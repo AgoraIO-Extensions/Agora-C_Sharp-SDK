@@ -38,6 +38,12 @@ Agora RTC C# SDK，目前支持 Windows 平台。
 
    *如您还未获取App ID，您可以查看附录。*
 
+## 帮助
+
+如您需要了解关于我们API的更多信息，请参考[Agora C++ API](https://docs.agora.io/cn/Video/API%20Reference/cpp/v3.1.2/index.html)。
+
+*C# API文档还在推进中，但我们已有的C++ API是相似的。*
+
 ## 附录
 
 ### 创建Agora账户并获取App ID
