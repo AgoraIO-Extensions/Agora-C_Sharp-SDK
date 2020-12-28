@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{9edc63ad-f4b4-4b7f-8dcc-ed615bd4a897}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module">
+      <UniqueIdentifier>{8db8be63-c968-488c-a440-4f102c1357c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc">
+      <UniqueIdentifier>{9f2a90d1-bbd8-4e92-a31d-3f2e52b23d82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\c_api">
+      <UniqueIdentifier>{d1762b51-7b7a-4eeb-88b7-fcdff5de313f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\callback">
+      <UniqueIdentifier>{1ae81f25-da38-4614-a943-fb08da28f656}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\common">
+      <UniqueIdentifier>{855ee58c-c342-4542-8688-9e9378726e76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\deviceManager">
+      <UniqueIdentifier>{181d5019-6115-4151-8f4b-e5f4fd923663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\include">
+      <UniqueIdentifier>{037356b8-c6b5-4e0e-989c-3f33eac6a0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\observer">
+      <UniqueIdentifier>{89cea35d-85aa-467a-a464-da2b6ed69627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\rtcChannel">
+      <UniqueIdentifier>{6767897b-5173-487f-a162-825c54b10c69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\rtcEngine">
+      <UniqueIdentifier>{3ed9c63d-1e93-47f2-ac80-d1594036b3c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\test">
+      <UniqueIdentifier>{72508257-15b0-4017-b1b2-98ccbf4ac35d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\callback\rtcChannnelCallback">
+      <UniqueIdentifier>{c05e93ac-1754-439a-a852-a184bd69cc5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\callback\rtcEngineCallback">
+      <UniqueIdentifier>{32632ac0-ec36-4406-aad0-986fd2bad15a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\common\rapidjson">
+      <UniqueIdentifier>{fd7d6e05-dc76-4269-b78a-b51f1c7a495e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\common\utils">
+      <UniqueIdentifier>{3e2deb81-1468-4abb-9dc1-37c145c53c35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\common\rapidjson\error">
+      <UniqueIdentifier>{c3e3e611-4a62-41d3-bf0f-cfb0a6391a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal">
+      <UniqueIdentifier>{93b33441-4110-4b47-8639-ccf4d42dacbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\common\rapidjson\msinttypes">
+      <UniqueIdentifier>{c484254c-fefa-42e3-bbff-d467296037fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager">
+      <UniqueIdentifier>{3e37e396-e8c2-4071-9913-052fb804085c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\deviceManager\videoDeviceManager">
+      <UniqueIdentifier>{4fd4693c-e37c-4169-b8d5-a4f5548b95aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cross-platform-sdk-module\rtc\observer\metadata">
+      <UniqueIdentifier>{ec784d90-44f7-49f0-8632-fa640a9ce208}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\callback\rtcChannnelCallback\RtcChannelEventHandler.h">
+      <Filter>src\cross-platform-sdk-module\rtc\callback\rtcChannnelCallback</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\callback\rtcChannnelCallback\RtcChannelEventHandlerBase.h">
+      <Filter>src\cross-platform-sdk-module\rtc\callback\rtcChannnelCallback</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\callback\rtcEngineCallback\RtcEngineEventHandler.h">
+      <Filter>src\cross-platform-sdk-module\rtc\callback\rtcEngineCallback</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\callback\rtcEngineCallback\RtcEngineEventHandlerBase.h">
+      <Filter>src\cross-platform-sdk-module\rtc\callback\rtcEngineCallback</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\callback\template_class_rtc_channel_event_handler.h">
+      <Filter>src\cross-platform-sdk-module\rtc\callback</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\callback\template_class_rtc_engine_event_handler.h">
+      <Filter>src\cross-platform-sdk-module\rtc\callback</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\CType.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\IBridgeCommon.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\allocators.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\document.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\encodedstream.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\encodings.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\filereadstream.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\filewritestream.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\fwd.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\istreamwrapper.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\memorybuffer.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\memorystream.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\ostreamwrapper.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\pointer.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\prettywriter.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\rapidjson.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\reader.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\schema.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\stream.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\stringbuffer.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\writer.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\error\en.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\error\error.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\error</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\biginteger.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\diyfp.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\dtoa.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\ieee754.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\itoa.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\meta.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\pow10.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\regex.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\stack.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\strfunc.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\strtod.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\internal\swap.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\msinttypes\inttypes.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\rapidjson\msinttypes\stdint.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\rapidjson\msinttypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\utils\DocumentHelper.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\common\utils\StructHelper.h">
+      <Filter>src\cross-platform-sdk-module\rtc\common\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\deviceManager\IAudioDeviceManagerBridge.h">
+      <Filter>src\cross-platform-sdk-module\rtc\deviceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\deviceManager\IVideoDeviceManagerBridge.h">
+      <Filter>src\cross-platform-sdk-module\rtc\deviceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager\AudioPlaybackDeviceManager.h">
+      <Filter>src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager\AudioRecordingDeviceManager.h">
+      <Filter>src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\deviceManager\videoDeviceManager\VideoDeviceManager.h">
+      <Filter>src\cross-platform-sdk-module\rtc\deviceManager\videoDeviceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\include\AgoraBase.h">
+      <Filter>src\cross-platform-sdk-module\rtc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\include\AgoraRtcCryptoCppLoader.h">
+      <Filter>src\cross-platform-sdk-module\rtc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\include\IAgoraMediaEngine.h">
+      <Filter>src\cross-platform-sdk-module\rtc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\include\IAgoraRtcChannel.h">
+      <Filter>src\cross-platform-sdk-module\rtc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\include\IAgoraRtcEngine.h">
+      <Filter>src\cross-platform-sdk-module\rtc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\include\IAgoraRtcEngine2.h">
+      <Filter>src\cross-platform-sdk-module\rtc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\include\IAgoraService.h">
+      <Filter>src\cross-platform-sdk-module\rtc\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\observer\metadata\metadata_observer.h">
+      <Filter>src\cross-platform-sdk-module\rtc\observer\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\rtcChannel\IRtcChannelBridge.h">
+      <Filter>src\cross-platform-sdk-module\rtc\rtcChannel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\rtcChannel\RtcChannelBridge.h">
+      <Filter>src\cross-platform-sdk-module\rtc\rtcChannel</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\rtcEngine\IRtcEngineBridge.h">
+      <Filter>src\cross-platform-sdk-module\rtc\rtcEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\test\api_tester_c.h">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\test\ApiTester.h">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\test\event_tester_c.h">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\test\EventTester.h">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\test\LogJson.h">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\LogHelper.h">
+      <Filter>src\cross-platform-sdk-module\rtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\rtcEngine\RtcEngineBridge.h">
+      <Filter>src\cross-platform-sdk-module\rtc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cross-platform-sdk-module\rtc\c_api\cross_platform_c_api_wrapper.h">
+      <Filter>src\cross-platform-sdk-module\rtc\c_api</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\callback\rtcChannnelCallback\RtcChannelEventHandler.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\callback\rtcChannnelCallback</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\callback\rtcEngineCallback\RtcEngineEventHandler.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\callback\rtcEngineCallback</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager\AudioPlaybackDeviceManager.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager\AudioRecordingDeviceManager.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\deviceManager\audioDeviceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\deviceManager\videoDeviceManager\VideoDeviceManager.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\deviceManager\videoDeviceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\observer\metadata\metadata_observer.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\observer\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\rtcChannel\RtcChannelBridge.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\rtcChannel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\rtcEngine\RtcEngineBridge.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\rtcEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\test\api_tester_c.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\test\ApiTester.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\test\event_tester_c.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\test\EventTester.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\test\LogJson.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\test</Filter>
+    </ClCompile>
+    <ClCompile Include="build.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cross-platform-sdk-module\rtc\c_api\cross_platform_c_api_wrapper.cpp">
+      <Filter>src\cross-platform-sdk-module\rtc\c_api</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

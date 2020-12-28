@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+.vs/
+target/
+x64/
+bin/
+agora_cpp.dll
+agora_rtc_sdk.dll

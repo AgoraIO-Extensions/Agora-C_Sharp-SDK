@@ -1,0 +1,61 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/hyq/Documents/cross_platform/Agora-C_Sharp-SDK/OneToOneVideo/OneToOneVideo/OneToOneVideo.csproj": {}
+  },
+  "projects": {
+    "/Users/hyq/Documents/cross_platform/Agora-C_Sharp-SDK/OneToOneVideo/OneToOneVideo/OneToOneVideo.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/hyq/Documents/cross_platform/Agora-C_Sharp-SDK/OneToOneVideo/OneToOneVideo/OneToOneVideo.csproj",
+        "projectName": "OneToOneVideo",
+        "projectPath": "/Users/hyq/Documents/cross_platform/Agora-C_Sharp-SDK/OneToOneVideo/OneToOneVideo/OneToOneVideo.csproj",
+        "packagesPath": "/Users/hyq/.nuget/packages/",
+        "outputPath": "/Users/hyq/Documents/cross_platform/Agora-C_Sharp-SDK/OneToOneVideo/OneToOneVideo/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/hyq/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WindowsForms": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
