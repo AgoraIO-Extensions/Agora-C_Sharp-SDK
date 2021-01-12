@@ -1,10 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using agorartc;
 
 namespace OneToOneVideo
 {
+    
     public partial class OneToOneVideoDemo : Form
     {
         internal static AgoraRtcEngine Rtc;
@@ -50,8 +60,9 @@ namespace OneToOneVideo
 
             Rtc.Initialize(appIdBox.Text, AREA_CODE.AREA_CODE_GLOBAL);
             Rtc.EnableVideo();
+            Rtc.EnableAudioVolumeIndication(800, 3, false);
             Rtc.JoinChannel("", channelNameBox.Text, "", 0);
-            var ret = new VideoCanvas(LocalWinId);
+            var ret = new VideoCanvas(LocalWinId, 0);
             Rtc.SetupLocalVideo(ret);
             Rtc.StartPreview();
         }
@@ -75,6 +86,11 @@ namespace OneToOneVideo
                 }
                 where Array.IndexOf(temp, nameChar) < 0
                 select nameChar).Any();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
@@ -129,7 +145,7 @@ namespace OneToOneVideo
             Console.WriteLine("OnUserOffline");
         }
 
-        public override void OnAudioVolumeIndication(int[] uid, int[] volume, int[] vad, int speakerNumber,
+        public override void OnAudioVolumeIndication(ref uint uid, ref uint volume, ref uint vad, string[] channelId, int speakerNumber,
             int totalVolume)
         {
             Console.WriteLine("OnAudioVolumeIndication");

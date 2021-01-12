@@ -35,10 +35,10 @@ namespace OneToOneVideo
             this.channelNameBox = new System.Windows.Forms.TextBox();
             this.joinChannel = new System.Windows.Forms.Button();
             this.leaveChannel = new System.Windows.Forms.Button();
-            OneToOneVideoDemo.remoteVideo = new System.Windows.Forms.PictureBox();
-            OneToOneVideoDemo.localVideo = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(OneToOneVideoDemo.remoteVideo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(OneToOneVideoDemo.localVideo)).BeginInit();
+            this.remoteVideo = new System.Windows.Forms.PictureBox();
+            this.localVideo = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.remoteVideo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.localVideo)).BeginInit();
             this.SuspendLayout();
             // 
             // appId
@@ -103,29 +103,31 @@ namespace OneToOneVideo
             // 
             // remoteVideo
             // 
-            OneToOneVideoDemo.remoteVideo.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            OneToOneVideoDemo.remoteVideo.Location = new System.Drawing.Point(24, 62);
-            OneToOneVideoDemo.remoteVideo.Name = "remoteVideo";
-            OneToOneVideoDemo.remoteVideo.Size = new System.Drawing.Size(425, 305);
-            OneToOneVideoDemo.remoteVideo.TabIndex = 6;
-            OneToOneVideoDemo.remoteVideo.TabStop = false;
+            this.remoteVideo.AccessibleName = "remoteVideoPic";
+            this.remoteVideo.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.remoteVideo.Location = new System.Drawing.Point(12, 12);
+            this.remoteVideo.Name = "remoteVideo";
+            this.remoteVideo.Size = new System.Drawing.Size(441, 372);
+            this.remoteVideo.TabIndex = 6;
+            this.remoteVideo.TabStop = false;
+            this.remoteVideo.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // localVideo
             // 
-            OneToOneVideoDemo.localVideo.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            OneToOneVideoDemo.localVideo.Location = new System.Drawing.Point(510, 239);
-            OneToOneVideoDemo.localVideo.Name = "localVideo";
-            OneToOneVideoDemo.localVideo.Size = new System.Drawing.Size(250, 172);
-            OneToOneVideoDemo.localVideo.TabIndex = 7;
-            OneToOneVideoDemo.localVideo.TabStop = false;
+            this.localVideo.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.localVideo.Location = new System.Drawing.Point(541, 248);
+            this.localVideo.Name = "localVideo";
+            this.localVideo.Size = new System.Drawing.Size(221, 136);
+            this.localVideo.TabIndex = 7;
+            this.localVideo.TabStop = false;
             // 
             // OneToOneVideoDemo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 461);
-            this.Controls.Add(OneToOneVideoDemo.localVideo);
-            this.Controls.Add(OneToOneVideoDemo.remoteVideo);
+            this.Controls.Add(this.localVideo);
+            this.Controls.Add(this.remoteVideo);
             this.Controls.Add(this.leaveChannel);
             this.Controls.Add(this.joinChannel);
             this.Controls.Add(this.channelNameBox);
@@ -134,8 +136,8 @@ namespace OneToOneVideo
             this.Controls.Add(this.appId);
             this.Name = "OneToOneVideoDemo";
             this.Text = "One to One Video Demo";
-            ((System.ComponentModel.ISupportInitialize)(OneToOneVideoDemo.remoteVideo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(OneToOneVideoDemo.localVideo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.remoteVideo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.localVideo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -149,8 +151,8 @@ namespace OneToOneVideo
         private System.Windows.Forms.TextBox channelNameBox;
         private System.Windows.Forms.Button joinChannel;
         private System.Windows.Forms.Button leaveChannel;
-        internal static System.Windows.Forms.PictureBox remoteVideo;
-        internal static System.Windows.Forms.PictureBox localVideo;
+        private System.Windows.Forms.PictureBox remoteVideo;
+        private System.Windows.Forms.PictureBox localVideo;
     }
 }
 
