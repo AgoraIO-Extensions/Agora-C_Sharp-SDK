@@ -105,9 +105,9 @@ namespace OneToOneVideo
             // 
             this.remoteVideo.AccessibleName = "remoteVideoPic";
             this.remoteVideo.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.remoteVideo.Location = new System.Drawing.Point(12, 12);
+            this.remoteVideo.Location = new System.Drawing.Point(16, 78);
             this.remoteVideo.Name = "remoteVideo";
-            this.remoteVideo.Size = new System.Drawing.Size(441, 372);
+            this.remoteVideo.Size = new System.Drawing.Size(442, 304);
             this.remoteVideo.TabIndex = 6;
             this.remoteVideo.TabStop = false;
             this.remoteVideo.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -115,7 +115,7 @@ namespace OneToOneVideo
             // localVideo
             // 
             this.localVideo.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.localVideo.Location = new System.Drawing.Point(541, 248);
+            this.localVideo.Location = new System.Drawing.Point(541, 246);
             this.localVideo.Name = "localVideo";
             this.localVideo.Size = new System.Drawing.Size(221, 136);
             this.localVideo.TabIndex = 7;

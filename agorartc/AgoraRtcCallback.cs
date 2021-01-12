@@ -158,7 +158,8 @@ namespace agorartc
         {
         }
 
-        public virtual void OnAudioVolumeIndication(int[] uid, int[] volume, int[] vad,
+        public virtual void OnAudioVolumeIndication(ref uint uid, ref uint volume, ref uint vad,
+            string[] channelId,
             int speakerNumber, int totalVolume)
         {
         }
