@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "agorartc", "agorartc\agorartc.csproj", "{2C3D659D-491B-488D-85C2-C3BDE1774A11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C3D659D-491B-488D-85C2-C3BDE1774A11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C3D659D-491B-488D-85C2-C3BDE1774A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C3D659D-491B-488D-85C2-C3BDE1774A11}.Debug|x64.ActiveCfg = Debug|x64
+		{2C3D659D-491B-488D-85C2-C3BDE1774A11}.Debug|x64.Build.0 = Debug|x64
+		{2C3D659D-491B-488D-85C2-C3BDE1774A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C3D659D-491B-488D-85C2-C3BDE1774A11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C3D659D-491B-488D-85C2-C3BDE1774A11}.Release|x64.ActiveCfg = Release|x64
+		{2C3D659D-491B-488D-85C2-C3BDE1774A11}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F86AA468-11FB-47A9-8BCB-CD3BFBB07514}
+	EndGlobalSection
+EndGlobal
