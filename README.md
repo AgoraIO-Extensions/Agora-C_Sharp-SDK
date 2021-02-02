@@ -23,6 +23,8 @@ Use Agora RTC SDK with C#!
 3. Compile SDK.
 
    Open `agora_cpp/agora_cpp.sln` via Visual Studio. Build Solution. The generated dynamic library lies in `agora_cpp/x64/Debug` named `agora_cpp.dll`.
+   
+   Open `agorartc/agorartc.sln` via Visual Studio. Build Solution. 
 
 ## Usage
 
@@ -30,7 +32,7 @@ A GUI demo has been contained in the repository.
 
 1. Add the required dynamic libraries and the SDK folder into the project.
 
-   Copy `agora_cpp/x64/Debug/agora_cpp.dll`, `agora_cpp/CSharp_RTC_SDK/lib/agora_rtc_sdk.dll`, and `agorartc` into `OneToOneVideo/OneToOneVideo` folder.
+   Copy `agora_cpp/x64/Debug/agora_cpp.dll` and  `agora_cpp/CSharp_RTC_SDK/lib/agora_rtc_sdk.dll` into `OneToOneVideo/OneToOneVideo` folder.
 
 2. Open `OneToOneVideo/OneToOneVideo.sln` via Visual Studio. Run Demo.
 

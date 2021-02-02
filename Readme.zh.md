@@ -24,6 +24,8 @@ Agora RTC C# SDK，目前支持 Windows 平台。
 3. 编译SDK。
 
    通过Visual Studio打开`agora_cpp/agora_cpp.sln`。生成解决方案。生成的DLL动态库`agora_cpp.dll`位于`agora_cpp/x64/Debug`。
+   
+   通过Visual Studio打开`agorartc/agorartc.sln`。生成解决方案。
 
 
 ## 使用方法
@@ -32,7 +34,7 @@ Agora RTC C# SDK，目前支持 Windows 平台。
 
 1. 将所需的动态库和SDK文件夹添加至项目中。
 
-   将`agora_cpp/x64/Debug/agora_cpp.dll`、`agora_cpp/CSharp_RTC_SDK/lib/agora_rtc_sdk.dll`和`agorartc`拷贝至`OneToOneVideo/OneToOneVideo`文件夹中。
+   将`agora_cpp/x64/Debug/agora_cpp.dll`和`agora_cpp/CSharp_RTC_SDK/lib/agora_rtc_sdk.dll`拷贝至`OneToOneVideo/OneToOneVideo`文件夹中。
 
 2. 通过Visual Studio打开`OneToOneVideo/OneToOneVideo.sln`。运行示例。
 
