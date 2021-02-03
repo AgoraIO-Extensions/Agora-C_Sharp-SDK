@@ -8,5 +8,6 @@ agora_cpp.dll
 agora_rtc_sdk.dll
 obj/
 agora_cpp_archived/
-agora_cpp/
+build/
+lib/
 OneToOneVideo/OneToOneVideo/agora_cpp.lib
