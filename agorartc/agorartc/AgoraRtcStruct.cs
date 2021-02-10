@@ -1462,4 +1462,24 @@ namespace agorartc
 		 */
         public string encryptionKey;
     }
+    
+    [StructLayout(LayoutKind.Sequential)]
+    public struct Metadata
+    {
+	    /** The User ID.
+
+         - For the receiver: the ID of the user who sent the metadata.
+         - For the sender: ignore it.
+         */
+	    public uint uid;
+	    /** Buffer size of the sent or received Metadata.
+         */
+	    public uint size;
+	    /** Buffer address of the sent or received Metadata.
+         */
+	    public byte[] buffer;
+	    /** Timestamp (ms) of the frame following the metadata.
+         */
+	    public long timeStampMs;
+    };
 }

@@ -2,15 +2,14 @@ using System;
 
 namespace agorartc
 {
-    using IAudioPlaybackDeviceManager_ptr = IntPtr;
-    using IAudioRecordingDeviceManager_ptr = IntPtr;
+    using IrisDeviceManagerPtr = IntPtr;
 
     public class AgoraAudioPlaybackDeviceManager : IDisposable
     {
-        private IAudioPlaybackDeviceManager_ptr _audioPlaybackHandler;
+        private IrisDeviceManagerPtr _audioPlaybackHandler;
         private bool _disposed = false;
 
-        internal AgoraAudioPlaybackDeviceManager(IAudioPlaybackDeviceManager_ptr handler)
+        internal AgoraAudioPlaybackDeviceManager(IrisDeviceManagerPtr handler)
         {
             _audioPlaybackHandler = handler;
         }
@@ -108,8 +107,7 @@ namespace agorartc
 
         private void ReleaseAudioPlaybackDeviceManager()
         {
-            AgorartcNative.releaseAudioPlaybackDeviceManager(_audioPlaybackHandler);
-            AgoraRtcEngine.CreateRtcEngine().ReleaseAudioPlaybackDeviceManager(this);
+            AgoraRtcEngine.CreateRtcEngine().ReleaseAudioPlaybackDeviceManager();
             _audioPlaybackHandler = IntPtr.Zero;
         }
 
@@ -121,10 +119,10 @@ namespace agorartc
 
     public class AgoraAudioRecordingDeviceManager: IDisposable
     {
-        private IAudioRecordingDeviceManager_ptr _audioRecordingHandler;
+        private IrisDeviceManagerPtr _audioRecordingHandler;
         private bool _disposed = false;
 
-        public AgoraAudioRecordingDeviceManager(IAudioRecordingDeviceManager_ptr handler)
+        public AgoraAudioRecordingDeviceManager(IrisDeviceManagerPtr handler)
         {
             _audioRecordingHandler = handler;
         }
@@ -226,8 +224,7 @@ namespace agorartc
 
         private void ReleaseAudioRecordingDeviceManager()
         {
-            AgorartcNative.releaseAudioRecordingDeviceManager(_audioRecordingHandler);
-            AgoraRtcEngine.CreateRtcEngine().ReleaseAudioRecordingDeviceManager(this);
+            AgoraRtcEngine.CreateRtcEngine().ReleaseAudioRecordingDeviceManager();
             _audioRecordingHandler = IntPtr.Zero;
         }
 

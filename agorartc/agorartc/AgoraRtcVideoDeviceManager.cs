@@ -1,20 +1,22 @@
 using System;
+using System.Text.Json;
 
 namespace agorartc
 {
-    using IVideoDeviceManager_ptr = IntPtr;
+    using IrisDeviceManagerPtr = IntPtr;
     using view_t = IntPtr;
-    
-    public class AgoraVideoDeviceManager: IDisposable
-    {
-        private IVideoDeviceManager_ptr _videoDeviceHandler;
-        private bool _disposed = false;
 
-        public AgoraVideoDeviceManager(IVideoDeviceManager_ptr handler)
+    public class AgoraVideoDeviceManager : IDisposable
+    {
+        private IrisDeviceManagerPtr _videoDeviceHandler;
+        private bool _disposed = false;
+        private char[] result = new char[2048];
+
+        public AgoraVideoDeviceManager(IrisDeviceManagerPtr handler)
         {
             _videoDeviceHandler = handler;
         }
-        
+
         public void Dispose()
         {
             Dispose(true);
@@ -26,7 +28,6 @@ namespace agorartc
             if (_disposed) return;
             if (disposing)
             {
-                
             }
 
             ReleaseVideoDeviceManager();
@@ -35,39 +36,65 @@ namespace agorartc
 
         public ERROR_CODE StartDeviceTest(view_t hwnd)
         {
-            return AgorartcNative.startDeviceTest(_videoDeviceHandler, hwnd);
+            var para = new
+            {
+                hwnd
+            };
+            return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kStartVideoDeviceTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StopDeviceTest()
         {
-            return AgorartcNative.stopDeviceTest(_videoDeviceHandler);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kStopVideoDeviceTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SetDevice(string deviceId)
+        public ERROR_CODE SetCurrentDevice(string deviceId)
         {
-            return AgorartcNative.setDevice(_videoDeviceHandler, deviceId);
+            var para = new
+            {
+                deviceId
+            };
+            return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kSetCurrentVideoDeviceId, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE GetDevice(int index, string deviceName, string deviceId)
+        public string GetCurrentDevice()
         {
-            return AgorartcNative.getDevice(_videoDeviceHandler, index, deviceName, deviceId);
-        }
+            var para = new { };
 
-        public ERROR_CODE GetCurrentDevice(string deviceId)
+            return AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kGetCurrentVideoDeviceId, JsonSerializer.Serialize(para), result) != 0
+                ? "GetDevice Failed."
+                : new string(result[..Array.IndexOf(result, '\0')]);
+        }
+        
+        public ERROR_CODE GetDeviceInfoByIndex(int index, char[] deviceName, char[] deviceId)
         {
-            return AgorartcNative.getCurrentDevice(_videoDeviceHandler, deviceId);
+            var para = new
+            {
+                index
+            };
+            var ret = (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kGetVideoDeviceInfoByIndex, JsonSerializer.Serialize(para), result) * -1);
+            deviceName = ((string) AgoraUtil.GetData<string>(result, "deviceName")).ToCharArray();
+            deviceId = ((string) AgoraUtil.GetData<string>(result, "deviceId")).ToCharArray();
+            return ret;
         }
 
         public int GetDeviceCount()
         {
-            return AgorartcNative.getDeviceCount(_videoDeviceHandler);
+            var para = new { };
+            return AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kGetVideoDeviceCount, JsonSerializer.Serialize(para), result);
         }
 
 
         private void ReleaseVideoDeviceManager()
         {
-            AgorartcNative.releaseVideoDeviceManager(_videoDeviceHandler);
-            AgoraRtcEngine.CreateRtcEngine().ReleaseAgoraVideoDeviceManager(this);
+            AgoraRtcEngine.CreateRtcEngine().ReleaseAgoraVideoDeviceManager();
             _videoDeviceHandler = IntPtr.Zero;
         }
 

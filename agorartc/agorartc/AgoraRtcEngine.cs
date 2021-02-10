@@ -1,446 +1,382 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 
 namespace agorartc
 {
     using uid_t = UInt32;
     using view_t = IntPtr;
-    using IRtcEngineBridge_ptr = IntPtr;
+    using IrisEnginePtr = IntPtr;
+    
+    using IrisDeviceManagerPtr = IntPtr;
 
-    internal static class NativeRtcEventHandler
+    internal static class NativeRtcEngineEventHandler
     {
-        internal static AgoraRtcEngine rtc;
+        internal static AgoraRtcEngine Rtc;
 
-        internal static void OnJoinChannelSuccess(string namelessParameter1, uint uid, int elapsed)
+        internal static void OnEvent(string @event, string data)
         {
-            rtc.engineEventHandler.OnJoinChannelSuccess(namelessParameter1, uid, elapsed);
-        }
-
-        internal static void OnReJoinChannelSuccess(string namelessParameter1, uint uid, int elapsed)
-        {
-            rtc.engineEventHandler.OnReJoinChannelSuccess(namelessParameter1, uid, elapsed);
-        }
-
-        internal static void OnConnectionLost()
-        {
-            rtc.engineEventHandler.OnConnectionLost();
-        }
-
-        internal static void OnConnectionInterrupted()
-        {
-            rtc.engineEventHandler.OnConnectionInterrupted();
-        }
-
-        internal static void OnLeaveChannel(uint duration, uint txBytes, uint rxBytes, uint txAudioBytes,
-            uint txVideoBytes, uint rxAudioBytes, uint rxVideoBytes, ushort txKBitRate, ushort rxKBitRate,
-            ushort rxAudioKBitRate, ushort txAudioKBitRate, ushort rxVideoKBitRate, ushort txVideoKBitRate,
-            ushort lastmileDelay, ushort txPacketLossRate, ushort rxPacketLossRate, uint userCount,
-            double cpuAppUsage,
-            double cpuTotalUsage, int gatewayRtt, double memoryAppUsageRatio, double memoryTotalUsageRatio,
-            int memoryAppUsageInKbytes)
-        {
-            rtc.engineEventHandler.OnLeaveChannel(duration, txBytes, rxBytes, txAudioBytes, txVideoBytes, rxAudioBytes,
-                rxVideoBytes, txKBitRate, rxKBitRate, rxAudioKBitRate, txAudioKBitRate, rxVideoKBitRate,
-                txVideoKBitRate, lastmileDelay, txPacketLossRate, rxPacketLossRate, userCount, cpuAppUsage,
-                cpuTotalUsage, gatewayRtt, memoryAppUsageRatio, memoryTotalUsageRatio, memoryAppUsageInKbytes);
-        }
-
-        internal static void OnRequestToken()
-        {
-            rtc.engineEventHandler.OnRequestToken();
-        }
-
-        internal static void OnUserJoined(uint uid, int elapsed)
-        {
-            rtc.engineEventHandler.OnUserJoined(uid, elapsed);
-        }
-
-        internal static void OnUserOffline(uint uid, int offLineReason)
-        {
-            rtc.engineEventHandler.OnUserOffline(uid, offLineReason);
-        }
-
-        internal static void OnAudioVolumeIndication(IntPtr uid, IntPtr volume, IntPtr vad,
-            string[] channelId,
-            int speakerNumber, int totalVolume)
-        {
-            if (speakerNumber > 0)
+            switch (@event)
             {
-                var uids = new int[speakerNumber];
-                var volumes = new int[speakerNumber];
-                var vads = new int[speakerNumber];
-                Marshal.Copy(uid, uids, 0, speakerNumber);
-                Marshal.Copy(volume, volumes, 0, speakerNumber);
-                Marshal.Copy(vad, vads, 0, speakerNumber);
-                for (int i = 0; i < speakerNumber; i++)
-                {
-                    Console.WriteLine("onAudioVolumeIndication {0}, {1}, {2}, {3}, {4}", uids[i], volumes[i], vads[i], speakerNumber,totalVolume);
-                }
-               // Console.WriteLine("uids: {0}  {1}  {2}", uids[0], uids[1], uids[2]);
-                // rtc.engineEventHandler.OnAudioVolumeIndication(ref uid, ref volume, ref vad, channelId, speakerNumber,
-                //     totalVolume);
+                case "onWarning":
+                    Rtc.engineEventHandler?.OnWarning((int) AgoraUtil.GetData<int>(data, "warn"),
+                        (string) AgoraUtil.GetData<string>(data, "msg"));
+                    break;
+                case "onError":
+                    Rtc.engineEventHandler?.OnError((int) AgoraUtil.GetData<int>(data, "err"),
+                        (string) AgoraUtil.GetData<string>(data, "msg"));
+                    break;
+                case "onJoinChannelSuccess":
+                    Rtc.engineEventHandler?.OnJoinChannelSuccess((string) AgoraUtil.GetData<string>(data, "channel"),
+                        (uint) AgoraUtil.GetData<uint>(data, "uid"), (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onRejoinChannelSuccess":
+                    Rtc.engineEventHandler?.OnReJoinChannelSuccess((string) AgoraUtil.GetData<string>(data, "channel"),
+                        (uint) AgoraUtil.GetData<uint>(data, "uid"), (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onLeaveChannel":
+                    Rtc.engineEventHandler?.OnLeaveChannel(AgoraUtil.JsonToStruct<RtcStats>(data, "stats"));
+                    break;
+                case "onClientRoleChanged":
+                    Rtc.engineEventHandler?.OnClientRoleChanged(
+                        (CLIENT_ROLE_TYPE) AgoraUtil.GetData<int>(data, "oldRole"),
+                        (CLIENT_ROLE_TYPE) AgoraUtil.GetData<int>(data, "newRole"));
+                    break;
+                case "onUserJoined":
+                    Rtc.engineEventHandler?.OnUserJoined((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onUserOffline":
+                    Rtc.engineEventHandler?.OnUserOffline((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (USER_OFFLINE_REASON_TYPE) AgoraUtil.GetData<int>(data, "reason"));
+                    break;
+                case "onLastmileQuality":
+                    Rtc.engineEventHandler?.OnLastmileQuality((int) AgoraUtil.GetData<int>(data, "quality"));
+                    break;
+                case "onLastmileProbeResult":
+                    Rtc.engineEventHandler?.OnLastmileProbeResult(
+                        AgoraUtil.JsonToStruct<LastmileProbeResult>(data, "result"));
+                    break;
+                case "onConnectionInterrupted":
+                    Rtc.engineEventHandler?.OnConnectionInterrupted();
+                    break;
+                case "onConnectionLost":
+                    Rtc.engineEventHandler?.OnConnectionLost();
+                    break;
+                case "onConnectionBanned":
+                    Rtc.engineEventHandler?.OnConnectionBanned();
+                    break;
+                case "onApiCallExecuted":
+                    Rtc.engineEventHandler?.OnApiCallExecuted((ERROR_CODE) AgoraUtil.GetData<int>(data, "err"),
+                        (string) AgoraUtil.GetData<string>(data, "api"),
+                        (string) AgoraUtil.GetData<string>(data, "result"));
+                    break;
+                case "onRequestToken":
+                    Rtc.engineEventHandler?.OnRequestToken();
+                    break;
+                case "onTokenPrivilegeWillExpire":
+                    Rtc.engineEventHandler?.OnTokenPrivilegeWillExpire(
+                        (string) AgoraUtil.GetData<string>(data, "token"));
+                    break;
+                case "onAudioQuality":
+                    Rtc.engineEventHandler?.OnAudioQuality((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "quality"),
+                        (ushort) AgoraUtil.GetData<ushort>(data, "delay"),
+                        (ushort) AgoraUtil.GetData<ushort>(data, "lost"));
+                    break;
+                case "onRtcStats":
+                    Rtc.engineEventHandler?.OnRtcStats(AgoraUtil.JsonToStruct<RtcStats>(data, "stats"));
+                    break;
+                case "onNetworkQuality":
+                    Rtc.engineEventHandler?.OnNetworkQuality((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "txQuality"),
+                        (int) AgoraUtil.GetData<int>(data, "rxQuality"));
+                    break;
+                case "onLocalVideoStats":
+                    Rtc.engineEventHandler?.OnLocalVideoStats(AgoraUtil.JsonToStruct<LocalVideoStats>(data, "stats"));
+                    break;
+                case "onRemoteVideoStats":
+                    Rtc.engineEventHandler?.OnRemoteVideoStats(AgoraUtil.JsonToStruct<RemoteVideoStats>(data, "stats"));
+                    break;
+                case "onLocalAudioStats":
+                    Rtc.engineEventHandler?.OnLocalAudioStats(AgoraUtil.JsonToStruct<LocalAudioStats>(data, "stats"));
+                    break;
+                case "onRemoteAudioStats":
+                    Rtc.engineEventHandler?.OnRemoteAudioStats(AgoraUtil.JsonToStruct<RemoteAudioStats>(data, "stats"));
+                    break;
+                case "onLocalAudioStateChanged":
+                    Rtc.engineEventHandler?.OnLocalAudioStateChanged(
+                        (LOCAL_AUDIO_STREAM_STATE) AgoraUtil.GetData<int>(data, "state"),
+                        (LOCAL_AUDIO_STREAM_ERROR) AgoraUtil.GetData<int>(data, "error"));
+                    break;
+                case "onRemoteAudioStateChanged":
+                    Rtc.engineEventHandler?.OnRemoteAudioStateChanged((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (REMOTE_AUDIO_STATE) AgoraUtil.GetData<int>(data, "state"),
+                        (REMOTE_AUDIO_STATE_REASON) AgoraUtil.GetData<int>(data, "error"),
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onVideoPublishStateChanged":
+                    Rtc.engineEventHandler?.OnVideoPublishStateChanged(
+                        (string) AgoraUtil.GetData<string>(data, "channel"),
+                        (STREAM_PUBLISH_STATE) AgoraUtil.GetData<int>(data, "oldState"),
+                        (STREAM_PUBLISH_STATE) AgoraUtil.GetData<int>(data, "newState"),
+                        (int) AgoraUtil.GetData<int>(data, "elapseSinceLastState"));
+                    break;
+                case "onAudioSubscribeStateChanged":
+                    Rtc.engineEventHandler?.OnAudioSubscribeStateChanged(
+                        (string) AgoraUtil.GetData<string>(data, "channel"),
+                        (uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (STREAM_SUBSCRIBE_STATE) AgoraUtil.GetData<int>(data, "oldState"),
+                        (STREAM_SUBSCRIBE_STATE) AgoraUtil.GetData<int>(data, "newState"),
+                        (int) AgoraUtil.GetData<int>(data, "elapseSinceLastState"));
+                    break;
+                case "onVideoSubscribeStateChanged":
+                    Rtc.engineEventHandler?.OnVideoSubscribeStateChanged(
+                        (string) AgoraUtil.GetData<string>(data, "channel"),
+                        (uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (STREAM_SUBSCRIBE_STATE) AgoraUtil.GetData<int>(data, "oldState"),
+                        (STREAM_SUBSCRIBE_STATE) AgoraUtil.GetData<int>(data, "newState"),
+                        (int) AgoraUtil.GetData<int>(data, "elapseSinceLastState"));
+                    break;
+                case "onAudioVolumeIndication":
+                    var speakerNumber = (uint) AgoraUtil.GetData<uint>(data, "speakerNumber");
+                    var speakers = AgoraUtil.JsonToStructArray<AudioVolumeInfo>(data, "speakers", speakerNumber);
+                    var totalVolume = (int) AgoraUtil.GetData<int>(data, "totalVolume");
+                    Rtc.engineEventHandler?.OnAudioVolumeIndication(speakers, speakerNumber, totalVolume);
+                    break;
+                case "onActiveSpeaker":
+                    Rtc.engineEventHandler?.OnActiveSpeaker((uint) AgoraUtil.GetData<uint>(data, "uid"));
+                    break;
+                case "onVideoStopped":
+                    Rtc.engineEventHandler?.OnVideoStopped();
+                    break;
+                case "onFirstLocalVideoFrame":
+                    Rtc.engineEventHandler?.OnFirstLocalVideoFrame((int) AgoraUtil.GetData<int>(data, "width"),
+                        (int) AgoraUtil.GetData<int>(data, "height"), (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onFirstLocalVideoFramePublished":
+                    Rtc.engineEventHandler?.OnFirstLocalVideoFramePublished(
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onFirstRemoteVideoDecoded":
+                    Rtc.engineEventHandler?.OnFirstRemoteVideoDecoded((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "width"), (int) AgoraUtil.GetData<int>(data, "height"),
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onFirstRemoteVideoFrame":
+                    Rtc.engineEventHandler?.OnFirstRemoteVideoFrame((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "width"), (int) AgoraUtil.GetData<int>(data, "height"),
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onUserMuteAudio":
+                    Rtc.engineEventHandler?.OnUserMuteAudio((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (bool) AgoraUtil.GetData<bool>(data, "muted"));
+                    break;
+                case "onUserMuteVideo":
+                    Rtc.engineEventHandler?.OnUserMuteVideo((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (bool) AgoraUtil.GetData<bool>(data, "muted"));
+                    break;
+                case "onUserEnableVideo":
+                    Rtc.engineEventHandler?.OnUserEnableVideo((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (bool) AgoraUtil.GetData<bool>(data, "enabled"));
+                    break;
+                case "onAudioDeviceStateChanged":
+                    Rtc.engineEventHandler?.OnAudioDeviceStateChanged(
+                        (string) AgoraUtil.GetData<string>(data, "deviceId"),
+                        (MEDIA_DEVICE_TYPE) AgoraUtil.GetData<int>(data, "deviceType"),
+                        (MEDIA_DEVICE_STATE_TYPE) AgoraUtil.GetData<int>(data, "deviceState"));
+                    break;
+                case "onAudioDeviceVolumeChanged":
+                    Rtc.engineEventHandler?.OnAudioDeviceVolumeChanged(
+                        (MEDIA_DEVICE_TYPE) AgoraUtil.GetData<int>(data, "deviceType"),
+                        (int) AgoraUtil.GetData<int>(data, "volume"),
+                        (bool) AgoraUtil.GetData<bool>(data, "muted"));
+                    break;
+                case "onCameraReady":
+                    Rtc.engineEventHandler?.OnCameraReady();
+                    break;
+                case "onCameraFocusAreaChanged":
+                    Rtc.engineEventHandler?.OnCameraFocusAreaChanged((int) AgoraUtil.GetData<int>(data, "x"),
+                        (int) AgoraUtil.GetData<int>(data, "y"), (int) AgoraUtil.GetData<int>(data, "width"),
+                        (int) AgoraUtil.GetData<int>(data, "height"));
+                    break;
+                case "onCameraExposureAreaChanged":
+                    Rtc.engineEventHandler?.OnCameraExposureAreaChanged((int) AgoraUtil.GetData<int>(data, "x"),
+                        (int) AgoraUtil.GetData<int>(data, "y"), (int) AgoraUtil.GetData<int>(data, "width"),
+                        (int) AgoraUtil.GetData<int>(data, "height"));
+                    break;
+                case "onAudioMixingFinished":
+                    Rtc.engineEventHandler?.OnAudioMixingFinished();
+                    break;
+                case "onAudioMixingStateChanged":
+                    Rtc.engineEventHandler?.OnAudioMixingStateChanged(
+                        (AUDIO_MIXING_STATE_TYPE) AgoraUtil.GetData<int>(data, "state"),
+                        (AUDIO_MIXING_ERROR_TYPE) AgoraUtil.GetData<int>(data, "errorCode"));
+                    break;
+                case "onRemoteAudioMixingBegin":
+                    Rtc.engineEventHandler?.OnRemoteAudioMixingBegin();
+                    break;
+                case "onRemoteAudioMixingEnd":
+                    Rtc.engineEventHandler?.OnRemoteAudioMixingEnd();
+                    break;
+                case "onAudioEffectFinished":
+                    Rtc.engineEventHandler?.OnAudioEffectFinished((int) AgoraUtil.GetData<int>(data, "soundId"));
+                    break;
+                case "onFirstRemoteAudioDecoded":
+                    Rtc.engineEventHandler?.OnFirstRemoteAudioDecoded((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onVideoDeviceStateChanged":
+                    Rtc.engineEventHandler?.OnVideoDeviceStateChanged(
+                        (string) AgoraUtil.GetData<string>(data, "deviceId"),
+                        (MEDIA_DEVICE_TYPE) AgoraUtil.GetData<int>(data, "deviceType"),
+                        (MEDIA_DEVICE_STATE_TYPE) AgoraUtil.GetData<int>(data, "deviceState"));
+                    break;
+                case "onLocalVideoStateChanged":
+                    Rtc.engineEventHandler?.OnLocalVideoStateChanged(
+                        (LOCAL_VIDEO_STREAM_STATE) AgoraUtil.GetData<int>(data, "localVideoState"),
+                        (LOCAL_VIDEO_STREAM_ERROR) AgoraUtil.GetData<int>(data, "error"));
+                    break;
+                case "onVideoSizeChanged":
+                    Rtc.engineEventHandler?.OnVideoSizeChanged((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "width"), (int) AgoraUtil.GetData<int>(data, "height"),
+                        (int) AgoraUtil.GetData<int>(data, "rotation"));
+                    break;
+                case "onRemoteVideoStateChanged":
+                    Rtc.engineEventHandler?.OnRemoteVideoStateChanged((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (REMOTE_VIDEO_STATE) AgoraUtil.GetData<int>(data, "state"),
+                        (REMOTE_VIDEO_STATE_REASON) AgoraUtil.GetData<int>(data, "reason"),
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onUserEnableLocalVideo":
+                    Rtc.engineEventHandler?.OnUserEnableLocalVideo((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (bool) AgoraUtil.GetData<bool>(data, "enabled"));
+                    break;
+                case "onStreamMessageError":
+                    Rtc.engineEventHandler?.OnStreamMessageError((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "streamId"), (int) AgoraUtil.GetData<int>(data, "code"),
+                        (int) AgoraUtil.GetData<int>(data, "missed"), (int) AgoraUtil.GetData<int>(data, "cached"));
+                    break;
+                case "onMediaEngineLoadSuccess":
+                    Rtc.engineEventHandler?.OnMediaEngineLoadSuccess();
+                    break;
+                case "onMediaEngineStartCallSuccess":
+                    Rtc.engineEventHandler?.OnMediaEngineStartCallSuccess();
+                    break;
+                case "onUserSuperResolutionEnabled":
+                    Rtc.engineEventHandler?.onUserSuperResolutionEnabled((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (bool) AgoraUtil.GetData<bool>(data, "enabled"),
+                        (SUPER_RESOLUTION_STATE_REASON) AgoraUtil.GetData<int>(data, "reason"));
+                    break;
+                case "onChannelMediaRelayStateChanged":
+                    Rtc.engineEventHandler?.OnChannelMediaRelayStateChanged(
+                        (CHANNEL_MEDIA_RELAY_STATE) AgoraUtil.GetData<int>(data, "state"),
+                        (CHANNEL_MEDIA_RELAY_ERROR) AgoraUtil.GetData<int>(data, "code"));
+                    break;
+                case "onChannelMediaRelayEvent":
+                    Rtc.engineEventHandler?.OnChannelMediaRelayEvent(
+                        (CHANNEL_MEDIA_RELAY_EVENT) AgoraUtil.GetData<int>(data, "code"));
+                    break;
+                case "onFirstLocalAudioFrame":
+                    Rtc.engineEventHandler?.OnFirstLocalAudioFrame((int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onFirstLocalAudioFramePublished":
+                    Rtc.engineEventHandler?.OnFirstLocalAudioFramePublished(
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onFirstRemoteAudioFrame":
+                    Rtc.engineEventHandler?.OnFirstRemoteAudioFrame((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onRtmpStreamingStateChanged":
+                    Rtc.engineEventHandler?.OnRtmpStreamingStateChanged((string) AgoraUtil.GetData<string>(data, "url"),
+                        (RTMP_STREAM_PUBLISH_STATE) AgoraUtil.GetData<int>(data, "state"),
+                        (RTMP_STREAM_PUBLISH_ERROR) AgoraUtil.GetData<int>(data, "errCode"));
+                    break;
+                case "onRtmpStreamingEvent":
+                    Rtc.engineEventHandler?.OnRtmpStreamingEvent((string) AgoraUtil.GetData<string>(data, "url"),
+                        (RTMP_STREAMING_EVENT) AgoraUtil.GetData<int>(data, "eventCode"));
+                    break;
+                case "onStreamPublished":
+                    Rtc.engineEventHandler?.OnStreamPublished((string) AgoraUtil.GetData<string>(data, "url"),
+                        (ERROR_CODE) AgoraUtil.GetData<int>(data, "error"));
+                    break;
+                case "onStreamUnpublished":
+                    Rtc.engineEventHandler?.OnStreamUnpublished((string) AgoraUtil.GetData<string>(data, "url"));
+                    break;
+                case "onTranscodingUpdated":
+                    Rtc.engineEventHandler?.OnTranscodingUpdated();
+                    break;
+                case "onStreamInjectedStatus":
+                    Rtc.engineEventHandler?.OnStreamInjectedStatus((string) AgoraUtil.GetData<string>(data, "url"),
+                        (uint) AgoraUtil.GetData<uint>(data, "uid"), (int) AgoraUtil.GetData<int>(data, "status"));
+                    break;
+                case "onAudioRouteChanged":
+                    Rtc.engineEventHandler?.OnAudioRouteChanged(
+                        (AUDIO_ROUTE_TYPE) AgoraUtil.GetData<int>(data, "routing"));
+                    break;
+                case "onLocalPublishFallbackToAudioOnly":
+                    Rtc.engineEventHandler?.OnLocalPublishFallbackToAudioOnly(
+                        (bool) AgoraUtil.GetData<bool>(data, "isFallbackOrRecover"));
+                    break;
+                case "onRemoteSubscribeFallbackToAudioOnly":
+                    Rtc.engineEventHandler?.OnRemoteSubscribeFallbackToAudioOnly(
+                        (uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (bool) AgoraUtil.GetData<bool>(data, "isFallbackOrRecover"));
+                    break;
+                case "onRemoteAudioTransportStats":
+                    Rtc.engineEventHandler?.OnRemoteAudioTransportStats(
+                        (uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (ushort) AgoraUtil.GetData<ushort>(data, "delay"),
+                        (ushort) AgoraUtil.GetData<ushort>(data, "lost"),
+                        (ushort) AgoraUtil.GetData<ushort>(data, "rxKBitRate"));
+                    break;
+                case "onRemoteVideoTransportStats":
+                    Rtc.engineEventHandler?.OnRemoteAudioTransportStats(
+                        (uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (ushort) AgoraUtil.GetData<ushort>(data, "delay"),
+                        (ushort) AgoraUtil.GetData<ushort>(data, "lost"),
+                        (ushort) AgoraUtil.GetData<ushort>(data, "rxKBitRate"));
+                    break;
+                case "onMicrophoneEnabled":
+                    Rtc.engineEventHandler?.OnMicrophoneEnabled((bool) AgoraUtil.GetData<bool>(data, "enabled"));
+                    break;
+                case "onConnectionStateChanged":
+                    Rtc.engineEventHandler?.OnConnectionStateChanged(
+                        (CONNECTION_STATE_TYPE) AgoraUtil.GetData<int>(data, "state"),
+                        (CONNECTION_CHANGED_REASON_TYPE) AgoraUtil.GetData<int>(data, "reason"));
+                    break;
+                case "onNetworkTypeChanged":
+                    Rtc.engineEventHandler?.OnNetworkTypeChanged((NETWORK_TYPE) AgoraUtil.GetData<int>(data, "type"));
+                    break;
+                case "onLocalUserRegistered":
+                    Rtc.engineEventHandler?.OnLocalUserRegistered((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (string) AgoraUtil.GetData<string>(data, "userAccount"));
+                    break;
+                case "onUserInfoUpdated":
+                    Rtc.engineEventHandler?.OnUserInfoUpdated((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        AgoraUtil.JsonToStruct<UserInfo>(data, "info"));
+                    break;
             }
         }
 
-        internal static void OnUserMuteAudio(uint uid, int muted)
-        {
-            rtc.engineEventHandler.OnUserMuteAudio(uid, muted);
-        }
-
-        internal static void OnWarning(int warn, string msg)
-        {
-            rtc.engineEventHandler.OnWarning(warn, msg);
-        }
-
-        internal static void OnError(int error, string msg)
-        {
-            rtc.engineEventHandler.OnError(error, msg);
-        }
-
-        internal static void OnRtcStats(uint duration, uint txBytes, uint rxBytes, uint txAudioBytes,
-            uint txVideoBytes, uint rxAudioBytes, uint rxVideoBytes, ushort txKBitRate, ushort rxKBitRate,
-            ushort rxAudioKBitRate, ushort txAudioKBitRate, ushort rxVideoKBitRate, ushort txVideoKBitRate,
-            ushort lastmileDelay, ushort txPacketLossRate, ushort rxPacketLossRate, uint userCount,
-            double cpuAppUsage,
-            double cpuTotalUsage, int gatewayRtt, double memoryAppUsageRatio, double memoryTotalUsageRatio,
-            int memoryAppUsageInKbytes)
-        {
-            rtc.engineEventHandler.OnRtcStats(duration, txBytes, rxBytes, txAudioBytes, txVideoBytes, rxAudioBytes,
-                rxVideoBytes, txKBitRate, rxKBitRate, rxAudioKBitRate, txAudioKBitRate, rxVideoKBitRate,
-                txVideoKBitRate, lastmileDelay, txPacketLossRate, rxPacketLossRate, userCount, cpuAppUsage,
-                cpuTotalUsage, gatewayRtt, memoryAppUsageRatio, memoryTotalUsageRatio, memoryAppUsageInKbytes);
-        }
-
-        internal static void OnAudioMixingFinished()
-        {
-            rtc.engineEventHandler.OnAudioMixingFinished();
-        }
-
-        internal static void OnAudioRouteChanged(int route)
-        {
-            rtc.engineEventHandler.OnAudioRouteChanged(route);
-        }
-
-        internal static void OnFirstRemoteVideoDecoded(uint uid, int width, int height, int elapsed)
-        {
-            rtc.engineEventHandler.OnFirstRemoteVideoDecoded(uid, width, height, elapsed);
-        }
-
-        internal static void OnVideoSizeChanged(uint uid, int width, int height, int elapsed)
-        {
-            rtc.engineEventHandler.OnVideoSizeChanged(uid, width, height, elapsed);
-        }
-
-        internal static void OnClientRoleChanged(int oldRole, int newRole)
-        {
-            rtc.engineEventHandler.OnClientRoleChanged(oldRole, newRole);
-        }
-
-        internal static void OnUserMuteVideo(uint uid, int muted)
-        {
-            rtc.engineEventHandler.OnUserMuteVideo(uid, muted);
-        }
-
-        internal static void OnMicrophoneEnabled(int isEnabled)
-        {
-            rtc.engineEventHandler.OnMicrophoneEnabled(isEnabled);
-        }
-
-        internal static void OnApiExecuted(int err, string api, string result)
-        {
-            rtc.engineEventHandler.OnApiExecuted(err, api, result);
-        }
-
-        internal static void OnFirstLocalAudioFrame(int elapsed)
-        {
-            rtc.engineEventHandler.OnFirstLocalAudioFrame(elapsed);
-        }
-
-        internal static void OnFirstRemoteAudioFrame(uint userId, int elapsed)
-        {
-            rtc.engineEventHandler.OnFirstRemoteAudioFrame(userId, elapsed);
-        }
-
-        internal static void OnLastmileQuality(int quality)
-        {
-            rtc.engineEventHandler.OnLastmileQuality(quality);
-        }
-
-        internal static void OnAudioQuality(uint userId, int quality, ushort delay, ushort lost)
-        {
-            rtc.engineEventHandler.OnAudioQuality(userId, quality, delay, lost);
-        }
-
-        internal static void OnStreamInjectedStatus(string url, uint userId, int status)
-        {
-            rtc.engineEventHandler.OnStreamInjectedStatus(url, userId, status);
-        }
-
-        internal static void OnStreamUnpublished(string url)
-        {
-            rtc.engineEventHandler.OnStreamUnpublished(url);
-        }
-
-        internal static void OnStreamPublished(string url, int error)
-        {
-            rtc.engineEventHandler.OnStreamPublished(url, error);
-        }
-
-        internal static void OnStreamMessageError(uint userId, int streamId, int code, int missed, int cached)
-        {
-            rtc.engineEventHandler.OnStreamMessageError(userId, streamId, code, missed, cached);
-        }
-
-        internal static void OnStreamMessage(uint userId, int streamId, string data, uint length)
-        {
-            rtc.engineEventHandler.OnStreamMessage(userId, streamId, data, length);
-        }
-
-        internal static void OnConnectionBanned()
-        {
-            rtc.engineEventHandler.OnConnectionBanned();
-        }
-
-        internal static void OnRemoteVideoTransportStats(uint uid, ushort delay, ushort lost,
-            ushort rxKBitRate)
-        {
-            rtc.engineEventHandler.OnRemoteVideoTransportStats(uid, delay, lost, rxKBitRate);
-        }
-
-        internal static void OnRemoteAudioTransportStats(uint uid, ushort delay, ushort lost,
-            ushort rxKBitRate)
-        {
-            rtc.engineEventHandler.OnRemoteAudioTransportStats(uid, delay, lost, rxKBitRate);
-        }
-
-        internal static void OnTranscodingUpdated()
-        {
-            rtc.engineEventHandler.OnTranscodingUpdated();
-        }
-
-        internal static void OnAudioDeviceVolumeChanged(int deviceType, int volume, int muted)
-        {
-            rtc.engineEventHandler.OnAudioDeviceVolumeChanged(deviceType, volume, muted);
-        }
-
-        internal static void OnActiveSpeaker(uint userId)
-        {
-            rtc.engineEventHandler.OnActiveSpeaker(userId);
-        }
-
-        internal static void OnMediaEngineStartCallSuccess()
-        {
-            rtc.engineEventHandler.OnMediaEngineStartCallSuccess();
-        }
-
-        internal static void OnMediaEngineLoadSuccess()
-        {
-            rtc.engineEventHandler.OnMediaEngineLoadSuccess();
-        }
-
-        internal static void OnVideoStopped()
-        {
-            rtc.engineEventHandler.OnVideoStopped();
-        }
-
-        internal static void OnTokenPrivilegeWillExpire(string token)
-        {
-            rtc.engineEventHandler.OnTokenPrivilegeWillExpire(token);
-        }
-
-        internal static void OnNetworkQuality(uint uid, int txQuality, int rxQuality)
-        {
-            rtc.engineEventHandler.OnNetworkQuality(uid, txQuality, rxQuality);
-        }
-
-        internal static void OnLocalVideoStats(int sentBitrate, int sentFrameRate, int encoderOutputFrameRate,
-            int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, int qualityAdaptIndication,
-            int encodedBitrate, int encodedFrameWidth, int encodedFrameHeight, int encodedFrameCount,
-            int codecType)
-        {
-            rtc.engineEventHandler.OnLocalVideoStats(sentBitrate, sentFrameRate, encoderOutputFrameRate,
-                rendererOutputFrameRate, targetBitrate, targetFrameRate, qualityAdaptIndication, encodedBitrate,
-                encodedFrameWidth, encodedFrameHeight, encodedFrameCount, codecType);
-        }
-
-        internal static void OnRemoteVideoStats(uint uid, int delay, int width, int height,
-            int receivedBitrate, int decoderOutputFrameRate, int rendererOutputFrameRate, int packetLossRate,
-            int rxStreamType, int totalFrozenTime, int frozenRate, int totalActiveTime)
-        {
-            rtc.engineEventHandler.OnRemoteVideoStats(uid, delay, width, height, receivedBitrate,
-                decoderOutputFrameRate, rendererOutputFrameRate, packetLossRate, rxStreamType, totalFrozenTime,
-                frozenRate, totalActiveTime);
-        }
-
-        internal static void OnRemoteAudioStats(uint uid, int quality, int networkTransportDelay,
-            int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate,
-            int totalFrozenTime, int frozenRate, int totalActiveTime)
-        {
-            rtc.engineEventHandler.OnRemoteAudioStats(uid, quality, networkTransportDelay, jitterBufferDelay,
-                audioLossRate, numChannels, receivedSampleRate, receivedBitrate, totalFrozenTime, frozenRate,
-                totalActiveTime);
-        }
-
-        internal static void OnLocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate)
-        {
-            rtc.engineEventHandler.OnLocalAudioStats(numChannels, sentSampleRate, sentBitrate);
-        }
-
-        internal static void OnFirstLocalVideoFrame(int width, int height, int elapsed)
-        {
-            rtc.engineEventHandler.OnFirstLocalVideoFrame(width, height, elapsed);
-        }
-
-        internal static void OnFirstRemoteVideoFrame(uint uid, int width, int height, int elapsed)
-        {
-            rtc.engineEventHandler.OnFirstRemoteVideoFrame(uid, width, height, elapsed);
-        }
-
-        internal static void OnUserEnableVideo(uint uid, int enabled)
-        {
-            rtc.engineEventHandler.OnUserEnableVideo(uid, enabled);
-        }
-
-        internal static void OnAudioDeviceStateChanged(string deviceId, int deviceType, int deviceState)
-        {
-            rtc.engineEventHandler.OnAudioDeviceStateChanged(deviceId, deviceType, deviceState);
-        }
-
-        internal static void OnCameraReady()
-        {
-            rtc.engineEventHandler.OnCameraReady();
-        }
-
-        internal static void OnCameraFocusAreaChanged(int x, int y, int width, int height)
-        {
-            rtc.engineEventHandler.OnCameraFocusAreaChanged(x, y, width, height);
-        }
-
-        internal static void OnCameraExposureAreaChanged(int x, int y, int width, int height)
-        {
-            rtc.engineEventHandler.OnCameraExposureAreaChanged(x, y, width, height);
-        }
-
-        internal static void OnRemoteAudioMixingBegin()
-        {
-            rtc.engineEventHandler.OnRemoteAudioMixingBegin();
-        }
-
-        internal static void OnRemoteAudioMixingEnd()
-        {
-            rtc.engineEventHandler.OnRemoteAudioMixingEnd();
-        }
-
-        internal static void OnAudioEffectFinished(int soundId)
-        {
-            rtc.engineEventHandler.OnAudioEffectFinished(soundId);
-        }
-
-        internal static void OnVideoDeviceStateChanged(string deviceId, int deviceType, int deviceState)
-        {
-            rtc.engineEventHandler.OnVideoDeviceStateChanged(deviceId, deviceType, deviceState);
-        }
-
-        internal static void OnRemoteVideoStateChanged(uint uid, int state, int reason, int elapsed)
-        {
-            rtc.engineEventHandler.OnRemoteVideoStateChanged(uid, state, reason, elapsed);
-        }
-
-        internal static void OnUserEnableLocalVideo(uint uid, int enabled)
-        {
-            rtc.engineEventHandler.OnUserEnableLocalVideo(uid, enabled);
-        }
-
-        internal static void OnLocalPublishFallbackToAudioOnly(int isFallbackOrRecover)
-        {
-            rtc.engineEventHandler.OnLocalPublishFallbackToAudioOnly(isFallbackOrRecover);
-        }
-
-        internal static void OnRemoteSubscribeFallbackToAudioOnly(uint uid, int isFallbackOrRecover)
-        {
-            rtc.engineEventHandler.OnRemoteSubscribeFallbackToAudioOnly(uid, isFallbackOrRecover);
-        }
-
-        internal static void OnConnectionStateChanged(int state, int reason)
-        {
-            rtc.engineEventHandler.OnConnectionStateChanged(state, reason);
-        }
-
-        internal static void OnRtmpStreamingStateChanged(string url, int state, int errCode)
-        {
-            rtc.engineEventHandler.OnRtmpStreamingStateChanged(url, state, errCode);
-        }
-
-        internal static void OnLocalUserRegistered(uint uid, string userAccount)
-        {
-            rtc.engineEventHandler.OnLocalUserRegistered(uid, userAccount);
-        }
-
-        internal static void OnUserInfoUpdated(uint uid, uint userUid, string userAccount)
-        {
-            rtc.engineEventHandler.OnUserInfoUpdated(uid, userUid, userAccount);
-        }
-
-        internal static void OnLocalAudioStateChanged(int state, int error)
-        {
-            rtc.engineEventHandler.OnLocalAudioStateChanged(state, error);
-        }
-
-        internal static void OnRemoteAudioStateChanged(uint uid, int state, int reason, int elapsed)
-        {
-            rtc.engineEventHandler.OnRemoteAudioStateChanged(uid, state, reason, elapsed);
-        }
-
-        internal static void OnAudioMixingStateChanged(int audioMixingStateType, int audioMixingErrorType)
-        {
-            rtc.engineEventHandler.OnAudioMixingStateChanged(audioMixingStateType, audioMixingErrorType);
-        }
-
-        internal static void OnFirstRemoteAudioDecoded(uint uid, int elapsed)
-        {
-            rtc.engineEventHandler.OnFirstRemoteAudioDecoded(uid, elapsed);
-        }
-
-        internal static void OnLocalVideoStateChanged(int localVideoState, int error)
-        {
-            rtc.engineEventHandler.OnLocalVideoStateChanged(localVideoState, error);
-        }
-
-        internal static void OnNetworkTypeChanged(int networkType)
-        {
-            rtc.engineEventHandler.OnNetworkTypeChanged(networkType);
-        }
-
-        internal static void OnLastmileProbeResult(int state, uint upLinkPacketLossRate, uint upLinkjitter,
-            uint upLinkAvailableBandwidth, uint downLinkPacketLossRate, uint downLinkJitter,
-            uint downLinkAvailableBandwidth, uint rtt)
-        {
-            rtc.engineEventHandler.OnLastmileProbeResult(state, upLinkPacketLossRate, upLinkjitter,
-                upLinkAvailableBandwidth, downLinkPacketLossRate, downLinkJitter, downLinkAvailableBandwidth, rtt);
-        }
-
-        internal static void OnChannelMediaRelayStateChanged(int state, int code)
-        {
-            rtc.engineEventHandler.OnChannelMediaRelayStateChanged(state, code);
-        }
-
-        internal static void OnChannelMediaRelayEvent(int code)
-        {
-            rtc.engineEventHandler.OnChannelMediaRelayEvent(code);
-        }
-
-        internal static void OnFacePositionChanged(int imageWidth, int imageHeight, int x, int y, int width,
-            int height, int vecDistance, int numFaces)
-        {
-            rtc.engineEventHandler.OnFacePositionChanged(imageWidth, imageHeight, x, y, width, height, vecDistance,
-                numFaces);
-        }
-
-        internal static void OnTestEnd()
-        {
-            rtc.engineEventHandler.OnTestEnd();
+        internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer)
+        {
+            switch (@event)
+            {
+                case "onStreamMessage":
+                    var length = (uint) AgoraUtil.GetData<uint>(data, "length");
+                    var streamData = new byte[length];
+                    Marshal.Copy(buffer, streamData, 0, (int) length);
+                    Rtc.engineEventHandler?.OnStreamMessage((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                        (int) AgoraUtil.GetData<int>(data, "streamId"), streamData, length);
+                    break;
+            }
         }
     }
 
@@ -448,18 +384,21 @@ namespace agorartc
     {
         private bool _disposed = false;
         private static AgoraRtcEngine _instance;
-        private IRtcEngineBridge_ptr _apiBridge = IntPtr.Zero;
-        private Dictionary<string, AgoraRtcChannel> _channels = new Dictionary<string, AgoraRtcChannel>();
+        private IrisEnginePtr _irisEngine = IntPtr.Zero;
         internal IRtcEngineEventHandlerBase engineEventHandler;
-        private List<IDisposable> _DeviceManagerList = new List<IDisposable>();
+        private Dictionary<string, AgoraRtcChannel> _channels = new Dictionary<string, AgoraRtcChannel>();
+        private AgoraVideoDeviceManager _videoDeviceManager = null;
+        private AgoraAudioPlaybackDeviceManager _audioPlaybackDeviceManager = null;
+        private AgoraAudioRecordingDeviceManager _audioRecordingDeviceManager = null;
+        private char[] result = new char[512];
 
-        public void Dispose(bool sync = false)
+        public void Dispose()
         {
-            Dispose(true, sync);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool disposing, bool sync)
+        private void Dispose(bool disposing)
         {
             if (_disposed) return;
 
@@ -469,14 +408,11 @@ namespace agorartc
                 {
                     value.Dispose();
                 }
-
-                foreach (var value in _DeviceManagerList)
-                {
-                    value.Dispose();
-                }
+                _videoDeviceManager.Dispose();
+                _audioRecordingDeviceManager.Dispose();
+                _audioPlaybackDeviceManager.Dispose();
             }
 
-            Remove_C_EventHandler();
             Release();
             _disposed = true;
         }
@@ -484,109 +420,39 @@ namespace agorartc
         public void InitEventHandler(IRtcEngineEventHandlerBase eventHandlerBase)
         {
             engineEventHandler = eventHandlerBase;
-            NativeRtcEventHandler.rtc = _instance;
-            var myHandler = new RtcEventHandler
+            NativeRtcEngineEventHandler.Rtc = _instance;
+            var myHandler = new IrisCEventHandler
             {
-                onJoinChannelSuccess = NativeRtcEventHandler.OnJoinChannelSuccess,
-                onReJoinChannelSuccess = NativeRtcEventHandler.OnReJoinChannelSuccess,
-                onLeaveChannel = NativeRtcEventHandler.OnLeaveChannel,
-                onConnectionLost = NativeRtcEventHandler.OnConnectionLost,
-                onConnectionInterrupted = NativeRtcEventHandler.OnConnectionInterrupted,
-                onRequestToken = NativeRtcEventHandler.OnRequestToken,
-                onUserJoined = NativeRtcEventHandler.OnUserJoined,
-                onUserOffline = NativeRtcEventHandler.OnUserOffline,
-                onAudioVolumeIndication = NativeRtcEventHandler.OnAudioVolumeIndication,
-                onUserMuteAudio = NativeRtcEventHandler.OnUserMuteAudio,
-                onWarning = NativeRtcEventHandler.OnWarning,
-                onError = NativeRtcEventHandler.OnError,
-                onRtcStats = NativeRtcEventHandler.OnRtcStats,
-                onAudioMixingFinished = NativeRtcEventHandler.OnAudioMixingFinished,
-                onAudioRouteChanged = NativeRtcEventHandler.OnAudioRouteChanged,
-                onFirstRemoteVideoDecoded = NativeRtcEventHandler.OnFirstRemoteVideoDecoded,
-                onVideoSizeChanged = NativeRtcEventHandler.OnVideoSizeChanged,
-                onClientRoleChanged = NativeRtcEventHandler.OnClientRoleChanged,
-                onUserMuteVideo = NativeRtcEventHandler.OnUserMuteVideo,
-                onMicrophoneEnabled = NativeRtcEventHandler.OnMicrophoneEnabled,
-                onApiCallExecuted = NativeRtcEventHandler.OnApiExecuted,
-                onFirstLocalAudioFrame = NativeRtcEventHandler.OnFirstLocalAudioFrame,
-                onFirstRemoteAudioFrame = NativeRtcEventHandler.OnFirstRemoteAudioFrame,
-                onLastmileQuality = NativeRtcEventHandler.OnLastmileQuality,
-                onAudioQuality = NativeRtcEventHandler.OnAudioQuality,
-                onStreamInjectedStatus = NativeRtcEventHandler.OnStreamInjectedStatus,
-                onStreamUnpublished = NativeRtcEventHandler.OnStreamUnpublished,
-                onStreamPublished = NativeRtcEventHandler.OnStreamPublished,
-                onStreamMessageError = NativeRtcEventHandler.OnStreamMessageError,
-                onStreamMessage = NativeRtcEventHandler.OnStreamMessage,
-                onConnectionBanned = NativeRtcEventHandler.OnConnectionBanned,
-                onRemoteVideoTransportStats = NativeRtcEventHandler.OnRemoteVideoTransportStats,
-                onRemoteAudioTransportStats = NativeRtcEventHandler.OnRemoteAudioTransportStats,
-                onTranscodingUpdated = NativeRtcEventHandler.OnTranscodingUpdated,
-                onAudioDeviceVolumeChanged = NativeRtcEventHandler.OnAudioDeviceVolumeChanged,
-                onActiveSpeaker = NativeRtcEventHandler.OnActiveSpeaker,
-                onMediaEngineStartCallSuccess = NativeRtcEventHandler.OnMediaEngineStartCallSuccess,
-                onMediaEngineLoadSuccess = NativeRtcEventHandler.OnMediaEngineLoadSuccess,
-                onConnectionStateChanged = NativeRtcEventHandler.OnConnectionStateChanged,
-                onRemoteSubscribeFallbackToAudioOnly = NativeRtcEventHandler.OnRemoteSubscribeFallbackToAudioOnly,
-                onLocalPublishFallbackToAudioOnly = NativeRtcEventHandler.OnLocalPublishFallbackToAudioOnly,
-                onUserEnableLocalVideo = NativeRtcEventHandler.OnUserEnableLocalVideo,
-                onRemoteVideoStateChanged = NativeRtcEventHandler.OnRemoteVideoStateChanged,
-                onVideoDeviceStateChanged = NativeRtcEventHandler.OnVideoDeviceStateChanged,
-                onAudioEffectFinished = NativeRtcEventHandler.OnAudioEffectFinished,
-                onRemoteAudioMixingEnd = NativeRtcEventHandler.OnRemoteAudioMixingEnd,
-                onRemoteAudioMixingBegin = NativeRtcEventHandler.OnRemoteAudioMixingBegin,
-                onCameraExposureAreaChanged = NativeRtcEventHandler.OnCameraExposureAreaChanged,
-                onCameraFocusAreaChanged = NativeRtcEventHandler.OnCameraFocusAreaChanged,
-                onCameraReady = NativeRtcEventHandler.OnCameraReady,
-                onAudioDeviceStateChanged = NativeRtcEventHandler.OnAudioDeviceStateChanged,
-                onUserEnableVideo = NativeRtcEventHandler.OnUserEnableVideo,
-                onFirstRemoteVideoFrame = NativeRtcEventHandler.OnFirstRemoteVideoFrame,
-                onFirstLocalVideoFrame = NativeRtcEventHandler.OnFirstLocalVideoFrame,
-                onRemoteAudioStats = NativeRtcEventHandler.OnRemoteAudioStats,
-                onRemoteVideoStats = NativeRtcEventHandler.OnRemoteVideoStats,
-                onLocalVideoStats = NativeRtcEventHandler.OnLocalVideoStats,
-                onNetworkQuality = NativeRtcEventHandler.OnNetworkQuality,
-                onTokenPrivilegeWillExpire = NativeRtcEventHandler.OnTokenPrivilegeWillExpire,
-                onVideoStopped = NativeRtcEventHandler.OnVideoStopped,
-                onAudioMixingStateChanged = NativeRtcEventHandler.OnAudioMixingStateChanged,
-                onFirstRemoteAudioDecoded = NativeRtcEventHandler.OnFirstRemoteAudioDecoded,
-                onLocalVideoStateChanged = NativeRtcEventHandler.OnLocalVideoStateChanged,
-                onNetworkTypeChanged = NativeRtcEventHandler.OnNetworkTypeChanged,
-                onRtmpStreamingStateChanged = NativeRtcEventHandler.OnRtmpStreamingStateChanged,
-                onLastmileProbeResult = NativeRtcEventHandler.OnLastmileProbeResult,
-                onLocalUserRegistered = NativeRtcEventHandler.OnLocalUserRegistered,
-                onUserInfoUpdated = NativeRtcEventHandler.OnUserInfoUpdated,
-                onLocalAudioStateChanged = NativeRtcEventHandler.OnLocalAudioStateChanged,
-                onRemoteAudioStateChanged = NativeRtcEventHandler.OnRemoteAudioStateChanged,
-                onLocalAudioStats = NativeRtcEventHandler.OnLocalAudioStats,
-                onChannelMediaRelayStateChanged = NativeRtcEventHandler.OnChannelMediaRelayStateChanged,
-                onChannelMediaRelayEvent = NativeRtcEventHandler.OnChannelMediaRelayEvent,
-                onFacePositionChanged = NativeRtcEventHandler.OnFacePositionChanged,
-                onTestEnd = NativeRtcEventHandler.OnTestEnd,
+                onEvent = NativeRtcEngineEventHandler.OnEvent,
+                onEventWithBuffer = NativeRtcEngineEventHandler.OnEventWithBuffer
             };
-            add_C_EventHandler(myHandler);
+            SetIrisEngineEventHandler(myHandler);
         }
 
         public static AgoraRtcEngine CreateRtcEngine()
         {
             return _instance ??= new AgoraRtcEngine
             {
-                _apiBridge = AgorartcNative.createRtcBridge()
+                _irisEngine = AgorartcNative.CreateIrisEngine()
             };
         }
 
-        private void Release(bool sync = false)
+        private void Release()
         {
-            AgorartcNative.release(_apiBridge, sync ? 1 : 0);
+            AgorartcNative.DestroyIrisEngine(_irisEngine);
             engineEventHandler = null;
-            _apiBridge = IntPtr.Zero;
+            _irisEngine = IntPtr.Zero;
         }
 
         public AgoraRtcChannel CreateChannel(string channelId)
         {
-            var channel = new AgoraRtcChannel(AgorartcNative.createChannel(_apiBridge, channelId), channelId);
-            NativeRtcChannelEventHandler.AddChannel(channelId, channel);
-            _channels[channelId] = channel;
-            return channel;
+            if (_channels.Keys.Contains(channelId))
+            {
+                return _channels[channelId];
+            }
+            var ret = new AgoraRtcChannel(channelId);
+            _channels.Add(channelId, ret);
+            return ret;
         }
 
         internal void ReleaseChannel(string channelId)
@@ -596,772 +462,1534 @@ namespace agorartc
 
         public AgoraAudioPlaybackDeviceManager CreateAudioPlaybackDeviceManager()
         {
-            var playbackDeviceManager = new AgoraAudioPlaybackDeviceManager(AgorartcNative.createAudioPlaybackDeviceManager(_apiBridge));
-            _DeviceManagerList.Add(playbackDeviceManager);
-            return playbackDeviceManager;
+            if (_audioPlaybackDeviceManager != null)
+            {
+                _audioPlaybackDeviceManager =
+                    new AgoraAudioPlaybackDeviceManager(AgorartcNative.GetIrisDeviceManager(_irisEngine));
+            }
+            
+            return _audioPlaybackDeviceManager;
         }
 
-        public void ReleaseAudioPlaybackDeviceManager(AgoraAudioPlaybackDeviceManager playbackDeviceManager)
+        internal void ReleaseAudioPlaybackDeviceManager()
         {
-            _DeviceManagerList.Remove(playbackDeviceManager);
+            _audioPlaybackDeviceManager = null;
         }
 
         public AgoraAudioRecordingDeviceManager CreateAudioRecordingDeviceManager()
         {
-            var recordingDeviceManager =
-                new AgoraAudioRecordingDeviceManager(AgorartcNative.createAudioRecordingDeviceManager(_apiBridge));
-            _DeviceManagerList.Add(recordingDeviceManager);
-            return recordingDeviceManager;
+            if (_audioRecordingDeviceManager != null)
+            {
+                _audioRecordingDeviceManager =
+                    new AgoraAudioRecordingDeviceManager(AgorartcNative.GetIrisDeviceManager(_irisEngine));
+            }
+
+            return _audioRecordingDeviceManager;
         }
 
-        public void ReleaseAudioRecordingDeviceManager(AgoraAudioRecordingDeviceManager recordingDeviceManager)
+        internal void ReleaseAudioRecordingDeviceManager()
         {
-            _DeviceManagerList.Remove(recordingDeviceManager);
+            _audioRecordingDeviceManager = null;
         }
 
         public AgoraVideoDeviceManager CreateVideoDeviceManager()
         {
-            var videoDeviceManager = new AgoraVideoDeviceManager(AgorartcNative.createVideoDeviceManager(_apiBridge));
-            _DeviceManagerList.Add(videoDeviceManager);
-            return videoDeviceManager;
+            if (_videoDeviceManager != null)
+            {
+                _videoDeviceManager =
+                    new AgoraVideoDeviceManager(AgorartcNative.GetIrisDeviceManager(_irisEngine));
+            }
+
+            return _videoDeviceManager;
         }
 
-        public void ReleaseAgoraVideoDeviceManager(AgoraVideoDeviceManager videoDeviceManager)
+        public void ReleaseAgoraVideoDeviceManager()
         {
-            _DeviceManagerList.Remove(videoDeviceManager);
+            _videoDeviceManager = null;
         }
 
         public ERROR_CODE Initialize(string appId, AREA_CODE areaCode)
         {
-            return AgorartcNative.initialize(_apiBridge, appId, IntPtr.Zero, (uint) areaCode);
+            var para = new
+            {
+                appId,
+                areaCode = (int) areaCode
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineInitialize,
+                JsonSerializer.Serialize(para), result) * -1);
         }
 
-        private void add_C_EventHandler(RtcEventHandler handler)
+        private void SetIrisEngineEventHandler(IrisCEventHandler handler)
         {
-            AgorartcNative.add_C_EventHandler(_apiBridge, handler);
-        }
-
-        private void Remove_C_EventHandler()
-        {
-            AgorartcNative.remove_C_EventHandler(_apiBridge);
+            AgorartcNative.SetIrisEngineEventHandler(_irisEngine, ref handler);
         }
 
         public ERROR_CODE SetChannelProfile(CHANNEL_PROFILE_TYPE channelProfileType)
         {
-            return AgorartcNative.setChannelProfile(_apiBridge, channelProfileType);
+            var para = new
+            {
+                channelProfileType = (int) channelProfileType
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineSetChannelProfile,
+                JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetClientRole(CLIENT_ROLE_TYPE role)
         {
-            return AgorartcNative.setClientRole(_apiBridge, role);
+            var para = new
+            {
+                role = (int) role
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineSetClientRole,
+                JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE JoinChannel(string token, string channelId, string info, uint uid)
         {
-            return AgorartcNative.joinChannel(_apiBridge, token, channelId, info, uid);
+            var para = new
+            {
+                token,
+                channelId,
+                info,
+                uid
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineJoinChannel,
+                JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SwitchChannel(string token, string channelId)
         {
-            return AgorartcNative.switchChannel(_apiBridge, token, channelId);
+            var para = new
+            {
+                token,
+                channelId
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineSwitchChannel,
+                JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE LeaveChannel()
         {
-            return AgorartcNative.leaveChannel(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineLeaveChannel,
+                JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE RenewToken(string token)
         {
-            return AgorartcNative.renewToken(_apiBridge, token);
+            var para = new
+            {
+                token
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineRenewToken,
+                JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE RegisterLocalUserAccount(string appId, string userAccount)
         {
-            return AgorartcNative.registerLocalUserAccount(_apiBridge, appId, userAccount);
+            var para = new
+            {
+                appId,
+                userAccount
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineRegisterLocalUserAccount, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE JoinChannelWithUserAccount(string token, string channelId, string userAccount)
         {
-            return AgorartcNative.joinChannelWithUserAccount(_apiBridge, token, channelId, userAccount);
+            var para = new
+            {
+                token,
+                channelId,
+                userAccount
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineJoinChannelWithUserAccount, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo)
         {
-            return AgorartcNative.getUserInfoByUserAccount(_apiBridge, userAccount, ref userInfo);
+            var para = new
+            {
+                userAccount
+            };
+            var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineGetUserInfoByUserAccount, JsonSerializer.Serialize(para), result) * -1);
+            userInfo = AgoraUtil.JsonToStruct<UserInfo>(result);
+            return ret;
         }
 
-        public ERROR_CODE GetUserInfoByUid(uid_t uid, ref UserInfo userInfo)
+        public ERROR_CODE GetUserInfoByUid(uint uid, ref UserInfo userInfo)
         {
-            return AgorartcNative.getUserInfoByUid(_apiBridge, uid, ref userInfo);
+            var para = new
+            {
+                uid
+            };
+            var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineGetUserInfoByUid, JsonSerializer.Serialize(para), result) * -1);
+            userInfo = AgoraUtil.JsonToStruct<UserInfo>(result);
+            return ret;
         }
 
         public ERROR_CODE StartEchoTest()
         {
-            return AgorartcNative.startEchoTest(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartEchoTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE StartEchoTest2(int intervalInSeconds)
+        public ERROR_CODE StartEchoTest(int intervalInSeconds)
         {
-            return AgorartcNative.startEchoTest2(_apiBridge, intervalInSeconds);
+            var para = new
+            {
+                intervalInSeconds
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartEchoTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StopEchoTest()
         {
-            return AgorartcNative.stopEchoTest(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopEchoTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE EnableVideo()
         {
-            return AgorartcNative.enableVideo(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableVideo, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE DisableVideo()
         {
-            return AgorartcNative.disableVideo(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineDisableVideo, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetVideoProfile(VIDEO_PROFILE_TYPE profile, bool swapWidthAndHeight)
         {
-            return AgorartcNative.setVideoProfile(_apiBridge, profile, swapWidthAndHeight ? 1 : 0);
+            var para = new
+            {
+                profile = (int) profile,
+                swapWidthAndHeight
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetVideoProfile, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetVideoEncoderConfiguration(VideoEncoderConfiguration config)
         {
-            return AgorartcNative.setVideoEncoderConfiguration(_apiBridge, config);
+            var para = new
+            {
+                config
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetVideoEncoderConfiguration, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetCameraCapturerConfiguration(CameraCapturerConfiguration config)
         {
-            return AgorartcNative.setCameraCapturerConfiguration(_apiBridge, config);
+            var para = new
+            {
+                config
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetCameraCapturerConfiguration, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetupLocalVideo(VideoCanvas canvas)
         {
-            return AgorartcNative.setupLocalVideo(_apiBridge, canvas);
+            var para = new
+            {
+                canvas
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetupLocalVideo, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetupRemoteVideo(VideoCanvas canvas)
         {
-            return AgorartcNative.setupRemoteVideo(_apiBridge, canvas);
+            var para = new
+            {
+                canvas
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetupRemoteVideo, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StartPreview()
         {
-            return AgorartcNative.startPreview(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartPreview, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SetRemoteUserPriority(uid_t uid, PRIORITY_TYPE userPriority)
+        public ERROR_CODE SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority)
         {
-            return AgorartcNative.setRemoteUserPriority(_apiBridge, uid, userPriority);
+            var para = new
+            {
+                uid,
+                userPriority = (int) userPriority
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetRemoteUserPriority, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StopPreview()
         {
-            return AgorartcNative.stopPreview(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopPreview, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE EnableAudio()
         {
-            return AgorartcNative.enableAudio(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableAudio, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE EnableLocalAudio(bool enabled)
         {
-            return AgorartcNative.enableLocalAudio(_apiBridge, enabled ? 1 : 0);
+            var para = new
+            {
+                enabled
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableLocalAudio, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE DisableAudio()
         {
-            return AgorartcNative.disableAudio(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineDisableAudio, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetAudioProfile(AUDIO_PROFILE_TYPE profile,
             AUDIO_SCENARIO_TYPE scenario)
         {
-            return AgorartcNative.setAudioProfile(_apiBridge, profile, scenario);
+            var para = new
+            {
+                profile = (int) profile,
+                scenario = (int) scenario
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetAudioProfile, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE MuteLocalAudioStream(bool mute)
         {
-            return AgorartcNative.muteLocalAudioStream(_apiBridge, mute ? 1 : 0);
+            var para = new
+            {
+                mute
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineMuteLocalAudioStream, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE MuteAllRemoteAudioStreams(bool mute)
         {
-            return AgorartcNative.muteAllRemoteAudioStreams(_apiBridge, mute ? 1 : 0);
+            var para = new
+            {
+                mute
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineMuteAllRemoteAudioStreams, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetDefaultMuteAllRemoteVideoStreams(bool mute)
         {
-            return AgorartcNative.setDefaultMuteAllRemoteVideoStreams(_apiBridge, mute ? 1 : 0);
+            var para = new
+            {
+                mute
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                        CApiTypeEngine.kEngineSetDefaultMuteAllRemoteAudioStreams,
+                        JsonSerializer.Serialize(para), result) * -1
+                );
         }
 
-        public ERROR_CODE AdjustUserPlaybackSignalVolume(uid_t uid, int volume)
+        public ERROR_CODE AdjustUserPlaybackSignalVolume(uint uid, int volume)
         {
-            return AgorartcNative.adjustUserPlaybackSignalVolume(_apiBridge, uid, volume);
+            var para = new
+            {
+                uid,
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAdjustUserPlaybackSignalVolume, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE MuteRemoteAudioStream(uid_t userId, bool mute)
+        public ERROR_CODE MuteRemoteAudioStream(uint userId, bool mute)
         {
-            return AgorartcNative.muteRemoteAudioStream(_apiBridge, userId, mute ? 1 : 0);
+            var para = new
+            {
+                userId,
+                mute
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineMuteRemoteAudioStream, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE MuteLocalVideoStream(bool mute)
         {
-            return AgorartcNative.muteLocalVideoStream(_apiBridge, mute ? 1 : 0);
+            var para = new
+            {
+                mute
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineMuteLocalVideoStream, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE EnableLocalVideo(bool enabled)
         {
-            return AgorartcNative.enableLocalVideo(_apiBridge, enabled ? 1 : 0);
+            var para = new
+            {
+                enabled
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableLocalVideo, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE MuteAllRemoteVideoStreams(bool mute)
         {
-            return AgorartcNative.muteAllRemoteVideoStreams(_apiBridge, mute ? 1 : 0);
+            var para = new
+            {
+                mute
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineMuteAllRemoteVideoStreams, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetDefaultMuteAllRemoteAudioStreams(bool mute)
         {
-            return AgorartcNative.setDefaultMuteAllRemoteAudioStreams(_apiBridge, mute ? 1 : 0);
+            var para = new
+            {
+                mute
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetDefaultMuteAllRemoteVideoStreams,
+                JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE MuteRemoteVideoStream(uid_t userId, bool mute)
+        public ERROR_CODE MuteRemoteVideoStream(uint userId, bool mute)
         {
-            return AgorartcNative.muteRemoteVideoStream(_apiBridge, userId, mute ? 1 : 0);
+            var para = new
+            {
+                userId,
+                mute
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineMuteRemoteVideoStream, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SetRemoteVideoStreamType(uid_t userId, REMOTE_VIDEO_STREAM_TYPE streamType)
+        public ERROR_CODE SetRemoteVideoStreamType(uint userId, REMOTE_VIDEO_STREAM_TYPE streamType)
         {
-            return AgorartcNative.setRemoteVideoStreamType(_apiBridge, userId, streamType);
+            var para = new
+            {
+                userId,
+                streamType = (int) streamType
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetRemoteVideoStreamType, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetRemoteDefaultVideoStreamType(REMOTE_VIDEO_STREAM_TYPE streamType)
         {
-            return AgorartcNative.setRemoteDefaultVideoStreamType(_apiBridge, streamType);
+            var para = new
+            {
+                streamType = (int) streamType
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetRemoteDefaultVideoStreamType, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE EnableAudioVolumeIndication(int interval, int smooth, bool report_vad)
+        public ERROR_CODE EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
         {
-            return AgorartcNative.enableAudioVolumeIndication(_apiBridge, interval, smooth, report_vad ? 1 : 0);
+            var para = new
+            {
+                interval,
+                smooth,
+                report_vad = reportVad
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableAudioVolumeIndication, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StartAudioRecording(string filePath, AUDIO_RECORDING_QUALITY_TYPE quality)
         {
-            return AgorartcNative.startAudioRecording(_apiBridge, filePath, quality);
+            var para = new
+            {
+                filePath,
+                quality = (int) quality
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartAudioRecording, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE StartAudioRecording2(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality)
+        public ERROR_CODE StartAudioRecording(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality)
         {
-            return AgorartcNative.startAudioRecording2(_apiBridge, filePath, sampleRate, quality);
+            var para = new
+            {
+                filePath,
+                sampleRate,
+                quality = (int) quality
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartAudioRecording, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StopAudioRecording()
         {
-            return AgorartcNative.stopAudioRecording(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopAudioRecording, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SetRemoteVoicePosition(uid_t uid, double pan, double gain)
+        public ERROR_CODE SetRemoteVoicePosition(uint uid, double pan, double gain)
         {
-            return AgorartcNative.setRemoteVoicePosition(_apiBridge, uid, pan, gain);
+            var para = new
+            {
+                uid,
+                pan,
+                gain
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetRemoteVoicePosition, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLogFile(string file)
         {
-            return AgorartcNative.setLogFile(_apiBridge, file);
+            var para = new
+            {
+                file
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLogFile, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLogFilter(uint filter)
         {
-            return AgorartcNative.setLogFilter(_apiBridge, filter);
+            var para = new
+            {
+                filter
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLogFilter, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLogFileSize(uint fileSizeInKBytes)
         {
-            return AgorartcNative.setLogFileSize(_apiBridge, fileSizeInKBytes);
+            var para = new
+            {
+                fileSizeInKBytes
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLogFileSize, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
         {
-            return AgorartcNative.setLocalRenderMode(_apiBridge, renderMode);
+            var para = new
+            {
+                renderMode = (int) renderMode
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalRenderMode, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SetLocalRenderMode2(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
+        public ERROR_CODE SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
-            return AgorartcNative.setLocalRenderMode2(_apiBridge, renderMode, mirrorMode);
+            var para = new
+            {
+                renderMode = (int) renderMode,
+                mirrorMode = (int) mirrorMode
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalRenderMode, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SetRemoteRenderMode(uid_t userId, RENDER_MODE_TYPE renderMode)
+        public ERROR_CODE SetRemoteRenderMode(uint userId, RENDER_MODE_TYPE renderMode)
         {
-            return AgorartcNative.setRemoteRenderMode(_apiBridge, userId, renderMode);
+            var para = new
+            {
+                userId,
+                renderMode = (int) renderMode
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetRemoteRenderMode, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SetRemoteRenderMode2(uid_t userId, RENDER_MODE_TYPE renderMode,
+        public ERROR_CODE SetRemoteRenderMode2(uint userId, RENDER_MODE_TYPE renderMode,
             VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
-            return AgorartcNative.setRemoteRenderMode2(_apiBridge, userId, renderMode, mirrorMode);
+            var para = new
+            {
+                userId,
+                renderMode = (int) renderMode,
+                mirrorMode = (int) mirrorMode
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetRemoteRenderMode, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
-            return AgorartcNative.setLocalVideoMirrorMode(_apiBridge, mirrorMode);
+            var para = new
+            {
+                mirrorMode = (int) mirrorMode
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalVideoMirrorMode, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE EnableDualStreamMode(bool enabled)
         {
-            return AgorartcNative.enableDualStreamMode(_apiBridge, enabled ? 1 : 0);
+            var para = new
+            {
+                enabled
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableDualStreamMode, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE AdjustRecordingSignalVolume(int volume)
         {
-            return AgorartcNative.adjustRecordingSignalVolume(_apiBridge, volume);
+            var para = new
+            {
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAdjustRecordingSignalVolume, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE AdjustPlaybackSignalVolume(int volume)
         {
-            return AgorartcNative.adjustPlaybackSignalVolume(_apiBridge, volume);
+            var para = new
+            {
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAdjustPlaybackSignalVolume, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE EnableWebSdkInteroperability(bool enabled)
         {
-            return AgorartcNative.enableWebSdkInteroperability(_apiBridge, enabled ? 1 : 0);
+            var para = new
+            {
+                enabled
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableWebSdkInteroperability, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetVideoQualityParameters(bool preferFrameRateOverImageQuality)
         {
-            return AgorartcNative.setVideoQualityParameters(_apiBridge, preferFrameRateOverImageQuality ? 1 : 0);
+            var para = new
+            {
+                preferFrameRateOverImageQuality
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetVideoQualityParameters, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option)
         {
-            return AgorartcNative.setLocalPublishFallbackOption(_apiBridge, option);
+            var para = new
+            {
+                option = (int) option
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalPublishFallbackOption, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option)
         {
-            return AgorartcNative.setRemoteSubscribeFallbackOption(_apiBridge, option);
+            var para = new
+            {
+                option = (int) option
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetRemoteSubscribeFallbackOption, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE EnableLoopbackRecording(bool enabled, string deviceName)
         {
-            return AgorartcNative.enableLoopbackRecording(_apiBridge, enabled ? 1 : 0, deviceName);
+            var para = new
+            {
+                enabled,
+                deviceName
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableLoopBackRecording, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE StartScreenCaptureByScreenRect(ref Rectangle screenRect, ref Rectangle regionRect,
-            ref ScreenCaptureParameters captureParams)
+        public ERROR_CODE StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect,
+            ScreenCaptureParameters captureParams)
         {
-            return AgorartcNative.startScreenCaptureByScreenRect(_apiBridge, ref screenRect, ref regionRect,
-                ref captureParams);
+            var para = new
+            {
+                screenRect,
+                regionRect,
+                captureParams
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartScreenCaptureByScreenRect, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE StartScreenCaptureByWindowId(view_t windowId, ref Rectangle regionRect,
-            ref ScreenCaptureParameters captureParams)
+        public ERROR_CODE StartScreenCaptureByWindowId(view_t windowId, Rectangle regionRect,
+            ScreenCaptureParameters captureParams)
         {
-            return AgorartcNative.startScreenCaptureByWindowId(_apiBridge, windowId, ref regionRect, ref captureParams);
+            var para = new
+            {
+                windowId,
+                regionRect,
+                captureParams
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartScreenCaptureByWindowId, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetScreenCaptureContentHint(VideoContentHint contentHint)
         {
-            return AgorartcNative.setScreenCaptureContentHint(_apiBridge, contentHint);
+            var para = new
+            {
+                contentHint = (int) contentHint
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetScreenCaptureContentHint, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE UpdateScreenCaptureParameters(ref ScreenCaptureParameters captureParams)
+        public ERROR_CODE UpdateScreenCaptureParameters(ScreenCaptureParameters captureParams)
         {
-            return AgorartcNative.updateScreenCaptureParameters(_apiBridge, ref captureParams);
+            var para = new
+            {
+                captureParams
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineUpdateScreenCaptureParameters, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE UpdateScreenCaptureRegion(ref Rectangle regionRect)
+        public ERROR_CODE UpdateScreenCaptureRegion(Rectangle regionRect)
         {
-            return AgorartcNative.updateScreenCaptureRegion(_apiBridge, ref regionRect);
+            var para = new
+            {
+                regionRect
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineUpdateScreenCaptureRegion, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StopScreenCapture()
         {
-            return AgorartcNative.stopScreenCapture(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopScreenCapture, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public string GetCallId()
         {
-            return AgorartcNative.getCallId(_apiBridge);
+            var para = new { };
+            return AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineGetCallId,
+                JsonSerializer.Serialize(para), result) != 0
+                ? "GetCallId Failed."
+                : new string(result[..Array.IndexOf(result, '\0')]);
         }
 
         public ERROR_CODE Rate(string callId, int rating, string description)
         {
-            return AgorartcNative.rate(_apiBridge, callId, rating, description);
+            var para = new
+            {
+                callId,
+                rating,
+                description
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineRate, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE Complain(string callId, string description)
         {
-            return AgorartcNative.complain(_apiBridge, callId, description);
+            var para = new
+            {
+                callId,
+                description
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineComplain, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public string GetVersion()
         {
-            return AgorartcNative.getVersion(_apiBridge);
+            var para = new { };
+            return AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineGetVersion,
+                JsonSerializer.Serialize(para), result) != 0
+                ? "GetVersion Failed."
+                : new string(result[..Array.IndexOf(result, '\0')]);
         }
 
         public ERROR_CODE EnableLastmileTest()
         {
-            return AgorartcNative.enableLastmileTest(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableLastMileTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE DisableLastmileTest()
         {
-            return AgorartcNative.disableLastmileTest(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineDisableLastMileTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StartLastmileProbeTest(LastmileProbeConfig config)
         {
-            return AgorartcNative.startLastmileProbeTest(_apiBridge, config);
+            var para = new
+            {
+                config
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartLastMileProbeTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StopLastmileProbeTest()
         {
-            return AgorartcNative.stopLastmileProbeTest(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopLastMileProbeTest, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public string GetErrorDescription(int code)
         {
-            return AgorartcNative.getErrorDescription(_apiBridge, code);
+            var para = new
+            {
+                code
+            };
+            return AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineGetErrorDescription,
+                JsonSerializer.Serialize(para), result) != 0
+                ? "GetErrorDescription Failed."
+                : new string(result[..Array.IndexOf(result, '\0')]);
         }
 
         public ERROR_CODE SetEncryptionSecret(string secret)
         {
-            return AgorartcNative.setEncryptionSecret(_apiBridge, secret);
+            var para = new
+            {
+                secret
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetEncryptionSecret, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetEncryptionMode(string encryptionMode)
         {
-            return AgorartcNative.setEncryptionMode(_apiBridge, encryptionMode);
+            var para = new
+            {
+                encryptionMode
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetEncryptionMode, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE CreateDataStream(IntPtr streamId, bool reliable, bool ordered)
+        public ERROR_CODE CreateDataStream(ref int streamId, bool reliable, bool ordered)
         {
-            return AgorartcNative.createDataStream(_apiBridge, streamId, reliable ? 1 : 0, ordered ? 1 : 0);
+            var para = new
+            {
+                reliable,
+                ordered
+            };
+            var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineCreateDataStream, JsonSerializer.Serialize(para), result) * -1);
+            // TODO: (CreateDataStream) streamId = 
+            return ret;
         }
 
-        public ERROR_CODE SendStreamMessage(int streamId, string data, long length)
+        public ERROR_CODE SendStreamMessage(int streamId, byte[] data)
         {
-            return AgorartcNative.sendStreamMessage(_apiBridge, streamId, data, length);
+            var para = new
+            {
+                streamId
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
+                CApiTypeEngine.kEngineSendStreamMessage, JsonSerializer.Serialize(para), data) * -1);
         }
 
         public ERROR_CODE AddPublishStreamUrl(string url, bool transcodingEnabled)
         {
-            return AgorartcNative.addPublishStreamUrl(_apiBridge, url, transcodingEnabled ? 1 : 0);
+            var para = new
+            {
+                url,
+                transcodingEnabled
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAddPublishStreamUrl, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE RemovePublishStreamUrl(string url)
         {
-            return AgorartcNative.removePublishStreamUrl(_apiBridge, url);
+            var para = new
+            {
+                url
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineRemovePublishStreamUrl, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SetLiveTranscoding(ref LiveTranscoding transcoding)
+        public ERROR_CODE SetLiveTranscoding(LiveTranscoding transcoding)
         {
-            return AgorartcNative.setLiveTranscoding(_apiBridge, ref transcoding);
+            var para = new
+            {
+                transcoding
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLiveTranscoding, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE AddVideoWatermark(RtcImage watermark)
         {
-            return AgorartcNative.addVideoWatermark(_apiBridge, watermark);
+            var para = new
+            {
+                watermark
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAddVideoWaterMark, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE AddVideoWatermark2(string watermarkUrl, WatermarkOptions options)
+        public ERROR_CODE AddVideoWatermark(string watermarkUrl, WatermarkOptions options)
         {
-            return AgorartcNative.addVideoWatermark2(_apiBridge, watermarkUrl, options);
+            var para = new
+            {
+                watermarkUrl,
+                options
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAddVideoWaterMark, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE ClearVideoWatermarks()
         {
-            return AgorartcNative.clearVideoWatermarks(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineClearVideoWaterMarks, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetBeautyEffectOptions(bool enabled, BeautyOptions options)
         {
-            return AgorartcNative.setBeautyEffectOptions(_apiBridge, enabled ? 1 : 0, options);
+            var para = new
+            {
+                enabled,
+                options
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetBeautyEffectOptions, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE AddInjectStreamUrl(string url, InjectStreamConfig config)
         {
-            return AgorartcNative.addInjectStreamUrl(_apiBridge, url, config);
+            var para = new
+            {
+                url,
+                config
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAddInjectStreamUrl, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
-            return AgorartcNative.startChannelMediaRelay(_apiBridge, configuration);
+            var para = new
+            {
+                configuration
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartChannelMediaRelay, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
-            return AgorartcNative.updateChannelMediaRelay(_apiBridge, configuration);
+            var para = new
+            {
+                configuration
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineUpdateChannelMediaRelay, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StopChannelMediaRelay()
         {
-            return AgorartcNative.stopChannelMediaRelay(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopChannelMediaRelay, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE RemoveInjectStreamUrl(string url)
         {
-            return AgorartcNative.removeInjectStreamUrl(_apiBridge, url);
+            var para = new
+            {
+                url
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineRemoveInjectStreamUrl, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public CONNECTION_STATE_TYPE GetConnectionState()
         {
-            return AgorartcNative.getConnectionState(_apiBridge);
+            var para = new { };
+            return (CONNECTION_STATE_TYPE) AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineGetConnectionState, JsonSerializer.Serialize(para), result);
+        }
+
+        public ERROR_CODE EnableRemoteSuperResolution(uint userId, string enable)
+        {
+            var para = new
+            {
+                userId,
+                enable
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableRemoteSuperResolution, JsonSerializer.Serialize(para), result) * -1);
+        }
+
+        public ERROR_CODE RegisterMediaMetadataObserver(METADATA_TYPE type)
+        {
+            var para = new
+            {
+                type
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineRegisterMediaMetadataObserver, JsonSerializer.Serialize(para), result) * -1);
+        }
+        
+        public ERROR_CODE UnRegisterMediaMetadataObserver(METADATA_TYPE type)
+        {
+            var para = new
+            {
+                type
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineUnRegisterMediaMetadataObserver, JsonSerializer.Serialize(para), result) * -1);
+        }
+        
+        public ERROR_CODE SetMaxMetadataSize(int size)
+        {
+            var para = new
+            {
+                size
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetMaxMetadataSize, JsonSerializer.Serialize(para), result) * -1);
+        }
+        
+        public ERROR_CODE SendMetadata(Metadata metadata)
+        {
+            var para = new
+            {
+                metadata = new
+                {
+                    metadata.uid,
+                    metadata.size,
+                    metadata.timeStampMs
+                }
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
+                CApiTypeEngine.kEngineSendMetadata, JsonSerializer.Serialize(para), metadata.buffer) * -1);
         }
 
         public ERROR_CODE SetParameters(string parameters)
         {
-            return AgorartcNative.setParameters(_apiBridge, parameters);
+            var para = new
+            {
+                parameters
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetParameters, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetPlaybackDeviceVolume(int volume)
         {
-            return AgorartcNative.setPlaybackDeviceVolume(_apiBridge, volume);
+            var para = new
+            {
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetPlaybackDeviceVolume, JsonSerializer.Serialize(para), result) * -1);
         }
 
         // API_TYPE_AUDIO_EFFECT
 
         public ERROR_CODE StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
         {
-            return AgorartcNative.startAudioMixing(_apiBridge, filePath, loopback ? 1 : 0, replace ? 1 : 0, cycle);
+            var para = new
+            {
+                filePath,
+                loopback,
+                replace,
+                cycle
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStartAudioMixing, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE StopAudioMixing()
         {
-            return AgorartcNative.stopAudioMixing(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopAudioMixing, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE PauseAudioMixing()
         {
-            return AgorartcNative.pauseAudioMixing(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEnginePauseAudioMixing, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE ResumeAudioMixing()
         {
-            return AgorartcNative.resumeAudioMixing(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineResumeAudioMixing, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetHighQualityAudioParameters(bool fullband, bool stereo, bool fullBitrate)
         {
-            return AgorartcNative.setHighQualityAudioParameters(_apiBridge, fullband ? 1 : 0, stereo ? 1 : 0,
-                fullBitrate ? 1 : 0);
+            var para = new
+            {
+                fullband,
+                stereo,
+                fullBitrate
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetHighQualityAudioParameters, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE AdjustAudioMixingVolume(int volume)
         {
-            return AgorartcNative.adjustAudioMixingVolume(_apiBridge, volume);
+            var para = new
+            {
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAdjustAudioMixingVolume, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE AdjustAudioMixingPlayoutVolume(int volume)
         {
-            return AgorartcNative.adjustAudioMixingPlayoutVolume(_apiBridge, volume);
+            var para = new
+            {
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAdjustAudioMixingPlayoutVolume, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE GetAudioMixingPlayoutVolume()
+        public ERROR_CODE GetAudioMixingPlayoutVolume(ref int volume)
         {
-            return AgorartcNative.getAudioMixingPlayoutVolume(_apiBridge);
+            var para = new { };
+            var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineGetAudioMixingPlayoutVolume, JsonSerializer.Serialize(para), result);
+            volume = ret < 0 ? -1 : ret;
+            return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
 
         public ERROR_CODE AdjustAudioMixingPublishVolume(int volume)
         {
-            return AgorartcNative.adjustAudioMixingPublishVolume(_apiBridge, volume);
+            var para = new
+            {
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineAdjustAudioMixingPublishVolume, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE GetAudioMixingPublishVolume()
+        public ERROR_CODE GetAudioMixingPublishVolume(ref int volume)
         {
-            return AgorartcNative.getAudioMixingPublishVolume(_apiBridge);
+            var para = new { };
+            var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineGetAudioMixingPublishVolume, JsonSerializer.Serialize(para), result);
+            volume = ret < 0 ? -1 : ret;
+            return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
 
-        public ERROR_CODE GetAudioMixingDuration()
+        public ERROR_CODE GetAudioMixingDuration(ref int duration)
         {
-            return AgorartcNative.getAudioMixingDuration(_apiBridge);
+            var para = new { };
+            var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineGetAudioMixingDuration, JsonSerializer.Serialize(para), result);
+            duration = ret < 0 ? -1 : ret;
+            return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
 
-        public ERROR_CODE GetAudioMixingCurrentPosition()
+        public ERROR_CODE GetAudioMixingCurrentPosition(ref int pos)
         {
-            return AgorartcNative.getAudioMixingCurrentPosition(_apiBridge);
+            var para = new { };
+            var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineGetAudioMixingCurrentPosition, JsonSerializer.Serialize(para), result);
+            pos = ret < 0 ? -1 : ret;
+            return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
 
         public ERROR_CODE SetAudioMixingPosition(int pos /*in ms*/)
         {
-            return AgorartcNative.setAudioMixingPosition(_apiBridge, pos);
+            var para = new
+            {
+                pos
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetAudioMixingPosition, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetAudioMixingPitch(int pitch)
         {
-            return AgorartcNative.setAudioMixingPitch(_apiBridge, pitch);
+            var para = new
+            {
+                pitch
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetAudioMixingPitch, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE GetEffectsVolume()
+        public ERROR_CODE GetEffectsVolume(ref int volume)
         {
-            return AgorartcNative.getEffectsVolume(_apiBridge);
+            var para = new { };
+            var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineGetEffectsVolume, JsonSerializer.Serialize(para), result);
+            volume = ret < 0 ? -1 : ret;
+            return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
 
         public ERROR_CODE SetEffectsVolume(int volume)
         {
-            return AgorartcNative.setEffectsVolume(_apiBridge, volume);
+            var para = new
+            {
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetEffectsVolume, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetVolumeOfEffect(int soundId, int volume)
         {
-            return AgorartcNative.setVolumeOfEffect(_apiBridge, soundId, volume);
+            var para = new
+            {
+                soundId,
+                volume
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetVolumeOfEffect, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain,
             bool publish)
         {
-            return AgorartcNative.playEffect(_apiBridge, soundId, filePath, loopCount, pitch, pan, gain,
-                publish ? 1 : 0);
+            var para = new
+            {
+                soundId,
+                filePath,
+                loopCount,
+                pitch,
+                pan,
+                gain,
+                publish
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEnginePlayEffect, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="soundId"></param>
-        /// <returns></returns>
         public ERROR_CODE StopEffect(int soundId)
         {
-            return AgorartcNative.stopEffect(_apiBridge, soundId);
+            var para = new
+            {
+                soundId
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopEffect, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public ERROR_CODE StopAllEffects()
         {
-            return AgorartcNative.stopAllEffects(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineStopAllEffects, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE PreloadEffect(int soundId, string filePath)
         {
-            return AgorartcNative.preloadEffect(_apiBridge, soundId, filePath);
+            var para = new
+            {
+                soundId,
+                filePath
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEnginePreloadEffect, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE UnloadEffect(int soundId)
         {
-            return AgorartcNative.unloadEffect(_apiBridge, soundId);
+            var para = new
+            {
+                soundId
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineUnloadEffect, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE PauseEffect(int soundId)
         {
-            return AgorartcNative.pauseEffect(_apiBridge, soundId);
+            var para = new
+            {
+                soundId
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEnginePauseEffect, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE PauseAllEffects()
         {
-            return AgorartcNative.pauseAllEffects(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEnginePauseAllEffects, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE ResumeEffect(int soundId)
         {
-            return AgorartcNative.resumeEffect(_apiBridge, soundId);
+            var para = new
+            {
+                soundId
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineResumeEffect, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE ResumeAllEffects()
         {
-            return AgorartcNative.resumeAllEffects(_apiBridge);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineResumeAllEffects, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE EnableSoundPositionIndication(bool enabled)
         {
-            return AgorartcNative.enableSoundPositionIndication(_apiBridge, enabled ? 1 : 0);
+            var para = new
+            {
+                enabled
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableSoundPositionIndication, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLocalVoicePitch(double pitch)
         {
-            return AgorartcNative.setLocalVoicePitch(_apiBridge, pitch);
+            var para = new
+            {
+                pitch
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalVoicePitch, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency, int bandGain)
         {
-            return AgorartcNative.setLocalVoiceEqualization(_apiBridge, bandFrequency, bandGain);
+            var para = new
+            {
+                bandFrequency = (int) bandFrequency,
+                bandGain
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalVoiceEqualization, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value)
         {
-            return AgorartcNative.setLocalVoiceReverb(_apiBridge, reverbKey, value);
+            var para = new
+            {
+                reverbKey = (int) reverbKey,
+                value
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalVoiceReverb, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLocalVoiceChanger(VOICE_CHANGER_PRESET voiceChanger)
         {
-            return AgorartcNative.setLocalVoiceChanger(_apiBridge, voiceChanger);
+            var para = new
+            {
+                voiceChanger = (int) voiceChanger
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalVoiceChanger, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetLocalVoiceReverbPreset(AUDIO_REVERB_PRESET reverbPreset)
         {
-            return AgorartcNative.setLocalVoiceReverbPreset(_apiBridge, reverbPreset);
+            var para = new
+            {
+                reverbPreset = (int) reverbPreset
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetLocalVoiceReverbPreset, JsonSerializer.Serialize(para), result) * -1);
+        }
+
+        public ERROR_CODE SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset)
+        {
+            var para = new
+            {
+                preset = (int) preset
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetVoiceBeautifierPreset, JsonSerializer.Serialize(para), result) * -1);
+        }
+
+        public ERROR_CODE SetAudioEffectPreset(AUDIO_EFFECT_PRESET preset)
+        {
+            var para = new
+            {
+                preset = (int) preset
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetAudioEffectPreset, JsonSerializer.Serialize(para), result) * -1);
+        }
+
+        public ERROR_CODE SetAudioEffectParameters(AUDIO_EFFECT_PRESET preset, int param1, int param2)
+        {
+            var para = new
+            {
+                preset = (int) preset,
+                param1,
+                param2
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetAudioEffectParameters, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetExternalAudioSource(bool enabled, int sampleRate, int channels)
         {
-            return AgorartcNative.setExternalAudioSource(_apiBridge, enabled ? 1 : 0, sampleRate, channels);
+            var para = new
+            {
+                enabled,
+                sampleRate,
+                channels
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetExternalAudioSource, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetExternalAudioSink(bool enabled, int sampleRate, int channels)
         {
-            return AgorartcNative.setExternalAudioSink(_apiBridge, enabled ? 1 : 0, sampleRate, channels);
+            var para = new
+            {
+                enabled,
+                sampleRate,
+                channels
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetExternalAudioSink, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetRecordingAudioFrameParameters(int sampleRate, int channel,
             RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
         {
-            return AgorartcNative.setRecordingAudioFrameParameters(_apiBridge, sampleRate, channel, mode,
-                samplesPerCall);
+            var para = new
+            {
+                sampleRate,
+                channel,
+                mode = (int) mode,
+                samplesPerCall
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetRecordingAudioFrameParameters, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetPlaybackAudioFrameParameters(int sampleRate, int channel,
             RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
         {
-            return AgorartcNative.setPlaybackAudioFrameParameters(_apiBridge, sampleRate, channel, mode,
-                samplesPerCall);
+            var para = new
+            {
+                sampleRate,
+                channel,
+                mode = (int) mode,
+                samplesPerCall
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetPlaybackAudioFrameParameters, JsonSerializer.Serialize(para), result) * -1);
         }
 
         public ERROR_CODE SetMixedAudioFrameParameters(int sampleRate, int samplesPerCall)
         {
-            return AgorartcNative.setMixedAudioFrameParameters(_apiBridge, sampleRate, samplesPerCall);
+            var para = new
+            {
+                sampleRate,
+                samplesPerCall
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSetMixedAudioFrameParameters, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE PushAudioFrame(MEDIA_SOURCE_TYPE type, ref AudioFrame frame, bool wrap)
-        {
-            return AgorartcNative.pushAudioFrame(_apiBridge, type, ref frame, wrap ? 1 : 0);
-        }
-
-        public ERROR_CODE PushAudioFrame2(ref AudioFrame frame)
-        {
-            return AgorartcNative.pushAudioFrame2(_apiBridge, ref frame);
-        }
-
-        public ERROR_CODE PullAudioFrame(ref AudioFrame frame)
-        {
-            return AgorartcNative.pullAudioFrame(_apiBridge, ref frame);
-        }
-
-        public ERROR_CODE SetExternalVideoSource(bool enable, bool useTexture)
-        {
-            return AgorartcNative.setExternalVideoSource(_apiBridge, enable ? 1 : 0, useTexture ? 1 : 0);
-        }
-
-        public ERROR_CODE PushVideoFrame(ref ExternalVideoFrame frame)
-        {
-            return AgorartcNative.pushVideoFrame(_apiBridge, ref frame);
-        }
+        // TODO: PushAudioFrame/PullAudioFrame/SetExternalVideoSource/PushVideoFrame
+        // public ERROR_CODE PushAudioFrame(MEDIA_SOURCE_TYPE type, ref AudioFrame frame, bool wrap)
+        // {
+        //     return AgorartcNative.pushAudioFrame(_apiBridge, type, ref frame, wrap ? 1 : 0);
+        // }
+        //
+        // public ERROR_CODE PushAudioFrame2(ref AudioFrame frame)
+        // {
+        //     return AgorartcNative.pushAudioFrame2(_apiBridge, ref frame);
+        // }
+        //
+        // public ERROR_CODE PullAudioFrame(ref AudioFrame frame)
+        // {
+        //     return AgorartcNative.pullAudioFrame(_apiBridge, ref frame);
+        // }
+        //
+        // public ERROR_CODE SetExternalVideoSource(bool enable, bool useTexture)
+        // {
+        //     var para = new
+        //     {
+        //         enable,
+        //         useTexture
+        //     };
+        //     return (ERROR_CODE) AgorartcNative.CallIrisEngineApi(_apiBridge,
+        //         CApiTypeEngine.kEngineSetMixedAudioFrameParameters, JsonSerializer.Serialize(para), result);
+        // }
+        //
+        // public ERROR_CODE PushVideoFrame(ref ExternalVideoFrame frame)
+        // {
+        //     return AgorartcNative.pushVideoFrame(_apiBridge, ref frame);
+        // }
 
         public ERROR_CODE EnableEncryption(bool enabled, EncryptionConfig config)
         {
-            return AgorartcNative.enableEncryption(_apiBridge, enabled ? 1 : 0, config);
+            var para = new
+            {
+                enabled,
+                config
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineEnableEncryption, JsonSerializer.Serialize(para), result) * -1);
         }
 
-        public ERROR_CODE SendCustomReportMessage(string id, string category, string event1, string label, int value)
+        public ERROR_CODE SendCustomReportMessage(string id, string category, string @event, string label, int value)
         {
-            return AgorartcNative.sendCustomReportMessage(_apiBridge, id, category, event1, label, value);
+            var para = new
+            {
+                id,
+                category,
+                @event,
+                label,
+                value
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kEngineSendCustomReportMessage, JsonSerializer.Serialize(para), result) * -1);
         }
 
         ~AgoraRtcEngine()
         {
-            Dispose(false, false);
+            Dispose(false);
         }
     }
 }
