@@ -4,7 +4,7 @@ using System.Text.Json;
 namespace agorartc
 {
     using IrisDeviceManagerPtr = IntPtr;
-    using view_t = IntPtr;
+    using view_t = UInt64;
 
     public class AgoraVideoDeviceManager : IDisposable
     {

@@ -14,134 +14,7 @@ namespace agorartc
     {
         internal FUNC_OnEvent onEvent;
         internal FUNC_OnEventWithBuffer onEventWithBuffer;
-    };
-
-    public abstract class IIrisCEventHandler
-    {
-        public virtual void OnEvent(string @event, string data)
-        {
-        }
-
-        public virtual void onEventWithBuffer(string @event, string data, IntPtr buffer)
-        {
-        }
     }
-
-    //
-    // [StructLayout(LayoutKind.Sequential)]
-    // internal class RtcEventHandler
-    // {
-    //     internal FUNC_OnJoinChannelSuccess onJoinChannelSuccess;
-    //     internal FUNC_OnReJoinChannelSuccess onReJoinChannelSuccess;
-    //     internal FUNC_OnLeaveChannel onLeaveChannel;
-    //     internal FUNC_OnConnectionLost onConnectionLost;
-    //     internal FUNC_OnConnectionInterrupted onConnectionInterrupted;
-    //     internal FUNC_OnRequestToken onRequestToken;
-    //     internal FUNC_OnUserJoined onUserJoined;
-    //     internal FUNC_OnUserOffline onUserOffline;
-    //     internal FUNC_OnAudioVolumeIndication onAudioVolumeIndication;
-    //     internal FUNC_OnUserMuteAudio onUserMuteAudio;
-    //     internal FUNC_OnWarning onWarning;
-    //     internal FUNC_OnError onError;
-    //     internal FUNC_OnRtcStats onRtcStats;
-    //     internal FUNC_OnAudioMixingFinished onAudioMixingFinished;
-    //     internal FUNC_OnAudioRouteChanged onAudioRouteChanged;
-    //     internal FUNC_OnFirstRemoteVideoDecoded onFirstRemoteVideoDecoded;
-    //     internal FUNC_OnVideoSizeChanged onVideoSizeChanged;
-    //     internal FUNC_OnClientRoleChanged onClientRoleChanged;
-    //     internal FUNC_OnUserMuteVideo onUserMuteVideo;
-    //     internal FUNC_OnMicrophoneEnabled onMicrophoneEnabled;
-    //     internal FUNC_OnApiExecuted onApiCallExecuted;
-    //     internal FUNC_OnFirstLocalAudioFrame onFirstLocalAudioFrame;
-    //     internal FUNC_OnFirstRemoteAudioFrame onFirstRemoteAudioFrame;
-    //     internal FUNC_OnLastmileQuality onLastmileQuality;
-    //     internal FUNC_OnAudioQuality onAudioQuality;
-    //     internal FUNC_OnStreamInjectedStatus onStreamInjectedStatus;
-    //     internal FUNC_OnStreamUnpublished onStreamUnpublished;
-    //     internal FUNC_OnStreamPublished onStreamPublished;
-    //     internal FUNC_OnStreamMessageError onStreamMessageError;
-    //     internal FUNC_OnStreamMessage onStreamMessage;
-    //     internal FUNC_OnConnectionBanned onConnectionBanned;
-    //     internal FUNC_OnRemoteVideoTransportStats onRemoteVideoTransportStats;
-    //     internal FUNC_OnRemoteAudioTransportStats onRemoteAudioTransportStats;
-    //     internal FUNC_OnTranscodingUpdated onTranscodingUpdated;
-    //     internal FUNC_OnAudioDeviceVolumeChanged onAudioDeviceVolumeChanged;
-    //     internal FUNC_OnActiveSpeaker onActiveSpeaker;
-    //     internal FUNC_OnMediaEngineStartCallSuccess onMediaEngineStartCallSuccess;
-    //     internal FUNC_OnMediaEngineLoadSuccess onMediaEngineLoadSuccess;
-    //     internal FUNC_OnConnectionStateChanged onConnectionStateChanged;
-    //     internal FUNC_OnRemoteSubscribeFallbackToAudioOnly onRemoteSubscribeFallbackToAudioOnly;
-    //     internal FUNC_OnLocalPublishFallbackToAudioOnly onLocalPublishFallbackToAudioOnly;
-    //     internal FUNC_OnUserEnableLocalVideo onUserEnableLocalVideo;
-    //     internal FUNC_OnRemoteVideoStateChanged onRemoteVideoStateChanged;
-    //     internal FUNC_OnVideoDeviceStateChanged onVideoDeviceStateChanged;
-    //     internal FUNC_OnAudioEffectFinished onAudioEffectFinished;
-    //     internal FUNC_OnRemoteAudioMixingEnd onRemoteAudioMixingEnd;
-    //     internal FUNC_OnRemoteAudioMixingBegin onRemoteAudioMixingBegin;
-    //     internal FUNC_OnCameraExposureAreaChanged onCameraExposureAreaChanged;
-    //     internal FUNC_OnCameraFocusAreaChanged onCameraFocusAreaChanged;
-    //     internal FUNC_OnCameraReady onCameraReady;
-    //     internal FUNC_OnAudioDeviceStateChanged onAudioDeviceStateChanged;
-    //     internal FUNC_OnUserEnableVideo onUserEnableVideo;
-    //     internal FUNC_OnFirstRemoteVideoFrame onFirstRemoteVideoFrame;
-    //     internal FUNC_OnFirstLocalVideoFrame onFirstLocalVideoFrame;
-    //     internal FUNC_OnRemoteAudioStats onRemoteAudioStats;
-    //     internal FUNC_OnRemoteVideoStats onRemoteVideoStats;
-    //     internal FUNC_OnLocalVideoStats onLocalVideoStats;
-    //     internal FUNC_OnNetworkQuality onNetworkQuality;
-    //     internal FUNC_OnTokenPrivilegeWillExpire onTokenPrivilegeWillExpire;
-    //     internal FUNC_OnVideoStopped onVideoStopped;
-    //     internal FUNC_OnAudioMixingStateChanged onAudioMixingStateChanged;
-    //     internal FUNC_OnFirstRemoteAudioDecoded onFirstRemoteAudioDecoded;
-    //     internal FUNC_OnLocalVideoStateChanged onLocalVideoStateChanged;
-    //     internal FUNC_OnNetworkTypeChanged onNetworkTypeChanged;
-    //     internal FUNC_OnRtmpStreamingStateChanged onRtmpStreamingStateChanged;
-    //     internal FUNC_OnLastmileProbeResult onLastmileProbeResult;
-    //     internal FUNC_OnLocalUserRegistered onLocalUserRegistered;
-    //     internal FUNC_OnUserInfoUpdated onUserInfoUpdated;
-    //     internal FUNC_OnLocalAudioStateChanged onLocalAudioStateChanged;
-    //     internal FUNC_OnRemoteAudioStateChanged onRemoteAudioStateChanged;
-    //     internal FUNC_OnLocalAudioStats onLocalAudioStats;
-    //     internal FUNC_OnChannelMediaRelayStateChanged onChannelMediaRelayStateChanged;
-    //     internal FUNC_OnChannelMediaRelayEvent onChannelMediaRelayEvent;
-    //     internal FUNC_OnFacePositionChanged onFacePositionChanged;
-    //     internal FUNC_OnTestEnd onTestEnd;
-    // }
-    //
-    // [StructLayout(LayoutKind.Sequential)]
-    // internal class ChannelEventHandler
-    // {
-    //     internal FUNC_OnChannelWarning onWarning;
-    //     internal FUNC_OnChannelError onError;
-    //     internal FUNC_OnChannelJoinChannelSuccess onJoinChannelSuccess;
-    //     internal FUNC_OnChannelReJoinChannelSuccess onRejoinChannelSuccess;
-    //     internal FUNC_OnChannelLeaveChannel onLeaveChannel;
-    //     internal FUNC_OnChannelClientRoleChanged onClientRoleChanged;
-    //     internal FUNC_OnChannelUserJoined onUserJoined;
-    //     internal FUNC_OnChannelUserOffLine onUserOffLine;
-    //     internal FUNC_OnChannelConnectionLost onConnectionLost;
-    //     internal FUNC_OnChannelRequestToken onRequestToken;
-    //     internal FUNC_OnChannelTokenPrivilegeWillExpire onTokenPrivilegeWillExpire;
-    //     internal FUNC_OnChannelRtcStats onRtcStats;
-    //     internal FUNC_OnChannelNetworkQuality onNetworkQuality;
-    //     internal FUNC_OnChannelRemoteVideoStats onRemoteVideoStats;
-    //     internal FUNC_OnChannelRemoteAudioStats onRemoteAudioStats;
-    //     internal FUNC_OnChannelRemoteAudioStateChanged onRemoteAudioStateChanged;
-    //     internal FUNC_OnChannelActiveSpeaker onActiveSpeaker;
-    //     internal FUNC_OnChannelVideoSizeChanged onVideoSizeChanged;
-    //     internal FUNC_OnChannelRemoteVideoStateChanged onRemoteVideoStateChanged;
-    //     internal FUNC_OnChannelStreamMessage onStreamMessage;
-    //     internal FUNC_OnChannelStreamMessageError onStreamMessageError;
-    //     internal FUNC_OnChannelMediaRelayStateChanged2 onMediaRelayStateChanged;
-    //     internal FUNC_OnChannelMediaRelayEvent2 onMediaRelayEvent;
-    //     internal FUNC_OnChannelRtmpStreamingStateChanged onRtmpStreamingStateChanged;
-    //     internal FUNC_OnChannelTranscodingUpdated onTranscodingUpdated;
-    //     internal FUNC_OnChannelStreamInjectedStatus onStreamInjectedStatus;
-    //     internal FUNC_OnChannelRemoteSubscribeFallbackToAudioOnly onRemoteSubscribeFallbackToAudioOnly;
-    //     internal FUNC_OnChannelConnectionStateChanged onConnectionStateChanged;
-    //     internal FUNC_OnChannelLocalPublishFallbackToAudioOnly onLocalPublishFallbackToAudioOnly;
-    //     internal FUNC_OnChannelTestEnd onTestEnd;
-    // }
 
     public abstract class IRtcEngineEventHandlerBase
     {
@@ -185,11 +58,11 @@ namespace agorartc
         {
         }
 
-        public virtual void OnWarning(int warn, string msg)
+        public virtual void OnWarning(WARN_CODE_TYPE warn, string msg)
         {
         }
 
-        public virtual void OnError(int error, string msg)
+        public virtual void OnError(ERROR_CODE error, string msg)
         {
         }
 
@@ -300,7 +173,7 @@ namespace agorartc
         {
         }
 
-        public virtual void onUserSuperResolutionEnabled(uint uid, bool enabled, SUPER_RESOLUTION_STATE_REASON reason)
+        public virtual void OnUserSuperResolutionEnabled(uint uid, bool enabled, SUPER_RESOLUTION_STATE_REASON reason)
         {
         }
 
@@ -483,12 +356,6 @@ namespace agorartc
         }
 
         public virtual void OnChannelMediaRelayEvent(CHANNEL_MEDIA_RELAY_EVENT code)
-        {
-        }
-
-
-        public virtual void OnFacePositionChanged(int imageWidth, int imageHeight, int x, int y, int width,
-            int height, int vecDistance, int numFaces)
         {
         }
     }

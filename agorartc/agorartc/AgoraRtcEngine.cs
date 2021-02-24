@@ -12,7 +12,6 @@ namespace agorartc
     using uid_t = UInt32;
     using view_t = IntPtr;
     using IrisEnginePtr = IntPtr;
-    
     using IrisDeviceManagerPtr = IntPtr;
 
     internal static class NativeRtcEngineEventHandler
@@ -24,11 +23,11 @@ namespace agorartc
             switch (@event)
             {
                 case "onWarning":
-                    Rtc.engineEventHandler?.OnWarning((int) AgoraUtil.GetData<int>(data, "warn"),
+                    Rtc.engineEventHandler?.OnWarning((WARN_CODE_TYPE) AgoraUtil.GetData<int>(data, "warn"),
                         (string) AgoraUtil.GetData<string>(data, "msg"));
                     break;
                 case "onError":
-                    Rtc.engineEventHandler?.OnError((int) AgoraUtil.GetData<int>(data, "err"),
+                    Rtc.engineEventHandler?.OnError((ERROR_CODE) AgoraUtil.GetData<int>(data, "err"),
                         (string) AgoraUtil.GetData<string>(data, "msg"));
                     break;
                 case "onJoinChannelSuccess":
@@ -117,8 +116,15 @@ namespace agorartc
                 case "onRemoteAudioStateChanged":
                     Rtc.engineEventHandler?.OnRemoteAudioStateChanged((uint) AgoraUtil.GetData<uint>(data, "uid"),
                         (REMOTE_AUDIO_STATE) AgoraUtil.GetData<int>(data, "state"),
-                        (REMOTE_AUDIO_STATE_REASON) AgoraUtil.GetData<int>(data, "error"),
+                        (REMOTE_AUDIO_STATE_REASON) AgoraUtil.GetData<int>(data, "reason"),
                         (int) AgoraUtil.GetData<int>(data, "elapsed"));
+                    break;
+                case "onAudioPublishStateChanged":
+                    Rtc.engineEventHandler?.OnAudioPublishStateChanged(
+                        (string) AgoraUtil.GetData<string>(data, "channel"),
+                        (STREAM_PUBLISH_STATE) AgoraUtil.GetData<int>(data, "oldState"),
+                        (STREAM_PUBLISH_STATE) AgoraUtil.GetData<int>(data, "newState"),
+                        (int) AgoraUtil.GetData<int>(data, "elapseSinceLastState"));
                     break;
                 case "onVideoPublishStateChanged":
                     Rtc.engineEventHandler?.OnVideoPublishStateChanged(
@@ -269,7 +275,7 @@ namespace agorartc
                     Rtc.engineEventHandler?.OnMediaEngineStartCallSuccess();
                     break;
                 case "onUserSuperResolutionEnabled":
-                    Rtc.engineEventHandler?.onUserSuperResolutionEnabled((uint) AgoraUtil.GetData<uint>(data, "uid"),
+                    Rtc.engineEventHandler?.OnUserSuperResolutionEnabled((uint) AgoraUtil.GetData<uint>(data, "uid"),
                         (bool) AgoraUtil.GetData<bool>(data, "enabled"),
                         (SUPER_RESOLUTION_STATE_REASON) AgoraUtil.GetData<int>(data, "reason"));
                     break;
@@ -337,7 +343,7 @@ namespace agorartc
                         (ushort) AgoraUtil.GetData<ushort>(data, "rxKBitRate"));
                     break;
                 case "onRemoteVideoTransportStats":
-                    Rtc.engineEventHandler?.OnRemoteAudioTransportStats(
+                    Rtc.engineEventHandler?.OnRemoteVideoTransportStats(
                         (uint) AgoraUtil.GetData<uint>(data, "uid"),
                         (ushort) AgoraUtil.GetData<ushort>(data, "delay"),
                         (ushort) AgoraUtil.GetData<ushort>(data, "lost"),
@@ -408,6 +414,7 @@ namespace agorartc
                 {
                     value.Dispose();
                 }
+
                 _videoDeviceManager.Dispose();
                 _audioRecordingDeviceManager.Dispose();
                 _audioPlaybackDeviceManager.Dispose();
@@ -450,6 +457,7 @@ namespace agorartc
             {
                 return _channels[channelId];
             }
+
             var ret = new AgoraRtcChannel(channelId);
             _channels.Add(channelId, ret);
             return ret;
@@ -467,7 +475,7 @@ namespace agorartc
                 _audioPlaybackDeviceManager =
                     new AgoraAudioPlaybackDeviceManager(AgorartcNative.GetIrisDeviceManager(_irisEngine));
             }
-            
+
             return _audioPlaybackDeviceManager;
         }
 
@@ -510,13 +518,24 @@ namespace agorartc
 
         public ERROR_CODE Initialize(string appId, AREA_CODE areaCode)
         {
+            var context = new RtcEngineContext(appId, areaCode);
+            return Initialize(context);
+        }
+
+        public ERROR_CODE Initialize(RtcEngineContext context)
+        {
             var para = new
             {
-                appId,
-                areaCode = (int) areaCode
+                context = new
+                {
+                    context.appId,
+                    areaCode = (uint) context.areaCode
+                }
             };
-            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineInitialize,
+            var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineInitialize,
                 JsonSerializer.Serialize(para), result) * -1);
+            SetAppType(AppType.APP_TYPE_C_SHARP);
+            return ret;
         }
 
         private void SetIrisEngineEventHandler(IrisCEventHandler handler)
@@ -1303,10 +1322,10 @@ namespace agorartc
                 reliable,
                 ordered
             };
-            var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineCreateDataStream, JsonSerializer.Serialize(para), result) * -1);
-            // TODO: (CreateDataStream) streamId = 
-            return ret;
+            var ret = AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineCreateDataStream,
+                JsonSerializer.Serialize(para), result);
+            streamId = ret < 0 ? -1 : ret;
+            return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
 
         public ERROR_CODE SendStreamMessage(int streamId, byte[] data)
@@ -1464,7 +1483,7 @@ namespace agorartc
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                 CApiTypeEngine.kEngineRegisterMediaMetadataObserver, JsonSerializer.Serialize(para), result) * -1);
         }
-        
+
         public ERROR_CODE UnRegisterMediaMetadataObserver(METADATA_TYPE type)
         {
             var para = new
@@ -1474,7 +1493,7 @@ namespace agorartc
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                 CApiTypeEngine.kEngineUnRegisterMediaMetadataObserver, JsonSerializer.Serialize(para), result) * -1);
         }
-        
+
         public ERROR_CODE SetMaxMetadataSize(int size)
         {
             var para = new
@@ -1484,7 +1503,7 @@ namespace agorartc
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                 CApiTypeEngine.kEngineSetMaxMetadataSize, JsonSerializer.Serialize(para), result) * -1);
         }
-        
+
         public ERROR_CODE SendMetadata(Metadata metadata)
         {
             var para = new
@@ -1518,6 +1537,16 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                 CApiTypeEngine.kEngineSetPlaybackDeviceVolume, JsonSerializer.Serialize(para), result) * -1);
+        }
+
+        private void SetAppType(AppType appType)
+        {
+            var para = new
+            {
+                appType = (int) appType
+            };
+            AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineSetAppType,
+                JsonSerializer.Serialize(para), result);
         }
 
         // API_TYPE_AUDIO_EFFECT
@@ -1929,38 +1958,97 @@ namespace agorartc
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                 CApiTypeEngine.kEngineSetMixedAudioFrameParameters, JsonSerializer.Serialize(para), result) * -1);
         }
-
-        // TODO: PushAudioFrame/PullAudioFrame/SetExternalVideoSource/PushVideoFrame
-        // public ERROR_CODE PushAudioFrame(MEDIA_SOURCE_TYPE type, ref AudioFrame frame, bool wrap)
-        // {
-        //     return AgorartcNative.pushAudioFrame(_apiBridge, type, ref frame, wrap ? 1 : 0);
-        // }
-        //
-        // public ERROR_CODE PushAudioFrame2(ref AudioFrame frame)
-        // {
-        //     return AgorartcNative.pushAudioFrame2(_apiBridge, ref frame);
-        // }
-        //
-        // public ERROR_CODE PullAudioFrame(ref AudioFrame frame)
-        // {
-        //     return AgorartcNative.pullAudioFrame(_apiBridge, ref frame);
-        // }
-        //
-        // public ERROR_CODE SetExternalVideoSource(bool enable, bool useTexture)
-        // {
-        //     var para = new
-        //     {
-        //         enable,
-        //         useTexture
-        //     };
-        //     return (ERROR_CODE) AgorartcNative.CallIrisEngineApi(_apiBridge,
-        //         CApiTypeEngine.kEngineSetMixedAudioFrameParameters, JsonSerializer.Serialize(para), result);
-        // }
-        //
-        // public ERROR_CODE PushVideoFrame(ref ExternalVideoFrame frame)
-        // {
-        //     return AgorartcNative.pushVideoFrame(_apiBridge, ref frame);
-        // }
+        
+        // TODO: RegisterPacketObserver, RegisterAudioFrameObserver, RegisterVideoFrameObserver, RegisterVideoRenderFactory
+        
+        public ERROR_CODE PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap)
+        {
+            var para = new
+            {
+                type,
+                frame = new
+                {
+                    frame.type,
+                    frame.samples,
+                    frame.bytesPerSample,
+                    frame.channels,
+                    frame.samplesPerSec,
+                    frame.renderTimeMs,
+                    frame.avsync_type
+                },
+                wrap
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
+                CApiTypeEngine.kMediaPushAudioFrame, JsonSerializer.Serialize(para), frame.buffer) * -1);
+        }
+        
+        public ERROR_CODE PushAudioFrame(ref AudioFrame frame)
+        {
+            var para = new
+            {
+                frame = new
+                {
+                    frame.type,
+                    frame.samples,
+                    frame.bytesPerSample,
+                    frame.channels,
+                    frame.samplesPerSec,
+                    frame.renderTimeMs,
+                    frame.avsync_type
+                }
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
+                CApiTypeEngine.kMediaPushAudioFrame, JsonSerializer.Serialize(para), frame.buffer) * -1);
+        }
+        
+        public ERROR_CODE PullAudioFrame(ref AudioFrame frame)
+        {
+            var para = new { };
+            var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
+                CApiTypeEngine.kMediaPullAudioFrame, JsonSerializer.Serialize(para), frame.buffer) * -1);
+            var f = AgoraUtil.JsonToStruct<AudioFrameWithoutBuffer>(result);
+            frame.avsync_type = f.avsync_type;
+            frame.channels = f.channels;
+            frame.samples = f.samples;
+            frame.type = f.type;
+            frame.bytesPerSample = f.bytesPerSample;
+            frame.renderTimeMs = f.renderTimeMs;
+            frame.samplesPerSec = f.samplesPerSec;
+            return ret;
+        }
+        
+        public ERROR_CODE SetExternalVideoSource(bool enable, bool useTexture)
+        {
+            var para = new
+            {
+                enable,
+                useTexture
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
+                CApiTypeEngine.kMediaSetExternalVideoSource, JsonSerializer.Serialize(para), result) * -1);
+        }
+        
+        public ERROR_CODE PushVideoFrame(ExternalVideoFrame frame)
+        {
+            var para = new
+            {
+                frame = new
+                {
+                    frame.type,
+                    frame.format,
+                    frame.stride,
+                    frame.height,
+                    frame.cropLeft,
+                    frame.cropTop,
+                    frame.cropRight,
+                    frame.cropBottom,
+                    frame.rotation,
+                    frame.timestamp
+                }
+            };
+            return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
+                CApiTypeEngine.kMediaPushVideoFrame, JsonSerializer.Serialize(para), frame.buffer) * -1);
+        }
 
         public ERROR_CODE EnableEncryption(bool enabled, EncryptionConfig config)
         {

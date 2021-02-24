@@ -11,9 +11,6 @@ namespace agorartc
 
     internal static class NativeRtcChannelEventHandler
     {
-        // private static readonly Dictionary<string, AgoraRtcChannel> Channels =
-        //     AgoraRtcEngine.CreateRtcEngine()._channels;
-
         private static readonly Dictionary<string, AgoraRtcChannel> Channels =
             new Dictionary<string, AgoraRtcChannel>();
 
@@ -691,10 +688,10 @@ namespace agorartc
                 reliable,
                 ordered
             };
-            var ret = (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelCreateDataStream, JsonSerializer.Serialize(para), result) * -1);
-            // TODO: (CreateDataStream) streamId = 
-            return ret;
+            var ret = AgorartcNative.CallIrisChannelApi(_irisChannel,
+                CApiTypeChannel.kChannelCreateDataStream, JsonSerializer.Serialize(para), result);
+            streamId = ret < 0 ? -1 : ret;
+            return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
 
         public ERROR_CODE SendStreamMessage(int streamId, byte[] data, long length)

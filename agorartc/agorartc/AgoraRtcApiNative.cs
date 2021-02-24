@@ -168,6 +168,15 @@ namespace agorartc
         kEngineSendMetadata,
         kEngineSetParameters,
         kEngineSetPlaybackDeviceVolume,
+        kEngineSetAppType,
+
+        kMediaRegisterAudioFrameObserver,
+        kMediaRegisterVideoFrameObserver,
+        kMediaRegisterVideoRenderFactory,
+        kMediaPushAudioFrame,
+        kMediaPullAudioFrame,
+        kMediaSetExternalVideoSource,
+        kMediaPushVideoFrame,
     };
 
     internal enum CApiTypeChannel
@@ -259,46 +268,46 @@ namespace agorartc
 
     internal static class AgorartcNative
     {
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisEnginePtr CreateIrisEngine();
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisEngine(IrisEnginePtr iris_engine);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetIrisEngineEventHandler(IrisEnginePtr iris_engine, ref IrisCEventHandler iris_c_event_handler);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisEngineApi(IrisEnginePtr iris_engine, CApiTypeEngine api_type,
                       string para, char[] result);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisEngineApiWithBuffer(IrisEnginePtr iris_engine, CApiTypeEngine api_type,
                       string para, byte[] buffer);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisChannelPtr GetIrisChannel(IrisEnginePtr iris_engine);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void SetIrisChannelEventHandler(IrisChannelPtr iris_channel,
                                 ref IrisCEventHandler iris_c_event_handler);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisChannelApi(IrisChannelPtr iris_channel, CApiTypeChannel api_type,
                        string para, char[] result);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisChannelApiWithBuffer(IrisChannelPtr iris_channel,
                                  CApiTypeChannel api_type, string para, byte[] buffer);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisDeviceManagerPtr GetIrisDeviceManager(IrisEnginePtr iris_engine);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallAudioDeviceApi(IrisDeviceManagerPtr iris_device_manager,
                        CApiTypeAudioDeviceManager api_type, string paras, char[] result);
 
-        [DllImport("agora_cpp.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport("iris.dll", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallVideoDeviceApi(IrisDeviceManagerPtr iris_device_manager,
                        CApiTypeVideoDeviceManager api_type, string para, char[] result);
     }

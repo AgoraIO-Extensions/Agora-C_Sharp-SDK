@@ -1,5 +1,5 @@
 namespace agorartc
-{
+{/*
     public enum API_TYPE
     {
         INITIALIZE = 0,
@@ -1077,5 +1077,5 @@ namespace agorartc
                 channelEventHandler.OnChannelTestEnd(channelId);
             }
         }
-    }
+    }*/
 }
