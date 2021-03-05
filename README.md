@@ -42,7 +42,7 @@ A GUI demo has been contained in the repository.
 
 For more information about our API, please refer to [Agora C++ API](https://docs.agora.io/en/Video/API%20Reference/cpp/v3.1.2/index.html).
 
-*C# API documatition is on proceeding while C++ API is similar.*
+*C# API reference is on proceeding while C++ API is similar.*
 
 ## Appendix
 
