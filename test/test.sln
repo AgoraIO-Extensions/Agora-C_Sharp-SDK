@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RtcEngineApiTest", "RtcEngineApiTest\RtcEngineApiTest.csproj", "{0518D2C8-FC4A-4949-9104-9270D9DB256F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RtcEngineEventTest", "RtcEngineEventTest\RtcEngineEventTest.csproj", "{A9035AD6-F14C-4D4A-B4DB-65613419EFAE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RtcChannelApiTest", "RtcChannelApiTest\RtcChannelApiTest.csproj", "{7156E817-51E9-4DBA-9697-43776625F3BB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RtcChannelEventTest", "RtcChannelEventTest\RtcChannelEventTest.csproj", "{889C8CF4-4E4D-4D6C-943C-1320D8E05894}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RtcAudioDeviceManagerApiTest", "RtcAudioDeviceManagerApiTest\RtcAudioDeviceManagerApiTest.csproj", "{90CB06F4-AF48-4AE0-B6E2-572B4BDED24A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtcVideoDeviceManagerApiTest", "RtcVideoDeviceManagerApiTest\RtcVideoDeviceManagerApiTest.csproj", "{AB10B70D-FBAC-45EA-BBA6-55F7BE909807}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0518D2C8-FC4A-4949-9104-9270D9DB256F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0518D2C8-FC4A-4949-9104-9270D9DB256F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0518D2C8-FC4A-4949-9104-9270D9DB256F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0518D2C8-FC4A-4949-9104-9270D9DB256F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9035AD6-F14C-4D4A-B4DB-65613419EFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9035AD6-F14C-4D4A-B4DB-65613419EFAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9035AD6-F14C-4D4A-B4DB-65613419EFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9035AD6-F14C-4D4A-B4DB-65613419EFAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7156E817-51E9-4DBA-9697-43776625F3BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7156E817-51E9-4DBA-9697-43776625F3BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7156E817-51E9-4DBA-9697-43776625F3BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7156E817-51E9-4DBA-9697-43776625F3BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{889C8CF4-4E4D-4D6C-943C-1320D8E05894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{889C8CF4-4E4D-4D6C-943C-1320D8E05894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{889C8CF4-4E4D-4D6C-943C-1320D8E05894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{889C8CF4-4E4D-4D6C-943C-1320D8E05894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90CB06F4-AF48-4AE0-B6E2-572B4BDED24A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90CB06F4-AF48-4AE0-B6E2-572B4BDED24A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90CB06F4-AF48-4AE0-B6E2-572B4BDED24A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90CB06F4-AF48-4AE0-B6E2-572B4BDED24A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB10B70D-FBAC-45EA-BBA6-55F7BE909807}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB10B70D-FBAC-45EA-BBA6-55F7BE909807}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB10B70D-FBAC-45EA-BBA6-55F7BE909807}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB10B70D-FBAC-45EA-BBA6-55F7BE909807}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D7C017D8-36F0-490D-9696-CF80A1C51827}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,144 @@
+[
+    {
+        "result": true,
+        "apiType": "kGetAudioPlaybackDeviceCount",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kGetAudioPlaybackDeviceInfoByIndex",
+        "expect": {
+            "index": 123
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kSetCurrentAudioPlaybackDeviceId",
+        "expect": {
+            "deviceId": "123"
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kGetCurrentAudioPlaybackDeviceId",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kGetCurrentAudioPlaybackDeviceInfo",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kSetAudioPlaybackDeviceVolume",
+        "expect": {
+            "volume": 100
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kGetAudioPlaybackDeviceVolume",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kSetAudioPlaybackDeviceMute",
+        "expect": {
+            "mute": true
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kGetAudioPlaybackDeviceMute",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kStartAudioPlaybackDeviceTest",
+        "expect": {
+            "testAudioFilePath": "./abc.mp3"
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kStopAudioPlaybackDeviceTest",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kStartAudioDeviceLoopbackTest",
+        "expect": {
+            "indicationInterval": 10
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kStopAudioDeviceLoopbackTest",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kGetAudioRecordingDeviceCount",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kGetAudioRecordingDeviceInfoByIndex",
+        "expect": {
+            "index": 123
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kSetCurrentAudioRecordingDeviceId",
+        "expect": {
+            "deviceId": "123"
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kGetCurrentAudioRecordingDeviceId",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kGetCurrentAudioRecordingDeviceInfo",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kSetAudioRecordingDeviceVolume",
+        "expect": {
+            "volume": 100
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kGetAudioRecordingDeviceVolume",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kSetAudioRecordingDeviceMute",
+        "expect": {
+            "mute": true
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kGetAudioRecordingDeviceMute",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kStartAudioRecordingDeviceTest",
+        "expect": {
+            "testAudioFilePath": "./abc.mp3"
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kStopAudioRecordingDeviceTest",
+        "expect": {}
+    }
+]

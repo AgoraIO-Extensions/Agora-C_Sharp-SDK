@@ -59,7 +59,6 @@ namespace OneToOneVideo
             
             var res = Rtc.Initialize(new RtcEngineContext(appIdBox.Text));
             Rtc.EnableVideo();
-            Rtc.EnableAudioVolumeIndication(800, 3, false);
             Rtc.JoinChannel("", channelNameBox.Text, "", 0);
             var ret = new VideoCanvas((ulong)LocalWinId, 0);
             Rtc.SetupLocalVideo(ret);
@@ -128,7 +127,7 @@ namespace OneToOneVideo
             OneToOneVideoDemo.Rtc.SetupRemoteVideo(ret);
         }
 
-        public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE offLineReason)
+        public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
         {
             Console.WriteLine("OnUserOffline");
         }
@@ -163,7 +162,7 @@ namespace OneToOneVideo
             Console.WriteLine("OnAudioMixingFinished");
         }
 
-        public override void OnAudioRouteChanged(AUDIO_ROUTE_TYPE audioRouteType)
+        public override void OnAudioRouteChanged(AUDIO_ROUTE_TYPE routing)
         {
             Console.WriteLine("OnAudioRouteChanged");
         }
@@ -173,7 +172,7 @@ namespace OneToOneVideo
             Console.WriteLine("OnFirstRemoteVideoDecoded");
         }
 
-        public override void OnVideoSizeChanged(uint uid, int width, int height, int elapsed)
+        public override void OnVideoSizeChanged(uint uid, int width, int height, int rotation)
         {
             Console.WriteLine("OnVideoSizeChanged");
         }
@@ -208,7 +207,7 @@ namespace OneToOneVideo
             Console.WriteLine("OnFirstLocalAudioFramePublished");
         }
 
-        public override void OnFirstRemoteAudioFrame(uint userId, int elapsed)
+        public override void OnFirstRemoteAudioFrame(uint uid, int elapsed)
         {
             Console.WriteLine("OnFirstRemoteAudioFrame");
         }
@@ -218,12 +217,12 @@ namespace OneToOneVideo
             Console.WriteLine("OnLastmileQuality");
         }
 
-        public override void OnAudioQuality(uint userId, int quality, ushort delay, ushort lost)
+        public override void OnAudioQuality(uint uid, int quality, ushort delay, ushort lost)
         {
             Console.WriteLine("OnAudioQuality");
         }
         
-        public override void OnStreamInjectedStatus(string url, uint userId, int status)
+        public override void OnStreamInjectedStatus(string url, uint uid, int status)
         {
             Console.WriteLine("OnStreamInjectedStatus");
         }
@@ -238,12 +237,12 @@ namespace OneToOneVideo
             Console.WriteLine("OnStreamPublished");
         }
 
-         public override void OnStreamMessageError(uint userId, int streamId, int code, int missed, int cached)
+         public override void OnStreamMessageError(uint uid, int streamId, int code, int missed, int cached)
          {
              Console.WriteLine("OnStreamMessageError");
          }
 
-        public override void OnStreamMessage(uint userId, int streamId, byte[] data, uint length)
+        public override void OnStreamMessage(uint uid, int streamId, byte[] data, uint length)
         {
             Console.WriteLine("OnStreamMessage");
         }
@@ -273,7 +272,7 @@ namespace OneToOneVideo
             Console.WriteLine("OnAudioDeviceVolumeChanged");
         }
 
-         public override void OnActiveSpeaker(uint userId)
+         public override void OnActiveSpeaker(uint uid)
          {
              Console.WriteLine("OnActiveSpeaker");
          }

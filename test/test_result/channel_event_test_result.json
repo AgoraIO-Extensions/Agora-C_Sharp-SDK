@@ -1,0 +1,337 @@
+[
+    {
+        "result": true,
+        "event": "onChannelWarning",
+        "expect": {
+            "channelId": "MyChannel",
+            "warn": 111,
+            "msg": "issue"
+        }
+    },
+    {
+        "result": true,
+        "event": "onChannelError",
+        "expect": {
+            "channelId": "MyChannel",
+            "err": 1,
+            "msg": "issue"
+        }
+    },
+    {
+        "result": true,
+        "event": "onJoinChannelSuccess",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onRejoinChannelSuccess",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onLeaveChannel",
+        "expect": {
+            "channelId": "MyChannel",
+            "stats": {
+                "duration": 100,
+                "txBytes": 100,
+                "rxBytes": 100,
+                "txAudioBytes": 100,
+                "txVideoBytes": 100,
+                "rxAudioBytes": 100,
+                "rxVideoBytes": 100,
+                "txKBitRate": 10,
+                "rxKBitRate": 10,
+                "rxAudioKBitRate": 10,
+                "txAudioKBitRate": 10,
+                "rxVideoKBitRate": 10,
+                "txVideoKBitRate": 10,
+                "lastmileDelay": 10,
+                "txPacketLossRate": 10,
+                "rxPacketLossRate": 10,
+                "userCount": 2048,
+                "cpuAppUsage": 10000000,
+                "cpuTotalUsage": 10000000,
+                "gatewayRtt": 100,
+                "memoryAppUsageRatio": 10,
+                "memoryTotalUsageRatio": 10,
+                "memoryAppUsageInKbytes": 100
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onClientRoleChanged",
+        "expect": {
+            "channelId": "MyChannel",
+            "oldRole": 1,
+            "newRole": 2
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserJoined",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserOffline",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "reason": 13
+        }
+    },
+    {
+        "result": true,
+        "event": "onConnectionLost",
+        "expect": {
+            "channelId": "MyChannel"
+        }
+    },
+    {
+        "result": true,
+        "event": "onRequestToken",
+        "expect": {
+            "channelId": "MyChannel"
+        }
+    },
+    {
+        "result": true,
+        "event": "onTokenPrivilegeWillExpire",
+        "expect": {
+            "channelId": "MyChannel",
+            "token": "token_abc"
+        }
+    },
+    {
+        "result": true,
+        "event": "onRtcStats",
+        "expect": {
+            "channelId": "MyChannel",
+            "stats": {
+                "duration": 100,
+                "txBytes": 100,
+                "rxBytes": 100,
+                "txAudioBytes": 100,
+                "txVideoBytes": 100,
+                "rxAudioBytes": 100,
+                "rxVideoBytes": 100,
+                "txKBitRate": 10,
+                "rxKBitRate": 10,
+                "rxAudioKBitRate": 10,
+                "txAudioKBitRate": 10,
+                "rxVideoKBitRate": 10,
+                "txVideoKBitRate": 10,
+                "lastmileDelay": 10,
+                "txPacketLossRate": 10,
+                "rxPacketLossRate": 10,
+                "userCount": 2048,
+                "cpuAppUsage": 10000000,
+                "cpuTotalUsage": 10000000,
+                "gatewayRtt": 100,
+                "memoryAppUsageRatio": 10,
+                "memoryTotalUsageRatio": 10,
+                "memoryAppUsageInKbytes": 100
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onNetworkQuality",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "txQuality": 100,
+            "rxQuality": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteVideoStats",
+        "expect": {
+            "channelId": "MyChannel",
+            "stats": {
+                "uid": 2048,
+                "delay": 100,
+                "width": 100,
+                "height": 100,
+                "receivedBitrate": 100,
+                "decoderOutputFrameRate": 100,
+                "rendererOutputFrameRate": 100,
+                "packetLossRate": 100,
+                "rxStreamType": 1,
+                "totalFrozenTime": 100,
+                "frozenRate": 10,
+                "totalActiveTime": 100,
+                "publishDuration": 100
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteAudioStats",
+        "expect": {
+            "channelId": "MyChannel",
+            "stats": {
+                "uid": 2048,
+                "quality": 100,
+                "networkTransportDelay": 100,
+                "jitterBufferDelay": 100,
+                "audioLossRate": 100,
+                "numChannels": 10,
+                "receivedSampleRate": 100,
+                "receivedBitrate": 100,
+                "totalFrozenTime": 1,
+                "frozenRate": 100,
+                "totalActiveTime": 100,
+                "publishDuration": 100
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteAudioStateChanged",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "state": 1,
+            "reason": 13,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onActiveSpeaker",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048
+        }
+    },
+    {
+        "result": true,
+        "event": "onVideoSizeChanged",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "width": 100,
+            "height": 100,
+            "rotation": 90
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteVideoStateChanged",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "state": 1,
+            "reason": 13,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onStreamMessage",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "streamId": 2048,
+            "length": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onStreamMessageError",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "streamId": 2048,
+            "code": 100,
+            "missed": 0,
+            "cached": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onChannelMediaRelayStateChanged",
+        "expect": {
+            "channelId": "MyChannel",
+            "state": 1,
+            "code": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onChannelMediaRelayEvent",
+        "expect": {
+            "channelId": "MyChannel",
+            "code": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onRtmpStreamingStateChanged",
+        "expect": {
+            "channelId": "MyChannel",
+            "url": "www.abc.com",
+            "state": 1,
+            "errCode": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onTranscodingUpdated",
+        "expect": {
+            "channelId": "MyChannel"
+        }
+    },
+    {
+        "result": true,
+        "event": "onStreamInjectedStatus",
+        "expect": {
+            "channelId": "MyChannel",
+            "url": "www.abc.com",
+            "uid": 2048,
+            "status": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onLocalPublishFallbackToAudioOnly",
+        "expect": {
+            "channelId": "MyChannel",
+            "isFallbackOrRecover": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteSubscribeFallbackToAudioOnly",
+        "expect": {
+            "channelId": "MyChannel",
+            "uid": 2048,
+            "isFallbackOrRecover": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onConnectionStateChanged",
+        "expect": {
+            "channelId": "MyChannel",
+            "state": 1,
+            "reason": 13
+        }
+    }
+]

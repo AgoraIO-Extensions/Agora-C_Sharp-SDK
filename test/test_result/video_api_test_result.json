@@ -1,0 +1,38 @@
+[
+    {
+        "result": true,
+        "apiType": "kGetVideoDeviceCount",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kGetVideoDeviceInfoByIndex",
+        "expect": {
+            "index": 123
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kSetCurrentVideoDeviceId",
+        "expect": {
+            "deviceId": "123"
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kGetCurrentVideoDeviceId",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "apiType": "kStartVideoDeviceTest",
+        "expect": {
+            "hwnd": 0
+        }
+    },
+    {
+        "result": true,
+        "apiType": "kStopVideoDeviceTest",
+        "expect": {}
+    }
+]

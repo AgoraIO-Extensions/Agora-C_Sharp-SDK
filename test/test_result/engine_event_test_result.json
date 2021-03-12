@@ -1,0 +1,690 @@
+[
+    {
+        "result": true,
+        "event": "onJoinChannelSuccess",
+        "expect": {
+            "channel": "channel1",
+            "uid": 2048,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onRejoinChannelSuccess",
+        "expect": {
+            "channel": "channel1",
+            "uid": 2048,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserJoined",
+        "expect": {
+            "uid": 2048,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserMuteAudio",
+        "expect": {
+            "uid": 2048,
+            "muted": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onFirstRemoteVideoDecoded",
+        "expect": {
+            "uid": 2048,
+            "width": 100,
+            "height": 100,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserMuteVideo",
+        "expect": {
+            "uid": 2048,
+            "muted": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onConnectionLost",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onRequestToken",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onWarning",
+        "expect": {
+            "warn": 1,
+            "msg": "abc"
+        }
+    },
+    {
+        "result": true,
+        "event": "onError",
+        "expect": {
+            "err": 1,
+            "msg": "abc"
+        }
+    },
+    {
+        "result": true,
+        "event": "onAudioMixingFinished",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onVideoSizeChanged",
+        "expect": {
+            "uid": 2048,
+            "width": 100,
+            "height": 100,
+            "rotation": 90
+        }
+    },
+    {
+        "result": true,
+        "event": "onConnectionInterrupted",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onMicrophoneEnabled",
+        "expect": {
+            "enabled": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onFirstRemoteAudioFrame",
+        "expect": {
+            "uid": 2048,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onFirstLocalAudioFrame",
+        "expect": {
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onApiCallExecuted",
+        "expect": {
+            "err": 1,
+            "api": "abc",
+            "result": "abc"
+        }
+    },
+    {
+        "result": true,
+        "event": "onLastmileQuality",
+        "expect": {
+            "quality": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onAudioQuality",
+        "expect": {
+            "uid": 2048,
+            "quality": 1,
+            "delay": 10,
+            "lost": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteVideoTransportStats",
+        "expect": {
+            "uid": 2048,
+            "delay": 100,
+            "lost": 1,
+            "rxKBitRate": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteAudioTransportStats",
+        "expect": {
+            "uid": 2048,
+            "delay": 100,
+            "lost": 1,
+            "rxKBitRate": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onStreamInjectedStatus",
+        "expect": {
+            "url": "https://abc.com",
+            "uid": 2048,
+            "status": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onTranscodingUpdated",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onStreamUnpublished",
+        "expect": {
+            "url": "https://abc.com"
+        }
+    },
+    {
+        "result": true,
+        "event": "onStreamPublished",
+        "expect": {
+            "url": "https://abc.com",
+            "error": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onActiveSpeaker",
+        "expect": {
+            "uid": 2048
+        }
+    },
+    {
+        "result": true,
+        "event": "onMediaEngineStartCallSuccess",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onMediaEngineLoadSuccess",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onStreamMessageError",
+        "expect": {
+            "uid": 2048,
+            "streamId": 2048,
+            "code": 1000,
+            "missed": 10,
+            "cached": 10
+        }
+    },
+    {
+        "result": true,
+        "event": "onStreamMessage",
+        "expect": {
+            "uid": 2048,
+            "streamId": 2048,
+            "length": 3
+        }
+    },
+    {
+        "result": true,
+        "event": "onConnectionBanned",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onVideoStopped",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onTokenPrivilegeWillExpire",
+        "expect": {
+            "token": "abc"
+        }
+    },
+    {
+        "result": true,
+        "event": "onNetworkQuality",
+        "expect": {
+            "uid": 2048,
+            "txQuality": 10,
+            "rxQuality": 10
+        }
+    },
+    {
+        "result": true,
+        "event": "onFirstLocalVideoFrame",
+        "expect": {
+            "width": 100,
+            "height": 100,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onFirstRemoteVideoFrame",
+        "expect": {
+            "uid": 2048,
+            "width": 100,
+            "height": 100,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserEnableVideo",
+        "expect": {
+            "uid": 2048,
+            "enabled": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onAudioDeviceStateChanged",
+        "expect": {
+            "deviceId": "abc",
+            "deviceType": 1,
+            "deviceState": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onCameraReady",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onCameraFocusAreaChanged",
+        "expect": {
+            "x": 1,
+            "y": 1,
+            "width": 100,
+            "height": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onCameraExposureAreaChanged",
+        "expect": {
+            "x": 1,
+            "y": 1,
+            "width": 100,
+            "height": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteAudioMixingBegin",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onRemoteAudioMixingEnd",
+        "expect": {}
+    },
+    {
+        "result": true,
+        "event": "onAudioEffectFinished",
+        "expect": {
+            "soundId": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onVideoDeviceStateChanged",
+        "expect": {
+            "deviceId": "abc",
+            "deviceType": 1,
+            "deviceState": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserEnableLocalVideo",
+        "expect": {
+            "uid": 2048,
+            "enabled": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onLocalPublishFallbackToAudioOnly",
+        "expect": {
+            "isFallbackOrRecover": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteSubscribeFallbackToAudioOnly",
+        "expect": {
+            "uid": 2048,
+            "isFallbackOrRecover": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onFirstRemoteAudioDecoded",
+        "expect": {
+            "uid": 2048,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onLocalUserRegistered",
+        "expect": {
+            "uid": 2048,
+            "userAccount": "abc"
+        }
+    },
+    {
+        "result": true,
+        "event": "onClientRoleChanged",
+        "expect": {
+            "oldRole": 1,
+            "newRole": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserOffline",
+        "expect": {
+            "uid": 2048,
+            "reason": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onAudioRouteChanged",
+        "expect": {
+            "routing": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onAudioDeviceVolumeChanged",
+        "expect": {
+            "deviceType": 1,
+            "volume": 50,
+            "muted": true
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteVideoStateChanged",
+        "expect": {
+            "uid": 2048,
+            "state": 1,
+            "reason": 1,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onConnectionStateChanged",
+        "expect": {
+            "state": 1,
+            "reason": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onAudioMixingStateChanged",
+        "expect": {
+            "state": 1,
+            "errorCode": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onLocalVideoStateChanged",
+        "expect": {
+            "localVideoState": 1,
+            "error": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onRtmpStreamingStateChanged",
+        "expect": {
+            "url": "https://abc.com",
+            "state": 1,
+            "errCode": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onNetworkTypeChanged",
+        "expect": {
+            "type": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onLocalAudioStateChanged",
+        "expect": {
+            "state": 1,
+            "error": 1
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteAudioStateChanged",
+        "expect": {
+            "uid": 2048,
+            "state": 1,
+            "reason": 1,
+            "elapsed": 100
+        }
+    },
+    {
+        "result": true,
+        "event": "onChannelMediaRelayStateChanged",
+        "expect": {
+            "state": 1,
+            "code": 1000
+        }
+    },
+    {
+        "result": true,
+        "event": "onLeaveChannel",
+        "expect": {
+            "stats": {
+                "duration": 10,
+                "txBytes": 10,
+                "rxBytes": 10,
+                "txAudioBytes": 10,
+                "txVideoBytes": 10,
+                "rxAudioBytes": 10,
+                "rxVideoBytes": 10,
+                "txKBitRate": 10,
+                "rxKBitRate": 10,
+                "rxAudioKBitRate": 10,
+                "txAudioKBitRate": 10,
+                "rxVideoKBitRate": 10,
+                "txVideoKBitRate": 10,
+                "lastmileDelay": 10,
+                "txPacketLossRate": 10,
+                "rxPacketLossRate": 10,
+                "userCount": 10,
+                "cpuAppUsage": 1000000,
+                "cpuTotalUsage": 1000000,
+                "gatewayRtt": 10,
+                "memoryAppUsageRatio": 1000000,
+                "memoryTotalUsageRatio": 1000000,
+                "memoryAppUsageInKbytes": 1000000
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onRtcStats",
+        "expect": {
+            "stats": {
+                "duration": 10,
+                "txBytes": 10,
+                "rxBytes": 10,
+                "txAudioBytes": 10,
+                "txVideoBytes": 10,
+                "rxAudioBytes": 10,
+                "rxVideoBytes": 10,
+                "txKBitRate": 10,
+                "rxKBitRate": 10,
+                "rxAudioKBitRate": 10,
+                "txAudioKBitRate": 10,
+                "rxVideoKBitRate": 10,
+                "txVideoKBitRate": 10,
+                "lastmileDelay": 10,
+                "txPacketLossRate": 10,
+                "rxPacketLossRate": 10,
+                "userCount": 10,
+                "cpuAppUsage": 1000000,
+                "cpuTotalUsage": 1000000,
+                "gatewayRtt": 10,
+                "memoryAppUsageRatio": 1000000,
+                "memoryTotalUsageRatio": 1000000,
+                "memoryAppUsageInKbytes": 1000000
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onLastmileProbeResult",
+        "expect": {
+            "result": {
+                "state": 10,
+                "uplinkReport": {
+                    "packetLossRate": 1,
+                    "jitter": 1,
+                    "availableBandwidth": 1
+                },
+                "downlinkReport": {
+                    "packetLossRate": 1,
+                    "jitter": 1,
+                    "availableBandwidth": 1
+                },
+                "rtt": 1
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onLocalVideoStats",
+        "expect": {
+            "stats": {
+                "sentBitrate": 10,
+                "sentFrameRate": 10,
+                "encoderOutputFrameRate": 10,
+                "rendererOutputFrameRate": 10,
+                "targetBitrate": 10,
+                "targetFrameRate": 10,
+                "qualityAdaptIndication": 10,
+                "encodedBitrate": 10,
+                "encodedFrameWidth": 100,
+                "encodedFrameHeight": 100,
+                "encodedFrameCount": 10,
+                "codecType": 1,
+                "txPacketLossRate": 10,
+                "captureFrameRate": 10
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onLocalAudioStats",
+        "expect": {
+            "stats": {
+                "numChannels": 1,
+                "sentSampleRate": 10,
+                "sentBitrate": 10,
+                "txPacketLossRate": 1
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteVideoStats",
+        "expect": {
+            "stats": {
+                "uid": 2048,
+                "delay": 10,
+                "width": 100,
+                "height": 100,
+                "receivedBitrate": 10,
+                "decoderOutputFrameRate": 10,
+                "rendererOutputFrameRate": 10,
+                "packetLossRate": 10,
+                "rxStreamType": 1,
+                "totalFrozenTime": 10,
+                "frozenRate": 10,
+                "totalActiveTime": 10,
+                "publishDuration": 10
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onRemoteAudioStats",
+        "expect": {
+            "stats": {
+                "uid": 2048,
+                "quality": 50,
+                "networkTransportDelay": 10,
+                "jitterBufferDelay": 10,
+                "audioLossRate": 10,
+                "numChannels": 1,
+                "receivedSampleRate": 10,
+                "receivedBitrate": 10,
+                "totalFrozenTime": 10,
+                "frozenRate": 10,
+                "totalActiveTime": 10,
+                "publishDuration": 10
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onUserInfoUpdated",
+        "expect": {
+            "uid": 2048,
+            "info": {
+                "uid": 2048,
+                "userAccount": "abc"
+            }
+        }
+    },
+    {
+        "result": true,
+        "event": "onAudioVolumeIndication",
+        "expect": {
+            "speakers": [
+                {
+                    "uid": 111,
+                    "volume": 100,
+                    "vad": 10,
+                    "channelId": "channel1"
+                },
+                {
+                    "uid": 121,
+                    "volume": 400,
+                    "vad": 40,
+                    "channelId": "channel2"
+                },
+                {
+                    "uid": 131,
+                    "volume": 700,
+                    "vad": 70,
+                    "channelId": "channel3"
+                }
+            ],
+            "speakerNumber": 3,
+            "totalVolume": 1200
+        }
+    }
+]
