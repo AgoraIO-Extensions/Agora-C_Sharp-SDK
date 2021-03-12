@@ -398,6 +398,7 @@ namespace agorartc
         private AgoraVideoDeviceManager _videoDeviceManager = null;
         private AgoraAudioPlaybackDeviceManager _audioPlaybackDeviceManager = null;
         private AgoraAudioRecordingDeviceManager _audioRecordingDeviceManager = null;
+        private IrisCEventHandler _userEngineEventHandler;
         private char[] result = new char[512];
 
         /// <summary>
@@ -461,12 +462,12 @@ namespace agorartc
         {
             engineEventHandler = eventHandlerBase;
             NativeRtcEngineEventHandler.Rtc = _instance;
-            var myHandler = new IrisCEventHandler
+            _userEngineEventHandler = new IrisCEventHandler
             {
                 onEvent = NativeRtcEngineEventHandler.OnEvent,
                 onEventWithBuffer = NativeRtcEngineEventHandler.OnEventWithBuffer
             };
-            SetIrisEngineEventHandler(myHandler);
+            SetIrisEngineEventHandler(_userEngineEventHandler);
         }
 
         /// <summary>

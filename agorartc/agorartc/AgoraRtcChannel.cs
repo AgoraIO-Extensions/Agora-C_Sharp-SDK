@@ -223,6 +223,7 @@ namespace agorartc
         private readonly string _channelId;
         private bool disposed = false;
         internal IRtcChannelEventHandlerBase channelEventHandler;
+        private IrisCEventHandler _userChannelEventHandler;
         private char[] result = new char[512];
 
         public AgoraRtcChannel(string id, AgoraRtcEngine rtcEngine)
@@ -275,12 +276,12 @@ namespace agorartc
         {
             channelEventHandler = channelEventHandlerBase;
             NativeRtcChannelEventHandler.AddChannel(_channelId, this);
-            var myHandler = new IrisCEventHandler()
+            _userChannelEventHandler = new IrisCEventHandler()
             {
                 onEvent = NativeRtcEngineEventHandler.OnEvent,
                 onEventWithBuffer = NativeRtcEngineEventHandler.OnEventWithBuffer
             };
-            SetIrisChannelEventHandler(myHandler);
+            SetIrisChannelEventHandler(_userChannelEventHandler);
         }
 
         private void SetIrisChannelEventHandler(IrisCEventHandler handler)
