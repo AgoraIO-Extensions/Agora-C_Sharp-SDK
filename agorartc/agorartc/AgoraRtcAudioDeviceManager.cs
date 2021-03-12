@@ -1,3 +1,8 @@
+﻿//
+//  Created by Yiqing Huang on 2020/12/15.
+//  Copyright © 2020 Agora. All rights reserved.
+//
+
 using System;
 using System.Text.Json;
 using Newtonsoft.Json;

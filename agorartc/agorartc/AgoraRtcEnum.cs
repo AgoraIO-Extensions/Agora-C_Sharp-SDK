@@ -1,4 +1,9 @@
-﻿namespace agorartc
+﻿//
+//  Created by Yiqing Huang on 2020/12/15.
+//  Copyright © 2020 Agora. All rights reserved.
+//
+
+namespace agorartc
 {
     /** Warning code.
      */

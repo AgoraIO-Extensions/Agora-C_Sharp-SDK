@@ -10,33 +10,53 @@ Use Agora RTC SDK with C#!
 
 ## Installation
 
+### Method 1: Use NuGet (Recommended)
+
+For Visual Studio users, please refer to [Usage](#Usage).
+
+```bash
+dotnet add package agora_rtc_sdk --version 3.2.1.1
+```
+
+### Method 2: Compile SDK
+
 1. Clone the repository.
 
    ```bash
    git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
    ```
 
-2. Download the required SDK.
+2. Compile SDK.
 
-   Download SDK [Agora Video SDK for Windows](https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_v3_1_2_FULL.zip). Unzip the downloaded SDK package and copy the `agora_rtc_sdk.dll` and `agora_rtc_sdk.lib` files from `libs/x86_64` into `agora_cpp/CSharp_RTC_SDK/lib`.
-
-3. Compile SDK.
-
-   Open `agora_cpp/agora_cpp.sln` via Visual Studio. Build Solution. The generated dynamic library lies in `agora_cpp/x64/Debug` named `agora_cpp.dll`.
-   
    Open `agorartc/agorartc.sln` via Visual Studio. Build Solution. 
 
 ## Usage
 
 A GUI demo has been contained in the repository.
 
-1. Add the required dynamic libraries and the SDK folder into the project.
+### Method 1: Use NuGet (Recommended)
 
-   Copy `agora_cpp/x64/Debug/agora_cpp.dll` and  `agora_cpp/CSharp_RTC_SDK/lib/agora_rtc_sdk.dll` into `OneToOneVideo/OneToOneVideo` folder.
+1. Open `OneToOneVideo/OneToOneVideo.sln` via Visual Studio.
+2. In `Solution Explorer`, find `OneToOneVideo->Dependencies` and right click. Then, click `Manage NuGet Packages...`.
+3. Click `Browse` button, search `agora_rtc_sdk` and install the package.
+4. Find all DLL files showed in `Solution Explorer` and set the `Copy to Output Directory` property in `Properties->Advanced` to `Copy always`.
+5. Run demo.
 
-2. Open `OneToOneVideo/OneToOneVideo.sln` via Visual Studio. Run Demo.
+### Method 2: Use DLL files
 
-   *If you do not have an App ID, see Appendix.*
+By following [self-compiling SDK](#Method 2: Compile SDK) in Installation section, please follow the instructions below.
+
+1. Download the required Native SDK.
+
+   Download SDK [Agora Video SDK for Windows](https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_v3_2_1_FULL.zip). Unzip the downloaded SDK package and copy all the `.dll` files `libs/x86_64` into `OneToOneVideo/OneToOneVideo` folder.
+
+2. Copy other required DLL files.
+
+   Copy `agorartc/agorartc/bin/debug/netcoreapp3.1/agorartc.dll` and  `iris.dll` into `OneToOneVideo/OneToOneVideo` folder.
+
+3. Open `OneToOneVideo/OneToOneVideo.sln` via Visual Studio. Run demo.
+
+*If you do not have an App ID, see Appendix.*
 
 ## Help
 
