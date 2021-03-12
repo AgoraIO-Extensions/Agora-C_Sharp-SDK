@@ -15,7 +15,7 @@ Use Agora RTC SDK with C#!
 For Visual Studio users, please refer to [Usage](#Usage).
 
 ```bash
-dotnet add package agora_rtc_sdk --version 3.2.1.1
+dotnet add package agora_rtc_sdk --version 3.2.1.2
 ```
 
 ### Method 2: Compile SDK

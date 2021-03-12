@@ -16,7 +16,7 @@ Agora RTC C# SDK，目前支持 Windows 平台。
 Visual Studio 用户请参考[使用方法](#使用方法)。
 
 ```bash
-dotnet add package agora_rtc_sdk --version 3.2.1.1
+dotnet add package agora_rtc_sdk --version 3.2.1.2
 ```
 
 ### 方法二：编译 SDK
