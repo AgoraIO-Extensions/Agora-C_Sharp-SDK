@@ -110,7 +110,6 @@ namespace OneToOneVideo
             this.remoteVideo.Size = new System.Drawing.Size(442, 304);
             this.remoteVideo.TabIndex = 6;
             this.remoteVideo.TabStop = false;
-            this.remoteVideo.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // localVideo
             // 

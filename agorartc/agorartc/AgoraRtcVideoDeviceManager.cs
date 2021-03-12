@@ -1,20 +1,30 @@
+﻿//
+//  Created by Yiqing Huang on 2020/12/15.
+//  Copyright © 2020 Agora. All rights reserved.
+//
+
 using System;
+using Newtonsoft.Json;
 
 namespace agorartc
 {
-    using IVideoDeviceManager_ptr = IntPtr;
-    using view_t = IntPtr;
-    
-    public class AgoraVideoDeviceManager: IDisposable
-    {
-        private IVideoDeviceManager_ptr _videoDeviceHandler;
-        private bool _disposed = false;
+    using IrisDeviceManagerPtr = IntPtr;
+    using view_t = UInt64;
 
-        public AgoraVideoDeviceManager(IVideoDeviceManager_ptr handler)
+    public class AgoraVideoDeviceManager : IDisposable
+    {
+        private IrisDeviceManagerPtr _videoDeviceHandler;
+        private bool _disposed = false;
+        private char[] result = new char[2048];
+
+        public AgoraVideoDeviceManager(IrisDeviceManagerPtr handler)
         {
             _videoDeviceHandler = handler;
         }
-        
+
+        /// <summary>
+        /// Releases all IRtcVideoDeviceManager resources.
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
@@ -26,48 +36,155 @@ namespace agorartc
             if (_disposed) return;
             if (disposing)
             {
-                
             }
 
             ReleaseVideoDeviceManager();
             _disposed = true;
         }
 
+        /// <summary>
+        /// Starts the video-capture device test.
+        ///
+        ///This method tests whether the video-capture device works properly. Before calling this method, ensure that you have already called the \ref IRtcEngine::enableVideo "enableVideo" method, and the window handle (*hwnd*) parameter is valid.
+        /// </summary>
+        /// 
+        /// <param name="hwnd">
+        /// @param hwnd The window handle used to display the screen.
+        /// </param>
+        /// 
+        /// <returns>
+        /// @return
+        /// - 0: Success.
+        /// - &lt;0: Failure.
+        /// </returns>
         public ERROR_CODE StartDeviceTest(view_t hwnd)
         {
-            return AgorartcNative.startDeviceTest(_videoDeviceHandler, hwnd);
+            var para = new
+            {
+                hwnd
+            };
+            return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kStartVideoDeviceTest, JsonConvert.SerializeObject(para), result) * -1);
         }
 
+        /// <summary>
+        /// Stops the video-capture device test.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// @return
+        /// - 0: Success.
+        /// - &lt;0: Failure.
+        /// </returns>
         public ERROR_CODE StopDeviceTest()
         {
-            return AgorartcNative.stopDeviceTest(_videoDeviceHandler);
+            var para = new { };
+            return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kStopVideoDeviceTest, JsonConvert.SerializeObject(para), result) * -1);
         }
 
-        public ERROR_CODE SetDevice(string deviceId)
+        /// <summary>
+        /// Sets the device with the device ID.
+        /// </summary>
+        /// 
+        /// <param name="deviceId">
+        /// @param deviceId Device ID of the device.
+        /// </param>
+        /// 
+        /// <returns>
+        /// @return
+        /// - 0: Success.
+        /// - &lt;0: Failure.
+        /// </returns>
+        public ERROR_CODE SetCurrentDevice(string deviceId)
         {
-            return AgorartcNative.setDevice(_videoDeviceHandler, deviceId);
+            var para = new
+            {
+                deviceId
+            };
+            return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kSetCurrentVideoDeviceId, JsonConvert.SerializeObject(para), result) * -1);
         }
 
-        public ERROR_CODE GetDevice(int index, string deviceName, string deviceId)
+        /// <summary>
+        /// Get the device id of the current device.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// @return
+        /// - The device id of the current device.
+        /// </returns>
+        public string GetCurrentDevice()
         {
-            return AgorartcNative.getDevice(_videoDeviceHandler, index, deviceName, deviceId);
-        }
+            var para = new { };
 
-        public ERROR_CODE GetCurrentDevice(string deviceId)
+            return AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kGetCurrentVideoDeviceId, JsonConvert.SerializeObject(para), result) != 0
+                ? "GetDevice Failed."
+                : new string(result[..Array.IndexOf(result, '\0')]);
+        }
+        
+        /// <summary>
+        /// Retrieves a specified piece of information about an indexed video device.
+        /// </summary>
+        /// 
+        /// <param name="index">
+        /// @param index The specified index of the video device that must be less than the return value of \ref IVideoDeviceCollection::getCount "getCount".
+        /// </param>
+        /// 
+        /// <param name="deviceName">
+        /// @param deviceName Pointer to the video device name.
+        /// </param>
+        /// 
+        /// <param name="deviceId">
+        /// @param deviceId Pointer to the video device ID.
+        /// </param>
+        /// 
+        /// <returns>
+        /// @return
+        /// - 0: Success.
+        /// - &lt;0: Failure.
+        /// </returns>
+        public ERROR_CODE GetDeviceInfoByIndex(int index, out string deviceName, out string deviceId)
         {
-            return AgorartcNative.getCurrentDevice(_videoDeviceHandler, deviceId);
+            var para = new
+            {
+                index
+            };
+            var ret = (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kGetVideoDeviceInfoByIndex, JsonConvert.SerializeObject(para), result) * -1);
+            if (Array.IndexOf(result, '\0') != 0)
+            {
+                deviceName = (string) AgoraUtil.GetData<string>(result, "deviceName");
+                deviceId = (string) AgoraUtil.GetData<string>(result, "deviceId");
+            }
+            else
+            {
+                deviceName = "";
+                deviceId = "";
+            }
+            
+            return ret;
         }
 
+        /// <summary>
+        /// Retrieves the total number of the indexed video devices in the system.
+        /// </summary>
+        /// 
+        /// <returns>
+        /// @return Total number of the indexed video devices:
+        /// </returns>
         public int GetDeviceCount()
         {
-            return AgorartcNative.getDeviceCount(_videoDeviceHandler);
+            var para = new { };
+            return AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
+                CApiTypeVideoDeviceManager.kGetVideoDeviceCount, JsonConvert.SerializeObject(para), result);
         }
 
 
         private void ReleaseVideoDeviceManager()
         {
-            AgorartcNative.releaseVideoDeviceManager(_videoDeviceHandler);
-            AgoraRtcEngine.CreateRtcEngine().ReleaseAgoraVideoDeviceManager(this);
+            AgoraRtcEngine.CreateRtcEngine().ReleaseAgoraVideoDeviceManager();
             _videoDeviceHandler = IntPtr.Zero;
         }
 

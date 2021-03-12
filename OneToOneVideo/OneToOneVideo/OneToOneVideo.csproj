@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <Reference Include="agorartc">
-      <HintPath>..\..\agorartc\agorartc\bin\x64\Debug\netcoreapp3.1\agorartc.dll</HintPath>
+      <HintPath>agorartc.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -29,10 +29,25 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="agora_cpp.dll">
+    <None Update="agora_rtc_sdk.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="agora_rtc_sdk.dll">
+    <None Update="iris.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libagora-fdkaac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libagora-ffmpeg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libagora-mpg123.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libagora-soundtouch.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libhwcodec.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
