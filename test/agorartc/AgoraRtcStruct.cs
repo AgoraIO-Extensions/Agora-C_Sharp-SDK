@@ -1,3 +1,8 @@
+//
+//  Created by Yiqing Huang on 2020/12/15.
+//  Copyright © 2020 Agora. All rights reserved.
+//
+
 using System;
 using System.Runtime.InteropServices;
 
@@ -1069,31 +1074,31 @@ namespace agorartc
             bitrate = (int) BITRATE.STANDARD_BITRATE;
             captureMouseCursor = true;
             windowFocus = false;
-            excludeWindowList = 0;
+            excludeWindowList = new view_t[0];
             excludeWindowCount = 0;
         }
 
         public ScreenCaptureParameters(VideoDimensions dimensions, int frameRate, int bitrate, bool captureMouseCursor,
-            bool windowFocus, view_t? excludeWindowList = null, int excludeWindowCount = 0)
+            bool windowFocus, view_t[]? excludeWindowList = null, int excludeWindowCount = 0)
         {
             this.dimensions = dimensions;
             this.frameRate = frameRate;
             this.bitrate = bitrate;
             this.captureMouseCursor = captureMouseCursor;
             this.windowFocus = windowFocus;
-            this.excludeWindowList = excludeWindowList ?? 0;
+            this.excludeWindowList = excludeWindowList ?? new view_t[0];
             this.excludeWindowCount = excludeWindowCount;
         }
 
         public ScreenCaptureParameters(int width, int height, int frameRate, int bitrate, bool captureMouseCursor,
-            bool windowFocus, view_t? excludeWindowList = null, int excludeWindowCount = 0)
+            bool windowFocus, view_t[]? excludeWindowList = null, int excludeWindowCount = 0)
         {
             dimensions = new VideoDimensions(width, height);
             this.frameRate = frameRate;
             this.bitrate = bitrate;
             this.captureMouseCursor = captureMouseCursor;
             this.windowFocus = windowFocus;
-            this.excludeWindowList = excludeWindowList ?? 0;
+            this.excludeWindowList = excludeWindowList ?? new view_t[0];
             this.excludeWindowCount = excludeWindowCount;
         }
 
@@ -1138,7 +1143,7 @@ namespace agorartc
 		 * When calling \ref IRtcEngine::startScreenCaptureByScreenRect "startScreenCaptureByScreenRect" to start screen sharing, you can use this parameter to block the specified windows.
 		 * When calling \ref IRtcEngine::updateScreenCaptureParameters "updateScreenCaptureParameters" to update the configuration for screen sharing, you can use this parameter to dynamically block the specified windows during screen sharing.
 		 */
-        public view_t excludeWindowList { set; get; }
+        public view_t[] excludeWindowList { set; get; }
 
         /** The number of windows to be blocked.
 		 */
