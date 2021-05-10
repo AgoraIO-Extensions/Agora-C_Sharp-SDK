@@ -399,7 +399,7 @@ namespace agorartc
         private AgoraAudioPlaybackDeviceManager _audioPlaybackDeviceManager = null;
         private AgoraAudioRecordingDeviceManager _audioRecordingDeviceManager = null;
         private IrisCEventHandler _userEngineEventHandler;
-        private char[] result = new char[512];
+        private CharArrayAssistant result;
 
         /// <summary>
         /// Releases all IRtcEngine resources.
@@ -482,7 +482,8 @@ namespace agorartc
         {
             return _instance ??= new AgoraRtcEngine
             {
-                _irisEngine = AgorartcNative.CreateIrisEngine()
+                _irisEngine = AgorartcNative.CreateIrisEngine(),
+                result = new CharArrayAssistant()
             };
         }
 
@@ -700,7 +701,7 @@ namespace agorartc
                 }
             };
             var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineInitialize,
-                JsonConvert.SerializeObject(para), result) * -1);
+                JsonConvert.SerializeObject(para), out result) * -1);
             SetAppType(AppType.APP_TYPE_C_SHARP);
             return ret;
         }
@@ -741,7 +742,7 @@ namespace agorartc
                 profile
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineSetChannelProfile,
-                JsonConvert.SerializeObject(para), result) * -1);
+                JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -774,7 +775,7 @@ namespace agorartc
                 role
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineSetClientRole,
-                JsonConvert.SerializeObject(para), result) * -1);
+                JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -837,7 +838,7 @@ namespace agorartc
                 uid
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineJoinChannel,
-                JsonConvert.SerializeObject(para), result) * -1);
+                JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -897,7 +898,7 @@ namespace agorartc
                 channelId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineSwitchChannel,
-                JsonConvert.SerializeObject(para), result) * -1);
+                JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -925,7 +926,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineLeaveChannel,
-                JsonConvert.SerializeObject(para), result) * -1);
+                JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -958,7 +959,7 @@ namespace agorartc
                 token
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineRenewToken,
-                JsonConvert.SerializeObject(para), result) * -1);
+                JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1007,7 +1008,7 @@ namespace agorartc
                 userAccount
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineRegisterLocalUserAccount, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineRegisterLocalUserAccount, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1063,7 +1064,7 @@ namespace agorartc
                 userAccount
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineJoinChannelWithUserAccount, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineJoinChannelWithUserAccount, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1103,8 +1104,8 @@ namespace agorartc
                 userAccount
             };
             var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineGetUserInfoByUserAccount, JsonConvert.SerializeObject(para), result) * -1);
-            userInfo = result[0] == '\0' ? new UserInfo() : AgoraUtil.JsonToStruct<UserInfo>(result);
+                CApiTypeEngine.kEngineGetUserInfoByUserAccount, JsonConvert.SerializeObject(para), out result) * -1);
+            userInfo = result.result.Length == 0 ? new UserInfo() : AgoraUtil.JsonToStruct<UserInfo>(result.result);
             return ret;
         }
 
@@ -1140,8 +1141,8 @@ namespace agorartc
                 uid
             };
             var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineGetUserInfoByUid, JsonConvert.SerializeObject(para), result) * -1);
-            userInfo = result[0] == '\0' ? new UserInfo() : AgoraUtil.JsonToStruct<UserInfo>(result);
+                CApiTypeEngine.kEngineGetUserInfoByUid, JsonConvert.SerializeObject(para), out result) * -1);
+            userInfo = result.result.Length == 0 ? new UserInfo() : AgoraUtil.JsonToStruct<UserInfo>(result.result);
             return ret;
         }
 
@@ -1171,7 +1172,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartEchoTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStartEchoTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1203,7 +1204,7 @@ namespace agorartc
                 intervalInSeconds
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartEchoTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStartEchoTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1219,7 +1220,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopEchoTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopEchoTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1246,7 +1247,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableVideo, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableVideo, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1273,7 +1274,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineDisableVideo, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineDisableVideo, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1313,7 +1314,7 @@ namespace agorartc
                 swapWidthAndHeight
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetVideoProfile, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetVideoProfile, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1342,7 +1343,9 @@ namespace agorartc
                 config
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetVideoEncoderConfiguration, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineSetVideoEncoderConfiguration,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -1377,7 +1380,9 @@ namespace agorartc
                 }
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetCameraCapturerConfiguration, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineSetCameraCapturerConfiguration,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -1409,7 +1414,7 @@ namespace agorartc
                 canvas
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetupLocalVideo, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetupLocalVideo, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1442,7 +1447,7 @@ namespace agorartc
                 canvas
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetupRemoteVideo, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetupRemoteVideo, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1465,7 +1470,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartPreview, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStartPreview, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1497,7 +1502,7 @@ namespace agorartc
                 userPriority
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetRemoteUserPriority, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetRemoteUserPriority, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1513,7 +1518,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopPreview, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopPreview, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1539,7 +1544,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableAudio, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableAudio, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1578,7 +1583,7 @@ namespace agorartc
                 enabled
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableLocalAudio, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableLocalAudio, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1598,7 +1603,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineDisableAudio, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineDisableAudio, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1635,7 +1640,7 @@ namespace agorartc
                 scenario
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetAudioProfile, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetAudioProfile, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1665,7 +1670,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineMuteLocalAudioStream, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineMuteLocalAudioStream, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1690,7 +1695,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineMuteAllRemoteAudioStreams, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineMuteAllRemoteAudioStreams, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1723,7 +1728,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                         CApiTypeEngine.kEngineSetDefaultMuteAllRemoteAudioStreams,
-                        JsonConvert.SerializeObject(para), result) * -1
+                        JsonConvert.SerializeObject(para), out result) * -1
                 );
         }
 
@@ -1761,7 +1766,9 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAdjustUserPlaybackSignalVolume, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineAdjustUserPlaybackSignalVolume,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -1793,7 +1800,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineMuteRemoteAudioStream, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineMuteRemoteAudioStream, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1824,7 +1831,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineMuteLocalVideoStream, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineMuteLocalVideoStream, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1857,7 +1864,7 @@ namespace agorartc
                 enabled
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableLocalVideo, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableLocalVideo, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1882,7 +1889,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineMuteAllRemoteVideoStreams, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineMuteAllRemoteVideoStreams, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1912,7 +1919,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                 CApiTypeEngine.kEngineSetDefaultMuteAllRemoteVideoStreams,
-                JsonConvert.SerializeObject(para), result) * -1);
+                JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1944,7 +1951,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineMuteRemoteVideoStream, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineMuteRemoteVideoStream, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -1985,7 +1992,7 @@ namespace agorartc
                 streamType
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetRemoteVideoStreamType, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetRemoteVideoStreamType, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2020,7 +2027,9 @@ namespace agorartc
                 streamType
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetRemoteDefaultVideoStreamType, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineSetRemoteDefaultVideoStreamType,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -2060,7 +2069,7 @@ namespace agorartc
                 report_vad = reportVad
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableAudioVolumeIndication, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableAudioVolumeIndication, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2101,7 +2110,7 @@ namespace agorartc
                 quality
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartAudioRecording, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStartAudioRecording, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2148,7 +2157,7 @@ namespace agorartc
                 quality
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartAudioRecording, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStartAudioRecording, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2166,7 +2175,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopAudioRecording, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopAudioRecording, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2208,7 +2217,7 @@ namespace agorartc
                 gain
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetRemoteVoicePosition, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetRemoteVoicePosition, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2241,7 +2250,7 @@ namespace agorartc
                 filePath
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLogFile, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLogFile, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2271,7 +2280,7 @@ namespace agorartc
                 filter
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLogFilter, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLogFilter, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2302,7 +2311,7 @@ namespace agorartc
                 fileSizeInKBytes
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLogFileSize, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLogFileSize, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2327,7 +2336,7 @@ namespace agorartc
                 renderMode
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalRenderMode, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLocalRenderMode, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2365,7 +2374,7 @@ namespace agorartc
                 mirrorMode
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalRenderMode, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLocalRenderMode, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2396,7 +2405,7 @@ namespace agorartc
                 renderMode
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetRemoteRenderMode, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetRemoteRenderMode, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2439,7 +2448,7 @@ namespace agorartc
                 mirrorMode
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetRemoteRenderMode, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetRemoteRenderMode, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2471,7 +2480,7 @@ namespace agorartc
                 mirrorMode
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalVideoMirrorMode, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLocalVideoMirrorMode, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2498,7 +2507,7 @@ namespace agorartc
                 enabled
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableDualStreamMode, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableDualStreamMode, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2526,7 +2535,7 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAdjustRecordingSignalVolume, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineAdjustRecordingSignalVolume, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2558,7 +2567,7 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAdjustPlaybackSignalVolume, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineAdjustPlaybackSignalVolume, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2588,7 +2597,9 @@ namespace agorartc
                 enabled
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableWebSdkInteroperability, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineEnableWebSdkInteroperability,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -2616,7 +2627,7 @@ namespace agorartc
                 preferFrameRateOverImageQuality
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetVideoQualityParameters, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetVideoQualityParameters, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2650,7 +2661,9 @@ namespace agorartc
                 option
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalPublishFallbackOption, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineSetLocalPublishFallbackOption,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -2680,7 +2693,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                                      CApiTypeEngine.kEngineSetRemoteSubscribeFallbackOption,
-                                     JsonConvert.SerializeObject(para), result) *
+                                     JsonConvert.SerializeObject(para), out result) *
                                  -1);
         }
 
@@ -2717,7 +2730,7 @@ namespace agorartc
                 deviceName
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableLoopBackRecording, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableLoopBackRecording, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2752,7 +2765,9 @@ namespace agorartc
                 captureParams
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartScreenCaptureByScreenRect, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineStartScreenCaptureByScreenRect,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -2898,7 +2913,9 @@ namespace agorartc
                 captureParams
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartScreenCaptureByWindowId, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineStartScreenCaptureByWindowId,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -2923,7 +2940,7 @@ namespace agorartc
                 contentHint
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetScreenCaptureContentHint, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetScreenCaptureContentHint, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2947,7 +2964,9 @@ namespace agorartc
                 captureParams
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineUpdateScreenCaptureParameters, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineUpdateScreenCaptureParameters,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -2971,7 +2990,7 @@ namespace agorartc
                 regionRect
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineUpdateScreenCaptureRegion, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineUpdateScreenCaptureRegion, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -2987,7 +3006,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopScreenCapture, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopScreenCapture, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3005,12 +3024,10 @@ namespace agorartc
         public string GetCallId()
         {
             var para = new { };
-            var ret = AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineGetCallId,
-                JsonConvert.SerializeObject(para), result);
             return AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineGetCallId,
-                JsonConvert.SerializeObject(para), result) != 0
+                JsonConvert.SerializeObject(para), out result) != 0
                 ? "GetCallId Failed."
-                : new string(result[..Array.IndexOf(result, '\0')]);
+                : result.result;
         }
 
         /// <summary>
@@ -3043,7 +3060,7 @@ namespace agorartc
                 description
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineRate, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineRate, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3071,7 +3088,7 @@ namespace agorartc
                 description
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineComplain, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineComplain, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3085,9 +3102,9 @@ namespace agorartc
         {
             var para = new { };
             return AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineGetVersion,
-                JsonConvert.SerializeObject(para), result) != 0
+                JsonConvert.SerializeObject(para), out result) != 0
                 ? "GetVersion Failed."
-                : new string(result[..Array.IndexOf(result, '\0')]);
+                : result.result;
         }
 
         /// <summary>
@@ -3116,7 +3133,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableLastMileTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableLastMileTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3132,7 +3149,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineDisableLastMileTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineDisableLastMileTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3167,7 +3184,7 @@ namespace agorartc
                 config
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartLastMileProbeTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStartLastMileProbeTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3183,7 +3200,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopLastMileProbeTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopLastMileProbeTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3204,9 +3221,9 @@ namespace agorartc
                 code
             };
             return AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineGetErrorDescription,
-                JsonConvert.SerializeObject(para), result) != 0
+                JsonConvert.SerializeObject(para), out result) != 0
                 ? "GetErrorDescription Failed."
-                : new string(result[..Array.IndexOf(result, '\0')]);
+                : result.result;
         }
 
         /// <summary>
@@ -3239,7 +3256,7 @@ namespace agorartc
                 secret
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetEncryptionSecret, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetEncryptionSecret, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3276,7 +3293,7 @@ namespace agorartc
                 encryptionMode
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetEncryptionMode, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetEncryptionMode, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3316,7 +3333,7 @@ namespace agorartc
                 ordered
             };
             var ret = AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineCreateDataStream,
-                JsonConvert.SerializeObject(para), result);
+                JsonConvert.SerializeObject(para), out result);
             streamId = ret < 0 ? -1 : ret;
             return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
@@ -3358,7 +3375,7 @@ namespace agorartc
                 length = data.Length
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
-                CApiTypeEngine.kEngineSendStreamMessage, JsonConvert.SerializeObject(para), data) * -1);
+                CApiTypeEngine.kEngineSendStreamMessage, JsonConvert.SerializeObject(para), data, out result) * -1);
         }
 
         /// <summary>
@@ -3399,7 +3416,7 @@ namespace agorartc
                 transcodingEnabled
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAddPublishStreamUrl, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineAddPublishStreamUrl, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3430,7 +3447,7 @@ namespace agorartc
                 url
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineRemovePublishStreamUrl, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineRemovePublishStreamUrl, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3460,7 +3477,7 @@ namespace agorartc
                 transcoding
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLiveTranscoding, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLiveTranscoding, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3495,7 +3512,7 @@ namespace agorartc
                 watermark
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAddVideoWaterMark, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineAddVideoWaterMark, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3539,7 +3556,7 @@ namespace agorartc
                 options
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAddVideoWaterMark, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineAddVideoWaterMark, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3555,7 +3572,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineClearVideoWaterMarks, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineClearVideoWaterMarks, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3591,7 +3608,7 @@ namespace agorartc
                 options
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetBeautyEffectOptions, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetBeautyEffectOptions, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3640,7 +3657,7 @@ namespace agorartc
                 config
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAddInjectStreamUrl, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineAddInjectStreamUrl, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3695,7 +3712,7 @@ namespace agorartc
                 configuration
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartChannelMediaRelay, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStartChannelMediaRelay, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3733,7 +3750,7 @@ namespace agorartc
                 configuration
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineUpdateChannelMediaRelay, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineUpdateChannelMediaRelay, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3767,7 +3784,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopChannelMediaRelay, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopChannelMediaRelay, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3794,7 +3811,7 @@ namespace agorartc
                 url
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineRemoveInjectStreamUrl, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineRemoveInjectStreamUrl, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3808,7 +3825,7 @@ namespace agorartc
         {
             var para = new { };
             return (CONNECTION_STATE_TYPE) AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineGetConnectionState, JsonConvert.SerializeObject(para), result);
+                CApiTypeEngine.kEngineGetConnectionState, JsonConvert.SerializeObject(para), out result);
         }
 
         /// <summary>
@@ -3883,7 +3900,7 @@ namespace agorartc
                 enable
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableRemoteSuperResolution, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableRemoteSuperResolution, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3911,7 +3928,9 @@ namespace agorartc
                 type
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineRegisterMediaMetadataObserver, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineRegisterMediaMetadataObserver,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         public ERROR_CODE UnRegisterMediaMetadataObserver(METADATA_TYPE type)
@@ -3921,9 +3940,11 @@ namespace agorartc
                 type
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineUnRegisterMediaMetadataObserver, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineUnRegisterMediaMetadataObserver,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
-        
+
         public ERROR_CODE SetMaxMetadataSize(int size)
         {
             var para = new
@@ -3931,7 +3952,7 @@ namespace agorartc
                 size
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetMaxMetadataSize, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetMaxMetadataSize, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         public ERROR_CODE SendMetadata(Metadata metadata)
@@ -3946,7 +3967,9 @@ namespace agorartc
                 }
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
-                CApiTypeEngine.kEngineSendMetadata, JsonConvert.SerializeObject(para), metadata.buffer) * -1);
+                                     CApiTypeEngine.kEngineSendMetadata, JsonConvert.SerializeObject(para),
+                                     metadata.buffer, out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -3971,7 +3994,7 @@ namespace agorartc
                 parameters
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetParameters, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetParameters, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -3994,7 +4017,7 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetPlaybackDeviceVolume, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetPlaybackDeviceVolume, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         private void SetAppType(AppType appType)
@@ -4004,7 +4027,7 @@ namespace agorartc
                 appType
             };
             AgorartcNative.CallIrisEngineApi(_irisEngine, CApiTypeEngine.kEngineSetAppType,
-                JsonConvert.SerializeObject(para), result);
+                JsonConvert.SerializeObject(para), out result);
         }
 
         // API_TYPE_AUDIO_EFFECT
@@ -4061,7 +4084,7 @@ namespace agorartc
                 cycle
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStartAudioMixing, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStartAudioMixing, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4078,7 +4101,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopAudioMixing, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopAudioMixing, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4095,7 +4118,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEnginePauseAudioMixing, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEnginePauseAudioMixing, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4112,7 +4135,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineResumeAudioMixing, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineResumeAudioMixing, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4153,7 +4176,9 @@ namespace agorartc
                 fullBitrate
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetHighQualityAudioParameters, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineSetHighQualityAudioParameters,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -4178,7 +4203,7 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAdjustAudioMixingVolume, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineAdjustAudioMixingVolume, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4202,7 +4227,9 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAdjustAudioMixingPlayoutVolume, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineAdjustAudioMixingPlayoutVolume,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -4224,7 +4251,7 @@ namespace agorartc
         {
             var para = new { };
             var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineGetAudioMixingPlayoutVolume, JsonConvert.SerializeObject(para), result);
+                CApiTypeEngine.kEngineGetAudioMixingPlayoutVolume, JsonConvert.SerializeObject(para), out result);
             volume = ret < 0 ? -1 : ret;
             return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
@@ -4250,7 +4277,9 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineAdjustAudioMixingPublishVolume, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineAdjustAudioMixingPublishVolume,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -4272,7 +4301,7 @@ namespace agorartc
         {
             var para = new { };
             var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineGetAudioMixingPublishVolume, JsonConvert.SerializeObject(para), result);
+                CApiTypeEngine.kEngineGetAudioMixingPublishVolume, JsonConvert.SerializeObject(para), out result);
             volume = ret < 0 ? -1 : ret;
             return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
@@ -4295,7 +4324,7 @@ namespace agorartc
         {
             var para = new { };
             var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineGetAudioMixingDuration, JsonConvert.SerializeObject(para), result);
+                CApiTypeEngine.kEngineGetAudioMixingDuration, JsonConvert.SerializeObject(para), out result);
             duration = ret < 0 ? -1 : ret;
             return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
@@ -4318,7 +4347,7 @@ namespace agorartc
         {
             var para = new { };
             var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineGetAudioMixingCurrentPosition, JsonConvert.SerializeObject(para), result);
+                CApiTypeEngine.kEngineGetAudioMixingCurrentPosition, JsonConvert.SerializeObject(para), out result);
             pos = ret < 0 ? -1 : ret;
             return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
@@ -4343,7 +4372,7 @@ namespace agorartc
                 pos
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetAudioMixingPosition, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetAudioMixingPosition, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         public ERROR_CODE SetAudioMixingPitch(int pitch)
@@ -4353,7 +4382,7 @@ namespace agorartc
                 pitch
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetAudioMixingPitch, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetAudioMixingPitch, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4374,7 +4403,7 @@ namespace agorartc
         {
             var para = new { };
             var ret = AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineGetEffectsVolume, JsonConvert.SerializeObject(para), result);
+                CApiTypeEngine.kEngineGetEffectsVolume, JsonConvert.SerializeObject(para), out result);
             volume = ret < 0 ? -1 : ret;
             return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
@@ -4396,7 +4425,7 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetEffectsVolume, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetEffectsVolume, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4424,7 +4453,7 @@ namespace agorartc
                 volume
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetVolumeOfEffect, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetVolumeOfEffect, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4491,7 +4520,7 @@ namespace agorartc
                 publish
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEnginePlayEffect, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEnginePlayEffect, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4514,7 +4543,7 @@ namespace agorartc
                 soundId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopEffect, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopEffect, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4530,7 +4559,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineStopAllEffects, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineStopAllEffects, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4561,7 +4590,7 @@ namespace agorartc
                 filePath
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEnginePreloadEffect, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEnginePreloadEffect, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4580,7 +4609,7 @@ namespace agorartc
                 soundId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineUnloadEffect, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineUnloadEffect, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4603,7 +4632,7 @@ namespace agorartc
                 soundId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEnginePauseEffect, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEnginePauseEffect, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4619,7 +4648,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEnginePauseAllEffects, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEnginePauseAllEffects, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4642,7 +4671,7 @@ namespace agorartc
                 soundId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineResumeEffect, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineResumeEffect, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4658,7 +4687,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineResumeAllEffects, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineResumeAllEffects, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4684,7 +4713,9 @@ namespace agorartc
                 enabled
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableSoundPositionIndication, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineEnableSoundPositionIndication,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -4707,7 +4738,7 @@ namespace agorartc
                 pitch
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalVoicePitch, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLocalVoicePitch, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4735,7 +4766,7 @@ namespace agorartc
                 bandGain
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalVoiceEqualization, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLocalVoiceEqualization, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4764,7 +4795,7 @@ namespace agorartc
                 value
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalVoiceReverb, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLocalVoiceReverb, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4802,7 +4833,7 @@ namespace agorartc
                 voiceChanger
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalVoiceChanger, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLocalVoiceChanger, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4838,7 +4869,7 @@ namespace agorartc
                 reverbPreset
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetLocalVoiceReverbPreset, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetLocalVoiceReverbPreset, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4888,7 +4919,7 @@ namespace agorartc
                 preset
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetVoiceBeautifierPreset, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetVoiceBeautifierPreset, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -4940,7 +4971,7 @@ namespace agorartc
                 preset
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetAudioEffectPreset, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetAudioEffectPreset, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -5034,7 +5065,7 @@ namespace agorartc
                 param2
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetAudioEffectParameters, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetAudioEffectParameters, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -5071,7 +5102,7 @@ namespace agorartc
                 channels
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetExternalAudioSource, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetExternalAudioSource, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -5120,7 +5151,7 @@ namespace agorartc
                 channels
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetExternalAudioSink, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSetExternalAudioSink, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -5163,7 +5194,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
                                      CApiTypeEngine.kEngineSetRecordingAudioFrameParameters,
-                                     JsonConvert.SerializeObject(para), result) *
+                                     JsonConvert.SerializeObject(para), out result) *
                                  -1);
         }
 
@@ -5206,7 +5237,9 @@ namespace agorartc
                 samplesPerCall
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetPlaybackAudioFrameParameters, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineSetPlaybackAudioFrameParameters,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         /// <summary>
@@ -5235,7 +5268,9 @@ namespace agorartc
                 samplesPerCall
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSetMixedAudioFrameParameters, JsonConvert.SerializeObject(para), result) * -1);
+                                     CApiTypeEngine.kEngineSetMixedAudioFrameParameters,
+                                     JsonConvert.SerializeObject(para), out result) *
+                                 -1);
         }
 
         // TODO: RegisterPacketObserver, RegisterAudioFrameObserver, RegisterVideoFrameObserver, RegisterVideoRenderFactory
@@ -5258,7 +5293,7 @@ namespace agorartc
                 wrap
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
-                CApiTypeEngine.kMediaPushAudioFrame, JsonConvert.SerializeObject(para), frame.buffer) * -1);
+                CApiTypeEngine.kMediaPushAudioFrame, JsonConvert.SerializeObject(para), frame.buffer, out result) * -1);
         }
 
         public ERROR_CODE PushAudioFrame(AudioFrame frame)
@@ -5277,17 +5312,18 @@ namespace agorartc
                 }
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
-                CApiTypeEngine.kMediaPushAudioFrame, JsonConvert.SerializeObject(para), frame.buffer) * -1);
+                CApiTypeEngine.kMediaPushAudioFrame, JsonConvert.SerializeObject(para), frame.buffer, out result) * -1);
         }
 
-        public ERROR_CODE PullAudioFrame(ref AudioFrame frame)
+        // TODO: byte[] buffer need to be changed into the similar structure as CharArrayAssistant to achieve both in and out attribute. A question remains: how to determine the buffer size before calling api?
+        private ERROR_CODE PullAudioFrame(ref AudioFrame frame)
         {
             var para = new { };
             var ret = (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
-                CApiTypeEngine.kMediaPullAudioFrame, JsonConvert.SerializeObject(para), frame.buffer) * -1);
-            var f = result[0] == '\0'
+                CApiTypeEngine.kMediaPullAudioFrame, JsonConvert.SerializeObject(para), frame.buffer, out result) * -1);
+            var f = result.result.Length == 0
                 ? new AudioFrameWithoutBuffer()
-                : AgoraUtil.JsonToStruct<AudioFrameWithoutBuffer>(result);
+                : AgoraUtil.JsonToStruct<AudioFrameWithoutBuffer>(result.result);
             frame.avsync_type = f.avsync_type;
             frame.channels = f.channels;
             frame.samples = f.samples;
@@ -5306,7 +5342,7 @@ namespace agorartc
                 useTexture
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kMediaSetExternalVideoSource, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kMediaSetExternalVideoSource, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         public ERROR_CODE PushVideoFrame(ExternalVideoFrame frame)
@@ -5328,7 +5364,7 @@ namespace agorartc
                 }
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApiWithBuffer(_irisEngine,
-                CApiTypeEngine.kMediaPushVideoFrame, JsonConvert.SerializeObject(para), frame.buffer) * -1);
+                CApiTypeEngine.kMediaPushVideoFrame, JsonConvert.SerializeObject(para), frame.buffer, out result) * -1);
         }
 
         /// <summary>
@@ -5373,7 +5409,7 @@ namespace agorartc
                 config
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineEnableEncryption, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineEnableEncryption, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         public ERROR_CODE SendCustomReportMessage(string id, string category, string @event, string label, int value)
@@ -5387,7 +5423,7 @@ namespace agorartc
                 value
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisEngineApi(_irisEngine,
-                CApiTypeEngine.kEngineSendCustomReportMessage, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeEngine.kEngineSendCustomReportMessage, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         ~AgoraRtcEngine()

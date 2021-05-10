@@ -1,3 +1,8 @@
+﻿//
+//  Created by Yiqing Huang on 2020/12/15.
+//  Copyright © 2020 Agora. All rights reserved.
+//
+
 using System;
 using Newtonsoft.Json;
 
@@ -10,10 +15,11 @@ namespace agorartc
     {
         private IrisDeviceManagerPtr _videoDeviceHandler;
         private bool _disposed = false;
-        private char[] result = new char[2048];
+        private CharArrayAssistant result;
 
         public AgoraVideoDeviceManager(IrisDeviceManagerPtr handler)
         {
+            result = new CharArrayAssistant();
             _videoDeviceHandler = handler;
         }
 
@@ -59,7 +65,7 @@ namespace agorartc
                 hwnd
             };
             return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
-                CApiTypeVideoDeviceManager.kStartVideoDeviceTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeVideoDeviceManager.kStartVideoDeviceTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -75,7 +81,7 @@ namespace agorartc
         {
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
-                CApiTypeVideoDeviceManager.kStopVideoDeviceTest, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeVideoDeviceManager.kStopVideoDeviceTest, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -98,7 +104,7 @@ namespace agorartc
                 deviceId
             };
             return (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
-                CApiTypeVideoDeviceManager.kSetCurrentVideoDeviceId, JsonConvert.SerializeObject(para), result) * -1);
+                CApiTypeVideoDeviceManager.kSetCurrentVideoDeviceId, JsonConvert.SerializeObject(para), out result) * -1);
         }
 
         /// <summary>
@@ -114,9 +120,9 @@ namespace agorartc
             var para = new { };
 
             return AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
-                CApiTypeVideoDeviceManager.kGetCurrentVideoDeviceId, JsonConvert.SerializeObject(para), result) != 0
+                CApiTypeVideoDeviceManager.kGetCurrentVideoDeviceId, JsonConvert.SerializeObject(para), out result) != 0
                 ? "GetDevice Failed."
-                : new string(result[..Array.IndexOf(result, '\0')]);
+                : result.result;
         }
         
         /// <summary>
@@ -147,11 +153,11 @@ namespace agorartc
                 index
             };
             var ret = (ERROR_CODE) (AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
-                CApiTypeVideoDeviceManager.kGetVideoDeviceInfoByIndex, JsonConvert.SerializeObject(para), result) * -1);
-            if (Array.IndexOf(result, '\0') != 0)
+                CApiTypeVideoDeviceManager.kGetVideoDeviceInfoByIndex, JsonConvert.SerializeObject(para), out result) * -1);
+            if (result.result.Length > 0)
             {
-                deviceName = (string) AgoraUtil.GetData<string>(result, "deviceName");
-                deviceId = (string) AgoraUtil.GetData<string>(result, "deviceId");
+                deviceName = (string) AgoraUtil.GetData<string>(result.result, "deviceName");
+                deviceId = (string) AgoraUtil.GetData<string>(result.result, "deviceId");
             }
             else
             {
@@ -173,7 +179,7 @@ namespace agorartc
         {
             var para = new { };
             return AgorartcNative.CallVideoDeviceApi(_videoDeviceHandler,
-                CApiTypeVideoDeviceManager.kGetVideoDeviceCount, JsonConvert.SerializeObject(para), result);
+                CApiTypeVideoDeviceManager.kGetVideoDeviceCount, JsonConvert.SerializeObject(para), out result);
         }
 
 

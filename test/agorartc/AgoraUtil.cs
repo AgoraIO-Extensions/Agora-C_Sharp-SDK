@@ -1,4 +1,11 @@
+﻿//
+//  Created by Yiqing Huang on 2020/12/15.
+//  Copyright © 2020 Agora. All rights reserved.
+//
+
 using System;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Newtonsoft.Json;
 
@@ -100,5 +107,23 @@ namespace agorartc
 
             return ret;
         }
+    }
+
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct CharArrayAssistant
+    {
+        internal CharArrayAssistant(int param = 0)
+        {
+            resultChar = new byte[2048];
+        }
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2048)]
+        private byte[] resultChar;
+
+        public string result =>
+            Marshal.PtrToStringAuto(
+                Marshal.UnsafeAddrOfPinnedArrayElement(
+                    Encoding.Convert(Encoding.Default, Encoding.Unicode, resultChar, 0, 2047), 0));
     }
 }
