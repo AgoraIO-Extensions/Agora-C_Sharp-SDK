@@ -440,9 +440,9 @@ namespace agorartc
                     value.Dispose();
                 }
 
-                _videoDeviceManager.Dispose();
-                _audioRecordingDeviceManager.Dispose();
-                _audioPlaybackDeviceManager.Dispose();
+                _videoDeviceManager?.Dispose();
+                _audioRecordingDeviceManager?.Dispose();
+                _audioPlaybackDeviceManager?.Dispose();
             }
 
             Release();
