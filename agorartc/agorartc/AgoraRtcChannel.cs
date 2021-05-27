@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace agorartc
@@ -236,7 +237,7 @@ namespace agorartc
                 channelId = _channelId
             };
             AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelCreateChannel,
-                JsonConvert.SerializeObject(para), out result);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result);
         }
 
         /// <summary>
@@ -345,7 +346,7 @@ namespace agorartc
                 options
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelJoinChannel,
-                JsonConvert.SerializeObject(para), out result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -395,7 +396,7 @@ namespace agorartc
                 options
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelJoinChannelWithUserAccount, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelJoinChannelWithUserAccount, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -426,7 +427,7 @@ namespace agorartc
                 channelId = _channelId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelLeaveChannel,
-                JsonConvert.SerializeObject(para), out result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -450,7 +451,7 @@ namespace agorartc
                 channelId = _channelId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelPublish,
-                JsonConvert.SerializeObject(para), out result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -471,7 +472,7 @@ namespace agorartc
                 channelId = _channelId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelUnPublish,
-                JsonConvert.SerializeObject(para), out result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -506,7 +507,7 @@ namespace agorartc
                 channelId = _channelId
             };
             return AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelGetCallId,
-                JsonConvert.SerializeObject(para), out result) != 0
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) != 0
                 ? "GetCallId Failed."
                 : result.result;
         }
@@ -539,7 +540,7 @@ namespace agorartc
                 token
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelRenewToken,
-                JsonConvert.SerializeObject(para), out result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -569,7 +570,7 @@ namespace agorartc
                 secret
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelSetEncryptionSecret, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelSetEncryptionSecret, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -602,7 +603,7 @@ namespace agorartc
                 encryptionMode
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelSetEncryptionMode, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelSetEncryptionMode, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -648,7 +649,7 @@ namespace agorartc
                 config
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelEnableEncryption, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelEnableEncryption, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -677,7 +678,7 @@ namespace agorartc
                 type
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelRegisterMediaMetadataObserver, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelRegisterMediaMetadataObserver, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         public ERROR_CODE UnRegisterMediaMetadataObserver(METADATA_TYPE type)
@@ -689,7 +690,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
                                      CApiTypeChannel.kChannelUnRegisterMediaMetadataObserver,
-                                     JsonConvert.SerializeObject(para), out result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) *
                                  -1);
         }
 
@@ -701,7 +702,7 @@ namespace agorartc
                 size
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelSetMaxMetadataSize, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelSetMaxMetadataSize, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         public ERROR_CODE SendMetadata(Metadata metadata)
@@ -717,7 +718,7 @@ namespace agorartc
                 }
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApiWithBuffer(_irisChannel,
-                CApiTypeChannel.kChannelSendMetadata, JsonConvert.SerializeObject(para), metadata.buffer, out result) * -1);
+                CApiTypeChannel.kChannelSendMetadata, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), metadata.buffer, out result) * -1);
         }
 
         /// <summary>
@@ -747,7 +748,7 @@ namespace agorartc
                 role
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelSetClientRole,
-                JsonConvert.SerializeObject(para), out result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -779,7 +780,7 @@ namespace agorartc
                 userPriority
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelSetRemoteUserPriority, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelSetRemoteUserPriority, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -823,7 +824,7 @@ namespace agorartc
                 gain
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelSetRemoteVoicePosition, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelSetRemoteVoicePosition, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -865,7 +866,7 @@ namespace agorartc
                 mirrorMode
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelSetRemoteRenderMode, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelSetRemoteRenderMode, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -897,7 +898,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
                 CApiTypeChannel.kChannelSetDefaultMuteAllRemoteAudioStreams,
-                JsonConvert.SerializeObject(para), out result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -933,7 +934,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
                 CApiTypeChannel.kChannelSetDefaultMuteAllRemoteVideoStreams,
-                JsonConvert.SerializeObject(para), out result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -959,7 +960,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelMuteAllRemoteAudioStreams, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelMuteAllRemoteAudioStreams, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -998,7 +999,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
                                      CApiTypeChannel.kChannelAdjustUserPlaybackSignalVolume,
-                                     JsonConvert.SerializeObject(para), out result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) *
                                  -1);
         }
 
@@ -1033,7 +1034,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelMuteRemoteAudioStream, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelMuteRemoteAudioStream, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1059,7 +1060,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelMuteAllRemoteVideoStreams, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelMuteAllRemoteVideoStreams, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1093,7 +1094,7 @@ namespace agorartc
                 mute
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelMuteRemoteVideoStream, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelMuteRemoteVideoStream, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1132,7 +1133,7 @@ namespace agorartc
                 streamType
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelSetRemoteVideoStreamType, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelSetRemoteVideoStreamType, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1167,7 +1168,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
                                      CApiTypeChannel.kChannelSetRemoteDefaultVideoStreamType,
-                                     JsonConvert.SerializeObject(para), out result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) *
                                  -1);
         }
 
@@ -1209,7 +1210,7 @@ namespace agorartc
                 transcodingEnabled
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelAddPublishStreamUrl, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelAddPublishStreamUrl, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1240,7 +1241,7 @@ namespace agorartc
                 url
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelRemovePublishStreamUrl, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelRemovePublishStreamUrl, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1269,7 +1270,7 @@ namespace agorartc
                 transcoding
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelSetLiveTranscoding, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelSetLiveTranscoding, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1318,7 +1319,7 @@ namespace agorartc
                 config
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelAddInjectStreamUrl, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelAddInjectStreamUrl, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1344,7 +1345,7 @@ namespace agorartc
                 url
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelRemoveInjectStreamUrl, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelRemoveInjectStreamUrl, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1402,7 +1403,7 @@ namespace agorartc
                 configuration
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelStartChannelMediaRelay, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelStartChannelMediaRelay, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1445,7 +1446,7 @@ namespace agorartc
                 configuration
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelUpdateChannelMediaRelay, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelUpdateChannelMediaRelay, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1483,7 +1484,7 @@ namespace agorartc
                 channelId = _channelId
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelStopChannelMediaRelay, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelStopChannelMediaRelay, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         /// <summary>
@@ -1524,7 +1525,7 @@ namespace agorartc
                 ordered
             };
             var ret = AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelCreateDataStream, JsonConvert.SerializeObject(para), out result);
+                CApiTypeChannel.kChannelCreateDataStream, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result);
             streamId = ret < 0 ? -1 : ret;
             return ret < 0 ? (ERROR_CODE) (ret * -1) : ERROR_CODE.ERR_OK;
         }
@@ -1570,7 +1571,7 @@ namespace agorartc
                 length = data.Length
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApiWithBuffer(_irisChannel,
-                CApiTypeChannel.kChannelSendStreamMessage, JsonConvert.SerializeObject(para), data, out result) * -1);
+                CApiTypeChannel.kChannelSendStreamMessage, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), data, out result) * -1);
         }
 
         /// <summary>
@@ -1587,7 +1588,7 @@ namespace agorartc
                 channelId = _channelId
             };
             return (CONNECTION_STATE_TYPE) AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelGetConnectionState, JsonConvert.SerializeObject(para), out result);
+                CApiTypeChannel.kChannelGetConnectionState, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result);
         }
 
         public ERROR_CODE EnableRemoteSuperResolution(uint userId, bool enable)
@@ -1599,7 +1600,7 @@ namespace agorartc
                 enable
             };
             return (ERROR_CODE) (AgorartcNative.CallIrisChannelApi(_irisChannel,
-                CApiTypeChannel.kChannelEnableRemoteSuperResolution, JsonConvert.SerializeObject(para), out result) * -1);
+                CApiTypeChannel.kChannelEnableRemoteSuperResolution, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result) * -1);
         }
 
         private void ReleaseChannel()
@@ -1609,7 +1610,7 @@ namespace agorartc
                 channelId = _channelId
             };
             AgorartcNative.CallIrisChannelApi(_irisChannel, CApiTypeChannel.kChannelRelease,
-                JsonConvert.SerializeObject(para), out result);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out result);
             NativeRtcChannelEventHandler.RemoveChannel(_channelId);
             _irisChannel = IntPtr.Zero;
             channelEventHandler = null;

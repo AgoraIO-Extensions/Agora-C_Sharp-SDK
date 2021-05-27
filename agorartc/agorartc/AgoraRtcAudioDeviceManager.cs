@@ -4,6 +4,7 @@
 //
 
 using System;
+using System.Text;
 using System.Text.Json;
 using Newtonsoft.Json;
 
@@ -56,7 +57,7 @@ namespace agorartc
         {
             var para = new { };
             return AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
-                CApiTypeAudioDeviceManager.kGetAudioPlaybackDeviceCount, JsonConvert.SerializeObject(para), out _result);
+                CApiTypeAudioDeviceManager.kGetAudioPlaybackDeviceCount, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result);
         }
 
         /// <summary>
@@ -88,7 +89,7 @@ namespace agorartc
             };
             var ret = (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
                 CApiTypeAudioDeviceManager.kGetAudioPlaybackDeviceInfoByIndex,
-                JsonConvert.SerializeObject(para), out _result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) * -1);
             if (_result.result.Length > 0)
             {
                 deviceName = (string) AgoraUtil.GetData<string>(_result.result, "deviceName");
@@ -124,7 +125,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
                 CApiTypeAudioDeviceManager.kSetCurrentAudioPlaybackDeviceId,
-                JsonConvert.SerializeObject(para), out _result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) * -1);
         }
 
         /// <summary>
@@ -140,7 +141,7 @@ namespace agorartc
             var para = new { };
 
             return AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
-                       CApiTypeAudioDeviceManager.kGetCurrentAudioPlaybackDeviceId, JsonConvert.SerializeObject(para),
+                       CApiTypeAudioDeviceManager.kGetCurrentAudioPlaybackDeviceId, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                        out _result) !=
                    0
                 ? "GetDevice Failed."
@@ -151,7 +152,7 @@ namespace agorartc
         {
             var para = new { };
             var ret = AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
-                CApiTypeAudioDeviceManager.kGetCurrentAudioPlaybackDeviceInfo, JsonConvert.SerializeObject(para),
+                CApiTypeAudioDeviceManager.kGetCurrentAudioPlaybackDeviceInfo, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                 out _result);
 
             if (_result.result.Length > 0)
@@ -189,7 +190,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
                                      CApiTypeAudioDeviceManager.kSetAudioPlaybackDeviceVolume,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -206,7 +207,7 @@ namespace agorartc
         {
             var para = new { };
             return AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
-                CApiTypeAudioDeviceManager.kGetAudioPlaybackDeviceVolume, JsonConvert.SerializeObject(para),
+                CApiTypeAudioDeviceManager.kGetAudioPlaybackDeviceVolume, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                 out _result);
         }
 
@@ -233,7 +234,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
                                      CApiTypeAudioDeviceManager.kSetAudioPlaybackDeviceMute,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -249,7 +250,7 @@ namespace agorartc
         {
             var para = new { };
             return AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
-                CApiTypeAudioDeviceManager.kGetAudioPlaybackDeviceMute, JsonConvert.SerializeObject(para),
+                CApiTypeAudioDeviceManager.kGetAudioPlaybackDeviceMute, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                 out _result) == 1;
         }
 
@@ -278,7 +279,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
                                      CApiTypeAudioDeviceManager.kStartAudioPlaybackDeviceTest,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -296,7 +297,7 @@ namespace agorartc
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
                                      CApiTypeAudioDeviceManager.kStopAudioPlaybackDeviceTest,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -325,7 +326,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
                                      CApiTypeAudioDeviceManager.kStartAudioDeviceLoopbackTest,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -345,7 +346,7 @@ namespace agorartc
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioPlaybackHandler,
                                      CApiTypeAudioDeviceManager.kStopAudioDeviceLoopbackTest,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -406,7 +407,7 @@ namespace agorartc
         {
             var para = new { };
             return AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
-                CApiTypeAudioDeviceManager.kGetAudioRecordingDeviceCount, JsonConvert.SerializeObject(para),
+                CApiTypeAudioDeviceManager.kGetAudioRecordingDeviceCount, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                 out _result);
         }
 
@@ -439,7 +440,7 @@ namespace agorartc
             };
             var ret = (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
                 CApiTypeAudioDeviceManager.kGetAudioRecordingDeviceInfoByIndex,
-                JsonConvert.SerializeObject(para), out _result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) * -1);
             if (_result.result.Length > 0)
             {
                 deviceName = (string) AgoraUtil.GetData<string>(_result.result, "deviceName");
@@ -475,7 +476,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
                 CApiTypeAudioDeviceManager.kSetCurrentAudioRecordingDeviceId,
-                JsonConvert.SerializeObject(para), out _result) * -1);
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) * -1);
         }
 
         /// <summary>
@@ -491,7 +492,7 @@ namespace agorartc
             var para = new { };
 
             return AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
-                       CApiTypeAudioDeviceManager.kGetCurrentAudioRecordingDeviceId, JsonConvert.SerializeObject(para),
+                       CApiTypeAudioDeviceManager.kGetCurrentAudioRecordingDeviceId, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                        out _result) !=
                    0
                 ? "GetDevice Failed."
@@ -502,7 +503,7 @@ namespace agorartc
         {
             var para = new { };
             var ret = AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
-                CApiTypeAudioDeviceManager.kGetCurrentAudioRecordingDeviceInfo, JsonConvert.SerializeObject(para),
+                CApiTypeAudioDeviceManager.kGetCurrentAudioRecordingDeviceInfo, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                 out _result);
 
             if (_result.result.Length > 0)
@@ -540,7 +541,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
                                      CApiTypeAudioDeviceManager.kSetAudioRecordingDeviceVolume,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -557,7 +558,7 @@ namespace agorartc
         {
             var para = new { };
             return AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
-                CApiTypeAudioDeviceManager.kGetAudioRecordingDeviceVolume, JsonConvert.SerializeObject(para),
+                CApiTypeAudioDeviceManager.kGetAudioRecordingDeviceVolume, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                 out _result);
         }
 
@@ -584,7 +585,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
                                      CApiTypeAudioDeviceManager.kSetAudioRecordingDeviceMute,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -600,7 +601,7 @@ namespace agorartc
         {
             var para = new { };
             return AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
-                       CApiTypeAudioDeviceManager.kGetAudioRecordingDeviceMute, JsonConvert.SerializeObject(para),
+                       CApiTypeAudioDeviceManager.kGetAudioRecordingDeviceMute, Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)),
                        out _result) ==
                    1;
         }
@@ -630,7 +631,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
                                      CApiTypeAudioDeviceManager.kStartAudioRecordingDeviceTest,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -648,7 +649,7 @@ namespace agorartc
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
                                      CApiTypeAudioDeviceManager.kStopAudioRecordingDeviceTest,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -677,7 +678,7 @@ namespace agorartc
             };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
                                      CApiTypeAudioDeviceManager.kStartAudioDeviceLoopbackTest,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
@@ -697,7 +698,7 @@ namespace agorartc
             var para = new { };
             return (ERROR_CODE) (AgorartcNative.CallAudioDeviceApi(_audioRecordingHandler,
                                      CApiTypeAudioDeviceManager.kStopAudioDeviceLoopbackTest,
-                                     JsonConvert.SerializeObject(para), out _result) *
+                                     Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(para)), out _result) *
                                  -1);
         }
 
