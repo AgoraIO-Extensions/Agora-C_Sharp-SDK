@@ -1079,7 +1079,7 @@ namespace agorartc
         }
 
         public ScreenCaptureParameters(VideoDimensions dimensions, int frameRate, int bitrate, bool captureMouseCursor,
-            bool windowFocus, view_t[]? excludeWindowList = null, int excludeWindowCount = 0)
+            bool windowFocus, view_t[] excludeWindowList = null, int excludeWindowCount = 0)
         {
             this.dimensions = dimensions;
             this.frameRate = frameRate;
@@ -1091,7 +1091,7 @@ namespace agorartc
         }
 
         public ScreenCaptureParameters(int width, int height, int frameRate, int bitrate, bool captureMouseCursor,
-            bool windowFocus, view_t[]? excludeWindowList = null, int excludeWindowCount = 0)
+            bool windowFocus, view_t[] excludeWindowList = null, int excludeWindowCount = 0)
         {
             dimensions = new VideoDimensions(width, height);
             this.frameRate = frameRate;
