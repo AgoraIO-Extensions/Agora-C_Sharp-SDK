@@ -283,8 +283,8 @@ namespace agorartc
             NativeRtcChannelEventHandler.AddChannel(_channelId, this);
             _userChannelEventHandler = new IrisCEventHandler()
             {
-                onEvent = NativeRtcChannelEventHandler.OnEvent,
-                onEventWithBuffer = NativeRtcChannelEventHandler.OnEventWithBuffer
+                onEvent = NativeRtcEngineEventHandler.OnEvent,
+                onEventWithBuffer = NativeRtcEngineEventHandler.OnEventWithBuffer
             };
             SetIrisChannelEventHandler(_userChannelEventHandler);
         }
