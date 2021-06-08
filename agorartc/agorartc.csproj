@@ -1,0 +1,80 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+    <Version>3.2.1.6</Version>
+    <Authors>Yiqing Jackie Huang</Authors>
+    <Company>Agora</Company>
+    <Description>
+      Agora Live Interactive Video Streaming enables one-to-many and many-to-many audio or video live streaming with the Agora RTC SDK.
+
+      Agora Live Interactive Video Streaming is different from [Agora Video Call](https://docs.agora.io/en/Interactive%20Broadcast/product_live). In a video call, all users are the same role and can talk to each other freely. In a live video streaming, users can be the host or audience, where only the host can talk. For details, see this [FAQ](https://docs.agora.io/en/faq/profile_difference).
+
+      Different from the traditional CDN live broadcast, which only allows one-way communication from the hosts to the audience, the Agora RTC SDK empowers the audience to interact with the hosts by [becoming a host](https://docs.agora.io/en/Agora Platform/terms?platform=All Platforms#becoming-host), like a viewer jumping onto the stage in the middle of a play to perform.
+
+      The Agora RTC SDK is applicable to scenarios that encourage active engagement, such as game-playing, online classes for students in small groups, and Q&amp;A sessions during E-commerce live streaming. You can also use this SDK for one-to-one video calls that require high image quality.
+
+      **For more detail information, please visit our [website](https://docs.agora.io/en/Interactive%20Broadcast/product_live?platform=All%20Platforms) and [GitHub repository](https://github.com/AgoraIO-Community/Agora-Python-SDK); and for some quick-start demos, please visit [Agora-Python-QuickStart](https://github.com/AgoraIO-Community/Agora-Python-QuickStart).**
+    </Description>
+    <PackageLicenseExpression></PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>agora_rtc_sdk</PackageId>
+    <Product>Agora RTC SDK</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1-beta1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="agora_rtc_sdk.dll" copyToOutput="false">
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="iris.dll" copyToOutput="false">
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="libagora-fdkaac.dll" copyToOutput="false">
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="libagora-ffmpeg.dll" copyToOutput="false">
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="libagora-mpg123.dll" copyToOutput="false">
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="libagora-soundtouch.dll" copyToOutput="false">
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+    <Content Include="libhwcodec.dll" copyToOutput="false">
+      <IncludeInPackage>true</IncludeInPackage>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="agora_rtc_sdk.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="iris.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libagora-fdkaac.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libagora-ffmpeg.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libagora-mpg123.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libagora-soundtouch.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libhwcodec.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>
