@@ -22,7 +22,10 @@ namespace agorartc
 
         internal static void AddChannel(string channelId, AgoraRtcChannel _Channel)
         {
-            Channels.Add(channelId, _Channel);
+            if (Channels.ContainsKey(channelId))
+                Channels[channelId] = _Channel;
+            else
+                Channels.Add(channelId, _Channel);
         }
 
         internal static void RemoveChannel(string channelId)
@@ -280,8 +283,8 @@ namespace agorartc
             NativeRtcChannelEventHandler.AddChannel(_channelId, this);
             _userChannelEventHandler = new IrisCEventHandler()
             {
-                onEvent = NativeRtcEngineEventHandler.OnEvent,
-                onEventWithBuffer = NativeRtcEngineEventHandler.OnEventWithBuffer
+                onEvent = NativeRtcChannelEventHandler.OnEvent,
+                onEventWithBuffer = NativeRtcChannelEventHandler.OnEventWithBuffer
             };
             SetIrisChannelEventHandler(_userChannelEventHandler);
         }
