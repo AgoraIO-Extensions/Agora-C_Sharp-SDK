@@ -11,14 +11,6 @@ Agora RTC C# SDK，目前支持 Windows 平台。
 
 ## 安装
 
-### 方法一：使用 NuGet（推荐）
-
-Visual Studio 用户请参考[使用方法](#使用方法)。
-
-```bash
-dotnet add package agora_rtc_sdk
-```
-
 ### 方法二：编译 SDK
 
 1. Clone当前仓库。
@@ -36,25 +28,17 @@ dotnet add package agora_rtc_sdk
 
 本仓库中包含一个图形化界面示例以供参考。
 
-### 方法一：使用 NuGet（推荐）
-
-1. 通过Visual Studio打开 `OneToOneVideo/OneToOneVideo.sln` 。
-2. 在 `解决方案资源管理器` 中找到 `OneToOneVideo->引用` 并点击右键。然后点击 `管理 NuGet 程序包...` 。
-3. 点击 `浏览` ，搜索 `agora_rtc_sdk` 并安装。
-4. 在 `解决方案资源管理器` 中找到所有 DLL 文件，并将它们在 `属性` 中的 `复制到输出目录` 属性设置为 `始终复制`。
-5. 运行示例。
-
 ### 方法二：使用 DLL 文件
 
 对于在安装时[自行编译SDK](#方法二：编译SDK)的用户，请参照以下步骤。
 
 1. 下载所需的SDK。
 
-   在 [Agora Video SDK for Windows](https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_v3_2_1_FULL.zip) 下载 SDK。解压缩之后，将 `libs/x86_64` 目录下所有的 `.dll` 文件复制到`OneToOneVideo/OneToOneVideo` 文件夹中。
+   在 [Agora Video SDK for Windows](https://download.agora.io/sdk/release/Agora_Native_SDK_for_Windows_v3_4_6_FULL.zip) 下载 SDK。解压缩之后，将 `libs/x86_64` 目录下所有的 `.dll` 文件复制到`OneToOneVideo/OneToOneVideo` 文件夹中。
 
 2. 拷贝其他需要的DLL文件。
 
-   将 `agorartc/agorartc/bin/debug/netcoreapp3.1/agorartc.dll` 和 `iris.dll` 拷贝至`OneToOneVideo/OneToOneVideo`文件夹中。
+   将 `agorartc/agorartc/bin/debug/netcoreapp3.1/agorartc.dll` 、`AgoraRtcScreenSharing.exe` 和 `AgoraRtcWrapper.dll` 拷贝至`OneToOneVideo/OneToOneVideo`文件夹中。
 
 3. 通过Visual Studio打开 `OneToOneVideo/OneToOneVideo.sln` 。运行示例。
 
