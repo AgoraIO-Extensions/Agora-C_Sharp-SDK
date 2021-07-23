@@ -17,14 +17,14 @@ namespace OneToOneVideo
     
     public partial class OneToOneVideoDemo : Form
     {
-        internal static AgoraRtcEngine Rtc;
+        internal static IAgoraRtcEngine Rtc;
         internal static IntPtr LocalWinId;
         internal static IntPtr RemoteWinId;
 
         public OneToOneVideoDemo()
         {
             InitializeComponent();
-            Rtc = AgoraRtcEngine.CreateRtcEngine();
+            Rtc = AgoraRtcEngine.CreateAgoraRtcEngine();
             Rtc.InitEventHandler(new MyEventHandler());
             LocalWinId = localVideo.Handle;
             RemoteWinId = remoteVideo.Handle;
@@ -63,6 +63,8 @@ namespace OneToOneVideo
             var ret = new VideoCanvas((ulong)LocalWinId, 0);
             Rtc.SetupLocalVideo(ret);
             Rtc.StartPreview();
+
+            Rtc.RegisterVideoFrameObserver(new UserVideoFrameObserver());
         }
 
         private void LeaveChannel_Click(object sender, EventArgs e)
@@ -87,14 +89,60 @@ namespace OneToOneVideo
         }
     }
 
-    internal class MyEventHandler : IRtcEngineEventHandlerBase
+    internal class UserVideoFrameObserver : IAgoraRtcVideoFrameObserver
+    {
+        public override bool OnCaptureVideoFrame(VideoFrame videoFrame)
+        {
+            Console.WriteLine("OnCaptureVideoFrame --- yBufferPtr: {0}  uBufferPtr: {1}  vBufferPtr: {2}",
+                videoFrame.yBufferPtr, videoFrame.uBufferPtr, videoFrame.vBufferPtr);
+            return true;
+        }
+
+        public override bool OnPreEncodeVideoFrame(VideoFrame videoFrame)
+        {
+            Console.WriteLine("OnPreEncodeVideoFrame --- yBufferPtr: {0}  uBufferPtr: {1}  vBufferPtr: {2}",
+                videoFrame.yBufferPtr, videoFrame.uBufferPtr, videoFrame.vBufferPtr);
+            return true;
+        }
+
+        public override bool OnRenderVideoFrame(uint uid, VideoFrame videoFrame)
+        {
+            Console.WriteLine("OnRenderVideoFrame --- uid: {0} yBufferPtr: {1}  uBufferPtr: {2}  vBufferPtr: {3}",
+                uid, videoFrame.yBufferPtr, videoFrame.uBufferPtr, videoFrame.vBufferPtr);
+            return true;
+        }
+
+        public override VIDEO_FRAME_TYPE GetVideoFormatPreference()
+        {
+            return VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA;
+        }
+
+        public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
+        {
+            return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
+        }
+
+        public override bool IsMultipleChannelFrameWanted()
+        {
+            return true;
+        }
+
+        public override bool OnRenderVideoFrameEx(string channelId, uint uid, VideoFrame videoFrame)
+        {
+            Console.WriteLine("OnRenderVideoFrameEx --- uid: {0} yBufferPtr: {1}  uBufferPtr: {2}  vBufferPtr: {3}",
+                uid, videoFrame.yBufferPtr, videoFrame.uBufferPtr, videoFrame.vBufferPtr);
+            return true;
+        }
+    }
+
+    internal class MyEventHandler : IAgoraRtcEngineEventHandler
     {
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("OnJoinChannelSuccess");
         }
 
-        public override void OnReJoinChannelSuccess(string channel, uint uid, int elapsed)
+        public override void OnRejoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("OnReJoinChannelSuccess");
         }
@@ -142,12 +190,12 @@ namespace OneToOneVideo
             Console.WriteLine("OnUserMuteAudio");
         }
 
-        public override void OnWarning(WARN_CODE_TYPE warn, string msg)
+        public override void OnWarning(int warn, string msg)
         {
             Console.WriteLine("OnWarning {0}", warn);
         }
 
-        public override void OnError(ERROR_CODE error, string msg)
+        public override void OnError(int error, string msg)
         {
             Console.WriteLine("OnError {0}", error);
         }
@@ -192,7 +240,7 @@ namespace OneToOneVideo
             Console.WriteLine("OnMicrophoneEnabled");
         }
         
-        public override void OnApiCallExecuted(ERROR_CODE err, string api, string result)
+        public override void OnApiCallExecuted(int err, string api, string result)
         {
             Console.WriteLine("OnApiCallExecuted");
         }
@@ -232,7 +280,7 @@ namespace OneToOneVideo
             Console.WriteLine("OnStreamUnpublished");
         }
 
-        public override void OnStreamPublished(string url, ERROR_CODE error)
+        public override void OnStreamPublished(string url, int error)
         {
             Console.WriteLine("OnStreamPublished");
         }
@@ -347,12 +395,6 @@ namespace OneToOneVideo
             Console.WriteLine("OnUserEnableVideo");
         }
 
-        public override void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType,
-            MEDIA_DEVICE_STATE_TYPE deviceState)
-        {
-            Console.WriteLine("OnAudioDeviceStateChanged");
-        }
-
          public override void OnCameraReady()
          {
              Console.WriteLine("OnCameraReady");
@@ -382,12 +424,6 @@ namespace OneToOneVideo
          {
              Console.WriteLine("OnAudioEffectFinished");
          }
-
-        public override void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType,
-            MEDIA_DEVICE_STATE_TYPE deviceState)
-        {
-            Console.WriteLine("OnVideoDeviceStateChanged");
-        }
 
         public override void OnRemoteVideoStateChanged(uint uid, REMOTE_VIDEO_STATE state,
             REMOTE_VIDEO_STATE_REASON reason, int elapsed)
@@ -452,12 +488,6 @@ namespace OneToOneVideo
             STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
         {
             Console.WriteLine("OnVideoPublishStateChanged");
-        }
-        
-        public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE audioMixingStateType,
-            AUDIO_MIXING_ERROR_TYPE audioMixingErrorType)
-        {
-            Console.WriteLine("OnAudioMixingStateChanged");
         }
 
          public override void OnFirstRemoteAudioDecoded(uint uid, int elapsed)
