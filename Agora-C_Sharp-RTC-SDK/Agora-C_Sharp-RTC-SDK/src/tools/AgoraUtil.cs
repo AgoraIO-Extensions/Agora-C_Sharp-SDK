@@ -134,6 +134,8 @@ namespace agora.rtc
         internal static T[] JsonToStructArray<T>(string data, string key = null, uint length = 0)
         {
             var jValueArray = key == null ? JsonMapper.ToObject(data) : JsonMapper.ToObject(data)[key];
+            if (jValueArray == null)
+                return new T[0];
             length = length != 0 ? length : (uint) jValueArray.Count;
             var ret = new T[length];
             for (var i = 0; i < length; i++)

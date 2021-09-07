@@ -1060,13 +1060,13 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad = false)
+        public override int EnableAudioVolumeIndication(int interval, int smooth, bool report_vad)
         {
             var param = new
             {
                 interval,
                 smooth,
-                reportVad
+                report_vad
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineEnableAudioVolumeIndication,
