@@ -121,7 +121,7 @@ namespace agora.rtc
         public abstract int MuteRemoteVideoStream(uint userId, bool mute);
         public abstract int SetRemoteVideoStreamType(uint userId, REMOTE_VIDEO_STREAM_TYPE streamType);
         public abstract int SetRemoteDefaultVideoStreamType(REMOTE_VIDEO_STREAM_TYPE streamType);
-        public abstract int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad = false);
+        public abstract int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad);
 
         [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public abstract int StartAudioRecording(string filePath, AUDIO_RECORDING_QUALITY_TYPE quality);
