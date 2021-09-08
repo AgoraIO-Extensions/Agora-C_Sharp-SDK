@@ -1,7 +1,1 @@
->>>audio
-WIN=
-<<<end
-
->>>video
-WIN=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.4.6/iris_3.4.6_RTC_Windows_20210723_0625.zip
-<<<end
+https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.4.6/iris_3.4.6_RTC_Windows_20210723_0625.zip

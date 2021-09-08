@@ -9,6 +9,7 @@
 ::         %2 (VERSION) : 3.4.0, etc.
 ::         %3 (CONFIG) : Debug or Release (For "%TYPE%"=="build" only)
 ::         %4 (APP-KEY) : The app-key for download iris
+::         %5 (WIN-URL) : The url for iris_win
 ::
 :: Created by Yiqing Huang on Apr 23, 2021.
 :: Modified by Yiqing Huang on May 12, 2021.
@@ -18,6 +19,7 @@
 
 SET CURDIR=%cd%
 SET APP_KEY=%4
+SET WIN_URL=%5
 
 goto :main
 
@@ -29,6 +31,21 @@ if "%TYPE%"=="release" (CALL :release %2) else (CALL :build %2 %3)
 endlocal
 EXIT /B 0
 
+:download_in_txt
+setlocal
+SET URL=%~1
+SET OUT_FILENAME=%~2
+powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+endlocal
+EXIT /B 0
+
+:download_in_command
+setlocal
+SET URL=%~1
+SET OUT_FILENAME=%~2
+powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+endlocal
+EXIT /B 0
 
 :: Download Iris and related native SDK libraries
 :: according to the URL in 'url_config.txt'.
@@ -44,7 +61,7 @@ echo =====Start downloading libraries=====
 echo %URL_FILE%
 echo %OUT_FILENAME%
 echo URL: %URL%
-powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+if "%WIN_URL%"=="" (CALL :download_in_txt %URL% %OUT_FILENAME%) else (CALL :download_in_command %WIN_URL% %OUT_FILENAME%)
 echo =====Finish downloading libraries=====
 endlocal
 EXIT /B 0
@@ -102,9 +119,13 @@ SET IRIS_PATH_x86=%CURDIR%\iris\iris_*\Win32
 SET NATIVE_SDK_x86=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86
 SET IRIS_PATH_x64=%CURDIR%\iris\iris_*\x64
 SET NATIVE_SDK_x64=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86_64
+mkdir %CURDIR%\agorartc
+xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
+powershell -command "cp -r %CURDIR%\..\*.sln %CURDIR%"
 CALL :download_library %URL_FILE% %OUT_FILENAME%
 mkdir %CURDIR%\temp
 powershell -command "Expand-Archive -Force %CURDIR%\%OUT_FILENAME% %CURDIR%\temp"
+mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
 xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
 powershell -command "cp -r %IRIS_PATH_x86%\Release\* %CURDIR%\iris\x86"
 powershell -command "cp -r %NATIVE_SDK_x86%\*.dll %CURDIR%\iris\x86"
@@ -118,31 +139,35 @@ echo =====Finish preparing for build=====
 
 echo =====Start building for x86=====
 SET IRIS_PATH_x86=%CURDIR%\iris\x86
-xcopy /i /s /y %IRIS_PATH_x86% %CURDIR%\agorartc\lib
 call %CURDIR%\compile-windows.bat x86 %CURDIR%\agorartc.sln %CONFIG% 2019
 echo =====Finish building for x86=====
 
 echo =====Start building for x64=====
 SET IRIS_PATH_x64=%CURDIR%\iris\x86_64
-xcopy /s /y %IRIS_PATH_x64% %CURDIR%\agorartc\lib
 call %CURDIR%\compile-windows.bat x64 %CURDIR%\agorartc.sln %CONFIG% 2019
 echo =====Finish building for x64=====
 
 echo =====Start packing=====
 mkdir %CURDIR%\Agora_C#_SDK
-mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64
+mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
+xcopy /s %CURDIR%\iris\x86 %CURDIR%\Agora_C#_SDK\x86
+xcopy /s %CURDIR%\iris\x86_64 %CURDIR%\Agora_C#_SDK\x86_64
 xcopy /s %CURDIR%\agorartc\bin\x86\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\x86
 xcopy /s %CURDIR%\agorartc\bin\x64\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\x86_64
 
-powershell -command "Compress-Archive %CURDIR%\Agora_C#_SDK\* %CURDIR%\Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
+if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
+rmdir /q /s %CURDIR%\agorartc\obj
+xcopy /s %CURDIR%\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
+powershell -command "cp -r %CURDIR%\agorartc.sln %CURDIR%\Agora_C#_SDK\agorartc"
+
+mkdir %CURDIR%\output
+powershell -command "Compress-Archive %CURDIR%\Agora_C#_SDK\* %CURDIR%\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
 echo =====Finish packing=====
 
 echo =====Start removing unnecessary files=====
-if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
-rmdir /q /s %CURDIR%\Agora_C#_SDK %CURDIR%\agorartc\obj
-del /s %CURDIR%\agorartc\lib
+rmdir /q /s %CURDIR%\Agora_C#_SDK %CURDIR%\iris %CURDIR%\agorartc 
+del /s %CURDIR%\agorartc.sln
 echo =====Finish removing unnecessary files=====
-
 echo =====Finish building for %VERSION%=====
 endlocal
 EXIT /B 0
