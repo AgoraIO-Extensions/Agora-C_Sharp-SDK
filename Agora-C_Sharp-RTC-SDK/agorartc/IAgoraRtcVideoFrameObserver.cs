@@ -33,7 +33,7 @@ namespace agora.rtc
         
         public virtual VIDEO_OBSERVER_POSITION GetObservedFramePosition()
         {
-            return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
+            return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER;
         }
 
         public virtual bool IsMultipleChannelFrameWanted()
