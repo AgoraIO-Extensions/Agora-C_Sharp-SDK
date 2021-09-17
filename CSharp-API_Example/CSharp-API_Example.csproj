@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>CSharp_API_Example</RootNamespace>
+		<Platforms>x64;x86</Platforms>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ApplicationIcon />
+        <StartupObject />
+        <Version>2.0.1</Version>
+    </PropertyGroup>
+
+    <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+        <OutputPath>binx64\Debug</OutputPath>
+    </PropertyGroup>-->
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+        <OutputPath>binx86\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <OutputPath>binx64\Debug</OutputPath>
+    </PropertyGroup>
+
+    <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <OutputPath>binx64\Release</OutputPath>
+    </PropertyGroup>-->
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+        <OutputPath>binx86\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <OutputPath>binx64\Debug</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="src\UI\common\**" />
+      <Compile Remove="src\UI\新文件夹1\**" />
+      <Compile Remove="src\UI\新文件夹2\**" />
+      <Compile Remove="src\UI\新文件夹\**" />
+      <EmbeddedResource Remove="src\UI\common\**" />
+      <EmbeddedResource Remove="src\UI\新文件夹1\**" />
+      <EmbeddedResource Remove="src\UI\新文件夹2\**" />
+      <EmbeddedResource Remove="src\UI\新文件夹\**" />
+      <None Remove="src\UI\common\**" />
+      <None Remove="src\UI\新文件夹1\**" />
+      <None Remove="src\UI\新文件夹2\**" />
+      <None Remove="src\UI\新文件夹\**" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Properties\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>
