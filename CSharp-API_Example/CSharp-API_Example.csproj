@@ -37,20 +37,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="src\UI\common\**" />
-      <Compile Remove="src\UI\新文件夹1\**" />
-      <Compile Remove="src\UI\新文件夹2\**" />
-      <Compile Remove="src\UI\新文件夹\**" />
-      <EmbeddedResource Remove="src\UI\common\**" />
-      <EmbeddedResource Remove="src\UI\新文件夹1\**" />
-      <EmbeddedResource Remove="src\UI\新文件夹2\**" />
-      <EmbeddedResource Remove="src\UI\新文件夹\**" />
-      <None Remove="src\UI\common\**" />
-      <None Remove="src\UI\新文件夹1\**" />
-      <None Remove="src\UI\新文件夹2\**" />
-      <None Remove="src\UI\新文件夹\**" />
-    </ItemGroup>
-    <ItemGroup>
         <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
     </ItemGroup>
     <ItemGroup>

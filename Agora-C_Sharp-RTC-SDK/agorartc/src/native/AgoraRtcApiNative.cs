@@ -145,7 +145,6 @@ namespace agora.rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void ClearVideoFrame(ref IrisRtcVideoFrame video_frame);
 
-#if UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_EDITOR_WIN
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr EnumerateDisplays();
 
@@ -157,7 +156,6 @@ namespace agora.rtc
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void FreeIrisWindowCollection(IntPtr collection);
-#endif
 
         #endregion
     }
