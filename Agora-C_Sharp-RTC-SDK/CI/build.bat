@@ -126,7 +126,8 @@ xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
 powershell -command "cp -r %CURDIR%\..\*.sln %CURDIR%"
 CALL :download_library %URL_FILE% %OUT_FILENAME%
 mkdir %CURDIR%\temp
-powershell -command "Expand-Archive -Force %CURDIR%\%OUT_FILENAME% %CURDIR%\temp"
+7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp
+:: powershell -command "Expand-Archive -Force %CURDIR%\%OUT_FILENAME% %CURDIR%\temp"
 mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
 xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
 powershell -command "cp -r %IRIS_PATH_x86%\Release\* %CURDIR%\iris\x86"
