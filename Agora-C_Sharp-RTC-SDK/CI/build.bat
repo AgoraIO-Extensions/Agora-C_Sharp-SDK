@@ -123,19 +123,19 @@ SET IRIS_PATH_x64=%CURDIR%\iris\iris_*\x64
 SET NATIVE_SDK_x64=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86_64
 mkdir %CURDIR%\agorartc
 xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
-powershell -command "cp -r %CURDIR%\..\*.sln %CURDIR%"
+powershell -command "cp -r $env:CURDIR\..\*.sln $env:CURDIR"
 CALL :download_library %URL_FILE% %OUT_FILENAME%
 mkdir %CURDIR%\temp
 7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp
 :: powershell -command "Expand-Archive -Force %CURDIR%\%OUT_FILENAME% %CURDIR%\temp"
 mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
 xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
-powershell -command "cp -r %IRIS_PATH_x86%\Release\* %CURDIR%\iris\x86"
-powershell -command "cp -r %NATIVE_SDK_x86%\*.dll %CURDIR%\iris\x86"
-powershell -command "cp -r %NATIVE_SDK_x86%\*.lib %CURDIR%\iris\x86"
-powershell -command "cp -r %IRIS_PATH_x64%\Release\* %CURDIR%\iris\x86_64"
-powershell -command "cp -r %NATIVE_SDK_x64%\*.dll %CURDIR%\iris\x86_64"
-powershell -command "cp -r %NATIVE_SDK_x64%\*.lib %CURDIR%\iris\x86_64"
+powershell -command "cp -r $env:IRIS_PATH_x86\Release\* $env:CURDIR\iris\x86"
+powershell -command "cp -r $env:NATIVE_SDK_x86\*.dll $env:CURDIR\iris\x86"
+powershell -command "cp -r $env:NATIVE_SDK_x86\*.lib $env:CURDIR\iris\x86"
+powershell -command "cp -r $env:IRIS_PATH_x64\Release\* $env:CURDIR\iris\x86_64"
+powershell -command "cp -r $env:NATIVE_SDK_x64\*.dll $env:CURDIR\iris\x86_64"
+powershell -command "cp -r $env:NATIVE_SDK_x64\*.lib $env:CURDIR\iris\x86_64"
 rmdir /q /s %CURDIR%\temp
 del /s %CURDIR%\%OUT_FILENAME%
 echo =====Finish preparing for build=====
@@ -161,10 +161,10 @@ xcopy /s %CURDIR%\agorartc\bin\x64\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\
 if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
 rmdir /q /s %CURDIR%\agorartc\obj
 xcopy /s %CURDIR%\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
-powershell -command "cp -r %CURDIR%\agorartc.sln %CURDIR%\Agora_C#_SDK\agorartc"
+powershell -command "cp -r $env:CURDIR\agorartc.sln $env:CURDIR\Agora_C#_SDK\agorartc"
 
 mkdir %CURDIR%\output
-powershell -command "Compress-Archive %CURDIR%\Agora_C#_SDK\* %CURDIR%\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
+powershell -command "Compress-Archive $env:CURDIR\Agora_C#_SDK\* $env:CURDIR\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
 echo =====Finish packing=====
 
 echo =====Start removing unnecessary files=====
