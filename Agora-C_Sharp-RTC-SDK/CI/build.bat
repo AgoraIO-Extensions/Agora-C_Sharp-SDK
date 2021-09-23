@@ -35,7 +35,8 @@ EXIT /B 0
 setlocal
 SET URL=%~1
 SET OUT_FILENAME=%~2
-powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+curl -H "X-JFrog-Art-Api:%APP_KEY%" %URL://artifactory.=//artifactory-api.bj2.% -o "%CURDIR%\%OUT_FILENAME%"
+:: powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
 endlocal
 EXIT /B 0
 
@@ -43,7 +44,8 @@ EXIT /B 0
 setlocal
 SET URL=%~1
 SET OUT_FILENAME=%~2
-powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+curl -H "X-JFrog-Art-Api:%APP_KEY%" %URL://artifactory.=//artifactory-api.bj2.% -o "%CURDIR%\%OUT_FILENAME%"
+:: powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
 endlocal
 EXIT /B 0
 
