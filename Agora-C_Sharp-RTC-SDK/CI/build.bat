@@ -62,7 +62,7 @@ for /F "usebackq delims=" %%a in (%URL_FILE%) do SET URL=%%a
 echo =====Start downloading libraries=====
 echo %URL_FILE%
 echo %OUT_FILENAME%
-echo URL: %URL%
+if "%WIN_URL%"=="" (echo URL: %URL%) else (echo URL: %WIN_URL%)
 if "%WIN_URL%"=="" (CALL :download_in_txt %URL% %OUT_FILENAME%) else (CALL :download_in_command %WIN_URL% %OUT_FILENAME%)
 echo =====Finish downloading libraries=====
 endlocal
