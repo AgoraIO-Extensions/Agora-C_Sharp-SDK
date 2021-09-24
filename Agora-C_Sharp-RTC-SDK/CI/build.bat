@@ -170,7 +170,7 @@ powershell -command "Compress-Archive $env:CURDIR/Agora_C#_SDK/* $env:CURDIR/out
 echo =====Finish packing=====
 
 echo =====Start removing unnecessary files=====
-rmdir /q /s %CURDIR%\Agora_C#_SDK %CURDIR%\iris %CURDIR%\agorartc 
+rmdir /q /s %CURDIR%\Agora_C#_SDK %CURDIR%\agorartc
 del /s %CURDIR%\agorartc.sln
 echo =====Finish removing unnecessary files=====
 echo =====Finish building for %VERSION%=====
