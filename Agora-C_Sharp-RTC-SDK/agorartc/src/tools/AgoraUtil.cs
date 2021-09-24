@@ -20,7 +20,7 @@ namespace agora.rtc
         {
             var jData = JsonMapper.ToObject(data);
             if (jData[key] == null) return null;
-            var jValue = jData[key].ToJson();
+            var jValue = jData[key].ToString();
 
             switch (typeof(T).Name)
             {
