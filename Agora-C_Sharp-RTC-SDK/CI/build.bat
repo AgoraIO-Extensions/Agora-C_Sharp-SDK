@@ -10,6 +10,7 @@
 ::         %3 (CONFIG) : Debug or Release (For "%TYPE%"=="build" only)
 ::         %4 (APP-KEY) : The app-key for download iris
 ::         %5 (WIN-URL) : The url for iris_win
+::         %6 (IRIS-NAME) : The name of Iris package
 ::
 :: Created by Yiqing Huang on Apr 23, 2021.
 :: Modified by Yiqing Huang on May 12, 2021.
@@ -20,6 +21,7 @@
 SET CURDIR=%cd%
 SET APP_KEY=%4
 SET WIN_URL=%5
+SET IRIS_NAME=%6
 
 goto :main
 
@@ -117,32 +119,25 @@ echo =====Start building for %VERSION%=====
 echo =====Start preparing for build=====
 SET URL_FILE=url_config.txt
 SET OUT_FILENAME=iris.zip
-SET IRIS_PATH_x86=%CURDIR%\iris\iris_*\Win32
-SET NATIVE_SDK_x86=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86
-SET IRIS_PATH_x64=%CURDIR%\iris\iris_*\x64
-SET NATIVE_SDK_x64=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86_64
 mkdir %CURDIR%\agorartc
 xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
 echo D|xcopy %CURDIR%\\..\\*.sln %CURDIR%\\ /y
-::powershell -command "cp -r $env:CURDIR/../*.sln $env:CURDIR"
 CALL :download_library %URL_FILE% %OUT_FILENAME%
 mkdir %CURDIR%\temp
 7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp
-:: powershell -command "Expand-Archive -Force $env:CURDIR/$env:OUT_FILENAME $env:CURDIR/temp"
 mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
 xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
-echo D|xcopy %IRIS_PATH_x86%\\Release\\* %CURDIR%\\iris\\x86\\ /y
-echo D|xcopy %NATIVE_SDK_x86%\\Release\\*.dll %CURDIR%\\iris\\x86\\ /y
-echo D|xcopy %NATIVE_SDK_x86%\\Release\\*.lib %CURDIR%\\iris\\x86\\ /y
-echo D|xcopy %IRIS_PATH_x64%\\Release\\* %CURDIR%\\iris\\x86_64\\ /y
-echo D|xcopy %NATIVE_SDK_x64%\\* %CURDIR%\\iris\\x86_64\\ /y
-echo D|xcopy %NATIVE_SDK_x64%\\* %CURDIR%\\iris\\x86_64\\ /y
-::powershell -command "cp -r $env:IRIS_PATH_x86/Release/* $env:CURDIR/iris/x86"
-::powershell -command "cp -r $env:NATIVE_SDK_x86/*.dll $env:CURDIR/iris/x86"
-::powershell -command "cp -r $env:NATIVE_SDK_x86/*.lib $env:CURDIR/iris/x86"
-::powershell -command "cp -r $env:IRIS_PATH_x64/Release/* $env:CURDIR/iris/x86_64"
-::powershell -command "cp -r $env:NATIVE_SDK_x64/*.dll $env:CURDIR/iris/x86_64"
-::powershell -command "cp -r $env:NATIVE_SDK_x64/*.lib $env:CURDIR/iris/x86_64"
+
+SET IRIS_PATH_x86=%CURDIR%\iris\%IRIS_NAME%\Win32
+SET NATIVE_SDK_x86=%CURDIR%\iris\%IRIS_NAME%\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86
+SET IRIS_PATH_x64=%CURDIR%\iris\%IRIS_NAME%\x64
+SET NATIVE_SDK_x64=%CURDIR%\iris\%IRIS_NAME%\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86_64
+
+xcopy /s /y %IRIS_PATH_x86%\Release\ %CURDIR%\iris\x86
+xcopy /s /y %NATIVE_SDK_x86%\ %CURDIR%\iris\x86
+xcopy /s /y %IRIS_PATH_x64%\Release\ %CURDIR%\iris\x86_64
+xcopy /s /y %NATIVE_SDK_x64%\ %CURDIR%\iris\x86_64
+
 rmdir /q /s %CURDIR%\temp
 del /s %CURDIR%\%OUT_FILENAME%
 echo =====Finish preparing for build=====
@@ -168,8 +163,7 @@ xcopy /s %CURDIR%\agorartc\bin\x64\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\
 if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
 rmdir /q /s %CURDIR%\agorartc\obj
 xcopy /s %CURDIR%\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
-echo D|xcopy %CURDIR%\\agorartc.sln %CURDIR%\\Agora_C#_SDK\\agorartc\\ /y
-::powershell -command "cp -r $env:CURDIR/agorartc.sln $env:CURDIR/Agora_C#_SDK/agorartc"
+echo D|xcopy %CURDIR%\\agorartc.sln %CURDIR%\\Agora_C#_SDK\\agorartc /y
 
 mkdir %CURDIR%\output
 powershell -command "Compress-Archive $env:CURDIR/Agora_C#_SDK/* $env:CURDIR/output/Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
