@@ -121,7 +121,7 @@ SET URL_FILE=url_config.txt
 SET OUT_FILENAME=iris.zip
 mkdir %CURDIR%\agorartc
 xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
-echo D|xcopy %CURDIR%\\..\\agorartc.sln %CURDIR%\\ /y
+xcopy /y %CURDIR%\..\agorartc.sln %CURDIR%\
 CALL :download_library %URL_FILE% %OUT_FILENAME%
 mkdir %CURDIR%\temp
 7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp
