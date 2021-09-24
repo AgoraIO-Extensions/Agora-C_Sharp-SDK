@@ -367,6 +367,9 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete(
+            "Deprecated since v2.3.2. Replaced by the onConnectionStateChanged(CONNECTION_STATE_RECONNECTING, CONNECTION_CHANGED_INTERRUPTED) callback",
+            false)]
         public virtual void OnConnectionInterrupted()
         {
         }
@@ -375,6 +378,9 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete(
+            "Deprecated since v2.3.2. Replaced by the onConnectionStateChanged(CONNECTION_STATE_FAILED, CONNECTION_CHANGED_BANNED_BY_SERVER) callback",
+            false)]
         public virtual void OnConnectionBanned()
         {
         }
@@ -391,6 +397,8 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete("Deprecated since v2.3.2. Use the onRemoteAudioStats callback instead",
+            false)]
         public virtual void OnAudioQuality(uint uid, int quality, ushort delay, ushort lost)
         {
         }
@@ -456,6 +464,8 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete("Deprecated since v2.4.1. Use LOCAL_VIDEO_STREAM_STATE_STOPPED(0) in the onLocalVideoStateChanged callback instead",
+            false)]
         public virtual void OnVideoStopped()
         {
         }
@@ -496,6 +506,8 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete("Deprecated since v2.4.1. Use LOCAL_VIDEO_STREAM_STATE_CAPTURING (1) in the onLocalVideoStateChanged callback instead",
+            false)]
         public virtual void OnCameraReady()
         {
         }
@@ -513,6 +525,8 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete("This method is deprecated, use onAudioMixingStateChanged instead",
+            false)]
         public virtual void OnAudioMixingFinished()
         {
         }
@@ -533,6 +547,9 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete(
+            "Deprecated since v3.0.0. Use onRemoteAudioStateChanged instead",
+            false)]
         public virtual void OnFirstRemoteAudioDecoded(uint uid, int elapsed)
         {
         }
@@ -593,6 +610,8 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete("Deprecated since v3.1.0. Use the onFirstLocalAudioFramePublished callback instead",
+            false)]
         public virtual void OnFirstLocalAudioFrame(int elapsed)
         {
         }
@@ -601,6 +620,9 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete(
+            "Deprecated since v3.0.0. Use onRemoteAudioStateChanged instead",
+            false)]
         public virtual void OnFirstRemoteAudioFrame(uint uid, int elapsed)
         {
         }
@@ -614,10 +636,14 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete("This method is deprecated, use the onRtmpStreamingStateChanged callback instead",
+            false)]
         public virtual void OnStreamPublished(string url, int error)
         {
         }
 
+        [Obsolete("This method is deprecated, use the onRtmpStreamingStateChanged callback instead",
+            false)]
         public virtual void OnStreamUnpublished(string url)
         {
         }
@@ -642,14 +668,20 @@ namespace agora.rtc
         {
         }
 
+        [Obsolete("This callback is deprecated and replaced by the onRemoteAudioStats callback",
+            false)]
         public virtual void OnRemoteAudioTransportStats(uint uid, ushort delay, ushort lost, ushort rxKBitRate)
         {
         }
 
+        [Obsolete("This callback is deprecated and replaced by the onRemoteVideoStats callback",
+            false)]
         public virtual void OnRemoteVideoTransportStats(uint uid, ushort delay, ushort lost, ushort rxKBitRate)
         {
         }
 
+        [Obsolete("Deprecated since v2.9.0. Use Use LOCAL_AUDIO_STREAM_STATE_STOPPED (0) or LOCAL_AUDIO_STREAM_STATE_RECORDING (1) in the onLocalAudioStateChanged callback instead",
+            false)]
         public virtual void OnMicrophoneEnabled(bool enabled)
         {
         }
