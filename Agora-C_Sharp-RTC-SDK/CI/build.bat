@@ -163,7 +163,7 @@ xcopy /s %CURDIR%\agorartc\bin\x64\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\
 if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
 rmdir /q /s %CURDIR%\agorartc\obj
 xcopy /s %CURDIR%\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
-echo D|xcopy %CURDIR%\\agorartc.sln %CURDIR%\\Agora_C#_SDK\\agorartc /y
+xcopy /y %CURDIR%\agorartc.sln %CURDIR%\Agora_C#_SDK\agorartc
 
 mkdir %CURDIR%\output
 powershell -command "Compress-Archive $env:CURDIR/Agora_C#_SDK/* $env:CURDIR/output/Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
