@@ -154,11 +154,13 @@ echo =====Finish building for x64=====
 
 echo =====Start packing=====
 mkdir %CURDIR%\Agora_C#_SDK
-mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
-xcopy /s %CURDIR%\iris\x86 %CURDIR%\Agora_C#_SDK\x86
-xcopy /s %CURDIR%\iris\x86_64 %CURDIR%\Agora_C#_SDK\x86_64
-xcopy /s %CURDIR%\agorartc\bin\x86\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\x86
-xcopy /s %CURDIR%\agorartc\bin\x64\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\x86_64
+mkdir %CURDIR%\Agora_C#_SDK\API-Examples
+mkdir %CURDIR%\Agora_C#_SDK\libs
+mkdir %CURDIR%\Agora_C#_SDK\libs\x86 %CURDIR%\Agora_C#_SDK\libs\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
+xcopy /s %CURDIR%\iris\x86 %CURDIR%\Agora_C#_SDK\libs\x86
+xcopy /s %CURDIR%\iris\x86_64 %CURDIR%\Agora_C#_SDK\libs\x86_64
+xcopy /s %CURDIR%\agorartc\bin\x86\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\libs\x86
+xcopy /s %CURDIR%\agorartc\bin\x64\%CONFIG%\netcoreapp3.1 %CURDIR%\Agora_C#_SDK\libs\x86_64
 
 if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
 rmdir /q /s %CURDIR%\agorartc\obj
