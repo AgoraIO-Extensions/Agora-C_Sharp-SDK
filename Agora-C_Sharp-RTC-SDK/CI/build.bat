@@ -126,7 +126,6 @@ CALL :download_library %URL_FILE% %OUT_FILENAME%
 mkdir %CURDIR%\temp
 7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp
 mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
-::xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris\
 move %CURDIR%\temp\%IRIS_NAME% %CURDIR%\iris\
 
 SET IRIS_PATH_x86=%CURDIR%\iris\%IRIS_NAME%\Win32
@@ -139,7 +138,7 @@ xcopy /y %NATIVE_SDK_x86%\* %CURDIR%\iris\x86\
 xcopy /y %IRIS_PATH_x64%\Release\* %CURDIR%\iris\x86_64\
 xcopy /y %NATIVE_SDK_x64%\* %CURDIR%\iris\x86_64\
 
-::rmdir /q /s %CURDIR%\temp
+rmdir /q /s %CURDIR%\temp
 del /s %CURDIR%\%OUT_FILENAME%
 echo =====Finish preparing for build=====
 
@@ -171,7 +170,7 @@ powershell -command "Compress-Archive $env:CURDIR/Agora_C#_SDK/* $env:CURDIR/out
 echo =====Finish packing=====
 
 echo =====Start removing unnecessary files=====
-rmdir /q /s %CURDIR%\Agora_C#_SDK %CURDIR%\agorartc
+rmdir /q /s %CURDIR%\Agora_C#_SDK %CURDIR%\agorartc %CURDIR%\iris
 del /s %CURDIR%\agorartc.sln
 echo =====Finish removing unnecessary files=====
 echo =====Finish building for %VERSION%=====
