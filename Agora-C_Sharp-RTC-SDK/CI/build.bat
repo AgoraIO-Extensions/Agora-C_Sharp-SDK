@@ -126,19 +126,19 @@ CALL :download_library %URL_FILE% %OUT_FILENAME%
 mkdir %CURDIR%\temp
 7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp
 mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
-xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
+xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris\
 
 SET IRIS_PATH_x86=%CURDIR%\iris\%IRIS_NAME%\Win32
 SET NATIVE_SDK_x86=%CURDIR%\iris\%IRIS_NAME%\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86
 SET IRIS_PATH_x64=%CURDIR%\iris\%IRIS_NAME%\x64
 SET NATIVE_SDK_x64=%CURDIR%\iris\%IRIS_NAME%\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86_64
 
-xcopy /s /y %IRIS_PATH_x86%\Release\ %CURDIR%\iris\x86
-xcopy /s /y %NATIVE_SDK_x86%\ %CURDIR%\iris\x86
-xcopy /s /y %IRIS_PATH_x64%\Release\ %CURDIR%\iris\x86_64
-xcopy /s /y %NATIVE_SDK_x64%\ %CURDIR%\iris\x86_64
+xcopy /s /y %IRIS_PATH_x86%\Release\ %CURDIR%\iris\x86\
+xcopy /s /y %NATIVE_SDK_x86%\ %CURDIR%\iris\x86\
+xcopy /s /y %IRIS_PATH_x64%\Release\ %CURDIR%\iris\x86_64\
+xcopy /s /y %NATIVE_SDK_x64%\ %CURDIR%\iris\x86_64\
 
-rmdir /q /s %CURDIR%\temp
+::rmdir /q /s %CURDIR%\temp
 del /s %CURDIR%\%OUT_FILENAME%
 echo =====Finish preparing for build=====
 
