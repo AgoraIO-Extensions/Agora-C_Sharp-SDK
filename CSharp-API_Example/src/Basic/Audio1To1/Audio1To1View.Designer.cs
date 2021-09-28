@@ -35,19 +35,20 @@ namespace CSharp_API_Example
             // audioLabel
             // 
             this.audioLabel.AutoSize = true;
-            this.audioLabel.Location = new System.Drawing.Point(37, 69);
+            this.audioLabel.Location = new System.Drawing.Point(188, 12);
             this.audioLabel.Name = "audioLabel";
-            this.audioLabel.Size = new System.Drawing.Size(53, 20);
+            this.audioLabel.Size = new System.Drawing.Size(114, 20);
             this.audioLabel.TabIndex = 0;
-            this.audioLabel.Text = "Audio";
+            this.audioLabel.Text = "一对一语音通话";
+            this.audioLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // audioView
+            // Audio1To1View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.audioLabel);
-            this.Name = "audioView";
-            this.Size = new System.Drawing.Size(255, 254);
+            this.Name = "Audio1To1View";
+            this.Size = new System.Drawing.Size(502, 367);
             this.ResumeLayout(false);
             this.PerformLayout();
 

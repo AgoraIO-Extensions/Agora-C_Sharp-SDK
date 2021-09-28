@@ -7,6 +7,9 @@
     <Compile Update="src\Advanced\MultiChannel\MultiChannelView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="src\Advanced\VideoGroup\VideoGroupView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="src\Basic\Audio1To1\Audio1To1View.cs">
       <SubType>UserControl</SubType>
     </Compile>
