@@ -31,6 +31,7 @@ namespace CSharp_API_Example
         {
             this.localVideoView = new System.Windows.Forms.PictureBox();
             this.remoteVideoView = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).BeginInit();
             this.SuspendLayout();
@@ -52,26 +53,38 @@ namespace CSharp_API_Example
             this.remoteVideoView.Location = new System.Drawing.Point(0, 0);
             this.remoteVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.remoteVideoView.Name = "remoteVideoView";
-            this.remoteVideoView.Size = new System.Drawing.Size(749, 583);
+            this.remoteVideoView.Size = new System.Drawing.Size(760, 600);
             this.remoteVideoView.TabIndex = 4;
             this.remoteVideoView.TabStop = false;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(255, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(170, 20);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "双进程（视频头+屏幕）";
             // 
             // ScreenShareView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.localVideoView);
             this.Controls.Add(this.remoteVideoView);
             this.Name = "ScreenShareView";
-            this.Size = new System.Drawing.Size(749, 583);
+            this.Size = new System.Drawing.Size(760, 600);
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         public System.Windows.Forms.PictureBox localVideoView;
         public System.Windows.Forms.PictureBox remoteVideoView;
+        private System.Windows.Forms.Label label1;
     }
 }

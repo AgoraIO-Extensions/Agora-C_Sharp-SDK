@@ -1,220 +1,226 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿/*
+ * 双进程【摄像头 + 屏幕共享】关键步骤：
+ * 1. 创建共享摄像头的Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+ *    创建共享屏幕的Engine并初始化：（CreateAgoraRtcEngine(AgoraEngineType.SubProcess)、Initialize、[InitEventHandler]）
+ *    
+ * 2. 加入频道
+ *     摄像头：（[EnableAudio]、[EnableVideo]、[MuteAllRemoteAudioStreams]、JoinChannel）
+ *     共享屏幕：（StartScreenCaptureByDisplayId、EnableVideo、JoinChannel）
+ *     
+ * 3. 离开频道：（LeaveChannel）
+ *    共享屏幕：（StopScreenCapture、LeaveChannel）
+ *    摄像头：（LeaveChannel）
+ *    
+ * 4. 退出
+ *    共享屏幕：（LeaveChannel、Dispose）
+ *    摄像头：（LeaveChannel、Dispose）
+ */
+
+using System;
 using agora.rtc;
-using System.Diagnostics;
-using Microsoft.Win32;
 
 namespace CSharp_API_Example
 {
     public class ScreenShare : IEngine
     {
-        private IAgoraRtcEngine rtc_engine = null;
-        private IAgoraRtcEngineEventHandler event_handler = null;
-        private IAgoraRtcVideoFrameObserver video_frame_observer = null;
+        private string app_id_ = "";
+        private string channel_id_ = "";
+        private readonly string ScreenShare_TAG = "[ScreenShare] ";
+        private readonly string log_file_path = "CSharp_API_Example.log";
+        private IAgoraRtcEngine rtc_engine_ = null;
+        private IAgoraRtcEngineEventHandler event_handler_ = null;
+        private IAgoraRtcEngine screen_share_engine_ = null;
+        //private IAgoraRtcEngineEventHandler screen_share_event_handler_ = null;
+        private IntPtr local_win_id_ = IntPtr.Zero;
+        private IntPtr remote_win_id_ = IntPtr.Zero;
 
-        private static IAgoraRtcEngine screen_share_engine = null;
-        //private static IAgoraRtcEngineEventHandler screen_share_event_handler = null;
-
-        // must
-        protected string app_id = "";
-        protected string channel_id = "";
-
-        // not necessary
-        private string ScreenShare_TAG = "[ScreenShare] ";
-
-        internal override string getSDKVersion()
+        public ScreenShare(IntPtr localWindowId, IntPtr remoteWindowId)
         {
-            if (null == rtc_engine)
-            {
-                rtc_engine = AgoraRtcEngine.CreateAgoraRtcEngine();
-                if (rtc_engine == null)
-                {
-                    CSharpForm.dump_handler("CreateEngine", -1);
-                    return "";
-                }
-            }
-            return rtc_engine.GetVersion();
-        }
-
-        internal override IAgoraRtcEngine getEngine()
-        {
-            if (null == rtc_engine)
-            {
-                rtc_engine = AgoraRtcEngine.CreateAgoraRtcEngine();
-                if (rtc_engine == null)
-                    Console.WriteLine("CreateEngine failed!!!");
-            }
-            return rtc_engine;
+            local_win_id_ = localWindowId;
+            remote_win_id_ = remoteWindowId;
         }
 
         internal override int Init(string appId, string channelId)
         {
             int ret = -1;
-            app_id = appId;
-            channel_id = channelId;
-            if (null == rtc_engine)
+            app_id_ = appId;
+            channel_id_ = channelId.Split(';').GetValue(0).ToString();
+
+            if (null == rtc_engine_)
             {
-                rtc_engine = AgoraRtcEngine.CreateAgoraRtcEngine();
-                if (rtc_engine == null)
-                {
-                    CSharpForm.dump_handler("CreateEngine", -1);
-                    return -1;
-                }
+                rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
 
-            event_handler = new ScreenShareEventHandler();
-            rtc_engine.InitEventHandler(event_handler);
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
+            ret = rtc_engine_.Initialize(rtc_engine_ctx);
+            CSharpForm.dump_handler_("Initialize", ret);
+            ret = rtc_engine_.SetLogFile(log_file_path);
+            CSharpForm.dump_handler_(ScreenShare_TAG + "SetLogFile", ret);
+            event_handler_ = new ScreenShareEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
 
-            //// raw data
-            //video_frame_observer = new ScreenShareVideoFrameObserver();
-            //rtc_engine.RegisterVideoFrameObserver(video_frame_observer);
+            if (null == screen_share_engine_)
+            {
+                screen_share_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine(AgoraEngineType.SubProcess);
+            }
+            ret = screen_share_engine_.Initialize(rtc_engine_ctx);
+            CSharpForm.dump_handler_(ScreenShare_TAG + "Initialize", ret);
 
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id);
-            ret = rtc_engine.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler("Initialize", ret);
-
-            ret = rtc_engine.EnableVideo();
-            CSharpForm.dump_handler("EnableVideo", ret);
-
-            ret = rtc_engine.EnableAudio();
-            CSharpForm.dump_handler("EnableAudio", ret);
-
-
-            // subprocess for screenshare
-            screen_share_engine = AgoraRtcEngine.CreateAgoraRtcEngine(AgoraEngineType.SubProcess);
-            if (screen_share_engine == null)
-                CSharpForm.dump_handler(ScreenShare_TAG + "CreateEngine", -1);
-            else
-                CSharpForm.dump_handler(ScreenShare_TAG + "CreateEngine", 0);
-            //screen_share_event_handler = new ScreenShareEventHandler();
-            //screen_share_engine.InitEventHandler(screen_share_event_handler);
-
-            ret = screen_share_engine.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler(ScreenShare_TAG + "Initialize", ret);
+            //screen_share_event_handler_ = new ScreenShareEventHandler(this);
+            //screen_share_engine_.InitEventHandler(screen_share_event_handler_);
 
             return ret;
         }
 
-        internal override int unInit()
+        internal override int UnInit()
         {
             int ret = -1;
 
-            if (null != screen_share_engine)
+            if (null != screen_share_engine_)
             {
-                ret = screen_share_engine.StopScreenCapture();
-                CSharpForm.dump_handler(ScreenShare_TAG + "StopScreenCapture", ret);
+                ret = screen_share_engine_.LeaveChannel();
+                CSharpForm.dump_handler_(ScreenShare_TAG + "LeaveChannel", ret);
 
-                ret = screen_share_engine.LeaveChannel();
-                CSharpForm.dump_handler(ScreenShare_TAG + "LeaveChannel", ret);
-
-                screen_share_engine.Dispose();
-                screen_share_engine = null;
+                screen_share_engine_.Dispose();
+                screen_share_engine_ = null;
             }
 
-            if (null != rtc_engine)
+            if (null != rtc_engine_)
             {
-                ret = rtc_engine.LeaveChannel();
-                CSharpForm.dump_handler("LeaveChannel", ret);
+                ret = rtc_engine_.LeaveChannel();
+                CSharpForm.dump_handler_("LeaveChannel", ret);
 
-                //rtc_engine.StopPreview();  // pair with StartPreview
-                //if (0 == ret)
-                //    Console.WriteLine("StopPreview failed!!!, ret={0}", ret);
-
-                ret = rtc_engine.DisableVideo();   // pair with EnableVideo
-                CSharpForm.dump_handler("DisableVideo", ret);
-
-                ret = rtc_engine.DisableAudio();   // pair with EnableAudio
-                CSharpForm.dump_handler("DisableAudio", ret);
-
-                rtc_engine.Dispose();
-                rtc_engine = null;
+                rtc_engine_.Dispose();
+                rtc_engine_ = null;
             }
             return ret;
         }
 
-        internal override int joinChannel()
+        internal override int JoinChannel()
         {
             int ret = -1;
-            if (null != screen_share_engine)
+            if (null != rtc_engine_)
+            {
+                ret = rtc_engine_.EnableAudio();
+                CSharpForm.dump_handler_("EnableAudio", ret);
+
+                ret = rtc_engine_.EnableVideo();
+                CSharpForm.dump_handler_("EnableVideo", ret);
+
+                // disable echo if need
+                //ret = rtc_engine.MuteAllRemoteAudioStreams(true);
+                //CSharpForm.dump_handler("MuteAllRemoteAudioStreams", ret);
+
+                ret = rtc_engine_.JoinChannel("", channel_id_, "info");
+                CSharpForm.dump_handler_("JoinChannel", ret);
+            }
+
+            if (null != screen_share_engine_)
             {
                 ret = startScreenShare();
-                CSharpForm.dump_handler(ScreenShare_TAG + "startScreenShare", ret);
+                CSharpForm.dump_handler_(ScreenShare_TAG + "startScreenShare", ret);
+
+                ret = screen_share_engine_.EnableVideo();
+                CSharpForm.dump_handler_(ScreenShare_TAG + "EnableVideo", ret);
+
+                ret = screen_share_engine_.JoinChannel("", channel_id_, "info");
+                CSharpForm.dump_handler_(ScreenShare_TAG + "JoinChannel", ret);
             }
 
-            if (null != rtc_engine)
-            {
-                ret = rtc_engine.JoinChannel("", channel_id, "info");
-                CSharpForm.dump_handler("JoinChannel", ret);
-            }
             return ret;
         }
 
-        internal override int leaveChannel()
+        internal override int LeaveChannel()
         {
             int ret = -1;
-            if (null != screen_share_engine)
+            if (null != screen_share_engine_)
             {
                 ret = stopScreenShare();
-                CSharpForm.dump_handler(ScreenShare_TAG + "stopScreenShare", ret);
+                CSharpForm.dump_handler_(ScreenShare_TAG + "stopScreenShare", ret);
             }
 
-            if (null != rtc_engine)
+            if (null != rtc_engine_)
             {
-                ret = rtc_engine.LeaveChannel();
-                CSharpForm.dump_handler("LeaveChannel", ret);
+                ret = rtc_engine_.LeaveChannel();
+                CSharpForm.dump_handler_("LeaveChannel", ret);
             }
             return ret;
         }
 
         private int startScreenShare()
         {
-            agora.rtc.Rectangle screenRect = new agora.rtc.Rectangle();
-            screenRect.height = Screen.PrimaryScreen.WorkingArea.Height;
-            screenRect.width = Screen.PrimaryScreen.WorkingArea.Width;
-            screenRect.x = Screen.PrimaryScreen.WorkingArea.X;
-            screenRect.y = Screen.PrimaryScreen.WorkingArea.Y;
-            agora.rtc.Rectangle regionRect = new agora.rtc.Rectangle(0, 0, 1920, 1080);
-            ScreenCaptureParameters screen_para = new ScreenCaptureParameters(new VideoDimensions(1920, 1080), 5, 0, true, false);
             int ret = -1;
+            if (null != screen_share_engine_)
+            {
+                //agora.rtc.Rectangle screenRect = new agora.rtc.Rectangle();
+                //screenRect.height = Screen.PrimaryScreen.WorkingArea.Height;
+                //screenRect.width = Screen.PrimaryScreen.WorkingArea.Width;
+                //screenRect.x = Screen.PrimaryScreen.WorkingArea.X;
+                //screenRect.y = Screen.PrimaryScreen.WorkingArea.Y;
+                //ret = screen_share_engine.StartScreenCaptureByScreenRect(screenRect, regionRect, screen_para);
+                //CSharpForm.dump_handler(ScreenShare_TAG + "StartScreenCaptureByScreenRect", ret);
 
-            //ret = screen_share_engine.StartScreenCaptureByScreenRect(screenRect, regionRect, screen_para);
-            //CSharpForm.dump_handler(ScreenShare_TAG + "StartScreenCaptureByScreenRect", ret);
+                agora.rtc.Rectangle regionRect = new agora.rtc.Rectangle(0, 0, 1920, 1080);
+                ScreenCaptureParameters screen_para = new ScreenCaptureParameters(new VideoDimensions(1920, 1080), 5, 0, true, false);
 
-            ret = screen_share_engine.StartScreenCaptureByDisplayId(0, regionRect, screen_para);
-            CSharpForm.dump_handler(ScreenShare_TAG + "StartScreenCaptureByDisplayId", ret);
-
-            ret = screen_share_engine.EnableVideo();
-            CSharpForm.dump_handler(ScreenShare_TAG + "EnableVideo", ret);
-
-            ret = screen_share_engine.JoinChannel("", channel_id, "info");
-            CSharpForm.dump_handler(ScreenShare_TAG + "JoinChannel", ret);
-
+                ret = screen_share_engine_.StartScreenCaptureByDisplayId(0, regionRect, screen_para);
+                CSharpForm.dump_handler_(ScreenShare_TAG + "StartScreenCaptureByDisplayId", ret);
+            }
             return ret;
         }
 
         private int stopScreenShare()
         {
-            int ret = screen_share_engine.StopScreenCapture();
-            CSharpForm.dump_handler(ScreenShare_TAG + "StopScreenCapture", ret);
+            int ret = -1;
+            if (null != screen_share_engine_)
+            {
+                ret = screen_share_engine_.StopScreenCapture();
+                CSharpForm.dump_handler_(ScreenShare_TAG + "StopScreenCapture", ret);
 
-            ret = screen_share_engine.LeaveChannel();
-            CSharpForm.dump_handler(ScreenShare_TAG + "LeaveChannel", ret);
-
+                ret = screen_share_engine_.LeaveChannel();
+                CSharpForm.dump_handler_(ScreenShare_TAG + "LeaveChannel", ret);
+            }
             return ret;
         }
 
+        internal override string GetSDKVersion()
+        {
+            if (null == rtc_engine_)
+                return "-" + (ERROR_CODE_TYPE.ERR_NOT_INITIALIZED).ToString();
+            return rtc_engine_.GetVersion();
+        }
+
+        internal override IAgoraRtcEngine GetEngine()
+        {
+            return rtc_engine_;
+        }
+
+        internal string GetChannelId()
+        {
+            return channel_id_;
+        }
+
+        internal IntPtr GetLocalWinId()
+        {
+            return local_win_id_;
+        }
+
+        internal IntPtr GetRemoteWinId()
+        {
+            return remote_win_id_;
+        }
     }
 
     // override if need
     internal class ScreenShareEventHandler : IAgoraRtcEngineEventHandler
     {
+        private ScreenShare screen_share_inst_ = null;
+
+        public ScreenShareEventHandler(ScreenShare screen_share)
+        {
+            screen_share_inst_ = screen_share;
+        }
+
         public override void OnWarning(int warn, string msg)
         {
             Console.WriteLine("=====>OnWarning {0} {1}", warn, msg);
@@ -228,14 +234,14 @@ namespace CSharp_API_Example
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess, channel={0}, uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)CSharpForm.local_win_id, RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
-            int ret = CSharpForm.usr_engine.getEngine().SetupLocalVideo(vs);
+            VideoCanvas vs = new VideoCanvas((ulong)screen_share_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            int ret = screen_share_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo, ret={0}", ret);
         }
 
         public override void OnRejoinChannelSuccess(string channel, uint uid, int elapsed)
         {
-            Console.WriteLine("OnRejoinChannelSuccess");
+            Console.WriteLine("----->OnRejoinChannelSuccess");
         }
 
         public override void OnLeaveChannel(RtcStats stats)
@@ -245,57 +251,16 @@ namespace CSharp_API_Example
 
         public override void OnUserJoined(uint uid, int elapsed)
         {
-            if (CSharpForm.remote_win_id == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)CSharpForm.remote_win_id, RENDER_MODE_TYPE.RENDER_MODE_FIT, CSharpForm.channel_id, uid);
-            int ret = CSharpForm.usr_engine.getEngine().SetupRemoteVideo(vc);
-            if (ret != 0)
-            {
-                Console.WriteLine("----->OnUserJoined, ret={0}", ret);
-            }
             Console.WriteLine("----->OnUserJoined, uid={0}", uid);
+            if (screen_share_inst_.GetRemoteWinId() == IntPtr.Zero) return;
+            var vc = new VideoCanvas((ulong)screen_share_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, screen_share_inst_.GetChannelId(), uid);
+            int ret = screen_share_inst_.GetEngine().SetupRemoteVideo(vc);
+            Console.WriteLine("----->OnUserJoined, ret={0}", ret);
         }
 
         public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
         {
             Console.WriteLine("----->OnUserOffline, reason={0}", reason);
-        }
-    }
-
-    // override if need
-    internal class ScreenShareVideoFrameObserver : IAgoraRtcVideoFrameObserver
-    {
-        public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
-        {
-            return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER;
-        }
-
-        public override VIDEO_FRAME_TYPE GetVideoFormatPreference()
-        {
-            return VIDEO_FRAME_TYPE.FRAME_TYPE_YUV420;
-        }
-
-        public override bool OnCaptureVideoFrame(VideoFrame videoFrame)
-        {
-            //Console.WriteLine("----->OnCaptureVideoFrame");
-            return true;
-        }
-
-        public override bool OnPreEncodeVideoFrame(VideoFrame videoFrame)
-        {
-            //Console.WriteLine("----->OnPreEncodeVideoFrame");
-            return true;
-        }
-
-        public override bool OnRenderVideoFrame(uint uid, VideoFrame videoFrame)
-        {
-            //Console.WriteLine("----->OnRenderVideoFrame");
-            return true;
-        }
-
-        public override bool OnRenderVideoFrameEx(string channelId, uint uid, VideoFrame videoFrame)
-        {
-            //Console.WriteLine("----->OnRenderVideoFrameEx, channelId={0}, uid={1}, wxh={2}x{3} ", channelId, uid, videoFrame.width, videoFrame.height);
-            return true;
         }
     }
 }

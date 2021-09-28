@@ -1,121 +1,102 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿/*
+ * 【一对一语音】关键步骤：
+ * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+ * 
+ * 2. 加入频道：（[EnableAudio]、JoinChannel）
+ * 
+ * 3. 离开频道：（LeaveChannel）
+ * 
+ * 4. 退出：（Dispose）
+ */
+
+using System;
 using agora.rtc;
-using System.Diagnostics;
-using Microsoft.Win32;
 
 namespace CSharp_API_Example
 {
     public class Audio1To1 : IEngine
     {
-        private IAgoraRtcEngine rtc_engine = null;
-        private IAgoraRtcEngineEventHandler event_handler = null;
-        private IAgoraRtcAudioFrameObserver video_frame_observer = null;
-        // must
-        protected string app_id = "";
-        protected string channel_id = "";
-
-        internal override string getSDKVersion()
-        {
-            if (null == rtc_engine)
-            {
-                rtc_engine = AgoraRtcEngine.CreateAgoraRtcEngine();
-                if (rtc_engine == null)
-                {
-                    CSharpForm.dump_handler("CreateEngine", -1);
-                    return "";
-                }
-            }
-            return rtc_engine.GetVersion();
-        }
-
-        internal override IAgoraRtcEngine getEngine()
-        {
-            if (null == rtc_engine)
-            {
-                rtc_engine = AgoraRtcEngine.CreateAgoraRtcEngine();
-                if (rtc_engine == null)
-                    Console.WriteLine("CreateEngine failed!!!");
-            }
-            return rtc_engine;
-        }
+        private string app_id_ = "";
+        private string channel_id_ = "";
+        private readonly string Audio1To1_TAG = "[Audio1To1] ";
+        private readonly string log_file_path = "CSharp_API_Example.log";
+        private IAgoraRtcEngine rtc_engine_ = null;
+        private IAgoraRtcEngineEventHandler event_handler_ = null;
 
         internal override int Init(string appId, string channelId)
         {
             int ret = -1;
-            app_id = appId;
-            channel_id = channelId;
-            if (null == rtc_engine)
+
+            app_id_ = appId;
+            channel_id_ = channelId.Split(';').GetValue(0).ToString();
+
+            if (null == rtc_engine_)
             {
-                rtc_engine = AgoraRtcEngine.CreateAgoraRtcEngine();
-                if (rtc_engine == null)
-                {
-                    CSharpForm.dump_handler("CreateEngine", -1);
-                    return -1;
-                }
+                rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
 
-            event_handler = new Audio1To1EventHandler();
-            rtc_engine.InitEventHandler(event_handler);
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
+            ret = rtc_engine_.Initialize(rtc_engine_ctx);
+            CSharpForm.dump_handler_(Audio1To1_TAG + "Initialize", ret);
+            ret = rtc_engine_.SetLogFile(log_file_path);
+            CSharpForm.dump_handler_(Audio1To1_TAG + "SetLogFile", ret);
 
-            //// raw data
-            video_frame_observer = new Audio1To1AudioFrameObserver();
-            rtc_engine.RegisterAudioFrameObserver(video_frame_observer);
-
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id);
-            ret = rtc_engine.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler("Initialize", ret);
-
-            ret = rtc_engine.EnableAudio();
-            CSharpForm.dump_handler("EnableAudio", ret);
+            event_handler_ = new Audio1To1EventHandler();
+            rtc_engine_.InitEventHandler(event_handler_);
 
             return ret;
         }
 
-        internal override int unInit()
+        internal override int UnInit()
         {
             int ret = -1;
-            if (null != rtc_engine)
+            if (null != rtc_engine_)
             {
-                ret = rtc_engine.LeaveChannel();
-                CSharpForm.dump_handler("LeaveChannel", ret);
+                ret = rtc_engine_.LeaveChannel();
+                CSharpForm.dump_handler_(Audio1To1_TAG + "LeaveChannel", ret);
 
-                ret = rtc_engine.DisableAudio();   // pair with EnableAudio
-                CSharpForm.dump_handler("DisableAudio", ret);
-
-                rtc_engine.Dispose();
-                rtc_engine = null;
+                rtc_engine_.Dispose();
+                rtc_engine_ = null;
             }
             return ret;
         }
 
-        internal override int joinChannel()
+        internal override int JoinChannel()
         {
             int ret = -1;
-            if (null != rtc_engine)
+            if (null != rtc_engine_)
             {
-                ret = rtc_engine.JoinChannel("", channel_id, "info");
-                CSharpForm.dump_handler("JoinChannel", ret);
+                ret = rtc_engine_.EnableAudio();
+                CSharpForm.dump_handler_(Audio1To1_TAG + "EnableAudio", ret);
+
+                ret = rtc_engine_.JoinChannel("", channel_id_, "info");
+                CSharpForm.dump_handler_(Audio1To1_TAG + "JoinChannel", ret);
             }
             return ret;
         }
 
-        internal override int leaveChannel()
+        internal override int LeaveChannel()
         {
             int ret = -1;
-            if (null != rtc_engine)
+            if (null != rtc_engine_)
             {
-                ret = rtc_engine.LeaveChannel();
-                CSharpForm.dump_handler("LeaveChannel", ret);
+                ret = rtc_engine_.LeaveChannel();
+                CSharpForm.dump_handler_(Audio1To1_TAG + "LeaveChannel", ret);
             }
             return ret;
+        }
+
+        internal override string GetSDKVersion()
+        {
+            if (null == rtc_engine_)
+                return "-" + (ERROR_CODE_TYPE.ERR_NOT_INITIALIZED).ToString(); 
+
+            return rtc_engine_.GetVersion();
+        }
+
+        internal override IAgoraRtcEngine GetEngine()
+        {
+            return rtc_engine_;
         }
     }
 
@@ -139,7 +120,7 @@ namespace CSharp_API_Example
 
         public override void OnRejoinChannelSuccess(string channel, uint uid, int elapsed)
         {
-            Console.WriteLine("OnRejoinChannelSuccess");
+            Console.WriteLine("----->OnRejoinChannelSuccess");
         }
 
         public override void OnLeaveChannel(RtcStats stats)
@@ -156,38 +137,5 @@ namespace CSharp_API_Example
         {
             Console.WriteLine("----->OnUserOffline reason={0}", reason);
         }
-    }
-
-    // override if need
-    internal class Audio1To1AudioFrameObserver : IAgoraRtcAudioFrameObserver
-    {
-        //public override bool OnMixedAudioFrame(AudioFrame audioFrame)
-        //{
-        //    Console.WriteLine("----->OnMixedAudioFrame");
-        //    return true;
-        //}
-
-        //public override bool OnPlaybackAudioFrame(AudioFrame audioFrame)
-        //{
-        //    Console.WriteLine("----->OnPlaybackAudioFrame");
-        //    return true;
-        //}
-
-        //public override bool OnPlaybackAudioFrameBeforeMixing(uint uid, AudioFrame audioFrame)
-        //{
-        //    Console.WriteLine("----->OnPlaybackAudioFrameBeforeMixing uid={0}", uid);
-        //    return true;
-        //}
-
-        //public override bool OnPlaybackAudioFrameBeforeMixingEx(string channelId, uint uid, AudioFrame audioFrame)
-        //{
-        //    Console.WriteLine("----->OnPlaybackAudioFrameBeforeMixingEx channedId={0} uid={1}", channelId, uid);
-        //    return true;
-        //}
-
-        //public override bool OnRecordAudioFrame(AudioFrame audioFrame)
-        //{
-        //    return true;
-        //}
     }
 }

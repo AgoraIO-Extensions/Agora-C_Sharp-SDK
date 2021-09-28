@@ -8,7 +8,10 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon />
         <StartupObject />
-        <Version>2.0.1</Version>
+        <Version>2.1.1</Version>
+        <Authors>mberky</Authors>
+        <Company>agora</Company>
+        <Description>winform version</Description>
     </PropertyGroup>
 
     <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -37,8 +40,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
+      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
     </ItemGroup>
+
     <ItemGroup>
       <Compile Update="Properties\Resources.Designer.cs">
         <DesignTime>True</DesignTime>
@@ -52,5 +56,8 @@
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="if not exist %25$(TargetDir)agora_rtc_sdk.dll%25 (&#xD;&#xA;Copy &quot;$(SolutionDir)..\libs\x86_64\*.*&quot; &quot;$(TargetDir)&quot;)" />
+    </Target>
 
 </Project>
