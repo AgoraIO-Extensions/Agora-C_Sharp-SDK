@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CSharp-API_Example": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
