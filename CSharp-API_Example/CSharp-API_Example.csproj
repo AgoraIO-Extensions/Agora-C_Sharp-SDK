@@ -10,8 +10,9 @@
         <StartupObject />
         <Version>2.1.1</Version>
         <Authors>mberky</Authors>
-        <Company>agora</Company>
+        <Company>Agora.io</Company>
         <Description>winform version</Description>
+        <Copyright>Agora.io Copyright (C) 2021</Copyright>
     </PropertyGroup>
 
     <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
