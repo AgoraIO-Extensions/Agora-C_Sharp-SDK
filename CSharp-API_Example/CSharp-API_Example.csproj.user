@@ -13,10 +13,16 @@
     <Compile Update="src\Basic\Audio1To1\Audio1To1View.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="src\Basic\RawData\RawDataView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="src\Basic\ScreenShare\ScreenShareView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="src\Basic\Video1To1\Video1To1View.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Basic\VirtualBackground\VirtualBackgroundView.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

@@ -136,6 +136,14 @@ namespace CSharp_API_Example
                 usr_engine_ = new VideoGroup(videoGroupView.localVideoView.Handle,
                     videoGroupView.fistUserVideoView.Handle, videoGroupView.secondUserVideoView.Handle);
             }
+            else if (tabCtrl.SelectedTab == rawDataTab) // 祼数据
+            {
+                usr_engine_ = new RawData(rawDataView.localVideoView.Handle, rawDataView.remoteVideoView.Handle);
+            }
+            else if (tabCtrl.SelectedTab == virtualBackgroundTab) // 虚拟背景
+            {
+                usr_engine_ = new VirtualBackground(virtualBackgroundView.localVideoView.Handle, virtualBackgroundView.remoteVideoView.Handle);
+            }
             else
             {
                 DumpStatus("todo", 0);
