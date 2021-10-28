@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AgoraRTCX64TargetDir Condition=" '$(AgoraRTCX64TargetDir)' == '' ">.</AgoraRTCX64TargetDir>
+    <AgoraRTCX86TargetDir Condition=" '$(AgoraRTCX86TargetDir)' == '' ">.</AgoraRTCX86TargetDir>
+    <AgoraRTCX64Enabled Condition="'$(AgoraRTCX64Enabled)' == '' AND ('$(Platform)' == 'x64' OR '$(Platform)' == 'AnyCPU')">true</AgoraRTCX64Enabled>
+    <AgoraRTCX86Enabled Condition="'$(AgoraRTCX86Enabled)' == '' AND ('$(Platform)' == 'x86' OR '$(Platform)' == 'AnyCPU')">true</AgoraRTCX86Enabled>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- If no AgoraRTC[...]IncludeFiles was declared previously, include all plugins by default by specifying ** (escaped, so %2A%2A) -->
+    <AgoraRTCX64IncludeFiles Condition="'@(AgoraRTCX64IncludeFiles)'==''" Include="%2A%2A" />
+    <AgoraRTCX86IncludeFiles Condition="'@(AgoraRTCX86IncludeFiles)'==''" Include="%2A%2A" />
+  </ItemGroup>
+  
+  <Target Name="CollectVlcFilesToCopyWindows" BeforeTargets="BeforeBuild">
+    <!-- First, transform the escaped, relative, platform-independant file path into real path, relative to 32/64 folders -->
+
+    <!-- x64 -->
+    <ItemGroup Condition="'$(AgoraRTCX64Enabled)' == 'true'">
+      <!-- Expand selectors and compute absolute paths for include, exclude and MainLibraries -->
+      <AgoraRTCX64IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\x64\%(AgoraRTCX64IncludeFiles.Identity)))" />
+      <AgoraRTCX64ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\x64\%(AgoraRTCX64ExcludeFiles.Identity)))" Condition="'%(AgoraRTCX64ExcludeFiles.Identity)'!=''" />
+
+      <!-- We have gathered all the full path of what should be copied and what should be skipped, let's include that as Content that gets copied -->
+      <Content Include="@(AgoraRTCX64IncludeFilesFullPath)" Exclude="@(AgoraRTCX64ExcludeFilesFullPath)">
+        <Link>$(AgoraRTCX86TargetDir)\%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <!-- x86 -->
+    <ItemGroup Condition="'$(AgoraRTCX86Enabled)' == 'true'">
+      <!-- Expand selectors and compute absolute paths for include, exclude and MainLibraries -->
+      <AgoraRTCX86IncludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\x86\%(AgoraRTCX86IncludeFiles.Identity)))" />
+      <AgoraRTCX86ExcludeFilesFullPath Include="$([MSBuild]::Unescape($(MSBuildThisFileDirectory)..\x86\%(AgoraRTCX86ExcludeFiles.Identity)))" Condition="'%(AgoraRTCX86ExcludeFiles.Identity)'!=''" />
+
+      <!-- We have gathered all the full path of what should be copied and what should be skipped, let's include that as Content that gets copied -->
+      <Content Include="@(AgoraRTCX86IncludeFilesFullPath)" Exclude="@(AgoraRTCX86ExcludeFilesFullPath)">
+        <Link>$(AgoraRTCX86TargetDir)\%(Filename)%(Extension)</Link>
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+  </Target>
+</Project>
