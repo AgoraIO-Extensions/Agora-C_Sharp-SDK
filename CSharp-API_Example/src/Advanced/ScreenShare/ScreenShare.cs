@@ -214,11 +214,11 @@ namespace CSharp_API_Example
     // override if need
     internal class ScreenShareEventHandler : IAgoraRtcEngineEventHandler
     {
-        private ScreenShare screen_share_inst_ = null;
+        private ScreenShare screenShare_inst_ = null;
 
-        public ScreenShareEventHandler(ScreenShare screen_share)
+        public ScreenShareEventHandler(ScreenShare _screenShare)
         {
-            screen_share_inst_ = screen_share;
+            screenShare_inst_ = _screenShare;
         }
 
         public override void OnWarning(int warn, string msg)
@@ -234,8 +234,8 @@ namespace CSharp_API_Example
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess, channel={0}, uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)screen_share_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
-            int ret = screen_share_inst_.GetEngine().SetupLocalVideo(vs);
+            VideoCanvas vs = new VideoCanvas((ulong)screenShare_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            int ret = screenShare_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo, ret={0}", ret);
         }
 
@@ -252,9 +252,9 @@ namespace CSharp_API_Example
         public override void OnUserJoined(uint uid, int elapsed)
         {
             Console.WriteLine("----->OnUserJoined, uid={0}", uid);
-            if (screen_share_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)screen_share_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, screen_share_inst_.GetChannelId(), uid);
-            int ret = screen_share_inst_.GetEngine().SetupRemoteVideo(vc);
+            if (screenShare_inst_.GetRemoteWinId() == IntPtr.Zero) return;
+            var vc = new VideoCanvas((ulong)screenShare_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, screenShare_inst_.GetChannelId(), uid);
+            int ret = screenShare_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->OnUserJoined, ret={0}", ret);
         }
 

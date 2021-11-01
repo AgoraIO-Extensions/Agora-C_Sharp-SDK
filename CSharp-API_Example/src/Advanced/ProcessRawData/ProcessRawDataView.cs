@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace CSharp_API_Example
 {
-    public partial class RawDataView : UserControl
+    public partial class ProcessRawDataView : UserControl
     {
-        public RawDataView()
+        public ProcessRawDataView()
         {
             InitializeComponent();
         }

@@ -1,7 +1,7 @@
 ﻿
 namespace CSharp_API_Example
 {
-    partial class MultiChannelView
+    partial class JoinMultipleChannelView
     {
         /// <summary> 
         /// 必需的设计器变量。

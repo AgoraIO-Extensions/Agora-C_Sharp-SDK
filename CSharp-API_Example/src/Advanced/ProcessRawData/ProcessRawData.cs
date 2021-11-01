@@ -16,11 +16,11 @@ using agora.rtc;
 
 namespace CSharp_API_Example
 {
-    public class RawData : IEngine
+    public class ProcessRawData : IEngine
     {
         private string app_id_ = "";
         private string channel_id_ = "";
-        private readonly string RawData_TAG = "[RawData] ";
+        private readonly string ProcessRawData_TAG = "[ProcessRawData] ";
         private readonly string log_file_path_ = "CSharp_API_Example.log";
         private IAgoraRtcEngine rtc_engine_ = null;
         private IAgoraRtcEngineEventHandler event_handler_ = null;
@@ -29,7 +29,7 @@ namespace CSharp_API_Example
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_win_id_ = IntPtr.Zero;
 
-        public RawData(IntPtr localWindowId, IntPtr remoteWindowId)
+        public ProcessRawData(IntPtr localWindowId, IntPtr remoteWindowId)
         {
             local_win_id_ = localWindowId;
             remote_win_id_ = remoteWindowId;
@@ -48,17 +48,17 @@ namespace CSharp_API_Example
 
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(RawData_TAG + "Initialize", ret);
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "Initialize", ret);
             ret = rtc_engine_.SetLogFile(log_file_path_);
-            CSharpForm.dump_handler_(RawData_TAG + "SetLogFile", ret);
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "SetLogFile", ret);
 
-            event_handler_ = new RawDataEventHandler(this);
+            event_handler_ = new ProcessRawDataEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
 
-            audio_frame_observer = new RawDataAudioFrameObserver();
+            audio_frame_observer = new ProcessRawDataAudioFrameObserver();
             rtc_engine_.RegisterAudioFrameObserver(audio_frame_observer);
 
-            video_frame_observer = new RawDataVideoFrameObserver();
+            video_frame_observer = new ProcessRawDataVideoFrameObserver();
             rtc_engine_.RegisterVideoFrameObserver(video_frame_observer);
 
             return ret;
@@ -70,7 +70,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(RawData_TAG + "LeaveChannel", ret);
+                CSharpForm.dump_handler_(ProcessRawData_TAG + "LeaveChannel", ret);
 
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
@@ -84,13 +84,13 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(RawData_TAG + "EnableAudio", ret);
+                CSharpForm.dump_handler_(ProcessRawData_TAG + "EnableAudio", ret);
 
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(RawData_TAG + "EnableVideo", ret);
+                CSharpForm.dump_handler_(ProcessRawData_TAG + "EnableVideo", ret);
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
-                CSharpForm.dump_handler_(RawData_TAG + "JoinChannel", ret);
+                CSharpForm.dump_handler_(ProcessRawData_TAG + "JoinChannel", ret);
             }
             return ret;
         }
@@ -101,7 +101,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(RawData_TAG + "LeaveChannel", ret);
+                CSharpForm.dump_handler_(ProcessRawData_TAG + "LeaveChannel", ret);
             }
             return ret;
         }
@@ -136,7 +136,7 @@ namespace CSharp_API_Example
     }
 
     // override if need
-    internal class RawDataAudioFrameObserver : IAgoraRtcAudioFrameObserver
+    internal class ProcessRawDataAudioFrameObserver : IAgoraRtcAudioFrameObserver
     {
         public override bool OnMixedAudioFrame(AudioFrame audioFrame)
         {
@@ -170,7 +170,7 @@ namespace CSharp_API_Example
     }
 
     // override if need
-    internal class RawDataVideoFrameObserver : IAgoraRtcVideoFrameObserver
+    internal class ProcessRawDataVideoFrameObserver : IAgoraRtcVideoFrameObserver
     {
         public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
         {
@@ -202,12 +202,12 @@ namespace CSharp_API_Example
     }
 
     // override if need
-    internal class RawDataEventHandler : IAgoraRtcEngineEventHandler
+    internal class ProcessRawDataEventHandler : IAgoraRtcEngineEventHandler
     {
-        private RawData rawData_inst_ = null;
+        private ProcessRawData processRawData_inst_ = null;
 
-        public RawDataEventHandler(RawData rawdata) {
-            rawData_inst_ = rawdata;
+        public ProcessRawDataEventHandler(ProcessRawData _processRawData) {
+            processRawData_inst_ = _processRawData;
         }
 
         public override void OnWarning(int warn, string msg)
@@ -223,8 +223,8 @@ namespace CSharp_API_Example
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)rawData_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
-            int ret = rawData_inst_.GetEngine().SetupLocalVideo(vs);
+            VideoCanvas vs = new VideoCanvas((ulong)processRawData_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            int ret = processRawData_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
 
@@ -241,9 +241,9 @@ namespace CSharp_API_Example
         public override void OnUserJoined(uint uid, int elapsed)
         {
             Console.WriteLine("----->OnUserJoined uid={0}", uid);
-            if (rawData_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)rawData_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, rawData_inst_.GetChannelId(), uid);
-            int ret = rawData_inst_.GetEngine().SetupRemoteVideo(vc);
+            if (processRawData_inst_.GetRemoteWinId() == IntPtr.Zero) return;
+            var vc = new VideoCanvas((ulong)processRawData_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, processRawData_inst_.GetChannelId(), uid);
+            int ret = processRawData_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 

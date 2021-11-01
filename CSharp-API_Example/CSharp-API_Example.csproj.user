@@ -4,25 +4,25 @@
     <Compile Update="CSharpForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="src\Advanced\MultiChannel\MultiChannelView.cs">
+    <Compile Update="src\Advanced\JoinMultipleChannel\JoinMultipleChannelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\ProcessRawData\ProcessRawDataView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\ScreenShare\ScreenShareView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="src\Advanced\VideoGroup\VideoGroupView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="src\Basic\Audio1To1\Audio1To1View.cs">
+    <Compile Update="src\Advanced\VirtualBackground\VirtualBackgroundView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="src\Basic\RawData\RawDataView.cs">
+    <Compile Update="src\Basic\JoinChannelAudio\JoinChannelAudioView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="src\Basic\ScreenShare\ScreenShareView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="src\Basic\Video1To1\Video1To1View.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Update="src\Basic\VirtualBackground\VirtualBackgroundView.cs">
+    <Compile Update="src\Basic\JoinChannelVideo\JoinChannelVideoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
   </ItemGroup>

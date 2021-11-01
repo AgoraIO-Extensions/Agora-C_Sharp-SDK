@@ -1,6 +1,7 @@
 .idea/
 .vscode/
 .vs/
+libs/
 target/
 x64/
 bin/
