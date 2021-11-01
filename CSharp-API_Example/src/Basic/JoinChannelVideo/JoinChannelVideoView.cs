@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace CSharp_API_Example
 {
-    public partial class Video1To1View : UserControl
+    public partial class JoinChannelVideoView : UserControl
     {
-        public Video1To1View()
+        public JoinChannelVideoView()
         {
             InitializeComponent();
         }

@@ -28,12 +28,12 @@ using agora.rtc;
 
 namespace CSharp_API_Example
 {
-    public class MultiChannel : IEngine
+    public class JoinMultipleChannel : IEngine
     {
         private string app_id_ = "";
         private string first_channel_id_ = "";
         private string second_channel_id_ = "";
-        private readonly string MultiChannel_TAG = "[MultiChannel] ";
+        private readonly string JoinMultipleChannel_TAG = "[JoinMultipleChannel] ";
         private readonly string log_file_path = "CSharp_API_Example.log";
         private IAgoraRtcEngine rtc_engine_ = null;
         //private IAgoraRtcEngineEventHandler event_handler_ = null;
@@ -45,7 +45,7 @@ namespace CSharp_API_Example
         private IntPtr remote_first_win_id_ = IntPtr.Zero;
         private IntPtr remote_second_win_id_ = IntPtr.Zero;
 
-        public MultiChannel(IntPtr localWindowId, IntPtr remoteFirstWindowId, IntPtr remoteSecondWindowId)
+        public JoinMultipleChannel(IntPtr localWindowId, IntPtr remoteFirstWindowId, IntPtr remoteSecondWindowId)
         {
             local_win_id_ = localWindowId;
             remote_first_win_id_ = remoteFirstWindowId;
@@ -65,23 +65,23 @@ namespace CSharp_API_Example
             }
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(MultiChannel_TAG + "Initialize", ret);
+            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Initialize", ret);
             ret = rtc_engine_.SetLogFile(log_file_path);
-            CSharpForm.dump_handler_(MultiChannel_TAG + "SetLogFile", ret);
-            //event_handler_ = new MultiChannelEventHandler(this);
+            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetLogFile", ret);
+            //event_handler_ = new JoinMultipleChannelEventHandler(this);
             //rtc_engine_.InitEventHandler(event_handler_);
             rtc_engine_.SetChannelProfile(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
 
             first_channel_ = rtc_engine_.CreateChannel(first_channel_id_);
             ret = first_channel_.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
-            CSharpForm.dump_handler_(MultiChannel_TAG + "SetClientRole(ch1)", ret);
-            first_channel_event_handler_ = new MultiChannelChannelEventHandler(this);
+            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetClientRole(ch1)", ret);
+            first_channel_event_handler_ = new JoinMultipleChannelChannelEventHandler(this);
             first_channel_.InitEventHandler(first_channel_event_handler_);
 
             second_channel_ = rtc_engine_.CreateChannel(second_channel_id_);
             ret = second_channel_.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE);
-            CSharpForm.dump_handler_(MultiChannel_TAG + "SetClientRole(ch2)", ret);
-            second_channel_event_handler_ = new MultiChannelChannelEventHandler(this);
+            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetClientRole(ch2)", ret);
+            second_channel_event_handler_ = new JoinMultipleChannelChannelEventHandler(this);
             second_channel_.InitEventHandler(second_channel_event_handler_);
 
             return ret;
@@ -96,7 +96,7 @@ namespace CSharp_API_Example
                 first_channel_.Unpublish();
                 ret = first_channel_.LeaveChannel();
                 first_channel_.Dispose();
-                CSharpForm.dump_handler_(MultiChannel_TAG + "LeaveChannel", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel", ret);
             }
 
             if (null != second_channel_)
@@ -104,7 +104,7 @@ namespace CSharp_API_Example
                 second_channel_.Unpublish();
                 ret = second_channel_.LeaveChannel();
                 second_channel_.Dispose();
-                CSharpForm.dump_handler_(MultiChannel_TAG + "LeaveChannel", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel", ret);
             }
 
             if (null != rtc_engine_)
@@ -123,30 +123,30 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(MultiChannel_TAG + "EnableAudio", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "EnableAudio", ret);
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(MultiChannel_TAG + "EnableVideo", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "EnableVideo", ret);
 
                 VideoCanvas vs = new VideoCanvas((ulong)local_win_id_, RENDER_MODE_TYPE.RENDER_MODE_FIT);
                 ret = rtc_engine_.SetupLocalVideo(vs);
-                CSharpForm.dump_handler_(MultiChannel_TAG + "SetupLocalVideo", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetupLocalVideo", ret);
             }
 
             if (null != first_channel_)
             {
                 ret = first_channel_.JoinChannel("", "", 0, new ChannelMediaOptions(true, true, true, true));
-                CSharpForm.dump_handler_(MultiChannel_TAG + "JoinChannel(ch1)", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch1)", ret);
                 ret = first_channel_.Publish();
-                CSharpForm.dump_handler_(MultiChannel_TAG + "Publish(ch1)", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Publish(ch1)", ret);
             }
 
             if (null != second_channel_)
             {
                 ret = second_channel_.JoinChannel("", "", 0, new ChannelMediaOptions(true, true, false, false));
-                CSharpForm.dump_handler_(MultiChannel_TAG + "JoinChannel(ch2)", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch2)", ret);
                 // 同一时刻只能发布一路流
                 //ret = second_channel_.Publish();
-                //CSharpForm.dump_handler_(MultiChannel_TAG + "Publish(ch2)", ret);
+                //CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Publish(ch2)", ret);
             }
             return ret;
         }
@@ -158,13 +158,13 @@ namespace CSharp_API_Example
             if (null != first_channel_)
             {
                 ret = first_channel_.LeaveChannel();
-                CSharpForm.dump_handler_(MultiChannel_TAG + "LeaveChannel(ch1)", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch1)", ret);
             }
 
             if (null != second_channel_)
             {
                 ret = second_channel_.LeaveChannel();
-                CSharpForm.dump_handler_(MultiChannel_TAG + "LeaveChannel(ch2)", ret);
+                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch2)", ret);
             }
 
             return ret;
@@ -218,12 +218,12 @@ namespace CSharp_API_Example
     }
 
     // override if need
-    internal class MultiChannelChannelEventHandler : IAgoraRtcChannelEventHandler
+    internal class JoinMultipleChannelChannelEventHandler : IAgoraRtcChannelEventHandler
     {
-        private MultiChannel multi_channel_inst = null;
-        public MultiChannelChannelEventHandler(MultiChannel multi_channel)
+        private JoinMultipleChannel joinMultipleChannelChannel_inst_ = null;
+        public JoinMultipleChannelChannelEventHandler(JoinMultipleChannel _joinMultipleChannelChannel)
         {
-            multi_channel_inst = multi_channel;
+            joinMultipleChannelChannel_inst_ = _joinMultipleChannelChannel;
         }
 
         public override void OnChannelError(string channelId, int err, string msg)
@@ -280,13 +280,13 @@ namespace CSharp_API_Example
         {
             IntPtr win_id = IntPtr.Zero;
 
-            if (channelId == multi_channel_inst.GetFistChannelId())
+            if (channelId == joinMultipleChannelChannel_inst_.GetFistChannelId())
             {
-                win_id = multi_channel_inst.GetRemoteFirstWinId();
+                win_id = joinMultipleChannelChannel_inst_.GetRemoteFirstWinId();
             }
-            else if(channelId == multi_channel_inst.GetSecondChannelId())
+            else if(channelId == joinMultipleChannelChannel_inst_.GetSecondChannelId())
             {
-                win_id = multi_channel_inst.GetRemoteSecondWinId();
+                win_id = joinMultipleChannelChannel_inst_.GetRemoteSecondWinId();
             }
             else
             {
@@ -315,12 +315,12 @@ namespace CSharp_API_Example
     }
 
     // override if need
-    internal class MultiChannelEventHandler : IAgoraRtcEngineEventHandler
+    internal class JoinMultipleChannelEventHandler : IAgoraRtcEngineEventHandler
     {
-        private MultiChannel multi_channel_inst = null;
-        public MultiChannelEventHandler(MultiChannel multi_channel)
+        private JoinMultipleChannel joinMultipleChannel_inst = null;
+        public JoinMultipleChannelEventHandler(JoinMultipleChannel _joinMultipleChannel)
         {
-            multi_channel_inst = multi_channel;
+            joinMultipleChannel_inst = _joinMultipleChannel;
         }
         
         public override void OnWarning(int warn, string msg)
@@ -336,27 +336,6 @@ namespace CSharp_API_Example
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess, channel={0}, uid={1}", channel, uid);
-            //VideoCanvas vs = new VideoCanvas((ulong)multi_channel_inst.GetLocalWindowId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
-            //int ret = CSharpForm.usr_engine_.GetEngine().SetupLocalVideo(vs);
-            //Console.WriteLine("----->SetupLocalVideo, ret={0}", ret);
-
-            //if (null != multi_channel_inst.GetFirstChannel())
-            //{
-            //    ret = multi_channel_inst.GetFirstChannel().JoinChannel("", "", uid, new ChannelMediaOptions(true, true, false, false));
-            //    Console.WriteLine("----->JoinChannel(ch1), ret={0}", ret);
-            //    //channel1.Publish();
-            //    //ret = channel1.MuteLocalAudioStream(false);
-            //    //CSharpForm.dump_handler(SCENE_TAG + "MuteLocalAudioStream", ret);
-            //    //ret = channel1.MuteLocalVideoStream(false);
-            //    //CSharpForm.dump_handler(SCENE_TAG + "MuteLocalVideoStream", ret);
-            //}
-
-            //if (null != multi_channel_inst.GetSecondChannel())
-            //{
-            //    ret = multi_channel_inst.GetSecondChannel().JoinChannel("", "", uid, new ChannelMediaOptions(true, true, false, false));
-            //    Console.WriteLine("----->JoinChannel(ch2), ret={0}", ret);
-            //    //channel2.Publish();
-            //}
         }
 
         public override void OnRejoinChannelSuccess(string channel, uint uid, int elapsed)
