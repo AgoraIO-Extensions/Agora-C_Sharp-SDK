@@ -139,8 +139,8 @@ namespace CSharp_API_Example
     {
         private VirtualBackground virtualBackground_inst_ = null;
 
-        public VirtualBackgroundEventHandler(VirtualBackground virtual_background) {
-            virtualBackground_inst_ = virtual_background;
+        public VirtualBackgroundEventHandler(VirtualBackground _virtualBackground) {
+            virtualBackground_inst_ = _virtualBackground;
         }
 
         public override void OnWarning(int warn, string msg)

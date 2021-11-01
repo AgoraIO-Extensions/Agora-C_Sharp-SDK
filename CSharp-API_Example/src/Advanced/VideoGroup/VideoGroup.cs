@@ -129,11 +129,11 @@ namespace CSharp_API_Example
     // override if need
     internal class VideoGroupEventHandler : IAgoraRtcEngineEventHandler
     {
-        private VideoGroup video_group_inst = null;
-        private int remote_win_idx = 0;
-        public VideoGroupEventHandler(VideoGroup video_group)
+        private VideoGroup videoGroup_inst_ = null;
+        private int remoteWin_idx_ = 0;
+        public VideoGroupEventHandler(VideoGroup _videoGroup)
         {
-            video_group_inst = video_group;
+            videoGroup_inst_ = _videoGroup;
         }
         
         public override void OnWarning(int warn, string msg)
@@ -149,7 +149,7 @@ namespace CSharp_API_Example
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess, channel={0}, uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)video_group_inst.GetLocalWindowId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            VideoCanvas vs = new VideoCanvas((ulong)videoGroup_inst_.GetLocalWindowId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
             int ret = CSharpForm.usr_engine_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo, ret={0}", ret);
         }
@@ -170,13 +170,13 @@ namespace CSharp_API_Example
             VideoCanvas vc = null;
 
             // only consider two users here
-            if (remote_win_idx++ % 2 == 0)
+            if (remoteWin_idx_++ % 2 == 0)
             {
-                vc = new VideoCanvas((ulong)video_group_inst.GetRemoteFirstWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, video_group_inst.GetChannelId(), uid);
+                vc = new VideoCanvas((ulong)videoGroup_inst_.GetRemoteFirstWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, videoGroup_inst_.GetChannelId(), uid);
             }
             else
             {
-                vc = new VideoCanvas((ulong)video_group_inst.GetRemoteSecondWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, video_group_inst.GetChannelId(), uid);
+                vc = new VideoCanvas((ulong)videoGroup_inst_.GetRemoteSecondWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, videoGroup_inst_.GetChannelId(), uid);
             }
                 int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->OnUserJoined, ret={0}", ret);

@@ -1,7 +1,7 @@
 ﻿
 namespace CSharp_API_Example
 {
-    partial class Audio1To1View
+    partial class JoinChannelAudioView
     {
         /// <summary> 
         /// 必需的设计器变量。
