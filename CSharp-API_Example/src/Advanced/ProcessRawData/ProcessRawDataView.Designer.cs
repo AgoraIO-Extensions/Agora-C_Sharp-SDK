@@ -1,7 +1,7 @@
 ﻿
 namespace CSharp_API_Example
 {
-    partial class Video1To1View
+    partial class ProcessRawDataView
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -62,18 +62,18 @@ namespace CSharp_API_Example
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(250, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 20);
+            this.label1.Size = new System.Drawing.Size(84, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "一对一视频通话";
+            this.label1.Text = "祼数据回调";
             // 
-            // Video1To1View
+            // RawDataView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.localVideoView);
             this.Controls.Add(this.remoteVideoView);
-            this.Name = "Video1To1View";
+            this.Name = "RawDataView";
             this.Size = new System.Drawing.Size(760, 600);
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).EndInit();

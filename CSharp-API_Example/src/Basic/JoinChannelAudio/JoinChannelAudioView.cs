@@ -8,12 +8,11 @@ using System.Windows.Forms;
 
 namespace CSharp_API_Example
 {
-    public partial class MultiChannelView : UserControl
+    public partial class JoinChannelAudioView : UserControl
     {
-        public MultiChannelView()
+        public JoinChannelAudioView()
         {
             InitializeComponent();
-            //channelSelComboBox.SelectedIndex = channelSelComboBox.Items.IndexOf("ch1");
         }
     }
 }

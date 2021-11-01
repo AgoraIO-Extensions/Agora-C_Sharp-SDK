@@ -38,7 +38,7 @@ namespace CSharp_API_Example
             dump_handler_ = new dumpHandler(DumpStatus);
 
             // local_win_id, remote_win_id
-            usr_engine_ = new Video1To1(video1To1View.localVideoView.Handle, video1To1View.remoteVideoView.Handle);
+            usr_engine_ = new JoinChannelVideo(joinChannelVideoView.localVideoView.Handle, joinChannelVideoView.remoteVideoView.Handle);
         }
 
         private void CheckId()
@@ -114,31 +114,31 @@ namespace CSharp_API_Example
                 usr_engine_ = null;
             }
 
-            if (tabCtrl.SelectedTab == video1v1Tab) // 一对一视频
+            if (tabCtrl.SelectedTab == joinChannelVideoTab) // 一对一视频
             {
-                usr_engine_ = new Video1To1(video1To1View.localVideoView.Handle, video1To1View.remoteVideoView.Handle);
+                usr_engine_ = new JoinChannelVideo(joinChannelVideoView.localVideoView.Handle, joinChannelVideoView.remoteVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == audio1v1Tab) // 一对一语音
+            else if (tabCtrl.SelectedTab == joinChannelAudioTab) // 一对一语音
             {
-                usr_engine_ = new Audio1To1();
+                usr_engine_ = new JoinChannelAudio();
             }
             else if (tabCtrl.SelectedTab == screenShareTab) // 摄像头 + 屏幕共享
             {
                 usr_engine_ = new ScreenShare(screenShareView.localVideoView.Handle, screenShareView.remoteVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == multiChannelTab)  // 多频道
+            else if (tabCtrl.SelectedTab == joinMultipleChannelTab)  // 多频道
             {
-                usr_engine_ = new MultiChannel(multiChannelView.localVideoView.Handle, 
-                    multiChannelView.firstChannelVideoView.Handle, multiChannelView.secondChannelVideoView.Handle);
+                usr_engine_ = new JoinMultipleChannel(joinMultipleChannelView.localVideoView.Handle, 
+                    joinMultipleChannelView.firstChannelVideoView.Handle, joinMultipleChannelView.secondChannelVideoView.Handle);
             }
             else if (tabCtrl.SelectedTab == videoGroupTab) // 多人视频
             {
                 usr_engine_ = new VideoGroup(videoGroupView.localVideoView.Handle,
                     videoGroupView.fistUserVideoView.Handle, videoGroupView.secondUserVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == rawDataTab) // 祼数据
+            else if (tabCtrl.SelectedTab == processRawDataTab) // 祼数据
             {
-                usr_engine_ = new RawData(rawDataView.localVideoView.Handle, rawDataView.remoteVideoView.Handle);
+                usr_engine_ = new ProcessRawData(processRawDataView.localVideoView.Handle, processRawDataView.remoteVideoView.Handle);
             }
             else if (tabCtrl.SelectedTab == virtualBackgroundTab) // 虚拟背景
             {
