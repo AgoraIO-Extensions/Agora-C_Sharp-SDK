@@ -5,14 +5,15 @@
 :: For pushing the SDK to NuGet, please set the API key for NuGet
 :: as an environment variable called %NUGET_APIKEY%.
 ::
-::  Input: %1 (TYPE) : build or release
+::  Input: %1 (TYPE) : build or publish
 ::         %2 (VERSION) : 3.4.0, etc.
 ::         %3 (CONFIG) : Debug or Release (For "%TYPE%"=="build" only)
 ::         %4 (APP-KEY) : The app-key for download iris
 ::         %5 (WIN-URL) : The url for iris_win
+::         %6 (NUGET_API_KEY) : nuget api key for publish
 ::  eg:
 ::     .\build.bat build 3.2.1.7 Debug ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL
-::     .\build.bat release 3.2.1.7 Release ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL
+::     .\build.bat publish 3.2.1.7 Release ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL
 :: Created by Yiqing Huang on Apr 23, 2021.
 :: Modified by Yiqing Huang on May 12, 2021.
 :: Modified by Hugo Chaan on September 2, 2021.
@@ -22,14 +23,21 @@
 SET CURDIR=%cd%
 SET APP_KEY=%4
 SET WIN_URL=%5
+SET NUGET_API_KEY=%6
 
 goto :main
-
 
 :main
 setlocal
 SET TYPE=%1
-if "%TYPE%"=="release" (CALL :release %2) else (CALL :build %2 %3)
+if "%TYPE%"=="publish" (
+    if "%NUGET_API_KEY%"=="" (
+        echo Nuget Api Key cannot be empyty when publish!!!
+        goto :error
+    )
+)
+
+if "%TYPE%"=="publish" (CALL :publish_to_nuget %2) else (CALL :build %2 %3)
 endlocal
 EXIT /B 0
 
@@ -75,16 +83,16 @@ EXIT /B 0
 ::
 :: Notes: Please set the API key for NuGet upload as an environment
 ::        variable called %NUGET_APIKEY% in advance.
-:Release
+:publish_to_nuget
 setlocal
 SET SOURCE=https://api.nuget.org/v3/index.json
-SET NUPKG_FILE_NAME=agora_rtc_sdk.%~1%.nupkg
+SET NUPKG_FILE_NAME=agora_rtc_sdk_test.%~1%.nupkg
 
-call :build %~1 Release pack
+call :build %~1 Release publish
 
-SET PATH_PATH=%CURDIR%\pack
+SET PATH_PATH=%CURDIR%\publish
 cd %PATH_PATH%
-nuget setapikey oy2g3o3***g643k2e5nqlow***zqhovu5chgp***qamaqu
+nuget setapikey %NUGET_API_KEY%
 nuget.exe pack agora_rtc_sdk.nuspec
 
 echo =====Start pushing package to NuGet=====
@@ -102,12 +110,75 @@ echo =====Finish pushing package to NuGet=====
 endlocal
 EXIT /B 0
 
+:: pack files for zip
+:: Params: %~1 (CONFIG): Debug or Release    
+:pre_packing
+setlocal
+SET CONFIG=%~1
+mkdir %CURDIR%\Agora_C#_SDK
+mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
+xcopy /s /y %CURDIR%\iris\x86 %CURDIR%\Agora_C#_SDK\x86
+xcopy /s /y %CURDIR%\iris\x86_64 %CURDIR%\Agora_C#_SDK\x86_64
+xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86
+xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86_64
+REM if exist %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb (
+REM     xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb %CURDIR%\Agora_C#_SDK\x86
+REM )
+REM if exist %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb (
+REM     xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb %CURDIR%\Agora_C#_SDK\x86_64
+REM )
+
+endlocal
+EXIT /B 0
+
+:: pack files for publish
+:: Params: %~1 (CONFIG): Debug or Release  
+:pre_publish_to_nuget
+setlocal
+SET CONFIG=%~1
+SET CONFIG_PATH=%CURDIR%\config
+SET CONFIG_PATH_DST=%CURDIR%\publish
+SET CONFIG_BIN_PATH_DST=%CURDIR%\publish\bin
+
+mkdir %CONFIG_BIN_PATH_DST%\x86\netcoreapp20 %CONFIG_BIN_PATH_DST%\x86\net40 %CONFIG_BIN_PATH_DST%\x86_64\netcoreapp20 %CONFIG_BIN_PATH_DST%\x86_64\net40
+xcopy /s /y %CONFIG_PATH%\agora_rtc_sdk.nuspec %CONFIG_PATH_DST%
+xcopy /s /y %CONFIG_PATH%\agorartc_core20.props %CONFIG_BIN_PATH_DST%
+xcopy /s /y %CONFIG_PATH%\agorartc_core20.targets %CONFIG_BIN_PATH_DST%
+xcopy /s /y %CONFIG_PATH%\agorartc_framework40.props %CONFIG_BIN_PATH_DST%
+xcopy /s /y %CONFIG_PATH%\agorartc_framework40.targets %CONFIG_BIN_PATH_DST%
+xcopy /s /y %CURDIR%\iris\x86  %CONFIG_BIN_PATH_DST%\x86
+xcopy /s /y %CURDIR%\iris\x86_64  %CONFIG_BIN_PATH_DST%\x86_64
+xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CONFIG_BIN_PATH_DST%\x86\netcoreapp20
+xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CONFIG_BIN_PATH_DST%\x86_64\netcoreapp20
+xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\net40\agorartc.dll %CONFIG_BIN_PATH_DST%\x86\net40
+xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\net40\agorartc.dll %CONFIG_BIN_PATH_DST%\x86_64\net40
+REM if exist %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb (
+REM     xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb %CONFIG_BIN_PATH_DST%\x86
+REM )
+REM if exist %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb (
+REM     xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb %CONFIG_BIN_PATH_DST%\x86_64
+REM )
+endlocal
+EXIT /B 0
+
+:: clean
+:post_packing
+setlocal
+
+echo =====Start removing unnecessary files=====
+rmdir /q /s %CURDIR%\Agora_C#_SDK
+rmdir /q /s %CURDIR%\iris %CURDIR%\agorartc
+del /s %CURDIR%\agorartc.sln
+echo =====Finish removing unnecessary files=====
+
+endlocal
+EXIT /B 0
 
 :: Build and compress dlls into a zip file.
 ::
 :: Params: %~1 (VERSION): 3.4.0, etc.
 ::         %~2 (CONFIG): Debug or Release
-::         %~3 (PACK): just for pack.
+::         %~3 (PUBLISH): just for publish.
 ::
 :: Notes: Please set the API key for NuGet upload as an environment
 ::        variable called %NUGET_APIKEY% in advance.
@@ -157,68 +228,18 @@ call %CURDIR%\compile-windows.bat x64 %CURDIR%\agorartc.sln %CONFIG% 2019
 echo =====Finish building for x64=====
 
 echo =====Start packing=====
-
-SET CONFIG_PATH=%CURDIR%\config
-SET CONFIG_PATH_DST=%CURDIR%\pack
-SET CONFIG_BIN_PATH_DST=%CURDIR%\pack\bin
-
-if "%~3" == "pack" (
-    mkdir %CONFIG_BIN_PATH_DST%\x86\netcoreapp20 %CONFIG_BIN_PATH_DST%\x86\net40 %CONFIG_BIN_PATH_DST%\x86_64\netcoreapp20 %CONFIG_BIN_PATH_DST%\x86_64\net40
-    xcopy /s /y %CONFIG_PATH%\agora_rtc_sdk.nuspec %CONFIG_PATH_DST%
-    xcopy /s %CONFIG_PATH%\agorartc_core20.props %CONFIG_BIN_PATH_DST%
-    xcopy /s %CONFIG_PATH%\agorartc_core20.targets %CONFIG_BIN_PATH_DST%
-    xcopy /s %CONFIG_PATH%\agorartc_framework40.props %CONFIG_BIN_PATH_DST%
-    xcopy /s %CONFIG_PATH%\agorartc_framework40.targets %CONFIG_BIN_PATH_DST%
-
-    xcopy /s %CURDIR%\iris\x86  %CONFIG_BIN_PATH_DST%\x86
-    xcopy /s %CURDIR%\iris\x86_64  %CONFIG_BIN_PATH_DST%\x86_64
-
-    xcopy /s %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CONFIG_BIN_PATH_DST%\x86\netcoreapp20
-    xcopy /s %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CONFIG_BIN_PATH_DST%\x86_64\netcoreapp20
-
-    xcopy /s %CURDIR%\agorartc\obj\x86\%CONFIG%\net40\agorartc.dll %CONFIG_BIN_PATH_DST%\x86\net40
-    xcopy /s %CURDIR%\agorartc\obj\x64\%CONFIG%\net40\agorartc.dll %CONFIG_BIN_PATH_DST%\x86_64\net40
-
-    if exist %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb (
-        xcopy /s %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb %CONFIG_BIN_PATH_DST%\x86
-    )
-
-    if exist %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb (
-        xcopy /s %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb %CONFIG_BIN_PATH_DST%\x86_64
-    )
-) else (
-    mkdir %CURDIR%\Agora_C#_SDK
-    mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
-
-    xcopy /s %CURDIR%\iris\x86 %CURDIR%\Agora_C#_SDK\x86
-    xcopy /s %CURDIR%\iris\x86_64 %CURDIR%\Agora_C#_SDK\x86_64
-    xcopy /s %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86
-    xcopy /s %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86_64
-
-    if exist %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb (
-        xcopy /s %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb %CURDIR%\Agora_C#_SDK\x86
-    )
-
-    if exist %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb (
-        xcopy /s %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb %CURDIR%\Agora_C#_SDK\x86_64
-    )
-
-    :: if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
-    rmdir /q /s %CURDIR%\agorartc\obj
-    xcopy /s %CURDIR%\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
-    powershell -command "cp -r %CURDIR%\agorartc.sln %CURDIR%\Agora_C#_SDK\agorartc"
-
-    mkdir %CURDIR%\output
-    powershell -command "Compress-Archive %CURDIR%\Agora_C#_SDK\* %CURDIR%\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
+if "%~3" == "publish" (
+    call :pre_publish_to_nuget %CONFIG%
 )
-
+call :pre_packing %CONFIG%
+:: if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
+rmdir /q /s %CURDIR%\agorartc\obj
+xcopy /s %CURDIR%\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
+powershell -command "cp -r %CURDIR%\agorartc.sln %CURDIR%\Agora_C#_SDK\agorartc"
+mkdir %CURDIR%\output
+powershell -command "Compress-Archive %CURDIR%\Agora_C#_SDK\* %CURDIR%\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
 echo =====Finish packing=====
-
-echo =====Start removing unnecessary files=====
-if not "%~3" == "pack" ( rmdir /q /s %CURDIR%\Agora_C#_SDK )
-rmdir /q /s %CURDIR%\iris %CURDIR%\agorartc
-del /s %CURDIR%\agorartc.sln
-echo =====Finish removing unnecessary files=====
+call :post_packing
 echo =====Finish building for %VERSION%=====
 endlocal
 EXIT /B 0
