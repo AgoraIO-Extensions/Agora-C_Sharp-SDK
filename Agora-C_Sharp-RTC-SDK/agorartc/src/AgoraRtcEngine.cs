@@ -526,10 +526,12 @@ namespace agora.rtc
             return ret;
         }
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         internal IVideoStreamManager GetVideoStreamManager()
         {
             return new VideoStreamManager(this);
         }
+#endif
 
         internal void ReleaseChannel(string channelId)
         {
