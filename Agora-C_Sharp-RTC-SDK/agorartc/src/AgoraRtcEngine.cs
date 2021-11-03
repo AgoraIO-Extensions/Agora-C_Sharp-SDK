@@ -165,7 +165,7 @@ namespace agora.rtc
             return _irisRtcEngine;
         }
 
-#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || __C_SHARP__
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
         public static IAgoraRtcEngine CreateAgoraRtcEngine(AgoraEngineType engineType = AgoraEngineType.MainProcess)
         {
             switch (engineType)
@@ -247,7 +247,7 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (ret == 0) SetAppType(AppType.APP_TYPE_UNITY);
-#elif __C_SHARP__
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             if (ret == 0) SetAppType(AppType.APP_TYPE_C_SHARP);
 #endif
             return ret;

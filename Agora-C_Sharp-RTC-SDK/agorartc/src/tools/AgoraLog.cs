@@ -8,7 +8,7 @@
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using UnityEngine;
-#elif __C_SHARP__
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using System.Diagnostics;
 #endif
 
@@ -37,7 +37,7 @@ namespace agora.rtc
 }
 #endif
 
-#if __C_SHARP__
+#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 namespace agora.rtc
 {
     internal class AgoraLog

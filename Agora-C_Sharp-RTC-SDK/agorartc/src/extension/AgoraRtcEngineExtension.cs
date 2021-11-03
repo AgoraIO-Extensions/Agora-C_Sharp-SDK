@@ -15,7 +15,7 @@ namespace agora.rtc
     {
         public static AgoraDisplayInfo[] GetDisplayInfos(this IAgoraRtcEngine agoraRtcEngine)
         {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || __C_SHARP__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             var displayCollectionPtr = AgoraRtcNative.EnumerateDisplays();
             var displayCollection =
                 (IrisDisplayCollection) (Marshal.PtrToStructure(displayCollectionPtr, typeof(IrisDisplayCollection)) ??
