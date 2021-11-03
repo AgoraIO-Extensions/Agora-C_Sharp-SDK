@@ -5,13 +5,11 @@
 //
 //  Copyright © 2021 Agora. All rights reserved.
 //
-#define __C_SHARP__
 
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using LitJson;
-#if __UNITY__
+#if !__C_SHARP__
 using AOT;
 #endif
 
@@ -33,7 +31,7 @@ namespace agora.rtc
         internal static IrisEventHandlerHandleNative IrisChannelEventHandlerHandleNative = IntPtr.Zero;
         private static IrisCEventHandler _irisCEventHandler;
         private static IrisEventHandlerHandleNative _irisCChannelEventHandlerNative;
-#if __UNITY__
+#if !__C_SHARP__
         private static AgoraCallbackObject _callbackObject;
 #endif
 
@@ -87,7 +85,7 @@ namespace agora.rtc
             Marshal.StructureToPtr(cChannelEventHandlerNativeLocal, _irisCChannelEventHandlerNative, true);
             IrisChannelEventHandlerHandleNative =
                 AgoraRtcNative.SetIrisRtcChannelEventHandler(irisRtcChannelPtr, _irisCChannelEventHandlerNative);
-#if __UNITY__
+#if !__C_SHARP__
             _callbackObject = new AgoraCallbackObject("Agora Channel");
             RtcChannelEventHandlerNative.CallbackObject = _callbackObject;
 #endif
@@ -95,7 +93,7 @@ namespace agora.rtc
 
         internal static void UnsetChannelEventHandler(IrisRtcChannelPtr irisRtcChannelPtr)
         {
-#if __UNITY__
+#if !__C_SHARP__
             RtcChannelEventHandlerNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
@@ -689,21 +687,21 @@ namespace agora.rtc
     {
         internal static Dictionary<string, IAgoraRtcChannelEventHandler> ChannelEventHandlerDict =
             new Dictionary<string, IAgoraRtcChannelEventHandler>();
-#if __UNITY__
+#if !__C_SHARP__
         internal static AgoraCallbackObject CallbackObject;
 
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
         internal static void OnEvent(string @event, string data)
         {
-#if __UNITY__
+#if !__C_SHARP__
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
             var channelId = (string) AgoraJson.GetData<string>(data, "channelId");
             switch (@event)
             {
                 case "onChannelWarning":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -714,12 +712,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "warn"),
                                 (string) AgoraJson.GetData<string>(data, "msg"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onChannelError":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -730,12 +728,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "err"),
                                 (string) AgoraJson.GetData<string>(data, "msg"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onJoinChannelSuccess":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -746,12 +744,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRejoinChannelSuccess":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -762,12 +760,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onLeaveChannel":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -777,12 +775,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 AgoraJson.JsonToStruct<RtcStats>(data, "stats"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onClientRoleChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -793,12 +791,12 @@ namespace agora.rtc
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "oldRole"),
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "newRole"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onUserJoined":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -809,12 +807,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onUserOffline":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -825,12 +823,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (USER_OFFLINE_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onConnectionLost":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -839,12 +837,12 @@ namespace agora.rtc
                             ChannelEventHandlerDict[channelId].OnConnectionLost(
                                 (string) AgoraJson.GetData<string>(data, "channelId"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRequestToken":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -853,12 +851,12 @@ namespace agora.rtc
                             ChannelEventHandlerDict[channelId]
                                 .OnRequestToken((string) AgoraJson.GetData<string>(data, "channelId"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onTokenPrivilegeWillExpire":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -868,12 +866,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 (string) AgoraJson.GetData<string>(data, "token"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRtcStats":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -883,12 +881,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 AgoraJson.JsonToStruct<RtcStats>(data, "stats"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onNetworkQuality":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -900,12 +898,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "txQuality"),
                                 (int) AgoraJson.GetData<int>(data, "rxQuality"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRemoteVideoStats":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -915,12 +913,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 AgoraJson.JsonToStruct<RemoteVideoStats>(data, "stats"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRemoteAudioStats":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -930,12 +928,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 AgoraJson.JsonToStruct<RemoteAudioStats>(data, "stats"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRemoteAudioStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -948,12 +946,12 @@ namespace agora.rtc
                                 (REMOTE_AUDIO_STATE_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onAudioPublishStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -965,12 +963,12 @@ namespace agora.rtc
                                 (STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onVideoPublishStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -982,12 +980,12 @@ namespace agora.rtc
                                 (STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onAudioSubscribeStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1000,12 +998,12 @@ namespace agora.rtc
                                 (STREAM_SUBSCRIBE_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onVideoSubscribeStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1018,12 +1016,12 @@ namespace agora.rtc
                                 (STREAM_SUBSCRIBE_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onUserSuperResolutionEnabled":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1035,12 +1033,12 @@ namespace agora.rtc
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"),
                                 (SUPER_RESOLUTION_STATE_REASON) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onActiveSpeaker":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1050,12 +1048,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 (uint) AgoraJson.GetData<uint>(data, "uid"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onVideoSizeChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1068,12 +1066,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "rotation"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRemoteVideoStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1086,12 +1084,12 @@ namespace agora.rtc
                                 (REMOTE_VIDEO_STATE_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onStreamMessageError":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1105,12 +1103,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "missed"),
                                 (int) AgoraJson.GetData<int>(data, "cached"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onChannelMediaRelayStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1121,12 +1119,12 @@ namespace agora.rtc
                                 (CHANNEL_MEDIA_RELAY_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (CHANNEL_MEDIA_RELAY_ERROR) AgoraJson.GetData<int>(data, "code"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onChannelMediaRelayEvent":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1136,12 +1134,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 (CHANNEL_MEDIA_RELAY_EVENT) AgoraJson.GetData<int>(data, "code"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRtmpStreamingStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1153,12 +1151,12 @@ namespace agora.rtc
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRtmpStreamingEvent":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1169,12 +1167,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAMING_EVENT) AgoraJson.GetData<int>(data, "eventCode"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onTranscodingUpdated":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1183,12 +1181,12 @@ namespace agora.rtc
                             ChannelEventHandlerDict[channelId].OnTranscodingUpdated(
                                 (string) AgoraJson.GetData<string>(data, "channelId"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onStreamInjectedStatus":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1200,12 +1198,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "status"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onLocalPublishFallbackToAudioOnly":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1215,12 +1213,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 (bool) AgoraJson.GetData<bool>(data, "isFallbackOrRecover"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onRemoteSubscribeFallbackToAudioOnly":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1231,12 +1229,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "isFallbackOrRecover"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onConnectionStateChanged":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1247,28 +1245,28 @@ namespace agora.rtc
                                 (CONNECTION_STATE_TYPE) AgoraJson.GetData<int>(data, "state"),
                                 (CONNECTION_CHANGED_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
             }
         }
 
-#if __UNITY__
+#if !__C_SHARP__
         [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
 #endif
         internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
         {
             var byteData = new byte[length];
             if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int) length);
-#if __UNITY__
+#if !__C_SHARP__
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
             var channelId = (string) AgoraJson.GetData<string>(data, "channelId");
             switch (@event)
             {
                 case "onStreamMessage":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1279,12 +1277,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "streamId"), byteData, length);
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onReadyToSendMetadata":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1295,12 +1293,12 @@ namespace agora.rtc
                         {
                             ChannelEventHandlerDict[channelId].OnReadyToSendMetadata(metadata1);
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;
                 case "onMetadataReceived":
-#if __UNITY__
+#if !__C_SHARP__
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -1311,7 +1309,7 @@ namespace agora.rtc
                         {
                             ChannelEventHandlerDict[channelId].OnMetadataReceived(metadata2);
                         }
-#if __UNITY__
+#if !__C_SHARP__
                     });
 #endif
                     break;

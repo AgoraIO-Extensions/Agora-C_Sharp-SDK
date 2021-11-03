@@ -5,15 +5,14 @@
 //
 //  Copyright © 2021 Agora. All rights reserved.
 //
-#define __C_SHARP__
 
-#if __UNITY__
+#if !__C_SHARP__
 using UnityEngine;
 #elif __C_SHARP__
 using System.Diagnostics;
 #endif
 
-#if __UNITY__
+#if !__C_SHARP__
 namespace agora.rtc
 {
     internal class AgoraLog

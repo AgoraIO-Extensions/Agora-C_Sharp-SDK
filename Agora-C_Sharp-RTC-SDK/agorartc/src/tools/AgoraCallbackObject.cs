@@ -5,7 +5,8 @@
 //
 //  Copyright © 2021 Agora. All rights reserved.
 //
-#if __UNITY__
+
+#if !__C_SHARP__
 using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
