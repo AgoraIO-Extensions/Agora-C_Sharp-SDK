@@ -24,8 +24,8 @@ echo LocalPath: %Local_Path%
 echo.
 echo ((((((((((( ============== Compiling for =============== %Machine% )))))))))))
 echo.
-@REM call "C:\Program Files (x86)\Microsoft Visual Studio\%platformTool%\Community\VC\Auxiliary\Build\vcvarsall.bat" %Machine%
-call "C:\Program Files (x86)\Microsoft Visual Studio\%platformTool%\Professional\VC\Auxiliary\Build\vcvarsall.bat" %Machine%
+call "C:\Program Files (x86)\Microsoft Visual Studio\%platformTool%\Community\VC\Auxiliary\Build\vcvarsall.bat" %Machine%
+@REM call "C:\Program Files (x86)\Microsoft Visual Studio\%platformTool%\Professional\VC\Auxiliary\Build\vcvarsall.bat" %Machine%
 @REM call "C:\Program Files (x86)\Microsoft Visual Studio\%platformTool%\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" %Machine%
 @REM Restore .NET configuration.
 dotnet restore

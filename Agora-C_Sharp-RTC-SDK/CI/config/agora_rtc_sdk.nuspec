@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>agora_rtc_sdk</id>
-    <version>3.2.1.7</version>
+    <id>agora_rtc_sdk_test</id>
+    <version>3.2.1.9</version>
     <title>agora rtc sdk wrapper</title>
     <authors>berky</authors>
 	<requireLicenseAcceptance>false</requireLicenseAcceptance>
