@@ -6,7 +6,7 @@
 //  Copyright © 2021 Agora. All rights reserved.
 //
 
-#if !__C_SHARP__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
