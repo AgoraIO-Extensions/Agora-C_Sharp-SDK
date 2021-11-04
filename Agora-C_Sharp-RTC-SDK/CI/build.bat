@@ -29,6 +29,7 @@ goto :main
 
 :main
 setlocal
+echo type[%1] version[%2] config[%3] app-key[%4] win-url[%5] nuget_api_key[%6]
 SET TYPE=%1
 if "%TYPE%"=="publish" (
     if "%NUGET_API_KEY%"=="" (
