@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
 
@@ -102,7 +102,7 @@ namespace agora.rtc
             return localVideoFrame;
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_VideoFrameLocal_Native))]
 #endif
         internal static bool OnCaptureVideoFrame(IntPtr videoFramePtr)
@@ -111,7 +111,7 @@ namespace agora.rtc
                    VideoFrameObserver.OnCaptureVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 0));
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_VideoFrameLocal_Native))]
 #endif
         internal static bool OnPreEncodeVideoFrame(IntPtr videoFramePtr)
@@ -120,7 +120,7 @@ namespace agora.rtc
                    VideoFrameObserver.OnPreEncodeVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 1));
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_VideoFrameRemote_Native))]
 #endif
         internal static bool OnRenderVideoFrame(uint uid, IntPtr videoFramePtr)
@@ -128,7 +128,7 @@ namespace agora.rtc
             return true;
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_Uint32_t_Native))]
 #endif
         internal static uint GetObservedFramePosition()
@@ -140,7 +140,7 @@ namespace agora.rtc
             return (uint) VideoFrameObserver.GetObservedFramePosition();
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_Bool_Natvie))]
 #endif
         internal static bool IsMultipleChannelFrameWanted()
@@ -148,7 +148,7 @@ namespace agora.rtc
             return VideoFrameObserver == null || VideoFrameObserver.IsMultipleChannelFrameWanted();
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_VideoFrameEx_Native))]
 #endif
         internal static bool OnRenderVideoFrameEx(string channelId, uint uid, IntPtr videoFramePtr)
