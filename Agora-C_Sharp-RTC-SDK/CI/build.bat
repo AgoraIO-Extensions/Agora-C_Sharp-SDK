@@ -193,7 +193,7 @@ SET CONFIG=%~2
 echo =====Start building for %VERSION%=====
 
 echo =====Start preparing for build=====
-SET URL_FILE=url_config.txt
+SET URL_FILE=url_config_csharp.txt
 SET OUT_FILENAME=iris.zip
 SET IRIS_PATH_x86=%CURDIR%\iris\iris_*\Win32
 SET NATIVE_SDK_x86=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86

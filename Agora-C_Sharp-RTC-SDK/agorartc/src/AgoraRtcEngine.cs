@@ -5,13 +5,11 @@
 //
 //  Copyright © 2021 Agora. All rights reserved.
 //
-#define __C_SHARP__
 
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using LitJson;
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
 
@@ -43,7 +41,7 @@ namespace agora.rtc
         private IrisCEventHandler _irisCEventHandler;
         private IrisEventHandlerHandleNative _irisCEngineEventHandlerNative;
         
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         private AgoraCallbackObject _callbackObject;
 #endif
 
@@ -167,7 +165,7 @@ namespace agora.rtc
             return _irisRtcEngine;
         }
 
-#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || __C_SHARP__
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
         public static IAgoraRtcEngine CreateAgoraRtcEngine(AgoraEngineType engineType = AgoraEngineType.MainProcess)
         {
             switch (engineType)
@@ -247,9 +245,9 @@ namespace agora.rtc
             var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineInitialize,
                 JsonMapper.ToJson(param), out _result);
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (ret == 0) SetAppType(AppType.APP_TYPE_UNITY);
-#elif __C_SHARP__
+#elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             if (ret == 0) SetAppType(AppType.APP_TYPE_C_SHARP);
 #endif
             return ret;
@@ -285,7 +283,7 @@ namespace agora.rtc
                 _irisEngineEventHandlerHandleNative =
                     AgoraRtcNative.SetIrisRtcEngineEventHandler(_irisRtcEngine, _irisCEngineEventHandlerNative);
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
                 RtcEngineEventHandlerNative.CallbackObjectArr[idx] = _callbackObject;
 #endif
@@ -299,7 +297,7 @@ namespace agora.rtc
             var idx = this == engineInstance[0] ? 0 : 1;
 
             RtcEngineEventHandlerNative.EngineEventHandlerArr[idx] = null;
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             RtcEngineEventHandlerNative.CallbackObjectArr[idx] = null;
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
@@ -528,10 +526,12 @@ namespace agora.rtc
             return ret;
         }
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         internal IVideoStreamManager GetVideoStreamManager()
         {
             return new VideoStreamManager(this);
         }
+#endif
 
         internal void ReleaseChannel(string channelId)
         {
@@ -2569,7 +2569,7 @@ namespace agora.rtc
     internal static class RtcEngineEventHandlerNative
     {
         internal static IAgoraRtcEngineEventHandler[] EngineEventHandlerArr = {null, null};
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         internal static AgoraCallbackObject[] CallbackObjectArr = {null, null};
 
 
@@ -2577,13 +2577,13 @@ namespace agora.rtc
 #endif
         internal static void OnEvent(string @event, string data)
         {
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (CallbackObjectArr[0] == null || CallbackObjectArr[0]._CallbackQueue == null) return;
 #endif
             switch (@event)
             {
                 case "onWarning":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2592,12 +2592,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnWarning((int) AgoraJson.GetData<int>(data, "warn"),
                                 (string) AgoraJson.GetData<string>(data, "msg"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onError":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2606,12 +2606,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnError((int) AgoraJson.GetData<int>(data, "err"),
                                 (string) AgoraJson.GetData<string>(data, "msg"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onJoinChannelSuccess":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2622,12 +2622,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRejoinChannelSuccess":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2638,12 +2638,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLeaveChannel":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2652,12 +2652,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnLeaveChannel(
                                 AgoraJson.JsonToStruct<RtcStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onClientRoleChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2667,12 +2667,12 @@ namespace agora.rtc
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "oldRole"),
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "newRole"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserJoined":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2681,12 +2681,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnUserJoined((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserOffline":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2695,12 +2695,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnUserOffline((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (USER_OFFLINE_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLastmileQuality":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2709,12 +2709,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnLastmileQuality(
                                 (int) AgoraJson.GetData<int>(data, "quality"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLastmileProbeResult":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2723,12 +2723,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnLastmileProbeResult(
                                 AgoraJson.JsonToStruct<LastmileProbeResult>(data, "result"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onConnectionInterrupted":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(
                         () =>
                         {
@@ -2737,12 +2737,12 @@ namespace agora.rtc
                             {
                                 EngineEventHandlerArr[0].OnConnectionInterrupted();
                             }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onConnectionLost":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2750,12 +2750,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnConnectionLost();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onConnectionBanned":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2763,12 +2763,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnConnectionBanned();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onApiCallExecuted":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2779,12 +2779,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "api"),
                                 (string) AgoraJson.GetData<string>(data, "result"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRequestToken":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2792,12 +2792,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnRequestToken();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onTokenPrivilegeWillExpire":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2806,12 +2806,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnTokenPrivilegeWillExpire(
                                 (string) AgoraJson.GetData<string>(data, "token"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioQuality":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2822,12 +2822,12 @@ namespace agora.rtc
                                 (ushort) AgoraJson.GetData<ushort>(data, "delay"),
                                 (ushort) AgoraJson.GetData<ushort>(data, "lost"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRtcStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2836,12 +2836,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnRtcStats(
                                 AgoraJson.JsonToStruct<RtcStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onNetworkQuality":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2851,12 +2851,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "txQuality"),
                                 (int) AgoraJson.GetData<int>(data, "rxQuality"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalVideoStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2865,12 +2865,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnLocalVideoStats(
                                 AgoraJson.JsonToStruct<LocalVideoStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteVideoStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2879,12 +2879,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnRemoteVideoStats(
                                 AgoraJson.JsonToStruct<RemoteVideoStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalAudioStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2893,12 +2893,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnLocalAudioStats(
                                 AgoraJson.JsonToStruct<LocalAudioStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2907,12 +2907,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnRemoteAudioStats(
                                 AgoraJson.JsonToStruct<RemoteAudioStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalAudioStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2922,12 +2922,12 @@ namespace agora.rtc
                                 (LOCAL_AUDIO_STREAM_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (LOCAL_AUDIO_STREAM_ERROR) AgoraJson.GetData<int>(data, "error"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2939,12 +2939,12 @@ namespace agora.rtc
                                 (REMOTE_AUDIO_STATE_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioPublishStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2956,12 +2956,12 @@ namespace agora.rtc
                                 (STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoPublishStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2973,12 +2973,12 @@ namespace agora.rtc
                                 (STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioSubscribeStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -2991,12 +2991,12 @@ namespace agora.rtc
                                 (STREAM_SUBSCRIBE_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoSubscribeStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3009,7 +3009,7 @@ namespace agora.rtc
                                 (STREAM_SUBSCRIBE_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
@@ -3017,7 +3017,7 @@ namespace agora.rtc
                     var speakerNumber = (uint) AgoraJson.GetData<uint>(data, "speakerNumber");
                     var speakers = AgoraJson.JsonToStructArray<AudioVolumeInfo>(data, "speakers", speakerNumber);
                     var totalVolume = (int) AgoraJson.GetData<int>(data, "totalVolume");
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3025,12 +3025,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnAudioVolumeIndication(speakers, speakerNumber, totalVolume);
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onActiveSpeaker":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3038,12 +3038,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnActiveSpeaker((uint) AgoraJson.GetData<uint>(data, "uid"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoStopped":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3051,12 +3051,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnVideoStopped();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstLocalVideoFrame":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3067,12 +3067,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstLocalVideoFramePublished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3081,12 +3081,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnFirstLocalVideoFramePublished(
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstRemoteVideoDecoded":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3098,12 +3098,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstRemoteVideoFrame":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3115,12 +3115,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserMuteAudio":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3129,12 +3129,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnUserMuteAudio((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "muted"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserMuteVideo":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3143,12 +3143,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnUserMuteVideo((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "muted"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserEnableVideo":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3157,12 +3157,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnUserEnableVideo((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioDeviceStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3173,12 +3173,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "deviceType"),
                                 (int) AgoraJson.GetData<int>(data, "deviceState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioDeviceVolumeChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3189,12 +3189,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "volume"),
                                 (bool) AgoraJson.GetData<bool>(data, "muted"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onCameraReady":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3202,12 +3202,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnCameraReady();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onCameraFocusAreaChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3218,13 +3218,13 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "y"), (int) AgoraJson.GetData<int>(data, "width"),
                                 (int) AgoraJson.GetData<int>(data, "height"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFacePositionChanged":
                     var numFaces = (int) AgoraJson.GetData<int>(data, "numFaces");
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3237,12 +3237,12 @@ namespace agora.rtc
                                     (string) AgoraJson.GetData<string>(data, "vecRectangle")),
                                 AgoraJson.JsonToStructArray<int>(data, "vecDistance", (uint) numFaces), numFaces);
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onCameraExposureAreaChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3253,12 +3253,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "y"), (int) AgoraJson.GetData<int>(data, "width"),
                                 (int) AgoraJson.GetData<int>(data, "height"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioMixingFinished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3266,12 +3266,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnAudioMixingFinished();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioMixingStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3281,12 +3281,12 @@ namespace agora.rtc
                                 (AUDIO_MIXING_STATE_TYPE) AgoraJson.GetData<int>(data, "state"),
                                 (AUDIO_MIXING_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioMixingBegin":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3294,12 +3294,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnRemoteAudioMixingBegin();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioMixingEnd":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3307,12 +3307,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnRemoteAudioMixingEnd();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioEffectFinished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3321,12 +3321,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnAudioEffectFinished(
                                 (int) AgoraJson.GetData<int>(data, "soundId"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstRemoteAudioDecoded":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3336,12 +3336,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoDeviceStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3352,12 +3352,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "deviceType"),
                                 (int) AgoraJson.GetData<int>(data, "deviceState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalVideoStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3367,12 +3367,12 @@ namespace agora.rtc
                                 (LOCAL_VIDEO_STREAM_STATE) AgoraJson.GetData<int>(data, "localVideoState"),
                                 (LOCAL_VIDEO_STREAM_ERROR) AgoraJson.GetData<int>(data, "error"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoSizeChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3383,12 +3383,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "rotation"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteVideoStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3400,12 +3400,12 @@ namespace agora.rtc
                                 (REMOTE_VIDEO_STATE_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserEnableLocalVideo":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3415,12 +3415,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onStreamMessageError":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3433,12 +3433,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "missed"),
                                 (int) AgoraJson.GetData<int>(data, "cached"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onMediaEngineLoadSuccess":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3446,12 +3446,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnMediaEngineLoadSuccess();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onMediaEngineStartCallSuccess":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3459,12 +3459,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnMediaEngineStartCallSuccess();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVirtualBackgroundSourceEnabled":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3474,12 +3474,12 @@ namespace agora.rtc
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"),
                                 (VIRTUAL_BACKGROUND_SOURCE_STATE_REASON) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserSuperResolutionEnabled":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3490,12 +3490,12 @@ namespace agora.rtc
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"),
                                 (SUPER_RESOLUTION_STATE_REASON) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onChannelMediaRelayStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3505,12 +3505,12 @@ namespace agora.rtc
                                 (CHANNEL_MEDIA_RELAY_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (CHANNEL_MEDIA_RELAY_ERROR) AgoraJson.GetData<int>(data, "code"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onChannelMediaRelayEvent":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3519,12 +3519,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnChannelMediaRelayEvent(
                                 (CHANNEL_MEDIA_RELAY_EVENT) AgoraJson.GetData<int>(data, "code"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstLocalAudioFrame":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3533,12 +3533,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnFirstLocalAudioFrame(
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstLocalAudioFramePublished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3547,12 +3547,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnFirstLocalAudioFramePublished(
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstRemoteAudioFrame":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3562,12 +3562,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRtmpStreamingStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3578,12 +3578,12 @@ namespace agora.rtc
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRtmpStreamingEvent":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3593,12 +3593,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAMING_EVENT) AgoraJson.GetData<int>(data, "eventCode"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onStreamPublished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3608,12 +3608,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (int) AgoraJson.GetData<int>(data, "error"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onStreamUnpublished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3622,12 +3622,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnStreamUnpublished(
                                 (string) AgoraJson.GetData<string>(data, "url"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onTranscodingUpdated":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3635,12 +3635,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnTranscodingUpdated();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onStreamInjectedStatus":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3651,12 +3651,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "status"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioRouteChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3665,12 +3665,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnAudioRouteChanged(
                                 (AUDIO_ROUTE_TYPE) AgoraJson.GetData<int>(data, "routing"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalPublishFallbackToAudioOnly":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3679,12 +3679,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnLocalPublishFallbackToAudioOnly(
                                 (bool) AgoraJson.GetData<bool>(data, "isFallbackOrRecover"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteSubscribeFallbackToAudioOnly":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3694,12 +3694,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "isFallbackOrRecover"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioTransportStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3711,12 +3711,12 @@ namespace agora.rtc
                                 (ushort) AgoraJson.GetData<ushort>(data, "lost"),
                                 (ushort) AgoraJson.GetData<ushort>(data, "rxKBitRate"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteVideoTransportStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3728,12 +3728,12 @@ namespace agora.rtc
                                 (ushort) AgoraJson.GetData<ushort>(data, "lost"),
                                 (ushort) AgoraJson.GetData<ushort>(data, "rxKBitRate"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onMicrophoneEnabled":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3742,12 +3742,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnMicrophoneEnabled(
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onConnectionStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3757,12 +3757,12 @@ namespace agora.rtc
                                 (CONNECTION_STATE_TYPE) AgoraJson.GetData<int>(data, "state"),
                                 (CONNECTION_CHANGED_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onNetworkTypeChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3771,12 +3771,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnNetworkTypeChanged(
                                 (NETWORK_TYPE) AgoraJson.GetData<int>(data, "type"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalUserRegistered":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3786,12 +3786,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (string) AgoraJson.GetData<string>(data, "userAccount"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserInfoUpdated":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3800,12 +3800,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnUserInfoUpdated((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 AgoraJson.JsonToStruct<UserInfo>(data, "info"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUploadLogResult":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3816,26 +3816,26 @@ namespace agora.rtc
                                 (bool) AgoraJson.GetData<bool>(data, "success"),
                                 (UPLOAD_ERROR_REASON) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
             }
         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
 #endif
         internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
         {
             var byteData = new byte[length];
             if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int) length);
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (CallbackObjectArr[0] == null || CallbackObjectArr[0]._CallbackQueue == null) return;
 #endif
             switch (@event)
             {
                 case "onStreamMessage":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3844,12 +3844,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnStreamMessage((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "streamId"), byteData, length);
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onReadyToSendMetadata":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3858,12 +3858,12 @@ namespace agora.rtc
                             (uint) AgoraJson.GetData<uint>(data, "size"), byteData,
                             (long) AgoraJson.GetData<long>(data, "timeStampMs"));
                         EngineEventHandlerArr[0].OnReadyToSendMetadata(metadata1);
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onMetadataReceived":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3872,25 +3872,25 @@ namespace agora.rtc
                             (uint) AgoraJson.GetData<uint>(data, "size"), byteData,
                             (long) AgoraJson.GetData<long>(data, "timeStampMs"));
                         EngineEventHandlerArr[0].OnMetadataReceived(metadata2);
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
             }
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
         internal static void OnEventSubProcess(string @event, string data)
         {
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (CallbackObjectArr[1] == null || CallbackObjectArr[1]._CallbackQueue == null) return;
 #endif
             switch (@event)
             {
                 case "onWarning":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3899,12 +3899,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnWarning((int) AgoraJson.GetData<int>(data, "warn"),
                                 (string) AgoraJson.GetData<string>(data, "msg"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onError":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3913,12 +3913,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnError((int) AgoraJson.GetData<int>(data, "err"),
                                 (string) AgoraJson.GetData<string>(data, "msg"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onJoinChannelSuccess":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3929,12 +3929,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRejoinChannelSuccess":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3945,12 +3945,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLeaveChannel":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3959,12 +3959,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnLeaveChannel(
                                 AgoraJson.JsonToStruct<RtcStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onClientRoleChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3974,12 +3974,12 @@ namespace agora.rtc
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "oldRole"),
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "newRole"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserJoined":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -3988,12 +3988,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnUserJoined((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserOffline":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4002,12 +4002,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnUserOffline((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (USER_OFFLINE_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLastmileQuality":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4016,12 +4016,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnLastmileQuality(
                                 (int) AgoraJson.GetData<int>(data, "quality"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLastmileProbeResult":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4030,12 +4030,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnLastmileProbeResult(
                                 AgoraJson.JsonToStruct<LastmileProbeResult>(data, "result"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onConnectionInterrupted":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(
                         () =>
                         {
@@ -4044,12 +4044,12 @@ namespace agora.rtc
                             {
                                 EngineEventHandlerArr[1].OnConnectionInterrupted();
                             }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onConnectionLost":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4057,12 +4057,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnConnectionLost();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onConnectionBanned":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4070,12 +4070,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnConnectionBanned();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onApiCallExecuted":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4086,12 +4086,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "api"),
                                 (string) AgoraJson.GetData<string>(data, "result"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRequestToken":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4099,12 +4099,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnRequestToken();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onTokenPrivilegeWillExpire":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4113,12 +4113,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnTokenPrivilegeWillExpire(
                                 (string) AgoraJson.GetData<string>(data, "token"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioQuality":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4129,12 +4129,12 @@ namespace agora.rtc
                                 (ushort) AgoraJson.GetData<ushort>(data, "delay"),
                                 (ushort) AgoraJson.GetData<ushort>(data, "lost"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRtcStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4143,12 +4143,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnRtcStats(
                                 AgoraJson.JsonToStruct<RtcStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onNetworkQuality":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4158,12 +4158,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "txQuality"),
                                 (int) AgoraJson.GetData<int>(data, "rxQuality"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalVideoStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4172,12 +4172,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnLocalVideoStats(
                                 AgoraJson.JsonToStruct<LocalVideoStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteVideoStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4186,12 +4186,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnRemoteVideoStats(
                                 AgoraJson.JsonToStruct<RemoteVideoStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalAudioStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4200,12 +4200,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnLocalAudioStats(
                                 AgoraJson.JsonToStruct<LocalAudioStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4214,12 +4214,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnRemoteAudioStats(
                                 AgoraJson.JsonToStruct<RemoteAudioStats>(data, "stats"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalAudioStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4229,12 +4229,12 @@ namespace agora.rtc
                                 (LOCAL_AUDIO_STREAM_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (LOCAL_AUDIO_STREAM_ERROR) AgoraJson.GetData<int>(data, "error"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4246,12 +4246,12 @@ namespace agora.rtc
                                 (REMOTE_AUDIO_STATE_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioPublishStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4263,12 +4263,12 @@ namespace agora.rtc
                                 (STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoPublishStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4280,12 +4280,12 @@ namespace agora.rtc
                                 (STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioSubscribeStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4298,12 +4298,12 @@ namespace agora.rtc
                                 (STREAM_SUBSCRIBE_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoSubscribeStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4316,7 +4316,7 @@ namespace agora.rtc
                                 (STREAM_SUBSCRIBE_STATE) AgoraJson.GetData<int>(data, "newState"),
                                 (int) AgoraJson.GetData<int>(data, "elapseSinceLastState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
@@ -4324,7 +4324,7 @@ namespace agora.rtc
                     var speakerNumber = (uint) AgoraJson.GetData<uint>(data, "speakerNumber");
                     var speakers = AgoraJson.JsonToStructArray<AudioVolumeInfo>(data, "speakers", speakerNumber);
                     var totalVolume = (int) AgoraJson.GetData<int>(data, "totalVolume");
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4332,12 +4332,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnAudioVolumeIndication(speakers, speakerNumber, totalVolume);
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onActiveSpeaker":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4345,12 +4345,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnActiveSpeaker((uint) AgoraJson.GetData<uint>(data, "uid"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoStopped":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4358,12 +4358,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnVideoStopped();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstLocalVideoFrame":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4374,12 +4374,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstLocalVideoFramePublished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4388,12 +4388,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnFirstLocalVideoFramePublished(
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstRemoteVideoDecoded":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4405,12 +4405,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstRemoteVideoFrame":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4422,12 +4422,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserMuteAudio":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4436,12 +4436,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnUserMuteAudio((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "muted"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserMuteVideo":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4450,12 +4450,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnUserMuteVideo((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "muted"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserEnableVideo":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4464,12 +4464,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnUserEnableVideo((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioDeviceStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4480,12 +4480,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "deviceType"),
                                 (int) AgoraJson.GetData<int>(data, "deviceState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioDeviceVolumeChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4496,12 +4496,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "volume"),
                                 (bool) AgoraJson.GetData<bool>(data, "muted"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onCameraReady":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4509,12 +4509,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnCameraReady();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onCameraFocusAreaChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4525,13 +4525,13 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "y"), (int) AgoraJson.GetData<int>(data, "width"),
                                 (int) AgoraJson.GetData<int>(data, "height"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFacePositionChanged":
                     var numFaces = (int) AgoraJson.GetData<int>(data, "numFaces");
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4544,12 +4544,12 @@ namespace agora.rtc
                                     (string) AgoraJson.GetData<string>(data, "vecRectangle")),
                                 AgoraJson.JsonToStructArray<int>(data, "vecDistance", (uint) numFaces), numFaces);
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onCameraExposureAreaChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4560,12 +4560,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "y"), (int) AgoraJson.GetData<int>(data, "width"),
                                 (int) AgoraJson.GetData<int>(data, "height"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioMixingFinished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4573,12 +4573,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnAudioMixingFinished();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioMixingStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4588,12 +4588,12 @@ namespace agora.rtc
                                 (AUDIO_MIXING_STATE_TYPE) AgoraJson.GetData<int>(data, "state"),
                                 (AUDIO_MIXING_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioMixingBegin":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4601,12 +4601,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnRemoteAudioMixingBegin();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioMixingEnd":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4614,12 +4614,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnRemoteAudioMixingEnd();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioEffectFinished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4628,12 +4628,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnAudioEffectFinished(
                                 (int) AgoraJson.GetData<int>(data, "soundId"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstRemoteAudioDecoded":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4643,12 +4643,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoDeviceStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4659,12 +4659,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "deviceType"),
                                 (int) AgoraJson.GetData<int>(data, "deviceState"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalVideoStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4674,12 +4674,12 @@ namespace agora.rtc
                                 (LOCAL_VIDEO_STREAM_STATE) AgoraJson.GetData<int>(data, "localVideoState"),
                                 (LOCAL_VIDEO_STREAM_ERROR) AgoraJson.GetData<int>(data, "error"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVideoSizeChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4690,12 +4690,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "rotation"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteVideoStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4707,12 +4707,12 @@ namespace agora.rtc
                                 (REMOTE_VIDEO_STATE_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserEnableLocalVideo":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4722,12 +4722,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onStreamMessageError":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4740,12 +4740,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "missed"),
                                 (int) AgoraJson.GetData<int>(data, "cached"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onMediaEngineLoadSuccess":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4753,12 +4753,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnMediaEngineLoadSuccess();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onMediaEngineStartCallSuccess":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4766,12 +4766,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnMediaEngineStartCallSuccess();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onVirtualBackgroundSourceEnabled":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4781,12 +4781,12 @@ namespace agora.rtc
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"),
                                 (VIRTUAL_BACKGROUND_SOURCE_STATE_REASON) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserSuperResolutionEnabled":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4797,12 +4797,12 @@ namespace agora.rtc
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"),
                                 (SUPER_RESOLUTION_STATE_REASON) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onChannelMediaRelayStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4812,12 +4812,12 @@ namespace agora.rtc
                                 (CHANNEL_MEDIA_RELAY_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (CHANNEL_MEDIA_RELAY_ERROR) AgoraJson.GetData<int>(data, "code"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onChannelMediaRelayEvent":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4826,12 +4826,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnChannelMediaRelayEvent(
                                 (CHANNEL_MEDIA_RELAY_EVENT) AgoraJson.GetData<int>(data, "code"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstLocalAudioFrame":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4840,12 +4840,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnFirstLocalAudioFrame(
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstLocalAudioFramePublished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4854,12 +4854,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnFirstLocalAudioFramePublished(
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onFirstRemoteAudioFrame":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4869,12 +4869,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRtmpStreamingStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4885,12 +4885,12 @@ namespace agora.rtc
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRtmpStreamingEvent":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4900,12 +4900,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAMING_EVENT) AgoraJson.GetData<int>(data, "eventCode"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onStreamPublished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4915,12 +4915,12 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (int) AgoraJson.GetData<int>(data, "error"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onStreamUnpublished":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4929,12 +4929,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnStreamUnpublished(
                                 (string) AgoraJson.GetData<string>(data, "url"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onTranscodingUpdated":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4942,12 +4942,12 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnTranscodingUpdated();
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onStreamInjectedStatus":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4958,12 +4958,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "status"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onAudioRouteChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4972,12 +4972,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnAudioRouteChanged(
                                 (AUDIO_ROUTE_TYPE) AgoraJson.GetData<int>(data, "routing"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalPublishFallbackToAudioOnly":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -4986,12 +4986,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnLocalPublishFallbackToAudioOnly(
                                 (bool) AgoraJson.GetData<bool>(data, "isFallbackOrRecover"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteSubscribeFallbackToAudioOnly":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5001,12 +5001,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (bool) AgoraJson.GetData<bool>(data, "isFallbackOrRecover"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteAudioTransportStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5018,12 +5018,12 @@ namespace agora.rtc
                                 (ushort) AgoraJson.GetData<ushort>(data, "lost"),
                                 (ushort) AgoraJson.GetData<ushort>(data, "rxKBitRate"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onRemoteVideoTransportStats":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5035,12 +5035,12 @@ namespace agora.rtc
                                 (ushort) AgoraJson.GetData<ushort>(data, "lost"),
                                 (ushort) AgoraJson.GetData<ushort>(data, "rxKBitRate"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onMicrophoneEnabled":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5049,12 +5049,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnMicrophoneEnabled(
                                 (bool) AgoraJson.GetData<bool>(data, "enabled"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onConnectionStateChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5064,12 +5064,12 @@ namespace agora.rtc
                                 (CONNECTION_STATE_TYPE) AgoraJson.GetData<int>(data, "state"),
                                 (CONNECTION_CHANGED_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onNetworkTypeChanged":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5078,12 +5078,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnNetworkTypeChanged(
                                 (NETWORK_TYPE) AgoraJson.GetData<int>(data, "type"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onLocalUserRegistered":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5093,12 +5093,12 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (string) AgoraJson.GetData<string>(data, "userAccount"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUserInfoUpdated":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5107,12 +5107,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnUserInfoUpdated((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 AgoraJson.JsonToStruct<UserInfo>(data, "info"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onUploadLogResult":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5123,26 +5123,26 @@ namespace agora.rtc
                                 (bool) AgoraJson.GetData<bool>(data, "success"),
                                 (UPLOAD_ERROR_REASON) AgoraJson.GetData<int>(data, "reason"));
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
             }
         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback((typeof(Func_EventWithBuffer_Native)))]
 #endif
         internal static void OnEventWithBufferSubProcess(string @event, string data, IntPtr buffer, uint length)
         {
             var byteData = new byte[length];
             if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int) length);
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (CallbackObjectArr[1] == null || CallbackObjectArr[1]._CallbackQueue == null) return;
 #endif
             switch (@event)
             {
                 case "onStreamMessage":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5151,12 +5151,12 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnStreamMessage((uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "streamId"), byteData, length);
                         }
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onReadyToSendMetadata":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5165,12 +5165,12 @@ namespace agora.rtc
                             (uint) AgoraJson.GetData<uint>(data, "size"), byteData,
                             (long) AgoraJson.GetData<long>(data, "timeStampMs"));
                         EngineEventHandlerArr[1].OnReadyToSendMetadata(metadata1);
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
                 case "onMetadataReceived":
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
                     {
 #endif
@@ -5179,7 +5179,7 @@ namespace agora.rtc
                             (uint) AgoraJson.GetData<uint>(data, "size"), byteData,
                             (long) AgoraJson.GetData<long>(data, "timeStampMs"));
                         EngineEventHandlerArr[1].OnMetadataReceived(metadata2);
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
                     break;
