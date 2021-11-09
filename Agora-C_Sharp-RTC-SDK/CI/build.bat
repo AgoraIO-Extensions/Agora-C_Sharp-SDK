@@ -21,7 +21,7 @@
 @echo off
 
 SET CURDIR=%cd%
-SET APP_KEY=%JFROG_TOKEN%
+SET APP_KEY=%4
 SET WIN_URL=%5
 SET NUGET_API_KEY=%6
 
@@ -29,7 +29,7 @@ goto :main
 
 :main
 setlocal
-echo type[%1] version[%2] config[%3] app_key[%4] win_url[%5] nuget_api_key[%6]
+echo type[%1] version[%2] config[%3] app_key[%APP_KEY%] win_url[%WIN_URL%] nuget_api_key[%NUGET_API_KEY%]
 SET TYPE=%1
 if "%TYPE%"=="publish" (
     if "%NUGET_API_KEY%"=="" (
@@ -199,10 +199,19 @@ SET IRIS_PATH_x86=%CURDIR%\iris\iris_*\Win32
 SET NATIVE_SDK_x86=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86
 SET IRIS_PATH_x64=%CURDIR%\iris\iris_*\x64
 SET NATIVE_SDK_x64=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86_64
-mkdir %CURDIR%\agorartc
-xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
-powershell -command "cp -r %CURDIR%\..\*.sln %CURDIR%"
+
 CALL :download_library %URL_FILE% %OUT_FILENAME%
+echo %CURDIR%\%OUT_FILENAME%
+if not exist %CURDIR%\%OUT_FILENAME% (
+    echo %CURDIR%\%OUT_FILENAME% not exist
+    goto error
+)
+for /f %%i in ('dir /b %CURDIR%\%OUT_FILENAME%') do   set  file_size=%%~zi
+if %file_size% leq 1048576 (
+    echo file size %file_size% unnormal
+	del /s %CURDIR%\%OUT_FILENAME%
+    goto error
+)
 mkdir %CURDIR%\temp
 powershell -command "Expand-Archive -Force %CURDIR%\%OUT_FILENAME% %CURDIR%\temp"
 mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
@@ -213,6 +222,9 @@ powershell -command "cp -r %NATIVE_SDK_x86%\*.lib %CURDIR%\iris\x86"
 powershell -command "cp -r %IRIS_PATH_x64%\Release\* %CURDIR%\iris\x86_64"
 powershell -command "cp -r %NATIVE_SDK_x64%\*.dll %CURDIR%\iris\x86_64"
 powershell -command "cp -r %NATIVE_SDK_x64%\*.lib %CURDIR%\iris\x86_64"
+mkdir %CURDIR%\agorartc
+xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
+powershell -command "cp -r %CURDIR%\..\*.sln %CURDIR%"
 
 rmdir /q /s %CURDIR%\temp
 del /s %CURDIR%\%OUT_FILENAME%
@@ -247,5 +259,5 @@ EXIT /B 0
 
 :: Error message.
 :error
-echo ERROR: Missing input parameter.
+echo ERROR: Missing input parameter or sdk file unnormal!
 EXIT /B 0
