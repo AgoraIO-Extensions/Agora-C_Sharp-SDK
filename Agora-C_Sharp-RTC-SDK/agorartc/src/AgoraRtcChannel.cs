@@ -103,6 +103,7 @@ namespace agora.rtc
             AgoraRtcNative.UnsetIrisRtcChannelEventHandler(irisRtcChannelPtr, IrisChannelEventHandlerHandleNative);
             Marshal.FreeHGlobal(_irisCChannelEventHandlerNative);
             _irisCChannelEventHandlerNative = IntPtr.Zero;
+            IrisChannelEventHandlerHandleNative = IntPtr.Zero;
         }
 
         public override void Dispose()
