@@ -1,7 +1,6 @@
 //  VideoSurface.cs
 //
-//  Created by Yiqing Huang on June 2, 2021.
-//  Modified by Tao Zhang on June 20, 2021.
+//  Created by YuGuo Chen on October 9, 2021.
 //
 //  Copyright © 2021 Agora. All rights reserved.
 //
@@ -9,10 +8,9 @@
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Runtime.InteropServices;
-
 
 namespace agora.rtc
 {
@@ -22,9 +20,8 @@ namespace agora.rtc
         RawImage = 1,
     };
 
-    public sealed class VideoSurface : MonoBehaviour
+    public sealed class AgoraVideoSurface : MonoBehaviour
     {
-        [SerializeField] private AgoraEngineType AgoraEngineType = AgoraEngineType.MainProcess;
         [SerializeField] private AgoraVideoSurfaceType VideoSurfaceType = AgoraVideoSurfaceType.Renderer;
         [SerializeField] private int VideoPixelWidth = 1080;
         [SerializeField] private int VideoPixelHeight = 720;
@@ -34,23 +31,19 @@ namespace agora.rtc
         [SerializeField] private string ChannelId = "";
         [SerializeField] private bool Enable = true;
 
+
         private Component _renderer;
         private bool _needUpdateInfo = true;
         private bool _needResize = false;
         private Texture2D _texture;
         private IVideoStreamManager _videoStreamManager;
-        private IrisRtcVideoFrame _cachedVideoFrame = new IrisRtcVideoFrame();
+        private IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
 
-        public VideoSurface()
+        public AgoraVideoSurface()
         {
             _cachedVideoFrame.y_buffer = IntPtr.Zero;
             _cachedVideoFrame.u_buffer = IntPtr.Zero;
             _cachedVideoFrame.v_buffer = IntPtr.Zero;
-        }
-
-        public void SetEngineType(AgoraEngineType agoraEngineType = AgoraEngineType.MainProcess)
-        {
-            AgoraEngineType = agoraEngineType;
         }
 
         void Start()
@@ -172,7 +165,7 @@ namespace agora.rtc
 
         private IAgoraRtcEngine GetEngine()
         {
-            var engine = AgoraRtcEngine.Get(AgoraEngineType);
+            var engine = AgoraRtcEngine.Get();
             if (_needUpdateInfo && engine != null)
             {
                 if (_videoStreamManager == null)
@@ -181,11 +174,14 @@ namespace agora.rtc
                 }
 
                 if (_videoStreamManager != null)
-                    _videoStreamManager.EnableVideoFrameCache(VideoPixelWidth, VideoPixelHeight, Uid, ChannelId);
+                {
+                    _videoStreamManager.EnableVideoFrameBuffer(VideoPixelWidth, VideoPixelHeight, Uid, ChannelId);
+                }
+            
                 _needUpdateInfo = false;
                 _needResize = true;
                 FreeMemory();
-                _cachedVideoFrame = new IrisRtcVideoFrame
+                _cachedVideoFrame = new IrisVideoFrame
                 {
                     type = VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
                     y_stride = VideoPixelWidth * 4,
@@ -254,7 +250,7 @@ namespace agora.rtc
 
             if (GetEngine() != null && _videoStreamManager != null)
             {
-                _videoStreamManager.DisableVideoFrameCache(Uid, ChannelId);
+                _videoStreamManager.DisableVideoFrameBuffer(Uid, ChannelId);
                 _videoStreamManager = null;
             }
 

@@ -1,7 +1,6 @@
-//  AgoraCallback.cs
+//  AgoraCallbackBase.cs
 //
-//  Created by Yiqing Huang on May 25, 2021.
-//  Modified by Yiqing Huang on July 21, 2021.
+//  Created by YuGuo Chen on September 27, 2021.
 //
 //  Copyright © 2021 Agora. All rights reserved.
 //
@@ -17,12 +16,16 @@ namespace agora.rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate uint Func_Uint32_t_Native();
 
+
+    //event_handler
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate void Func_Event_Native(string @event, string data);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate void Func_EventWithBuffer_Native(string @event, string data, IntPtr buffer, uint length);
 
+
+    //audio_frame
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_AudioFrameLocal_Native(IntPtr audio_frame);
 
@@ -32,8 +35,16 @@ namespace agora.rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_AudioFrameEx_Native(string channel_id, uint uid, IntPtr audio_frame);
 
+
+    //video_frame
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_VideoFrameLocal_Native(IntPtr video_frame);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate bool Func_VideoCaptureLocal_Native(IntPtr video_frame, VideoSourceType source_type);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate bool Func_VideoFrameMediaPlayer_Native(IntPtr videoFrame, int mediaPlayerId);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_VideoFrameRemote_Native(uint uid, IntPtr video_frame);
@@ -41,11 +52,14 @@ namespace agora.rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_VideoFrameEx_Native(string channel_id, uint uid, IntPtr video_frame);
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate VIDEO_FRAME_TYPE Func_VideoFrameType_Native();
+
+
+    // [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    // internal delegate VIDEO_FRAME_TYPE Func_VideoFrameType_Native();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate void Func_VideoFrame_Native(IntPtr video_frame, bool resize);
+    internal delegate void Func_VideoFrame_Native(IntPtr video_frame, uint uid, string channel_id, bool resize);
+
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCEventHandlerNative
@@ -85,6 +99,7 @@ namespace agora.rtc
     internal struct IrisRtcCVideoFrameObserverNative
     {
         internal IntPtr OnCaptureVideoFrame;
+        internal IntPtr OnMediaPlayerVideoFrame;
         internal IntPtr OnPreEncodeVideoFrame;
         internal IntPtr OnRenderVideoFrame;
         internal IntPtr GetObservedFramePosition;
@@ -94,7 +109,8 @@ namespace agora.rtc
     
     internal struct IrisRtcCVideoFrameObserver
     {
-        internal Func_VideoFrameLocal_Native OnCaptureVideoFrame;
+        internal Func_VideoCaptureLocal_Native OnCaptureVideoFrame;
+        internal Func_VideoFrameMediaPlayer_Native OnMediaPlayerVideoFrame;
         internal Func_VideoFrameLocal_Native OnPreEncodeVideoFrame;
         internal Func_VideoFrameRemote_Native OnRenderVideoFrame;
         internal Func_Uint32_t_Native GetObservedFramePosition;
@@ -103,7 +119,7 @@ namespace agora.rtc
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisRtcCRendererCacheConfigNative
+    internal struct IrisCVideoFrameBufferNative
     {
         internal int type;
         internal IntPtr OnVideoFrameReceived;
@@ -111,10 +127,10 @@ namespace agora.rtc
         internal int resize_height;
     }
     
-    internal struct IrisRtcCRendererCacheConfig
+    internal struct IrisCVideoFrameBuffer
     {
         internal VIDEO_FRAME_TYPE type;
-        internal Func_VideoFrame_Native OnVideoFrameNativeReceived;
+        internal Func_VideoFrame_Native OnVideoFrameReceived;
         internal int resize_width;
         internal int resize_height;
     }

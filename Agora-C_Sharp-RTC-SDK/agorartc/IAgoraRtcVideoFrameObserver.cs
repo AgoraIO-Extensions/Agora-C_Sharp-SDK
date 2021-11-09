@@ -1,17 +1,22 @@
 //  IAgoraRtcVideoFrameObserver.cs
 //
-//  Created by Yiqing Huang on June 9, 2021.
-//  Modified by Yiqing Huang on June 11, 2021.
+//  Created by YuGuo Chen on October 6, 2021.
 //
 //  Copyright © 2021 Agora. All rights reserved.
 //
 
+using System;
 
 namespace agora.rtc
 {
     public class IAgoraRtcVideoFrameObserver
     {
-        public virtual bool OnCaptureVideoFrame(VideoFrame videoFrame)
+        public virtual bool OnCaptureVideoFrame(VideoFrame videoFrame, VideoSourceType source_type)
+        {
+            return true;
+        }
+
+        public virtual bool OnMediaPlayerVideoFrame(VideoFrame videoFrame, int mediaPlayerId)
         {
             return true;
         }
