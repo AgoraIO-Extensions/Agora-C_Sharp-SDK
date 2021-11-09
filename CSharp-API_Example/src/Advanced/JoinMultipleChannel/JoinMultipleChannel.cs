@@ -56,6 +56,9 @@ namespace CSharp_API_Example
         {
             int ret = -1;
             app_id_ = appId;
+            var channels = channelId.Split(';');
+            if (channels.Length < 2)
+                return -1;
             first_channel_id_ = channelId.Split(';').GetValue(0).ToString();
             second_channel_id_ = channelId.Split(';').GetValue(1).ToString();
 
