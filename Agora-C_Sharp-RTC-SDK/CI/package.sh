@@ -101,21 +101,24 @@ elif [ "$SDK_TYPE" == "video" ]; then
 fi
 
 mkdir "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/RTC/Agora_*/libs/*.jar "$ANDROID_DST_PATH"/libs
+cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-cp -r $ANDROID_SRC_PATH/RTC/Agora_*/libs/arm64-v8a "$ANDROID_DST_PATH"/libs
+cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/arm64-v8a/Release/*.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
-cp -r $ANDROID_SRC_PATH/RTC/Agora_*/libs/armeabi-v7a "$ANDROID_DST_PATH"/libs
+cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/armeabi-v7a/Release/*.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
-cp -r $ANDROID_SRC_PATH/RTC/Agora_*/libs/x86 "$ANDROID_DST_PATH"/libs
+cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86
+
+cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
+cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86_64
 
 # iOS
 echo "[Unity CI] copying iOS ..."
 IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-RTC-SDK/Plugins/iOS"
-cp -PRf $IOS_SRC_PATH/RTC/Agora_*/libs/*.xcframework/ios-armv7_arm64/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.framework "$IOS_DST_PATH"
 cp -PRf $IOS_SRC_PATH/OS64COMBINED/Release/*.framework "$IOS_DST_PATH"
 
 # macOS
@@ -126,14 +129,14 @@ cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
 # Windows x86-64
 echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
-cp $WIN_SRC_PATH/RTC/Agora_*/libs/x86_64/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_x64_*/rtc/sdk/*.dll "$WIN64_DST_PATH"
 cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
 cp $WIN_SRC_PATH/x64/Release/*.exe "$WIN64_DST_PATH"
 
 # Windows x86
 echo "[Unity CI] copying Windows x86 ..."
 WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
-cp $WIN_SRC_PATH/RTC/Agora_*/libs/x86/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_x86_*/rtc/sdk/*.dll "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/Win32/Release/*.exe "$WIN32_DST_PATH"
 
