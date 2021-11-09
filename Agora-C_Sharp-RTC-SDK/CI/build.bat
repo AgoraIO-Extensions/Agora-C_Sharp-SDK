@@ -30,6 +30,7 @@ goto :main
 :main
 setlocal
 echo type[%1] version[%2] config[%3] app_key[%APP_KEY%] win_url[%WIN_URL%] nuget_api_key[%NUGET_API_KEY%]
+
 SET TYPE=%1
 if "%TYPE%"=="publish" (
     if "%NUGET_API_KEY%"=="" (
@@ -72,6 +73,7 @@ echo =====Start downloading libraries=====
 echo %URL_FILE%
 echo %OUT_FILENAME%
 echo URL: %URL%
+echo %APP_KEY% >> %CURDIR%\jfrogtoken.txt
 if "%WIN_URL%"=="" (CALL :download_in_txt %URL% %OUT_FILENAME%) else (CALL :download_in_command %WIN_URL% %OUT_FILENAME%)
 echo =====Finish downloading libraries=====
 endlocal

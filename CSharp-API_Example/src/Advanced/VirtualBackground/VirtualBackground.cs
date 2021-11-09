@@ -82,7 +82,7 @@ namespace CSharp_API_Example
                 VirtualBackgroundSource virtual_background_source = new VirtualBackgroundSource
                 {
                     background_source_type = BACKGROUND_SOURCE_TYPE.BACKGROUND_IMG,
-                    source = "../../../src/Basic/VirtualBackground/virtual_back_ground.jpg"  // path to background image
+                    source = "../../../src/Advanced/VirtualBackground/virtual_back_ground.jpg"  // path to background image
                 };
 
                 ret = rtc_engine_.EnableVirtualBackground(true, virtual_background_source);
