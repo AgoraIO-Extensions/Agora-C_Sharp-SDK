@@ -83,20 +83,20 @@ echo "ANDROID URL: $ANDROID_URL"
 echo "MAC URL: $MAC_URL"
 echo "WIN URL: $WIN_URL"
 HEADER="X-JFrog-Art-Api: $API_KEY"
-mkdir "$CUR_DIR"/temp/ios "$CUR_DIR"/temp/android "$CUR_DIR"/temp/mac "$CUR_DIR"/temp/win || exit 1
-wget -q --header="$HEADER" "$IOS_URL" -P "$CUR_DIR"/temp/ios || exit 1
-wget -q --header="$HEADER" "$ANDROID_URL" -P "$CUR_DIR"/temp/android || exit 1
-wget -q --header="$HEADER" "$MAC_URL" -P "$CUR_DIR"/temp/mac || exit 1
-wget -q --header="$HEADER" "$WIN_URL" -P "$CUR_DIR"/temp/win || exit 1
-
+mkdir "$CUR_DIR"/temp/ios "$CUR_DIR"/temp/android "$CUR_DIR"/temp/mac "$CUR_DIR"/temp/win
+wget -q --header="$HEADER" "$IOS_URL" -P "$CUR_DIR"/temp/ios
+wget -q --header="$HEADER" "$ANDROID_URL" -P "$CUR_DIR"/temp/android
+wget -q --header="$HEADER" "$MAC_URL" -P "$CUR_DIR"/temp/mac
+wget -q --header="$HEADER" "$WIN_URL" -P "$CUR_DIR"/temp/win 
+echo "Download plugins done"
 
 #--------------------------------------
 # Extract plugins
 #--------------------------------------
-unzip -d "$CUR_DIR"/temp/ios/ "$CUR_DIR"/temp/ios/iris_*.zip || exit 1
-unzip -d "$CUR_DIR"/temp/android/ "$CUR_DIR"/temp/android/iris_*.zip || exit 1
-unzip -d "$CUR_DIR"/temp/mac/ "$CUR_DIR"/temp/mac/iris_*.zip || exit 1
-unzip -d "$CUR_DIR"/temp/win/ "$CUR_DIR"/temp/win/iris_*.zip || exit 1
+unzip -d "$CUR_DIR"/temp/ios/ "$CUR_DIR"/temp/ios/iris_*.zip
+unzip -d "$CUR_DIR"/temp/android/ "$CUR_DIR"/temp/android/iris_*.zip
+unzip -d "$CUR_DIR"/temp/mac/ "$CUR_DIR"/temp/mac/iris_*.zip
+unzip -d "$CUR_DIR"/temp/win/ "$CUR_DIR"/temp/win/iris_*.zip 
 
 #--------------------------------------
 # Delete zip files
