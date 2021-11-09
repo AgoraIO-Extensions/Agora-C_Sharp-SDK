@@ -1,43 +1,67 @@
 //  IAgoraRtcAudioFrameObserver.cs
 //
-//  Created by Yiqing Huang on June 9, 2021.
-//  Modified by Yiqing Huang on June 9, 2021.
+//  Created by YuGuo Chen on October 6, 2021.
 //
 //  Copyright © 2021 Agora. All rights reserved.
 //
 
+using System;
+
 namespace agora.rtc
 {
-    public abstract class IAgoraRtcAudioFrameObserver
+    public class IAgoraRtcAudioFrameObserver
     {
         public virtual bool OnRecordAudioFrame(AudioFrame audioFrame)
         {
             return true;
         }
 
-        public virtual bool OnPlaybackAudioFrame(AudioFrame audioFrame)
+        public virtual bool OnPlaybackAudioFrame(AudioFrame audio_frame)
         {
             return true;
         }
 
-        public virtual bool OnMixedAudioFrame(AudioFrame audioFrame)
+        public virtual bool OnMixedAudioFrame(AudioFrame audio_frame)
         {
             return true;
         }
 
-        public virtual bool OnPlaybackAudioFrameBeforeMixing(uint uid, AudioFrame audioFrame)
+        public virtual bool OnPlaybackAudioFrameBeforeMixing(uint uid, AudioFrame audio_frame)
         {
             return true;
         }
 
         public virtual bool IsMultipleChannelFrameWanted()
-        {
-            return true;
+        { 
+            return true; 
         }
 
-        public virtual bool OnPlaybackAudioFrameBeforeMixingEx(string channelId, uint uid, AudioFrame audioFrame)
+        public virtual bool OnPlaybackAudioFrameBeforeMixingEx(string channel_id,
+                                                        uint uid,
+                                                        AudioFrame audio_frame)
         {
-            return true;
+            return false;
         }
     }
+
+    public class IAgoraRtcAudioEncodedFrameObserver
+    {
+        public virtual void OnRecordAudioEncodedFrame(uint frameBuffer,  int length, 
+                                                    EncodedAudioFrameInfo audioEncodedFrameInfo)
+        {
+
+        }
+
+        public virtual void OnPlaybackAudioEncodedFrame(uint frameBuffer,  int length, 
+                                                    EncodedAudioFrameInfo audioEncodedFrameInfo)
+        {
+
+        }
+
+        public virtual void OnMixedAudioEncodedFrame(uint frameBuffer,  int length, 
+                                                    EncodedAudioFrameInfo audioEncodedFrameInfo)
+        {
+
+        }
+    };
 }
