@@ -959,6 +959,10 @@ namespace agora.rtc
      */
         MEDIA_ENGINE_AUDIO_ADM_USING_NORM_PARAMS = 113,
 
+        /** 114: For internal use only.
+     */
+         MEDIA_ENGINE_AUDIO_ADM_ROUTING_UPDATE = 114,
+
         // audio mix state
         /** 710: For internal use only.
      */
@@ -1249,7 +1253,11 @@ namespace agora.rtc
 
         /** 7: No playout audio device.
    */
-        LOCAL_AUDIO_STREAM_ERROR_NO_PLAYOUT_DEVICE = 7
+        LOCAL_AUDIO_STREAM_ERROR_NO_PLAYOUT_DEVICE = 7,
+
+        LOCAL_AUDIO_STREAM_ERROR_RECORD_INVALID_ID = 9,
+
+        LOCAL_AUDIO_STREAM_ERROR_PLAYOUT_INVALID_ID = 10
     }
 
     /** Audio recording qualities.
@@ -2957,6 +2965,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** 5: The network type is mobile 4G. */
         NETWORK_TYPE_MOBILE_4G = 5,
+
+        NETWORK_TYPE_MOBILE_5G = 6
     }
 
     /// @cond
@@ -3575,6 +3585,14 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** 11: The video profile is sent to the server.
      */
         RELAY_EVENT_VIDEO_PROFILE_UPDATE = 11,
+
+        RELAY_EVENT_PAUSE_SEND_PACKET_TO_DEST_CHANNEL_SUCCESS = 12,
+
+        RELAY_EVENT_PAUSE_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 13,
+
+        RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_SUCCESS = 14,
+
+        RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 15
     }
 
     /** The state code in CHANNEL_MEDIA_RELAY_STATE. */
@@ -5047,6 +5065,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** image file path */
         public string source { set; get; }
+
+        public BACKGROUND_BLUR_DEGREE blur_degree { set; get; }
     }
 
     /** The source used to substitude image background(foreground is portrait area).
@@ -5058,6 +5078,15 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** Background source is image path, only support png and jpg format*/
         BACKGROUND_IMG,
+
+        BACKGROUND_BLUR
+    }
+
+    public enum BACKGROUND_BLUR_DEGREE
+    {
+       BLUR_DEGREE_LOW = 1,
+       BLUR_DEGREE_MEDIUM,
+       BLUR_DEGREE_HIGH
     }
 
     /**
@@ -5861,6 +5890,33 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             set { _areaCode = (uint) areaCode; }
         }
     };
+
+    public enum AUDIO_MIXING_DUAL_MONO_MODE
+    {
+       AUDIO_MIXING_DUAL_MONO_AUTO,
+       AUDIO_MIXING_DUAL_MONO_L,
+       AUDIO_MIXING_DUAL_MONO_R,
+       AUDIO_MIXING_DUAL_MONO_MIX
+    }
+
+    public struct AudioFileInfo {
+      /** The file path.
+         */
+      public stirng filePath;
+      /** The file duration (ms).
+         */
+      public int durationMs;
+   };
+
+   public enum AUDIO_FILE_INFO_ERROR {
+      /** 0: Successfully get the information of an audio file.
+         */
+      AUDIO_FILE_INFO_ERROR_OK = 0,
+
+      /** 1: Fail to get the information of an audio file.
+         */
+      AUDIO_FILE_INFO_ERROR_FAILURE = 1
+   };
 
     public enum AgoraEngineType
     {
