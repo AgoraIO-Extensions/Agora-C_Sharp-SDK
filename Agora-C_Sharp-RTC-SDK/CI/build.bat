@@ -187,10 +187,10 @@ echo =====Start building for %VERSION%=====
 echo =====Start preparing for build=====
 SET URL_FILE=url_config_csharp.txt
 SET OUT_FILENAME=iris.zip
-SET IRIS_PATH_x86=%CURDIR%/iris/iris_*/Win32
-SET NATIVE_SDK_x86=%CURDIR%/iris/iris_*/RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86
-SET IRIS_PATH_x64=%CURDIR%/iris/iris_*/x64
-SET NATIVE_SDK_x64=%CURDIR%/iris/iris_*/RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64
+SET IRIS_PATH_x86=%CURDIR%/temp/iris_*/Win32
+SET NATIVE_SDK_x86=%CURDIR%/temp/iris_*/RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86
+SET IRIS_PATH_x64=%CURDIR%/temp/iris_*/x64
+SET NATIVE_SDK_x64=%CURDIR%/temp/iris_*/RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64
 
 CALL :download_library %URL_FILE% %OUT_FILENAME%
 echo %CURDIR%\%OUT_FILENAME%
@@ -204,10 +204,8 @@ if %file_size% leq 1048576 (
 	del /s %CURDIR%\%OUT_FILENAME%
     goto error
 )
-mkdir %CURDIR%\temp
+mkdir %CURDIR%\temp %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
 7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp" -aoa
-mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
-xcopy /s /y %CURDIR%\temp\* %CURDIR%\iris\
 powershell -command "cp -r %IRIS_PATH_x86%/Release/* %CURDIR%/iris/x86"
 powershell -command "cp -r %NATIVE_SDK_x86%/*.dll %CURDIR%/iris/x86"
 powershell -command "cp -r %NATIVE_SDK_x86%/*.lib %CURDIR%/iris/x86"
