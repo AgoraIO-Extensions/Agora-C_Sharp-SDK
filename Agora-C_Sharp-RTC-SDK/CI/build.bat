@@ -47,7 +47,8 @@ EXIT /B 0
 setlocal
 SET URL=%~1
 SET OUT_FILENAME=%~2
-powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+SET HEADER="X-JFrog-Art-Api: %APP_KEY%"
+curl -H %HEADER% %URL% -o %OUT_FILENAME%
 endlocal
 EXIT /B 0
 
@@ -55,7 +56,9 @@ EXIT /B 0
 setlocal
 SET URL=%~1
 SET OUT_FILENAME=%~2
-powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+SET HEADER="X-JFrog-Art-Api: %APP_KEY%"
+echo [%HEADER%] [%URL%] [%OUT_FILENAME%]
+curl -H %HEADER% %URL% -o %OUT_FILENAME%
 endlocal
 EXIT /B 0
 
@@ -73,7 +76,6 @@ echo =====Start downloading libraries=====
 echo %URL_FILE%
 echo %OUT_FILENAME%
 echo URL: %URL%
-echo %APP_KEY% >> %CURDIR%\jfrogtoken.txt
 if "%WIN_URL%"=="" (CALL :download_in_txt %URL% %OUT_FILENAME%) else (CALL :download_in_command %WIN_URL% %OUT_FILENAME%)
 echo =====Finish downloading libraries=====
 endlocal
