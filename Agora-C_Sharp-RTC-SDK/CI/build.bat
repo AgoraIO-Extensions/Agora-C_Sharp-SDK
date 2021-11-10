@@ -122,16 +122,10 @@ setlocal
 SET CONFIG=%~1
 mkdir %CURDIR%\Agora_C#_SDK
 mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
-xcopy /s /y %CURDIR%\iris\x86 %CURDIR%\Agora_C#_SDK\x86
-xcopy /s /y %CURDIR%\iris\x86_64 %CURDIR%\Agora_C#_SDK\x86_64
+xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\x86\
+xcopy /s /y %CURDIR%\iris\x86_64\* %CURDIR%\Agora_C#_SDK\x86_64\
 xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86
 xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86_64
-REM if exist %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb (
-REM     xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb %CURDIR%\Agora_C#_SDK\x86
-REM )
-REM if exist %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb (
-REM     xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb %CURDIR%\Agora_C#_SDK\x86_64
-REM )
 
 endlocal
 EXIT /B 0
@@ -151,18 +145,12 @@ xcopy /s /y %CONFIG_PATH%\agorartc_core20.props %CONFIG_BIN_PATH_DST%
 xcopy /s /y %CONFIG_PATH%\agorartc_core20.targets %CONFIG_BIN_PATH_DST%
 xcopy /s /y %CONFIG_PATH%\agorartc_framework40.props %CONFIG_BIN_PATH_DST%
 xcopy /s /y %CONFIG_PATH%\agorartc_framework40.targets %CONFIG_BIN_PATH_DST%
-xcopy /s /y %CURDIR%\iris\x86  %CONFIG_BIN_PATH_DST%\x86
-xcopy /s /y %CURDIR%\iris\x86_64  %CONFIG_BIN_PATH_DST%\x86_64
+xcopy /s /y %CURDIR%\iris\x86\*  %CONFIG_BIN_PATH_DST%\x86\
+xcopy /s /y %CURDIR%\iris\x86_64\*  %CONFIG_BIN_PATH_DST%\x86_64\
 xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CONFIG_BIN_PATH_DST%\x86\netcoreapp20
 xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CONFIG_BIN_PATH_DST%\x86_64\netcoreapp20
 xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\net40\agorartc.dll %CONFIG_BIN_PATH_DST%\x86\net40
 xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\net40\agorartc.dll %CONFIG_BIN_PATH_DST%\x86_64\net40
-REM if exist %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb (
-REM     xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb %CONFIG_BIN_PATH_DST%\x86
-REM )
-REM if exist %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb (
-REM     xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb %CONFIG_BIN_PATH_DST%\x86_64
-REM )
 endlocal
 EXIT /B 0
 
@@ -171,9 +159,9 @@ EXIT /B 0
 setlocal
 
 echo =====Start removing unnecessary files=====
-rem rmdir /q /s %CURDIR%\Agora_C#_SDK
-rem rmdir /q /s %CURDIR%\iris %CURDIR%\agorartc
-rem del /s %CURDIR%\agorartc.sln
+rmdir /q /s %CURDIR%\Agora_C#_SDK
+rmdir /q /s %CURDIR%\iris %CURDIR%\agorartc
+del /s %CURDIR%\agorartc.sln
 echo =====Finish removing unnecessary files=====
 
 endlocal
@@ -217,9 +205,9 @@ if %file_size% leq 1048576 (
     goto error
 )
 mkdir %CURDIR%\temp
-powershell -command "Expand-Archive -Force %CURDIR%\%OUT_FILENAME% %CURDIR%\temp"
+7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp" -aoa
 mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
-xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
+xcopy /s /y %CURDIR%\temp\* %CURDIR%\iris\
 powershell -command "cp -r %IRIS_PATH_x86%/Release/* %CURDIR%/iris/x86"
 powershell -command "cp -r %NATIVE_SDK_x86%/*.dll %CURDIR%/iris/x86"
 powershell -command "cp -r %NATIVE_SDK_x86%/*.lib %CURDIR%/iris/x86"
@@ -227,11 +215,11 @@ powershell -command "cp -r %IRIS_PATH_x64%/Release/* %CURDIR%/iris/x86_64"
 powershell -command "cp -r %NATIVE_SDK_x64%/*.dll %CURDIR%/iris/x86_64"
 powershell -command "cp -r %NATIVE_SDK_x64%/*.lib %CURDIR%/iris/x86_64"
 mkdir %CURDIR%\agorartc
-xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
-powershell -command "cp -r %CURDIR%\..\*.sln %CURDIR%"
+xcopy /s /y %CURDIR%\..\agorartc\* %CURDIR%\agorartc\
+powershell -command "cp -r %CURDIR%/../*.sln %CURDIR%"
 
-rem rmdir /q /s %CURDIR%\temp
-rem del /s %CURDIR%\%OUT_FILENAME%
+rmdir /q /s %CURDIR%\temp
+del /s %CURDIR%\%OUT_FILENAME%
 echo =====Finish preparing for build=====
 
 echo =====Start building for x86=====
@@ -251,10 +239,10 @@ if "%~3" == "publish" (
 call :pre_packing %CONFIG%
 :: if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
 rmdir /q /s %CURDIR%\agorartc\obj
-xcopy /s %CURDIR%\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
-powershell -command "cp -r %CURDIR%\agorartc.sln %CURDIR%\Agora_C#_SDK\agorartc"
+xcopy /s %CURDIR%\agorartc\* %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
+powershell -command "cp -r %CURDIR%/agorartc.sln %CURDIR%/Agora_C#_SDK/agorartc"
 mkdir %CURDIR%\output
-powershell -command "Compress-Archive %CURDIR%\Agora_C#_SDK\* %CURDIR%\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
+powershell -command "Compress-Archive %CURDIR%/Agora_C#_SDK/* %CURDIR%/output/Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
 echo =====Finish packing=====
 call :post_packing
 echo =====Finish building for %VERSION%=====
