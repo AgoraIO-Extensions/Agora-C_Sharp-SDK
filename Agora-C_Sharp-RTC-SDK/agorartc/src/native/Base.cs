@@ -194,7 +194,10 @@ namespace agora.rtc
         kEngineGetAudioTrackCount,
         kEngineSetAudioMixingDualMonoMode,
         kEngineGetAudioFileInfo,
-        kMediaSetExternalAudioSourceVolume
+        kMediaSetExternalAudioSourceVolume,
+        kEngineGetScreenCaptureSources,
+        kEngineTakeSnapshot,
+        kEngineEnableContentInspect,
     }
 
 

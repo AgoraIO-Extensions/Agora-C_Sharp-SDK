@@ -335,6 +335,9 @@ namespace agora.rtc
         public abstract int ResumeAllChannelMediaRelay();
         public abstract int GetAudioFileInfo(string filePath);
         public abstract int SetExternalAudioSourceVolume(int sourcePos, int volume);
+        public abstract int TakeSnapshot(string channel, uint uid, string filePath);
+        public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
+        public abstract int StartEchoTest(EchoTestConfiguration config);
     }
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -728,6 +731,13 @@ namespace agora.rtc
         }
 
         public virtual void OnRequestAudioFileInfo(AudioFileInfo info, AUDIO_FILE_INFO_ERROR error)
+        {
+        }
+
+        public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result)
+        {
+        }
+        public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode)
         {
         }
     }

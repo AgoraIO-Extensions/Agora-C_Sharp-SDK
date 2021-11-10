@@ -2659,6 +2659,42 @@ namespace agora.rtc
                 out _result);
         }
 
+        public override int takeSnapshot(string channel, uint uid, string filePath)
+        {
+            var param = new
+            {
+                channel,
+                uid,
+                filePath
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineTakeSnapshot, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int enableContentInspect(bool enabled, ContentInspectConfig config)
+        {
+            var param = new
+            {
+                enabled,
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineEnableContentInspect, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StartEchoTest(EchoTestConfiguration config)
+        {
+            var param = new
+            {
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineStartEchoTest, JsonMapper.ToJson(param),
+                out _result);
+        }
+
         ~AgoraRtcEngine()
         {
             Dispose(false, false);
@@ -3933,6 +3969,40 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
 #endif
+                    break;
+                case "onContentInspectResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnContentInspectResult(
+                                (CONTENT_INSPECT_RESULT) AgoraJson.GetData<int>(data, "result"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onSnapshotTaken":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnSnapshotTaken(
+                                (string) AgoraJson.GetData<int>(data, "channel"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (string) AgoraJson.GetData<int>(data, "filePath"),
+                                (int) AgoraJson.GetData<int>(data, "width"),
+                                (int) AgoraJson.GetData<int>(data, "height"),
+                                (int) AgoraJson.GetData<int>(data, "errCode"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
             }
         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -5250,6 +5320,39 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnRequestAudioFileInfo(
                                 AgoraJson.JsonToStruct<AudioFileInfo>(data, "info"),
                                 (AUDIO_FILE_INFO_ERROR) AgoraJson.GetData<int>(data, "error"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onContentInspectResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnContentInspectResult(
+                                (CONTENT_INSPECT_RESULT) AgoraJson.GetData<int>(data, "result"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onSnapshotTaken":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnSnapshotTaken(
+                                (string) AgoraJson.GetData<int>(data, "channel"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (string) AgoraJson.GetData<int>(data, "filePath"),
+                                (int) AgoraJson.GetData<int>(data, "width"),
+                                (int) AgoraJson.GetData<int>(data, "height"),
+                                (int) AgoraJson.GetData<int>(data, "errCode"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

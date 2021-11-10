@@ -5921,6 +5921,185 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
       AUDIO_FILE_INFO_ERROR_FAILURE = 1
    };
 
+   /*
+    * @since v3.5.2
+    */
+    public enum CONTENT_INSPECT_RESULT {
+        CONTENT_INSPECT_NEUTRAL = 1,
+        CONTENT_INSPECT_SEXY = 2,
+        CONTENT_INSPECT_PORN = 3
+    };
+
+    /**
+    * The EchoTestConfiguration struct.
+    * @since v3.5.2
+    */
+    public struct EchoTestConfiguration {
+        public IntPtr view;
+        public bool enableAudio;
+        public bool enableVideo;
+        public string token;
+        public string channelId;
+    };
+
+    /** Definition of ContentInspectModule.
+    * @since v3.5.2
+    */
+    public struct ContentInspectModule {
+        /**
+        * The content inspect module type.
+        * the module type can be 0 to 31.
+        * kContentInspectInvalid(0)
+        * kContentInspectModeration(1)
+        * kContentInspectSupervise(2)
+        */
+        public int type;
+        /**The content inspect frequency, default is 0 second.
+        * the frequency <= 0 is invalid.
+        */
+        public int interval;
+    };
+
+    /** Definition of ContentInspectConfig.
+    * @since v3.5.2
+    */
+    public struct ContentInspectConfig {
+        /** The extra information, max length of extraInfo is 1024.
+        *  The extra information will send to server with content(image).
+        */
+        public string extraInfo;
+        /**The content inspect modules, max length of modules is 32.
+        * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
+        */
+        public ContentInspectModule[] modules;
+        /**The content inspect module count.
+        */
+        public int moduleCount;
+    };
+
+    public enum AVDATA_TYPE {
+        /** 0: the metadata type is unknown.
+        */
+        AVDATA_UNKNOWN = 0,
+        /** 1: the metadata type is video.
+        */
+        AVDATA_VIDEO = 1,
+        /** 2: the metadata type is video.
+        */
+        AVDATA_AUDIO = 2
+    };
+
+    public enum CODEC_VIDEO {
+        /** 0: h264 avc codec.
+        */
+        CODEC_VIDEO_AVC = 0,
+        /** 1: h265 hevc codec.
+        */
+        CODEC_VIDEO_HEVC = 1,
+        /** 2: vp8 codec.
+        */
+        CODEC_VIDEO_VP8 = 2
+    };
+
+    public enum CODEC_AUDIO {
+        /** 0: PCM audio codec.
+        */
+        CODEC_AUDIO_PCM = 0,
+        /** 1: aac audio codec.
+        */
+        CODEC_AUDIO_AAC = 1,
+        /** 2: G711 audio codec.
+        */
+        CODEC_AUDIO_G722 = 2
+    };
+
+    public class VDataInfo {
+        public uint codec;
+        public uint width;
+        public uint height;
+        public int frameType;
+        public int rotation;
+        public bool equal(VDataInfo vinfo) { return codec == vinfo.codec && width == vinfo.width && height == vinfo.height && rotation == vinfo.rotation; }
+    };
+
+    public class ADataInfo {
+        public uint codec;
+        public uint bitwidth;
+        public uint sample_rate;
+        public uint channel;
+        public uint sample_size;
+
+        public bool equal(ADataInfo ainfo) { return codec == ainfo.codec && bitwidth == ainfo.bitwidth && sample_rate == ainfo.sample_rate && channel == ainfo.channel; }
+    };
+
+    public struct AVData {
+        /** The User ID. reserved
+        - For the receiver: the ID of the user who owns the data.
+        */
+        public uint uid;
+        /**
+        - data type, audio / video.
+        */
+        public AVDATA_TYPE type;
+        /** Buffer size of the sent or received Metadata.
+        */
+        public uint size;
+        /** Buffer address of the sent or received Metadata.
+        */
+        public byte[] buffer;
+        /** Time statmp of the frame following the metadata.
+        */
+        public uint timestamp;
+        /**
+        * Video frame info
+        */
+        public VDataInfo vinfo;
+        /**
+        * Audio frame info
+        */
+        public ADataInfo ainfo;
+    };
+
+    public enum MediaRecorderContainerFormat {
+        FORMAT_MP4 = 1,
+        FORMAT_FLV = 2
+    };
+
+    public enum MediaRecorderStreamType {
+        STREAM_TYPE_AUDIO = 0x01,
+        STREAM_TYPE_VIDEO = 0x02,
+        STREAM_TYPE_BOTH = STREAM_TYPE_AUDIO | STREAM_TYPE_VIDEO
+    };
+
+    public enum RecorderState {
+        RECORDER_STATE_ERROR = -1,
+        RECORDER_STATE_START = 2,
+        RECORDER_STATE_STOP = 3
+    };
+
+    public enum RecorderErrorCode {
+        RECORDER_ERROR_NONE = 0,
+        RECORDER_ERROR_WRITE_FAILED = 1,
+        RECORDER_ERROR_NO_STREAM = 2,
+        RECORDER_ERROR_OVER_MAX_DURATION = 3,
+        RECORDER_ERROR_CONFIG_CHANGED = 4,
+        RECORDER_ERROR_CUSTOM_STREAM_DETECTED = 5
+    };
+
+    public struct MediaRecorderConfiguration {
+        public string storagePath;
+        public MediaRecorderContainerFormat containerFormat;
+        public MediaRecorderStreamType streamType;
+        public int maxDurationMs;
+        public int recorderInfoUpdateInterval;
+    };
+
+    public struct RecorderInfo {
+        public string fileName;
+        public uint durationMs;
+        public uint fileSize;
+    };
+
     public enum AgoraEngineType
     {
         MainProcess,
