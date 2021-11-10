@@ -1584,10 +1584,10 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
     {
         /**
      0: Default audio profile:
-     - For the interactive streaming profile: A sample rate of 48 KHz, music encoding, mono, and a bitrate of up to 64 Kbps.
+     - For the `LIVE_BROADCASTING` profile: A sample rate of 48 KHz, music encoding, mono, and a bitrate of up to 64 Kbps.
      - For the `COMMUNICATION` profile:
-        - Windows: A sample rate of 16 KHz, music encoding, mono, and a bitrate of up to 16 Kbps.
-        - Android/macOS/iOS: A sample rate of 32 KHz, music encoding, mono, and a bitrate of up to 18 Kbps.
+        - Windows: A sample rate of 16 KHz, audio encoding, mono, and a bitrate of up to 16 Kbps.
+        - Android/macOS/iOS: A sample rate of 32 KHz, audio encoding, mono, and a bitrate of up to 18 Kbps.
     */
         AUDIO_PROFILE_DEFAULT = 0, // use default settings
 
@@ -1663,7 +1663,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
  */
     public enum CHANNEL_PROFILE_TYPE
     {
-        /** (Default) Communication. This profile applies to scenarios such as an audio call or video call,
+        /** Communication. This profile applies to scenarios such as an audio call or video call,
     * where all users can publish and subscribe to streams.
     */
         CHANNEL_PROFILE_COMMUNICATION = 0,
@@ -1704,25 +1704,28 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         AUDIENCE_LATENCY_LEVEL_ULTRA_LOW_LATENCY = 2,
     }
 
-    /// @cond
-    /** The reason why the super-resolution algorithm is not successfully enabled.
-     */
+    /**
+   * The reason why super resolution is not successfully enabled or the message
+   * that confirms success.
+   *
+   * @since v3.5.1
+   */
     public enum SUPER_RESOLUTION_STATE_REASON
     {
         /** 0: The super-resolution algorithm is successfully enabled.
      */
         SR_STATE_REASON_SUCCESS = 0,
 
-        /** 1: The origin resolution of the remote video is beyond the range where
-     * the super-resolution algorithm can be applied.
+        /** 1: The original resolution of the remote video is beyond the range where
+      *  super resolution can be applied.
      */
         SR_STATE_REASON_STREAM_OVER_LIMITATION = 1,
 
-        /** 2: Another user is already using the super-resolution algorithm.
+        /** 2: Super resolution is already being used to boost another remote user's video.
      */
         SR_STATE_REASON_USER_COUNT_OVER_LIMITATION = 2,
 
-        /** 3: The device does not support the super-resolution algorithm.
+        /** 3: The device does not support using super resolution.
      */
         SR_STATE_REASON_DEVICE_NOT_SUPPORTED = 3,
     }
