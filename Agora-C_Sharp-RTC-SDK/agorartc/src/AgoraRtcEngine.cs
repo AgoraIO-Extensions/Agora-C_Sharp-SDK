@@ -2560,6 +2560,105 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), frame.buffer, out _result);
         }
 
+        public override PushAudioFrame(int sourcePos, AudioFrame frame)
+        {
+            var param = new { sourcePos };
+            var ret = AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine,
+                ApiTypeEngine.kMediaPullAudioFrame,
+                JsonMapper.ToJson(param), frame.buffer, out _result);
+            var f = _result.Result.Length == 0
+                ? new AudioFrameWithoutBuffer()
+                : AgoraJson.JsonToStruct<AudioFrameWithoutBuffer>(_result.Result);
+            frame.avsync_type = f.avsync_type;
+            frame.channels = f.channels;
+            frame.samples = f.samples;
+            frame.type = f.type;
+            frame.bytesPerSample = f.bytesPerSample;
+            frame.renderTimeMs = f.renderTimeMs;
+            frame.samplesPerSec = f.samplesPerSec;
+            return ret;
+        }
+
+        public override int SetAudioMixingPlaybackSpeed(int speed)
+        {
+            var param = new
+            {
+                speed
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetAudioMixingPlaybackSpeed, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SelectAudioTrack(int index)
+        {
+            var param = new
+            {
+                index
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSelectAudioTrack, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int GetAudioTrackCount()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineGetAudioTrackCount, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
+        {
+            var param = new
+            {
+                mode
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetAudioMixingDualMonoMode, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int PauseAllChannelMediaRelay()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEnginePauseAllChannelMediaRelay, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int ResumeAllChannelMediaRelay()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineResumeAllChannelMediaRelay, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int GetAudioFileInfo(string filePath)
+        {
+            var param = new
+            {
+                filePath
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineGetAudioFileInfo, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetExternalAudioSourceVolume(int sourcePos, int volume)
+        {
+            var param = new
+            {
+                sourcePos,
+                volume
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kMediaSetExternalAudioSourceVolume, JsonMapper.ToJson(param),
+                out _result);
+        }
+
         ~AgoraRtcEngine()
         {
             Dispose(false, false);
@@ -3820,6 +3919,20 @@ namespace agora.rtc
                     });
 #endif
                     break;
+                case "onRequestAudioFileInfo":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnRequestAudioFileInfo(
+                                AgoraJson.JsonToStruct<AudioFileInfo>(data, "info"),
+                                (AUDIO_FILE_INFO_ERROR) AgoraJson.GetData<int>(data, "error"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
             }
         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -5122,6 +5235,21 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "requestId"),
                                 (bool) AgoraJson.GetData<bool>(data, "success"),
                                 (UPLOAD_ERROR_REASON) AgoraJson.GetData<int>(data, "reason"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRequestAudioFileInfo":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnRequestAudioFileInfo(
+                                AgoraJson.JsonToStruct<AudioFileInfo>(data, "info"),
+                                (AUDIO_FILE_INFO_ERROR) AgoraJson.GetData<int>(data, "error"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

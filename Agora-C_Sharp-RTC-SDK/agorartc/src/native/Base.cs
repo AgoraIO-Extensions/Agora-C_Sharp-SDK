@@ -188,6 +188,13 @@ namespace agora.rtc
         kMediaPullAudioFrame,
         kMediaSetExternalVideoSource,
         kMediaPushVideoFrame,
+
+        kEngineSetAudioMixingPlaybackSpeed,
+        kEngineSelectAudioTrack,
+        kEngineGetAudioTrackCount,
+        kEngineSetAudioMixingDualMonoMode,
+        kEngineGetAudioFileInfo,
+        kMediaSetExternalAudioSourceVolume
     }
 
 
