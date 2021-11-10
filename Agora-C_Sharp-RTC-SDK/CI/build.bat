@@ -171,9 +171,9 @@ EXIT /B 0
 setlocal
 
 echo =====Start removing unnecessary files=====
-rmdir /q /s %CURDIR%\Agora_C#_SDK
-rmdir /q /s %CURDIR%\iris %CURDIR%\agorartc
-del /s %CURDIR%\agorartc.sln
+rem rmdir /q /s %CURDIR%\Agora_C#_SDK
+rem rmdir /q /s %CURDIR%\iris %CURDIR%\agorartc
+rem del /s %CURDIR%\agorartc.sln
 echo =====Finish removing unnecessary files=====
 
 endlocal
@@ -199,10 +199,10 @@ echo =====Start building for %VERSION%=====
 echo =====Start preparing for build=====
 SET URL_FILE=url_config_csharp.txt
 SET OUT_FILENAME=iris.zip
-SET IRIS_PATH_x86=%CURDIR%\iris\iris_*\Win32
-SET NATIVE_SDK_x86=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86
-SET IRIS_PATH_x64=%CURDIR%\iris\iris_*\x64
-SET NATIVE_SDK_x64=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86_64
+SET IRIS_PATH_x86=%CURDIR%/iris/iris_*/Win32
+SET NATIVE_SDK_x86=%CURDIR%/iris/iris_*/RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86
+SET IRIS_PATH_x64=%CURDIR%/iris/iris_*/x64
+SET NATIVE_SDK_x64=%CURDIR%/iris/iris_*/RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64
 
 CALL :download_library %URL_FILE% %OUT_FILENAME%
 echo %CURDIR%\%OUT_FILENAME%
@@ -220,18 +220,18 @@ mkdir %CURDIR%\temp
 powershell -command "Expand-Archive -Force %CURDIR%\%OUT_FILENAME% %CURDIR%\temp"
 mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
 xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
-powershell -command "cp -r %IRIS_PATH_x86%\Release\* %CURDIR%\iris\x86"
-powershell -command "cp -r %NATIVE_SDK_x86%\*.dll %CURDIR%\iris\x86"
-powershell -command "cp -r %NATIVE_SDK_x86%\*.lib %CURDIR%\iris\x86"
-powershell -command "cp -r %IRIS_PATH_x64%\Release\* %CURDIR%\iris\x86_64"
-powershell -command "cp -r %NATIVE_SDK_x64%\*.dll %CURDIR%\iris\x86_64"
-powershell -command "cp -r %NATIVE_SDK_x64%\*.lib %CURDIR%\iris\x86_64"
+powershell -command "cp -r %IRIS_PATH_x86%/Release/* %CURDIR%/iris/x86"
+powershell -command "cp -r %NATIVE_SDK_x86%/*.dll %CURDIR%/iris/x86"
+powershell -command "cp -r %NATIVE_SDK_x86%/*.lib %CURDIR%/iris/x86"
+powershell -command "cp -r %IRIS_PATH_x64%/Release/* %CURDIR%/iris/x86_64"
+powershell -command "cp -r %NATIVE_SDK_x64%/*.dll %CURDIR%/iris/x86_64"
+powershell -command "cp -r %NATIVE_SDK_x64%/*.lib %CURDIR%/iris/x86_64"
 mkdir %CURDIR%\agorartc
 xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
 powershell -command "cp -r %CURDIR%\..\*.sln %CURDIR%"
 
-rmdir /q /s %CURDIR%\temp
-del /s %CURDIR%\%OUT_FILENAME%
+rem rmdir /q /s %CURDIR%\temp
+rem del /s %CURDIR%\%OUT_FILENAME%
 echo =====Finish preparing for build=====
 
 echo =====Start building for x86=====
