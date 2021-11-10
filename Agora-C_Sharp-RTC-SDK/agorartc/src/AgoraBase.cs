@@ -5905,7 +5905,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
     public struct AudioFileInfo {
       /** The file path.
          */
-      public stirng filePath;
+      public string filePath;
       /** The file duration (ms).
          */
       public int durationMs;

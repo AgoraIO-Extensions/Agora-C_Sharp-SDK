@@ -2560,7 +2560,7 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), frame.buffer, out _result);
         }
 
-        public override PushAudioFrame(int sourcePos, AudioFrame frame)
+        public override int PushAudioFrame(int sourcePos, AudioFrame frame)
         {
             var param = new { sourcePos };
             var ret = AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine,
@@ -2659,7 +2659,7 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int takeSnapshot(string channel, uint uid, string filePath)
+        public override int TakeSnapshot(string channel, uint uid, string filePath)
         {
             var param = new
             {
@@ -2672,7 +2672,7 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int enableContentInspect(bool enabled, ContentInspectConfig config)
+        public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
         {
             var param = new
             {
