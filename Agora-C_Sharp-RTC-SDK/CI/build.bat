@@ -95,8 +95,8 @@ SET NUPKG_FILE_NAME=agora_rtc_sdk_test.%~1%.nupkg
 
 call :build %~1 Release publish
 
-SET PATH_PATH=%CURDIR%\publish
-cd %PATH_PATH%
+SET PUBLISH_PATH=%CURDIR%\publish
+cd %PUBLISH_PATH%
 nuget setapikey %NUGET_API_KEY%
 nuget.exe pack agora_rtc_sdk.nuspec
 
@@ -104,7 +104,7 @@ echo =====Start pushing package to NuGet=====
 nuget.exe push %NUPKG_FILE_NAME% -Source %SOURCE%
 if %errorlevel% == 0 (
     echo =====Publis Sucess, start removing unnecessary files=====
-    rmdir /q /s %PATH_PATH%
+    rmdir /q /s %PUBLISH_PATH%
     echo =====Finish removing unnecessary files=====
 ) else (
     echo =====Publish package to NuGet failed !!!=====
