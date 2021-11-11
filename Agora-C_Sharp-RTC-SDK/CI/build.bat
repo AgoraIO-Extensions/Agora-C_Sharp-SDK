@@ -205,7 +205,8 @@ if %file_size% leq 1048576 (
     goto error
 )
 mkdir %CURDIR%\temp %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
-7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp" -aoa
+7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp -aoa
+
 powershell -command "cp -r %IRIS_PATH_x86%/Release/* %CURDIR%/iris/x86"
 powershell -command "cp -r %NATIVE_SDK_x86%/*.dll %CURDIR%/iris/x86"
 powershell -command "cp -r %NATIVE_SDK_x86%/*.lib %CURDIR%/iris/x86"
@@ -250,4 +251,4 @@ EXIT /B 0
 :: Error message.
 :error
 echo ERROR: Missing input parameter or sdk file unnormal!
-EXIT /B 0
+EXIT /B 1
