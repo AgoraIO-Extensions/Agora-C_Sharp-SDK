@@ -61,9 +61,9 @@
 
 3. 通过以下任意一种方式下载SDK：
 
-  a. 下载[Agora Video SDK for Windows](https://docs.agora.io/cn/Agora%20Platform/downloads)，解压后把`RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64`以及`x64/Release` 目录下所有的 `.dll` 文件复制到`Agora-C_Sharp-SDK/CSharp-API_Example/binx64/Debug/netcoreapp3.1` 文件夹中。
+    a. 下载[Agora Video SDK for Windows](https://docs.agora.io/cn/Agora%20Platform/downloads)，解压后把`RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64`以及`x64/Release` 目录下所有的 `.dll` 文件复制到`Agora-C_Sharp-SDK/CSharp-API_Example/binx64/Debug/netcoreapp3.1` 文件夹中。
   
-  b. 在`解决方案管理器`中，找到`CSharp-API_Example->依赖项`，右键选择`管理 Nuget 程序包`。点击`浏览`按钮，搜索`agora_rtc_sdk`包并安装。
+    b. 在`解决方案管理器`中，找到`CSharp-API_Example->依赖项`，右键选择`管理 Nuget 程序包`。点击`浏览`按钮，搜索`agora_rtc_sdk`包并安装。
 
 4. 将 APPID 填入,点“更新”按钮，保存一下。选择想要运行的 Scene 运行程序。
 
