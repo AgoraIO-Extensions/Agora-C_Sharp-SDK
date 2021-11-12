@@ -25,7 +25,7 @@ SET APP_KEY=%4
 SET WIN_URL=%5
 SET NUGET_API_KEY=%6
 
-goto :main
+goto main
 
 :main
 setlocal
@@ -35,7 +35,7 @@ SET TYPE=%1
 if "%TYPE%"=="publish" (
     if "%NUGET_API_KEY%"=="" (
         echo Nuget Api Key cannot be empyty when publish!!!
-        goto :error
+        goto error
     )
 )
 
@@ -108,6 +108,7 @@ if %errorlevel% == 0 (
     echo =====Finish removing unnecessary files=====
 ) else (
     echo =====Publish package to NuGet failed !!!=====
+	goto error
 )
 rmdir /q /s %CURDIR%\..\CSharp-API_Example
 echo =====Finish pushing package to NuGet=====
@@ -177,8 +178,8 @@ EXIT /B 0
 ::        variable called %NUGET_APIKEY% in advance.
 :build
 setlocal
-if "%~1"=="" goto :error
-if "%~2"=="" goto :error
+if "%~1"=="" goto error
+if "%~2"=="" goto error
 SET VERSION=%~1
 SET CONFIG=%~2
 
