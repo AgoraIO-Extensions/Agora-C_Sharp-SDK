@@ -101,7 +101,7 @@ nuget setapikey %NUGET_API_KEY%
 nuget.exe pack agora_rtc_sdk.nuspec
 
 echo =====Start pushing package to NuGet=====
-nuget.exe push %NUPKG_FILE_NAME% -Source %SOURCE%
+nuget.exe push %NUPKG_FILE_NAME% -Timeout 600 -Source %SOURCE%
 if %errorlevel% == 0 (
     echo =====Publis Sucess, start removing unnecessary files=====
     rmdir /q /s %PUBLISH_PATH%
