@@ -18,22 +18,22 @@ The project uses a single app to combine a variety of functionalities.
 
 * **Basic demos:**
 
-| Function                                          | Location                                         |
-| --------------------------------------------------|--------------------------------------------------|
-| make a one to one audio call                      | [JoinChannelAudio][JoinChannelAudioLink]         |
-| make a one to one video call                      | [JoinChannelVideo][JoinChannelVideoLink]         |
-| ...                                               | ...                                              |
+| Demo                                     | Description                            | APIs                                                                     |
+| ---------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------ |
+| [JoinChannelAudio][JoinChannelAudioLink] | basic demo to show audio call          | CreateAgoraRtcEngine, Initialize, JoinChannel, LeaveChannel              |
+| [JoinChannelVideo][JoinChannelVideoLink] | basic demo to show video call          | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel |
+| ...                                      | ...                                    | ...                                                                      |
 
 * **Advanced demos:**
 
-| Function                                          | Location                                         |
-| --------------------------------------------------|--------------------------------------------------|
-| join from different channel                       | [JoinMultipleChannel][JoinMultipleChannelLink]   |
-| how to get raw data                               | [ProcessRawData][ProcessRawDataLink]             |
-| screen share                                      | [ScreenShare][ScreenShareLink]                   |
-| users join a same channel                         | [VideoGroup][VideoGroupLink]                     |
-| enable virtual background                         | [VirtualBackground][VirtualBackgroundLink]       |
-| ...                                               | ...                                              |
+| Demo                                           | Description                      | APIs                                                                     |
+| ---------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------ |
+| [JoinMultipleChannel][JoinMultipleChannelLink] | join from different channel      | CreateAgoraRtcEngine, Initialize, SetChannelProfile, CreateChannel, SetClientRole, EnableAudio、EnableVideo、SetupLocalVideo, JoinChannel, Publish, LeaveChannel |
+| [ProcessRawData][ProcessRawDataLink]           | how to get raw data              | CreateAgoraRtcEngine, Initialize, EnableAudio, EnableVideo, JoinChannel, LeaveChannel |
+| [ScreenShare][ScreenShareLink]                 | screen share                     | CreateAgoraRtcEngine, Initialize, StartScreenCaptureByDisplayId, EnableVideo,JoinChannel, StopScreenCapture, LeaveChannel |
+| [VideoGroup][VideoGroupLink]                   | users join a same channel        | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel |
+| [VirtualBackground][VirtualBackgroundLink]     | enable virtual background        | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableVirtualBackground, JoinChannel, LeaveChannel |
+| ...                                            | ...                              | ...                                                                      |
 
 ## How to run the sample project
 
@@ -92,10 +92,10 @@ If you have any problems or suggestions regarding the sample projects, feel free
 ## License
 The sample projects are under the MIT license.
 
-[JoinChannelAudioLink]:https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/blob/dev/3.5.0.3/CSharp-API_Example/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
-[JoinChannelVideoLink]:https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/blob/dev/3.5.0.3/CSharp-API_Example/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
-[JoinMultipleChannelLink]:https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/blob/dev/3.5.0.3/CSharp-API_Example/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
-[ProcessRawDataLink]:https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/blob/dev/3.5.0.3/CSharp-API_Example/src/Advanced/ProcessRawData/ProcessRawData.cs
-[ScreenShareLink]:https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/blob/dev/3.5.0.3/CSharp-API_Example/src/Advanced/ScreenShare/ScreenShare.cs
-[VideoGroupLink]:https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/blob/dev/3.5.0.3/CSharp-API_Example/src/Advanced/VideoGroup/VideoGroup.cs
-[VirtualBackgroundLink]:https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/blob/dev/3.5.0.3/CSharp-API_Example/src/Advanced/VirtualBackground/VirtualBackground.cs
+[JoinChannelAudioLink]:./CSharp-API_Example/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
+[JoinChannelVideoLink]:./CSharp-API_Example/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
+[JoinMultipleChannelLink]:./CSharp-API_Example/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
+[ProcessRawDataLink]:./CSharp-API_Example/src/Advanced/ProcessRawData/ProcessRawData.cs
+[ScreenShareLink]:./CSharp-API_Example/src/Advanced/ScreenShare/ScreenShare.cs
+[VideoGroupLink]:./CSharp-API_Example/src/Advanced/VideoGroup/VideoGroup.cs
+[VirtualBackgroundLink]:./CSharp-API_Example/src/Advanced/VirtualBackground/VirtualBackground.cs
