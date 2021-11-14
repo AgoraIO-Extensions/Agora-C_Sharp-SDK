@@ -25,7 +25,7 @@ SET APP_KEY=%4
 SET WIN_URL=%5
 SET NUGET_API_KEY=%6
 
-goto :main
+goto main
 
 :main
 setlocal
@@ -35,7 +35,7 @@ SET TYPE=%1
 if "%TYPE%"=="publish" (
     if "%NUGET_API_KEY%"=="" (
         echo Nuget Api Key cannot be empyty when publish!!!
-        goto :error
+        goto error
     )
 )
 
@@ -47,7 +47,8 @@ EXIT /B 0
 setlocal
 SET URL=%~1
 SET OUT_FILENAME=%~2
-powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+SET HEADER="X-JFrog-Art-Api: %APP_KEY%"
+curl -H %HEADER% %URL% -o %OUT_FILENAME%
 endlocal
 EXIT /B 0
 
@@ -55,7 +56,9 @@ EXIT /B 0
 setlocal
 SET URL=%~1
 SET OUT_FILENAME=%~2
-powershell -command "[Net.ServicePointManager]::SecurityProtocol = @('Tls, Tls11, Tls12, Ssl3') ; & Invoke-WebRequest -Uri %URL://artifactory.=//artifactory-api.bj2.% -Headers @{'X-JFrog-Art-Api' = '%APP_KEY%'} -OutFile %OUT_FILENAME%"
+SET HEADER="X-JFrog-Art-Api: %APP_KEY%"
+echo [%HEADER%] [%URL%] [%OUT_FILENAME%]
+curl -H %HEADER% %URL% -o %OUT_FILENAME%
 endlocal
 EXIT /B 0
 
@@ -73,7 +76,6 @@ echo =====Start downloading libraries=====
 echo %URL_FILE%
 echo %OUT_FILENAME%
 echo URL: %URL%
-echo %APP_KEY% >> %CURDIR%\jfrogtoken.txt
 if "%WIN_URL%"=="" (CALL :download_in_txt %URL% %OUT_FILENAME%) else (CALL :download_in_command %WIN_URL% %OUT_FILENAME%)
 echo =====Finish downloading libraries=====
 endlocal
@@ -93,19 +95,20 @@ SET NUPKG_FILE_NAME=agora_rtc_sdk_test.%~1%.nupkg
 
 call :build %~1 Release publish
 
-SET PATH_PATH=%CURDIR%\publish
-cd %PATH_PATH%
+SET PUBLISH_PATH=%CURDIR%\publish
+cd %PUBLISH_PATH%
 nuget setapikey %NUGET_API_KEY%
 nuget.exe pack agora_rtc_sdk.nuspec
 
 echo =====Start pushing package to NuGet=====
-nuget.exe push %NUPKG_FILE_NAME% -Source %SOURCE%
+nuget.exe push %NUPKG_FILE_NAME% -Timeout 600 -Source %SOURCE%
 if %errorlevel% == 0 (
     echo =====Publis Sucess, start removing unnecessary files=====
-    rmdir /q /s %PATH_PATH%
+    rmdir /q /s %PUBLISH_PATH%
     echo =====Finish removing unnecessary files=====
 ) else (
     echo =====Publish package to NuGet failed !!!=====
+	goto error
 )
 rmdir /q /s %CURDIR%\..\CSharp-API_Example
 echo =====Finish pushing package to NuGet=====
@@ -120,16 +123,10 @@ setlocal
 SET CONFIG=%~1
 mkdir %CURDIR%\Agora_C#_SDK
 mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
-xcopy /s /y %CURDIR%\iris\x86 %CURDIR%\Agora_C#_SDK\x86
-xcopy /s /y %CURDIR%\iris\x86_64 %CURDIR%\Agora_C#_SDK\x86_64
+xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\x86\
+xcopy /s /y %CURDIR%\iris\x86_64\* %CURDIR%\Agora_C#_SDK\x86_64\
 xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86
 xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86_64
-REM if exist %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb (
-REM     xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb %CURDIR%\Agora_C#_SDK\x86
-REM )
-REM if exist %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb (
-REM     xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb %CURDIR%\Agora_C#_SDK\x86_64
-REM )
 
 endlocal
 EXIT /B 0
@@ -149,18 +146,12 @@ xcopy /s /y %CONFIG_PATH%\agorartc_core20.props %CONFIG_BIN_PATH_DST%
 xcopy /s /y %CONFIG_PATH%\agorartc_core20.targets %CONFIG_BIN_PATH_DST%
 xcopy /s /y %CONFIG_PATH%\agorartc_framework40.props %CONFIG_BIN_PATH_DST%
 xcopy /s /y %CONFIG_PATH%\agorartc_framework40.targets %CONFIG_BIN_PATH_DST%
-xcopy /s /y %CURDIR%\iris\x86  %CONFIG_BIN_PATH_DST%\x86
-xcopy /s /y %CURDIR%\iris\x86_64  %CONFIG_BIN_PATH_DST%\x86_64
+xcopy /s /y %CURDIR%\iris\x86\*  %CONFIG_BIN_PATH_DST%\x86\
+xcopy /s /y %CURDIR%\iris\x86_64\*  %CONFIG_BIN_PATH_DST%\x86_64\
 xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CONFIG_BIN_PATH_DST%\x86\netcoreapp20
 xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CONFIG_BIN_PATH_DST%\x86_64\netcoreapp20
 xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\net40\agorartc.dll %CONFIG_BIN_PATH_DST%\x86\net40
 xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\net40\agorartc.dll %CONFIG_BIN_PATH_DST%\x86_64\net40
-REM if exist %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb (
-REM     xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.pdb %CONFIG_BIN_PATH_DST%\x86
-REM )
-REM if exist %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb (
-REM     xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.pdb %CONFIG_BIN_PATH_DST%\x86_64
-REM )
 endlocal
 EXIT /B 0
 
@@ -187,8 +178,8 @@ EXIT /B 0
 ::        variable called %NUGET_APIKEY% in advance.
 :build
 setlocal
-if "%~1"=="" goto :error
-if "%~2"=="" goto :error
+if "%~1"=="" goto error
+if "%~2"=="" goto error
 SET VERSION=%~1
 SET CONFIG=%~2
 
@@ -197,10 +188,10 @@ echo =====Start building for %VERSION%=====
 echo =====Start preparing for build=====
 SET URL_FILE=url_config_csharp.txt
 SET OUT_FILENAME=iris.zip
-SET IRIS_PATH_x86=%CURDIR%\iris\iris_*\Win32
-SET NATIVE_SDK_x86=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86
-SET IRIS_PATH_x64=%CURDIR%\iris\iris_*\x64
-SET NATIVE_SDK_x64=%CURDIR%\iris\iris_*\RTC\Agora_Native_SDK_for_Windows_FULL\libs\x86_64
+SET IRIS_PATH_x86=%CURDIR%/temp/iris_*/Win32
+SET NATIVE_SDK_x86=%CURDIR%/temp/iris_*/RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86
+SET IRIS_PATH_x64=%CURDIR%/temp/iris_*/x64
+SET NATIVE_SDK_x64=%CURDIR%/temp/iris_*/RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64
 
 CALL :download_library %URL_FILE% %OUT_FILENAME%
 echo %CURDIR%\%OUT_FILENAME%
@@ -214,19 +205,18 @@ if %file_size% leq 1048576 (
 	del /s %CURDIR%\%OUT_FILENAME%
     goto error
 )
-mkdir %CURDIR%\temp
-powershell -command "Expand-Archive -Force %CURDIR%\%OUT_FILENAME% %CURDIR%\temp"
-mkdir %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
-xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
-powershell -command "cp -r %IRIS_PATH_x86%\Release\* %CURDIR%\iris\x86"
-powershell -command "cp -r %NATIVE_SDK_x86%\*.dll %CURDIR%\iris\x86"
-powershell -command "cp -r %NATIVE_SDK_x86%\*.lib %CURDIR%\iris\x86"
-powershell -command "cp -r %IRIS_PATH_x64%\Release\* %CURDIR%\iris\x86_64"
-powershell -command "cp -r %NATIVE_SDK_x64%\*.dll %CURDIR%\iris\x86_64"
-powershell -command "cp -r %NATIVE_SDK_x64%\*.lib %CURDIR%\iris\x86_64"
+mkdir %CURDIR%\temp %CURDIR%\iris %CURDIR%\iris\x86 %CURDIR%\iris\x86_64
+7z x %CURDIR%\%OUT_FILENAME% -o%CURDIR%\temp -aoa
+
+powershell -command "cp -r %IRIS_PATH_x86%/Release/* %CURDIR%/iris/x86"
+powershell -command "cp -r %NATIVE_SDK_x86%/*.dll %CURDIR%/iris/x86"
+powershell -command "cp -r %NATIVE_SDK_x86%/*.lib %CURDIR%/iris/x86"
+powershell -command "cp -r %IRIS_PATH_x64%/Release/* %CURDIR%/iris/x86_64"
+powershell -command "cp -r %NATIVE_SDK_x64%/*.dll %CURDIR%/iris/x86_64"
+powershell -command "cp -r %NATIVE_SDK_x64%/*.lib %CURDIR%/iris/x86_64"
 mkdir %CURDIR%\agorartc
-xcopy /s /y %CURDIR%\..\agorartc %CURDIR%\agorartc\
-powershell -command "cp -r %CURDIR%\..\*.sln %CURDIR%"
+xcopy /s /y %CURDIR%\..\agorartc\* %CURDIR%\agorartc\
+powershell -command "cp -r %CURDIR%/../*.sln %CURDIR%"
 
 rmdir /q /s %CURDIR%\temp
 del /s %CURDIR%\%OUT_FILENAME%
@@ -249,10 +239,10 @@ if "%~3" == "publish" (
 call :pre_packing %CONFIG%
 :: if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
 rmdir /q /s %CURDIR%\agorartc\obj
-xcopy /s %CURDIR%\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
-powershell -command "cp -r %CURDIR%\agorartc.sln %CURDIR%\Agora_C#_SDK\agorartc"
+xcopy /s %CURDIR%\agorartc\* %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
+powershell -command "cp -r %CURDIR%/agorartc.sln %CURDIR%/Agora_C#_SDK/agorartc"
 mkdir %CURDIR%\output
-powershell -command "Compress-Archive %CURDIR%\Agora_C#_SDK\* %CURDIR%\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
+powershell -command "Compress-Archive %CURDIR%/Agora_C#_SDK/* %CURDIR%/output/Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
 echo =====Finish packing=====
 call :post_packing
 echo =====Finish building for %VERSION%=====
@@ -262,4 +252,4 @@ EXIT /B 0
 :: Error message.
 :error
 echo ERROR: Missing input parameter or sdk file unnormal!
-EXIT /B 0
+EXIT /B 1
