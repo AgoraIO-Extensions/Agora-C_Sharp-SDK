@@ -2560,7 +2560,7 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), frame.buffer, out _result);
         }
 
-        public override PushAudioFrame(int sourcePos, AudioFrame frame)
+        public override int PushAudioFrame(int sourcePos, AudioFrame frame)
         {
             var param = new { sourcePos };
             var ret = AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine,

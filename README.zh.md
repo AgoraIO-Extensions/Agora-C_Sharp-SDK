@@ -53,7 +53,7 @@
    ```
 
    ```bash
-   git checkout dev/3.5.1
+   git checkout release/3.5.1
    ```
 
 2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln`解决方案，选择x64平台。
