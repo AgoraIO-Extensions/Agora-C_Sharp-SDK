@@ -34,8 +34,9 @@ echo "start restructure framework links..."
 echo "--------------------------------------"
 APP="$PWD/$1"
 ENTITLEMENT="App.entitlements"
-AGORA_FRAMEWORKS="$APP/Contents/PlugIns/agoraSdkCWrapper.bundle/Contents/Resources"
-AGORA_CLIB="$APP/Contents/Plugins/agoraSdkCWrapper.bundle/Contents/MacOS/agoraSdkCWrapper"
+BUNDLE="AgoraRtcWrapperUnity.bundle"
+AGORA_FRAMEWORKS="$APP/Contents/PlugIns/$BUNDLE/Contents/Resources"
+MacOS_BINS="$APP/Contents/Plugins/$BUNDLE/Contents/MacOS/Iris*"
 
 shopt -s extglob
 
@@ -87,7 +88,7 @@ function signhelp {
 
 echo ""
 echo "Make sure you code sign the following items in addition to the App itself:"
-echo "        $AGORA_CLIB"
+echo "        $MacOS_BINS"
 for framework in $AGORA_FRAMEWORKS/*; do
     echo "        $framework" 
 done
@@ -98,7 +99,7 @@ done
 find $APP -type f -name "*.meta" -delete
 
 # There are both .framework in Frameworks folder and Resources folder, need only one
-rm -r $APP/Contents/PlugIns/agoraSdkCWrapper.bundle/Contents/Frameworks
+rm -r $APP/Contents/PlugIns/$BUNDLE/Contents/Frameworks
 
 # re-estasbish version symlinks inside the frameworks
 for framework in $AGORA_FRAMEWORKS/*; do

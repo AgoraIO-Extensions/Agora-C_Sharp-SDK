@@ -4169,7 +4169,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
          * - 44100
          * - 48000
          */
-        int recordingSampleRate { set; get; }
+        public int recordingSampleRate { set; get; }
     }
 
     /** Audio recording position. */
