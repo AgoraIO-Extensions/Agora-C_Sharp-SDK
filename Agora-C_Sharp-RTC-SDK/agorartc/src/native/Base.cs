@@ -194,6 +194,8 @@ namespace agora.rtc
         kEngineGetAudioTrackCount,
         kEngineSetAudioMixingDualMonoMode,
         kEngineGetAudioFileInfo,
+        kEngineSetCameraTorchOn,
+        kEngineIsCameraTorchSupported,
         kMediaSetExternalAudioSourceVolume,
         kEngineGetScreenCaptureSources,
         kEngineTakeSnapshot,

@@ -334,6 +334,8 @@ namespace agora.rtc
         public abstract int PauseAllChannelMediaRelay();
         public abstract int ResumeAllChannelMediaRelay();
         public abstract int GetAudioFileInfo(string filePath);
+        public abstract int SetCameraTorchOn(bool isOn);
+        public abstract int IsCameraTorchSupported();
         public abstract int SetExternalAudioSourceVolume(int sourcePos, int volume);
         public abstract int TakeSnapshot(string channel, uint uid, string filePath);
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
