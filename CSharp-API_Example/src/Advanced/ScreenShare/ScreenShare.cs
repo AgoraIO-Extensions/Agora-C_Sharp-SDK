@@ -26,7 +26,7 @@ namespace CSharp_API_Example
         private string app_id_ = "";
         private string channel_id_ = "";
         private readonly string ScreenShare_TAG = "[ScreenShare] ";
-        private readonly string log_file_path = "CSharp_API_Example.log";
+        private readonly string agora_sdk_log_file_path_ = "agorasdk.log";
         private IAgoraRtcEngine rtc_engine_ = null;
         private IAgoraRtcEngineEventHandler event_handler_ = null;
         private IAgoraRtcEngine screen_share_engine_ = null;
@@ -50,12 +50,10 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
-
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
+            LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_("Initialize", ret);
-            ret = rtc_engine_.SetLogFile(log_file_path);
-            CSharpForm.dump_handler_(ScreenShare_TAG + "SetLogFile", ret);
             event_handler_ = new ScreenShareEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
 

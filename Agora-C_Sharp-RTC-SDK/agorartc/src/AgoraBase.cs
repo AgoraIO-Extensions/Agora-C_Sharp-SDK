@@ -5798,18 +5798,18 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
          *
          * Ensure that the directory for the log files exists and is writable. You can use this parameter to rename the log files.
          */
-        string filePath { set; get; }
+        public string filePath { set; get; }
 
         /** The size (KB) of a log file. The default value is 1024 KB. If you set `fileSize` to 1024 KB, the SDK outputs at most 5 MB log files;
          * if you set it to less than 1024 KB, the setting is invalid, and the maximum size of a log file is still 1024 KB.
          */
-        int fileSize { set; get; }
+        public int fileSize { set; get; }
 
         /** The output log level of the SDK. See #LOG_LEVEL.
          *
          * For example, if you set the log level to WARN, the SDK outputs the logs within levels FATAL, ERROR, and WARN.
          */
-        LOG_LEVEL level { set; get; }
+        public LOG_LEVEL level { set; get; }
     };
 
     /** Configurations for the `IRtcEngine` instance.
