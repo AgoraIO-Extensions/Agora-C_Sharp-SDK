@@ -179,7 +179,7 @@ namespace agora.rtc
         public abstract int PauseAllEffects();
         public abstract int ResumeEffect(int soundId);
         public abstract int ResumeAllEffects();
-        public abstract int GetEffectDuration();
+        public abstract int GetEffectDuration(string filePath);
         public abstract int SetEffectPosition(int soundId, int pos);
         public abstract int GetEffectCurrentPosition(int soundId);
         public abstract int EnableDeepLearningDenoise(bool enable);
