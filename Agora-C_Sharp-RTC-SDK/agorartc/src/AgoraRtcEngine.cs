@@ -1436,9 +1436,12 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int GetEffectDuration()
+        public override int GetEffectDuration(string filePath)
         {
-            var param = new { };
+            var param = new 
+            {
+                filePath
+            };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineGetEffectDuration,
                 JsonMapper.ToJson(param), out _result);
         }
