@@ -55,7 +55,7 @@ First, create a developer account at [Agora.io](https://dashboard.agora.io/signi
 	```
 
 	```bash
-	git checkout dev/3.5.2
+	git checkout release/3.5.2
 	```
 	
 2. Open `Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln` via Visual Studio. select x64 platform. 
