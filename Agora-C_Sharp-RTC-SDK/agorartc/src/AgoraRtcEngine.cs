@@ -2650,6 +2650,25 @@ namespace agora.rtc
                 out _result);
         }
 
+        public override int SetCameraTorchOn(bool isOn)
+        {
+            var param = new
+            {
+                isOn
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraTorchOn, JsonMapper.ToJson(param),
+                out _result);
+        }
+        
+        public override int IsCameraTorchSupported()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineIsCameraTorchSupported, JsonMapper.ToJson(param),
+                out _result);
+        }
+
         public override int SetExternalAudioSourceVolume(int sourcePos, int volume)
         {
             var param = new
