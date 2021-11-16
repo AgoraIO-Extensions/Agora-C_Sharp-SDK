@@ -242,7 +242,11 @@ namespace agora.rtc
         kMediaSetExternalVideoSource,
         kMediaSetExternalAudioSource,
         kMediaPushVideoFrame,
-        kMediaPushEncodedVideoImage
+        kMediaPushEncodedVideoImage,
+        kEngineGetCertificateVerifyResult,
+        kEngineSetAudioSessionOperationRestriction,
+        kEngineAdjustCustomAudioPublishVolume,
+        kEngineAdjustCustomAudioPlayoutVolume
     }
 
     internal enum ApiTypeAudioDeviceManager
