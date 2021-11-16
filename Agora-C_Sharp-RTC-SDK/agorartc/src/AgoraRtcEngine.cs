@@ -71,9 +71,29 @@ namespace agora.rtc
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
         }
 
-        private void Dispose(bool dispose, bool sync)
+        private void Dispose(bool disposing, bool sync)
         {
             if (_disposed) return;
+
+            if (disposing)
+            {
+                ReleaseEventHandler();
+                // TODO: Unmanaged resources.
+                UnSetIrisAudioFrameObserver();
+                UnSetIrisVideoFrameObserver();
+
+                _videoDeviceManagerInstance.Dispose();
+                _videoDeviceManagerInstance = null;
+
+                _audioPlaybackDeviceManagerInstance.Dispose();
+                _audioPlaybackDeviceManagerInstance = null;
+
+                _audioRecordingDeviceManagerInstance.Dispose();
+                _audioRecordingDeviceManagerInstance = null;
+
+                _irisRtcDeviceManager = IntPtr.Zero;
+                AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
+            }
             
             Release(sync);
             
@@ -86,8 +106,6 @@ namespace agora.rtc
             {
                 sync
             };
-
-            AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
 
             AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
             ApiTypeEngine.kEngineRelease,
@@ -4659,7 +4677,7 @@ namespace agora.rtc
                         {
                             EngineEventHandler.OnFirstRemoteAudioDecoded(
                                 AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                                (uint) AgoraJson.GetData<uint>(data, "userId"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed")
                             );
                         }
