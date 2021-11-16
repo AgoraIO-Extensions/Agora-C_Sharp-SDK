@@ -1928,9 +1928,9 @@ namespace agora.rtc
         }
 
         public RtcStats(uint duration, uint txBytes, uint rxBytes, uint txAudioBytes, uint txVideoBytes,
-            uint rxAudioBytes, uint rxVideoBytes, ushort txKBitRate, ushort rxKBitRate, ushort rxAudioKBitRate,
-            ushort txAudioKBitRate, ushort rxVideoKBitRate, ushort txVideoKBitRate, ushort lastmileDelay,
-            ushort txPacketLossRate, ushort rxPacketLossRate, uint userCount, double cpuAppUsage, double cpuTotalUsage,
+            uint rxAudioBytes, uint rxVideoBytes, UInt16 txKBitRate, UInt16 rxKBitRate, UInt16 rxAudioKBitRate,
+            UInt16 txAudioKBitRate, UInt16 rxVideoKBitRate, UInt16 txVideoKBitRate, UInt16 lastmileDelay,
+            UInt16 txPacketLossRate, UInt16 rxPacketLossRate, uint userCount, double cpuAppUsage, double cpuTotalUsage, int gatewayRtt,
             double memoryAppUsageRatio, double memoryTotalUsageRatio, int memoryAppUsageInKbytes,int connectTimeMs,
             int firstAudioPacketDuration, int firstVideoPacketDuration, int firstVideoKeyFramePacketDuration,
             int packetsBeforeFirstKeyFramePacket, int firstAudioPacketDurationAfterUnmute, int firstVideoPacketDurationAfterUnmute,
@@ -1956,6 +1956,7 @@ namespace agora.rtc
             this.userCount = userCount;
             this.cpuAppUsage = cpuAppUsage;
             this.cpuTotalUsage = cpuTotalUsage;
+            this.gatewayRtt = gatewayRtt;
             this.memoryAppUsageRatio = memoryAppUsageRatio;
             this.memoryTotalUsageRatio = memoryTotalUsageRatio;
             this.memoryAppUsageInKbytes = memoryAppUsageInKbytes;
@@ -2009,46 +2010,46 @@ namespace agora.rtc
         /**
 		 Transmission bitrate (Kbps), represented by an instantaneous value.
 		 */
-        public ushort txKBitRate { set; get; }
+        public UInt16 txKBitRate { set; get; }
 
         /**
 		 Receive bitrate (Kbps), represented by an instantaneous value.
 		 */
-        public ushort rxKBitRate { set; get; }
+        public UInt16 rxKBitRate { set; get; }
 
         /**
 		 Audio receive bitrate (Kbps), represented by an instantaneous value.
 		 */
-        public ushort rxAudioKBitRate { set; get; }
+        public UInt16 rxAudioKBitRate { set; get; }
 
         /**
 		 Audio transmission bitrate (Kbps), represented by an instantaneous value.
 		 */
-        public ushort txAudioKBitRate { set; get; }
+        public UInt16 txAudioKBitRate { set; get; }
 
         /**
 		 Video receive bitrate (Kbps), represented by an instantaneous value.
 		 */
-        public ushort rxVideoKBitRate { set; get; }
+        public UInt16 rxVideoKBitRate { set; get; }
 
         /**
 		 Video transmission bitrate (Kbps), represented by an instantaneous value.
 		 */
-        public ushort txVideoKBitRate { set; get; }
+        public UInt16 txVideoKBitRate { set; get; }
 
         /** Client-server latency (ms)
 		 */
-        public ushort lastmileDelay { set; get; }
+        public UInt16 lastmileDelay { set; get; }
 
         /** The packet loss rate (%) from the local client to Agora's edge server,
 		 * before using the anti-packet-loss method.
 		 */
-        public ushort txPacketLossRate { set; get; }
+        public UInt16 txPacketLossRate { set; get; }
 
         /** The packet loss rate (%) from Agora's edge server to the local client,
 		 * before using the anti-packet-loss method.
 		 */
-        public ushort rxPacketLossRate { set; get; }
+        public UInt16 rxPacketLossRate { set; get; }
 
         /** Number of users in the channel.
 		 - `COMMUNICATION` profile: The number of users in the channel.
@@ -2069,6 +2070,11 @@ namespace agora.rtc
 		 The value **=** 100 **-** System Idle Progress in Task Manager (%).
 		 */
         public double cpuTotalUsage { set; get; }
+
+        /** 
+        * gateway Rtt
+        */
+        public int gatewayRtt { set; get; }
 
         /**
 		 The memory usage ratio of the app (%).
@@ -2234,7 +2240,7 @@ namespace agora.rtc
 
         public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay,
             int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime,
-            int frozenRate, int mosValue)
+            int frozenRate, int mosValue, int totalActiveTime, int publishDuration)
         {
             this.uid = uid;
             this.quality = quality;
@@ -2247,6 +2253,8 @@ namespace agora.rtc
             this.totalFrozenTime = totalFrozenTime;
             this.frozenRate = frozenRate;
             this.mosValue = mosValue;
+            this.totalActiveTime = totalActiveTime;
+            this.publishDuration = publishDuration;
         }
 
         /** User ID of the remote user sending the audio streams.
@@ -2294,6 +2302,16 @@ namespace agora.rtc
         * The mos value of remote audio.
         */
         public int mosValue { set; get; }
+
+        /**
+        * The total time (ms) when the remote user neither stops sending the audio
+        * stream nor disables the audio module after joining the channel.
+        */
+        public int totalActiveTime { set; get; }
+        /**
+        * The total publish duration (ms) of the remote audio stream.
+        */
+        public int publishDuration { set; get; }
     }
 
     /**
@@ -2718,7 +2736,7 @@ namespace agora.rtc
         public VideoTrackInfo()
         {
             isLocal = false; 
-            ownerUid = 0; 
+            ownerUserId = null; 
             trackId = 0;
             channelId = null;
             streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH; 
@@ -2727,13 +2745,13 @@ namespace agora.rtc
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
         }
 
-        public VideoTrackInfo(bool isLocal, uint ownerUid, uint trackId,
+        public VideoTrackInfo(bool isLocal, string ownerUserId, uint trackId,
                               string channelId, VIDEO_STREAM_TYPE streamType,
                               VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly,
                               VIDEO_SOURCE_TYPE sourceType)
         {
             this.isLocal = isLocal; 
-            this.ownerUid = ownerUid; 
+            this.ownerUserId = ownerUserId; 
             this.trackId = trackId;
             this.channelId = channelId;
             this.streamType = streamType; 
@@ -2751,7 +2769,7 @@ namespace agora.rtc
         /**
         * ID of the user who publishes the video track.
         */
-        public uint ownerUid { set; get; }
+        public string ownerUserId { set; get; }
 
         /**
         * ID of the video track.
@@ -2817,11 +2835,11 @@ namespace agora.rtc
         {
         }
 
-        public AudioVolumeInfo(uint uid, uint volume, uint vad, string userId)
+        public AudioVolumeInfo(uint uid, uint volume, uint vad)
         {
             this.uid = uid;
             this.volume = volume;
-            this.userId = userId;
+            this.vad = vad;
         }
 
         /**
@@ -2833,7 +2851,10 @@ namespace agora.rtc
 		 */
         public uint volume { set; get; }
 
-        public string userId { set; get; }
+        /*
+        * The activity status of remote users
+        */
+        public uint vad { set; get; }
     }
 
     /** Definition of Packet.
@@ -5110,7 +5131,7 @@ namespace agora.rtc
         }
 
         public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int encoderOutputFrameRate,
-            int rendererOutputFrameRate, int targetBitrate, int targetFrameRate,
+            int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication,
             int encodedBitrate, int encodedFrameWidth,int encodedFrameHeight, int encodedFrameCount, 
             VIDEO_CODEC_TYPE codecType)
         {
@@ -5121,6 +5142,7 @@ namespace agora.rtc
             this.rendererOutputFrameRate = rendererOutputFrameRate;
             this.targetBitrate = targetBitrate;
             this.targetFrameRate = targetFrameRate;
+            this.qualityAdaptIndication = qualityAdaptIndication;
             this.encodedBitrate = encodedBitrate;
             this.encodedFrameWidth = encodedFrameWidth;
             this.encodedFrameHeight = encodedFrameHeight;
@@ -5160,6 +5182,11 @@ namespace agora.rtc
         public int targetFrameRate { set; get; }
 
         /** Quality change of the local video in terms of target frame rate and
+        * target bit rate in this reported interval. See #QUALITY_ADAPT_INDICATION.
+        */
+        public QUALITY_ADAPT_INDICATION qualityAdaptIndication;
+
+        /** Quality change of the local video in terms of target frame rate and
 		 * target bit rate in this reported interval. See #QUALITY_ADAPT_INDICATION.
 		 */
 
@@ -5194,7 +5221,8 @@ namespace agora.rtc
 
         public RemoteVideoStats(uint uid, int delay, int width, int height, int receivedBitrate,
             int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate,
-            VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs)
+            VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime,
+            int publishDuration)
         {
             this.uid = uid;
             this.delay = delay;
@@ -5209,6 +5237,8 @@ namespace agora.rtc
             this.totalFrozenTime = totalFrozenTime;
             this.frozenRate = frozenRate;
             this.avSyncTimeMs = avSyncTimeMs;
+            this.totalActiveTime = totalActiveTime;
+            this.totalFrozenTime = totalFrozenTime;
         }
 
         /**
@@ -5274,6 +5304,17 @@ namespace agora.rtc
         video, and a negative value indicates the audio lags the video.
         */
         public int avSyncTimeMs { set; get; }
+
+        /**
+        * The total time (ms) when the remote user neither stops sending the audio
+        * stream nor disables the audio module after joining the channel.
+        */
+        public int totalActiveTime { set; get; }
+
+        /**
+        * The total publish duration (ms) of the remote audio stream.
+        */
+        public int publishDuration { set; get; }
     }
 
     /** Configuration of the injected media stream.
@@ -5726,5 +5767,74 @@ namespace agora.rtc
         * - false: Do not stop microphone recording.
         */
         public bool stopMicrophoneRecording { set; get; }
+    };
+
+    /**
+    * The operational permission of the SDK on the audio session.
+    */
+    public enum AUDIO_SESSION_OPERATION_RESTRICTION {
+        /**
+        * 0: No restriction; the SDK can change the audio session.
+        */
+        AUDIO_SESSION_OPERATION_RESTRICTION_NONE = 0,
+        /**
+        * 1: The SDK cannot change the audio session category.
+        */
+        AUDIO_SESSION_OPERATION_RESTRICTION_SET_CATEGORY = 1,
+        /**
+        * 2: The SDK cannot change the audio session category, mode, or categoryOptions.
+        */
+        AUDIO_SESSION_OPERATION_RESTRICTION_CONFIGURE_SESSION = 1 << 1,
+        /**
+        * 4: The SDK keeps the audio session active when the user leaves the
+        * channel, for example, to play an audio file in the background.
+        */
+        AUDIO_SESSION_OPERATION_RESTRICTION_DEACTIVATE_SESSION = 1 << 2,
+        /**
+        * 128: Completely restricts the operational permission of the SDK on the
+        * audio session; the SDK cannot change the audio session.
+        */
+        AUDIO_SESSION_OPERATION_RESTRICTION_ALL = 1 << 7,
+    };
+
+    /** Quality change of the local video in terms of target frame rate and target bit rate since last count.
+    */
+    public enum QUALITY_ADAPT_INDICATION {
+        /** The quality of the local video stays the same. */
+        ADAPT_NONE = 0,
+        /** The quality improves because the network bandwidth increases. */
+        ADAPT_UP_BANDWIDTH = 1,
+        /** The quality worsens because the network bandwidth decreases. */
+        ADAPT_DOWN_BANDWIDTH = 2,
+    };
+
+    /** 
+    * Thread priority type.
+    */
+    public enum THREAD_PRIORITY_TYPE {
+        /**
+        * 0: Lowest priority.
+        */
+        LOWEST = 0,
+        /**
+        * 1: Low priority.
+        */
+        LOW = 1,
+        /**
+        * 2: Normal priority.
+        */
+        NORMAL = 2,
+        /**
+        * 3: High priority.
+        */
+        HIGH = 3,
+        /**
+        * 4. Highest priority.
+        */
+        HIGHEST = 4,
+        /**
+        * 5. Critical priority.
+        */
+        CRITICAL = 5
     };
 }

@@ -9,10 +9,6 @@ using System;
 
 namespace agora.rtc
 {
-    using view_t = UInt64;
-    using uint64_t = UInt64;
-    using uint32_t = UInt32;
-    using uint8_t = UInt16;
 
     public abstract class IAgoraRtcEngine : IRtcEngine
     {
@@ -119,7 +115,7 @@ namespace agora.rtc
 
         public abstract int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType);
 
-        public abstract int EnableAudioVolumeIndication(int interval, int smooth);
+        public abstract int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad);
 
         public abstract int StartAudioRecording(string filePath,
                                         AUDIO_RECORDING_QUALITY_TYPE quality);
@@ -166,9 +162,9 @@ namespace agora.rtc
 
         public abstract int SetEffectsVolume(int volume);
 
-        public abstract int PreloadEffect(int soundId, string filePath);
+        public abstract int PreloadEffect(int soundId, string filePath, int startPos = 0);
 
-        public abstract int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false);
+        public abstract int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0);
 
         public abstract int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false);
 
@@ -206,16 +202,13 @@ namespace agora.rtc
 
         public abstract int SetAudioEffectParameters(AUDIO_EFFECT_PRESET preset, int param1, int param2);
 
-        public abstract int SetVoiceBeautifierParameters(VOICE_BEAUTIFIER_PRESET preset,
-                                                  int param1, int param2);
+        public abstract int SetVoiceBeautifierParameters(VOICE_BEAUTIFIER_PRESET preset, int param1, int param2);
 
-        public abstract int SetVoiceConversionParameters(VOICE_CONVERSION_PRESET preset,
-                                                  int param1, int param2);
+        public abstract int SetVoiceConversionParameters(VOICE_CONVERSION_PRESET preset, int param1, int param2);
 
         public abstract int SetLocalVoicePitch(double pitch);
 
-        public abstract int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency,
-                                              int bandGain);
+        public abstract int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency, int bandGain);
       
         public abstract int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value);
 
@@ -233,8 +226,7 @@ namespace agora.rtc
 
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
-        public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode,
-                                        VIDEO_MIRROR_MODE_TYPE mirrorMode);
+        public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
 
@@ -261,13 +253,9 @@ namespace agora.rtc
 
         public abstract int StopSecondaryCustomAudioTrack();
 
-        public abstract int SetRecordingAudioFrameParameters(int sampleRate, int channel,
-                                                    RAW_AUDIO_FRAME_OP_MODE_TYPE mode,
-                                                    int samplesPerCall);
+        public abstract int SetRecordingAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
 
-        public abstract int SetPlaybackAudioFrameParameters(int sampleRate, int channel,
-                                                    RAW_AUDIO_FRAME_OP_MODE_TYPE mode,
-                                                    int samplesPerCall);
+        public abstract int SetPlaybackAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
 
         public abstract int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall);
 
@@ -303,16 +291,11 @@ namespace agora.rtc
 
         public abstract int SetExtensionProviderProperty(string provider_name, string key, string json_value);
 
-        public abstract int EnableExtension(
-          string provider_name, string extension_name, bool enable=true);
+        public abstract int EnableExtension(string provider_name, string extension_name, bool enable=true);
 
-        public abstract int SetExtensionProperty(
-          string provider_name, string extension_name,
-          string key, string json_value);
+        public abstract int SetExtensionProperty(string provider_name, string extension_name, string key, string json_value);
 
-        public abstract int GetExtensionProperty(
-          string provider_name, string extension_name,
-          string key, string json_value, int buf_len);
+        public abstract int GetExtensionProperty(string provider_name, string extension_name, string key, string json_value, int buf_len);
 
         public abstract int SetCameraCapturerConfiguration(CameraCapturerConfiguration config);
 
@@ -340,10 +323,8 @@ namespace agora.rtc
 
         public abstract int SetCameraAutoFocusFaceModeEnabled(bool enabled);
       
-
         public abstract bool IsCameraExposurePositionSupported();
       
-
         public abstract int SetCameraExposurePosition(float positionXinView, float positionYinView);
 
         public abstract bool IsCameraAutoExposureFaceModeSupported();
@@ -356,18 +337,13 @@ namespace agora.rtc
       
         public abstract bool IsSpeakerphoneEnabled();
     
-        public abstract int StartScreenCaptureByDisplayId(uint32_t displayId, Rectangle regionRect,
-                                                ScreenCaptureParameters captureParams);
+        public abstract int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams);
     
-        public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect,
-                                                 Rectangle regionRect,
-                                                 ScreenCaptureParameters captureParams);
+        public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
-        public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData,
-                                     ScreenCaptureParameters captureParams);
+        public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
 
-        public abstract int StartScreenCaptureByWindowId(view_t windowId, Rectangle regionRect,
-                                               ScreenCaptureParameters captureParams);
+        public abstract int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
     
         public abstract int SetScreenCaptureContentHint(VIDEO_CONTENT_HINT contentHint);
       
@@ -461,22 +437,17 @@ namespace agora.rtc
 
         // public abstract int UnregisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type);
 
-        public abstract int StartAudioFrameDump(string channel_id, uint user_id, string location,
-            string uuid, string passwd, long duration_ms, bool auto_upload);
+        public abstract int StartAudioFrameDump(string channel_id, uint user_id, string location, string uuid, string passwd, long duration_ms, bool auto_upload);
       
         public abstract int StopAudioFrameDump(string channel_id, uint user_id, string location);
 
         public abstract int RegisterLocalUserAccount(string appId, string userAccount);
 
-        public abstract int JoinChannelWithUserAccount(string token, string channelId,
-                                              string userAccount);
+        public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount);
 
-        public abstract int JoinChannelWithUserAccount(string token, string channelId, 
-                                                string userAccount, ChannelMediaOptions options);
+        public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
-        public abstract int JoinChannelWithUserAccountEx(string token, string channelId,
-                                                string userAccount, ChannelMediaOptions options,
-                                                IAgoraRtcEngineEventHandler eventHandler);
+        public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options, IAgoraRtcEngineEventHandler eventHandler);
 
         public abstract int GetUserInfoByUserAccount(string userAccount, UserInfo userInfo, string channelId = null, string localUserAccount = null);
       
@@ -492,17 +463,15 @@ namespace agora.rtc
         
         public abstract int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config);
       
-        // public abstract int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler,
-        //                                     string publishUrl, DirectCdnStreamingMediaOptions options);
+        // public abstract int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler, string publishUrl, DirectCdnStreamingMediaOptions options);
+        
         // public abstract int StopDirectCdnStreaming();
       
         // public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
       
         public abstract int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame);
 
-        public abstract int JoinChannelEx(string token, RtcConnection connection,
-                              ChannelMediaOptions options,
-                              IAgoraRtcEngineEventHandler eventHandler);
+        public abstract int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options, IAgoraRtcEngineEventHandler eventHandler);
 
         public abstract int LeaveChannelEx(RtcConnection connection);
 
@@ -520,8 +489,7 @@ namespace agora.rtc
 
         public abstract int SetRemoteVoice3DPositionEx(uint remoteUid, double azimuth, double elevation, double distance, RtcConnection connection);
 
-        public abstract int SetRemoteRenderModeEx(uint remoteUid, RENDER_MODE_TYPE renderMode,
-                                          VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
+        public abstract int SetRemoteRenderModeEx(uint remoteUid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
 
         public abstract int EnableLoopbackRecordingEx(bool enabled, RtcConnection connection);
 
@@ -541,27 +509,29 @@ namespace agora.rtc
 
         public abstract int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection);
 
-        public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame,
-                             bool wrap = false, int sourceId = 0);
-
+        public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
 
         public abstract int PullAudioFrame(AudioFrame frame);
 
-        
         public abstract int SetExternalVideoSource(bool enabled, bool useTexture, bool encodedFrame = false);
        
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
 
-        
         public abstract int PushVideoFrame(ExternalVideoFrame frame);
+
         public abstract int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection);
 
-        public abstract int PushEncodedVideoImage(uint8_t imageBuffer, uint length,
-                                          EncodedVideoFrameInfo videoEncodedFrameInfo);
+        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo);
 
-        public abstract int PushEncodedVideoImage(uint8_t imageBuffer, uint length,
-                                          EncodedVideoFrameInfo videoEncodedFrameInfo,
-                                          RtcConnection connection);
+        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
+        
+        public abstract int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len);
+        
+        public abstract int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction);
+
+        public abstract int AdjustCustomAudioPublishVolume(int sourceId, int volume);
+
+        public abstract int AdjustCustomAudioPlayoutVolume(int sourceId, int volume);
     };
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -574,13 +544,11 @@ namespace agora.rtc
 
         public virtual void OnError(int err, string msg) {}
 
-        public virtual void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, ushort delay,
-                                    ushort lost) {}
+        public virtual void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost) {}
 
         public virtual void OnLastmileProbeResult(LastmileProbeResult result) {}
 
-        public virtual void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber,
-                                            int totalVolume) {}
+        public virtual void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume) {}
 
         public virtual void OnLeaveChannel(RtcConnection connection, RtcStats stats) {}
 
@@ -648,9 +616,7 @@ namespace agora.rtc
 
         public virtual void OnCameraExposureAreaChanged(int x, int y, int width, int height) {}
 
-        public virtual void OnFacePositionChanged(int imageWidth, int imageHeight,
-                                      Rectangle vecRectangle, int[] vecDistance,
-                                      int numFaces) {}
+        public virtual void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces) {}
 
         public virtual void OnVideoStopped() {}
 
@@ -662,7 +628,7 @@ namespace agora.rtc
 
         public virtual void OnConnectionBanned(RtcConnection connection) {}
 
-        public virtual void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, uint sentTs) {}  //uint64_t
+        public virtual void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs) {}
 
         public virtual void OnStreamMessageError(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached) {}
 
@@ -682,8 +648,7 @@ namespace agora.rtc
 
         public virtual void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted) {}
 
-        public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state,
-                                                RTMP_STREAM_PUBLISH_ERROR errCode) {}
+        public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR errCode) {}
 
         public virtual void OnStreamPublished(string url, int error) {}
 
@@ -701,14 +666,11 @@ namespace agora.rtc
 
         public virtual void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover) {}
 
-        public virtual void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost,
-                                                ushort rxKBitRate) {}
+        public virtual void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) {}
 
-        public virtual void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost,
-                                                ushort rxKBitRate) {}
+        public virtual void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) {}
 
-        public virtual void OnConnectionStateChanged(RtcConnection connection, 
-            CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason) {}
+        public virtual void OnConnectionStateChanged(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason) {}
 
         public virtual void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type) {}
 
@@ -737,6 +699,12 @@ namespace agora.rtc
         public virtual void OnExtensionErrored(string provider_name, string ext_name, int error, string msg) {}
 
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) {}
+
+        public virtual void OnUserMuteAudio(uint connId, uint uid, bool muted) {}
+
+        public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed) {}
+
+        public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) {}
   };
 
     internal static partial class ObsoleteMethodWarning
