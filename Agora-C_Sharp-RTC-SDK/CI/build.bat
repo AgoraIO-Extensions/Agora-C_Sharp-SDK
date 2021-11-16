@@ -57,7 +57,6 @@ setlocal
 SET URL=%~1
 SET OUT_FILENAME=%~2
 SET HEADER="X-JFrog-Art-Api: %APP_KEY%"
-echo [%HEADER%] [%URL%] [%OUT_FILENAME%]
 curl -H %HEADER% %URL% -o %OUT_FILENAME%
 endlocal
 EXIT /B 0
@@ -242,7 +241,9 @@ rmdir /q /s %CURDIR%\agorartc\obj
 xcopy /s %CURDIR%\agorartc\* %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
 powershell -command "cp -r %CURDIR%/agorartc.sln %CURDIR%/Agora_C#_SDK/agorartc"
 mkdir %CURDIR%\output
-powershell -command "Compress-Archive %CURDIR%/Agora_C#_SDK/* %CURDIR%/output/Agora_C#_SDK_%VERSION%_%CONFIG%.zip"
+cd /d Agora_C#_SDK
+7z a -r %CURDIR%\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip  .\*
+cd ..
 echo =====Finish packing=====
 call :post_packing
 echo =====Finish building for %VERSION%=====
