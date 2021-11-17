@@ -3197,7 +3197,7 @@ namespace agora.rtc
                 connection
             };
             return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kMediaPushVideoFrame,
-                JsonMapper.ToJson(param), null, out _result);
+                JsonMapper.ToJson(param), frame.buffer, out _result);
         }
 
         public override int PushEncodedVideoImage(byte[] imageBuffer, uint length,
@@ -3209,7 +3209,7 @@ namespace agora.rtc
                 videoEncodedFrameInfo
             };
             return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kMediaPushEncodedVideoImage,
-                JsonMapper.ToJson(param), null, out _result);
+                JsonMapper.ToJson(param), imageBuffer, out _result);
         }
 
         public override int PushEncodedVideoImage(byte[] imageBuffer, uint length,
@@ -3223,7 +3223,7 @@ namespace agora.rtc
                 connection
             };
             return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kMediaPushEncodedVideoImage,
-                JsonMapper.ToJson(param), null, out _result);
+                JsonMapper.ToJson(param), imageBuffer, out _result);
         }
 
         public override int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len)
@@ -3235,8 +3235,8 @@ namespace agora.rtc
                 certificate_buf,
                 certificate_len
             };
-            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kEngineGetCertificateVerifyResult,
-                JsonMapper.ToJson(param), null, out _result);
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineGetCertificateVerifyResult,
+                JsonMapper.ToJson(param), out _result);
         }
         
         public override int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction)
@@ -3245,8 +3245,8 @@ namespace agora.rtc
             {
                 restriction
             };
-            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kEngineSetAudioSessionOperationRestriction,
-                JsonMapper.ToJson(param), null, out _result);
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetAudioSessionOperationRestriction,
+                JsonMapper.ToJson(param), out _result);
         }
 
         public override int AdjustCustomAudioPublishVolume(int sourceId, int volume)
@@ -3256,8 +3256,8 @@ namespace agora.rtc
                 sourceId,
                 volume
             };
-            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kEngineAdjustCustomAudioPublishVolume,
-                JsonMapper.ToJson(param), null, out _result);
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineAdjustCustomAudioPublishVolume,
+                JsonMapper.ToJson(param), out _result);
         }
 
         public override int AdjustCustomAudioPlayoutVolume(int sourceId, int volume)
@@ -3267,8 +3267,18 @@ namespace agora.rtc
                 sourceId,
                 volume
             };
-            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kEngineAdjustCustomAudioPlayoutVolume,
-                JsonMapper.ToJson(param), null, out _result);
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineAdjustCustomAudioPlayoutVolume,
+                JsonMapper.ToJson(param), out _result);
+        }
+
+        public override int SetParameters(string @params)
+        {
+            var param = new
+            {
+                @params
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetParameters,
+                JsonMapper.ToJson(param), out _result);
         }
 
         ~AgoraRtcEngine()
