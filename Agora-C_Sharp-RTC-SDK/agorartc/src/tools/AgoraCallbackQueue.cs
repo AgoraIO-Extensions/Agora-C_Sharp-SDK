@@ -10,7 +10,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace agora.rtc
+namespace agora.fpa
 {
     internal sealed class AgoraCallbackQueue : MonoBehaviour
     {

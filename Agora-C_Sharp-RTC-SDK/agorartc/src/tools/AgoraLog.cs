@@ -12,7 +12,7 @@ using System.Diagnostics;
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-namespace agora.rtc
+namespace agora.fpa
 {
     internal class AgoraLog
     {
@@ -37,7 +37,7 @@ namespace agora.rtc
 #endif
 
 #if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-namespace agora.rtc
+namespace agora.fpa
 {
     internal class AgoraLog
     {

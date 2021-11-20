@@ -10,7 +10,7 @@ using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace agora.rtc
+namespace agora.fpa
 {
     internal sealed class AgoraCallbackObject
     {

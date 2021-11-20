@@ -10,7 +10,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace agora.rtc
+namespace agora.fpa
 {
     using LitJson;
 

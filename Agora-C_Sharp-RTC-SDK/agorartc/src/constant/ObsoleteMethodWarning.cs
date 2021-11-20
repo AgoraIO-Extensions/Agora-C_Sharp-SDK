@@ -5,7 +5,7 @@
 //  Copyright © 2021 Agora. All rights reserved.
 //
 
-namespace agora.rtc
+namespace agora.fpa
 {
     internal static partial class ObsoleteMethodWarning
     {
