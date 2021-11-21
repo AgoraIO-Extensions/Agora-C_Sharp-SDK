@@ -353,9 +353,9 @@ namespace agora.rtc
 
         public abstract int StopScreenCapture();
 
-        public abstract int GetCallId(string callId); //Astring
+        public abstract string GetCallId();
 
-        public abstract int Rate(string callId, int rating, string description);  // Astring
+        public abstract int Rate(string callId, int rating, string description);
 
         public abstract int Complain(string callId, string description);
 
@@ -449,9 +449,9 @@ namespace agora.rtc
 
         public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options, IAgoraRtcEngineEventHandler eventHandler);
 
-        public abstract int GetUserInfoByUserAccount(string userAccount, UserInfo userInfo, string channelId = null, string localUserAccount = null);
+        public abstract int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo, string channelId = null, string localUserAccount = null);
       
-        public abstract int GetUserInfoByUid(uint uid, UserInfo userInfo, string channelId = null, string localUserAccount = null);
+        public abstract int GetUserInfoByUid(uint uid, out UserInfo userInfo, string channelId = null, string localUserAccount = null);
 
         public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 

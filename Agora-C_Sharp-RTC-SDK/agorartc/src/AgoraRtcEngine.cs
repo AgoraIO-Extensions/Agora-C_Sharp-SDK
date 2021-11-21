@@ -2114,16 +2114,14 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int GetCallId(string callId)
+        public override string GetCallId()
         {
-            var param = new
-            {
-                callId
-            };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, 
                 ApiTypeEngine.kEngineGetCallId,
-                JsonMapper.ToJson(param),
-                out _result);
+                JsonMapper.ToJson(param), out _result) != 0
+                ? null
+                : _result.Result;
         }
 
         public override int Rate(string callId, int rating,
@@ -2349,11 +2347,10 @@ namespace agora.rtc
             {
                 eventHandler
             };
-            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineRegisterEventHandler,
                 JsonMapper.ToJson(param),
                 out _result);
-            return ret == 0 ? true : false;
         }
 
         public override bool UnregisterEventHandler(IAgoraRtcEngineEventHandler eventHandler)
@@ -2362,11 +2359,10 @@ namespace agora.rtc
             {
                 eventHandler
             };
-            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineUnregisterEventHandler,
                 JsonMapper.ToJson(param),
                 out _result);
-            return ret == 0 ? true : false;
         }
 
         public override int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority)
@@ -2707,34 +2703,34 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int GetUserInfoByUserAccount(string userAccount, UserInfo userInfo, string channelId = null, string localUserAccount = null)
+        public override int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo, string channelId = null, string localUserAccount = null)
         {
             var param = new
             {
                 userAccount,
-                userInfo,
                 channelId,
                 localUserAccount
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineGetUserInfoByUserAccount,
-                JsonMapper.ToJson(param),
-                out _result);
+                JsonMapper.ToJson(param), out _result);
+            userInfo = _result.Result.Length == 0 ? new UserInfo() : AgoraJson.JsonToStruct<UserInfo>(_result.Result);
+            return ret;
         }
       
-        public override int GetUserInfoByUid(uint uid, UserInfo userInfo, string channelId = null, string localUserAccount = null)
+        public override int GetUserInfoByUid(uint uid, out UserInfo userInfo, string channelId = null, string localUserAccount = null)
         {
             var param = new
             {
-                uid,
-                userInfo,
+                userAccount,
                 channelId,
                 localUserAccount
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineGetUserInfoByUid,
-                JsonMapper.ToJson(param),
-                out _result);
+                JsonMapper.ToJson(param), out _result);
+            userInfo = _result.Result.Length == 0 ? new UserInfo() : AgoraJson.JsonToStruct<UserInfo>(_result.Result);
+            return ret;
         }
 
         public override int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
