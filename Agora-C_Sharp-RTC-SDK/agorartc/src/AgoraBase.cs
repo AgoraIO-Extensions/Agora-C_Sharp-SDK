@@ -1278,6 +1278,10 @@ namespace agora.rtc
      * around 3.75 MB after 10 minutes of recording.
     */
         AUDIO_RECORDING_QUALITY_HIGH = 2,
+        /** 3: Ultra high quality. For example, the size of an AAC file with a sample rate
+         * of 32,000 Hz and a 10-minute recording is approximately 7.5 MB.
+         */
+        AUDIO_RECORDING_QUALITY_ULTRA_HIGH = 3,
     }
 
     /** Network quality types. */
@@ -3268,7 +3272,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             uint rxAudioBytes, uint rxVideoBytes, ushort txKBitRate, ushort rxKBitRate, ushort rxAudioKBitRate,
             ushort txAudioKBitRate, ushort rxVideoKBitRate, ushort txVideoKBitRate, ushort lastmileDelay,
             ushort txPacketLossRate, ushort rxPacketLossRate, uint userCount, double cpuAppUsage, double cpuTotalUsage,
-            int gatewayRtt, double memoryAppUsageRatio, double memoryTotalUsageRatio, int memoryAppUsageInKbytes)
+            int gatewayRtt, double memoryAppUsageRatio, double memoryTotalUsageRatio, int memoryAppUsageInKbytes, int videoMosValue)
         {
             this.duration = duration;
             this.txBytes = txBytes;
@@ -3293,6 +3297,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             this.memoryAppUsageRatio = memoryAppUsageRatio;
             this.memoryTotalUsageRatio = memoryTotalUsageRatio;
             this.memoryAppUsageInKbytes = memoryAppUsageInKbytes;
+            this.videoMosValue = videoMosValue;
         }
 
         /**
@@ -3415,6 +3420,19 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 		 @note This value is for reference only. Due to system limitations, you may not get the value of this member.
 		 */
         public int memoryAppUsageInKbytes { set; get; }
+        /**
+        * The quality of the master remote video stream as determined by the Agora
+        * real-time video MOS (Mean Opinion Score) measurement method in the
+        * reported interval.  The return value ranges from 0 to 500. Dividing the
+        * return value by 100 gets the MOS score, which ranges from 0 to 5. The
+        * higher the score, the better the video quality.
+
+        * @note The master remote video stream should be binded to the biggest video view.
+        * you can call
+        * \ref IRtcEngine::setRemoteVideoStreamType "setRemoteVideoStreamType"
+        * to switch the remote video stream to master video stream.
+        */
+        public int videoMosValue { set; get; }
     }
 
     /** Quality change of the local video in terms of target frame rate and target bit rate since last count.
@@ -3725,7 +3743,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         public RemoteVideoStats(uint uid, int delay, int width, int height, int receivedBitrate,
             int decoderOutputFrameRate, int rendererOutputFrameRate, int packetLossRate,
             REMOTE_VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int totalActiveTime,
-            int publishDuration)
+            int publishDuration, int qualityChangedReason, int mosValue)
         {
             this.uid = uid;
             this.delay = delay;
@@ -3740,6 +3758,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             this.frozenRate = frozenRate;
             this.totalActiveTime = totalActiveTime;
             this.publishDuration = publishDuration;
+            this.qualityChangedReason = qualityChangedReason;
+            this.mosValue = mosValue;
         }
 
         /**
@@ -3808,6 +3828,22 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 		 * The total publish duration (ms) of the remote video stream.
 		 */
         public int publishDuration { set; get; }
+
+        /**
+         * The reason for poor QoE of the local user when receiving a remote audio stream. See #EXPERIENCE_POOR_REASON.
+         *
+         * @since v3.4.5.91
+         */
+        public int qualityChangedReason { set; get; }
+
+        /**
+         * The quality of the remote video stream as determined by the Agora
+         * real-time video MOS (Mean Opinion Score) measurement method in the
+         * reported interval.  The return value ranges from 0 to 500. Dividing the
+         * return value by 100 gets the MOS score, which ranges from 0 to 5. The
+         * higher the score, the better the video quality.
+         */
+        public int mosValue { set; get; }
     }
 
     /** Audio statistics of the local user */
@@ -4131,15 +4167,17 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             recordingQuality = AUDIO_RECORDING_QUALITY_TYPE.AUDIO_RECORDING_QUALITY_MEDIUM;
             recordingPosition = AUDIO_RECORDING_POSITION.AUDIO_RECORDING_POSITION_MIXED_RECORDING_AND_PLAYBACK;
             recordingSampleRate = 32000;
+            recordingChannel = 0;
         }
 
         public AudioRecordingConfiguration(string filePath, AUDIO_RECORDING_QUALITY_TYPE recordingQuality,
-            AUDIO_RECORDING_POSITION recordingPosition, int recordingSampleRate)
+            AUDIO_RECORDING_POSITION recordingPosition, int recordingSampleRate, int recordingChannel)
         {
             this.filePath = filePath;
             this.recordingQuality = recordingQuality;
             this.recordingPosition = recordingPosition;
             this.recordingSampleRate = recordingSampleRate;
+            this.recordingChannel = recordingChannel;
         }
 
         /** Pointer to the absolute file path of the recording file. The string of the file name is in UTF-8.
@@ -4169,7 +4207,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
          * - 44100
          * - 48000
          */
-        int recordingSampleRate { set; get; }
+        public int recordingSampleRate { set; get; }
+        public int recordingChannel { set; get; }
     }
 
     /** Audio recording position. */
