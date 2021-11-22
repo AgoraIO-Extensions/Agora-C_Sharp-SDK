@@ -33,7 +33,7 @@ namespace agora.fpa
 
         public abstract int UpdateChainIdInfos(FPAChainInfo[] infos, int info_count);
 
-        public abstract int GetDiagnosisInfo(ref FpaDiagnosisInfo info);
+        public abstract int GetDiagnosisInfo(out FpaDiagnosisInfo info);
 
         public abstract string GetAgoraFpaProxyServiceSdkVersion();
 

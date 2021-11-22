@@ -206,32 +206,31 @@ namespace agora.fpa
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int GetDiagnosisInfo(ref FpaDiagnosisInfo info)
+        public override int GetDiagnosisInfo(out FpaDiagnosisInfo info)
         {
-            var param = new 
-            {
-                info
-            };
+            var param = new { };
             var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetTransparentProxyPort, 
                 JsonMapper.ToJson(param), out _result);
-            info = AgoraJson.JsonToStruct<FpaDiagnosisInfo>(_result.Result, info);
+            info = _result.Result.Length == 0 ? new FpaDiagnosisInfo() : AgoraJson.JsonToStruct<FpaDiagnosisInfo>(_result.Result);
             return ret; 
         }
 
         public override string GetAgoraFpaProxyServiceSdkVersion()
         {
             var param = new { };
-            AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetAgoraFpaProxyServiceSdkVersion, 
-                JsonMapper.ToJson(param), out _result);
-            return _result.Result;
+            return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetAgoraFpaProxyServiceSdkVersion, 
+                JsonMapper.ToJson(param), out _result) != 0
+            ? null
+            : ((_result.Result.Length == 0) ? null : _result.Result);
         }
 
         public override string GetAgoraFpaProxyServiceSdkBuildInfo()
         {
             var param = new { };
-            AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetAgoraFpaProxyServiceSdkBuildInfo, 
-                JsonMapper.ToJson(param), out _result);
-            return _result.Result;
+            return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetAgoraFpaProxyServiceSdkBuildInfo, 
+                JsonMapper.ToJson(param), out _result) != 0
+            ? null
+            : ((_result.Result.Length == 0) ? null : _result.Result);
         }
       
         ~AgoraFpaProxyService()
