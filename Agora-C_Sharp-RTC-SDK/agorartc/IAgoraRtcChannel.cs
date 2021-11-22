@@ -185,6 +185,10 @@ namespace agora.rtc
         {
         }
 
+        public virtual void onFirstRemoteVideoFrame(string channelId, uint uid, int width, int height, int elapsed)
+        {
+        }
+
         public virtual void OnVideoSizeChanged(string channelId, uint uid, int width, int height, int rotation)
         {
         }
