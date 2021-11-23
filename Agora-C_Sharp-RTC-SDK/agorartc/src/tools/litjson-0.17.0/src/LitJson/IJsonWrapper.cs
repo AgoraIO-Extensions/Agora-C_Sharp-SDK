@@ -14,7 +14,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace agora.rtc.LitJson
+namespace agora.fpa.LitJson
 {
     public enum JsonType
     {

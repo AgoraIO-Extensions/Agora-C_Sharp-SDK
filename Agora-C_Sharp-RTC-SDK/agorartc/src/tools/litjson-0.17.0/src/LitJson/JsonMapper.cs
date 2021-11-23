@@ -16,7 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace agora.rtc.LitJson
+namespace agora.fpa.LitJson
 {
     internal struct PropertyMetadata
     {

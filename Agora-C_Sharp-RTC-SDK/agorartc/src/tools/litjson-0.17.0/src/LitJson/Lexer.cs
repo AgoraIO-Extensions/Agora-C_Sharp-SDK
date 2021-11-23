@@ -13,7 +13,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace agora.rtc.LitJson
+namespace agora.fpa.LitJson
 {
     internal class FsmContext
     {

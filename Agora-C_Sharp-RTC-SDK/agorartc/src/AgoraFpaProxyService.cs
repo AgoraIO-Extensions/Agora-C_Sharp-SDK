@@ -131,7 +131,7 @@ namespace agora.fpa
             _irisServiceEventHandlerHandleNative = IntPtr.Zero;
         }
 
-        public override int Start(FpaProxyServiceConfig config, IAgoraFpaProxyServiceObserver* observer)
+        public override int Start(FpaProxyServiceConfig config)
         {
             var param = new 
             {
@@ -156,7 +156,7 @@ namespace agora.fpa
             };
             var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetHttpProxyPort, 
                 JsonMapper.ToJson(param), out _result);
-            port = AgoraJson.GetData<ushort>(_result.Result, port);
+            port = (ushort) AgoraJson.GetData<ushort>(_result.Result, "port");
             return ret;
         }
 
@@ -172,15 +172,15 @@ namespace agora.fpa
             };
             var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetTransparentProxyPort, 
                 JsonMapper.ToJson(param), out _result);
-            proxy_port = AgoraJson.GetData<ushort>(_result.Result, proxy_port);
+            proxy_port = (ushort) AgoraJson.GetData<ushort>(_result.Result, "proxy_port");
             return ret;
         }
 
-        public override int SetParameters(string param)
+        public override int SetParameters(string parameters)
         {
             var param = new 
             {
-                param
+                parameters
             };
             return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceSetParameters, 
                 JsonMapper.ToJson(param), out _result);
