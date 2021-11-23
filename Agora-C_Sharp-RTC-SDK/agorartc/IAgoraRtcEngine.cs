@@ -393,9 +393,9 @@ namespace agora.rtc
       
         public abstract CONNECTION_STATE_TYPE GetConnectionState();
       
-        public abstract bool RegisterEventHandler(IAgoraRtcEngineEventHandler eventHandler);
+        public abstract int RegisterEventHandler(IAgoraRtcEngineEventHandler eventHandler);
 
-        public abstract bool UnregisterEventHandler(IAgoraRtcEngineEventHandler eventHandler);
+        public abstract int UnregisterEventHandler(IAgoraRtcEngineEventHandler eventHandler);
         
         public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
 

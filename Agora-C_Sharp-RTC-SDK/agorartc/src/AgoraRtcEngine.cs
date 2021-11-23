@@ -2341,7 +2341,7 @@ namespace agora.rtc
                 out _result);
         }
       
-        public override bool RegisterEventHandler(IAgoraRtcEngineEventHandler eventHandler)
+        public override int RegisterEventHandler(IAgoraRtcEngineEventHandler eventHandler)
         {
             var param = new
             {
@@ -2353,7 +2353,7 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override bool UnregisterEventHandler(IAgoraRtcEngineEventHandler eventHandler)
+        public override int UnregisterEventHandler(IAgoraRtcEngineEventHandler eventHandler)
         {
             var param = new
             {
@@ -2722,7 +2722,7 @@ namespace agora.rtc
         {
             var param = new
             {
-                userAccount,
+                uid,
                 channelId,
                 localUserAccount
             };
