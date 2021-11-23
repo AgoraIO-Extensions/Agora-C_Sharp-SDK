@@ -176,16 +176,6 @@ namespace agora.fpa
             return ret;
         }
 
-        public override int RenewToken(string token)
-        {
-            var param = new 
-            {
-                token
-            };
-            return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceRenewToken, 
-                JsonMapper.ToJson(param), out _result);
-        }
-
         public override int SetParameters(string param)
         {
             var param = new 
@@ -196,13 +186,13 @@ namespace agora.fpa
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int UpdateChainIdInfos(FPAChainInfo[] infos, int info_count)
+        public override int SetOrUpdateHttpProxyChainConfig(HttpProxyChainConfig config)
         {
             var param = new 
             {
-                param
+                config
             };
-            return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceUpdateChainIdInfos, 
+            return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceSetOrUpdateHttpProxyChainConfig, 
                 JsonMapper.ToJson(param), out _result);
         }
 
@@ -252,45 +242,16 @@ namespace agora.fpa
 #endif
             switch(@event)
             {
-                case "onEvent":
+                
+                case "onProxyEvent":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (ServiceEventHandler != null)
                         {
-                            ServiceEventHandler.OnEvent(
-                                (FPA_SERVICE_EVENT) AgoraJson.GetData<int>(data, "event"),
-                                (int) AgoraJson.GetData<int>(data, "error_code")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "onTokenWillExpire":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (ServiceEventHandler != null)
-                        {
-                            ServiceEventHandler.OnTokenWillExpire(
-                                (string) AgoraJson.GetData<string>(data, "token")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "0nProxyFallback":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (ServiceEventHandler != null)
-                        {
-                            ServiceEventHandler.OnProxyFallback(
+                            ServiceEventHandler.OnProxyEvent(
+                                (FpaProxyEvent) AgoraJson.GetData<int>(data, "event"),
                                 (string) AgoraJson.GetData<string>(data, "request_id"),
                                 (FPA_ERROR_CODE) AgoraJson.GetData<int>(data, "err")
                             );

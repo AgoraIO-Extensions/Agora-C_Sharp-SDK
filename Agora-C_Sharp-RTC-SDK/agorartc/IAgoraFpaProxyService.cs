@@ -19,7 +19,7 @@ namespace agora.fpa
 
         public abstract void InitEventHandler(IAgoraFpaProxyServiceEventHandler serviceEventHandler);
 
-        public abstract int Start(FpaProxyServiceConfig config, IAgoraFpaProxyServiceObserver* observer = null);
+        public abstract int Start(FpaProxyServiceConfig config);
 
         public abstract int Stop();
 
@@ -27,11 +27,9 @@ namespace agora.fpa
 
         public abstract int GetTransparentProxyPort(ref ushort proxy_port, int chain_id, string dst_ip_or_domain, ushort dst_port, bool enable_fallback);
 
-        public abstract int RenewToken(string token);
-
         public abstract int SetParameters(string param);
 
-        public abstract int UpdateChainIdInfos(FPAChainInfo[] infos, int info_count);
+        public abstract int SetOrUpdateHttpProxyChainConfig(HttpProxyChainConfig config);
 
         public abstract int GetDiagnosisInfo(out FpaDiagnosisInfo info);
 
@@ -42,11 +40,7 @@ namespace agora.fpa
 
     public abstract class IAgoraFpaProxyServiceEventHandler
     {
-        public virtual void OnEvent(FPA_SERVICE_EVENT @event, int error_code);
-
-        public virtual void OnTokenWillExpire(string token);
-
-        public virtual void OnProxyFallback(string request_id, FPA_ERROR_CODE err);
+        public virtual void OnProxyEvent(FpaProxyEvent @event, string request_id, FPA_ERROR_CODE err);
     }
 
     internal static partial class ObsoleteMethodWarning

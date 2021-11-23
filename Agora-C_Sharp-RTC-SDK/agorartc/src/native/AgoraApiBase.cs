@@ -13,11 +13,11 @@ namespace agora.fpa
     internal enum ApiTypeProxyService {
         KServiceStart,
         KServiceStop,
+        KServiceSetObserver,
         KServiceGetHttpProxyPort,
         KServiceGetTransparentProxyPort,
-        KServiceRenewToken,
         KServiceSetParameters,
-        KServiceUpdateChainIdInfos,
+        KServiceSetOrUpdateHttpProxyChainConfig,
         KServiceGetDiagnosisInfo,
         KServiceGetAgoraFpaProxyServiceSdkVersion,
         KServiceGetAgoraFpaProxyServiceSdkBuildInfo,

@@ -9,9 +9,10 @@ using System;
 
 namespace agora.fpa
 {
-    public enum FPA_SERVICE_EVENT { 
-        FPA_SERVICE_EVENT_FAILED = 1, 
-        FPA_SERVICE_EVENT_STOPPED = 2 
+    public enum FpaProxyEvent {
+        FPA_START,
+        FPA_FAILED_FALLBACK,
+        FPA_FAILED_NO_FALLBACK,
     };
 
     public enum FPA_ERROR_CODE {
@@ -89,48 +90,50 @@ namespace agora.fpa
 
     public struct FPAChainInfo {
 
-        public string key;
-        public int chain_id;
+        public string key { set; get; }
+        public int chain_id { set; get; }
 
         /**
         * Whether to fall back to the original link, if not, the link fails
         */
-        public bool enable_fallback;
+        public bool enable_fallback { set; get; }
     };
 
     public struct FpaDiagnosisInfo {
         /**
         * Install id
         */
-        public string install_id;
+        public string install_id { set; get; }
 
         /**
         * Instance id
         */
-        public string instance_id;
+        public string instance_id { set; get; }
     };
 
     public struct FpaProxyServiceConfig {
-        public string app_id;
-        public string token;
-        public int log_level;
-        public int log_file_size_kb;
-        public string log_file_path;
+        public string app_id { set; get; }
+        public string token { set; get; }
+        public int log_level { set; get; }
+        public int log_file_size_kb { set; get; }
+        public string log_file_path { set; get; }
+    };
+
+    public struct HttpProxyChainConfig {
+        /**
+        * FPAChainInfo array
+        */
+        public FPAChainInfo[] chain_array { set; get; }
 
         /**
-        * FPAChainInfo structure array address
+        * FPAChainInfo array size
         */
-        FPAChainInfo[] infos;
-
-        /**
-        * FPAChainInfo structure array count
-        */
-        public int info_count;
+        public int chain_array_size { set; get; }
 
         /**
         * When the http proxy cannot find the corresponding chain configuration, whether to fall back to
         * the original link, if not, the link fails
         */
-        public bool enable_fallback_when_invalid_chain;
+        public bool enable_fallback_when_invalid_chain { set; get; }
     };
 }
