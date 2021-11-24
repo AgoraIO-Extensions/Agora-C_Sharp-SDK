@@ -144,19 +144,17 @@ namespace agora.fpa
         public override int Stop()
         {
             var param = new { };
-            return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceStart, 
+            return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceStop, 
                 JsonMapper.ToJson(param), out _result);
         }
 
         public override int GetHttpProxyPort(ref ushort port)
         {
-            var param = new 
-            {
-                port
-            };
+            var param = new { };
             var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetHttpProxyPort, 
                 JsonMapper.ToJson(param), out _result);
-            port = (ushort) AgoraJson.GetData<ushort>(_result.Result, "port");
+            if (_result.Result == null) return -99;
+            port = Convert.ToUInt16(_result.Result);
             return ret;
         }
 
@@ -199,7 +197,7 @@ namespace agora.fpa
         public override int GetDiagnosisInfo(out FpaDiagnosisInfo info)
         {
             var param = new { };
-            var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetTransparentProxyPort, 
+            var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetDiagnosisInfo, 
                 JsonMapper.ToJson(param), out _result);
             info = _result.Result.Length == 0 ? new FpaDiagnosisInfo() : AgoraJson.JsonToStruct<FpaDiagnosisInfo>(_result.Result);
             return ret; 
