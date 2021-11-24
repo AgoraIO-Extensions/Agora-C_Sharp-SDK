@@ -29,6 +29,10 @@ namespace agora.rtc
 
         public abstract void UnRegisterVideoFrameObserver();
 
+        public abstract void RegisterVideoEncodedImageReceiver(IAgoraRtcVideoEncodedImageReceiver videoEncodedImageReceiver);
+
+        public abstract void UnRegisterVideoEncodedImageReceiver();
+
         public abstract IAgoraRtcAudioRecordingDeviceManager GetAgoraRtcAudioRecordingDeviceManager();
 
         public abstract IAgoraRtcAudioPlaybackDeviceManager GetAgoraRtcAudioPlaybackDeviceManager();

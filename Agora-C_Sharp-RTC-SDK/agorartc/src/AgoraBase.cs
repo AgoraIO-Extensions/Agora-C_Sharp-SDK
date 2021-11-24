@@ -9,7 +9,6 @@ using System;
 
 namespace agora.rtc
 {
-    using uid_t = UInt32;
     using int64_t = Int64;
     using view_t = UInt64;
     using uint64_t = UInt64;
@@ -1579,7 +1578,7 @@ namespace agora.rtc
         /**
         * ID of the user.
         */
-        public uid_t uid { set; get; }
+        public uint uid { set; get; }
         /**
         * The stream type of video frame.
         */
@@ -3382,7 +3381,7 @@ namespace agora.rtc
         {
         }
 
-        public TranscodingVideoStream(VIDEO_SOURCE_TYPE sourceType, uid_t remoteUserUid,
+        public TranscodingVideoStream(VIDEO_SOURCE_TYPE sourceType, uint remoteUserUid,
             string imageUrl, int x, int y, int width, int height, int zOrder, double alpha,
             bool mirror)
         {
@@ -3405,7 +3404,7 @@ namespace agora.rtc
         /**
         * Remote user uid if sourceType is VIDEO_SOURCE_REMOTE.
         */
-        public uid_t remoteUserUid { set; get; }
+        public uint remoteUserUid { set; get; }
         /**
         * RTC image if sourceType is VIDEO_SOURCE_RTC_IMAGE.
         */

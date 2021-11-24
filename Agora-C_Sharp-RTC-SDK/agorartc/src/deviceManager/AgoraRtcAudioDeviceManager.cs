@@ -102,9 +102,10 @@ namespace agora.rtc
         public override int GetPlaybackDeviceVolume()
         {
             var param = new {};
-            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+            AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
             ApiTypeAudioDeviceManager.kADMGetPlaybackDeviceVolume,
             JsonMapper.ToJson(param), out _result);
+            return Convert.ToInt32(_result.Result);
         }
 
         public override int SetPlaybackDeviceMute(bool mute)
@@ -121,9 +122,10 @@ namespace agora.rtc
         public override bool GetPlaybackDeviceMute()
         {
             var param = new {};
-            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+            AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
             ApiTypeAudioDeviceManager.kADMGetPlaybackDeviceMute,
-            JsonMapper.ToJson(param), out _result) == 1;
+            JsonMapper.ToJson(param), out _result);
+            return Convert.ToBoolean(_result.Result);
         }
 
         public override int StartPlaybackDeviceTest(string testAudioFilePath)
@@ -265,9 +267,10 @@ namespace agora.rtc
         public override int GetRecordingDeviceVolume()
         {
             var param = new {};
-            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+            AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
             ApiTypeAudioDeviceManager.kADMGetRecordingDeviceVolume,
             JsonMapper.ToJson(param), out _result);
+            return Convert.ToInt32(_result.Result);
         }
 
         public override int SetRecordingDeviceMute(bool mute)
@@ -284,9 +287,10 @@ namespace agora.rtc
         public override bool GetRecordingDeviceMute()
         {
             var param = new {};
-            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+            AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
             ApiTypeAudioDeviceManager.kADMGetRecordingDeviceMute,
-            JsonMapper.ToJson(param), out _result) == 1;
+            JsonMapper.ToJson(param), out _result);
+            return Convert.ToBoolean(_result.Result);
         }
 
         public override int StartRecordingDeviceTest(int indicationInterval)
