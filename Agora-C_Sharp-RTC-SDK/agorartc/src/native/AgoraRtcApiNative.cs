@@ -21,6 +21,7 @@ namespace agora.rtc
     using IrisRtcRendererCacheConfigHandle = IntPtr;
     using IrisVideoFrameBufferManagerPtr = IntPtr;
     using IrisVideoFrameBufferDelegateHandle = IntPtr;
+    using IrisRtcVideoEncodedImageReceiverHandle = IntPtr;
 
     internal static class AgoraRtcNative
     {
@@ -97,9 +98,15 @@ namespace agora.rtc
         internal static extern IrisRtcRawDataPluginManagerPtr GetIrisRtcRawDataPluginManager(
             IrisRtcRawDataPtr raw_data_ptr);
 
-        // [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        // internal static extern IrisVideoFrameBufferManagerPtr GetVideoFrameBufferManagerPtr(IrisRtcRawDataPtr raw_data_ptr);
+        // Iris Video Encoded Image Receiver
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisRtcVideoEncodedImageReceiverHandle RegisterVideoEncodedImageReceiver(IrisRtcRawDataPtr raw_data_ptr,
+                                  IntPtr receiverNative,
+                                  int order, string identifier);
 
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void UnRegisterVideoEncodedImageReceiver(IrisRtcRawDataPtr raw_data_ptr,
+                                IrisRtcVideoEncodedImageReceiverHandle handle, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void Attach(IrisRtcRawDataPtr raw_data_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);

@@ -188,6 +188,22 @@ namespace agora.rtc
         internal double height;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisEncodedVideoFrameInfo
+    {
+        internal int codecType;
+        internal int width;
+        internal int height;
+        internal int framesPerSecond;
+        internal int frameType;
+        internal int rotation;
+        internal int trackId;
+        internal Int64 renderTimeMs;
+        internal UInt64 internalSendTs;
+        internal uint uid;
+        internal int streamType;
+    }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

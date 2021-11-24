@@ -23,6 +23,8 @@ namespace agora.rtc
     using IrisRtcAudioFrameObserverHandleNative = IntPtr;
     using IrisRtcCVideoFrameObserverNativeMarshal = IntPtr;
     using IrisRtcVideoFrameObserverHandleNative = IntPtr;
+    using IrisRtcCVideoEncodedImageReceiverNativeMarshal = IntPtr;
+    using IrisRtcVideoEncodedImageReceiverHandleNative = IntPtr;
     using IrisVideoFrameBufferManagerPtr = IntPtr;
 
     public sealed class AgoraRtcEngine : IAgoraRtcEngine
@@ -55,6 +57,10 @@ namespace agora.rtc
         private IrisRtcCVideoFrameObserverNativeMarshal _irisRtcCVideoFrameObserverNative;
         private IrisRtcCVideoFrameObserver _irisRtcCVideoFrameObserver;
         private IrisRtcVideoFrameObserverHandleNative _irisRtcVideoFrameObserverHandleNative;
+
+        private IrisRtcCVideoEncodedImageReceiverNativeMarshal _irisRtcCVideoEncodedImageReceiverNative;
+        private IrisRtcCVideoEncodedImageReceiver _irisRtcCVideoEncodedImageReceiver;
+        private IrisRtcVideoEncodedImageReceiverHandleNative _irisRtcVideoEncodedImageReceiverHandleNative;
 
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
@@ -335,6 +341,54 @@ namespace agora.rtc
             AgoraRtcVideoFrameObserverNative.VideoFrameObserver = null;
             _irisRtcCVideoFrameObserver = new IrisRtcCVideoFrameObserver();
             Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
+        }
+
+        public override void RegisterVideoEncodedImageReceiver(IAgoraRtcVideoEncodedImageReceiver videoEncodedImageReceiver)
+        {
+            SetIrisVideoEncodedImageReceiver();
+            AgoraRtcVideoEncodedImageReceiver.VideoEncodedImageReceiver = videoEncodedImageReceiver;
+        }
+
+        public override void UnRegisterVideoEncodedImageReceiver()
+        {
+            UnSetIrisVideoEncodedImageReceiver();
+        }
+
+        private void SetIrisVideoEncodedImageReceiver()
+        {
+            if (_irisRtcVideoEncodedImageReceiverHandleNative != IntPtr.Zero) return;
+
+            _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver
+            {
+                OnEncodedVideoImageReceived = AgoraRtcVideoEncodedImageReceiver.OnEncodedVideoImageReceived
+            };
+
+            var irisRtcCVideoEncodedImageReceiverNativeLocal = new IrisRtcCVideoEncodedImageReceiverNative
+            {
+                OnEncodedVideoImageReceived =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoEncodedImageReceiver.OnEncodedVideoImageReceived),
+
+            };
+
+            _irisRtcCVideoEncodedImageReceiverNative =
+                Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCVideoEncodedImageReceiverNativeLocal));
+            Marshal.StructureToPtr(irisRtcCVideoEncodedImageReceiverNativeLocal, _irisRtcCVideoEncodedImageReceiverNative, true);
+
+            _irisRtcVideoEncodedImageReceiverHandleNative = AgoraRtcNative.RegisterVideoEncodedImageReceiver(
+                AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _irisRtcCVideoEncodedImageReceiverNative, 0,
+                identifier);
+        }
+
+        private void UnSetIrisVideoEncodedImageReceiver()
+        {
+            if (_irisRtcVideoEncodedImageReceiverHandleNative == IntPtr.Zero) return;
+
+            AgoraRtcNative.UnRegisterVideoEncodedImageReceiver(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine),
+                _irisRtcVideoEncodedImageReceiverHandleNative, identifier);
+            _irisRtcVideoEncodedImageReceiverHandleNative = IntPtr.Zero;
+            AgoraRtcVideoEncodedImageReceiver.VideoEncodedImageReceiver = null;
+            _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver();
+            Marshal.FreeHGlobal(_irisRtcCVideoEncodedImageReceiverNative);
         }
 
         public override IAgoraRtcAudioRecordingDeviceManager GetAgoraRtcAudioRecordingDeviceManager()
