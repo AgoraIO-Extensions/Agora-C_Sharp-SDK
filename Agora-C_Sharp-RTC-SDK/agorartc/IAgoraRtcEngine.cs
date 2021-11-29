@@ -537,7 +537,7 @@ namespace agora.rtc
 
         public abstract int AdjustCustomAudioPlayoutVolume(int sourceId, int volume);
 
-        public abstract int SetParameters(string @params);
+        public abstract int SetParameters(string parameters);
     };
 
     public abstract class IAgoraRtcEngineEventHandler
