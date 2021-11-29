@@ -95,49 +95,25 @@ public class BL_BuildPostProcess
 #if UNITY_2019_3_OR_NEWER
         target = proj.GetUnityMainTargetGuid();
 #endif
-        string defaultLocationInProj = "Agora-Plugin/Agora-Unity-RTC-SDK/Plugins/iOS";
-        const string AgoraRtcWrapperFrameworkName = "AgoraRtcWrapper.framework";
-        const string AgoraRtcKitFrameworkName = "AgoraRtcKit.framework";
-        const string AgorafdkaacFrameworkName = "Agorafdkaac.framework";
-        const string AgoraffmpegFrameworkName = "Agoraffmpeg.framework";
-        const string AgoraSoundTouchFrameworkName = "AgoraSoundTouch.framework";
-        const string AgoraAIDenoiseExtensionFrameworkName = "AgoraAIDenoiseExtension.framework";
-        const string AgoraCoreFrameworkName = "AgoraCore.framework";
-        const string AgoraDav1dExtensionFrameworkName = "AgoraDav1dExtension.framework";
-        const string AgoraJNDExtensionFrameworkName = "AgoraJNDExtension.framework";
+        string defaultLocationInProj = "Agora-Plugin/Agora-Unity-FPA-SDK/Plugins/iOS";
+        const string AgoraFpaWrapperFrameworkName = "AgoraFpaWrapper.framework";
+        const string AgoraFpaServiceFrameworkName = "AgoraFpaService.framework";
+        const string AgoraFpaFrameworkName = "AgoraFpa.framework";
 
 
-        string AgoraRtcWrapperFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcWrapperFrameworkName);
-        string AgoraRtcKitFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcKitFrameworkName);
-        string AgorafdkaacFrameworkPath = Path.Combine(defaultLocationInProj, AgorafdkaacFrameworkName);
-        string AgoraffmpegFrameworkPath = Path.Combine(defaultLocationInProj, AgoraffmpegFrameworkName);
-        string AgoraSoundTouchFrameworkPath = Path.Combine(defaultLocationInProj, AgoraSoundTouchFrameworkName);
-        string AgoraAIDenoiseExtensionFrameworkPath = Path.Combine(defaultLocationInProj, AgoraAIDenoiseExtensionFrameworkName);
-        string AgoraCoreFrameworkPath = Path.Combine(defaultLocationInProj, AgoraCoreFrameworkName);
-        string AgoraDav1dExtensionFrameworkPath = Path.Combine(defaultLocationInProj, AgoraDav1dExtensionFrameworkName);
-        string AgoraJNDExtensionFrameworkPath = Path.Combine(defaultLocationInProj, AgoraJNDExtensionFrameworkName);
+        string AgoraFpaWrapperFrameworkPath = Path.Combine(defaultLocationInProj, AgoraFpaWrapperFrameworkName);
+        string AgoraFpaServiceFrameworkPath = Path.Combine(defaultLocationInProj, AgoraFpaServiceFrameworkName);
+        string AgoraFpaFrameworkPath = Path.Combine(defaultLocationInProj, AgoraFpaFrameworkName);
+        
 
 
-        string fileGuid = proj.AddFile(AgoraRtcWrapperFrameworkPath, "Frameworks/" + AgoraRtcWrapperFrameworkPath, PBXSourceTree.Sdk);
+        string fileGuid = proj.AddFile(AgoraFpaWrapperFrameworkPath, "Frameworks/" + AgoraFpaWrapperFrameworkPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraRtcKitFrameworkPath, "Frameworks/" + AgoraRtcKitFrameworkPath, PBXSourceTree.Sdk);
+        fileGuid = proj.AddFile(AgoraFpaServiceFrameworkPath, "Frameworks/" + AgoraFpaServiceFrameworkPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgorafdkaacFrameworkPath, "Frameworks/" + AgorafdkaacFrameworkPath, PBXSourceTree.Sdk);
+        fileGuid = proj.AddFile(AgoraFpaFrameworkPath, "Frameworks/" + AgoraFpaFrameworkPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraSoundTouchFrameworkPath, "Frameworks/" + AgoraSoundTouchFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraAIDenoiseExtensionFrameworkPath, "Frameworks/" + AgoraAIDenoiseExtensionFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraCoreFrameworkPath, "Frameworks/" + AgoraCoreFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-
-        // Start Tag for video SDK only (If the framework is video only, please place it inside the scope)
-        fileGuid = proj.AddFile(AgoraffmpegFrameworkPath, "Frameworks/" + AgoraffmpegFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraDav1dExtensionFrameworkPath, "Frameworks/" + AgoraDav1dExtensionFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraJNDExtensionFrameworkPath, "Frameworks/" + AgoraJNDExtensionFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+        
         // End Tag
 
         proj.SetBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/Frameworks");
