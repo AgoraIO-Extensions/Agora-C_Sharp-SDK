@@ -3321,11 +3321,11 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int SetParameters(string @params)
+        public override int SetParameters(string parameters)
         {
             var param = new
             {
-                @params
+                parameters
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetParameters,
                 JsonMapper.ToJson(param), out _result);
