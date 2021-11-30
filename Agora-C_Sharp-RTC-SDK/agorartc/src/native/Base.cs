@@ -318,7 +318,7 @@ namespace agora.rtc
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisRtcVideoFrame
+    internal struct IrisVideoFrame
     {
         internal VIDEO_FRAME_TYPE type;
         internal int width;
