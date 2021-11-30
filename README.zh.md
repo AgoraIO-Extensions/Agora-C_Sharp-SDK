@@ -52,14 +52,10 @@
    git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
    ```
 
-   ```bash
-   git checkout dev/3.5.0.3
-   ```
-
 2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln`解决方案，选择x64平台。
 注意：此时还没有下载SDK，直接编译会有编译错误。
 
-3. 通过以下任意一种方式下载SDK：
+3. 通过以下任意一种方式下载SDK(推荐方式b)：
 
     a. 下载[Agora Video SDK for Windows](https://download.agora.io/sdk/release/iris_3.5.0.3_RTC_Windows_20211118_0343.zip)，解压后把`RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64`以及`x64/Release` 目录下所有的 `.dll` 文件复制到`Agora-C_Sharp-SDK/CSharp-API_Example/binx64/Debug/netcoreapp3.1` 文件夹中。
   

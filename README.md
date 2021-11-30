@@ -53,15 +53,11 @@ First, create a developer account at [Agora.io](https://dashboard.agora.io/signi
 	```bash
 	git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
 	```
-
-	```bash
-	git checkout dev/3.5.0.3
-	```
 	
 2. Open `Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln` via Visual Studio. select x64 platform. 
 Note that you will see compiler errors because you download the SDK package yet.
 
-3. You may download the SDK package by one of the following ways:
+3. You may download the SDK package by one of the following ways(recommend b):
 
     a. Download [Agora Video SDK for Windows](https://download.agora.io/sdk/release/iris_3.5.0.3_RTC_Windows_20211118_0343.zip). Unzip the downloaded SDK package and copy all the `.dll` files from `RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64` and `x64/Release` to `Agora-C_Sharp-SDK/CSharp-API_Example/binx64/Debug/netcoreapp3.1` folder.
     
