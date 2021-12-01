@@ -247,7 +247,11 @@ namespace agora.rtc
         kEngineSetAudioSessionOperationRestriction,
         kEngineAdjustCustomAudioPublishVolume,
         kEngineAdjustCustomAudioPlayoutVolume,
-        kEngineSetParameters
+        kEngineSetParameters,
+        kEngineEnableDirectExternalAudioSource,
+        kEngineGetAudioDeviceInfo,
+        kMediaPushDirectSendAudioFrame,
+        kMediaEnableCustomAudioLocalPlayback
     }
 
     internal enum ApiTypeAudioDeviceManager

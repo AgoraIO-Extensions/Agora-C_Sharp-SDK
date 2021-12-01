@@ -517,7 +517,7 @@ namespace agora.rtc
 
         public abstract int PullAudioFrame(AudioFrame frame);
 
-        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, bool encodedFrame = false);
+        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, bool encodedFrame, EncodedVideoTrackOptions encodedVideoOption);
        
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
 
@@ -538,6 +538,14 @@ namespace agora.rtc
         public abstract int AdjustCustomAudioPlayoutVolume(int sourceId, int volume);
 
         public abstract int SetParameters(string parameters);
+
+        public abstract int EnableDirectExternalAudioSource(bool enabled);
+
+        public abstract int PushDirectSendAudioFrame(AudioFrame frame);
+
+        //public abstract DeviceInfo GetAudioDeviceInfo();
+
+        public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
     };
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -663,6 +671,8 @@ namespace agora.rtc
         public virtual void OnTranscodingUpdated() {}
 
         public virtual void OnAudioRoutingChanged(int routing) {}
+
+        public virtual void OnAudioSessionRestrictionResume() {}
 
         public virtual void OnChannelMediaRelayStateChanged(int state, int code) {}
 
