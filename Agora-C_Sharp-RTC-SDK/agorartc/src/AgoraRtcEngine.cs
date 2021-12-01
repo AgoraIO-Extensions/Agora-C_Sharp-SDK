@@ -3177,13 +3177,14 @@ namespace agora.rtc
         }
 
         
-        public override int SetExternalVideoSource(bool enabled, bool useTexture, bool encodedFrame = false)
+        public override int SetExternalVideoSource(bool enabled, bool useTexture, bool encodedFrame, EncodedVideoTrackOptions encodedVideoOption)
         {
             var param = new
             {
                 enabled,
                 useTexture,
-                encodedFrame
+                encodedFrame,
+                encodedVideoOption
             };
             return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kMediaSetExternalVideoSource,
                 JsonMapper.ToJson(param), null, out _result);
@@ -3328,6 +3329,56 @@ namespace agora.rtc
                 parameters
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetParameters,
+                JsonMapper.ToJson(param), out _result);
+        }
+
+        public override int EnableDirectExternalAudioSource(bool enabled)
+        {
+            var param = new
+            {
+                enabled
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineEnableDirectExternalAudioSource,
+                JsonMapper.ToJson(param), out _result);
+        }
+
+        public override int PushDirectSendAudioFrame(AudioFrame frame)
+        {
+            var param = new
+            {
+                frame = new
+                {
+                    frame.type,
+                    frame.samplesPerChannel,
+                    frame.bytesPerSample,
+                    frame.channels,
+                    frame.samplesPerSec,
+                    frame.renderTimeMs,
+                    frame.avsync_type
+                }
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kMediaPushDirectSendAudioFrame,
+                JsonMapper.ToJson(param), frame.buffer, out _result);
+        }
+
+        // public override DeviceInfo GetAudioDeviceInfo()
+        // {
+        //     var param = new {};
+        //     return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcDeviceManager,
+        //     ApiTypeEngine.kEngineGetAudioDeviceInfo,
+        //     JsonMapper.ToJson(param), out _result) != 0
+        //     ? new DeviceInfo()
+        //     : AgoraJson.JsonToStruct<DeviceInfo>(_result.Result);
+        // }
+
+        public override int EnableCustomAudioLocalPlayback(int sourceId, bool enabled)
+        {
+            var param = new
+            {
+                sourceId,
+                enabled
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kMediaEnableCustomAudioLocalPlayback,
                 JsonMapper.ToJson(param), out _result);
         }
 
@@ -4589,6 +4640,19 @@ namespace agora.rtc
                             EngineEventHandler.OnAudioRoutingChanged(
                                 (int) AgoraJson.GetData<int>(data, "routing")
                             );
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onAudioSessionRestrictionResume":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandler != null)
+                        {
+                            EngineEventHandler.OnAudioSessionRestrictionResume();
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

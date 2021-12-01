@@ -2407,13 +2407,15 @@ namespace agora.rtc
             width = (int) FRAME_WIDTH.FRAME_WIDTH_640;
             height = (int) FRAME_HEIGHT.FRAME_HEIGHT_360;
             fps = (int) FRAME_RATE.FRAME_RATE_FPS_15;
+            pixelFormat = 0;
         }
 
-        public VideoFormat(int w, int h, int f)
+        public VideoFormat(int w, int h, int f, uint pixelFormat = 0)
         {
-            width = w;
-            height = h;
-            fps = f;
+            this.width = w;
+            this.height = h;
+            this.fps = f;
+            this.pixelFormat = pixelFormat;
         }
         /**
         * The width (px) of the video.
@@ -2427,6 +2429,10 @@ namespace agora.rtc
         * The video frame rate (fps).
         */
         public int fps { set; get; }
+        /*
+        * Pixel format (for iOS only). 
+        */
+        public uint pixelFormat { set; get; }
     };
 
     /**
@@ -5667,6 +5673,12 @@ namespace agora.rtc
         */
         public bool publishCustomAudioTrackEnableAec { set; get; }
         /**
+        * Determines whether to publish direct custom audio track.
+        * - true: publish.
+        * - false: (Default) Do not publish.
+        */
+        public bool publishDirectCustomAudioTrack { set; get; }
+        /**
         * Determines whether to publish the video of the custom video track.
         * - true: Publish the video of the custom video track.
         * - false: (Default) Do not publish the video of the custom video track.
@@ -5742,6 +5754,46 @@ namespace agora.rtc
         * To switch off the delay, set the value to zero.
         */
         public int audioDelayMs { set; get; }
+        /**
+        * The token
+        */
+        public string token { set; get; }
+        /**
+        * The sender option for video encoded track.
+        */
+        public EncodedVideoTrackOptions encodedVideoTrackOption { set; get; }
+    };
+
+    /**
+    * The encoded video track options.
+    */
+    public class EncodedVideoTrackOptions {
+        public EncodedVideoTrackOptions()
+        {
+            ccMode = TCcMode.CC_ENABLED;
+            codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_GENERIC_H264;
+            targetBitrate = 6500;
+        }
+
+        public EncodedVideoTrackOptions(TCcMode ccMode, VIDEO_CODEC_TYPE codecType, int targetBitrate)
+        {
+            this.ccMode = ccMode;
+            this.codecType = codecType;
+            this.targetBitrate = targetBitrate;
+        }
+        /**
+        * Whether to enable CC mode. See #TCcMode.
+        */
+        public TCcMode ccMode { set; get; }
+        /**
+        * The codec type used for the encoded images:
+        * \ref agora::rtc::VIDEO_CODEC_TYPE "VIDEO_CODEC_TYPE".
+        */
+        public VIDEO_CODEC_TYPE codecType { set; get; }
+        /**
+        * Target bitrate (Kbps) for sending encoded video frame.
+        */
+        public int targetBitrate { set; get; }
     };
 
     /**
@@ -5835,5 +5887,19 @@ namespace agora.rtc
         * 5. Critical priority.
         */
         CRITICAL = 5
+    };
+
+    /**
+    * The CC (Congestion Control) mode options.
+    */
+    public enum TCcMode {
+        /**
+        * Enable CC mode.
+        */
+        CC_ENABLED,
+        /**
+        * Disable CC mode.
+        */
+        CC_DISABLED
     };
 }
