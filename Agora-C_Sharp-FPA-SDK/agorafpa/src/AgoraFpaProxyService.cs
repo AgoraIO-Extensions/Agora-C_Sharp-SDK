@@ -158,15 +158,11 @@ namespace agora.fpa
             return ret;
         }
 
-        public override int GetTransparentProxyPort(ref ushort proxy_port, int chain_id, string dst_ip_or_domain, ushort dst_port, bool enable_fallback)
+        public override int GetTransparentProxyPort(ref ushort proxy_port, FpaChainInfo info)
         {
             var param = new 
             {
-                proxy_port,
-                chain_id,
-                dst_ip_or_domain,
-                dst_port,
-                enable_fallback
+                info
             };
             var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetTransparentProxyPort, 
                 JsonMapper.ToJson(param), out _result);
@@ -184,7 +180,7 @@ namespace agora.fpa
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int SetOrUpdateHttpProxyChainConfig(HttpProxyChainConfig config)
+        public override int SetOrUpdateHttpProxyChainConfig(FpaHttpProxyChainConfig config)
         {
             var param = new 
             {
@@ -194,12 +190,12 @@ namespace agora.fpa
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int GetDiagnosisInfo(out FpaDiagnosisInfo info)
+        public override int GetDiagnosisInfo(out FpaProxyServiceDiagnosisInfo info)
         {
             var param = new { };
             var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetDiagnosisInfo, 
                 JsonMapper.ToJson(param), out _result);
-            info = _result.Result.Length == 0 ? new FpaDiagnosisInfo() : AgoraJson.JsonToStruct<FpaDiagnosisInfo>(_result.Result);
+            info = _result.Result.Length == 0 ? new FpaProxyServiceDiagnosisInfo() : AgoraJson.JsonToStruct<FpaProxyServiceDiagnosisInfo>(_result.Result);
             return ret; 
         }
 
@@ -249,8 +245,8 @@ namespace agora.fpa
                         if (ServiceEventHandler != null)
                         {
                             ServiceEventHandler.OnProxyEvent(
-                                (FpaProxyEvent) AgoraJson.GetData<int>(data, "event"),
-                                (string) AgoraJson.GetData<string>(data, "request_id"),
+                                (FPA_PROXY_EVENT) AgoraJson.GetData<int>(data, "event"),
+                                AgoraJson.JsonToStruct<FpaProxyConnectionInfo>(data, "info"),
                                 (FPA_ERROR_CODE) AgoraJson.GetData<int>(data, "err")
                             );
                         }

@@ -25,13 +25,13 @@ namespace agora.fpa
 
         public abstract int GetHttpProxyPort(ref ushort port);
 
-        public abstract int GetTransparentProxyPort(ref ushort proxy_port, int chain_id, string dst_ip_or_domain, ushort dst_port, bool enable_fallback);
+        public abstract int GetTransparentProxyPort(ref ushort proxy_port, FpaChainInfo info);
 
         public abstract int SetParameters(string parameters);
 
-        public abstract int SetOrUpdateHttpProxyChainConfig(HttpProxyChainConfig config);
+        public abstract int SetOrUpdateHttpProxyChainConfig(FpaHttpProxyChainConfig config);
 
-        public abstract int GetDiagnosisInfo(out FpaDiagnosisInfo info);
+        public abstract int GetDiagnosisInfo(out FpaProxyServiceDiagnosisInfo info);
 
         public abstract string GetAgoraFpaProxyServiceSdkVersion();
 
@@ -40,7 +40,7 @@ namespace agora.fpa
 
     public abstract class IAgoraFpaProxyServiceEventHandler
     {
-        public virtual void OnProxyEvent(FpaProxyEvent @event, string request_id, FPA_ERROR_CODE err) { }
+        public virtual void OnProxyEvent(FPA_PROXY_EVENT @event, FpaProxyConnectionInfo connection_info, FPA_ERROR_CODE err) { }
     }
 
     internal static partial class ObsoleteMethodWarning

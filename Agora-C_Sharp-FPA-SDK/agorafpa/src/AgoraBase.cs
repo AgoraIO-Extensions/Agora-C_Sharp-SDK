@@ -9,10 +9,10 @@ using System;
 
 namespace agora.fpa
 {
-    public enum FpaProxyEvent {
-        FPA_START,
-        FPA_FAILED_FALLBACK,
-        FPA_FAILED_NO_FALLBACK,
+    public enum FPA_PROXY_EVENT {
+        PROXY_CONNECTED,
+        PROXY_CONNECTION_FAILED_AND_TRY_FALLBACK,
+        PROXY_CONNECTION_FAILED_AND_NO_FALLBACK
     };
 
     public enum FPA_ERROR_CODE {
@@ -88,52 +88,61 @@ namespace agora.fpa
         FPA_ERR_NO_CHAIN = -10019,
     };
 
-    public struct FPAChainInfo {
+    public struct FpaChainInfo {
 
-        public string key { set; get; }
-        public int chain_id { set; get; }
+        public string address;
+        public int port;
+        public int chain_id;
 
         /**
         * Whether to fall back to the original link, if not, the link fails
         */
-        public bool enable_fallback { set; get; }
+        public bool enable_fallback;
     };
 
-    public struct FpaDiagnosisInfo {
+    public struct FpaProxyServiceDiagnosisInfo {
         /**
         * Install id
         */
-        public string install_id { set; get; }
+        public string install_id;
 
         /**
         * Instance id
         */
-        public string instance_id { set; get; }
+        public string instance_id;
     };
 
     public struct FpaProxyServiceConfig {
-        public string app_id { set; get; }
-        public string token { set; get; }
-        public int log_level { set; get; }
-        public int log_file_size_kb { set; get; }
-        public string log_file_path { set; get; }
+        public string app_id;
+        public string token;
+        public int log_level;
+        public int log_file_size_kb;
+        public string log_file_path;
     };
 
-    public struct HttpProxyChainConfig {
+    public struct FpaHttpProxyChainConfig {
         /**
         * FPAChainInfo array
         */
-        public FPAChainInfo[] chain_array { set; get; }
+        public FpaChainInfo[] chain_array;
 
         /**
         * FPAChainInfo array size
         */
-        public int chain_array_size { set; get; }
+        public int chain_array_size;
 
         /**
         * When the http proxy cannot find the corresponding chain configuration, whether to fall back to
         * the original link, if not, the link fails
         */
-        public bool enable_fallback_when_invalid_chain { set; get; }
+        public bool fallback_when_no_chain_available;
+    };
+
+    public struct FpaProxyConnectionInfo {
+        public string dst_ip_or_domain;
+        public string connection_id;
+        public string proxy_type;  // http/https/transport
+        public int dst_port;
+        public int local_port;  // local socket bind port
     };
 }
