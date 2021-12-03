@@ -18,8 +18,8 @@ Different from the traditional CDN live broadcast, which only allows one-way com
 The Agora RTC SDK is applicable to scenarios that encourage active engagement, such as game-playing, online classes for students in small groups, and Q&amp;amp;A sessions during E-commerce live streaming. You can also use this SDK for one-to-one video calls that require high image quality.
 
 **For more detail information, please visit our [website](https://docs.agora.io/en/Interactive Broadcast/product_live?platform=All Platforms) and [GitHub repository](https://github.com/AgoraIO-Community/Agora-Python-SDK); and for some quick-start demos, please visit [Agora-Python-QuickStart](https://github.com/AgoraIO-Community/Agora-Python-QuickStart).**</Description>
-    <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/dev/3.5.0.3</PackageProjectUrl>
-    <PackageId>agora_rtc_sdk_test</PackageId>
+    <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/release/3.5.2</PackageProjectUrl>
+    <PackageId>agora_rtc_sdk</PackageId>
   </PropertyGroup>
 
   <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
