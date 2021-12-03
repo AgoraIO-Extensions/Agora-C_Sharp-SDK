@@ -163,7 +163,6 @@ namespace CSharp_API_Example
                     camera_ = new CameraHelper(cameraIndex, formats[0]);
                     camera_.Start();
                     render_handler_ = new ElapsedEventHandler(VideoFrameProcess);
-                    InitTimer();
                 }
             }
         }
