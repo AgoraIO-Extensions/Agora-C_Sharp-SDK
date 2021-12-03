@@ -8,7 +8,7 @@
 	<requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
-    <projectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/dev/3.5.0.3</projectUrl>
+    <projectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/release/3.5.2</projectUrl>
     <iconUrl>http://icon_url_here_or_delete_this_line/</iconUrl>
     <description>Agora Live Interactive Video Streaming enables one-to-many and many-to-many audio or video live streaming with the Agora RTC SDK.
 

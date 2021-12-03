@@ -90,7 +90,7 @@ EXIT /B 0
 :publish_to_nuget
 setlocal
 SET SOURCE=https://api.nuget.org/v3/index.json
-SET NUPKG_FILE_NAME=agora_rtc_sdk_test.%~1%.nupkg
+SET NUPKG_FILE_NAME=agora_rtc_sdk.%~1%.nupkg
 
 call :build %~1 Release publish
 
