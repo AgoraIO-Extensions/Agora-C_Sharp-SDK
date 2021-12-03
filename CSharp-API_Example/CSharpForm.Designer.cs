@@ -45,6 +45,8 @@ namespace CSharp_API_Example
             this.processRawDataView = new CSharp_API_Example.ProcessRawDataView();
             this.virtualBackgroundTab = new System.Windows.Forms.TabPage();
             this.virtualBackgroundView = new CSharp_API_Example.VirtualBackgroundView();
+            this.customCaptureVideoTab = new System.Windows.Forms.TabPage();
+            this.customCaptureVideoView = new CSharp_API_Example.CustomCaptureVideoView();
             this.leave_channel_btn = new System.Windows.Forms.Button();
             this.join_channel_btn = new System.Windows.Forms.Button();
             this.appId_label = new System.Windows.Forms.Label();
@@ -70,6 +72,7 @@ namespace CSharp_API_Example
             this.videoGroupTab.SuspendLayout();
             this.processRawDataTab.SuspendLayout();
             this.virtualBackgroundTab.SuspendLayout();
+            this.customCaptureVideoTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_left_part)).BeginInit();
             this.splitContainer_left_part.Panel1.SuspendLayout();
             this.splitContainer_left_part.Panel2.SuspendLayout();
@@ -110,6 +113,7 @@ namespace CSharp_API_Example
             this.tabCtrl.Controls.Add(this.videoGroupTab);
             this.tabCtrl.Controls.Add(this.processRawDataTab);
             this.tabCtrl.Controls.Add(this.virtualBackgroundTab);
+            this.tabCtrl.Controls.Add(this.customCaptureVideoTab);
             this.tabCtrl.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabCtrl.Location = new System.Drawing.Point(0, 0);
@@ -263,6 +267,25 @@ namespace CSharp_API_Example
             this.virtualBackgroundView.Name = "virtualBackgroundView";
             this.virtualBackgroundView.Size = new System.Drawing.Size(1001, 753);
             this.virtualBackgroundView.TabIndex = 0;
+            // 
+            // customCaptureVideoTab
+            // 
+            this.customCaptureVideoTab.Controls.Add(this.customCaptureVideoView);
+            this.customCaptureVideoTab.Location = new System.Drawing.Point(4, 29);
+            this.customCaptureVideoTab.Name = "customCaptureVideoTab";
+            this.customCaptureVideoTab.Padding = new System.Windows.Forms.Padding(3);
+            this.customCaptureVideoTab.Size = new System.Drawing.Size(1007, 759);
+            this.customCaptureVideoTab.TabIndex = 7;
+            this.customCaptureVideoTab.Text = "自采集";
+            this.customCaptureVideoTab.UseVisualStyleBackColor = true;
+            // 
+            // customCaptureVideoView
+            // 
+            this.customCaptureVideoView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.customCaptureVideoView.Location = new System.Drawing.Point(3, 3);
+            this.customCaptureVideoView.Name = "customCaptureVideoView";
+            this.customCaptureVideoView.Size = new System.Drawing.Size(1001, 753);
+            this.customCaptureVideoView.TabIndex = 0;
             // 
             // leave_channel_btn
             // 
@@ -531,6 +554,7 @@ namespace CSharp_API_Example
             this.videoGroupTab.ResumeLayout(false);
             this.processRawDataTab.ResumeLayout(false);
             this.virtualBackgroundTab.ResumeLayout(false);
+            this.customCaptureVideoTab.ResumeLayout(false);
             this.splitContainer_left_part.Panel1.ResumeLayout(false);
             this.splitContainer_left_part.Panel1.PerformLayout();
             this.splitContainer_left_part.Panel2.ResumeLayout(false);
@@ -589,6 +613,8 @@ namespace CSharp_API_Example
         private ProcessRawDataView processRawDataView;
         private System.Windows.Forms.TabPage virtualBackgroundTab;
         private VirtualBackgroundView virtualBackgroundView;
+        private System.Windows.Forms.TabPage customCaptureVideoTab;
+        private CustomCaptureVideoView customCaptureVideoView;
     }
 }
 
