@@ -144,6 +144,10 @@ namespace CSharp_API_Example
             {
                 usr_engine_ = new VirtualBackground(virtualBackgroundView.localVideoView.Handle, virtualBackgroundView.remoteVideoView.Handle);
             }
+            else if (tabCtrl.SelectedTab == customCaptureVideoTab) // 自采集自渲染
+            {
+                usr_engine_ = new CustomCaptureVideo(customCaptureVideoView.localVideoView.Handle, customCaptureVideoView.remoteVideoView.Handle, customCaptureVideoView.localVideoView);
+            }
             else
             {
                 DumpStatus("todo", 0);

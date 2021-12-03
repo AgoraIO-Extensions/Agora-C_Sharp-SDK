@@ -33,6 +33,7 @@ The project uses a single app to combine a variety of functionalities.
 | [ScreenShare][ScreenShareLink]                 | screen share                     | CreateAgoraRtcEngine, Initialize, StartScreenCaptureByDisplayId, EnableVideo,JoinChannel, StopScreenCapture, LeaveChannel |
 | [VideoGroup][VideoGroupLink]                   | users join a same channel        | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel |
 | [VirtualBackground][VirtualBackgroundLink]     | enable virtual background        | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableVirtualBackground, JoinChannel, LeaveChannel |
+| [CustomCaptureVideo][CustomCaptureVideoLink]   | custom capture video             | CreateAgoraRtcEngine, Initialize, EnableVideo, SetExternalVideoSource, JoinChannel, PushVideoFrame, LeaveChannel |
 | ...                                            | ...                              | ...                                                                      |
 
 ## How to run the sample project
@@ -99,3 +100,5 @@ The sample projects are under the MIT license.
 [ScreenShareLink]:./CSharp-API_Example/src/Advanced/ScreenShare/ScreenShare.cs
 [VideoGroupLink]:./CSharp-API_Example/src/Advanced/VideoGroup/VideoGroup.cs
 [VirtualBackgroundLink]:./CSharp-API_Example/src/Advanced/VirtualBackground/VirtualBackground.cs
+[CustomCaptureVideoLink]:./CSharp-API_Example/src/Advanced/CustomCaptureVideo/CustomCaptureVideo.cs
+
