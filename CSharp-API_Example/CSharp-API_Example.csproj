@@ -8,7 +8,7 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon />
         <StartupObject />
-        <Version>2.1.1</Version>
+        <Version>3.5.0.246</Version>
         <Authors>mberky</Authors>
         <Company>Agora.io</Company>
         <Description>winform version</Description>
