@@ -166,7 +166,8 @@ namespace agora.fpa
             };
             var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceGetTransparentProxyPort, 
                 JsonMapper.ToJson(param), out _result);
-            proxy_port = (ushort) AgoraJson.GetData<ushort>(_result.Result, "proxy_port");
+            if (_result.Result == null) return -99;
+            proxy_port = Convert.ToUInt16(_result.Result);
             return ret;
         }
 
