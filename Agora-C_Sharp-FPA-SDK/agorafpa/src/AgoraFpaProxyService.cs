@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEngine;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
@@ -247,7 +248,7 @@ namespace agora.fpa
                         {
                             ServiceEventHandler.OnProxyEvent(
                                 (FPA_PROXY_EVENT) AgoraJson.GetData<int>(data, "event"),
-                                AgoraJson.JsonToStruct<FpaProxyConnectionInfo>(data, "info"),
+                                AgoraJson.JsonToStruct<FpaProxyConnectionInfo>(data, "connection_info"),
                                 (FPA_ERROR_CODE) AgoraJson.GetData<int>(data, "err")
                             );
                         }
