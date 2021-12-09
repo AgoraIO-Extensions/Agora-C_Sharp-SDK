@@ -42,6 +42,7 @@ namespace CSharp_API_Example
             // 
             // firstChannelVideoView
             // 
+            this.firstChannelVideoView.BackColor = System.Drawing.Color.Transparent;
             this.firstChannelVideoView.Location = new System.Drawing.Point(130, 55);
             this.firstChannelVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.firstChannelVideoView.Name = "firstChannelVideoView";
@@ -51,6 +52,7 @@ namespace CSharp_API_Example
             // 
             // secondChannelVideoView
             // 
+            this.secondChannelVideoView.BackColor = System.Drawing.Color.Transparent;
             this.secondChannelVideoView.Location = new System.Drawing.Point(450, 55);
             this.secondChannelVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.secondChannelVideoView.Name = "secondChannelVideoView";
@@ -97,7 +99,7 @@ namespace CSharp_API_Example
             this.pushToLabel.TabIndex = 7;
             this.pushToLabel.Text = "加入到不同频道（同一时刻只能发布一路流）";
             // 
-            // MultiChannelView
+            // JoinMultipleChannelView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -107,7 +109,7 @@ namespace CSharp_API_Example
             this.Controls.Add(this.channelTwoLabel);
             this.Controls.Add(this.channelOneLabel);
             this.Controls.Add(this.localVideoView);
-            this.Name = "MultiChannelView";
+            this.Name = "JoinMultipleChannelView";
             this.Size = new System.Drawing.Size(760, 600);
             ((System.ComponentModel.ISupportInitialize)(this.firstChannelVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondChannelVideoView)).EndInit();

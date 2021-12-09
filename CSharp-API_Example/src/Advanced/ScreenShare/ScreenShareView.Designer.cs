@@ -38,10 +38,11 @@ namespace CSharp_API_Example
             // 
             // localVideoView
             // 
+            this.localVideoView.BackColor = System.Drawing.Color.Transparent;
             this.localVideoView.Location = new System.Drawing.Point(3, 4);
             this.localVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.localVideoView.Name = "localVideoView";
-            this.localVideoView.Size = new System.Drawing.Size(122, 112);
+            this.localVideoView.Size = new System.Drawing.Size(180, 180);
             this.localVideoView.TabIndex = 2;
             this.localVideoView.TabStop = false;
             // 

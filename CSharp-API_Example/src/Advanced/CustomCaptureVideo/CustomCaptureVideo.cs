@@ -252,10 +252,10 @@ namespace CSharp_API_Example
     // override if need
     internal class CustomCaptureVideoEventHandler : IAgoraRtcEngineEventHandler
     {
-        private CustomCaptureVideo processRawData_inst_ = null;
+        private CustomCaptureVideo customCapture_inst_ = null;
 
-        public CustomCaptureVideoEventHandler(CustomCaptureVideo _processRawData) {
-            processRawData_inst_ = _processRawData;
+        public CustomCaptureVideoEventHandler(CustomCaptureVideo _customCapture) {
+            customCapture_inst_ = _customCapture;
         }
 
         public override void OnWarning(int warn, string msg)
@@ -286,9 +286,9 @@ namespace CSharp_API_Example
         public override void OnUserJoined(uint uid, int elapsed)
         {
             Console.WriteLine("----->OnUserJoined uid={0}", uid);
-            if (processRawData_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)processRawData_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, processRawData_inst_.GetChannelId(), uid);
-            int ret = processRawData_inst_.GetEngine().SetupRemoteVideo(vc);
+            if (customCapture_inst_.GetRemoteWinId() == IntPtr.Zero) return;
+            var vc = new VideoCanvas((ulong)customCapture_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, customCapture_inst_.GetChannelId(), uid);
+            int ret = customCapture_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
