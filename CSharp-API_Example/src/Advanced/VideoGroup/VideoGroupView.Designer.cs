@@ -42,6 +42,7 @@ namespace CSharp_API_Example
             // 
             // fistUserVideoView
             // 
+            this.fistUserVideoView.BackColor = System.Drawing.Color.Transparent;
             this.fistUserVideoView.Location = new System.Drawing.Point(130, 56);
             this.fistUserVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.fistUserVideoView.Name = "fistUserVideoView";
@@ -51,6 +52,7 @@ namespace CSharp_API_Example
             // 
             // secondUserVideoView
             // 
+            this.secondUserVideoView.BackColor = System.Drawing.Color.Transparent;
             this.secondUserVideoView.Location = new System.Drawing.Point(450, 56);
             this.secondUserVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.secondUserVideoView.Name = "secondUserVideoView";

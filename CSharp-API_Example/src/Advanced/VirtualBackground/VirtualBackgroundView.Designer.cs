@@ -38,10 +38,11 @@ namespace CSharp_API_Example
             // 
             // remoteVideoView
             // 
+            this.remoteVideoView.BackColor = System.Drawing.Color.Transparent;
             this.remoteVideoView.Location = new System.Drawing.Point(3, 4);
             this.remoteVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.remoteVideoView.Name = "remoteVideoView";
-            this.remoteVideoView.Size = new System.Drawing.Size(122, 112);
+            this.remoteVideoView.Size = new System.Drawing.Size(180, 180);
             this.remoteVideoView.TabIndex = 2;
             this.remoteVideoView.TabStop = false;
             // 

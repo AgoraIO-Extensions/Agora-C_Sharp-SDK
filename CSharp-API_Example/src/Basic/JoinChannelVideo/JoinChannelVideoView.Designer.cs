@@ -38,10 +38,11 @@ namespace CSharp_API_Example
             // 
             // localVideoView
             // 
+            this.localVideoView.BackColor = System.Drawing.Color.Transparent;
             this.localVideoView.Location = new System.Drawing.Point(3, 4);
             this.localVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.localVideoView.Name = "localVideoView";
-            this.localVideoView.Size = new System.Drawing.Size(122, 112);
+            this.localVideoView.Size = new System.Drawing.Size(180, 180);
             this.localVideoView.TabIndex = 2;
             this.localVideoView.TabStop = false;
             // 
@@ -66,14 +67,14 @@ namespace CSharp_API_Example
             this.label1.TabIndex = 5;
             this.label1.Text = "一对一视频通话";
             // 
-            // Video1To1View
+            // JoinChannelVideoView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.localVideoView);
             this.Controls.Add(this.remoteVideoView);
-            this.Name = "Video1To1View";
+            this.Name = "JoinChannelVideoView";
             this.Size = new System.Drawing.Size(760, 600);
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).EndInit();
