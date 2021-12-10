@@ -25,8 +25,8 @@ SDK_TYPE=$1
 API_KEY=$3
 DEMO_BRANCH=$2
 PLUGIN_NAME="Agora-Plugin"
-ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
-CI_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK/CI
+ROOT_DIR=$(pwd)/Agora-C_Sharp-FPA-SDK
+CI_DIR=$(pwd)/Agora-C_Sharp-FPA-SDK/CI
 UNITY_DIR=/Applications/Unity/Hub/Editor/$4/Unity.app/Contents/MacOS
 
 #--------------------------------------
@@ -65,78 +65,78 @@ cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/API-Example
 
 # Copy SDK
 echo "[Unity CI] copying scripts ..."
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
-cp -r "$ROOT_DIR"/Unity/Editor "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
+mkdir "$PLUGIN_PATH"/Agora-Unity-FPA-SDK
+cp -r "$ROOT_DIR"/Unity/Editor "$PLUGIN_PATH"/Agora-Unity-FPA-SDK
 if [ "$SDK_TYPE" == "audio" ]; then
-    POST_PROCESS_SCRIPT_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Editor/BL_BuildPostProcess.cs
+    POST_PROCESS_SCRIPT_PATH="$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Editor/BL_BuildPostProcess.cs
     sed -i '' 's/var cameraPermission = "NSCameraUsageDescription";//' "$POST_PROCESS_SCRIPT_PATH"
     sed -i '' 's/rootDic.SetString(cameraPermission, "Video need to use camera");//' "$POST_PROCESS_SCRIPT_PATH"
     perl -0777 -pi -e 's|Start Tag for video SDK only[\s\S]*End Tag||g' "$POST_PROCESS_SCRIPT_PATH"
 fi
-cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
-cp -r "$ROOT_DIR"/Unity/AgoraTools "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
-cp -r "$ROOT_DIR"/agorartc "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
-rm -rf "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/agorartc/agorartc.csproj
+cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/Agora-Unity-FPA-SDK
+cp -r "$ROOT_DIR"/Unity/AgoraTools "$PLUGIN_PATH"/Agora-Unity-FPA-SDK
+cp -r "$ROOT_DIR"/agorafpa "$PLUGIN_PATH"/Agora-Unity-FPA-SDK
+rm -rf "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/agorafpa/agorartc.csproj
 
 # Copy Plugins
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/iOS
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
+mkdir "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Plugins/iOS
+#mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
+#mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
+#mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
 
 # Android
 echo "[Unity CI] copying Android ..."
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android/AgoraRtcEngineKit.plugin
+mkdir "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Plugins/Android/AgoraFPAServiceKit.plugin
 
-ANDROID_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android/AgoraRtcEngineKit.plugin
+ANDROID_DST_PATH="$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Plugins/Android/AgoraFPAServiceKit.plugin
 
-mv "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android/project.properties "$ANDROID_DST_PATH"
+mv "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Plugins/Android/project.properties "$ANDROID_DST_PATH"
 
 if [ "$SDK_TYPE" == "audio" ]; then
-    mv "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android/AndroidManifest-audio.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
-    rm -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android/AndroidManifest-video.xml
+    mv "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Plugins/Android/AndroidManifest-audio.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
+    rm -r "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Plugins/Android/AndroidManifest-video.xml
 elif [ "$SDK_TYPE" == "video" ]; then
-    mv "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android/AndroidManifest-video.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
-    rm -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android/AndroidManifest-audio.xml
+    mv "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Plugins/Android/AndroidManifest-video.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
+    rm -r "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/Plugins/Android/AndroidManifest-audio.xml
 fi
 
 mkdir "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
+cp $ANDROID_SRC_PATH/FPA/so_jar/*.jar "$ANDROID_DST_PATH"/libs
 
-cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
+cp -r $ANDROID_SRC_PATH/FPA/so_jar/arm64-v8a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/arm64-v8a/Release/*.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
-cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
+cp -r $ANDROID_SRC_PATH/FPA/so_jar/armeabi-v7a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/armeabi-v7a/Release/*.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
-cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
+cp -r $ANDROID_SRC_PATH/FPA/so_jar/x86 "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86
 
-cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
+cp -r $ANDROID_SRC_PATH/FPA/so_jar/x86_64 "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86_64
 
 # iOS
 echo "[Unity CI] copying iOS ..."
-IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-RTC-SDK/Plugins/iOS"
-cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.framework "$IOS_DST_PATH"
+IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-FPA-SDK/Plugins/iOS"
+cp -PRf $IOS_SRC_PATH/FPA/libs/ALL_ARCHITECTURE/*.framework "$IOS_DST_PATH"
 cp -PRf $IOS_SRC_PATH/OS64COMBINED/Release/*.framework "$IOS_DST_PATH"
 
 # macOS
-echo "[Unity CI] copying macOS ..."
-MAC_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
-cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
+# echo "[Unity CI] copying macOS ..."
+# MAC_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
+# cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
 
 # Windows x86-64
-echo "[Unity CI] copying Windows x86-64 ..."
-WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
-cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_x64_*/rtc/sdk/*.dll "$WIN64_DST_PATH"
-cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
+# echo "[Unity CI] copying Windows x86-64 ..."
+# WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
+# cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_x64_*/rtc/sdk/*.dll "$WIN64_DST_PATH"
+# cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
 
 # Windows x86
-echo "[Unity CI] copying Windows x86 ..."
-WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
-cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_x86_*/rtc/sdk/*.dll "$WIN32_DST_PATH"
-cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
+# echo "[Unity CI] copying Windows x86 ..."
+# WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
+# cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_x86_*/rtc/sdk/*.dll "$WIN32_DST_PATH"
+# cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
 
 echo "[Unity CI] finish copying files"
 

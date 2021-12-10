@@ -97,8 +97,8 @@ public class BL_BuildPostProcess
 #endif
         string defaultLocationInProj = "Agora-Plugin/Agora-Unity-FPA-SDK/Plugins/iOS";
         const string AgoraFpaWrapperFrameworkName = "AgoraFpaWrapper.framework";
-        const string AgoraFpaServiceFrameworkName = "AgoraFpaService.framework";
-        const string AgoraFpaFrameworkName = "AgoraFpa.framework";
+        const string AgoraFpaServiceFrameworkName = "AgoraFpaProxyService.framework";
+        const string AgoraFpaFrameworkName = "AgoraFPA.framework";
 
 
         string AgoraFpaWrapperFrameworkPath = Path.Combine(defaultLocationInProj, AgoraFpaWrapperFrameworkName);
