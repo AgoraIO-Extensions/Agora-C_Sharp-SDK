@@ -76,6 +76,7 @@ fi
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/Agora-Unity-FPA-SDK
 cp -r "$ROOT_DIR"/Unity/AgoraTools "$PLUGIN_PATH"/Agora-Unity-FPA-SDK
 cp -r "$ROOT_DIR"/agorafpa "$PLUGIN_PATH"/Agora-Unity-FPA-SDK
+cp -r "$ROOT_DIR"/Unity/AgoraTools/API-Example "$PLUGIN_PATH"/
 rm -rf "$PLUGIN_PATH"/Agora-Unity-FPA-SDK/agorafpa/agorartc.csproj
 
 # Copy Plugins
