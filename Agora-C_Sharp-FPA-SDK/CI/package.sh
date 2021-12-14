@@ -25,8 +25,8 @@ SDK_TYPE=$1
 API_KEY=$3
 DEMO_BRANCH=$2
 PLUGIN_NAME="Agora-Plugin"
-ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
-CI_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK/CI
+ROOT_DIR=$(pwd)/Agora-C_Sharp-FPA-SDK
+CI_DIR=$(pwd)/Agora-C_Sharp-FPA-SDK/CI
 UNITY_DIR=/Applications/Unity/Hub/Editor/$4/Unity.app/Contents/MacOS
 
 #--------------------------------------
@@ -110,11 +110,11 @@ cp $ANDROID_SRC_PATH/arm64-v8a/Release/*.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 cp -r $ANDROID_SRC_PATH/FPA/so_jar/armeabi-v7a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/armeabi-v7a/Release/*.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
-cp -r $ANDROID_SRC_PATH/FPA/so_jar/x86 "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86
+# cp -r $ANDROID_SRC_PATH/FPA/so_jar/x86 "$ANDROID_DST_PATH"/libs
+# cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86
 
-cp -r $ANDROID_SRC_PATH/FPA/so_jar/x86_64 "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86_64
+# cp -r $ANDROID_SRC_PATH/FPA/so_jar/x86_64 "$ANDROID_DST_PATH"/libs
+# cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86_64
 
 # iOS
 echo "[Unity CI] copying iOS ..."
