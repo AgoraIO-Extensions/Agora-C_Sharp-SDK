@@ -302,4 +302,82 @@ namespace agora.rtc
         kRDPMGetPluginParameter,
         kRDPMRelease
     }
+
+    internal enum ApiTypeMediaPlayer
+    {
+        kMediaPlayerCreate = 0,
+        kMediaPlayerDestroyMediaPlayer,
+        kMediaPlayerId,
+        kMediaPlayerOpen,
+        kMediaPlayerOpenWithCustomSource,
+        kMediaPlayerPlay,
+        kMediaPlayerPause,
+        kMediaPlayerStop,
+        kMediaPlayerResume,
+        kMediaPlayerSeek,
+        kMediaPlayerGetDuration,
+        kMediaPlayerGetPlayPosition,
+        kMediaPlayerGetStreamCount,
+        kMediaPlayerGetStreamInfo,
+        kMediaPlayerSetLoopCount,
+        kMediaPlayerMuteAudio,
+        kMediaPlayerIsAudioMuted,
+        kMediaPlayerMuteVideo,
+        kMediaPlayerIsVideoMuted,
+        kMediaPlayerChangePlaybackSpeed,
+        kMediaPlayerSelectAudioTrack,
+        kMediaPlayerSetPlayerOption,
+        kMediaPlayerTakeScreenshot,
+        kMediaPlayerSelectInternalSubtitle,
+        kMediaPlayerSetExternalSubtitle,
+        kMediaPlayerGetState,
+        kMediaPlayerMute,
+        kMediaPlayerGetMute,
+        kMediaPlayerAdjustPlayoutVolume,
+        kMediaPlayerGetPlayoutVolume,
+        kMediaPlayerAdjustPublishSignalVolume,
+        kMediaPlayerGetPublishSignalVolume,
+        kMediaPlayerSetView,
+        kMediaPlayerSetRenderMode,
+        kMediaPlayerSetAudioDualMonoMode,
+        kMediaPlayerGetPlayerSdkVersion,
+        kMediaPlayerGetPlaySrc,
+        kMediaPlayerRegisterAudioFrameObserver,
+        kMediaPlayerUnregisterAudioFrameObserver,
+        kMediaPlayerRegisterVideoFrameObserver,
+        kMediaPlayerUnregisterVideoFrameObserver
+    };
+
+    enum ApiTypeLocalSpatialAudio
+    {
+        kLocalSpatialAudioSetMaxAudioRecvCount = 0,
+        kLocalSpatialAudioSetAudioRecvRange,
+        kLocalSpatialAudioSetDistanceUnit,
+        kLocalSpatialAudioUpdateSelfPosition,
+        kLocalSpatialAudioSetParameters,
+        kLocalSpatialAudioEnableMic,
+        kLocalSpatialAudioEnableSpeaker,
+        kLocalSpatialAudioUpdateRemotePosition,
+        kLocalSpatialAudioRemoveRemotePosition,
+        kLocalSpatialAudioClearRemotePositions,
+        };
+
+    enum ApiTypeCloudSpatialAudio {
+        kCloudSpatialAudioSetMaxAudioRecvCount = 0,
+        kCloudSpatialAudioSetAudioRecvRange,
+        kCloudSpatialAudioSetDistanceUnit,
+        kCloudSpatialAudioUpdateSelfPosition,
+        kCloudSpatialAudioSetParameters,
+        kCloudSpatialAudioEnableMic,
+        kCloudSpatialAudioEnableSpeaker,
+        kCloudSpatialAudioInitialze,
+        kCloudSpatialAudioRelease,
+
+        kCloudSpatialAudioEnableSpatializer,
+        kCloudSpatialAudioSetTeamId,
+        kCloudSpatialAudioSetRangeAudioMode,
+        kCloudSpatialAudioEnterRoom,
+        kCloudSpatialAudioExitRoom,
+        kCloudSpatialAudioGetTeammates
+    };
 } // namespace agora.rtc

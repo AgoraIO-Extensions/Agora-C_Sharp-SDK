@@ -41,10 +41,7 @@ namespace agora.rtc
     internal delegate bool Func_VideoFrameLocal_Native(IntPtr video_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_VideoCaptureLocal_Native(IntPtr video_frame, VideoSourceType source_type);
-
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_VideoFrameMediaPlayer_Native(IntPtr videoFrame, int mediaPlayerId);
+    internal delegate bool Func_VideoCaptureLocal_Native(IntPtr video_frame, IntPtr config);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_VideoFrameRemote_Native(uint uid, IntPtr video_frame);
@@ -52,15 +49,44 @@ namespace agora.rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_VideoFrameEx_Native(string channel_id, uint uid, IntPtr video_frame);
 
-    // [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    // internal delegate VIDEO_FRAME_TYPE Func_VideoFrameType_Native();
-
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate void Func_VideoFrame_Native(IntPtr video_frame, uint uid, string channel_id, bool resize);
+    internal delegate void Func_VideoFrame_Native(IntPtr video_frame, IntPtr config, bool resize);
 
     //encoded_video_image
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_EncodedVideoImageReceived_Native(IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfo);
+
+    //media player
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate bool Func_AudioOnFrame_Native(IntPtr audio_frame, int mediaPlayerId);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate Int64 Func_OnSeek_Native(Int64 offset, int whence, int playerId);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate int Func_onReadData_Native(IntPtr buffer, int bufferSize, int playerId);
+    
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisMediaPlayerCAudioFrameObserverNative {
+        internal IntPtr onFrame;
+    }
+
+    internal struct IrisMediaPlayerCAudioFrameObserver {
+        internal Func_AudioOnFrame_Native OnFrame;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisMediaPlayerCCustomProviderNative {
+        internal IntPtr onSeek;
+        internal IntPtr onReadData;
+    }
+
+    internal struct IrisMediaPlayerCCustomProvider {
+        internal Func_OnSeek_Native OnSeek;
+        internal Func_onReadData_Native OnReadData;
+    }
+ 
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcCVideoEncodedImageReceiverNative {
@@ -109,7 +135,6 @@ namespace agora.rtc
     internal struct IrisRtcCVideoFrameObserverNative
     {
         internal IntPtr OnCaptureVideoFrame;
-        internal IntPtr OnMediaPlayerVideoFrame;
         internal IntPtr OnPreEncodeVideoFrame;
         internal IntPtr OnRenderVideoFrame;
         internal IntPtr GetObservedFramePosition;
@@ -120,7 +145,6 @@ namespace agora.rtc
     internal struct IrisRtcCVideoFrameObserver
     {
         internal Func_VideoCaptureLocal_Native OnCaptureVideoFrame;
-        internal Func_VideoFrameMediaPlayer_Native OnMediaPlayerVideoFrame;
         internal Func_VideoFrameLocal_Native OnPreEncodeVideoFrame;
         internal Func_VideoFrameRemote_Native OnRenderVideoFrame;
         internal Func_Uint32_t_Native GetObservedFramePosition;
@@ -143,5 +167,22 @@ namespace agora.rtc
         internal Func_VideoFrame_Native OnVideoFrameReceived;
         internal int resize_width;
         internal int resize_height;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisVideoFrameBufferConfig
+    {
+        internal int type;
+        internal uint id;
+        
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+        internal string key;
+    }
+
+    public struct VideoFrameBufferConfig 
+    {
+        public IRIS_VIDEO_SOURCE_TYPE type;
+        public uint id;
+        public string key;
     }
 }

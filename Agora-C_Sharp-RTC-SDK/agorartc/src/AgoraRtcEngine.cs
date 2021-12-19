@@ -26,6 +26,9 @@ namespace agora.rtc
     using IrisRtcCVideoEncodedImageReceiverNativeMarshal = IntPtr;
     using IrisRtcVideoEncodedImageReceiverHandleNative = IntPtr;
     using IrisVideoFrameBufferManagerPtr = IntPtr;
+    using IrisRtcMediaPlayerPtr = IntPtr;
+    using IrisCloudSpatialAudioEnginePtr = IntPtr;
+    using IrisLocalSpatialAudioEnginePtr = IntPtr;
 
     public sealed class AgoraRtcEngine : IAgoraRtcEngine
     {
@@ -36,6 +39,9 @@ namespace agora.rtc
 
         private IrisRtcEnginePtr _irisRtcEngine;
         private IrisRtcDeviceManagerPtr _irisRtcDeviceManager;
+        private IrisRtcMediaPlayerPtr _irisRtcMediaPlayer;
+        private IrisCloudSpatialAudioEnginePtr _irisCloudSpatialAudioEngine;
+        private IrisLocalSpatialAudioEnginePtr _irisLocalSpatialAudioEngine;
         private CharAssistant _result;
 
         private IrisEventHandlerHandleNative _irisEngineEventHandlerHandleNative;
@@ -64,15 +70,25 @@ namespace agora.rtc
 
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
+        private AgoraRtcMediaPlayer _mediaPlayerInstance;
+        private AgoraRtcCloudSpatialAudioEngine _cloudSpatialAudioEngineInstance;
+        private AgoraRtcSpatialAudioEngine _spatialAudioEngineInstance;
+
         private AgoraRtcEngine()
         {
             _result = new CharAssistant();
             _irisRtcEngine = AgoraRtcNative.CreateIrisRtcEngine();
             _irisRtcDeviceManager = AgoraRtcNative.GetIrisRtcDeviceManager(_irisRtcEngine);
+            _irisRtcMediaPlayer = AgoraRtcNative.GetIrisMediaPlayer(_irisRtcEngine);
+            _irisCloudSpatialAudioEngine = AgoraRtcNative.GetIrisCloudSpatialAudioEngine(_irisRtcEngine);
+            _irisLocalSpatialAudioEngine = AgoraRtcNative.GetIrisLocalSpatialAudioEngine(_irisRtcEngine);
 
             _videoDeviceManagerInstance = new AgoraRtcVideoDeviceManager(_irisRtcDeviceManager);
             _audioPlaybackDeviceManagerInstance = new AgoraRtcAudioPlaybackDeviceManager(_irisRtcDeviceManager);
             _audioRecordingDeviceManagerInstance = new AgoraRtcAudioRecordingDeviceManager(_irisRtcDeviceManager);
+            _mediaPlayerInstance = new AgoraRtcMediaPlayer(_irisRtcMediaPlayer);
+            _cloudSpatialAudioEngineInstance = new AgoraRtcCloudSpatialAudioEngine(_irisCloudSpatialAudioEngine);
+            _spatialAudioEngineInstance = new AgoraRtcSpatialAudioEngine(_irisLocalSpatialAudioEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
         }
@@ -97,7 +113,18 @@ namespace agora.rtc
                 _audioRecordingDeviceManagerInstance.Dispose();
                 _audioRecordingDeviceManagerInstance = null;
 
+                _mediaPlayerInstance.Dispose();
+                _mediaPlayerInstance = null;
+
+                _cloudSpatialAudioEngineInstance.Dispose();
+                _cloudSpatialAudioEngineInstance = null;
+                _spatialAudioEngineInstance = null;
+
                 _irisRtcDeviceManager = IntPtr.Zero;
+                _irisRtcMediaPlayer = IntPtr.Zero;
+                _irisCloudSpatialAudioEngine = IntPtr.Zero;
+                _irisLocalSpatialAudioEngine = IntPtr.Zero;
+
                 AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
             }
             
@@ -295,7 +322,6 @@ namespace agora.rtc
             _irisRtcCVideoFrameObserver = new IrisRtcCVideoFrameObserver
             {
                 OnCaptureVideoFrame = AgoraRtcVideoFrameObserverNative.OnCaptureVideoFrame,
-                OnMediaPlayerVideoFrame = AgoraRtcVideoFrameObserverNative.OnMediaPlayerVideoFrame,
                 OnPreEncodeVideoFrame = AgoraRtcVideoFrameObserverNative.OnPreEncodeVideoFrame,
                 OnRenderVideoFrame = AgoraRtcVideoFrameObserverNative.OnRenderVideoFrame,
                 GetObservedFramePosition = AgoraRtcVideoFrameObserverNative.GetObservedFramePosition,
@@ -307,8 +333,6 @@ namespace agora.rtc
             {
                 OnCaptureVideoFrame =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnCaptureVideoFrame),
-                OnMediaPlayerVideoFrame =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnMediaPlayerVideoFrame),
                 OnPreEncodeVideoFrame =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnPreEncodeVideoFrame),
                 OnRenderVideoFrame =
@@ -404,6 +428,21 @@ namespace agora.rtc
         public override IAgoraRtcVideoDeviceManager GetAgoraRtcVideoDeviceManager()
         {
             return _videoDeviceManagerInstance;
+        }
+
+        public override IAgoraRtcMediaPlayer GetAgoraRtcMediaPlayer()
+        {
+            return _mediaPlayerInstance;
+        }
+
+        public override IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine()
+        {
+            return _cloudSpatialAudioEngineInstance;
+        }
+
+        public override IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine()
+        {
+            return _spatialAudioEngineInstance;
         }
 
         internal IVideoStreamManager GetVideoStreamManager()

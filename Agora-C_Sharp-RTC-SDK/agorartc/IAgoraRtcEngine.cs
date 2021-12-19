@@ -39,6 +39,12 @@ namespace agora.rtc
 
         public abstract IAgoraRtcVideoDeviceManager GetAgoraRtcVideoDeviceManager();
 
+        public abstract IAgoraRtcMediaPlayer GetAgoraRtcMediaPlayer();
+
+        public abstract IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine();
+
+        public abstract IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine();
+
         public abstract string GetVersion();
 
         public abstract string GetErrorDescription(int code);
@@ -133,10 +139,6 @@ namespace agora.rtc
         public abstract int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config,  IAgoraRtcAudioEncodedFrameObserver observer); //TODO
 
         public abstract int StopAudioRecording();
-
-        //CreateMediaPlayer
-
-        //DestroyMediaPlayer
 
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle);
 
@@ -721,7 +723,7 @@ namespace agora.rtc
         public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed) {}
 
         public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) {}
-  };
+    };
 
     internal static partial class ObsoleteMethodWarning
     {
