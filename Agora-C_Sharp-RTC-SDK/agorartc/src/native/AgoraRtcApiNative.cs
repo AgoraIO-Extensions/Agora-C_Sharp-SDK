@@ -221,14 +221,6 @@ namespace agora.rtc
         internal static extern int CallIrisMediaPlayerApiWithBuffer(IrisMediaPlayerPtr player_ptr, ApiTypeMediaPlayer api_type,
                                              string @params, byte[] buffer, out CharAssistant result);
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisEventHandlerHandle RegisterIrisMediaPlayerEventHandler(IrisMediaPlayerPtr player_ptr, int playerId,
-                                            IntPtr event_handler);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnRegisterIrisMediaPlayerEventHandler(
-            IrisMediaPlayerPtr player_ptr, IrisEventHandlerHandle handle, int playerId);
-
 // media player video frame observer 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisMediaPlayerVideoFrameObserverHandle RegisterMediaPlayerVideoFrameObserver(
