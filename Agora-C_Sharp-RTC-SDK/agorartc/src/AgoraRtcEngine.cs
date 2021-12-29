@@ -2520,11 +2520,10 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int CreateDataStream(int[] streamId, bool reliable, bool ordered)
+        public override int CreateDataStream(bool reliable, bool ordered)
         {
             var param = new
             {
-                streamId,
                 reliable,
                 ordered
             };
@@ -2534,11 +2533,10 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int CreateDataStream(int[] streamId, DataStreamConfig config)
+        public override int CreateDataStream(DataStreamConfig config)
         {
             var param = new
             {
-                streamId,
                 config
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
@@ -3087,11 +3085,10 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int CreateDataStreamEx(int[] streamId, bool reliable, bool ordered, RtcConnection connection)
+        public override int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection)
         {
             var param = new
             {
-                streamId,
                 reliable,
                 ordered,
                 connection
@@ -3100,11 +3097,10 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int CreateDataStreamEx(int[] streamId, DataStreamConfig config, RtcConnection connection)
+        public override int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection)
         {
             var param = new
             {
-                streamId,
                 config,
                 connection
             };

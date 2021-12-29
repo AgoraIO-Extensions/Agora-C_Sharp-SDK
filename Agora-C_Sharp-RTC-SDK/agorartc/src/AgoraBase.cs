@@ -1929,7 +1929,7 @@ namespace agora.rtc
         public RtcStats(uint duration, uint txBytes, uint rxBytes, uint txAudioBytes, uint txVideoBytes,
             uint rxAudioBytes, uint rxVideoBytes, UInt16 txKBitRate, UInt16 rxKBitRate, UInt16 rxAudioKBitRate,
             UInt16 txAudioKBitRate, UInt16 rxVideoKBitRate, UInt16 txVideoKBitRate, UInt16 lastmileDelay,
-            UInt16 txPacketLossRate, UInt16 rxPacketLossRate, uint userCount, double cpuAppUsage, double cpuTotalUsage, int gatewayRtt,
+            int txPacketLossRate, int rxPacketLossRate, uint userCount, double cpuAppUsage, double cpuTotalUsage, int gatewayRtt,
             double memoryAppUsageRatio, double memoryTotalUsageRatio, int memoryAppUsageInKbytes,int connectTimeMs,
             int firstAudioPacketDuration, int firstVideoPacketDuration, int firstVideoKeyFramePacketDuration,
             int packetsBeforeFirstKeyFramePacket, int firstAudioPacketDurationAfterUnmute, int firstVideoPacketDurationAfterUnmute,
@@ -2043,12 +2043,12 @@ namespace agora.rtc
         /** The packet loss rate (%) from the local client to Agora's edge server,
 		 * before using the anti-packet-loss method.
 		 */
-        public UInt16 txPacketLossRate { set; get; }
+        public int txPacketLossRate { set; get; }
 
         /** The packet loss rate (%) from Agora's edge server to the local client,
 		 * before using the anti-packet-loss method.
 		 */
-        public UInt16 rxPacketLossRate { set; get; }
+        public int rxPacketLossRate { set; get; }
 
         /** Number of users in the channel.
 		 - `COMMUNICATION` profile: The number of users in the channel.
