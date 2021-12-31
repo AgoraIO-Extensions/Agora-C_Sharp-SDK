@@ -107,8 +107,9 @@ namespace agora.rtc
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
 
-                foreach (var channelInstance in _channelInstance.Values)
+                for (int i = 0; i < _channelInstance.Count; i++)
                 {
+                    var channelInstance = _channelInstance.ElementAt(i).Value;
                     channelInstance.Dispose();
                 }
 
