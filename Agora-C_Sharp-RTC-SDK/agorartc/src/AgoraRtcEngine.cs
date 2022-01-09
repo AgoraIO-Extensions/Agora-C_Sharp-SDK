@@ -95,6 +95,7 @@ namespace agora.rtc
                 new AudioEffectManager(type == EngineType.kEngineTypeNormal ? engineInstance[0] : engineInstance[1]);
             
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
+            AgoraRtcNative.Attach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -142,10 +143,12 @@ namespace agora.rtc
                 _deprecatedAudioEffectManagerInstance = null;
 
                 _irisRtcDeviceManager = IntPtr.Zero;
+                
                 AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
             }
 
             Release(sync);
+            AgoraRtcNative.Detach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
 
             _disposed = true;
         }
