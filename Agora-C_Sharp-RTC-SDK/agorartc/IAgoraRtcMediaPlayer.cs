@@ -102,6 +102,10 @@ namespace agora.rtc
         public abstract string GetPlayerSdkVersion(int playerId);
 
         public abstract string GetPlaySrc(int playerId);
+
+        public abstract int SetAudioMixingPitch(int pitch);
+
+        public abstract int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params);
     }
 
     public abstract class IAgoraRtcMediaPlayerEventHandler

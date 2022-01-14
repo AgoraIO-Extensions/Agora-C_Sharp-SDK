@@ -5935,7 +5935,7 @@ namespace agora.rtc
 
    /** The definition of GMEngineContext
    */
-   public struct SpatialAudioConfig {
+   public struct CloudSpatialAudioConfig {
       /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
          * the real-time audio and video communication functionality.
          */
@@ -6203,4 +6203,59 @@ namespace agora.rtc
       /**< ChanLout=ChanRout=(ChanLin+ChanRin)/2 */
       AUDIO_DUAL_MONO_MIX = 3
    };
+
+   /** 
+    * Spatial audio parameters
+    */
+    public class SpatialAudioParams
+    {
+        /**
+        * optional azimuth: speaker azimuth in a spherical coordinate system centered on the listener
+        */
+        public double speaker_azimuth { set; get; }
+        /**
+        * optional azimuth: speaker elevation in a spherical coordinate system centered on the listener
+        */
+        public double speaker_elevation { set; get; }
+        /**
+        * distance between speaker and listener
+        */
+        public double speaker_distance { set; get; }
+        /**
+        * speaker orientation [0-180]: 0 degree is the same with listener orientation
+        */
+        public int speaker_orientation { set; get; }
+        /**
+        * enable blur or not for the speaker
+        */
+        public bool enable_blur { set; get; }
+        /**
+        * enable air absorb or not for the speaker
+        */
+        public bool enable_air_absorb { set; get; }
+    };
+
+    /** range audio mode type
+    */
+    public enum RANGE_AUDIO_MODE_TYPE
+    {
+        /* In world mode, you can hear players whose mode are also world mode in other teams */
+        RANGE_AUDIO_MODE_WORLD = 0,
+        /* In team mode, you can hear teammates only */
+        RANGE_AUDIO_MODE_TEAM
+    };
+
+    // The information of remote voice position
+    public class RemoteVoicePositionInfo
+    {
+        public RemoteVoicePositionInfo(float[] position, float[] forward)
+        {
+            this.position= position;
+            this.forward = forward;
+        }
+        // The coordnate of remote voice source, (x, y, z)
+        float[] position { set; get; }
+        // The forward vector of remote voice, (x, y, z). When it's not set, the vector is forward to listner.
+        float[] forward { set; get; }
+    };
 }

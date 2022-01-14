@@ -91,6 +91,7 @@ namespace agora.rtc
             _spatialAudioEngineInstance = new AgoraRtcSpatialAudioEngine(_irisLocalSpatialAudioEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
+            AgoraRtcNative.Attach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -1051,6 +1052,17 @@ namespace agora.rtc
             JsonMapper.ToJson(param), out _result);
         }
 
+        public override int SetAudioMixingPitch(int pitch)
+        {
+            var param = new
+            {
+                pitch
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, 
+            ApiTypeEngine.kEngineSetAudioMixingPitch,
+            JsonMapper.ToJson(param), out _result);
+        }
+
         public override int GetEffectsVolume()
         {
             var param = new {};
@@ -1239,18 +1251,27 @@ namespace agora.rtc
             JsonMapper.ToJson(param), out _result);
         }
 
-        public override int SetRemoteVoice3DPosition(uint uid, double azimuth, double elevation, double distance)
+        public override int EnableSpatialAudio(bool enabled)
         {
             var param = new
             {
-                uid,
-                azimuth,
-                elevation,
-                distance
+                enabled
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, 
-            ApiTypeEngine.kEngineSetRemoteVoice3DPosition,
+            ApiTypeEngine.kEngineEnableSpatialAudio,
             JsonMapper.ToJson(param), out _result);
+        }
+
+        public override int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param)
+        {
+            var param1 = new
+            {
+                uid,
+                param
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, 
+            ApiTypeEngine.kEngineSetRemoteUserSpatialAudioParamso,
+            JsonMapper.ToJson(param1), out _result);
         }
 
         public override int SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset)
@@ -1816,13 +1837,13 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int SetExtensionProviderProperty(string provider_name, string key, string json_value)
+        public override int SetExtensionProviderProperty(string provider, string key, string value)
         {
             var param = new
             {
-                provider_name,
+                provider,
                 key,
-                json_value
+                value
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineSetExtensionProviderProperty,
@@ -1831,12 +1852,12 @@ namespace agora.rtc
         }
 
         public override int EnableExtension(
-          string provider_name, string extension_name, bool enable=true)
+          string provider, string extension, bool enable=true)
         {
             var param = new
             {
-                provider_name,
-                extension_name,
+                provider,
+                extension,
                 enable
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
@@ -1846,15 +1867,15 @@ namespace agora.rtc
         }
 
         public override int SetExtensionProperty(
-          string provider_name, string extension_name,
-          string key, string json_value)
+          string provider, string extension,
+          string key, string value)
         {
             var param = new
             {
-                provider_name,
-                extension_name,
+                provider,
+                extension,
                 key,
-                json_value
+                value
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineSetExtensionProperty,
@@ -1863,15 +1884,15 @@ namespace agora.rtc
         }  
 
         public override int GetExtensionProperty(
-          string provider_name, string extension_name,
-          string key, string json_value, int buf_len)
+          string provider, string extension,
+          string key, string value, int buf_len)
         {
             var param = new
             {
-                provider_name,
-                extension_name,
+                provider,
+                extension,
                 key,
-                json_value,
+                value,
                 buf_len
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
@@ -2986,11 +3007,11 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int MuteRemoteAudioStreamEx(uint remoteUid, bool mute, RtcConnection connection)
+        public override int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection)
         {
             var param = new
             {
-                remoteUid,
+                uid,
                 mute,
                 connection
             };
@@ -2998,11 +3019,11 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int MuteRemoteVideoStreamEx(uint remoteUid, bool mute, RtcConnection connection)
+        public override int MuteRemoteVideoStreamEx(uint uid, bool mute, RtcConnection connection)
         {
             var param = new
             {
-                remoteUid,
+                uid,
                 mute,
                 connection
             };
@@ -3010,11 +3031,11 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int SetRemoteVoicePositionEx(uint remoteUid, double pan, double gain, RtcConnection connection)
+        public override int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection)
         {
             var param = new
             {
-                remoteUid,
+                uid,
                 pan,
                 gain,
                 connection
@@ -3023,27 +3044,24 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int SetRemoteVoice3DPositionEx(uint remoteUid, double azimuth, double elevation, 
-                                            double distance, RtcConnection connection)
+        public override int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams param, RtcConnection connection)
         {
-            var param = new
+            var param1 = new
             {
-                remoteUid,
-                azimuth,
-                elevation,
-                distance,
+                uid,
+                param,
                 connection
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetRemoteVoice3DPositionEx,
-                JsonMapper.ToJson(param), out _result);
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetRemoteUserSpatialAudioParamsEx,
+                JsonMapper.ToJson(param1), out _result);
         }
 
-        public override int SetRemoteRenderModeEx(uint remoteUid, RENDER_MODE_TYPE renderMode,
+        public override int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode,
                                           VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection)
         {
             var param = new
             {
-                remoteUid,
+                uid,
                 renderMode,
                 mirrorMode,
                 connection
@@ -3155,6 +3173,18 @@ namespace agora.rtc
                 connection
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSendCustomReportMessageEx,
+                JsonMapper.ToJson(param), out _result);
+        }
+
+        public override int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
+        {
+            var param = new
+            {
+                url,
+                transcodingEnabled,
+                connection
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineAddPublishStreamUrlEx,
                 JsonMapper.ToJson(param), out _result);
         }
 
@@ -4027,13 +4057,13 @@ namespace agora.rtc
 #endif
                         if (EngineEventHandler != null)
                         {
-                            EngineEventHandler.OnFirstRemoteVideoFrame(
-                                AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                                (uint) AgoraJson.GetData<uint>(data, "remoteUid"),
-                                (int) AgoraJson.GetData<int>(data, "width"),
-                                (int) AgoraJson.GetData<int>(data, "height"),
-                                (int) AgoraJson.GetData<int>(data, "elapsed")
-                            );
+                            // EngineEventHandler.OnFirstRemoteVideoFrame(
+                            //     AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
+                            //     (uint) AgoraJson.GetData<uint>(data, "remoteUid"),
+                            //     (int) AgoraJson.GetData<int>(data, "width"),
+                            //     (int) AgoraJson.GetData<int>(data, "height"),
+                            //     (int) AgoraJson.GetData<int>(data, "elapsed")
+                            // );
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -4716,10 +4746,10 @@ namespace agora.rtc
                         if (EngineEventHandler != null)
                         {
                             EngineEventHandler.OnExtensionEvent(
-                                (string) AgoraJson.GetData<string>(data, "provider_name"),
-                                (string) AgoraJson.GetData<string>(data, "ext_name"),
+                                (string) AgoraJson.GetData<string>(data, "provider"),
+                                (string) AgoraJson.GetData<string>(data, "extension"),
                                 (string) AgoraJson.GetData<string>(data, "key"),
-                                (string) AgoraJson.GetData<string>(data, "json_value")
+                                (string) AgoraJson.GetData<string>(data, "value")
                             );
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -4734,8 +4764,8 @@ namespace agora.rtc
                         if (EngineEventHandler != null)
                         {
                             EngineEventHandler.OnExtensionStarted(
-                                (string) AgoraJson.GetData<string>(data, "provider_name"),
-                                (string) AgoraJson.GetData<string>(data, "ext_name")
+                                (string) AgoraJson.GetData<string>(data, "provider"),
+                                (string) AgoraJson.GetData<string>(data, "extension")
                             );
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -4750,8 +4780,8 @@ namespace agora.rtc
                         if (EngineEventHandler != null)
                         {
                             EngineEventHandler.OnExtensionStopped(
-                                (string) AgoraJson.GetData<string>(data, "provider_name"),
-                                (string) AgoraJson.GetData<string>(data, "ext_name")
+                                (string) AgoraJson.GetData<string>(data, "provider"),
+                                (string) AgoraJson.GetData<string>(data, "extension")
                             );
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -4766,8 +4796,8 @@ namespace agora.rtc
                         if (EngineEventHandler != null)
                         {
                             EngineEventHandler.OnExtensionErrored(
-                                (string) AgoraJson.GetData<int>(data, "provider_name"),
-                                (string) AgoraJson.GetData<int>(data, "ext_name"),
+                                (string) AgoraJson.GetData<int>(data, "provider"),
+                                (string) AgoraJson.GetData<int>(data, "extension"),
                                 (int) AgoraJson.GetData<int>(data, "error"),
                                 (string) AgoraJson.GetData<int>(data, "msg")
                             );

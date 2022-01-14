@@ -13,7 +13,7 @@ namespace agora.rtc
     {
         public abstract void InitEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler eh);
 
-        public abstract int Initialize(SpatialAudioConfig config);
+        public abstract int Initialize(CloudSpatialAudioConfig config);
 
         public abstract void Dispose();
 
@@ -25,6 +25,10 @@ namespace agora.rtc
 
         public abstract int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp);
 
+        public abstract int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection);
+
+        public abstract int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward);
+
         public abstract int SetParameters(string @params);
 
         public abstract int EnableMic(bool enable);
@@ -35,7 +39,7 @@ namespace agora.rtc
 
         public abstract int SetTeamId(int teamId);
   
-        public abstract int SetRangeAudioMode(int rangeAudioMode);
+        public abstract int SetRangeAudioMode(RANGE_AUDIO_MODE_TYPE rangeAudioMode);
 
         public abstract int EnterRoom(string token, string roomName, uint uid);
 
@@ -56,17 +60,27 @@ namespace agora.rtc
 
         public abstract int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp);
 
+        public abstract int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection);
+
+        public abstract int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward);
+
         public abstract int SetParameters(string @params);
 
         public abstract int EnableMic(bool enable);
 
         public abstract int EnableSpeaker(bool enable);
 
-        public abstract int UpdateRemotePosition(uint uid, float[] position);
+        public abstract int UpdateRemotePosition(uint uid, float[] position, float[] forward);
+
+        public abstract int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection);
 
         public abstract int RemoveRemotePosition(uint uid);
 
+        public abstract int RemoveRemotePositionEx(uint uid, RtcConnection connection);
+
         public abstract int ClearRemotePositions();
+
+        public abstract int ClearRemotePositionsEx(RtcConnection connection);
     }
 
     public abstract class IAgoraRtcCloudSpatialAudioEngineEventHandler
