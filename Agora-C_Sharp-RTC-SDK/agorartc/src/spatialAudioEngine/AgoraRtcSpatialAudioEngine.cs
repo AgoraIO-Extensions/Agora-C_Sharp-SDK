@@ -66,244 +66,264 @@ namespace agora.rtc
 
         private void Release()
         {
-            var param = new { };
+            return;
+            // var param = new { };
 
-            AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine,
-            ApiTypeCloudSpatialAudio.kCloudSpatialAudioRelease,
-            JsonMapper.ToJson(param), out _result);
+            // AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine,
+            // ApiTypeCloudSpatialAudio.kCloudSpatialAudioRelease,
+            // JsonMapper.ToJson(param), out _result);
 
-            // AgoraRtcNative.DestroyIrisRtcEngine(_irisRtcSpatialAudioEngine);
-            _irisRtcCloudSpatialAudioEngine = IntPtr.Zero;
-            _result = new CharAssistant();
+            // // AgoraRtcNative.DestroyIrisRtcEngine(_irisRtcSpatialAudioEngine);
+            // _irisRtcCloudSpatialAudioEngine = IntPtr.Zero;
+            // _result = new CharAssistant();
         }
 
         public override void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            return;
+            // Dispose(true);
+            // GC.SuppressFinalize(this);
         }
 
         public override void InitEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler)
         {
-            if (_irisEngineEventHandlerHandleNative == IntPtr.Zero)
-            {
-                _irisCEventHandler = new IrisCEventHandler
-                {
-                    OnEvent = RtcCloudSpatialAudioEngineEventHandlerNative.OnEvent,
-                    OnEventWithBuffer = RtcCloudSpatialAudioEngineEventHandlerNative.OnEventWithBuffer
-                };
+            return;
+//             if (_irisEngineEventHandlerHandleNative == IntPtr.Zero)
+//             {
+//                 _irisCEventHandler = new IrisCEventHandler
+//                 {
+//                     OnEvent = RtcCloudSpatialAudioEngineEventHandlerNative.OnEvent,
+//                     OnEventWithBuffer = RtcCloudSpatialAudioEngineEventHandlerNative.OnEventWithBuffer
+//                 };
 
-                var cEventHandlerNativeLocal = new IrisCEventHandlerNative
-                {
-                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent),
-                    onEventWithBuffer =
-                        Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEventWithBuffer)
-                };
+//                 var cEventHandlerNativeLocal = new IrisCEventHandlerNative
+//                 {
+//                     onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent),
+//                     onEventWithBuffer =
+//                         Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEventWithBuffer)
+//                 };
 
-                _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
-                Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
-                _irisEngineEventHandlerHandleNative =
-                    AgoraRtcNative.SetIrisCloudAudioEngineEventHandler(_irisRtcCloudSpatialAudioEngine, _irisCEngineEventHandlerNative);
+//                 _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
+//                 Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
+//                 _irisEngineEventHandlerHandleNative =
+//                     AgoraRtcNative.SetIrisCloudAudioEngineEventHandler(_irisRtcCloudSpatialAudioEngine, _irisCEngineEventHandlerNative);
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
-                RtcCloudSpatialAudioEngineEventHandlerNative.CallbackObject = _callbackObject;
-#endif
-            }
+// #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+//                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
+//                 RtcCloudSpatialAudioEngineEventHandlerNative.CallbackObject = _callbackObject;
+// #endif
+//             }
 
-            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
+//             RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
         }
 
         private void ReleaseEventHandler()
         {
-            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-            RtcCloudSpatialAudioEngineEventHandlerNative.CallbackObject = null;
-            if (_callbackObject != null) _callbackObject.Release();
-            _callbackObject = null;
-#endif
-            AgoraRtcNative.UnsetIrisCloudAudioEngineEventHandler(_irisRtcCloudSpatialAudioEngine, _irisEngineEventHandlerHandleNative);
-            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
-            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
+            return;
+//             RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
+// #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+//             RtcCloudSpatialAudioEngineEventHandlerNative.CallbackObject = null;
+//             if (_callbackObject != null) _callbackObject.Release();
+//             _callbackObject = null;
+// #endif
+//             AgoraRtcNative.UnsetIrisCloudAudioEngineEventHandler(_irisRtcCloudSpatialAudioEngine, _irisEngineEventHandlerHandleNative);
+//             Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
+//             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
         public override int SetMaxAudioRecvCount(int maxCount)
         {
-            var param = new
-            {
-                maxCount
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetMaxAudioRecvCount,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     maxCount
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetMaxAudioRecvCount,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int SetAudioRecvRange(float range)
         {
-            var param = new
-            {
-                range
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetAudioRecvRange,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     range
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetAudioRecvRange,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int SetDistanceUnit(float unit)
         {
-            var param = new
-            {
-                unit
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetDistanceUnit,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     unit
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetDistanceUnit,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
         {
-            var param = new
-            {
-                position,
-                axisForward,
-                axisRight,
-                axisUp
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdateSelfPosition,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     position,
+            //     axisForward,
+            //     axisRight,
+            //     axisUp
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdateSelfPosition,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
         {
-            var param = new
-            {
-                position,
-                axisForward,
-                axisRight,
-                axisUp,
-                connection
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdateSelfPositionEx,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     position,
+            //     axisForward,
+            //     axisRight,
+            //     axisUp,
+            //     connection
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdateSelfPositionEx,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
         {
-            var param = new
-            {
-                playerId,
-                position,
-                forward
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdatePlayerPositionInfo,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     playerId,
+            //     position,
+            //     forward
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdatePlayerPositionInfo,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int SetParameters(string @params)
         {
-            var param = new
-            {
-                @params
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetParameters,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     @params
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetParameters,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int EnableMic(bool enable)
         {
-            var param = new
-            {
-                enable
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableMic,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     enable
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableMic,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int EnableSpeaker(bool enable)
         {
-            var param = new
-            {
-                enable
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableSpeaker,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     enable
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableSpeaker,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int Initialize(CloudSpatialAudioConfig config)
         {
-            var param = new
-            {
-                config
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioInitialze,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     config
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioInitialze,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int EnableSpatializer(bool enable, bool applyToTeam)
         {
-            var param = new
-            {
-                enable,
-                applyToTeam
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableSpatializer,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     enable,
+            //     applyToTeam
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableSpatializer,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int SetTeamId(int teamId)
         {
-            var param = new
-            {
-                teamId
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetTeamId,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     teamId
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetTeamId,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int SetRangeAudioMode(RANGE_AUDIO_MODE_TYPE rangeAudioMode)
         {
-            var param = new
-            {
-                rangeAudioMode
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetRangeAudioMode,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     rangeAudioMode
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetRangeAudioMode,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int EnterRoom(string token, string roomName, uint uid)
         {
-            var param = new
-            {
-                token,
-                roomName,
-                uid
-            };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnterRoom,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     token,
+            //     roomName,
+            //     uid
+            // };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnterRoom,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int ExitRoom()
         {
-            var param = new { };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioExitRoom,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new { };
+            // return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
+            //     ApiTypeCloudSpatialAudio.kCloudSpatialAudioExitRoom,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int GetTeammates(ref uint[] uids, int[] userCount)
         {
-            return 0;
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // return 0;
         }
     }
 
@@ -333,179 +353,194 @@ namespace agora.rtc
 
         public override int SetMaxAudioRecvCount(int maxCount)
         {
-            var param = new
-            {
-                maxCount
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetMaxAudioRecvCount,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     maxCount
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetMaxAudioRecvCount,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int SetAudioRecvRange(float range)
         {
-            var param = new
-            {
-                range
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetAudioRecvRange,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     range
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetAudioRecvRange,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int SetDistanceUnit(float unit)
         {
-            var param = new
-            {
-                unit
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetDistanceUnit,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     unit
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetDistanceUnit,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
         {
-            var param = new
-            {
-                position,
-                axisForward,
-                axisRight,
-                axisUp
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateSelfPosition,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     position,
+            //     axisForward,
+            //     axisRight,
+            //     axisUp
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateSelfPosition,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
         {
-            var param = new
-            {
-                position,
-                axisForward,
-                axisRight,
-                axisUp,
-                connection
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateSelfPositionEx,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     position,
+            //     axisForward,
+            //     axisRight,
+            //     axisUp,
+            //     connection
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateSelfPositionEx,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
         {
-            var param = new
-            {
-                playerId,
-                position,
-                forward
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdatePlayerPositionInfo,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     playerId,
+            //     position,
+            //     forward
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdatePlayerPositionInfo,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int SetParameters(string @params)
         {
-            var param = new
-            {
-                @params
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetParameters,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     @params
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetParameters,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int EnableMic(bool enable)
         {
-            var param = new
-            {
-                enable
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioEnableMic,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     enable
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioEnableMic,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int EnableSpeaker(bool enable)
         {
-            var param = new
-            {
-                enable
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioEnableSpeaker,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     enable
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioEnableSpeaker,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int UpdateRemotePosition(uint uid, float[] position, float[] forward)
         {
-            var param = new
-            {
-                uid,
-                position,
-                forward
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateRemotePosition,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     uid,
+            //     position,
+            //     forward
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateRemotePosition,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
         {
-            var param = new
-            {
-                uid,
-                position,
-                forward,
-                connection
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateRemotePositionEx,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     uid,
+            //     position,
+            //     forward,
+            //     connection
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateRemotePositionEx,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int RemoveRemotePosition(uint uid)
         {
-            var param = new
-            {
-                uid
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioRemoveRemotePosition,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     uid
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioRemoveRemotePosition,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int RemoveRemotePositionEx(uint uid, RtcConnection connection)
         {
-            var param = new
-            {
-                uid,
-                connection
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioRemoveRemotePositionEx,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     uid,
+            //     connection
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioRemoveRemotePositionEx,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int ClearRemotePositions()
         {
-            var param = new { };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioClearRemotePositions,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new { };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioClearRemotePositions,
+            //     JsonMapper.ToJson(param), out _result);
         }
 
         public override int ClearRemotePositionsEx(RtcConnection connection)
         {
-            var param = new
-            {
-                connection
-            };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioClearRemotePositionsEx,
-                JsonMapper.ToJson(param), out _result);
+            return (int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
+            // var param = new
+            // {
+            //     connection
+            // };
+            // return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+            //     ApiTypeLocalSpatialAudio.kLocalSpatialAudioClearRemotePositionsEx,
+            //     JsonMapper.ToJson(param), out _result);
         }
     }
 

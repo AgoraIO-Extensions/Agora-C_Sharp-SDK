@@ -80,8 +80,8 @@ namespace agora.rtc
             _irisRtcEngine = AgoraRtcNative.CreateIrisRtcEngine();
             _irisRtcDeviceManager = AgoraRtcNative.GetIrisRtcDeviceManager(_irisRtcEngine);
             _irisRtcMediaPlayer = AgoraRtcNative.GetIrisMediaPlayer(_irisRtcEngine);
-            _irisCloudSpatialAudioEngine = AgoraRtcNative.GetIrisCloudSpatialAudioEngine(_irisRtcEngine);
-            _irisLocalSpatialAudioEngine = AgoraRtcNative.GetIrisLocalSpatialAudioEngine(_irisRtcEngine);
+            //_irisCloudSpatialAudioEngine = AgoraRtcNative.GetIrisCloudSpatialAudioEngine(_irisRtcEngine);
+            //_irisLocalSpatialAudioEngine = AgoraRtcNative.GetIrisLocalSpatialAudioEngine(_irisRtcEngine);
 
             _videoDeviceManagerInstance = new AgoraRtcVideoDeviceManager(_irisRtcDeviceManager);
             _audioPlaybackDeviceManagerInstance = new AgoraRtcAudioPlaybackDeviceManager(_irisRtcDeviceManager);
