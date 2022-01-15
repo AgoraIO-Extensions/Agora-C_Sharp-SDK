@@ -10,7 +10,8 @@ using System.Runtime.InteropServices;
 
 namespace agora.rtc
 {
-    public enum MEDIA_SOURCE_TYPE {
+    public enum MEDIA_SOURCE_TYPE 
+    {
         /** 
         * 0: The audio playback device.
         */
@@ -67,7 +68,7 @@ namespace agora.rtc
         * 100: unknown media source.
         */
         UNKNOWN_MEDIA_SOURCE = 100
-    };
+    }
     
     public enum AUDIO_FRAME_TYPE
     {
@@ -104,6 +105,27 @@ namespace agora.rtc
 
         /** * 2: BGRA */
         FRAME_TYPE_BGRA = 3, // BGRA format
+    }
+
+    public enum IRIS_VIDEO_SOURCE_TYPE
+    {
+        kVideoSourceTypeCameraPrimary,
+        kVideoSourceTypeCameraSecondary,
+        kVideoSourceTypeScreenPrimary,
+        kVideoSourceTypeScreenSecondary,
+        kVideoSourceTypeCustom,
+        kVideoSourceTypeMediaPlayer,
+        kVideoSourceTypeRtcImagePng,
+        kVideoSourceTypeRtcImageJpeg,
+        kVideoSourceTypeRtcImageGif,
+        kVideoSourceTypeRemote,
+        kVideoSourceTypeTranscoded,
+        kVideoSourceTypeUnknown,
+    };
+
+    public enum IRIS_BYTES_PER_SAMPLE 
+    {
+        IRIS_TWO_BYTES_PER_SAMPLE = 2,
     };
 
     [StructLayout(LayoutKind.Sequential)]
@@ -202,6 +224,16 @@ namespace agora.rtc
         internal UInt64 internalSendTs;
         internal uint uid;
         internal int streamType;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisAudioPcmFrame {
+        internal UInt32 capture_timestamp;
+        internal UInt16 samples_per_channel_;
+        internal int sample_rate_hz_;
+        internal IRIS_BYTES_PER_SAMPLE bytes_per_sample;
+        internal UInt16 num_channels_;
+        internal Int16[] data_;
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -636,5 +668,28 @@ namespace agora.rtc
         */
         kVideoSourceTranscoded,
         kVideoSourceUnknown
+    };
+
+    /**
+    * The detailed information of the incoming audio frame in the PCM format.
+    */
+    public struct AudioPcmFrame {
+        /** The timestamp (ms) of the audio frame.
+        */
+        public UInt32 capture_timestamp;
+        /** The number of samples per channel.
+        */
+        public UInt64 samples_per_channel_;
+        /** The sample rate (Hz) of the audio data.
+        */
+        public int sample_rate_hz_;
+        /** The channel number.
+        */
+        public UInt64 num_channels_;
+        /** The number of bytes per sample.
+        */
+        public BYTES_PER_SAMPLE bytes_per_sample;
+        /** The audio frame data. */
+        public Int16[] data_;
     };
 }

@@ -11,16 +11,11 @@ namespace agora.rtc
 {
     public class IAgoraRtcVideoFrameObserver
     {
-        public virtual bool OnCaptureVideoFrame(VideoFrame videoFrame, VideoSourceType source_type)
+        public virtual bool OnCaptureVideoFrame(VideoFrame videoFrame, VideoFrameBufferConfig config)
         {
             return true;
         }
 
-        public virtual bool OnMediaPlayerVideoFrame(VideoFrame videoFrame, int mediaPlayerId)
-        {
-            return true;
-        }
-        
         public virtual bool OnPreEncodeVideoFrame(VideoFrame videoFrame)
         {
             return true;

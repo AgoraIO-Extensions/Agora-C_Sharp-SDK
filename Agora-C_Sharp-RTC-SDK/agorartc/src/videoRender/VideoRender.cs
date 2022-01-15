@@ -8,6 +8,7 @@
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace agora.rtc
 {
@@ -15,12 +16,12 @@ namespace agora.rtc
     
     internal abstract class IVideoStreamManager
     {
-        internal abstract int EnableVideoFrameBuffer(int width, int height, uint uid, string channel_id = "");
+        internal abstract int EnableVideoFrameBuffer(int width, int height, IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
 
-        internal abstract void DisableVideoFrameBuffer(uint uid = 0, string channel_id = "");
+        internal abstract void DisableVideoFrameBuffer(IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "");
 
         internal abstract bool GetVideoFrame(ref IrisVideoFrame video_frame,
-            ref bool is_new_frame, uint uid, string channel_id = "");
+            ref bool is_new_frame, IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
     }
 
     internal class VideoStreamManager : IVideoStreamManager, IDisposable
@@ -28,8 +29,10 @@ namespace agora.rtc
         private IAgoraRtcEngine _agoraRtcEngine;
         private IrisCVideoFrameBufferNative _videoFrameBuffer;
         private IrisVideoFrameBufferHandle _irisVideoFrameBufferHandle;
+        private IrisVideoFrameBufferConfig _videoFrameBufferConfig;
+        private IntPtr videoFrameBufferConfigPtr;
 
-        private IntPtr videoFrameBufferManagerPtr;
+        //private IntPtr videoFrameBufferManagerPtr;
 
         private bool _disposed;
 
@@ -43,7 +46,7 @@ namespace agora.rtc
             Dispose();
         }
 
-        internal override int EnableVideoFrameBuffer(int width, int height, uint uid, string channel_id = "")
+        internal override int EnableVideoFrameBuffer(int width, int height, IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "")
         {
             if (_agoraRtcEngine == null)
             {
@@ -57,22 +60,29 @@ namespace agora.rtc
             if (irisEngine != IntPtr.Zero)
             {
                 var rawDataPtr = AgoraRtcNative.GetIrisRtcRawData(irisEngine);
-                //var videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
-                AgoraRtcNative.Attach(rawDataPtr, videoFrameBufferManagerPtr);
+
+                //AgoraRtcNative.Attach(rawDataPtr, videoFrameBufferManagerPtr);
                 _videoFrameBuffer = new IrisCVideoFrameBufferNative {
                     type = (int)VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
                     OnVideoFrameReceived = IntPtr.Zero,
                     resize_width = width,
                     resize_height = height
                 };
-                _irisVideoFrameBufferHandle = AgoraRtcNative.EnableVideoFrameBuffer(videoFrameBufferManagerPtr, ref _videoFrameBuffer, uid, channel_id);
-                //AgoraRtcNative.FreeIrisVideoFrameBufferManager(videoFrameBufferManagerPtr);
+
+                _videoFrameBufferConfig = new IrisVideoFrameBufferConfig
+                {
+                  type = (int)sourceType,
+                  id = uid,
+                  key = channel_id
+                };
+                _irisVideoFrameBufferHandle = AgoraRtcNative.EnableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBuffer, ref _videoFrameBufferConfig);
+
                 return (int)ERROR_CODE_TYPE.ERR_OK;
             }
             return (int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
         }
 
-        internal override void DisableVideoFrameBuffer(uint uid = 0, string channel_id = "")
+        internal override void DisableVideoFrameBuffer(IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "")
         {
             if (_agoraRtcEngine == null)
             {
@@ -86,14 +96,17 @@ namespace agora.rtc
             if (irisEngine != IntPtr.Zero)
             {
                 var rawDataPtr = AgoraRtcNative.GetIrisRtcRawData(irisEngine);
-                //var videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
-                AgoraRtcNative.DisableVideoFrameBufferByUid(videoFrameBufferManagerPtr, uid, channel_id);
-                //AgoraRtcNative.Detach(rawDataPtr, videoFrameBufferManagerPtr);
-                //AgoraRtcNative.FreeIrisVideoFrameBufferManager(videoFrameBufferManagerPtr);
+                _videoFrameBufferConfig = new IrisVideoFrameBufferConfig
+                {
+                    type = (int)sourceType,
+                    id = uid,
+                    key = key
+                };
+                AgoraRtcNative.DisableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBufferConfig);
             }
         }
 
-        internal override bool GetVideoFrame(ref IrisVideoFrame video_frame, ref bool is_new_frame, uint uid, string channel_id = "")
+        internal override bool GetVideoFrame(ref IrisVideoFrame video_frame, ref bool is_new_frame, IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "")
         {
             if (_agoraRtcEngine == null)
             {
@@ -106,7 +119,14 @@ namespace agora.rtc
 
             if (irisEngine != IntPtr.Zero)
             {
-                return AgoraRtcNative.GetVideoFrame(videoFrameBufferManagerPtr, ref video_frame, out is_new_frame, uid, channel_id);
+
+                _videoFrameBufferConfig = new IrisVideoFrameBufferConfig
+                 {
+                     type = (int)sourceType,
+                     id = uid,
+                     key = key
+                 };
+                return AgoraRtcNative.GetVideoFrameByConfig(videoFrameBufferManagerPtr, ref video_frame, out is_new_frame, ref _videoFrameBufferConfig);
             }
             return false;
         }

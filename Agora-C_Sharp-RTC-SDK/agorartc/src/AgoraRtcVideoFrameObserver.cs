@@ -107,21 +107,19 @@ namespace agora.rtc
         }
 
 #if __UNITY__
-        [MonoPInvokeCallback(typeof(Func_VideoFrameLocal_Native))]
+        [MonoPInvokeCallback(typeof(Func_VideoCaptureLocal_Native))]
 #endif
-        internal static bool OnCaptureVideoFrame(IntPtr videoFramePtr, VideoSourceType source_type)
+        internal static bool OnCaptureVideoFrame(IntPtr videoFramePtr, IntPtr videoFrameConfig)
         {
+            var videoFrameBufferConfig = (IrisVideoFrameBufferConfig) (Marshal.PtrToStructure(videoFrameConfig, typeof(IrisVideoFrameBufferConfig)) ?? 
+                                                                   new IrisVideoFrameBufferConfig());
+            var config = new VideoFrameBufferConfig();
+            config.type = (IRIS_VIDEO_SOURCE_TYPE) videoFrameBufferConfig.type;
+            config.id = videoFrameBufferConfig.id;
+            config.key = videoFrameBufferConfig.key;
+            
             return VideoFrameObserver == null || 
-                VideoFrameObserver.OnCaptureVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 0), source_type);
-        }
-
-#if __UNITY__
-        [MonoPInvokeCallback(typeof(Func_VideoFrameLocal_Native))]
-#endif
-        internal static bool OnMediaPlayerVideoFrame(IntPtr videoFramePtr, int mediaPlayerId)
-        {
-            return VideoFrameObserver == null ||
-                   VideoFrameObserver.OnMediaPlayerVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 1), mediaPlayerId);
+                VideoFrameObserver.OnCaptureVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 0), config);
         }
 
 #if __UNITY__

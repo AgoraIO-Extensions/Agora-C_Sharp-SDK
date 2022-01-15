@@ -30,6 +30,7 @@ namespace agora.rtc
         [SerializeField] private uint Uid = 0;
         [SerializeField] private string ChannelId = "";
         [SerializeField] private bool Enable = true;
+        [SerializeField] private IRIS_VIDEO_SOURCE_TYPE sourceType = IRIS_VIDEO_SOURCE_TYPE.kVideoSourceTypeCameraPrimary;
 
 
         private Component _renderer;
@@ -93,7 +94,7 @@ namespace agora.rtc
             if (Enable)
             {
                 isFresh = false;
-                ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, Uid, ChannelId);
+                ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, sourceType, Uid, ChannelId);
                 if (!ret)
                 {
                     AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", ChannelId, Uid));
@@ -175,7 +176,7 @@ namespace agora.rtc
 
                 if (_videoStreamManager != null)
                 {
-                    _videoStreamManager.EnableVideoFrameBuffer(VideoPixelWidth, VideoPixelHeight, Uid, ChannelId);
+                    _videoStreamManager.EnableVideoFrameBuffer(VideoPixelWidth, VideoPixelHeight, sourceType, Uid, ChannelId);
                 }
             
                 _needUpdateInfo = false;
@@ -234,11 +235,13 @@ namespace agora.rtc
             }
         }
 
-        public void SetForUser(uint uid = 0, string channelId = "", int videoPixelWidth = 1080,
-            int videoPixelHeight = 720)
+        public void SetForUser(uint uid = 0, string channelId = "", 
+            IRIS_VIDEO_SOURCE_TYPE source_type = IRIS_VIDEO_SOURCE_TYPE.kVideoSourceTypeCameraPrimary, 
+            int videoPixelWidth = 1080, int videoPixelHeight = 720)
         {
             Uid = uid;
             ChannelId = channelId;
+            sourceType = source_type;
             VideoPixelWidth = videoPixelWidth;
             VideoPixelHeight = videoPixelHeight;
             _needUpdateInfo = true;
@@ -250,7 +253,7 @@ namespace agora.rtc
 
             if (GetEngine() != null && _videoStreamManager != null)
             {
-                _videoStreamManager.DisableVideoFrameBuffer(Uid, ChannelId);
+                _videoStreamManager.DisableVideoFrameBuffer(sourceType, Uid, ChannelId);
                 _videoStreamManager = null;
             }
 

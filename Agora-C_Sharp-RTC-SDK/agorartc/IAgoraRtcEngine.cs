@@ -39,6 +39,12 @@ namespace agora.rtc
 
         public abstract IAgoraRtcVideoDeviceManager GetAgoraRtcVideoDeviceManager();
 
+        public abstract IAgoraRtcMediaPlayer GetAgoraRtcMediaPlayer();
+
+        public abstract IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine();
+
+        public abstract IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine();
+
         public abstract string GetVersion();
 
         public abstract string GetErrorDescription(int code);
@@ -134,10 +140,6 @@ namespace agora.rtc
 
         public abstract int StopAudioRecording();
 
-        //CreateMediaPlayer
-
-        //DestroyMediaPlayer
-
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle);
 
         public abstract int StopAudioMixing();
@@ -161,6 +163,8 @@ namespace agora.rtc
         public abstract int GetAudioMixingCurrentPosition();
 
         public abstract int SetAudioMixingPosition(int pos /*in ms*/);
+
+        public abstract int SetAudioMixingPitch(int pitch);
 
         public abstract int GetEffectsVolume();
 
@@ -196,7 +200,9 @@ namespace agora.rtc
 
         public abstract int SetRemoteVoicePosition(uint uid, double pan, double gain);
 
-        public abstract int SetRemoteVoice3DPosition(uint uid, double azimuth, double elevation, double distance);
+        public abstract int EnableSpatialAudio(bool enabled);
+
+        public abstract int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param);
 
         public abstract int SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset);
 
@@ -293,13 +299,13 @@ namespace agora.rtc
     
         public abstract int LoadExtensionProvider(string extension_lib_path);
 
-        public abstract int SetExtensionProviderProperty(string provider_name, string key, string json_value);
+        public abstract int SetExtensionProviderProperty(string provider, string key, string value);
 
-        public abstract int EnableExtension(string provider_name, string extension_name, bool enable=true);
+        public abstract int EnableExtension(string provider, string extension, bool enable=true);
 
-        public abstract int SetExtensionProperty(string provider_name, string extension_name, string key, string json_value);
+        public abstract int SetExtensionProperty(string provider, string extension, string key, string value);
 
-        public abstract int GetExtensionProperty(string provider_name, string extension_name, string key, string json_value, int buf_len);
+        public abstract int GetExtensionProperty(string provider, string extension, string key, string value, int buf_len);
 
         public abstract int SetCameraCapturerConfiguration(CameraCapturerConfiguration config);
 
@@ -411,9 +417,9 @@ namespace agora.rtc
 
         public abstract int EnableEncryption(bool enabled, EncryptionConfig config);
 
-        public abstract int CreateDataStream(int[] streamId, bool reliable, bool ordered);
+        public abstract int CreateDataStream(bool reliable, bool ordered);
 
-        public abstract int CreateDataStream(int[] streamId, DataStreamConfig config);
+        public abstract int CreateDataStream(DataStreamConfig config);
 
         public abstract int SendStreamMessage(int streamId, string data, uint length);
 
@@ -485,15 +491,15 @@ namespace agora.rtc
 
         public abstract int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection);
 
-        public abstract int MuteRemoteAudioStreamEx(uint remoteUid, bool mute, RtcConnection connection);
+        public abstract int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection);
 
-        public abstract int MuteRemoteVideoStreamEx(uint remoteUid, bool mute, RtcConnection connection);
+        public abstract int MuteRemoteVideoStreamEx(uint uid, bool mute, RtcConnection connection);
 
-        public abstract int SetRemoteVoicePositionEx(uint remoteUid, double pan, double gain, RtcConnection connection);
+        public abstract int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection);
 
-        public abstract int SetRemoteVoice3DPositionEx(uint remoteUid, double azimuth, double elevation, double distance, RtcConnection connection);
+        public abstract int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams param, RtcConnection connection);
 
-        public abstract int SetRemoteRenderModeEx(uint remoteUid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
+        public abstract int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
 
         public abstract int EnableLoopbackRecordingEx(bool enabled, RtcConnection connection);
 
@@ -501,9 +507,9 @@ namespace agora.rtc
 
         public abstract int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config);
 
-        public abstract int CreateDataStreamEx(int[] streamId, bool reliable, bool ordered, RtcConnection connection);
+        public abstract int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection);
 
-        public abstract int CreateDataStreamEx(int[] streamId, DataStreamConfig config, RtcConnection connection);
+        public abstract int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection);
 
         public abstract int SendStreamMessageEx(int streamId, string data, uint length, RtcConnection connection);
 
@@ -512,6 +518,8 @@ namespace agora.rtc
         public abstract int ClearVideoWatermarkEx(RtcConnection connection);
 
         public abstract int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection);
+
+        public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
 
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
 
@@ -706,13 +714,13 @@ namespace agora.rtc
 
         public virtual void OnVideoPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) {}
 
-        public virtual void OnExtensionEvent(string provider_name, string ext_name, string key, string json_value) {}
+        public virtual void OnExtensionEvent(string provider, string extension, string key, string value) {}
 
-        public virtual void OnExtensionStarted(string provider_name, string ext_name) {}
+        public virtual void OnExtensionStarted(string provider, string extension) {}
 
-        public virtual void OnExtensionStopped(string provider_name, string ext_name) {}
+        public virtual void OnExtensionStopped(string provider, string extension) {}
 
-        public virtual void OnExtensionErrored(string provider_name, string ext_name, int error, string msg) {}
+        public virtual void OnExtensionErrored(string provider, string extension, int error, string msg) {}
 
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) {}
 
@@ -721,7 +729,7 @@ namespace agora.rtc
         public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed) {}
 
         public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) {}
-  };
+    };
 
     internal static partial class ObsoleteMethodWarning
     {
