@@ -16,78 +16,86 @@ namespace agora.fpa
         PROXY_CONNECTION_FAILED_AND_NO_FALLBACK
     };
 
-    public enum FPA_ERROR_CODE
-    {
+    public enum FPA_ERROR_CODE {
         /**
-        * 0: No error occurs.
+        * Everything is OK, No error happen
         */
         FPA_ERR_NONE = 0,
-        /**
-        * A general error occurs (no specified reason).
-        */
-        FPA_ERR_FAILED = -10001,
-        /**
-        * The SDK module is not ready. Choose one of the following solutions:
-        */
-        FPA_ERR_NOT_READY = -10002,
-        /**
-        * The SDK does not support this function.
-        */
-        FPA_ERR_NOT_SUPPORTED = -10003,
-        /**
-        * The request is rejected.
-        */
-        FPA_ERR_REFUSED = -10004,
-        /**
-        * The buffer size is not big enough to store the returned data.
-        */
-        FPA_ERR_BUFFER_TOO_SMALL = -10005,
-        /**
-        * The state is invalid.
-        */
-        FPA_ERR_INVALID_STATE = -10006,
 
-        FPA_ERR_TIMEDOUT = -10007,
+        /**
+        * Bad parameters when call function
+        */
+        FPA_ERR_INVALID_ARGUMENT = -1,
 
-        FPA_ERR_TOO_OFTEN = -10008,
+        /**
+        * No memory to allocate object
+        */
+        FPA_ERR_NO_MEMORY = -2,
 
-        FPA_ERR_INVALID_ARGUMENT = -10009,
+        /**
+        * Not init
+        */
+        FPA_ERR_NOT_INITIALIZED = -3,
 
-        FPA_ERR_NOT_INITIALIZED = -10010,
+        /**
+        * Initialize failed
+        */
+        FPA_ERR_CORE_INITIALIZE_FAILED = -4,
 
-        FPA_ERR_NO_PERMISSION = -10011,
         /**
-        * Local server initialize failed.
+        * Unable to bind a socket port
         */
-        FPA_ERR_SERVICE_START_FAILED = -10012,
+        FPA_ERR_UNABLE_BIND_SOCKET_PORT = -5,
+    };
+
+    /**
+    * fpa fallback error reason code
+    */
+    public enum FPA_FAILED_REASON_CODE {
         /**
-        * Failed to bind port
+        * Query dns failed(convert request url to ip failed)
         */
-        FPA_ERR_BIND_PORT_FAILED = -10013,
+        FPA_FAILED_REASON_DNS_QUERY = -101,
+
         /**
-        * Unable to get available port.
+        * Create socket failed
         */
-        FPA_ERR_BAD_PORT = -10014,
+        FPA_FAILED_REASON_SOCKET_CREATE = -102,
+
         /**
-        * bad file descriptor
+        * Connect socket failed
         */
-        FPA_ERR_BAD_FD = -10015,
+        FPA_FAILED_REASON_SOCKET_CONNECT = -103,
+
         /**
-        * connect err
+        * Connect remote server timeout(most use at NOT fallback)
         */
-        FPA_ERR_CONNECT = -10016,
+        FPA_FAILED_REASON_CONNECT_TIMEOUT = -104,
+
         /**
-        * send err
+        * Not match a chain id(most use at http)
         */
-        FPA_ERR_SEND = -10017,
+        FPA_FAILED_REASON_NO_CHAIN_ID_MATCH = -105,
+
         /**
-        * read err
+        * Failed to read data
         */
-        FPA_ERR_READ = -10018,
+        FPA_FAILED_REASON_DATA_READ = -106,
+
         /**
-        * can't find chain id
+        * Failed to write data
         */
-        FPA_ERR_NO_CHAIN = -10019,
+        FPA_FAILED_REASON_DATA_WRITE = -107,
+
+        /**
+        * Call too frequently
+        */
+        FPA_FAILED_REASON_TOO_FREQUENTLY = -108,
+
+        /**
+        * Service core connect too many connections
+        */
+        FPA_FAILED_REASON_TOO_MANY_CONNECTIONS = -109,
     };
 
     public class FpaChainInfo
@@ -153,13 +161,13 @@ namespace agora.fpa
             log_file_path = "";
         }
 
-        public FpaProxyServiceConfig(string app_id, string token, int log_level, int log_file_size_kb, int log_file_path)
+        public FpaProxyServiceConfig(string app_id, string token, int log_level, int log_file_size_kb, string log_file_path)
         {
             this.app_id = app_id;
             this.token = token;
             this.log_level = log_level;
             this.log_file_size_kb = log_file_size_kb;
-            this.log_file_path = this.log_file_path;
+            this.log_file_path = log_file_path;
         }
         public string app_id { set; get; }
         public string token { set; get; }

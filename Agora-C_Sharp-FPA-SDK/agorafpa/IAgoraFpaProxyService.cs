@@ -40,7 +40,13 @@ namespace agora.fpa
 
     public abstract class IAgoraFpaProxyServiceEventHandler
     {
-        public virtual void OnProxyEvent(FPA_PROXY_EVENT @event, FpaProxyConnectionInfo connection_info, FPA_ERROR_CODE err) { }
+        public virtual void OnAccelerationSuccess(FpaProxyConnectionInfo info) { }
+
+        public virtual void OnConnected(FpaProxyConnectionInfo info) { }
+
+        public virtual void OnDisconnectedAndFallback(FpaProxyConnectionInfo info, FPA_FAILED_REASON_CODE reason) { }
+
+        public virtual void OnConnectionFailed(FpaProxyConnectionInfo info, FPA_FAILED_REASON_CODE reason) { }
     }
 
     internal static partial class ObsoleteMethodWarning

@@ -42,6 +42,7 @@ namespace agora.fpa
         {
             _result = new CharAssistant();
             _irisFpaProxyService = AgoraFpaNative.CreateIrisFpaProxyService();
+            SetParameters("{\"fpa:app_type\":2}");
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -238,18 +239,62 @@ namespace agora.fpa
 #endif
             switch(@event)
             {
-                
-                case "onProxyEvent":
+                case "onAccelerationSuccess":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (ServiceEventHandler != null)
                         {
-                            ServiceEventHandler.OnProxyEvent(
-                                (FPA_PROXY_EVENT) AgoraJson.GetData<int>(data, "event"),
-                                AgoraJson.JsonToStruct<FpaProxyConnectionInfo>(data, "connection_info"),
-                                (FPA_ERROR_CODE) AgoraJson.GetData<int>(data, "err")
+                            ServiceEventHandler.OnAccelerationSuccess(
+                                AgoraJson.JsonToStruct<FpaProxyConnectionInfo>(data, "info")
+                            );
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onConnected":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (ServiceEventHandler != null)
+                        {
+                            ServiceEventHandler.OnConnected(
+                                AgoraJson.JsonToStruct<FpaProxyConnectionInfo>(data, "info")
+                            );
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onDisconnectedAndFallback":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (ServiceEventHandler != null)
+                        {
+                            ServiceEventHandler.OnDisconnectedAndFallback(
+                                AgoraJson.JsonToStruct<FpaProxyConnectionInfo>(data, "info"),
+                                (FPA_FAILED_REASON_CODE) AgoraJson.GetData<int>(data, "reason")
+                            );
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onConnectionFailed":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (ServiceEventHandler != null)
+                        {
+                            ServiceEventHandler.OnConnectionFailed(
+                                AgoraJson.JsonToStruct<FpaProxyConnectionInfo>(data, "info"),
+                                (FPA_FAILED_REASON_CODE) AgoraJson.GetData<int>(data, "reason")
                             );
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 

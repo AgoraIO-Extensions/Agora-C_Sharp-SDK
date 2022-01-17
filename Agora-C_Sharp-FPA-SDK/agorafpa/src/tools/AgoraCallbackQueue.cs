@@ -51,10 +51,17 @@ namespace agora.fpa
 
         private void Update()
         {
-            var action = DeQueue();
-            if (action != null)
+            while(true)
             {
-                action.Invoke();
+                var action = DeQueue();
+                if (action != null)
+                {
+                    action.Invoke();
+                }
+                else
+                {
+                    break;
+                }
             }
         }
 
