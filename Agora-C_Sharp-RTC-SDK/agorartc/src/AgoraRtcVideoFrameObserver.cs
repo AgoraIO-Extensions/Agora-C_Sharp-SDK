@@ -114,7 +114,7 @@ namespace agora.rtc
             var videoFrameBufferConfig = (IrisVideoFrameBufferConfig) (Marshal.PtrToStructure(videoFrameConfig, typeof(IrisVideoFrameBufferConfig)) ?? 
                                                                    new IrisVideoFrameBufferConfig());
             var config = new VideoFrameBufferConfig();
-            config.type = (IRIS_VIDEO_SOURCE_TYPE) videoFrameBufferConfig.type;
+            config.type = (VIDEO_SOURCE_TYPE) videoFrameBufferConfig.type;
             config.id = videoFrameBufferConfig.id;
             config.key = videoFrameBufferConfig.key;
             

@@ -30,7 +30,7 @@ namespace agora.rtc
         [SerializeField] private uint Uid = 0;
         [SerializeField] private string ChannelId = "";
         [SerializeField] private bool Enable = true;
-        [SerializeField] private IRIS_VIDEO_SOURCE_TYPE sourceType = IRIS_VIDEO_SOURCE_TYPE.kVideoSourceTypeCameraPrimary;
+        [SerializeField] private VIDEO_SOURCE_TYPE sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
 
 
         private Component _renderer;
@@ -134,7 +134,7 @@ namespace agora.rtc
                         {
                             if (_needResize)
                             {
-                                _texture.Resize(VideoPixelWidth, VideoPixelHeight);
+                                _texture.Reinitialize(VideoPixelWidth, VideoPixelHeight);
                                 _texture.LoadRawTextureData(_cachedVideoFrame.y_buffer,
                                     (int) VideoPixelWidth * (int) VideoPixelHeight * 4);
                                 _texture.Apply();
@@ -235,8 +235,8 @@ namespace agora.rtc
             }
         }
 
-        public void SetForUser(uint uid = 0, string channelId = "", 
-            IRIS_VIDEO_SOURCE_TYPE source_type = IRIS_VIDEO_SOURCE_TYPE.kVideoSourceTypeCameraPrimary, 
+        public void SetForUser(uint uid = 0, string channelId = "",
+            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY, 
             int videoPixelWidth = 1080, int videoPixelHeight = 720)
         {
             Uid = uid;

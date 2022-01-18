@@ -181,7 +181,7 @@ namespace agora.rtc
 
     public struct VideoFrameBufferConfig 
     {
-        public IRIS_VIDEO_SOURCE_TYPE type;
+        public VIDEO_SOURCE_TYPE type;
         public uint id;
         public string key;
     }
