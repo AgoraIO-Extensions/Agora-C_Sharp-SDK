@@ -107,22 +107,6 @@ namespace agora.rtc
         FRAME_TYPE_BGRA = 3, // BGRA format
     }
 
-    public enum IRIS_VIDEO_SOURCE_TYPE
-    {
-        kVideoSourceTypeCameraPrimary,
-        kVideoSourceTypeCameraSecondary,
-        kVideoSourceTypeScreenPrimary,
-        kVideoSourceTypeScreenSecondary,
-        kVideoSourceTypeCustom,
-        kVideoSourceTypeMediaPlayer,
-        kVideoSourceTypeRtcImagePng,
-        kVideoSourceTypeRtcImageJpeg,
-        kVideoSourceTypeRtcImageGif,
-        kVideoSourceTypeRemote,
-        kVideoSourceTypeTranscoded,
-        kVideoSourceTypeUnknown,
-    };
-
     public enum IRIS_BYTES_PER_SAMPLE 
     {
         IRIS_TWO_BYTES_PER_SAMPLE = 2,
@@ -627,49 +611,7 @@ namespace agora.rtc
 		 */
         public int avsync_type { set; get; }
     }
-
-     /**
-    * Video source types definition.
-    **/
-    public enum VideoSourceType {
-        /** Video captured by the camera.
-        */
-        kVideoSourceCameraPrimary,
-        kVideoSourceCamera = kVideoSourceCameraPrimary,
-        /** Video captured by the secondary camera.
-        */
-        kVideoSourceCameraSecondary,
-        /** Video for screen sharing.
-        */
-        kVideoSourceScreenPrimary,
-        kVideoSourceScreen = kVideoSourceScreenPrimary,
-        /** Video for secondary screen sharing.
-        */
-        kVideoSourceScreenSecondary,
-        /** Not define.
-        */
-        kVideoSourceCustom,
-        /** Video for media player sharing.
-        */
-        kVideoSourceMediaPlayer,
-        /** Video for png image.
-        */
-        kVideoSourceRtmImagePng,
-        /** Video for png image.
-        */
-        kVideoSourceRtcImageJpeg,
-        /** Video for png image.
-        */
-        kVideoSourceRtcImageGif,
-        /** Remote video received from network.
-        */
-        kVideoSourceRemote,
-        /** Video for transcoded.
-        */
-        kVideoSourceTranscoded,
-        kVideoSourceUnknown
-    };
-
+   
     /**
     * The detailed information of the incoming audio frame in the PCM format.
     */

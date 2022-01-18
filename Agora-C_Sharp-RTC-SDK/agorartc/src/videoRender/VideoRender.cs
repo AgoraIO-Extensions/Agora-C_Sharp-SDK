@@ -16,12 +16,12 @@ namespace agora.rtc
     
     internal abstract class IVideoStreamManager
     {
-        internal abstract int EnableVideoFrameBuffer(int width, int height, IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
+        internal abstract int EnableVideoFrameBuffer(int width, int height, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
 
-        internal abstract void DisableVideoFrameBuffer(IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "");
+        internal abstract void DisableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "");
 
         internal abstract bool GetVideoFrame(ref IrisVideoFrame video_frame,
-            ref bool is_new_frame, IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
+            ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
     }
 
     internal class VideoStreamManager : IVideoStreamManager, IDisposable
@@ -46,7 +46,7 @@ namespace agora.rtc
             Dispose();
         }
 
-        internal override int EnableVideoFrameBuffer(int width, int height, IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "")
+        internal override int EnableVideoFrameBuffer(int width, int height, VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "")
         {
             if (_agoraRtcEngine == null)
             {
@@ -82,7 +82,7 @@ namespace agora.rtc
             return (int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
         }
 
-        internal override void DisableVideoFrameBuffer(IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "")
+        internal override void DisableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "")
         {
             if (_agoraRtcEngine == null)
             {
@@ -106,7 +106,7 @@ namespace agora.rtc
             }
         }
 
-        internal override bool GetVideoFrame(ref IrisVideoFrame video_frame, ref bool is_new_frame, IRIS_VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "")
+        internal override bool GetVideoFrame(ref IrisVideoFrame video_frame, ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "")
         {
             if (_agoraRtcEngine == null)
             {

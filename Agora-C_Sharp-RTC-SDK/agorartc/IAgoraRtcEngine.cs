@@ -41,9 +41,9 @@ namespace agora.rtc
 
         public abstract IAgoraRtcMediaPlayer GetAgoraRtcMediaPlayer();
 
-        public abstract IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine();
+        //public abstract IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine();
 
-        public abstract IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine();
+        //public abstract IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine();
 
         public abstract string GetVersion();
 
@@ -664,7 +664,7 @@ namespace agora.rtc
 
         public virtual void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed) {}
 
-        public virtual void OnActiveSpeaker(RtcConnection connection, uint userId) {}
+        public virtual void OnActiveSpeaker(uint userId) {}
 
         public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole) {}
 
