@@ -134,7 +134,7 @@ namespace agora.rtc
                         {
                             if (_needResize)
                             {
-                                _texture.Reinitialize(VideoPixelWidth, VideoPixelHeight);
+                                _texture.Resize(VideoPixelWidth, VideoPixelHeight);
                                 _texture.LoadRawTextureData(_cachedVideoFrame.y_buffer,
                                     (int) VideoPixelWidth * (int) VideoPixelHeight * 4);
                                 _texture.Apply();
