@@ -120,7 +120,7 @@ cp $ANDROID_SRC_PATH/armeabi-v7a/Release/*.so "$ANDROID_DST_PATH"/libs/armeabi-v
 echo "[Unity CI] copying iOS ..."
 IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-FPA-SDK/Plugins/iOS"
 cp -PRf $IOS_SRC_PATH/FPA/libs/ALL_ARCHITECTURE/*.framework "$IOS_DST_PATH"
-cp -PRf $IOS_SRC_PATH/OS64COMBINED/Release/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
 
 # macOS
 # echo "[Unity CI] copying macOS ..."
