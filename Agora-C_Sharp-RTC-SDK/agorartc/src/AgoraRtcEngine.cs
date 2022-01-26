@@ -2524,12 +2524,7 @@ namespace agora.rtc
         {
             var param = new
             {
-                config.ipList,
-                config.ipListSize,
-                config.domainList,
-                config.domainListSize,
-                config.verifyDomainName,
-                config.mode
+                config
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetLocalAccessPoint,
                 JsonMapper.ToJson(param), out _result);
