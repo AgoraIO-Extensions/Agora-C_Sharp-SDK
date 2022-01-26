@@ -61,6 +61,7 @@ namespace agora.rtc
         public abstract int SwitchChannel(string token, string channelId);
         public abstract int SwitchChannel(string token, string channelId, ChannelMediaOptions options);
         public abstract int LeaveChannel();
+        public abstract int SetAVSyncSource(string channelId, uint uid);
         public abstract int RenewToken(string token);
         public abstract int RegisterLocalUserAccount(string appId, string userAccount);
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount);
@@ -297,6 +298,10 @@ namespace agora.rtc
         public abstract int AddPublishStreamUrl(string url, bool transcodingEnabled);
         public abstract int RemovePublishStreamUrl(string url);
         public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
+        public abstract int StartRtmpStreamWithoutTranscoding(string url);
+        public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
+        public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
+        public abstract int StopRtmpStream(string url);
 
         [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public abstract int AddVideoWatermark(RtcImage watermark);
@@ -304,6 +309,11 @@ namespace agora.rtc
         public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
         public abstract int ClearVideoWatermarks();
         public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options);
+
+        public abstract int SetLowlightEnhanceOptions(bool enabled, LowLightEnhanceOptions options);
+        public abstract int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options);
+        public abstract int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options);
+
         public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource);
         public abstract int AddInjectStreamUrl(string url, InjectStreamConfig config);
         public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
@@ -316,6 +326,7 @@ namespace agora.rtc
         public abstract int UnRegisterMediaMetadataObserver(METADATA_TYPE type);
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
         public abstract int SetParameters(string parameters);
+        public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
         public abstract int SetMaxMetadataSize(int size);
         public abstract int SendMetadata(Metadata metadata);
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap);
@@ -628,7 +639,7 @@ namespace agora.rtc
         }
 
         public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state,
-            RTMP_STREAM_PUBLISH_ERROR errCode)
+            RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
         {
         }
 

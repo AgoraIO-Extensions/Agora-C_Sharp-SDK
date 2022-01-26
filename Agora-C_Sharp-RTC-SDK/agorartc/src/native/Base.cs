@@ -26,6 +26,7 @@ namespace agora.rtc
         kEngineJoinChannel,
         kEngineSwitchChannel,
         kEngineLeaveChannel,
+        kEngineSetAvSyncSource,
         kEngineRenewToken,
         kEngineRegisterLocalUserAccount,
         kEngineJoinChannelWithUserAccount,
@@ -161,9 +162,16 @@ namespace agora.rtc
         kEngineAddPublishStreamUrl,
         kEngineRemovePublishStreamUrl,
         kEngineSetLiveTranscoding,
+        kEngineStartRtmpStreamWithoutTranscoding,
+        kEngineStartRtmpStreamWithTranscoding,
+        kEngineUpdateRtmpTranscoding,
+        kEngineStopRtmpStream,
         kEngineAddVideoWaterMark,
         kEngineClearVideoWaterMarks,
         kEngineSetBeautyEffectOptions,
+        kEngineSetLowlightEnhanceOptions,
+        kEngineSetVideoDenoiserOptions,
+        kEngineSetColorEnhanceOptions,
         kEngineEnableVirtualBackground,
         kEngineAddInjectStreamUrl,
         kEngineStartChannelMediaRelay,
@@ -198,6 +206,7 @@ namespace agora.rtc
         kChannelJoinChannel,
         kChannelJoinChannelWithUserAccount,
         kChannelLeaveChannel,
+        kChannelSetAvSyncSource,
         kChannelPublish,
         kChannelUnPublish,
         kChannelChannelId,
@@ -231,6 +240,10 @@ namespace agora.rtc
         kChannelAddPublishStreamUrl,
         kChannelRemovePublishStreamUrl,
         kChannelSetLiveTranscoding,
+        kChannelStartRtmpStreamWithoutTranscoding,
+        kChannelStartRtmpStreamWithTranscoding,
+        kChannelUpdateRtmpTranscoding,
+        kChannelStopRtmpStream,
         kChannelAddInjectStreamUrl,
         kChannelRemoveInjectStreamUrl,
         kChannelStartChannelMediaRelay,
@@ -268,6 +281,8 @@ namespace agora.rtc
 
         kADMStartAudioDeviceLoopbackTest,
         kADMStopAudioDeviceLoopbackTest,
+        kADMFollowSystemPlaybackDevice,
+        kADMFollowSystemRecordingDevice
     }
 
     internal enum ApiTypeVideoDeviceManager

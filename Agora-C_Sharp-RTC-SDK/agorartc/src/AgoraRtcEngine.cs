@@ -640,6 +640,17 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
+        public override int SetAVSyncSource(string channelId, uint uid)
+        {
+            var param = new
+            {
+                channelId,
+                uid
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetAvSyncSource,
+                JsonMapper.ToJson(param), out _result);
+        }
+
         public override int RenewToken(string token)
         {
             var param = new
@@ -2265,6 +2276,45 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
+        public override int StartRtmpStreamWithoutTranscoding(string url)
+        {
+            var param = new
+            {
+                url
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineStartRtmpStreamWithoutTranscoding,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
+        {
+            var param = new
+            {
+                url,
+                transcoding
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineStartRtmpStreamWithTranscoding,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int UpdateRtmpTranscoding(LiveTranscoding transcoding)
+        {
+            var param = new
+            {
+                transcoding
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineUpdateRtmpTranscoding,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int StopRtmpStream(string url)
+        {
+            var param = new
+            {
+                url
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineStopRtmpStream,
+                JsonMapper.ToJson(param), out _result);
+        }
+
         [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public override int AddVideoWatermark(RtcImage watermark)
         {
@@ -2306,6 +2356,39 @@ namespace agora.rtc
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineSetBeautyEffectOptions,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int SetLowlightEnhanceOptions(bool enabled, LowLightEnhanceOptions options)
+        {
+            var param = new
+            {
+                enabled,
+                options
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetLowlightEnhanceOptions,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options)
+        {
+            var param = new
+            {
+                enabled,
+                options
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetVideoDenoiserOptions,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options)
+        {
+            var param = new
+            {
+                enabled,
+                options
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetColorEnhanceOptions,
                 JsonMapper.ToJson(param), out _result);
         }
 
@@ -2437,6 +2520,20 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
+        public override int SetLocalAccessPoint(LocalAccessPointConfiguration config)
+        {
+            var param = new
+            {
+                config.ipList,
+                config.ipListSize,
+                config.domainList,
+                config.domainListSize,
+                config.verifyDomainName,
+                config.mode
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetLocalAccessPoint,
+                JsonMapper.ToJson(param), out _result);
+        }
         public override int SetMaxMetadataSize(int size)
         {
             var param = new
@@ -3576,7 +3673,7 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnRtmpStreamingStateChanged(
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
-                                (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
+                                (RTMP_STREAM_PUBLISH_ERROR_TYPE) AgoraJson.GetData<int>(data, "errCode"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -4883,7 +4980,7 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnRtmpStreamingStateChanged(
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
-                                (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
+                                (RTMP_STREAM_PUBLISH_ERROR_TYPE) AgoraJson.GetData<int>(data, "errCode"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

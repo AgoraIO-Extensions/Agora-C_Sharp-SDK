@@ -26,6 +26,8 @@ namespace agora.rtc
         public abstract int JoinChannelWithUserAccount(string token, string userAccount, ChannelMediaOptions options);
         public abstract int LeaveChannel();
 
+        public abstract int SetAVSyncSource(string channelId, uint uid);
+
         [Obsolete(ObsoleteMethodWarning.PublishWarning, false)]
         public abstract int Publish();
 
@@ -80,6 +82,10 @@ namespace agora.rtc
         public abstract int AddPublishStreamUrl(string url, bool transcodingEnabled);
         public abstract int RemovePublishStreamUrl(string url);
         public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
+        public abstract int StartRtmpStreamWithoutTranscoding(string url);
+        public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
+        public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
+        public abstract int StopRtmpStream(string url);
         public abstract int AddInjectStreamUrl(string url, InjectStreamConfig config);
         public abstract int RemoveInjectStreamUrl(string url);
         public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
@@ -213,7 +219,7 @@ namespace agora.rtc
         }
 
         public virtual void OnRtmpStreamingStateChanged(string channelId, string url, RTMP_STREAM_PUBLISH_STATE state,
-            RTMP_STREAM_PUBLISH_ERROR errCode)
+            RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
         {
         }
 

@@ -181,6 +181,16 @@ namespace agora.rtc
             return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel, ApiTypeChannel.kChannelLeaveChannel,
                 JsonMapper.ToJson(param), out _result);
         }
+        public override int SetAVSyncSource(string channelId, uint uid)
+        {
+            var param = new
+            {
+                channelId,
+                uid
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel, ApiTypeChannel.kChannelSetAvSyncSource,
+                JsonMapper.ToJson(param), out _result);
+        }
 
         [Obsolete(ObsoleteMethodWarning.PublishWarning, false)]
         public override int Publish()
@@ -596,6 +606,45 @@ namespace agora.rtc
                 transcoding
             };
             return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel, ApiTypeChannel.kChannelSetLiveTranscoding,
+                JsonMapper.ToJson(param), out _result);
+        }
+
+        public override int StartRtmpStreamWithoutTranscoding(string url)
+        {
+            var param = new
+            {
+                url
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel, ApiTypeChannel.kChannelStartRtmpStreamWithoutTranscoding,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
+        {
+            var param = new
+            {
+                url,
+                transcoding
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel, ApiTypeChannel.kChannelStartRtmpStreamWithTranscoding,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int UpdateRtmpTranscoding(LiveTranscoding transcoding)
+        {
+            var param = new
+            {
+                transcoding
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
+                ApiTypeChannel.kChannelUpdateRtmpTranscoding,
+                JsonMapper.ToJson(param), out _result);
+        }
+        public override int StopRtmpStream(string url)
+        {
+            var param = new
+            {
+                url
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel, ApiTypeChannel.kChannelStopRtmpStream,
                 JsonMapper.ToJson(param), out _result);
         }
 
@@ -1150,7 +1199,7 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
-                                (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
+                                (RTMP_STREAM_PUBLISH_ERROR_TYPE) AgoraJson.GetData<int>(data, "errCode"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

@@ -1779,7 +1779,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
     /**
  Error codes of the RTMP or RTMPS streaming.
  */
-    public enum RTMP_STREAM_PUBLISH_ERROR
+    public enum RTMP_STREAM_PUBLISH_ERROR_TYPE
     {
         /** The RTMP or RTMPS streaming publishes successfully. */
         RTMP_STREAM_PUBLISH_ERROR_OK = 0,
@@ -3979,8 +3979,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             dimensions = null;
             frameRate = FRAME_RATE.FRAME_RATE_FPS_15;
             minBitrate = -1;
-            bitrate = (int) BITRATE.STANDARD_BITRATE;
-            minBitrate = (int) BITRATE.DEFAULT_MIN_BITRATE;
+            bitrate = (int)BITRATE.STANDARD_BITRATE;
+            minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
             orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO;
@@ -3996,8 +3996,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             this.dimensions = dimensions ?? new VideoDimensions();
             this.frameRate = frameRate;
             this.minFrameRate = minFrameRate;
-            this.bitrate = (int) bitrate;
-            this.minBitrate = (int) minBitrate;
+            this.bitrate = (int)bitrate;
+            this.minBitrate = (int)minBitrate;
             this.orientationMode = orientationMode;
             this.degradationPreference = degradationPreference;
             this.mirrorMode = mirrorMode;
@@ -4013,8 +4013,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             dimensions = new VideoDimensions(width, height);
             this.frameRate = frameRate;
             this.minFrameRate = minFrameRate;
-            this.bitrate = (int) bitrate;
-            this.minBitrate = (int) minBitrate;
+            this.bitrate = (int)bitrate;
+            this.minBitrate = (int)minBitrate;
             this.orientationMode = orientationMode;
             this.degradationPreference = degradationPreference;
             this.mirrorMode = mirrorMode;
@@ -4849,7 +4849,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         {
             dimensions = new VideoDimensions(1920, 1080);
             frameRate = 5;
-            bitrate = (int) BITRATE.STANDARD_BITRATE;
+            bitrate = (int)BITRATE.STANDARD_BITRATE;
             captureMouseCursor = true;
             windowFocus = false;
             excludeWindowList = new view_t[0];
@@ -4861,7 +4861,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         {
             dimensions = new VideoDimensions(width, height);
             this.frameRate = frameRate;
-            this.bitrate = (int) bitrate;
+            this.bitrate = (int)bitrate;
             this.captureMouseCursor = captureMouseCursor;
             this.windowFocus = windowFocus;
             this.excludeWindowList = excludeWindowList ?? new view_t[0];
@@ -4873,7 +4873,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         {
             this.dimensions = dimensions;
             this.frameRate = frameRate;
-            this.bitrate = (int) bitrate;
+            this.bitrate = (int)bitrate;
             this.captureMouseCursor = captureMouseCursor;
             this.windowFocus = windowFocus;
             this.excludeWindowList = excludeWindowList ?? new view_t[0];
@@ -4929,7 +4929,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         public VideoCanvas()
         {
             view = 0;
-            renderMode = (int) RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
+            renderMode = (int)RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
             channelId = "";
             uid = 0;
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO;
@@ -4939,7 +4939,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             VIDEO_MIRROR_MODE_TYPE mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO)
         {
             this.view = view ?? 0;
-            this.renderMode = (int) renderMode;
+            this.renderMode = (int)renderMode;
             this.channelId = channelId;
             this.uid = uid;
             this.mirrorMode = mirrorMode;
@@ -5832,7 +5832,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             LogConfig logConfig = null)
         {
             this.appId = appId;
-            _areaCode = (uint) areaCode;
+            _areaCode = (uint)areaCode;
             this.logConfig = logConfig ?? new LogConfig();
         }
 
@@ -5857,11 +5857,124 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         public AREA_CODE areaCode
         {
-            get { return (AREA_CODE) _areaCode; }
-            set { _areaCode = (uint) areaCode; }
+            get { return (AREA_CODE)_areaCode; }
+            set { _areaCode = (uint)areaCode; }
         }
     };
 
+    public enum LOCAL_PROXY_MODE
+    {
+        ConnectivityFirst = 0,
+        LocalOnly = 1,
+    }
+
+    public class LocalAccessPointConfiguration
+    {
+        public LocalAccessPointConfiguration(string[] ipList, int ipListSize
+            , string[] domainList, int domainListSize, string verifyDomainName, LOCAL_PROXY_MODE mode)
+        {
+            this.domainListSize = domainListSize;
+            this.ipListSize = ipListSize;
+            this.verifyDomainName = verifyDomainName;
+            this.mode = mode;
+            this.domainList = (string[])domainList.Clone();
+            this.ipList = (string[])ipList.Clone();
+        }
+        public string[] ipList;
+
+        public int ipListSize;
+
+        public string[] domainList;
+
+        public int domainListSize;
+
+        public string verifyDomainName;
+        /** local proxy connection mode, connectivity first or local only.
+         */
+        public LOCAL_PROXY_MODE mode;
+    };
+
+    public enum LOW_LIGHT_ENHANCE_MODE
+    {
+        /** low light enhancement is applied automatically when neccessary. */
+        LOW_LIGHT_ENHANCE_AUTO = 0,
+        /** low light enhancement is applied manually. */
+        LOW_LIGHT_ENHANCE_MANUAL
+    };
+    public enum LOW_LIGHT_ENHANCE_LEVEL
+    {
+        /** low light enhancement is applied without reducing frame rate. */
+        LOW_LIGHT_ENHANCE_LEVEL_HIGH_QUALITY = 0,
+        /** High-quality low light enhancement is applied, at the cost of possibly reduced frame rate and higher cpu usage. */
+        LOW_LIGHT_ENHANCE_LEVEL_FAST
+    };
+
+    public class LowLightEnhanceOptions
+    {
+
+        public LowLightEnhanceOptions(LOW_LIGHT_ENHANCE_MODE mode, LOW_LIGHT_ENHANCE_LEVEL level)
+        {
+            this.mode = mode;
+            this.level = level;
+        }
+
+        LOW_LIGHT_ENHANCE_MODE mode { set; get; }
+
+        LOW_LIGHT_ENHANCE_LEVEL level { set; get; }
+    };
+
+    /** video noise reduction mode
+        */
+    public enum VIDEO_DENOISER_MODE
+    {
+        /** video noise reduction is applied automatically when neccessary. */
+        VIDEO_DENOISER_AUTO = 0,
+        /** video noise reduction is applied manually. */
+        VIDEO_DENOISER_MANUAL
+    };
+
+    public enum VIDEO_DENOISER_LEVEL
+    {
+        /** Video noise reduction is applied for the default scene  */
+        VIDEO_DENOISER_LEVEL_HIGH_QUALITY = 0,
+        /** Video noise reduction is applied for the fixed-camera scene to save the cpu usage */
+        VIDEO_DENOISER_LEVEL_FAST,
+        /** Video noise reduction is applied for the high noisy scene to further denoise the video. */
+        VIDEO_DENOISER_LEVEL_STRENGTH
+    };
+    public class VideoDenoiserOptions
+    {
+        public VideoDenoiserOptions(VIDEO_DENOISER_MODE denoiserMode, VIDEO_DENOISER_LEVEL denoiserLevel)
+        {
+            this.mode = denoiserMode;
+            this.level = denoiserLevel;
+        }
+
+        /** video noise reduction mode.
+         */
+        VIDEO_DENOISER_MODE mode { set; get; }
+
+        /** video noise reduction level.
+         */
+        VIDEO_DENOISER_LEVEL level { set; get; }
+    };
+
+    public class ColorEnhanceOptions
+    {
+        /** Color enhance strength. The value ranges between 0 (original) and 1.
+         */
+        float strengthLevel { set; get; }
+
+        /** Skin protect level. The value ranges between 0 (original) and 1.
+         */
+        float skinProtectLevel { set; get; }
+
+        ColorEnhanceOptions(float stength, float skinProtect) 
+        { 
+            this.strengthLevel = stength; 
+            this.skinProtectLevel = skinProtect; 
+        }
+    };
     public enum AgoraEngineType
     {
         MainProcess,

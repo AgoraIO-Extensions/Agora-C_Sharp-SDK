@@ -24,6 +24,8 @@ namespace agora.rtc
         public abstract DeviceInfo GetPlaybackDeviceInfo();
         public abstract int StartAudioDeviceLoopbackTest(int indicationInterval);
         public abstract int StopAudioDeviceLoopbackTest();
+        public abstract int FollowSystemPlaybackDevice(bool enable);
+        public abstract int FollowSystemRecordingDevice(bool enable);
     }
 
     public abstract class IAgoraRtcAudioRecordingDeviceManager
