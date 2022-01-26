@@ -83,6 +83,11 @@ namespace CSharp_API_Example
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "JoinChannel", ret);
+                /*string[] ipList = { "127.0.0.1", "127.0.0.2" };
+                string[] domainList = { "255.0.0.0", "255.255.0.0" };
+                LocalAccessPointConfiguration config = new LocalAccessPointConfiguration(ipList, 2, domainList, 2, "dnstest", LOCAL_PROXY_MODE.ConnectivityFirst);
+                ret = rtc_engine_.SetLocalAccessPoint(config);
+                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetLocalAccessPoint", ret);*/
             }
             return ret;
         }
