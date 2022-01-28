@@ -42,7 +42,6 @@ namespace agora.fpa
         {
             _result = new CharAssistant();
             _irisFpaProxyService = AgoraFpaNative.CreateIrisFpaProxyService();
-            SetParameters("{\"fpa.app_type\":2}");
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -139,8 +138,10 @@ namespace agora.fpa
             {
                 config
             };
-            return AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceStart, 
+            var ret = AgoraFpaNative.CallIrisFpaProxyServiceApi(_irisFpaProxyService, ApiTypeProxyService.KServiceStart, 
                 JsonMapper.ToJson(param), out _result);
+            SetParameters("{\"fpa.app_type\":2}");
+            return ret;
         }
 
         public override int Stop()
