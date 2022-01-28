@@ -42,7 +42,7 @@ namespace agora.fpa
         {
             _result = new CharAssistant();
             _irisFpaProxyService = AgoraFpaNative.CreateIrisFpaProxyService();
-            SetParameters("{\"fpa:app_type\":2}");
+            SetParameters("{\"fpa.app_type\":2}");
         }
 
         private void Dispose(bool disposing, bool sync)
