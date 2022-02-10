@@ -154,6 +154,7 @@ namespace agora.rtc
         [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public abstract int GetAudioMixingDuration();
 
+        [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public abstract int GetAudioMixingDuration(string filePath);
 
         public abstract int GetAudioMixingCurrentPosition();
@@ -179,7 +180,7 @@ namespace agora.rtc
         public abstract int PauseAllEffects();
         public abstract int ResumeEffect(int soundId);
         public abstract int ResumeAllEffects();
-        public abstract int GetEffectDuration();
+        public abstract int GetEffectDuration(string filePath);
         public abstract int SetEffectPosition(int soundId, int pos);
         public abstract int GetEffectCurrentPosition(int soundId);
         public abstract int EnableDeepLearningDenoise(bool enable);
@@ -330,10 +331,26 @@ namespace agora.rtc
         public abstract int SetMaxMetadataSize(int size);
         public abstract int SendMetadata(Metadata metadata);
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap);
+
+        [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public abstract int PushAudioFrame(AudioFrame frame);
         public abstract int PullAudioFrame(AudioFrame frame);
         public abstract int SetExternalVideoSource(bool enable, bool useTexture = false);
         public abstract int PushVideoFrame(ExternalVideoFrame frame);
+        public abstract int PushAudioFrame(int sourcePos, AudioFrame frame);
+        public abstract int SetAudioMixingPlaybackSpeed(int speed);
+        public abstract int SelectAudioTrack(int index);
+        public abstract int GetAudioTrackCount();
+        public abstract int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode);
+        public abstract int PauseAllChannelMediaRelay();
+        public abstract int ResumeAllChannelMediaRelay();
+        public abstract int GetAudioFileInfo(string filePath);
+        public abstract int SetCameraTorchOn(bool isOn);
+        public abstract int IsCameraTorchSupported();
+        public abstract int SetExternalAudioSourceVolume(int sourcePos, int volume);
+        public abstract int TakeSnapshot(string channel, uint uid, string filePath);
+        public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
+        public abstract int StartEchoTest(EchoTestConfiguration config);
     }
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -723,6 +740,17 @@ namespace agora.rtc
         }
 
         public virtual void OnMetadataReceived(Metadata metadata)
+        {
+        }
+
+        public virtual void OnRequestAudioFileInfo(AudioFileInfo info, AUDIO_FILE_INFO_ERROR error)
+        {
+        }
+
+        public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result)
+        {
+        }
+        public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode)
         {
         }
     }

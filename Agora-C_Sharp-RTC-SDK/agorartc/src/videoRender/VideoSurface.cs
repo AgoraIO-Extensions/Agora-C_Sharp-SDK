@@ -103,7 +103,6 @@ namespace agora.rtc
                 ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, Uid, ChannelId);
                 if (!ret)
                 {
-                    AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", ChannelId, Uid));
                     return;
                 }
 

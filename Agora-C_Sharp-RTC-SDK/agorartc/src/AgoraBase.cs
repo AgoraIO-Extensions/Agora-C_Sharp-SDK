@@ -959,6 +959,10 @@ namespace agora.rtc
      */
         MEDIA_ENGINE_AUDIO_ADM_USING_NORM_PARAMS = 113,
 
+        /** 114: For internal use only.
+     */
+         MEDIA_ENGINE_AUDIO_ADM_ROUTING_UPDATE = 114,
+
         // audio mix state
         /** 710: For internal use only.
      */
@@ -1249,7 +1253,11 @@ namespace agora.rtc
 
         /** 7: No playout audio device.
    */
-        LOCAL_AUDIO_STREAM_ERROR_NO_PLAYOUT_DEVICE = 7
+        LOCAL_AUDIO_STREAM_ERROR_NO_PLAYOUT_DEVICE = 7,
+
+        LOCAL_AUDIO_STREAM_ERROR_RECORD_INVALID_ID = 9,
+
+        LOCAL_AUDIO_STREAM_ERROR_PLAYOUT_INVALID_ID = 10
     }
 
     /** Audio recording qualities.
@@ -1576,10 +1584,10 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
     {
         /**
      0: Default audio profile:
-     - For the interactive streaming profile: A sample rate of 48 KHz, music encoding, mono, and a bitrate of up to 64 Kbps.
+     - For the `LIVE_BROADCASTING` profile: A sample rate of 48 KHz, music encoding, mono, and a bitrate of up to 64 Kbps.
      - For the `COMMUNICATION` profile:
-        - Windows: A sample rate of 16 KHz, music encoding, mono, and a bitrate of up to 16 Kbps.
-        - Android/macOS/iOS: A sample rate of 32 KHz, music encoding, mono, and a bitrate of up to 18 Kbps.
+        - Windows: A sample rate of 16 KHz, audio encoding, mono, and a bitrate of up to 16 Kbps.
+        - Android/macOS/iOS: A sample rate of 32 KHz, audio encoding, mono, and a bitrate of up to 18 Kbps.
     */
         AUDIO_PROFILE_DEFAULT = 0, // use default settings
 
@@ -1655,7 +1663,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
  */
     public enum CHANNEL_PROFILE_TYPE
     {
-        /** (Default) Communication. This profile applies to scenarios such as an audio call or video call,
+        /** Communication. This profile applies to scenarios such as an audio call or video call,
     * where all users can publish and subscribe to streams.
     */
         CHANNEL_PROFILE_COMMUNICATION = 0,
@@ -1696,25 +1704,28 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         AUDIENCE_LATENCY_LEVEL_ULTRA_LOW_LATENCY = 2,
     }
 
-    /// @cond
-    /** The reason why the super-resolution algorithm is not successfully enabled.
-     */
+    /**
+   * The reason why super resolution is not successfully enabled or the message
+   * that confirms success.
+   *
+   * @since v3.5.1
+   */
     public enum SUPER_RESOLUTION_STATE_REASON
     {
         /** 0: The super-resolution algorithm is successfully enabled.
      */
         SR_STATE_REASON_SUCCESS = 0,
 
-        /** 1: The origin resolution of the remote video is beyond the range where
-     * the super-resolution algorithm can be applied.
+        /** 1: The original resolution of the remote video is beyond the range where
+      *  super resolution can be applied.
      */
         SR_STATE_REASON_STREAM_OVER_LIMITATION = 1,
 
-        /** 2: Another user is already using the super-resolution algorithm.
+        /** 2: Super resolution is already being used to boost another remote user's video.
      */
         SR_STATE_REASON_USER_COUNT_OVER_LIMITATION = 2,
 
-        /** 3: The device does not support the super-resolution algorithm.
+        /** 3: The device does not support using super resolution.
      */
         SR_STATE_REASON_DEVICE_NOT_SUPPORTED = 3,
     }
@@ -2957,6 +2968,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** 5: The network type is mobile 4G. */
         NETWORK_TYPE_MOBILE_4G = 5,
+
+        NETWORK_TYPE_MOBILE_5G = 6
     }
 
     /// @cond
@@ -3575,6 +3588,14 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** 11: The video profile is sent to the server.
      */
         RELAY_EVENT_VIDEO_PROFILE_UPDATE = 11,
+
+        RELAY_EVENT_PAUSE_SEND_PACKET_TO_DEST_CHANNEL_SUCCESS = 12,
+
+        RELAY_EVENT_PAUSE_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 13,
+
+        RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_SUCCESS = 14,
+
+        RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 15
     }
 
     /** The state code in CHANNEL_MEDIA_RELAY_STATE. */
@@ -4148,7 +4169,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
          * - 44100
          * - 48000
          */
-        int recordingSampleRate { set; get; }
+        public int recordingSampleRate { set; get; }
     }
 
     /** Audio recording position. */
@@ -5047,6 +5068,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** image file path */
         public string source { set; get; }
+
+        public BACKGROUND_BLUR_DEGREE blur_degree { set; get; }
     }
 
     /** The source used to substitude image background(foreground is portrait area).
@@ -5059,8 +5082,14 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** Background source is image path, only support png and jpg format*/
         BACKGROUND_IMG,
 
-        /**The background image is blurred.*/
         BACKGROUND_BLUR
+    }
+
+    public enum BACKGROUND_BLUR_DEGREE
+    {
+       BLUR_DEGREE_LOW = 1,
+       BLUR_DEGREE_MEDIUM,
+       BLUR_DEGREE_HIGH
     }
 
     /**
@@ -5864,7 +5893,211 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             set { _areaCode = (uint)areaCode; }
         }
     };
+    public enum AUDIO_MIXING_DUAL_MONO_MODE
+    {
+       AUDIO_MIXING_DUAL_MONO_AUTO,
+       AUDIO_MIXING_DUAL_MONO_L,
+       AUDIO_MIXING_DUAL_MONO_R,
+       AUDIO_MIXING_DUAL_MONO_MIX
+    }
 
+    public struct AudioFileInfo {
+      /** The file path.
+         */
+      public string filePath;
+      /** The file duration (ms).
+         */
+      public int durationMs;
+   };
+
+   public enum AUDIO_FILE_INFO_ERROR {
+      /** 0: Successfully get the information of an audio file.
+         */
+      AUDIO_FILE_INFO_ERROR_OK = 0,
+
+      /** 1: Fail to get the information of an audio file.
+         */
+      AUDIO_FILE_INFO_ERROR_FAILURE = 1
+   };
+
+   /*
+    * @since v3.5.2
+    */
+    public enum CONTENT_INSPECT_RESULT {
+        CONTENT_INSPECT_NEUTRAL = 1,
+        CONTENT_INSPECT_SEXY = 2,
+        CONTENT_INSPECT_PORN = 3
+    };
+
+    /**
+    * The EchoTestConfiguration struct.
+    * @since v3.5.2
+    */
+    public struct EchoTestConfiguration {
+        public IntPtr view;
+        public bool enableAudio;
+        public bool enableVideo;
+        public string token;
+        public string channelId;
+    };
+
+    /** Definition of ContentInspectModule.
+    * @since v3.5.2
+    */
+    public struct ContentInspectModule {
+        /**
+        * The content inspect module type.
+        * the module type can be 0 to 31.
+        * kContentInspectInvalid(0)
+        * kContentInspectModeration(1)
+        * kContentInspectSupervise(2)
+        */
+        public int type;
+        /**The content inspect frequency, default is 0 second.
+        * the frequency <= 0 is invalid.
+        */
+        public int interval;
+    };
+
+    /** Definition of ContentInspectConfig.
+    * @since v3.5.2
+    */
+    public struct ContentInspectConfig {
+        /** The extra information, max length of extraInfo is 1024.
+        *  The extra information will send to server with content(image).
+        */
+        public string extraInfo;
+        /**The content inspect modules, max length of modules is 32.
+        * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
+        */
+        public ContentInspectModule[] modules;
+        /**The content inspect module count.
+        */
+        public int moduleCount;
+    };
+
+    public enum AVDATA_TYPE {
+        /** 0: the metadata type is unknown.
+        */
+        AVDATA_UNKNOWN = 0,
+        /** 1: the metadata type is video.
+        */
+        AVDATA_VIDEO = 1,
+        /** 2: the metadata type is video.
+        */
+        AVDATA_AUDIO = 2
+    };
+
+    public enum CODEC_VIDEO {
+        /** 0: h264 avc codec.
+        */
+        CODEC_VIDEO_AVC = 0,
+        /** 1: h265 hevc codec.
+        */
+        CODEC_VIDEO_HEVC = 1,
+        /** 2: vp8 codec.
+        */
+        CODEC_VIDEO_VP8 = 2
+    };
+
+    public enum CODEC_AUDIO {
+        /** 0: PCM audio codec.
+        */
+        CODEC_AUDIO_PCM = 0,
+        /** 1: aac audio codec.
+        */
+        CODEC_AUDIO_AAC = 1,
+        /** 2: G711 audio codec.
+        */
+        CODEC_AUDIO_G722 = 2
+    };
+
+    public class VDataInfo {
+        public uint codec;
+        public uint width;
+        public uint height;
+        public int frameType;
+        public int rotation;
+        public bool equal(VDataInfo vinfo) { return codec == vinfo.codec && width == vinfo.width && height == vinfo.height && rotation == vinfo.rotation; }
+    };
+
+    public class ADataInfo {
+        public uint codec;
+        public uint bitwidth;
+        public uint sample_rate;
+        public uint channel;
+        public uint sample_size;
+
+        public bool equal(ADataInfo ainfo) { return codec == ainfo.codec && bitwidth == ainfo.bitwidth && sample_rate == ainfo.sample_rate && channel == ainfo.channel; }
+    };
+
+    public struct AVData {
+        /** The User ID. reserved
+        - For the receiver: the ID of the user who owns the data.
+        */
+        public uint uid;
+        /**
+        - data type, audio / video.
+        */
+        public AVDATA_TYPE type;
+        /** Buffer size of the sent or received Metadata.
+        */
+        public uint size;
+        /** Buffer address of the sent or received Metadata.
+        */
+        public byte[] buffer;
+        /** Time statmp of the frame following the metadata.
+        */
+        public uint timestamp;
+        /**
+        * Video frame info
+        */
+        public VDataInfo vinfo;
+        /**
+        * Audio frame info
+        */
+        public ADataInfo ainfo;
+    };
+
+    public enum MediaRecorderContainerFormat {
+        FORMAT_MP4 = 1,
+        FORMAT_FLV = 2
+    };
+
+    public enum MediaRecorderStreamType {
+        STREAM_TYPE_AUDIO = 0x01,
+        STREAM_TYPE_VIDEO = 0x02,
+        STREAM_TYPE_BOTH = STREAM_TYPE_AUDIO | STREAM_TYPE_VIDEO
+    };
+
+    public enum RecorderState {
+        RECORDER_STATE_ERROR = -1,
+        RECORDER_STATE_START = 2,
+        RECORDER_STATE_STOP = 3
+    };
+
+    public enum RecorderErrorCode {
+        RECORDER_ERROR_NONE = 0,
+        RECORDER_ERROR_WRITE_FAILED = 1,
+        RECORDER_ERROR_NO_STREAM = 2,
+        RECORDER_ERROR_OVER_MAX_DURATION = 3,
+        RECORDER_ERROR_CONFIG_CHANGED = 4,
+        RECORDER_ERROR_CUSTOM_STREAM_DETECTED = 5
+    };
+
+    public struct MediaRecorderConfiguration {
+        public string storagePath;
+        public MediaRecorderContainerFormat containerFormat;
+        public MediaRecorderStreamType streamType;
+        public int maxDurationMs;
+        public int recorderInfoUpdateInterval;
+    };
+
+    public struct RecorderInfo {
+        public string fileName;
+        public uint durationMs;
+        public uint fileSize;
+    };
     public enum LOCAL_PROXY_MODE
     {
         ConnectivityFirst = 0,
