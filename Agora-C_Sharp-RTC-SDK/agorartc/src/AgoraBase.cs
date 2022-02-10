@@ -5058,6 +5058,9 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** Background source is image path, only support png and jpg format*/
         BACKGROUND_IMG,
+
+        /**The background image is blurred.*/
+        BACKGROUND_BLUR
     }
 
     /**
