@@ -6258,4 +6258,219 @@ namespace agora.rtc
         // The forward vector of remote voice, (x, y, z). When it's not set, the vector is forward to listner.
         float[] forward { set; get; }
     };
+
+    /** The type of the custom background image.
+    */
+    public enum BACKGROUND_SOURCE_TYPE {
+        /**
+        * 1: (Default) The background image is a solid color.
+        */
+        BACKGROUND_COLOR = 1,
+        /**
+        * The background image is a file in PNG or JPG format.
+        */
+        BACKGROUND_IMG,
+        /** Background source is blur background besides human body*/
+        BACKGROUND_BLUR,
+    };
+
+    /** The blur degree used to blur background in different level.(foreground keeps same as before).
+    */
+    public enum BACKGROUND_BLUR_DEGREE {
+        /** blur degree level low, background can see things, but have some blur effect */
+        BLUR_DEGREE_LOW = 1,
+        /** blur degree level medium, blur more than level medium */
+        BLUR_DEGREE_MEDIUM,
+        /** blur degree level high, blur default, hard to find background */
+        BLUR_DEGREE_HIGH,
+    };
+
+    public class VirtualBackgroundSource
+    {
+        /** The type of the custom background image. See #BACKGROUND_SOURCE_TYPE.
+        */
+        public BACKGROUND_SOURCE_TYPE background_source_type;
+
+        /**
+        * The color of the custom background image. The format is a hexadecimal integer defined by RGB, without the # sign,
+        * such as 0xFFB6C1 for light pink. The default value is 0xFFFFFF, which signifies white. The value range
+        * is [0x000000,0xFFFFFF]. If the value is invalid, the SDK replaces the original background image with a white
+        * background image.
+        *
+        * @note This parameter takes effect only when the type of the custom background image is `BACKGROUND_COLOR`.
+        */
+        public uint color;
+
+        /**
+        * The local absolute path of the custom background image. PNG and JPG formats are supported. If the path is invalid,
+        * the SDK replaces the original background image with a white background image.
+        *
+        * @note This parameter takes effect only when the type of the custom background image is `BACKGROUND_IMG`.
+        */
+        public string source;
+
+        /** blur degree */
+        public BACKGROUND_BLUR_DEGREE blur_degree;
+    };
+
+    /**
+    * The configuration of rhythm player,
+    * which is set in startRhythmPlayer or configRhythmPlayer.
+    */
+    public class AgoraRhythmPlayerConfig {
+        /**
+        * The number of beats per measure. The range is 1 to 9.
+        * The default value is 4,
+        * which means that each measure contains one downbeat and three upbeats.
+        */
+        public int beatsPerMeasure;
+        /*
+        * The range is 60 to 360.
+        * The default value is 60,
+        * which means that the rhythm player plays 60 beats in one minute.
+        */
+        public int beatsPerMinute;
+    };
+
+    /** Definition of contentinspect
+    */
+    public enum CONTENT_INSPECT_RESULT {
+        CONTENT_INSPECT_NEUTRAL = 1,
+        CONTENT_INSPECT_SEXY = 2,
+        CONTENT_INSPECT_PORN = 3,
+    };
+
+    public enum CONTENT_INSPECT_DEVICE_TYPE{
+        CONTENT_INSPECT_DEVICE_INVALID = 0,
+        CONTENT_INSPECT_DEVICE_AGORA = 1,
+        CONTENT_INSPECT_DEVICE_HIVE = 2,
+        CONTENT_INSPECT_DEVICE_TUPU = 3
+    };
+
+    public enum CONTENT_INSPECT_TYPE {
+        /**
+        * (Default) content inspect type invalid
+        */
+        CONTENT_INSPECT_INVALIDE = 0,
+        /**
+        * Content inspect type moderation
+        */
+        CONTENT_INSPECT_MODERATION = 1,
+        /**
+        * Content inspect type supervise
+        */
+        CONTENT_INSPECT_SUPERVISE = 2
+    };
+
+    public class ContentInspectModule {
+        /**
+        * The content inspect module type.
+        */
+        public CONTENT_INSPECT_TYPE type;
+        /**The content inspect frequency, default is 0 second.
+        * the frequency <= 0 is invalid.
+        */
+        public uint frequency;
+    };
+
+    /** Definition of ContentInspectConfig.
+    */
+    public class ContentInspectConfig
+    {
+        /** jh on device.*/
+        public bool DeviceWork;
+
+        /** jh on cloud.*/
+        public bool CloudWork;
+
+        /**the type of jh on device.*/
+        public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType;
+
+        public string extraInfo;
+
+        /**The content inspect modules, max length of modules is 32.
+        * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
+        */
+        public ContentInspectModule[] modules;
+
+        /**The content inspect module count.
+        */
+        public int moduleCount;
+    };
+
+    public class VideoSubscriptionOptions {
+        /**
+        * The type of the video stream to subscribe to.
+        *
+        * The default value is `VIDEO_STREAM_HIGH`, which means the high-quality
+        * video stream.
+        */
+        public VIDEO_STREAM_TYPE type;
+        /**
+        * Whether to subscribe to encoded video data only:
+        * - `true`: Subscribe to encoded video data only.
+        * - `false`: (Default) Subscribe to decoded video data.
+        */
+        public bool encodedFrameOnly;
+    };
+
+    /**
+    The states of the rhythm player.
+    */
+    public enum RHYTHM_PLAYER_STATE_TYPE {
+        /** 810: The rhythm player is idle. */
+        RHYTHM_PLAYER_STATE_IDLE = 810,
+        /** 811: The rhythm player is opening files. */
+        RHYTHM_PLAYER_STATE_OPENING,
+        /** 812: Files opened successfully, the rhythm player starts decoding files. */
+        RHYTHM_PLAYER_STATE_DECODING,
+        /** 813: Files decoded successfully, the rhythm player starts mixing the two files and playing back them locally. */
+        RHYTHM_PLAYER_STATE_PLAYING,
+        /** 814: The rhythm player is starting to fail, and you need to check the error code for detailed failure reasons. */
+        RHYTHM_PLAYER_STATE_FAILED,
+    };
+
+    /**
+    The error codes of the rhythm player.
+    */
+    public enum RHYTHM_PLAYER_ERROR_TYPE {
+        /** 0: The rhythm player works well. */
+        RHYTHM_PLAYER_ERROR_OK = 0,
+        /** 1: The rhythm player occurs a internal error. */
+        RHYTHM_PLAYER_ERROR_FAILED = 1,
+        /** 801: The rhythm player can not open the file. */
+        RHYTHM_PLAYER_ERROR_CAN_NOT_OPEN = 801,
+        /** 802: The rhythm player can not play the file. */
+        RHYTHM_PLAYER_ERROR_CAN_NOT_PLAY,
+        /** 803: The file duration over the limit. The file duration limit is 1.2 seconds */
+        RHYTHM_PLAYER_ERROR_FILE_OVER_DURATION_LIMIT,
+    };
+
+    /**
+    * @brief The information of the media stream object.
+    *
+    */
+    public class SrcInfo {
+        /** The bitrate of the media stream. The unit of the number is kbps.
+        *
+        */
+        public int bitrateInKbps;
+
+        /** The name of the media stream.
+        *
+        */
+        public string name;
+    };
+
+    /** Values when user trigger interface of opening
+    */
+    public class PlayerUpdatedInfo {
+        /** player_id has value when user trigger interface of opening
+        */
+        public string playerId;
+
+        /** device_id has value when user trigger interface of opening
+        */
+        public string deviceId;
+    };
 }

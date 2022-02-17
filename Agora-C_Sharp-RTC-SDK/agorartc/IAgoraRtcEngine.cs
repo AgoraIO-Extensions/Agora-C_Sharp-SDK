@@ -41,9 +41,9 @@ namespace agora.rtc
 
         public abstract IAgoraRtcMediaPlayer GetAgoraRtcMediaPlayer();
 
-        //public abstract IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine();
+        public abstract IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine();
 
-        //public abstract IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine();
+        public abstract IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine();
 
         public abstract string GetVersion();
 
@@ -421,7 +421,7 @@ namespace agora.rtc
 
         public abstract int CreateDataStream(DataStreamConfig config);
 
-        public abstract int SendStreamMessage(int streamId, string data, uint length);
+        public abstract int SendStreamMessage(int streamId, byte[] data, uint length);
 
         public abstract int AddVideoWatermark(RtcImage watermark);
 
@@ -511,15 +511,13 @@ namespace agora.rtc
 
         public abstract int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection);
 
-        public abstract int SendStreamMessageEx(int streamId, string data, uint length, RtcConnection connection);
+        public abstract int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection);
 
         public abstract int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection);
 
         public abstract int ClearVideoWatermarkEx(RtcConnection connection);
 
         public abstract int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection);
-
-        public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
 
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
 
@@ -547,13 +545,41 @@ namespace agora.rtc
 
         public abstract int SetParameters(string parameters);
 
-        public abstract int EnableDirectExternalAudioSource(bool enabled);
-
-        public abstract int PushDirectSendAudioFrame(AudioFrame frame);
-
         //public abstract DeviceInfo GetAudioDeviceInfo();
 
         public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
+
+        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource);
+
+        public abstract int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option);
+
+        public abstract int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option);
+
+        public abstract int PauseAllChannelMediaRelay();
+
+        public abstract int ResumeAllChannelMediaRelay();
+
+        public abstract int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay);
+
+        public abstract int TakeSnapshot(string channel, uint uid, string filePath);
+
+        public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
+
+        public abstract int SwitchChannel(string token, string channel);
+
+        public abstract int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config);
+
+        public abstract int StopRhythmPlayer();
+
+        public abstract int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config);
+
+        public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
+
+        public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions option, RtcConnection connection);
+
+        public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
+
+        public abstract int PushDirectAudioFrame(AudioFrame frame);
     };
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -724,11 +750,13 @@ namespace agora.rtc
 
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) {}
 
-        public virtual void OnUserMuteAudio(uint connId, uint uid, bool muted) {}
+        // public virtual void OnUserMuteAudio(uint connId, uint uid, bool muted) {}
 
-        public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed) {}
+        // public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed) {}
 
-        public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) {}
+        // public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) {}
+
+        public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) {}
     };
 
     internal static partial class ObsoleteMethodWarning
