@@ -575,7 +575,7 @@ namespace agora.rtc
 
         public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
 
-        public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions option, RtcConnection connection);
+        public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
 
         public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
 
