@@ -4528,7 +4528,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
       *
       * @since v3.3.0
       */
-        int captureWidth { set; get; }
+        public int captureWidth { set; get; }
 
         /** The height (px) of the video image captured by the local camera.
       * To customize the height of the video image, set `preference` as #CAPTURER_OUTPUT_PREFERENCE_MANUAL (3) first,
@@ -4536,10 +4536,10 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
       *
       * @since v3.3.0
       */
-        int captureHeight { set; get; }
+        public int captureHeight { set; get; }
 
         /** Camera direction settings (for Android/iOS only). See: #CAMERA_DIRECTION. */
-        CAMERA_DIRECTION? cameraDirection { set; get; }
+        public CAMERA_DIRECTION? cameraDirection { set; get; }
     }
 
     /** The configurations for the data stream.

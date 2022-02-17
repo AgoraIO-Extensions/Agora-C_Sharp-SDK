@@ -7,6 +7,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -26,6 +27,7 @@ namespace agora.rtc
     using IrisRtcAudioFrameObserverHandleNative = IntPtr;
     using IrisRtcRendererPtr = IntPtr;
     using IrisRtcCAudioFrameObserverNativeMarshal = IntPtr;
+    using IrisVideoFrameBufferManagerPtr = IntPtr;
 
     public sealed class AgoraRtcEngine : IAgoraRtcEngine
     {
@@ -64,6 +66,8 @@ namespace agora.rtc
         private IrisRtcCVideoFrameObserver _irisRtcCVideoFrameObserver;
         private IrisRtcVideoFrameObserverHandleNative _irisRtcVideoFrameObserverHandleNative;
 
+        private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
+
         private CharAssistant _result;
 
         private AgoraRtcEngine(EngineType type = EngineType.kEngineTypeNormal)
@@ -89,6 +93,9 @@ namespace agora.rtc
 
             _deprecatedAudioEffectManagerInstance =
                 new AudioEffectManager(type == EngineType.kEngineTypeNormal ? engineInstance[0] : engineInstance[1]);
+            
+            _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
+            AgoraRtcNative.Attach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -102,8 +109,9 @@ namespace agora.rtc
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
 
-                foreach (var channelInstance in _channelInstance.Values)
+                for (int i = 0; i < _channelInstance.Count; i++)
                 {
+                    var channelInstance = _channelInstance.ElementAt(i).Value;
                     channelInstance.Dispose();
                 }
 
@@ -135,10 +143,12 @@ namespace agora.rtc
                 _deprecatedAudioEffectManagerInstance = null;
 
                 _irisRtcDeviceManager = IntPtr.Zero;
+                
+                AgoraRtcNative.Detach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
             }
 
             Release(sync);
-
+            AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
             _disposed = true;
         }
 
@@ -163,6 +173,11 @@ namespace agora.rtc
         internal IrisRtcEnginePtr GetNativeHandler()
         {
             return _irisRtcEngine;
+        }
+
+        internal IrisVideoFrameBufferManagerPtr GetVideoFrameBufferManager()
+        {
+            return _videoFrameBufferManagerPtr;
         }
 
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER

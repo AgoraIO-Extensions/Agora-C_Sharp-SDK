@@ -521,7 +521,8 @@ namespace agora.rtc
         {
             var param = new
             {
-                channelId = _channelId
+                channelId = _channelId,
+                streamType
             };
             return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
                 ApiTypeChannel.kChannelSetRemoteDefaultVideoStreamType,

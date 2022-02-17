@@ -39,7 +39,7 @@ namespace agora.rtc
         private bool _needResize = false;
         private Texture2D _texture;
         private IVideoStreamManager _videoStreamManager;
-        private IrisRtcVideoFrame _cachedVideoFrame = new IrisRtcVideoFrame();
+        private IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
 
         public VideoSurface()
         {
@@ -103,6 +103,7 @@ namespace agora.rtc
                 ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, Uid, ChannelId);
                 if (!ret)
                 {
+                    AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", ChannelId, Uid));
                     return;
                 }
 
@@ -184,7 +185,7 @@ namespace agora.rtc
                 _needUpdateInfo = false;
                 _needResize = true;
                 FreeMemory();
-                _cachedVideoFrame = new IrisRtcVideoFrame
+                _cachedVideoFrame = new IrisVideoFrame
                 {
                     type = VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
                     y_stride = VideoPixelWidth * 4,

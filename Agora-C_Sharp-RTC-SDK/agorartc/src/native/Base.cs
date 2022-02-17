@@ -194,9 +194,30 @@ namespace agora.rtc
         kEngineGetAudioTrackCount,
         kEngineSetAudioMixingDualMonoMode,
         kEngineGetAudioFileInfo,
+        kEngineSetVideoProfileEx,
+        kMediaSetExternalAudioSourceVolume,
+        kEngineSetLogWriter,
+        kEngineReleaseLogWriter,
+        kEngineSetLocalVideoRenderer,
+        kEngineSetRemoteVideoRenderer,
         kEngineSetCameraTorchOn,
         kEngineIsCameraTorchSupported,
-        kMediaSetExternalAudioSourceVolume,
+
+        kEngineGetCameraMaxZoomFactor,
+        kEngineIsCameraAutoFocusFaceModeSupported,
+        kEngineIsCameraExposurePositionSupported,
+        kEngineIsCameraFocusSupported,
+        kEngineIsCameraZoomSupported,
+        kEngineSetCameraAutoFocusFaceModeEnabled,
+        kEngineSetCameraExposurePosition,
+        kEngineSetCameraFocusPositionInPreview,
+        kEngineSetCameraZoomFactor,
+        kEngineStartRhythmPlayer,
+        kEngineStopRhythmPlayer,
+        kEngineConfigRhythmPlayer,
+        kEngineGetNativeHandle,
+
+
         kEngineGetScreenCaptureSources,
         kEngineTakeSnapshot,
         kEngineEnableContentInspect,
@@ -318,7 +339,7 @@ namespace agora.rtc
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisRtcVideoFrame
+    internal struct IrisVideoFrame
     {
         internal VIDEO_FRAME_TYPE type;
         internal int width;
