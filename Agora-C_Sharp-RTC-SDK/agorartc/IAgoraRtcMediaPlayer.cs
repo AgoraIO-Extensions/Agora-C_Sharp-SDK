@@ -65,7 +65,7 @@ namespace agora.rtc
 
         public abstract bool IsVideoMuted(int playerId);
 
-        public abstract int ChangePlaybackSpeed(int playerId, MEDIA_PLAYER_PLAYBACK_SPEED speed);
+        public abstract int SetPlaybackSpeed(int playerId, MEDIA_PLAYER_PLAYBACK_SPEED speed);
 
         public abstract int SelectAudioTrack(int playerId, int index);
 
@@ -103,9 +103,31 @@ namespace agora.rtc
 
         public abstract string GetPlaySrc(int playerId);
 
-        public abstract int SetAudioMixingPitch(int pitch);
+        public abstract int SetAudioPitch(int pitch);
 
         public abstract int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params);
+
+        public abstract int OpenWithAgoraCDNSrc(string src, Int64 startPos);
+
+        public abstract int GetAgoraCDNLineCount();
+
+        public abstract int SwitchAgoraCDNLineByIndex(int index);
+
+        public abstract int GetCurrentAgoraCDNIndex();
+
+        public abstract int EnableAutoSwitchAgoraCDN(bool enable);
+
+        public abstract int RenewAgoraCDNSrcToken(string token, Int64 ts);
+
+        public abstract int SwitchAgoraCDNSrc(string src, bool syncPts = false);
+
+        public abstract int SwitchSrc(string src, bool syncPts = true);
+
+        public abstract int PreloadSrc(string src, Int64 startPos);
+
+        public abstract int PlayPreloadedSrc(string src);
+
+        public abstract int UnloadSrc(string src);
     }
 
     public abstract class IAgoraRtcMediaPlayerEventHandler
@@ -114,12 +136,20 @@ namespace agora.rtc
 
         public virtual void OnPositionChanged(int playerId, Int64 position) {}
 
-        public virtual void OnPlayerEvent(int playerId, MEDIA_PLAYER_EVENT @event) {}
+        public virtual void OnPlayerEvent(int playerId, MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message) {}
 
         public virtual void OnMetaData(int playerId, byte[] data, int length) {}
 
         public virtual void OnPlayBufferUpdated(int playerId, Int64 playCachedBuffer) {}
 
         public virtual void OnCompleted(int playerId) {}
+
+        public virtual void OnAgoraCDNTokenWillExpire() {}
+
+        public virtual void OnPlayerSrcInfoChanged(SrcInfo from, SrcInfo to) {}
+
+        public virtual void OnPlayerInfoUpdated(PlayerUpdatedInfo info) {}
+
+        public virtual void OnAudioVolumeIndication(int volume) {}
     }
 }
