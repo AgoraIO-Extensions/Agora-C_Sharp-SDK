@@ -6254,9 +6254,9 @@ namespace agora.rtc
             this.forward = forward;
         }
         // The coordnate of remote voice source, (x, y, z)
-        float[] position { set; get; }
+        public float[] position { set; get; }
         // The forward vector of remote voice, (x, y, z). When it's not set, the vector is forward to listner.
-        float[] forward { set; get; }
+        public float[] forward { set; get; }
     };
 
     /** The type of the custom background image.
