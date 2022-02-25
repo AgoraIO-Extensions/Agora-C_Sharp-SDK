@@ -191,9 +191,7 @@ namespace agora.rtc
 
        public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
        {
-           RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo();
-           positionInfo.position = position;
-           positionInfo.forward = forward;
+           RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
            var param = new
            {
                playerId,
@@ -397,9 +395,7 @@ namespace agora.rtc
 
        public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
        {
-           RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo();
-           positionInfo.position = position;
-           positionInfo.forward = forward;
+           RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
            var param = new
            {
                playerId,
@@ -445,9 +441,7 @@ namespace agora.rtc
 
        public override int UpdateRemotePosition(uint uid, float[] position, float[] forward)
        {
-           RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo();
-           posInfo.position = position;
-           posInfo.forward = forward;
+           RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo(position, forward);
            var param = new
            {
                uid,
@@ -460,9 +454,7 @@ namespace agora.rtc
 
        public override int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
        {
-           RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo();
-           posInfo.position = position;
-           posInfo.forward = forward;
+           RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo(position, forward);
            var param = new
            {
                uid,
