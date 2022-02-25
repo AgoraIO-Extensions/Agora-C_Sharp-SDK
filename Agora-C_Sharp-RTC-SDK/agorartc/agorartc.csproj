@@ -20,18 +20,21 @@ The Agora RTC SDK is applicable to scenarios that encourage active engagement, s
 **For more detail information, please visit our [website](https://docs.agora.io/en/Interactive Broadcast/product_live?platform=All Platforms) and [GitHub repository](https://github.com/AgoraIO-Community/Agora-Python-SDK); and for some quick-start demos, please visit [Agora-Python-QuickStart](https://github.com/AgoraIO-Community/Agora-Python-QuickStart).**</Description>
     <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/release/3.5.0.3</PackageProjectUrl>
     <PackageId>agora_rtc_sdk</PackageId>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <OutputType>Library</OutputType>
+    <StartupObject />
   </PropertyGroup>
-
+  
   <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>..\..\CSharp-API_Example\binx64\Debug\</OutputPath>
     </PropertyGroup>-->
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+ 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(TargetFramework)'=='Debug|x86|net40'">
     <OutputPath>..\..\CSharp-API_Example\binx86\Debug\</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(TargetFramework)'=='Debug|x64|net40'">
     <OutputPath>..\..\CSharp-API_Example\binx64\Debug</OutputPath>
   </PropertyGroup>
 
@@ -39,14 +42,17 @@ The Agora RTC SDK is applicable to scenarios that encourage active engagement, s
     <OutputPath>..\..\CSharp-API_Example\binx64\Release\</OutputPath>
     </PropertyGroup>-->
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(TargetFramework)'=='Release|x86|net40'">
     <OutputPath>..\..\CSharp-API_Example\binx86\Release\</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)|$(TargetFramework)'=='Release|x64|net40'">
     <OutputPath>..\..\CSharp-API_Example\binx64\Release\</OutputPath>
   </PropertyGroup>
-
+  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>-->
+ 
   <ItemGroup>
     <PackageReference Include="LitJson" Version="0.17.0" />
   </ItemGroup>

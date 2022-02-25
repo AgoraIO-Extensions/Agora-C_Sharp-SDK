@@ -2,9 +2,9 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
         <RootNamespace>CSharp_API_Example</RootNamespace>
-		<Platforms>x64;x86</Platforms>
+		    <Platforms>x64;x86</Platforms>
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon />
         <StartupObject />

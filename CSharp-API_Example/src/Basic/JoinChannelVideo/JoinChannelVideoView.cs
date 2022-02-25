@@ -10,6 +10,7 @@ namespace CSharp_API_Example
 {
     public partial class JoinChannelVideoView : UserControl
     {
+        private string sendText_;
         public JoinChannelVideoView()
         {
             InitializeComponent();

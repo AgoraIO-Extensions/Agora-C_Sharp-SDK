@@ -5,6 +5,7 @@ libs/
 target/
 x64/
 bin/
+CSharp-API_Example/res/config/API_Example.ini
 CSharp-API_Example/binx64/
 Agora-C_Sharp-RTC-SDK/CI/publish/
 Agora-C_Sharp-RTC-SDK/CSharp-API_Example/

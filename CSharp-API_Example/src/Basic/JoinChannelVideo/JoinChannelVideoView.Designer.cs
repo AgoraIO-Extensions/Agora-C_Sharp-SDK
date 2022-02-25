@@ -38,10 +38,10 @@ namespace CSharp_API_Example
             // 
             // localVideoView
             // 
-            this.localVideoView.Location = new System.Drawing.Point(3, 4);
-            this.localVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.localVideoView.Location = new System.Drawing.Point(4, 5);
+            this.localVideoView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.localVideoView.Name = "localVideoView";
-            this.localVideoView.Size = new System.Drawing.Size(122, 112);
+            this.localVideoView.Size = new System.Drawing.Size(149, 134);
             this.localVideoView.TabIndex = 2;
             this.localVideoView.TabStop = false;
             // 
@@ -51,30 +51,32 @@ namespace CSharp_API_Example
             this.remoteVideoView.Cursor = System.Windows.Forms.Cursors.Default;
             this.remoteVideoView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.remoteVideoView.Location = new System.Drawing.Point(0, 0);
-            this.remoteVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.remoteVideoView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.remoteVideoView.Name = "remoteVideoView";
-            this.remoteVideoView.Size = new System.Drawing.Size(760, 600);
+            this.remoteVideoView.Size = new System.Drawing.Size(929, 720);
             this.remoteVideoView.TabIndex = 4;
             this.remoteVideoView.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(250, 17);
+            this.label1.Location = new System.Drawing.Point(306, 20);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 20);
+            this.label1.Size = new System.Drawing.Size(136, 24);
             this.label1.TabIndex = 5;
             this.label1.Text = "一对一视频通话";
             // 
-            // Video1To1View
+            // JoinChannelVideoView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
             this.Controls.Add(this.localVideoView);
             this.Controls.Add(this.remoteVideoView);
-            this.Name = "Video1To1View";
-            this.Size = new System.Drawing.Size(760, 600);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "JoinChannelVideoView";
+            this.Size = new System.Drawing.Size(929, 720);
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).EndInit();
             this.ResumeLayout(false);

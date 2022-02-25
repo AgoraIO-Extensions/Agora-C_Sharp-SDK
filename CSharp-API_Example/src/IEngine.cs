@@ -11,6 +11,7 @@ namespace CSharp_API_Example
         internal abstract int JoinChannel();
         internal abstract int LeaveChannel();
 
+        public virtual  void SendStreamMessage(string str) { }
         // not necessary
         internal abstract string GetSDKVersion();
         internal abstract IAgoraRtcEngine GetEngine();

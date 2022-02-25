@@ -24,11 +24,12 @@ namespace CSharp_API_Example
         private IAgoraRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_win_id_ = IntPtr.Zero;
-
+        private int data_stream_id_ = -1;
         public JoinChannelVideo(IntPtr localWindowId, IntPtr remoteWindowId)
         {
             local_win_id_ = localWindowId;
             remote_win_id_ = remoteWindowId;
+            data_stream_id_ = -1;
         }
 
         internal override int Init(string appId, string channelId)
@@ -59,6 +60,7 @@ namespace CSharp_API_Example
         internal override int UnInit()
         {
             int ret = -1;
+            data_stream_id_ = -1;
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
@@ -80,6 +82,10 @@ namespace CSharp_API_Example
 
                 ret = rtc_engine_.EnableVideo();
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableVideo", ret);
+
+                VideoEncoderConfiguration config = new VideoEncoderConfiguration(960, 540, FRAME_RATE.FRAME_RATE_FPS_30, 5, BITRATE.STANDARD_BITRATE, BITRATE.COMPATIBLE_BITRATE);
+                ret = rtc_engine_.SetVideoEncoderConfiguration(config);
+                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetVideoEncoderConfiguration", ret);
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "JoinChannel", ret);
@@ -130,13 +136,38 @@ namespace CSharp_API_Example
         {
             return remote_win_id_;
         }
+
+        public override void SendStreamMessage(string str)
+        {
+            if (null == rtc_engine_ )
+                return;
+            if (str.Length == 0)
+            {
+                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "DataStream Message is null", -1);
+                return;
+            }
+
+            int ret = -1;
+            if (data_stream_id_ == -1) {
+                DataStreamConfig config = new DataStreamConfig(false, false);
+                data_stream_id_ = rtc_engine_.CreateDataStream(config);
+                if(data_stream_id_ == -1)
+                {
+                    CSharpForm.dump_handler_(JoinChannelVideo_TAG + "CreateDataStream", data_stream_id_);
+                    return;
+                }
+            }
+
+            byte[] data = System.Text.Encoding.Default.GetBytes(str);
+            ret = rtc_engine_.SendStreamMessage(data_stream_id_, data);
+            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SendStreamMessage", ret);
+        }
     }
 
     // override if need
     internal class JoinChannelVideoEventHandler : IAgoraRtcEngineEventHandler
     {
         private JoinChannelVideo joinChannelVideo_inst_ = null;
-
         public JoinChannelVideoEventHandler(JoinChannelVideo _joinChannelVideo) {
             joinChannelVideo_inst_ = _joinChannelVideo;
         }
@@ -154,7 +185,7 @@ namespace CSharp_API_Example
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)joinChannelVideo_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            VideoCanvas vs = new VideoCanvas((ulong)joinChannelVideo_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
             int ret = joinChannelVideo_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
@@ -171,16 +202,25 @@ namespace CSharp_API_Example
 
         public override void OnUserJoined(uint uid, int elapsed)
         {
+            VideoCanvas vs = new VideoCanvas((ulong)0, RENDER_MODE_TYPE.RENDER_MODE_FIT, joinChannelVideo_inst_.GetChannelId());
+            int ret = joinChannelVideo_inst_.GetEngine().SetupLocalVideo(vs);
+            VideoCanvas vs2 = new VideoCanvas((ulong)joinChannelVideo_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, joinChannelVideo_inst_.GetChannelId());
+            ret = joinChannelVideo_inst_.GetEngine().SetupLocalVideo(vs2);
             Console.WriteLine("----->OnUserJoined uid={0}", uid);
             if (joinChannelVideo_inst_.GetRemoteWinId() == IntPtr.Zero) return;
             var vc = new VideoCanvas((ulong)joinChannelVideo_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, joinChannelVideo_inst_.GetChannelId(), uid);
-            int ret = joinChannelVideo_inst_.GetEngine().SetupRemoteVideo(vc);
+           ret = joinChannelVideo_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
         public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
         {
             Console.WriteLine("----->OnUserOffline reason={0}", reason);
+        }
+
+        public override void OnStreamMessage(uint uid, int streamId, byte[] data, uint length)
+        {
+          
         }
     }
 }
