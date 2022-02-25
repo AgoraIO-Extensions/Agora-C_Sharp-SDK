@@ -191,11 +191,13 @@ namespace agora.rtc
 
        public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
        {
+           RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo();
+           positionInfo.position = position;
+           positionInfo.forward = forward;
            var param = new
            {
                playerId,
-               position,
-               forward
+               positionInfo
            };
            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
                ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdatePlayerPositionInfo,
@@ -395,11 +397,13 @@ namespace agora.rtc
 
        public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
        {
+           RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo();
+           positionInfo.position = position;
+           positionInfo.forward = forward;
            var param = new
            {
                playerId,
-               position,
-               forward
+               positionInfo
            };
            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdatePlayerPositionInfo,
@@ -441,11 +445,13 @@ namespace agora.rtc
 
        public override int UpdateRemotePosition(uint uid, float[] position, float[] forward)
        {
+           RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo();
+           posInfo.position = position;
+           posInfo.forward = forward;
            var param = new
            {
                uid,
-               position,
-               forward
+               posInfo
            };
            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateRemotePosition,
@@ -454,11 +460,13 @@ namespace agora.rtc
 
        public override int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
        {
+           RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo();
+           posInfo.position = position;
+           posInfo.forward = forward;
            var param = new
            {
                uid,
-               position,
-               forward,
+               posInfo,
                connection
            };
            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
