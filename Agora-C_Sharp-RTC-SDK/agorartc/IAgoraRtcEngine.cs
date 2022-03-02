@@ -340,6 +340,16 @@ namespace agora.rtc
         public abstract int TakeSnapshot(string channel, uint uid, string filePath);
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
         public abstract int StartEchoTest(EchoTestConfiguration config);
+
+        public abstract int SetAVSyncSource(string channelId, uint uid);
+        public abstract int StartRtmpStreamWithoutTranscoding(string url);
+        public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
+        public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
+        public abstract int StopRtmpStream(string url);
+        public abstract int SetLowlightEnhanceOptions(bool enabled, LowLightEnhanceOptions options);
+        public abstract int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options);
+        public abstract int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options);
+        public abstract int EnableWirelessAccelerate(bool enabled);
     }
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -645,7 +655,7 @@ namespace agora.rtc
         }
 
         public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state,
-            RTMP_STREAM_PUBLISH_ERROR errCode)
+            RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
         {
         }
 
@@ -739,7 +749,16 @@ namespace agora.rtc
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result)
         {
         }
+
         public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode)
+        {
+        }
+
+        public virtual void OnScreenCaptureInfoUpdated(ScreenCaptureInfo info) 
+        {
+        }
+        
+        public virtual void OnClientRoleChangeFailed(CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) 
         {
         }
     }
