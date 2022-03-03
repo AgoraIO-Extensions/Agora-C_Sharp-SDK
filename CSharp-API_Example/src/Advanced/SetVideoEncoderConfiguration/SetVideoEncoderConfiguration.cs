@@ -14,17 +14,17 @@ using agora.rtc;
 
 namespace CSharp_API_Example
 {
-    public class JoinChannelVideo : IEngine
+    public class SetVideoEncoderConfiguration : IEngine
     {
         private string app_id_ = "";
         private string channel_id_ = "";
-        private readonly string JoinChannelVideo_TAG = "[JoinChannelVideo] ";
+        private readonly string SetVideoEncoderConfiguration_TAG = "[SetVideoEncoderConfiguration] ";
         private readonly string agora_sdk_log_file_path_ = "agorasdk.log";
         private IAgoraRtcEngine rtc_engine_ = null;
         private IAgoraRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_win_id_ = IntPtr.Zero;
-         public JoinChannelVideo(IntPtr localWindowId, IntPtr remoteWindowId)
+         public SetVideoEncoderConfiguration(IntPtr localWindowId, IntPtr remoteWindowId)
         {
             local_win_id_ = localWindowId;
             remote_win_id_ = remoteWindowId;
@@ -44,12 +44,12 @@ namespace CSharp_API_Example
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Initialize", ret);
+            CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "Initialize", ret);
             // second way to set logfile
             //ret = rtc_engine_.SetLogFile(log_file_path);
-            //CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetLogFile", ret);
+            //CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "SetLogFile", ret);
 
-            event_handler_ = new JoinChannelVideoEventHandler(this);
+            event_handler_ = new SetVideoEncoderConfigurationEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
 
             return ret;
@@ -61,7 +61,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
+                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "LeaveChannel", ret);
 
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
@@ -75,22 +75,22 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableAudio", ret);
+                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "EnableAudio", ret);
 
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableVideo", ret);
+                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "EnableVideo", ret);
 
                 VideoEncoderConfiguration config = new VideoEncoderConfiguration(960, 540, FRAME_RATE.FRAME_RATE_FPS_30, 5, BITRATE.STANDARD_BITRATE, BITRATE.COMPATIBLE_BITRATE);
                 ret = rtc_engine_.SetVideoEncoderConfiguration(config);
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetVideoEncoderConfiguration", ret);
+                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "SetVideoEncoderConfiguration", ret);
 
-                ret = rtc_engine_.JoinChannel("", channel_id_, "info");
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "JoinChannel", ret);
+                ret = rtc_engine_.JoinChannel("", channel_id_, "info", 0, new ChannelMediaOptions(true, true, true, true));
+                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "JoinChannel", ret);
                 /*string[] ipList = { "127.0.0.1", "127.0.0.2" };
                 string[] domainList = { "255.0.0.0", "255.255.0.0" };
                 LocalAccessPointConfiguration config = new LocalAccessPointConfiguration(ipList, 2, domainList, 2, "dnstest", LOCAL_PROXY_MODE.ConnectivityFirst);
                 ret = rtc_engine_.SetLocalAccessPoint(config);
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetLocalAccessPoint", ret);*/
+                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "SetLocalAccessPoint", ret);*/
             }
             return ret;
         }
@@ -101,7 +101,18 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
+                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "LeaveChannel", ret);
+            }
+            return ret;
+        }
+
+        public override int setVideoEncoderConfiguration(agora.rtc.VideoDimensions dimension, agora.rtc.FRAME_RATE fps)
+        {
+            int ret = -1;
+            if (null != rtc_engine_)
+            {
+                ret = rtc_engine_.SetVideoEncoderConfiguration(new VideoEncoderConfiguration(dimension, fps, 5, BITRATE.STANDARD_BITRATE, BITRATE.COMPATIBLE_BITRATE));
+                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "setVideoEncoderConfiguration", ret);
             }
             return ret;
         }
@@ -136,11 +147,11 @@ namespace CSharp_API_Example
     }
 
     // override if need
-    internal class JoinChannelVideoEventHandler : IAgoraRtcEngineEventHandler
+    internal class SetVideoEncoderConfigurationEventHandler : IAgoraRtcEngineEventHandler
     {
-        private JoinChannelVideo joinChannelVideo_inst_ = null;
-        public JoinChannelVideoEventHandler(JoinChannelVideo _joinChannelVideo) {
-            joinChannelVideo_inst_ = _joinChannelVideo;
+        private SetVideoEncoderConfiguration SetVideoEncoderConfiguration_inst_ = null;
+        public SetVideoEncoderConfigurationEventHandler(SetVideoEncoderConfiguration _SetVideoEncoderConfiguration) {
+            SetVideoEncoderConfiguration_inst_ = _SetVideoEncoderConfiguration;
         }
 
         public override void OnWarning(int warn, string msg)
@@ -156,8 +167,8 @@ namespace CSharp_API_Example
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)joinChannelVideo_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
-            int ret = joinChannelVideo_inst_.GetEngine().SetupLocalVideo(vs);
+            VideoCanvas vs = new VideoCanvas((ulong)SetVideoEncoderConfiguration_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            int ret = SetVideoEncoderConfiguration_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
 
@@ -174,9 +185,9 @@ namespace CSharp_API_Example
         public override void OnUserJoined(uint uid, int elapsed)
         {
             Console.WriteLine("----->OnUserJoined uid={0}", uid);
-            if (joinChannelVideo_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)joinChannelVideo_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, joinChannelVideo_inst_.GetChannelId(), uid);
-            int ret = joinChannelVideo_inst_.GetEngine().SetupRemoteVideo(vc);
+            if (SetVideoEncoderConfiguration_inst_.GetRemoteWinId() == IntPtr.Zero) return;
+            var vc = new VideoCanvas((ulong)SetVideoEncoderConfiguration_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, SetVideoEncoderConfiguration_inst_.GetChannelId(), uid);
+            int ret = SetVideoEncoderConfiguration_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
