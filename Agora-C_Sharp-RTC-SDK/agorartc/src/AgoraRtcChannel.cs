@@ -683,7 +683,6 @@ namespace agora.rtc
         {
             var param = new
             {
-                channelId = _channelId,
                 channelId,
                 uid
             };

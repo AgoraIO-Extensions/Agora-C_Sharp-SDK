@@ -6298,10 +6298,10 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
       {
       }
 
-      public ColorEnhanceOptions(VIDEO_DENOISER_MODE mode, VIDEO_DENOISER_LEVEL level)
+      public ColorEnhanceOptions(float strengthLevel, float skinProtectLevel)
       {
-         this.mode = mode;
-         this.level = level;
+         this.strengthLevel = strengthLevel;
+         this.skinProtectLevel = skinProtectLevel;
       }
       /** The level of color enhancement. The value range is [0.0,1.0]. `0.0` is the default value, which means no color enhancement is applied to the video. The higher the value, the higher the level of color enhancement.
          */
