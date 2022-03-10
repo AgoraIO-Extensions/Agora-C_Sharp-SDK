@@ -350,6 +350,8 @@ namespace agora.rtc
         public abstract int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options);
         public abstract int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options);
         public abstract int EnableWirelessAccelerate(bool enabled);
+        public abstract int StartRecording(MediaRecorderConfiguration config);
+        public abstract int StopRecording();
     }
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -775,6 +777,14 @@ namespace agora.rtc
         }
 
         public virtual void OnAudioDeviceTestVolumeIndication(AudioDeviceTestVolumeType volumeType, int volume)
+        {
+        }
+
+        public virtual void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error)
+        {
+        }
+
+        public virtual void OnRecorderInfoUpdated(RecorderInfo info)
         {
         }
     }

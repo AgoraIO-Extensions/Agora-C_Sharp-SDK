@@ -231,6 +231,9 @@ namespace agora.rtc
         kEngineSetVideoDenoiserOptions = 202,
         kEngineSetColorEnhanceOptions = 203,
         kEngineEnableWirelessAccelerate = 204,
+        kEngineMediaRecorderStart = 205,
+        kEngineMediaRecorderStop = 206,
+        kEngineMediaRecorderRelease = 207,
     }
 
 

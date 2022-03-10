@@ -104,6 +104,7 @@ namespace agora.rtc
 
             if (disposing)
             {
+                ReleaseRecorder();
                 ReleaseEventHandler();
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
@@ -2836,6 +2837,33 @@ namespace agora.rtc
                 out _result);
         }
 
+        public override int StartRecording(MediaRecorderConfiguration config)
+        {
+            var param = new
+            {
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineMediaRecorderStart, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StopRecording()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineMediaRecorderStop, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        private void ReleaseRecorder()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineMediaRecorderStop, JsonMapper.ToJson(param),
+                out _result);
+        }
+
         ~AgoraRtcEngine()
         {
             Dispose(false, false);
@@ -4232,6 +4260,35 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnAudioDeviceTestVolumeIndication(
                                 (AudioDeviceTestVolumeType) AgoraJson.GetData<int>(data, "volumeType"),
                                 (int) AgoraJson.GetData<int>(data, "volume"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRecorderStateChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnRecorderStateChanged(
+                                AgoraJson.JsonToStruct<RecorderState>(data, "state"),
+                                (RecorderErrorCode) AgoraJson.GetData<int>(data, "error"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRecorderInfoUpdated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnRecorderInfoUpdated(
+                                AgoraJson.JsonToStruct<RecorderInfo>(data, "info"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -5680,6 +5737,35 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnAudioDeviceTestVolumeIndication(
                                 (AudioDeviceTestVolumeType) AgoraJson.GetData<int>(data, "volumeType"),
                                 (int) AgoraJson.GetData<int>(data, "volume"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRecorderStateChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnRecorderStateChanged(
+                                AgoraJson.JsonToStruct<RecorderState>(data, "state"),
+                                (RecorderErrorCode) AgoraJson.GetData<int>(data, "error"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRecorderInfoUpdated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnRecorderInfoUpdated(
+                                AgoraJson.JsonToStruct<RecorderInfo>(data, "info"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
