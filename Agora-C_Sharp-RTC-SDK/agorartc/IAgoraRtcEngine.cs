@@ -761,6 +761,22 @@ namespace agora.rtc
         public virtual void OnClientRoleChangeFailed(CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) 
         {
         }
+
+        public virtual void OnWlAccMessage(WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
+        {
+        }
+
+        public virtual void OnWlAccStats(WlAccStats currentStats, WlAccStats averageStats)
+        { 
+        }
+
+        public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        {
+        }
+
+        public virtual void OnAudioDeviceTestVolumeIndication(AudioDeviceTestVolumeType volumeType, int volume)
+        {
+        }
     }
 
     internal static partial class ObsoleteMethodWarning

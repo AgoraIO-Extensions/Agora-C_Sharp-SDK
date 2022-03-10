@@ -256,7 +256,11 @@ namespace agora.rtc
         {
         }
 
-        public virtual void OnClientRoleChangeFailed(CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) 
+        public virtual void OnClientRoleChangeFailed(string channelId, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) 
+        {
+        }
+
+        public virtual void OnProxyConnected(string channelId, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
         {
         }
     }

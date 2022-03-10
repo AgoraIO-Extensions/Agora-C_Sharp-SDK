@@ -6412,6 +6412,85 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
       CLIENT_ROLE_CHANGE_FAILED_BY_CONNECTION_FAILED = 4,
    };
 
+   public enum WLACC_MESSAGE_REASON {
+      /** WIFI signal is weak.*/
+      WLACC_MESSAGE_REASON_WEAK_SIGNAL = 0,
+      /** Channel congestion.*/
+      WLACC_MESSAGE_REASON_CHANNEL_CONGESTION = 1,
+   };
+
+   /** Suggest an action for the user.
+   */
+   public enum WLACC_SUGGEST_ACTION {
+      /** Please get close to AP.*/
+      WLACC_SUGGEST_ACTION_CLOSE_TO_WIFI = 0,
+      /** The user is advised to connect to the prompted SSID.*/
+      WLACC_SUGGEST_ACTION_CONNECT_SSID = 1,
+      /** The user is advised to check whether the AP supports 5G band and enable 5G band (the aciton link is attached), or purchases an AP that supports 5G. AP does not support 5G band.*/
+      WLACC_SUGGEST_ACTION_CHECK_5G = 2,
+      /** The user is advised to change the SSID of the 2.4G or 5G band (the aciton link is attached). The SSID of the 2.4G band AP is the same as that of the 5G band.*/
+      WLACC_SUGGEST_ACTION_MODIFY_SSID = 3,
+   };
+
+   /** Indicator optimization degree.
+   */
+   public class WlAccStats
+   {
+      public WlAccStats()
+      {
+      }
+
+      public WlAccStats(ushort e2eDelayPercent, ushort frozenRatioPercent, ushort lossRatePercent)
+      {
+         this.e2eDelayPercent = e2eDelayPercent;
+         this.frozenRatioPercent = frozenRatioPercent;
+         this.lossRatePercent = lossRatePercent;
+      }
+      /** End-to-end delay optimization percentage.*/
+      public ushort e2eDelayPercent { set; get; }
+      /** Frozen Ratio optimization percentage.*/
+      public ushort frozenRatioPercent { set; get; }
+      /** Loss Rate optimization percentage.*/
+      public ushort lossRatePercent { set; get; }
+   };
+
+   /**
+   * The proxy type.
+   *
+   * @since v3.6.2
+   */
+   public enum PROXY_TYPE {
+      /** 0: Reserved for future use.
+         */
+      NONE_PROXY_TYPE = 0,
+      /** 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
+         */
+      UDP_PROXY_TYPE = 1,
+      /** 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TLS 443.
+         */
+      TCP_PROXY_TYPE = 2,
+      /** 3: Reserved for future use.
+         */
+      LOCAL_PROXY_TYPE = 3,
+      /** 4: The automatic mode. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TLS 443 if the attempt fails.
+         */
+      TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
+   };
+
+   /**
+   * The volume type.
+   *
+   * @since v3.6.2
+   */
+   public enum AudioDeviceTestVolumeType {
+      /** 0: The volume of the audio capturing device.
+         */
+      AudioTestRecordingVolume = 0,
+      /** 1: The volume of the audio playback device.
+         */
+      AudioTestPlaybackVolume = 1,
+   };
+
     public enum AgoraEngineType
     {
         MainProcess,

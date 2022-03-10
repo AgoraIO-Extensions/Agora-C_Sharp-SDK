@@ -1320,8 +1320,27 @@ namespace agora.rtc
                         if (ChannelEventHandlerDict != null && ChannelEventHandlerDict.ContainsKey(channelId))
                         {
                             ChannelEventHandlerDict[channelId].OnClientRoleChangeFailed(
+                                (string) AgoraJson.GetData<string>(data, "channelId"),
                                 (CLIENT_ROLE_CHANGE_FAILED_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "currentRole"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onProxyConnected":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (ChannelEventHandlerDict != null && ChannelEventHandlerDict.ContainsKey(channelId))
+                        {
+                            ChannelEventHandlerDict[channelId].OnProxyConnected(
+                                (string) AgoraJson.GetData<string>(data, "channelId"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (PROXY_TYPE) AgoraJson.GetData<int>(data, "proxyType"),
+                                (string) AgoraJson.GetData<string>(data, "localProxyIp"),
+                                (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

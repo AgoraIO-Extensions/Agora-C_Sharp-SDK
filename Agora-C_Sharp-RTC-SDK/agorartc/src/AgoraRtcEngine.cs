@@ -4133,9 +4133,9 @@ namespace agora.rtc
                         if (EngineEventHandlerArr[0] != null)
                         {
                             EngineEventHandlerArr[0].OnSnapshotTaken(
-                                (string) AgoraJson.GetData<int>(data, "channel"),
+                                (string) AgoraJson.GetData<string>(data, "channel"),
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
-                                (string) AgoraJson.GetData<int>(data, "filePath"),
+                                (string) AgoraJson.GetData<string>(data, "filePath"),
                                 (int) AgoraJson.GetData<int>(data, "width"),
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "errCode"));
@@ -4168,6 +4168,70 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnClientRoleChangeFailed(
                                 (CLIENT_ROLE_CHANGE_FAILED_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "currentRole"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onWlAccMessage":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnWlAccMessage(
+                                (WLACC_MESSAGE_REASON) AgoraJson.GetData<int>(data, "reason"),
+                                (WLACC_SUGGEST_ACTION) AgoraJson.GetData<int>(data, "action"),
+                                (string) AgoraJson.GetData<string>(data, "wlAccMsg"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onWlAccStats":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnWlAccStats(
+                                AgoraJson.JsonToStruct<WlAccStats>(data, "currentStats"),
+                                AgoraJson.JsonToStruct<WlAccStats>(data, "averageStats"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onProxyConnected":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnProxyConnected(
+                                (string) AgoraJson.GetData<string>(data, "channel"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (PROXY_TYPE) AgoraJson.GetData<int>(data, "proxyType"),
+                                (string) AgoraJson.GetData<string>(data, "localProxyIp"),
+                                (int) AgoraJson.GetData<int>(data, "elapsed"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onAudioDeviceTestVolumeIndication":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnAudioDeviceTestVolumeIndication(
+                                (AudioDeviceTestVolumeType) AgoraJson.GetData<int>(data, "volumeType"),
+                                (int) AgoraJson.GetData<int>(data, "volume"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -5517,9 +5581,9 @@ namespace agora.rtc
                         if (EngineEventHandlerArr[1] != null)
                         {
                             EngineEventHandlerArr[1].OnSnapshotTaken(
-                                (string) AgoraJson.GetData<int>(data, "channel"),
+                                (string) AgoraJson.GetData<string>(data, "channel"),
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
-                                (string) AgoraJson.GetData<int>(data, "filePath"),
+                                (string) AgoraJson.GetData<string>(data, "filePath"),
                                 (int) AgoraJson.GetData<int>(data, "width"),
                                 (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "errCode"));
@@ -5552,6 +5616,70 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnClientRoleChangeFailed(
                                 (CLIENT_ROLE_CHANGE_FAILED_REASON) AgoraJson.GetData<int>(data, "reason"),
                                 (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "currentRole"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onWlAccMessage":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnWlAccMessage(
+                                (WLACC_MESSAGE_REASON) AgoraJson.GetData<int>(data, "reason"),
+                                (WLACC_SUGGEST_ACTION) AgoraJson.GetData<int>(data, "action"),
+                                (string) AgoraJson.GetData<string>(data, "wlAccMsg"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onWlAccStats":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnWlAccStats(
+                                AgoraJson.JsonToStruct<WlAccStats>(data, "currentStats"),
+                                AgoraJson.JsonToStruct<WlAccStats>(data, "averageStats"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onProxyConnected":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnProxyConnected(
+                                (string) AgoraJson.GetData<string>(data, "channel"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (PROXY_TYPE) AgoraJson.GetData<int>(data, "proxyType"),
+                                (string) AgoraJson.GetData<string>(data, "localProxyIp"),
+                                (int) AgoraJson.GetData<int>(data, "elapsed"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onAudioDeviceTestVolumeIndication":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnAudioDeviceTestVolumeIndication(
+                                (AudioDeviceTestVolumeType) AgoraJson.GetData<int>(data, "volumeType"),
+                                (int) AgoraJson.GetData<int>(data, "volume"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
