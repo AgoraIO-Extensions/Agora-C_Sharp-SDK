@@ -2859,7 +2859,7 @@ namespace agora.rtc
         private void ReleaseRecorder()
         {
             var param = new { };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineMediaRecorderStop, JsonMapper.ToJson(param),
                 out _result);
         }
