@@ -6454,28 +6454,6 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
       public ushort lossRatePercent { set; get; }
    };
 
-   /**
-   * The proxy type.
-   *
-   * @since v3.6.2
-   */
-   public enum PROXY_TYPE {
-      /** 0: Reserved for future use.
-         */
-      NONE_PROXY_TYPE = 0,
-      /** 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
-         */
-      UDP_PROXY_TYPE = 1,
-      /** 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TLS 443.
-         */
-      TCP_PROXY_TYPE = 2,
-      /** 3: Reserved for future use.
-         */
-      LOCAL_PROXY_TYPE = 3,
-      /** 4: The automatic mode. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TLS 443 if the attempt fails.
-         */
-      TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
-   };
 
    /**
    * The volume type.
