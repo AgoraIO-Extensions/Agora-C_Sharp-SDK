@@ -317,7 +317,6 @@ namespace agora.rtc
        {
            _result = new CharAssistant();
            _irisRtcSpatialAudioEngine = irisSpatialAudioEngine;
-           Initialize();
        }
         
        ~AgoraRtcSpatialAudioEngine()
@@ -516,7 +515,7 @@ namespace agora.rtc
                JsonMapper.ToJson(param), out _result);
        }
 
-       private int Initialize()
+       public int Initialize()
        {
            var param = new { };
            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
