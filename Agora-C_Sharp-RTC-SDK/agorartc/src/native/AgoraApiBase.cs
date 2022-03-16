@@ -395,7 +395,11 @@ namespace agora.rtc
         kLocalSpatialAudioRemoveRemotePosition,
         kLocalSpatialAudioRemoveRemotePositionEx,
         kLocalSpatialAudioClearRemotePositions,
-        kLocalSpatialAudioClearRemotePositionsEx
+        kLocalSpatialAudioClearRemotePositionsEx,
+        kLocalSpatialAudioMuteLocalAudioStream,
+        kLocalSpatialAudioMuteAllRemoteAudioStreams,
+        kLocalSpatialAudioInitialize,
+        kLocalSpatialAudioRelease
     };
 
     internal enum ApiTypeCloudSpatialAudio
@@ -414,10 +418,13 @@ namespace agora.rtc
 
         kCloudSpatialAudioEnableSpatializer,
         kCloudSpatialAudioSetTeamId,
-        kCloudSpatialAudioSetRangeAudioMode,
+        kCloudSpatialAudioSetAudioRangeMode,
         kCloudSpatialAudioEnterRoom,
         kCloudSpatialAudioRenewToken,
         kCloudSpatialAudioExitRoom,
-        kCloudSpatialAudioGetTeammates
+        kCloudSpatialAudioGetTeammates,
+
+        kCloudSpatialAudioMuteLocalAudioStream,
+        kCloudSpatialAudioMuteAllRemoteAudioStreams
     };
 } // namespace agora.rtc

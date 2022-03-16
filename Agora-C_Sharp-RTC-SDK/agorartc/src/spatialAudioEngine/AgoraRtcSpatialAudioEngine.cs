@@ -213,25 +213,25 @@ namespace agora.rtc
                JsonMapper.ToJson(param), out _result);
        }
 
-       public override int EnableMic(bool enable)
+       public override int MuteLocalAudioStream(bool mute)
        {
            var param = new
            {
-               enable
+               mute
            };
            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-               ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableMic,
+               ApiTypeCloudSpatialAudio.kCloudSpatialAudioMuteLocalAudioStream,
                JsonMapper.ToJson(param), out _result);
        }
 
-       public override int EnableSpeaker(bool enable)
+       public override int MuteAllRemoteAudioStreams(bool mute)
        {
            var param = new
            {
-               enable
+               mute
            };
            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-               ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableSpeaker,
+               ApiTypeCloudSpatialAudio.kCloudSpatialAudioMuteAllRemoteAudioStreams,
                JsonMapper.ToJson(param), out _result);
        }
 
@@ -269,14 +269,14 @@ namespace agora.rtc
                JsonMapper.ToJson(param), out _result);
        }
 
-       public override int SetRangeAudioMode(RANGE_AUDIO_MODE_TYPE rangeAudioMode)
+       public override int SetAudioRangeMode(RANGE_AUDIO_MODE_TYPE rangeMode)
        {
            var param = new
            {
-               rangeAudioMode
+               rangeMode
            };
            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-               ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetRangeAudioMode,
+               ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetAudioRangeMode,
                JsonMapper.ToJson(param), out _result);
        }
 
@@ -311,11 +311,13 @@ namespace agora.rtc
    {
        private IrisSpatialAudioEnginePtr _irisRtcSpatialAudioEngine;
        private CharAssistant _result;
+       private bool _disposed = false;
         
        internal AgoraRtcSpatialAudioEngine(IrisSpatialAudioEnginePtr irisSpatialAudioEngine)
        {
            _result = new CharAssistant();
            _irisRtcSpatialAudioEngine = irisSpatialAudioEngine;
+           Initialize();
        }
         
        ~AgoraRtcSpatialAudioEngine()
@@ -326,6 +328,12 @@ namespace agora.rtc
         
        public override void Dispose()
        {
+           if (!_disposed)
+           {
+               Release();
+               _disposed = true;
+           }
+           
            _irisRtcSpatialAudioEngine = IntPtr.Zero;
            _result = new CharAssistant();
            GC.SuppressFinalize(this);
@@ -417,25 +425,25 @@ namespace agora.rtc
                JsonMapper.ToJson(param), out _result);
        }
 
-       public override int EnableMic(bool enable)
+       public override int MuteLocalAudioStream(bool mute)
        {
            var param = new
            {
-               enable
+               mute
            };
            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-               ApiTypeLocalSpatialAudio.kLocalSpatialAudioEnableMic,
+               ApiTypeLocalSpatialAudio.kLocalSpatialAudioMuteLocalAudioStream,
                JsonMapper.ToJson(param), out _result);
        }
 
-       public override int EnableSpeaker(bool enable)
+       public override int MuteAllRemoteAudioStreams(bool mute)
        {
            var param = new
            {
-               enable
+               mute
            };
            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-               ApiTypeLocalSpatialAudio.kLocalSpatialAudioEnableSpeaker,
+               ApiTypeLocalSpatialAudio.kLocalSpatialAudioMuteAllRemoteAudioStreams,
                JsonMapper.ToJson(param), out _result);
        }
 
@@ -505,6 +513,22 @@ namespace agora.rtc
            };
            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
                ApiTypeLocalSpatialAudio.kLocalSpatialAudioClearRemotePositionsEx,
+               JsonMapper.ToJson(param), out _result);
+       }
+
+       private int Initialize()
+       {
+           var param = new { };
+           return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+               ApiTypeLocalSpatialAudio.kLocalSpatialAudioInitialize,
+               JsonMapper.ToJson(param), out _result);
+       }
+
+       private int Release()
+       {
+           var param = new { };
+           return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
+               ApiTypeLocalSpatialAudio.kLocalSpatialAudioRelease,
                JsonMapper.ToJson(param), out _result);
        }
    }

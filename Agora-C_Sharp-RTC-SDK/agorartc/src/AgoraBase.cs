@@ -3882,7 +3882,8 @@ namespace agora.rtc
         TIMBRE_TRANSFORMATION_RESOUNDING = 0x01030700,
         /** A more ringing voice.
         */
-        TIMBRE_TRANSFORMATION_RINGING = 0x01030800
+        TIMBRE_TRANSFORMATION_RINGING = 0x01030800,
+        ULTRA_HIGH_QUALITY_VOICE = 0x01040100
     };
 
     /** The options for SDK preset audio effects.
@@ -4578,6 +4579,18 @@ namespace agora.rtc
         /** 11: The video profile is sent to the server.
             */
         RELAY_EVENT_VIDEO_PROFILE_UPDATE = 11,
+        /** 12: pause send packet to dest channel success.
+        */
+        RELAY_EVENT_PAUSE_SEND_PACKET_TO_DEST_CHANNEL_SUCCESS = 12,
+        /** 13: pause send packet to dest channel failed.
+        */
+        RELAY_EVENT_PAUSE_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 13,
+        /** 14: resume send packet to dest channel success.
+        */
+        RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_SUCCESS = 14,
+        /** 15: pause send packet to dest channel failed.
+        */
+        RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 15,
     };
 
     public enum CHANNEL_MEDIA_RELAY_STATE {
@@ -5755,14 +5768,47 @@ namespace agora.rtc
         */
         public int audioDelayMs { set; get; }
         /**
+        * The delay in ms for sending media player audio frames. This is used for explicit control of A/V sync.
+        * To switch off the delay, set the value to zero.
+        */
+        public int mediaPlayerAudioDelayMs { set; get; }
+        /**
         * The token
         */
         public string token { set; get; }
         /**
+        * Enable media packet encryption.
+        * This parameter is ignored when calling function updateChannelMediaOptions()
+        * - false is default.
+        */
+        public bool enableBuiltInMediaEncryption { set; get; }
+        /**
+        * Determines whether to publish the sound of the rhythm player to remote users.
+        * - true: (Default) Publish the sound of the rhythm player.
+        * - false: Do not publish the sound of the rhythm player.
+        */
+        public bool publishRhythmPlayerTrack { set; get; }
+        /**
+        * This mode is only used for audience. In PK mode, client might join one
+        * channel as broadcaster, and join another channel as interactive audience to
+        * achieve low lentancy and smooth video from remote user.
+        * - true: Enable low lentancy and smooth video when joining as an audience.
+        * - false: (Default) Use default settings for audience role.
+        */
+        public bool isInteractiveAudience { set; get; }
+        /**
         * The sender option for video encoded track.
         */
         public EncodedVideoTrackOptions encodedVideoTrackOption { set; get; }
+
+        public AudioOptionsAdvanced audioOptionsAdvanced { set; get; }
     };
+
+    public class AudioOptionsAdvanced {
+        public bool enable_aec_external_custom_ { set; get; }
+
+        public bool enable_aec_external_loopback_ { set; get; }
+    }
 
     /**
     * The encoded video track options.
@@ -5949,12 +5995,33 @@ namespace agora.rtc
       /**
          * The region for connection. This advanced feature applies to scenarios that have regional restrictions.
          *
-         * For the regions that Agora supports, see #AREA_CODE. The area codes support bitwise operation.
+         * For the regions that Agora supports, see #SAE_DEPLOY_REGION. The area codes support bitwise operation.
          *
          * After specifying the region, the SDK connects to the Agora servers within that region.
          */
-      public uint areaCode;
+      public uint deployRegion;
    };
+
+    /** IP areas.
+    */
+    public enum SAE_DEPLOY_REGION {
+        /**
+        * Mainland China.
+        */
+        SAE_DEPLOY_REGION_CN = 0x00000001,
+        /**
+        * North America.
+        */
+        SAE_DEPLOY_REGION_NA = 0x00000002,
+        /**
+        * Europe.
+        */
+        SAE_DEPLOY_REGION_EU = 0x00000004,
+        /**
+        * Asia, excluding Mainland China.
+        */
+        SAE_DEPLOY_REGION_AS = 0x00000008
+    };
 
    public enum MEDIA_PLAYER_STATE {
       /** Default state.
@@ -6050,6 +6117,18 @@ namespace agora.rtc
       /** The audio mixing file playback is interrupted.
          */
       PLAYER_ERROR_INTERRUPTED = -13,
+      /** The SDK does not support this function.
+        */
+        PLAYER_ERROR_NOT_SUPPORTED = -14,
+        /** The token has expired.
+        */
+        PLAYER_ERROR_TOKEN_EXPIRED = -15,
+        /** The ip has expired.
+        */
+        PLAYER_ERROR_IP_EXPIRED = -16,
+        /** An unknown error occurs.
+        */
+        PLAYER_ERROR_UNKNOWN = -17,
    };
 
    /**
@@ -6472,5 +6551,20 @@ namespace agora.rtc
         /** device_id has value when user trigger interface of opening
         */
         public string deviceId;
+    };
+
+    public enum SEG_MODEL_TYPE {
+
+        SEG_MODEL_AI = 1, 
+        SEG_MODEL_GREEN = 2
+    };
+
+    public class SegmentationProperty {
+
+        public SEG_MODEL_TYPE modelType;
+
+        public int preferVelocity;
+        
+        public float greenCapacity;
     };
 }
