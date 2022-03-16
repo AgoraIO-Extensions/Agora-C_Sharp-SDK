@@ -9,6 +9,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace agora.rtc
 {
@@ -51,10 +52,18 @@ namespace agora.rtc
 
         private void Update()
         {
-            var action = DeQueue();
-            if (action != null)
+            while(true)
             {
-                action.Invoke();
+                var action = DeQueue();
+                if (action != null)
+                {
+                    action.Invoke();
+                    Thread.Sleep(10);
+                }
+                else
+                {
+                    break;
+                }
             }
         }
 
