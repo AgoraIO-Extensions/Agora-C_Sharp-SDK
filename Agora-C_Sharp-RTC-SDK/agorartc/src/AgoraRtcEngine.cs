@@ -186,7 +186,7 @@ namespace agora.rtc
 #elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             if (ret == 0) SetAppType(AppType.APP_TYPE_C_SHARP);
 #endif
-
+            _spatialAudioEngineInstance.Initialize();
             return ret;
         }
 
