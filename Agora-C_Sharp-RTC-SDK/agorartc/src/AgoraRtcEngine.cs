@@ -665,22 +665,40 @@ namespace agora.rtc
         {
             var param = new
             {
-                canvas
+                canvas = new
+                {
+                    view = (ulong) canvas.view,
+                    canvas.renderMode,
+                    canvas.uid,
+                    canvas.mirrorMode,
+                    canvas.isScreenView,
+                    canvas.priv_size,
+                    canvas.sourceType
+                }
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, 
+            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, 
             ApiTypeEngine.kEngineSetupRemoteVideo,
-            JsonMapper.ToJson(param), out _result);
+            JsonMapper.ToJson(param), canvas.priv, out _result);
         }
 
         public override int SetupLocalVideo(VideoCanvas canvas)
         {
             var param = new
             {
-                canvas
+                canvas = new
+                {
+                    view = (ulong) canvas.view,
+                    canvas.renderMode,
+                    canvas.uid,
+                    canvas.mirrorMode,
+                    canvas.isScreenView,
+                    canvas.priv_size,
+                    canvas.sourceType
+                }
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, 
+            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, 
             ApiTypeEngine.kEngineSetupLocalVideo,
-            JsonMapper.ToJson(param), out _result);
+            JsonMapper.ToJson(param), canvas.priv, out _result);
         }
 
         public override int EnableAudio()
@@ -1522,23 +1540,6 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        // public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels,
-        //                                   int sourceNumber = 1, bool localPlayback = false, bool publish = true)
-        // {
-        //     var param = new
-        //     {
-        //         enabled,
-        //         sampleRate,
-        //         channels,
-        //         sourceNumber,
-        //         localPlayback,
-        //         publish
-        //     };
-        //     return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-        //         ApiTypeEngine.kEngineSetExternalAudioSource,
-        //         JsonMapper.ToJson(param), out _result);
-        // }
-
         public override int SetExternalAudioSink(int sampleRate, int channels)
         {
             var param = new
@@ -1550,17 +1551,6 @@ namespace agora.rtc
                 ApiTypeEngine.kEngineSetExternalAudioSink,
                 JsonMapper.ToJson(param), out _result);
         }
-
-        // public override int PullAudioFrame(AudioFrame frame)
-        // {
-        //     var param = new
-        //     {
-        //         frame
-        //     };
-        //     return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-        //         ApiTypeEngine.kEnginePullAudioFrame,
-        //         JsonMapper.ToJson(param), out _result);
-        // }
 
         public override int StartPrimaryCustomAudioTrack(AudioTrackConfig config)
         {
@@ -2997,11 +2987,20 @@ namespace agora.rtc
         {
             var param = new
             {
-                canvas,
+                canvas = new
+                {
+                    view = (ulong) canvas.view,
+                    canvas.renderMode,
+                    canvas.uid,
+                    canvas.mirrorMode,
+                    canvas.isScreenView,
+                    canvas.priv_size,
+                    canvas.sourceType
+                },
                 connection
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetupRemoteVideoEx,
-                JsonMapper.ToJson(param), out _result);
+            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kEngineSetupRemoteVideoEx,
+                JsonMapper.ToJson(param), canvas.priv, out _result);
         }
 
         public override int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection)
@@ -3208,20 +3207,20 @@ namespace agora.rtc
 
         public override int PullAudioFrame(AudioFrame frame)
         {
-            // var param = new { };
-            // var ret = AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine,
-            //     ApiTypeEngine.kMediaPullAudioFrame,
-            //     JsonMapper.ToJson(param), frame.buffer, out _result);
-            // // var f = _result.Result.Length == 0
-            // //     ? new AudioFrameWithoutBuffer()
-            // //     : AgoraJson.JsonToStruct<AudioFrameWithoutBuffer>(_result.Result);
-            // frame.avsync_type = f.avsync_type;
-            // frame.channels = f.channels;
-            // frame.samplesPerChannel = f.samplesPerChannel;
-            // frame.type = f.type;
-            // frame.bytesPerSample = f.bytesPerSample;
-            // frame.renderTimeMs = f.renderTimeMs;
-            // frame.samplesPerSec = f.samplesPerSec;
+            var param = new { };
+            var ret = AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine,
+                ApiTypeEngine.kMediaPullAudioFrame,
+                JsonMapper.ToJson(param), frame.buffer, out _result);
+            var f = _result.Result.Length == 0
+                ? new AudioFrameWithoutBuffer()
+                : AgoraJson.JsonToStruct<AudioFrameWithoutBuffer>(_result.Result);
+            frame.avsync_type = f.avsync_type;
+            frame.channels = f.channels;
+            //frame.samplesPerChannel = f.samplesPerChannel;
+            frame.type = f.type;
+            frame.bytesPerSample = f.bytesPerSample;
+            frame.renderTimeMs = f.renderTimeMs;
+            frame.samplesPerSec = f.samplesPerSec;
             return 0;
         }
 
@@ -3402,12 +3401,14 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource)
+        public override int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource, SegmentationProperty segproperty, MEDIA_SOURCE_TYPE type)
         {
             var param = new
             {
                 enabled,
-                backgroundSource
+                backgroundSource,
+                segproperty,
+                type
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, 
                 ApiTypeEngine.kEngineEnableVirtualBackground,
@@ -3584,7 +3585,21 @@ namespace agora.rtc
 
         public override int PushDirectAudioFrame(AudioFrame frame)
         {
-            return -2;
+            var param = new
+            {
+                frame = new
+                {
+                    frame.type,
+                    frame.samplesPerChannel,
+                    frame.bytesPerSample,
+                    frame.channels,
+                    frame.samplesPerSec,
+                    frame.renderTimeMs,
+                    frame.avsync_type
+                }
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine, ApiTypeEngine.kMediaPushDirectAudioFrame,
+                JsonMapper.ToJson(param), frame.buffer, out _result);
         }
 
         ~AgoraRtcEngine()
@@ -4925,24 +4940,24 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onExtensionErrored":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (EngineEventHandler != null)
-                        {
-                            EngineEventHandler.OnExtensionErrored(
-                                (string) AgoraJson.GetData<int>(data, "provider"),
-                                (string) AgoraJson.GetData<int>(data, "extension"),
-                                (int) AgoraJson.GetData<int>(data, "error"),
-                                (string) AgoraJson.GetData<int>(data, "msg")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
+//                 case "onExtensionErrored":
+// #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+//                     CallbackObject._CallbackQueue.EnQueue(() =>
+//                     {
+// #endif
+//                         if (EngineEventHandler != null)
+//                         {
+//                             EngineEventHandler.OnExtensionErrored(
+//                                 (string) AgoraJson.GetData<int>(data, "provider"),
+//                                 (string) AgoraJson.GetData<int>(data, "extension"),
+//                                 (int) AgoraJson.GetData<int>(data, "error"),
+//                                 (string) AgoraJson.GetData<int>(data, "msg")
+//                             );
+//                         }
+// #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+//                     });
+// #endif
+//                     break;
                 case "onUserAccountUpdated":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     CallbackObject._CallbackQueue.EnQueue(() =>
