@@ -4190,15 +4190,17 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             recordingQuality = AUDIO_RECORDING_QUALITY_TYPE.AUDIO_RECORDING_QUALITY_MEDIUM;
             recordingPosition = AUDIO_RECORDING_POSITION.AUDIO_RECORDING_POSITION_MIXED_RECORDING_AND_PLAYBACK;
             recordingSampleRate = 32000;
+            recordingChannel = 1;
         }
 
         public AudioRecordingConfiguration(string filePath, AUDIO_RECORDING_QUALITY_TYPE recordingQuality,
-            AUDIO_RECORDING_POSITION recordingPosition, int recordingSampleRate)
+            AUDIO_RECORDING_POSITION recordingPosition, int recordingSampleRate, int recordingChannel )
         {
             this.filePath = filePath;
             this.recordingQuality = recordingQuality;
             this.recordingPosition = recordingPosition;
             this.recordingSampleRate = recordingSampleRate;
+            this.recordingChannel = recordingChannel;
         }
 
         /** Pointer to the absolute file path of the recording file. The string of the file name is in UTF-8.
@@ -4229,6 +4231,19 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
          * - 48000
          */
         public int recordingSampleRate { set; get; }
+        /**
+         * @since v3.6.2
+         *
+         * The recorded audio channel. The following values are supported:
+         * - `1`: (Default) Mono channel.
+         * - `2`: Dual channel.
+         *
+         * @note The actual recorded audio channel is related to the audio channel that you capture.
+         * If the captured audio is mono and `recordingChannel` is 2, the recorded audio is the dual-channel data that is copied from mono data, not stereo.
+         * If the captured audio is dual channel and `recordingChannel` is 1, the recorded audio is the mono data that is mixed by dual-channel data.
+         * The integration scheme also affects the final recorded audio channel. Therefore, to record in stereo, contact technical support for assistance.
+         */
+         public int recordingChannel  { set; get; }
     }
 
     /** Audio recording position. */
