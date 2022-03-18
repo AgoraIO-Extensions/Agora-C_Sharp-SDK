@@ -14,12 +14,16 @@ namespace CSharp_API_Example
         private static extern long WritePrivateProfileString(string section, string key,
             string val, string filePath);
 
-        private string config_file_path_ = string.Empty;
+        string config_file_path_
+        {
+            get;
+            set;
+        }
 
         public ConfigHelper()
         {
             // path to res/config/API_Example.ini
-            config_file_path_ = System.IO.Directory.GetCurrentDirectory() + "/../../../res/config/API_Example.ini";
+            config_file_path_ = System.IO.Directory.GetCurrentDirectory() + "\\API_Example.ini";
             if (!File.Exists(config_file_path_))
             {
                 CSharpForm.dump_handler_(config_file_path_ + " not Exists!!!!", -1);

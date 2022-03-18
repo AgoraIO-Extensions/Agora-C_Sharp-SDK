@@ -6,6 +6,7 @@ namespace CSharp_API_Example
     // convenient to use
     public abstract class IEngine
     {
+        public delegate void ReceiveStreamMessage(string message);
         internal abstract int Init(string appId, string channelId);
         internal abstract int UnInit();
         internal abstract int JoinChannel();
@@ -25,7 +26,6 @@ namespace CSharp_API_Example
         public virtual void SetVideoDevice(string id) {  }
         public virtual void SetRecordingDevice(string id) {  }
         public virtual void SetPlaybackDevice(string id) { }
-        public virtual void SendStreamMessage(string str) { }
 
         //RtmpStreaming
         public virtual int AddPublishStreamUrl(string url) { return -1; }
@@ -35,6 +35,19 @@ namespace CSharp_API_Example
         public virtual int EnableEncryption(ENCRYPTION_MODE mode) { return -1; }
         //SetVideoEncoderConfiguration
         public virtual int setVideoEncoderConfiguration(agora.rtc.VideoDimensions dimension, agora.rtc.FRAME_RATE fps) { return -1; }
+
+        //voice changer
+        public virtual int SetVoiceBeautifierPreset(int index) { return -1; }
+        public virtual int SetVoiceBeautifierParameters(int index, int param1, int param2) { return -1; }
+        public virtual int SetAudioEffectPreset(int index) { return -1; }
+        public virtual int SetAudioEffectParameters(int index, int param1, int param2) { return -1; }
+
+        //SendStreamMessage
+        public virtual int SendStreamMessage(string str) { return -1; }
+
+        //SendStreamMessage
+        public virtual int StartMediaRelay(string channelName) { return -1; }
+        public virtual int StopMediaRelay() { return -1; }
         // not necessary
         internal abstract string GetSDKVersion();
         internal abstract IAgoraRtcEngine GetEngine();

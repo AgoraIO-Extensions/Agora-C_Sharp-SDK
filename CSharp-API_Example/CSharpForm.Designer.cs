@@ -61,6 +61,14 @@ namespace CSharp_API_Example
             this.setEncryptionView = new CSharp_API_Example.SetEncryptionView();
             this.SetVideoEncoderConfigurationTag = new System.Windows.Forms.TabPage();
             this.setVideoEncoderConfigurationView = new CSharp_API_Example.SetVideoEncoderConfigurationView();
+            this.voiceChangerView = new CSharp_API_Example.VoiceChangerView();
+            this.VoiceChangerTag = new System.Windows.Forms.TabPage();
+            this.sendStreamMessageView = new CSharp_API_Example.SendStreamMessageView();
+            this.SendStreamMessageTag = new System.Windows.Forms.TabPage();
+            this.ChannelMediaRelayTag = new System.Windows.Forms.TabPage();
+            this.channelMediaRelayView = new CSharp_API_Example.ChannelMediaRelayView();
+            this.StringUidTag = new System.Windows.Forms.TabPage();
+            this.stringUidView = new CSharp_API_Example.StringUidView();
             this.leave_channel_btn = new System.Windows.Forms.Button();
             this.join_channel_btn = new System.Windows.Forms.Button();
             this.appId_label = new System.Windows.Forms.Label();
@@ -94,6 +102,7 @@ namespace CSharp_API_Example
             this.SetLiveTranscodingTag.SuspendLayout();
             this.SetEncryptionTag.SuspendLayout();
             this.SetVideoEncoderConfigurationTag.SuspendLayout();
+            this.VoiceChangerTag.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_left_part)).BeginInit();
             this.splitContainer_left_part.Panel1.SuspendLayout();
             this.splitContainer_left_part.Panel2.SuspendLayout();
@@ -142,6 +151,12 @@ namespace CSharp_API_Example
             this.tabCtrl.Controls.Add(this.SetLiveTranscodingTag);
             this.tabCtrl.Controls.Add(this.SetEncryptionTag);
             this.tabCtrl.Controls.Add(this.SetVideoEncoderConfigurationTag);
+            this.tabCtrl.Controls.Add(this.VoiceChangerTag);
+            this.tabCtrl.Controls.Add(this.ChannelMediaRelayTag);
+            this.tabCtrl.Controls.Add(this.SendStreamMessageTag);
+            
+            this.tabCtrl.Controls.Add(this.StringUidTag);
+            this.stringUidView = new CSharp_API_Example.StringUidView();
             this.tabCtrl.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabCtrl.Location = new System.Drawing.Point(0, 0);
@@ -322,7 +337,7 @@ namespace CSharp_API_Example
             this.AudioMixingTag.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.AudioMixingTag.Name = "AudioMixingTag";
             this.AudioMixingTag.Size = new System.Drawing.Size(784, 620);
-            this.AudioMixingTag.TabIndex = 7;
+            this.AudioMixingTag.TabIndex = 8;
             this.AudioMixingTag.Text = "混音";
             this.AudioMixingTag.UseVisualStyleBackColor = true;
             // 
@@ -343,7 +358,7 @@ namespace CSharp_API_Example
             this.PlayEffectTag.Name = "PlayEffectTag";
             this.PlayEffectTag.Padding = new System.Windows.Forms.Padding(3);
             this.PlayEffectTag.Size = new System.Drawing.Size(784, 620);
-            this.PlayEffectTag.TabIndex = 7;
+            this.PlayEffectTag.TabIndex = 9;
             this.PlayEffectTag.Text = "音效";
             this.PlayEffectTag.UseVisualStyleBackColor = true;
             // 
@@ -364,7 +379,7 @@ namespace CSharp_API_Example
             this.DeviceManagerTag.Name = "DeviceManagerTag";
             this.DeviceManagerTag.Padding = new System.Windows.Forms.Padding(3);
             this.DeviceManagerTag.Size = new System.Drawing.Size(784, 620);
-            this.DeviceManagerTag.TabIndex = 7;
+            this.DeviceManagerTag.TabIndex = 10;
             this.DeviceManagerTag.Text = "设备管理";
             this.DeviceManagerTag.UseVisualStyleBackColor = true;
             // 
@@ -385,7 +400,7 @@ namespace CSharp_API_Example
             this.RtmpStreamingTag.Name = "RtmpStreamingTag";
             this.RtmpStreamingTag.Padding = new System.Windows.Forms.Padding(3);
             this.RtmpStreamingTag.Size = new System.Drawing.Size(784, 620);
-            this.RtmpStreamingTag.TabIndex = 7;
+            this.RtmpStreamingTag.TabIndex = 11;
             this.RtmpStreamingTag.Text = "旁路推流";
             this.RtmpStreamingTag.UseVisualStyleBackColor = true;
             // 
@@ -406,7 +421,7 @@ namespace CSharp_API_Example
             this.SetLiveTranscodingTag.Name = "SetLiveTranscodingTag";
             this.SetLiveTranscodingTag.Padding = new System.Windows.Forms.Padding(3);
             this.SetLiveTranscodingTag.Size = new System.Drawing.Size(784, 620);
-            this.SetLiveTranscodingTag.TabIndex = 7;
+            this.SetLiveTranscodingTag.TabIndex = 12;
             this.SetLiveTranscodingTag.Text = "转码";
             this.SetLiveTranscodingTag.UseVisualStyleBackColor = true;
             // 
@@ -427,7 +442,7 @@ namespace CSharp_API_Example
             this.SetEncryptionTag.Name = "SetEncryptionTag";
             this.SetEncryptionTag.Padding = new System.Windows.Forms.Padding(3);
             this.SetEncryptionTag.Size = new System.Drawing.Size(784, 620);
-            this.SetEncryptionTag.TabIndex = 7;
+            this.SetEncryptionTag.TabIndex = 13;
             this.SetEncryptionTag.Text = "加密";
             this.SetEncryptionTag.UseVisualStyleBackColor = true;
             // 
@@ -447,7 +462,7 @@ namespace CSharp_API_Example
             this.SetVideoEncoderConfigurationTag.Name = "SetVideoEncoderConfigurationTag";
             this.SetVideoEncoderConfigurationTag.Padding = new System.Windows.Forms.Padding(3);
             this.SetVideoEncoderConfigurationTag.Size = new System.Drawing.Size(784, 620);
-            this.SetVideoEncoderConfigurationTag.TabIndex = 7;
+            this.SetVideoEncoderConfigurationTag.TabIndex = 14;
             this.SetVideoEncoderConfigurationTag.Text = "编码参数";
             this.SetVideoEncoderConfigurationTag.UseVisualStyleBackColor = true;
             // 
@@ -459,6 +474,87 @@ namespace CSharp_API_Example
             this.setVideoEncoderConfigurationView.Name = "setVideoEncoderConfigurationView";
             this.setVideoEncoderConfigurationView.Size = new System.Drawing.Size(778, 614);
             this.setVideoEncoderConfigurationView.TabIndex = 0;
+
+            // 
+            // voiceChangerTag
+            // 
+            this.VoiceChangerTag.Controls.Add(this.voiceChangerView);
+            this.VoiceChangerTag.Location = new System.Drawing.Point(4, 48);
+            this.VoiceChangerTag.Name = "VoiceChangerTag";
+            this.VoiceChangerTag.Padding = new System.Windows.Forms.Padding(3);
+            this.VoiceChangerTag.Size = new System.Drawing.Size(784, 620);
+            this.VoiceChangerTag.TabIndex = 15;
+            this.VoiceChangerTag.Text = "变声";
+            this.VoiceChangerTag.UseVisualStyleBackColor = true;
+            // 
+            // voiceChangerView
+            // 
+            this.voiceChangerView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.voiceChangerView.Location = new System.Drawing.Point(3, 3);
+            this.voiceChangerView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.voiceChangerView.Name = "voiceChangerView";
+            this.voiceChangerView.Size = new System.Drawing.Size(778, 614);
+            this.voiceChangerView.TabIndex = 0;
+            // 
+            // ChannelMediaRelayTag
+            // 
+            this.ChannelMediaRelayTag.Controls.Add(this.channelMediaRelayView);
+            this.ChannelMediaRelayTag.Location = new System.Drawing.Point(4, 48);
+            this.ChannelMediaRelayTag.Name = "ChannelMediaRelayTag";
+            this.ChannelMediaRelayTag.Padding = new System.Windows.Forms.Padding(3);
+            this.ChannelMediaRelayTag.Size = new System.Drawing.Size(784, 620);
+            this.ChannelMediaRelayTag.TabIndex = 16;
+            this.ChannelMediaRelayTag.Text = "跨频道";
+            this.ChannelMediaRelayTag.UseVisualStyleBackColor = true;
+            // 
+            // ChannelMediaRelayView
+            // 
+            this.channelMediaRelayView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.channelMediaRelayView.Location = new System.Drawing.Point(3, 3);
+            this.channelMediaRelayView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.channelMediaRelayView.Name = "ChannelMediaRelayView";
+            this.channelMediaRelayView.Size = new System.Drawing.Size(778, 614);
+            this.channelMediaRelayView.TabIndex = 0;
+            // 
+            // sendStreamMessageTag
+            // 
+            this.SendStreamMessageTag.Controls.Add(this.sendStreamMessageView);
+            this.SendStreamMessageTag.Location = new System.Drawing.Point(4, 48);
+            this.SendStreamMessageTag.Name = "sendStreamMessageTag";
+            this.SendStreamMessageTag.Padding = new System.Windows.Forms.Padding(3);
+            this.SendStreamMessageTag.Size = new System.Drawing.Size(784, 620);
+            this.SendStreamMessageTag.TabIndex = 17;
+            this.SendStreamMessageTag.Text = "发消息";
+            this.SendStreamMessageTag.UseVisualStyleBackColor = true;
+            // 
+            // sendStreamMessageView
+            // 
+            this.sendStreamMessageView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sendStreamMessageView.Location = new System.Drawing.Point(3, 3);
+            this.sendStreamMessageView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.sendStreamMessageView.Name = "sendStreamMessageView";
+            this.sendStreamMessageView.Size = new System.Drawing.Size(778, 614);
+            this.sendStreamMessageView.TabIndex = 0;
+            // 
+            // StringUidTag
+            // 
+            this.StringUidTag.Controls.Add(this.stringUidView);
+            this.StringUidTag.Location = new System.Drawing.Point(4, 48);
+            this.StringUidTag.Name = "StringUidTag";
+            this.StringUidTag.Padding = new System.Windows.Forms.Padding(3);
+            this.StringUidTag.Size = new System.Drawing.Size(784, 620);
+            this.StringUidTag.TabIndex = 18;
+            this.StringUidTag.Text = "字符串uid";
+            this.StringUidTag.UseVisualStyleBackColor = true;
+            // 
+            // StringUidView
+            // 
+            this.stringUidView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stringUidView.Location = new System.Drawing.Point(3, 3);
+            this.stringUidView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.stringUidView.Name = "StringUidView";
+            this.stringUidView.Size = new System.Drawing.Size(778, 614);
+            this.stringUidView.TabIndex = 0;
             // 
             // leave_channel_btn
             // 
@@ -787,7 +883,6 @@ namespace CSharp_API_Example
 
         private System.Windows.Forms.TabPage PlayEffectTag;
         private PlayEffectView playEffectView;
-
         private System.Windows.Forms.TabPage DeviceManagerTag;
         private DeviceManagerView deviceManagerView;
         private System.Windows.Forms.TabPage RtmpStreamingTag;
@@ -798,6 +893,16 @@ namespace CSharp_API_Example
         private SetEncryptionView setEncryptionView;
         private System.Windows.Forms.TabPage SetVideoEncoderConfigurationTag;
         private SetVideoEncoderConfigurationView setVideoEncoderConfigurationView;
+        private System.Windows.Forms.TabPage VoiceChangerTag;
+        private VoiceChangerView voiceChangerView;
+        private System.Windows.Forms.TabPage SendStreamMessageTag;
+        private SendStreamMessageView sendStreamMessageView;
+        private System.Windows.Forms.TabPage ChannelMediaRelayTag;
+        private ChannelMediaRelayView channelMediaRelayView;
+
+        private System.Windows.Forms.TabPage StringUidTag;
+        private StringUidView stringUidView;
+
     }
 }
 

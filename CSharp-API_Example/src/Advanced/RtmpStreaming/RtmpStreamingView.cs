@@ -46,5 +46,14 @@ namespace CSharp_API_Example
                     cmbUrl.SelectedIndex = 0;
             }
         }
+
+        public void RemoveAllStreamUrl()
+        {
+            for (int i = 0; i < cmbUrl.Items.Count; ++i)
+            {
+                CSharpForm.usr_engine_.RemovePublishStreamUrl(cmbUrl.Text);
+            }
+            cmbUrl.Items.Clear();
+        }
     }
 }

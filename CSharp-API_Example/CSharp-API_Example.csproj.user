@@ -4,10 +4,13 @@
     <Compile Update="CSharpForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="src\Advanced\CustomCaptureVideo\CustomCaptureVideoView.cs">
+    <Compile Update="src\Advanced\AudioMixing\AudioMixingView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="src\Advanced\AudioMixing\AudioMixingView.cs">
+    <Compile Update="src\Advanced\ChannelMediaRelay\ChannelMediaRelayView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\CustomCaptureVideo\CustomCaptureVideoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="src\Advanced\DeviceManager\DeviceManagerView.cs">
@@ -37,10 +40,19 @@
     <Compile Update="src\Advanced\SetVideoEncoderConfiguration\SetVideoEncoderConfigurationView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="src\Advanced\StreamMessage\StreamMessageView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\StringUid\StringUid View.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="src\Advanced\VideoGroup\VideoGroupView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="src\Advanced\VirtualBackground\VirtualBackgroundView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\VoiceChanger\VoiceChangerView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="src\Basic\JoinChannelAudio\JoinChannelAudioView.cs">

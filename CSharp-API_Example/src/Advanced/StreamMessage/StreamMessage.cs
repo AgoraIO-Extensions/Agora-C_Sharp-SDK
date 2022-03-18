@@ -1,12 +1,14 @@
 ﻿/*
- * 【加密】关键步骤：
+ * 【一对一视频】关键步骤：
  * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
  * 
- * 2. 加入频道：（[EnableAudio], EnableVideo, EnableEncryptionMode, JoinChannel）
+ * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
  * 
- * 3. 离开频道：（LeaveChannel）
+ * 3. 发送消息 sendStreamMessage
  * 
- * 4. 退出：（Dispose）
+ * 4. 离开频道：（LeaveChannel）
+ * 
+ * 5. 退出：（Dispose）
  */
 
 using System;
@@ -14,18 +16,21 @@ using agora.rtc;
 
 namespace CSharp_API_Example
 {
-    public class SetEncryption : IEngine
+    using System;
+    using System.Runtime.InteropServices;
+
+    public class StreamMessage : IEngine
     {
         private string app_id_ = "";
         private string channel_id_ = "";
-        private readonly string SetEncryption_TAG = "[SetEncryption] ";
+        private readonly string StreamMessage_TAG = "[StreamMessage] ";
         private readonly string agora_sdk_log_file_path_ = "agorasdk.log";
         private IAgoraRtcEngine rtc_engine_ = null;
         private IAgoraRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_win_id_ = IntPtr.Zero;
-        ENCRYPTION_MODE encrypt_mode_ = ENCRYPTION_MODE.AES_128_ECB;
-         public SetEncryption(IntPtr localWindowId, IntPtr remoteWindowId)
+        private int data_stream_id_ = -1;
+        public StreamMessage(IntPtr localWindowId, IntPtr remoteWindowId)
         {
             local_win_id_ = localWindowId;
             remote_win_id_ = remoteWindowId;
@@ -41,18 +46,15 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
-
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(SetEncryption_TAG + "Initialize", ret);
-            // second way to set logfile
-            //ret = rtc_engine_.SetLogFile(log_file_path);
-            //CSharpForm.dump_handler_(SetEncryption_TAG + "SetLogFile", ret);
-
-            event_handler_ = new SetEncryptionEventHandler(this);
+            CSharpForm.dump_handler_(StreamMessage_TAG + "Initialize", ret);                      
+            event_handler_ = new StreamMessageEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
 
+            DataStreamConfig config = new DataStreamConfig(false, false);
+            data_stream_id_ = rtc_engine_.CreateDataStream(config);
             return ret;
         }
 
@@ -62,10 +64,10 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(SetEncryption_TAG + "LeaveChannel", ret);
+                CSharpForm.dump_handler_(StreamMessage_TAG + "LeaveChannel", ret);
 
                 rtc_engine_.Dispose();
-                rtc_engine_ = null;
+                rtc_engine_ = null;    
             }
             return ret;
         }
@@ -76,20 +78,13 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(SetEncryption_TAG + "EnableAudio", ret);
+                CSharpForm.dump_handler_(StreamMessage_TAG + "EnableAudio", ret);
 
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(SetEncryption_TAG + "EnableVideo", ret);
-
-                string encryptionKey = "01234567890123456789012345678912";
-                byte[] salt = { 0,1,2,3, 4,5,6,7,8,9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2 };
-                ret = rtc_engine_.EnableEncryption(true, new EncryptionConfig(encrypt_mode_, encryptionKey, salt));
-                CSharpForm.dump_handler_(SetEncryption_TAG + "EnableEncryption", ret);
-                CSharpForm.dump_handler_(SetEncryption_TAG + "key:" + encryptionKey, ret);
-                CSharpForm.dump_handler_(SetEncryption_TAG + "salt:" + encryptionKey, ret);
+                CSharpForm.dump_handler_(StreamMessage_TAG + "EnableVideo", ret);
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
-                CSharpForm.dump_handler_(SetEncryption_TAG + "JoinChannel", ret);     
+                CSharpForm.dump_handler_(StreamMessage_TAG + "JoinChannel", ret);
             }
             return ret;
         }
@@ -100,22 +95,11 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(SetEncryption_TAG + "LeaveChannel", ret);
+                CSharpForm.dump_handler_(StreamMessage_TAG + "LeaveChannel", ret);
             }
             return ret;
         }
-        public override int EnableEncryption(ENCRYPTION_MODE mode)
-        {
-            if(rtc_engine_ == null)
-            {
-                encrypt_mode_ = mode;
-            }
-            else
-            {
-                CSharpForm.dump_handler_(SetEncryption_TAG + "EnableEncryption before joinChannel", 0);
-            }
-            return 0;
-        }
+
         internal override string GetSDKVersion()
         {
             if (null == rtc_engine_)
@@ -143,14 +127,30 @@ namespace CSharp_API_Example
         {
             return remote_win_id_;
         }
+
+        public override int SendStreamMessage(string str)
+        {
+            if (null == rtc_engine_)
+                return 0;
+            int ret = rtc_engine_.SendStreamMessage(data_stream_id_, System.Text.Encoding.Default.GetBytes(str));
+            CSharpForm.dump_handler_(StreamMessage_TAG + "SendStreamMessage", ret);
+            return ret;
+        }
+
+        public  void onRecevMessage(string message)
+        {
+            CSharpForm.dump_handler_(StreamMessage_TAG + "OnStreamMessage", 0);
+           
+        }
     }
 
     // override if need
-    internal class SetEncryptionEventHandler : IAgoraRtcEngineEventHandler
+    internal class StreamMessageEventHandler : IAgoraRtcEngineEventHandler
     {
-        private SetEncryption SetEncryption_inst_ = null;
-        public SetEncryptionEventHandler(SetEncryption _SetEncryption) {
-            SetEncryption_inst_ = _SetEncryption;
+        private StreamMessage StreamMessage_inst_ = null;
+
+        public StreamMessageEventHandler(StreamMessage _StreamMessage) {
+            StreamMessage_inst_ = _StreamMessage;
         }
 
         public override void OnWarning(int warn, string msg)
@@ -166,8 +166,8 @@ namespace CSharp_API_Example
         public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)SetEncryption_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
-            int ret = SetEncryption_inst_.GetEngine().SetupLocalVideo(vs);
+            VideoCanvas vs = new VideoCanvas((ulong)StreamMessage_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            int ret = StreamMessage_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
 
@@ -184,9 +184,9 @@ namespace CSharp_API_Example
         public override void OnUserJoined(uint uid, int elapsed)
         {
             Console.WriteLine("----->OnUserJoined uid={0}", uid);
-            if (SetEncryption_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)SetEncryption_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, SetEncryption_inst_.GetChannelId(), uid);
-            int ret = SetEncryption_inst_.GetEngine().SetupRemoteVideo(vc);
+            if (StreamMessage_inst_.GetRemoteWinId() == IntPtr.Zero) return;
+            var vc = new VideoCanvas((ulong)StreamMessage_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, StreamMessage_inst_.GetChannelId(), uid);
+            int ret = StreamMessage_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
@@ -197,7 +197,18 @@ namespace CSharp_API_Example
 
         public override void OnStreamMessage(uint uid, int streamId, byte[] data, uint length)
         {
-          
+            string str = System.Text.Encoding.Default.GetString(data);
+
+            CSharpForm.dump_handler_("OnStreamMessage,recv message: " + str , 0);
+
+            Console.WriteLine("----->OnStreamMessage uid={0},streamId={1},data={2},length={3}"
+              , uid, streamId, str, length);
+        }
+
+        public override void OnStreamMessageError(uint uid, int streamId, int code, int missed, int cached)
+        {
+            Console.WriteLine("----->OnStreamMessageError uid={0},streamId={1},code={2},missed={3},cached={4}"
+                , uid, streamId, code, missed, cached);
         }
     }
 }
