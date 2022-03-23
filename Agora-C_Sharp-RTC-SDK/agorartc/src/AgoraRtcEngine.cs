@@ -186,7 +186,6 @@ namespace agora.rtc
 #elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
             if (ret == 0) SetAppType(AppType.APP_TYPE_C_SHARP);
 #endif
-            _spatialAudioEngineInstance.Initialize();
             return ret;
         }
 
@@ -920,7 +919,7 @@ namespace agora.rtc
             JsonMapper.ToJson(param), out _result);
         }
 
-        public override int StartAudioRecording(AudioFileRecordingConfig config)
+        public override int StartAudioRecording(AudioRecordingConfiguration config)
         {
             var param = new
             {
@@ -3225,13 +3224,13 @@ namespace agora.rtc
         }
 
         
-        public override int SetExternalVideoSource(bool enabled, bool useTexture, bool encodedFrame, EncodedVideoTrackOptions encodedVideoOption)
+        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, EncodedVideoTrackOptions encodedVideoOption)
         {
             var param = new
             {
                 enabled,
                 useTexture,
-                encodedFrame,
+                sourceType,
                 encodedVideoOption
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kMediaSetExternalVideoSource,
@@ -4265,7 +4264,7 @@ namespace agora.rtc
                             EngineEventHandler.OnAudioDeviceStateChanged(
                                 (string) AgoraJson.GetData<string>(data, "deviceId"),
                                 (int) AgoraJson.GetData<int>(data, "deviceType"),
-                                (int) AgoraJson.GetData<int>(data, "deviceState")
+                                (MEDIA_DEVICE_STATE_TYPE) AgoraJson.GetData<int>(data, "deviceState")
                             );
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -4411,7 +4410,7 @@ namespace agora.rtc
                             EngineEventHandler.OnVideoDeviceStateChanged(
                                 (string) AgoraJson.GetData<string>(data, "deviceId"),
                                 (int) AgoraJson.GetData<int>(data, "deviceType"),
-                                (int) AgoraJson.GetData<int>(data, "deviceState")
+                                (MEDIA_DEVICE_STATE_TYPE) AgoraJson.GetData<int>(data, "deviceState")
                             );
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 

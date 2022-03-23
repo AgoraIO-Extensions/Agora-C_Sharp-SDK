@@ -52,6 +52,8 @@ namespace agora.rtc
     {
         public abstract void Dispose();
 
+        public abstract int Initialize();
+
         public abstract int SetMaxAudioRecvCount(int maxCount);
 
         public abstract int SetAudioRecvRange(float range);

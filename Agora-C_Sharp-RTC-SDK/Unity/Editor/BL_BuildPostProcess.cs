@@ -99,7 +99,7 @@ public class BL_BuildPostProcess
         const string AgoraRtcWrapperFrameworkName = "AgoraRtcWrapper.framework";
         const string AgoraRtcKitFrameworkName = "AgoraRtcKit.framework";
         const string AgoraffmpegFrameworkName = "Agoraffmpeg.framework";
-        const string AgoraVideoProcessFrameworkName = "AgoraVideoProcess.framework"
+        const string AgoraVideoProcessFrameworkName = "AgoraVideoProcessExtension.framework";
 
 
         string AgoraRtcWrapperFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcWrapperFrameworkName);

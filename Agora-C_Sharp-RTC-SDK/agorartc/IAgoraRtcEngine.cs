@@ -134,7 +134,7 @@ namespace agora.rtc
                                         int sampleRate,
                                         AUDIO_RECORDING_QUALITY_TYPE quality);
 
-        public abstract int StartAudioRecording(AudioFileRecordingConfig config);
+        public abstract int StartAudioRecording(AudioRecordingConfiguration config);
     
         public abstract int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config,  IAgoraRtcAudioEncodedFrameObserver observer); //TODO
 
@@ -523,7 +523,7 @@ namespace agora.rtc
 
         public abstract int PullAudioFrame(AudioFrame frame);
 
-        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, bool encodedFrame, EncodedVideoTrackOptions encodedVideoOption);
+        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, EncodedVideoTrackOptions encodedVideoOption);
        
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
 
@@ -602,13 +602,13 @@ namespace agora.rtc
 
         public virtual void OnRtcStats(RtcConnection connection, RtcStats stats) {}
 
-        public virtual void OnAudioDeviceStateChanged(string deviceId, int deviceType, int deviceState) {}
+        public virtual void OnAudioDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) {}
 
         public virtual void OnAudioMixingFinished() {}
 
         public virtual void OnAudioEffectFinished(int soundId) {}
 
-        public virtual void OnVideoDeviceStateChanged(string deviceId, int deviceType, int deviceState) {}
+        public virtual void OnVideoDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) {}
 
         public virtual void OnMediaDeviceChanged(int deviceType) {}
 
