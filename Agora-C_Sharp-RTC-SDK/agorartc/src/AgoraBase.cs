@@ -964,6 +964,8 @@ namespace agora.rtc
         AGORA_IID_RTC_CONNECTION = 7,
         AGORA_IID_SIGNALING_ENGINE = 8,
         AGORA_IID_MEDIA_ENGINE_REGULATOR = 9,
+        AGORA_IID_CLOUD_SPATIAL_AUDIO = 10,
+        AGORA_IID_LOCAL_SPATIAL_AUDIO = 11,
     };
 
     /**
@@ -2558,7 +2560,11 @@ namespace agora.rtc
         /** 7: The local video capturing device not avalible because the app is running in a multi-app layout (generally on the pad) */
         LOCAL_VIDEO_STREAM_ERROR_MULTIPLE_FOREGROUND_APPS = 7,
         /** 8: The local video capturing device  temporarily being made unavailable due to system pressure. */
-        LOCAL_VIDEO_STREAM_ERROR_SYSTEM_PRESSURE = 8
+        LOCAL_VIDEO_STREAM_ERROR_SYSTEM_PRESSURE = 8,
+        /** 11: The local screen capture window is minimized. */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
+        /** 12: The local screen capture window is closed. */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_CLOSED = 12
     };
 
     /**
@@ -4269,9 +4275,9 @@ namespace agora.rtc
     /**
     * The Audio file recording options.
     */
-    public class AudioFileRecordingConfig
+    public class AudioRecordingConfiguration
     {
-        public AudioFileRecordingConfig()
+        public AudioRecordingConfiguration()
         {
             filePath = null;
             encode = false;
@@ -4280,7 +4286,7 @@ namespace agora.rtc
             quality = AUDIO_RECORDING_QUALITY_TYPE.AUDIO_RECORDING_QUALITY_LOW;
         }
 
-        public AudioFileRecordingConfig(string file_path, int sample_rate, AUDIO_RECORDING_QUALITY_TYPE quality_type)
+        public AudioRecordingConfiguration(string file_path, int sample_rate, AUDIO_RECORDING_QUALITY_TYPE quality_type)
         {
             this.filePath = file_path;
             this.encode = false;
@@ -4289,7 +4295,7 @@ namespace agora.rtc
             this.quality = quality_type;
         }
 
-        public AudioFileRecordingConfig(string file_path, bool enc, int sample_rate, 
+        public AudioRecordingConfiguration(string file_path, bool enc, int sample_rate, 
                                         AUDIO_FILE_RECORDING_TYPE type, AUDIO_RECORDING_QUALITY_TYPE quality_type)
         {
             this.filePath = file_path;
@@ -4784,9 +4790,24 @@ namespace agora.rtc
     /** Encryption mode.
     */
     public enum ENCRYPTION_MODE {
+        /** 1: 128-bit AES encryption, XTS mode.
+        */
+        AES_128_XTS = 1,
+        /** 2: 128-bit AES encryption, ECB mode.
+        */
+        AES_128_ECB = 2,
+        /** 3: 256-bit AES encryption, XTS mode.
+        */
+        AES_256_XTS = 3,
         /** 4: 128-bit SM4 encryption, ECB mode.
         */
         SM4_128_ECB = 4,
+        /** 5: 128-bit AES encryption, GCM mode.
+        */
+        AES_128_GCM = 5,
+        /** 6: 256-bit AES encryption, GCM mode.
+        */
+        AES_256_GCM = 6,
         /** 7: (Default) 128-bit AES encryption, GCM mode, with KDF salt.
         */
         AES_128_GCM2 = 7,
@@ -6210,6 +6231,18 @@ namespace agora.rtc
       /** Interrupt at the end of the video or audio
          */
       PLAYER_EVENT_FREEZE_STOP = 9,
+      /** switch source begin
+        */
+        PLAYER_EVENT_SWITCH_BEGIN = 10,
+        /** switch source complete
+        */
+        PLAYER_EVENT_SWITCH_COMPLETE = 11,
+        /** switch source error
+        */
+        PLAYER_EVENT_SWITCH_ERROR = 12,
+        /** An application can render the video to less than a second
+        */
+        PLAYER_EVENT_FIRST_DISPLAYED = 13,
    };
 
    /**
@@ -6566,5 +6599,46 @@ namespace agora.rtc
         public int preferVelocity;
         
         public float greenCapacity;
+    };
+
+    /**
+    * The external video source type.
+    */
+    public enum EXTERNAL_VIDEO_SOURCE_TYPE {
+        /**
+        * 0: non-encoded video frame.
+        */
+        VIDEO_FRAME = 0,
+        /**
+        * 1: encoded video frame.
+        */
+        ENCODED_VIDEO_FRAME,
+    };
+
+    /** Media device states. */
+    public enum MEDIA_DEVICE_STATE_TYPE {
+        /** 1: The device is active.
+        */
+        MEDIA_DEVICE_STATE_ACTIVE = 1,
+        /** 2: The device is disabled.
+        */
+        MEDIA_DEVICE_STATE_DISABLED = 2,
+        /** 4: The device is not present.
+        */
+        MEDIA_DEVICE_STATE_NOT_PRESENT = 4,
+        /** 8: The device is unplugged.
+        */
+        MEDIA_DEVICE_STATE_UNPLUGGED = 8
+    };
+
+    /** The video stream lifecycle of CDN Live.
+    */
+    public enum RTMP_STREAM_LIFE_CYCLE_TYPE {
+        /** Bound to the channel lifecycle.
+        */
+        RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL = 1,
+        /** Bound to the owner identity of the RTMP stream.
+        */
+        RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
     };
 }
