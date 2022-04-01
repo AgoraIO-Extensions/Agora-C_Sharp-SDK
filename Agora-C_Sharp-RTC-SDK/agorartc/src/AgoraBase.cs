@@ -6484,13 +6484,34 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
       AudioTestPlaybackVolume = 1,
    };
 
-    public enum AgoraEngineType
-    {
-        MainProcess,
-        SubProcess
-    }
+   public struct LocalAccessPointConfiguration {
+      /** local access point ip address list.
+         */
+      public string[] ipList;
+      /** the number of local access point ip address.
+         */
+      public int ipListSize;
+      /** local access point domain list.
+         */
+      public string[] domainList;
+      /** the number of local access point domain.
+         */
+      public int domainListSize;
+      /** certificate domain name installed on specific local access point. pass "" means using sni domain on specific local access point
+         */
+      public string[] verifyDomainName;
+      /** local proxy connection mode, connectivity first or local only.
+         */
+      public LOCAL_PROXY_MODE mode;
+   };
 
-    internal static partial class ObsoleteMethodWarning
-    {
-    }
+   public enum AgoraEngineType
+   {
+      MainProcess,
+      SubProcess
+   }
+
+   internal static partial class ObsoleteMethodWarning
+   {
+   }
 }

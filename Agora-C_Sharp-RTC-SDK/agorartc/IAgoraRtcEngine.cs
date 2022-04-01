@@ -317,6 +317,7 @@ namespace agora.rtc
         public abstract int UnRegisterMediaMetadataObserver(METADATA_TYPE type);
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
         public abstract int SetParameters(string parameters);
+        public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
         public abstract int SetMaxMetadataSize(int size);
         public abstract int SendMetadata(Metadata metadata);
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap);

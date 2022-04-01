@@ -2456,6 +2456,16 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
+        public override int SetLocalAccessPoint(LocalAccessPointConfiguration config)
+        {
+            var param = new
+            {
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetLocalAccessPoint,
+                JsonMapper.ToJson(param), out _result);
+        }
+
         public override int SetMaxMetadataSize(int size)
         {
             var param = new
@@ -4273,7 +4283,7 @@ namespace agora.rtc
                         if (EngineEventHandlerArr[0] != null)
                         {
                             EngineEventHandlerArr[0].OnRecorderStateChanged(
-                                AgoraJson.JsonToStruct<RecorderState>(data, "state"),
+                                (RecorderState) AgoraJson.GetData<int>(data, "state"),
                                 (RecorderErrorCode) AgoraJson.GetData<int>(data, "error"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -5750,7 +5760,7 @@ namespace agora.rtc
                         if (EngineEventHandlerArr[1] != null)
                         {
                             EngineEventHandlerArr[1].OnRecorderStateChanged(
-                                AgoraJson.JsonToStruct<RecorderState>(data, "state"),
+                                (RecorderState) AgoraJson.GetData<int>(data, "state"),
                                 (RecorderErrorCode) AgoraJson.GetData<int>(data, "error"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
