@@ -1178,8 +1178,15 @@ namespace agora.rtc
         /** 8:capture not found*/
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_NOT_FOUND = 8,
 
+        /**
+          * 10: (macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID
+          * of the video device is valid.
+          *
+          * @since v3.5.2
+          */
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_INVALID_ID = 10,
         /** 11: The shared window is minimized when you call \ref IRtcEngine::startScreenCaptureByWindowId "startScreenCaptureByWindowId" to share a window.
-     */
+         */
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
 
         /** 12: The error code indicates that a window shared by the window ID has been closed, or a full-screen window
@@ -1195,6 +1202,19 @@ namespace agora.rtc
      * the web video or document. After the user exits full-screen mode, the SDK reports this error code.
      */
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_CLOSED = 12,
+      /**
+        * 13: (Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by
+        * the SDK during window sharing.
+        *
+        * @since v3.5.2
+        */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_OCCLUDED = 13,
+        /**
+         * 20: (Windows only) The SDK does not support sharing this type of window.
+         *
+         * @since v3.5.2
+         */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
     }
 
     /** Local audio state types.
@@ -1254,6 +1274,11 @@ namespace agora.rtc
         /** 7: No playout audio device.
    */
         LOCAL_AUDIO_STREAM_ERROR_NO_PLAYOUT_DEVICE = 7,
+
+    /**
+     * 8: The local audio capturing is interrupted by the system call.
+     */
+        LOCAL_AUDIO_STREAM_ERROR_INTERRUPTED = 8,
 
         LOCAL_AUDIO_STREAM_ERROR_RECORD_INVALID_ID = 9,
 
