@@ -580,6 +580,8 @@ namespace agora.rtc
         public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
 
         public abstract int PushDirectAudioFrame(AudioFrame frame);
+
+        public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
     };
 
     public abstract class IAgoraRtcEngineEventHandler

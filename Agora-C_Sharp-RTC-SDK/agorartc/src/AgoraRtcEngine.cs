@@ -3601,6 +3601,16 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), frame.buffer, out _result);
         }
 
+        public override int SetLocalAccessPoint(LocalAccessPointConfiguration config)
+        {
+            var param = new
+            {
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetLocalAccessPoint,
+                JsonMapper.ToJson(param), out _result);
+        }
+
         ~AgoraRtcEngine()
         {
             Dispose(false, false);

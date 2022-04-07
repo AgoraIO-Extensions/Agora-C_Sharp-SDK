@@ -270,6 +270,10 @@ namespace agora.rtc
         kEngineSetRemoteVideoSubscriptionOptionsEx,
         kMediaSetDirectExternalAudioSource,
         kMediaPushDirectAudioFrame,
+        kEngineEnableAudioVolumeIndicationEx,
+        kEngineEnableDualStreamModeEx,
+        kEngineAddPublishStreamUrlEx,
+        kEngineSetLocalAccessPoint,
     }
 
     internal enum ApiTypeAudioDeviceManager

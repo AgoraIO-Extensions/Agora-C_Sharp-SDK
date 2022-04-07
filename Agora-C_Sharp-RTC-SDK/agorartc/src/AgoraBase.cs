@@ -6641,4 +6641,34 @@ namespace agora.rtc
         */
         RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
     };
+
+    public enum LOCAL_PROXY_MODE {
+        /** 0: Connect local proxy with high priority, if not connected to local proxy, fallback to sdrtn.
+            */
+        ConnectivityFirst = 0,
+        /** 1: Only connect local proxy
+            */
+        LocalOnly = 1,
+   };
+
+    public struct LocalAccessPointConfiguration {
+        /** local access point ip address list.
+            */
+        public string[] ipList;
+        /** the number of local access point ip address.
+            */
+        public int ipListSize;
+        /** local access point domain list.
+            */
+        public string[] domainList;
+        /** the number of local access point domain.
+            */
+        public int domainListSize;
+        /** certificate domain name installed on specific local access point. pass "" means using sni domain on specific local access point
+            */
+        public string[] verifyDomainName;
+        /** local proxy connection mode, connectivity first or local only.
+            */
+        public LOCAL_PROXY_MODE mode;
+   };
 }
