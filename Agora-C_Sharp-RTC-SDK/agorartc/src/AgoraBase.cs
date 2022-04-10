@@ -895,42 +895,50 @@ namespace agora.rtc
         ERR_VCM_ENCODER_SET_ERROR = 1603,
         };
     
-    /**
-	 * The UserInfo class.
-	 */
-    public class UserInfo
-    {
-        public UserInfo()
-        {
-            userId = "";
-            this.hasAudio = false;
-            this.hasVideo = false;
-        }
+    // /**
+	//  * The UserInfo class.
+	//  */
+    // public class UserInfo
+    // {
+    //     public UserInfo()
+    //     {
+    //         userId = "";
+    //         this.hasAudio = false;
+    //         this.hasVideo = false;
+    //     }
 
-        public UserInfo(string userId = "", bool hasAudio = false, bool hasVideo = false)
-        {
-            this.userId = userId;
-            this.hasAudio = hasAudio;
-            this.hasVideo = hasVideo;
-        }
+    //     public UserInfo(string userId = "", bool hasAudio = false, bool hasVideo = false)
+    //     {
+    //         this.userId = userId;
+    //         this.hasAudio = hasAudio;
+    //         this.hasVideo = hasVideo;
+    //     }
 
-        /**
-		 * The user account.
-		 */
-        public string userId { set; get; }
+    //     /**
+	// 	 * The user account.
+	// 	 */
+    //     public string userId { set; get; }
 
-        /**
-         * Whether the user has enabled audio:
-         * - true: The user has enabled audio.
-         * - false: The user has disabled audio.
-        */
-        public bool hasAudio { set; get; }
-        /**
-         * Whether the user has enabled video:
-         * - true: The user has enabled video.
-         * - false: The user has disabled video.
-         */
-        public bool hasVideo { set; get; }
+    //     /**
+    //      * Whether the user has enabled audio:
+    //      * - true: The user has enabled audio.
+    //      * - false: The user has disabled audio.
+    //     */
+    //     public bool hasAudio { set; get; }
+    //     /**
+    //      * Whether the user has enabled video:
+    //      * - true: The user has enabled video.
+    //      * - false: The user has disabled video.
+    //      */
+    //     public bool hasVideo { set; get; }
+    // }
+
+    public struct UserInfo
+    { 
+        /** * The user ID. */ 
+        public uint uid; 
+        /** * The user account. */ 
+        public string userAccount; 
     }
 
 
