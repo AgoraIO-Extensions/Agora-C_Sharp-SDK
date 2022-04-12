@@ -18,7 +18,7 @@
 
 using System;
 using agora.rtc;
-
+using System.Collections.Generic;
 namespace CSharp_API_Example
 {
     public class ScreenShare : IEngine
@@ -28,7 +28,7 @@ namespace CSharp_API_Example
         private readonly string ScreenShare_TAG = "[ScreenShare] ";
         private readonly string agora_sdk_log_file_path_ = "agorasdk.log";
         private IAgoraRtcEngine rtc_engine_ = null;
-        private IAgoraRtcEngineEventHandler event_handler_ = null;
+        private ScreenShareEventHandler event_handler_ = null;
         private IAgoraRtcEngine screen_share_engine_ = null;
         //private IAgoraRtcEngineEventHandler screen_share_event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
@@ -108,6 +108,16 @@ namespace CSharp_API_Example
                 // disable echo if need
                 //ret = rtc_engine.MuteAllRemoteAudioStreams(true);
                 //CSharpForm.dump_handler("MuteAllRemoteAudioStreams", ret);
+
+                SIZE thumbSize = new SIZE(100, 100);
+                SIZE iconSize = new SIZE(40, 40);
+                ScreenCaptureSourceInfo[] info;
+                ret = rtc_engine_.GetScreenCaptureSources(thumbSize, iconSize, false, out info);
+                for (int i = 0; i < info.Length; ++i)
+                {
+                    info[i].iconImage.buffer = event_handler_.GetIconImage(info[i].sourceId);
+                    info[i].thumbImage.buffer = event_handler_.GetThumbImage(info[i].sourceId);
+                }
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
                 CSharpForm.dump_handler_("JoinChannel", ret);
@@ -213,10 +223,23 @@ namespace CSharp_API_Example
     internal class ScreenShareEventHandler : IAgoraRtcEngineEventHandler
     {
         private ScreenShare screenShare_inst_ = null;
+        private Dictionary<ulong, byte[]> mapIconImage;
+        private Dictionary<ulong, byte[]> mapThumbImage;
+        public byte[] GetIconImage(ulong sourceId)
+        {
+            return mapIconImage[sourceId];
+        }
+
+        public byte[] GetThumbImage(ulong sourceId)
+        {
+            return mapThumbImage[sourceId];
+        }
 
         public ScreenShareEventHandler(ScreenShare _screenShare)
         {
             screenShare_inst_ = _screenShare;
+            mapIconImage = new Dictionary<ulong, byte[]>();
+            mapThumbImage = new Dictionary<ulong, byte[]>();
         }
 
         public override void OnWarning(int warn, string msg)
@@ -259,6 +282,20 @@ namespace CSharp_API_Example
         public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
         {
             Console.WriteLine("----->OnUserOffline, reason={0}", reason);
+        }
+
+        public override void onScreenCaptureSourceThumbImage(ulong sourceId, byte[] data, uint length)
+        {
+            byte[] d = new byte[length];
+            Buffer.BlockCopy(data, 0, d, 0, (int)length);
+            mapThumbImage.Add(sourceId, d);
+        }
+
+        public override void onScreenCaptureSourceIconImage(ulong sourceId, byte[] data, uint length)
+        {
+            byte[] d = new byte[length];
+            Buffer.BlockCopy(data, 0, d, 0, (int)length);
+            mapIconImage.Add(sourceId, d);
         }
     }
 }

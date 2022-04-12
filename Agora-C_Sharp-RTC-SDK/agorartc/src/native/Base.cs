@@ -208,6 +208,8 @@ namespace agora.rtc
         kEngineGetScreenCaptureSources,
         kEngineTakeSnapshot,
         kEngineEnableContentInspect,
+        kEngineScreenCaptureSourcesRelease,
+        kEngineGetScreenCaptureSource,
     }
 
 

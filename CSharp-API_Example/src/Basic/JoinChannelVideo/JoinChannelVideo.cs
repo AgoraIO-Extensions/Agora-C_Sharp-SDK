@@ -11,7 +11,6 @@
 
 using System;
 using agora.rtc;
-
 namespace CSharp_API_Example
 {
     public class JoinChannelVideo : IEngine
@@ -83,14 +82,10 @@ namespace CSharp_API_Example
                 VideoEncoderConfiguration config = new VideoEncoderConfiguration(960, 540, FRAME_RATE.FRAME_RATE_FPS_30, 5, BITRATE.STANDARD_BITRATE, BITRATE.COMPATIBLE_BITRATE);
                 ret = rtc_engine_.SetVideoEncoderConfiguration(config);
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetVideoEncoderConfiguration", ret);
-
+              
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "JoinChannel", ret);
-                /*string[] ipList = { "127.0.0.1", "127.0.0.2" };
-                string[] domainList = { "255.0.0.0", "255.255.0.0" };
-                LocalAccessPointConfiguration config = new LocalAccessPointConfiguration(ipList, 2, domainList, 2, "dnstest", LOCAL_PROXY_MODE.ConnectivityFirst);
-                ret = rtc_engine_.SetLocalAccessPoint(config);
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetLocalAccessPoint", ret);*/
+          
             }
             return ret;
         }

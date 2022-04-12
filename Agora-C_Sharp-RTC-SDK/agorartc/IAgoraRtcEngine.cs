@@ -351,6 +351,7 @@ namespace agora.rtc
         public abstract int TakeSnapshot(string channel, uint uid, string filePath);
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
         public abstract int StartEchoTest(EchoTestConfiguration config);
+        public abstract int GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen, out ScreenCaptureSourceInfo[] screen_capture_source_info);
     }
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -752,6 +753,16 @@ namespace agora.rtc
         }
         public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode)
         {
+        }
+
+        public virtual void onScreenCaptureSourceThumbImage(ulong sourceId, byte[] data, uint length)
+        {
+
+        }
+
+        public virtual void onScreenCaptureSourceIconImage(ulong sourceId, byte[] data, uint length)
+        {
+
         }
     }
 
