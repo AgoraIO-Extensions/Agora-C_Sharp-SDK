@@ -317,6 +317,7 @@ namespace agora.rtc
         public abstract int UnRegisterMediaMetadataObserver(METADATA_TYPE type);
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
         public abstract int SetParameters(string parameters);
+        public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
         public abstract int SetMaxMetadataSize(int size);
         public abstract int SendMetadata(Metadata metadata);
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap);
@@ -340,6 +341,18 @@ namespace agora.rtc
         public abstract int TakeSnapshot(string channel, uint uid, string filePath);
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
         public abstract int StartEchoTest(EchoTestConfiguration config);
+
+        public abstract int SetAVSyncSource(string channelId, uint uid);
+        public abstract int StartRtmpStreamWithoutTranscoding(string url);
+        public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
+        public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
+        public abstract int StopRtmpStream(string url);
+        public abstract int SetLowlightEnhanceOptions(bool enabled, LowLightEnhanceOptions options);
+        public abstract int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options);
+        public abstract int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options);
+        public abstract int EnableWirelessAccelerate(bool enabled);
+        public abstract int StartRecording(MediaRecorderConfiguration config);
+        public abstract int StopRecording();
     }
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -645,7 +658,7 @@ namespace agora.rtc
         }
 
         public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state,
-            RTMP_STREAM_PUBLISH_ERROR errCode)
+            RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
         {
         }
 
@@ -739,7 +752,40 @@ namespace agora.rtc
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result)
         {
         }
+
         public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode)
+        {
+        }
+
+        public virtual void OnScreenCaptureInfoUpdated(ScreenCaptureInfo info) 
+        {
+        }
+        
+        public virtual void OnClientRoleChangeFailed(CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) 
+        {
+        }
+
+        public virtual void OnWlAccMessage(WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
+        {
+        }
+
+        public virtual void OnWlAccStats(WlAccStats currentStats, WlAccStats averageStats)
+        { 
+        }
+
+        public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        {
+        }
+
+        public virtual void OnAudioDeviceTestVolumeIndication(AudioDeviceTestVolumeType volumeType, int volume)
+        {
+        }
+
+        public virtual void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error)
+        {
+        }
+
+        public virtual void OnRecorderInfoUpdated(RecorderInfo info)
         {
         }
     }

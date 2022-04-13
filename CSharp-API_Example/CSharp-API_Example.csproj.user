@@ -7,13 +7,34 @@
     <Compile Update="src\Advanced\CustomCaptureVideo\CustomCaptureVideoView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="src\Advanced\AudioMixing\AudioMixingView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\DeviceManager\DeviceManagerView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="src\Advanced\JoinMultipleChannel\JoinMultipleChannelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\PlayEffect\PlayEffectView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="src\Advanced\ProcessRawData\ProcessRawDataView.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="src\Advanced\RtmpStreaming\RtmpStreamingView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="src\Advanced\ScreenShare\ScreenShareView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\SetEncryption\SetEncryptionView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\SetLiveTranscoding\SetLiveTranscodingView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\SetVideoEncoderConfiguration\SetVideoEncoderConfigurationView.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="src\Advanced\VideoGroup\VideoGroupView.cs">

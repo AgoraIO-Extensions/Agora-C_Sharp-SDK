@@ -81,6 +81,14 @@ namespace CSharp_API_Example
             faq_linkLabel.Links.Add(0, faq_url.Length, faq_url);
         }
 
+        private void InitSceneControl()
+        {
+            if (tabCtrl.SelectedTab == DeviceManagerTag)
+            {
+                deviceManagerView.InitDevices();
+            }
+        }
+        
         private void JoinChannelClicked(object sender, EventArgs e)
         {
             if (null != usr_engine_)
@@ -91,7 +99,7 @@ namespace CSharp_API_Example
                 if(0 == ret) {
                     sdk_version.Text = "SDK Version: " + usr_engine_.GetSDKVersion();
                 }
-
+                InitSceneControl();
                 ret = usr_engine_.JoinChannel();
                 DumpStatus("joinChannel", ret);
             }
@@ -114,19 +122,19 @@ namespace CSharp_API_Example
                 usr_engine_ = null;
             }
 
-            if (tabCtrl.SelectedTab == joinChannelVideoTab) // 一对一视频
+            if (tabCtrl.SelectedTab == joinChannelVideoTab) // 1v1 Video
             {
                 usr_engine_ = new JoinChannelVideo(joinChannelVideoView.localVideoView.Handle, joinChannelVideoView.remoteVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == joinChannelAudioTab) // 一对一语音
+            else if (tabCtrl.SelectedTab == joinChannelAudioTab) // 1v1 Audio
             {
                 usr_engine_ = new JoinChannelAudio();
             }
-            else if (tabCtrl.SelectedTab == screenShareTab) // 摄像头 + 屏幕共享
+            else if (tabCtrl.SelectedTab == screenShareTab) // camera + screen share
             {
                 usr_engine_ = new ScreenShare(screenShareView.localVideoView.Handle, screenShareView.remoteVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == joinMultipleChannelTab)  // 多频道
+            else if (tabCtrl.SelectedTab == joinMultipleChannelTab)  // multiple channel
             {
                 usr_engine_ = new JoinMultipleChannel(joinMultipleChannelView.localVideoView.Handle, 
                     joinMultipleChannelView.firstChannelVideoView.Handle, joinMultipleChannelView.secondChannelVideoView.Handle);
@@ -144,9 +152,39 @@ namespace CSharp_API_Example
             {
                 usr_engine_ = new VirtualBackground(virtualBackgroundView.localVideoView.Handle, virtualBackgroundView.remoteVideoView.Handle);
             }
+
             else if (tabCtrl.SelectedTab == customCaptureVideoTab) // 自采集自渲染
             {
                 usr_engine_ = new CustomCaptureVideo(customCaptureVideoView.localVideoView.Handle, customCaptureVideoView.remoteVideoView.Handle, customCaptureVideoView.localVideoView);
+            }
+            else if (tabCtrl.SelectedTab == AudioMixingTag) // AudioMixing
+            {
+                usr_engine_ = new AudioMixing();
+            }
+            else if (tabCtrl.SelectedTab == PlayEffectTag) // PlayEffect
+            {
+                usr_engine_ = new AudioEffect();
+            }
+            else if (tabCtrl.SelectedTab == DeviceManagerTag) // DeviceManager
+            {
+                usr_engine_ = new DeviceManager(deviceManagerView.localVideoView.Handle, deviceManagerView.remoteVideoView.Handle);
+            }
+            else if (tabCtrl.SelectedTab == RtmpStreamingTag) // RtmpStreaming
+            {
+                usr_engine_ = new RtmpStreaming( rtmpStreamingView.remoteVideoView.Handle);
+            }
+            else if (tabCtrl.SelectedTab == SetLiveTranscodingTag) // SetLiveTranscoding
+            {
+                usr_engine_ = new SetLiveTranscoding(setLiveTranscodingView.localVideoView.Handle, setLiveTranscodingView.remoteVideoView.Handle);
+            }
+            else if (tabCtrl.SelectedTab == SetEncryptionTag) // SetEncryption
+            {
+                usr_engine_ = new SetEncryption(setEncryptionView.localVideoView.Handle, setEncryptionView.remoteVideoView.Handle);
+            }
+            else if (tabCtrl.SelectedTab == SetVideoEncoderConfigurationTag) // SetVideoEncoderConfiguration
+            {
+                usr_engine_ = new SetVideoEncoderConfiguration(setVideoEncoderConfigurationView.localVideoView.Handle, setVideoEncoderConfigurationView.remoteVideoView.Handle);
+
             }
             else
             {
