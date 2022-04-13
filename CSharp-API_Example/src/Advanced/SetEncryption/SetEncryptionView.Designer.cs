@@ -1,7 +1,7 @@
 ﻿
 namespace CSharp_API_Example
 {
-    partial class JoinChannelVideoView
+    partial class SetEncryptionView
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -32,6 +32,8 @@ namespace CSharp_API_Example
             this.localVideoView = new System.Windows.Forms.PictureBox();
             this.remoteVideoView = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.cmbMode = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).BeginInit();
             this.SuspendLayout();
@@ -41,8 +43,7 @@ namespace CSharp_API_Example
             this.localVideoView.Location = new System.Drawing.Point(3, 4);
             this.localVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.localVideoView.Name = "localVideoView";
-            this.localVideoView.Size = new System.Drawing.Size(122, 112);
-
+            this.localVideoView.Size = new System.Drawing.Size(95, 95);
             this.localVideoView.TabIndex = 2;
             this.localVideoView.TabStop = false;
             // 
@@ -54,28 +55,58 @@ namespace CSharp_API_Example
             this.remoteVideoView.Location = new System.Drawing.Point(0, 0);
             this.remoteVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.remoteVideoView.Name = "remoteVideoView";
-            this.remoteVideoView.Size = new System.Drawing.Size(760, 600);
+            this.remoteVideoView.Size = new System.Drawing.Size(591, 510);
             this.remoteVideoView.TabIndex = 4;
             this.remoteVideoView.TabStop = false;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(250, 17);
+            this.label1.Location = new System.Drawing.Point(195, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 20);
+            this.label1.Size = new System.Drawing.Size(92, 17);
             this.label1.TabIndex = 5;
-            this.label1.Text = "一对一视频通话";
+            this.label1.Text = "加密";
             // 
-            // Video1To1View
+            // cmbMode
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.cmbMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMode.FormattingEnabled = true;
+            this.cmbMode.Items.AddRange(new object[] {
+            "AES_128_XTS",
+            "AES_128_ECB ",
+            "AES_256_XTS",
+            "SM4_128_ECB ",
+            "AES_128_GCM",
+            "AES_256_GCM",
+            "AES_128_GCM2",
+            "AES_256_GCM2"});
+            this.cmbMode.Location = new System.Drawing.Point(124, 460);
+            this.cmbMode.Name = "cmbMode";
+            this.cmbMode.Size = new System.Drawing.Size(177, 25);
+            this.cmbMode.TabIndex = 7;
+            this.cmbMode.SelectedIndexChanged += new System.EventHandler(this.cmbMode_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(28, 463);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(90, 17);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Encrypt Mode";
+            // 
+            // SetEncryptionView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.cmbMode);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.localVideoView);
             this.Controls.Add(this.remoteVideoView);
-            this.Name = "Video1To1View";
-            this.Size = new System.Drawing.Size(760, 600);
+            this.Name = "SetEncryptionView";
+            this.Size = new System.Drawing.Size(591, 510);
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).EndInit();
             this.ResumeLayout(false);
@@ -87,5 +118,7 @@ namespace CSharp_API_Example
         public System.Windows.Forms.PictureBox localVideoView;
         public System.Windows.Forms.PictureBox remoteVideoView;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbMode;
+        private System.Windows.Forms.Label label2;
     }
 }

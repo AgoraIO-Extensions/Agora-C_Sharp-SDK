@@ -221,6 +221,19 @@ namespace agora.rtc
         kEngineGetScreenCaptureSources,
         kEngineTakeSnapshot,
         kEngineEnableContentInspect,
+
+        kEngineSetAVSyncSource = 196,
+        kEngineStartRtmpStreamWithoutTranscoding = 197,
+        kEngineStartRtmpStreamWithTranscoding = 198,
+        kEngineUpdateRtmpTranscoding = 199,
+        kEngineStopRtmpStream = 200,
+        kEngineSetLowlightEnhanceOptions = 201,
+        kEngineSetVideoDenoiserOptions = 202,
+        kEngineSetColorEnhanceOptions = 203,
+        kEngineEnableWirelessAccelerate = 204,
+        kEngineMediaRecorderStart = 205,
+        kEngineMediaRecorderStop = 206,
+        kEngineMediaRecorderRelease = 207,
     }
 
 
@@ -273,6 +286,11 @@ namespace agora.rtc
         kChannelStopChannelMediaRelay,
         kChannelGetConnectionState,
         kChannelEnableRemoteSuperResolution,
+        kChannelSetAVSyncSource = 47,
+        kChannelStartRtmpStreamWithoutTranscoding = 48,
+        kChannelStartRtmpStreamWithTranscoding = 49,
+        kChannelUpdateRtmpTranscoding = 50,
+        kChannelStopRtmpStream = 51,
     }
 
     internal enum ApiTypeAudioDeviceManager
@@ -301,6 +319,8 @@ namespace agora.rtc
 
         kADMStartAudioDeviceLoopbackTest,
         kADMStopAudioDeviceLoopbackTest,
+        kADMFollowSystemPlaybackDevice = 22,
+        kADMFollowSystemRecordingDevice = 23,
     }
 
     internal enum ApiTypeVideoDeviceManager

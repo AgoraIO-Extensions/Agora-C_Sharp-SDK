@@ -87,6 +87,11 @@ namespace agora.rtc
         public abstract int StopChannelMediaRelay();
         public abstract CONNECTION_STATE_TYPE GetConnectionState();
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
+        public abstract int SetAVSyncSource(string channelId, uint uid);
+        public abstract int StartRtmpStreamWithoutTranscoding(string url);
+        public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
+        public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
+        public abstract int StopRtmpStream(string url);
     }
 
     public abstract class IAgoraRtcChannelEventHandler
@@ -213,7 +218,7 @@ namespace agora.rtc
         }
 
         public virtual void OnRtmpStreamingStateChanged(string channelId, string url, RTMP_STREAM_PUBLISH_STATE state,
-            RTMP_STREAM_PUBLISH_ERROR errCode)
+            RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
         {
         }
 
@@ -248,6 +253,14 @@ namespace agora.rtc
         }
 
         public virtual void OnMetadataReceived(Metadata metadata)
+        {
+        }
+
+        public virtual void OnClientRoleChangeFailed(string channelId, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) 
+        {
+        }
+
+        public virtual void OnProxyConnected(string channelId, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
         {
         }
     }

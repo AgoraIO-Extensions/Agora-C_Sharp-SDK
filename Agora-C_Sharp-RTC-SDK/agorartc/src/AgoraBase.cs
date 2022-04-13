@@ -1278,6 +1278,12 @@ namespace agora.rtc
      * around 3.75 MB after 10 minutes of recording.
     */
         AUDIO_RECORDING_QUALITY_HIGH = 2,
+        /** 3: Ultra high quality. For example, the size of an AAC file with a sample rate
+            * of 32,000 Hz and a 10-minute recording is approximately 7.5 MB.
+            *
+            * @since v3.6.2
+            */
+         AUDIO_RECORDING_QUALITY_ULTRA_HIGH = 3,
     }
 
     /** Network quality types. */
@@ -1785,12 +1791,18 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** The RTMP or RTMPS streaming fails. See the errCode parameter for the detailed error information. You can also call the \ref IRtcEngine::addPublishStreamUrl "addPublishStreamUrl" method to publish the RTMP or RTMPS streaming again.
    */
         RTMP_STREAM_PUBLISH_STATE_FAILURE = 4,
+        /** The SDK is disconnecting from the Agora streaming server and CDN.
+         * When you call remove or stop to stop the streaming normally, the SDK reports the streaming state as `DISCONNECTING`, `IDLE` in sequence.
+         *
+         * @since v3.6.0
+         */
+      RTMP_STREAM_PUBLISH_STATE_DISCONNECTING = 5,
     }
 
     /**
  Error codes of the RTMP or RTMPS streaming.
  */
-    public enum RTMP_STREAM_PUBLISH_ERROR
+    public enum RTMP_STREAM_PUBLISH_ERROR_TYPE
     {
         /** The RTMP or RTMPS streaming publishes successfully. */
         RTMP_STREAM_PUBLISH_ERROR_OK = 0,
@@ -1824,6 +1836,34 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** The format of the RTMP or RTMPS streaming URL is not supported. Check whether the URL format is correct. */
         RTMP_STREAM_PUBLISH_ERROR_FORMAT_NOT_SUPPORTED = 10,
+        /**
+            * 11: The user role is not host, so the user cannot use the CDN live streaming function.
+            * Check your application code logic.
+            *
+            * @since v3.6.0
+            */
+         RTMP_STREAM_PUBLISH_ERROR_NOT_BROADCASTER = 11,  // Note: match to ERR_PUBLISH_STREAM_NOT_BROADCASTER in AgoraBase.h
+         /**
+            * 13: The `updateRtmpTranscoding` or `setLiveTranscoding` method is called to update the transcoding configuration in a scenario where there is streaming without transcoding.
+            * Check your application code logic.
+            *
+            * @since v3.6.0
+            */
+         RTMP_STREAM_PUBLISH_ERROR_TRANSCODING_NO_MIX_STREAM = 13,  // Note: match to ERR_PUBLISH_STREAM_TRANSCODING_NO_MIX_STREAM in AgoraBase.h
+         /**
+            * 14: Errors occurred in the host's network.
+            *
+            * @since v3.6.0
+            */
+         RTMP_STREAM_PUBLISH_ERROR_NET_DOWN = 14,  // Note: match to ERR_NET_DOWN in AgoraBase.h
+         /**
+            * 15: Your App ID does not have permission to use the CDN live streaming function.
+            * Refer to [Prerequisites](https://docs.agora.io/en/Interactive%20Broadcast/cdn_streaming_windows?platform=Windows#prerequisites) to
+            * enable the CDN live streaming permission.
+            *
+            * @since v3.6.0
+            */
+         RTMP_STREAM_PUBLISH_ERROR_INVALID_APPID = 15,  // Note: match to ERR_PUBLISH_STREAM_APPID_INVALID in AgoraBase.h
 
         /** The RTMP streaming unpublishes successfully. */
         RTMP_STREAM_UNPUBLISH_ERROR_OK = 100,
@@ -1839,6 +1879,16 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** The chosen URL address is already in use for CDN live streaming.
    */
         RTMP_STREAMING_EVENT_URL_ALREADY_IN_USE = 2,
+        /** 3: The feature is not supported.
+            *
+            * @since v3.6.0
+            */
+         RTMP_STREAMING_EVENT_ADVANCED_FEATURE_NOT_SUPPORT = 3,
+         /** 4: Reserved.
+            *
+            * @since v3.6.0
+            */
+         RTMP_STREAMING_EVENT_REQUEST_TOO_OFTEN = 4,
     }
 
     /** States of importing an external video stream in the interactive live streaming. */
@@ -2492,6 +2542,11 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** 1: HE-AAC, which is the high-efficiency audio codec type. */
         AUDIO_CODEC_PROFILE_HE_AAC = 1,
+        /** 2: HE-AAC v2
+         *
+         * @since v3.6.0
+         */
+         AUDIO_CODEC_PROFILE_HE_AAC_V2 = 2,
     }
 
     /** Remote audio states.
@@ -2941,8 +2996,12 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** 14: Timeout for the keep-alive of the connection between the SDK and Agora's edge server. The connection state changes to CONNECTION_STATE_RECONNECTING(4). */
         CONNECTION_CHANGED_KEEP_ALIVE_TIMEOUT = 14,
 
-        /** 15: In cloud proxy mode, the proxy server connection interrupted. */
-        CONNECTION_CHANGED_PROXY_SERVER_INTERRUPTED = 15,
+        /// @cond nodoc
+         /** 19: The connection failed due to same uid joined again on another device. */
+         CONNECTION_CHANGED_SAME_UID_LOGIN = 19,
+         /** 20: The connection failed due to too many broadcasters in the channel. */
+         CONNECTION_CHANGED_TOO_MANY_BROADCASTERS = 20,
+         /// @endcond
     }
 
     /** Network type. */
@@ -4131,15 +4190,17 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             recordingQuality = AUDIO_RECORDING_QUALITY_TYPE.AUDIO_RECORDING_QUALITY_MEDIUM;
             recordingPosition = AUDIO_RECORDING_POSITION.AUDIO_RECORDING_POSITION_MIXED_RECORDING_AND_PLAYBACK;
             recordingSampleRate = 32000;
+            recordingChannel = 1;
         }
 
         public AudioRecordingConfiguration(string filePath, AUDIO_RECORDING_QUALITY_TYPE recordingQuality,
-            AUDIO_RECORDING_POSITION recordingPosition, int recordingSampleRate)
+            AUDIO_RECORDING_POSITION recordingPosition, int recordingSampleRate, int recordingChannel )
         {
             this.filePath = filePath;
             this.recordingQuality = recordingQuality;
             this.recordingPosition = recordingPosition;
             this.recordingSampleRate = recordingSampleRate;
+            this.recordingChannel = recordingChannel;
         }
 
         /** Pointer to the absolute file path of the recording file. The string of the file name is in UTF-8.
@@ -4170,6 +4231,19 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
          * - 48000
          */
         public int recordingSampleRate { set; get; }
+        /**
+         * @since v3.6.2
+         *
+         * The recorded audio channel. The following values are supported:
+         * - `1`: (Default) Mono channel.
+         * - `2`: Dual channel.
+         *
+         * @note The actual recorded audio channel is related to the audio channel that you capture.
+         * If the captured audio is mono and `recordingChannel` is 2, the recorded audio is the dual-channel data that is copied from mono data, not stereo.
+         * If the captured audio is dual channel and `recordingChannel` is 1, the recorded audio is the mono data that is mixed by dual-channel data.
+         * The integration scheme also affects the final recorded audio channel. Therefore, to record in stereo, contact technical support for assistance.
+         */
+         public int recordingChannel  { set; get; }
     }
 
     /** Audio recording position. */
@@ -4265,13 +4339,15 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         {
         }
 
-        public RtcImage(string url, int x, int y, int width, int height)
+        public RtcImage(string url, int x, int y, int width, int height, int zOrder, double alpha)
         {
             this.url = url;
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
+            this.zOrder = zOrder;
+            this.alpha = alpha;
         }
 
         /** HTTP/HTTPS URL address of the image on the live video. The maximum length of this parameter is 1024 bytes. */
@@ -4288,6 +4364,8 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         /** Height of the image on the live video. */
         public int height { set; get; }
+        public int zOrder { set; get; }
+        public double alpha { set; get; }
     }
 
 
@@ -4359,7 +4437,7 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         public LiveTranscoding(int width, int height, int videoBitrate, int videoFramerate, bool lowLatency,
             int videoGop, VIDEO_CODEC_PROFILE_TYPE videoCodecProfile, uint backgroundColor,
             VIDEO_CODEC_TYPE_FOR_STREAM videoCodecType, uint userCount, TranscodingUser[] transcodingUsers,
-            string transcodingExtraInfo, string metadata, RtcImage watermark, RtcImage backgroundImage,
+            string transcodingExtraInfo, string metadata, RtcImage[] watermark, uint watermarkCount, RtcImage[] backgroundImage, uint backgroundImageCount,
             AUDIO_SAMPLE_RATE_TYPE audioSampleRate, int audioBitrate, int audioChannels,
             AUDIO_CODEC_PROFILE_TYPE audioCodecProfile, LiveStreamAdvancedFeature[] advancedFeatures,
             uint advancedFeatureCount)
@@ -4378,7 +4456,9 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
             this.transcodingExtraInfo = transcodingExtraInfo;
             this.metadata = metadata;
             this.watermark = watermark;
+            this.watermarkCount = watermarkCount;
             this.backgroundImage = backgroundImage;
+            this.backgroundImageCount = backgroundImageCount;
             this.audioSampleRate = audioSampleRate;
             this.audioBitrate = audioBitrate;
             this.audioChannels = audioChannels;
@@ -4451,12 +4531,16 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** The watermark image added to the CDN live publishing stream.
 		 Ensure that the format of the image is PNG. Once a watermark image is added, the audience of the CDN live publishing stream can see the watermark image. See RtcImage.
 		 */
-        public RtcImage watermark { set; get; }
+        public RtcImage[] watermark { set; get; }
+
+        public uint watermarkCount { set; get; }
 
         /** The background image added to the CDN live publishing stream.
 		 Once a background image is added, the audience of the CDN live publishing stream can see the background image. See RtcImage.
 		 */
-        public RtcImage backgroundImage { set; get; }
+        public RtcImage[] backgroundImage { set; get; }
+
+        public uint backgroundImageCount { set; get; }
 
         /** Self-defined audio-sample rate: #AUDIO_SAMPLE_RATE_TYPE.
 		 */
@@ -5023,12 +5107,13 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
 
         public BeautyOptions(
             LIGHTENING_CONTRAST_LEVEL lighteningContrastLevel, float lighteningLevel, float smoothnessLevel,
-            float rednessLevel)
+            float rednessLevel, float sharpnessLevel)
         {
             this.lighteningContrastLevel = lighteningContrastLevel;
             this.lighteningLevel = lighteningLevel;
             this.smoothnessLevel = smoothnessLevel;
             this.rednessLevel = rednessLevel;
+            this.sharpnessLevel = sharpnessLevel;
         }
 
         /** The contrast level, used with the @p lightening parameter.
@@ -5045,6 +5130,12 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** The redness level. The value ranges between 0 (original) and 1. This parameter adjusts the red saturation level.
 		 */
         public float rednessLevel { set; get; }
+        /** The sharpness level, in the range [0.0,1.0], where 0.0 means the original sharpness.
+         * The default value is 0.3. The higher the value, the greater the sharpness level.
+         *
+         * @since v3.6.0
+         */
+         public float sharpnessLevel { set; get; }
     }
 
     /** Background substitutoin meta data.
@@ -5291,6 +5382,12 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         /** 16: The video pixel format is I422.
 		 */
         VIDEO_PIXEL_I422 = 16,
+        /** 17: The video pixel format is GL_TEXTURE_2D.
+         */
+         VIDEO_TEXTURE_2D = 17,
+         /** 18: The video pixel format is GL_TEXTURE_OES.
+         */
+         VIDEO_TEXTURE_OES = 18,
     }
 
     public enum MEDIA_SOURCE_TYPE
@@ -6100,13 +6197,321 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
         public uint fileSize;
     };
 
-    public enum AgoraEngineType
-    {
-        MainProcess,
-        SubProcess
-    }
+    /**
+      * The low-light enhancement mode.
+      */
+   public enum LOW_LIGHT_ENHANCE_MODE {
+      /** 0: (Default) Automatic mode. The SDK automatically enables or disables the low-light enhancement feature according to the ambient light to compensate for the lighting level or prevent overexposure, as necessary. */
+      LOW_LIGHT_ENHANCE_AUTO = 0,
+      /** Manual mode. Users need to enable or disable the low-light enhancement feature manually. */
+      LOW_LIGHT_ENHANCE_MANUAL
+   };
 
-    internal static partial class ObsoleteMethodWarning
-    {
-    }
+   /**
+      * The low-light enhancement level.
+      */
+   public enum LOW_LIGHT_ENHANCE_LEVEL {
+      /**
+      * 0: (Default) Promotes video quality during low-light enhancement. It processes the brightness, details, and noise of the video image. The performance consumption is moderate, the processing speed is moderate, and the overall video quality is optimal.
+      */
+      LOW_LIGHT_ENHANCE_LEVEL_HIGH_QUALITY = 0,
+      /**
+      * Promotes performance during low-light enhancement. It processes the brightness and details of the video image. The processing speed is faster.
+      */
+      LOW_LIGHT_ENHANCE_LEVEL_FAST
+   };
+
+
+    /** The low-light enhancement options.
+   *
+   * @since v3.6.2
+   */
+   public class LowLightEnhanceOptions
+   {
+      public LowLightEnhanceOptions()
+      {
+      }
+
+      public LowLightEnhanceOptions(LOW_LIGHT_ENHANCE_MODE mode, LOW_LIGHT_ENHANCE_LEVEL level)
+      {
+         this.mode = mode;
+         this.level = level;
+      }
+
+      /** The low-light enhancement mode. See #LOW_LIGHT_ENHANCE_MODE.
+         */
+      public LOW_LIGHT_ENHANCE_MODE mode { set; get; }
+
+      /** The low-light enhancement level. See #LOW_LIGHT_ENHANCE_LEVEL.
+         */
+      public LOW_LIGHT_ENHANCE_LEVEL level { set; get; }
+   };
+
+   /** The video noise reduction mode.
+      */
+   public enum VIDEO_DENOISER_MODE {
+      /** 0: (Default) Automatic mode. The SDK automatically enables or disables the video noise reduction feature according to the ambient light. */
+      VIDEO_DENOISER_AUTO = 0,
+      /** Manual mode. Users need to enable or disable the video noise reduction feature manually. */
+      VIDEO_DENOISER_MANUAL
+   };
+
+   /**
+      * The video noise reduction level.
+      */
+   public enum VIDEO_DENOISER_LEVEL {
+      /**
+      * 0: (Default) Promotes video quality during video noise reduction. `HIGH_QUALITY` balances performance consumption and video noise reduction quality.
+      * The performance consumption is moderate, the video noise reduction speed is moderate, and the overall video quality is optimal.
+      */
+      VIDEO_DENOISER_LEVEL_HIGH_QUALITY = 0,
+      /**
+      * Promotes reducing performance consumption during video noise reduction. `FAST` prioritizes reducing performance consumption over video noise reduction quality.
+      * The performance consumption is lower, and the video noise reduction speed is faster. To avoid a noticeable shadowing effect (shadows trailing behind moving objects) in the processed video, Agora recommends that you use `FAST` when the camera is fixed.
+      */
+      VIDEO_DENOISER_LEVEL_FAST,
+      /**
+      * Enhanced video noise reduction. `STRENGTH` prioritizes video noise reduction quality over reducing performance consumption.
+      * The performance consumption is higher, the video noise reduction speed is slower, and the video noise reduction quality is better.
+      * If `HIGH_QUALITY` is not enough for your video noise reduction needs, you can use `STRENGTH`.
+      */
+      VIDEO_DENOISER_LEVEL_STRENGTH
+   };
+
+   /**
+   * The video noise reduction options.
+   *
+   * @since v3.6.2
+   */
+   public class VideoDenoiserOptions
+   {
+      public VideoDenoiserOptions()
+      {
+      }
+
+      public VideoDenoiserOptions(VIDEO_DENOISER_MODE mode, VIDEO_DENOISER_LEVEL level)
+      {
+         this.mode = mode;
+         this.level = level;
+      }
+      /** The video noise reduction mode. See #VIDEO_DENOISER_MODE.
+         */
+      public VIDEO_DENOISER_MODE mode { set; get; }
+
+      /** The video noise reduction level. See #VIDEO_DENOISER_LEVEL.
+         */
+      public VIDEO_DENOISER_LEVEL level { set; get; }
+   };
+
+   /** The color enhancement options.
+   *
+   * @since v3.6.2
+   */
+   public class ColorEnhanceOptions
+   {
+      public ColorEnhanceOptions()
+      {
+      }
+
+      public ColorEnhanceOptions(float strengthLevel, float skinProtectLevel)
+      {
+         this.strengthLevel = strengthLevel;
+         this.skinProtectLevel = skinProtectLevel;
+      }
+      /** The level of color enhancement. The value range is [0.0,1.0]. `0.0` is the default value, which means no color enhancement is applied to the video. The higher the value, the higher the level of color enhancement.
+         */
+      public float strengthLevel { set; get; }
+
+      /** The level of skin tone protection. The value range is [0.0,1.0]. `0.0` means no skin tone protection. The higher the value, the higher the level of skin tone protection.
+         * The default value is `1.0`. When the level of color enhancement is higher, the portrait skin tone can be significantly distorted, so you need to set the level of skin tone protection; when the level of skin tone protection is higher, the color enhancement effect can be slightly reduced.
+         * Therefore, to get the best color enhancement effect, Agora recommends that you adjust `strengthLevel` and `skinProtectLevel` to get the most appropriate values.
+         */
+      public float skinProtectLevel { set; get; }
+   };
+
+   /**
+   * The screen sharing information.
+   *
+   * @since v3.6.1
+   */
+   public class ScreenCaptureInfo
+   {
+      public ScreenCaptureInfo()
+      {
+      }
+
+      public ScreenCaptureInfo(string graphicsCardType, EXCLUDE_WINDOW_ERROR errCode)
+      {
+         this.graphicsCardType = graphicsCardType;
+         this.errCode = errCode;
+      }
+      /**
+         * The type of the graphics card, which contains the model information of the graphics card.
+         */
+      public string graphicsCardType;
+      /**
+         * The error code of the window blocking during screen sharing. See #EXCLUDE_WINDOW_ERROR
+         */
+      public EXCLUDE_WINDOW_ERROR errCode;
+   };
+
+   /**
+   * The error code of the window blocking during screen sharing.
+   *
+   * @since v3.6.1
+   */
+   public enum EXCLUDE_WINDOW_ERROR {
+      /**
+         * -1: Fails to block the window during screen sharing. The user's graphics card does not support window blocking.
+         */
+      EXCLUDE_WINDOW_FAIL = -1,
+      /**
+         * 0: Reserved.
+         */
+      EXCLUDE_WINDOW_NONE = 0
+   };
+
+      /** The local  proxy mode type. */
+   public enum LOCAL_PROXY_MODE {
+      /** 0: Connect local proxy with high priority, if not connected to local proxy, fallback to sdrtn.
+         */
+      ConnectivityFirst = 0,
+      /** 1: Only connect local proxy
+         */
+      LocalOnly = 1,
+   };
+
+   /**
+   * The proxy type.
+   *
+   * @since v3.6.2
+   */
+   public enum PROXY_TYPE {
+      /** 0: Reserved for future use.
+         */
+      NONE_PROXY_TYPE = 0,
+      /** 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
+         */
+      UDP_PROXY_TYPE = 1,
+      /** 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TLS 443.
+         */
+      TCP_PROXY_TYPE = 2,
+      /** 3: Reserved for future use.
+         */
+      LOCAL_PROXY_TYPE = 3,
+      /** 4: The automatic mode. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TLS 443 if the attempt fails.
+         */
+      TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
+   };  // namespace rtc
+
+   /**
+   * The reason for failure of changing role.
+   *
+   * @since v3.6.1
+   */
+   public enum CLIENT_ROLE_CHANGE_FAILED_REASON {
+      /** 1: Too many broadcasters in the channel.
+         */
+      CLIENT_ROLE_CHANGE_FAILED_BY_TOO_MANY_BROADCASTERS = 1,
+
+      /** 2: Change operation not authorized.
+         */
+      CLIENT_ROLE_CHANGE_FAILED_BY_NOT_AUTHORIZED = 2,
+
+      /** 3: Change operation timer out.
+         */
+      CLIENT_ROLE_CHANGE_FAILED_BY_REQUEST_TIME_OUT = 3,
+
+      /** 4: Change operation is interrupted since we lost connection with agora service.
+         */
+      CLIENT_ROLE_CHANGE_FAILED_BY_CONNECTION_FAILED = 4,
+   };
+
+   public enum WLACC_MESSAGE_REASON {
+      /** WIFI signal is weak.*/
+      WLACC_MESSAGE_REASON_WEAK_SIGNAL = 0,
+      /** Channel congestion.*/
+      WLACC_MESSAGE_REASON_CHANNEL_CONGESTION = 1,
+   };
+
+   /** Suggest an action for the user.
+   */
+   public enum WLACC_SUGGEST_ACTION {
+      /** Please get close to AP.*/
+      WLACC_SUGGEST_ACTION_CLOSE_TO_WIFI = 0,
+      /** The user is advised to connect to the prompted SSID.*/
+      WLACC_SUGGEST_ACTION_CONNECT_SSID = 1,
+      /** The user is advised to check whether the AP supports 5G band and enable 5G band (the aciton link is attached), or purchases an AP that supports 5G. AP does not support 5G band.*/
+      WLACC_SUGGEST_ACTION_CHECK_5G = 2,
+      /** The user is advised to change the SSID of the 2.4G or 5G band (the aciton link is attached). The SSID of the 2.4G band AP is the same as that of the 5G band.*/
+      WLACC_SUGGEST_ACTION_MODIFY_SSID = 3,
+   };
+
+   /** Indicator optimization degree.
+   */
+   public class WlAccStats
+   {
+      public WlAccStats()
+      {
+      }
+
+      public WlAccStats(ushort e2eDelayPercent, ushort frozenRatioPercent, ushort lossRatePercent)
+      {
+         this.e2eDelayPercent = e2eDelayPercent;
+         this.frozenRatioPercent = frozenRatioPercent;
+         this.lossRatePercent = lossRatePercent;
+      }
+      /** End-to-end delay optimization percentage.*/
+      public ushort e2eDelayPercent { set; get; }
+      /** Frozen Ratio optimization percentage.*/
+      public ushort frozenRatioPercent { set; get; }
+      /** Loss Rate optimization percentage.*/
+      public ushort lossRatePercent { set; get; }
+   };
+
+
+   /**
+   * The volume type.
+   *
+   * @since v3.6.2
+   */
+   public enum AudioDeviceTestVolumeType {
+      /** 0: The volume of the audio capturing device.
+         */
+      AudioTestRecordingVolume = 0,
+      /** 1: The volume of the audio playback device.
+         */
+      AudioTestPlaybackVolume = 1,
+   };
+
+   public struct LocalAccessPointConfiguration {
+      /** local access point ip address list.
+         */
+      public string[] ipList;
+      /** the number of local access point ip address.
+         */
+      public int ipListSize;
+      /** local access point domain list.
+         */
+      public string[] domainList;
+      /** the number of local access point domain.
+         */
+      public int domainListSize;
+      /** certificate domain name installed on specific local access point. pass "" means using sni domain on specific local access point
+         */
+      public string[] verifyDomainName;
+      /** local proxy connection mode, connectivity first or local only.
+         */
+      public LOCAL_PROXY_MODE mode;
+   };
+
+   public enum AgoraEngineType
+   {
+      MainProcess,
+      SubProcess
+   }
+
+   internal static partial class ObsoleteMethodWarning
+   {
+   }
 }

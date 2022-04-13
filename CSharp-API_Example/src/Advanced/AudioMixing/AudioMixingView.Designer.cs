@@ -1,7 +1,7 @@
 ﻿
 namespace CSharp_API_Example
 {
-    partial class JoinChannelAudioView
+    partial class AudioMixingView
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -29,26 +29,27 @@ namespace CSharp_API_Example
         /// </summary>
         private void InitializeComponent()
         {
-            this.audioLabel = new System.Windows.Forms.Label();
+            this.audioMxingLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // audioLabel
+            // audioMxingLabel
             // 
-            this.audioLabel.AutoSize = true;
-            this.audioLabel.Location = new System.Drawing.Point(188, 12);
-            this.audioLabel.Name = "audioLabel";
-            this.audioLabel.Size = new System.Drawing.Size(114, 20);
-            this.audioLabel.TabIndex = 0;
-            this.audioLabel.Text = "一对一语音通话";
-            this.audioLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.audioMxingLabel.AutoSize = true;
+            this.audioMxingLabel.Location = new System.Drawing.Point(165, 21);
+            this.audioMxingLabel.Name = "audioMxingLabel";
+            this.audioMxingLabel.Size = new System.Drawing.Size(39, 20);
+            this.audioMxingLabel.TabIndex = 0;
+            this.audioMxingLabel.Text = "混音";
+            this.audioMxingLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // JoinChannelAudioView
+            // AudioMixingView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.audioLabel);
-            this.Name = "JoinChannelAudioView";
-            this.Size = new System.Drawing.Size(502, 367);
+            this.Controls.Add(this.audioMxingLabel);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.Name = "AudioMixingView";
+            this.Size = new System.Drawing.Size(501, 367);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -56,6 +57,6 @@ namespace CSharp_API_Example
 
         #endregion
 
-        public System.Windows.Forms.Label audioLabel;
+        public System.Windows.Forms.Label audioMxingLabel;
     }
 }
