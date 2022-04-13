@@ -149,7 +149,7 @@ namespace CSharp_API_Example
         {
             Console.WriteLine("----->OnJoinChannelSuccess, channel={0}, uid={1}", channel, uid);
             VideoCanvas vs = new VideoCanvas((ulong)videoGroup_inst_.GetLocalWindowId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
-            int ret = CSharpForm.usr_engine_.GetEngine().SetupLocalVideo(vs);
+            int ret = videoGroup_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo, ret={0}", ret);
         }
 
@@ -177,7 +177,7 @@ namespace CSharp_API_Example
             {
                 vc = new VideoCanvas((ulong)videoGroup_inst_.GetRemoteSecondWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, videoGroup_inst_.GetChannelId(), uid);
             }
-                int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
+                int ret = videoGroup_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->OnUserJoined, ret={0}", ret);
         }
 

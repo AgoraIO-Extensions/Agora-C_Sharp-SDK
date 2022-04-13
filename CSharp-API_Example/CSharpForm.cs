@@ -21,14 +21,12 @@ namespace CSharp_API_Example
 
     public partial class CSharpForm : Form
     {
-        internal static IEngine usr_engine_ = null;
         internal static dumpHandler dump_handler_ = null;
-        // config
-        private ConfigHelper config_helper_ = null;
         private readonly string SECTION = "must";
         private readonly string APPID_KEY = "AppId";
         private readonly string CHANNELID_KEY = "ChannelId";
-
+        private IEngine usr_engine_ = null;
+        private ConfigHelper config_helper_ = null; // config
         public CSharpForm()
         {
             InitializeComponent();

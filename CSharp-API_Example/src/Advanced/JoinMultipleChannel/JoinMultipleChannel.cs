@@ -296,7 +296,7 @@ namespace CSharp_API_Example
                 return;
             }
             var vc = new VideoCanvas((ulong)win_id, RENDER_MODE_TYPE.RENDER_MODE_FIT, channelId, uid);
-            int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
+            int ret = joinMultipleChannelChannel_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->OnUserJoined, channelId={0} uid={1} ret ={2}", channelId, uid, ret);
         }
 
