@@ -6674,7 +6674,7 @@ namespace agora.rtc
         public int domainListSize;
         /** certificate domain name installed on specific local access point. pass "" means using sni domain on specific local access point
             */
-        public string[] verifyDomainName;
+        public string verifyDomainName;
         /** local proxy connection mode, connectivity first or local only.
             */
         public LOCAL_PROXY_MODE mode;
