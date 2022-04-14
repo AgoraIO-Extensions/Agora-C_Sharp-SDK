@@ -33,6 +33,7 @@ namespace agora.rtc
         kEngineSetVideoEncoderConfiguration,
         kEngineSetBeautyEffectOptions,
         kEngineSetupRemoteVideo,
+        kEngineEnableVirtualBackground,
         kEngineSetupLocalVideo,
         kEngineEnableAudio,
         kEngineDisableAudio,
@@ -83,8 +84,7 @@ namespace agora.rtc
         kEngineUnloadAllEffects,
         kEngineEnableSoundPositionIndication,
         kEngineSetRemoteVoicePosition,
-        kEngineEnableSpatialAudio,
-        kEngineSetRemoteUserSpatialAudioParamso,
+        //kEngineSetRemoteVoice3DPosition,
         kEngineSetVoiceBeautifierPreset,
         kEngineSetAudioEffectPreset,
         kEngineSetVoiceConversionPreset,
@@ -100,6 +100,7 @@ namespace agora.rtc
         kEngineSetLogFilter,
         kEngineSetLogLevel,
         kEngineSetLogFileSize,
+        kEngineUploadLogFile,
         kEngineSetLocalRenderMode,
         kEngineSetRemoteRenderMode,
         kEngineSetLocalVideoMirrorMode,
@@ -123,6 +124,8 @@ namespace agora.rtc
         kEngineMuteRecordingSignal,
         kEngineAdjustPlaybackSignalVolume,
         kEngineAdjustUserPlaybackSignalVolume,
+        kEngineSetLocalPublishFallbackOption,
+        kEngineSetRemoteSubscribeFallbackOption,
         kEngineEnableLoopBackRecording,
         kEngineAdjustLoopbackRecordingVolume,
         kEngineGetLoopbackRecordingVolume,
@@ -211,6 +214,8 @@ namespace agora.rtc
         kEngineStartChannelMediaRelay,
         kEngineUpdateChannelMediaRelay,
         kEngineStopChannelMediaRelay,
+        kEnginePauseAllChannelMediaRelay,
+        kEngineResumeAllChannelMediaRelay,
         kEngineSetDirectCdnStreamingAudioConfiguration,
         kEngineSetDirectCdnStreamingVideoConfiguration,
         kEngineStartDirectCdnStreaming,
@@ -226,7 +231,7 @@ namespace agora.rtc
         kEngineMuteRemoteAudioStreamEx,
         kEngineMuteRemoteVideoStreamEx,
         kEngineSetRemoteVoicePositionEx,
-        kEngineSetRemoteUserSpatialAudioParamsEx,
+        // kEngineSetRemoteVoice3DPositionEx,
         kEngineSetRemoteRenderModeEx,
         kEngineEnableLoopBackRecordingEx,
         kEngineGetConnectionStateEx,
@@ -236,13 +241,13 @@ namespace agora.rtc
         kEngineAddVideoWaterMarkEx,
         kEngineClearVideoWatermarkEx,
         kEngineSendCustomReportMessageEx,
-        kEngineAddPublishStreamUrlEx,
         kEngineSetAppType,
 
         kMediaPushAudioFrame,
         kMediaPullAudioFrame,
         kMediaSetExternalVideoSource,
         kMediaSetExternalAudioSource,
+        kMediaEnableEchoCancellationExternal,
         kMediaPushVideoFrame,
         kMediaPushEncodedVideoImage,
         kEngineGetCertificateVerifyResult,
@@ -250,10 +255,21 @@ namespace agora.rtc
         kEngineAdjustCustomAudioPublishVolume,
         kEngineAdjustCustomAudioPlayoutVolume,
         kEngineSetParameters,
-        kEngineEnableDirectExternalAudioSource,
         kEngineGetAudioDeviceInfo,
-        kMediaPushDirectSendAudioFrame,
-        kMediaEnableCustomAudioLocalPlayback
+        kEngineTakeSnapshot,
+        kEngineEnableContentInspect,
+        kEngineSwitchChannel,
+        kEngineStartRhythmPlayer,
+        kEngineStopRhythmPlayer,
+        kEngineConfigRhythmPlayer,
+        kEngineEnableSpatialAudio,
+        kEngineSetRemoteUserSpatialAudioParams,
+        kEngineSetRemoteUserSpatialAudioParamsEx,
+        kMediaEnableCustomAudioLocalPlayback,
+        kEngineSetRemoteVideoSubscriptionOptions,
+        kEngineSetRemoteVideoSubscriptionOptionsEx,
+        kMediaSetDirectExternalAudioSource,
+        kMediaPushDirectAudioFrame,
     }
 
     internal enum ApiTypeAudioDeviceManager
@@ -317,7 +333,7 @@ namespace agora.rtc
         kMediaPlayerStop,
         kMediaPlayerResume,
         kMediaPlayerSeek,
-        kMediaPlayerSetAudioMixingPitch,
+        kMediaPlayerSetAudioPitch,
         kMediaPlayerGetDuration,
         kMediaPlayerGetPlayPosition,
         kMediaPlayerGetStreamCount,
@@ -327,7 +343,7 @@ namespace agora.rtc
         kMediaPlayerIsAudioMuted,
         kMediaPlayerMuteVideo,
         kMediaPlayerIsVideoMuted,
-        kMediaPlayerChangePlaybackSpeed,
+        kMediaPlayerSetPlaybackSpeed,
         kMediaPlayerSelectAudioTrack,
         kMediaPlayerSetPlayerOption,
         kMediaPlayerTakeScreenshot,
@@ -349,12 +365,21 @@ namespace agora.rtc
         kMediaPlayerUnregisterAudioFrameObserver,
         kMediaPlayerRegisterVideoFrameObserver,
         kMediaPlayerUnregisterVideoFrameObserver,
-        kMediaPlayerRegisterMediaPlayerAudioSpectrumObserver,
-        kMediaPlayerUnregisterMediaPlayerAudioSpectrumObserver,
-        kMediaPlayerSetSpatialAudioParams
+        kMediaPlayerOpenWithAgoraCDNSrc,
+        kMediaPlayerGetAgoraCDNLineCount,
+        kMediaPlayerSwitchAgoraCDNLineByIndex,
+        kMediaPlayerGetCurrentAgoraCDNIndex,
+        kMediaPlayerEnableAutoSwitchAgoraCDN,
+        kMediaPlayerRenewAgoraCDNSrcToken,
+        kMediaPlayerSwitchAgoraCDNSrc,
+        kMediaPlayerSwitchSrc,
+        kMediaPlayerPreloadSrc,
+        kMediaPlayerPlayPreloadedSrc,
+        kMediaPlayerUnloadSrc,
+        kMediaPlayerSetSpatialAudioParams,
     };
 
-    enum ApiTypeLocalSpatialAudio
+    internal enum ApiTypeLocalSpatialAudio
     {
         kLocalSpatialAudioSetMaxAudioRecvCount = 0,
         kLocalSpatialAudioSetAudioRecvRange,
@@ -370,10 +395,14 @@ namespace agora.rtc
         kLocalSpatialAudioRemoveRemotePosition,
         kLocalSpatialAudioRemoveRemotePositionEx,
         kLocalSpatialAudioClearRemotePositions,
-        kLocalSpatialAudioClearRemotePositionsEx
+        kLocalSpatialAudioClearRemotePositionsEx,
+        kLocalSpatialAudioMuteLocalAudioStream,
+        kLocalSpatialAudioMuteAllRemoteAudioStreams,
+        kLocalSpatialAudioInitialize,
+        kLocalSpatialAudioRelease
     };
 
-    enum ApiTypeCloudSpatialAudio
+    internal enum ApiTypeCloudSpatialAudio
     {
         kCloudSpatialAudioSetMaxAudioRecvCount = 0,
         kCloudSpatialAudioSetAudioRecvRange,
@@ -389,10 +418,13 @@ namespace agora.rtc
 
         kCloudSpatialAudioEnableSpatializer,
         kCloudSpatialAudioSetTeamId,
-        kCloudSpatialAudioSetRangeAudioMode,
+        kCloudSpatialAudioSetAudioRangeMode,
         kCloudSpatialAudioEnterRoom,
         kCloudSpatialAudioRenewToken,
         kCloudSpatialAudioExitRoom,
-        kCloudSpatialAudioGetTeammates
+        kCloudSpatialAudioGetTeammates,
+
+        kCloudSpatialAudioMuteLocalAudioStream,
+        kCloudSpatialAudioMuteAllRemoteAudioStreams
     };
 } // namespace agora.rtc

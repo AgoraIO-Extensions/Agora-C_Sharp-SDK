@@ -895,42 +895,50 @@ namespace agora.rtc
         ERR_VCM_ENCODER_SET_ERROR = 1603,
         };
     
-    /**
-	 * The UserInfo class.
-	 */
-    public class UserInfo
-    {
-        public UserInfo()
-        {
-            userId = "";
-            this.hasAudio = false;
-            this.hasVideo = false;
-        }
+    // /**
+	//  * The UserInfo class.
+	//  */
+    // public class UserInfo
+    // {
+    //     public UserInfo()
+    //     {
+    //         userId = "";
+    //         this.hasAudio = false;
+    //         this.hasVideo = false;
+    //     }
 
-        public UserInfo(string userId = "", bool hasAudio = false, bool hasVideo = false)
-        {
-            this.userId = userId;
-            this.hasAudio = hasAudio;
-            this.hasVideo = hasVideo;
-        }
+    //     public UserInfo(string userId = "", bool hasAudio = false, bool hasVideo = false)
+    //     {
+    //         this.userId = userId;
+    //         this.hasAudio = hasAudio;
+    //         this.hasVideo = hasVideo;
+    //     }
 
-        /**
-		 * The user account.
-		 */
-        public string userId { set; get; }
+    //     /**
+	// 	 * The user account.
+	// 	 */
+    //     public string userId { set; get; }
 
-        /**
-         * Whether the user has enabled audio:
-         * - true: The user has enabled audio.
-         * - false: The user has disabled audio.
-        */
-        public bool hasAudio { set; get; }
-        /**
-         * Whether the user has enabled video:
-         * - true: The user has enabled video.
-         * - false: The user has disabled video.
-         */
-        public bool hasVideo { set; get; }
+    //     /**
+    //      * Whether the user has enabled audio:
+    //      * - true: The user has enabled audio.
+    //      * - false: The user has disabled audio.
+    //     */
+    //     public bool hasAudio { set; get; }
+    //     /**
+    //      * Whether the user has enabled video:
+    //      * - true: The user has enabled video.
+    //      * - false: The user has disabled video.
+    //      */
+    //     public bool hasVideo { set; get; }
+    // }
+
+    public struct UserInfo
+    { 
+        /** * The user ID. */ 
+        public uint uid; 
+        /** * The user account. */ 
+        public string userAccount; 
     }
 
 
@@ -964,6 +972,8 @@ namespace agora.rtc
         AGORA_IID_RTC_CONNECTION = 7,
         AGORA_IID_SIGNALING_ENGINE = 8,
         AGORA_IID_MEDIA_ENGINE_REGULATOR = 9,
+        AGORA_IID_CLOUD_SPATIAL_AUDIO = 10,
+        AGORA_IID_LOCAL_SPATIAL_AUDIO = 11,
     };
 
     /**
@@ -2558,7 +2568,11 @@ namespace agora.rtc
         /** 7: The local video capturing device not avalible because the app is running in a multi-app layout (generally on the pad) */
         LOCAL_VIDEO_STREAM_ERROR_MULTIPLE_FOREGROUND_APPS = 7,
         /** 8: The local video capturing device  temporarily being made unavailable due to system pressure. */
-        LOCAL_VIDEO_STREAM_ERROR_SYSTEM_PRESSURE = 8
+        LOCAL_VIDEO_STREAM_ERROR_SYSTEM_PRESSURE = 8,
+        /** 11: The local screen capture window is minimized. */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
+        /** 12: The local screen capture window is closed. */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_CLOSED = 12
     };
 
     /**
@@ -3882,7 +3896,8 @@ namespace agora.rtc
         TIMBRE_TRANSFORMATION_RESOUNDING = 0x01030700,
         /** A more ringing voice.
         */
-        TIMBRE_TRANSFORMATION_RINGING = 0x01030800
+        TIMBRE_TRANSFORMATION_RINGING = 0x01030800,
+        ULTRA_HIGH_QUALITY_VOICE = 0x01040100
     };
 
     /** The options for SDK preset audio effects.
@@ -4268,9 +4283,9 @@ namespace agora.rtc
     /**
     * The Audio file recording options.
     */
-    public class AudioFileRecordingConfig
+    public class AudioRecordingConfiguration
     {
-        public AudioFileRecordingConfig()
+        public AudioRecordingConfiguration()
         {
             filePath = null;
             encode = false;
@@ -4279,7 +4294,7 @@ namespace agora.rtc
             quality = AUDIO_RECORDING_QUALITY_TYPE.AUDIO_RECORDING_QUALITY_LOW;
         }
 
-        public AudioFileRecordingConfig(string file_path, int sample_rate, AUDIO_RECORDING_QUALITY_TYPE quality_type)
+        public AudioRecordingConfiguration(string file_path, int sample_rate, AUDIO_RECORDING_QUALITY_TYPE quality_type)
         {
             this.filePath = file_path;
             this.encode = false;
@@ -4288,7 +4303,7 @@ namespace agora.rtc
             this.quality = quality_type;
         }
 
-        public AudioFileRecordingConfig(string file_path, bool enc, int sample_rate, 
+        public AudioRecordingConfiguration(string file_path, bool enc, int sample_rate, 
                                         AUDIO_FILE_RECORDING_TYPE type, AUDIO_RECORDING_QUALITY_TYPE quality_type)
         {
             this.filePath = file_path;
@@ -4578,6 +4593,18 @@ namespace agora.rtc
         /** 11: The video profile is sent to the server.
             */
         RELAY_EVENT_VIDEO_PROFILE_UPDATE = 11,
+        /** 12: pause send packet to dest channel success.
+        */
+        RELAY_EVENT_PAUSE_SEND_PACKET_TO_DEST_CHANNEL_SUCCESS = 12,
+        /** 13: pause send packet to dest channel failed.
+        */
+        RELAY_EVENT_PAUSE_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 13,
+        /** 14: resume send packet to dest channel success.
+        */
+        RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_SUCCESS = 14,
+        /** 15: pause send packet to dest channel failed.
+        */
+        RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 15,
     };
 
     public enum CHANNEL_MEDIA_RELAY_STATE {
@@ -4771,9 +4798,24 @@ namespace agora.rtc
     /** Encryption mode.
     */
     public enum ENCRYPTION_MODE {
+        /** 1: 128-bit AES encryption, XTS mode.
+        */
+        AES_128_XTS = 1,
+        /** 2: 128-bit AES encryption, ECB mode.
+        */
+        AES_128_ECB = 2,
+        /** 3: 256-bit AES encryption, XTS mode.
+        */
+        AES_256_XTS = 3,
         /** 4: 128-bit SM4 encryption, ECB mode.
         */
         SM4_128_ECB = 4,
+        /** 5: 128-bit AES encryption, GCM mode.
+        */
+        AES_128_GCM = 5,
+        /** 6: 256-bit AES encryption, GCM mode.
+        */
+        AES_256_GCM = 6,
         /** 7: (Default) 128-bit AES encryption, GCM mode, with KDF salt.
         */
         AES_128_GCM2 = 7,
@@ -5755,14 +5797,47 @@ namespace agora.rtc
         */
         public int audioDelayMs { set; get; }
         /**
+        * The delay in ms for sending media player audio frames. This is used for explicit control of A/V sync.
+        * To switch off the delay, set the value to zero.
+        */
+        public int mediaPlayerAudioDelayMs { set; get; }
+        /**
         * The token
         */
         public string token { set; get; }
         /**
+        * Enable media packet encryption.
+        * This parameter is ignored when calling function updateChannelMediaOptions()
+        * - false is default.
+        */
+        public bool enableBuiltInMediaEncryption { set; get; }
+        /**
+        * Determines whether to publish the sound of the rhythm player to remote users.
+        * - true: (Default) Publish the sound of the rhythm player.
+        * - false: Do not publish the sound of the rhythm player.
+        */
+        public bool publishRhythmPlayerTrack { set; get; }
+        /**
+        * This mode is only used for audience. In PK mode, client might join one
+        * channel as broadcaster, and join another channel as interactive audience to
+        * achieve low lentancy and smooth video from remote user.
+        * - true: Enable low lentancy and smooth video when joining as an audience.
+        * - false: (Default) Use default settings for audience role.
+        */
+        public bool isInteractiveAudience { set; get; }
+        /**
         * The sender option for video encoded track.
         */
         public EncodedVideoTrackOptions encodedVideoTrackOption { set; get; }
+
+        public AudioOptionsAdvanced audioOptionsAdvanced { set; get; }
     };
+
+    public class AudioOptionsAdvanced {
+        public bool enable_aec_external_custom_ { set; get; }
+
+        public bool enable_aec_external_loopback_ { set; get; }
+    }
 
     /**
     * The encoded video track options.
@@ -5949,12 +6024,33 @@ namespace agora.rtc
       /**
          * The region for connection. This advanced feature applies to scenarios that have regional restrictions.
          *
-         * For the regions that Agora supports, see #AREA_CODE. The area codes support bitwise operation.
+         * For the regions that Agora supports, see #SAE_DEPLOY_REGION. The area codes support bitwise operation.
          *
          * After specifying the region, the SDK connects to the Agora servers within that region.
          */
-      public uint areaCode;
+      public uint deployRegion;
    };
+
+    /** IP areas.
+    */
+    public enum SAE_DEPLOY_REGION {
+        /**
+        * Mainland China.
+        */
+        SAE_DEPLOY_REGION_CN = 0x00000001,
+        /**
+        * North America.
+        */
+        SAE_DEPLOY_REGION_NA = 0x00000002,
+        /**
+        * Europe.
+        */
+        SAE_DEPLOY_REGION_EU = 0x00000004,
+        /**
+        * Asia, excluding Mainland China.
+        */
+        SAE_DEPLOY_REGION_AS = 0x00000008
+    };
 
    public enum MEDIA_PLAYER_STATE {
       /** Default state.
@@ -6050,6 +6146,18 @@ namespace agora.rtc
       /** The audio mixing file playback is interrupted.
          */
       PLAYER_ERROR_INTERRUPTED = -13,
+      /** The SDK does not support this function.
+        */
+        PLAYER_ERROR_NOT_SUPPORTED = -14,
+        /** The token has expired.
+        */
+        PLAYER_ERROR_TOKEN_EXPIRED = -15,
+        /** The ip has expired.
+        */
+        PLAYER_ERROR_IP_EXPIRED = -16,
+        /** An unknown error occurs.
+        */
+        PLAYER_ERROR_UNKNOWN = -17,
    };
 
    /**
@@ -6131,6 +6239,18 @@ namespace agora.rtc
       /** Interrupt at the end of the video or audio
          */
       PLAYER_EVENT_FREEZE_STOP = 9,
+      /** switch source begin
+        */
+        PLAYER_EVENT_SWITCH_BEGIN = 10,
+        /** switch source complete
+        */
+        PLAYER_EVENT_SWITCH_COMPLETE = 11,
+        /** switch source error
+        */
+        PLAYER_EVENT_SWITCH_ERROR = 12,
+        /** An application can render the video to less than a second
+        */
+        PLAYER_EVENT_FIRST_DISPLAYED = 13,
    };
 
    /**
@@ -6254,8 +6374,279 @@ namespace agora.rtc
             this.forward = forward;
         }
         // The coordnate of remote voice source, (x, y, z)
-        float[] position { set; get; }
+        public float[] position { set; get; }
         // The forward vector of remote voice, (x, y, z). When it's not set, the vector is forward to listner.
-        float[] forward { set; get; }
+        public float[] forward { set; get; }
+    };
+
+    /** The type of the custom background image.
+    */
+    public enum BACKGROUND_SOURCE_TYPE {
+        /**
+        * 1: (Default) The background image is a solid color.
+        */
+        BACKGROUND_COLOR = 1,
+        /**
+        * The background image is a file in PNG or JPG format.
+        */
+        BACKGROUND_IMG,
+        /** Background source is blur background besides human body*/
+        BACKGROUND_BLUR,
+    };
+
+    /** The blur degree used to blur background in different level.(foreground keeps same as before).
+    */
+    public enum BACKGROUND_BLUR_DEGREE {
+        /** blur degree level low, background can see things, but have some blur effect */
+        BLUR_DEGREE_LOW = 1,
+        /** blur degree level medium, blur more than level medium */
+        BLUR_DEGREE_MEDIUM,
+        /** blur degree level high, blur default, hard to find background */
+        BLUR_DEGREE_HIGH,
+    };
+
+    public class VirtualBackgroundSource
+    {
+        /** The type of the custom background image. See #BACKGROUND_SOURCE_TYPE.
+        */
+        public BACKGROUND_SOURCE_TYPE background_source_type;
+
+        /**
+        * The color of the custom background image. The format is a hexadecimal integer defined by RGB, without the # sign,
+        * such as 0xFFB6C1 for light pink. The default value is 0xFFFFFF, which signifies white. The value range
+        * is [0x000000,0xFFFFFF]. If the value is invalid, the SDK replaces the original background image with a white
+        * background image.
+        *
+        * @note This parameter takes effect only when the type of the custom background image is `BACKGROUND_COLOR`.
+        */
+        public uint color;
+
+        /**
+        * The local absolute path of the custom background image. PNG and JPG formats are supported. If the path is invalid,
+        * the SDK replaces the original background image with a white background image.
+        *
+        * @note This parameter takes effect only when the type of the custom background image is `BACKGROUND_IMG`.
+        */
+        public string source;
+
+        /** blur degree */
+        public BACKGROUND_BLUR_DEGREE blur_degree;
+    };
+
+    /**
+    * The configuration of rhythm player,
+    * which is set in startRhythmPlayer or configRhythmPlayer.
+    */
+    public class AgoraRhythmPlayerConfig {
+        /**
+        * The number of beats per measure. The range is 1 to 9.
+        * The default value is 4,
+        * which means that each measure contains one downbeat and three upbeats.
+        */
+        public int beatsPerMeasure;
+        /*
+        * The range is 60 to 360.
+        * The default value is 60,
+        * which means that the rhythm player plays 60 beats in one minute.
+        */
+        public int beatsPerMinute;
+    };
+
+    /** Definition of contentinspect
+    */
+    public enum CONTENT_INSPECT_RESULT {
+        CONTENT_INSPECT_NEUTRAL = 1,
+        CONTENT_INSPECT_SEXY = 2,
+        CONTENT_INSPECT_PORN = 3,
+    };
+
+    public enum CONTENT_INSPECT_DEVICE_TYPE{
+        CONTENT_INSPECT_DEVICE_INVALID = 0,
+        CONTENT_INSPECT_DEVICE_AGORA = 1,
+        CONTENT_INSPECT_DEVICE_HIVE = 2,
+        CONTENT_INSPECT_DEVICE_TUPU = 3
+    };
+
+    public enum CONTENT_INSPECT_TYPE {
+        /**
+        * (Default) content inspect type invalid
+        */
+        CONTENT_INSPECT_INVALIDE = 0,
+        /**
+        * Content inspect type moderation
+        */
+        CONTENT_INSPECT_MODERATION = 1,
+        /**
+        * Content inspect type supervise
+        */
+        CONTENT_INSPECT_SUPERVISE = 2
+    };
+
+    public class ContentInspectModule {
+        /**
+        * The content inspect module type.
+        */
+        public CONTENT_INSPECT_TYPE type;
+        /**The content inspect frequency, default is 0 second.
+        * the frequency <= 0 is invalid.
+        */
+        public uint frequency;
+    };
+
+    /** Definition of ContentInspectConfig.
+    */
+    public class ContentInspectConfig
+    {
+        /** jh on device.*/
+        public bool DeviceWork;
+
+        /** jh on cloud.*/
+        public bool CloudWork;
+
+        /**the type of jh on device.*/
+        public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType;
+
+        public string extraInfo;
+
+        /**The content inspect modules, max length of modules is 32.
+        * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
+        */
+        public ContentInspectModule[] modules;
+
+        /**The content inspect module count.
+        */
+        public int moduleCount;
+    };
+
+    public class VideoSubscriptionOptions {
+        /**
+        * The type of the video stream to subscribe to.
+        *
+        * The default value is `VIDEO_STREAM_HIGH`, which means the high-quality
+        * video stream.
+        */
+        public VIDEO_STREAM_TYPE type;
+        /**
+        * Whether to subscribe to encoded video data only:
+        * - `true`: Subscribe to encoded video data only.
+        * - `false`: (Default) Subscribe to decoded video data.
+        */
+        public bool encodedFrameOnly;
+    };
+
+    /**
+    The states of the rhythm player.
+    */
+    public enum RHYTHM_PLAYER_STATE_TYPE {
+        /** 810: The rhythm player is idle. */
+        RHYTHM_PLAYER_STATE_IDLE = 810,
+        /** 811: The rhythm player is opening files. */
+        RHYTHM_PLAYER_STATE_OPENING,
+        /** 812: Files opened successfully, the rhythm player starts decoding files. */
+        RHYTHM_PLAYER_STATE_DECODING,
+        /** 813: Files decoded successfully, the rhythm player starts mixing the two files and playing back them locally. */
+        RHYTHM_PLAYER_STATE_PLAYING,
+        /** 814: The rhythm player is starting to fail, and you need to check the error code for detailed failure reasons. */
+        RHYTHM_PLAYER_STATE_FAILED,
+    };
+
+    /**
+    The error codes of the rhythm player.
+    */
+    public enum RHYTHM_PLAYER_ERROR_TYPE {
+        /** 0: The rhythm player works well. */
+        RHYTHM_PLAYER_ERROR_OK = 0,
+        /** 1: The rhythm player occurs a internal error. */
+        RHYTHM_PLAYER_ERROR_FAILED = 1,
+        /** 801: The rhythm player can not open the file. */
+        RHYTHM_PLAYER_ERROR_CAN_NOT_OPEN = 801,
+        /** 802: The rhythm player can not play the file. */
+        RHYTHM_PLAYER_ERROR_CAN_NOT_PLAY,
+        /** 803: The file duration over the limit. The file duration limit is 1.2 seconds */
+        RHYTHM_PLAYER_ERROR_FILE_OVER_DURATION_LIMIT,
+    };
+
+    /**
+    * @brief The information of the media stream object.
+    *
+    */
+    public class SrcInfo {
+        /** The bitrate of the media stream. The unit of the number is kbps.
+        *
+        */
+        public int bitrateInKbps;
+
+        /** The name of the media stream.
+        *
+        */
+        public string name;
+    };
+
+    /** Values when user trigger interface of opening
+    */
+    public class PlayerUpdatedInfo {
+        /** player_id has value when user trigger interface of opening
+        */
+        public string playerId;
+
+        /** device_id has value when user trigger interface of opening
+        */
+        public string deviceId;
+    };
+
+    public enum SEG_MODEL_TYPE {
+
+        SEG_MODEL_AI = 1, 
+        SEG_MODEL_GREEN = 2
+    };
+
+    public class SegmentationProperty {
+
+        public SEG_MODEL_TYPE modelType;
+
+        public int preferVelocity;
+        
+        public float greenCapacity;
+    };
+
+    /**
+    * The external video source type.
+    */
+    public enum EXTERNAL_VIDEO_SOURCE_TYPE {
+        /**
+        * 0: non-encoded video frame.
+        */
+        VIDEO_FRAME = 0,
+        /**
+        * 1: encoded video frame.
+        */
+        ENCODED_VIDEO_FRAME,
+    };
+
+    /** Media device states. */
+    public enum MEDIA_DEVICE_STATE_TYPE {
+        /** 1: The device is active.
+        */
+        MEDIA_DEVICE_STATE_ACTIVE = 1,
+        /** 2: The device is disabled.
+        */
+        MEDIA_DEVICE_STATE_DISABLED = 2,
+        /** 4: The device is not present.
+        */
+        MEDIA_DEVICE_STATE_NOT_PRESENT = 4,
+        /** 8: The device is unplugged.
+        */
+        MEDIA_DEVICE_STATE_UNPLUGGED = 8
+    };
+
+    /** The video stream lifecycle of CDN Live.
+    */
+    public enum RTMP_STREAM_LIFE_CYCLE_TYPE {
+        /** Bound to the channel lifecycle.
+        */
+        RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL = 1,
+        /** Bound to the owner identity of the RTMP stream.
+        */
+        RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
     };
 }

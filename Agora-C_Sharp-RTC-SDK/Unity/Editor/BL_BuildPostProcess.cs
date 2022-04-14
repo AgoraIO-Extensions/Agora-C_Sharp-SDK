@@ -1,32 +1,3 @@
-#if UNITY_STANDALONE_WIN
-using System.IO;
-using UnityEditor;
-
-public class BL_BuildPostProcess
-{
-    [UnityEditor.Callbacks.PostProcessBuild(999)]
-    public static void OnPostprocessBuild(UnityEditor.BuildTarget BuildTarget, string path)
-    {
-        var arch = BuildTarget == BuildTarget.StandaloneWindows64 ? "x86_64/" : "x86/";
-        var exeName = "AgoraRtcScreenSharing.exe";
-        var strPathFrom = UnityEngine.Application.dataPath + "/Agora-Plugin/Agora-Unity-RTC-SDK/Plugins/" + arch + exeName;
-        UnityEngine.Debug.LogFormat("src path: {0}", strPathFrom);
-        var nIdxSlash = path.LastIndexOf('/');
-        var nIdxDot = path.LastIndexOf('.');
-        var strRootTarget = path.Substring(0, nIdxSlash);
-        var strPluginsTarget = strRootTarget + path.Substring(nIdxSlash, nIdxDot - nIdxSlash) + "_Data/Plugins/";
-        var strPathTargetFile = File.Exists(strPluginsTarget + arch)
-            ? strPluginsTarget + arch + exeName
-            : strPluginsTarget + exeName;
-        var strPathTargetFileBackup = strPluginsTarget + arch + exeName;
-        File.Copy(strPathFrom, strPathTargetFile);
-        File.Copy(strPathFrom, strPathTargetFileBackup);
-        UnityEngine.Debug.Log("Copy " + strPathFrom + " to " + strPathTargetFile);
-        UnityEngine.Debug.Log("Copy " + strPathFrom + " to " + strPathTargetFileBackup);
-    }
-}
-#endif
-
 #if UNITY_IPHONE || UNITY_STANDALONE_OSX
 using System.IO;
 using UnityEditor;
@@ -99,24 +70,49 @@ public class BL_BuildPostProcess
         const string AgoraRtcWrapperFrameworkName = "AgoraRtcWrapper.framework";
         const string AgoraRtcKitFrameworkName = "AgoraRtcKit.framework";
         const string AgoraffmpegFrameworkName = "Agoraffmpeg.framework";
-        const string AgoraVideoProcessFrameworkName = "AgoraVideoProcess.framework"
+        const string AgoraVideoProcessFrameworkName = "AgoraVideoProcessExtension.framework";
+        const string AgoraPvcExtensionFrameworkName = "AgoraPvcExtension.framework";
+        const string AgoraRtcCryptoLoaderFrameworkName = "AgoraRtcCryptoLoader.framework";
+        const string AgoraRtmKitFrameworkName = "AgoraRtmKit.framework";
+        const string AgoraVideoSegmentationExtensionFrameworkName = "AgoraVideoSegmentationExtension.framework";
+        const string BeQuicFrameworkName = "BeQuic.framework";
+        const string AgoraRtmLoaderFramework = "AgoraRtmLoader.framework";
 
 
         string AgoraRtcWrapperFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcWrapperFrameworkName);
         string AgoraRtcKitFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcKitFrameworkName);
         string AgoraffmpegFrameworkPath = Path.Combine(defaultLocationInProj, AgoraffmpegFrameworkName);
         string AgoraVideoProcessPath = Path.Combine(defaultLocationInProj, AgoraVideoProcessFrameworkName);
+        string AgoraPvcExtensionPath = Path.Combine(defaultLocationInProj, AgoraPvcExtensionFrameworkName);
+        string AgoraRtcCryptoLoaderPath = Path.Combine(defaultLocationInProj, AgoraRtcCryptoLoaderFrameworkName);
+        string AgoraRtmKitPath = Path.Combine(defaultLocationInProj, AgoraRtmKitFrameworkName);
+        string AgoraVideoSegmentationExtensionPath = Path.Combine(defaultLocationInProj, AgoraVideoSegmentationExtensionFrameworkName);
+        string BeQuicPath = Path.Combine(defaultLocationInProj, BeQuicFrameworkName);
+        string AgoraRtmLoaderPath = Path.Combine(defaultLocationInProj, AgoraRtmLoaderFramework); ;
 
 
         string fileGuid = proj.AddFile(AgoraRtcWrapperFrameworkPath, "Frameworks/" + AgoraRtcWrapperFrameworkPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
         fileGuid = proj.AddFile(AgoraRtcKitFrameworkPath, "Frameworks/" + AgoraRtcKitFrameworkPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+        fileGuid = proj.AddFile(AgoraPvcExtensionPath, "Frameworks/" + AgoraPvcExtensionPath, PBXSourceTree.Sdk);
+        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+        fileGuid = proj.AddFile(AgoraRtcCryptoLoaderPath, "Frameworks/" + AgoraRtcCryptoLoaderPath, PBXSourceTree.Sdk);
+        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+        fileGuid = proj.AddFile(AgoraRtmKitPath, "Frameworks/" + AgoraRtmKitPath, PBXSourceTree.Sdk);
+        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+        fileGuid = proj.AddFile(BeQuicPath, "Frameworks/" + BeQuicPath, PBXSourceTree.Sdk);
+        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+        fileGuid = proj.AddFile(AgoraRtmLoaderPath, "Frameworks/" + AgoraRtmLoaderPath, PBXSourceTree.Sdk);
+        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+
 
         // Start Tag for video SDK only (If the framework is video only, please place it inside the scope)
         fileGuid = proj.AddFile(AgoraffmpegFrameworkPath, "Frameworks/" + AgoraffmpegFrameworkPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
         fileGuid = proj.AddFile(AgoraVideoProcessPath, "Frameworks/" + AgoraVideoProcessPath, PBXSourceTree.Sdk);
+        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+        fileGuid = proj.AddFile(AgoraVideoSegmentationExtensionPath, "Frameworks/" + AgoraVideoSegmentationExtensionPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
         // End Tag
 
