@@ -491,6 +491,10 @@ namespace agora.rtc
         ERR_LICENSE_CREDENTIAL_INVALID = 131,
 
         // Licensing, keep the license error code same as the main version
+        /**
+        * 134: The user account is invalid, usually because the data format of the user account is incorrect.
+        */
+        ERR_INVALID_USER_ACCOUNT = 134,
         ERR_CERT_RAW = 157,
         ERR_CERT_JSON_PART = 158,
         ERR_CERT_JSON_INVAL = 159,
@@ -2249,7 +2253,7 @@ namespace agora.rtc
 
         public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay,
             int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime,
-            int frozenRate, int mosValue, int totalActiveTime, int publishDuration)
+            int frozenRate, int mosValue, int totalActiveTime, int publishDuration, int qoeQuality)
         {
             this.uid = uid;
             this.quality = quality;
@@ -2264,6 +2268,7 @@ namespace agora.rtc
             this.mosValue = mosValue;
             this.totalActiveTime = totalActiveTime;
             this.publishDuration = publishDuration;
+            this.qoeQuality = qoeQuality;
         }
 
         /** User ID of the remote user sending the audio streams.
@@ -2321,6 +2326,10 @@ namespace agora.rtc
         * The total publish duration (ms) of the remote audio stream.
         */
         public int publishDuration { set; get; }
+        /**
+        * Quality of experience (QoE) of the local user when receiving a remote audio stream. See #EXPERIENCE_QUALITY_TYPE.
+        */
+        public int qoeQuality { set; get; }
     }
 
     /**
@@ -2417,15 +2426,13 @@ namespace agora.rtc
             width = (int) FRAME_WIDTH.FRAME_WIDTH_640;
             height = (int) FRAME_HEIGHT.FRAME_HEIGHT_360;
             fps = (int) FRAME_RATE.FRAME_RATE_FPS_15;
-            pixelFormat = 0;
         }
 
-        public VideoFormat(int w, int h, int f, uint pixelFormat = 0)
+        public VideoFormat(int w, int h, int f)
         {
             this.width = w;
             this.height = h;
             this.fps = f;
-            this.pixelFormat = pixelFormat;
         }
         /**
         * The width (px) of the video.
@@ -2439,10 +2446,6 @@ namespace agora.rtc
         * The video frame rate (fps).
         */
         public int fps { set; get; }
-        /*
-        * Pixel format (for iOS only). 
-        */
-        public uint pixelFormat { set; get; }
     };
 
     /**
@@ -2564,15 +2567,25 @@ namespace agora.rtc
         /** 5: The local video encoding fails. */
         LOCAL_VIDEO_STREAM_ERROR_ENCODE_FAILURE = 5,
         /** 6: The local video capturing device not avalible due to app did enter background.*/
-        LOCAL_VIDEO_STREAM_ERROR_BACKGROUD = 6,
+        LOCAL_VIDEO_STREAM_ERROR_CAPTURE_INBACKGROUND = 6,
         /** 7: The local video capturing device not avalible because the app is running in a multi-app layout (generally on the pad) */
-        LOCAL_VIDEO_STREAM_ERROR_MULTIPLE_FOREGROUND_APPS = 7,
+        LOCAL_VIDEO_STREAM_ERROR_CAPTURE_MULTIPLE_FOREGROUND_APPS = 7,
         /** 8: The local video capturing device  temporarily being made unavailable due to system pressure. */
-        LOCAL_VIDEO_STREAM_ERROR_SYSTEM_PRESSURE = 8,
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_NOT_FOUND = 8,
+        /** 9: The local capture device is disconnected */
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_DISCONNECTED = 9,
+        /** 10:The local captue device id is invalid, for Windows and Mac only */
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_INVALID_ID = 10,
+        /** 101: The local video capturing device temporarily being made unavailable due to system pressure. */
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_SYSTEM_PRESSURE = 101,
         /** 11: The local screen capture window is minimized. */
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
         /** 12: The local screen capture window is closed. */
-        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_CLOSED = 12
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_CLOSED = 12,
+        /** 13: The local screen capture window is occluded. */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_OCCLUDED = 13,
+        /** 20: The local screen capture window is not supported. */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
     };
 
     /**
@@ -2950,6 +2963,10 @@ namespace agora.rtc
         * 1: HE-AAC, which is the high-efficiency audio codec type.
         */
         AUDIO_CODEC_PROFILE_HE_AAC = 1,
+        /**
+        *  2: HE-AACv2, which is the high-efficiency audio codec type. 
+        */
+        AUDIO_CODEC_PROFILE_HE_AAC_V2 = 2,
     };
 
     /** Audio statistics of the local user */
@@ -2959,12 +2976,13 @@ namespace agora.rtc
         {
         }
 
-        public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec)
+        public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec, ushort txPacketLossRate)
         {
             this.numChannels = numChannels;
             this.sentSampleRate = sentSampleRate;
             this.sentBitrate = sentBitrate;
             this.internalCodec = internalCodec;
+            this.txPacketLossRate = txPacketLossRate;
         }
 
         /** The number of channels.
@@ -2982,6 +3000,10 @@ namespace agora.rtc
         /** The audio packet loss rate (%) from the local client to the Agora edge server before applying the anti-packet loss strategies.
 		 */
         public int internalCodec { set; get; }
+        /**
+        * The audio packet loss rate (%) from the local client to the Agora edge server before applying the anti-packet loss strategies.
+        */
+        public ushort txPacketLossRate { set; get; }
     }
 
     /**
@@ -3026,7 +3048,7 @@ namespace agora.rtc
     /**
     * Error codes of the RTMP streaming.
     */
-    public enum RTMP_STREAM_PUBLISH_ERROR {
+    public enum RTMP_STREAM_PUBLISH_ERROR_TYPE {
         /**
         * -1: The RTMP streaming fails.
         */
@@ -3079,15 +3101,14 @@ namespace agora.rtc
         * 10: The format of the RTMP streaming URL is not supported. Check whether the URL format is correct.
         */
         RTMP_STREAM_PUBLISH_ERROR_FORMAT_NOT_SUPPORTED = 10,
-        /**
-        * 11: CDN related errors. Remove the original URL address and add a new one by calling
-        * `removePublishStreamUrl` and `addPublishStreamUrl`.
-        */
-        RTMP_STREAM_PUBLISH_ERROR_CDN_ERROR = 11,
-        /**
-        * 12: Resources are occupied and cannot be reused.
-        */
-        RTMP_STREAM_PUBLISH_ERROR_ALREADY_IN_USE = 12,
+        /** Current role is not broadcaster. Check whether the role of the current channel. */
+        RTMP_STREAM_PUBLISH_ERROR_NOT_BROADCASTER = 11,  // Note: match to ERR_PUBLISH_STREAM_NOT_BROADCASTER in AgoraBase.h
+        /** Call updateTranscoding, but no mix stream. */
+        RTMP_STREAM_PUBLISH_ERROR_TRANSCODING_NO_MIX_STREAM = 13,  // Note: match to ERR_PUBLISH_STREAM_TRANSCODING_NO_MIX_STREAM in AgoraBase.h
+        /** Network error. */
+        RTMP_STREAM_PUBLISH_ERROR_NET_DOWN = 14,  // Note: match to ERR_NET_DOWN in AgoraBase.h
+        /** User AppId have not authorized to push stream. */
+        RTMP_STREAM_PUBLISH_ERROR_INVALID_APPID = 15, 
     };
 
     /** Image properties.
@@ -5180,7 +5201,7 @@ namespace agora.rtc
         public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int encoderOutputFrameRate,
             int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication,
             int encodedBitrate, int encodedFrameWidth,int encodedFrameHeight, int encodedFrameCount, 
-            VIDEO_CODEC_TYPE codecType)
+            VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate)
         {
             this.uid = uid;
             this.sentBitrate = sentBitrate;
@@ -5195,6 +5216,7 @@ namespace agora.rtc
             this.encodedFrameHeight = encodedFrameHeight;
             this.encodedFrameCount = encodedFrameCount;
             this.codecType = codecType;
+            this.txPacketLossRate = txPacketLossRate;
         }
 
         /**
@@ -5256,6 +5278,11 @@ namespace agora.rtc
 		 * - VIDEO_CODEC_H264 = 2: (Default) H.264.
 		 */
         public VIDEO_CODEC_TYPE codecType { set; get; }
+
+        /**
+        * The video packet loss rate (%) from the local client to the Agora edge server before applying the anti-packet loss strategies.
+        */
+        public ushort txPacketLossRate { set; get; }
     }
 
     /** Statistics of the remote video stream.
@@ -5269,7 +5296,7 @@ namespace agora.rtc
         public RemoteVideoStats(uint uid, int delay, int width, int height, int receivedBitrate,
             int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate,
             VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime,
-            int publishDuration)
+            int publishDuration, int superResolutionType)
         {
             this.uid = uid;
             this.delay = delay;
@@ -5286,6 +5313,7 @@ namespace agora.rtc
             this.avSyncTimeMs = avSyncTimeMs;
             this.totalActiveTime = totalActiveTime;
             this.totalFrozenTime = totalFrozenTime;
+            this.superResolutionType = superResolutionType;
         }
 
         /**
@@ -5362,6 +5390,11 @@ namespace agora.rtc
         * The total publish duration (ms) of the remote audio stream.
         */
         public int publishDuration { set; get; }
+
+        /**
+        * The SuperResolution stats. 0 is not ok. >0 is ok. 
+        */
+        public int superResolutionType { set; get; }
     }
 
     /** Configuration of the injected media stream.
@@ -5764,6 +5797,13 @@ namespace agora.rtc
         * - false: (Default) do not subscribe to any video stream automatically.
         */
         public bool autoSubscribeVideo { set; get; }
+
+        /**
+        * Determines whether to start preview when join channel if canvas have been set.
+        * - true: (Default) start preview when join channel.
+        * - false: Do not start preview.
+        */
+        public bool startPreview { set; get; }
         /**
         * Determines whether to enable audio recording or playout.
         * - true: It's used to publish audio and mix microphone, or subscribe audio and playout
@@ -5817,26 +5857,20 @@ namespace agora.rtc
         * - false: Do not publish the sound of the rhythm player.
         */
         public bool publishRhythmPlayerTrack { set; get; }
-        /**
-        * This mode is only used for audience. In PK mode, client might join one
-        * channel as broadcaster, and join another channel as interactive audience to
-        * achieve low lentancy and smooth video from remote user.
-        * - true: Enable low lentancy and smooth video when joining as an audience.
-        * - false: (Default) Use default settings for audience role.
-        */
-        public bool isInteractiveAudience { set; get; }
-        /**
-        * The sender option for video encoded track.
-        */
-        public EncodedVideoTrackOptions encodedVideoTrackOption { set; get; }
 
-        public AudioOptionsAdvanced audioOptionsAdvanced { set; get; }
+        public AudioOptionsExternal audioOptionsExternal { set; get; }
     };
 
-    public class AudioOptionsAdvanced {
+    public class AudioOptionsExternal {
         public bool enable_aec_external_custom_ { set; get; }
 
         public bool enable_aec_external_loopback_ { set; get; }
+
+        public bool enable_agc_external_custom_  { set; get; }
+
+        public bool enable_ans_external_custom_  { set; get; }
+
+        public bool aec_aggressiveness_external_custom_  { set; get; }
     }
 
     /**
@@ -6648,5 +6682,78 @@ namespace agora.rtc
         /** Bound to the owner identity of the RTMP stream.
         */
         RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
+    };
+
+    /** The cloud proxy type.
+    *
+    * @since v3.3.0
+    */
+    public enum CLOUD_PROXY_TYPE {
+        /** 0: Do not use the cloud proxy.
+        */
+        NONE_PROXY = 0,
+        /** 1: The cloud proxy for the UDP protocol.
+        */
+        UDP_PROXY = 1,
+        /// @cond
+        /** 2: The cloud proxy for the TCP (encrypted) protocol.
+        */
+        TCP_PROXY = 2,
+        /// @endcond
+    };
+
+    /** The local  proxy mode type. */
+    public enum LOCAL_PROXY_MODE {
+        /** 0: Connect local proxy with high priority, if not connected to local proxy, fallback to sdrtn.
+        */
+        kConnectivityFirst = 0,
+        /** 1: Only connect local proxy
+        */
+        kLocalOnly = 1,
+    };
+
+    public struct LocalAccessPointConfiguration {
+        /** local access point ip address list.
+        */
+        public string[] ipList;
+        /** the number of local access point ip address.
+        */
+        public int ipListSize;
+        /** local access point domain list.
+        */
+        public string[] domainList;
+        /** the number of local access point domain.
+        */
+        public int domainListSize;
+        /** certificate domain name installed on specific local access point. pass "" means using sni domain on specific local access point
+        */
+        public string verifyDomainName;
+        /** local proxy connection mode, connectivity first or local only.
+        */
+        public LOCAL_PROXY_MODE mode;
+    };
+
+    public enum AUDIO_PROCESSING_CHANNELS {
+        AUDIO_PROCESSING_MONO = 1,
+        AUDIO_PROCESSING_STEREO = 2,
+    };
+
+    public struct AdvancedAudioOptions {
+        public AUDIO_PROCESSING_CHANNELS audioProcessingChannels;
+    };
+
+    /**
+    * The detailed information of the incoming audio encoded frame.
+    */
+
+    public struct AudioEncodedFrameInfo {
+        /**
+        * The send time of the packet.
+        */
+        public uint64_t sendTs;
+        /**
+        * The codec of the packet.
+        */
+        public Byte codec;
     };
 }

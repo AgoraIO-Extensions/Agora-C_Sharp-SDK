@@ -580,6 +580,32 @@ namespace agora.rtc
         public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
 
         public abstract int PushDirectAudioFrame(AudioFrame frame);
+
+        public abstract int SetCloudProxy(CLOUD_PROXY_TYPE proxyType);
+
+        public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
+
+        public abstract int EnableFishCorrection(bool enabled, FishCorrectionParams @params);
+
+        public abstract int SetAdvancedAudioOptions(AdvancedAudioOptions options);
+
+        public abstract int SetAVSyncSource(string channelId, uint uid);
+
+        public abstract int StartRtmpStreamWithoutTranscoding(string url);
+
+        public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
+
+        public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
+
+        public abstract int StopRtmpStream(string url);
+
+        public abstract int GetUserInfoByUserAccountEx(string userAccount, out UserInfo userInfo, RtcConnection connection);
+
+        public abstract int GetUserInfoByUidEx(uint uid, out UserInfo userInfo, RtcConnection connection);
+
+        public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
+
+        public abstract int SetContentInspect(ContentInspectConfig config);
     };
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -696,7 +722,7 @@ namespace agora.rtc
 
         public virtual void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted) {}
 
-        public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR errCode) {}
+        public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode) {}
 
         public virtual void OnStreamPublished(string url, int error) {}
 
@@ -757,6 +783,8 @@ namespace agora.rtc
         // public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) {}
 
         public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) {}
+
+        public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode) {}
     };
 
     internal static partial class ObsoleteMethodWarning
