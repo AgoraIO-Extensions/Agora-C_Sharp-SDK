@@ -6764,6 +6764,6 @@ namespace agora.rtc
         public float _focal_length;
         public float _pol_focal_length;
         public float _split_height;
-        public float[5] _ss;
+        public float[] _ss;
     };
 }
