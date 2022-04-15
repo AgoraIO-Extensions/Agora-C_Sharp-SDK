@@ -6756,4 +6756,14 @@ namespace agora.rtc
         */
         public Byte codec;
     };
+
+    public struct FishCorrectionParams {
+        public float _x_center;
+        public float _y_center;
+        public float _scale_factor;
+        public float _focal_length;
+        public float _pol_focal_length;
+        public float _split_height;
+        public float[5] _ss;
+    };
 }
