@@ -233,7 +233,8 @@ namespace agora.rtc
         kEngineEnableWirelessAccelerate = 204,
         kEngineMediaRecorderStart = 205,
         kEngineMediaRecorderStop = 206,
-        kEngineMediaRecorderRelease = 207,
+        kEngineGetScreenCaptureSource = 207,
+        kEngineScreenCaptureSourcesRelease = 208,
     }
 
 

@@ -2873,7 +2873,53 @@ namespace agora.rtc
                 ApiTypeEngine.kEngineMediaRecorderStop, JsonMapper.ToJson(param),
                 out _result);
         }
+        public override int GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen, out ScreenCaptureSourceInfo[] screen_capture_source_info)
+        {
+            var param = new
+            {
+                thumbSize,
+                iconSize,
+                includeScreen
+            };
+            string str = JsonMapper.ToJson(param);
+            int count = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineGetScreenCaptureSources,
+                JsonMapper.ToJson(param), out _result);
 
+            if (count > 0)
+            {
+                screen_capture_source_info = new ScreenCaptureSourceInfo[count];
+                for (int index = 0; index < count; ++index)
+                {
+                    CharAssistant result = new CharAssistant();
+                    var param1 = new
+                    {
+                        index
+                    };
+                    AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                    ApiTypeEngine.kEngineGetScreenCaptureSource,
+                    JsonMapper.ToJson(param1), out result);
+                    string str1 = result.Result;
+                    if (result.Result.Length > 0)
+                    {
+                        screen_capture_source_info[index] = new ScreenCaptureSourceInfo();
+                        screen_capture_source_info[index] = AgoraJson.JsonToStruct<ScreenCaptureSourceInfo>(result.Result);
+                        screen_capture_source_info[index].thumbImage = new ThumbImageBuffer();
+                        screen_capture_source_info[index].iconImage = new ThumbImageBuffer();
+                        screen_capture_source_info[index].thumbImage.buffer = new byte[screen_capture_source_info[index].thumbImage.length];
+                        screen_capture_source_info[index].iconImage.buffer = new byte[screen_capture_source_info[index].iconImage.length];
+                    }
+                }
+            }
+            else
+                screen_capture_source_info = new ScreenCaptureSourceInfo[0];
+            //  screen_capture_source_info = _result.Result.Length == 0 ? new ScreenCaptureSourceInfo[1] : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfo>(_result.Result);
+            var param2 = new { };
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineScreenCaptureSourcesRelease,
+                JsonMapper.ToJson(param2), out _result);
+            return ret;
+        }
         ~AgoraRtcEngine()
         {
             Dispose(false, false);
@@ -5837,6 +5883,28 @@ namespace agora.rtc
                     });
 #endif
                     break;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#else
+                case "onScreenCaptureSourceThumbImage":
+
+                    if (EngineEventHandlerArr[0] != null)
+                    {
+                        ulong sourceId = (ulong)AgoraJson.GetData<ulong>(data, "sourceId");
+                        EngineEventHandlerArr[0].onScreenCaptureSourceThumbImage(
+                            sourceId, byteData, length);
+                    }
+                    break;
+
+                case "onScreenCaptureSourceIconImage":
+
+                    if (EngineEventHandlerArr[0] != null)
+                    {
+                        EngineEventHandlerArr[0].onScreenCaptureSourceIconImage(
+                            (ulong)AgoraJson.GetData<ulong>(data, "sourceId"), byteData, length);
+                    }
+
+                    break;
+#endif
             }
         }
     }

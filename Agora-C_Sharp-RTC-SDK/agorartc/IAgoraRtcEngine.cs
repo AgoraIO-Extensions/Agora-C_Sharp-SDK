@@ -353,6 +353,7 @@ namespace agora.rtc
         public abstract int EnableWirelessAccelerate(bool enabled);
         public abstract int StartRecording(MediaRecorderConfiguration config);
         public abstract int StopRecording();
+        public abstract int GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen, out ScreenCaptureSourceInfo[] screen_capture_source_info);
     }
 
     public abstract class IAgoraRtcEngineEventHandler
@@ -787,6 +788,16 @@ namespace agora.rtc
 
         public virtual void OnRecorderInfoUpdated(RecorderInfo info)
         {
+        }
+
+        public virtual void onScreenCaptureSourceThumbImage(ulong sourceId, byte[] data, uint length)
+        {
+
+        }
+
+        public virtual void onScreenCaptureSourceIconImage(ulong sourceId, byte[] data, uint length)
+        {
+
         }
     }
 

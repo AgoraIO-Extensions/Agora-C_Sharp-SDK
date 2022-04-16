@@ -1178,6 +1178,14 @@ namespace agora.rtc
         /** 8:capture not found*/
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_NOT_FOUND = 8,
 
+        /**
+       * 10: (macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID
+       * of the video device is valid.
+       *
+       * @since v3.5.2
+       */
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_INVALID_ID = 10,
+
         /** 11: The shared window is minimized when you call \ref IRtcEngine::startScreenCaptureByWindowId "startScreenCaptureByWindowId" to share a window.
      */
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
@@ -1195,6 +1203,20 @@ namespace agora.rtc
      * the web video or document. After the user exits full-screen mode, the SDK reports this error code.
      */
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_CLOSED = 12,
+
+        /**
+      * 13: (Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by
+      * the SDK during window sharing.
+      *
+      * @since v3.5.2
+      */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_OCCLUDED = 13,
+        /**
+         * 20: (Windows only) The SDK does not support sharing this type of window.
+         *
+         * @since v3.5.2
+         */
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
     }
 
     /** Local audio state types.
@@ -1254,6 +1276,11 @@ namespace agora.rtc
         /** 7: No playout audio device.
    */
         LOCAL_AUDIO_STREAM_ERROR_NO_PLAYOUT_DEVICE = 7,
+
+        /**
+     * 8: The local audio capturing is interrupted by the system call.
+     */
+        LOCAL_AUDIO_STREAM_ERROR_INTERRUPTED = 8,
 
         LOCAL_AUDIO_STREAM_ERROR_RECORD_INVALID_ID = 9,
 
@@ -6505,7 +6532,129 @@ Sets the sample rate, bitrate, encoding mode, and the number of channels:*/
       public LOCAL_PROXY_MODE mode;
    };
 
-   public enum AgoraEngineType
+    public enum ScreenCaptureSourceType
+    {
+        /**
+         * -1: Unknown type.
+         */
+        ScreenCaptureSourceType_Unknown = -1,
+        /**
+         * 0: The shared target is a window.
+         */
+        ScreenCaptureSourceType_Window = 0,
+        /**
+         * 1: The shared target is a screen of a particular monitor.
+         */
+        ScreenCaptureSourceType_Screen = 1,
+        /**
+         * 2: Reserved parameter.
+         */
+        ScreenCaptureSourceType_Custom = 2,
+    };
+    public class SIZE
+    {
+        public long cx;
+        public long cy;
+
+        public SIZE()
+        {
+
+        }
+        public SIZE(long cx, long cy)
+        {
+            this.cx = cx;
+            this.cy = cy;
+        }
+    };
+    public class ThumbImageBuffer
+    {
+        /**
+         * The buffer of the thumbnail or icon.
+         */
+        public byte[] buffer { set; get; } //data buffer
+        /**
+         * The buffer length (bytes) of the thumbnail or icon.
+         */
+        public uint length;
+        /**
+         * The actual width (px) of the thumbnail or icon.
+         */
+        public uint width;
+        /**
+         * The actual height (px) of the thumbnail or icon.
+         */
+        public uint height;
+        public ThumbImageBuffer()
+        {
+
+        }
+        public ThumbImageBuffer(byte[] buffer, uint length, uint width, uint height)
+        {
+            this.buffer = buffer;
+            this.length = length;
+            this.width = width;
+            this.height = height;
+        }
+    };
+    public class ScreenCaptureSourceInfo
+    {
+        /**
+         * The type of the shared target. See \ref agora::rtc::ScreenCaptureSourceType "ScreenCaptureSourceType".
+         */
+        public ScreenCaptureSourceType type { set; get; }
+        /**
+         * The window ID for a window or the display ID for a screen.
+         */
+        public view_t sourceId { set; get; }
+
+        /**
+         * The name of the window or screen. UTF-8 encoding.
+         */
+        public string sourceName { set; get; }
+        /**
+         * The image content of the thumbnail. See ThumbImageBuffer.
+         */
+        public ThumbImageBuffer thumbImage;
+        /**
+         * The image content of the icon. See ThumbImageBuffer.
+         */
+        public ThumbImageBuffer iconImage;
+        /**
+         * The process to which the window belongs. UTF-8 encoding.
+         */
+        public string processPath { set; get; }
+        /**
+         * The title of the window. UTF-8 encoding.
+         */
+        public string sourceTitle { set; get; }
+        /**
+         * Determines whether the screen is the primary display:
+         * - true: The screen is the primary display.
+         * - false: The screen is not the primary display.
+         */
+        public bool primaryMonitor { set; get; }
+
+        public ScreenCaptureSourceInfo()
+        {
+
+        }
+        public ScreenCaptureSourceInfo(ScreenCaptureSourceType type, view_t sourceId, string sourceName,
+            ThumbImageBuffer thumbImage, ThumbImageBuffer iconImage, string processPath, string sourceTitle, bool primaryMonitor)
+        {
+            this.type = type;
+            this.sourceId = sourceId;
+            this.sourceName = sourceName;
+
+            this.thumbImage = thumbImage;
+            this.iconImage = iconImage;
+            this.processPath = processPath;
+            this.sourceTitle = sourceTitle;
+            this.primaryMonitor = primaryMonitor;
+        }
+        //  type(ScreenCaptureSourceType_Unknown), sourceId(nullptr), sourceName(nullptr), processPath(nullptr), sourceTitle(nullptr), primaryMonitor(false) { }
+    };
+
+    public enum AgoraEngineType
    {
       MainProcess,
       SubProcess
