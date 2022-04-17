@@ -785,6 +785,16 @@ namespace agora.rtc
         /** 1603: Video Device Module: An error occurs in setting the video encoder.
          */
         ERR_VCM_ENCODER_SET_ERROR = 1603,
+
+        /** 1735: (Windows only) The Windows Audio service is disabled. You need to
+         * either enable the Windows Audio service or restart the device.
+         *
+         * @since v3.5.0
+         */
+        ERR_ADM_WIN_CORE_SERVRE_SHUT_DOWN = 1735,
+        /** 1736: screen share do not support to exclude window on muti gpu.
+         */
+        ERR_NOT_SUPPORTED_MUTI_GPU_EXCLUDE_WINDOW = 1736,
     }
 
     /** Output log filter level. */
