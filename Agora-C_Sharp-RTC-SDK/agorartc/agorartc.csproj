@@ -8,7 +8,7 @@
     <Win32Resource />
     <Company>Agora.io</Company>
     <Copyright>Agora.io Copyright (C) 2021</Copyright>
-    <Version>3.5.2</Version>
+    <Version>3.6.2.246</Version>
     <Description>Agora Live Interactive Video Streaming enables one-to-many and many-to-many audio or video live streaming with the Agora RTC SDK.
 
 Agora Live Interactive Video Streaming is different from [Agora Video Call](https://docs.agora.io/en/Interactive Broadcast/product_live). In a video call, all users are the same role and can talk to each other freely. In a live video streaming, users can be the host or audience, where only the host can talk. For details, see this [FAQ](https://docs.agora.io/en/faq/profile_difference).
@@ -18,7 +18,7 @@ Different from the traditional CDN live broadcast, which only allows one-way com
 The Agora RTC SDK is applicable to scenarios that encourage active engagement, such as game-playing, online classes for students in small groups, and Q&amp;amp;A sessions during E-commerce live streaming. You can also use this SDK for one-to-one video calls that require high image quality.
 
 **For more detail information, please visit our [website](https://docs.agora.io/en/Interactive Broadcast/product_live?platform=All Platforms) and [GitHub repository](https://github.com/AgoraIO-Community/Agora-Python-SDK); and for some quick-start demos, please visit [Agora-Python-QuickStart](https://github.com/AgoraIO-Community/Agora-Python-QuickStart).**</Description>
-    <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/release/3.5.2</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/dev/3.6.2.246</PackageProjectUrl>
     <PackageId>agora_rtc_sdk</PackageId>
   </PropertyGroup>
 
