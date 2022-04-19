@@ -41,9 +41,9 @@
         <OutputPath>binx64\Release</OutputPath>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
-    </ItemGroup>
+    <Reference Include="agorartc">
+        <HintPath>..\libs\agorartc.dll</HintPath>
+    </Reference>
 
     <ItemGroup>
       <Compile Update="Properties\Resources.Designer.cs">
@@ -62,7 +62,7 @@
       <Exec Command="if not exist &quot;$(TargetDir)API_Example.ini&quot;  (&#xD;&#xA;        Copy &quot;$(SolutionDir)\res\config\*.*&quot; &quot;$(TargetDir)&quot;)&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;if not exist %25$(TargetDir)agora_rtc_sdk.dll%25  (&#xD;&#xA;    if exist &quot;$(SolutionDir)..\libs&quot; (&#xD;&#xA;        if  &quot;$(Platform)&quot; == &quot;x64&quot; (&#xD;&#xA;            copy &quot;$(SolutionDir)..\libs\x86_64\*.*&quot; &quot;$(TargetDir)&quot;)&#xD;&#xA;        ) else (&#xD;&#xA;            copy &quot;$(SolutionDir)..\libs\x86\*.*&quot; &quot;$(TargetDir)&quot;)&#xD;&#xA;        )&#xD;&#xA;    )&#xD;&#xA;)" />
     </Target>
     <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-      <Exec Command="powershell.exe -command ^&#xD;&#xA;  &quot;&amp; {set-executionpolicy Remotesigned -Scope Process; ./'downloadsdk.ps1' '%251'}&quot;&#xD;&#xA;&#xD;&#xA;if $(Platform) == 'x64'  (&#xD;&#xA;      if exist ..\libs\netCore\x86_x64\agorartc.dll (&#xD;&#xA;          copy ..\libs\netCore\x86_x64\agorartc.dll  ..\libs\&#xD;&#xA;      )&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;if $(Platform) == 'x86'  (&#xD;&#xA;      if exist ..\libs\netCore\x86\agorartc.dll (&#xD;&#xA;          copy ..\libs\netCore\x86\agorartc.dll  ..\libs\&#xD;&#xA;      )&#xD;&#xA;)" />
+      <Exec Command="if not exist ..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj (&#xD;&#xA;    set $(ExampleReference) = DllReference&#xD;&#xA;)else(&#xD;&#xA;    set $(ExampleReference) = ProjectReference&#xD;&#xA;)" />
     </Target>
 
 </Project>

@@ -255,7 +255,7 @@ rmdir /q /s %CURDIR%\agorartc\obj
 ::xcopy /s %CURDIR%\agorartc\* %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
 ::powershell -command "cp -r %CURDIR%/agorartc.sln %CURDIR%/Agora_C#_SDK/agorartc"
 xcopy /s %CURDIR%\..\..\CSharp-API_Example\* %CURDIR%\Agora_C#_SDK\CSharp-API_Example
-::powershell -command "cp -r %CURDIR%/../../CSharp-API_Example/CSharp-API_Example.sln %CURDIR%/Agora_C#_SDK/CSharp-API_Example
+powershell -command "cp -r %CURDIR%/../../CSharp-API_Example/res/CSharp-API_Example.csproj %CURDIR%/Agora_C#_SDK/CSharp-API_Example
 if exist %CURDIR%\Agora_C#_SDK\CSharp-API_Example\binx64 (
     rmdir /q /s %CURDIR%\Agora_C#_SDK\CSharp-API_Example\binx64
 )
