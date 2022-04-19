@@ -177,6 +177,11 @@ namespace CSharp_API_Example
             UserInfo userInfo = new UserInfo();
             StringUid_inst_.GetEngine().GetUserInfoByUid(uid, out userInfo);
             Console.WriteLine("----->userjoined GetUserInfoByUid, uid={0}, userAccount={1}", uid, userInfo.userAccount);
+
+            if (StringUid_inst_.GetLocalWinId() == IntPtr.Zero) return;
+            var vc = new VideoCanvas((ulong)StringUid_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, StringUid_inst_.GetChannelId(), uid);
+            int ret = StringUid_inst_.GetEngine().SetupRemoteVideo(vc);
+            Console.WriteLine("----->SetupRemoteVideo, ret={0}", 0);
         }
 
         public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
@@ -198,11 +203,7 @@ namespace CSharp_API_Example
            REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
             Console.WriteLine("----->OnRemoteVideoStateChanged reason={0}, state = {1}", reason, state);
-            if (StringUid_inst_.GetLocalWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)StringUid_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, StringUid_inst_.GetChannelId(), 1000992650);
-            int ret = StringUid_inst_.GetEngine().SetupRemoteVideo(vc);
-            Console.WriteLine("----->SetupRemoteVideo, ret={0}", 0);
-
+         
             UserInfo userInfo = new UserInfo();
             StringUid_inst_.GetEngine().GetUserInfoByUid(uid, out userInfo);
             Console.WriteLine("----->userjoined GetUserInfoByUid, uid={0}, userAccount={1}", uid, userInfo.userAccount);

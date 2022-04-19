@@ -99,6 +99,7 @@ namespace CSharp_API_Example
             this.cmbRecordingDevices.Name = "cmbRecordingDevices";
             this.cmbRecordingDevices.Size = new System.Drawing.Size(234, 28);
             this.cmbRecordingDevices.TabIndex = 11;
+            this.cmbRecordingDevices.SelectedIndexChanged += new System.EventHandler(this.cmbRecordingDevices_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -117,6 +118,7 @@ namespace CSharp_API_Example
             this.cmbPlayback.Name = "cmbPlayback";
             this.cmbPlayback.Size = new System.Drawing.Size(234, 28);
             this.cmbPlayback.TabIndex = 13;
+            this.cmbPlayback.SelectedIndexChanged += new System.EventHandler(this.cmbPlayback_SelectedIndexChanged);
             // 
             // label4
             // 
