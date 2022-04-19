@@ -42,9 +42,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Reference Include="agorartc">
-        <HintPath>..\libs\x86_64\agorartc.dll</HintPath>
-      </Reference>
+      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
     </ItemGroup>
 
     <ItemGroup>
