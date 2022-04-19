@@ -87,6 +87,14 @@ namespace CSharp_API_Example
             {
                 deviceManagerView.InitDevices();
             }
+            else if (tabCtrl.SelectedTab == ChannelMediaRelayTag)
+            {
+                channelMediaRelayView.SetEnabled(true);
+            }
+            else if (tabCtrl.SelectedTab == VoiceChangerTag)
+            {
+                voiceChangerView.EnableCmbType(false);
+            }
         }
         
         private void JoinChannelClicked(object sender, EventArgs e)
@@ -109,6 +117,18 @@ namespace CSharp_API_Example
         {
             if (null != usr_engine_)
             {
+                if (tabCtrl.SelectedTab == VoiceChangerTag)
+                {
+                    voiceChangerView.EnableCmbType(true);
+                }
+                else if (tabCtrl.SelectedTab == RtmpStreamingTag)
+                {
+                    rtmpStreamingView.RemoveAllStreamUrl();
+                }
+                else if (tabCtrl.SelectedTab == SetLiveTranscodingTag)
+                {
+                    setLiveTranscodingView.RemoveAllStreamUrl();
+                }
                 int ret = usr_engine_.LeaveChannel();
                 DumpStatus("LeaveChannel", ret);
             }
@@ -185,6 +205,24 @@ namespace CSharp_API_Example
             {
                 usr_engine_ = new SetVideoEncoderConfiguration(setVideoEncoderConfigurationView.localVideoView.Handle, setVideoEncoderConfigurationView.remoteVideoView.Handle);
 
+            }
+            else if (tabCtrl.SelectedTab == VoiceChangerTag) // VoiceChanger
+            {
+                usr_engine_ = new VoiceChanger();
+                 
+            }
+            else if (tabCtrl.SelectedTab == ChannelMediaRelayTag) // ChannelMediaRelay
+            {
+                usr_engine_ = new ChannelMediaRelay(channelMediaRelayView.localVideoView.Handle, channelMediaRelayView.remoteVideoView.Handle);
+
+            }
+            else if (tabCtrl.SelectedTab == SendStreamMessageTag) // SendStreamMessage
+            {
+                usr_engine_ = new StreamMessage(sendStreamMessageView.localVideoView.Handle, sendStreamMessageView.remoteVideoView.Handle);
+            }
+            else if (tabCtrl.SelectedTab == StringUidTag) // stringUid
+            {
+                usr_engine_ = new StringUid(stringUidView.localVideoView.Handle, stringUidView.remoteVideoView.Handle);
             }
             else
             {

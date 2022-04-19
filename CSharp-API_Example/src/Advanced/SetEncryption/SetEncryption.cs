@@ -82,7 +82,7 @@ namespace CSharp_API_Example
                 CSharpForm.dump_handler_(SetEncryption_TAG + "EnableVideo", ret);
 
                 string encryptionKey = "01234567890123456789012345678912";
-                byte[] salt = { 0,1,2,3,4,5,6,7,8,9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2 };
+                byte[] salt = { 0,1,2,3, 4,5,6,7,8,9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2 };
                 ret = rtc_engine_.EnableEncryption(true, new EncryptionConfig(encrypt_mode_, encryptionKey, salt));
                 CSharpForm.dump_handler_(SetEncryption_TAG + "EnableEncryption", ret);
                 CSharpForm.dump_handler_(SetEncryption_TAG + "key:" + encryptionKey, ret);

@@ -68,5 +68,21 @@ namespace CSharp_API_Example
                 CSharpForm.usr_engine_.SetVideoDevice(videoDevices_[cmbVideoDevice.SelectedIndex].deviceId);
             }
         }
+
+        private void cmbRecordingDevices_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbRecordingDevices.SelectedIndex < recordingDevices_.Length)
+            {
+                CSharpForm.usr_engine_.SetRecordingDevice(recordingDevices_[cmbRecordingDevices.SelectedIndex].deviceId);
+            }
+        }
+
+        private void cmbPlayback_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbPlayback.SelectedIndex < playbackDevices_.Length)
+            {
+                CSharpForm.usr_engine_.SetPlaybackDevice(playbackDevices_[cmbPlayback.SelectedIndex].deviceId);
+            }
+        }
     }
 }

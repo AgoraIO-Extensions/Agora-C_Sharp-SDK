@@ -35,8 +35,8 @@ namespace CSharp_API_Example
         public uint remote_uid_ = 0;
         public SetLiveTranscoding(IntPtr localWindowId, IntPtr remoteWindowId)
         {
-            local_win_id_ = remoteWindowId;
-            remote_win_id_ = localWindowId;
+            local_win_id_ = localWindowId;
+            remote_win_id_ = remoteWindowId;
         }
 
         internal override int Init(string appId, string channelId)
@@ -92,7 +92,7 @@ namespace CSharp_API_Example
                 VideoEncoderConfiguration config = new VideoEncoderConfiguration(960, 540, FRAME_RATE.FRAME_RATE_FPS_30, 5, BITRATE.STANDARD_BITRATE, BITRATE.COMPATIBLE_BITRATE);
                 ret = rtc_engine_.SetVideoEncoderConfiguration(config);
                 CSharpForm.dump_handler_(SetLiveTranscoding_TAG + "SetVideoEncoderConfiguration", ret);
-                ret = rtc_engine_.JoinChannel("", channel_id_, "info", local_uid_, new ChannelMediaOptions(false, false, true, true));
+                ret = rtc_engine_.JoinChannel("", channel_id_, "info", local_uid_, new ChannelMediaOptions(true, true, true, true));
                 CSharpForm.dump_handler_(SetLiveTranscoding_TAG + "JoinChannel", ret);
             }
             return ret;
@@ -139,9 +139,9 @@ namespace CSharp_API_Example
         {
             if (null != rtc_engine_)
             {
+                setLiveTranscoding();
                 int ret = rtc_engine_.AddPublishStreamUrl(url, true);
                 CSharpForm.dump_handler_(SetLiveTranscoding_TAG + "AddPublishStreamUrl", ret);
-                setLiveTranscoding();
                 return ret;
             }
             else
@@ -179,14 +179,14 @@ namespace CSharp_API_Example
                     transcoding.transcodingUsers = new TranscodingUser[2];
                     transcoding.transcodingUsers[0] = new TranscodingUser();
                     transcoding.transcodingUsers[1] = new TranscodingUser();
-                    transcoding.transcodingUsers[0].uid = local_uid_;
-                    transcoding.transcodingUsers[0].x = 0;
-                    transcoding.transcodingUsers[0].y = 0;
-                    transcoding.transcodingUsers[0].width = transcoding.width;
-                    transcoding.transcodingUsers[0].height = transcoding.height;
-                    transcoding.transcodingUsers[0].zOrder = 1;
+                    transcoding.transcodingUsers[1].uid = remote_uid_;
+                    transcoding.transcodingUsers[1].x = 0;
+                    transcoding.transcodingUsers[1].y = 0;
+                    transcoding.transcodingUsers[1].width = transcoding.width;
+                    transcoding.transcodingUsers[1].height = transcoding.height;
+                    transcoding.transcodingUsers[1].zOrder = 1;
 
-                    transcoding.transcodingUsers[0].uid = remote_uid_;
+                    transcoding.transcodingUsers[0].uid = local_uid_;
                     transcoding.transcodingUsers[0].x = 0;
                     transcoding.transcodingUsers[0].y = 0;
                     transcoding.transcodingUsers[0].width = 320;
@@ -197,6 +197,7 @@ namespace CSharp_API_Example
                 {
                     transcoding.userCount = 1;
                     transcoding.transcodingUsers = new TranscodingUser[1];
+                    transcoding.transcodingUsers[0] = new TranscodingUser();
                     transcoding.transcodingUsers[0].uid = local_uid_;
                     transcoding.transcodingUsers[0].x = 0;
                     transcoding.transcodingUsers[0].y = 0;
@@ -205,7 +206,7 @@ namespace CSharp_API_Example
                     transcoding.transcodingUsers[0].zOrder = 1;
                 }
                 int ret = rtc_engine_.SetLiveTranscoding(transcoding);
-                CSharpForm.dump_handler_(SetLiveTranscoding_TAG + "SetLiveTranscoding", ret);
+               // CSharpForm.dump_handler_(SetLiveTranscoding_TAG + "SetLiveTranscoding", ret);
             }
             return -1; 
         }
@@ -256,10 +257,13 @@ namespace CSharp_API_Example
             SetLiveTranscoding_inst_.remote_uid_ = uid;
             SetLiveTranscoding_inst_.setLiveTranscoding();
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
+            SetLiveTranscoding_inst_.setLiveTranscoding();
         }
 
         public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
         {
+            SetLiveTranscoding_inst_.remote_uid_ = 0;
+            SetLiveTranscoding_inst_.setLiveTranscoding();
             Console.WriteLine("----->OnUserOffline reason={0}", reason);
         }
 

@@ -4406,6 +4406,28 @@ namespace agora.rtc
                     });
 #endif
                     break;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#else
+                case "onScreenCaptureSourceThumbImage":
+
+                    if (EngineEventHandlerArr[0] != null)
+                    {
+                        ulong sourceId = (ulong)AgoraJson.GetData<ulong>(data, "sourceId");
+                        EngineEventHandlerArr[0].onScreenCaptureSourceThumbImage(
+                            sourceId, byteData, length);
+                    }
+                    break;
+
+                case "onScreenCaptureSourceIconImage":
+
+                    if (EngineEventHandlerArr[0] != null)
+                    {
+                        EngineEventHandlerArr[0].onScreenCaptureSourceIconImage(
+                            (ulong)AgoraJson.GetData<ulong>(data, "sourceId"), byteData, length);
+                    }
+
+                    break;
+#endif
             }
         }
 
@@ -5883,28 +5905,6 @@ namespace agora.rtc
                     });
 #endif
                     break;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-#else
-                case "onScreenCaptureSourceThumbImage":
-
-                    if (EngineEventHandlerArr[0] != null)
-                    {
-                        ulong sourceId = (ulong)AgoraJson.GetData<ulong>(data, "sourceId");
-                        EngineEventHandlerArr[0].onScreenCaptureSourceThumbImage(
-                            sourceId, byteData, length);
-                    }
-                    break;
-
-                case "onScreenCaptureSourceIconImage":
-
-                    if (EngineEventHandlerArr[0] != null)
-                    {
-                        EngineEventHandlerArr[0].onScreenCaptureSourceIconImage(
-                            (ulong)AgoraJson.GetData<ulong>(data, "sourceId"), byteData, length);
-                    }
-
-                    break;
-#endif
             }
         }
     }

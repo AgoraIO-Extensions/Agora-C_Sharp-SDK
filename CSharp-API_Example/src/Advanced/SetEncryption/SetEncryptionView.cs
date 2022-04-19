@@ -10,7 +10,6 @@ namespace CSharp_API_Example
 {
     public partial class SetEncryptionView : UserControl
     {
-        private string sendText_;
         public SetEncryptionView()
         {
             InitializeComponent();

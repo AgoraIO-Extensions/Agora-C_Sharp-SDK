@@ -1,7 +1,7 @@
 ﻿
 namespace CSharp_API_Example
 {
-    partial class DeviceManagerView
+    partial class SendStreamMessageView
     {
         /// <summary> 
         /// 必需的设计器变量。
@@ -33,11 +33,8 @@ namespace CSharp_API_Example
             this.remoteVideoView = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cmbVideoDevice = new System.Windows.Forms.ComboBox();
-            this.cmbRecordingDevices = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cmbPlayback = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.sendTextBox = new System.Windows.Forms.TextBox();
+            this.btnSend = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).BeginInit();
             this.SuspendLayout();
@@ -68,81 +65,47 @@ namespace CSharp_API_Example
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(250, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 20);
+            this.label1.Size = new System.Drawing.Size(54, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "设备管理";
+            this.label1.Text = "发消息";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 457);
+            this.label2.Location = new System.Drawing.Point(10, 571);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 20);
+            this.label2.Size = new System.Drawing.Size(69, 20);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Video Device";
+            this.label2.Text = "发送消息";
             // 
-            // cmbVideoDevice
+            // sendTextBox
             // 
-            this.cmbVideoDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbVideoDevice.FormattingEnabled = true;
-            this.cmbVideoDevice.Location = new System.Drawing.Point(174, 454);
-            this.cmbVideoDevice.Name = "cmbVideoDevice";
-            this.cmbVideoDevice.Size = new System.Drawing.Size(234, 28);
-            this.cmbVideoDevice.TabIndex = 9;
-            this.cmbVideoDevice.SelectedIndexChanged += new System.EventHandler(this.cmbVideoDevice_SelectedIndexChanged);
+            this.sendTextBox.Location = new System.Drawing.Point(105, 571);
+            this.sendTextBox.Name = "sendTextBox";
+            this.sendTextBox.Size = new System.Drawing.Size(372, 27);
+            this.sendTextBox.TabIndex = 9;
             // 
-            // cmbRecordingDevices
+            // btnSend
             // 
-            this.cmbRecordingDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbRecordingDevices.FormattingEnabled = true;
-            this.cmbRecordingDevices.Location = new System.Drawing.Point(174, 501);
-            this.cmbRecordingDevices.Name = "cmbRecordingDevices";
-            this.cmbRecordingDevices.Size = new System.Drawing.Size(234, 28);
-            this.cmbRecordingDevices.TabIndex = 11;
-            this.cmbRecordingDevices.SelectedIndexChanged += new System.EventHandler(this.cmbRecordingDevices_SelectedIndexChanged);
+            this.btnSend.Location = new System.Drawing.Point(507, 572);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(77, 25);
+            this.btnSend.TabIndex = 13;
+            this.btnSend.Text = "发送";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 509);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(138, 20);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Recording Device";
-            // 
-            // cmbPlayback
-            // 
-            this.cmbPlayback.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPlayback.FormattingEnabled = true;
-            this.cmbPlayback.Location = new System.Drawing.Point(174, 547);
-            this.cmbPlayback.Name = "cmbPlayback";
-            this.cmbPlayback.Size = new System.Drawing.Size(234, 28);
-            this.cmbPlayback.TabIndex = 13;
-            this.cmbPlayback.SelectedIndexChanged += new System.EventHandler(this.cmbPlayback_SelectedIndexChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 555);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(125, 20);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Playback Device";
-            // 
-            // DeviceManagerView
+            // SendStreamMessageView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.cmbPlayback);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.cmbRecordingDevices);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.cmbVideoDevice);
+            this.Controls.Add(this.btnSend);
+            this.Controls.Add(this.sendTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.localVideoView);
             this.Controls.Add(this.remoteVideoView);
-            this.Name = "DeviceManagerView";
+            this.Name = "SendStreamMessageView";
             this.Size = new System.Drawing.Size(760, 600);
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.remoteVideoView)).EndInit();
@@ -156,10 +119,7 @@ namespace CSharp_API_Example
         public System.Windows.Forms.PictureBox remoteVideoView;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbVideoDevice;
-        private System.Windows.Forms.ComboBox cmbRecordingDevices;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cmbPlayback;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox sendTextBox;
+        private System.Windows.Forms.Button btnSend;
     }
 }

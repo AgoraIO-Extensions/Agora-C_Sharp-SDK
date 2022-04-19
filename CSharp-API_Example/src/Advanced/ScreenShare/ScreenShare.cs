@@ -227,12 +227,18 @@ namespace CSharp_API_Example
         private Dictionary<ulong, byte[]> mapThumbImage;
         public byte[] GetIconImage(ulong sourceId)
         {
-            return mapIconImage[sourceId];
+            if (mapIconImage.ContainsKey(sourceId))
+                return mapIconImage[sourceId];
+            else
+                return null;
         }
 
         public byte[] GetThumbImage(ulong sourceId)
         {
-            return mapThumbImage[sourceId];
+            if (mapThumbImage.ContainsKey(sourceId))
+                return mapThumbImage[sourceId];
+            else
+                return null;
         }
 
         public ScreenShareEventHandler(ScreenShare _screenShare)
