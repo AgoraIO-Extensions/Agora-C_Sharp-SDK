@@ -124,12 +124,12 @@ namespace agora.rtc
                 _irisRtcMediaPlayer = IntPtr.Zero;
                 _irisCloudSpatialAudioEngine = IntPtr.Zero;
                 _irisLocalSpatialAudioEngine = IntPtr.Zero;
-
-                AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
+                
+                AgoraRtcNative.Detach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
             }
             
             Release(sync);
-            
+            AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
             _disposed = true;
         }
 
