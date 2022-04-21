@@ -4791,7 +4791,7 @@ namespace agora.rtc
             this.bandwidth_estimation_bps = bandwidth_estimation_bps;
             this.total_downscale_level_count = total_downscale_level_count;
             this.peer_downlink_info = peer_downlink_info;
-            this.total_downscale_level_count = total_received_video_count;
+            this.total_received_video_count = total_received_video_count;
         }
 
         /**
