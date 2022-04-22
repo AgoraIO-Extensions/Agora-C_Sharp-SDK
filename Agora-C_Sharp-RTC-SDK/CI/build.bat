@@ -109,7 +109,7 @@ if %errorlevel% == 0 (
     echo =====Publish package to NuGet failed !!!=====
 	goto error
 )
-rmdir /q /s %CURDIR%\..\CSharp-API_Example
+rmdir /q /s %CURDIR%\..\APIExample
 echo =====Finish pushing package to NuGet=====
 
 endlocal
@@ -128,7 +128,7 @@ echo "pre_packing"
 ::xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86
 ::xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86_64
 
-mkdir %CURDIR%\Agora_C#_SDK %CURDIR%\Agora_C#_SDK\libs %CURDIR%\Agora_C#_SDK\CSharp-API_Example
+mkdir %CURDIR%\Agora_C#_SDK %CURDIR%\Agora_C#_SDK\libs %CURDIR%\Agora_C#_SDK\APIExample
 mkdir %CURDIR%\Agora_C#_SDK\libs\netCore %CURDIR%\Agora_C#_SDK\libs\netFramework
 mkdir %CURDIR%\Agora_C#_SDK\libs\netCore\x86 %CURDIR%\Agora_C#_SDK\libs\netCore\x86_64 %CURDIR%\Agora_C#_SDK\libs\netFramework\x86  %CURDIR%\Agora_C#_SDK\libs\netFramework\x86_64
 xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\libs\netCore\x86\
@@ -254,13 +254,13 @@ call :pre_packing %CONFIG%
 rmdir /q /s %CURDIR%\agorartc\obj
 ::xcopy /s %CURDIR%\agorartc\* %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
 ::powershell -command "cp -r %CURDIR%/agorartc.sln %CURDIR%/Agora_C#_SDK/agorartc"
-xcopy /s %CURDIR%\..\..\CSharp-API_Example\* %CURDIR%\Agora_C#_SDK\CSharp-API_Example
-::powershell -command "cp -r %CURDIR%/../../CSharp-API_Example/CSharp-API_Example.sln %CURDIR%/Agora_C#_SDK/CSharp-API_Example
-if exist %CURDIR%\Agora_C#_SDK\CSharp-API_Example\binx64 (
-    rmdir /q /s %CURDIR%\Agora_C#_SDK\CSharp-API_Example\binx64
+xcopy /s %CURDIR%\..\..\APIExample\* %CURDIR%\Agora_C#_SDK\APIExample
+::powershell -command "cp -r %CURDIR%/../../APIExample/APIExample.sln %CURDIR%/Agora_C#_SDK/APIExample
+if exist %CURDIR%\Agora_C#_SDK\APIExample\binx64 (
+    rmdir /q /s %CURDIR%\Agora_C#_SDK\APIExample\binx64
 )
-if exist  %CURDIR%\Agora_C#_SDK\CSharp-API_Example\binx86 (
-    rmdir /q /s %CURDIR%\Agora_C#_SDK\CSharp-API_Example\binx86
+if exist  %CURDIR%\Agora_C#_SDK\APIExample\binx86 (
+    rmdir /q /s %CURDIR%\Agora_C#_SDK\APIExample\binx86
 )
 
 mkdir %CURDIR%\output

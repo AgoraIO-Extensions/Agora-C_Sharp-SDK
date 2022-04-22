@@ -41,8 +41,8 @@
         <OutputPath>binx64\Release</OutputPath>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
+     <ItemGroup>
+      <PackageReference Include="agora_rtc_sdk" Version="3.6.2" />
     </ItemGroup>
 
     <ItemGroup>
@@ -59,7 +59,7 @@
       </EmbeddedResource>
     </ItemGroup>
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="if not exist &quot;$(TargetDir)API_Example.ini&quot;  (&#xD;&#xA;        Copy &quot;$(SolutionDir)\res\config\*.*&quot; &quot;$(TargetDir)&quot;)&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;if not exist %25$(TargetDir)agora_rtc_sdk.dll%25  (&#xD;&#xA;    if exist &quot;$(SolutionDir)..\libs&quot; (&#xD;&#xA;        if  &quot;$(Platform)&quot; == &quot;x64&quot; (&#xD;&#xA;            copy &quot;$(SolutionDir)..\libs\x86_64\*.*&quot; &quot;$(TargetDir)&quot;)&#xD;&#xA;        ) else (&#xD;&#xA;            copy &quot;$(SolutionDir)..\libs\x86\*.*&quot; &quot;$(TargetDir)&quot;)&#xD;&#xA;        )&#xD;&#xA;    )&#xD;&#xA;)" />
+      <Exec Command="if not exist &quot;$(TargetDir)API_Example.ini&quot;  (&#xD;&#xA;        Copy &quot;$(SolutionDir)\res\config\*.*&quot; &quot;$(TargetDir)&quot;)&#xD;&#xA;)" />
     </Target>
 
 </Project>
