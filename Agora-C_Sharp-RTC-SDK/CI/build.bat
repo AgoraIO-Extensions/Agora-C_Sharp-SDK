@@ -109,7 +109,7 @@ if %errorlevel% == 0 (
     echo =====Publish package to NuGet failed !!!=====
 	goto error
 )
-rmdir /q /s %CURDIR%\..\CSharp-API_Example
+rmdir /q /s %CURDIR%\..\APIExample
 echo =====Finish pushing package to NuGet=====
 
 endlocal
@@ -120,12 +120,25 @@ EXIT /B 0
 :pre_packing
 setlocal
 SET CONFIG=%~1
-mkdir %CURDIR%\Agora_C#_SDK
-mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
-xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\x86\
-xcopy /s /y %CURDIR%\iris\x86_64\* %CURDIR%\Agora_C#_SDK\x86_64\
-xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86
-xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86_64
+echo "pre_packing"
+::mkdir %CURDIR%\Agora_C#_SDK
+::mkdir %CURDIR%\Agora_C#_SDK\x86 %CURDIR%\Agora_C#_SDK\x86_64 %CURDIR%\Agora_C#_SDK\agorartc %CURDIR%\Agora_C#_SDK\agorartc\agorartc
+::xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\x86\
+::xcopy /s /y %CURDIR%\iris\x86_64\* %CURDIR%\Agora_C#_SDK\x86_64\
+::xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86
+::xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\x86_64
+
+mkdir %CURDIR%\Agora_C#_SDK %CURDIR%\Agora_C#_SDK\libs %CURDIR%\Agora_C#_SDK\APIExample
+mkdir %CURDIR%\Agora_C#_SDK\libs\netCore %CURDIR%\Agora_C#_SDK\libs\netFramework
+mkdir %CURDIR%\Agora_C#_SDK\libs\netCore\x86 %CURDIR%\Agora_C#_SDK\libs\netCore\x86_64 %CURDIR%\Agora_C#_SDK\libs\netFramework\x86  %CURDIR%\Agora_C#_SDK\libs\netFramework\x86_64
+xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\libs\netCore\x86\
+xcopy /s /y %CURDIR%\iris\x86_64\* %CURDIR%\Agora_C#_SDK\libs\netCore\x86_64\
+xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\libs\netFramework\x86\
+xcopy /s /y %CURDIR%\iris\x86_64\* %CURDIR%\Agora_C#_SDK\libs\netFramework\x86_64\
+xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\net40\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netFramework\x86
+xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\net40\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netFramework\x86_64
+xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netCore\x86
+xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netCore\x86_64
 
 endlocal
 EXIT /B 0
@@ -133,6 +146,7 @@ EXIT /B 0
 :: pack files for publish
 :: Params: %~1 (CONFIG): Debug or Release  
 :pre_publish_to_nuget
+echo "pre_publish_to_nuget"
 setlocal
 SET CONFIG=%~1
 SET CONFIG_PATH=%CURDIR%\config
@@ -238,8 +252,17 @@ if "%~3" == "publish" (
 call :pre_packing %CONFIG%
 :: if "%~3"=="" rmdir /q /s %CURDIR%\agorartc\bin
 rmdir /q /s %CURDIR%\agorartc\obj
-xcopy /s %CURDIR%\agorartc\* %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
-powershell -command "cp -r %CURDIR%/agorartc.sln %CURDIR%/Agora_C#_SDK/agorartc"
+::xcopy /s %CURDIR%\agorartc\* %CURDIR%\Agora_C#_SDK\agorartc\agorartc\
+::powershell -command "cp -r %CURDIR%/agorartc.sln %CURDIR%/Agora_C#_SDK/agorartc"
+xcopy /s %CURDIR%\..\..\APIExample\* %CURDIR%\Agora_C#_SDK\APIExample
+::powershell -command "cp -r %CURDIR%/../../APIExample/APIExample.sln %CURDIR%/Agora_C#_SDK/APIExample
+if exist %CURDIR%\Agora_C#_SDK\APIExample\binx64 (
+    rmdir /q /s %CURDIR%\Agora_C#_SDK\APIExample\binx64
+)
+if exist  %CURDIR%\Agora_C#_SDK\APIExample\binx86 (
+    rmdir /q /s %CURDIR%\Agora_C#_SDK\APIExample\binx86
+)
+
 mkdir %CURDIR%\output
 cd /d Agora_C#_SDK
 7z a -r %CURDIR%\output\Agora_C#_SDK_%VERSION%_%CONFIG%.zip  .\*
