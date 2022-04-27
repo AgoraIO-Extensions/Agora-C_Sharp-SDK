@@ -9,12 +9,12 @@
 
 namespace agora.rtc
 {
-    /*
+    /**
      * The IVideoFrameObserver class.
      */
     public abstract class IAgoraRtcVideoFrameObserver
     {
-        /*
+        /**
          * Occurs each time the SDK receives a video frame captured by the local camera.
          * After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data captured by the local camera. You can then pre-process the data according to your scenarios.
          *  After pre-processing, you can send the processed video data back to the SDK by this callback. This callback does not support sending processed RGBA video data back to the SDK.
@@ -31,7 +31,7 @@ namespace agora.rtc
             return true;
         }
         
-        /*
+        /**
          * Occurs each time the SDK receives a video frame before encoding.
          * After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data before encoding and then process the data according to your particular scenarios.
          *  After processing, you can send the processed video data back to the SDK in this callback. To get the video data captured from the second screen before encoding, you need to set GetObservedFramePosition .
@@ -49,7 +49,7 @@ namespace agora.rtc
             return true;
         }
         
-        /*
+        /**
          * Occurs each time the SDK receives a video frame sent by the remote user.
          * Since
          *  v3.0.0 After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data before encoding. You can then process the data according to your particular scenarios.
@@ -68,7 +68,7 @@ namespace agora.rtc
             return true;
         }
         
-        /*
+        /**
          * Occurs each time the SDK receives a video frame and prompts you to set the video format.
          * If you want to receive other video formats than YUV420, register this callback when calling RegisterVideoFrameObserver . After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. You need to set your preferred video data in the return value of this callback.
          * @return
@@ -81,7 +81,7 @@ namespace agora.rtc
             return VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA;
         }
         
-        /*
+        /**
          * Sets the frame position for the video observer.
          * After successfully registering the video data observer, the SDK uses this callback to determine whether to trigger OnCaptureVideoFrame , OnRenderVideoFrame and OnPreEncodeVideoFrame callback at each specific video frame processing position, so that you can observe the locally collected video data, the video data sent by the remote end, and the video data before encoding. You can set one or more positions you need to observe by modifying the return value according to your scenario: OnCaptureVideoFrame callback.
          *  OnRenderVideoFrame callback.
@@ -95,7 +95,7 @@ namespace agora.rtc
             return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
         }
 
-        /*
+        /**
          * Sets whether to get video data from multiple channels in the multi-channel scenario.
          * Since
          *  v3.0.1 After you register the video frame observer, the SDK triggers this callback every time it captures a video frame.
@@ -110,7 +110,7 @@ namespace agora.rtc
             return true;
         }
 
-        /*
+        /**
          * Gets the video frame from multiple channels.
          * After you successfully register the video frame observer, if you set the return value of IsMultipleChannelFrameWanted as true, the SDK triggers this callback each time it receives a video frame from any of the channel.
          *  You can process the video data retrieved from this callback according to your scenario, and send the processed data back to the SDK using the videoFrame parameter in this callback.
