@@ -8,12 +8,12 @@
 
 namespace agora.rtc
 {
-    /*
+    /**
      * The audio frame observer.
      */
     public abstract class IAgoraRtcAudioFrameObserver
     {
-        /*
+        /**
          * Gets the captured audio frame.
          * @param
          *  audioFrame: The playback audio frame. 
@@ -26,7 +26,7 @@ namespace agora.rtc
             return true;
         }
 
-        /*
+        /**
          * Gtes the audio frame for playback.
          * @param
          *  audioFrame: The playback audio frame. 
@@ -39,7 +39,7 @@ namespace agora.rtc
             return true;
         }
 
-        /*
+        /**
          * Retrieves the mixed captured and playback audio frame.
          * This callback only returns the single-channel data.
          * @param
@@ -53,7 +53,7 @@ namespace agora.rtc
             return true;
         }
 
-        /*
+        /**
          * Retrieves the audio frame of a specified user before mixing.
          * @param
          *  uid: The user ID of the specified user.
@@ -67,7 +67,7 @@ namespace agora.rtc
             return true;
         }
 
-        /*
+        /**
          * Determines whether to receive audio data from multiple channels.
          * Since
          *  v3.0.1 After you register the audio frame observer, the SDK triggers this callback every time it captures an audio frame.
@@ -82,7 +82,7 @@ namespace agora.rtc
             return true;
         }
 
-        /*
+        /**
          * Gets the before-mixing playback audio frame from multiple channels.
          * After you successfully register the audio frame observer, if you set the return value of IsMultipleChannelFrameWanted as true, the SDK triggers this callback each time it receives an audio frame from any of the channels.
          * @param
