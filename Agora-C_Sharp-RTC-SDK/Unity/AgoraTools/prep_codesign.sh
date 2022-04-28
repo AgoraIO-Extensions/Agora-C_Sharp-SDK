@@ -35,7 +35,7 @@ echo "--------------------------------------"
 APP="$PWD/$1"
 ENTITLEMENT="App.entitlements"
 BUNDLE="AgoraRtcWrapperUnity.bundle"
-AGORA_FRAMEWORKS="$APP/Contents/PlugIns/$BUNDLE/Contents/Resources"
+AGORA_FRAMEWORKS="$APP/Contents/PlugIns/$BUNDLE/Contents/Frameworks"
 MacOS_BINS="$APP/Contents/Plugins/$BUNDLE/Contents/MacOS/Iris*"
 
 shopt -s extglob
@@ -92,6 +92,7 @@ echo "        $MacOS_BINS"
 for framework in $AGORA_FRAMEWORKS/*; do
     echo "        $framework" 
 done
+echo "Excute signcode.sh to do this if you want to complete this step on command line"
 
 }
 
@@ -99,7 +100,7 @@ done
 find $APP -type f -name "*.meta" -delete
 
 # There are both .framework in Frameworks folder and Resources folder, need only one
-rm -r $APP/Contents/PlugIns/$BUNDLE/Contents/Frameworks
+# rm -r $APP/Contents/PlugIns/$BUNDLE/Contents/Frameworks
 
 # re-estasbish version symlinks inside the frameworks
 for framework in $AGORA_FRAMEWORKS/*; do
