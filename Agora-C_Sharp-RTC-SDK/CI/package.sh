@@ -118,7 +118,7 @@ cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86_64
 # iOS
 echo "[Unity CI] copying iOS ..."
 IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-RTC-SDK/Plugins/iOS"
-cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/ALL_ARCHITECTURE/*.framework "$IOS_DST_PATH"
 cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
 
 # macOS
@@ -129,13 +129,13 @@ cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
 # Windows x86-64
 echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
-cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_x64_*/Agora_Native_SDK_for_Windows_FULL/rtc/sdk/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_FULL/x86_64/rtc/sdk/*.dll "$WIN64_DST_PATH"
 cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
 
 # Windows x86
 echo "[Unity CI] copying Windows x86 ..."
 WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
-cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_x86_*/Agora_Native_SDK_for_Windows_FULL/rtc/sdk/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/DCG/Agora_Native_SDK_for_Windows_FULL/x86/rtc/sdk/*.dll "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
 
 echo "[Unity CI] finish copying files"
