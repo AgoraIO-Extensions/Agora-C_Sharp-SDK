@@ -135,7 +135,7 @@ xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\libs\netCore\x86\
 xcopy /s /y %CURDIR%\iris\x86_64\* %CURDIR%\Agora_C#_SDK\libs\netCore\x86_64\
 xcopy /s /y %CURDIR%\iris\x86\* %CURDIR%\Agora_C#_SDK\libs\netFramework\x86\
 xcopy /s /y %CURDIR%\iris\x86_64\* %CURDIR%\Agora_C#_SDK\libs\netFramework\x86_64\
-xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\net40\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netFramework\x86
+xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\net40\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netFramework\x86
 xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\net40\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netFramework\x86_64
 xcopy /s /y %CURDIR%\agorartc\obj\x86\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netCore\x86
 xcopy /s /y %CURDIR%\agorartc\obj\x64\%CONFIG%\netcoreapp20\agorartc.dll %CURDIR%\Agora_C#_SDK\libs\netCore\x86_64
