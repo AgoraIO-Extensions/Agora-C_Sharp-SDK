@@ -19,6 +19,8 @@
 #
 #  $8 iris_url_android (optional)
 #
+#  $9 Build Mac,IOS,Android,x86,x86_64 package
+#  "true"/"false"
 #============================================================================== 
 
 SDK_TYPE=$1
@@ -28,6 +30,7 @@ PLUGIN_NAME="Agora-Plugin"
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 CI_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK/CI
 UNITY_DIR=/Applications/Unity/Hub/Editor/$4/Unity.app/Contents/MacOS
+BUILD_PACKAGE=$9
 
 #--------------------------------------
 # Prepare all the required resources
@@ -150,6 +153,19 @@ $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects  "$CI_DIR/project" -
 #--------------------------------------
 mkdir "$CI_DIR"/output
 cp "$CI_DIR"/project/*.unitypackage "$CI_DIR"/output || exit 1
+
+
+if [ $BUILD_PACKAGE == "true" ] 
+then
+    echo "[Unity CI] Build Mac,IOS,Android,x86,x86_64 package. It may take a while ..."
+    cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets || exit 1
+    $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "$CI_DIR/temp/Agora-Unity-Quickstart/API-Example-Unity" -executeMethod CommandBuild.BuildAll
+    cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/Build "$CI_DIR"/output || exit 1
+    echo "[Unity CI] Build Mac,IOS,Android,x86,x86_64 finish"
+else 
+    echo "[Unity CI] Do not build package"
+fi
+
 rm -rf "$CI_DIR"/project "$CI_DIR"/temp
 
 exit 0
