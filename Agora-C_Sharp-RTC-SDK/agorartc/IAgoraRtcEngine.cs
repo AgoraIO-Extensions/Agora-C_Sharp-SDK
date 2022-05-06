@@ -19,7 +19,11 @@ namespace agora.rtc
 
         public abstract void Dispose(bool sync = false);
 
+        public abstract AgoraRtcEngineEventHandler GetAgoraRtcEngineEventHandler();
+
         public abstract void InitEventHandler(IAgoraRtcEngineEventHandler engineEventHandler);
+
+        public abstract void RemoveEventHandler(IAgoraRtcEngineEventHandler engineEventHandler);
 
         public abstract void RegisterAudioFrameObserver(IAgoraRtcAudioFrameObserver audioFrameObserver);
 
@@ -49,11 +53,9 @@ namespace agora.rtc
 
         public abstract string GetErrorDescription(int code);
 
-        public abstract int JoinChannel(string token, string channelId, string info = "",
-                                uint uid = 0);
+        public abstract int JoinChannel(string token, string channelId, string info = "", uint uid = 0);
 
-        public abstract int JoinChannel(string token, string channelId, uint uid,
-                                ChannelMediaOptions options);
+        public abstract int JoinChannel(string token, string channelId, uint uid, ChannelMediaOptions options);
       
         public abstract int UpdateChannelMediaOptions(ChannelMediaOptions options);
 
@@ -127,12 +129,9 @@ namespace agora.rtc
 
         public abstract int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad);
 
-        public abstract int StartAudioRecording(string filePath,
-                                        AUDIO_RECORDING_QUALITY_TYPE quality);
+        public abstract int StartAudioRecording(string filePath, AUDIO_RECORDING_QUALITY_TYPE quality);
 
-        public abstract int StartAudioRecording(string filePath,
-                                        int sampleRate,
-                                        AUDIO_RECORDING_QUALITY_TYPE quality);
+        public abstract int StartAudioRecording(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality);
 
         public abstract int StartAudioRecording(AudioRecordingConfiguration config);
     
@@ -248,12 +247,7 @@ namespace agora.rtc
 
         public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig);
 
-        //public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels,
-        //                                  int sourceNumber = 1, bool localPlayback = false, bool publish = true);
-
         public abstract int SetExternalAudioSink(int sampleRate, int channels);
-
-        //public abstract int PullAudioFrame(AudioFrame frame);
 
         public abstract int StartPrimaryCustomAudioTrack(AudioTrackConfig config);
 

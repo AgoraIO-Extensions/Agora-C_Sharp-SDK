@@ -52,6 +52,7 @@ namespace agora.rtc
         private AgoraCallbackObject _callbackObject;
 #endif
 
+        private AgoraRtcEngineEventHandler _engineEventHandlerInstance;
         private AgoraRtcVideoDeviceManager _videoDeviceManagerInstance;
         private AgoraRtcAudioPlaybackDeviceManager _audioPlaybackDeviceManagerInstance;
         private AgoraRtcAudioRecordingDeviceManager _audioRecordingDeviceManagerInstance;
@@ -77,6 +78,7 @@ namespace agora.rtc
         private AgoraRtcEngine()
         {
             _result = new CharAssistant();
+
             _irisRtcEngine = AgoraRtcNative.CreateIrisRtcEngine();
             _irisRtcDeviceManager = AgoraRtcNative.GetIrisRtcDeviceManager(_irisRtcEngine);
             _irisRtcMediaPlayer = AgoraRtcNative.GetIrisMediaPlayer(_irisRtcEngine);
@@ -89,8 +91,11 @@ namespace agora.rtc
             _mediaPlayerInstance = new AgoraRtcMediaPlayer(_irisRtcMediaPlayer);
             _cloudSpatialAudioEngineInstance = new AgoraRtcCloudSpatialAudioEngine(_irisCloudSpatialAudioEngine);
             _spatialAudioEngineInstance = new AgoraRtcSpatialAudioEngine(_irisLocalSpatialAudioEngine);
+
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
             AgoraRtcNative.Attach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
+
+            CreateEventHandler();
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -151,6 +156,50 @@ namespace agora.rtc
             engineInstance = null;
         }
 
+        private void CreateEventHandler()
+        {
+            if (_irisEngineEventHandlerHandleNative == IntPtr.Zero)
+            {
+                _irisCEventHandler = new IrisCEventHandler
+                {
+                    OnEvent = RtcEngineEventHandlerNative.OnEvent,
+                    OnEventWithBuffer = RtcEngineEventHandlerNative.OnEventWithBuffer
+                };
+
+                var cEventHandlerNativeLocal = new IrisCEventHandlerNative
+                {
+                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent),
+                    onEventWithBuffer =
+                        Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEventWithBuffer)
+                };
+
+                _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
+                Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
+                _irisEngineEventHandlerHandleNative =
+                    AgoraRtcNative.SetIrisRtcEngineEventHandler(_irisRtcEngine, _irisCEngineEventHandlerNative);
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
+                RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
+#endif
+            }
+            _engineEventHandlerInstance = AgoraRtcEngineEventHandler.GetInstance();
+            RtcEngineEventHandlerNative.EngineEventHandler = _engineEventHandlerInstance;
+        }
+
+        private void ReleaseEventHandler()
+        {
+            RtcEngineEventHandlerNative.EngineEventHandler = null;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+            RtcEngineEventHandlerNative.CallbackObject = null;
+            if (_callbackObject != null) _callbackObject.Release();
+            _callbackObject = null;
+#endif
+            AgoraRtcNative.UnsetIrisRtcEngineEventHandler(_irisRtcEngine, _irisEngineEventHandlerHandleNative);
+            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
+            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
+        }
+
         internal IrisRtcEnginePtr GetNativeHandler()
         {
             return _irisRtcEngine;
@@ -195,48 +244,19 @@ namespace agora.rtc
             GC.SuppressFinalize(this);
         }
 
+        public override AgoraRtcEngineEventHandler GetAgoraRtcEngineEventHandler()
+        {
+            return _engineEventHandlerInstance;
+        }
+
         public override void InitEventHandler(IAgoraRtcEngineEventHandler engineEventHandler)
         {
-            if (_irisEngineEventHandlerHandleNative == IntPtr.Zero)
-            {
-                _irisCEventHandler = new IrisCEventHandler
-                {
-                    OnEvent = RtcEngineEventHandlerNative.OnEvent,
-                    OnEventWithBuffer = RtcEngineEventHandlerNative.OnEventWithBuffer
-                };
-
-                var cEventHandlerNativeLocal = new IrisCEventHandlerNative
-                {
-                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent),
-                    onEventWithBuffer =
-                        Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEventWithBuffer)
-                };
-
-                _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
-                Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
-                _irisEngineEventHandlerHandleNative =
-                    AgoraRtcNative.SetIrisRtcEngineEventHandler(_irisRtcEngine, _irisCEngineEventHandlerNative);
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
-                RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
-#endif
-            }
-
             RtcEngineEventHandlerNative.EngineEventHandler = engineEventHandler;
         }
 
-        private void ReleaseEventHandler()
+        public override void RemoveEventHandler(IAgoraRtcEngineEventHandler engineEventHandler)
         {
             RtcEngineEventHandlerNative.EngineEventHandler = null;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-            RtcEngineEventHandlerNative.CallbackObject = null;
-            if (_callbackObject != null) _callbackObject.Release();
-            _callbackObject = null;
-#endif
-            AgoraRtcNative.UnsetIrisRtcEngineEventHandler(_irisRtcEngine, _irisEngineEventHandlerHandleNative);
-            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
-            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
         public override void RegisterAudioFrameObserver(IAgoraRtcAudioFrameObserver audioFrameObserver)
