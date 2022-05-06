@@ -19,8 +19,14 @@
 #
 #  $8 iris_url_android (optional)
 #
-#  $9 Build Mac,IOS,Android,x86,x86_64 package
+#  $9 build_package
 #  "true"/"false"
+#
+#  $10 build_Wayang
+#  "true"/"false"
+#
+#  $11 wayang_branch (The branch name of Wayang unitydemo)
+#
 #============================================================================== 
 
 SDK_TYPE=$1
@@ -31,6 +37,8 @@ ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 CI_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK/CI
 UNITY_DIR=/Applications/Unity/Hub/Editor/$4/Unity.app/Contents/MacOS
 BUILD_PACKAGE=$9
+BUILD_WAYANG=${10}
+WAYANG_BRANCH=${11}
 
 #--------------------------------------
 # Prepare all the required resources
@@ -157,13 +165,27 @@ cp "$CI_DIR"/project/*.unitypackage "$CI_DIR"/output || exit 1
 
 if [ $BUILD_PACKAGE == "true" ] 
 then
-    echo "[Unity CI] Build Mac,IOS,Android,x86,x86_64 package. It may take a while ..."
+    echo "[Unity CI] Build package. It may take a while ..."
     cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets || exit 1
     $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "$CI_DIR/temp/Agora-Unity-Quickstart/API-Example-Unity" -executeMethod CommandBuild.BuildAll
     cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/Build "$CI_DIR"/output || exit 1
-    echo "[Unity CI] Build Mac,IOS,Android,x86,x86_64 finish"
+    echo "[Unity CI] Build package finish"
 else 
     echo "[Unity CI] Do not build package"
+fi
+
+
+if [ $BUILD_WAYANG == "true" ]
+then 
+    echo "[Unity CI] Build Wayang, It may take a while ..."
+    cd temp
+    git clone -b $WAYANG_BRANCH ssh://git@git.agoralab.co/apps/unitydemo.git
+    cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/unitydemo/Assets || exit 1
+    $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "$CI_DIR/temp/unitydemo" -executeMethod Wayang.CommandBuild.BuildAll
+    cp -r "$CI_DIR"/temp/unitydemo/Wayang "$CI_DIR"/output || exit 1
+    echo "[Unity CI] Build Wayang finish"
+else
+    echo "[Unity CI] Do not build wayang"
 fi
 
 rm -rf "$CI_DIR"/project "$CI_DIR"/temp
