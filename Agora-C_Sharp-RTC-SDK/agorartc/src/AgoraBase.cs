@@ -4934,9 +4934,7 @@ namespace agora.rtc
     }
 
 
-    /**
-     * Built-in encryption configurations.
-     */
+    /** Configurations of built-in encryption schemas. */
     public class EncryptionConfig
     {
         public EncryptionConfig()
@@ -4954,32 +4952,18 @@ namespace agora.rtc
         }
 
         /**
-         * The built-in encryption mode. See ENCRYPTION_MODE . Agora recommends using AES_128_GCM2 or AES_256_GCM2 encrypted mode. These two modes support the use of salt for higher security.
-         *  
-         */
+		 * Encryption mode. The default encryption mode is `AES_128_XTS`. See #ENCRYPTION_MODE.
+		 */
         public ENCRYPTION_MODE encryptionMode { set; get; }
 
         /**
-         * Encryption key in string type.
-         *  If you do not set an encryption key or set it as NULL, you cannot use the built-in encryption, and the SDK returns -2.
-         *  
-         */
+		 * Encryption key in string type.
+		 *
+		 * @note If you do not set an encryption key or set it as NULL, you cannot use the built-in encryption, and the SDK returns #ERR_INVALID_ARGUMENT (-2).
+		 */
         public string encryptionKey { set; get; }
 
-        private byte[] encryptionKdfSalt32 = new byte[32];
-
-        /**
-         *  Since
-         *  v3.4.5 Salt, 32 bytes in length. Agora recommends that you use OpenSSL to generate salt on the server side. See Media Stream Encryption for details.
-         *  This parameter takes effect only in AES_128_GCM2 or AES_256_GCM2 encrypted mode. In this case, ensure that this parameter is not 0.
-         *  
-         */
-        public byte[] encryptionKdfSalt
-        {
-            set { Buffer.BlockCopy(encryptionKdfSalt, 0, encryptionKdfSalt32, 0, 32); }
-
-            get { return encryptionKdfSalt32; }
-        }
+        public byte[] encryptionKdfSalt { set; get; }
     }
 
     /**
