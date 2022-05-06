@@ -82,10 +82,10 @@ cp -r "$ROOT_DIR"/agorartc "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 rm -rf "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/agorartc/agorartc.csproj
 
 # Copy Plugins
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/iOS
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
-mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
+#mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/iOS
+#mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
+#mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
+#mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
 
 # Android
 echo "[Unity CI] copying Android ..."
