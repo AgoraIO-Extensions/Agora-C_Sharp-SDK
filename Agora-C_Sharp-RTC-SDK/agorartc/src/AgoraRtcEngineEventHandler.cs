@@ -365,7 +365,7 @@ namespace agora.rtc
 
         public override void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info)
         {
-            EventOnDownlinkNetworkInfoUpdated(info);
+            EventOnDownlinkNetworkInfoUpdated?.Invoke(info);
         }
 
         public override void OnLastmileQuality(int quality)

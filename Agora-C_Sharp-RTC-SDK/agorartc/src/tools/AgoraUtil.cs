@@ -16,11 +16,20 @@ namespace agora.rtc
 
     public class AgoraJson
     {
+        private const string ErrorTag = "AgoraJsonError";
         internal static object GetData<T>(string data, string key)
         {
-            var jData = JsonMapper.ToObject(data);
-            if (jData[key] == null) return null;
-            var jValue = jData[key].ToString();
+            string jValue = "";
+            try
+            {
+                var jData = JsonMapper.ToObject(data);
+                if (jData[key] == null) return null;
+                jValue = jData[key].ToString();
+            }
+            catch (System.Exception)
+            {
+                AgoraLog.LogError(ErrorTag + data);
+            }    
 
             switch (typeof(T).Name)
             {
