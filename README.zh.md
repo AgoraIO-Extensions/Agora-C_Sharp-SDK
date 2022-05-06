@@ -54,17 +54,15 @@
    ```
 
    ```bash
-   git checkout release/3.5.2
+   git checkout release/3.6.2
    ```
 
-2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln`解决方案，选择x64平台。
+2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln`解决方案，选择x86 或 x64平台。
 注意：此时还没有下载SDK，直接编译会有编译错误。
 
-3. 通过以下任意一种方式下载SDK：
+3. 第一次build APIExample时，visual studio 会自动下载SDK的nuget包。
 
-    a. 下载[Agora Video SDK for Windows](https://download.agora.io/sdk/release/iris_3.5.2_RTC_Windows_20211117_1126.zip)，解压后把`RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64`以及`x64/Release` 目录下所有的 `.dll` 文件复制到`Agora-C_Sharp-SDK/CSharp-API_Example/binx64/Debug/netcoreapp3.1` 文件夹中。
-  
-    b. 在`解决方案管理器`中，找到`CSharp-API_Example->依赖项`，右键选择`管理 Nuget 程序包`。点击`浏览`按钮，搜索`agora_rtc_sdk`包并安装。
+    注意，APIExample已经自动配置了SDK的nuget包依赖。如果创建自己的example程序，需要在example的依赖项上管理nuget包，搜索agora_rtc_sdk，选择对应的稳定版本。
 
 4. 将 APPID 填入,点“更新”按钮，保存一下。选择想要运行的 Scene 运行程序。
 

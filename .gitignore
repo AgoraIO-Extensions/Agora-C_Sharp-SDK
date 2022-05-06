@@ -15,3 +15,4 @@ obj/
 *.rar
 *.7z
 binx86/
+binx64/
