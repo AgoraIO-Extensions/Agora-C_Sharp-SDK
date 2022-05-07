@@ -76,7 +76,6 @@ public class BL_BuildPostProcess
         const string AgoraRtmKitFrameworkName = "AgoraRtmKit.framework";
         const string AgoraVideoSegmentationExtensionFrameworkName = "AgoraVideoSegmentationExtension.framework";
         const string BeQuicFrameworkName = "BeQuic.framework";
-        const string AgoraRtmLoaderFramework = "AgoraRtmLoader.framework";
 
 
         string AgoraRtcWrapperFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcWrapperFrameworkName);
@@ -88,7 +87,6 @@ public class BL_BuildPostProcess
         string AgoraRtmKitPath = Path.Combine(defaultLocationInProj, AgoraRtmKitFrameworkName);
         string AgoraVideoSegmentationExtensionPath = Path.Combine(defaultLocationInProj, AgoraVideoSegmentationExtensionFrameworkName);
         string BeQuicPath = Path.Combine(defaultLocationInProj, BeQuicFrameworkName);
-        string AgoraRtmLoaderPath = Path.Combine(defaultLocationInProj, AgoraRtmLoaderFramework); ;
 
 
         string fileGuid = proj.AddFile(AgoraRtcWrapperFrameworkPath, "Frameworks/" + AgoraRtcWrapperFrameworkPath, PBXSourceTree.Sdk);
@@ -102,8 +100,6 @@ public class BL_BuildPostProcess
         fileGuid = proj.AddFile(AgoraRtmKitPath, "Frameworks/" + AgoraRtmKitPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
         fileGuid = proj.AddFile(BeQuicPath, "Frameworks/" + BeQuicPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraRtmLoaderPath, "Frameworks/" + AgoraRtmLoaderPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
 
 
