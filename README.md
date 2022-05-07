@@ -1,16 +1,16 @@
-# API-Example-CSharp
+# APIExample
 
 *__其他语言版本：__  [__简体中文__](README.zh.md)*
 
 ## Overview
 
-The API-Example-CSharp project is an open-source demo that will show you different scenes on how to integrate Agora SDK APIs into your project.
+The APIExample project is an open-source demo that will show you different scenes on how to integrate Agora SDK APIs into your project.
 
 Any scene of this project can run successfully alone.
 
 *image_of_a_running_project*
 
-![snapshot.png](./CSharp-API_Example/res/snapshot.png)
+![snapshot.png](./APIExample/res/snapshot.png)
 
 ## Project structure
 
@@ -34,6 +34,16 @@ The project uses a single app to combine a variety of functionalities.
 | [VideoGroup][VideoGroupLink]                   | users join a same channel        | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel |
 | [VirtualBackground][VirtualBackgroundLink]     | enable virtual background        | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableVirtualBackground, JoinChannel, LeaveChannel |
 | [CustomCaptureVideo][CustomCaptureVideoLink]   | custom capture video             | CreateAgoraRtcEngine, Initialize, EnableVideo, SetExternalVideoSource, JoinChannel, PushVideoFrame, LeaveChannel |
+| [AudioMixing][AudioMixingLink]                 | audio ,ixing                     | CreateAgoraRtcEngine, Initialize, EnableAudio, StartAudioMixing, JoinChannel, StopAudioMixing, LeaveChannel |
+| [ChannelMediaRelay][ChannelMediaRelayLink]     | channel media relay              | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel,startChannelMediaRelay, stopChannelMediaRelay, LeaveChannel |
+| [DeviceManager][DeviceManagerLink]             | device manager                   | CreateAgoraRtcEngine, Initialize, EnableAudio, EnableVideo, GetAgoraRtcVideoDeviceManager JoinChannel, GetAgoraRtcAudioPlaybackDeviceManager, GetAgoraRtcAudioRecordingDeviceManager,EnumerateVideoDevices, EnumeratePlaybackDevices EnumerateRecordingDevices,, LeaveChannel |
+| [PlayEffect][PlayEffectLink]                   | audio effect                     | CreateAgoraRtcEngine, Initialize, EnableAudio, JoinChannel , PlayEffect, PauseEffect, ResumeEffect, StopEffect , LeaveChannel 
+| [RtmpStreaming][RtmpStreamingLink]             | rtmp streaming                   | CreateAgoraRtcEngine, Initialize, EnableVideo, AddPublishStreamUrl, JoinChannel, RemovePublishStreamUrl, LeaveChannel |
+| [SetEncryption][SetEncryptionLink]             | set ecnrypt                      | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableEncryptionMode, JoinChannel,  LeaveChannel |
+| [SetLiveTranscoding][SetLiveTranscodingLink]   | live transcoding                 | CreateAgoraRtcEngine, Initialize, EnableVideo, AddPublishStreamUrl,SetLiveTranscoding, JoinChannel, RemovePublishStreamUrl, LeaveChannel |
+| [StreamMessage][StreamMessageLink]             | send stream message              | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, sendStreamMessage, LeaveChannel |
+| [VoiceChanger][VoiceChangerLink]               | voice changer                    | CreateAgoraRtcEngine, Initialize, EnableVideo, SetVoiceBeautifierPreset, SetAudioEffectPreset, JoinChannel, SetVoiceBeautifierParameters, SetAudioEffectParameters, StopVoiceChanger, LeaveChannel |
+| [StringUid][StringUidLink]                     | string uid                       | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannelWithUserAccount, LeaveChannel |
 | ...                                            | ...                              | ...                                                                      |
 
 ## How to run the sample project
@@ -52,14 +62,14 @@ First, create a developer account at [Agora.io](https://dashboard.agora.io/signi
 1. Clone this repository.
 
 	```bash
-	git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
+	git clone https://github.com/AgoraIO/Agora-C_Sharp-SDK.git
 	```
 
 	```bash
 	git checkout release/3.6.2
 	```
 	
-2. Open `Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln` via Visual Studio. select x86 or x64 platform. Note that you will see compiler errors because you download the SDK package yet.
+2. Open `Agora-C_Sharp-SDK/APIExample/APIExample.sln` via Visual Studio. select x86 or x64 platform. Note that you will see compiler errors because you download the SDK package yet.
 
 3. Visual studio will download SDK nuget package when you build APIExample at first time. 
 
@@ -90,12 +100,21 @@ If you have any problems or suggestions regarding the sample projects, feel free
 ## License
 The sample projects are under the MIT license.
 
-[JoinChannelAudioLink]:./CSharp-API_Example/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
-[JoinChannelVideoLink]:./CSharp-API_Example/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
-[JoinMultipleChannelLink]:./CSharp-API_Example/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
-[ProcessRawDataLink]:./CSharp-API_Example/src/Advanced/ProcessRawData/ProcessRawData.cs
-[ScreenShareLink]:./CSharp-API_Example/src/Advanced/ScreenShare/ScreenShare.cs
-[VideoGroupLink]:./CSharp-API_Example/src/Advanced/VideoGroup/VideoGroup.cs
-[VirtualBackgroundLink]:./CSharp-API_Example/src/Advanced/VirtualBackground/VirtualBackground.cs
-[CustomCaptureVideoLink]:./CSharp-API_Example/src/Advanced/CustomCaptureVideo/CustomCaptureVideo.cs
-
+[JoinChannelAudioLink]:./APIExample/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
+[JoinChannelVideoLink]:./APIExample/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
+[JoinMultipleChannelLink]:./APIExample/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
+[ProcessRawDataLink]:./APIExample/src/Advanced/ProcessRawData/ProcessRawData.cs
+[ScreenShareLink]:./APIExample/src/Advanced/ScreenShare/ScreenShare.cs
+[VideoGroupLink]:./APIExample/src/Advanced/VideoGroup/VideoGroup.cs
+[VirtualBackgroundLink]:./APIExample/src/Advanced/VirtualBackground/VirtualBackground.cs
+[CustomCaptureVideoLink]:./APIExample/src/Advanced/CustomCaptureVideo/CustomCaptureVideo.cs
+[AudioMixingLink]:./APIExample/src/Advanced/AudioMixing/AudioMixing.cs
+[ChannelMediaRelayLink]:./APIExample/src/Advanced/ChannelMediaRelay/ChannelMediaRelay.cs
+[DeviceManagerLink]:./APIExample/src/Advanced/DeviceManager/DeviceManager.cs
+[PlayEffectLink]:./APIExample/src/Advanced/PlayEffect/PlayEffect.cs
+[RtmpStreamingLink]:./APIExample/src/Advanced/RtmpStreaming/RtmpStreaming.cs
+[SetEncryptionLink]:./APIExample/src/Advanced/SetEncryption/SetEncryption.cs
+[SetLiveTranscodingLink]:./APIExample/src/Advanced/SetLiveTranscoding/SetLiveTranscoding.cs
+[StreamMessageLink]:./APIExample/src/Advanced/StreamMessage/StreamMessage.cs
+[VoiceChangerLink]:./APIExample/src/Advanced/VoiceChanger/VoiceChanger.cs
+[StringUidLink]:./APIExample/src/Advanced/StringUid/StringUid.cs

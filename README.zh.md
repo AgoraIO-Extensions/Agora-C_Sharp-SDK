@@ -1,4 +1,4 @@
-# API-Example-CSharp
+# APIExample
 
 *Read this in other languages: [English](README.md)*
 
@@ -10,7 +10,7 @@
 
 *项目运行效果图*
 
-![snapshot.png](./CSharp-API_Example/res/snapshot.png)
+![snapshot.png](./APIExample/res/snapshot.png)
 
 ## 项目结构
 
@@ -32,6 +32,16 @@
 | [VideoGroup][VideoGroupLink]                   | 多人视频          | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel                          |
 | [VirtualBackground][VirtualBackgroundLink]     | 虚拟背景          | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableVirtualBackground, JoinChannel, LeaveChannel |
 | [CustomCaptureVideo][CustomCaptureVideoLink]   | 自采集            | CreateAgoraRtcEngine, Initialize, EnableVideo, SetExternalVideoSource, JoinChannel, PushVideoFrame, LeaveChannel |
+| [AudioMixing][AudioMixingLink]                 | 混音              | CreateAgoraRtcEngine, Initialize, EnableAudio, StartAudioMixing, JoinChannel, StopAudioMixing, LeaveChannel |
+| [ChannelMediaRelay][ChannelMediaRelayLink]     | 跨频道连麦        | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel,startChannelMediaRelay, stopChannelMediaRelay, LeaveChannel |
+| [DeviceManager][DeviceManagerLink]             | 设备管理          | CreateAgoraRtcEngine, Initialize, EnableAudio, EnableVideo, GetAgoraRtcVideoDeviceManager JoinChannel, GetAgoraRtcAudioPlaybackDeviceManager, GetAgoraRtcAudioRecordingDeviceManager,EnumerateVideoDevices, EnumeratePlaybackDevices EnumerateRecordingDevices,, LeaveChannel |
+| [PlayEffect][PlayEffectLink]                   | 音效              | CreateAgoraRtcEngine, Initialize, EnableAudio, JoinChannel , PlayEffect, PauseEffect, ResumeEffect, StopEffect , LeaveChannel 
+| [RtmpStreaming][RtmpStreamingLink]             | 旁路推流          | CreateAgoraRtcEngine, Initialize, EnableVideo, AddPublishStreamUrl, JoinChannel, RemovePublishStreamUrl, LeaveChannel |
+| [SetEncryption][SetEncryptionLink]             | 加密              | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableEncryptionMode, JoinChannel,  LeaveChannel |
+| [SetLiveTranscoding][SetLiveTranscodingLink]   | 转码              | CreateAgoraRtcEngine, Initialize, EnableVideo, AddPublishStreamUrl,SetLiveTranscoding, JoinChannel, RemovePublishStreamUrl, LeaveChannel |
+| [StreamMessage][StreamMessageLink]             | 发送消息          | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, sendStreamMessage, LeaveChannel |
+| [VoiceChanger][VoiceChangerLink]               | 变声              | CreateAgoraRtcEngine, Initialize, EnableVideo, SetVoiceBeautifierPreset, SetAudioEffectPreset, JoinChannel, SetVoiceBeautifierParameters, SetAudioEffectParameters, StopVoiceChanger, LeaveChannel |
+| [StringUid][StringUidLink]                     | 字符串uid         | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannelWithUserAccount, LeaveChannel |
 | ...                                            | ...               | ...                                                                                               |
 
 ## 如何运行示例程序
@@ -50,14 +60,14 @@
 1. Clone仓库
 
    ```bash
-   git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
+   git clone https://github.com/AgoraIO/Agora-C_Sharp-SDK.git
    ```
 
    ```bash
    git checkout release/3.6.2
    ```
 
-2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln`解决方案，选择x86 或 x64平台。
+2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/APIExample/APIExample.sln`解决方案，选择x86 或 x64平台。
 注意：此时还没有下载SDK，直接编译会有编译错误。
 
 3. 第一次build APIExample时，visual studio 会自动下载SDK的nuget包。
@@ -91,11 +101,21 @@
 
 示例项目遵守 MIT 许可证。
 
-[JoinChannelAudioLink]:./CSharp-API_Example/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
-[JoinChannelVideoLink]:./CSharp-API_Example/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
-[JoinMultipleChannelLink]:./CSharp-API_Example/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
-[ProcessRawDataLink]:./CSharp-API_Example/src/Advanced/ProcessRawData/ProcessRawData.cs
-[ScreenShareLink]:./CSharp-API_Example/src/Advanced/ScreenShare/ScreenShare.cs
-[VideoGroupLink]:./CSharp-API_Example/src/Advanced/VideoGroup/VideoGroup.cs
-[VirtualBackgroundLink]:./CSharp-API_Example/src/Advanced/VirtualBackground/VirtualBackground.cs
-[CustomCaptureVideoLink]:./CSharp-API_Example/src/Advanced/CustomCaptureVideo/CustomCaptureVideo.cs
+[JoinChannelAudioLink]:./APIExample/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
+[JoinChannelVideoLink]:./APIExample/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
+[JoinMultipleChannelLink]:./APIExample/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
+[ProcessRawDataLink]:./APIExample/src/Advanced/ProcessRawData/ProcessRawData.cs
+[ScreenShareLink]:./APIExample/src/Advanced/ScreenShare/ScreenShare.cs
+[VideoGroupLink]:./APIExample/src/Advanced/VideoGroup/VideoGroup.cs
+[VirtualBackgroundLink]:./APIExample/src/Advanced/VirtualBackground/VirtualBackground.cs
+[CustomCaptureVideoLink]:./APIExample/src/Advanced/CustomCaptureVideo/CustomCaptureVideo.cs
+[AudioMixingLink]:./APIExample/src/Advanced/AudioMixing/AudioMixing.cs
+[ChannelMediaRelayLink]:./APIExample/src/Advanced/ChannelMediaRelay/ChannelMediaRelay.cs
+[DeviceManagerLink]:./APIExample/src/Advanced/DeviceManager/DeviceManager.cs
+[PlayEffectLink]:./APIExample/src/Advanced/PlayEffect/PlayEffect.cs
+[RtmpStreamingLink]:./APIExample/src/Advanced/RtmpStreaming/RtmpStreaming.cs
+[SetEncryptionLink]:./APIExample/src/Advanced/SetEncryption/SetEncryption.cs
+[SetLiveTranscodingLink]:./APIExample/src/Advanced/SetLiveTranscoding/SetLiveTranscoding.cs
+[StreamMessageLink]:./APIExample/src/Advanced/StreamMessage/StreamMessage.cs
+[VoiceChangerLink]:./APIExample/src/Advanced/VoiceChanger/VoiceChanger.cs
+[StringUidLink]:./APIExample/src/Advanced/StringUid/StringUid.cs
