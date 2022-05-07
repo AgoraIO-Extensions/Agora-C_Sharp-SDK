@@ -1,5 +1,5 @@
 ﻿/*
- * 【一对一视频】关键步骤：
+ * 【发送消息】关键步骤：
  * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
  * 
  * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
