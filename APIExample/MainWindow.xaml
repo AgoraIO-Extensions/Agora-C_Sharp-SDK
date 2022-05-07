@@ -1,0 +1,59 @@
+﻿<Window x:Class="APIExample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:APIExample"
+        xmlns:wfm="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        mc:Ignorable="d"
+        Title="CSharp API Example" Height="720" Width="1280" Closing="onClosing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <WindowsFormsHost x:Name="localSection" Background="Black" Grid.Column="0">
+            <wfm:PictureBox x:Name="localView" />
+        </WindowsFormsHost>
+        <StackPanel Orientation="Vertical" Grid.Column="1"  Margin="5 10 10 5">
+            <WindowsFormsHost>
+                <wfm:PictureBox x:Name="firstRemoteView" Height="180" Width="180"/>
+            </WindowsFormsHost>
+
+            <WindowsFormsHost>
+                <wfm:PictureBox x:Name="secondRemoteView" Height="180" Width="180"/>
+            </WindowsFormsHost>
+
+            <TextBlock x:Name="statusTips" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            </TextBlock>
+        </StackPanel>
+
+        <Grid Grid.Row="1" >
+            <TabControl x:Name="tabCtrl"  Background="Transparent" SelectionChanged="onSceneChanged">
+                <TabItem x:Name="joinChannelVideoTab"  Header="一对一视频" ToolTip="一对一视频通话"/>
+                <TabItem x:Name="joinChannelAudioTab"  Header="一对一语音" ToolTip="一对一语音通话"/>
+                <TabItem x:Name="screenShareTab"  Header="屏幕共享" ToolTip="双进程（视频头+屏幕）"/>
+                <TabItem x:Name="joinMultipleChannelTab" Header="多频道" ToolTip="加入到不同频道（同一时刻只能发布一路流）"/>
+                <TabItem x:Name="videoGroupTab" Header="多人视频" ToolTip="用户从远端加入相同频道"/>
+                <TabItem x:Name="processRawDataTab" Header="裸数据" ToolTip="祼数据回调"/>
+                <TabItem x:Name="virtualBackgroundTab" Header="虚拟背景" ToolTip="虚拟背景"/>
+            </TabControl>
+        </Grid>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Content="JoinChannel" Click="onJoinChannel"/>
+            <Button Grid.Column="1" Content="LeaveChannel" Click="onLeaveChannel"/>
+            <Button Grid.Column="2" Content="Clear" Click="onClear"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,4 +1,4 @@
-# API-Example-CSharp
+# APIExample
 
 *Read this in other languages: [English](README.md)*
 
@@ -7,10 +7,6 @@
 这个开源示例项目演示了不同场景下，Agora SDK 的基本集成逻辑。 项目中每个 Scene 都是一个独立的场景，都可以成功独立运行。
 
 在这个示例项目中包含的所有场景都可以独立运行：
-
-*项目运行效果图*
-
-![snapshot.png](./CSharp-API_Example/res/snapshot.png)
 
 ## 项目结构
 
@@ -31,7 +27,6 @@
 | [ScreenShare][ScreenShareLink]                 | 屏幕共享          | CreateAgoraRtcEngine, Initialize, StartScreenCaptureByDisplayId, EnableVideo,JoinChannel, StopScreenCapture, LeaveChannel |
 | [VideoGroup][VideoGroupLink]                   | 多人视频          | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel                          |
 | [VirtualBackground][VirtualBackgroundLink]     | 虚拟背景          | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableVirtualBackground, JoinChannel, LeaveChannel |
-| [CustomCaptureVideo][CustomCaptureVideoLink]   | 自采集            | CreateAgoraRtcEngine, Initialize, EnableVideo, SetExternalVideoSource, JoinChannel, PushVideoFrame, LeaveChannel |
 | ...                                            | ...               | ...                                                                                               |
 
 ## 如何运行示例程序
@@ -50,19 +45,15 @@
 1. Clone仓库
 
    ```bash
-   git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
+   git clone https://github.com/AgoraIO/Agora-C_Sharp_QuickStart.git
    ```
 
-   ```bash
-   git checkout release/3.6.2
-   ```
-
-2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln`解决方案，选择x86 或 x64平台。
+2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/APIExample/APIExample.sln`解决方案，选择x64平台。
 注意：此时还没有下载SDK，直接编译会有编译错误。
 
-3. 第一次build APIExample时，visual studio 会自动下载SDK的nuget包。
+3. 下载SDK：
 
-    注意，APIExample已经自动配置了SDK的nuget包依赖。如果创建自己的example程序，需要在example的依赖项上管理nuget包，搜索agora_rtc_sdk，选择对应的稳定版本。
+    在`解决方案管理器`中，找到`APIExample->依赖项`，右键选择`管理 Nuget 程序包`。点击`浏览`按钮，搜索`agora_rtc_sdk`包并安装。
 
 4. 将 APPID 填入,点“更新”按钮，保存一下。选择想要运行的 Scene 运行程序。
 
@@ -91,11 +82,10 @@
 
 示例项目遵守 MIT 许可证。
 
-[JoinChannelAudioLink]:./CSharp-API_Example/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
-[JoinChannelVideoLink]:./CSharp-API_Example/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
-[JoinMultipleChannelLink]:./CSharp-API_Example/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
-[ProcessRawDataLink]:./CSharp-API_Example/src/Advanced/ProcessRawData/ProcessRawData.cs
-[ScreenShareLink]:./CSharp-API_Example/src/Advanced/ScreenShare/ScreenShare.cs
-[VideoGroupLink]:./CSharp-API_Example/src/Advanced/VideoGroup/VideoGroup.cs
-[VirtualBackgroundLink]:./CSharp-API_Example/src/Advanced/VirtualBackground/VirtualBackground.cs
-[CustomCaptureVideoLink]:./CSharp-API_Example/src/Advanced/CustomCaptureVideo/CustomCaptureVideo.cs
+[JoinChannelAudioLink]:./APIExample/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
+[JoinChannelVideoLink]:./APIExample/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
+[JoinMultipleChannelLink]:./APIExample/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
+[ProcessRawDataLink]:./APIExample/src/Advanced/ProcessRawData/ProcessRawData.cs
+[ScreenShareLink]:./APIExample/src/Advanced/ScreenShare/ScreenShare.cs
+[VideoGroupLink]:./APIExample/src/Advanced/VideoGroup/VideoGroup.cs
+[VirtualBackgroundLink]:./APIExample/src/Advanced/VirtualBackground/VirtualBackground.cs

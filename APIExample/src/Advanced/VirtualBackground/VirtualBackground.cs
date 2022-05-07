@@ -12,7 +12,7 @@
 using System;
 using agora.rtc;
 
-namespace CSharp_API_Example
+namespace APIExample
 {
     public class VirtualBackground : IEngine
     {
@@ -44,7 +44,7 @@ namespace CSharp_API_Example
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(VirtualBackground_TAG + "Initialize", ret);
+            MainWindow.dump_handler_(VirtualBackground_TAG + "Initialize", ret);
 
             event_handler_ = new VirtualBackgroundEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
@@ -58,7 +58,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(VirtualBackground_TAG + "LeaveChannel", ret);
 
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
@@ -72,10 +72,10 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableAudio", ret);
+                MainWindow.dump_handler_(VirtualBackground_TAG + "EnableAudio", ret);
 
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableVideo", ret);
+                MainWindow.dump_handler_(VirtualBackground_TAG + "EnableVideo", ret);
 
                 VirtualBackgroundSource virtual_background_source = new VirtualBackgroundSource
                 {
@@ -84,10 +84,10 @@ namespace CSharp_API_Example
                 };
 
                 ret = rtc_engine_.EnableVirtualBackground(true, virtual_background_source);
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableVirtualBackground", ret);
+                MainWindow.dump_handler_(VirtualBackground_TAG + "EnableVirtualBackground", ret);
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "JoinChannel", ret);
+                MainWindow.dump_handler_(VirtualBackground_TAG + "JoinChannel", ret);
             }
             return ret;
         }
@@ -98,7 +98,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(VirtualBackground_TAG + "LeaveChannel", ret);
             }
             return ret;
         }

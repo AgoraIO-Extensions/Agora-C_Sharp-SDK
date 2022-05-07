@@ -26,7 +26,7 @@
 using System;
 using agora.rtc;
 
-namespace CSharp_API_Example
+namespace APIExample
 {
     public class JoinMultipleChannel : IEngine
     {
@@ -69,20 +69,20 @@ namespace CSharp_API_Example
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Initialize", ret);
+            MainWindow.dump_handler_(JoinMultipleChannel_TAG + "Initialize", ret);
             //event_handler_ = new JoinMultipleChannelEventHandler(this);
             //rtc_engine_.InitEventHandler(event_handler_);
             rtc_engine_.SetChannelProfile(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
 
             first_channel_ = rtc_engine_.CreateChannel(first_channel_id_);
             ret = first_channel_.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
-            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetClientRole(ch1)", ret);
+            MainWindow.dump_handler_(JoinMultipleChannel_TAG + "SetClientRole(ch1)", ret);
             first_channel_event_handler_ = new JoinMultipleChannelChannelEventHandler(this);
             first_channel_.InitEventHandler(first_channel_event_handler_);
 
             second_channel_ = rtc_engine_.CreateChannel(second_channel_id_);
             ret = second_channel_.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE);
-            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetClientRole(ch2)", ret);
+            MainWindow.dump_handler_(JoinMultipleChannel_TAG + "SetClientRole(ch2)", ret);
             second_channel_event_handler_ = new JoinMultipleChannelChannelEventHandler(this);
             second_channel_.InitEventHandler(second_channel_event_handler_);
 
@@ -98,7 +98,7 @@ namespace CSharp_API_Example
                 first_channel_.Unpublish();
                 ret = first_channel_.LeaveChannel();
                 first_channel_.Dispose();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel", ret);
             }
 
             if (null != second_channel_)
@@ -106,7 +106,7 @@ namespace CSharp_API_Example
                 second_channel_.Unpublish();
                 ret = second_channel_.LeaveChannel();
                 second_channel_.Dispose();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel", ret);
             }
 
             if (null != rtc_engine_)
@@ -125,30 +125,30 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "EnableAudio", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "EnableAudio", ret);
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "EnableVideo", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "EnableVideo", ret);
 
                 VideoCanvas vs = new VideoCanvas((ulong)local_win_id_, RENDER_MODE_TYPE.RENDER_MODE_FIT);
                 ret = rtc_engine_.SetupLocalVideo(vs);
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetupLocalVideo", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "SetupLocalVideo", ret);
             }
 
             if (null != first_channel_)
             {
                 ret = first_channel_.JoinChannel("", "", 0, new ChannelMediaOptions(true, true, true, true));
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch1)", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch1)", ret);
                 ret = first_channel_.Publish();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Publish(ch1)", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "Publish(ch1)", ret);
             }
 
             if (null != second_channel_)
             {
                 ret = second_channel_.JoinChannel("", "", 0, new ChannelMediaOptions(true, true, false, false));
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch2)", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch2)", ret);
                 // 同一时刻只能发布一路流
                 //ret = second_channel_.Publish();
-                //CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Publish(ch2)", ret);
+                //MainWindow.dump_handler_(JoinMultipleChannel_TAG + "Publish(ch2)", ret);
             }
             return ret;
         }
@@ -160,13 +160,13 @@ namespace CSharp_API_Example
             if (null != first_channel_)
             {
                 ret = first_channel_.LeaveChannel();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch1)", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch1)", ret);
             }
 
             if (null != second_channel_)
             {
                 ret = second_channel_.LeaveChannel();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch2)", ret);
+                MainWindow.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch2)", ret);
             }
 
             return ret;
@@ -296,7 +296,7 @@ namespace CSharp_API_Example
                 return;
             }
             var vc = new VideoCanvas((ulong)win_id, RENDER_MODE_TYPE.RENDER_MODE_FIT, channelId, uid);
-            int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
+            int ret = joinMultipleChannelChannel_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->OnUserJoined, channelId={0} uid={1} ret ={2}", channelId, uid, ret);
         }
 

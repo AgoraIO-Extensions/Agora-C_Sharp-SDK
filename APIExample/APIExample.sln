@@ -1,47 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.31515.178
+VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIExample", "APIExample.csproj", "{3FED1A0C-44C5-4969-B265-EAF5B868CA99}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "agorartc", "..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj", "{8999873B-931F-470D-A09C-EA44E79AAACC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIExample", "APIExample.csproj", "{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Debug|x64.ActiveCfg = Debug|x64
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Debug|x64.Build.0 = Debug|x64
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Debug|x86.ActiveCfg = Debug|x86
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Debug|x86.Build.0 = Debug|x86
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Release|Any CPU.ActiveCfg = Release|x86
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Release|x64.ActiveCfg = Release|x64
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Release|x64.Build.0 = Release|x64
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Release|x86.ActiveCfg = Release|x86
-		{3FED1A0C-44C5-4969-B265-EAF5B868CA99}.Release|x86.Build.0 = Release|x86
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Debug|x64.ActiveCfg = Debug|x64
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Debug|x64.Build.0 = Debug|x64
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Debug|x86.ActiveCfg = Debug|x86
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Debug|x86.Build.0 = Debug|x86
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Release|Any CPU.ActiveCfg = Release|x86
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Release|x64.ActiveCfg = Release|x64
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Release|x64.Build.0 = Release|x64
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Release|x86.ActiveCfg = Release|x86
-		{8999873B-931F-470D-A09C-EA44E79AAACC}.Release|x86.Build.0 = Release|x86
+		{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}.Debug|x64.ActiveCfg = Debug|x64
+		{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}.Debug|x64.Build.0 = Debug|x64
+		{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}.Release|x64.ActiveCfg = Release|x64
+		{C0ADC995-5A51-4060-BC87-97DC0AFA1C2F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {E846391A-FEBB-4489-98E1-B605F7E2AB73}
+		SolutionGuid = {B139F5C1-43BE-4C6F-906D-70A7A6429417}
 	EndGlobalSection
 EndGlobal

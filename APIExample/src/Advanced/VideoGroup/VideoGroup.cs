@@ -12,7 +12,7 @@
 using System;
 using agora.rtc;
 
-namespace CSharp_API_Example
+namespace APIExample
 {
     public class VideoGroup : IEngine
     {
@@ -46,7 +46,7 @@ namespace CSharp_API_Example
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(VideoGroup_TAG + "Initialize", ret);
+            MainWindow.dump_handler_(VideoGroup_TAG + "Initialize", ret);
             event_handler_ = new VideoGroupEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
 
@@ -71,12 +71,12 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(VideoGroup_TAG + "EnableAudio", ret);
+                MainWindow.dump_handler_(VideoGroup_TAG + "EnableAudio", ret);
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(VideoGroup_TAG + "EnableVideo", ret);
+                MainWindow.dump_handler_(VideoGroup_TAG + "EnableVideo", ret);
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "");
-                CSharpForm.dump_handler_(VideoGroup_TAG + "JoinChannel", ret);
+                MainWindow.dump_handler_(VideoGroup_TAG + "JoinChannel", ret);
             }
             return ret;
         }
@@ -88,7 +88,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(VideoGroup_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(VideoGroup_TAG + "LeaveChannel", ret);
             }
 
             return ret;
@@ -149,7 +149,7 @@ namespace CSharp_API_Example
         {
             Console.WriteLine("----->OnJoinChannelSuccess, channel={0}, uid={1}", channel, uid);
             VideoCanvas vs = new VideoCanvas((ulong)videoGroup_inst_.GetLocalWindowId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
-            int ret = CSharpForm.usr_engine_.GetEngine().SetupLocalVideo(vs);
+            int ret = videoGroup_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo, ret={0}", ret);
         }
 
@@ -177,7 +177,7 @@ namespace CSharp_API_Example
             {
                 vc = new VideoCanvas((ulong)videoGroup_inst_.GetRemoteSecondWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, videoGroup_inst_.GetChannelId(), uid);
             }
-                int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
+                int ret = videoGroup_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->OnUserJoined, ret={0}", ret);
         }
 

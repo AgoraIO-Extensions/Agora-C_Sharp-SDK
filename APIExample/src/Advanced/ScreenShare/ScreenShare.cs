@@ -19,7 +19,7 @@
 using System;
 using agora.rtc;
 
-namespace CSharp_API_Example
+namespace APIExample
 {
     public class ScreenShare : IEngine
     {
@@ -53,7 +53,7 @@ namespace CSharp_API_Example
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_("Initialize", ret);
+            MainWindow.dump_handler_("Initialize", ret);
             event_handler_ = new ScreenShareEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
 
@@ -62,7 +62,7 @@ namespace CSharp_API_Example
                 screen_share_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine(AgoraEngineType.SubProcess);
             }
             ret = screen_share_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(ScreenShare_TAG + "Initialize", ret);
+            MainWindow.dump_handler_(ScreenShare_TAG + "Initialize", ret);
 
             //screen_share_event_handler_ = new ScreenShareEventHandler(this);
             //screen_share_engine_.InitEventHandler(screen_share_event_handler_);
@@ -77,7 +77,7 @@ namespace CSharp_API_Example
             if (null != screen_share_engine_)
             {
                 ret = screen_share_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(ScreenShare_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(ScreenShare_TAG + "LeaveChannel", ret);
 
                 screen_share_engine_.Dispose();
                 screen_share_engine_ = null;
@@ -86,7 +86,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_("LeaveChannel", ret);
+                MainWindow.dump_handler_("LeaveChannel", ret);
 
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
@@ -100,29 +100,29 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_("EnableAudio", ret);
+                MainWindow.dump_handler_("EnableAudio", ret);
 
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_("EnableVideo", ret);
+                MainWindow.dump_handler_("EnableVideo", ret);
 
                 // disable echo if need
                 //ret = rtc_engine.MuteAllRemoteAudioStreams(true);
-                //CSharpForm.dump_handler("MuteAllRemoteAudioStreams", ret);
+                //MainWindow.dump_handler("MuteAllRemoteAudioStreams", ret);
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
-                CSharpForm.dump_handler_("JoinChannel", ret);
+                MainWindow.dump_handler_("JoinChannel", ret);
             }
 
             if (null != screen_share_engine_)
             {
                 ret = startScreenShare();
-                CSharpForm.dump_handler_(ScreenShare_TAG + "startScreenShare", ret);
+                MainWindow.dump_handler_(ScreenShare_TAG + "startScreenShare", ret);
 
                 ret = screen_share_engine_.EnableVideo();
-                CSharpForm.dump_handler_(ScreenShare_TAG + "EnableVideo", ret);
+                MainWindow.dump_handler_(ScreenShare_TAG + "EnableVideo", ret);
 
                 ret = screen_share_engine_.JoinChannel("", channel_id_, "info");
-                CSharpForm.dump_handler_(ScreenShare_TAG + "JoinChannel", ret);
+                MainWindow.dump_handler_(ScreenShare_TAG + "JoinChannel", ret);
             }
 
             return ret;
@@ -134,13 +134,13 @@ namespace CSharp_API_Example
             if (null != screen_share_engine_)
             {
                 ret = stopScreenShare();
-                CSharpForm.dump_handler_(ScreenShare_TAG + "stopScreenShare", ret);
+                MainWindow.dump_handler_(ScreenShare_TAG + "stopScreenShare", ret);
             }
 
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_("LeaveChannel", ret);
+                MainWindow.dump_handler_("LeaveChannel", ret);
             }
             return ret;
         }
@@ -156,13 +156,13 @@ namespace CSharp_API_Example
                 //screenRect.x = Screen.PrimaryScreen.WorkingArea.X;
                 //screenRect.y = Screen.PrimaryScreen.WorkingArea.Y;
                 //ret = screen_share_engine.StartScreenCaptureByScreenRect(screenRect, regionRect, screen_para);
-                //CSharpForm.dump_handler(ScreenShare_TAG + "StartScreenCaptureByScreenRect", ret);
+                //MainWindow.dump_handler(ScreenShare_TAG + "StartScreenCaptureByScreenRect", ret);
 
                 agora.rtc.Rectangle regionRect = new agora.rtc.Rectangle(0, 0, 1920, 1080);
                 ScreenCaptureParameters screen_para = new ScreenCaptureParameters(new VideoDimensions(1920, 1080), 5, 0, true, false);
 
                 ret = screen_share_engine_.StartScreenCaptureByDisplayId(0, regionRect, screen_para);
-                CSharpForm.dump_handler_(ScreenShare_TAG + "StartScreenCaptureByDisplayId", ret);
+                MainWindow.dump_handler_(ScreenShare_TAG + "StartScreenCaptureByDisplayId", ret);
             }
             return ret;
         }
@@ -173,10 +173,10 @@ namespace CSharp_API_Example
             if (null != screen_share_engine_)
             {
                 ret = screen_share_engine_.StopScreenCapture();
-                CSharpForm.dump_handler_(ScreenShare_TAG + "StopScreenCapture", ret);
+                MainWindow.dump_handler_(ScreenShare_TAG + "StopScreenCapture", ret);
 
                 ret = screen_share_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(ScreenShare_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(ScreenShare_TAG + "LeaveChannel", ret);
             }
             return ret;
         }

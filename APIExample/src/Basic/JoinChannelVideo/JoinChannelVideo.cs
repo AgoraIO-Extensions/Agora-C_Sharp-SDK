@@ -12,7 +12,7 @@
 using System;
 using agora.rtc;
 
-namespace CSharp_API_Example
+namespace APIExample
 {
     public class JoinChannelVideo : IEngine
     {
@@ -40,14 +40,12 @@ namespace CSharp_API_Example
             if (null == rtc_engine_)
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
-            } 
+            }
+
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
-            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Initialize", ret);
-            // second way to set logfile
-            //ret = rtc_engine_.SetLogFile(log_file_path);
-            //CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetLogFile", ret);
+            MainWindow.dump_handler_(JoinChannelVideo_TAG + "Initialize", ret);
 
             event_handler_ = new JoinChannelVideoEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
@@ -61,7 +59,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
 
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
@@ -75,13 +73,13 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableAudio", ret);
+                MainWindow.dump_handler_(JoinChannelVideo_TAG + "EnableAudio", ret);
 
                 ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableVideo", ret);
+                MainWindow.dump_handler_(JoinChannelVideo_TAG + "EnableVideo", ret);
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "JoinChannel", ret);
+                MainWindow.dump_handler_(JoinChannelVideo_TAG + "JoinChannel", ret);
             }
             return ret;
         }
@@ -92,7 +90,7 @@ namespace CSharp_API_Example
             if (null != rtc_engine_)
             {
                 ret = rtc_engine_.LeaveChannel();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
+                MainWindow.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
             }
             return ret;
         }
