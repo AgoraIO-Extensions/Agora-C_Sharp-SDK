@@ -34,8 +34,9 @@ APP="$1"
 BUNDLE="AgoraRtcWrapperUnity.bundle"
 
 UNITY_FRAMEWORKS="$APP/Contents/Frameworks"
-AGORA_FRAMEWORKS="$APP/Contents/PlugIns/$BUNDLE/Contents/MacOS/Resources"
+AGORA_FRAMEWORKS="$APP/Contents/PlugIns/$BUNDLE/Contents/Frameworks"
 AGORA_CLIB="$APP/Contents/Plugins/$BUNDLE/Contents/MacOS/AgoraRtcWrapperUnity"
+AGORA_CLIB2="$APP/Contents/Plugins/$BUNDLE/Contents/Frameworks/AgoraRtcWrapper.framework/Versions/A/Resources/AgoraRtcScreenSharing"
 PROJ_BIN="$APP/Contents/MacOS"
 
 # with option the executable can't be run before notarization
@@ -71,6 +72,7 @@ for bin in $PROJ_BIN/*; do
 done
 
 CodeSign $AGORA_CLIB
+CodeSign $AGORA_CLIB2
 CodeSign $APP
 
 # verify
