@@ -20,8 +20,9 @@ namespace agora.rtc
     using IrisEventHandlerHandle = IntPtr;
     using IrisRtcAudioFrameObserverHandle = IntPtr;
     using IrisRtcVideoFrameObserverHandle = IntPtr;
-    using IrisRtcRendererCacheConfigHandle = IntPtr;
-
+    using IrisVideoFrameBufferManagerPtr = IntPtr;
+    using IrisVideoFrameBufferDelegateHandle = IntPtr;
+    using IrisRtcVideoEncodedImageReceiverHandle = IntPtr;
 
     internal static class AgoraRtcNative
     {
@@ -36,6 +37,8 @@ namespace agora.rtc
 #else
         private const string AgoraRtcLibName = "AgoraRtcWrapper";
 #endif
+
+// IrisRtcEngine
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcEnginePtr CreateIrisRtcEngine(EngineType type = EngineType.kEngineTypeNormal,
             string executable_path = null);
@@ -68,6 +71,7 @@ namespace agora.rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcRawDataPtr GetIrisRtcRawData(IrisRtcEnginePtr engine_ptr);
 
+// IrisRtcDeviceManager
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisRtcAudioDeviceManagerApi(IrisRtcDeviceManagerPtr device_manager_ptr,
             ApiTypeAudioDeviceManager api_type, string @params, out CharAssistant result);
@@ -76,6 +80,7 @@ namespace agora.rtc
         internal static extern int CallIrisRtcVideoDeviceManagerApi(IrisRtcDeviceManagerPtr device_manager_ptr,
             ApiTypeVideoDeviceManager api_type, string @params, out CharAssistant result);
 
+// IrisRtcChannel
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisEventHandlerHandle SetIrisRtcChannelEventHandler(IrisRtcChannelPtr channel_ptr,
             IntPtr event_handler);
@@ -100,6 +105,7 @@ namespace agora.rtc
         internal static extern int CallIrisRtcChannelApiWithBuffer(IrisRtcChannelPtr channel_ptr,
             ApiTypeChannel api_type, string @params, byte[] buffer, out CharAssistant result);
 
+// IrisRtcRawData
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcAudioFrameObserverHandle RegisterAudioFrameObserver(
             IrisRtcRawDataPtr raw_data_ptr, IntPtr observerNative, int order, string identifier);
@@ -121,29 +127,64 @@ namespace agora.rtc
             IrisRtcRawDataPtr raw_data_ptr);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcRendererPtr GetIrisRtcRenderer(IrisRtcRawDataPtr raw_data_ptr);
+        internal static extern void Attach(IrisRtcRawDataPtr raw_data_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
 
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void Detach(IrisRtcRawDataPtr raw_data_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
+
+// IrisRtcRawDataPluginManager
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisRtcRawDataPluginManagerApi(IrisRtcRawDataPluginManagerPtr plugin_manager_ptr,
             ApiTypeRawDataPluginManager api_type, string @params, out CharAssistant result);
 
+// IrisVideoFrameBufferManager
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcRendererCacheConfigHandle EnableVideoFrameCache(IrisRtcRendererPtr renderer_ptr,
-            ref IrisRtcCRendererCacheConfigNative cacheConfigNative, uint uid = 0, string channel_id = "");
+        internal static extern IrisVideoFrameBufferManagerPtr CreateIrisVideoFrameBufferManager();
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void DisableVideoFrameCacheByUid(IrisRtcRendererPtr renderer_ptr, uint uid = 0,
-            string channel_id = "");
+        internal static extern void
+        FreeIrisVideoFrameBufferManager(IrisVideoFrameBufferManagerPtr manager_ptr);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern bool GetVideoFrame(IrisRtcRendererPtr renderer_ptr, ref IrisRtcVideoFrame video_frame,
-            out bool is_new_frame, uint uid, string channel_id = "");
+        internal static extern IrisEventHandlerHandle SetIrisVideoFrameBufferManagerEventHandler(
+            IrisVideoFrameBufferManagerPtr manager_ptr,
+            IrisCEventHandler event_handler);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcVideoFrame ConvertVideoFrame(ref IrisRtcVideoFrame src, VIDEO_FRAME_TYPE format);
+        internal static extern void UnsetIrisVideoFrameBufferManagerEventHandler(
+            IrisVideoFrameBufferManagerPtr manager_ptr, IrisEventHandlerHandle handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void ClearVideoFrame(ref IrisRtcVideoFrame video_frame);
+        internal static extern IrisVideoFrameBufferDelegateHandle EnableVideoFrameBuffer(
+            IrisVideoFrameBufferManagerPtr manager_ptr, ref IrisCVideoFrameBufferNative buffer,
+            uint uid = 0, string channel_id = "");
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void DisableVideoFrameBufferByDelegate(
+            IrisVideoFrameBufferManagerPtr manager_ptr,
+            IrisVideoFrameBufferDelegateHandle handle);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void
+        DisableVideoFrameBufferByUid(IrisVideoFrameBufferManagerPtr manager_ptr,
+                                    uint uid = 0, string channel_id = "");
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void
+        DisableAllVideoFrameBuffer(IrisVideoFrameBufferManagerPtr manager_ptr);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool GetVideoFrame(IrisVideoFrameBufferManagerPtr manager_ptr,
+                                    ref IrisVideoFrame video_frame, out bool is_new_frame,
+                                    uint uid, string channel_id = "");
+
+// Iris Media Base
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisVideoFrame ConvertVideoFrame(ref IrisVideoFrame src, VIDEO_FRAME_TYPE format);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void ClearVideoFrame(ref IrisVideoFrame video_frame);
+
 
 #if UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_EDITOR_OSX || UNITY_EDITOR_WIN || NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]

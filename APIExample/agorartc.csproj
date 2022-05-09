@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp20;net40</TargetFrameworks>
+    <Nullable>disable</Nullable>
+    <Platforms>x64;x86</Platforms>
+    <ApplicationIcon />
+    <Win32Resource />
+    <Company>Agora.io</Company>
+    <Copyright>Agora.io Copyright (C) 2021</Copyright>
+    <Version>3.6.2</Version>
+    <Description>Agora Live Interactive Video Streaming enables one-to-many and many-to-many audio or video live streaming with the Agora RTC SDK.
+
+Agora Live Interactive Video Streaming is different from [Agora Video Call](https://docs.agora.io/en/Interactive Broadcast/product_live). In a video call, all users are the same role and can talk to each other freely. In a live video streaming, users can be the host or audience, where only the host can talk. For details, see this [FAQ](https://docs.agora.io/en/faq/profile_difference).
+
+Different from the traditional CDN live broadcast, which only allows one-way communication from the hosts to the audience, the Agora RTC SDK empowers the audience to interact with the hosts by [becoming a host](https://docs.agora.io/en/Agora Platform/terms?platform=All Platforms#becoming-host), like a viewer jumping onto the stage in the middle of a play to perform.
+
+The Agora RTC SDK is applicable to scenarios that encourage active engagement, such as game-playing, online classes for students in small groups, and Q&amp;amp;A sessions during E-commerce live streaming. You can also use this SDK for one-to-one video calls that require high image quality.
+
+**For more detail information, please visit our [website](https://docs.agora.io/en/Interactive Broadcast/product_live?platform=All Platforms) and [GitHub repository](https://github.com/AgoraIO-Community/Agora-Python-SDK); and for some quick-start demos, please visit [Agora-Python-QuickStart](https://github.com/AgoraIO-Community/Agora-Python-QuickStart).**</Description>
+    <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/release/3.6.2</PackageProjectUrl>
+    <PackageId>agora_rtc_sdk</PackageId>
+  </PropertyGroup>
+
+  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\..\CSharp-API_Example\binx64\Debug\</OutputPath>
+    </PropertyGroup>-->
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <OutputPath>..\..\APIExample\binx86\Debug\</OutputPath>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutputPath>..\..\APIExample\binx64\Debug</OutputPath>
+  </PropertyGroup>
+
+  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>..\..\CSharp-API_Example\binx64\Release\</OutputPath>
+    </PropertyGroup>-->
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <OutputPath>..\..\CSharp-API_Example\binx86\Release\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutputPath>..\..\CSharp-API_Example\binx64\Release\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LitJson" Version="0.17.0" />
+  </ItemGroup>
+
+</Project>

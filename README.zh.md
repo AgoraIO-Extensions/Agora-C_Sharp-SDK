@@ -1,4 +1,5 @@
-# API-Example-CSharp
+# APIExample
+
 
 *Read this in other languages: [English](README.md)*
 
@@ -10,7 +11,8 @@
 
 *项目运行效果图*
 
-![snapshot.png](./CSharp-API_Example/res/snapshot.png)
+![snapshot.png](./APIExample/res/snapshot.png)
+
 
 ## 项目结构
 
@@ -31,6 +33,18 @@
 | [ScreenShare][ScreenShareLink]                 | 屏幕共享          | CreateAgoraRtcEngine, Initialize, StartScreenCaptureByDisplayId, EnableVideo,JoinChannel, StopScreenCapture, LeaveChannel |
 | [VideoGroup][VideoGroupLink]                   | 多人视频          | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel                          |
 | [VirtualBackground][VirtualBackgroundLink]     | 虚拟背景          | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableVirtualBackground, JoinChannel, LeaveChannel |
+
+| [CustomCaptureVideo][CustomCaptureVideoLink]   | 自采集            | CreateAgoraRtcEngine, Initialize, EnableVideo, SetExternalVideoSource, JoinChannel, PushVideoFrame, LeaveChannel |
+| [AudioMixing][AudioMixingLink]                 | 混音              | CreateAgoraRtcEngine, Initialize, EnableAudio, StartAudioMixing, JoinChannel, StopAudioMixing, LeaveChannel |
+| [ChannelMediaRelay][ChannelMediaRelayLink]     | 跨频道连麦        | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel,startChannelMediaRelay, stopChannelMediaRelay, LeaveChannel |
+| [DeviceManager][DeviceManagerLink]             | 设备管理          | CreateAgoraRtcEngine, Initialize, EnableAudio, EnableVideo, GetAgoraRtcVideoDeviceManager JoinChannel, GetAgoraRtcAudioPlaybackDeviceManager, GetAgoraRtcAudioRecordingDeviceManager,EnumerateVideoDevices, EnumeratePlaybackDevices EnumerateRecordingDevices,, LeaveChannel |
+| [PlayEffect][PlayEffectLink]                   | 音效              | CreateAgoraRtcEngine, Initialize, EnableAudio, JoinChannel , PlayEffect, PauseEffect, ResumeEffect, StopEffect , LeaveChannel 
+| [RtmpStreaming][RtmpStreamingLink]             | 旁路推流          | CreateAgoraRtcEngine, Initialize, EnableVideo, AddPublishStreamUrl, JoinChannel, RemovePublishStreamUrl, LeaveChannel |
+| [SetEncryption][SetEncryptionLink]             | 加密              | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableEncryptionMode, JoinChannel,  LeaveChannel |
+| [SetLiveTranscoding][SetLiveTranscodingLink]   | 转码              | CreateAgoraRtcEngine, Initialize, EnableVideo, AddPublishStreamUrl,SetLiveTranscoding, JoinChannel, RemovePublishStreamUrl, LeaveChannel |
+| [StreamMessage][StreamMessageLink]             | 发送消息          | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, sendStreamMessage, LeaveChannel |
+| [VoiceChanger][VoiceChangerLink]               | 变声              | CreateAgoraRtcEngine, Initialize, EnableVideo, SetVoiceBeautifierPreset, SetAudioEffectPreset, JoinChannel, SetVoiceBeautifierParameters, SetAudioEffectParameters, StopVoiceChanger, LeaveChannel |
+| [StringUid][StringUidLink]                     | 字符串uid         | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannelWithUserAccount, LeaveChannel |
 | ...                                            | ...               | ...                                                                                               |
 
 ## 如何运行示例程序
@@ -49,17 +63,19 @@
 1. Clone仓库
 
    ```bash
-   git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
+   git clone https://github.com/AgoraIO/Agora-C_Sharp-SDK.git
    ```
 
-2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln`解决方案，选择x64平台。
+   ```bash
+   git checkout release/3.6.2
+   ```
+
+2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/APIExample/APIExample.sln`解决方案，选择x86 或 x64平台。
 注意：此时还没有下载SDK，直接编译会有编译错误。
 
-3. 通过以下任意一种方式下载SDK(推荐方式b)：
+3. 第一次build APIExample时，visual studio 会自动下载SDK的nuget包。
 
-    a. 下载[Agora Video SDK for Windows](https://download.agora.io/sdk/release/iris_3.5.0.3_RTC_Windows_20211118_0343.zip)，解压后把`RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64`以及`x64/Release` 目录下所有的 `.dll` 文件复制到`Agora-C_Sharp-SDK/CSharp-API_Example/binx64/Debug/netcoreapp3.1` 文件夹中。
-  
-    b. 在`解决方案管理器`中，找到`CSharp-API_Example->依赖项`，右键选择`管理 Nuget 程序包`。点击`浏览`按钮，搜索`agora_rtc_sdk`包并安装。
+    注意，APIExample已经自动配置了SDK的nuget包依赖。如果创建自己的example程序，需要在example的依赖项上管理nuget包，搜索agora_rtc_sdk，选择对应的稳定版本。
 
 4. 将 APPID 填入,点“更新”按钮，保存一下。选择想要运行的 Scene 运行程序。
 
@@ -88,10 +104,21 @@
 
 示例项目遵守 MIT 许可证。
 
-[JoinChannelAudioLink]:./CSharp-API_Example/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
-[JoinChannelVideoLink]:./CSharp-API_Example/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
-[JoinMultipleChannelLink]:./CSharp-API_Example/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
-[ProcessRawDataLink]:./CSharp-API_Example/src/Advanced/ProcessRawData/ProcessRawData.cs
-[ScreenShareLink]:./CSharp-API_Example/src/Advanced/ScreenShare/ScreenShare.cs
-[VideoGroupLink]:./CSharp-API_Example/src/Advanced/VideoGroup/VideoGroup.cs
-[VirtualBackgroundLink]:./CSharp-API_Example/src/Advanced/VirtualBackground/VirtualBackground.cs
+[JoinChannelAudioLink]:./APIExample/src/Basic/JoinChannelAudio/JoinChannelAudio.cs
+[JoinChannelVideoLink]:./APIExample/src/Basic/JoinChannelVideo/JoinChannelVideo.cs
+[JoinMultipleChannelLink]:./APIExample/src/Advanced/JoinMultipleChannel/JoinMultipleChannel.cs
+[ProcessRawDataLink]:./APIExample/src/Advanced/ProcessRawData/ProcessRawData.cs
+[ScreenShareLink]:./APIExample/src/Advanced/ScreenShare/ScreenShare.cs
+[VideoGroupLink]:./APIExample/src/Advanced/VideoGroup/VideoGroup.cs
+[VirtualBackgroundLink]:./APIExample/src/Advanced/VirtualBackground/VirtualBackground.cs
+[CustomCaptureVideoLink]:./APIExample/src/Advanced/CustomCaptureVideo/CustomCaptureVideo.cs
+[AudioMixingLink]:./APIExample/src/Advanced/AudioMixing/AudioMixing.cs
+[ChannelMediaRelayLink]:./APIExample/src/Advanced/ChannelMediaRelay/ChannelMediaRelay.cs
+[DeviceManagerLink]:./APIExample/src/Advanced/DeviceManager/DeviceManager.cs
+[PlayEffectLink]:./APIExample/src/Advanced/PlayEffect/PlayEffect.cs
+[RtmpStreamingLink]:./APIExample/src/Advanced/RtmpStreaming/RtmpStreaming.cs
+[SetEncryptionLink]:./APIExample/src/Advanced/SetEncryption/SetEncryption.cs
+[SetLiveTranscodingLink]:./APIExample/src/Advanced/SetLiveTranscoding/SetLiveTranscoding.cs
+[StreamMessageLink]:./APIExample/src/Advanced/StreamMessage/StreamMessage.cs
+[VoiceChangerLink]:./APIExample/src/Advanced/VoiceChanger/VoiceChanger.cs
+[StringUidLink]:./APIExample/src/Advanced/StringUid/StringUid.cs

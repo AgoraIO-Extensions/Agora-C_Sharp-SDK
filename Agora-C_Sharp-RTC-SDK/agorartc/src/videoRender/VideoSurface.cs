@@ -39,7 +39,7 @@ namespace agora.rtc
         private bool _needResize = false;
         private Texture2D _texture;
         private IVideoStreamManager _videoStreamManager;
-        private IrisRtcVideoFrame _cachedVideoFrame = new IrisRtcVideoFrame();
+        private IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
 
         public VideoSurface()
         {
@@ -185,7 +185,7 @@ namespace agora.rtc
                 _needUpdateInfo = false;
                 _needResize = true;
                 FreeMemory();
-                _cachedVideoFrame = new IrisRtcVideoFrame
+                _cachedVideoFrame = new IrisVideoFrame
                 {
                     type = VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
                     y_stride = VideoPixelWidth * 4,

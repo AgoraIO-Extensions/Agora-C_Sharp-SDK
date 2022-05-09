@@ -7,6 +7,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -26,6 +27,7 @@ namespace agora.rtc
     using IrisRtcAudioFrameObserverHandleNative = IntPtr;
     using IrisRtcRendererPtr = IntPtr;
     using IrisRtcCAudioFrameObserverNativeMarshal = IntPtr;
+    using IrisVideoFrameBufferManagerPtr = IntPtr;
 
     public sealed class AgoraRtcEngine : IAgoraRtcEngine
     {
@@ -64,6 +66,8 @@ namespace agora.rtc
         private IrisRtcCVideoFrameObserver _irisRtcCVideoFrameObserver;
         private IrisRtcVideoFrameObserverHandleNative _irisRtcVideoFrameObserverHandleNative;
 
+        private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
+
         private CharAssistant _result;
 
         private AgoraRtcEngine(EngineType type = EngineType.kEngineTypeNormal)
@@ -89,6 +93,9 @@ namespace agora.rtc
 
             _deprecatedAudioEffectManagerInstance =
                 new AudioEffectManager(type == EngineType.kEngineTypeNormal ? engineInstance[0] : engineInstance[1]);
+            
+            _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
+            AgoraRtcNative.Attach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -97,13 +104,15 @@ namespace agora.rtc
 
             if (disposing)
             {
+                ReleaseRecorder();
                 ReleaseEventHandler();
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
 
-                foreach (var channelInstance in _channelInstance.Values)
+                for (int i = 0; i < _channelInstance.Count; i++)
                 {
+                    var channelInstance = _channelInstance.ElementAt(i).Value;
                     channelInstance.Dispose();
                 }
 
@@ -135,10 +144,12 @@ namespace agora.rtc
                 _deprecatedAudioEffectManagerInstance = null;
 
                 _irisRtcDeviceManager = IntPtr.Zero;
+                
+                AgoraRtcNative.Detach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
             }
 
             Release(sync);
-
+            AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
             _disposed = true;
         }
 
@@ -163,6 +174,11 @@ namespace agora.rtc
         internal IrisRtcEnginePtr GetNativeHandler()
         {
             return _irisRtcEngine;
+        }
+
+        internal IrisVideoFrameBufferManagerPtr GetVideoFrameBufferManager()
+        {
+            return _videoFrameBufferManagerPtr;
         }
 
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
@@ -1436,9 +1452,12 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
-        public override int GetEffectDuration()
+        public override int GetEffectDuration(string filePath)
         {
-            var param = new { };
+            var param = new 
+            {
+                filePath
+            };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineGetEffectDuration,
                 JsonMapper.ToJson(param), out _result);
         }
@@ -2437,6 +2456,16 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
+        public override int SetLocalAccessPoint(LocalAccessPointConfiguration config)
+        {
+            var param = new
+            {
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetLocalAccessPoint,
+                JsonMapper.ToJson(param), out _result);
+        }
+
         public override int SetMaxMetadataSize(int size)
         {
             var param = new
@@ -2558,6 +2587,291 @@ namespace agora.rtc
             return AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine,
                 ApiTypeEngine.kMediaPushVideoFrame,
                 JsonMapper.ToJson(param), frame.buffer, out _result);
+        }
+
+        public override int PushAudioFrame(int sourcePos, AudioFrame frame)
+        {
+            var param = new { sourcePos };
+            var ret = AgoraRtcNative.CallIrisRtcEngineApiWithBuffer(_irisRtcEngine,
+                ApiTypeEngine.kMediaPullAudioFrame,
+                JsonMapper.ToJson(param), frame.buffer, out _result);
+            var f = _result.Result.Length == 0
+                ? new AudioFrameWithoutBuffer()
+                : AgoraJson.JsonToStruct<AudioFrameWithoutBuffer>(_result.Result);
+            frame.avsync_type = f.avsync_type;
+            frame.channels = f.channels;
+            frame.samples = f.samples;
+            frame.type = f.type;
+            frame.bytesPerSample = f.bytesPerSample;
+            frame.renderTimeMs = f.renderTimeMs;
+            frame.samplesPerSec = f.samplesPerSec;
+            return ret;
+        }
+
+        public override int SetAudioMixingPlaybackSpeed(int speed)
+        {
+            var param = new
+            {
+                speed
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetAudioMixingPlaybackSpeed, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SelectAudioTrack(int index)
+        {
+            var param = new
+            {
+                index
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSelectAudioTrack, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int GetAudioTrackCount()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineGetAudioTrackCount, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
+        {
+            var param = new
+            {
+                mode
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetAudioMixingDualMonoMode, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int PauseAllChannelMediaRelay()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEnginePauseAllChannelMediaRelay, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int ResumeAllChannelMediaRelay()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineResumeAllChannelMediaRelay, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int GetAudioFileInfo(string filePath)
+        {
+            var param = new
+            {
+                filePath
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineGetAudioFileInfo, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetCameraTorchOn(bool isOn)
+        {
+            var param = new
+            {
+                isOn
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraTorchOn, JsonMapper.ToJson(param),
+                out _result);
+        }
+        
+        public override int IsCameraTorchSupported()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineIsCameraTorchSupported, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetExternalAudioSourceVolume(int sourcePos, int volume)
+        {
+            var param = new
+            {
+                sourcePos,
+                volume
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kMediaSetExternalAudioSourceVolume, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int TakeSnapshot(string channel, uint uid, string filePath)
+        {
+            var param = new
+            {
+                channel,
+                uid,
+                filePath
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineTakeSnapshot, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
+        {
+            var param = new
+            {
+                enabled,
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineEnableContentInspect, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StartEchoTest(EchoTestConfiguration config)
+        {
+            var param = new
+            {
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineStartEchoTest, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetAVSyncSource(string channelId, uint uid)
+        {
+            var param = new
+            {
+                channelId,
+                uid
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetAVSyncSource, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StartRtmpStreamWithoutTranscoding(string url)
+        {
+            var param = new
+            {
+                url
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineStartRtmpStreamWithoutTranscoding, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
+        {
+            var param = new
+            {
+                url,
+                transcoding
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineStartRtmpStreamWithTranscoding, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int UpdateRtmpTranscoding(LiveTranscoding transcoding)
+        {
+            var param = new
+            {
+                transcoding
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineUpdateRtmpTranscoding, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StopRtmpStream(string url)
+        {
+            var param = new
+            {
+                url
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineStopRtmpStream, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetLowlightEnhanceOptions(bool enabled, LowLightEnhanceOptions options)
+        {
+            var param = new
+            {
+                enabled,
+                options
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetLowlightEnhanceOptions, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options)
+        {
+            var param = new
+            {
+                enabled,
+                options
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetVideoDenoiserOptions, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options)
+        {
+            var param = new
+            {
+                enabled,
+                options
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetColorEnhanceOptions, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int EnableWirelessAccelerate(bool enabled)
+        {
+            var param = new
+            {
+                enabled
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineEnableWirelessAccelerate, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StartRecording(MediaRecorderConfiguration config)
+        {
+            var param = new
+            {
+                config
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineMediaRecorderStart, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StopRecording()
+        {
+            var param = new { };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineMediaRecorderStop, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        private void ReleaseRecorder()
+        {
+            var param = new { };
+            AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineMediaRecorderStop, JsonMapper.ToJson(param),
+                out _result);
         }
 
         ~AgoraRtcEngine()
@@ -3576,7 +3890,7 @@ namespace agora.rtc
                             EngineEventHandlerArr[0].OnRtmpStreamingStateChanged(
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
-                                (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
+                                (RTMP_STREAM_PUBLISH_ERROR_TYPE) AgoraJson.GetData<int>(data, "errCode"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -3815,6 +4129,176 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "requestId"),
                                 (bool) AgoraJson.GetData<bool>(data, "success"),
                                 (UPLOAD_ERROR_REASON) AgoraJson.GetData<int>(data, "reason"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRequestAudioFileInfo":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnRequestAudioFileInfo(
+                                AgoraJson.JsonToStruct<AudioFileInfo>(data, "info"),
+                                (AUDIO_FILE_INFO_ERROR) AgoraJson.GetData<int>(data, "error"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onContentInspectResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnContentInspectResult(
+                                (CONTENT_INSPECT_RESULT) AgoraJson.GetData<int>(data, "result"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onSnapshotTaken":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnSnapshotTaken(
+                                (string) AgoraJson.GetData<string>(data, "channel"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (string) AgoraJson.GetData<string>(data, "filePath"),
+                                (int) AgoraJson.GetData<int>(data, "width"),
+                                (int) AgoraJson.GetData<int>(data, "height"),
+                                (int) AgoraJson.GetData<int>(data, "errCode"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onScreenCaptureInfoUpdated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnScreenCaptureInfoUpdated(
+                                AgoraJson.JsonToStruct<ScreenCaptureInfo>(data, "info"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onClientRoleChangeFailed":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnClientRoleChangeFailed(
+                                (CLIENT_ROLE_CHANGE_FAILED_REASON) AgoraJson.GetData<int>(data, "reason"),
+                                (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "currentRole"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onWlAccMessage":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnWlAccMessage(
+                                (WLACC_MESSAGE_REASON) AgoraJson.GetData<int>(data, "reason"),
+                                (WLACC_SUGGEST_ACTION) AgoraJson.GetData<int>(data, "action"),
+                                (string) AgoraJson.GetData<string>(data, "wlAccMsg"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onWlAccStats":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnWlAccStats(
+                                AgoraJson.JsonToStruct<WlAccStats>(data, "currentStats"),
+                                AgoraJson.JsonToStruct<WlAccStats>(data, "averageStats"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onProxyConnected":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnProxyConnected(
+                                (string) AgoraJson.GetData<string>(data, "channel"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (PROXY_TYPE) AgoraJson.GetData<int>(data, "proxyType"),
+                                (string) AgoraJson.GetData<string>(data, "localProxyIp"),
+                                (int) AgoraJson.GetData<int>(data, "elapsed"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onAudioDeviceTestVolumeIndication":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnAudioDeviceTestVolumeIndication(
+                                (AudioDeviceTestVolumeType) AgoraJson.GetData<int>(data, "volumeType"),
+                                (int) AgoraJson.GetData<int>(data, "volume"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRecorderStateChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnRecorderStateChanged(
+                                (RecorderState) AgoraJson.GetData<int>(data, "state"),
+                                (RecorderErrorCode) AgoraJson.GetData<int>(data, "error"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRecorderInfoUpdated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnRecorderInfoUpdated(
+                                AgoraJson.JsonToStruct<RecorderInfo>(data, "info"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -4883,7 +5367,7 @@ namespace agora.rtc
                             EngineEventHandlerArr[1].OnRtmpStreamingStateChanged(
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
-                                (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
+                                (RTMP_STREAM_PUBLISH_ERROR_TYPE) AgoraJson.GetData<int>(data, "errCode"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -5122,6 +5606,176 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "requestId"),
                                 (bool) AgoraJson.GetData<bool>(data, "success"),
                                 (UPLOAD_ERROR_REASON) AgoraJson.GetData<int>(data, "reason"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRequestAudioFileInfo":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnRequestAudioFileInfo(
+                                AgoraJson.JsonToStruct<AudioFileInfo>(data, "info"),
+                                (AUDIO_FILE_INFO_ERROR) AgoraJson.GetData<int>(data, "error"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onContentInspectResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnContentInspectResult(
+                                (CONTENT_INSPECT_RESULT) AgoraJson.GetData<int>(data, "result"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onSnapshotTaken":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnSnapshotTaken(
+                                (string) AgoraJson.GetData<string>(data, "channel"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (string) AgoraJson.GetData<string>(data, "filePath"),
+                                (int) AgoraJson.GetData<int>(data, "width"),
+                                (int) AgoraJson.GetData<int>(data, "height"),
+                                (int) AgoraJson.GetData<int>(data, "errCode"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onScreenCaptureInfoUpdated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnScreenCaptureInfoUpdated(
+                                AgoraJson.JsonToStruct<ScreenCaptureInfo>(data, "info"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onClientRoleChangeFailed":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnClientRoleChangeFailed(
+                                (CLIENT_ROLE_CHANGE_FAILED_REASON) AgoraJson.GetData<int>(data, "reason"),
+                                (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "currentRole"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onWlAccMessage":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnWlAccMessage(
+                                (WLACC_MESSAGE_REASON) AgoraJson.GetData<int>(data, "reason"),
+                                (WLACC_SUGGEST_ACTION) AgoraJson.GetData<int>(data, "action"),
+                                (string) AgoraJson.GetData<string>(data, "wlAccMsg"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onWlAccStats":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnWlAccStats(
+                                AgoraJson.JsonToStruct<WlAccStats>(data, "currentStats"),
+                                AgoraJson.JsonToStruct<WlAccStats>(data, "averageStats"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onProxyConnected":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnProxyConnected(
+                                (string) AgoraJson.GetData<string>(data, "channel"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (PROXY_TYPE) AgoraJson.GetData<int>(data, "proxyType"),
+                                (string) AgoraJson.GetData<string>(data, "localProxyIp"),
+                                (int) AgoraJson.GetData<int>(data, "elapsed"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onAudioDeviceTestVolumeIndication":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnAudioDeviceTestVolumeIndication(
+                                (AudioDeviceTestVolumeType) AgoraJson.GetData<int>(data, "volumeType"),
+                                (int) AgoraJson.GetData<int>(data, "volume"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRecorderStateChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnRecorderStateChanged(
+                                (RecorderState) AgoraJson.GetData<int>(data, "state"),
+                                (RecorderErrorCode) AgoraJson.GetData<int>(data, "error"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onRecorderInfoUpdated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnRecorderInfoUpdated(
+                                AgoraJson.JsonToStruct<RecorderInfo>(data, "info"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

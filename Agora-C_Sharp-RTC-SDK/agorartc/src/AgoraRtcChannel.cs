@@ -521,7 +521,8 @@ namespace agora.rtc
         {
             var param = new
             {
-                channelId = _channelId
+                channelId = _channelId,
+                streamType
             };
             return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
                 ApiTypeChannel.kChannelSetRemoteDefaultVideoStreamType,
@@ -675,6 +676,67 @@ namespace agora.rtc
             };
             return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
                 ApiTypeChannel.kChannelEnableRemoteSuperResolution, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetAVSyncSource(string channelId, uint uid)
+        {
+            var param = new
+            {
+                channelId,
+                uid
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
+                ApiTypeChannel.kChannelSetAVSyncSource, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StartRtmpStreamWithoutTranscoding(string url)
+        {
+            var param = new
+            {
+                channelId = _channelId,
+                url
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
+                ApiTypeChannel.kChannelStartRtmpStreamWithoutTranscoding, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
+        {
+            var param = new
+            {
+                channelId = _channelId,
+                url,
+                transcoding
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
+                ApiTypeChannel.kChannelStartRtmpStreamWithTranscoding, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int UpdateRtmpTranscoding(LiveTranscoding transcoding)
+        {
+            var param = new
+            {
+                channelId = _channelId,
+                transcoding
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
+                ApiTypeChannel.kChannelUpdateRtmpTranscoding, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int StopRtmpStream(string url)
+        {
+            var param = new
+            {
+                channelId = _channelId,
+                url
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
+                ApiTypeChannel.kChannelStopRtmpStream, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -1150,7 +1212,7 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 (string) AgoraJson.GetData<string>(data, "url"),
                                 (RTMP_STREAM_PUBLISH_STATE) AgoraJson.GetData<int>(data, "state"),
-                                (RTMP_STREAM_PUBLISH_ERROR) AgoraJson.GetData<int>(data, "errCode"));
+                                (RTMP_STREAM_PUBLISH_ERROR_TYPE) AgoraJson.GetData<int>(data, "errCode"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -1245,6 +1307,40 @@ namespace agora.rtc
                                 (string) AgoraJson.GetData<string>(data, "channelId"),
                                 (CONNECTION_STATE_TYPE) AgoraJson.GetData<int>(data, "state"),
                                 (CONNECTION_CHANGED_REASON_TYPE) AgoraJson.GetData<int>(data, "reason"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onClientRoleChangeFailed":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (ChannelEventHandlerDict != null && ChannelEventHandlerDict.ContainsKey(channelId))
+                        {
+                            ChannelEventHandlerDict[channelId].OnClientRoleChangeFailed(
+                                (string) AgoraJson.GetData<string>(data, "channelId"),
+                                (CLIENT_ROLE_CHANGE_FAILED_REASON) AgoraJson.GetData<int>(data, "reason"),
+                                (CLIENT_ROLE_TYPE) AgoraJson.GetData<int>(data, "currentRole"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onProxyConnected":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (ChannelEventHandlerDict != null && ChannelEventHandlerDict.ContainsKey(channelId))
+                        {
+                            ChannelEventHandlerDict[channelId].OnProxyConnected(
+                                (string) AgoraJson.GetData<string>(data, "channelId"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (PROXY_TYPE) AgoraJson.GetData<int>(data, "proxyType"),
+                                (string) AgoraJson.GetData<string>(data, "localProxyIp"),
+                                (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

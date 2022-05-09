@@ -30,8 +30,8 @@ namespace agora.rtc
 
         private static VideoFrame ProcessVideoFrameReceived(IntPtr videoFramePtr, string channelId, uint uid)
         {
-            var videoFrame = (IrisRtcVideoFrame) (Marshal.PtrToStructure(videoFramePtr, typeof(IrisRtcVideoFrame)) ??
-                                                        new IrisRtcVideoFrame());
+            var videoFrame = (IrisVideoFrame) (Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ??
+                                                        new IrisVideoFrame());
             var localVideoFrame = new VideoFrame();
 
             var ifConverted = VideoFrameObserver.GetVideoFormatPreference() != VIDEO_FRAME_TYPE.FRAME_TYPE_YUV420;
