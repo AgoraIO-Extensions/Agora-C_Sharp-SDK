@@ -32,8 +32,6 @@ namespace agora.rtc
         private IrisVideoFrameBufferConfig _videoFrameBufferConfig;
         private IntPtr videoFrameBufferConfigPtr;
 
-        //private IntPtr videoFrameBufferManagerPtr;
-
         private bool _disposed;
 
         public VideoStreamManager(IAgoraRtcEngine agoraRtcEngine)
@@ -61,7 +59,6 @@ namespace agora.rtc
             {
                 var rawDataPtr = AgoraRtcNative.GetIrisRtcRawData(irisEngine);
 
-                //AgoraRtcNative.Attach(rawDataPtr, videoFrameBufferManagerPtr);
                 _videoFrameBuffer = new IrisCVideoFrameBufferNative {
                     type = (int)VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
                     OnVideoFrameReceived = IntPtr.Zero,
