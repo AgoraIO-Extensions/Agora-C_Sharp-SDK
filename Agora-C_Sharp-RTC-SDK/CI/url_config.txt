@@ -6,8 +6,8 @@ WIN=
 <<<end
 
 >>>video
-IOS=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.4.6/iris_3.4.6_RTC_iOS_20210723_0643.zip
-ANDROID=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.4.6/iris_3.4.6_RTC_Android_20210723_0638.zip
-MAC=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.4.6/iris_3.4.6_RTC_Mac_20210723_0622.zip
-WIN=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.4.6/iris_3.4.6_RTC_Windows_20210723_0625.zip
+IOS=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.6.2/iris_3.6.2_RTC_iOS_20220428_0333.zip
+ANDROID=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/iris_3.6.2_RTC_Android_20220428_0331.zip
+MAC=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.6.2/iris_3.6.2_RTC_Mac_20220428_0331.zip
+WIN=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/3.6.2/iris_3.6.2_RTC_Windows_20220428_0333.zip
 <<<end

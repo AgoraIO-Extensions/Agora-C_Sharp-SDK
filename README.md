@@ -1,5 +1,6 @@
 # APIExample
 
+
 *__其他语言版本：__  [__简体中文__](README.zh.md)*
 
 ## Overview
@@ -33,6 +34,7 @@ The project uses a single app to combine a variety of functionalities.
 | [ScreenShare][ScreenShareLink]                 | screen share                     | CreateAgoraRtcEngine, Initialize, StartScreenCaptureByDisplayId, EnableVideo,JoinChannel, StopScreenCapture, LeaveChannel |
 | [VideoGroup][VideoGroupLink]                   | users join a same channel        | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel |
 | [VirtualBackground][VirtualBackgroundLink]     | enable virtual background        | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableVirtualBackground, JoinChannel, LeaveChannel |
+
 | [CustomCaptureVideo][CustomCaptureVideoLink]   | custom capture video             | CreateAgoraRtcEngine, Initialize, EnableVideo, SetExternalVideoSource, JoinChannel, PushVideoFrame, LeaveChannel |
 | [AudioMixing][AudioMixingLink]                 | audio ,ixing                     | CreateAgoraRtcEngine, Initialize, EnableAudio, StartAudioMixing, JoinChannel, StopAudioMixing, LeaveChannel |
 | [ChannelMediaRelay][ChannelMediaRelayLink]     | channel media relay              | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel,startChannelMediaRelay, stopChannelMediaRelay, LeaveChannel |
@@ -64,12 +66,13 @@ First, create a developer account at [Agora.io](https://dashboard.agora.io/signi
 	```bash
 	git clone https://github.com/AgoraIO/Agora-C_Sharp-SDK.git
 	```
+	
+2. Open `Agora-C_Sharp-SDK/CSharp-API_Example/APIExample.sln` via Visual Studio. select  x86 or x64 platform. 
+Note that you will see compiler errors because you download the SDK package yet.
 
 	```bash
 	git checkout release/3.6.2
 	```
-	
-2. Open `Agora-C_Sharp-SDK/APIExample/APIExample.sln` via Visual Studio. select x86 or x64 platform. Note that you will see compiler errors because you download the SDK package yet.
 
 3. Visual studio will download SDK nuget package when you build APIExample at first time. 
 
