@@ -173,6 +173,15 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
         }
 
+        public override int FollowSystemPlaybackDevice(bool enable)
+        {
+            var param = new { enable };
+
+            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+                ApiTypeAudioDeviceManager.kADMFollowSystemPlaybackDevice,
+                JsonMapper.ToJson(param), out _result);
+        }
+
         internal int CallIrisRtcAudioDeviceManagerApi(ApiTypeAudioDeviceManager apiType, string paramJson,
             out string result)
         {
@@ -325,6 +334,15 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result) != 0
                 ? new DeviceInfo()
                 : AgoraJson.JsonToStruct<DeviceInfo>(_result.Result);
+        }
+
+        public override int FollowSystemRecordingDevice(bool enable)
+        {
+            var param = new { enable };
+
+            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+                ApiTypeAudioDeviceManager.kADMFollowSystemRecordingDevice,
+                JsonMapper.ToJson(param), out _result);
         }
 
         internal int CallIrisRtcAudioDeviceManagerApi(ApiTypeAudioDeviceManager apiType, string paramJson,

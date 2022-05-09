@@ -188,6 +188,52 @@ namespace agora.rtc
         kMediaPullAudioFrame,
         kMediaSetExternalVideoSource,
         kMediaPushVideoFrame,
+
+        kEngineSetAudioMixingPlaybackSpeed,
+        kEngineSelectAudioTrack,
+        kEngineGetAudioTrackCount,
+        kEngineSetAudioMixingDualMonoMode,
+        kEngineGetAudioFileInfo,
+        kEngineSetVideoProfileEx,
+        kMediaSetExternalAudioSourceVolume,
+        kEngineSetLogWriter,
+        kEngineReleaseLogWriter,
+        kEngineSetLocalVideoRenderer,
+        kEngineSetRemoteVideoRenderer,
+        kEngineSetCameraTorchOn,
+        kEngineIsCameraTorchSupported,
+
+        kEngineGetCameraMaxZoomFactor,
+        kEngineIsCameraAutoFocusFaceModeSupported,
+        kEngineIsCameraExposurePositionSupported,
+        kEngineIsCameraFocusSupported,
+        kEngineIsCameraZoomSupported,
+        kEngineSetCameraAutoFocusFaceModeEnabled,
+        kEngineSetCameraExposurePosition,
+        kEngineSetCameraFocusPositionInPreview,
+        kEngineSetCameraZoomFactor,
+        kEngineStartRhythmPlayer,
+        kEngineStopRhythmPlayer,
+        kEngineConfigRhythmPlayer,
+        kEngineGetNativeHandle,
+
+
+        kEngineGetScreenCaptureSources,
+        kEngineTakeSnapshot,
+        kEngineEnableContentInspect,
+
+        kEngineSetAVSyncSource = 196,
+        kEngineStartRtmpStreamWithoutTranscoding = 197,
+        kEngineStartRtmpStreamWithTranscoding = 198,
+        kEngineUpdateRtmpTranscoding = 199,
+        kEngineStopRtmpStream = 200,
+        kEngineSetLowlightEnhanceOptions = 201,
+        kEngineSetVideoDenoiserOptions = 202,
+        kEngineSetColorEnhanceOptions = 203,
+        kEngineEnableWirelessAccelerate = 204,
+        kEngineMediaRecorderStart = 205,
+        kEngineMediaRecorderStop = 206,
+        kEngineMediaRecorderRelease = 207,
     }
 
 
@@ -240,6 +286,11 @@ namespace agora.rtc
         kChannelStopChannelMediaRelay,
         kChannelGetConnectionState,
         kChannelEnableRemoteSuperResolution,
+        kChannelSetAVSyncSource = 47,
+        kChannelStartRtmpStreamWithoutTranscoding = 48,
+        kChannelStartRtmpStreamWithTranscoding = 49,
+        kChannelUpdateRtmpTranscoding = 50,
+        kChannelStopRtmpStream = 51,
     }
 
     internal enum ApiTypeAudioDeviceManager
@@ -268,6 +319,8 @@ namespace agora.rtc
 
         kADMStartAudioDeviceLoopbackTest,
         kADMStopAudioDeviceLoopbackTest,
+        kADMFollowSystemPlaybackDevice = 22,
+        kADMFollowSystemRecordingDevice = 23,
     }
 
     internal enum ApiTypeVideoDeviceManager
@@ -306,7 +359,7 @@ namespace agora.rtc
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisRtcVideoFrame
+    internal struct IrisVideoFrame
     {
         internal VIDEO_FRAME_TYPE type;
         internal int width;

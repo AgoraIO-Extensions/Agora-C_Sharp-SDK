@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>CSharp_API_Example</RootNamespace>
+		<Platforms>x64;x86</Platforms>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ApplicationIcon />
+        <StartupObject />
+        <Version>3.6.2</Version>
+        <Authors>Agora.io</Authors>
+        <Company>Agora.io</Company>
+        <Description>winform version</Description>
+        <Copyright>Agora.io Copyright (C) 2021</Copyright>
+    </PropertyGroup>
+
+    <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+        <OutputPath>binx64\Debug</OutputPath>
+    </PropertyGroup>-->
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+        <OutputPath>binx86\Debug\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <OutputPath>binx64\Debug</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <OutputPath>binx64\Release</OutputPath>
+    </PropertyGroup>-->
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+        <OutputPath>binx86\Release\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <OutputPath>binx64\Release</OutputPath>
+    </PropertyGroup>
+
+     <ItemGroup>
+      <PackageReference Include="agora_rtc_sdk" Version="3.6.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Properties\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="if not exist &quot;$(TargetDir)API_Example.ini&quot;  (&#xD;&#xA;        Copy &quot;$(SolutionDir)\res\config\*.*&quot; &quot;$(TargetDir)&quot;)&#xD;&#xA;)" />
+    </Target>
+
+</Project>

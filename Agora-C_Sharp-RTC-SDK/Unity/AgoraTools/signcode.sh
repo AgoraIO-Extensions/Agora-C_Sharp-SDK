@@ -1,10 +1,15 @@
 #!/bin/bash
 ################################################################################
-# Notarize Step #1 - Code signing
-#  Required envirnmenta variable "$SIGNATURE"
-#  possible command line: 
+# Notarize help script - Code signing, for Unity SDK Iris releases
+#
+# Prerequisites:
+#
+#  Required envirnmental variable "$SIGNATURE"
+#
+#  possible command line:
 #     (export SIGNATURE="my apple developer identity (xxxxx)"; ./codesign.sh MyApp.app)
-#  To find available signatures, use 
+#
+#  To find available signatures, use
 #	security find-identity -v -p codesigning
 ################################################################################
 
@@ -15,18 +20,23 @@ fi
 
 if [ "" == "$SIGNATURE" ]; then
     echo "You must provide signature for codesign!"
-    echo possible command line: 
+    echo possible command line:
     echo '  (export SIGNATURE="my apple developer identity (xxxxx)";' $0 $1
-    echo To find available signatures, use 
+    echo To find available signatures, use
     echo '  security find-identity -v -p codesigning'
+    security find-identity -v -p codesigning
     exit 2
 fi
 
 ENTITLEMENT="App.entitlements"
 APP="$1"
 
-AGORA_FRAMEWORKS="$APP/Contents/PlugIns/agoraSdkCWrapper.bundle/Contents/Resources"
-AGORA_CLIB="$APP/Contents/Plugins/agoraSdkCWrapper.bundle/Contents/MacOS/agoraSdkCWrapper"
+BUNDLE="AgoraRtcWrapperUnity.bundle"
+
+UNITY_FRAMEWORKS="$APP/Contents/Frameworks"
+AGORA_FRAMEWORKS="$APP/Contents/PlugIns/$BUNDLE/Contents/Frameworks"
+AGORA_CLIB="$APP/Contents/Plugins/$BUNDLE/Contents/MacOS/AgoraRtcWrapperUnity"
+AGORA_CLIB2="$APP/Contents/Plugins/$BUNDLE/Contents/Frameworks/AgoraRtcWrapper.framework/Versions/A/Resources/AgoraRtcScreenSharing"
 PROJ_BIN="$APP/Contents/MacOS"
 
 # with option the executable can't be run before notarization
@@ -39,7 +49,7 @@ fi
 
 function CodeSign {
     target="$1"
-    echo "codesigning $target" 
+    echo "codesigning $target"
     codesign $OPTIONS -f -v --timestamp --deep -s "$SIGNATURE" --entitlements $ENTITLEMENT $target
 }
 
@@ -49,6 +59,9 @@ chmod -R a+xr $APP
 
 echo ""
 echo "==== frameworks"
+for framework in $UNITY_FRAMEWORKS/*; do
+    CodeSign $framework
+done
 for framework in $AGORA_FRAMEWORKS/*; do
     CodeSign $framework
 done
@@ -59,6 +72,7 @@ for bin in $PROJ_BIN/*; do
 done
 
 CodeSign $AGORA_CLIB
+CodeSign $AGORA_CLIB2
 CodeSign $APP
 
 # verify
