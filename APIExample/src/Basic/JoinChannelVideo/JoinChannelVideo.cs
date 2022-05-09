@@ -40,9 +40,9 @@ namespace CSharp_API_Example
             if (null == rtc_engine_)
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
-            } 
-            LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
+            }
+
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Initialize", ret);
             // second way to set logfile

@@ -9,16 +9,18 @@
     <Company>Agora.io</Company>
     <Copyright>Agora.io Copyright (C) 2021</Copyright>
     <Version>3.6.2</Version>
-    <Description>Agora Live Interactive Video Streaming enables one-to-many and many-to-many audio or video live streaming with the Agora RTC SDK.
+    <Description> Agora C# SDK enables developer one-to-many and many-to-many audio or video live streaming.
+Agora C# SDK support .netCore(minimum 2.0) and .netFramework(minimum 4.0) application.
 
-Agora Live Interactive Video Streaming is different from [Agora Video Call](https://docs.agora.io/en/Interactive Broadcast/product_live). In a video call, all users are the same role and can talk to each other freely. In a live video streaming, users can be the host or audience, where only the host can talk. For details, see this [FAQ](https://docs.agora.io/en/faq/profile_difference).
+Developer can use APIExample to test different case and understand how to integrate C# SDK.
 
-Different from the traditional CDN live broadcast, which only allows one-way communication from the hosts to the audience, the Agora RTC SDK empowers the audience to interact with the hosts by [becoming a host](https://docs.agora.io/en/Agora Platform/terms?platform=All Platforms#becoming-host), like a viewer jumping onto the stage in the middle of a play to perform.
+Before test APIExample, create a developer account at [Agora.io](https://dashboard.agora.io/signin/), and obtain an App ID.
 
-The Agora RTC SDK is applicable to scenarios that encourage active engagement, such as game-playing, online classes for students in small groups, and Q&amp;amp;A sessions during E-commerce live streaming. You can also use this SDK for one-to-one video calls that require high image quality.
+For details, see this [FAQ](https://docs.agora.io/en/faq/profile_difference).
 
-**For more detail information, please visit our [website](https://docs.agora.io/en/Interactive Broadcast/product_live?platform=All Platforms) and [GitHub repository](https://github.com/AgoraIO-Community/Agora-Python-SDK); and for some quick-start demos, please visit [Agora-Python-QuickStart](https://github.com/AgoraIO-Community/Agora-Python-QuickStart).**</Description>
+**For more detail information, please visit our [API Reference](https://docs.agora.io/en/Video/api-ref?platform=All%20Platforms) **</Description>
     <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/release/3.6.2</PackageProjectUrl>
+
     <PackageId>agora_rtc_sdk</PackageId>
   </PropertyGroup>
 
