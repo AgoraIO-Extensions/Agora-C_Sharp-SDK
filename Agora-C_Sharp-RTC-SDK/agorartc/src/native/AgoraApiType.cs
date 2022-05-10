@@ -12,18 +12,6 @@ namespace agora.rtc
 {
     internal static class AgoraApiType
     {
-        // class IVideoDeviceManager start
-        internal const string FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES = "VideoDeviceManager_enumerateVideoDevices";
-        internal const string FUNC_VIDEODEVICEMANAGER_SETDEVICE = "VideoDeviceManager_setDevice";
-        internal const string FUNC_VIDEODEVICEMANAGER_GETDEVICE = "VideoDeviceManager_getDevice";
-        internal const string FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST = "VideoDeviceManager_startDeviceTest";
-        internal const string FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST = "VideoDeviceManager_stopDeviceTest";
-        internal const string FUNC_VIDEODEVICEMANAGER_RELEASE = "VideoDeviceManager_release";
-        // class IVideoDeviceManager end
-
-        // class IMediaPlayer start
-        // class IMediaPlayer end
-
         // class IRtcEngine start
         internal const string FUNC_RTCENGINE_RELEASE = "RtcEngine_release";
         internal const string FUNC_RTCENGINE_INITIALIZE = "RtcEngine_initialize";
@@ -144,22 +132,19 @@ namespace agora.rtc
         internal const string FUNC_RTCENGINE_SETPLAYBACKAUDIOFRAMEPARAMETERS = "RtcEngine_setPlaybackAudioFrameParameters";
         internal const string FUNC_RTCENGINE_SETMIXEDAUDIOFRAMEPARAMETERS = "RtcEngine_setMixedAudioFrameParameters";
         internal const string FUNC_RTCENGINE_SETPLAYBACKAUDIOFRAMEBEFOREMIXINGPARAMETERS = "RtcEngine_setPlaybackAudioFrameBeforeMixingParameters";
-        internal const string FUNC_RTCENGINE_ENABLEAUDIOSPECTRUMMONITOR
- = "RtcEngine_enableAudioSpectrumMonitor";
+        internal const string FUNC_RTCENGINE_ENABLEAUDIOSPECTRUMMONITOR = "RtcEngine_enableAudioSpectrumMonitor";
         internal const string FUNC_RTCENGINE_DISABLEAUDIOSPECTRUMMONITOR = "RtcEngine_disableAudioSpectrumMonitor";
         internal const string FUNC_RTCENGINE_REGISTERAUDIOSPECTRUMOBSERVER = "RtcEngine_registerAudioSpectrumObserver";
         internal const string FUNC_RTCENGINE_UNREGISTERAUDIOSPECTRUMOBSERVER = "RtcEngine_unregisterAudioSpectrumObserver";
         internal const string FUNC_RTCENGINE_ADJUSTRECORDINGSIGNALVOLUME = "RtcEngine_adjustRecordingSignalVolume";
         internal const string FUNC_RTCENGINE_MUTERECORDINGSIGNAL = "RtcEngine_muteRecordingSignal";
-        internal const string FUNC_RTCENGINE_ADJUSTPLAYBACKSIGNALVOLUME
- = "RtcEngine_adjustPlaybackSignalVolume";
+        internal const string FUNC_RTCENGINE_ADJUSTPLAYBACKSIGNALVOLUME = "RtcEngine_adjustPlaybackSignalVolume";
         internal const string FUNC_RTCENGINE_ADJUSTUSERPLAYBACKSIGNALVOLUME = "RtcEngine_adjustUserPlaybackSignalVolume";
         internal const string FUNC_RTCENGINE_SETLOCALPUBLISHFALLBACKOPTION = "RtcEngine_setLocalPublishFallbackOption";
         internal const string FUNC_RTCENGINE_SETREMOTESUBSCRIBEFALLBACKOPTION = "RtcEngine_setRemoteSubscribeFallbackOption";
         internal const string FUNC_RTCENGINE_ENABLELOOPBACKRECORDING = "RtcEngine_enableLoopbackRecording";
         internal const string FUNC_RTCENGINE_ADJUSTLOOPBACKRECORDINGVOLUME = "RtcEngine_adjustLoopbackRecordingVolume";
-        internal const string FUNC_RTCENGINE_GETLOOPBACKRECORDINGVOLUME
- = "RtcEngine_getLoopbackRecordingVolume";
+        internal const string FUNC_RTCENGINE_GETLOOPBACKRECORDINGVOLUME = "RtcEngine_getLoopbackRecordingVolume";
         internal const string FUNC_RTCENGINE_ENABLEINEARMONITORING = "RtcEngine_enableInEarMonitoring";
         internal const string FUNC_RTCENGINE_SETINEARMONITORINGVOLUME = "RtcEngine_setInEarMonitoringVolume";
         internal const string FUNC_RTCENGINE_LOADEXTENSIONPROVIDER = "RtcEngine_loadExtensionProvider";
@@ -206,22 +191,19 @@ namespace agora.rtc
         internal const string FUNC_RTCENGINE_STARTRTMPSTREAMWITHTRANSCODING = "RtcEngine_startRtmpStreamWithTranscoding";
         internal const string FUNC_RTCENGINE_UPDATERTMPTRANSCODING = "RtcEngine_updateRtmpTranscoding";
         internal const string FUNC_RTCENGINE_STOPRTMPSTREAM = "RtcEngine_stopRtmpStream";
-        internal const string FUNC_RTCENGINE_STARTLOCALVIDEOTRANSCODER= "RtcEngine_startLocalVideoTranscoder";
+        internal const string FUNC_RTCENGINE_STARTLOCALVIDEOTRANSCODER = "RtcEngine_startLocalVideoTranscoder";
         internal const string FUNC_RTCENGINE_UPDATELOCALTRANSCODERCONFIGURATION = "RtcEngine_updateLocalTranscoderConfiguration";
         internal const string FUNC_RTCENGINE_STOPLOCALVIDEOTRANSCODER = "RtcEngine_stopLocalVideoTranscoder";
         internal const string FUNC_RTCENGINE_STARTPRIMARYCAMERACAPTURE= "RtcEngine_startPrimaryCameraCapture";
         internal const string FUNC_RTCENGINE_STARTSECONDARYCAMERACAPTURE = "RtcEngine_startSecondaryCameraCapture";
         internal const string FUNC_RTCENGINE_STOPPRIMARYCAMERACAPTURE = "RtcEngine_stopPrimaryCameraCapture";
-        internal const string FUNC_RTCENGINE_STOPSECONDARYCAMERACAPTURE
- = "RtcEngine_stopSecondaryCameraCapture";
-        internal const string FUNC_RTCENGINE_SETCAMERADEVICEORIENTATION
- = "RtcEngine_setCameraDeviceOrientation";
+        internal const string FUNC_RTCENGINE_STOPSECONDARYCAMERACAPTURE = "RtcEngine_stopSecondaryCameraCapture";
+        internal const string FUNC_RTCENGINE_SETCAMERADEVICEORIENTATION = "RtcEngine_setCameraDeviceOrientation";
         internal const string FUNC_RTCENGINE_SETSCREENCAPTUREORIENTATION = "RtcEngine_setScreenCaptureOrientation";
         internal const string FUNC_RTCENGINE_STARTPRIMARYSCREENCAPTURE= "RtcEngine_startPrimaryScreenCapture";
         internal const string FUNC_RTCENGINE_STARTSECONDARYSCREENCAPTURE = "RtcEngine_startSecondaryScreenCapture";
         internal const string FUNC_RTCENGINE_STOPPRIMARYSCREENCAPTURE = "RtcEngine_stopPrimaryScreenCapture";
-        internal const string FUNC_RTCENGINE_STOPSECONDARYSCREENCAPTURE
- = "RtcEngine_stopSecondaryScreenCapture";
+        internal const string FUNC_RTCENGINE_STOPSECONDARYSCREENCAPTURE = "RtcEngine_stopSecondaryScreenCapture";
         internal const string FUNC_RTCENGINE_GETCONNECTIONSTATE = "RtcEngine_getConnectionState";
         internal const string FUNC_RTCENGINE_REGISTEREVENTHANDLER = "RtcEngine_registerEventHandler";
         internal const string FUNC_RTCENGINE_UNREGISTEREVENTHANDLER = "RtcEngine_unregisterEventHandler";
@@ -331,8 +313,7 @@ namespace agora.rtc
         internal const string FUNC_MEDIAPLAYER_GETAGORACDNLINECOUNT = "MediaPlayer_getAgoraCDNLineCount";
         internal const string FUNC_MEDIAPLAYER_SWITCHAGORACDNLINEBYINDEX = "MediaPlayer_switchAgoraCDNLineByIndex";
         internal const string FUNC_MEDIAPLAYER_GETCURRENTAGORACDNINDEX= "MediaPlayer_getCurrentAgoraCDNIndex";
-        internal const string FUNC_MEDIAPLAYER_ENABLEAUTOSWITCHAGORACDN
- = "MediaPlayer_enableAutoSwitchAgoraCDN";
+        internal const string FUNC_MEDIAPLAYER_ENABLEAUTOSWITCHAGORACDN = "MediaPlayer_enableAutoSwitchAgoraCDN";
         internal const string FUNC_MEDIAPLAYER_RENEWAGORACDNSRCTOKEN = "MediaPlayer_renewAgoraCDNSrcToken";
         internal const string FUNC_MEDIAPLAYER_SWITCHAGORACDNSRC = "MediaPlayer_switchAgoraCDNSrc";
         internal const string FUNC_MEDIAPLAYER_SWITCHSRC = "MediaPlayer_switchSrc";
@@ -345,10 +326,8 @@ namespace agora.rtc
         // class IAudioDeviceManager start
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATEPLAYBACKDEVICES = "AudioDeviceManager_enumeratePlaybackDevices";
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATERECORDINGDEVICES = "AudioDeviceManager_enumerateRecordingDevices";
-        internal const string FUNC_AUDIODEVICEMANAGER_SETPLAYBACKDEVICE
- = "AudioDeviceManager_setPlaybackDevice";
-        internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICE
- = "AudioDeviceManager_getPlaybackDevice";
+        internal const string FUNC_AUDIODEVICEMANAGER_SETPLAYBACKDEVICE = "AudioDeviceManager_setPlaybackDevice";
+        internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICE = "AudioDeviceManager_getPlaybackDevice";
         internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICEINFO = "AudioDeviceManager_getPlaybackDeviceInfo";
         internal const string FUNC_AUDIODEVICEMANAGER_SETPLAYBACKDEVICEVOLUME = "AudioDeviceManager_setPlaybackDeviceVolume";
         internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICEVOLUME = "AudioDeviceManager_getPlaybackDeviceVolume";
@@ -370,6 +349,15 @@ namespace agora.rtc
         internal const string FUNC_AUDIODEVICEMANAGER_RELEASE = "AudioDeviceManager_release";
         // class IAudioDeviceManager end
 
+        // class IVideoDeviceManager start
+        internal const string FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES = "VideoDeviceManager_enumerateVideoDevices";
+        internal const string FUNC_VIDEODEVICEMANAGER_SETDEVICE = "VideoDeviceManager_setDevice";
+        internal const string FUNC_VIDEODEVICEMANAGER_GETDEVICE = "VideoDeviceManager_getDevice";
+        internal const string FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST = "VideoDeviceManager_startDeviceTest";
+        internal const string FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST = "VideoDeviceManager_stopDeviceTest";
+        internal const string FUNC_VIDEODEVICEMANAGER_RELEASE = "VideoDeviceManager_release";
+        // class IVideoDeviceManager end
+
         // class ICloudSpatialAudioEngine start
         internal const string FUNC_CLOUDSPATIALAUDIOENGINE_SETMAXAUDIORECVCOUNT = "CloudSpatialAudioEngine_setMaxAudioRecvCount";
         internal const string FUNC_CLOUDSPATIALAUDIOENGINE_SETAUDIORECVRANGE = "CloudSpatialAudioEngine_setAudioRecvRange";
@@ -387,11 +375,9 @@ namespace agora.rtc
         internal const string FUNC_CLOUDSPATIALAUDIOENGINE_ENTERROOM = "CloudSpatialAudioEngine_enterRoom";
         internal const string FUNC_CLOUDSPATIALAUDIOENGINE_RENEWTOKEN = "CloudSpatialAudioEngine_renewToken";
         internal const string FUNC_CLOUDSPATIALAUDIOENGINE_EXITROOM = "CloudSpatialAudioEngine_exitRoom";
-        internal const string FUNC_CLOUDSPATIALAUDIOENGINE_GETTEAMMATES
- = "CloudSpatialAudioEngine_getTeammates";
+        internal const string FUNC_CLOUDSPATIALAUDIOENGINE_GETTEAMMATES = "CloudSpatialAudioEngine_getTeammates";
         internal const string FUNC_CLOUDSPATIALAUDIOENGINE_MUTELOCALAUDIOSTREAM = "CloudSpatialAudioEngine_muteLocalAudioStream";
-        internal const string FUNC_CLOUDSPATIALAUDIOENGINE_MUTEALLREMOTEAUDIOSTREAMS
- = "CloudSpatialAudioEngine_muteAllRemoteAudioStreams";
+        internal const string FUNC_CLOUDSPATIALAUDIOENGINE_MUTEALLREMOTEAUDIOSTREAMS = "CloudSpatialAudioEngine_muteAllRemoteAudioStreams";
         // class ICloudSpatialAudioEngine end
 
         // class ILocalSpatialAudioEngine start
@@ -409,8 +395,7 @@ namespace agora.rtc
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_REMOVEREMOTEPOSITIONEX = "LocalSpatialAudioEngine_removeRemotePositionEx";
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_CLEARREMOTEPOSITIONSEX = "LocalSpatialAudioEngine_clearRemotePositionsEx";
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_MUTELOCALAUDIOSTREAM = "LocalSpatialAudioEngine_muteLocalAudioStream";
-        internal const string FUNC_LOCALSPATIALAUDIOENGINE_MUTEALLREMOTEAUDIOSTREAMS
- = "LocalSpatialAudioEngine_muteAllRemoteAudioStreams";
+        internal const string FUNC_LOCALSPATIALAUDIOENGINE_MUTEALLREMOTEAUDIOSTREAMS = "LocalSpatialAudioEngine_muteAllRemoteAudioStreams";
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_INITIALIZE = "LocalSpatialAudioEngine_initialize";
         // class ILocalSpatialAudioEngine end
 
@@ -419,10 +404,8 @@ namespace agora.rtc
         internal const string FUNC_RTCRAWDATAPLUGINMANAGER_GETPLUGINPARAMETER = "RtcRawDataPluginManager_getPluginParameter";
         internal const string FUNC_RTCRAWDATAPLUGINMANAGER_UNREGISTERPLUGIN = "RtcRawDataPluginManager_unRegisterPlugin";
         internal const string FUNC_RTCRAWDATAPLUGINMANAGER_HASPLUGIN = "RtcRawDataPluginManager_hasPlugin";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_ENABLEPLUGIN
- = "RtcRawDataPluginManager_enablePlugin";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_DELETEPLUGIN
- = "RtcRawDataPluginManager_deletePlugin";
+        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_ENABLEPLUGIN = "RtcRawDataPluginManager_enablePlugin";
+        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_DELETEPLUGIN = "RtcRawDataPluginManager_deletePlugin";
         internal const string FUNC_RTCRAWDATAPLUGINMANAGER_GETPLUGINS = "RtcRawDataPluginManager_getPlugins";
         internal const string FUNC_RTCRAWDATAPLUGINMANAGER_SETPLUGINPARAMETER = "RtcRawDataPluginManager_setPluginParameter";
         internal const string FUNC_RTCRAWDATAPLUGINMANAGER_REMOVEALLPLUGINS = "RtcRawDataPluginManager_removeAllPlugins";
