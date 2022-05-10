@@ -16,9 +16,8 @@ namespace agora.rtc
 {
     using LitJson;
 
-    using IrisCloudSpatialAudioEnginePtr = IntPtr;
-    using IrisLocalSpatialAudioEnginePtr = IntPtr;
-    using IrisSpatialAudioEnginePtr = IntPtr;
+    using IrisApiEnginePtr = IntPtr;
+
     using IrisEventHandlerHandleNative = IntPtr;
 
     public sealed class AgoraRtcCloudSpatialAudioEngine : IAgoraRtcCloudSpatialAudioEngine
@@ -26,7 +25,7 @@ namespace agora.rtc
         private bool _disposed = false;
         private static readonly string identifier = "AgoraRtcSpatialAudioEngine";
 
-        private IrisCloudSpatialAudioEnginePtr _irisRtcCloudSpatialAudioEngine;
+        private IrisApiEnginePtr _irisApiEngine;
 
         private CharAssistant _result;
 
@@ -38,10 +37,10 @@ namespace agora.rtc
         private AgoraCallbackObject _callbackObject;
     #endif
 
-        internal AgoraRtcCloudSpatialAudioEngine(IrisCloudSpatialAudioEnginePtr irisCloudSpatialAudioEngine)
+        internal AgoraRtcCloudSpatialAudioEngine(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
-            _irisRtcCloudSpatialAudioEngine = irisCloudSpatialAudioEngine;
+            _irisApiEngine = irisApiEngine;
         }
 
         ~AgoraRtcCloudSpatialAudioEngine()
@@ -72,7 +71,7 @@ namespace agora.rtc
             JsonMapper.ToJson(param), out _result);
 
             // AgoraRtcNative.DestroyIrisRtcEngine(_irisRtcSpatialAudioEngine);
-            _irisRtcCloudSpatialAudioEngine = IntPtr.Zero;
+            _irisApiEngine = IntPtr.Zero;
             _result = new CharAssistant();
         }
 
@@ -308,21 +307,21 @@ namespace agora.rtc
 
     public sealed class AgoraRtcSpatialAudioEngine : IAgoraRtcSpatialAudioEngine
     {
-        private IrisSpatialAudioEnginePtr _irisRtcSpatialAudioEngine;
+        private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
         private bool _disposed = false;
         private bool _initialized = false;
         private const int UNINITIALIZED = -99;
             
-        internal AgoraRtcSpatialAudioEngine(IrisSpatialAudioEnginePtr irisSpatialAudioEngine)
+        internal AgoraRtcSpatialAudioEngine(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
-            _irisRtcSpatialAudioEngine = irisSpatialAudioEngine;
+            _irisApiEngine = irisApiEngine;
         }
             
         ~AgoraRtcSpatialAudioEngine()
         {
-            _irisRtcSpatialAudioEngine = IntPtr.Zero;
+            _irisApiEngine = IntPtr.Zero;
             _result = new CharAssistant();
         }
             

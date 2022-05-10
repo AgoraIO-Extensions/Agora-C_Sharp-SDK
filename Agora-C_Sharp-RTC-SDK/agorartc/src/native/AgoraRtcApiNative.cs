@@ -58,44 +58,24 @@ namespace agora.rtc
             IrisEventHandlerHandle handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisRtcEngineApi(IrisRtcEnginePtr engine_ptr, ApiTypeEngine api_type,
-            string @params, out CharAssistant result);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisRtcEngineApiWithBuffer(IrisRtcEnginePtr engine_ptr, ApiTypeEngine api_type,
-            string @params, byte[] buffer, out CharAssistant result);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcDeviceManagerPtr GetIrisRtcDeviceManager(IrisRtcEnginePtr engine_ptr);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcRawDataPtr GetIrisRtcRawData(IrisRtcEnginePtr engine_ptr);
-
-// IrisRtcDeviceManager
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisRtcAudioDeviceManagerApi(IrisRtcDeviceManagerPtr device_manager_ptr,
-            ApiTypeAudioDeviceManager api_type, string @params, out CharAssistant result);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisRtcVideoDeviceManagerApi(IrisRtcDeviceManagerPtr device_manager_ptr,
-            ApiTypeVideoDeviceManager api_type, string @params, out CharAssistant result);
-
+        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name, 
+            string @params, UInt64 paramLength, byte[] buffer, UInt64 bufferLength, out CharAssistant result);
 
 // IrisRtcRawData
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcAudioFrameObserverHandle RegisterAudioFrameObserver(
-            IrisRtcRawDataPtr raw_data_ptr, IntPtr observerNative, int order, string identifier);
+            IrisRtcEnginePtr engine_ptr, IntPtr observerNative, int order, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnRegisterAudioFrameObserver(IrisRtcRawDataPtr raw_data_ptr,
+        internal static extern void UnRegisterAudioFrameObserver(IrisRtcEnginePtr engine_ptr,
             IrisRtcAudioFrameObserverHandle handle, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcVideoFrameObserverHandle RegisterVideoFrameObserver(
-            IrisRtcRawDataPtr raw_data_ptr, IntPtr observerNative, int order, string identifier);
+            IrisRtcEnginePtr engine_ptr, IntPtr observerNative, int order, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnRegisterVideoFrameObserver(IrisRtcRawDataPtr raw_data_ptr,
+        internal static extern void UnRegisterVideoFrameObserver(IrisRtcEnginePtr engine_ptr,
             IrisRtcVideoFrameObserverHandle handle, string identifier);
 
 
@@ -105,19 +85,19 @@ namespace agora.rtc
 
  // Iris Video Encoded Image Receiver
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcVideoEncodedImageReceiverHandle RegisterVideoEncodedImageReceiver(IrisRtcRawDataPtr raw_data_ptr,
+        internal static extern IrisRtcVideoEncodedImageReceiverHandle RegisterVideoEncodedImageReceiver(IrisRtcEnginePtr engine_ptr,
                                   IntPtr receiverNative,
                                   int order, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnRegisterVideoEncodedImageReceiver(IrisRtcRawDataPtr raw_data_ptr,
+        internal static extern void UnRegisterVideoEncodedImageReceiver(IrisRtcEnginePtr engine_ptr,
                                 IrisRtcVideoEncodedImageReceiverHandle handle, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void Attach(IrisRtcRawDataPtr raw_data_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
+        internal static extern void Attach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void Detach(IrisRtcRawDataPtr raw_data_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
+        internal static extern void Detach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
 
 // IrisRtcRawDataPluginManager
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -204,22 +184,10 @@ namespace agora.rtc
 
 // IrisMediaPlayerPtr
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisMediaPlayerPtr GetIrisMediaPlayer(IrisRtcEnginePtr engine_ptr);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisEventHandlerHandle SetIrisMediaPlayerEventHandler(IrisMediaPlayerPtr player_ptr, IntPtr event_handler);
+        internal static extern IrisEventHandlerHandle SetIrisMediaPlayerEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
         
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnsetIrisMediaPlayerEventHandler(IrisMediaPlayerPtr player_ptr,
-            IrisEventHandlerHandle handle);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisMediaPlayerApi(IrisMediaPlayerPtr player_ptr, ApiTypeMediaPlayer api_type,
-                                   string @params, out CharAssistant result);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisMediaPlayerApiWithBuffer(IrisMediaPlayerPtr player_ptr, ApiTypeMediaPlayer api_type,
-                                             string @params, byte[] buffer, out CharAssistant result);
+        internal static extern void UnsetIrisMediaPlayerEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
 
 // // media player video frame observer 
 //         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -245,41 +213,16 @@ namespace agora.rtc
 //             IrisMediaPlayerAudioFrameObserverHandle handle, string @params);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int MediaPlayerOpenWithSource(IrisMediaPlayerPtr player_ptr,
-                                    IntPtr provider, string @params);
+        internal static extern int MediaPlayerOpenWithSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
 
 //IrisCloudSpatialAudioEnginePtr
-       [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-       internal static extern IrisCloudSpatialAudioEnginePtr GetIrisCloudSpatialAudioEngine(IrisRtcEnginePtr engine_ptr);
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisEventHandlerHandle SetIrisCloudAudioEngineEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
 
-       [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-       internal static extern int CallIrisCloudSpatialAudioApi(IrisCloudSpatialAudioEnginePtr engine_ptr,
-                                   ApiTypeCloudSpatialAudio api_type,
-                                   string @params, out CharAssistant result);
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void UnsetIrisCloudAudioEngineEventHandler(IrisCloudSpatialAudioEnginePtr engine_ptr,
+                                        IrisEventHandlerHandle handle);
 
-       [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-       internal static extern int CallIrisCloudSpatialAudioApiWithBuffer(IrisCloudSpatialAudioEnginePtr engine_ptr,
-                           ApiTypeCloudSpatialAudio api_type, string @params, byte[] buffer, out CharAssistant result);
-
-       [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-       internal static extern IrisEventHandlerHandle SetIrisCloudAudioEngineEventHandler(IrisCloudSpatialAudioEnginePtr engine_ptr,
-                                   IntPtr event_handler);
-
-       [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-       internal static extern void UnsetIrisCloudAudioEngineEventHandler(IrisCloudSpatialAudioEnginePtr engine_ptr,
-                                     IrisEventHandlerHandle handle);
-
-// IrisLocalSpatialAudioEnginePtr
-       [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-       internal static extern IrisLocalSpatialAudioEnginePtr GetIrisLocalSpatialAudioEngine(IrisRtcEnginePtr engine_ptr);
-        
-       [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-       internal static extern int CallIrisLocalSpatialAudioApi(IrisLocalSpatialAudioEnginePtr engine_ptr,
-                            ApiTypeLocalSpatialAudio api_type, string @params, out CharAssistant result);
-
-       [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-       internal static extern int CallIrisLocalSpatialAudioApiWithBuffer(IrisLocalSpatialAudioEnginePtr engine_ptr,
-                               ApiTypeLocalSpatialAudio api_type, string @params, byte[] buffer, out CharAssistant result);
         #endregion
 
     }

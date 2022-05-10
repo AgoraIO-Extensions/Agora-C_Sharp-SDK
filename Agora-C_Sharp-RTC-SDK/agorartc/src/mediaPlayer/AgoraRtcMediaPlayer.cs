@@ -16,7 +16,7 @@ namespace agora.rtc
 {
     using LitJson;
 
-    using IrisRtcMediaPlayerPtr = IntPtr;
+    using IrisApiEnginePtr = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
     using IrisMediaPlayerCAudioFrameObserverNativeMarshal = IntPtr;
     using IrisMediaPlayerAudioFrameObserverHandleNative = IntPtr;
@@ -32,7 +32,7 @@ namespace agora.rtc
         private int playerId;
 
 
-        private IrisRtcMediaPlayerPtr _irisRtcMediaPlayer;
+        private IrisApiEnginePtr _irisApiEngine;
 
         private CharAssistant _result;
 
@@ -56,10 +56,10 @@ namespace agora.rtc
         private AgoraCallbackObject _callbackObject;
 #endif
 
-        internal AgoraRtcMediaPlayer(IrisRtcMediaPlayerPtr irisRtcMediaPlayer)
+        internal AgoraRtcMediaPlayer(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
-            _irisRtcMediaPlayer = irisRtcMediaPlayer;
+            _irisApiEngine = irisApiEngine;
         }
 
         ~AgoraRtcMediaPlayer()
@@ -76,7 +76,7 @@ namespace agora.rtc
                 ReleaseEventHandler();
             }
 
-            _irisRtcMediaPlayer = IntPtr.Zero;
+            _irisApiEngine = IntPtr.Zero;
             _result = new CharAssistant();
             
             _disposed = true;

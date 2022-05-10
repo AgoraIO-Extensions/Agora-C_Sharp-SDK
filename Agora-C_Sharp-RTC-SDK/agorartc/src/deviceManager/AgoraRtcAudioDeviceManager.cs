@@ -10,17 +10,17 @@ using System;
 namespace agora.rtc
 {
     using LitJson;
-    using IrisRtcDeviceManagerPtr = IntPtr;
+    using IrisApiEnginePtr = IntPtr;
     public sealed class AgoraRtcAudioPlaybackDeviceManager : IAgoraRtcAudioPlaybackDeviceManager
     {
         private bool _disposed;
-        private IrisRtcDeviceManagerPtr _irisRtcDeviceManager;
+        private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
 
-        internal AgoraRtcAudioPlaybackDeviceManager(IrisRtcDeviceManagerPtr irisRtcDeviceManager)
+        internal AgoraRtcAudioPlaybackDeviceManager(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
-            _irisRtcDeviceManager = irisRtcDeviceManager;
+            _irisApiEngine = irisApiEngine;
         }
 
         ~AgoraRtcAudioPlaybackDeviceManager()
@@ -42,7 +42,7 @@ namespace agora.rtc
             {
             }
 
-            _irisRtcDeviceManager = IntPtr.Zero;
+            _irisApiEngine = IntPtr.Zero;
             _result = new CharAssistant();
             _disposed = true;
         }
@@ -179,13 +179,13 @@ namespace agora.rtc
     public sealed class AgoraRtcAudioRecordingDeviceManager : IAgoraRtcAudioRecordingDeviceManager
     {
         private bool _disposed;
-        private IrisRtcDeviceManagerPtr _irisRtcDeviceManager;
+        private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
 
-        internal AgoraRtcAudioRecordingDeviceManager(IrisRtcDeviceManagerPtr irisRtcDeviceManager)
+        internal AgoraRtcAudioRecordingDeviceManager(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
-            _irisRtcDeviceManager = irisRtcDeviceManager;
+            _irisApiEngine = irisApiEngine;
         }
 
         ~AgoraRtcAudioRecordingDeviceManager()
@@ -207,7 +207,7 @@ namespace agora.rtc
             {
             }
 
-            _irisRtcDeviceManager = IntPtr.Zero;
+            _irisApiEngine = IntPtr.Zero;
             _result = new CharAssistant();
             _disposed = true;
         }

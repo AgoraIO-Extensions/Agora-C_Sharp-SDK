@@ -38,10 +38,6 @@ namespace agora.rtc
 
 
         private IrisRtcEnginePtr _irisRtcEngine;
-        private IrisRtcDeviceManagerPtr _irisRtcDeviceManager;
-        private IrisRtcMediaPlayerPtr _irisRtcMediaPlayer;
-        private IrisCloudSpatialAudioEnginePtr _irisCloudSpatialAudioEngine;
-        private IrisLocalSpatialAudioEnginePtr _irisLocalSpatialAudioEngine;
         private CharAssistant _result;
 
         private IrisEventHandlerHandleNative _irisEngineEventHandlerHandleNative;
@@ -80,17 +76,13 @@ namespace agora.rtc
             _result = new CharAssistant();
 
             _irisRtcEngine = AgoraRtcNative.CreateIrisRtcEngine();
-            _irisRtcDeviceManager = AgoraRtcNative.GetIrisRtcDeviceManager(_irisRtcEngine);
-            _irisRtcMediaPlayer = AgoraRtcNative.GetIrisMediaPlayer(_irisRtcEngine);
-            _irisCloudSpatialAudioEngine = AgoraRtcNative.GetIrisCloudSpatialAudioEngine(_irisRtcEngine);
-            _irisLocalSpatialAudioEngine = AgoraRtcNative.GetIrisLocalSpatialAudioEngine(_irisRtcEngine);
 
-            _videoDeviceManagerInstance = new AgoraRtcVideoDeviceManager(_irisRtcDeviceManager);
-            _audioPlaybackDeviceManagerInstance = new AgoraRtcAudioPlaybackDeviceManager(_irisRtcDeviceManager);
-            _audioRecordingDeviceManagerInstance = new AgoraRtcAudioRecordingDeviceManager(_irisRtcDeviceManager);
-            _mediaPlayerInstance = new AgoraRtcMediaPlayer(_irisRtcMediaPlayer);
-            _cloudSpatialAudioEngineInstance = new AgoraRtcCloudSpatialAudioEngine(_irisCloudSpatialAudioEngine);
-            _spatialAudioEngineInstance = new AgoraRtcSpatialAudioEngine(_irisLocalSpatialAudioEngine);
+            _videoDeviceManagerInstance = new AgoraRtcVideoDeviceManager(_irisRtcEngine);
+            _audioPlaybackDeviceManagerInstance = new AgoraRtcAudioPlaybackDeviceManager(_irisRtcEngine);
+            _audioRecordingDeviceManagerInstance = new AgoraRtcAudioRecordingDeviceManager(_irisRtcEngine);
+            _mediaPlayerInstance = new AgoraRtcMediaPlayer(_irisRtcEngine);
+            _cloudSpatialAudioEngineInstance = new AgoraRtcCloudSpatialAudioEngine(_irisRtcEngine);
+            _spatialAudioEngineInstance = new AgoraRtcSpatialAudioEngine(_irisRtcEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
             AgoraRtcNative.Attach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
@@ -124,11 +116,6 @@ namespace agora.rtc
                 _cloudSpatialAudioEngineInstance.Dispose();
                 _cloudSpatialAudioEngineInstance = null;
                 _spatialAudioEngineInstance = null;
-
-                _irisRtcDeviceManager = IntPtr.Zero;
-                _irisRtcMediaPlayer = IntPtr.Zero;
-                _irisCloudSpatialAudioEngine = IntPtr.Zero;
-                _irisLocalSpatialAudioEngine = IntPtr.Zero;
                 
                 AgoraRtcNative.Detach(AgoraRtcNative.GetIrisRtcRawData(_irisRtcEngine), _videoFrameBufferManagerPtr);
             }
