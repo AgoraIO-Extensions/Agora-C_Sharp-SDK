@@ -14,7 +14,7 @@ namespace agora.rtc
     using view_t = IntPtr;
     public sealed class AgoraRtcVideoDeviceManager : IAgoraRtcVideoDeviceManager
     {
-        private bool _disposed;
+        private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
 
@@ -50,10 +50,9 @@ namespace agora.rtc
 
         public override DeviceInfo[] EnumerateVideoDevices()
         {
-            var param = new { };
-            return AgoraRtcNative.CallIrisRtcVideoDeviceManagerApi(_irisRtcDeviceManager,
-                ApiTypeVideoDeviceManager.kVDMEnumerateVideoDevices, JsonMapper.ToJson(param),
-                out _result) != 0
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES,
+                "", 0, null, 0, out _result) != 0
                 ? new DeviceInfo[0]
                 : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result);
         }
@@ -64,19 +63,19 @@ namespace agora.rtc
             {
                 deviceIdUTF8
             };
-            return AgoraRtcNative.CallIrisRtcVideoDeviceManagerApi(_irisRtcDeviceManager,
-                ApiTypeVideoDeviceManager.kVDMSetDevice, JsonMapper.ToJson(param),
-                out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_VIDEODEVICEMANAGER_SETDEVICE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override string GetDevice()
         {
-            var param = new { };
-            return AgoraRtcNative.CallIrisRtcVideoDeviceManagerApi(_irisRtcDeviceManager,
-                            ApiTypeVideoDeviceManager.kVDMGetDevice, JsonMapper.ToJson(param),
-                            out _result) != 0
-                            ? null
-                            : ((_result.Result.Length == 0) ? null : _result.Result);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETDEVICE,
+                "", 0, null, 0, out _result) != 0
+                ? null
+                : ((_result.Result.Length == 0) ? null : _result.Result);
         }
 
         public override int StartDeviceTest(view_t hwnd)
@@ -85,26 +84,17 @@ namespace agora.rtc
             {
                 hwnd = (ulong) hwnd
             };
-            return AgoraRtcNative.CallIrisRtcVideoDeviceManagerApi(_irisRtcDeviceManager,
-                ApiTypeVideoDeviceManager.kVDMStartDeviceTest, JsonMapper.ToJson(param),
-                out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int StopDeviceTest()
         {
-            var param = new { };
-            return AgoraRtcNative.CallIrisRtcVideoDeviceManagerApi(_irisRtcDeviceManager,
-                ApiTypeVideoDeviceManager.kVDMStopDeviceTest, JsonMapper.ToJson(param),
-                out _result);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST,
+                "", 0, null, 0, out _result);
         }
-
-        // internal int CallIrisRtcVideoDeviceManagerApi(ApiTypeVideoDeviceManager apiType, string paramJson,
-        //     out string result)
-        // {
-        //     var ret = AgoraRtcNative.CallIrisRtcVideoDeviceManagerApi(_irisRtcDeviceManager, apiType,
-        //         paramJson, out _result);
-        //     result = _result.Result;
-        //     return ret;
-        // }
     }
 }
