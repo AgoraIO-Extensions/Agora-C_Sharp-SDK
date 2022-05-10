@@ -35,7 +35,7 @@ namespace agora.rtc
     /**
     * The channel profile.
     */
-    public enum CHANNEL_PROFILE_TYPE 
+    public enum CHANNEL_PROFILE_TYPE
     {
         /**
         * 0: Communication.
@@ -80,7 +80,7 @@ namespace agora.rtc
     /**
     * The warning codes.
     */
-    public enum WARN_CODE_TYPE 
+    public enum WARN_CODE_TYPE
     {
         /**
         * 8: The specified view is invalid. To use the video function, you need to specify
@@ -242,7 +242,7 @@ namespace agora.rtc
     /**
     * The error codes.
     */
-    public enum ERROR_CODE_TYPE 
+    public enum ERROR_CODE_TYPE
     {
         /**
         * 0: No error occurs.
@@ -509,7 +509,7 @@ namespace agora.rtc
         ERR_CERT_REQUEST = 168,
 
         // PcmSend Error num
-        ERR_PCMSEND_FORMAT =200,           // unsupport pcm format
+        ERR_PCMSEND_FORMAT = 200,           // unsupport pcm format
         ERR_PCMSEND_BUFFEROVERFLOW = 201,  // buffer overflow, the pcm send rate too quickly
 
         /// @cond
@@ -897,11 +897,11 @@ namespace agora.rtc
         * 1603: Video Device Module: An error occurs in setting the video encoder.
         */
         ERR_VCM_ENCODER_SET_ERROR = 1603,
-        };
-    
+    };
+
     // /**
-	//  * The UserInfo class.
-	//  */
+    //  * The UserInfo class.
+    //  */
     // public class UserInfo
     // {
     //     public UserInfo()
@@ -919,8 +919,8 @@ namespace agora.rtc
     //     }
 
     //     /**
-	// 	 * The user account.
-	// 	 */
+    // 	 * The user account.
+    // 	 */
     //     public string userId { set; get; }
 
     //     /**
@@ -938,18 +938,19 @@ namespace agora.rtc
     // }
 
     public struct UserInfo
-    { 
-        /** * The user ID. */ 
-        public uint uid; 
-        /** * The user account. */ 
-        public string userAccount; 
+    {
+        /** * The user ID. */
+        public uint uid;
+        /** * The user account. */
+        public string userAccount;
     }
 
 
     /**
     * Reasons for a user being offline.
     */
-    public enum USER_OFFLINE_REASON_TYPE {
+    public enum USER_OFFLINE_REASON_TYPE
+    {
         /**
         * 0: The user leaves the current channel.
         */
@@ -966,7 +967,8 @@ namespace agora.rtc
         USER_OFFLINE_BECOME_AUDIENCE = 2,
     };
 
-    public enum INTERFACE_ID_TYPE {
+    public enum INTERFACE_ID_TYPE
+    {
         AGORA_IID_AUDIO_DEVICE_MANAGER = 1,
         AGORA_IID_VIDEO_DEVICE_MANAGER = 2,
         AGORA_IID_PARAMETER_ENGINE = 3,
@@ -983,7 +985,8 @@ namespace agora.rtc
     /**
     * The network quality types.
     */
-    public enum QUALITY_TYPE {
+    public enum QUALITY_TYPE
+    {
         /**
         * 0: The network quality is unknown.
         * @deprecated This member is deprecated.
@@ -1027,7 +1030,8 @@ namespace agora.rtc
     /**
     * Content fit modes.
     */
-    public enum FIT_MODE_TYPE {
+    public enum FIT_MODE_TYPE
+    {
         /**
         * 1: Uniformly scale the video until it fills the visible boundaries (cropped).
         * One dimension of the video may have clipped contents.
@@ -1045,7 +1049,8 @@ namespace agora.rtc
     /**
     * The rotation information.
     */
-    public enum VIDEO_ORIENTATION {
+    public enum VIDEO_ORIENTATION
+    {
         /**
         * 0: Rotate the video by 0 degree clockwise.
         */
@@ -1067,7 +1072,8 @@ namespace agora.rtc
     /**
     * The video frame rate.
     */
-    public enum FRAME_RATE {
+    public enum FRAME_RATE
+    {
         /**
         * 1: 1 fps.
         */
@@ -1098,11 +1104,13 @@ namespace agora.rtc
         FRAME_RATE_FPS_60 = 60,
     };
 
-    public enum FRAME_WIDTH {
+    public enum FRAME_WIDTH
+    {
         FRAME_WIDTH_640 = 640,
     };
 
-    public enum FRAME_HEIGHT {
+    public enum FRAME_HEIGHT
+    {
         FRAME_HEIGHT_360 = 360,
     };
 
@@ -1110,7 +1118,8 @@ namespace agora.rtc
     /**
     * Types of the video frame.
     */
-    public enum VIDEO_FRAME_TYPE_NATIVE {
+    public enum VIDEO_FRAME_TYPE_NATIVE
+    {
         /** (Default) Blank frame */
         VIDEO_FRAME_TYPE_BLANK_FRAME = 0,
         /** (Default) Key frame */
@@ -1128,7 +1137,8 @@ namespace agora.rtc
     /**
     * Video output orientation modes.
     */
-    public enum ORIENTATION_MODE {
+    public enum ORIENTATION_MODE
+    {
         /**
         * 0: (Default) Adaptive mode.
         *
@@ -1158,7 +1168,8 @@ namespace agora.rtc
     /**
     * (For future use) Video degradation preferences under limited bandwidth.
     */
-    public enum DEGRADATION_PREFERENCE {
+    public enum DEGRADATION_PREFERENCE
+    {
         /**
         * 0: (Default) Degrade the frame rate and keep resolution to guarantee the video quality.
         */
@@ -1181,9 +1192,9 @@ namespace agora.rtc
         DISABLED = 100,
     };
 
-     /**
-	 * Video dimensions.
-	 */
+    /**
+    * Video dimensions.
+    */
     public class VideoDimensions
     {
         public VideoDimensions()
@@ -1236,7 +1247,8 @@ namespace agora.rtc
     /**
     * Video codec types.
     */
-    public enum VIDEO_CODEC_TYPE {
+    public enum VIDEO_CODEC_TYPE
+    {
         /**
         * 1: VP8.
         */
@@ -1270,7 +1282,8 @@ namespace agora.rtc
     /**
     * Audio codec types.
     */
-    public enum AUDIO_CODEC_TYPE {
+    public enum AUDIO_CODEC_TYPE
+    {
         /**
         * 1: OPUS.
         */
@@ -1310,7 +1323,8 @@ namespace agora.rtc
     * audio encoding type of audio encoded frame observer.
     */
     [Flags]
-    public enum AUDIO_ENCODING_TYPE {
+    public enum AUDIO_ENCODING_TYPE
+    {
         /**
         * 1: codecType AAC; sampleRate 16000; quality low which around 1.2 MB after 10 minutes
         */
@@ -1361,7 +1375,8 @@ namespace agora.rtc
     /**
     * Watermark fit mode
     */
-    public enum WATERMARK_FIT_MODE {
+    public enum WATERMARK_FIT_MODE
+    {
         /**
         * Use the position of positionInLandscapeMode/positionInPortraitMode in #WatermarkOptions
         * the widthRatio will be invalid.
@@ -1531,7 +1546,7 @@ namespace agora.rtc
             internalSendTs = 0;
             uid = 0;
             streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
-            
+
         }
 
         public EncodedVideoFrameInfo(ref EncodedVideoFrameInfo rhs)
@@ -1542,7 +1557,7 @@ namespace agora.rtc
             framesPerSecond = rhs.framesPerSecond;
             frameType = rhs.frameType;
             rotation = rhs.rotation;
-            trackId = rhs.trackId;;
+            trackId = rhs.trackId; ;
             renderTimeMs = rhs.renderTimeMs;
             internalSendTs = rhs.internalSendTs;
             uid = rhs.uid;
@@ -1580,7 +1595,7 @@ namespace agora.rtc
         * The track ID of the video frame.
         */
         public int trackId { set; get; }  // This can be reserved for multiple video tracks, we need to create different ssrc
-                        // and additional payload for later implementation.
+                                          // and additional payload for later implementation.
         /**
         * The timestamp for rendering the video.
         */
@@ -1602,7 +1617,8 @@ namespace agora.rtc
     /**
     * Video mirror mode types.
     */
-    public enum VIDEO_MIRROR_MODE_TYPE {
+    public enum VIDEO_MIRROR_MODE_TYPE
+    {
         /**
         * (Default) 0: The mirror mode determined by the SDK.
         */
@@ -1626,15 +1642,15 @@ namespace agora.rtc
             dimensions = null;
             frameRate = FRAME_RATE.FRAME_RATE_FPS_15;
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_GENERIC_H264;
-            bitrate = (int) BITRATE.STANDARD_BITRATE;
-            minBitrate = (int) BITRATE.DEFAULT_MIN_BITRATE;
+            bitrate = (int)BITRATE.STANDARD_BITRATE;
+            minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
             orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO;
         }
 
         public VideoEncoderConfiguration(VideoDimensions dimensions,
-            FRAME_RATE frameRate = FRAME_RATE.FRAME_RATE_FPS_15, 
+            FRAME_RATE frameRate = FRAME_RATE.FRAME_RATE_FPS_15,
             VIDEO_CODEC_TYPE codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_GENERIC_H264,
             BITRATE bitrate = BITRATE.STANDARD_BITRATE, BITRATE minBitrate = BITRATE.DEFAULT_MIN_BITRATE,
             ORIENTATION_MODE orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE,
@@ -1644,8 +1660,8 @@ namespace agora.rtc
             this.dimensions = dimensions ?? new VideoDimensions();
             this.frameRate = frameRate;
             this.codecType = codecType;
-            this.bitrate = (int) bitrate;
-            this.minBitrate = (int) minBitrate;
+            this.bitrate = (int)bitrate;
+            this.minBitrate = (int)minBitrate;
             this.orientationMode = orientationMode;
             this.degradationPreference = degradationPreference;
             this.mirrorMode = mirrorMode;
@@ -1662,8 +1678,8 @@ namespace agora.rtc
             dimensions = new VideoDimensions(width, height);
             this.frameRate = frameRate;
             this.codecType = codecType;
-            this.bitrate = (int) bitrate;
-            this.minBitrate = (int) minBitrate;
+            this.bitrate = (int)bitrate;
+            this.minBitrate = (int)minBitrate;
             this.orientationMode = orientationMode;
             this.degradationPreference = degradationPreference;
             this.mirrorMode = mirrorMode;
@@ -1786,7 +1802,8 @@ namespace agora.rtc
         public bool ordered { set; get; }
     }
 
-    public class SimulcastStreamConfig {
+    public class SimulcastStreamConfig
+    {
         public SimulcastStreamConfig()
         {
             dimensions = new VideoDimensions(160, 120);
@@ -1851,7 +1868,8 @@ namespace agora.rtc
     }
 
     /** The options of the watermark image to be added. */
-    public class WatermarkRatio {
+    public class WatermarkRatio
+    {
         public WatermarkRatio()
         {
             xRatio = 0.0f;
@@ -1944,7 +1962,7 @@ namespace agora.rtc
             uint rxAudioBytes, uint rxVideoBytes, UInt16 txKBitRate, UInt16 rxKBitRate, UInt16 rxAudioKBitRate,
             UInt16 txAudioKBitRate, UInt16 rxVideoKBitRate, UInt16 txVideoKBitRate, UInt16 lastmileDelay,
             int txPacketLossRate, int rxPacketLossRate, uint userCount, double cpuAppUsage, double cpuTotalUsage, int gatewayRtt,
-            double memoryAppUsageRatio, double memoryTotalUsageRatio, int memoryAppUsageInKbytes,int connectTimeMs,
+            double memoryAppUsageRatio, double memoryTotalUsageRatio, int memoryAppUsageInKbytes, int connectTimeMs,
             int firstAudioPacketDuration, int firstVideoPacketDuration, int firstVideoKeyFramePacketDuration,
             int packetsBeforeFirstKeyFramePacket, int firstAudioPacketDurationAfterUnmute, int firstVideoPacketDurationAfterUnmute,
             int firstVideoKeyFramePacketDurationAfterUnmute, int firstVideoKeyFrameDecodedDurationAfterUnmute,
@@ -2162,41 +2180,42 @@ namespace agora.rtc
     /**
     * Video source types definition.
     **/
-    public enum VIDEO_SOURCE_TYPE {
+    public enum VIDEO_SOURCE_TYPE
+    {
         /** Video captured by the camera.
         */
         VIDEO_SOURCE_CAMERA_PRIMARY,
         VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
         /** Video captured by the secondary camera.
-        */
+         */
         VIDEO_SOURCE_CAMERA_SECONDARY,
         /** Video for screen sharing.
-        */
+         */
         VIDEO_SOURCE_SCREEN_PRIMARY,
         VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
         /** Video for secondary screen sharing.
-        */
+         */
         VIDEO_SOURCE_SCREEN_SECONDARY,
         /** Not define.
-        */
+         */
         VIDEO_SOURCE_CUSTOM,
         /** Video for media player sharing.
-        */
+         */
         VIDEO_SOURCE_MEDIA_PLAYER,
         /** Video for png image.
-        */
+         */
         VIDEO_SOURCE_RTC_IMAGE_PNG,
         /** Video for png image.
-        */
+         */
         VIDEO_SOURCE_RTC_IMAGE_JPEG,
         /** Video for png image.
-        */
+         */
         VIDEO_SOURCE_RTC_IMAGE_GIF,
         /** Remote video received from network.
-        */
+         */
         VIDEO_SOURCE_REMOTE,
         /** Video for transcoded.
-        */
+         */
         VIDEO_SOURCE_TRANSCODED,
 
         VIDEO_SOURCE_UNKNOWN = 100
@@ -2205,7 +2224,8 @@ namespace agora.rtc
     /**
     * User role types.
     */
-    public enum CLIENT_ROLE_TYPE {
+    public enum CLIENT_ROLE_TYPE
+    {
         /**
         * 1: Broadcaster. A broadcaster can both send and receive streams.
         */
@@ -2335,7 +2355,8 @@ namespace agora.rtc
     /**
     * Audio profile types.
     */
-    public enum AUDIO_PROFILE_TYPE {
+    public enum AUDIO_PROFILE_TYPE
+    {
         /**
         * 0: The default audio profile.
         * - In the Communication profile, it represents a sample rate of 16 kHz, music encoding, mono, and a bitrate
@@ -2375,7 +2396,8 @@ namespace agora.rtc
     /**
     * Audio application scenarios.
     */
-    public enum AUDIO_SCENARIO_TYPE {
+    public enum AUDIO_SCENARIO_TYPE
+    {
         /**
         * 0: (Recommended) The default audio scenario.
         */
@@ -2423,9 +2445,9 @@ namespace agora.rtc
     {
         public VideoFormat()
         {
-            width = (int) FRAME_WIDTH.FRAME_WIDTH_640;
-            height = (int) FRAME_HEIGHT.FRAME_HEIGHT_360;
-            fps = (int) FRAME_RATE.FRAME_RATE_FPS_15;
+            width = (int)FRAME_WIDTH.FRAME_WIDTH_640;
+            height = (int)FRAME_HEIGHT.FRAME_HEIGHT_360;
+            fps = (int)FRAME_RATE.FRAME_RATE_FPS_15;
         }
 
         public VideoFormat(int w, int h, int f)
@@ -2748,7 +2770,7 @@ namespace agora.rtc
         * stream after the network conditions improve.
         */
         REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK_RECOVERY = 9,
-        
+
         /** 10: The remote video stream type change to low stream type
         *  just for internal use
         */
@@ -2767,11 +2789,11 @@ namespace agora.rtc
     {
         public VideoTrackInfo()
         {
-            isLocal = false; 
-            ownerUserId = null; 
+            isLocal = false;
+            ownerUserId = null;
             trackId = 0;
             channelId = null;
-            streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH; 
+            streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             encodedFrameOnly = false;
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
@@ -2782,11 +2804,11 @@ namespace agora.rtc
                               VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly,
                               VIDEO_SOURCE_TYPE sourceType)
         {
-            this.isLocal = isLocal; 
-            this.ownerUserId = ownerUserId; 
+            this.isLocal = isLocal;
+            this.ownerUserId = ownerUserId;
             this.trackId = trackId;
             this.channelId = channelId;
-            this.streamType = streamType; 
+            this.streamType = streamType;
             this.codecType = codecType;
             this.encodedFrameOnly = encodedFrameOnly;
             this.sourceType = sourceType;
@@ -2918,7 +2940,8 @@ namespace agora.rtc
     /**
     * Audio sample rate types.
     */
-    public enum AUDIO_SAMPLE_RATE_TYPE {
+    public enum AUDIO_SAMPLE_RATE_TYPE
+    {
         /**
         * 32000: 32 KHz.
         */
@@ -2936,7 +2959,8 @@ namespace agora.rtc
     /**
     * Video codec profile types.
     */
-    public enum VIDEO_CODEC_PROFILE_TYPE {
+    public enum VIDEO_CODEC_PROFILE_TYPE
+    {
         /**
         * 66: Baseline video codec profile. Generally used in video calls on mobile phones.
         */
@@ -2954,7 +2978,8 @@ namespace agora.rtc
     /**
     * Audio codec profile types.
     */
-    public enum AUDIO_CODEC_PROFILE_TYPE {
+    public enum AUDIO_CODEC_PROFILE_TYPE
+    {
         /**
         * 0: (Default) LC-AAC, which is the low-complexity audio codec type.
         */
@@ -3009,7 +3034,8 @@ namespace agora.rtc
     /**
     * States of the RTMP streaming.
     */
-    public enum RTMP_STREAM_PUBLISH_STATE {
+    public enum RTMP_STREAM_PUBLISH_STATE
+    {
         /**
         * 0: The RTMP streaming has not started or has ended.
         *
@@ -3048,7 +3074,8 @@ namespace agora.rtc
     /**
     * Error codes of the RTMP streaming.
     */
-    public enum RTMP_STREAM_PUBLISH_ERROR_TYPE {
+    public enum RTMP_STREAM_PUBLISH_ERROR_TYPE
+    {
         /**
         * -1: The RTMP streaming fails.
         */
@@ -3108,7 +3135,7 @@ namespace agora.rtc
         /** Network error. */
         RTMP_STREAM_PUBLISH_ERROR_NET_DOWN = 14,  // Note: match to ERR_NET_DOWN in AgoraBase.h
         /** User AppId have not authorized to push stream. */
-        RTMP_STREAM_PUBLISH_ERROR_INVALID_APPID = 15, 
+        RTMP_STREAM_PUBLISH_ERROR_INVALID_APPID = 15,
     };
 
     /** Image properties.
@@ -3437,7 +3464,7 @@ namespace agora.rtc
             this.alpha = alpha;
             this.mirror = mirror;
         }
-        
+
         /**
         * Source type of video stream.
         */
@@ -3449,7 +3476,7 @@ namespace agora.rtc
         /**
         * RTC image if sourceType is VIDEO_SOURCE_RTC_IMAGE.
         */
-        public string imageUrl { set; get; } 
+        public string imageUrl { set; get; }
         /**
         * The horizontal position of the top left corner of the video frame.
         */
@@ -3485,7 +3512,8 @@ namespace agora.rtc
     /**
     * The definition of the LocalTranscodingConfiguration struct.
     */
-    public class LocalTranscoderConfiguration {
+    public class LocalTranscoderConfiguration
+    {
         public LocalTranscoderConfiguration(uint streamCount, TranscodingVideoStream[] VideoInputStreams,
                                             VideoEncoderConfiguration videoOutputConfiguration)
         {
@@ -3544,7 +3572,8 @@ namespace agora.rtc
     /**
     * States of the last mile network probe result.
     */
-    public enum LASTMILE_PROBE_RESULT_STATE {
+    public enum LASTMILE_PROBE_RESULT_STATE
+    {
         /**
         * 1: The probe result is complete.
         */
@@ -3701,7 +3730,8 @@ namespace agora.rtc
     /**
     * The network type.
     */
-    public enum NETWORK_TYPE {
+    public enum NETWORK_TYPE
+    {
         /**
         * -1: The network type is unknown.
         */
@@ -3739,7 +3769,7 @@ namespace agora.rtc
         public VideoCanvas()
         {
             view = 0;
-            renderMode = (int) RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
+            renderMode = (int)RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
             uid = 0;
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO;
             isScreenView = false;
@@ -3748,13 +3778,13 @@ namespace agora.rtc
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
         }
 
-        public VideoCanvas(view_t? view, RENDER_MODE_TYPE renderMode,  
+        public VideoCanvas(view_t? view, RENDER_MODE_TYPE renderMode,
              bool isScreenView, byte[] priv, uint priv_size,
-            VIDEO_SOURCE_TYPE sourceType, uint uid = 0, 
+            VIDEO_SOURCE_TYPE sourceType, uint uid = 0,
             VIDEO_MIRROR_MODE_TYPE mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO)
         {
             this.view = view ?? 0;
-            this.renderMode = (int) renderMode;
+            this.renderMode = (int)renderMode;
             this.uid = uid;
             this.mirrorMode = mirrorMode;
             this.isScreenView = isScreenView;
@@ -3788,7 +3818,8 @@ namespace agora.rtc
         public VIDEO_SOURCE_TYPE sourceType { set; get; }
     }
 
-    public enum LIGHTENING_CONTRAST_LEVEL {
+    public enum LIGHTENING_CONTRAST_LEVEL
+    {
         /** Low contrast level. */
         LIGHTENING_CONTRAST_LOW = 0,
         /** (Default) Normal contrast level. */
@@ -3924,7 +3955,8 @@ namespace agora.rtc
     /** The options for SDK preset audio effects.
     */
     [Flags]
-    public enum AUDIO_EFFECT_PRESET {
+    public enum AUDIO_EFFECT_PRESET
+    {
         /** Turn off audio effects and use the original voice.
         */
         AUDIO_EFFECT_OFF = 0x00000000,
@@ -4171,7 +4203,7 @@ namespace agora.rtc
         {
             dimensions = new VideoDimensions(1920, 1080);
             frameRate = 5;
-            bitrate = (int) BITRATE.STANDARD_BITRATE;
+            bitrate = (int)BITRATE.STANDARD_BITRATE;
             captureMouseCursor = true;
             windowFocus = false;
             excludeWindowList = new view_t[0];
@@ -4183,7 +4215,7 @@ namespace agora.rtc
         {
             dimensions = new VideoDimensions(width, height);
             this.frameRate = frameRate;
-            this.bitrate = (int) bitrate;
+            this.bitrate = (int)bitrate;
             this.captureMouseCursor = captureMouseCursor;
             this.windowFocus = windowFocus;
             this.excludeWindowList = excludeWindowList ?? new view_t[0];
@@ -4195,7 +4227,7 @@ namespace agora.rtc
         {
             this.dimensions = dimensions;
             this.frameRate = frameRate;
-            this.bitrate = (int) bitrate;
+            this.bitrate = (int)bitrate;
             this.captureMouseCursor = captureMouseCursor;
             this.windowFocus = windowFocus;
             this.excludeWindowList = excludeWindowList ?? new view_t[0];
@@ -4324,7 +4356,7 @@ namespace agora.rtc
             this.quality = quality_type;
         }
 
-        public AudioRecordingConfiguration(string file_path, bool enc, int sample_rate, 
+        public AudioRecordingConfiguration(string file_path, bool enc, int sample_rate,
                                         AUDIO_FILE_RECORDING_TYPE type, AUDIO_RECORDING_QUALITY_TYPE quality_type)
         {
             this.filePath = file_path;
@@ -4364,7 +4396,7 @@ namespace agora.rtc
     * The Audio encoded frame receiver options.
     * 
     */
-    public class AudioEncodedFrameObserverConfig 
+    public class AudioEncodedFrameObserverConfig
     {
         public AudioEncodedFrameObserverConfig()
         {
@@ -4372,7 +4404,7 @@ namespace agora.rtc
             encodingType = AUDIO_ENCODING_TYPE.AUDIO_ENCODING_TYPE_OPUS_48000_MEDIUM;
         }
 
-        public AudioEncodedFrameObserverConfig(AUDIO_ENCODED_FRAME_OBSERVER_POSITION postionType, 
+        public AudioEncodedFrameObserverConfig(AUDIO_ENCODED_FRAME_OBSERVER_POSITION postionType,
                                                 AUDIO_ENCODING_TYPE encodingType)
         {
             this.encodingType = encodingType;
@@ -4382,7 +4414,7 @@ namespace agora.rtc
         /**
         * The position where SDK record the audio, and callback to encoded audio frame receiver.
         */
-        public AUDIO_ENCODED_FRAME_OBSERVER_POSITION postionType { set; get; } 
+        public AUDIO_ENCODED_FRAME_OBSERVER_POSITION postionType { set; get; }
         /**
         * The audio encoding type of encoded frame.
         */
@@ -4393,7 +4425,8 @@ namespace agora.rtc
     * Preset local voice changer options.
     */
     [Flags]
-    public enum VOICE_CHANGER_PRESET {
+    public enum VOICE_CHANGER_PRESET
+    {
         /**
         * 0: Turn off the local voice changer, that is, to use the original voice.
         */
@@ -4479,7 +4512,8 @@ namespace agora.rtc
     /** IP areas.
     */
     [Flags]
-    public enum AREA_CODE {
+    public enum AREA_CODE
+    {
         /**
         * Mainland China.
         */
@@ -4511,7 +4545,8 @@ namespace agora.rtc
     };
 
     [Flags]
-    public enum AREA_CODE_EX {
+    public enum AREA_CODE_EX
+    {
         /**
         * Oceania
         */
@@ -4530,7 +4565,8 @@ namespace agora.rtc
         //AREA_CODE_OVS = 0xFFFFFFFE
     };
 
-    public enum CHANNEL_MEDIA_RELAY_ERROR {
+    public enum CHANNEL_MEDIA_RELAY_ERROR
+    {
         /** 0: The state is normal.
             */
         RELAY_OK = 0,
@@ -4575,7 +4611,8 @@ namespace agora.rtc
     };
 
     //callback event
-    public enum CHANNEL_MEDIA_RELAY_EVENT {
+    public enum CHANNEL_MEDIA_RELAY_EVENT
+    {
         /** 0: The user disconnects from the server due to poor network
             * connections.
             */
@@ -4628,7 +4665,8 @@ namespace agora.rtc
         RELAY_EVENT_RESUME_SEND_PACKET_TO_DEST_CHANNEL_FAILED = 15,
     };
 
-    public enum CHANNEL_MEDIA_RELAY_STATE {
+    public enum CHANNEL_MEDIA_RELAY_STATE
+    {
         /** 0: The SDK is initializing.
             */
         RELAY_STATE_IDLE = 0,
@@ -4746,7 +4784,7 @@ namespace agora.rtc
             expected_bitrate_bps = -1;
         }
 
-        public PeerDownlinkInfo(string uid, VIDEO_STREAM_TYPE stream_type, 
+        public PeerDownlinkInfo(string uid, VIDEO_STREAM_TYPE stream_type,
                                 REMOTE_VIDEO_DOWNSCALE_LEVEL current_downscale_level, int expected_bitrate_bps)
         {
             this.uid = uid;
@@ -4818,7 +4856,8 @@ namespace agora.rtc
 
     /** Encryption mode.
     */
-    public enum ENCRYPTION_MODE {
+    public enum ENCRYPTION_MODE
+    {
         /** 1: 128-bit AES encryption, XTS mode.
         */
         AES_128_XTS = 1,
@@ -4889,7 +4928,8 @@ namespace agora.rtc
 
     /** Encryption error type.
     */
-    public enum ENCRYPTION_ERROR_TYPE {
+    public enum ENCRYPTION_ERROR_TYPE
+    {
         ENCRYPTION_ERROR_INTERNAL_FAILURE = 0,
         ENCRYPTION_ERROR_DECRYPTION_FAILURE = 1,
         ENCRYPTION_ERROR_ENCRYPTION_FAILURE = 2,
@@ -4897,7 +4937,8 @@ namespace agora.rtc
 
     /** Type of permission.
     */
-    public enum PERMISSION_TYPE {
+    public enum PERMISSION_TYPE
+    {
         RECORD_AUDIO = 0,
         CAMERA = 1,
     };
@@ -4906,15 +4947,16 @@ namespace agora.rtc
     */
     public enum MAX_USER_ACCOUNT_LENGTH_TYPE
     {
-    /** The maximum length of user account is 255 bytes.
-    */
+        /** The maximum length of user account is 255 bytes.
+        */
         MAX_USER_ACCOUNT_LENGTH = 256
     };
 
     /**
     * The stream subscribe state.
     */
-    public enum STREAM_SUBSCRIBE_STATE {
+    public enum STREAM_SUBSCRIBE_STATE
+    {
         SUB_STATE_IDLE = 0,
         SUB_STATE_NO_SUBSCRIBED = 1,
         SUB_STATE_SUBSCRIBING = 2,
@@ -4924,7 +4966,8 @@ namespace agora.rtc
     /**
     * The stream publish state.
     */
-    public enum STREAM_PUBLISH_STATE {
+    public enum STREAM_PUBLISH_STATE
+    {
         PUB_STATE_IDLE = 0,
         PUB_STATE_NO_PUBLISHED = 1,
         PUB_STATE_PUBLISHING = 2,
@@ -4948,13 +4991,13 @@ namespace agora.rtc
     //     }
 
     //     /**
-	// 	 * The user ID.
-	// 	 */
+    // 	 * The user ID.
+    // 	 */
     //     public uint uid { set; get; }
 
     //     /**
-	// 	 * The user account.
-	// 	 */
+    // 	 * The user account.
+    // 	 */
     //     public string userAccount { set; get; }
     // }
 
@@ -4962,19 +5005,20 @@ namespace agora.rtc
     * Type of ear monitoring filter.
     */
     [Flags]
-    public enum EAR_MONITORING_FILTER_TYPE {
+    public enum EAR_MONITORING_FILTER_TYPE
+    {
         /**
         * 1: Do not add an audio filter to the in-ear monitor.
         */
-        EAR_MONITORING_FILTER_NONE = (1<<0),
+        EAR_MONITORING_FILTER_NONE = (1 << 0),
         /**
         * 2: Enable audio filters to the in-ear monitor.
         */
-        EAR_MONITORING_FILTER_BUILT_IN_AUDIO_FILTERS = (1<<1),
+        EAR_MONITORING_FILTER_BUILT_IN_AUDIO_FILTERS = (1 << 1),
         /**
         * 4: Enable noise suppression to the in-ear monitor.
         */
-        EAR_MONITORING_FILTER_NOISE_SUPPRESSION = (1<<2)
+        EAR_MONITORING_FILTER_NOISE_SUPPRESSION = (1 << 2)
     };
 
     ////////////////////////////////////////////////////////////////////////////////////////engine
@@ -4982,7 +5026,8 @@ namespace agora.rtc
     /**
     * The media device types.
     */
-    public enum MEDIA_DEVICE_TYPE {
+    public enum MEDIA_DEVICE_TYPE
+    {
         /**
         * -1: Unknown device type.
         */
@@ -5012,7 +5057,8 @@ namespace agora.rtc
     /**
     The states of the local user's audio mixing file.
     */
-    public enum AUDIO_MIXING_STATE_TYPE {
+    public enum AUDIO_MIXING_STATE_TYPE
+    {
         /** 710: The audio mixing file is playing. */
         AUDIO_MIXING_STATE_PLAYING = 710,
         /** 711: The audio mixing file pauses playing. */
@@ -5032,7 +5078,8 @@ namespace agora.rtc
     /**
     The error codes of the local user's audio mixing file.
     */
-    public enum AUDIO_MIXING_ERROR_TYPE {
+    public enum AUDIO_MIXING_ERROR_TYPE
+    {
         /** 701: The SDK cannot open the audio mixing file. */
         AUDIO_MIXING_ERROR_CAN_NOT_OPEN = 701,
         /** 702: The SDK opens the audio mixing file too frequently. */
@@ -5046,7 +5093,8 @@ namespace agora.rtc
     /**
     * The status of importing an external video stream in a live broadcast.
     */
-    public enum INJECT_STREAM_STATUS {
+    public enum INJECT_STREAM_STATUS
+    {
         /**
         * 0: The media stream is injected successfully.
         */
@@ -5096,7 +5144,8 @@ namespace agora.rtc
     /**
     * The audio equalization band frequency.
     */
-    public enum AUDIO_EQUALIZATION_BAND_FREQUENCY {
+    public enum AUDIO_EQUALIZATION_BAND_FREQUENCY
+    {
         /**
         * 0: 31 Hz.
         */
@@ -5142,7 +5191,8 @@ namespace agora.rtc
     /**
     * The audio reverberation type.
     */
-    public enum AUDIO_REVERB_TYPE {
+    public enum AUDIO_REVERB_TYPE
+    {
         /**
         * 0: (-20 to 10 dB), the level of the dry signal.
         */
@@ -5165,7 +5215,8 @@ namespace agora.rtc
         AUDIO_REVERB_STRENGTH = 4,
     };
 
-    public enum STREAM_FALLBACK_OPTIONS {
+    public enum STREAM_FALLBACK_OPTIONS
+    {
         /** 0: (Default) No fallback operation for the stream when the network
             condition is poor. The stream quality cannot be guaranteed. */
 
@@ -5181,7 +5232,8 @@ namespace agora.rtc
         STREAM_FALLBACK_OPTION_AUDIO_ONLY = 2,
     };
 
-    public enum PRIORITY_TYPE {
+    public enum PRIORITY_TYPE
+    {
         /** 50: High priority.
         */
         PRIORITY_HIGH = 50,
@@ -5200,7 +5252,7 @@ namespace agora.rtc
 
         public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int encoderOutputFrameRate,
             int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication,
-            int encodedBitrate, int encodedFrameWidth,int encodedFrameHeight, int encodedFrameCount, 
+            int encodedBitrate, int encodedFrameWidth, int encodedFrameHeight, int encodedFrameCount,
             VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate)
         {
             this.uid = uid;
@@ -5465,11 +5517,12 @@ namespace agora.rtc
         public int audioChannels { set; get; }
     }
 
-    public enum CAMERA_DIRECTION {
-    /** The rear camera. */
-    CAMERA_REAR = 0,
-    /** The front camera. */
-    CAMERA_FRONT = 1,
+    public enum CAMERA_DIRECTION
+    {
+        /** The rear camera. */
+        CAMERA_REAR = 0,
+        /** The front camera. */
+        CAMERA_FRONT = 1,
     };
 
     /** Camera capturer configuration.
@@ -5496,7 +5549,8 @@ namespace agora.rtc
         public CAMERA_DIRECTION? cameraDirection { set; get; }
     }
 
-    public class ScreenCaptureConfiguration {
+    public class ScreenCaptureConfiguration
+    {
         public bool isCaptureWindow { set; get; } // true - capture window, false - capture display
         public uint displayId { set; get; } // MacOS only
         public Rectangle screenRect { set; get; } //Windows only
@@ -5504,12 +5558,13 @@ namespace agora.rtc
         public ScreenCaptureParameters parameters { set; get; }
         public Rectangle regionRect { set; get; }
     }
-    
+
     ////////////////////////////////////Ex
     /**
     * Rtc Connection.
     */
-    public class RtcConnection {
+    public class RtcConnection
+    {
         public RtcConnection()
         {
 
@@ -5549,9 +5604,9 @@ namespace agora.rtc
 	 */
     public class RtcEngineContext
     {
-        public RtcEngineContext(IAgoraRtcEngineEventHandler eventHandler, string appId, byte[] context, 
+        public RtcEngineContext(IAgoraRtcEngineEventHandler eventHandler, string appId, byte[] context,
             bool enableAudioDevice, CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
-            AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,  
+            AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
             LogConfig logConfig = null)
         {
             this.eventHandler = eventHandler;
@@ -5560,7 +5615,7 @@ namespace agora.rtc
             this.enableAudioDevice = enableAudioDevice;
             this.channelProfile = channelProfile;
             this.audioScenario = audioScenario;
-            _areaCode = (uint) areaCode;
+            _areaCode = (uint)areaCode;
             this.logConfig = logConfig ?? new LogConfig();
         }
 
@@ -5619,8 +5674,8 @@ namespace agora.rtc
 
         public AREA_CODE areaCode
         {
-            get { return (AREA_CODE) _areaCode; }
-            set { _areaCode = (uint) areaCode; }
+            get { return (AREA_CODE)_areaCode; }
+            set { _areaCode = (uint)areaCode; }
         }
     };
 
@@ -5667,7 +5722,8 @@ namespace agora.rtc
     };
 
     [Flags]
-    public enum LOG_LEVEL {
+    public enum LOG_LEVEL
+    {
         LOG_LEVEL_NONE = 0x0000,
         LOG_LEVEL_INFO = 0x0001,
         LOG_LEVEL_WARN = 0x0002,
@@ -5697,14 +5753,16 @@ namespace agora.rtc
         POSITION_PRE_ENCODER = 1 << 2,
     };
 
-    public class AudioTrackConfig {
+    public class AudioTrackConfig
+    {
         public bool enableLocalPlayback { set; get; }
     };
 
     /**
     * The channel media options.
     */
-    public class ChannelMediaOptions {
+    public class ChannelMediaOptions
+    {
         /**
         * Determines whether to publish the video of the camera track.
         * - true: Publish the video track of the camera capturer.
@@ -5861,22 +5919,24 @@ namespace agora.rtc
         public AudioOptionsExternal audioOptionsExternal { set; get; }
     };
 
-    public class AudioOptionsExternal {
+    public class AudioOptionsExternal
+    {
         public bool enable_aec_external_custom_ { set; get; }
 
         public bool enable_aec_external_loopback_ { set; get; }
 
-        public bool enable_agc_external_custom_  { set; get; }
+        public bool enable_agc_external_custom_ { set; get; }
 
-        public bool enable_ans_external_custom_  { set; get; }
+        public bool enable_ans_external_custom_ { set; get; }
 
-        public bool aec_aggressiveness_external_custom_  { set; get; }
+        public bool aec_aggressiveness_external_custom_ { set; get; }
     }
 
     /**
     * The encoded video track options.
     */
-    public class EncodedVideoTrackOptions {
+    public class EncodedVideoTrackOptions
+    {
         public EncodedVideoTrackOptions()
         {
             ccMode = TCcMode.CC_ENABLED;
@@ -5908,7 +5968,8 @@ namespace agora.rtc
     /**
     * The leave channel options.
     */
-    public class LeaveChannelOptions {
+    public class LeaveChannelOptions
+    {
         /**
         * Determines whether to stop playing and mixing the music file when leave channel.
         * - true: (Default) Stop playing and mixing the music file.
@@ -5932,7 +5993,8 @@ namespace agora.rtc
     /**
     * The operational permission of the SDK on the audio session.
     */
-    public enum AUDIO_SESSION_OPERATION_RESTRICTION {
+    public enum AUDIO_SESSION_OPERATION_RESTRICTION
+    {
         /**
         * 0: No restriction; the SDK can change the audio session.
         */
@@ -5959,7 +6021,8 @@ namespace agora.rtc
 
     /** Quality change of the local video in terms of target frame rate and target bit rate since last count.
     */
-    public enum QUALITY_ADAPT_INDICATION {
+    public enum QUALITY_ADAPT_INDICATION
+    {
         /** The quality of the local video stays the same. */
         ADAPT_NONE = 0,
         /** The quality improves because the network bandwidth increases. */
@@ -5971,7 +6034,8 @@ namespace agora.rtc
     /** 
     * Thread priority type.
     */
-    public enum THREAD_PRIORITY_TYPE {
+    public enum THREAD_PRIORITY_TYPE
+    {
         /**
         * 0: Lowest priority.
         */
@@ -6001,7 +6065,8 @@ namespace agora.rtc
     /**
     * The CC (Congestion Control) mode options.
     */
-    public enum TCcMode {
+    public enum TCcMode
+    {
         /**
         * Enable CC mode.
         */
@@ -6012,62 +6077,66 @@ namespace agora.rtc
         CC_DISABLED
     };
 
-    public enum SAE_CONNECTION_STATE_TYPE {
-      /* The SDK is connecting to the game server. */
-      SAE_CONNECTION_STATE_CONNECTING = 0,
-      /* The SDK is connected to the game server. */
-      SAE_CONNECTION_STATE_CONNECTED,
-      /* The SDK is disconnected from the game server. */
-      SAE_CONNECTION_STATE_DISCONNECTED,
-      /* The SDK is reconnecting to the game server. */
-      SAE_CONNECTION_STATE_RECONNECTING,
-      /* The SDK is reconnected to the game server. */
-      SAE_CONNECTION_STATE_RECONNECTED
-   };
+    public enum SAE_CONNECTION_STATE_TYPE
+    {
+        /* The SDK is connecting to the game server. */
+        SAE_CONNECTION_STATE_CONNECTING = 0,
+        /* The SDK is connected to the game server. */
+        SAE_CONNECTION_STATE_CONNECTED,
+        /* The SDK is disconnected from the game server. */
+        SAE_CONNECTION_STATE_DISCONNECTED,
+        /* The SDK is reconnecting to the game server. */
+        SAE_CONNECTION_STATE_RECONNECTING,
+        /* The SDK is reconnected to the game server. */
+        SAE_CONNECTION_STATE_RECONNECTED
+    };
 
-   /** reason of connection state change of GME
-   */
-   public enum SAE_CONNECTION_CHANGED_REASON_TYPE {
-      /* The connection state is changed. */
-      SAE_CONNECTION_CHANGED_DEFAULT = 0,
-      /* The SDK is connecting to the game server. */
-      SAE_CONNECTION_CHANGED_CONNECTING,
-      /* The SDK fails to create the game room. */
-      SAE_CONNECTION_CHANGED_CREATE_ROOM_FAIL,
-      /* The SDK is disconnected from the Agora RTM system. */
-      SAE_CONNECTION_CHANGED_RTM_DISCONNECT,
-      /* The SDK is kicked out of the Agora RTM system. */
-      SAE_CONNECTION_CHANGED_RTM_ABORTED,
-      /* The SDK recieved no message from server after long time */
-      SAE_CONNECTION_CHANGED_LOST_SYNC
-   };
+    /** reason of connection state change of GME
+    */
+    public enum SAE_CONNECTION_CHANGED_REASON_TYPE
+    {
+        /* The connection state is changed. */
+        SAE_CONNECTION_CHANGED_DEFAULT = 0,
+        /* The SDK is connecting to the game server. */
+        SAE_CONNECTION_CHANGED_CONNECTING,
+        /* The SDK fails to create the game room. */
+        SAE_CONNECTION_CHANGED_CREATE_ROOM_FAIL,
+        /* The SDK is disconnected from the Agora RTM system. */
+        SAE_CONNECTION_CHANGED_RTM_DISCONNECT,
+        /* The SDK is kicked out of the Agora RTM system. */
+        SAE_CONNECTION_CHANGED_RTM_ABORTED,
+        /* The SDK recieved no message from server after long time */
+        SAE_CONNECTION_CHANGED_LOST_SYNC
+    };
 
-   /** The definition of GMEngineContext
-   */
-   public struct CloudSpatialAudioConfig {
-      /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
-         * the real-time audio and video communication functionality.
-         */
-      public IAgoraRtcEngine rtcEngine;
-      /** The SDK uses the eventHandler interface class to send callbacks to the app.
-         */
-      public IAgoraRtcCloudSpatialAudioEngineEventHandler eventHandler;
-      /** The App ID must be the same App ID used for initializing the IRtcEngine object.
-         */
-      public string appId;
-      /**
-         * The region for connection. This advanced feature applies to scenarios that have regional restrictions.
-         *
-         * For the regions that Agora supports, see #SAE_DEPLOY_REGION. The area codes support bitwise operation.
-         *
-         * After specifying the region, the SDK connects to the Agora servers within that region.
-         */
-      public uint deployRegion;
-   };
+    /** The definition of GMEngineContext
+    */
+    public struct CloudSpatialAudioConfig
+    {
+        /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
+           * the real-time audio and video communication functionality.
+           */
+        public IAgoraRtcEngine rtcEngine;
+        /** The SDK uses the eventHandler interface class to send callbacks to the app.
+           */
+        public IAgoraRtcCloudSpatialAudioEngineEventHandler eventHandler;
+        /** The App ID must be the same App ID used for initializing the IRtcEngine object.
+           */
+        public string appId;
+        /**
+           * The region for connection. This advanced feature applies to scenarios that have regional restrictions.
+           *
+           * For the regions that Agora supports, see #SAE_DEPLOY_REGION. The area codes support bitwise operation.
+           *
+           * After specifying the region, the SDK connects to the Agora servers within that region.
+           */
+        public uint deployRegion;
+    };
 
     /** IP areas.
     */
-    public enum SAE_DEPLOY_REGION {
+    public enum SAE_DEPLOY_REGION
+    {
         /**
         * Mainland China.
         */
@@ -6086,102 +6155,104 @@ namespace agora.rtc
         SAE_DEPLOY_REGION_AS = 0x00000008
     };
 
-   public enum MEDIA_PLAYER_STATE {
-      /** Default state.
-         */
-      PLAYER_STATE_IDLE = 0,
-      /** Opening the media file.
-         */
-      PLAYER_STATE_OPENING,
-      /** The media file is opened successfully.
-         */
-      PLAYER_STATE_OPEN_COMPLETED,
-      /** Playing the media file.
-         */
-      PLAYER_STATE_PLAYING,
-      /** The playback is paused.
-         */
-      PLAYER_STATE_PAUSED,
-      /** The playback is completed.
-         */
-      PLAYER_STATE_PLAYBACK_COMPLETED,
-      /** All loops are completed.
-         */
-      PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED,
-      /** The playback is stopped.
-         */
-      PLAYER_STATE_STOPPED,
-      /** Player pausing (internal)
-         */
-      PLAYER_STATE_PAUSING_INTERNAL = 50,
-      /** Player stopping (internal)
-         */
-      PLAYER_STATE_STOPPING_INTERNAL,
-      /** Player seeking state (internal)
-         */
-      PLAYER_STATE_SEEKING_INTERNAL,
-      /** Player getting state (internal)
-         */
-      PLAYER_STATE_GETTING_INTERNAL,
-      /** None state for state machine (internal)
-         */
-      PLAYER_STATE_NONE_INTERNAL,
-      /** Do nothing state for state machine (internal)
-         */
-      PLAYER_STATE_DO_NOTHING_INTERNAL,
-      /** The playback fails.
-         */
-      PLAYER_STATE_FAILED = 100,
-   };
-   /**
-   * @brief Player error code
-   *
-   */
-   public enum MEDIA_PLAYER_ERROR {
-      /** No error.
-         */
-      PLAYER_ERROR_NONE = 0,
-      /** The parameter is invalid.
-         */
-      PLAYER_ERROR_INVALID_ARGUMENTS = -1,
-      /** Internel error.
-         */
-      PLAYER_ERROR_INTERNAL = -2,
-      /** No resource.
-         */
-      PLAYER_ERROR_NO_RESOURCE = -3,
-      /** Invalid media source.
-         */
-      PLAYER_ERROR_INVALID_MEDIA_SOURCE = -4,
-      /** The type of the media stream is unknown.
-         */
-      PLAYER_ERROR_UNKNOWN_STREAM_TYPE = -5,
-      /** The object is not initialized.
-         */
-      PLAYER_ERROR_OBJ_NOT_INITIALIZED = -6,
-      /** The codec is not supported.
-         */
-      PLAYER_ERROR_CODEC_NOT_SUPPORTED = -7,
-      /** Invalid renderer.
-         */
-      PLAYER_ERROR_VIDEO_RENDER_FAILED = -8,
-      /** An error occurs in the internal state of the player.
-         */
-      PLAYER_ERROR_INVALID_STATE = -9,
-      /** The URL of the media file cannot be found.
-         */
-      PLAYER_ERROR_URL_NOT_FOUND = -10,
-      /** Invalid connection between the player and the Agora server.
-         */
-      PLAYER_ERROR_INVALID_CONNECTION_STATE = -11,
-      /** The playback buffer is insufficient.
-         */
-      PLAYER_ERROR_SRC_BUFFER_UNDERFLOW = -12,
-      /** The audio mixing file playback is interrupted.
-         */
-      PLAYER_ERROR_INTERRUPTED = -13,
-      /** The SDK does not support this function.
-        */
+    public enum MEDIA_PLAYER_STATE
+    {
+        /** Default state.
+           */
+        PLAYER_STATE_IDLE = 0,
+        /** Opening the media file.
+           */
+        PLAYER_STATE_OPENING,
+        /** The media file is opened successfully.
+           */
+        PLAYER_STATE_OPEN_COMPLETED,
+        /** Playing the media file.
+           */
+        PLAYER_STATE_PLAYING,
+        /** The playback is paused.
+           */
+        PLAYER_STATE_PAUSED,
+        /** The playback is completed.
+           */
+        PLAYER_STATE_PLAYBACK_COMPLETED,
+        /** All loops are completed.
+           */
+        PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED,
+        /** The playback is stopped.
+           */
+        PLAYER_STATE_STOPPED,
+        /** Player pausing (internal)
+           */
+        PLAYER_STATE_PAUSING_INTERNAL = 50,
+        /** Player stopping (internal)
+           */
+        PLAYER_STATE_STOPPING_INTERNAL,
+        /** Player seeking state (internal)
+           */
+        PLAYER_STATE_SEEKING_INTERNAL,
+        /** Player getting state (internal)
+           */
+        PLAYER_STATE_GETTING_INTERNAL,
+        /** None state for state machine (internal)
+           */
+        PLAYER_STATE_NONE_INTERNAL,
+        /** Do nothing state for state machine (internal)
+           */
+        PLAYER_STATE_DO_NOTHING_INTERNAL,
+        /** The playback fails.
+           */
+        PLAYER_STATE_FAILED = 100,
+    };
+    /**
+    * @brief Player error code
+    *
+    */
+    public enum MEDIA_PLAYER_ERROR
+    {
+        /** No error.
+           */
+        PLAYER_ERROR_NONE = 0,
+        /** The parameter is invalid.
+           */
+        PLAYER_ERROR_INVALID_ARGUMENTS = -1,
+        /** Internel error.
+           */
+        PLAYER_ERROR_INTERNAL = -2,
+        /** No resource.
+           */
+        PLAYER_ERROR_NO_RESOURCE = -3,
+        /** Invalid media source.
+           */
+        PLAYER_ERROR_INVALID_MEDIA_SOURCE = -4,
+        /** The type of the media stream is unknown.
+           */
+        PLAYER_ERROR_UNKNOWN_STREAM_TYPE = -5,
+        /** The object is not initialized.
+           */
+        PLAYER_ERROR_OBJ_NOT_INITIALIZED = -6,
+        /** The codec is not supported.
+           */
+        PLAYER_ERROR_CODEC_NOT_SUPPORTED = -7,
+        /** Invalid renderer.
+           */
+        PLAYER_ERROR_VIDEO_RENDER_FAILED = -8,
+        /** An error occurs in the internal state of the player.
+           */
+        PLAYER_ERROR_INVALID_STATE = -9,
+        /** The URL of the media file cannot be found.
+           */
+        PLAYER_ERROR_URL_NOT_FOUND = -10,
+        /** Invalid connection between the player and the Agora server.
+           */
+        PLAYER_ERROR_INVALID_CONNECTION_STATE = -11,
+        /** The playback buffer is insufficient.
+           */
+        PLAYER_ERROR_SRC_BUFFER_UNDERFLOW = -12,
+        /** The audio mixing file playback is interrupted.
+           */
+        PLAYER_ERROR_INTERRUPTED = -13,
+        /** The SDK does not support this function.
+          */
         PLAYER_ERROR_NOT_SUPPORTED = -14,
         /** The token has expired.
         */
@@ -6192,89 +6263,92 @@ namespace agora.rtc
         /** An unknown error occurs.
         */
         PLAYER_ERROR_UNKNOWN = -17,
-   };
+    };
 
-   /**
-   * @brief The playback speed.
-   *
-   */
-   public enum MEDIA_PLAYER_PLAYBACK_SPEED {
-      /** The original playback speed.
-         */
-      PLAYBACK_SPEED_ORIGINAL = 100,
-      /** 0.5 times the original playback speed.
-      */
-      PLAYBACK_SPEED_50_PERCENT = 50,
-      /** 0.75 times the original playback speed.
-         */
-      PLAYBACK_SPEED_75_PERCENT = 75,
-      /** 1.25 times the original playback speed.
-         */
-      PLAYBACK_SPEED_125_PERCENT = 125,
-      /** 1.5 times the original playback speed.
-         */
-      PLAYBACK_SPEED_150_PERCENT = 150,
-      /** 2.0 times the original playback.
-         */
-      PLAYBACK_SPEED_200_PERCENT = 200,
-   };
-
-   /**
-   * @brief The type of the media stream.
-   *
-   */
-   public enum MEDIA_STREAM_TYPE {
-      /** The type is unknown.
-         */
-      STREAM_TYPE_UNKNOWN = 0,
-      /** The video stream.
-         */
-      STREAM_TYPE_VIDEO = 1,
-      /** The audio stream.
-         */
-      STREAM_TYPE_AUDIO = 2,
-      /** The subtitle stream.
-         */
-      STREAM_TYPE_SUBTITLE = 3,
-   };
-
-   /**
-   * @brief The playback event.
-   *
-   */
-   public enum MEDIA_PLAYER_EVENT {
-      /** The player begins to seek to the new playback position.
-         */
-      PLAYER_EVENT_SEEK_BEGIN = 0,
-      /** The seek operation completes.
-         */
-      PLAYER_EVENT_SEEK_COMPLETE = 1,
-      /** An error occurs during the seek operation.
-         */
-      PLAYER_EVENT_SEEK_ERROR = 2,
-      /** The player publishes a video track.
-         */
-      PLAYER_EVENT_VIDEO_PUBLISHED = 3,
-      /** The player publishes an audio track.
-         */
-      PLAYER_EVENT_AUDIO_PUBLISHED = 4,
-      /** The player changes the audio track for playback.
-         */
-      PLAYER_EVENT_AUDIO_TRACK_CHANGED = 5,
-      /** player buffer low
-         */
-      PLAYER_EVENT_BUFFER_LOW = 6,
-         /** player buffer recover
-         */
-      PLAYER_EVENT_BUFFER_RECOVER = 7,
-      /** The video or audio is interrupted
-         */
-      PLAYER_EVENT_FREEZE_START = 8,
-      /** Interrupt at the end of the video or audio
-         */
-      PLAYER_EVENT_FREEZE_STOP = 9,
-      /** switch source begin
+    /**
+    * @brief The playback speed.
+    *
+    */
+    public enum MEDIA_PLAYER_PLAYBACK_SPEED
+    {
+        /** The original playback speed.
+           */
+        PLAYBACK_SPEED_ORIGINAL = 100,
+        /** 0.5 times the original playback speed.
         */
+        PLAYBACK_SPEED_50_PERCENT = 50,
+        /** 0.75 times the original playback speed.
+           */
+        PLAYBACK_SPEED_75_PERCENT = 75,
+        /** 1.25 times the original playback speed.
+           */
+        PLAYBACK_SPEED_125_PERCENT = 125,
+        /** 1.5 times the original playback speed.
+           */
+        PLAYBACK_SPEED_150_PERCENT = 150,
+        /** 2.0 times the original playback.
+           */
+        PLAYBACK_SPEED_200_PERCENT = 200,
+    };
+
+    /**
+    * @brief The type of the media stream.
+    *
+    */
+    public enum MEDIA_STREAM_TYPE
+    {
+        /** The type is unknown.
+           */
+        STREAM_TYPE_UNKNOWN = 0,
+        /** The video stream.
+           */
+        STREAM_TYPE_VIDEO = 1,
+        /** The audio stream.
+           */
+        STREAM_TYPE_AUDIO = 2,
+        /** The subtitle stream.
+           */
+        STREAM_TYPE_SUBTITLE = 3,
+    };
+
+    /**
+    * @brief The playback event.
+    *
+    */
+    public enum MEDIA_PLAYER_EVENT
+    {
+        /** The player begins to seek to the new playback position.
+           */
+        PLAYER_EVENT_SEEK_BEGIN = 0,
+        /** The seek operation completes.
+           */
+        PLAYER_EVENT_SEEK_COMPLETE = 1,
+        /** An error occurs during the seek operation.
+           */
+        PLAYER_EVENT_SEEK_ERROR = 2,
+        /** The player publishes a video track.
+           */
+        PLAYER_EVENT_VIDEO_PUBLISHED = 3,
+        /** The player publishes an audio track.
+           */
+        PLAYER_EVENT_AUDIO_PUBLISHED = 4,
+        /** The player changes the audio track for playback.
+           */
+        PLAYER_EVENT_AUDIO_TRACK_CHANGED = 5,
+        /** player buffer low
+           */
+        PLAYER_EVENT_BUFFER_LOW = 6,
+        /** player buffer recover
+        */
+        PLAYER_EVENT_BUFFER_RECOVER = 7,
+        /** The video or audio is interrupted
+           */
+        PLAYER_EVENT_FREEZE_START = 8,
+        /** Interrupt at the end of the video or audio
+           */
+        PLAYER_EVENT_FREEZE_STOP = 9,
+        /** switch source begin
+          */
         PLAYER_EVENT_SWITCH_BEGIN = 10,
         /** switch source complete
         */
@@ -6285,82 +6359,85 @@ namespace agora.rtc
         /** An application can render the video to less than a second
         */
         PLAYER_EVENT_FIRST_DISPLAYED = 13,
-   };
+    };
 
-   /**
-   * @brief The information of the media stream object.
-   *
-   */
-   public struct PlayerStreamInfo {
-      /** The index of the media stream. */
-      public int streamIndex;
-
-      /** The type of the media stream. See {@link MEDIA_STREAM_TYPE}. */
-      public MEDIA_STREAM_TYPE streamType;
-
-      /** The codec of the media stream. */
-      public string codecName;
-
-      /** The language of the media stream. */
-      public string language;
-
-      /** The frame rate (fps) if the stream is video. */
-      public int videoFrameRate;
-
-      /** The video bitrate (bps) if the stream is video. */
-      public int videoBitRate;
-
-      /** The video width (pixel) if the stream is video. */
-      public int videoWidth;
-
-      /** The video height (pixel) if the stream is video. */
-      public int videoHeight;
-
-      /** The rotation angle if the steam is video. */
-      public int videoRotation;
-
-      /** The sample rate if the stream is audio. */
-      public int audioSampleRate;
-
-      /** The number of audio channels if the stream is audio. */
-      public int audioChannels;
-
-      /** The number of bits per sample if the stream is audio. */
-      public int audioBitsPerSample;
-
-      /** The total duration (second) of the media stream. */
-      public Int64 duration;
-   };
-
-   /**
-   * @brief The type of the media metadata.
-   *
-   */
-   public enum MEDIA_PLAYER_METADATA_TYPE {
-      /** The type is unknown.
-         */
-      PLAYER_METADATA_TYPE_UNKNOWN = 0,
-      /** The type is SEI.
-         */
-      PLAYER_METADATA_TYPE_SEI = 1,
-   };
-
-   /** Audio dual-mono output mode
-   */
-   public enum AUDIO_DUAL_MONO_MODE {
-   /**< ChanLOut=ChanLin, ChanRout=ChanRin */
-      AUDIO_DUAL_MONO_STEREO = 0,
-      /**< ChanLOut=ChanRout=ChanLin */
-      AUDIO_DUAL_MONO_L = 1,
-      /**< ChanLOut=ChanRout=ChanRin */
-      AUDIO_DUAL_MONO_R = 2,
-      /**< ChanLout=ChanRout=(ChanLin+ChanRin)/2 */
-      AUDIO_DUAL_MONO_MIX = 3
-   };
-
-   /** 
-    * Spatial audio parameters
+    /**
+    * @brief The information of the media stream object.
+    *
     */
+    public struct PlayerStreamInfo
+    {
+        /** The index of the media stream. */
+        public int streamIndex;
+
+        /** The type of the media stream. See {@link MEDIA_STREAM_TYPE}. */
+        public MEDIA_STREAM_TYPE streamType;
+
+        /** The codec of the media stream. */
+        public string codecName;
+
+        /** The language of the media stream. */
+        public string language;
+
+        /** The frame rate (fps) if the stream is video. */
+        public int videoFrameRate;
+
+        /** The video bitrate (bps) if the stream is video. */
+        public int videoBitRate;
+
+        /** The video width (pixel) if the stream is video. */
+        public int videoWidth;
+
+        /** The video height (pixel) if the stream is video. */
+        public int videoHeight;
+
+        /** The rotation angle if the steam is video. */
+        public int videoRotation;
+
+        /** The sample rate if the stream is audio. */
+        public int audioSampleRate;
+
+        /** The number of audio channels if the stream is audio. */
+        public int audioChannels;
+
+        /** The number of bits per sample if the stream is audio. */
+        public int audioBitsPerSample;
+
+        /** The total duration (second) of the media stream. */
+        public Int64 duration;
+    };
+
+    /**
+    * @brief The type of the media metadata.
+    *
+    */
+    public enum MEDIA_PLAYER_METADATA_TYPE
+    {
+        /** The type is unknown.
+           */
+        PLAYER_METADATA_TYPE_UNKNOWN = 0,
+        /** The type is SEI.
+           */
+        PLAYER_METADATA_TYPE_SEI = 1,
+    };
+
+    /** Audio dual-mono output mode
+    */
+    public enum AUDIO_DUAL_MONO_MODE
+    {
+        /**< ChanLOut=ChanLin, ChanRout=ChanRin */
+        AUDIO_DUAL_MONO_STEREO = 0,
+        /**< ChanLOut=ChanRout=ChanLin */
+        AUDIO_DUAL_MONO_L = 1,
+        /**< ChanLOut=ChanRout=ChanRin */
+        AUDIO_DUAL_MONO_R = 2,
+        /**< ChanLout=ChanRout=(ChanLin+ChanRin)/2 */
+        AUDIO_DUAL_MONO_MIX = 3
+    };
+
+    /** 
+     * Spatial audio parameters
+     */
     public class SpatialAudioParams
     {
         /**
@@ -6404,7 +6481,7 @@ namespace agora.rtc
     {
         public RemoteVoicePositionInfo(float[] position, float[] forward)
         {
-            this.position= position;
+            this.position = position;
             this.forward = forward;
         }
         // The coordnate of remote voice source, (x, y, z)
@@ -6415,7 +6492,8 @@ namespace agora.rtc
 
     /** The type of the custom background image.
     */
-    public enum BACKGROUND_SOURCE_TYPE {
+    public enum BACKGROUND_SOURCE_TYPE
+    {
         /**
         * 1: (Default) The background image is a solid color.
         */
@@ -6430,7 +6508,8 @@ namespace agora.rtc
 
     /** The blur degree used to blur background in different level.(foreground keeps same as before).
     */
-    public enum BACKGROUND_BLUR_DEGREE {
+    public enum BACKGROUND_BLUR_DEGREE
+    {
         /** blur degree level low, background can see things, but have some blur effect */
         BLUR_DEGREE_LOW = 1,
         /** blur degree level medium, blur more than level medium */
@@ -6471,7 +6550,8 @@ namespace agora.rtc
     * The configuration of rhythm player,
     * which is set in startRhythmPlayer or configRhythmPlayer.
     */
-    public class AgoraRhythmPlayerConfig {
+    public class AgoraRhythmPlayerConfig
+    {
         /**
         * The number of beats per measure. The range is 1 to 9.
         * The default value is 4,
@@ -6488,20 +6568,23 @@ namespace agora.rtc
 
     /** Definition of contentinspect
     */
-    public enum CONTENT_INSPECT_RESULT {
+    public enum CONTENT_INSPECT_RESULT
+    {
         CONTENT_INSPECT_NEUTRAL = 1,
         CONTENT_INSPECT_SEXY = 2,
         CONTENT_INSPECT_PORN = 3,
     };
 
-    public enum CONTENT_INSPECT_DEVICE_TYPE{
+    public enum CONTENT_INSPECT_DEVICE_TYPE
+    {
         CONTENT_INSPECT_DEVICE_INVALID = 0,
         CONTENT_INSPECT_DEVICE_AGORA = 1,
         CONTENT_INSPECT_DEVICE_HIVE = 2,
         CONTENT_INSPECT_DEVICE_TUPU = 3
     };
 
-    public enum CONTENT_INSPECT_TYPE {
+    public enum CONTENT_INSPECT_TYPE
+    {
         /**
         * (Default) content inspect type invalid
         */
@@ -6516,7 +6599,8 @@ namespace agora.rtc
         CONTENT_INSPECT_SUPERVISE = 2
     };
 
-    public class ContentInspectModule {
+    public class ContentInspectModule
+    {
         /**
         * The content inspect module type.
         */
@@ -6552,7 +6636,8 @@ namespace agora.rtc
         public int moduleCount;
     };
 
-    public class VideoSubscriptionOptions {
+    public class VideoSubscriptionOptions
+    {
         /**
         * The type of the video stream to subscribe to.
         *
@@ -6571,7 +6656,8 @@ namespace agora.rtc
     /**
     The states of the rhythm player.
     */
-    public enum RHYTHM_PLAYER_STATE_TYPE {
+    public enum RHYTHM_PLAYER_STATE_TYPE
+    {
         /** 810: The rhythm player is idle. */
         RHYTHM_PLAYER_STATE_IDLE = 810,
         /** 811: The rhythm player is opening files. */
@@ -6587,7 +6673,8 @@ namespace agora.rtc
     /**
     The error codes of the rhythm player.
     */
-    public enum RHYTHM_PLAYER_ERROR_TYPE {
+    public enum RHYTHM_PLAYER_ERROR_TYPE
+    {
         /** 0: The rhythm player works well. */
         RHYTHM_PLAYER_ERROR_OK = 0,
         /** 1: The rhythm player occurs a internal error. */
@@ -6604,7 +6691,8 @@ namespace agora.rtc
     * @brief The information of the media stream object.
     *
     */
-    public class SrcInfo {
+    public class SrcInfo
+    {
         /** The bitrate of the media stream. The unit of the number is kbps.
         *
         */
@@ -6618,7 +6706,8 @@ namespace agora.rtc
 
     /** Values when user trigger interface of opening
     */
-    public class PlayerUpdatedInfo {
+    public class PlayerUpdatedInfo
+    {
         /** player_id has value when user trigger interface of opening
         */
         public string playerId;
@@ -6628,25 +6717,28 @@ namespace agora.rtc
         public string deviceId;
     };
 
-    public enum SEG_MODEL_TYPE {
+    public enum SEG_MODEL_TYPE
+    {
 
-        SEG_MODEL_AI = 1, 
+        SEG_MODEL_AI = 1,
         SEG_MODEL_GREEN = 2
     };
 
-    public class SegmentationProperty {
+    public class SegmentationProperty
+    {
 
         public SEG_MODEL_TYPE modelType;
 
         public int preferVelocity;
-        
+
         public float greenCapacity;
     };
 
     /**
     * The external video source type.
     */
-    public enum EXTERNAL_VIDEO_SOURCE_TYPE {
+    public enum EXTERNAL_VIDEO_SOURCE_TYPE
+    {
         /**
         * 0: non-encoded video frame.
         */
@@ -6658,7 +6750,8 @@ namespace agora.rtc
     };
 
     /** Media device states. */
-    public enum MEDIA_DEVICE_STATE_TYPE {
+    public enum MEDIA_DEVICE_STATE_TYPE
+    {
         /** 1: The device is active.
         */
         MEDIA_DEVICE_STATE_ACTIVE = 1,
@@ -6675,7 +6768,8 @@ namespace agora.rtc
 
     /** The video stream lifecycle of CDN Live.
     */
-    public enum RTMP_STREAM_LIFE_CYCLE_TYPE {
+    public enum RTMP_STREAM_LIFE_CYCLE_TYPE
+    {
         /** Bound to the channel lifecycle.
         */
         RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL = 1,
@@ -6688,7 +6782,8 @@ namespace agora.rtc
     *
     * @since v3.3.0
     */
-    public enum CLOUD_PROXY_TYPE {
+    public enum CLOUD_PROXY_TYPE
+    {
         /** 0: Do not use the cloud proxy.
         */
         NONE_PROXY = 0,
@@ -6703,7 +6798,8 @@ namespace agora.rtc
     };
 
     /** The local  proxy mode type. */
-    public enum LOCAL_PROXY_MODE {
+    public enum LOCAL_PROXY_MODE
+    {
         /** 0: Connect local proxy with high priority, if not connected to local proxy, fallback to sdrtn.
         */
         kConnectivityFirst = 0,
@@ -6712,7 +6808,8 @@ namespace agora.rtc
         kLocalOnly = 1,
     };
 
-    public struct LocalAccessPointConfiguration {
+    public struct LocalAccessPointConfiguration
+    {
         /** local access point ip address list.
         */
         public string[] ipList;
@@ -6733,12 +6830,14 @@ namespace agora.rtc
         public LOCAL_PROXY_MODE mode;
     };
 
-    public enum AUDIO_PROCESSING_CHANNELS {
+    public enum AUDIO_PROCESSING_CHANNELS
+    {
         AUDIO_PROCESSING_MONO = 1,
         AUDIO_PROCESSING_STEREO = 2,
     };
 
-    public struct AdvancedAudioOptions {
+    public struct AdvancedAudioOptions
+    {
         public AUDIO_PROCESSING_CHANNELS audioProcessingChannels;
     };
 
@@ -6746,7 +6845,8 @@ namespace agora.rtc
     * The detailed information of the incoming audio encoded frame.
     */
 
-    public struct AudioEncodedFrameInfo {
+    public struct AudioEncodedFrameInfo
+    {
         /**
         * The send time of the packet.
         */
@@ -6757,7 +6857,8 @@ namespace agora.rtc
         public Byte codec;
     };
 
-    public struct FishCorrectionParams {
+    public struct FishCorrectionParams
+    {
         public float _x_center;
         public float _y_center;
         public float _scale_factor;
