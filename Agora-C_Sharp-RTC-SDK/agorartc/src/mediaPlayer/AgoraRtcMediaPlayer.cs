@@ -30,9 +30,10 @@ namespace agora.rtc
         private bool _disposed = false;
         private static readonly string identifier = "AgoraRtcMediaPlayer";
         private int playerId;
-
+        private static readonly int INVALID_RETURN = -99;
 
         private IrisApiEnginePtr _irisApiEngine;
+        private AgoraRtcMediaPlayerEventHandler _mediaPlayerEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -60,6 +61,7 @@ namespace agora.rtc
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
+            CreateEventHandler();
         }
 
         ~AgoraRtcMediaPlayer()
@@ -88,7 +90,7 @@ namespace agora.rtc
             GC.SuppressFinalize(this);
         }
 
-        public override void InitEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler)
+        private void CreateEventHandler()
         {
             if (_irisEngineEventHandlerHandleNative == IntPtr.Zero)
             {
@@ -108,15 +110,15 @@ namespace agora.rtc
                 _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
                 Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
                 _irisEngineEventHandlerHandleNative =
-                    AgoraRtcNative.SetIrisMediaPlayerEventHandler(_irisRtcMediaPlayer, _irisCEngineEventHandlerNative);
+                    AgoraRtcNative.SetIrisMediaPlayerEventHandler(_irisApiEngine, _irisCEngineEventHandlerNative);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                 _callbackObject = new AgoraCallbackObject("Agora MediaPlayer");
                 RtcMediaPlayerEventHandlerNative.CallbackObject = _callbackObject;
 #endif
-           }
-
-           RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = engineEventHandler;
+            }
+            _mediaPlayerEventHandlerInstance = AgoraRtcMediaPlayerEventHandler.GetInstance();
+            RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = _mediaPlayerEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
@@ -127,9 +129,24 @@ namespace agora.rtc
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
-            AgoraRtcNative.UnsetIrisMediaPlayerEventHandler(_irisRtcMediaPlayer, _irisEngineEventHandlerHandleNative);
+            AgoraRtcNative.UnsetIrisMediaPlayerEventHandler(_irisApiEngine, _irisEngineEventHandlerHandleNative);
             Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
+        }
+
+        public override AgoraRtcMediaPlayerEventHandler GetAgoraRtcMediaPlayerEventHandler()
+        {
+            return _mediaPlayerEventHandlerInstance;
+        }
+
+        public override void InitEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler)
+        {
+           RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = engineEventHandler;
+        }
+
+        public override void RemoveEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler)
+        {
+           RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = null;
         }
 
         public override void RegisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer)
@@ -167,7 +184,7 @@ namespace agora.rtc
             // _irisMediaPlayerCAudioFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCAudioFrameObserverNativeLocal));
             // Marshal.StructureToPtr(irisMediaPlayerCAudioFrameObserverNativeLocal, _irisMediaPlayerCAudioFrameObserverNative, true);
             // _irisMediaPlayerAudioFrameObserverHandleNative = AgoraRtcNative.RegisterMediaPlayerAudioFrameObserver(
-            //     _irisRtcMediaPlayer,
+            //     _irisApiEngine,
             //     _irisMediaPlayerCAudioFrameObserverNative, JsonMapper.ToJson(param)
             // );
         }
@@ -190,7 +207,7 @@ namespace agora.rtc
             // _irisMediaPlayerCAudioFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCAudioFrameObserverNativeLocal));
             // Marshal.StructureToPtr(irisMediaPlayerCAudioFrameObserverNativeLocal, _irisMediaPlayerCAudioFrameObserverNative, true);
             // _irisMediaPlayerAudioFrameObserverHandleNative = AgoraRtcNative.RegisterMediaPlayerAudioFrameObserver(
-            //     _irisRtcMediaPlayer,
+            //     _irisApiEngine,
             //     _irisMediaPlayerCAudioFrameObserverNative, JsonMapper.ToJson(param)
             // );
         }
@@ -201,7 +218,7 @@ namespace agora.rtc
             // if (_irisMediaPlayerAudioFrameObserverHandleNative == IntPtr.Zero) return;
             //
             // AgoraRtcNative.UnRegisterMediaPlayerAudioFrameObserver(
-            //     _irisRtcMediaPlayer,
+            //     _irisApiEngine,
             //     _irisMediaPlayerAudioFrameObserverHandleNative, JsonMapper.ToJson(param)
             // );
             // _irisMediaPlayerAudioFrameObserverHandleNative = IntPtr.Zero;
@@ -239,7 +256,7 @@ namespace agora.rtc
             // _irisMediaPlayerCVideoFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCVideoFrameObserverNativeLocal));
             // Marshal.StructureToPtr(irisMediaPlayerCVideoFrameObserverNativeLocal, _irisMediaPlayerCVideoFrameObserverNative, true);
             // _irisMediaPlayerVideoFrameObserverHandleNative = AgoraRtcNative.RegisterMediaPlayerVideoFrameObserver(
-            //     _irisRtcMediaPlayer,
+            //     _irisApiEngine,
             //     _irisMediaPlayerCVideoFrameObserverNative, JsonMapper.ToJson(param)
             // );
         }
@@ -250,7 +267,7 @@ namespace agora.rtc
             // if (_irisMediaPlayerVideoFrameObserverHandleNative == IntPtr.Zero) return;
             //
             // AgoraRtcNative.UnRegisterMediaPlayerVideoFrameObserver(
-            //     _irisRtcMediaPlayer,
+            //     _irisApiEngine,
             //     _irisMediaPlayerVideoFrameObserverHandleNative, JsonMapper.ToJson(param)
             // );
             // _irisMediaPlayerVideoFrameObserverHandleNative = IntPtr.Zero;
@@ -279,7 +296,7 @@ namespace agora.rtc
             _irisMediaPlayerCCustomProviderNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCCustomProviderNativeLocal));
             Marshal.StructureToPtr(irisMediaPlayerCCustomProviderNativeLocal, _irisMediaPlayerCCustomProviderNative, true);
             var ret = AgoraRtcNative.MediaPlayerOpenWithSource(
-                _irisRtcMediaPlayer,
+                _irisApiEngine,
                 _irisMediaPlayerCCustomProviderNative, JsonMapper.ToJson(param)
             );
             return ret;
@@ -287,12 +304,9 @@ namespace agora.rtc
 
         public override int CreateMediaPlayer()
         {
-            var param = new { };
-            var playerId =  AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerCreate,
-                JsonMapper.ToJson(param), out _result);
-            UnityEngine.Debug.Log("playerId is: " + this.playerId);
-            return playerId;
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_RTCENGINE_CREATEMEDIAPLAYER,
+                "", 0, null, 0, out _result);
         }
 
         public override int DestroyMediaPlayer(int playerId)
@@ -301,9 +315,10 @@ namespace agora.rtc
             {
                 playerId
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerDestroyMediaPlayer,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_RTCENGINE_DESTROYMEDIAPLAYER,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int Open(int playerId, string url, Int64 startPos)
@@ -314,9 +329,10 @@ namespace agora.rtc
                 url,
                 startPos
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerOpen,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_OPEN,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int OpenWithCustomSource(int playerId, Int64 startPos, IAgoraRtcMediaPlayerCustomDataProvider provider)
@@ -329,33 +345,37 @@ namespace agora.rtc
         public override int Play(int playerId)
         {
             var param = new { playerId };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerPlay,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_PLAY,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int Pause(int playerId)
         {
             var param = new { playerId };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerPause,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_PAUSE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int Stop(int playerId)
         {
             var param = new { playerId };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerStop,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_STOP,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int Resume(int playerId)
         {
             var param = new { playerId };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerResume,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_RESUME,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int Seek(int playerId, Int64 newPos)
@@ -365,29 +385,34 @@ namespace agora.rtc
                 playerId,
                 newPos
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSeek,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SEEK,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int GetDuration(int playerId, ref Int64 duration)
         {
+            //TODO CHECK
             var param = new { playerId };
-            var ret =  AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetDuration,
-                JsonMapper.ToJson(param), out _result);
-            if (_result.Result == null) return -99;
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETDURATION,
+                jsonParam, jsonParam.Length, null, 0, out _result);
+            if (_result.Result == null) return INVALID_RETURN;
             duration = (long) AgoraJson.GetData<long>(_result.Result, "duration");
             return ret;
         }
 
         public override int GetPlayPosition(int playerId, ref Int64 pos)
         {
+            //TODO CHECK
             var param = new { playerId };
-            var ret = AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetPlayPosition,
-                JsonMapper.ToJson(param), out _result);
-            if (_result.Result == null) return -99;
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYPOSITION,
+                jsonParam, jsonParam.Length, null, 0, out _result);
+            if (_result.Result == null) return INVALID_RETURN;
             pos = (long) AgoraJson.GetData<long>(_result.Result, "pos");
             return ret;
         }
@@ -395,10 +420,11 @@ namespace agora.rtc
         public override int GetStreamCount(int playerId, ref Int64 count)
         {
             var param = new { playerId };
-            var ret = AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetStreamCount,
-                JsonMapper.ToJson(param), out _result);
-            if (_result.Result == null) return -99;
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETSTREAMCOUNT,
+                jsonParam, jsonParam.Length, null, 0, out _result);
+            if (_result.Result == null) return INVALID_RETURN;
             count = (long) AgoraJson.GetData<long>(_result.Result, "count");
             return ret;
         }
@@ -410,9 +436,10 @@ namespace agora.rtc
                 playerId,
                 index
             };
-            var ret = AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetStreamInfo,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETSTREAMINFO,
+                jsonParam, jsonParam.Length, null, 0, out _result);
             info = _result.Result.Length == 0 ? new PlayerStreamInfo() : AgoraJson.JsonToStruct<PlayerStreamInfo>(_result.Result);
             return ret;
         }
@@ -424,9 +451,10 @@ namespace agora.rtc
                 playerId,
                 loopCount
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetLoopCount,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETLOOPCOUNT,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int MuteAudio(int playerId, bool audio_mute)
@@ -436,17 +464,20 @@ namespace agora.rtc
                 playerId,
                 audio_mute
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerMuteAudio,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_MUTEAUDIO,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override bool IsAudioMuted(int playerId)
         {
+            //TODO CHECK
             var param = new { playerId };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerIsAudioMuted,
-                JsonMapper.ToJson(param), out _result) == 0 ? false : true;
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_ISAUDIOMUTED,
+                jsonParam, jsonParam.Length, null, 0, out _result) == 0 ? false : true;
         }
 
         public override int MuteVideo(int playerId, bool video_mute)
@@ -456,17 +487,20 @@ namespace agora.rtc
                 playerId,
                 video_mute
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerMuteVideo,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_MUTEVIDEO,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override bool IsVideoMuted(int playerId)
         {
+            //TODO CHECK
             var param = new { playerId };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerIsVideoMuted,
-                JsonMapper.ToJson(param), out _result) == 0 ? false : true;
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_ISVIDEOMUTED,
+                jsonParam, jsonParam.Length, null, 0, out _result) == 0 ? false : true;
         }
 
         public override int SetPlaybackSpeed(int playerId, MEDIA_PLAYER_PLAYBACK_SPEED speed)
@@ -476,9 +510,10 @@ namespace agora.rtc
                 playerId,
                 speed
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetPlaybackSpeed,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYBACKSPEED,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SelectAudioTrack(int playerId, int index)
@@ -488,9 +523,10 @@ namespace agora.rtc
                 playerId,
                 index
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSelectAudioTrack,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SELECTAUDIOTRACK,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SetPlayerOption(int playerId, string key, int value)
@@ -501,9 +537,10 @@ namespace agora.rtc
                 key,
                 value
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetPlayerOption,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYEROPTION,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SetPlayerOption(int playerId, string key, string value)
@@ -514,9 +551,10 @@ namespace agora.rtc
                 key,
                 value
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetPlayerOption,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYEROPTION2,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int TakeScreenshot(int playerId, string filename)
@@ -526,9 +564,10 @@ namespace agora.rtc
                 playerId,
                 filename
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerTakeScreenshot,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_TAKESCREENSHOT,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SelectInternalSubtitle(int playerId, int index)
@@ -538,9 +577,10 @@ namespace agora.rtc
                 playerId,
                 index
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSelectInternalSubtitle,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SELECTINTERNALSUBTITLE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SetExternalSubtitle(int playerId, string url)
@@ -550,17 +590,19 @@ namespace agora.rtc
                 playerId,
                 url
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetExternalSubtitle,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETEXTERNALSUBTITLE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override MEDIA_PLAYER_STATE GetState(int playerId)
         {
             var param = new { playerId };
-            return (MEDIA_PLAYER_STATE) AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetState,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return (MEDIA_PLAYER_STATE) AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETSTATE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int Mute(int playerId, bool mute)
@@ -570,18 +612,20 @@ namespace agora.rtc
                 playerId,
                 mute
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerMute,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_MUTE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int GetMute(int playerId, ref bool mute)
         {
             var param = new { playerId };
-            var ret = AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetMute,
-                JsonMapper.ToJson(param), out _result);
-            if (_result.Result == null) return -99;
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETMUTE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
+            if (_result.Result == null) return INVALID_RETURN;
             mute = (bool) AgoraJson.GetData<bool>(_result.Result, "mute");
             return ret;
             
@@ -594,18 +638,20 @@ namespace agora.rtc
                 playerId,
                 volume
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerAdjustPlayoutVolume,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_ADJUSTPLAYOUTVOLUME,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int GetPlayoutVolume(int playerId, ref int volume)
         {
             var param = new { playerId };
-            var ret = AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetPlayoutVolume,
-                JsonMapper.ToJson(param), out _result);
-            if (_result.Result == null) return -99;
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYOUTVOLUME,
+                jsonParam, jsonParam.Length, null, 0, out _result);
+            if (_result.Result == null) return INVALID_RETURN;
             volume = (int) AgoraJson.GetData<int>(_result.Result, "volume");
             return ret;
         }
@@ -617,9 +663,10 @@ namespace agora.rtc
                 playerId,
                 volume
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerAdjustPublishSignalVolume,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_ADJUSTPUBLISHSIGNALVOLUME,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int GetPublishSignalVolume(int playerId, ref int volume)
@@ -629,10 +676,11 @@ namespace agora.rtc
                 playerId,
                 volume
             };
-            var ret = AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetPublishSignalVolume,
-                JsonMapper.ToJson(param), out _result);
-            if (_result.Result == null) return -99;
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETPUBLISHSIGNALVOLUME,
+                jsonParam, jsonParam.Length, null, 0, out _result);
+            if (_result.Result == null) return INVALID_RETURN;
             volume = (int) AgoraJson.GetData<int>(_result.Result, "volume");
             return ret;
         }
@@ -643,9 +691,10 @@ namespace agora.rtc
             {
                 playerId
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetView,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETVIEW,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SetRenderMode(int playerId, RENDER_MODE_TYPE renderMode)
@@ -655,9 +704,10 @@ namespace agora.rtc
                 playerId,
                 renderMode
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetRenderMode,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETRENDERMODE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SetAudioDualMonoMode(int playerId, AUDIO_DUAL_MONO_MODE mode)
@@ -667,131 +717,145 @@ namespace agora.rtc
                 playerId,
                 mode
             };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetAudioDualMonoMode,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETAUDIODUALMONOMODE,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override string GetPlayerSdkVersion(int playerId)
         {
             var param = new { playerId };
-            AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetPlayerSdkVersion,
-                JsonMapper.ToJson(param), out _result);
-            return _result.Result;
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYERSDKVERSION,
+                jsonParam, jsonParam.Length, null, 0, out _result) != 0
+                ? null
+                : ((_result.Result.Length == 0) ? null : _result.Result);
         }
 
         public override string GetPlaySrc(int playerId)
         {
             var param = new { playerId };
-            AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetPlaySrc,
-                JsonMapper.ToJson(param), out _result);
-            return _result.Result;
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYSRC,
+                jsonParam, jsonParam.Length, null, 0, out _result) != 0
+                ? null
+                : ((_result.Result.Length == 0) ? null : _result.Result);
         }
 
         public override int SetAudioPitch(int pitch)
         {
             var param = new { pitch };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetAudioPitch,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETAUDIOPITCH,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params)
         {
             var param = new { playerId, spatial_audio_params };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSetSpatialAudioParams,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SETSPATIALAUDIOPARAMS,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int OpenWithAgoraCDNSrc(string src, Int64 startPos)
         {
             var param = new { src, startPos };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerOpenWithAgoraCDNSrc,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHAGORACDNSRC,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int GetAgoraCDNLineCount()
         {
-            var param = new { };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetAgoraCDNLineCount,
-                JsonMapper.ToJson(param), out _result); 
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETAGORACDNLINECOUNT,
+                "", 0, null, 0, out _result);
         }
 
         public override int SwitchAgoraCDNLineByIndex(int index)
         {
             var param = new { index };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSwitchAgoraCDNLineByIndex,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SWITCHAGORACDNLINEBYINDEX,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int GetCurrentAgoraCDNIndex()
         {
-            var param = new {};
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerGetCurrentAgoraCDNIndex,
-                JsonMapper.ToJson(param), out _result); 
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_GETCURRENTAGORACDNINDEX,
+                "", 0, null, 0, out _result);
         }
 
         public override int EnableAutoSwitchAgoraCDN(bool enable)
         {
             var param = new { enable };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerEnableAutoSwitchAgoraCDN,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_ENABLEAUTOSWITCHAGORACDN,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int RenewAgoraCDNSrcToken(string token, Int64 ts)
         {
             var param = new { token, ts };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerRenewAgoraCDNSrcToken,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_RENEWAGORACDNSRCTOKEN,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SwitchAgoraCDNSrc(string src, bool syncPts = false)
         {
             var param = new { src, syncPts };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSwitchAgoraCDNSrc,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SWITCHAGORACDNSRC,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int SwitchSrc(string src, bool syncPts = true)
         {
             var param = new { src, syncPts };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerSwitchSrc,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SWITCHSRC,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int PreloadSrc(string src, Int64 startPos)
         {
             var param = new { src, startPos };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerPreloadSrc,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_PRELOADSRC,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int PlayPreloadedSrc(string src)
         {
             var param = new { src };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerPlayPreloadedSrc,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_PLAYPRELOADEDSRC,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
 
         public override int UnloadSrc(string src)
         {
             var param = new { src };
-            return AgoraRtcNative.CallIrisMediaPlayerApi(_irisRtcMediaPlayer, 
-                ApiTypeMediaPlayer.kMediaPlayerUnloadSrc,
-                JsonMapper.ToJson(param), out _result); 
+            string jsonParam = JsonMapper.ToJson(param);
+            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_UNLOADSRC,
+                jsonParam, jsonParam.Length, null, 0, out _result);
         }
     }
 
@@ -804,154 +868,69 @@ namespace agora.rtc
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
         internal static void OnEvent(string @event, string data)
         {
+            if (RtcMediaPlayerEventHandler == null) return;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
-#endif
-            switch(@event)
+            CallbackObject._CallbackQueue.EnQueue(() =>
             {
-                case "onPlayerSourceStateChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
 #endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnPlayerSourceStateChanged(
-                                (int) AgoraJson.GetData<int>(data, "playerId"),
-                                (MEDIA_PLAYER_STATE) AgoraJson.GetData<int>(data, "state"),
-                                (MEDIA_PLAYER_ERROR) AgoraJson.GetData<int>(data, "ec")
-                            );
-                        }
+                switch(@event)
+                {
+                    case "onPlayerSourceStateChanged":
+                        RtcMediaPlayerEventHandler.OnPlayerSourceStateChanged(
+                            (int) AgoraJson.GetData<int>(data, "playerId"),
+                            (MEDIA_PLAYER_STATE) AgoraJson.GetData<int>(data, "state"),
+                            (MEDIA_PLAYER_ERROR) AgoraJson.GetData<int>(data, "ec")
+                        );
+                        break;
+                    case "onPositionChanged":
+                        RtcMediaPlayerEventHandler.OnPositionChanged(
+                            (int) AgoraJson.GetData<int>(data, "playerId"),
+                            (Int64) AgoraJson.GetData<Int64>(data, "position")
+                        );
+                        break;
+                    case "onPlayerEvent":  
+                        RtcMediaPlayerEventHandler.OnPlayerEvent(
+                            (int) AgoraJson.GetData<int>(data, "playerId"),
+                            (MEDIA_PLAYER_EVENT) AgoraJson.GetData<int>(data, "event"),
+                            (Int64) AgoraJson.GetData<Int64>(data, "elapsedTime"),
+                            (string) AgoraJson.GetData<string>(data, "message")
+                        );
+                        break;
+                    case "onPlayBufferUpdated":
+                        RtcMediaPlayerEventHandler.OnPlayBufferUpdated(
+                            (int) AgoraJson.GetData<int>(data, "playerId"),
+                            (Int64) AgoraJson.GetData<Int64>(data, "playCachedBuffer")
+                        );
+                        break;
+                    case "onCompleted":
+                        RtcMediaPlayerEventHandler.OnCompleted(
+                            (int) AgoraJson.GetData<int>(data, "playerId")
+                        );
+                        break;
+                    case "onAgoraCDNTokenWillExpire":   
+                        RtcMediaPlayerEventHandler.OnAgoraCDNTokenWillExpire();
+                        break;
+                    case "onPlayerInfoUpdated":
+                        RtcMediaPlayerEventHandler.OnPlayerInfoUpdated(
+                            AgoraJson.JsonToStruct<PlayerUpdatedInfo>(data, "info")
+                        );
+                        break;
+                    case "onPlayerSrcInfoChanged":
+                        RtcMediaPlayerEventHandler.OnPlayerSrcInfoChanged(
+                            AgoraJson.JsonToStruct<SrcInfo>(data, "from"),
+                            AgoraJson.JsonToStruct<SrcInfo>(data, "to")
+                        );
+                        break;
+                    case "onAudioVolumeIndication":
+                        RtcMediaPlayerEventHandler.OnAudioVolumeIndication(
+                            (int) AgoraJson.GetData<int>(data, "volume")
+                        );
+                        break;
+                }   
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
+            });
 #endif
-                    break;
-                case "onPositionChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnPositionChanged(
-                                (int) AgoraJson.GetData<int>(data, "playerId"),
-                                (Int64) AgoraJson.GetData<Int64>(data, "position")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "onPlayerEvent":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnPlayerEvent(
-                                (int) AgoraJson.GetData<int>(data, "playerId"),
-                                (MEDIA_PLAYER_EVENT) AgoraJson.GetData<int>(data, "event"),
-                                (Int64) AgoraJson.GetData<Int64>(data, "elapsedTime"),
-                                (string) AgoraJson.GetData<string>(data, "message")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "onPlayBufferUpdated":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (RtcMediaPlayerEventHandler != null != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnPlayBufferUpdated(
-                                (int) AgoraJson.GetData<int>(data, "playerId"),
-                                (Int64) AgoraJson.GetData<Int64>(data, "playCachedBuffer")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "onCompleted":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnCompleted(
-                                (int) AgoraJson.GetData<int>(data, "playerId")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "onAgoraCDNTokenWillExpire":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnAgoraCDNTokenWillExpire();
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "onPlayerInfoUpdated":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnPlayerInfoUpdated(
-                                AgoraJson.JsonToStruct<PlayerUpdatedInfo>(data, "info")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "onPlayerSrcInfoChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnPlayerSrcInfoChanged(
-                                AgoraJson.JsonToStruct<SrcInfo>(data, "from"),
-                                AgoraJson.JsonToStruct<SrcInfo>(data, "to")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-                case "onAudioVolumeIndication":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnAudioVolumeIndication(
-                                (int) AgoraJson.GetData<int>(data, "volume")
-                            );
-                        }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-#endif
-                    break;
-
-            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -963,25 +942,20 @@ namespace agora.rtc
             if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int) length);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
-#endif
-            var playerId = (int) AgoraJson.GetData<int>(data, "playerId");
-            switch (@event)
+            CallbackObject._CallbackQueue.EnQueue(() =>
             {
-                case "onMetaData":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
 #endif
-                        if (RtcMediaPlayerEventHandler != null)
-                        {
-                            RtcMediaPlayerEventHandler.OnMetaData((int) AgoraJson.GetData<int>(data, "playerId"),
-                                byteData, (int)length);
-                        }
+                var playerId = (int) AgoraJson.GetData<int>(data, "playerId");
+                switch (@event)
+                {
+                    case "onMetaData":
+                        RtcMediaPlayerEventHandler.OnMetaData((int) AgoraJson.GetData<int>(data, "playerId"),
+                            byteData, (int)length);
+                        break;  
+                }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
+            });
 #endif
-                    break;  
-            }
         }
     }
 }

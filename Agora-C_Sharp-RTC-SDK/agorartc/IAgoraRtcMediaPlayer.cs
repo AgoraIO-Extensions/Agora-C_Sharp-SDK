@@ -21,7 +21,11 @@ namespace agora.rtc
 
         public abstract int DestroyMediaPlayer(int playerId);
 
+        public abstract AgoraRtcMediaPlayerEventHandler GetAgoraRtcMediaPlayerEventHandler();
+
         public abstract void InitEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler);
+
+        public abstract void RemoveEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler);
 
         public abstract void RegisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer);
 
