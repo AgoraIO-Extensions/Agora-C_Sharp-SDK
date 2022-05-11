@@ -64,18 +64,18 @@ namespace agora.rtc
                 deviceIdUTF8
             };
             string jsonParam = JsonMapper.ToJson(param);
-            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_SETDEVICE,
                 jsonParam, jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override string GetDevice()
         {
-            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETDEVICE,
-                "", 0, null, 0, out _result) != 0
-                ? null
-                : ((_result.Result.Length == 0) ? null : _result.Result);
+                "", 0, null, 0, out _result);
+            return ret != 0 ? ret.ToString() : (string) AgoraJson.GetData<string>(_result.Result, "result");
         }
 
         public override int StartDeviceTest(view_t hwnd)
@@ -85,16 +85,18 @@ namespace agora.rtc
                 hwnd = (ulong) hwnd
             };
             string jsonParam = JsonMapper.ToJson(param);
-            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST,
                 jsonParam, jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int StopDeviceTest()
         {
-            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST,
                 "", 0, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
     }
 }

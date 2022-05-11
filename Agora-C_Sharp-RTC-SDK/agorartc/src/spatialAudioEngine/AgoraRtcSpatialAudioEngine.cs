@@ -26,6 +26,7 @@ namespace agora.rtc
         private static readonly string identifier = "AgoraRtcSpatialAudioEngine";
 
         private IrisApiEnginePtr _irisApiEngine;
+        private AgoraRtcCloudSpatialAudioEngineEventHandler _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -41,6 +42,7 @@ namespace agora.rtc
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
+            CreateEventHandler();
         }
 
         ~AgoraRtcCloudSpatialAudioEngine()
@@ -57,22 +59,10 @@ namespace agora.rtc
                 ReleaseEventHandler();
             }
                 
-            Release();
-                
-            _disposed = true;
-        }
-
-        private void Release()
-        {
-            var param = new { };
-
-            AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine,
-            ApiTypeCloudSpatialAudio.kCloudSpatialAudioRelease,
-            JsonMapper.ToJson(param), out _result);
-
-            // AgoraRtcNative.DestroyIrisRtcEngine(_irisRtcSpatialAudioEngine);
             _irisApiEngine = IntPtr.Zero;
             _result = new CharAssistant();
+                
+            _disposed = true;
         }
 
         public override void Dispose()
@@ -81,7 +71,7 @@ namespace agora.rtc
             GC.SuppressFinalize(this);
         }
 
-        public override void InitEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler)
+        private void CreateEventHandler()
         {
             if (_irisEngineEventHandlerHandleNative == IntPtr.Zero)
             {
@@ -108,8 +98,8 @@ namespace agora.rtc
                 RtcCloudSpatialAudioEngineEventHandlerNative.CallbackObject = _callbackObject;
     #endif
             }
-
-            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
+            _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance = AgoraRtcCloudSpatialAudioEngineEventHandler.GetInstance();
+            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
@@ -125,15 +115,32 @@ namespace agora.rtc
             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
+        public override AgoraRtcCloudSpatialAudioEngineEventHandler GetAgoraRtcCloudSpatialAudioEngineEventHandler()
+        {
+            return _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
+        }
+
+        public override void InitEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler)
+        {
+            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
+        }
+
+        public override void RemoveEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler)
+        {
+            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
+        }
+
         public override int SetMaxAudioRecvCount(int maxCount)
         {
             var param = new
             {
                 maxCount
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetMaxAudioRecvCount,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_SETMAXAUDIORECVCOUNT,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetAudioRecvRange(float range)
@@ -142,9 +149,11 @@ namespace agora.rtc
             {
                 range
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetAudioRecvRange,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_SETAUDIORECVRANGE,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetDistanceUnit(float unit)
@@ -153,9 +162,11 @@ namespace agora.rtc
             {
                 unit
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetDistanceUnit,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_SETDISTANCEUNIT,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
@@ -167,9 +178,11 @@ namespace agora.rtc
                 axisRight,
                 axisUp
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdateSelfPosition,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_UPDATESELFPOSITION,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
@@ -182,9 +195,11 @@ namespace agora.rtc
                 axisUp,
                 connection
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdateSelfPositionEx,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_UPDATESELFPOSITIONEX,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
@@ -195,9 +210,11 @@ namespace agora.rtc
                 playerId,
                 positionInfo
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioUpdatePlayerPositionInfo,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_UPDATEPLAYERPOSITIONINFO,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetParameters(string @params)
@@ -206,9 +223,11 @@ namespace agora.rtc
             {
                 @params
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetParameters,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_SETPARAMETERS,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int MuteLocalAudioStream(bool mute)
@@ -217,9 +236,11 @@ namespace agora.rtc
             {
                 mute
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioMuteLocalAudioStream,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_RTCENGINE_MUTELOCALAUDIOSTREAM,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int MuteAllRemoteAudioStreams(bool mute)
@@ -228,9 +249,11 @@ namespace agora.rtc
             {
                 mute
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioMuteAllRemoteAudioStreams,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_RTCENGINE_MUTEALLREMOTEAUDIOSTREAMS,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int Initialize(CloudSpatialAudioConfig config)
@@ -239,9 +262,11 @@ namespace agora.rtc
             {
                 config
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioInitialze,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_INITIALIZE,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int EnableSpatializer(bool enable, bool applyToTeam)
@@ -251,9 +276,11 @@ namespace agora.rtc
                 enable,
                 applyToTeam
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnableSpatializer,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_ENABLESPATIALIZER,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetTeamId(int teamId)
@@ -262,9 +289,11 @@ namespace agora.rtc
             {
                 teamId
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetTeamId,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_SETTEAMID,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetAudioRangeMode(RANGE_AUDIO_MODE_TYPE rangeMode)
@@ -273,9 +302,11 @@ namespace agora.rtc
             {
                 rangeMode
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioSetAudioRangeMode,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_SETAUDIORANGEMODE,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int EnterRoom(string token, string roomName, uint uid)
@@ -286,22 +317,68 @@ namespace agora.rtc
                 roomName,
                 uid
             };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioEnterRoom,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_ENTERROOM,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int ExitRoom()
         {
-            var param = new { };
-            return AgoraRtcNative.CallIrisCloudSpatialAudioApi(_irisRtcCloudSpatialAudioEngine, 
-                ApiTypeCloudSpatialAudio.kCloudSpatialAudioExitRoom,
-                JsonMapper.ToJson(param), out _result);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_EXITROOM,
+                "", 0, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetTeammates(ref uint[] uids, int[] userCount)
+        public override int GetTeammates(ref uint[] uids, ref int userCount)
         {
-            return 0;
+            //TODO
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_GETTEAMMATES,
+                "", 0, null, 0, out _result);
+            userCount = (int) AgoraJson.GetData<int>(_result.Result, "userCount");
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public override int RenewToken(string token)
+        {
+            var param = new
+            {
+                token
+            };
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_RENEWTOKEN,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public override int MuteLocalAudioStream(bool mute)
+        {
+            var param = new
+            {
+                mute
+            };
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_MUTELOCALAUDIOSTREAM,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public override int MuteAllRemoteAudioStreams(bool mute)
+        {
+            var param = new
+            {
+                mute
+            };
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_MUTEALLREMOTEAUDIOSTREAMS,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
     }
 
@@ -321,19 +398,18 @@ namespace agora.rtc
             
         ~AgoraRtcSpatialAudioEngine()
         {
-            _irisApiEngine = IntPtr.Zero;
-            _result = new CharAssistant();
+            Dispose();
         }
             
         public override void Dispose()
         {
             if (!_disposed)
             {
-                Release();
+                //Release();
                 _disposed = true;
             }
             
-            _irisRtcSpatialAudioEngine = IntPtr.Zero;
+            _irisApiEngine = IntPtr.Zero;
             _result = new CharAssistant();
             GC.SuppressFinalize(this);
         }
@@ -345,9 +421,11 @@ namespace agora.rtc
             {
                 maxCount
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetMaxAudioRecvCount,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETMAXAUDIORECVCOUNT,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetAudioRecvRange(float range)
@@ -357,9 +435,11 @@ namespace agora.rtc
             {
                 range
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetAudioRecvRange,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETAUDIORECVRANGE,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetDistanceUnit(float unit)
@@ -369,9 +449,11 @@ namespace agora.rtc
             {
                 unit
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetDistanceUnit,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETDISTANCEUNIT,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
@@ -384,9 +466,11 @@ namespace agora.rtc
                 axisRight,
                 axisUp
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateSelfPosition,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATESELFPOSITION,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
@@ -400,9 +484,11 @@ namespace agora.rtc
                 axisUp,
                 connection
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateSelfPositionEx,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATESELFPOSITIONEX,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
@@ -414,9 +500,11 @@ namespace agora.rtc
                 playerId,
                 positionInfo
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdatePlayerPositionInfo,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATEPLAYERPOSITIONINFO,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetParameters(string @params)
@@ -426,9 +514,11 @@ namespace agora.rtc
             {
                 @params
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioSetParameters,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETPARAMETERS,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int MuteLocalAudioStream(bool mute)
@@ -438,9 +528,11 @@ namespace agora.rtc
             {
                 mute
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioMuteLocalAudioStream,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_MUTELOCALAUDIOSTREAM,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int MuteAllRemoteAudioStreams(bool mute)
@@ -450,9 +542,11 @@ namespace agora.rtc
             {
                 mute
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioMuteAllRemoteAudioStreams,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_MUTEALLREMOTEAUDIOSTREAMS,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int UpdateRemotePosition(uint uid, float[] position, float[] forward)
@@ -464,9 +558,11 @@ namespace agora.rtc
                 uid,
                 posInfo
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateRemotePosition,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATEREMOTEPOSITION,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
@@ -479,9 +575,11 @@ namespace agora.rtc
                 posInfo,
                 connection
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioUpdateRemotePositionEx,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATEREMOTEPOSITIONEX,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int RemoveRemotePosition(uint uid)
@@ -491,9 +589,11 @@ namespace agora.rtc
             {
                 uid
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioRemoveRemotePosition,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_REMOVEREMOTEPOSITION,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int RemoveRemotePositionEx(uint uid, RtcConnection connection)
@@ -504,18 +604,22 @@ namespace agora.rtc
                 uid,
                 connection
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioRemoveRemotePositionEx,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_REMOVEREMOTEPOSITIONEX,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int ClearRemotePositions()
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new { };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioClearRemotePositions,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_CLEARREMOTEPOSITIONS,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int ClearRemotePositionsEx(RtcConnection connection)
@@ -525,30 +629,31 @@ namespace agora.rtc
             {
                 connection
             };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioClearRemotePositionsEx,
-                JsonMapper.ToJson(param), out _result);
+            string jsonParam = JsonMapper.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_CLEARREMOTEPOSITIONSEX,
+                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int Initialize()
         {
-            var param = new { };
-            
-            var ret = AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioInitialize,
-                JsonMapper.ToJson(param), out _result);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_INITIALIZE,
+                "", 0, null, 0, out _result);
+            var init = (int) AgoraJson.GetData<int>(_result.Result, "result");
                 
-            if (ret == 0) _initialized = true;
-            return ret;    
+            if (init == 0) _initialized = true;
+            return ret != 0 ? ret : init;
         }
 
-        private int Release()
-        {
-            var param = new { };
-            return AgoraRtcNative.CallIrisLocalSpatialAudioApi(_irisRtcSpatialAudioEngine, 
-                ApiTypeLocalSpatialAudio.kLocalSpatialAudioRelease,
-                JsonMapper.ToJson(param), out _result);
-        }
+        // private int Release()
+        // {
+        //     var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+        //         AgoraApiType.Release,
+        //         "", 0, null, 0, out _result);
+        //     return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
+        // }
     }
 
     internal static class RtcCloudSpatialAudioEngineEventHandlerNative
@@ -559,76 +664,43 @@ namespace agora.rtc
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
         internal static void OnEvent(string @event, string data)
         {
+            if (CloudSpatialAudioEngineEventHandler == null) return;
     #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
-    #endif
-            switch(@event)
+            CallbackObject._CallbackQueue.EnQueue(() =>
             {
-                case "onTokenWillExpire":
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
     #endif
-                        if (CloudSpatialAudioEngineEventHandler != null)
-                        {
-                            CloudSpatialAudioEngineEventHandler.OnTokenWillExpire();
-                        }
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-    #endif
-                    break;
-                case "onConnectionStateChange":
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-    #endif
-                        if (CloudSpatialAudioEngineEventHandler != null)
-                        {
-                            CloudSpatialAudioEngineEventHandler.OnConnectionStateChange(
-                                (SAE_CONNECTION_STATE_TYPE) AgoraJson.GetData<int>(data, "state"),
-                                (SAE_CONNECTION_CHANGED_REASON_TYPE) AgoraJson.GetData<int>(data, "reason")
-                            );
-                        }
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-    #endif
-                    break;
-                case "onTeammateLeft":
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-    #endif
-                        if (CloudSpatialAudioEngineEventHandler != null)
-                        {
-                            CloudSpatialAudioEngineEventHandler.OnTeammateLeft(
-                                (uint) AgoraJson.GetData<uint>(data, "uid")
-                            );
-                        }
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-    #endif
-                    break;
-                case "onTeammateJoined":
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-    #endif
-                        if (CloudSpatialAudioEngineEventHandler != null)
-                        {
-                            CloudSpatialAudioEngineEventHandler.OnTeammateJoined(
-                                (uint) AgoraJson.GetData<uint>(data, "uid")
-                            );
-                        }
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    });
-    #endif
-                    break;
+                switch(@event)
+                {
+                    case "onTokenWillExpire":
+                        CloudSpatialAudioEngineEventHandler.OnTokenWillExpire();
+                        break;
+                    case "onConnectionStateChange":
+                        CloudSpatialAudioEngineEventHandler.OnConnectionStateChange(
+                            (SAE_CONNECTION_STATE_TYPE) AgoraJson.GetData<int>(data, "state"),
+                            (SAE_CONNECTION_CHANGED_REASON_TYPE) AgoraJson.GetData<int>(data, "reason")
+                        );
+                        break;
+                    case "onTeammateLeft":
+                        CloudSpatialAudioEngineEventHandler.OnTeammateLeft(
+                            (uint) AgoraJson.GetData<uint>(data, "uid")
+                        );
+                        break;
+                    case "onTeammateJoined":
+                        CloudSpatialAudioEngineEventHandler.OnTeammateJoined(
+                            (uint) AgoraJson.GetData<uint>(data, "uid")
+                        );
+                        break;
+                }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+            });
+#endif
             }
         }
 
-    #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
-    #endif
+#endif
         internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
         {
             var byteData = new byte[length];

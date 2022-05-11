@@ -11,7 +11,11 @@ namespace agora.rtc
 {
     public abstract class IAgoraRtcCloudSpatialAudioEngine
     {
-        public abstract void InitEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler eh);
+        public abstract AgoraRtcCloudSpatialAudioEngineEventHandler GetAgoraRtcCloudSpatialAudioEngineEventHandler();
+        
+        public abstract void InitEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler);
+
+        public override void RemoveEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler);
 
         public abstract int Initialize(CloudSpatialAudioConfig config);
 
@@ -45,7 +49,13 @@ namespace agora.rtc
 
         public abstract int ExitRoom();
 
-        public abstract int GetTeammates(ref uint[] uids, int[] userCount);
+        public abstract int GetTeammates(ref uint[] uids, ref int userCount);
+
+        public abstract int RenewToken(string token);
+
+        public abstract int MuteLocalAudioStream(bool mute);
+
+        public abstract int MuteAllRemoteAudioStreams(bool mute);
     }
 
     public abstract class IAgoraRtcSpatialAudioEngine
