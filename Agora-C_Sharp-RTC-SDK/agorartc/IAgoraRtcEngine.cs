@@ -56,7 +56,7 @@ namespace agora.rtc
         public abstract int JoinChannel(string token, string channelId, string info = "", uint uid = 0);
 
         public abstract int JoinChannel(string token, string channelId, uint uid, ChannelMediaOptions options);
-      
+
         public abstract int UpdateChannelMediaOptions(ChannelMediaOptions options);
 
         public abstract int LeaveChannel();
@@ -68,6 +68,8 @@ namespace agora.rtc
         public abstract int SetChannelProfile(CHANNEL_PROFILE_TYPE profile);
 
         public abstract int SetClientRole(CLIENT_ROLE_TYPE role);
+
+        public abstract int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options);
 
         public abstract int StartEchoTest();
 
@@ -81,10 +83,14 @@ namespace agora.rtc
 
         public abstract int StartPreview();
 
+        public abstract int StartPreview(VIDEO_SOURCE_TYPE sourceType);
+
         public abstract int StopPreview();
 
+        public abstract int StopPreview(VIDEO_SOURCE_TYPE sourceType);
+
         public abstract int StartLastmileProbeTest(LastmileProbeConfig config);
-      
+
         public abstract int StopLastmileProbeTest();
 
         public abstract int SetVideoEncoderConfiguration(VideoEncoderConfiguration config);
@@ -96,15 +102,15 @@ namespace agora.rtc
         public abstract int SetupLocalVideo(VideoCanvas canvas);
 
         public abstract int EnableAudio();
-      
+
         public abstract int DisableAudio();
-      
+
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario);
 
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile);
 
         public abstract int EnableLocalAudio(bool enabled);
-      
+
         public abstract int MuteLocalAudioStream(bool mute);
 
         public abstract int MuteAllRemoteAudioStreams(bool mute);
@@ -134,12 +140,14 @@ namespace agora.rtc
         public abstract int StartAudioRecording(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality);
 
         public abstract int StartAudioRecording(AudioRecordingConfiguration config);
-    
-        public abstract int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config,  IAgoraRtcAudioEncodedFrameObserver observer); //TODO
+
+        public abstract int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAgoraRtcAudioEncodedFrameObserver observer); //TODO
 
         public abstract int StopAudioRecording();
 
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle);
+
+        public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos);
 
         public abstract int StopAudioMixing();
 
@@ -218,7 +226,7 @@ namespace agora.rtc
         public abstract int SetLocalVoicePitch(double pitch);
 
         public abstract int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency, int bandGain);
-      
+
         public abstract int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value);
 
         public abstract int SetLocalVoiceReverbPreset(AUDIO_REVERB_PRESET reverbPreset);
@@ -269,9 +277,9 @@ namespace agora.rtc
 
         public abstract int DisableAudioSpectrumMonitor();
 
-        // public abstract int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
+        public abstract int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
 
-        // public abstract int UnregisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
+        public abstract int UnregisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
 
         public abstract int AdjustRecordingSignalVolume(int volume);
 
@@ -290,16 +298,16 @@ namespace agora.rtc
         public abstract int EnableInEarMonitoring(bool enabled, int includeAudioFilters);
 
         public abstract int SetInEarMonitoringVolume(int volume);
-    
+
         public abstract int LoadExtensionProvider(string extension_lib_path);
 
         public abstract int SetExtensionProviderProperty(string provider, string key, string value);
 
-        public abstract int EnableExtension(string provider, string extension, bool enable=true);
+        public abstract int EnableExtension(string provider, string extension, bool enable = true);
 
         public abstract int SetExtensionProperty(string provider, string extension, string key, string value);
 
-        public abstract int GetExtensionProperty(string provider, string extension, string key, string value, int buf_len);
+        public abstract int GetExtensionProperty(string provider, string extension, string key, string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
         public abstract int SetCameraCapturerConfiguration(CameraCapturerConfiguration config);
 
@@ -318,7 +326,7 @@ namespace agora.rtc
         public abstract int SetCameraZoomFactor(float factor);
 
         public abstract int EnableFaceDetection(bool enabled);
-  
+
         public abstract float GetCameraMaxZoomFactor();
 
         public abstract int SetCameraFocusPositionInPreview(float positionX, float positionY);
@@ -326,31 +334,31 @@ namespace agora.rtc
         public abstract int SetCameraTorchOn(bool isOn);
 
         public abstract int SetCameraAutoFocusFaceModeEnabled(bool enabled);
-      
+
         public abstract bool IsCameraExposurePositionSupported();
-      
+
         public abstract int SetCameraExposurePosition(float positionXinView, float positionYinView);
 
         public abstract bool IsCameraAutoExposureFaceModeSupported();
-      
-        public abstract int SetCameraAutoExposureFaceModeEnabled(bool enabled);  
+
+        public abstract int SetCameraAutoExposureFaceModeEnabled(bool enabled);
 
         public abstract int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker);
 
         public abstract int SetEnableSpeakerphone(bool speakerOn);
-      
+
         public abstract bool IsSpeakerphoneEnabled();
-    
+
         public abstract int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams);
-    
+
         public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
         public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
 
         public abstract int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
-    
+
         public abstract int SetScreenCaptureContentHint(VIDEO_CONTENT_HINT contentHint);
-      
+
         public abstract int UpdateScreenCaptureRegion(Rectangle regionRect);
 
         public abstract int UpdateScreenCaptureParameters(ScreenCaptureParameters captureParams);
@@ -368,13 +376,13 @@ namespace agora.rtc
         public abstract int RemovePublishStreamUrl(string url);
 
         public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
-      
+
         public abstract int StartLocalVideoTranscoder(LocalTranscoderConfiguration config);
 
         public abstract int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config);
 
         public abstract int StopLocalVideoTranscoder();
-      
+
         public abstract int StartPrimaryCameraCapture(CameraCapturerConfiguration config);
 
         public abstract int StartSecondaryCameraCapture(CameraCapturerConfiguration config);
@@ -382,11 +390,11 @@ namespace agora.rtc
         public abstract int StopPrimaryCameraCapture();
 
         public abstract int StopSecondaryCameraCapture();
-      
+
         public abstract int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
 
         public abstract int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
-      
+
         public abstract int StartPrimaryScreenCapture(ScreenCaptureConfiguration config);
 
         public abstract int StartSecondaryScreenCapture(ScreenCaptureConfiguration config);
@@ -394,16 +402,16 @@ namespace agora.rtc
         public abstract int StopPrimaryScreenCapture();
 
         public abstract int StopSecondaryScreenCapture();
-      
+
         public abstract CONNECTION_STATE_TYPE GetConnectionState();
-      
+
         public abstract int RegisterEventHandler(IAgoraRtcEngineEventHandler eventHandler);
 
         public abstract int UnregisterEventHandler(IAgoraRtcEngineEventHandler eventHandler);
-        
+
         public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
 
-        //public abstract int RegisterPacketObserver(IPacketObserver observer);
+        public abstract int RegisterPacketObserver(IPacketObserver observer);
 
         public abstract int SetEncryptionMode(string encryptionMode);
 
@@ -411,9 +419,9 @@ namespace agora.rtc
 
         public abstract int EnableEncryption(bool enabled, EncryptionConfig config);
 
-        public abstract int CreateDataStream(bool reliable, bool ordered);
+        public abstract int CreateDataStream(ref int streamId, bool reliable, bool ordered);
 
-        public abstract int CreateDataStream(DataStreamConfig config);
+        public abstract int CreateDataStream(ref int streamId, DataStreamConfig config);
 
         public abstract int SendStreamMessage(int streamId, byte[] data, uint length);
 
@@ -437,12 +445,12 @@ namespace agora.rtc
 
         public abstract int SendCustomReportMessage(string id, string category, string @event, string label, int value);
 
-        // public abstract int RegisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type);
+        public abstract int RegisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type);
 
-        // public abstract int UnregisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type);
+        public abstract int UnregisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type);
 
         public abstract int StartAudioFrameDump(string channel_id, uint user_id, string location, string uuid, string passwd, long duration_ms, bool auto_upload);
-      
+
         public abstract int StopAudioFrameDump(string channel_id, uint user_id, string location);
 
         public abstract int RegisterLocalUserAccount(string appId, string userAccount);
@@ -453,26 +461,26 @@ namespace agora.rtc
 
         public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options, IAgoraRtcEngineEventHandler eventHandler);
 
-        public abstract int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo, string channelId = null, string localUserAccount = null);
-      
-        public abstract int GetUserInfoByUid(uint uid, out UserInfo userInfo, string channelId = null, string localUserAccount = null);
+        public abstract int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo);
+
+        public abstract int GetUserInfoByUid(uint uid, out UserInfo userInfo);
 
         public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
         public abstract int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
-      
+
         public abstract int StopChannelMediaRelay();
-      
+
         public abstract int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile);
-        
+
         public abstract int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config);
-      
-        // public abstract int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler, string publishUrl, DirectCdnStreamingMediaOptions options);
-        
-        // public abstract int StopDirectCdnStreaming();
-      
-        // public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
-      
+
+        public abstract int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler, string publishUrl, DirectCdnStreamingMediaOptions options);
+
+        public abstract int StopDirectCdnStreaming();
+
+        public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
+
         public abstract int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame);
 
         public abstract int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options, IAgoraRtcEngineEventHandler eventHandler);
@@ -518,7 +526,7 @@ namespace agora.rtc
         public abstract int PullAudioFrame(AudioFrame frame);
 
         public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, EncodedVideoTrackOptions encodedVideoOption);
-       
+
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
 
         public abstract int PushVideoFrame(ExternalVideoFrame frame);
@@ -528,9 +536,9 @@ namespace agora.rtc
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo);
 
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
-        
+
         public abstract int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len);
-        
+
         public abstract int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction);
 
         public abstract int AdjustCustomAudioPublishVolume(int sourceId, int volume);
@@ -539,7 +547,7 @@ namespace agora.rtc
 
         public abstract int SetParameters(string parameters);
 
-        //public abstract DeviceInfo GetAudioDeviceInfo();
+        public abstract int GetAudioDeviceInfo(out DeviceInfo deviceInfo);
 
         public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
 
@@ -560,6 +568,8 @@ namespace agora.rtc
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
 
         public abstract int SwitchChannel(string token, string channel);
+
+        public abstract int SwitchChannel(string token, string channel, ChannelMediaOptions options);
 
         public abstract int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config);
 
@@ -604,171 +614,171 @@ namespace agora.rtc
 
     public abstract class IAgoraRtcEngineEventHandler
     {
-        public virtual void OnJoinChannelSuccess(RtcConnection connection, int elapsed) {}
+        public virtual void OnJoinChannelSuccess(RtcConnection connection, int elapsed) { }
 
-        public virtual void OnRejoinChannelSuccess(RtcConnection connection, int elapsed) {}
+        public virtual void OnRejoinChannelSuccess(RtcConnection connection, int elapsed) { }
 
-        public virtual void OnWarning(int warn, string msg) {}
+        public virtual void OnWarning(int warn, string msg) { }
 
-        public virtual void OnError(int err, string msg) {}
+        public virtual void OnError(int err, string msg) { }
 
-        public virtual void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost) {}
+        public virtual void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost) { }
 
-        public virtual void OnLastmileProbeResult(LastmileProbeResult result) {}
+        public virtual void OnLastmileProbeResult(LastmileProbeResult result) { }
 
-        public virtual void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume) {}
+        public virtual void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume) { }
 
-        public virtual void OnLeaveChannel(RtcConnection connection, RtcStats stats) {}
+        public virtual void OnLeaveChannel(RtcConnection connection, RtcStats stats) { }
 
-        public virtual void OnRtcStats(RtcConnection connection, RtcStats stats) {}
+        public virtual void OnRtcStats(RtcConnection connection, RtcStats stats) { }
 
-        public virtual void OnAudioDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) {}
+        public virtual void OnAudioDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
-        public virtual void OnAudioMixingFinished() {}
+        public virtual void OnAudioMixingFinished() { }
 
-        public virtual void OnAudioEffectFinished(int soundId) {}
+        public virtual void OnAudioEffectFinished(int soundId) { }
 
-        public virtual void OnVideoDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) {}
+        public virtual void OnVideoDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
-        public virtual void OnMediaDeviceChanged(int deviceType) {}
+        public virtual void OnMediaDeviceChanged(int deviceType) { }
 
-        public virtual void OnNetworkQuality(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality) {}
+        public virtual void OnNetworkQuality(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality) { }
 
-        public virtual void OnIntraRequestReceived(RtcConnection connection) {}
+        public virtual void OnIntraRequestReceived(RtcConnection connection) { }
 
-        public virtual void OnUplinkNetworkInfoUpdated(UplinkNetworkInfo info) {}
+        public virtual void OnUplinkNetworkInfoUpdated(UplinkNetworkInfo info) { }
 
-        public virtual void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info) {}
+        public virtual void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info) { }
 
-        public virtual void OnLastmileQuality(int quality) {}
+        public virtual void OnLastmileQuality(int quality) { }
 
-        public virtual void OnFirstLocalVideoFrame(RtcConnection connection, int width, int height, int elapsed) {}
+        public virtual void OnFirstLocalVideoFrame(RtcConnection connection, int width, int height, int elapsed) { }
 
-        public virtual void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed) {}
+        public virtual void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed) { }
 
-        public virtual void OnVideoSourceFrameSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, int width, int height) {}
+        public virtual void OnVideoSourceFrameSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, int width, int height) { }
 
-        public virtual void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed) {}
+        public virtual void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed) { }
 
-        public virtual void OnVideoSizeChanged(RtcConnection connection, uint uid, int width, int height, int rotation) {}
+        public virtual void OnVideoSizeChanged(RtcConnection connection, uint uid, int width, int height, int rotation) { }
 
-        public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) {}
+        public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
 
-        public virtual void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed) {}
+        public virtual void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed) { }
 
-        public virtual void OnFirstRemoteVideoFrame(RtcConnection connection, uint remoteUid, int width, int height, int elapsed) {}
+        public virtual void OnFirstRemoteVideoFrame(RtcConnection connection, uint remoteUid, int width, int height, int elapsed) { }
 
-        public virtual void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed) {}
+        public virtual void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed) { }
 
-        public virtual void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason) {}
+        public virtual void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason) { }
 
-        public virtual void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted) {}
+        public virtual void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted) { }
 
-        public virtual void OnUserEnableVideo(RtcConnection connection, uint remoteUid, bool enabled) {}
+        public virtual void OnUserEnableVideo(RtcConnection connection, uint remoteUid, bool enabled) { }
 
-        public virtual void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled) {}
+        public virtual void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled) { }
 
-        public virtual void OnApiCallExecuted(int err, string api, string result) {}
+        public virtual void OnApiCallExecuted(int err, string api, string result) { }
 
-        public virtual void OnLocalAudioStats(RtcConnection connection, LocalAudioStats stats) {}
+        public virtual void OnLocalAudioStats(RtcConnection connection, LocalAudioStats stats) { }
 
-        public virtual void OnRemoteAudioStats(RtcConnection connection, RemoteAudioStats stats) {}
+        public virtual void OnRemoteAudioStats(RtcConnection connection, RemoteAudioStats stats) { }
 
-        public virtual void OnLocalVideoStats(RtcConnection connection, LocalVideoStats stats) {}
+        public virtual void OnLocalVideoStats(RtcConnection connection, LocalVideoStats stats) { }
 
-        public virtual void OnRemoteVideoStats(RtcConnection connection, RemoteVideoStats stats) {}
+        public virtual void OnRemoteVideoStats(RtcConnection connection, RemoteVideoStats stats) { }
 
-        public virtual void OnCameraReady() {}
+        public virtual void OnCameraReady() { }
 
-        public virtual void OnCameraFocusAreaChanged(int x, int y, int width, int height) {}
+        public virtual void OnCameraFocusAreaChanged(int x, int y, int width, int height) { }
 
-        public virtual void OnCameraExposureAreaChanged(int x, int y, int width, int height) {}
+        public virtual void OnCameraExposureAreaChanged(int x, int y, int width, int height) { }
 
-        public virtual void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces) {}
+        public virtual void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces) { }
 
-        public virtual void OnVideoStopped() {}
+        public virtual void OnVideoStopped() { }
 
-        public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode) {}
+        public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode) { }
 
-        public virtual void OnConnectionLost(RtcConnection connection) {}
+        public virtual void OnConnectionLost(RtcConnection connection) { }
 
-        public virtual void OnConnectionInterrupted(RtcConnection connection) {}
+        public virtual void OnConnectionInterrupted(RtcConnection connection) { }
 
-        public virtual void OnConnectionBanned(RtcConnection connection) {}
+        public virtual void OnConnectionBanned(RtcConnection connection) { }
 
-        public virtual void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs) {}
+        public virtual void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs) { }
 
-        public virtual void OnStreamMessageError(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached) {}
+        public virtual void OnStreamMessageError(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached) { }
 
-        public virtual void OnRequestToken(RtcConnection connection) {}
+        public virtual void OnRequestToken(RtcConnection connection) { }
 
-        public virtual void OnTokenPrivilegeWillExpire(RtcConnection connection, string token) {}
+        public virtual void OnTokenPrivilegeWillExpire(RtcConnection connection, string token) { }
 
-        public virtual void OnFirstLocalAudioFramePublished(RtcConnection connection, int elapsed) {}
+        public virtual void OnFirstLocalAudioFramePublished(RtcConnection connection, int elapsed) { }
 
-        public virtual void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error) {}
+        public virtual void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error) { }
 
-        public virtual void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed) {}
+        public virtual void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed) { }
 
-        public virtual void OnActiveSpeaker(uint userId) {}
+        public virtual void OnActiveSpeaker(uint userId) { }
 
-        public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole) {}
+        public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole) { }
 
-        public virtual void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted) {}
+        public virtual void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted) { }
 
-        public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode) {}
+        public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode) { }
 
-        public virtual void OnStreamPublished(string url, int error) {}
+        public virtual void OnStreamPublished(string url, int error) { }
 
-        public virtual void OnStreamUnpublished(string url) {}
+        public virtual void OnStreamUnpublished(string url) { }
 
-        public virtual void OnTranscodingUpdated() {}
+        public virtual void OnTranscodingUpdated() { }
 
-        public virtual void OnAudioRoutingChanged(int routing) {}
+        public virtual void OnAudioRoutingChanged(int routing) { }
 
-        public virtual void OnAudioSessionRestrictionResume() {}
+        public virtual void OnAudioSessionRestrictionResume() { }
 
-        public virtual void OnChannelMediaRelayStateChanged(int state, int code) {}
+        public virtual void OnChannelMediaRelayStateChanged(int state, int code) { }
 
-        public virtual void OnChannelMediaRelayEvent(int code) {}
+        public virtual void OnChannelMediaRelayEvent(int code) { }
 
-        public virtual void OnLocalPublishFallbackToAudioOnly(bool isFallbackOrRecover) {}
+        public virtual void OnLocalPublishFallbackToAudioOnly(bool isFallbackOrRecover) { }
 
-        public virtual void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover) {}
+        public virtual void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover) { }
 
-        public virtual void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) {}
+        public virtual void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) { }
 
-        public virtual void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) {}
+        public virtual void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) { }
 
-        public virtual void OnConnectionStateChanged(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason) {}
+        public virtual void OnConnectionStateChanged(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason) { }
 
-        public virtual void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type) {}
+        public virtual void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type) { }
 
-        public virtual void OnEncryptionError(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType) {}
+        public virtual void OnEncryptionError(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType) { }
 
-        public virtual void OnPermissionError(PERMISSION_TYPE permissionType) {}
+        public virtual void OnPermissionError(PERMISSION_TYPE permissionType) { }
 
-        public virtual void OnLocalUserRegistered(uint uid, string userAccount) {}
+        public virtual void OnLocalUserRegistered(uint uid, string userAccount) { }
 
-        public virtual void OnUserInfoUpdated(uint uid, UserInfo info) {}
+        public virtual void OnUserInfoUpdated(uint uid, UserInfo info) { }
 
-        public virtual void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState) {}
+        public virtual void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState) { }
 
-        public virtual void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState) {}
+        public virtual void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState) { }
 
-        public virtual void OnAudioPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) {}
+        public virtual void OnAudioPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) { }
 
-        public virtual void OnVideoPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) {}
+        public virtual void OnVideoPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) { }
 
-        public virtual void OnExtensionEvent(string provider, string extension, string key, string value) {}
+        public virtual void OnExtensionEvent(string provider, string extension, string key, string value) { }
 
-        public virtual void OnExtensionStarted(string provider, string extension) {}
+        public virtual void OnExtensionStarted(string provider, string extension) { }
 
-        public virtual void OnExtensionStopped(string provider, string extension) {}
+        public virtual void OnExtensionStopped(string provider, string extension) { }
 
         //public virtual void OnExtensionErrored(string provider, string extension, int error, string msg) {}
 
-        public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) {}
+        public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) { }
 
         // public virtual void OnUserMuteAudio(uint connId, uint uid, bool muted) {}
 
@@ -776,9 +786,9 @@ namespace agora.rtc
 
         // public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) {}
 
-        public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) {}
+        public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) { }
 
-        public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode) {}
+        public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode) { }
     };
 
     internal static partial class ObsoleteMethodWarning
