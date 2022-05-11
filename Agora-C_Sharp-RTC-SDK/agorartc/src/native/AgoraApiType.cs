@@ -259,7 +259,37 @@ namespace agora.rtc
         internal const string FUNC_RTCENGINE_ENABLEFISHCORRECTION = "RtcEngine_enableFishCorrection";
         internal const string FUNC_RTCENGINE_SETADVANCEDAUDIOOPTIONS = "RtcEngine_setAdvancedAudioOptions";
         internal const string FUNC_RTCENGINE_SETAVSYNCSOURCE = "RtcEngine_setAVSyncSource";
+        internal const string FUNC_RTC_ENGINE_STARTSCREENCAPTUREBYDISPLAYID = "RtcEngine_startScreenCaptureByDisplayId";
         // class IRtcEngine end
+
+        // class IRtcEngineEx start
+        internal const string FUNC_RTCENGINEEX_JOINCHANNELEX = "RtcEngineEx_joinChannelEx";
+        internal const string FUNC_RTCENGINEEX_LEAVECHANNELEX = "RtcEngineEx_leaveChannelEx";
+        internal const string FUNC_RTCENGINEEX_UPDATECHANNELMEDIAOPTIONSEX = "RtcEngineEx_updateChannelMediaOptionsEx";
+        internal const string FUNC_RTCENGINEEX_SETVIDEOENCODERCONFIGURATIONEX = "RtcEngineEx_setVideoEncoderConfigurationEx";
+        internal const string FUNC_RTCENGINEEX_SETUPREMOTEVIDEOEX = "RtcEngineEx_setupRemoteVideoEx";
+        internal const string FUNC_RTCENGINEEX_MUTEREMOTEAUDIOSTREAMEX = "RtcEngineEx_muteRemoteAudioStreamEx";
+        internal const string FUNC_RTCENGINEEX_MUTEREMOTEVIDEOSTREAMEX = "RtcEngineEx_muteRemoteVideoStreamEx";
+        internal const string FUNC_RTCENGINEEX_SETREMOTEVIDEOSTREAMTYPEEX = "RtcEngineEx_setRemoteVideoStreamTypeEx";
+        internal const string FUNC_RTCENGINEEX_SETREMOTEVOICEPOSITIONEX = "RtcEngineEx_setRemoteVoicePositionEx";
+        internal const string FUNC_RTCENGINEEX_SETREMOTEUSERSPATIALAUDIOPARAMSEX = "RtcEngineEx_setRemoteUserSpatialAudioParamsEx";
+        internal const string FUNC_RTCENGINEEX_SETREMOTERENDERMODEEX = "RtcEngineEx_setRemoteRenderModeEx";
+        internal const string FUNC_RTCENGINEEX_ENABLELOOPBACKRECORDINGEX = "RtcEngineEx_enableLoopbackRecordingEx";
+        internal const string FUNC_RTCENGINEEX_GETCONNECTIONSTATEEX = "RtcEngineEx_getConnectionStateEx";
+        internal const string FUNC_RTCENGINEEX_ENABLEENCRYPTIONEX = "RtcEngineEx_enableEncryptionEx";
+        internal const string FUNC_RTCENGINEEX_CREATEDATASTREAMEX = "RtcEngineEx_createDataStreamEx";
+        internal const string FUNC_RTCENGINEEX_CREATEDATASTREAMEX2 = "RtcEngineEx_createDataStreamEx2";
+        internal const string FUNC_RTCENGINEEX_SENDSTREAMMESSAGEEX = "RtcEngineEx_sendStreamMessageEx";
+        internal const string FUNC_RTCENGINEEX_ADDVIDEOWATERMARKEX = "RtcEngineEx_addVideoWatermarkEx";
+        internal const string FUNC_RTCENGINEEX_CLEARVIDEOWATERMARKEX = "RtcEngineEx_clearVideoWatermarkEx";
+        internal const string FUNC_RTCENGINEEX_SENDCUSTOMREPORTMESSAGEEX = "RtcEngineEx_sendCustomReportMessageEx";
+        internal const string FUNC_RTCENGINEEX_ENABLEAUDIOVOLUMEINDICATIONEX = "RtcEngineEx_enableAudioVolumeIndicationEx";
+        internal const string FUNC_RTCENGINEEX_GETUSERINFOBYUSERACCOUNTEX = "RtcEngineEx_getUserInfoByUserAccountEx";
+        internal const string FUNC_RTCENGINEEX_GETUSERINFOBYUIDEX = "RtcEngineEx_getUserInfoByUidEx";
+        internal const string FUNC_RTCENGINEEX_SETVIDEOPROFILEEX = "RtcEngineEx_setVideoProfileEx";
+        internal const string FUNC_RTCENGINEEX_ENABLEDUALSTREAMMODEEX = "RtcEngineEx_enableDualStreamModeEx";
+        internal const string FUNC_RTCENGINEEX_ADDPUBLISHSTREAMURLEX = "RtcEngineEx_addPublishStreamUrlEx";
+        // class IRtcEngineEx end
 
         // class IMediaPlayer start
         internal const string FUNC_MEDIAPLAYER_INITIALIZE = "MediaPlayer_initialize";
@@ -414,24 +444,23 @@ namespace agora.rtc
         // class IMediaEngine start
         internal const string FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER = "MediaEngine_registerAudioFrameObserver";
         internal const string FUNC_MEDIAENGINE_REGISTERVIDEOFRAMEOBSERVER = "MediaEngine_registerVideoFrameObserver";
-        internal const string FUNC_MEDIAENGINE_REGISTERVIDEOENCODEDIMAGERECEIVER ="MediaEngine_registerVideoEncodedImageReceiver";
-        internal const string FUNC_MEDIAENGINE_PUSHAUDIOFRAME ="MediaEngine_pushAudioFrame";
-        internal const string FUNC_MEDIAENGINE_PUSHCAPTUREAUDIOFRAME ="MediaEngine_pushCaptureAudioFrame";
-        internal const string FUNC_MEDIAENGINE_PUSHREVERSEAUDIOFRAME ="MediaEngine_pushReverseAudioFrame";
-        internal const string FUNC_MEDIAENGINE_PUSHDIRECTAUDIOFRAME ="MediaEngine_pushDirectAudioFrame";
-        internal const string FUNC_MEDIAENGINE_PULLAUDIOFRAME ="MediaEngine_pullAudioFrame";
-        internal const string FUNC_MEDIAENGINE_SETEXTERNALVIDEOSOURCE ="MediaEngine_setExternalVideoSource";
-        internal const string FUNC_MEDIAENGINE_SETEXTERNALAUDIOSOURCE ="MediaEngine_setExternalAudioSource";
-        internal const string FUNC_MEDIAENGINE_SETEXTERNALAUDIOSINK= "MediaEngine_setExternalAudioSink";
-        internal const string FUNC_MEDIAENGINE_ENABLECUSTOMAUDIOLOCALPLAYBACK ="MediaEngine_enableCustomAudioLocalPlayback";
-        internal const string FUNC_MEDIAENGINE_SETDIRECTEXTERNALAUDIOSOURCE ="MediaEngine_setDirectExternalAudioSource";
-        internal const string FUNC_MEDIAENGINE_PUSHVIDEOFRAME= "MediaEngine_pushVideoFrame";
-        internal const string FUNC_MEDIAENGINE_PUSHVIDEOFRAME2 ="MediaEngine_pushVideoFrame2";
-        internal const string FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE ="MediaEngine_pushEncodedVideoImage";
-        internal const string FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE2 ="MediaEngine_pushEncodedVideoImage2";
-        internal const string FUNC_MEDIAENGINE_RELEASE= "MediaEngine_release";
+        internal const string FUNC_MEDIAENGINE_REGISTERVIDEOENCODEDIMAGERECEIVER = "MediaEngine_registerVideoEncodedImageReceiver";
+        internal const string FUNC_MEDIAENGINE_PUSHAUDIOFRAME = "MediaEngine_pushAudioFrame";
+        internal const string FUNC_MEDIAENGINE_PUSHCAPTUREAUDIOFRAME = "MediaEngine_pushCaptureAudioFrame";
+        internal const string FUNC_MEDIAENGINE_PUSHREVERSEAUDIOFRAME = "MediaEngine_pushReverseAudioFrame";
+        internal const string FUNC_MEDIAENGINE_PUSHDIRECTAUDIOFRAME = "MediaEngine_pushDirectAudioFrame";
+        internal const string FUNC_MEDIAENGINE_PULLAUDIOFRAME = "MediaEngine_pullAudioFrame";
+        internal const string FUNC_MEDIAENGINE_SETEXTERNALVIDEOSOURCE = "MediaEngine_setExternalVideoSource";
+        internal const string FUNC_MEDIAENGINE_SETEXTERNALAUDIOSOURCE = "MediaEngine_setExternalAudioSource";
+        internal const string FUNC_MEDIAENGINE_SETEXTERNALAUDIOSINK = "MediaEngine_setExternalAudioSink";
+        internal const string FUNC_MEDIAENGINE_ENABLECUSTOMAUDIOLOCALPLAYBACK = "MediaEngine_enableCustomAudioLocalPlayback";
+        internal const string FUNC_MEDIAENGINE_SETDIRECTEXTERNALAUDIOSOURCE = "MediaEngine_setDirectExternalAudioSource";
+        internal const string FUNC_MEDIAENGINE_PUSHVIDEOFRAME = "MediaEngine_pushVideoFrame";
+        internal const string FUNC_MEDIAENGINE_PUSHVIDEOFRAME2 = "MediaEngine_pushVideoFrame2";
+        internal const string FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE = "MediaEngine_pushEncodedVideoImage";
+        internal const string FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE2 = "MediaEngine_pushEncodedVideoImage2";
+        internal const string FUNC_MEDIAENGINE_RELEASE = "MediaEngine_release";
         // class IMediaEngine end
-
 
         // class RtcRawData start
         internal const string FUNC_RTCRAWDATA_REGISTERAUDIOFRAMEOBSERVER = "RtcRawData_registerAudioFrameObserver";
