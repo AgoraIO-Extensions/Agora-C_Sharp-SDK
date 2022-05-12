@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp20;net40</TargetFrameworks>
     <Nullable>disable</Nullable>
-    <Platforms>x64;x86</Platforms>
+    <Platforms>x86;x64</Platforms>
     <ApplicationIcon />
     <Win32Resource />
     <Company>Agora.io</Company>
@@ -27,12 +27,12 @@ The Agora RTC SDK is applicable to scenarios that encourage active engagement, s
     </PropertyGroup>-->
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <OutputPath>..\..\CSharp-API_Example\binx86\Debug\</OutputPath>
+    <OutputPath>..\..\CSharp-API_Example\binx86\Debug\netcoreapp20</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutputPath>..\..\CSharp-API_Example\binx64\Debug</OutputPath>
+    <OutputPath>..\..\CSharp-API_Example\binx64\Debug\netcoreapp20</OutputPath>
   </PropertyGroup>
 
   <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -40,11 +40,11 @@ The Agora RTC SDK is applicable to scenarios that encourage active engagement, s
     </PropertyGroup>-->
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <OutputPath>..\..\CSharp-API_Example\binx86\Release\</OutputPath>
+    <OutputPath>..\..\CSharp-API_Example\binx86\Release\netcoreapp20</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutputPath>..\..\CSharp-API_Example\binx64\Release\</OutputPath>
+    <OutputPath>..\..\CSharp-API_Example\binx64\Release\netcoreapp20</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
