@@ -17,7 +17,7 @@ namespace agora.rtc
          * - true: Processed.
          * - false: Not processed.
          */
-        public virtual bool onLocalAudioSpectrum(ref AudioSpectrumData data)
+        public virtual bool onLocalAudioSpectrum(AudioSpectrumData data)
         {
             return true;
         }

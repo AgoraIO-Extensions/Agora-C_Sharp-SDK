@@ -6898,13 +6898,13 @@ namespace agora.rtc
         /**
          * User ID of the speaker.
          */
-        uint uid;
+        public uint uid;
         /**
          * The audio spectrum data of audio.
          */
-        AudioSpectrumData spectrumData;
+        public AudioSpectrumData spectrumData;
 
-        UserAudioSpectrumInfo()
+        public UserAudioSpectrumInfo()
         {
             uid = 0;
             spectrumData = null;

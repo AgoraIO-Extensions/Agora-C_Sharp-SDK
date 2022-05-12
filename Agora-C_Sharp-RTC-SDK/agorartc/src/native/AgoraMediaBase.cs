@@ -248,8 +248,8 @@ namespace agora.rtc
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisUserAudioSpectrumInfo
     {
-        uint uid;
-        IrisAudioSpectrumData spectrumData;
+        internal uint uid;
+        internal IrisAudioSpectrumData spectrumData;
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
