@@ -141,7 +141,9 @@ namespace agora.rtc
 
         public abstract int StartAudioRecording(AudioRecordingConfiguration config);
 
-        public abstract int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAgoraRtcAudioEncodedFrameObserver observer); //TODO
+        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAgoraRtcAudioEncodedFrameObserver observer); //TODO
+
+        public abstract void UnRegisterAudioEncodedFrameObserver();
 
         public abstract int StopAudioRecording();
 

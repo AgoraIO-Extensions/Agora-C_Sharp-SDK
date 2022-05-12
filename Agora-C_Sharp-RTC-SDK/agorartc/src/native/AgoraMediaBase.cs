@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace agora.rtc
 {
-    public enum MEDIA_SOURCE_TYPE 
+    public enum MEDIA_SOURCE_TYPE
     {
         /** 
         * 0: The audio playback device.
@@ -69,7 +69,7 @@ namespace agora.rtc
         */
         UNKNOWN_MEDIA_SOURCE = 100
     }
-    
+
     public enum AUDIO_FRAME_TYPE
     {
         /** 0: PCM16. */
@@ -107,7 +107,7 @@ namespace agora.rtc
         FRAME_TYPE_BGRA = 3, // BGRA format
     }
 
-    public enum IRIS_BYTES_PER_SAMPLE 
+    public enum IRIS_BYTES_PER_SAMPLE
     {
         IRIS_TWO_BYTES_PER_SAMPLE = 2,
     };
@@ -124,6 +124,23 @@ namespace agora.rtc
         internal uint buffer_length;
         internal long render_time_ms;
         internal int av_sync_type;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisEncodedAudioFrameInfo
+    { 
+        internal AUDIO_CODEC_TYPE codec;
+        internal int sampleRateHz;
+        internal int samplesPerChannel;
+        internal int numberOfChannels;
+        internal IrisEncodedAudioFrameAdvancedSettings advancedSettings;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisEncodedAudioFrameAdvancedSettings
+    {
+        internal bool speech;
+        internal bool sendEvenIfEmpty;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -211,7 +228,8 @@ namespace agora.rtc
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisAudioPcmFrame {
+    internal struct IrisAudioPcmFrame
+    {
         internal UInt32 capture_timestamp;
         internal UInt16 samples_per_channel_;
         internal int sample_rate_hz_;
@@ -220,9 +238,9 @@ namespace agora.rtc
         internal Int16[] data_;
     }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
     * Audio routes.
@@ -270,14 +288,16 @@ namespace agora.rtc
     /**
     * Bytes per sample
     */
-    public enum BYTES_PER_SAMPLE {
+    public enum BYTES_PER_SAMPLE
+    {
         /**
         * two bytes per sample
         */
         TWO_BYTES_PER_SAMPLE = 2,
     };
 
-    public class AudioParameters {
+    public class AudioParameters
+    {
         public AudioParameters() { }
         public AudioParameters(int sample_rate, uint channels, uint frames_per_buffer)
         {
@@ -290,7 +310,8 @@ namespace agora.rtc
         public uint frames_per_buffer { set; get; }
     }
 
-    public enum RAW_AUDIO_FRAME_OP_MODE_TYPE {
+    public enum RAW_AUDIO_FRAME_OP_MODE_TYPE
+    {
         /** 0: Read-only mode: Users only read the
             agora::media::IAudioFrameObserver::AudioFrame data without modifying
             anything. For example, when users acquire data with the Agora SDK then push
@@ -307,14 +328,16 @@ namespace agora.rtc
     /**
     * The maximum metadata size.
     */
-    public enum MAX_METADATA_SIZE_TYPE {
+    public enum MAX_METADATA_SIZE_TYPE
+    {
         MAX_METADATA_SIZE_IN_BYTE = 1024
     };
 
     /**
     * Video pixel formats.
     */
-    public enum VIDEO_PIXEL_FORMAT {
+    public enum VIDEO_PIXEL_FORMAT
+    {
         /**
         * 0: Unknown format.
         */
@@ -356,7 +379,8 @@ namespace agora.rtc
     /**
     * The video display mode.
     */
-    public enum RENDER_MODE_TYPE {
+    public enum RENDER_MODE_TYPE
+    {
         /**
         * 1: Uniformly scale the video until it fills the visible boundaries
         * (cropped). One dimension of the video may have clipped contents.
@@ -378,7 +402,8 @@ namespace agora.rtc
     /**
     * The EGL context type.
     */
-    public enum EGL_CONTEXT_TYPE {
+    public enum EGL_CONTEXT_TYPE
+    {
         /**
         * 0: When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos
         */
@@ -662,11 +687,12 @@ namespace agora.rtc
 		 */
         public int avsync_type { set; get; }
     }
-   
+
     /**
     * The detailed information of the incoming audio frame in the PCM format.
     */
-    public struct AudioPcmFrame {
+    public struct AudioPcmFrame
+    {
         /** The timestamp (ms) of the audio frame.
         */
         public UInt32 capture_timestamp;

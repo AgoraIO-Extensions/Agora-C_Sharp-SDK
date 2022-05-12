@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 namespace agora.rtc
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_Bool_Natvie();
+    internal delegate bool Func_Bool_Native();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate uint Func_Uint32_t_Native();
@@ -35,6 +35,9 @@ namespace agora.rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_AudioFrameEx_Native(string channel_id, uint uid, IntPtr audio_frame);
 
+    //audio_encoded_frame
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Func_RecordAudioEncodedFrame_Native(IntPtr frame_buffer, int length, IntPtr encoded_audio_frame_info);
 
     //video_frame
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -127,8 +130,23 @@ namespace agora.rtc
         internal Func_AudioFrameLocal_Native OnPlaybackAudioFrame;
         internal Func_AudioFrameLocal_Native OnMixedAudioFrame;
         internal Func_AudioFrameRemote_Native OnPlaybackAudioFrameBeforeMixing;
-        internal Func_Bool_Natvie IsMultipleChannelFrameWanted;
+        internal Func_Bool_Native IsMultipleChannelFrameWanted;
         internal Func_AudioFrameEx_Native OnPlaybackAudioFrameBeforeMixingEx;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtcCAudioEncodedFrameObserverNative
+    {
+        internal IntPtr OnRecordAudioEncodedFrame;
+        internal IntPtr OnPlaybackAudioEncodedFrame;
+        internal IntPtr OnMixedAudioEncodedFrame;
+    }
+
+    internal struct IrisRtcCAudioEncodedFrameObserver
+    {
+        internal Func_RecordAudioEncodedFrame_Native OnRecordAudioEncodedFrame;
+        internal Func_RecordAudioEncodedFrame_Native OnPlaybackAudioEncodedFrame;
+        internal Func_RecordAudioEncodedFrame_Native OnMixedAudioEncodedFrame;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -141,14 +159,14 @@ namespace agora.rtc
         internal IntPtr IsMultipleChannelFrameWanted;
         internal IntPtr OnRenderVideoFrameEx;
     }
-    
+
     internal struct IrisRtcCVideoFrameObserver
     {
         internal Func_VideoCaptureLocal_Native OnCaptureVideoFrame;
         internal Func_VideoFrameLocal_Native OnPreEncodeVideoFrame;
         internal Func_VideoFrameRemote_Native OnRenderVideoFrame;
         internal Func_Uint32_t_Native GetObservedFramePosition;
-        internal Func_Bool_Natvie IsMultipleChannelFrameWanted;
+        internal Func_Bool_Native IsMultipleChannelFrameWanted;
         internal Func_VideoFrameEx_Native OnRenderVideoFrameEx;
     }
 

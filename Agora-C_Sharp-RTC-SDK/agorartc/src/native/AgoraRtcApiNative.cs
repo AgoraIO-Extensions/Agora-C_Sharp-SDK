@@ -17,6 +17,7 @@ namespace agora.rtc
     using IrisRtcRendererPtr = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
     using IrisRtcAudioFrameObserverHandle = IntPtr;
+    using IrisAudioEncodedFrameObserverHandle = IntPtr;
     using IrisRtcVideoFrameObserverHandle = IntPtr;
     using IrisRtcRendererCacheConfigHandle = IntPtr;
     using IrisVideoFrameBufferManagerPtr = IntPtr;
@@ -77,6 +78,14 @@ namespace agora.rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void UnRegisterVideoFrameObserver(IrisRtcEnginePtr engine_ptr,
             IrisRtcVideoFrameObserverHandle handle, string identifier);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisAudioEncodedFrameObserverHandle RegisterAudioEncodedFrameObserver(
+           IrisRtcEnginePtr engine_ptr, IntPtr observerNative, string @params);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void UnRegisterAudioEncodedFrameObserver(IrisRtcEnginePtr engine_ptr,
+            IrisRtcAudioFrameObserverHandle handle, string identifier);
 
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
