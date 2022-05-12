@@ -152,7 +152,7 @@ namespace agora.rtc
         }
 
 #if __UNITY__
-        [MonoPInvokeCallback(typeof(Func_Bool_Natvie))]
+        [MonoPInvokeCallback(typeof(Func_Bool_Native))]
 #endif
         internal static bool IsMultipleChannelFrameWanted()
         {

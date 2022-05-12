@@ -19,12 +19,23 @@ namespace agora.rtc
 
     using IrisRtcEnginePtr = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
+
+    //AudioFrameObserver
     using IrisRtcCAudioFrameObserverNativeMarshal = IntPtr;
     using IrisRtcAudioFrameObserverHandleNative = IntPtr;
+
+    //AudioEncodeFrameObserver
+    using IrisRtcCAudioEncodeFrameObserverNativeMarshal = IntPtr;
+    using IrisRtcAudioEncodeFrameObserverHandleNative = IntPtr;
+
+    //VideoFrameObserver
     using IrisRtcCVideoFrameObserverNativeMarshal = IntPtr;
     using IrisRtcVideoFrameObserverHandleNative = IntPtr;
+
+    //VideoEncodedImageReceiver
     using IrisRtcCVideoEncodedImageReceiverNativeMarshal = IntPtr;
     using IrisRtcVideoEncodedImageReceiverHandleNative = IntPtr;
+
     using IrisVideoFrameBufferManagerPtr = IntPtr;
 
 
@@ -54,6 +65,11 @@ namespace agora.rtc
         private IrisRtcCAudioFrameObserverNativeMarshal _irisRtcCAudioFrameObserverNative;
         private IrisRtcCAudioFrameObserver _irisRtcCAudioFrameObserver;
         private IrisRtcAudioFrameObserverHandleNative _irisRtcAudioFrameObserverHandleNative;
+
+        //audioEncodedFrameObserver
+        private IrisRtcCAudioEncodeFrameObserverNativeMarshal _irisRtcCAudioEncodedFrameObserverNative;
+        private IrisRtcCAudioEncodedFrameObserver _irisRtcCAudioEncodedFrameObserver;
+        private IrisRtcAudioEncodeFrameObserverHandleNative _irisRtcAudioEncodedFrameObserverHandleNative;
 
         private IrisRtcCVideoFrameObserverNativeMarshal _irisRtcCVideoFrameObserverNative;
         private IrisRtcCVideoFrameObserver _irisRtcCVideoFrameObserver;
@@ -457,6 +473,7 @@ namespace agora.rtc
             return _spatialAudioEngineInstance;
         }
 
+        //todo not found in dcg
         //internal IVideoStreamManager GetVideoStreamManager()
         //{
         //    return new VideoStreamManager(this);
@@ -1210,23 +1227,62 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAgoraRtcAudioEncodedFrameObserver observer)
+        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAgoraRtcAudioEncodedFrameObserver observer)
         {
-            //todo 
-            //var param = new
-            //{
-            //    config,
-            //    observer
-            //};
-
-            //var json = JsonMapper.ToJson(param);
-            //var jsonLength = Convert.ToUInt64(json.Length);
-            //var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERAUDIOENCODEDFRAMEOBSERVER,
-            //    json, jsonLength,
-            //    null, 0,
-            //    out _result);
-            //return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            SetIrisAudioEncodedFrameObserver(config);
+            AgoraRtcAudioEncodedFrameObserverNative.AudioEncodedFrameObserver = observer;
         }
+
+        public override void UnRegisterAudioEncodedFrameObserver()
+        {
+            UnSetIrisAudioEncodedFrameObserver();
+        }
+
+        private void SetIrisAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config)
+        {
+            if (_irisRtcAudioEncodedFrameObserverHandleNative != IntPtr.Zero) return;
+
+            _irisRtcCAudioEncodedFrameObserver = new IrisRtcCAudioEncodedFrameObserver
+            {
+                OnRecordAudioEncodedFrame = AgoraRtcAudioEncodedFrameObserverNative.OnRecordAudioEncodedFrame,
+                OnPlaybackAudioEncodedFrame = AgoraRtcAudioEncodedFrameObserverNative.OnPlaybackAudioEncodedFrame,
+                OnMixedAudioEncodedFrame = AgoraRtcAudioEncodedFrameObserverNative.OnMixedAudioEncodedFrame
+            };
+
+            var _irisRtcCAudioEncodeFrameObserverNativeLocal = new IrisRtcCAudioEncodedFrameObserverNative
+            {
+                OnRecordAudioEncodedFrame = Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioEncodedFrameObserver.OnRecordAudioEncodedFrame),
+                OnPlaybackAudioEncodedFrame = Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame),
+                OnMixedAudioEncodedFrame = Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioEncodedFrameObserver.OnMixedAudioEncodedFrame),
+            };
+
+            _irisRtcCAudioEncodedFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(_irisRtcCAudioEncodeFrameObserverNativeLocal));
+            Marshal.StructureToPtr(_irisRtcCAudioEncodeFrameObserverNativeLocal, _irisRtcCAudioEncodedFrameObserverNative, true);
+
+            var param = LitJson.JsonMapper.ToJson(config);
+            _irisRtcAudioEncodedFrameObserverHandleNative = AgoraRtcNative.RegisterAudioEncodedFrameObserver(
+                _irisRtcEngine,
+                _irisRtcCAudioEncodedFrameObserverNative,
+                param
+             );
+        }
+
+        private void UnSetIrisAudioEncodedFrameObserver()
+        {
+            if (_irisRtcCAudioEncodedFrameObserverNative == null) return;
+
+            AgoraRtcNative.UnRegisterAudioEncodedFrameObserver(
+                 _irisRtcEngine,
+                 _irisRtcAudioEncodedFrameObserverHandleNative,
+                 identifier
+            );
+            _irisRtcAudioEncodedFrameObserverHandleNative = IntPtr.Zero;
+            AgoraRtcAudioEncodedFrameObserverNative.AudioEncodedFrameObserver = null;
+            Marshal.FreeHGlobal(_irisRtcCAudioEncodedFrameObserverNative);
+            _irisRtcCAudioEncodedFrameObserverNative = IntPtr.Zero;
+            _irisRtcCAudioEncodedFrameObserver = new IrisRtcCAudioEncodedFrameObserver();
+        }
+
 
         public override int StopAudioRecording()
         {
@@ -4673,7 +4729,7 @@ namespace agora.rtc
                 json, jsonLength,
                 null, 0,
                 out _result);
-            
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
