@@ -238,6 +238,20 @@ namespace agora.rtc
         internal Int16[] data_;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisAudioSpectrumData
+    {
+        internal float[] audioSpectrumData;
+        internal int dataLength;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisUserAudioSpectrumInfo
+    {
+        internal uint uid;
+        internal IrisAudioSpectrumData spectrumData;
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -710,5 +724,25 @@ namespace agora.rtc
         public BYTES_PER_SAMPLE bytes_per_sample;
         /** The audio frame data. */
         public Int16[] data_;
+    };
+
+    public struct AudioSpectrumData {
+  
+        public float[] audioSpectrumData;
+        /**
+        * The data length of audio spectrum data.
+        */
+        public int dataLength;
+    };
+
+    public struct UserAudioSpectrumInfo {
+        /**
+        * User ID of the speaker.
+        */
+        public uint uid;
+        /**
+        * The audio spectrum data of audio.
+        */
+        public public AudioSpectrumData spectrumData;
     };
 }

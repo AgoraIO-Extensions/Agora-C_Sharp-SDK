@@ -68,7 +68,23 @@ namespace agora.rtc
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate int Func_onReadData_Native(IntPtr buffer, int bufferSize, int playerId);
-    
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate bool Func_LocalAudioSpectrum_Native(IntPtr data);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate bool Func_RemoteAudioSpectrum_Native(IntPtr audio_frame, uint spectrumNumber);
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisMediaPlayerCAudioSpectrumObserverNative {
+        internal IntPtr onLocalAudioSpectrum;
+        internal IntPtr onRemoteAudioSpectrum;
+    }
+
+    internal struct IrisMediaPlayerCAudioSpectrumObserver {
+        internal Func_LocalAudioSpectrum_Native OnLocalAudioSpectrum;
+        internal Func_RemoteAudioSpectrum_Native OnRemoteAudioSpectrum;
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisMediaPlayerCAudioFrameObserverNative {
