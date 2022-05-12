@@ -1,11 +1,3 @@
-//  AgoraRtcEngineExtension.cs
-//
-//  Created by Yiqing Huang on July 1, 2021.
-//  Modified by Yiqing Huang on July 6, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 using System.Runtime.InteropServices;
 

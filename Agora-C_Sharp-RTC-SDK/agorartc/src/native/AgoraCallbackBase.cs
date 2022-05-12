@@ -1,10 +1,3 @@
-//  AgoraCallbackBase.cs
-//
-//  Created by YuGuo Chen on September 27, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -201,22 +194,5 @@ namespace agora.rtc
         internal Func_VideoFrame_Native OnVideoFrameReceived;
         internal int resize_width;
         internal int resize_height;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisVideoFrameBufferConfig
-    {
-        internal int type;
-        internal uint id;
-        
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
-        internal string key;
-    }
-
-    public struct VideoFrameBufferConfig 
-    {
-        public VIDEO_SOURCE_TYPE type;
-        public uint id;
-        public string key;
     }
 }

@@ -1,10 +1,3 @@
-//  AgoraRtcSpatialAudioEngineEventHandler.cs
-//
-//  Created by YuGuo Chen on May 11, 2022.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;

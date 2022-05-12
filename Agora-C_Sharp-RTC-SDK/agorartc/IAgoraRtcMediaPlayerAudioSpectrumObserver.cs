@@ -1,10 +1,3 @@
-//  IAgoraRtcMediaPlayerAudioSpectrumObserver.cs
-//
-//  Created by YuGuo Chen on May 12, 2022.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 
 namespace agora.rtc

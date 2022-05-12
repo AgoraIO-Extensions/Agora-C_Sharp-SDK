@@ -1,10 +1,3 @@
-//  AgoraRtcSpatialAudioEngine.cs
-//
-//  Created by YuGuo Chen on December 12, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
