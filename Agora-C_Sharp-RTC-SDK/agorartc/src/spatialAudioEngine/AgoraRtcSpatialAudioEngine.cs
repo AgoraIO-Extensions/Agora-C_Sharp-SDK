@@ -1,10 +1,3 @@
-//  AgoraRtcSpatialAudioEngine.cs
-//
-//  Created by YuGuo Chen on December 12, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -695,7 +688,6 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             });
 #endif
-            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 

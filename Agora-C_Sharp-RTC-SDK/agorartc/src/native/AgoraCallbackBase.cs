@@ -1,10 +1,3 @@
-//  AgoraCallbackBase.cs
-//
-//  Created by YuGuo Chen on September 27, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -59,7 +52,7 @@ namespace agora.rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_EncodedVideoImageReceived_Native(IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfo);
 
-    //media_player
+    //media player
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_AudioOnFrame_Native(IntPtr audio_frame, int mediaPlayerId);
 
@@ -69,15 +62,23 @@ namespace agora.rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate int Func_onReadData_Native(IntPtr buffer, int bufferSize, int playerId);
 
-    //audio_spectrum_observer
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_LocalAudioSpectrum_Native(IntPtr data);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_RemoteAudioSpectrum_Native(IntPtr audio_frame, uint spectrumNumber);
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisMediaPlayerCAudioSpectrumObserverNative {
+        internal IntPtr onLocalAudioSpectrum;
+        internal IntPtr onRemoteAudioSpectrum;
+    }
 
-    /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// 
+    internal struct IrisMediaPlayerCAudioSpectrumObserver {
+        internal Func_LocalAudioSpectrum_Native OnLocalAudioSpectrum;
+        internal Func_RemoteAudioSpectrum_Native OnRemoteAudioSpectrum;
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisMediaPlayerCAudioFrameObserverNative {
         internal IntPtr onFrame;
@@ -157,22 +158,6 @@ namespace agora.rtc
         internal Func_RecordAudioEncodedFrame_Native OnMixedAudioEncodedFrame;
     }
 
-    //AudioSpectrumObserver
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisRtcCAudioSpectrumObserverNative
-    {
-        internal IntPtr onLocalAudioSpectrum;
-        internal IntPtr onRemoteAudioSpectrum;
-    }
-
-    internal struct IrisRtcCAudioSpectrumObserver
-    {
-        internal Func_LocalAudioSpectrum_Native onLocalAudioSpectrum;
-        internal Func_RemoteAudioSpectrum_Native onRemoteAudioSpectrum;
-    }
-
-
-    //
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcCVideoFrameObserverNative
     {
@@ -209,22 +194,5 @@ namespace agora.rtc
         internal Func_VideoFrame_Native OnVideoFrameReceived;
         internal int resize_width;
         internal int resize_height;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisVideoFrameBufferConfig
-    {
-        internal int type;
-        internal uint id;
-        
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
-        internal string key;
-    }
-
-    public struct VideoFrameBufferConfig 
-    {
-        public VIDEO_SOURCE_TYPE type;
-        public uint id;
-        public string key;
     }
 }

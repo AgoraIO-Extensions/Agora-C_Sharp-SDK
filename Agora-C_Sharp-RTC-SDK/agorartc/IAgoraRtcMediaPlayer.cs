@@ -1,10 +1,3 @@
-//  IAgoraRtcMediaPlayer.cs
-//
-//  Created by YuGuo Chen on December 12, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 
 namespace agora.rtc
@@ -33,9 +26,15 @@ namespace agora.rtc
 
         public abstract void UnregisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer);
 
+        [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public abstract void RegisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer);
 
+        [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public abstract void UnregisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer);
+
+        public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer, int intervalInMS);
+
+        public abstract void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer);
 
         public abstract int Open(int playerId, string url, Int64 startPos);
 

@@ -1,10 +1,3 @@
-//  AgoraRtcApiNative.cs
-//
-//  Created by YuGuo Chen on September 26, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -28,6 +21,7 @@ namespace agora.rtc
     using IrisCloudSpatialAudioEnginePtr = IntPtr;
     using IrisLocalSpatialAudioEnginePtr = IntPtr;
     using IrisMediaPlayerVideoFrameObserverHandle = IntPtr;
+    using IrisMediaPlayerAudioSpectrumObserverHandle = IntPtr;
 
     internal static class AgoraRtcNative
     {
@@ -198,28 +192,35 @@ namespace agora.rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void UnsetIrisMediaPlayerEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
 
-// // media player video frame observer 
-//         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-//         internal static extern IrisMediaPlayerVideoFrameObserverHandle RegisterMediaPlayerVideoFrameObserver(
-//             IrisMediaPlayerPtr player_ptr,
-//             IntPtr observer, string @params);
-//
-//         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-//         internal static extern void UnRegisterMediaPlayerVideoFrameObserver(
-//             IrisMediaPlayerPtr player_ptr,
-//             IrisMediaPlayerVideoFrameObserverHandle handle, string @params);
-//
-//
-// // media player audio frame observer 
-//         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-//         internal static extern IrisMediaPlayerAudioFrameObserverHandle
-//         RegisterMediaPlayerAudioFrameObserver(
-//             IrisMediaPlayerPtr player_ptr, IntPtr observer, string @params);
-//
-//         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-//         internal static extern void UnRegisterMediaPlayerAudioFrameObserver(
-//             IrisMediaPlayerPtr player_ptr,
-//             IrisMediaPlayerAudioFrameObserverHandle handle, string @params);
+// media player video frame observer 
+        // [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        // internal static extern IrisMediaPlayerVideoFrameObserverHandle RegisterMediaPlayerVideoFrameObserver(
+        //     IrisRtcEnginePtr engine_ptr,
+        //     IntPtr observer, string @params);
+
+        // [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        // internal static extern void UnRegisterMediaPlayerVideoFrameObserver(
+        //     IrisRtcEnginePtr engine_ptr,
+        //     IrisMediaPlayerVideoFrameObserverHandle handle, string @params);
+
+
+// media player audio frame observer 
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisMediaPlayerAudioFrameObserverHandle
+            RegisterMediaPlayerAudioFrameObserver(IrisRtcEnginePtr engine_ptr, IntPtr observer, string @params);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void UnRegisterMediaPlayerAudioFrameObserver(
+            IrisRtcEnginePtr engine_ptr, IrisMediaPlayerAudioFrameObserverHandle handle, string @params);
+        
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisMediaPlayerAudioSpectrumObserverHandle
+            RegisterMediaPlayerAudioSpectrumObserver(IrisRtcEnginePtr engine_ptr, IntPtr observer, string @params);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void UnRegisterMediaPlayerAudioSpectrumObserver(
+            IrisRtcEnginePtr engine_ptr, IrisMediaPlayerAudioSpectrumObserverHandle handle, string @params);
+
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int MediaPlayerOpenWithSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);

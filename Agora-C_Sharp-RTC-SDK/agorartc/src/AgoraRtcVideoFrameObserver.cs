@@ -1,10 +1,3 @@
-//  AgoraRtcVideoFrameObserver.cs
-//
-//  Created by YuGuo Chen on October 9, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 #define __UNITY__
 
 using System;

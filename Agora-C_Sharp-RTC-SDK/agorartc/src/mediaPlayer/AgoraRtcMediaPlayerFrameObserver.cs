@@ -1,10 +1,3 @@
-//  AgoraRtcMediaPlayerFrameObserver.cs
-//
-//  Created by YuGuo Chen on December 14, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 #define __UNITY__
 
 using System;
