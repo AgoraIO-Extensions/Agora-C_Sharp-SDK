@@ -440,9 +440,9 @@ namespace agora.rtc
 
         public abstract int SendCustomReportMessage(string id, string category, string @event, string label, int value);
 
-        public abstract int RegisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type);
+        public abstract int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
-        public abstract int UnregisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type);
+        public abstract int UnregisterMediaMetadataObserver(IMetadataObserver observer);
 
         public abstract int StartAudioFrameDump(string channel_id, uint user_id, string location, string uuid, string passwd, long duration_ms, bool auto_upload);
 

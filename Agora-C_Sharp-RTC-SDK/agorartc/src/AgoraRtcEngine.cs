@@ -30,6 +30,10 @@ namespace agora.rtc
     using IrisRtcVideoEncodedImageReceiverHandleNative = IntPtr;
 
     using IrisVideoFrameBufferManagerPtr = IntPtr;
+    
+    //MetadataObserver
+    using IrisRtcCMetaDataObserverNativeMarshal = IntPtr;
+    using IrisRtcMetaDataObserverHandleNative = IntPtr;
 
 
     public sealed class AgoraRtcEngine : IAgoraRtcEngine
@@ -72,6 +76,10 @@ namespace agora.rtc
         private IrisRtcCVideoEncodedImageReceiver _irisRtcCVideoEncodedImageReceiver;
         private IrisRtcVideoEncodedImageReceiverHandleNative _irisRtcVideoEncodedImageReceiverHandleNative;
 
+        private IrisRtcCMetaDataObserverNativeMarshal _irisRtcCMetaDataObserverNative;
+        private IrisCMediaMetadataObserver _irisRtcCMetaDataObserver;
+        private IrisRtcMetaDataObserverHandleNative _irisRtcMetaDataObserverHandleNative;
+
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
         private AgoraRtcMediaPlayer _mediaPlayerInstance;
@@ -107,6 +115,8 @@ namespace agora.rtc
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
+                UnSetIrisMetaDataObserver();
+                UnSetIrisAudioEncodedFrameObserver();
 
                 _videoDeviceManagerInstance.Dispose();
                 _videoDeviceManagerInstance = null;
@@ -434,6 +444,51 @@ namespace agora.rtc
             AgoraRtcVideoEncodedImageReceiver.VideoEncodedImageReceiver = null;
             _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver();
             Marshal.FreeHGlobal(_irisRtcCVideoEncodedImageReceiverNative);
+        }
+
+        private void SetIrisMetaDataObserver(METADATA_TYPE type)
+        {
+            if (_irisRtcMetaDataObserverHandleNative != IntPtr.Zero) return;
+
+            _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver
+            {
+                GetMaxMetadataSize = MetadataObserver.GetMaxMetadataSize,
+                OnReadyToSendMetadata = MetadataObserver.OnReadyToSendMetadata,
+                OnMetadataReceived = MetadataObserver.OnMetadataReceived
+            };
+
+            var irisRtcCMetaDataObserverNativeLocal = new IrisCMediaMetadataObserverNative
+            {
+                getMaxMetadataSize =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.GetMaxMetadataSize),
+                onReadyToSendMetadata =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.OnReadyToSendMetadata),
+                onMetadataReceived = 
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.OnMetadataReceived)
+            };
+
+            _irisRtcCMetaDataObserverNative =
+                Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCMetaDataObserverNativeLocal));
+            Marshal.StructureToPtr(irisRtcCMetaDataObserverNativeLocal, _irisRtcCMetaDataObserverNative, true);
+
+            var param = new
+            {
+                volume
+            };
+            var json = JsonMapper.ToJson(param);
+            _irisRtcMetaDataObserverHandleNative = AgoraRtcNative.RegisterMediaMetadataObserver(_irisRtcEngine, 
+                _irisRtcCMetaDataObserverNative, param);
+        }
+
+        private void UnSetIrisMetaDataObserver()
+        {
+            if (_irisRtcMetaDataObserverHandleNative == IntPtr.Zero) return;
+
+            AgoraRtcNative.UnRegisterMediaMetadataObserver(_irisRtcEngine, _irisRtcMetaDataObserverHandleNative);
+            _irisRtcMetaDataObserverHandleNative = IntPtr.Zero;
+            MetadataObserver.Observer = null;
+            _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver();
+            Marshal.FreeHGlobal(_irisRtcCMetaDataObserverNative);
         }
 
         public override IAgoraRtcAudioRecordingDeviceManager GetAgoraRtcAudioRecordingDeviceManager()
@@ -3673,30 +3728,15 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RegisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type)
+        public override int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
         {
-            //var param = new
-            //{
-            //    observer,
-            //    type
-            //};
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-            //    ApiTypeEngine.kEngineRegisterMediaMetadataObserver,
-            //    JsonMapper.ToJson(param),
-            //    out _result);
+            SetIrisMetaDataObserver(type);
+            MetadataObserver.Observer = observer;
         }
 
-        public override int UnregisterMediaMetadataObserver(IMetadataObserver observer, IMetadataObserver::METADATA_TYPE type)
+        public override int UnregisterMediaMetadataObserver(IMetadataObserver observer)
         {
-            //var param = new
-            //{
-            //    observer,
-            //    type
-            //};
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-            //    ApiTypeEngine.kEngineUnRegisterMediaMetadataObserver,
-            //    JsonMapper.ToJson(param),
-            //    out _result);
+            UnSetIrisMetaDataObserver();
         }
 
         public override int StartAudioFrameDump(string channel_id, uint user_id, string location,

@@ -1,9 +1,7 @@
-#define __UNITY__
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
 
@@ -17,7 +15,7 @@ namespace agora.rtc
             internal static readonly AudioPcmFrame AudioPcmFrame = new AudioPcmFrame();
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioOnFrame_Native))]
 #endif
         internal static bool OnFrame(IntPtr audioFramePtr, int mediaPlayerId)
@@ -54,7 +52,7 @@ namespace agora.rtc
             internal static readonly VideoFrame VideoFrame = new VideoFrame();
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_VideoCaptureLocal_Native))]
 #endif
         internal static bool OnFrame(IntPtr videoFramePtr, IntPtr configPtr)
@@ -110,7 +108,7 @@ namespace agora.rtc
     {
         internal static IAgoraRtcMediaPlayerCustomDataProvider CustomDataProvider;
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_OnSeek_Native))]
 #endif
         internal static Int64 OnSeek(Int64 offset, int whence, int playerId)
@@ -119,7 +117,7 @@ namespace agora.rtc
                 CustomDataProvider.OnSeek(offset, whence, playerId);
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_onReadData_Native))]
 #endif
         internal static int OnReadData(IntPtr buffer, int bufferSize, int playerId)

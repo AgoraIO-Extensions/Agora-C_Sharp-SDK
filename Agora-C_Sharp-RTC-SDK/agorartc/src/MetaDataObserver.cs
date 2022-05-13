@@ -1,9 +1,7 @@
-#define __UNITY__
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
 
@@ -13,7 +11,7 @@ namespace agora.rtc
     {
         internal static IMetadataObserver Observer;
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_MaxMetadataSize_Native))]
 #endif
         internal static int GetMaxMetadataSize()
@@ -22,7 +20,7 @@ namespace agora.rtc
             return Observer.GetMaxMetadataSize();
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_ReadyToSendMetadata_Native))]
 #endif
         internal static bool OnReadyToSendMetadata(IntPtr metadata, VIDEO_SOURCE_TYPE source_type)
@@ -31,7 +29,7 @@ namespace agora.rtc
             return Observer.OnReadyToSendMetadata(metadata, source_type);
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_MetadataReceived_Native))]
 #endif
         internal static void OnMetadataReceived(IntPtr metadata)

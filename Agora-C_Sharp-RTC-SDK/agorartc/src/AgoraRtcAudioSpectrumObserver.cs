@@ -1,10 +1,8 @@
-﻿
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-#define __UNITY__
-#endif
-
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+using AOT;
+#endif
 
 namespace agora.rtc
 {
@@ -12,7 +10,7 @@ namespace agora.rtc
     {
         internal static IAgoraRtcAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_LocalAudioSpectrum_Native))]
 #endif
         internal static bool OnLocalAudioSpectrum(IntPtr data)
@@ -27,7 +25,7 @@ namespace agora.rtc
             return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(spectrumData);
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_RemoteAudioSpectrum_Native))]
 #endif
         internal static bool OnRemoteAudioSpectrum(IntPtr dataspectrums, uint spectrumNumber)

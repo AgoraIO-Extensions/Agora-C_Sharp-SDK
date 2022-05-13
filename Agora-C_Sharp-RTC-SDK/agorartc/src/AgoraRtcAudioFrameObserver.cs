@@ -1,9 +1,7 @@
-#define __UNITY__
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
 
@@ -80,7 +78,7 @@ namespace agora.rtc
             return localAudioFrame;
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
 #endif
         internal static bool OnRecordAudioFrame(IntPtr audioFramePtr)
@@ -89,7 +87,7 @@ namespace agora.rtc
                 AudioFrameObserver.OnRecordAudioFrame(ProcessAudioFrameReceived(audioFramePtr, "", 0));
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
 #endif
         internal static bool OnPlaybackAudioFrame(IntPtr audioFramePtr)
@@ -98,7 +96,7 @@ namespace agora.rtc
                 AudioFrameObserver.OnPlaybackAudioFrame(ProcessAudioFrameReceived(audioFramePtr, "", 1));
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
 #endif
         internal static bool OnMixedAudioFrame(IntPtr audioFramePtr)
@@ -107,7 +105,7 @@ namespace agora.rtc
                 AudioFrameObserver.OnMixedAudioFrame(ProcessAudioFrameReceived(audioFramePtr, "", 2));
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameRemote_Native))]
 #endif
         internal static bool OnPlaybackAudioFrameBeforeMixing(uint uid, IntPtr audioFramePtr)
@@ -115,7 +113,7 @@ namespace agora.rtc
             return true;
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_Bool_Native))]
 #endif
         internal static bool IsMultipleChannelFrameWanted()
@@ -124,7 +122,7 @@ namespace agora.rtc
                 AudioFrameObserver.IsMultipleChannelFrameWanted();
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameEx_Native))]
 #endif
         internal static bool OnPlaybackAudioFrameBeforeMixingEx(string channelId, uint uid, IntPtr audioFramePtr)

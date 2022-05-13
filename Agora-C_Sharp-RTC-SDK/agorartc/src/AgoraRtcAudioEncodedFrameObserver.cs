@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-#define __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+using AOT;
 #endif
 
 namespace agora.rtc
@@ -26,7 +25,7 @@ namespace agora.rtc
         }
 
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_RecordAudioEncodedFrame_Native))]
 #endif
         internal static void OnRecordAudioEncodedFrame(IntPtr frame_buffer, int length, IntPtr encoded_audio_frame_info)
@@ -42,7 +41,7 @@ namespace agora.rtc
             AudioEncodedFrameObserver.OnRecordAudioEncodedFrame(frameBuffer, length, to);
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_RecordAudioEncodedFrame_Native))]
 #endif
         internal static void OnPlaybackAudioEncodedFrame(IntPtr frame_buffer, int length, IntPtr encoded_audio_frame_info)
@@ -58,7 +57,7 @@ namespace agora.rtc
             AudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frameBuffer, length, to);
         }
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_RecordAudioEncodedFrame_Native))]
 #endif
         internal static void OnMixedAudioEncodedFrame(IntPtr frame_buffer, int length, IntPtr encoded_audio_frame_info)

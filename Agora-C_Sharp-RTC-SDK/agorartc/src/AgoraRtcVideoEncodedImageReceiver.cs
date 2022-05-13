@@ -1,9 +1,7 @@
-#define __UNITY__
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
 
@@ -19,7 +17,7 @@ namespace agora.rtc
         }
 
 
-#if __UNITY__
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_EncodedVideoImageReceived_Native))]
 #endif
         internal static bool OnEncodedVideoImageReceived(IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)

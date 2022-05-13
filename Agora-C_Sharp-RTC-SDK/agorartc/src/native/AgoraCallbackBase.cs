@@ -79,13 +79,13 @@ namespace agora.rtc
     internal delegate bool Func_MetadataReceived_Native(IntPtr metadata);
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisCMediaMetadataObserverrNative {
+    internal struct IrisCMediaMetadataObserverNative {
         internal IntPtr getMaxMetadataSize;
         internal IntPtr onReadyToSendMetadata;
         internal IntPtr onMetadataReceived;
     }
 
-    internal struct IrisCMediaMetadataObserverr {
+    internal struct IrisCMediaMetadataObserver {
         internal Func_MaxMetadataSize_Native GetMaxMetadataSize;
         internal Func_ReadyToSendMetadata_Native OnReadyToSendMetadata;
         internal Func_MetadataReceived_Native OnMetadataReceived;

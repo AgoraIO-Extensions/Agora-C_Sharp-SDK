@@ -83,10 +83,6 @@ namespace agora.rtc
             IrisRtcAudioFrameObserverHandle handle, string identifier);
 
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcRawDataPluginManagerPtr GetIrisRtcRawDataPluginManager(
-            IrisRtcRawDataPtr raw_data_ptr);
-
  // Iris Video Encoded Image Receiver
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcVideoEncodedImageReceiverHandle RegisterVideoEncodedImageReceiver(IrisRtcEnginePtr engine_ptr,
@@ -104,9 +100,9 @@ namespace agora.rtc
         internal static extern void Detach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
 
 // IrisRtcRawDataPluginManager
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisRtcRawDataPluginManagerApi(IrisRtcRawDataPluginManagerPtr plugin_manager_ptr,
-            ApiTypeRawDataPluginManager api_type, string @params, out CharAssistant result);
+        // [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        // internal static extern int CallIrisRtcRawDataPluginManagerApi(IrisRtcEnginePtr engine_ptr,
+        //     ApiTypeRawDataPluginManager api_type, string @params, out CharAssistant result);
 
 // IrisVideoFrameBufferManager
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]

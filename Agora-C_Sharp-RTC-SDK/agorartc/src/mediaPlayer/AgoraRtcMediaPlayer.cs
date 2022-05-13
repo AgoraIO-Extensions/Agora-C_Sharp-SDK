@@ -75,6 +75,8 @@ namespace agora.rtc
             if (disposing)
             {
                 ReleaseEventHandler();
+                UnSetIrisAudioFrameObserver();
+                UnSetIrisAudioSpectrumObserver();
             }
 
             _irisApiEngine = IntPtr.Zero;
@@ -295,6 +297,7 @@ namespace agora.rtc
                 _irisMediaPlayerCAudioSpectrumObserverHandleNative, JsonMapper.ToJson(param)
             );
             _irisMediaPlayerCAudioSpectrumObserverNative = IntPtr.Zero;
+            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
             _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioFrameObserver();
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
@@ -353,7 +356,6 @@ namespace agora.rtc
         public override void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer)
         {
             UnSetIrisAudioSpectrumObserver();
-            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
         }
 
         public override int CreateMediaPlayer()
@@ -958,7 +960,28 @@ namespace agora.rtc
             CallbackObject._CallbackQueue.EnQueue(() =>
             {
 #endif
-                switch(@event)
+                // switch(@event)
+                // {
+                // }   
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+            });
+#endif
+        }
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+        [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
+#endif
+        internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
+        {
+            var byteData = new byte[length];
+            if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int) length);
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+            if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
+            CallbackObject._CallbackQueue.EnQueue(() =>
+            {
+#endif
+                var playerId = (int) AgoraJson.GetData<int>(data, "playerId");
+                switch (@event)
                 {
                     case "onPlayerSourceStateChanged":
                         RtcMediaPlayerEventHandler.OnPlayerSourceStateChanged(
@@ -1011,27 +1034,6 @@ namespace agora.rtc
                             (int) AgoraJson.GetData<int>(data, "volume")
                         );
                         break;
-                }   
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-            });
-#endif
-        }
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
-#endif
-        internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
-        {
-            var byteData = new byte[length];
-            if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int) length);
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-            if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
-            CallbackObject._CallbackQueue.EnQueue(() =>
-            {
-#endif
-                var playerId = (int) AgoraJson.GetData<int>(data, "playerId");
-                switch (@event)
-                {
                     case "onMetaData":
                         RtcMediaPlayerEventHandler.OnMetaData((int) AgoraJson.GetData<int>(data, "playerId"),
                             byteData, (int)length);
