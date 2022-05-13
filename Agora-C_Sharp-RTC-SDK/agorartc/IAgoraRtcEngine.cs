@@ -272,9 +272,9 @@ namespace agora.rtc
 
         public abstract int DisableAudioSpectrumMonitor();
 
-        public abstract int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
+        public abstract int RegisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
 
-        public abstract int UnregisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
+        public abstract int UnregisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
 
         public abstract int AdjustRecordingSignalVolume(int volume);
 

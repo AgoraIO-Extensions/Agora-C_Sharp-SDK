@@ -8,52 +8,42 @@ using System.Runtime.InteropServices;
 
 namespace agora.rtc
 {
-    public class AgoraRtcAudioSpectrumObserverNative
+    internal static class AgoraRtcAudioSpectrumObserverNative
     {
-        public static IAgoraRtcAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
-
-        internal static AudioSpectrumData IrisAudioSpectrumData2AudioSpectrumData(ref IrisAudioSpectrumData from)
-        {
-            var to = new AudioSpectrumData();
-            to.audioSpectrumData = new float[from.dataLength];
-            Marshal.Copy(to.audioSpectrumData, 0, from.audioSpectrumData, from.dataLength);
-            to.dataLength = from.dataLength;
-            return to;
-        }
-
-        internal static UserAudioSpectrumInfo IrisUserAudioSpectrumInfo2UserAudioSpectrumInfo(ref IrisUserAudioSpectrumInfo from)
-        {
-            UserAudioSpectrumInfo to = new UserAudioSpectrumInfo();
-            to.uid = from.uid;
-            to.spectrumData = IrisAudioSpectrumData2AudioSpectrumData(ref from.spectrumData);
-            return to;
-        }
+        internal static IAgoraRtcAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
 
 #if __UNITY__
         [MonoPInvokeCallback(typeof(Func_LocalAudioSpectrum_Native))]
 #endif
-        internal static bool onLocalAudioSpectrum(IntPtr data)
+        internal static bool OnLocalAudioSpectrum(IntPtr data)
         {
             if (AgoraRtcAudioSpectrumObserver == null) return false;
 
-            var from = Marshal.PtrToStructure<IrisAudioSpectrumData>(data);
-            var to = IrisAudioSpectrumData2AudioSpectrumData(ref from);
+            var AudioSpectrumData = Marshal.PtrToStructure<IrisAudioSpectrumData>(data);
+            AudioSpectrumData spectrumData = new AudioSpectrumData();
+            spectrumData.audioSpectrumData = AudioSpectrumData.audioSpectrumData;
+            spectrumData.dataLength = AudioSpectrumData.dataLength;
 
-            return AgoraRtcAudioSpectrumObserver.onLocalAudioSpectrum(to);
+            return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(spectrumData);
         }
 
 #if __UNITY__
         [MonoPInvokeCallback(typeof(Func_RemoteAudioSpectrum_Native))]
 #endif
-        internal static bool onRemoteAudioSpectrum(IntPtr dataspectrums, uint spectrumNumber)
+        internal static bool OnRemoteAudioSpectrum(IntPtr dataspectrums, uint spectrumNumber)
         {
             if (AgoraRtcAudioSpectrumObserver == null) return false;
 
-            var from = Marshal.PtrToStructure<IrisUserAudioSpectrumInfo>(dataspectrums);
-            var to = IrisUserAudioSpectrumInfo2UserAudioSpectrumInfo(ref from);
+            UserAudioSpectrumInfo[] SpectrumInfos = new UserAudioSpectrumInfo[spectrumNumber];
+            for (int i = 0; i < spectrumNumber; i++)
+            {
+                IntPtr p = new IntPtr(dataspectrums.ToInt64() + Marshal.SizeOf(typeof(IrisUserAudioSpectrumInfo)) * i);
+                var dataspectrum = (UserAudioSpectrumInfo)Marshal.PtrToStructure(p, typeof(IrisUserAudioSpectrumInfo));
+                SpectrumInfos[i].uid = dataspectrum.uid;
+                SpectrumInfos[i].spectrumData = dataspectrum.spectrumData;
+            }
 
-            return AgoraRtcAudioSpectrumObserver.onRemoteAudioSpectrum(to, spectrumNumber);
+            return AgoraRtcAudioSpectrumObserver.OnRemoteAudioSpectrum(SpectrumInfos, spectrumNumber);
         }
-
     }
 }

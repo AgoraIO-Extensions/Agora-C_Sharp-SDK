@@ -2347,30 +2347,16 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
+        public override int RegisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
         {
-            //todo
-            //var param = new
-            //{
-            //    observer
-            //};
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-            //    ApiTypeEngine.kEngineRegisterAudioSpectrumObserver,
-            //    JsonMapper.ToJson(param),
-            //    out _result);
+            //todo wait for capi
+            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
-        public override int UnregisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
+        public override int UnregisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
         {
-            //todo 
-            //var param = new
-            //{
-            //    observer
-            //};
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-            //    ApiTypeEngine.kEngineUnregisterAudioSpectrumObserver,
-            //    JsonMapper.ToJson(param),
-            //    out _result);
+            //todo wait for capi
+            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
         }
 
         public override int AdjustRecordingSignalVolume(int volume)

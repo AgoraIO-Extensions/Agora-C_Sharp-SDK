@@ -267,8 +267,8 @@ namespace agora.rtc
             
             _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver
             {
-                OnLocalAudioSpectrum = AgoraRtcMediaPlayerAudioSpectrumObserverNative.OnLocalAudioSpectrum,
-                OnRemoteAudioSpectrum = AgoraRtcMediaPlayerAudioSpectrumObserverNative.OnRemoteAudioSpectrum
+                OnLocalAudioSpectrum = AgoraRtcAudioSpectrumObserverNative.OnLocalAudioSpectrum,
+                OnRemoteAudioSpectrum = AgoraRtcAudioSpectrumObserverNative.OnRemoteAudioSpectrum
             };
 
             var irisMediaPlayerCAudioSpectrumObserverNativeLocal = new IrisMediaPlayerCAudioSpectrumObserverNative
@@ -347,13 +347,13 @@ namespace agora.rtc
         public override void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer, int intervalInMS)
         {
             SetIrisAudioSpectrumObserver(intervalInMS);
-            AgoraRtcMediaPlayerAudioSpectrumObserverNative.AudioSpectrumObserver = observer;
+            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
         public override void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer)
         {
             UnSetIrisAudioSpectrumObserver();
-            AgoraRtcMediaPlayerAudioSpectrumObserverNative.AudioSpectrumObserver = null;
+            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
         }
 
         public override int CreateMediaPlayer()

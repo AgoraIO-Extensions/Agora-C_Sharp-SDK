@@ -126,12 +126,15 @@ namespace agora.rtc
         internal int sample_rate_hz_;
         internal IRIS_BYTES_PER_SAMPLE bytes_per_sample;
         internal UInt16 num_channels_;
+
+        [MarshalAs(UnmanagedType.LPArray)]
         internal Int16[] data_;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisAudioSpectrumData
     {
+        [MarshalAs(UnmanagedType.LPArray)]
         internal float[] audioSpectrumData;
         internal int dataLength;
     }

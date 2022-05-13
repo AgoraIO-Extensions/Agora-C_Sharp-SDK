@@ -592,7 +592,7 @@ namespace agora.rtc
         /**
         * The audio spectrum data of audio.
         */
-        public public AudioSpectrumData spectrumData;
+        public AudioSpectrumData spectrumData;
     };
 
     public struct VideoFrameBufferConfig 

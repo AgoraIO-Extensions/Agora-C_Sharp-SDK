@@ -31,22 +31,26 @@ namespace agora.rtc
 
         public override void OnTokenWillExpire()
         {
-            EventOnTokenWillExpire?.Invoke();
+            if (EventOnTokenWillExpire == null) return;
+            EventOnTokenWillExpire.Invoke();
         }
   
         public override void OnConnectionStateChange(SAE_CONNECTION_STATE_TYPE state, SAE_CONNECTION_CHANGED_REASON_TYPE reason)
         {
-            EventOnConnectionStateChange?.Invoke(state, reason);
+            if (EventOnConnectionStateChange == null) return;
+            EventOnConnectionStateChange.Invoke(state, reason);
         }
 
         public override void OnTeammateLeft(uint uid)
         {
-            EventOnTeammateLeft?.Invoke(uid);
+            if (EventOnTeammateLeft == null) return;
+            EventOnTeammateLeft.Invoke(uid);
         }
 
         public override void OnTeammateJoined(uint uid)
         {
-            EventOnTeammateJoined?.Invoke(uid);
+            if (EventOnTeammateJoined == null) return;
+            EventOnTeammateJoined.Invoke(uid);
         }
     }
 }

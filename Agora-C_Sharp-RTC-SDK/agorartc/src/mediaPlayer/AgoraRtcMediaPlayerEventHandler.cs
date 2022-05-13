@@ -49,52 +49,62 @@ namespace agora.rtc
 
         public override void OnPlayerSourceStateChanged(int playerId, MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
         {
-            EventOnPlayerSourceStateChanged?.Invoke(playerId, state, ec);
+            if (EventOnPlayerSourceStateChanged == null) return;
+            EventOnPlayerSourceStateChanged.Invoke(playerId, state, ec);
         }
 
         public override void OnPositionChanged(int playerId, Int64 position)
         {
-            EventOnPositionChanged?.Invoke(playerId, position);
+            if (EventOnPositionChanged == null) return;
+            EventOnPositionChanged.Invoke(playerId, position);
         }
 
         public override void OnPlayerEvent(int playerId, MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message)
         {
-            EventOnPositionChanged?.Invoke(playerId, @event, elapsedTime, message);
+            if (EventOnPositionChanged == null) return;
+            EventOnPositionChanged.Invoke(playerId, @event, elapsedTime, message);
         }
 
         public override void OnMetaData(int playerId, byte[] data, int length)
         {
-            EventOnMetaData?.Invoke(playerId, data, length);
+            if (EventOnMetaData == null) return;
+            EventOnMetaData.Invoke(playerId, data, length);
         }
 
         public override void OnPlayBufferUpdated(int playerId, Int64 playCachedBuffer)
         {
-            EventOnPlayBufferUpdated?.Invoke(playerId, playCachedBuffer);
+            if (EventOnPlayBufferUpdated == null) return;
+            EventOnPlayBufferUpdated.Invoke(playerId, playCachedBuffer);
         }
 
         public override void OnCompleted(int playerId)
         {
-            EventOnCompleted?.Invoke(playerId);
+            if (EventOnCompleted == null) return;
+            EventOnCompleted.Invoke(playerId);
         }
 
         public override void OnAgoraCDNTokenWillExpire()
         {
-            EventOnAgoraCDNTokenWillExpire?.Invoke();
+            if (EventOnAgoraCDNTokenWillExpire == null) return;
+            EventOnAgoraCDNTokenWillExpire.Invoke();
         }
 
         public override void OnPlayerSrcInfoChanged(SrcInfo from, SrcInfo to)
         {
-            EventOnPlayerSrcInfoChanged?.Invoke(from, to);
+            if (EventOnPlayerSrcInfoChanged == null) return;
+            EventOnPlayerSrcInfoChanged.Invoke(from, to);
         }
 
         public override void OnPlayerInfoUpdated(PlayerUpdatedInfo info)
         {
-            EventOnPlayerInfoUpdated?.Invoke(info);
+            if (EventOnPlayerInfoUpdated == null) return;
+            EventOnPlayerInfoUpdated.Invoke(info);
         }
 
         public override void OnAudioVolumeIndication(int volume)
         {
-            EventOnAudioVolumeIndication?.Invoke(volume);
+            if (EventOnAudioVolumeIndication == null) return;
+            EventOnAudioVolumeIndication.Invoke(volume);
         }
     }
 }
