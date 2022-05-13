@@ -5304,8 +5304,31 @@ namespace agora.rtc
             CallbackObject._CallbackQueue.EnQueue(() =>
             {
 #endif
+            //switch (@event)
+            //{
+             
+            //}
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            });
+#endif
+        }
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
+#endif
+        internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
+        {
+            if (EngineEventHandler == null) return;
+            var byteData = new byte[length];
+            if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int)length);
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
+            CallbackObject._CallbackQueue.EnQueue(() =>
+            {
+#endif
             switch (@event)
             {
+                #region no buffer start
                 case "onWarning":
                     EngineEventHandler.OnWarning(
                         (int)AgoraJson.GetData<int>(data, "warn"),
@@ -5830,27 +5853,9 @@ namespace agora.rtc
                         (int)AgoraJson.GetData<int>(data, "errorCode")
                     );
                     break;
-            }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            });
-#endif
-        }
+                #endregion no buffer end
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
-#endif
-        internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
-        {
-            if (EngineEventHandler == null) return;
-            var byteData = new byte[length];
-            if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int)length);
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
-            CallbackObject._CallbackQueue.EnQueue(() =>
-            {
-#endif
-            switch (@event)
-            {
+                #region withBuffer start
                 case "onStreamMessage":
                     EngineEventHandler.OnStreamMessage(
                         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
@@ -5858,6 +5863,7 @@ namespace agora.rtc
                         (int)AgoraJson.GetData<int>(data, "streamId"), byteData, length,
                         (uint)AgoraJson.GetData<uint>(data, "sentTs"));
                     break;
+                 #endregion withBuffer end
             }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             });
