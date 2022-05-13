@@ -3131,6 +3131,26 @@ namespace agora.rtc
         RTMP_STREAM_PUBLISH_ERROR_INVALID_APPID = 15,
     };
 
+    /** Events during the RTMP or RTMPS streaming. */
+    public enum RTMP_STREAMING_EVENT
+    {
+        /** An error occurs when you add a background image or a watermark image to the RTMP or RTMPS stream.
+         */
+        RTMP_STREAMING_EVENT_FAILED_LOAD_IMAGE = 1,
+        /** 2: The streaming URL is already being used for CDN live streaming. If you want to start new streaming, use a new streaming URL.
+         *
+         * @since v3.4.5
+         */
+        RTMP_STREAMING_EVENT_URL_ALREADY_IN_USE = 2,
+        /** advanced feature not support
+         */
+        RTMP_STREAMING_EVENT_ADVANCED_FEATURE_NOT_SUPPORT = 3,
+        /** Client request too frequently.
+         */
+        RTMP_STREAMING_EVENT_REQUEST_TOO_OFTEN = 4,
+    };
+
+
     /** Image properties.
 	 The properties of the watermark and background images.
 	 */
@@ -3140,7 +3160,7 @@ namespace agora.rtc
         {
         }
 
-        public RtcImage(string url, int x, int y, int width, int height, int zOrder)
+        public RtcImage(string url, int x, int y, int width, int height, int zOrder, double alpha)
         {
             this.url = url;
             this.x = x;
@@ -3148,6 +3168,7 @@ namespace agora.rtc
             this.width = width;
             this.height = height;
             this.zOrder = zOrder;
+            this.alpha = alpha;
         }
 
         /** HTTP/HTTPS URL address of the image on the live video. The maximum length of this parameter is 1024 bytes. */
@@ -3167,6 +3188,12 @@ namespace agora.rtc
 
         /** * Order attribute for an ordering of overlapping two-dimensional objects. */
         public int zOrder { set; get; }
+
+        /** The transparency level of the image. The value ranges between 0 and 1.0:
+        * - 0: Completely transparent
+        * - 1.0: (Default) Opaque
+        */
+        public double alpha;
     }
 
     /**
@@ -3719,6 +3746,31 @@ namespace agora.rtc
         */
         CONNECTION_CHANGED_CLIENT_IP_ADDRESS_CHANGED_BY_USER = 18,
     };
+
+
+    /**
+    * The reason of changing role's failure.
+    */
+    public enum CLIENT_ROLE_CHANGE_FAILED_REASON
+    {
+        /**
+         * 1: Too many broadcasters in the channel.
+         */
+        CLIENT_ROLE_CHANGE_FAILED_TOO_MANY_BROADCASTERS = 1,
+        /**
+         * 2: The operation of changing role is not authorized.
+         */
+        CLIENT_ROLE_CHANGE_FAILED_NOT_AUTHORIZED = 2,
+        /**
+         * 3: The operation of changing role is timeout.
+         */
+        CLIENT_ROLE_CHANGE_FAILED_REQUEST_TIME_OUT = 3,
+        /** 
+         * 4: The operation of changing role is interrupted since we lost connection with agora service.
+         */
+        CLIENT_ROLE_CHANGE_FAILED_CONNECTION_FAILED = 4,
+    };
+
 
     /**
     * The network type.
@@ -4926,6 +4978,13 @@ namespace agora.rtc
         ENCRYPTION_ERROR_INTERNAL_FAILURE = 0,
         ENCRYPTION_ERROR_DECRYPTION_FAILURE = 1,
         ENCRYPTION_ERROR_ENCRYPTION_FAILURE = 2,
+    };
+
+    public enum UPLOAD_ERROR_REASON
+    {
+        UPLOAD_SUCCESS = 0,
+        UPLOAD_NET_ERROR = 1,
+        UPLOAD_SERVER_ERROR = 2,
     };
 
     /** Type of permission.

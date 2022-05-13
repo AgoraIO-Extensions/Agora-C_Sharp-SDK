@@ -25,15 +25,15 @@ namespace agora.rtc
 
     public delegate void OnRtcStatsHandler(RtcConnection connection, RtcStats stats);
 
-    public delegate void OnAudioDeviceStateChangedHandler(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState);
+    public delegate void OnAudioDeviceStateChangedHandler(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState);
 
     public delegate void OnAudioMixingFinishedHandler();
 
     public delegate void OnAudioEffectFinishedHandler(int soundId);
 
-    public delegate void OnVideoDeviceStateChangedHandler(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState);
+    public delegate void OnVideoDeviceStateChangedHandler(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState);
 
-    public delegate void OnMediaDeviceChangedHandler(int deviceType);
+    public delegate void OnMediaDeviceChangedHandler(MEDIA_DEVICE_TYPE deviceType);
 
     public delegate void OnNetworkQualityHandler(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality);
 
@@ -55,6 +55,10 @@ namespace agora.rtc
 
     public delegate void OnVideoSizeChangedHandler(RtcConnection connection, uint uid, int width, int height, int rotation);
 
+    public delegate void OnContentInspectResultHandler(CONTENT_INSPECT_RESULT result);
+
+    public delegate void OnSnapshotTakenHandler(RtcConnection connection, string filePath, int width, int height, int errCode);
+
     public delegate void OnLocalVideoStateChangedHandler(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode);
 
     public delegate void OnRemoteVideoStateChangedHandler(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed);
@@ -65,11 +69,15 @@ namespace agora.rtc
 
     public delegate void OnUserOfflineHandler(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason);
 
+    public delegate void OnUserMuteAudioHandler(RtcConnection connection, uint remoteUid, bool muted);
+
     public delegate void OnUserMuteVideoHandler(RtcConnection connection, uint remoteUid, bool muted);
 
     public delegate void OnUserEnableVideoHandler(RtcConnection connection, uint remoteUid, bool enabled);
 
     public delegate void OnUserEnableLocalVideoHandler(RtcConnection connection, uint remoteUid, bool enabled);
+
+    public delegate void OnUserStateChangedHandler(RtcConnection connection, uint remoteUid, uint state);
 
     public delegate void OnApiCallExecutedHandler(int err, string api, string result);
 
@@ -93,6 +101,8 @@ namespace agora.rtc
 
     public delegate void OnAudioMixingStateChangedHandler(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode);
 
+    public delegate void OnRhythmPlayerStateChangedHandler(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode);
+
     public delegate void OnConnectionLostHandler(RtcConnection connection);
 
     public delegate void OnConnectionInterruptedHandler(RtcConnection connection);
@@ -109,17 +119,25 @@ namespace agora.rtc
 
     public delegate void OnFirstLocalAudioFramePublishedHandler(RtcConnection connection, int elapsed);
 
+    public delegate void OnFirstRemoteAudioFrameHandler(RtcConnection connection, int userId, int elapsed);
+
+    public delegate void OnFirstRemoteAudioDecodedHandler(RtcConnection connection, uint uid, int elapsed);
+
     public delegate void OnLocalAudioStateChangedHandler(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error);
 
     public delegate void OnRemoteAudioStateChangedHandler(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed);
 
-    public delegate void OnActiveSpeakerHandler(uint userId);
+    public delegate void OnActiveSpeakerHandler(RtcConnection connection, uint userId);
 
     public delegate void OnClientRoleChangedHandler(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole);
+
+    public delegate void OnClientRoleChangeFailedHandler(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole);
 
     public delegate void OnAudioDeviceVolumeChangedHandler(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted);
 
     public delegate void OnRtmpStreamingStateChangedHandler(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode);
+
+    public delegate void OnRtmpStreamingEventHandler(string url, RTMP_STREAMING_EVENT eventCode);
 
     public delegate void OnStreamPublishedHandler(string url, int error);
 
@@ -129,7 +147,7 @@ namespace agora.rtc
 
     public delegate void OnAudioRoutingChangedHandler(int routing);
 
-    public delegate void OnAudioSessionRestrictionResumeHandler();
+    //public delegate void OnAudioSessionRestrictionResumeHandler();
 
     public delegate void OnChannelMediaRelayStateChangedHandler(int state, int code);
 
@@ -148,6 +166,10 @@ namespace agora.rtc
     public delegate void OnNetworkTypeChangedHandler(RtcConnection connection, NETWORK_TYPE type);
 
     public delegate void OnEncryptionErrorHandler(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType);
+
+    public delegate void OnUploadLogResultHandler(RtcConnection connection, string requestId, bool success, UPLOAD_ERROR_REASON reason);
+
+    public delegate void OnUserAccountUpdatedHandler(RtcConnection connection, uint remoteUid, string userAccount);
 
     public delegate void OnPermissionErrorHandler(PERMISSION_TYPE permissionType);
 
@@ -169,11 +191,7 @@ namespace agora.rtc
 
     public delegate void OnExtensionStoppedHandler(string provider, string extension);
 
-    public delegate void OnUserAccountUpdatedHandler(RtcConnection connection, uint remoteUid, string userAccount);
-
-    public delegate void OnRhythmPlayerStateChangedHandler(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode);
-
-    public delegate void OnSnapshotTakenHandler(string channel, uint uid, string filePath, int width, int height, int errCode);
+    public delegate void OnExtensionErroredHandler(string provider, string extension, int error, string msg);
 
     public class AgoraRtcEngineEventHandler : IAgoraRtcEngineEventHandler
     {
@@ -201,14 +219,18 @@ namespace agora.rtc
         public event OnVideoSourceFrameSizeChangedHandler EventOnVideoSourceFrameSizeChanged;
         public event OnFirstRemoteVideoDecodedHandler EventOnFirstRemoteVideoDecoded;
         public event OnVideoSizeChangedHandler EventOnVideoSizeChanged;
+        public event OnContentInspectResultHandler EventOnContentInspectResult;
+        public event OnSnapshotTakenHandler EventOnSnapshotTaken;
         public event OnLocalVideoStateChangedHandler EventOnLocalVideoStateChanged;
         public event OnRemoteVideoStateChangedHandler EventOnRemoteVideoStateChanged;
         public event OnFirstRemoteVideoFrameHandler EventOnFirstRemoteVideoFrame;
         public event OnUserJoinedHandler EventOnUserJoined;
         public event OnUserOfflineHandler EventOnUserOffline;
+        public event OnUserMuteAudioHandler EventOnUserMuteAudio;
         public event OnUserMuteVideoHandler EventOnUserMuteVideo;
         public event OnUserEnableVideoHandler EventOnUserEnableVideo;
         public event OnUserEnableLocalVideoHandler EventOnUserEnableLocalVideo;
+        public event OnUserStateChangedHandler EventOnUserStateChanged;
         public event OnApiCallExecutedHandler EventOnApiCallExecuted;
         public event OnLocalAudioStatsHandler EventOnLocalAudioStats;
         public event OnRemoteAudioStatsHandler EventOnRemoteAudioStats;
@@ -220,6 +242,7 @@ namespace agora.rtc
         public event OnFacePositionChangedHandler EventOnFacePositionChanged;
         public event OnVideoStoppedHandler EventOnVideoStopped;
         public event OnAudioMixingStateChangedHandler EventOnAudioMixingStateChanged;
+        public event OnRhythmPlayerStateChangedHandler EventOnRhythmPlayerStateChanged;
         public event OnConnectionLostHandler EventOnConnectionLost;
         public event OnConnectionInterruptedHandler EventOnConnectionInterrupted;
         public event OnConnectionBannedHandler EventOnConnectionBanned;
@@ -228,17 +251,21 @@ namespace agora.rtc
         public event OnRequestTokenHandler EventOnRequestToken;
         public event OnTokenPrivilegeWillExpireHandler EventOnTokenPrivilegeWillExpire;
         public event OnFirstLocalAudioFramePublishedHandler EventOnFirstLocalAudioFramePublished;
+        public event OnFirstRemoteAudioFrameHandler EventOnFirstRemoteAudioFrame;
+        public event OnFirstRemoteAudioDecodedHandler EventOnFirstRemoteAudioDecoded;
         public event OnLocalAudioStateChangedHandler EventOnLocalAudioStateChanged;
         public event OnRemoteAudioStateChangedHandler EventOnRemoteAudioStateChanged;
         public event OnActiveSpeakerHandler EventOnActiveSpeaker;
         public event OnClientRoleChangedHandler EventOnClientRoleChanged;
+        public event OnClientRoleChangeFailedHandler EventOnClientRoleChangeFailed;
         public event OnAudioDeviceVolumeChangedHandler EventOnAudioDeviceVolumeChanged;
         public event OnRtmpStreamingStateChangedHandler EventOnRtmpStreamingStateChanged;
+        public event OnRtmpStreamingEventHandler EventOnRtmpStreamingEvent;
         public event OnStreamPublishedHandler EventOnStreamPublished;
         public event OnStreamUnpublishedHandler EventOnStreamUnpublished;
         public event OnTranscodingUpdatedHandler EventOnTranscodingUpdated;
         public event OnAudioRoutingChangedHandler EventOnAudioRoutingChanged;
-        public event OnAudioSessionRestrictionResumeHandler EventOnAudioSessionRestrictionResume;
+        //public event OnAudioSessionRestrictionResumeHandler EventOnAudioSessionRestrictionResume;
         public event OnChannelMediaRelayStateChangedHandler EventOnChannelMediaRelayStateChanged;
         public event OnChannelMediaRelayEventHandler EventOnChannelMediaRelayEvent;
         public event OnLocalPublishFallbackToAudioOnlyHandler EventOnLocalPublishFallbackToAudioOnly;
@@ -248,6 +275,8 @@ namespace agora.rtc
         public event OnConnectionStateChangedHandler EventOnConnectionStateChanged;
         public event OnNetworkTypeChangedHandler EventOnNetworkTypeChanged;
         public event OnEncryptionErrorHandler EventOnEncryptionError;
+        public event OnUploadLogResultHandler EventOnUploadLogResult;
+        public event OnUserAccountUpdatedHandler EventOnUserAccountUpdated;
         public event OnPermissionErrorHandler EventOnPermissionError;
         public event OnLocalUserRegisteredHandler EventOnLocalUserRegistered;
         public event OnUserInfoUpdatedHandler EventOnUserInfoUpdated;
@@ -258,10 +287,8 @@ namespace agora.rtc
         public event OnExtensionEventHandler EventOnExtensionEvent;
         public event OnExtensionStartedHandler EventOnExtensionStarted;
         public event OnExtensionStoppedHandler EventOnExtensionStopped;
-        public event OnUserAccountUpdatedHandler EventOnUserAccountUpdated;
-        public event OnRhythmPlayerStateChangedHandler EventOnRhythmPlayerStateChanged;
-        public event OnSnapshotTakenHandler EventOnSnapshotTaken;
-
+      
+        public event OnExtensionErroredHandler EventOnExtensionErrored;
 
         private static AgoraRtcEngineEventHandler eventInstance = null;
 
@@ -329,7 +356,7 @@ namespace agora.rtc
             EventOnRtcStats.Invoke(connection, stats);
         }
 
-        public override void OnAudioDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
+        public override void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
         {
             if (EventOnAudioDeviceStateChanged == null) return;
             EventOnAudioDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
@@ -347,13 +374,13 @@ namespace agora.rtc
             EventOnAudioEffectFinished.Invoke(soundId);
         }
 
-        public override void OnVideoDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
+        public override void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
         {
             if (EventOnVideoDeviceStateChanged == null) return;
             EventOnVideoDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
         }
 
-        public override void OnMediaDeviceChanged(int deviceType)
+        public override void OnMediaDeviceChanged(MEDIA_DEVICE_TYPE deviceType)
         {
             if (EventOnMediaDeviceChanged == null) return;
             EventOnMediaDeviceChanged.Invoke(deviceType);
@@ -419,6 +446,18 @@ namespace agora.rtc
             EventOnVideoSizeChanged.Invoke(connection, uid, width, height, rotation);
         }
 
+        public override void OnContentInspectResult(CONTENT_INSPECT_RESULT result)
+        {
+            if (EventOnContentInspectResult == null) return;
+            EventOnContentInspectResult.Invoke(result);
+        }
+
+        public override void OnSnapshotTaken(RtcConnection connection, string filePath, int width, int height, int errCode)
+        {
+            if (EventOnSnapshotTaken == null) return;
+            EventOnSnapshotTaken.Invoke(connection, filePath, width, height, errCode);
+        }
+
         public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
         {
             if (EventOnLocalVideoStateChanged == null) return;
@@ -449,6 +488,12 @@ namespace agora.rtc
             EventOnUserOffline.Invoke(connection, remoteUid, reason);
         }
 
+        public override void OnUserMuteAudio(RtcConnection connection, uint remoteUid, bool muted)
+        {
+            if (EventOnUserMuteAudio == null) return;
+            EventOnUserMuteAudio.Invoke(connection, remoteUid,muted);
+        }
+
         public override void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted)
         {
             if (EventOnUserMuteVideo == null) return;
@@ -465,6 +510,12 @@ namespace agora.rtc
         {
             if (EventOnUserEnableLocalVideo == null) return;
             EventOnUserEnableLocalVideo.Invoke(connection, remoteUid, enabled);
+        }
+
+        public override void OnUserStateChanged(RtcConnection connection, uint remoteUid, uint state)
+        {
+            if (EventOnUserStateChanged == null) return;
+            EventOnUserStateChanged.Invoke(connection, remoteUid, state);
         }
 
         public override void OnApiCallExecuted(int err, string api, string result)
@@ -533,6 +584,12 @@ namespace agora.rtc
             EventOnAudioMixingStateChanged.Invoke(state, errorCode);
         }
 
+        public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode)
+        {
+            if (EventOnRhythmPlayerStateChanged == null) return;
+            EventOnRhythmPlayerStateChanged.Invoke(state, errorCode);
+        }
+
         public override void OnConnectionLost(RtcConnection connection)
         {
             if (EventOnConnectionLost == null) return;
@@ -581,6 +638,18 @@ namespace agora.rtc
             EventOnFirstLocalAudioFramePublished.Invoke(connection, elapsed);
         }
 
+        public override void OnFirstRemoteAudioFrame(RtcConnection connection, int userId, int elapsed)
+        {
+            if (EventOnFirstRemoteAudioFrame == null) return;
+            EventOnFirstRemoteAudioFrame.Invoke(connection, userId, elapsed);
+        }
+
+        public override void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed)
+        {
+            if (EventOnFirstRemoteAudioDecoded == null) return;
+            EventOnFirstRemoteAudioDecoded.Invoke(connection, uid, elapsed);
+        }
+
         public override void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
         {
             if (EventOnLocalAudioStateChanged == null) return;
@@ -593,16 +662,22 @@ namespace agora.rtc
             EventOnRemoteAudioStateChanged.Invoke(connection, remoteUid, state, reason, elapsed);
         }
 
-        public override void OnActiveSpeaker(uint userId)
+        public override void OnActiveSpeaker(RtcConnection connection, uint userId)
         {
             if (EventOnActiveSpeaker == null) return;
-            EventOnActiveSpeaker.Invoke(userId);
+            EventOnActiveSpeaker.Invoke(connection, userId);
         }
 
         public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole)
         {
             if (EventOnClientRoleChanged == null) return;
             EventOnClientRoleChanged.Invoke(connection, oldRole, newRole);
+        }
+
+        public override void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
+        {
+            if (EventOnClientRoleChangeFailed == null) return;
+            EventOnClientRoleChangeFailed.Invoke(connection, reason, currentRole);
         }
 
         public override void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted)
@@ -615,6 +690,12 @@ namespace agora.rtc
         {
             if (EventOnRtmpStreamingStateChanged == null) return;
             EventOnRtmpStreamingStateChanged.Invoke(url, state, errCode);
+        }
+
+        public override void OnRtmpStreamingEvent(string url, RTMP_STREAMING_EVENT eventCode)
+        {
+            if (EventOnRtmpStreamingEvent == null) return;
+            EventOnRtmpStreamingEvent.Invoke(url, eventCode);
         }
 
         public override void OnStreamPublished(string url, int error)
@@ -641,11 +722,11 @@ namespace agora.rtc
             EventOnAudioRoutingChanged.Invoke(routing);
         }
 
-        public override void OnAudioSessionRestrictionResume()
-        {
-            if (EventOnAudioSessionRestrictionResume == null) return;
-            EventOnAudioSessionRestrictionResume.Invoke();
-        }
+        //public override void OnAudioSessionRestrictionResume()
+        //{
+        //    if (EventOnAudioSessionRestrictionResume == null) return;
+        //    EventOnAudioSessionRestrictionResume.Invoke();
+        //}
 
         public override void OnChannelMediaRelayStateChanged(int state, int code)
         {
@@ -699,6 +780,18 @@ namespace agora.rtc
         {
             if (EventOnEncryptionError == null) return;
             EventOnEncryptionError.Invoke(connection, errorType);
+        }
+
+        public override void OnUploadLogResult(RtcConnection connection, string requestId, bool success, UPLOAD_ERROR_REASON reason)
+        {
+            if (EventOnUploadLogResult == null) return;
+            EventOnUploadLogResult.Invoke(connection, requestId, success,reason);
+        }
+
+        public override void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount)
+        {
+            if (EventOnUserAccountUpdated == null) return;
+            EventOnUserAccountUpdated.Invoke(connection, remoteUid, userAccount);
         }
 
         public override void OnPermissionError(PERMISSION_TYPE permissionType)
@@ -761,22 +854,11 @@ namespace agora.rtc
             EventOnExtensionStopped.Invoke(provider, extension);
         }
 
-        public override void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount)
+        public override void OnExtensionErrored(string provider, string extension, int error, string msg)
         {
-            if (EventOnUserAccountUpdated == null) return;
-            EventOnUserAccountUpdated.Invoke(connection, remoteUid, userAccount);
-        }
 
-        public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode)
-        {
-            if (EventOnRhythmPlayerStateChanged == null) return;
-            EventOnRhythmPlayerStateChanged.Invoke(state, errorCode);
-        }
-
-        public override void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode)
-        {
-            if (EventOnSnapshotTaken == null) return;
-            EventOnSnapshotTaken.Invoke(channel, uid, filePath, width, height, errCode);
+            if (EventOnExtensionErrored == null) return;
+            EventOnExtensionErrored.Invoke(provider, extension, error, msg);
         }
     }
 }

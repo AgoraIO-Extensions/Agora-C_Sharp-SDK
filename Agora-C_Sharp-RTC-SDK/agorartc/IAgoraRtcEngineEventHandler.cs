@@ -57,7 +57,7 @@ namespace agora.rtc
         public virtual void OnVideoSizeChanged(RtcConnection connection, uint uid, int width, int height, int rotation) { }//exDone
 
         //todo new add in dcg
-        public virtual void OnContentInspectResult(media::CONTENT_INSPECT_RESULT result) { }//exDone
+        public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }//exDone
 
         //todo fix with dcg
         public virtual void OnSnapshotTaken(RtcConnection connection, string filePath, int width, int height, int errCode) { }//exDone
@@ -71,9 +71,6 @@ namespace agora.rtc
         public virtual void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed) { }//exDone
 
         public virtual void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason) { }//exDone
-
-        //todo new add in dcg
-        public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed) { }//handleDone
 
         [Obsolete("__deprecated")]
         public virtual void OnUserMuteAudio(RtcConnection connection, uint remoteUid, bool muted) { } //exDone
@@ -154,8 +151,7 @@ namespace agora.rtc
         public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode) { }//handleDone
 
         //todo new add in dcg
-        public virtual void onRtmpStreamingEvent(string url, RTMP_STREAMING_EVENT eventCode) { }//handleDone
-
+        public virtual void OnRtmpStreamingEvent(string url, RTMP_STREAMING_EVENT eventCode) { }//handleDone
 
         public virtual void OnStreamPublished(string url, int error) { }//handleDone
 
