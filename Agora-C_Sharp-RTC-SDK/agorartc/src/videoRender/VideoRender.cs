@@ -50,8 +50,6 @@ namespace agora.rtc
 
             if (irisEngine != IntPtr.Zero)
             {
-                var rawDataPtr = AgoraRtcNative.GetIrisRtcRawData(irisEngine);
-
                 _videoFrameBuffer = new IrisCVideoFrameBufferNative {
                     type = (int)VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
                     OnVideoFrameReceived = IntPtr.Zero,
@@ -85,7 +83,6 @@ namespace agora.rtc
 
             if (irisEngine != IntPtr.Zero)
             {
-                var rawDataPtr = AgoraRtcNative.GetIrisRtcRawData(irisEngine);
                 _videoFrameBufferConfig = new IrisVideoFrameBufferConfig
                 {
                     type = (int)sourceType,

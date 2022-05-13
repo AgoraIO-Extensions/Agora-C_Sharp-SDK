@@ -224,9 +224,9 @@ namespace agora.rtc
 
         public abstract int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value);
 
-        public abstract int SetLocalVoiceReverbPreset(AUDIO_REVERB_PRESET reverbPreset);
+        //public abstract int SetLocalVoiceReverbPreset(AUDIO_REVERB_PRESET reverbPreset);
 
-        public abstract int SetLocalVoiceChanger(VOICE_CHANGER_PRESET voiceChanger);
+        //public abstract int SetLocalVoiceChanger(VOICE_CHANGER_PRESET voiceChanger);
 
         public abstract int SetLogFile(string filePath);
 
@@ -272,9 +272,9 @@ namespace agora.rtc
 
         public abstract int DisableAudioSpectrumMonitor();
 
-        public abstract int RegisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
+        public abstract void RegisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
 
-        public abstract int UnregisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
+        public abstract void UnregisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
 
         public abstract int AdjustRecordingSignalVolume(int volume);
 
@@ -400,13 +400,9 @@ namespace agora.rtc
 
         public abstract CONNECTION_STATE_TYPE GetConnectionState();
 
-        public abstract int RegisterEventHandler(IAgoraRtcEngineEventHandler eventHandler);
-
-        public abstract int UnregisterEventHandler(IAgoraRtcEngineEventHandler eventHandler);
-
         public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
 
-        public abstract int RegisterPacketObserver(IPacketObserver observer);
+        //public abstract int RegisterPacketObserver(IPacketObserver observer);
 
         public abstract int SetEncryptionMode(string encryptionMode);
 
@@ -440,9 +436,9 @@ namespace agora.rtc
 
         public abstract int SendCustomReportMessage(string id, string category, string @event, string label, int value);
 
-        public abstract int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
+        public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
-        public abstract int UnregisterMediaMetadataObserver(IMetadataObserver observer);
+        public abstract void UnregisterMediaMetadataObserver(IMetadataObserver observer);
 
         public abstract int StartAudioFrameDump(string channel_id, uint user_id, string location, string uuid, string passwd, long duration_ms, bool auto_upload);
 
@@ -470,15 +466,15 @@ namespace agora.rtc
 
         public abstract int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config);
 
-        public abstract int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler, string publishUrl, DirectCdnStreamingMediaOptions options);
+        // public abstract int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler, string publishUrl, DirectCdnStreamingMediaOptions options);
 
-        public abstract int StopDirectCdnStreaming();
+        // public abstract int StopDirectCdnStreaming();
 
-        public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
+        // public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
 
         public abstract int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame);
 
-        public abstract int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options, IAgoraRtcEngineEventHandler eventHandler);
+        public abstract int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options);
 
         public abstract int LeaveChannelEx(RtcConnection connection);
 
@@ -532,7 +528,7 @@ namespace agora.rtc
 
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
 
-        public abstract int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len);
+        //public abstract int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len);
 
         public abstract int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction);
 
@@ -558,9 +554,9 @@ namespace agora.rtc
 
         public abstract int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay);
 
-        public abstract int TakeSnapshot(string channel, uint uid, string filePath);
+        public abstract int TakeSnapshot(SnapShotConfig config);
 
-        public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
+        //public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
 
         public abstract int SwitchChannel(string token, string channel);
 
@@ -572,9 +568,9 @@ namespace agora.rtc
 
         public abstract int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config);
 
-        public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
+        //public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
 
-        public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
+        //public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
 
         public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
 

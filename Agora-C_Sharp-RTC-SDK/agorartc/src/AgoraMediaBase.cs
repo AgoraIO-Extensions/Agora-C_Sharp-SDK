@@ -189,14 +189,6 @@ namespace agora.rtc
     };
 
     /**
-    * The maximum metadata size.
-    */
-    public enum MAX_METADATA_SIZE_TYPE
-    {
-        MAX_METADATA_SIZE_IN_BYTE = 1024
-    };
-
-    /**
     * Video pixel formats.
     */
     public enum VIDEO_PIXEL_FORMAT

@@ -16,7 +16,7 @@ namespace agora.rtc
 #endif
         internal static int GetMaxMetadataSize()
         {
-            if (Observer.GetMaxMetadataSize == null) return;
+            if (Observer == null) return 0;
             return Observer.GetMaxMetadataSize();
         }
 
@@ -25,7 +25,7 @@ namespace agora.rtc
 #endif
         internal static bool OnReadyToSendMetadata(IntPtr metadata, VIDEO_SOURCE_TYPE source_type)
         {
-            if (Observer.OnReadyToSendMetadata == null) return;
+            if (Observer == null) return false;
             return Observer.OnReadyToSendMetadata(metadata, source_type);
         }
 
@@ -34,9 +34,9 @@ namespace agora.rtc
 #endif
         internal static void OnMetadataReceived(IntPtr metadata)
         {
-            if (Observer.OnMetadataReceived == null) return;
+            if (Observer == null) return;
 
-            var metaData = (IrisMetadata) (Marshal.PtrToStructure(audioFramePtr, typeof(IrisMetadata)) ??
+            var metaData = (IrisMetadata) (Marshal.PtrToStructure(metadata, typeof(IrisMetadata)) ??
                                                     new IrisMetadata());
             var localMetaData = new Metadata();
 
@@ -48,7 +48,7 @@ namespace agora.rtc
             localMetaData.size = metaData.size;
             localMetaData.timeStampMs = metaData.timeStampMs;
 
-            return Observer.OnMetadataReceived(localMetaData);
+            Observer.OnMetadataReceived(localMetaData);
         }
     }
 }

@@ -84,7 +84,7 @@ namespace agora.rtc
                 _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
                 Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
                 _irisEngineEventHandlerHandleNative =
-                    AgoraRtcNative.SetIrisCloudAudioEngineEventHandler(_irisRtcCloudSpatialAudioEngine, _irisCEngineEventHandlerNative);
+                    AgoraRtcNative.SetIrisCloudAudioEngineEventHandler(_irisApiEngine, _irisCEngineEventHandlerNative);
 
     #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
@@ -103,7 +103,7 @@ namespace agora.rtc
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
     #endif
-            AgoraRtcNative.UnsetIrisCloudAudioEngineEventHandler(_irisRtcCloudSpatialAudioEngine, _irisEngineEventHandlerHandleNative);
+            AgoraRtcNative.UnsetIrisCloudAudioEngineEventHandler(_irisApiEngine, _irisEngineEventHandlerHandleNative);
             Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
@@ -219,32 +219,6 @@ namespace agora.rtc
             string jsonParam = JsonMapper.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_SETPARAMETERS,
-                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
-            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public override int MuteLocalAudioStream(bool mute)
-        {
-            var param = new
-            {
-                mute
-            };
-            string jsonParam = JsonMapper.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_RTCENGINE_MUTELOCALAUDIOSTREAM,
-                jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
-            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public override int MuteAllRemoteAudioStreams(bool mute)
-        {
-            var param = new
-            {
-                mute
-            };
-            string jsonParam = JsonMapper.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_RTCENGINE_MUTEALLREMOTEAUDIOSTREAMS,
                 jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }

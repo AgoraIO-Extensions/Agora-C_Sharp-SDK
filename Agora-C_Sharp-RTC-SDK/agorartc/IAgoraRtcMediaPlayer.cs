@@ -32,9 +32,9 @@ namespace agora.rtc
         [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
         public abstract void UnregisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer);
 
-        public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer, int intervalInMS);
+        public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer, int intervalInMS);
 
-        public abstract void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer);
+        public abstract void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
 
         public abstract int Open(int playerId, string url, Int64 startPos);
 

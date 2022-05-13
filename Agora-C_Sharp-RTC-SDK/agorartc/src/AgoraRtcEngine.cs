@@ -473,11 +473,11 @@ namespace agora.rtc
 
             var param = new
             {
-                volume
+                type
             };
             var json = JsonMapper.ToJson(param);
             _irisRtcMetaDataObserverHandleNative = AgoraRtcNative.RegisterMediaMetadataObserver(_irisRtcEngine, 
-                _irisRtcCMetaDataObserverNative, param);
+                _irisRtcCMetaDataObserverNative, json);
         }
 
         private void UnSetIrisMetaDataObserver()
@@ -521,11 +521,12 @@ namespace agora.rtc
             return _spatialAudioEngineInstance;
         }
 
-        //todo not found in dcg
-        //internal IVideoStreamManager GetVideoStreamManager()
-        //{
-        //    return new VideoStreamManager(this);
-        //}
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+        internal IVideoStreamManager GetVideoStreamManager()
+        {
+           return new VideoStreamManager(this);
+        }
+#endif
 
         public override string GetVersion()
         {
@@ -2402,13 +2403,13 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RegisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
+        public override void RegisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
         {
             //todo wait for capi
             AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
-        public override int UnregisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
+        public override void UnregisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
         {
             //todo wait for capi
             AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
@@ -2654,6 +2655,7 @@ namespace agora.rtc
             //    null, 0,
             //    out _result);
             //return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return 0;
         }
 
         public override int SetCameraCapturerConfiguration(CameraCapturerConfiguration config)
@@ -3442,18 +3444,18 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RegisterPacketObserver(IPacketObserver observer)
-        {
-            //todo 
-            //var param = new
-            //{
-            //    observer
-            //};
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-            //    ApiTypeEngine.kEngineRegisterPacketObserver,
-            //    JsonMapper.ToJson(param),
-            //    out _result);
-        }
+        // public override int RegisterPacketObserver(IPacketObserver observer)
+        // {
+        //     //todo 
+        //     //var param = new
+        //     //{
+        //     //    observer
+        //     //};
+        //     //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+        //     //    ApiTypeEngine.kEngineRegisterPacketObserver,
+        //     //    JsonMapper.ToJson(param),
+        //     //    out _result);
+        // }
 
 
         public override int SetEncryptionMode(string encryptionMode)
@@ -3728,13 +3730,13 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
+        public override void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
         {
             SetIrisMetaDataObserver(type);
             MetadataObserver.Observer = observer;
         }
 
-        public override int UnregisterMediaMetadataObserver(IMetadataObserver observer)
+        public override void UnregisterMediaMetadataObserver(IMetadataObserver observer)
         {
             UnSetIrisMetaDataObserver();
         }
@@ -3984,46 +3986,46 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler,
-                                            string publishUrl, DirectCdnStreamingMediaOptions options)
-        {
-            //todo 
-            //var param = new
-            //{
-            //    eventHandler,
-            //    options
-            //};
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-            //    ApiTypeEngine.kEngineStartDirectCdnStreaming,
-            //    JsonMapper.ToJson(param),
-            //    out _result);
-        }
+        // public override int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler,
+        //                                     string publishUrl, DirectCdnStreamingMediaOptions options)
+        // {
+        //     //todo 
+        //     //var param = new
+        //     //{
+        //     //    eventHandler,
+        //     //    options
+        //     //};
+        //     //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+        //     //    ApiTypeEngine.kEngineStartDirectCdnStreaming,
+        //     //    JsonMapper.ToJson(param),
+        //     //    out _result);
+        // }
 
-        public override int StopDirectCdnStreaming()
-        {
-            var param = new { };
+        // public override int StopDirectCdnStreaming()
+        // {
+        //     var param = new { };
 
-            var json = JsonMapper.ToJson(param);
-            var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPDIRECTCDNSTREAMING,
-                json, jsonLength,
-                null, 0,
-                out _result);
+        //     var json = JsonMapper.ToJson(param);
+        //     var jsonLength = Convert.ToUInt64(json.Length);
+        //     var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPDIRECTCDNSTREAMING,
+        //         json, jsonLength,
+        //         null, 0,
+        //         out _result);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
+        //     return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        // }
 
-        public override int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options)
-        {
-            //var param = new
-            //{
-            //    options
-            //};
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-            //    ApiTypeEngine.kEngineUpdateDirectCdnStreamingMediaOptions,
-            //    JsonMapper.ToJson(param),
-            //    out _result);
-        }
+        // public override int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options)
+        // {
+        //     //var param = new
+        //     //{
+        //     //    options
+        //     //};
+        //     //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+        //     //    ApiTypeEngine.kEngineUpdateDirectCdnStreamingMediaOptions,
+        //     //    JsonMapper.ToJson(param),
+        //     //    out _result);
+        // }
 
         public override int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame)
         {
@@ -4056,23 +4058,23 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int JoinChannelEx(string token, RtcConnection connection,
-                              ChannelMediaOptions options,
-                              IAgoraRtcEngineEventHandler eventHandler)
+        public override int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
         {
-            //todo 
-            //var param = new
-            //{
-            //    token,
-            //    connection,
-            //    options,
-            //    eventHandler
-            //};
+            var param = new
+            {
+               token,
+               connection,
+               options
+            };
 
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_JOINCHANNELEX,
+                json, jsonLength,
+                null, 0,
+                out _result);
 
-
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineJoinChannelEx,
-            //    JsonMapper.ToJson(param), out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int LeaveChannelEx(RtcConnection connection)
@@ -4429,6 +4431,7 @@ namespace agora.rtc
             //};
             //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetAppType,
             //    JsonMapper.ToJson(param), out _result);
+            return 0;
         }
 
         public override int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame,
@@ -4481,7 +4484,7 @@ namespace agora.rtc
             //frame.bytesPerSample = f.bytesPerSample;
             //frame.renderTimeMs = f.renderTimeMs;
             //frame.samplesPerSec = f.samplesPerSec;
-            //return 0;
+            return 0;
         }
 
 
@@ -4852,24 +4855,21 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int TakeSnapshot(media::SnapShotConfig &config, media::ISnapshotCallback* callback)
+        public override int TakeSnapshot(SnapShotConfig config)
         {
-            //todo 
-            //var param = new
-            //{
-            //    channel,
-            //    uid,
-            //    filePath
-            //};
+            var param = new
+            {
+               config
+            };
 
-            //var json = JsonMapper.ToJson(param);
-            //var jsonLength = Convert.ToUInt64(json.Length);
-            //var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_TAKESNAPSHOT,
-            //    json, jsonLength,
-            //    null, 0,
-            //    out _result);
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_TAKESNAPSHOT,
+               json, jsonLength,
+               null, 0,
+               out _result);
 
-            //return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         //todo  not found in dcg
@@ -4920,7 +4920,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCHANNEL2,//todo no key
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.,//todo no key
                 json, jsonLength,
                 null, 0,
                 out _result);

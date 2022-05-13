@@ -6919,4 +6919,11 @@ namespace agora.rtc
         public float _split_height;
         public float[] _ss;
     };
+
+    public class SnapShotConfig
+    {
+        public string channel;
+        public uint uid;
+        public string filePath;
+    }
 }

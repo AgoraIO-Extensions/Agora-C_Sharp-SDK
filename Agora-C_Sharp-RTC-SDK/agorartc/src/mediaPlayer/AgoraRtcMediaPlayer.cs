@@ -265,7 +265,7 @@ namespace agora.rtc
         private void SetIrisAudioSpectrumObserver(int intervalInMS)
         {
             var param = new { intervalInMS };
-            if (_irisMediaPlayerCAudioSpectrumObserverNative != IntPtr.Zero) return -1;
+            if (_irisMediaPlayerCAudioSpectrumObserverNative != IntPtr.Zero) return;
             
             _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver
             {
@@ -298,7 +298,7 @@ namespace agora.rtc
             );
             _irisMediaPlayerCAudioSpectrumObserverNative = IntPtr.Zero;
             AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
-            _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioFrameObserver();
+            _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver();
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
 
@@ -347,13 +347,13 @@ namespace agora.rtc
             //UnSetIrisVideoFrameObserver();
         }
 
-        public override void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer, int intervalInMS)
+        public override void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer, int intervalInMS)
         {
             SetIrisAudioSpectrumObserver(intervalInMS);
             AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
-        public override void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcMediaPlayerAudioSpectrumObserver observer)
+        public override void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
         {
             UnSetIrisAudioSpectrumObserver();
         }
@@ -673,7 +673,7 @@ namespace agora.rtc
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETSTATE,
                 jsonParam, (UInt64)jsonParam.Length, null, 0, out _result);
-            return ret != 0 ? ret : (MEDIA_PLAYER_STATE) AgoraJson.GetData<int>(_result.Result, "result");
+            return (MEDIA_PLAYER_STATE) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int Mute(int playerId, bool mute)

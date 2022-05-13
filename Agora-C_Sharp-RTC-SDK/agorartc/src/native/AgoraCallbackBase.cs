@@ -76,7 +76,7 @@ namespace agora.rtc
     internal delegate bool Func_ReadyToSendMetadata_Native(IntPtr metadata, VIDEO_SOURCE_TYPE source_type);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_MetadataReceived_Native(IntPtr metadata);
+    internal delegate void Func_MetadataReceived_Native(IntPtr metadata);
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCMediaMetadataObserverNative {

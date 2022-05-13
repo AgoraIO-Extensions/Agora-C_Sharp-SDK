@@ -31,7 +31,7 @@ namespace agora.rtc
     {
         public event OnPlayerSourceStateChangedHandler EventOnPlayerSourceStateChanged;
         public event OnPositionChangedHandler EventOnPositionChanged;
-        public event OnPlayerEventHandler EventOnPositionChanged;
+        public event OnPlayerEventHandler EventOnPlayerEvent;
         public event OnMetaDataHandler EventOnMetaData;
         public event OnPlayBufferUpdatedHandler EventOnPlayBufferUpdated;
         public event OnCompletedHandler EventOnCompleted;
@@ -61,8 +61,8 @@ namespace agora.rtc
 
         public override void OnPlayerEvent(int playerId, MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message)
         {
-            if (EventOnPositionChanged == null) return;
-            EventOnPositionChanged.Invoke(playerId, @event, elapsedTime, message);
+            if (EventOnPlayerEvent == null) return;
+            EventOnPlayerEvent.Invoke(playerId, @event, elapsedTime, message);
         }
 
         public override void OnMetaData(int playerId, byte[] data, int length)
