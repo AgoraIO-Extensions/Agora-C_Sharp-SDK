@@ -174,7 +174,7 @@ namespace agora.rtc
     public delegate void OnRhythmPlayerStateChangedHandler(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode);
 
     public delegate void OnSnapshotTakenHandler(string channel, uint uid, string filePath, int width, int height, int errCode);
-    
+
     public class AgoraRtcEngineEventHandler : IAgoraRtcEngineEventHandler
     {
         public event OnJoinChannelSuccessHandler EventOnJoinChannelSuccess;
@@ -267,428 +267,516 @@ namespace agora.rtc
 
         public static AgoraRtcEngineEventHandler GetInstance()
         {
-            return eventInstance ?? (eventInstance = new AgoraRtcEngineEventHandler());
+            if (eventInstance == null)
+            {
+                eventInstance = new AgoraRtcEngineEventHandler();
+            }
+
+            return eventInstance;
         }
 
         public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
-            EventOnJoinChannelSuccess?.Invoke(connection, elapsed);
+            if (EventOnJoinChannelSuccess == null) return;
+            EventOnJoinChannelSuccess.Invoke(connection, elapsed);
         }
 
         public override void OnWarning(int warn, string msg)
         {
-            EventOnWarning?.Invoke(warn, msg);
+            if (EventOnWarning == null) return;
+            EventOnWarning.Invoke(warn, msg);
         }
 
         public override void OnError(int err, string msg)
         {
-            EventOnError?.Invoke(err, msg);
+            if (EventOnError == null) return;
+            EventOnError.Invoke(err, msg);
         }
 
         public override void OnLeaveChannel(RtcConnection connection, RtcStats stats)
         {
-            EventOnLeaveChannel?.Invoke(connection, stats);
+            if (EventOnLeaveChannel == null) return;
+            EventOnLeaveChannel.Invoke(connection, stats);
         }
-
 
         public override void OnRejoinChannelSuccess(RtcConnection connection, int elapsed)
         {
-            EventOnRejoinChannelSuccess?.Invoke(connection, elapsed);
+            if (EventOnRejoinChannelSuccess == null) return;
+            EventOnRejoinChannelSuccess.Invoke(connection, elapsed);
         }
 
         public override void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost)
         {
-            EventOnAudioQuality?.Invoke(connection, remoteUid, quality, delay, lost);
+            if (EventOnAudioQuality == null) return;
+            EventOnAudioQuality.Invoke(connection, remoteUid, quality, delay, lost);
         }
 
         public override void OnLastmileProbeResult(LastmileProbeResult result)
         {
-            EventOnLastmileProbeResult?.Invoke(result);
+            if (EventOnLastmileProbeResult == null) return;
+            EventOnLastmileProbeResult.Invoke(result);
         }
 
         public override void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume)
         {
-            EventOnAudioVolumeIndication?.Invoke(connection, speakers, speakerNumber, totalVolume);
+            if (EventOnAudioVolumeIndication == null) return;
+            EventOnAudioVolumeIndication.Invoke(connection, speakers, speakerNumber, totalVolume);
         }
 
         public override void OnRtcStats(RtcConnection connection, RtcStats stats)
         {
-            EventOnRtcStats?.Invoke(connection, stats);
+            if (EventOnRtcStats == null) return;
+            EventOnRtcStats.Invoke(connection, stats);
         }
 
         public override void OnAudioDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
         {
-            EventOnAudioDeviceStateChanged?.Invoke(deviceId, deviceType, deviceState);
+            if (EventOnAudioDeviceStateChanged == null) return;
+            EventOnAudioDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
         }
 
         public override void OnAudioMixingFinished()
         {
-            EventOnAudioMixingFinished?.Invoke();
+            if (EventOnAudioMixingFinished == null) return;
+            EventOnAudioMixingFinished.Invoke();
         }
 
         public override void OnAudioEffectFinished(int soundId)
         {
-            EventOnAudioEffectFinished?.Invoke(soundId);
+            if (EventOnAudioEffectFinished == null) return;
+            EventOnAudioEffectFinished.Invoke(soundId);
         }
 
         public override void OnVideoDeviceStateChanged(string deviceId, int deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
         {
-            EventOnVideoDeviceStateChanged?.Invoke(deviceId, deviceType, deviceState);
+            if (EventOnVideoDeviceStateChanged == null) return;
+            EventOnVideoDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
         }
 
         public override void OnMediaDeviceChanged(int deviceType)
         {
-            EventOnMediaDeviceChanged?.Invoke(deviceType);
+            if (EventOnMediaDeviceChanged == null) return;
+            EventOnMediaDeviceChanged.Invoke(deviceType);
         }
 
         public override void OnNetworkQuality(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality)
         {
-            EventOnNetworkQuality?.Invoke(connection, remoteUid, txQuality, rxQuality);
+            if (EventOnNetworkQuality == null) return;
+            EventOnNetworkQuality.Invoke(connection, remoteUid, txQuality, rxQuality);
         }
 
         public override void OnIntraRequestReceived(RtcConnection connection)
         {
-            EventOnIntraRequestReceived?.Invoke(connection);
+            if (EventOnIntraRequestReceived == null) return;
+            EventOnIntraRequestReceived.Invoke(connection);
         }
 
         public override void OnUplinkNetworkInfoUpdated(UplinkNetworkInfo info)
         {
-            EventOnUplinkNetworkInfoUpdated?.Invoke(info);
+            if (EventOnUplinkNetworkInfoUpdated == null) return;
+            EventOnUplinkNetworkInfoUpdated.Invoke(info);
         }
 
         public override void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info)
         {
-            EventOnDownlinkNetworkInfoUpdated?.Invoke(info);
+            if (EventOnDownlinkNetworkInfoUpdated == null) return;
+            EventOnDownlinkNetworkInfoUpdated.Invoke(info);
         }
 
         public override void OnLastmileQuality(int quality)
         {
-            EventOnLastmileQuality?.Invoke(quality);
+            if (EventOnLastmileQuality == null) return;
+            EventOnLastmileQuality.Invoke(quality);
         }
 
         public override void OnFirstLocalVideoFrame(RtcConnection connection, int width, int height, int elapsed)
         {
-            EventOnFirstLocalVideoFrame?.Invoke(connection, width, height, elapsed);
+            if (EventOnFirstLocalVideoFrame == null) return;
+            EventOnFirstLocalVideoFrame.Invoke(connection, width, height, elapsed);
         }
 
         public override void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed)
         {
-            EventOnFirstLocalVideoFramePublished?.Invoke(connection, elapsed);
+            if (EventOnFirstLocalVideoFramePublished == null) return;
+            EventOnFirstLocalVideoFramePublished.Invoke(connection, elapsed);
         }
 
         public override void OnVideoSourceFrameSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, int width, int height)
         {
-            EventOnVideoSourceFrameSizeChanged?.Invoke(connection, sourceType, width, height);
+            if (EventOnVideoSourceFrameSizeChanged == null) return;
+            EventOnVideoSourceFrameSizeChanged.Invoke(connection, sourceType, width, height);
         }
 
         public override void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
         {
-            EventOnFirstRemoteVideoDecoded?.Invoke(connection, remoteUid, width, height, elapsed);
+            if (EventOnFirstRemoteVideoDecoded == null) return;
+            EventOnFirstRemoteVideoDecoded.Invoke(connection, remoteUid, width, height, elapsed);
         }
 
         public override void OnVideoSizeChanged(RtcConnection connection, uint uid, int width, int height, int rotation)
         {
-            EventOnVideoSizeChanged?.Invoke(connection, uid, width, height, rotation);
+            if (EventOnVideoSizeChanged == null) return;
+            EventOnVideoSizeChanged.Invoke(connection, uid, width, height, rotation);
         }
 
         public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
         {
-            EventOnLocalVideoStateChanged?.Invoke(connection, state, errorCode);
+            if (EventOnLocalVideoStateChanged == null) return;
+            EventOnLocalVideoStateChanged.Invoke(connection, state, errorCode);
         }
 
         public override void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
-            EventOnRemoteVideoStateChanged?.Invoke(connection, remoteUid, state, reason, elapsed);
+            if (EventOnRemoteVideoStateChanged == null) return;
+            EventOnRemoteVideoStateChanged.Invoke(connection, remoteUid, state, reason, elapsed);
         }
 
         public override void OnFirstRemoteVideoFrame(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
         {
-            EventOnFirstRemoteVideoFrame?.Invoke(connection, remoteUid, width, height, elapsed);
+            if (EventOnFirstRemoteVideoFrame == null) return;
+            EventOnFirstRemoteVideoFrame.Invoke(connection, remoteUid, width, height, elapsed);
         }
 
         public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
-            EventOnUserJoined?.Invoke(connection, remoteUid, elapsed);
+            if (EventOnUserJoined == null) return;
+            EventOnUserJoined.Invoke(connection, remoteUid, elapsed);
         }
 
         public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
-            EventOnUserOffline?.Invoke(connection, remoteUid, reason);
+            if (EventOnUserOffline == null) return;
+            EventOnUserOffline.Invoke(connection, remoteUid, reason);
         }
 
         public override void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted)
         {
-            EventOnUserMuteVideo?.Invoke(connection, remoteUid, muted);
+            if (EventOnUserMuteVideo == null) return;
+            EventOnUserMuteVideo.Invoke(connection, remoteUid, muted);
         }
 
         public override void OnUserEnableVideo(RtcConnection connection, uint remoteUid, bool enabled)
         {
-            EventOnUserEnableVideo?.Invoke(connection, remoteUid, enabled);
+            if (EventOnUserEnableVideo == null) return;
+            EventOnUserEnableVideo.Invoke(connection, remoteUid, enabled);
         }
 
         public override void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled)
         {
-            EventOnUserEnableLocalVideo?.Invoke(connection, remoteUid, enabled);
+            if (EventOnUserEnableLocalVideo == null) return;
+            EventOnUserEnableLocalVideo.Invoke(connection, remoteUid, enabled);
         }
 
         public override void OnApiCallExecuted(int err, string api, string result)
         {
-            EventOnApiCallExecuted?.Invoke(err, api, result);
+            if (EventOnApiCallExecuted == null) return;
+            EventOnApiCallExecuted.Invoke(err, api, result);
         }
 
         public override void OnLocalAudioStats(RtcConnection connection, LocalAudioStats stats)
         {
-            EventOnLocalAudioStats?.Invoke(connection, stats);
+            if (EventOnLocalAudioStats == null) return;
+            EventOnLocalAudioStats.Invoke(connection, stats);
         }
 
         public override void OnRemoteAudioStats(RtcConnection connection, RemoteAudioStats stats)
         {
-            EventOnRemoteAudioStats?.Invoke(connection, stats);
+            if (EventOnRemoteAudioStats == null) return;
+            EventOnRemoteAudioStats.Invoke(connection, stats);
         }
 
         public override void OnLocalVideoStats(RtcConnection connection, LocalVideoStats stats)
         {
-            EventOnLocalVideoStats?.Invoke(connection, stats);
+            if (EventOnLocalVideoStats == null) return;
+            EventOnLocalVideoStats.Invoke(connection, stats);
         }
 
         public override void OnRemoteVideoStats(RtcConnection connection, RemoteVideoStats stats)
         {
-            EventOnRemoteVideoStats?.Invoke(connection, stats);
+            if (EventOnRemoteVideoStats == null) return;
+            EventOnRemoteVideoStats.Invoke(connection, stats);
         }
 
         public override void OnCameraReady()
         {
-            EventOnCameraReady?.Invoke();
+            if (EventOnCameraReady == null) return;
+            EventOnCameraReady.Invoke();
         }
 
         public override void OnCameraFocusAreaChanged(int x, int y, int width, int height)
         {
-            EventOnCameraFocusAreaChanged?.Invoke(x, y, width, height);
+            if (EventOnCameraFocusAreaChanged == null) return;
+            EventOnCameraFocusAreaChanged.Invoke(x, y, width, height);
         }
 
         public override void OnCameraExposureAreaChanged(int x, int y, int width, int height)
         {
-            EventOnCameraExposureAreaChanged?.Invoke(x, y, width, height);
+            if (EventOnCameraExposureAreaChanged == null) return;
+            EventOnCameraExposureAreaChanged.Invoke(x, y, width, height);
         }
 
         public override void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces)
         {
-            EventOnFacePositionChanged?.Invoke(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
+            if (EventOnFacePositionChanged == null) return;
+            EventOnFacePositionChanged.Invoke(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
         }
 
         public override void OnVideoStopped()
         {
-            EventOnVideoStopped?.Invoke();
+            if (EventOnVideoStopped == null) return;
+            EventOnVideoStopped.Invoke();
         }
 
         public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode)
         {
-            EventOnAudioMixingStateChanged?.Invoke(state, errorCode);
+            if (EventOnAudioMixingStateChanged == null) return;
+            EventOnAudioMixingStateChanged.Invoke(state, errorCode);
         }
 
         public override void OnConnectionLost(RtcConnection connection)
         {
-            EventOnConnectionLost?.Invoke(connection);
+            if (EventOnConnectionLost == null) return;
+            EventOnConnectionLost.Invoke(connection);
         }
 
         public override void OnConnectionInterrupted(RtcConnection connection)
         {
-            EventOnConnectionInterrupted?.Invoke(connection);
+            if (EventOnConnectionInterrupted == null) return;
+            EventOnConnectionInterrupted.Invoke(connection);
         }
 
         public override void OnConnectionBanned(RtcConnection connection)
         {
-            EventOnConnectionBanned?.Invoke(connection);
+            if (EventOnConnectionBanned == null) return;
+            EventOnConnectionBanned.Invoke(connection);
         }
 
         public override void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs)
         {
-            EventOnStreamMessage?.Invoke(connection, remoteUid, streamId, data, length, sentTs);
+            if (EventOnStreamMessage == null) return;
+            EventOnStreamMessage.Invoke(connection, remoteUid, streamId, data, length, sentTs);
         }
 
         public override void OnStreamMessageError(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached)
         {
-            EventOnStreamMessageError?.Invoke(connection, remoteUid, streamId, code, missed, cached);
+            if (EventOnStreamMessageError == null) return;
+            EventOnStreamMessageError.Invoke(connection, remoteUid, streamId, code, missed, cached);
         }
 
         public override void OnRequestToken(RtcConnection connection)
         {
-            EventOnRequestToken?.Invoke(connection);
+            if (EventOnRequestToken == null) return;
+            EventOnRequestToken.Invoke(connection);
         }
 
         public override void OnTokenPrivilegeWillExpire(RtcConnection connection, string token)
         {
-            EventOnTokenPrivilegeWillExpire?.Invoke(connection, token);
+            if (EventOnTokenPrivilegeWillExpire == null) return;
+            EventOnTokenPrivilegeWillExpire.Invoke(connection, token);
         }
 
         public override void OnFirstLocalAudioFramePublished(RtcConnection connection, int elapsed)
         {
-            EventOnFirstLocalAudioFramePublished?.Invoke(connection, elapsed);
+            if (EventOnFirstLocalAudioFramePublished == null) return;
+            EventOnFirstLocalAudioFramePublished.Invoke(connection, elapsed);
         }
 
         public override void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
         {
-            EventOnLocalAudioStateChanged?.Invoke(connection, state, error);
+            if (EventOnLocalAudioStateChanged == null) return;
+            EventOnLocalAudioStateChanged.Invoke(connection, state, error);
         }
 
-        public override void  OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
+        public override void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
         {
-            EventOnRemoteAudioStateChanged?.Invoke(connection, remoteUid, state, reason, elapsed);
+            if (EventOnRemoteAudioStateChanged == null) return;
+            EventOnRemoteAudioStateChanged.Invoke(connection, remoteUid, state, reason, elapsed);
         }
 
         public override void OnActiveSpeaker(uint userId)
         {
-            EventOnActiveSpeaker?.Invoke(userId);
+            if (EventOnActiveSpeaker == null) return;
+            EventOnActiveSpeaker.Invoke(userId);
         }
 
         public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole)
         {
-            EventOnClientRoleChanged?.Invoke(connection, oldRole, newRole);
+            if (EventOnClientRoleChanged == null) return;
+            EventOnClientRoleChanged.Invoke(connection, oldRole, newRole);
         }
 
         public override void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted)
         {
-            EventOnAudioDeviceVolumeChanged?.Invoke(deviceType, volume, muted);
+            if (EventOnAudioDeviceVolumeChanged == null) return;
+            EventOnAudioDeviceVolumeChanged.Invoke(deviceType, volume, muted);
         }
 
         public override void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
         {
-            EventOnRtmpStreamingStateChanged?.Invoke(url, state, errCode);
+            if (EventOnRtmpStreamingStateChanged == null) return;
+            EventOnRtmpStreamingStateChanged.Invoke(url, state, errCode);
         }
 
         public override void OnStreamPublished(string url, int error)
         {
-            EventOnStreamPublished?.Invoke(url, error);
+            if (EventOnStreamPublished == null) return;
+            EventOnStreamPublished.Invoke(url, error);
         }
 
         public override void OnStreamUnpublished(string url)
         {
-            EventOnStreamUnpublished?.Invoke(url);
+            if (EventOnStreamUnpublished == null) return;
+            EventOnStreamUnpublished.Invoke(url);
         }
 
         public override void OnTranscodingUpdated()
         {
-            EventOnTranscodingUpdated?.Invoke();
+            if (EventOnTranscodingUpdated == null) return;
+            EventOnTranscodingUpdated.Invoke();
         }
 
         public override void OnAudioRoutingChanged(int routing)
         {
-            EventOnAudioRoutingChanged?.Invoke(routing);
+            if (EventOnAudioRoutingChanged == null) return;
+            EventOnAudioRoutingChanged.Invoke(routing);
         }
 
         public override void OnAudioSessionRestrictionResume()
         {
-           EventOnAudioSessionRestrictionResume?.Invoke();
+            if (EventOnAudioSessionRestrictionResume == null) return;
+            EventOnAudioSessionRestrictionResume.Invoke();
         }
 
         public override void OnChannelMediaRelayStateChanged(int state, int code)
         {
-            EventOnChannelMediaRelayStateChanged?.Invoke(state, code);
+            if (EventOnChannelMediaRelayStateChanged == null) return;
+            EventOnChannelMediaRelayStateChanged.Invoke(state, code);
         }
 
         public override void OnChannelMediaRelayEvent(int code)
         {
-            EventOnChannelMediaRelayEvent?.Invoke(code);
+            if (EventOnChannelMediaRelayEvent == null) return;
+            EventOnChannelMediaRelayEvent.Invoke(code);
         }
 
         public override void OnLocalPublishFallbackToAudioOnly(bool isFallbackOrRecover)
         {
-            EventOnLocalPublishFallbackToAudioOnly?.Invoke(isFallbackOrRecover);
+            if (EventOnLocalPublishFallbackToAudioOnly == null) return;
+            EventOnLocalPublishFallbackToAudioOnly.Invoke(isFallbackOrRecover);
         }
 
         public override void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
         {
-            EventOnRemoteSubscribeFallbackToAudioOnly?.Invoke(uid, isFallbackOrRecover);
+            if (EventOnRemoteSubscribeFallbackToAudioOnly == null) return;
+            EventOnRemoteSubscribeFallbackToAudioOnly.Invoke(uid, isFallbackOrRecover);
         }
 
         public override void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate)
         {
-            EventOnRemoteAudioTransportStats?.Invoke(connection, remoteUid, delay, lost, rxKBitRate);
+            if (EventOnRemoteAudioTransportStats == null) return;
+            EventOnRemoteAudioTransportStats.Invoke(connection, remoteUid, delay, lost, rxKBitRate);
         }
 
         public override void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate)
         {
-            EventOnRemoteVideoTransportStats?.Invoke(connection, remoteUid, delay, lost, rxKBitRate);
+            if (EventOnRemoteVideoTransportStats == null) return;
+            EventOnRemoteVideoTransportStats.Invoke(connection, remoteUid, delay, lost, rxKBitRate);
         }
 
         public override void OnConnectionStateChanged(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
         {
-            EventOnConnectionStateChanged?.Invoke(connection, state, reason);
+            if (EventOnConnectionStateChanged == null) return;
+            EventOnConnectionStateChanged.Invoke(connection, state, reason);
         }
 
         public override void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type)
         {
-            EventOnNetworkTypeChanged?.Invoke(connection, type);
+            if (EventOnNetworkTypeChanged == null) return;
+            EventOnNetworkTypeChanged.Invoke(connection, type);
         }
 
         public override void OnEncryptionError(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType)
         {
-            EventOnEncryptionError?.Invoke(connection, errorType);
+            if (EventOnEncryptionError == null) return;
+            EventOnEncryptionError.Invoke(connection, errorType);
         }
 
         public override void OnPermissionError(PERMISSION_TYPE permissionType)
         {
-            EventOnPermissionError?.Invoke(permissionType);
+            if (EventOnPermissionError == null) return;
+            EventOnPermissionError.Invoke(permissionType);
         }
 
         public override void OnLocalUserRegistered(uint uid, string userAccount)
         {
-            EventOnLocalUserRegistered?.Invoke(uid, userAccount);
+            if (EventOnLocalUserRegistered == null) return;
+            EventOnLocalUserRegistered.Invoke(uid, userAccount);
         }
 
         public override void OnUserInfoUpdated(uint uid, UserInfo info)
         {
-            EventOnUserInfoUpdated?.Invoke(uid, info);
+            if (EventOnUserInfoUpdated == null) return;
+            EventOnUserInfoUpdated.Invoke(uid, info);
         }
 
         public override void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
         {
-            EventOnAudioSubscribeStateChanged?.Invoke(channel, uid, oldState, newState, elapseSinceLastState);
+            if (EventOnAudioSubscribeStateChanged == null) return;
+            EventOnAudioSubscribeStateChanged.Invoke(channel, uid, oldState, newState, elapseSinceLastState);
         }
 
         public override void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
         {
-            EventOnVideoSubscribeStateChanged?.Invoke(channel, uid, oldState, newState, elapseSinceLastState);
+            if (EventOnVideoSubscribeStateChanged == null) return;
+            EventOnVideoSubscribeStateChanged.Invoke(channel, uid, oldState, newState, elapseSinceLastState);
         }
 
         public override void OnAudioPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
         {
-            EventOnAudioPublishStateChanged?.Invoke(channel, oldState, newState, elapseSinceLastState);
+            if (EventOnAudioPublishStateChanged == null) return;
+            EventOnAudioPublishStateChanged.Invoke(channel, oldState, newState, elapseSinceLastState);
         }
 
         public override void OnVideoPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
         {
-            EventOnVideoPublishStateChanged?.Invoke(channel, oldState, newState, elapseSinceLastState);
+            if (EventOnVideoPublishStateChanged == null) return;
+            EventOnVideoPublishStateChanged.Invoke(channel, oldState, newState, elapseSinceLastState);
         }
 
         public override void OnExtensionEvent(string provider, string extension, string key, string value)
         {
-            EventOnExtensionEvent?.Invoke(provider, extension, key, value);
+            if (EventOnExtensionEvent == null) return;
+            EventOnExtensionEvent.Invoke(provider, extension, key, value);
         }
 
         public override void OnExtensionStarted(string provider, string extension)
         {
-            EventOnExtensionStarted?.Invoke(provider, extension);
+            if (EventOnExtensionStarted == null) return;
+            EventOnExtensionStarted.Invoke(provider, extension);
         }
 
         public override void OnExtensionStopped(string provider, string extension)
         {
-            EventOnExtensionStopped?.Invoke(provider, extension);
+            if (EventOnExtensionStopped == null) return;
+            EventOnExtensionStopped.Invoke(provider, extension);
         }
 
         public override void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount)
         {
-            EventOnUserAccountUpdated?.Invoke(connection, remoteUid, userAccount);
+            if (EventOnUserAccountUpdated == null) return;
+            EventOnUserAccountUpdated.Invoke(connection, remoteUid, userAccount);
         }
 
         public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode)
         {
-            EventOnRhythmPlayerStateChanged?.Invoke(state, errorCode);
+            if (EventOnRhythmPlayerStateChanged == null) return;
+            EventOnRhythmPlayerStateChanged.Invoke(state, errorCode);
         }
 
         public override void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode)
         {
-            EventOnSnapshotTaken?.Invoke(channel, uid, filePath, width, height, errCode);
+            if (EventOnSnapshotTaken == null) return;
+            EventOnSnapshotTaken.Invoke(channel, uid, filePath, width, height, errCode);
         }
     }
 }
