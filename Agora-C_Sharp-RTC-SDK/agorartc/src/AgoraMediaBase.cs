@@ -601,4 +601,40 @@ namespace agora.rtc
         public uint id;
         public string key;
     }
+
+    public enum METADATA_TYPE
+    {
+        UNKNOWN_METADATA = -1,
+        VIDEO_METADATA = 0,
+    };
+
+    public enum MAX_METADATA_SIZE_TYPE
+    {
+        INVALID_METADATA_SIZE_IN_BYTE = -1,
+        DEFAULT_METADATA_SIZE_IN_BYTE = 512,
+        MAX_METADATA_SIZE_IN_BYTE = 1024
+    };
+
+    /** Metadata.
+        */
+    public class Metadata
+    {
+        /** The User ID that sent the metadata.
+            * For the receiver: the remote track User ID.
+            * For the sender: ignore it.
+            */
+        public uint uid;
+        /** The metadata size.
+            */
+        public uint size;
+        /** The metadata buffer.
+            */
+        public byte[] buffer;
+        public IntPtr bufferPtr;
+        /** The NTP timestamp (ms) that the metadata sends.
+            *
+            * @note If the metadata receiver is audience, this parameter does not work.
+            */
+        public long timeStampMs;
+    };
 }

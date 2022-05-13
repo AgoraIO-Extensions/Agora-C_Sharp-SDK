@@ -155,4 +155,15 @@ namespace agora.rtc
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
         internal string key;
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisMetadata {
+        internal uint uid;
+
+        internal uint size;
+
+        internal IntPtr buffer;
+
+        internal Int64 timeStampMs;
+    }
 }
