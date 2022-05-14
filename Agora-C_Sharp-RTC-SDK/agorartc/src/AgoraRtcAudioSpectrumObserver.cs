@@ -10,6 +10,19 @@ namespace agora.rtc
     {
         internal static IAgoraRtcAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
 
+        private AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
+        {
+            AudioSpectrumData spectrumData = new AudioSpectrumData();
+            spectrumData.dataLength = length;
+
+            spectrumData.audioSpectrumData = new float[length];
+            if (bufferPtr != IntPtr.Zero)
+            {
+                Marshal.Copy(bufferPtr, spectrumData.audioSpectrumData, 0, length);
+            }
+            return spectrumData;
+        }
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_LocalAudioSpectrum_Native))]
 #endif
@@ -17,12 +30,9 @@ namespace agora.rtc
         {
             if (AgoraRtcAudioSpectrumObserver == null) return false;
 
-            var AudioSpectrumData = Marshal.PtrToStructure<IrisAudioSpectrumData>(data);
-            AudioSpectrumData spectrumData = new AudioSpectrumData();
-            spectrumData.audioSpectrumData = AudioSpectrumData.audioSpectrumData;
-            spectrumData.dataLength = AudioSpectrumData.dataLength;
+            var irisAudioSpectrumData = Marshal.PtrToStructure<IrisAudioSpectrumData>(data);
 
-            return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(spectrumData);
+            return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(ProcessAudioSpectrumData(irisAudioSpectrumData.audioSpectrumData, irisAudioSpectrumData.dataLength));
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -38,7 +48,7 @@ namespace agora.rtc
                 IntPtr p = new IntPtr(dataspectrums.ToInt64() + Marshal.SizeOf(typeof(IrisUserAudioSpectrumInfo)) * i);
                 var dataspectrum = (UserAudioSpectrumInfo)Marshal.PtrToStructure(p, typeof(IrisUserAudioSpectrumInfo));
                 SpectrumInfos[i].uid = dataspectrum.uid;
-                SpectrumInfos[i].spectrumData = dataspectrum.spectrumData;
+                SpectrumInfos[i].spectrumData = ProcessAudioSpectrumData(dataspectrum.spectrumData.audioSpectrumData, dataspectrum.spectrumData.dataLength);
             }
 
             return AgoraRtcAudioSpectrumObserver.OnRemoteAudioSpectrum(SpectrumInfos, spectrumNumber);
