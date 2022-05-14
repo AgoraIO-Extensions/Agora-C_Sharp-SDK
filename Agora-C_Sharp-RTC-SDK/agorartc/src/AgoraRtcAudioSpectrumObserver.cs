@@ -10,7 +10,7 @@ namespace agora.rtc
     {
         internal static IAgoraRtcAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
 
-        private AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
+        private static AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
         {
             AudioSpectrumData spectrumData = new AudioSpectrumData();
             spectrumData.dataLength = length;
@@ -46,7 +46,7 @@ namespace agora.rtc
             for (int i = 0; i < spectrumNumber; i++)
             {
                 IntPtr p = new IntPtr(dataspectrums.ToInt64() + Marshal.SizeOf(typeof(IrisUserAudioSpectrumInfo)) * i);
-                var dataspectrum = (UserAudioSpectrumInfo)Marshal.PtrToStructure(p, typeof(IrisUserAudioSpectrumInfo));
+                var dataspectrum = (IrisUserAudioSpectrumInfo)Marshal.PtrToStructure(p, typeof(IrisUserAudioSpectrumInfo));
                 SpectrumInfos[i].uid = dataspectrum.uid;
                 SpectrumInfos[i].spectrumData = ProcessAudioSpectrumData(dataspectrum.spectrumData.audioSpectrumData, dataspectrum.spectrumData.dataLength);
             }

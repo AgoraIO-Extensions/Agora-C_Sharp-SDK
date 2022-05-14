@@ -6,6 +6,7 @@ namespace agora.rtc
     internal static class AgoraApiType
     {
         // class IRtcEngine start
+        internal const string FUNC_KEY_ERROR = "";
         internal const string FUNC_RTCENGINE_RELEASE = "RtcEngine_release";
         internal const string FUNC_RTCENGINE_INITIALIZE = "RtcEngine_initialize";
         internal const string FUNC_RTCENGINE_QUERYINTERFACE = "RtcEngine_queryInterface";

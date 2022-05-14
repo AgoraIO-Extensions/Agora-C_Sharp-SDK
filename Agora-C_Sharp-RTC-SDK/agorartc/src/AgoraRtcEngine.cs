@@ -4655,7 +4655,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType., //todo no key
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_KEY_ERROR, //todo no key
                 json, jsonLength,
                 null, 0,
                 out _result);
@@ -4707,7 +4707,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.,//todo no key
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_KEY_ERROR,//todo no key
                 json, jsonLength,
                 null, 0,
                 out _result);
@@ -4747,7 +4747,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.,//todo two key found.
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_KEY_ERROR,//todo two key found.
                 json, jsonLength,
                 null, 0,
                 out _result);
@@ -4920,7 +4920,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.,//todo no key
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_KEY_ERROR,//todo no key
                 json, jsonLength,
                 null, 0,
                 out _result);
