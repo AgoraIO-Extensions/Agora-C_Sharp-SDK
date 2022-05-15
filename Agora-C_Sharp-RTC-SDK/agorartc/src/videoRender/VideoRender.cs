@@ -13,7 +13,7 @@ namespace agora.rtc
 
         internal abstract void DisableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "");
 
-        internal abstract bool GetVideoFrame(ref IrisVideoFrame video_frame,
+        internal abstract IRIS_VIDEO_PROCESS_ERR GetVideoFrame(ref IrisVideoFrame video_frame,
             ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
     }
 
@@ -93,12 +93,12 @@ namespace agora.rtc
             }
         }
 
-        internal override bool GetVideoFrame(ref IrisVideoFrame video_frame, ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "")
+        internal override IRIS_VIDEO_PROCESS_ERR GetVideoFrame(ref IrisVideoFrame video_frame, ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "")
         {
             if (_agoraRtcEngine == null)
             {
                 AgoraLog.LogError(string.Format("EnableVideoFrameCache ret: ${0}", ERROR_CODE_TYPE.ERR_NOT_INITIALIZED));
-                return false;
+                return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
             }
 
             IntPtr irisEngine = (_agoraRtcEngine as AgoraRtcEngine).GetNativeHandler();
@@ -115,7 +115,7 @@ namespace agora.rtc
                  };
                 return AgoraRtcNative.GetVideoFrameByConfig(videoFrameBufferManagerPtr, ref video_frame, out is_new_frame, ref _videoFrameBufferConfig);
             }
-            return false;
+            return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
         }
 
         internal void Dispose(bool disposing)

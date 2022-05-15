@@ -338,29 +338,29 @@ namespace agora.rtc
                     );
                     break;
 
-                case "OnUserMuteAudio":
-                    EngineEventHandler.OnUserMuteAudio(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (bool)AgoraJson.GetData<bool>(data, "muted")
-                    );
-                    break;
+                // case "OnUserMuteAudio":
+                //     EngineEventHandler.OnUserMuteAudio(
+                //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
+                //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
+                //         (bool)AgoraJson.GetData<bool>(data, "muted")
+                //     );
+                //     break;
 
-                case "onUserMuteVideo":
-                    EngineEventHandler.OnUserMuteVideo(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (bool)AgoraJson.GetData<bool>(data, "muted")
-                    );
-                    break;
+                // case "onUserMuteVideo":
+                //     EngineEventHandler.OnUserMuteVideo(
+                //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
+                //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
+                //         (bool)AgoraJson.GetData<bool>(data, "muted")
+                //     );
+                //     break;
 
-                case "onUserEnableVideo":
-                    EngineEventHandler.OnUserEnableVideo(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (bool)AgoraJson.GetData<bool>(data, "enabled")
-                    );
-                    break;
+                // case "onUserEnableVideo":
+                //     EngineEventHandler.OnUserEnableVideo(
+                //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
+                //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
+                //         (bool)AgoraJson.GetData<bool>(data, "enabled")
+                //     );
+                //     break;
 
                 case "onAudioDeviceStateChanged":
                     EngineEventHandler.OnAudioDeviceStateChanged(
@@ -486,13 +486,14 @@ namespace agora.rtc
                     );
                     break;
 
-                case "onUserEnableLocalVideo":
-                    EngineEventHandler.OnUserEnableLocalVideo(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (bool)AgoraJson.GetData<bool>(data, "enabled")
-                    );
-                    break;
+                // case "onUserEnableLocalVideo":
+                //     UnityEngine.Debug.Log(data);
+                //     EngineEventHandler.OnUserEnableLocalVideo(
+                //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
+                //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
+                //         (bool)AgoraJson.GetData<bool>(data, "enabled")
+                //     );
+                //     break;
 
                 case "OnUserStateChanged":
                     EngineEventHandler.OnUserStateChanged(

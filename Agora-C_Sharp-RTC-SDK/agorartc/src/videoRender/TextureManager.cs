@@ -8,6 +8,13 @@ using UnityEngine.UI;
 
 namespace agora.rtc
 {
+    internal enum IRIS_VIDEO_PROCESS_ERR {
+        ERR_OK = 0,
+        ERR_NULL_POINTER = 1,
+        ERR_SIZE_NOT_MATCHING = 2,
+        ERR_BUFFER_EMPTY = 5,
+    };
+
     internal class TextureManager
     {
         private int VideoPixelWidth = 1080;
@@ -69,6 +76,7 @@ namespace agora.rtc
                     type = VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
                     y_stride = VideoPixelWidth * 4,
                     height = VideoPixelHeight,
+                    width = VideoPixelWidth,
                     y_buffer = Marshal.AllocHGlobal(VideoPixelWidth * VideoPixelHeight * 4)
                 };
             }
@@ -90,17 +98,51 @@ namespace agora.rtc
         internal void RenewVideoFrame()
         {
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, sourceType, Uid, ChannelId);
-            if (!ret)
+            AgoraLog.LogWarning("GetVideoFrame" + ret + " width:" + _cachedVideoFrame.width + " height:" + _cachedVideoFrame.height);
+            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY)
             {
                 AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", ChannelId, Uid));
                 return;
             }
+            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_SIZE_NOT_MATCHING)
+            {
+                _needResize = true;
+                VideoPixelWidth = _cachedVideoFrame.width;
+                VideoPixelHeight = _cachedVideoFrame.height;
+                FreeMemory();
+                _cachedVideoFrame = new IrisVideoFrame
+                {
+                    type = VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
+                    y_stride = VideoPixelWidth * 4,
+                    height = VideoPixelHeight,
+                    width = VideoPixelWidth,
+                    y_buffer = Marshal.AllocHGlobal(VideoPixelWidth * VideoPixelHeight * 4)
+                };
+            }
 
             if (isFresh)
             {
-                _texture.LoadRawTextureData(_cachedVideoFrame.y_buffer,
-                                    (int) VideoPixelWidth * (int) VideoPixelHeight * 4);
-                _texture.Apply();
+                try
+                {
+                    if (_needResize)
+                    {
+                        _texture.Resize(VideoPixelWidth, VideoPixelHeight);
+                        // _texture.LoadRawTextureData(_cachedVideoFrame.y_buffer,
+                        //     (int) VideoPixelWidth * (int) VideoPixelHeight * 4);
+                        _texture.Apply();
+                        _needResize = false;
+                    }
+                    else
+                    {
+                        _texture.LoadRawTextureData(_cachedVideoFrame.y_buffer,
+                            (int) VideoPixelWidth * (int) VideoPixelHeight * 4);
+                        _texture.Apply();
+                    }
+                }
+                catch (Exception e)
+                {
+                    AgoraLog.Log("Exception e = " + e);
+                }
             }
         }
 
