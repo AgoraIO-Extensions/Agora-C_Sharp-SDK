@@ -302,7 +302,7 @@ namespace agora.rtc
 
         public abstract int SetExtensionProperty(string provider, string extension, string key, string value);
 
-        public abstract int GetExtensionProperty(string provider, string extension, string key, string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
+        public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
         public abstract int SetCameraCapturerConfiguration(CameraCapturerConfiguration config);
 

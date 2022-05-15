@@ -2634,7 +2634,7 @@ namespace agora.rtc
 
         public override int GetExtensionProperty(
           string provider, string extension,
-          string key, string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
+          string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
             var param = new
             {
@@ -2646,16 +2646,15 @@ namespace agora.rtc
                 type
             };
 
-            //Wait For SunYong Fix Iris 
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION,
+                json, jsonLength,
+                null, 0,
+                out _result);
 
-            //var json = JsonMapper.ToJson(param);
-            //var jsonLength = Convert.ToUInt64(json.Length);
-            //var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION,
-            //    json, jsonLength,
-            //    null, 0,
-            //    out _result);
-            //return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-            return 0;
+            value = (string)AgoraJson.GetData<string>(_result.Result, "value");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int SetCameraCapturerConfiguration(CameraCapturerConfiguration config)
