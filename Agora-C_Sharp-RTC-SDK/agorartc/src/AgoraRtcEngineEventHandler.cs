@@ -362,6 +362,7 @@ namespace agora.rtc
             EventOnAudioDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
         }
 
+        [Obsolete]
         public override void OnAudioMixingFinished()
         {
             if (EventOnAudioMixingFinished == null) return;
@@ -488,24 +489,28 @@ namespace agora.rtc
             EventOnUserOffline.Invoke(connection, remoteUid, reason);
         }
 
+        [Obsolete]
         public override void OnUserMuteAudio(RtcConnection connection, uint remoteUid, bool muted)
         {
             if (EventOnUserMuteAudio == null) return;
             EventOnUserMuteAudio.Invoke(connection, remoteUid,muted);
         }
 
+        [Obsolete]
         public override void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted)
         {
             if (EventOnUserMuteVideo == null) return;
             EventOnUserMuteVideo.Invoke(connection, remoteUid, muted);
         }
 
+        [Obsolete]
         public override void OnUserEnableVideo(RtcConnection connection, uint remoteUid, bool enabled)
         {
             if (EventOnUserEnableVideo == null) return;
             EventOnUserEnableVideo.Invoke(connection, remoteUid, enabled);
         }
 
+        [Obsolete]
         public override void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled)
         {
             if (EventOnUserEnableLocalVideo == null) return;
@@ -704,6 +709,7 @@ namespace agora.rtc
             EventOnStreamPublished.Invoke(url, error);
         }
 
+        [Obsolete]
         public override void OnStreamUnpublished(string url)
         {
             if (EventOnStreamUnpublished == null) return;

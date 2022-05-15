@@ -25,7 +25,7 @@ namespace agora.rtc
         //todo fix with dcg
         public virtual void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { } //handleDone
 
-        [Obsolete("__deprecated")]
+        [Obsolete("This method is deprecated, use onAudioMixingStateChanged instead")]
         public virtual void OnAudioMixingFinished() { } //handleDone
 
         public virtual void OnAudioEffectFinished(int soundId) { }//handleDone
@@ -72,16 +72,16 @@ namespace agora.rtc
 
         public virtual void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason) { }//exDone
 
-        [Obsolete("__deprecated")]
+        [Obsolete("Use onRemoteAudioStateChanged instead of")]
         public virtual void OnUserMuteAudio(RtcConnection connection, uint remoteUid, bool muted) { } //exDone
 
-        [Obsolete("__deprecated")]
+        [Obsolete("Use onRemoteVideoStateChanged instead of")]
         public virtual void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted) { }//exDone
 
-        [Obsolete("__deprecated")]
+        [Obsolete("Use onRemoteVideoStateChanged instead of")]
         public virtual void OnUserEnableVideo(RtcConnection connection, uint remoteUid, bool enabled) { }//exDone
 
-        [Obsolete("__deprecated")]
+        [Obsolete("Use onRemoteVideoStateChanged instead of")]
         public virtual void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled) { }//exDone
 
         //todo new add in dcg
@@ -155,7 +155,7 @@ namespace agora.rtc
 
         public virtual void OnStreamPublished(string url, int error) { }//handleDone
 
-        [Obsolete("__deprecated")]
+        [Obsolete("Use onRtmpStreamingStateChanged instead of")]
         public virtual void OnStreamUnpublished(string url) { }//handleDone
 
         public virtual void OnTranscodingUpdated() { }//handleDone
