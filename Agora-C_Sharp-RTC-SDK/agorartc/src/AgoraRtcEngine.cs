@@ -4424,14 +4424,18 @@ namespace agora.rtc
 
         private int SetAppType(AppType appType)
         {
-            //todo wait for sy
-            //var param = new
-            //{
-            //    appType
-            //};
-            //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineSetAppType,
-            //    JsonMapper.ToJson(param), out _result);
-            return 0;
+            var param = new
+            {
+                appType
+            };
+
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAPPTYPE,
+                json, jsonLength,
+                null, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public override int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame,
