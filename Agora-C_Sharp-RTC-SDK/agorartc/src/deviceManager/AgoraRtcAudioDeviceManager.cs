@@ -46,7 +46,7 @@ namespace agora.rtc
                 AgoraApiType.FUNC_AUDIODEVICEMANAGER_ENUMERATEPLAYBACKDEVICES,
                 "", 0, null, 0, out _result) != 0
                 ? new DeviceInfo[0]
-                : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result);
+                : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result, "devices");
         }
 
         public override int SetPlaybackDevice(string deviceId)
@@ -206,7 +206,7 @@ namespace agora.rtc
                 AgoraApiType.FUNC_AUDIODEVICEMANAGER_ENUMERATERECORDINGDEVICES,
                 "", 0, null, 0, out _result) != 0
                 ? new DeviceInfo[0]
-                : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result);
+                : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result, "devices");
         }
 
         public override int SetRecordingDevice(string deviceId)
