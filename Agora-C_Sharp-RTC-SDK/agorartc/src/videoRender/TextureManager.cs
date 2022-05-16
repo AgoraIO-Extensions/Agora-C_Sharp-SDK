@@ -161,12 +161,9 @@ namespace agora.rtc
         {
             AgoraLog.Log(string.Format("VideoSurface channel: ${0}, user:{1} destroy", ChannelId, Uid));
 
-            if (useCount > 1)
-            {
-                useCount --;
-                AgoraLog.Log("TextureManager UseCount Minus, Now is: " + useCount);
-                return;
-            }
+            useCount --;
+            AgoraLog.Log("TextureManager UseCount Minus, Now is: " + useCount);
+            if (useCount >= 1) return;
 
             if (_videoStreamManager != null)
             {

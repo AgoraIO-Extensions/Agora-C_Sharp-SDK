@@ -58,14 +58,14 @@ namespace agora.rtc
         {
             var ret = false;
 
-            if (_renderer == null || _needUpdateInfo)
+            if (_renderer == null || _needUpdateInfo || _texturePool == null)
             {
                 AgoraLog.LogError("VideoSurface need to initialize engine first");
                 return;
             }
 
             //GetVideoFrame
-            if (isFirstUser || (_textureManager !=null && _textureManager.GetUserCount() == 1)) {
+            if (_textureManager != null && (isFirstUser || _textureManager.GetUserCount() == 1)) {
                 _textureManager.RenewVideoFrame();
             }
             
@@ -109,6 +109,11 @@ namespace agora.rtc
             isFirstUser = false;
 
             _textureManager.Destroy();
+            if(_textureManager.GetUserCount() == 0)
+            {
+                _texturePool.DelObj(_identity);
+            }
+            _textureManager = null;
         }
 
         private void CheckVideoSurfaceType()
