@@ -30,7 +30,7 @@ namespace agora.rtc
         {
             if (AgoraRtcAudioSpectrumObserver == null) return false;
 
-            var irisAudioSpectrumData = (IrisAudioSpectrumData)Marshal.PtrToStructure(data);
+            var irisAudioSpectrumData = (IrisAudioSpectrumData)Marshal.PtrToStructure(data, typeof(IrisAudioSpectrumData));
 
             return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(ProcessAudioSpectrumData(irisAudioSpectrumData.audioSpectrumData, irisAudioSpectrumData.dataLength));
         }

@@ -35,7 +35,7 @@ namespace agora.rtc
             byte[] frameBuffer = new byte[length];
             Marshal.Copy(frameBuffer, 0, frame_buffer, length);
 
-            IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info);
+            IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
             AudioEncodedFrameObserver.OnRecordAudioEncodedFrame(frameBuffer, length, to);
@@ -51,7 +51,7 @@ namespace agora.rtc
             byte[] frameBuffer = new byte[length];
             Marshal.Copy(frameBuffer, 0, frame_buffer, length);
 
-            IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info);
+            IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
             AudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frameBuffer, length, to);
@@ -67,7 +67,7 @@ namespace agora.rtc
             byte[] frameBuffer = new byte[length];
             Marshal.Copy(frameBuffer, 0, frame_buffer, length);
 
-            IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info);
+            IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
             AudioEncodedFrameObserver.OnMixedAudioEncodedFrame(frameBuffer, length, to);
