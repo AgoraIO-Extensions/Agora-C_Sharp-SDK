@@ -65,7 +65,7 @@ namespace agora.rtc
             }
 
             //GetVideoFrame
-            if (isFirstUser || _textureManager?.GetUserCount() == 1) {
+            if (isFirstUser || (_textureManager !=null && _textureManager?.GetUserCount() == 1)) {
                 _textureManager.RenewVideoFrame();
             }
             

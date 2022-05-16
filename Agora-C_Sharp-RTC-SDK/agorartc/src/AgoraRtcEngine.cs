@@ -30,7 +30,7 @@ namespace agora.rtc
     using IrisRtcVideoEncodedImageReceiverHandleNative = IntPtr;
 
     using IrisVideoFrameBufferManagerPtr = IntPtr;
-    
+
     //MetadataObserver
     using IrisRtcCMetaDataObserverNativeMarshal = IntPtr;
     using IrisRtcMetaDataObserverHandleNative = IntPtr;
@@ -463,7 +463,7 @@ namespace agora.rtc
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.GetMaxMetadataSize),
                 onReadyToSendMetadata =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.OnReadyToSendMetadata),
-                onMetadataReceived = 
+                onMetadataReceived =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.OnMetadataReceived)
             };
 
@@ -476,7 +476,7 @@ namespace agora.rtc
                 type
             };
             var json = JsonMapper.ToJson(param);
-            _irisRtcMetaDataObserverHandleNative = AgoraRtcNative.RegisterMediaMetadataObserver(_irisRtcEngine, 
+            _irisRtcMetaDataObserverHandleNative = AgoraRtcNative.RegisterMediaMetadataObserver(_irisRtcEngine,
                 _irisRtcCMetaDataObserverNative, json);
         }
 
@@ -2653,7 +2653,16 @@ namespace agora.rtc
                 null, 0,
                 out _result);
 
-            value = (string)AgoraJson.GetData<string>(_result.Result, "value");
+            if (nRet == 0)
+            {
+
+                value = (string)AgoraJson.GetData<string>(_result.Result, "value");
+            }
+            else
+            {
+                value = "";
+            }
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
@@ -3524,7 +3533,14 @@ namespace agora.rtc
                 null, 0,
                 out _result);
 
-            streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
+            if (nRet == 0)
+            {
+                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
+            }
+            else
+            {
+                streamId = 0;
+            }
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
@@ -3542,7 +3558,14 @@ namespace agora.rtc
                 null, 0,
                 out _result);
 
-            streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
+            if (nRet == 0)
+            {
+                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
+            }
+            else
+            {
+                streamId = 0;
+            }
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
@@ -3881,7 +3904,15 @@ namespace agora.rtc
                 null, 0,
                 out _result);
 
-            userInfo = AgoraJson.JsonToStruct<UserInfo>(_result.Result, "userInfo");
+            if (nRet == 0)
+            {
+                userInfo = AgoraJson.JsonToStruct<UserInfo>(_result.Result, "userInfo");
+            }
+            else
+            {
+                userInfo = new UserInfo();
+            }
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
@@ -3899,7 +3930,15 @@ namespace agora.rtc
                 null, 0,
                 out _result);
 
-            userInfo = AgoraJson.JsonToStruct<UserInfo>(_result.Result, "userInfo");
+            if (nRet == 0)
+            {
+                userInfo = AgoraJson.JsonToStruct<UserInfo>(_result.Result, "userInfo");
+            }
+            else
+            {
+                userInfo = new UserInfo();
+            }
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
@@ -4061,9 +4100,9 @@ namespace agora.rtc
         {
             var param = new
             {
-               token,
-               connection,
-               options
+                token,
+                connection,
+                options
             };
 
             var json = JsonMapper.ToJson(param);
@@ -4862,7 +4901,7 @@ namespace agora.rtc
         {
             var param = new
             {
-               config
+                config
             };
 
             var json = JsonMapper.ToJson(param);
