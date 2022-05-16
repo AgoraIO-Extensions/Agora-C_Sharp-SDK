@@ -19,13 +19,13 @@ namespace agora.rtc
 
     public delegate void OnCompletedHandler(int playerId);
 
-    public delegate void OnAgoraCDNTokenWillExpireHandler();
+    public delegate void OnAgoraCDNTokenWillExpireHandler(int playerId);
 
-    public delegate void OnPlayerSrcInfoChangedHandler(SrcInfo from, SrcInfo to);
+    public delegate void OnPlayerSrcInfoChangedHandler(int playerId, SrcInfo from, SrcInfo to);
 
     public delegate void OnPlayerInfoUpdatedHandler(PlayerUpdatedInfo info);
 
-    public delegate void MediaPlayerOnAudioVolumeIndicationHandler(int volume);
+    public delegate void MediaPlayerOnAudioVolumeIndicationHandler(int playerId, int volume);
     
     public class AgoraRtcMediaPlayerEventHandler : IAgoraRtcMediaPlayerEventHandler
     {
@@ -83,16 +83,16 @@ namespace agora.rtc
             EventOnCompleted.Invoke(playerId);
         }
 
-        public override void OnAgoraCDNTokenWillExpire()
+        public override void OnAgoraCDNTokenWillExpire(int playerId)
         {
             if (EventOnAgoraCDNTokenWillExpire == null) return;
-            EventOnAgoraCDNTokenWillExpire.Invoke();
+            EventOnAgoraCDNTokenWillExpire.Invoke(playerId);
         }
 
-        public override void OnPlayerSrcInfoChanged(SrcInfo from, SrcInfo to)
+        public override void OnPlayerSrcInfoChanged(int playerId, SrcInfo from, SrcInfo to)
         {
             if (EventOnPlayerSrcInfoChanged == null) return;
-            EventOnPlayerSrcInfoChanged.Invoke(from, to);
+            EventOnPlayerSrcInfoChanged.Invoke(playerId, from, to);
         }
 
         public override void OnPlayerInfoUpdated(PlayerUpdatedInfo info)
@@ -101,10 +101,10 @@ namespace agora.rtc
             EventOnPlayerInfoUpdated.Invoke(info);
         }
 
-        public override void OnAudioVolumeIndication(int volume)
+        public override void OnAudioVolumeIndication(int playerId, int volume)
         {
             if (EventOnAudioVolumeIndication == null) return;
-            EventOnAudioVolumeIndication.Invoke(volume);
+            EventOnAudioVolumeIndication.Invoke(playerId, volume);
         }
     }
 }

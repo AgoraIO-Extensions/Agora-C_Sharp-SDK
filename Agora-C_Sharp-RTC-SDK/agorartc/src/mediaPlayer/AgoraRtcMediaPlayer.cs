@@ -60,7 +60,7 @@ namespace agora.rtc
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
-            CreateEventHandler();
+            //CreateEventHandler();
         }
 
         ~AgoraRtcMediaPlayer()
@@ -309,12 +309,13 @@ namespace agora.rtc
 
         public override void InitEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler)
         {
-           RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = engineEventHandler;
+            CreateEventHandler();
+            RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = engineEventHandler;
         }
 
         public override void RemoveEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler)
         {
-           RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = null;
+            RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = null;
         }
 
         public override void RegisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer)
@@ -980,7 +981,7 @@ namespace agora.rtc
             CallbackObject._CallbackQueue.EnQueue(() =>
             {
 #endif
-                var playerId = (int) AgoraJson.GetData<int>(data, "playerId");
+                //var playerId = (int) AgoraJson.GetData<int>(data, "playerId");
                 switch (@event)
                 {
                     case "onPlayerSourceStateChanged":
@@ -1016,7 +1017,9 @@ namespace agora.rtc
                         );
                         break;
                     case "onAgoraCDNTokenWillExpire":   
-                        RtcMediaPlayerEventHandler.OnAgoraCDNTokenWillExpire();
+                        RtcMediaPlayerEventHandler.OnAgoraCDNTokenWillExpire(
+                            (int) AgoraJson.GetData<int>(data, "playerId")
+                        );
                         break;
                     case "onPlayerInfoUpdated":
                         RtcMediaPlayerEventHandler.OnPlayerInfoUpdated(
@@ -1025,12 +1028,14 @@ namespace agora.rtc
                         break;
                     case "onPlayerSrcInfoChanged":
                         RtcMediaPlayerEventHandler.OnPlayerSrcInfoChanged(
+                            (int) AgoraJson.GetData<int>(data, "playerId"),
                             AgoraJson.JsonToStruct<SrcInfo>(data, "from"),
                             AgoraJson.JsonToStruct<SrcInfo>(data, "to")
                         );
                         break;
                     case "onAudioVolumeIndication":
                         RtcMediaPlayerEventHandler.OnAudioVolumeIndication(
+                            (int) AgoraJson.GetData<int>(data, "playerId"),
                             (int) AgoraJson.GetData<int>(data, "volume")
                         );
                         break;

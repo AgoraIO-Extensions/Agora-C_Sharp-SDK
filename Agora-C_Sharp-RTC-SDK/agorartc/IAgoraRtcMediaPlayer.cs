@@ -147,12 +147,12 @@ namespace agora.rtc
 
         public virtual void OnCompleted(int playerId) {}
 
-        public virtual void OnAgoraCDNTokenWillExpire() {}
+        public virtual void OnAgoraCDNTokenWillExpire(int playerId) {}
 
-        public virtual void OnPlayerSrcInfoChanged(SrcInfo from, SrcInfo to) {}
+        public virtual void OnPlayerSrcInfoChanged(int playerId, SrcInfo from, SrcInfo to) {}
 
         public virtual void OnPlayerInfoUpdated(PlayerUpdatedInfo info) {}
 
-        public virtual void OnAudioVolumeIndication(int volume) {}
+        public virtual void OnAudioVolumeIndication(int playerId, int volume) {}
     }
 }
