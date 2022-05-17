@@ -516,7 +516,7 @@ namespace agora.rtc
 
         public abstract int PullAudioFrame(AudioFrame frame);
 
-        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, EncodedVideoTrackOptions encodedVideoOption);
+        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType);
 
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
 
@@ -601,6 +601,17 @@ namespace agora.rtc
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
 
         public abstract int SetContentInspect(ContentInspectConfig config);
+
+        public abstract int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection);
+
+        public abstract int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection);
+
+        public abstract int SetVideoProfileEx(int width, int height, int frameRate, int bitrate);
+
+        public abstract int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
+
+        public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
+
     };
 
     internal static partial class ObsoleteMethodWarning

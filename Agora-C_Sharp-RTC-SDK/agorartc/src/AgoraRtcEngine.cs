@@ -914,7 +914,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETBEAUTYEFFECTOPTIONS,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPREMOTEVIDEO,
                json, jsonLength,
                canvas.priv, canvas.priv_size,
                out _result);
@@ -2215,7 +2215,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE2,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE3,
                 json, jsonLength,
                 null, 0,
                 out _result);
@@ -2648,7 +2648,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY,
                 json, jsonLength,
                 null, 0,
                 out _result);
@@ -2847,7 +2847,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERATORCHON,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAAUTOFOCUSFACEMODEENABLED,
                 json, jsonLength,
                 null, 0,
                 out _result);
@@ -4088,7 +4088,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDIRECTCDNSTREAMINGVIDEOCONFIGURATION,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PUSHDIRECTCDNSTREAMINGCUSTOMVIDEOFRAME,
                 json, jsonLength,
                 frame.buffer, Convert.ToUInt64(frame.buffer.Length),
                 out _result);
@@ -4530,14 +4530,13 @@ namespace agora.rtc
         }
 
 
-        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, EncodedVideoTrackOptions encodedVideoOption)
+        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
         {
             var param = new
             {
                 enabled,
                 useTexture,
-                sourceType,
-                encodedVideoOption
+                sourceType
             };
 
             var json = JsonMapper.ToJson(param);
@@ -4594,7 +4593,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETEXTERNALVIDEOSOURCE,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME,
                 json, jsonLength,
                 frame.buffer, Convert.ToUInt64(frame.buffer.Length),
                 out _result);
@@ -4789,7 +4788,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_KEY_ERROR,//todo two key found.
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLECUSTOMAUDIOLOCALPLAYBACK,//todo two key found.
                 json, jsonLength,
                 null, 0,
                 out _result);
@@ -5125,7 +5124,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETDIRECTEXTERNALAUDIOSOURCE,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCLOUDPROXY,
                 json, jsonLength,
                 null, 0,
                 out _result);
@@ -5360,6 +5359,105 @@ namespace agora.rtc
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
+
+        public override int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection)
+        {
+            var param = new
+            {
+                uid,
+                streamType,
+                connection
+            };
+
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTEVIDEOSTREAMTYPEEX,
+                json, jsonLength,
+                null, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public override int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection)
+        {
+            var param = new
+            {
+                interval,
+                smooth,
+                reportVad,
+                connection
+            };
+
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEAUDIOVOLUMEINDICATIONEX,
+                json, jsonLength,
+                null, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public override int SetVideoProfileEx(int width, int height, int frameRate, int bitrate)
+        {
+            var param = new
+            {
+                width,
+                height,
+                frameRate,
+                bitrate
+            };
+
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETVIDEOPROFILEEX,
+                json, jsonLength,
+                null, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public override int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
+        {
+            var param = new
+            {
+                sourceType,
+                enabled,
+                streamConfig,
+                connection
+            };
+
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEDUALSTREAMMODEEX,
+                json, jsonLength,
+                null, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public override int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
+        {
+            var param = new
+            {
+                url,
+                transcodingEnabled,
+                connection
+            };
+
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ADDPUBLISHSTREAMURLEX,
+                json, jsonLength,
+                null, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
 
         ~AgoraRtcEngine()
         {
