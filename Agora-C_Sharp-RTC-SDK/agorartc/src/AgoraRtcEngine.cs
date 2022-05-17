@@ -2975,7 +2975,7 @@ namespace agora.rtc
 
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTC_ENGINE_STARTSCREENCAPTUREBYDISPLAYID,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTUREBYDISPLAYID,
                 json, jsonLength,
                 null, 0,
                 out _result);

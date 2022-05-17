@@ -29,11 +29,10 @@ namespace agora.rtc
         {
             lock (_queue)
             {
-                if (_queue.Count >= 250)
+                if (action != null)
                 {
-                    _queue.Dequeue();
+                    _queue.Enqueue(action);
                 }
-                _queue.Enqueue(action);
             }
         }
 
@@ -52,17 +51,11 @@ namespace agora.rtc
 
         private void Update()
         {
-            while(true)
+            lock (_queue)
             {
-                var action = DeQueue();
-                if (action != null)
+                while (_queue.Count > 0)
                 {
-                    action.Invoke();
-                    Thread.Sleep(10);
-                }
-                else
-                {
-                    break;
+                    _queue.Dequeue().Invoke();
                 }
             }
         }
