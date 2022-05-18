@@ -612,6 +612,9 @@ namespace agora.rtc
 
         public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
 
+        public abstract int UploadLogFile(ref string requestId);
+
+        //public abstract int GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
     };
 
     internal static partial class ObsoleteMethodWarning

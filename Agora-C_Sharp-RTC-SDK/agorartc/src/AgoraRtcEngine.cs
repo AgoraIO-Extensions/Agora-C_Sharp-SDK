@@ -5134,6 +5134,46 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        public override int UploadLogFile(ref string requestId)
+        {
+            var param = new { };
+
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPLOADLOGFILE,
+                json, jsonLength,
+                IntPtr.Zero, 0,
+                out _result);
+            if (nRet == 0)
+            {
+                requestId = (string)AgoraJson.GetData<string>(_result.Result, "requestId");
+            }
+            else
+            {
+                requestId = "";
+            }
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        // public override int GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
+        // {
+        //     var param = new
+        //     {
+        //         thumbSize,
+        //         iconSize,
+        //         includeScreen
+        //     };
+
+        //     var json = JsonMapper.ToJson(param);
+        //     var jsonLength = Convert.ToUInt64(json.Length);
+        //     var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
+        //         json, jsonLength,
+        //         IntPtr.Zero, 0,
+        //         out _result);
+
+        //     return nRet;
+        // }
+
         #region CallIrisApiWithBuffer
 
         public override int SetupRemoteVideo(VideoCanvas canvas)

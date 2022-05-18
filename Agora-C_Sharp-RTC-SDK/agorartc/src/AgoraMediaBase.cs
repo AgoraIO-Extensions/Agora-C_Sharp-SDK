@@ -637,4 +637,14 @@ namespace agora.rtc
         POSITION_PRE_ENCODER = 1 << 2,
         POSITION_POST_FILTERS = 1 << 3,
     };
+
+    public struct SIZE
+    {
+        /** The width of the screen shot.
+        */
+        public int width;
+        /** The width of the screen shot.
+        */
+        public int height;
+    };
 }
