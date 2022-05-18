@@ -149,16 +149,5 @@ namespace agora.rtc
         {
             return VideoFrameObserver == null || VideoFrameObserver.IsMultipleChannelFrameWanted();
         }
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_VideoFrameEx_Native))]
-#endif
-        internal static bool OnRenderVideoFrameEx(string channelId, uint uid, IntPtr videoFramePtr)
-        {
-            if (VideoFrameObserver == null) return true;
-
-            return VideoFrameObserver.OnRenderVideoFrameEx(channelId, uid,
-                ProcessVideoFrameReceived(videoFramePtr, channelId, uid));
-        }
     }
 }

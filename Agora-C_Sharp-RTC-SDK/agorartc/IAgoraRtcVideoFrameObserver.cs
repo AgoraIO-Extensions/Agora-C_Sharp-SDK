@@ -33,10 +33,5 @@ namespace agora.rtc
         {
             return true;
         }
-
-        public virtual bool OnRenderVideoFrameEx(string channelId, uint uid, VideoFrame videoFrame)
-        {
-            return true;
-        }
     }
 }

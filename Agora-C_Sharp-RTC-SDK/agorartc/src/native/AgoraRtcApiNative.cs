@@ -55,7 +55,7 @@ namespace agora.rtc
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name, 
-            string @params, UInt64 paramLength, byte[] buffer, UInt64 bufferLength, out CharAssistant result);
+            string @params, UInt64 paramLength, IntPtr bufferPtr, UInt64 bufferLength, out CharAssistant result);
 
 // IrisRtcRawData
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
