@@ -629,4 +629,12 @@ namespace agora.rtc
             */
         public long timeStampMs;
     };
+
+    public enum VIDEO_MODULE_POSITION
+    {
+        POSITION_POST_CAPTURER = 1 << 0,
+        POSITION_PRE_RENDERER = 1 << 1,
+        POSITION_PRE_ENCODER = 1 << 2,
+        POSITION_POST_FILTERS = 1 << 3,
+    };
 }
