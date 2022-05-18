@@ -513,7 +513,7 @@ namespace agora.rtc
 #endif
                         EngineEventHandler.OnActiveSpeaker(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                            (uint)AgoraJson.GetData<uint>(data, "userId")
+                            (uint)AgoraJson.GetData<uint>(data, "uid")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1304,7 +1304,7 @@ namespace agora.rtc
 #endif
                         EngineEventHandler.OnExtensionEvent(
                             (string)AgoraJson.GetData<string>(data, "provider"),
-                            (string)AgoraJson.GetData<string>(data, "extension"),
+                            (string)AgoraJson.GetData<string>(data, "ext_name"),
                             (string)AgoraJson.GetData<string>(data, "key"),
                             (string)AgoraJson.GetData<string>(data, "value")
                         );
@@ -1320,7 +1320,7 @@ namespace agora.rtc
 #endif
                         EngineEventHandler.OnExtensionStarted(
                             (string)AgoraJson.GetData<string>(data, "provider"),
-                            (string)AgoraJson.GetData<string>(data, "extension")
+                            (string)AgoraJson.GetData<string>(data, "ext_name")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1334,7 +1334,7 @@ namespace agora.rtc
 #endif
                         EngineEventHandler.OnExtensionStopped(
                             (string)AgoraJson.GetData<string>(data, "provider"),
-                            (string)AgoraJson.GetData<string>(data, "extension")
+                            (string)AgoraJson.GetData<string>(data, "ext_name")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1348,7 +1348,7 @@ namespace agora.rtc
 #endif
                         EngineEventHandler.OnExtensionErrored(
                             (string)AgoraJson.GetData<string>(data, "provider"),
-                            (string)AgoraJson.GetData<string>(data, "extension"),
+                            (string)AgoraJson.GetData<string>(data, "ext_name"),
                             (int)AgoraJson.GetData<int>(data, "error"),
                             (string)AgoraJson.GetData<string>(data, "msg")
                         );

@@ -127,7 +127,7 @@ namespace agora.rtc
 
     public delegate void OnRemoteAudioStateChangedHandler(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed);
 
-    public delegate void OnActiveSpeakerHandler(RtcConnection connection, uint userId);
+    public delegate void OnActiveSpeakerHandler(RtcConnection connection, uint uid);
 
     public delegate void OnClientRoleChangedHandler(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole);
 
@@ -185,13 +185,13 @@ namespace agora.rtc
 
     public delegate void OnVideoPublishStateChangedHandler(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState);
 
-    public delegate void OnExtensionEventHandler(string provider, string extension, string key, string value);
+    public delegate void OnExtensionEventHandler(string provider, string ext_name, string key, string value);
 
-    public delegate void OnExtensionStartedHandler(string provider, string extension);
+    public delegate void OnExtensionStartedHandler(string provider, string ext_name);
 
-    public delegate void OnExtensionStoppedHandler(string provider, string extension);
+    public delegate void OnExtensionStoppedHandler(string provider, string ext_name);
 
-    public delegate void OnExtensionErroredHandler(string provider, string extension, int error, string msg);
+    public delegate void OnExtensionErroredHandler(string provider, string ext_name, int error, string msg);
 
     public class AgoraRtcEngineEventHandler : IAgoraRtcEngineEventHandler
     {
@@ -667,10 +667,10 @@ namespace agora.rtc
             EventOnRemoteAudioStateChanged.Invoke(connection, remoteUid, state, reason, elapsed);
         }
 
-        public override void OnActiveSpeaker(RtcConnection connection, uint userId)
+        public override void OnActiveSpeaker(RtcConnection connection, uint uid)
         {
             if (EventOnActiveSpeaker == null) return;
-            EventOnActiveSpeaker.Invoke(connection, userId);
+            EventOnActiveSpeaker.Invoke(connection, uid);
         }
 
         public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole)
@@ -842,29 +842,29 @@ namespace agora.rtc
             EventOnVideoPublishStateChanged.Invoke(channel, oldState, newState, elapseSinceLastState);
         }
 
-        public override void OnExtensionEvent(string provider, string extension, string key, string value)
+        public override void OnExtensionEvent(string provider, string ext_name, string key, string value)
         {
             if (EventOnExtensionEvent == null) return;
-            EventOnExtensionEvent.Invoke(provider, extension, key, value);
+            EventOnExtensionEvent.Invoke(provider, ext_name, key, value);
         }
 
-        public override void OnExtensionStarted(string provider, string extension)
+        public override void OnExtensionStarted(string provider, string ext_name)
         {
             if (EventOnExtensionStarted == null) return;
-            EventOnExtensionStarted.Invoke(provider, extension);
+            EventOnExtensionStarted.Invoke(provider, ext_name);
         }
 
-        public override void OnExtensionStopped(string provider, string extension)
+        public override void OnExtensionStopped(string provider, string ext_name)
         {
             if (EventOnExtensionStopped == null) return;
-            EventOnExtensionStopped.Invoke(provider, extension);
+            EventOnExtensionStopped.Invoke(provider, ext_name);
         }
 
-        public override void OnExtensionErrored(string provider, string extension, int error, string msg)
+        public override void OnExtensionErrored(string provider, string ext_name, int error, string msg)
         {
 
             if (EventOnExtensionErrored == null) return;
-            EventOnExtensionErrored.Invoke(provider, extension, error, msg);
+            EventOnExtensionErrored.Invoke(provider, ext_name, error, msg);
         }
     }
 }

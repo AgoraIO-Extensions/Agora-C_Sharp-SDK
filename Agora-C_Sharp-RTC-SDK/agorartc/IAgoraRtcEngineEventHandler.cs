@@ -139,7 +139,7 @@ namespace agora.rtc
         public virtual void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed) { }//exDone
 
         //todo fix with dcg
-        public virtual void OnActiveSpeaker(RtcConnection connection, uint userId) { }//exDone
+        public virtual void OnActiveSpeaker(RtcConnection connection, uint uid) { }//exDone
 
         public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole) { }//exDone
 
@@ -203,14 +203,14 @@ namespace agora.rtc
 
         public virtual void OnVideoPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) { }//handleDone
 
-        public virtual void OnExtensionEvent(string provider, string extension, string key, string value) { }//handleDone
+        public virtual void OnExtensionEvent(string provider, string ext_name, string key, string value) { }//handleDone
 
-        public virtual void OnExtensionStarted(string provider, string extension) { }//handleDone
+        public virtual void OnExtensionStarted(string provider, string ext_name) { }//handleDone
 
-        public virtual void OnExtensionStopped(string provider, string extension) { }//handleDone
+        public virtual void OnExtensionStopped(string provider, string ext_name) { }//handleDone
 
         //todo new add in dcg
-        public virtual void OnExtensionErrored(string provider, string extension, int error, string msg) { }//handleDone
+        public virtual void OnExtensionErrored(string provider, string ext_name, int error, string msg) { }//handleDone
     };
 
 }
