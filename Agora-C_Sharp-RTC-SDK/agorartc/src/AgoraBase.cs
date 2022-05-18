@@ -3296,6 +3296,26 @@ namespace agora.rtc
         public int audioChannel { set; get; }
     }
 
+    public class LiveStreamAdvancedFeature
+    {
+        /** The advanced feature for high-quality video with a lower bitrate. */
+        // static const char* LBHQ = "lbhq";
+        /** The advanced feature for the optimized video encoder. */
+        // static const char* VEO = "veo";
+
+        /** The name of the advanced feature. It contains LBHQ and VEO.
+        * "lbhq"
+        * "veo"
+        */
+        public string featureName { set; get; }
+
+        /** Whether to enable the advanced feature:
+        * - true: Enable the advanced feature.
+        * - false: (Default) Disable the advanced feature.
+        */
+        public bool opened { set; get; }
+    }
+
     /** A class for managing CDN live audio/video transcoding settings.
 	 */
     public class LiveTranscoding
@@ -3314,23 +3334,24 @@ namespace agora.rtc
             transcodingUsers = new TranscodingUser[0];
             transcodingExtraInfo = null;
             metadata = null;
-            watermark = null;
+            watermark = new RtcImage[0];
             watermarkCount = 0;
-            backgroundImage = null;
+            backgroundImage = new RtcImage[0];
             backgroundImageCount = 0;
             audioSampleRate = AUDIO_SAMPLE_RATE_TYPE.AUDIO_SAMPLE_RATE_48000;
             audioBitrate = 48;
             audioChannels = 1;
             audioCodecProfile = AUDIO_CODEC_PROFILE_TYPE.AUDIO_CODEC_PROFILE_LC_AAC;
+            advancedFeatures = new LiveStreamAdvancedFeature[0];
         }
 
         public LiveTranscoding(int width, int height, int videoBitrate, int videoFramerate, bool lowLatency,
             int videoGop, VIDEO_CODEC_PROFILE_TYPE videoCodecProfile, uint backgroundColor,
             uint userCount, TranscodingUser[] transcodingUsers,
-            string transcodingExtraInfo, string metadata, RtcImage watermark, uint watermarkCount,
-            RtcImage backgroundImage, uint backgroundImageCount,
+            string transcodingExtraInfo, string metadata, RtcImage[] watermark, uint watermarkCount,
+            RtcImage[] backgroundImage, uint backgroundImageCount,
             AUDIO_SAMPLE_RATE_TYPE audioSampleRate, int audioBitrate, int audioChannels,
-            AUDIO_CODEC_PROFILE_TYPE audioCodecProfile)
+            AUDIO_CODEC_PROFILE_TYPE audioCodecProfile, LiveStreamAdvancedFeature[] advancedFeatures)
         {
             this.width = width;
             this.height = height;
@@ -3352,6 +3373,7 @@ namespace agora.rtc
             this.audioBitrate = audioBitrate;
             this.audioChannels = audioChannels;
             this.audioCodecProfile = audioCodecProfile;
+            this.advancedFeatures = advancedFeatures;
         }
 
         /** The width of the video in pixels. The default value is 360.
@@ -3415,7 +3437,7 @@ namespace agora.rtc
         /** The watermark image added to the CDN live publishing stream.
 		 Ensure that the format of the image is PNG. Once a watermark image is added, the audience of the CDN live publishing stream can see the watermark image. See RtcImage.
 		 */
-        public RtcImage watermark { set; get; }
+        public RtcImage[] watermark { set; get; }
 
         /**
         * The variables means the count of watermark.
@@ -3428,7 +3450,7 @@ namespace agora.rtc
         /** The background image added to the CDN live publishing stream.
 		 Once a background image is added, the audience of the CDN live publishing stream can see the background image. See RtcImage.
 		 */
-        public RtcImage backgroundImage { set; get; }
+        public RtcImage[] backgroundImage { set; get; }
 
         /**
         * The variables means the count of backgroundImage.
@@ -3458,6 +3480,8 @@ namespace agora.rtc
         /** Self-defined audio codec profile: #AUDIO_CODEC_PROFILE_TYPE.
 		 */
         public AUDIO_CODEC_PROFILE_TYPE audioCodecProfile { set; get; }
+
+        public LiveStreamAdvancedFeature[] advancedFeatures { set; get; }
     }
 
     /**
@@ -6925,5 +6949,47 @@ namespace agora.rtc
         public string channel;
         public uint uid;
         public string filePath;
+    }
+
+    /**
+    * The channel media options.
+    */
+    public struct DirectCdnStreamingMediaOptions
+    {
+        /**
+        * Determines whether to publish the video of the camera track.
+        * - true: Publish the video track of the camera capturer.
+        * - false: (Default) Do not publish the video track of the camera capturer.
+        */
+        public bool publishCameraTrack;
+        /**
+        * Determines whether to publish the recorded audio.
+        * - true: Publish the recorded audio.
+        * - false: (Default) Do not publish the recorded audio.
+        */
+        public bool publishMicrophoneTrack;
+        /**
+        * Determines whether to publish the audio of the custom audio track.
+        * - true: Publish the audio of the custom audio track.
+        * - false: (Default) Do not publish the audio of the custom audio track.
+        */
+        public bool publishCustomAudioTrack;
+        /**
+        * Determines whether to publish the video of the custom video track.
+        * - true: Publish the video of the custom video track.
+        * - false: (Default) Do not publish the video of the custom video track.
+        */
+        public bool publishCustomVideoTrack;
+        /**
+        * Determines whether to publish the audio track of media player source.
+        * - true: Publish the audio track of media player source.
+        * - false: (default) Do not publish the audio track of media player source.
+        */
+        public bool publishMediaPlayerAudioTrack;
+        /**
+        * Determines which media player source should be published.
+        * - DEFAULT_PLAYER_ID(0) is default.
+        */
+        public bool publishMediaPlayerId;
     }
 }

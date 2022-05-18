@@ -466,11 +466,11 @@ namespace agora.rtc
 
         public abstract int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config);
 
-        // public abstract int StartDirectCdnStreaming(IDirectCdnStreamingEventHandler eventHandler, string publishUrl, DirectCdnStreamingMediaOptions options);
+        public abstract int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options);
 
-        // public abstract int StopDirectCdnStreaming();
+        public abstract int StopDirectCdnStreaming();
 
-        // public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
+        public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
 
         public abstract int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame);
 
