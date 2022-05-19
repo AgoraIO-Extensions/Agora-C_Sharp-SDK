@@ -172,7 +172,7 @@ namespace agora.rtc
         internal int type;
         internal uint id;
         
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 65536)]
         internal string key;
     }
 
