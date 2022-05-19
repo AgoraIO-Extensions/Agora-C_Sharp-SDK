@@ -51,7 +51,7 @@ namespace agora.rtc
             if (irisEngine != IntPtr.Zero)
             {
                 _videoFrameBuffer = new IrisCVideoFrameBufferNative {
-                    type = (int)VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
+                    type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
                     OnVideoFrameReceived = IntPtr.Zero,
                     resize_width = width,
                     resize_height = height

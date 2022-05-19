@@ -74,7 +74,7 @@ namespace agora.rtc
                 FreeMemory();
                 _cachedVideoFrame = new IrisVideoFrame
                 {
-                    type = VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
+                    type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
                     y_stride = VideoPixelWidth * 4,
                     height = VideoPixelHeight,
                     width = VideoPixelWidth,
@@ -113,7 +113,7 @@ namespace agora.rtc
                 FreeMemory();
                 _cachedVideoFrame = new IrisVideoFrame
                 {
-                    type = VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA,
+                    type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
                     y_stride = VideoPixelWidth * 4,
                     height = VideoPixelHeight,
                     width = VideoPixelWidth,

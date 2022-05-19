@@ -211,7 +211,7 @@ namespace agora.rtc
     
     internal struct IrisCVideoFrameBuffer
     {
-        internal VIDEO_FRAME_TYPE type;
+        internal VIDEO_OBSERVER_FRAME_TYPE type;
         internal Func_VideoFrame_Native OnVideoFrameReceived;
         internal int resize_width;
         internal int resize_height;

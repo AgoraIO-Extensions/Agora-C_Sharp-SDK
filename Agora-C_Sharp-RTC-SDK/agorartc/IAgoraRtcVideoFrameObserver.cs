@@ -19,9 +19,9 @@ namespace agora.rtc
             return true;
         }
         
-        public virtual VIDEO_FRAME_TYPE GetVideoFormatPreference()
+        public virtual VIDEO_OBSERVER_FRAME_TYPE GetVideoFormatPreference()
         {
-            return VIDEO_FRAME_TYPE.FRAME_TYPE_RGBA;
+            return VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
         }
         
         public virtual VIDEO_OBSERVER_POSITION GetObservedFramePosition()

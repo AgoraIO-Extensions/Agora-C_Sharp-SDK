@@ -26,7 +26,7 @@ namespace agora.rtc
             
             var localVideoFrame = new VideoFrame();
 
-            var ifConverted = VideoFrameObserver.GetVideoFormatPreference() != VIDEO_FRAME_TYPE.FRAME_TYPE_YUV420;
+            var ifConverted = VideoFrameObserver.GetVideoFormatPreference() != VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
             var videoFrameConverted = ifConverted
                 ? AgoraRtcNative.ConvertVideoFrame(ref videoFrame, VideoFrameObserver.GetVideoFormatPreference())
                 : videoFrame;

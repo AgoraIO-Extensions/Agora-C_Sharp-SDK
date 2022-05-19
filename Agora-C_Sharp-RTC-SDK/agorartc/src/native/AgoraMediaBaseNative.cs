@@ -3,12 +3,29 @@ using System.Runtime.InteropServices;
 
 namespace agora.rtc
 {
+    public enum VIDEO_OBSERVER_FRAME_TYPE
+    {
+        /**
+        * 0: (Default) YUV 420
+        */
+        FRAME_TYPE_YUV420 = 0,  // YUV 420 format
+        /**
+        * 1: YUV 422
+        */
+        FRAME_TYPE_YUV422 = 1,  // YUV 422 format
+        /**
+        * 2: RGBA
+        */
+        FRAME_TYPE_RGBA = 2,  // RGBA format
+        FRAME_TYPE_BGRA = 3,
+    };
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisAudioFrame
     {
         internal AUDIO_FRAME_TYPE type;
         internal int samples;
-        internal int bytes_per_sample;
+        internal BYTES_PER_SAMPLE bytes_per_sample;
         internal int channels;
         internal int samples_per_sec;
         internal IntPtr buffer;
@@ -37,7 +54,7 @@ namespace agora.rtc
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisVideoFrame
     {
-        internal VIDEO_FRAME_TYPE type;
+        internal VIDEO_OBSERVER_FRAME_TYPE type;
         internal int width;
         internal int height;
         internal int y_stride;

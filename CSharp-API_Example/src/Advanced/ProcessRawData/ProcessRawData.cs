@@ -177,9 +177,9 @@ namespace CSharp_API_Example
             return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER;
         }
 
-        public override VIDEO_FRAME_TYPE GetVideoFormatPreference()
+        public override VIDEO_OBSERVER_FRAME_TYPE GetVideoFormatPreference()
         {
-            return VIDEO_FRAME_TYPE.FRAME_TYPE_YUV420;  // default:FRAME_TYPE_RGBA
+            return VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;  // default:FRAME_TYPE_RGBA
         }
 
         public override bool OnCaptureVideoFrame(VideoFrame videoFrame)
