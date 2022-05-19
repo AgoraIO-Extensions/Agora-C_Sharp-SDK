@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using agora.rtc.LitJson;
+
 namespace agora.rtc
 {
     using int64_t = Int64;
@@ -72,4 +75,47 @@ namespace agora.rtc
         ERR_SIZE_NOT_MATCHING = 2,
         ERR_BUFFER_EMPTY = 5,
     };
+
+
+    public class Optional<T>
+    {
+        private T value;
+        private bool hasValue;
+
+        public Optional()
+        {
+            hasValue = false;
+        }
+
+        public bool HasValue()
+        {
+            return hasValue;
+        }
+
+        public T GetValue()
+        {
+            return this.value;
+        }
+
+        public void SetValue(T val)
+        {
+            this.hasValue = true;
+            this.value = val;
+        }
+
+        public void SetEmpty()
+        {
+            this.hasValue = false;
+        }
+
+    }
+
+
+    public interface OptionalJsonParse
+    {
+        public abstract string ToJson();
+        public abstract void Parse(string json);
+    }
+
+
 }

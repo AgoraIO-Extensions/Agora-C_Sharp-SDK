@@ -1223,7 +1223,7 @@ The error codes of the local user's audio mixing file.
         public AREA_CODE areaCode { set; get; }
         
 
-        public THREAD_PRIORITY_TYPE threadPriority { set; get; }
+        public  THREAD_PRIORITY_TYPE threadPriority { set; get; }
 
         /**
          * Whether use egl context in current thread as sdk‘s root egl context 
