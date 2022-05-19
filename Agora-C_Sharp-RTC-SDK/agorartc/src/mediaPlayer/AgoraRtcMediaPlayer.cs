@@ -334,6 +334,7 @@ namespace agora.rtc
             UnSetIrisAudioFrameObserver();
         }
 
+        
         public override void RegisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer)
         {
             return;
@@ -341,6 +342,7 @@ namespace agora.rtc
             // AgoraRtcMediaPlayerVideoFrameObserverNative.VideoFrameObserver = observer;
         }
 
+      
         public override void UnregisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer)
         {
             return;
@@ -565,11 +567,10 @@ namespace agora.rtc
             return (bool) AgoraJson.GetData<bool>(_result.Result, "result");
         }
 
-        public override int SetPlaybackSpeed(int playerId, MEDIA_PLAYER_PLAYBACK_SPEED speed)
+        public override int SetPlaybackSpeed(int speed)
         {
             var param = new
             {
-                playerId,
                 speed
             };
             string jsonParam = JsonMapper.ToJson(param);
@@ -947,15 +948,17 @@ namespace agora.rtc
     internal static class RtcMediaPlayerEventHandlerNative
     {
         internal static IAgoraRtcMediaPlayerEventHandler RtcMediaPlayerEventHandler = null;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         internal static AgoraCallbackObject CallbackObject = null;
+#endif
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
         internal static void OnEvent(string @event, string data)
         {
             if (RtcMediaPlayerEventHandler == null) return;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
             CallbackObject._CallbackQueue.EnQueue(() =>
             {
@@ -963,12 +966,12 @@ namespace agora.rtc
                 // switch(@event)
                 // {
                 // }   
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             });
 #endif
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
 #endif
         internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
@@ -982,7 +985,7 @@ namespace agora.rtc
                 switch (@event)
                 {
                     case "onPlayerSourceStateChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
@@ -991,12 +994,12 @@ namespace agora.rtc
                                 (MEDIA_PLAYER_STATE) AgoraJson.GetData<int>(data, "state"),
                                 (MEDIA_PLAYER_ERROR) AgoraJson.GetData<int>(data, "ec")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onPositionChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
@@ -1004,12 +1007,12 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "playerId"),
                                 (Int64) AgoraJson.GetData<Int64>(data, "position")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onPlayerEvent":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
@@ -1019,12 +1022,12 @@ namespace agora.rtc
                                 (Int64) AgoraJson.GetData<Int64>(data, "elapsedTime"),
                                 (string) AgoraJson.GetData<string>(data, "message")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onPlayBufferUpdated":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
@@ -1032,48 +1035,48 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "playerId"),
                                 (Int64) AgoraJson.GetData<Int64>(data, "playCachedBuffer")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onCompleted":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
                             RtcMediaPlayerEventHandler.OnCompleted(
                                 (int) AgoraJson.GetData<int>(data, "playerId")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onAgoraCDNTokenWillExpire":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
-#endif                       
+#endif
                             RtcMediaPlayerEventHandler.OnAgoraCDNTokenWillExpire(
                                 (int) AgoraJson.GetData<int>(data, "playerId")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onPlayerInfoUpdated":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
                             RtcMediaPlayerEventHandler.OnPlayerInfoUpdated(
                                 AgoraJson.JsonToStruct<PlayerUpdatedInfo>(data, "info")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onPlayerSrcInfoChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
@@ -1082,12 +1085,12 @@ namespace agora.rtc
                                 AgoraJson.JsonToStruct<SrcInfo>(data, "from"),
                                 AgoraJson.JsonToStruct<SrcInfo>(data, "to")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onAudioVolumeIndication":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
@@ -1095,18 +1098,18 @@ namespace agora.rtc
                                 (int) AgoraJson.GetData<int>(data, "playerId"),
                                 (int) AgoraJson.GetData<int>(data, "volume")
                             );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;
                     case "onMetaData":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         CallbackObject._CallbackQueue.EnQueue(() =>
                         {
 #endif
                             RtcMediaPlayerEventHandler.OnMetaData((int) AgoraJson.GetData<int>(data, "playerId"),
                                 byteData, (int)length);
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                         });
 #endif
                         break;  

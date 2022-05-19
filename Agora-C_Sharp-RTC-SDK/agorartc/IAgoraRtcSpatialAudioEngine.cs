@@ -36,7 +36,7 @@ namespace agora.rtc
 
         public abstract int SetTeamId(int teamId);
   
-        public abstract int SetAudioRangeMode(RANGE_AUDIO_MODE_TYPE rangeMode);
+        public abstract int SetAudioRangeMode(AUDIO_RANGE_MODE_TYPE rangeMode);
 
         public abstract int EnterRoom(string token, string roomName, uint uid);
 

@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using UnityEngine;
 using UnityEngine.UI;
+#endif
+
 
 namespace agora.rtc
 {
-    internal enum IRIS_VIDEO_PROCESS_ERR {
-        ERR_OK = 0,
-        ERR_NULL_POINTER = 1,
-        ERR_SIZE_NOT_MATCHING = 2,
-        ERR_BUFFER_EMPTY = 5,
-    };
+ 
 
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
     internal class TextureManager
     {
         private int VideoPixelWidth = 1080;
@@ -193,4 +194,5 @@ namespace agora.rtc
         }
 
     }
+#endif
 }

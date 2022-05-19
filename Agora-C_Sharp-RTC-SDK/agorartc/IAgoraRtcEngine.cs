@@ -542,7 +542,7 @@ namespace agora.rtc
 
         public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
 
-        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource, SegmentationProperty segproperty, MEDIA_SOURCE_TYPE type);
+        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource);
 
         public abstract int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option);
 

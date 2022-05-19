@@ -4499,14 +4499,12 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource, SegmentationProperty segproperty, MEDIA_SOURCE_TYPE type)
+        public override int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource)
         {
             var param = new
             {
                 enabled,
                 backgroundSource,
-                segproperty,
-                type
             };
 
             var json = JsonMapper.ToJson(param);
@@ -5512,7 +5510,7 @@ namespace agora.rtc
             frame.renderTimeMs = f.renderTimeMs;
             frame.samplesPerSec = f.samplesPerSec;
 
-            int length = frame.channels * frame.samplesPerChannel * frame.bytesPerSample;
+            int length = frame.channels * frame.samplesPerChannel * (int)frame.bytesPerSample;
             frame.buffer = new byte[length];
             if (frame.bufferPtr != IntPtr.Zero)
             {
