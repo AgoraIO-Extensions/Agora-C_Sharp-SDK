@@ -194,7 +194,7 @@ namespace agora.rtc
     internal struct IrisRtcCVideoFrameObserver
     {
         internal Func_VideoCaptureLocal_Native OnCaptureVideoFrame;
-        internal Func_VideoFrameLocal_Native OnPreEncodeVideoFrame;
+        internal Func_VideoCaptureLocal_Native OnPreEncodeVideoFrame;
         internal Func_VideoFrameRemote_Native OnRenderVideoFrame;
         internal Func_Uint32_t_Native GetObservedFramePosition;
         internal Func_Bool_Native IsMultipleChannelFrameWanted;

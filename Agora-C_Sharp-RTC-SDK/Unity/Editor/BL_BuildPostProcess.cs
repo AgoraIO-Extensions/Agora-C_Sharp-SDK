@@ -72,11 +72,10 @@ public class BL_BuildPostProcess
         const string AgoraffmpegFrameworkName = "Agoraffmpeg.framework";
         const string AgoraVideoProcessFrameworkName = "AgoraVideoProcessExtension.framework";
         const string AgoraPvcExtensionFrameworkName = "AgoraPvcExtension.framework";
-        const string AgoraRtcCryptoLoaderFrameworkName = "AgoraRtcCryptoLoader.framework";
-        const string AgoraRtmKitFrameworkName = "AgoraRtmKit.framework";
+        const string AgoraRTEFrameworkName = "AgoraRTE.framework";
         const string AgoraVideoSegmentationExtensionFrameworkName = "AgoraVideoSegmentationExtension.framework";
         const string BeQuicFrameworkName = "BeQuic.framework";
-        const string AgoraRtmLoaderFramework = "AgoraRtmLoader.framework";
+        const string AgoraQualityEduVideoProcessFramework = "AgoraQualityEduVideoProcess.framework";
 
 
         string AgoraRtcWrapperFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcWrapperFrameworkName);
@@ -84,11 +83,10 @@ public class BL_BuildPostProcess
         string AgoraffmpegFrameworkPath = Path.Combine(defaultLocationInProj, AgoraffmpegFrameworkName);
         string AgoraVideoProcessPath = Path.Combine(defaultLocationInProj, AgoraVideoProcessFrameworkName);
         string AgoraPvcExtensionPath = Path.Combine(defaultLocationInProj, AgoraPvcExtensionFrameworkName);
-        string AgoraRtcCryptoLoaderPath = Path.Combine(defaultLocationInProj, AgoraRtcCryptoLoaderFrameworkName);
-        string AgoraRtmKitPath = Path.Combine(defaultLocationInProj, AgoraRtmKitFrameworkName);
+        string AgoraRTEPath = Path.Combine(defaultLocationInProj, AgoraRTEFrameworkName);
         string AgoraVideoSegmentationExtensionPath = Path.Combine(defaultLocationInProj, AgoraVideoSegmentationExtensionFrameworkName);
         string BeQuicPath = Path.Combine(defaultLocationInProj, BeQuicFrameworkName);
-        string AgoraRtmLoaderPath = Path.Combine(defaultLocationInProj, AgoraRtmLoaderFramework); ;
+        string AgoraQualityEduVideoProcessPath = Path.Combine(defaultLocationInProj, AgoraQualityEduVideoProcessFramework); ;
 
 
         string fileGuid = proj.AddFile(AgoraRtcWrapperFrameworkPath, "Frameworks/" + AgoraRtcWrapperFrameworkPath, PBXSourceTree.Sdk);
@@ -97,13 +95,11 @@ public class BL_BuildPostProcess
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
         fileGuid = proj.AddFile(AgoraPvcExtensionPath, "Frameworks/" + AgoraPvcExtensionPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraRtcCryptoLoaderPath, "Frameworks/" + AgoraRtcCryptoLoaderPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraRtmKitPath, "Frameworks/" + AgoraRtmKitPath, PBXSourceTree.Sdk);
+        fileGuid = proj.AddFile(AgoraRTEPath, "Frameworks/" + AgoraRTEPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
         fileGuid = proj.AddFile(BeQuicPath, "Frameworks/" + BeQuicPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraRtmLoaderPath, "Frameworks/" + AgoraRtmLoaderPath, PBXSourceTree.Sdk);
+        fileGuid = proj.AddFile(AgoraQualityEduVideoProcessPath, "Frameworks/" + AgoraQualityEduVideoProcessPath, PBXSourceTree.Sdk);
         PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
 
 

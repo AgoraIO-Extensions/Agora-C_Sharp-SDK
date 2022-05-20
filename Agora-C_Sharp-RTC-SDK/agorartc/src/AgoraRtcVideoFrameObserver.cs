@@ -21,15 +21,15 @@ namespace agora.rtc
 
         private static VideoFrame ProcessVideoFrameReceived(IntPtr videoFramePtr, string channelId, uint uid)
         {
-            var videoFrame = (IrisVideoFrame) (Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ?? 
+            var videoFrameConverted = (IrisVideoFrame) (Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ?? 
                 new IrisVideoFrame());
             
             var localVideoFrame = new VideoFrame();
 
-            var ifConverted = VideoFrameObserver.GetVideoFormatPreference() != VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-            var videoFrameConverted = ifConverted
-                ? AgoraRtcNative.ConvertVideoFrame(ref videoFrame, VideoFrameObserver.GetVideoFormatPreference())
-                : videoFrame;
+            // var ifConverted = VideoFrameObserver.GetVideoFormatPreference() != VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
+            // var videoFrameConverted = ifConverted
+            //     ? AgoraRtcNative.ConvertVideoFrame(ref videoFrame, VideoFrameObserver.GetVideoFormatPreference())
+            //     : videoFrame;
             
             if (channelId == "")
             {
@@ -70,6 +70,10 @@ namespace agora.rtc
                 localVideoFrame.uBuffer = new byte[videoFrameConverted.u_buffer_length];
                 localVideoFrame.vBuffer = new byte[videoFrameConverted.v_buffer_length];
             }
+            else
+            {
+                return localVideoFrame;
+            }
 
             if (videoFrameConverted.y_buffer != IntPtr.Zero)
                 Marshal.Copy(videoFrameConverted.y_buffer, localVideoFrame.yBuffer, 0,
@@ -92,7 +96,7 @@ namespace agora.rtc
             localVideoFrame.renderTimeMs = videoFrameConverted.render_time_ms;
             localVideoFrame.avsync_type = videoFrameConverted.av_sync_type;
 
-            if (ifConverted) AgoraRtcNative.ClearVideoFrame(ref videoFrameConverted);
+            //if (ifConverted) AgoraRtcNative.ClearVideoFrame(ref videoFrameConverted);
 
             return localVideoFrame;
         }
@@ -114,12 +118,18 @@ namespace agora.rtc
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_VideoFrameLocal_Native))]
+        [MonoPInvokeCallback(typeof(Func_VideoCaptureLocal_Native))]
 #endif
-        internal static bool OnPreEncodeVideoFrame(IntPtr videoFramePtr)
+        internal static bool OnPreEncodeVideoFrame(IntPtr videoFramePtr, IntPtr videoFrameConfig)
         {
+            var videoFrameBufferConfig = (IrisVideoFrameBufferConfig) (Marshal.PtrToStructure(videoFrameConfig, typeof(IrisVideoFrameBufferConfig)) ?? 
+                                                                   new IrisVideoFrameBufferConfig());
+            var config = new VideoFrameBufferConfig();
+            config.type = (VIDEO_SOURCE_TYPE) videoFrameBufferConfig.type;
+            config.id = videoFrameBufferConfig.id;
+            config.key = videoFrameBufferConfig.key;
             return VideoFrameObserver == null ||
-                   VideoFrameObserver.OnPreEncodeVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 1));
+                   VideoFrameObserver.OnPreEncodeVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 1), config);
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
