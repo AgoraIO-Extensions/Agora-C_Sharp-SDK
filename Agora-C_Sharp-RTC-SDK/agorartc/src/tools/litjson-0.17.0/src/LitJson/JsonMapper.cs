@@ -1494,7 +1494,7 @@ namespace agora.rtc.LitJson
             table[json_type][value_type] = importer;
         }
 
-        private static void WriteValue(object obj, JsonWriter writer,
+        public static void WriteValue(object obj, JsonWriter writer,
                                         bool writer_is_private,
                                         int depth)
         {

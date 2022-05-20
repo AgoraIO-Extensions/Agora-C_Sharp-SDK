@@ -716,12 +716,12 @@ The error codes of the local user's audio mixing file.
 
     public class AudioOptionsExternal : OptionalJsonParse
     {
-        Optional<bool> enable_aec_external_custom_ = new Optional<bool>();
-        Optional<bool> enable_agc_external_custom_ = new Optional<bool>();
-        Optional<bool> enable_ans_external_custom_ = new Optional<bool>();
-        Optional<NLP_AGGRESSIVENESS> aec_aggressiveness_external_custom_ = new Optional<NLP_AGGRESSIVENESS>();
+        public Optional<bool> enable_aec_external_custom_ = new Optional<bool>();
+        public Optional<bool> enable_agc_external_custom_ = new Optional<bool>();
+        public Optional<bool> enable_ans_external_custom_ = new Optional<bool>();
+        public Optional<NLP_AGGRESSIVENESS> aec_aggressiveness_external_custom_ = new Optional<NLP_AGGRESSIVENESS>();
 
-        Optional<bool> enable_aec_external_loopback_ = new Optional<bool>();
+        public Optional<bool> enable_aec_external_loopback_ = new Optional<bool>();
 
         public override void ToJson(LitJson.JsonWriter writer)
         {
@@ -1374,7 +1374,7 @@ The error codes of the local user's audio mixing file.
         {
             eventHandler = null;
             appId = null;
-            context = IntPtr.Zero;
+            context = 0;
             enableAudioDevice = true;
             channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;
             audioScenario = AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT;
@@ -1384,7 +1384,7 @@ The error codes of the local user's audio mixing file.
         }
 
 
-        public RtcEngineContext(string appId, IntPtr context,
+        public RtcEngineContext(string appId, UInt64 context,
             bool enableAudioDevice, CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
             LogConfig logConfig = null)
@@ -1415,7 +1415,7 @@ The error codes of the local user's audio mixing file.
         * - For Windows, it is the window handle of app. Once set, this parameter enables you to plug
         * or unplug the video devices while they are powered.
         */
-        public IntPtr context { set; get; }
+        public UInt64 context { set; get; }
 
         /**
         * Determines whether to enable audio device
@@ -1470,7 +1470,6 @@ The error codes of the local user's audio mixing file.
         {
             writer.WriteObjectStart();
 
-
             writer.WritePropertyName("appId");
             writer.Write(this.appId);
 
@@ -1480,22 +1479,18 @@ The error codes of the local user's audio mixing file.
             writer.WritePropertyName("enableAudioDevice");
             writer.Write(this.enableAudioDevice);
 
-
             writer.WritePropertyName("channelProfile");
-            writer.Write((int)this.channelProfile);
-
+            this.WriteEnum(writer, this.channelProfile);
 
             writer.WritePropertyName("audioScenario");
-            writer.Write((int)this.audioScenario);
-
+            this.WriteEnum(writer, this.audioScenario);
 
             writer.WritePropertyName("areaCode");
-            writer.Write((uint)this.areaCode);
+            this.WriteEnum(writer, this.areaCode);
 
 
             writer.WritePropertyName("logConfig");
-            writer.TextWriter.Write(AgoraJson.ToJson<LogConfig>(this.logConfig));
-
+            JsonMapper.WriteValue(this.logConfig, writer, false, 0);
 
 
             if (this.threadPriority.HasValue())
@@ -1503,7 +1498,6 @@ The error codes of the local user's audio mixing file.
                 writer.WritePropertyName("threadPriority");
                 this.WriteEnum(writer, this.threadPriority.GetValue());
             }
-
 
             writer.WritePropertyName("useExternalEglContext");
             writer.Write(this.useExternalEglContext);
