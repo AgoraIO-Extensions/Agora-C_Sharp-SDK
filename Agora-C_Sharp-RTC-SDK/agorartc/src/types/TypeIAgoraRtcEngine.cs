@@ -749,7 +749,7 @@ The error codes of the local user's audio mixing file.
             if (this.aec_aggressiveness_external_custom_.HasValue())
             {
                 writer.WritePropertyName("aec_aggressiveness_external_custom_");
-                writer.Write((int)this.aec_aggressiveness_external_custom_.GetValue());
+                this.WriteEnum(writer, this.aec_aggressiveness_external_custom_.GetValue());
             }
 
             if (this.enable_aec_external_loopback_.HasValue())
@@ -1188,25 +1188,25 @@ The error codes of the local user's audio mixing file.
             if (this.clientRoleType.HasValue())
             {
                 writer.WritePropertyName("clientRoleType");
-                writer.Write((int)this.clientRoleType.GetValue());
+                this.WriteEnum(writer, this.clientRoleType.GetValue());
             }
 
             if (this.audienceLatencyLevel.HasValue())
             {
                 writer.WritePropertyName("audienceLatencyLevel");
-                writer.Write((int)this.audienceLatencyLevel.GetValue());
+                this.WriteEnum(writer, this.audienceLatencyLevel.GetValue());
             }
 
             if (this.defaultVideoStreamType.HasValue())
             {
                 writer.WritePropertyName("defaultVideoStreamType");
-                writer.Write((int)this.defaultVideoStreamType.GetValue());
+                this.WriteEnum(writer, this.defaultVideoStreamType.GetValue());
             }
 
             if (this.channelProfile.HasValue())
             {
                 writer.WritePropertyName("channelProfile");
-                writer.Write((int)this.channelProfile.GetValue());
+                this.WriteEnum(writer, this.channelProfile.GetValue());
             }
 
             if (this.audioDelayMs.HasValue())
@@ -1368,13 +1368,13 @@ The error codes of the local user's audio mixing file.
     //};
     /** Definition of RtcEngineContext.
    */
-    public class RtcEngineContext
+    public class RtcEngineContext : OptionalJsonParse
     {
         RtcEngineContext()
         {
             eventHandler = null;
             appId = null;
-            context = null;
+            context = IntPtr.Zero;
             enableAudioDevice = true;
             channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;
             audioScenario = AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT;
@@ -1384,7 +1384,7 @@ The error codes of the local user's audio mixing file.
         }
 
 
-        public RtcEngineContext(string appId, byte[] context,
+        public RtcEngineContext(string appId, IntPtr context,
             bool enableAudioDevice, CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
             LogConfig logConfig = null)
@@ -1415,7 +1415,7 @@ The error codes of the local user's audio mixing file.
         * - For Windows, it is the window handle of app. Once set, this parameter enables you to plug
         * or unplug the video devices while they are powered.
         */
-        public byte[] context { set; get; }
+        public IntPtr context { set; get; }
 
         /**
         * Determines whether to enable audio device
@@ -1454,7 +1454,7 @@ The error codes of the local user's audio mixing file.
         public AREA_CODE areaCode { set; get; }
 
 
-        public THREAD_PRIORITY_TYPE threadPriority { set; get; }
+        public Optional<THREAD_PRIORITY_TYPE> threadPriority = new Optional<THREAD_PRIORITY_TYPE>();
 
         /**
          * Whether use egl context in current thread as sdk‘s root egl context 
@@ -1465,8 +1465,53 @@ The error codes of the local user's audio mixing file.
          */
         public bool useExternalEglContext { set; get; }
 
-    };
 
+        public override void ToJson(JsonWriter writer)
+        {
+            writer.WriteObjectStart();
+
+
+            writer.WritePropertyName("appId");
+            writer.Write(this.appId);
+
+            writer.WritePropertyName("context");
+            writer.Write((UInt64)this.context);
+
+            writer.WritePropertyName("enableAudioDevice");
+            writer.Write(this.enableAudioDevice);
+
+
+            writer.WritePropertyName("channelProfile");
+            writer.Write((int)this.channelProfile);
+
+
+            writer.WritePropertyName("audioScenario");
+            writer.Write((int)this.audioScenario);
+
+
+            writer.WritePropertyName("areaCode");
+            writer.Write((uint)this.areaCode);
+
+
+            writer.WritePropertyName("logConfig");
+            writer.TextWriter.Write(AgoraJson.ToJson<LogConfig>(this.logConfig));
+
+
+
+            if (this.threadPriority.HasValue())
+            {
+                writer.WritePropertyName("threadPriority");
+                this.WriteEnum(writer, this.threadPriority.GetValue());
+            }
+
+
+            writer.WritePropertyName("useExternalEglContext");
+            writer.Write(this.useExternalEglContext);
+
+            writer.WriteObjectEnd();
+        }
+
+    }
     public enum METADATA_TYPE
     {
         UNKNOWN_METADATA = -1,
@@ -1571,7 +1616,7 @@ The error codes of the local user's audio mixing file.
     };
 
 
-    public class DirectCdnStreamingMediaOptions:OptionalJsonParse
+    public class DirectCdnStreamingMediaOptions : OptionalJsonParse
     {
         /**
          * Determines whether to publish the video of the camera track.
