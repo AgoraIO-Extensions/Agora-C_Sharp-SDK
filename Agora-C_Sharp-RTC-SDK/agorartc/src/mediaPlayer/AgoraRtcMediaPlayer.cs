@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -156,7 +156,7 @@ namespace agora.rtc
             Marshal.StructureToPtr(irisMediaPlayerCAudioFrameObserverNativeLocal, _irisMediaPlayerCAudioFrameObserverNative, true);
             _irisMediaPlayerAudioFrameObserverHandleNative = AgoraRtcNative.RegisterMediaPlayerAudioFrameObserver(
                 _irisApiEngine,
-                _irisMediaPlayerCAudioFrameObserverNative, JsonMapper.ToJson(param)
+                _irisMediaPlayerCAudioFrameObserverNative, AgoraJson.ToJson(param)
             );
         }
 
@@ -179,7 +179,7 @@ namespace agora.rtc
             Marshal.StructureToPtr(irisMediaPlayerCAudioFrameObserverNativeLocal, _irisMediaPlayerCAudioFrameObserverNative, true);
             _irisMediaPlayerAudioFrameObserverHandleNative = AgoraRtcNative.RegisterMediaPlayerAudioFrameObserver(
                 _irisApiEngine,
-                _irisMediaPlayerCAudioFrameObserverNative, JsonMapper.ToJson(param)
+                _irisMediaPlayerCAudioFrameObserverNative, AgoraJson.ToJson(param)
             );
         }
 
@@ -190,7 +190,7 @@ namespace agora.rtc
             
             AgoraRtcNative.UnRegisterMediaPlayerAudioFrameObserver(
                 _irisApiEngine,
-                _irisMediaPlayerAudioFrameObserverHandleNative, JsonMapper.ToJson(param)
+                _irisMediaPlayerAudioFrameObserverHandleNative, AgoraJson.ToJson(param)
             );
             _irisMediaPlayerAudioFrameObserverHandleNative = IntPtr.Zero;
             AgoraRtcMediaPlayerAudioFrameObserverNative.AudioFrameObserver = null;
@@ -217,7 +217,7 @@ namespace agora.rtc
             // Marshal.StructureToPtr(irisMediaPlayerCVideoFrameObserverNativeLocal, _irisMediaPlayerCVideoFrameObserverNative, true);
             // _irisMediaPlayerVideoFrameObserverHandleNative = AgoraRtcNative.RegisterMediaPlayerVideoFrameObserver(
             //     _irisApiEngine,
-            //     _irisMediaPlayerCVideoFrameObserverNative, JsonMapper.ToJson(param)
+            //     _irisMediaPlayerCVideoFrameObserverNative, AgoraJson.ToJson(param)
             // );
         }
 
@@ -228,7 +228,7 @@ namespace agora.rtc
             //
             // AgoraRtcNative.UnRegisterMediaPlayerVideoFrameObserver(
             //     _irisApiEngine,
-            //     _irisMediaPlayerVideoFrameObserverHandleNative, JsonMapper.ToJson(param)
+            //     _irisMediaPlayerVideoFrameObserverHandleNative, AgoraJson.ToJson(param)
             // );
             // _irisMediaPlayerVideoFrameObserverHandleNative = IntPtr.Zero;
             // AgoraRtcMediaPlayerVideoFrameObserverNative.VideoFrameObserver = null;
@@ -257,7 +257,7 @@ namespace agora.rtc
             Marshal.StructureToPtr(irisMediaPlayerCCustomProviderNativeLocal, _irisMediaPlayerCCustomProviderNative, true);
             var ret = AgoraRtcNative.MediaPlayerOpenWithSource(
                 _irisApiEngine,
-                _irisMediaPlayerCCustomProviderNative, JsonMapper.ToJson(param)
+                _irisMediaPlayerCCustomProviderNative, AgoraJson.ToJson(param)
             );
             return ret;
         }
@@ -283,7 +283,7 @@ namespace agora.rtc
             Marshal.StructureToPtr(irisMediaPlayerCAudioSpectrumObserverNativeLocal, _irisMediaPlayerCAudioSpectrumObserverHandleNative, true);
             _irisMediaPlayerCAudioSpectrumObserverNative = AgoraRtcNative.RegisterMediaPlayerAudioSpectrumObserver(
                 _irisApiEngine,
-                _irisMediaPlayerCAudioSpectrumObserverHandleNative, JsonMapper.ToJson(param)
+                _irisMediaPlayerCAudioSpectrumObserverHandleNative, AgoraJson.ToJson(param)
             );
         }
 
@@ -294,7 +294,7 @@ namespace agora.rtc
             
             AgoraRtcNative.UnRegisterMediaPlayerAudioSpectrumObserver(
                 _irisApiEngine,
-                _irisMediaPlayerCAudioSpectrumObserverHandleNative, JsonMapper.ToJson(param)
+                _irisMediaPlayerCAudioSpectrumObserverHandleNative, AgoraJson.ToJson(param)
             );
             _irisMediaPlayerCAudioSpectrumObserverNative = IntPtr.Zero;
             AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
@@ -373,7 +373,7 @@ namespace agora.rtc
             {
                 playerId
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             return AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_RTCENGINE_DESTROYMEDIAPLAYER,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -387,7 +387,7 @@ namespace agora.rtc
                 url,
                 startPos
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_OPEN,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -404,7 +404,7 @@ namespace agora.rtc
         public override int Play(int playerId)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_PLAY,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -414,7 +414,7 @@ namespace agora.rtc
         public override int Pause(int playerId)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_PAUSE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -424,7 +424,7 @@ namespace agora.rtc
         public override int Stop(int playerId)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_STOP,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -434,7 +434,7 @@ namespace agora.rtc
         public override int Resume(int playerId)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_RESUME,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -448,7 +448,7 @@ namespace agora.rtc
                 playerId,
                 newPos
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SEEK,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -458,7 +458,7 @@ namespace agora.rtc
         public override int GetDuration(int playerId, ref Int64 duration)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETDURATION,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -469,7 +469,7 @@ namespace agora.rtc
         public override int GetPlayPosition(int playerId, ref Int64 pos)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYPOSITION,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -480,7 +480,7 @@ namespace agora.rtc
         public override int GetStreamCount(int playerId, ref Int64 count)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETSTREAMCOUNT,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -495,7 +495,7 @@ namespace agora.rtc
                 playerId,
                 index
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETSTREAMINFO,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -510,7 +510,7 @@ namespace agora.rtc
                 playerId,
                 loopCount
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETLOOPCOUNT,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -524,7 +524,7 @@ namespace agora.rtc
                 playerId,
                 audio_mute
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_MUTEAUDIO,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -535,7 +535,7 @@ namespace agora.rtc
         {
             //TODO CHECK
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_ISAUDIOMUTED,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -549,7 +549,7 @@ namespace agora.rtc
                 playerId,
                 video_mute
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_MUTEVIDEO,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -560,7 +560,7 @@ namespace agora.rtc
         {
             //TODO CHECK
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_ISVIDEOMUTED,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -573,7 +573,7 @@ namespace agora.rtc
             {
                 speed
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYBACKSPEED,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -587,7 +587,7 @@ namespace agora.rtc
                 playerId,
                 index
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SELECTAUDIOTRACK,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -602,7 +602,7 @@ namespace agora.rtc
                 key,
                 value
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYEROPTION,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -617,7 +617,7 @@ namespace agora.rtc
                 key,
                 value
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETPLAYEROPTION2,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -631,7 +631,7 @@ namespace agora.rtc
                 playerId,
                 filename
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_TAKESCREENSHOT,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -645,7 +645,7 @@ namespace agora.rtc
                 playerId,
                 index
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SELECTINTERNALSUBTITLE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -659,7 +659,7 @@ namespace agora.rtc
                 playerId,
                 url
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETEXTERNALSUBTITLE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -670,7 +670,7 @@ namespace agora.rtc
         {
             //TODO CHECK
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETSTATE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -684,7 +684,7 @@ namespace agora.rtc
                 playerId,
                 mute
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_MUTE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -694,7 +694,7 @@ namespace agora.rtc
         public override int GetMute(int playerId, ref bool mute)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETMUTE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -709,7 +709,7 @@ namespace agora.rtc
                 playerId,
                 volume
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_ADJUSTPLAYOUTVOLUME,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -719,7 +719,7 @@ namespace agora.rtc
         public override int GetPlayoutVolume(int playerId, ref int volume)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYOUTVOLUME,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -734,7 +734,7 @@ namespace agora.rtc
                 playerId,
                 volume
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_ADJUSTPUBLISHSIGNALVOLUME,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -748,7 +748,7 @@ namespace agora.rtc
                 playerId,
                 volume
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETPUBLISHSIGNALVOLUME,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -762,7 +762,7 @@ namespace agora.rtc
             {
                 playerId
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETVIEW,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -776,7 +776,7 @@ namespace agora.rtc
                 playerId,
                 renderMode
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETRENDERMODE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -790,7 +790,7 @@ namespace agora.rtc
                 playerId,
                 mode
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETAUDIODUALMONOMODE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -800,7 +800,7 @@ namespace agora.rtc
         public override string GetPlayerSdkVersion(int playerId)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYERSDKVERSION,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -810,7 +810,7 @@ namespace agora.rtc
         public override string GetPlaySrc(int playerId)
         {
             var param = new { playerId };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETPLAYSRC,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -820,7 +820,7 @@ namespace agora.rtc
         public override int SetAudioPitch(int pitch)
         {
             var param = new { pitch };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETAUDIOPITCH,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -830,7 +830,7 @@ namespace agora.rtc
         public override int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params)
         {
             var param = new { playerId, spatial_audio_params };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SETSPATIALAUDIOPARAMS,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -840,7 +840,7 @@ namespace agora.rtc
         public override int OpenWithAgoraCDNSrc(string src, Int64 startPos)
         {
             var param = new { src, startPos };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHAGORACDNSRC,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -858,7 +858,7 @@ namespace agora.rtc
         public override int SwitchAgoraCDNLineByIndex(int index)
         {
             var param = new { index };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SWITCHAGORACDNLINEBYINDEX,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -876,7 +876,7 @@ namespace agora.rtc
         public override int EnableAutoSwitchAgoraCDN(bool enable)
         {
             var param = new { enable };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_ENABLEAUTOSWITCHAGORACDN,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -886,7 +886,7 @@ namespace agora.rtc
         public override int RenewAgoraCDNSrcToken(string token, Int64 ts)
         {
             var param = new { token, ts };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_RENEWAGORACDNSRCTOKEN,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -896,7 +896,7 @@ namespace agora.rtc
         public override int SwitchAgoraCDNSrc(string src, bool syncPts = false)
         {
             var param = new { src, syncPts };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SWITCHAGORACDNSRC,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -906,7 +906,7 @@ namespace agora.rtc
         public override int SwitchSrc(string src, bool syncPts = true)
         {
             var param = new { src, syncPts };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SWITCHSRC,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -916,7 +916,7 @@ namespace agora.rtc
         public override int PreloadSrc(string src, Int64 startPos)
         {
             var param = new { src, startPos };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_PRELOADSRC,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -926,7 +926,7 @@ namespace agora.rtc
         public override int PlayPreloadedSrc(string src)
         {
             var param = new { src };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_PLAYPRELOADEDSRC,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -936,7 +936,7 @@ namespace agora.rtc
         public override int UnloadSrc(string src)
         {
             var param = new { src };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_UNLOADSRC,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);

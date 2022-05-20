@@ -167,7 +167,7 @@ namespace agora.rtc
 
         internal static string ToJson<T>(T param)
         {
-            return JsonMapper.ToJson(param);
+            return LitJson.JsonMapper.ToJson(param);
         }
 
     }

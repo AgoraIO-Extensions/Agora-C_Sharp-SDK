@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace agora.rtc
 {
@@ -56,7 +56,7 @@ namespace agora.rtc
             {
                 deviceIdUTF8
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_SETDEVICE,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
@@ -77,7 +77,7 @@ namespace agora.rtc
             {
                 hwnd = (ulong) hwnd
             };
-            string jsonParam = JsonMapper.ToJson(param);
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST,
                 jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
