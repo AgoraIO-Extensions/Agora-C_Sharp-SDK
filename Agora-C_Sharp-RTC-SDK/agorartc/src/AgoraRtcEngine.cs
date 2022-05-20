@@ -236,11 +236,12 @@ namespace agora.rtc
             };
             var json = JsonMapper.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var ret = AgoraRtcNative.CallIrisApi(
+            var nRet = AgoraRtcNative.CallIrisApi(
                 _irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_INITIALIZE,
                 json, jsonLength,
                 IntPtr.Zero, 0,
                 out _result);
+            var ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (ret == 0) SetAppType(AppType.APP_TYPE_UNITY);
