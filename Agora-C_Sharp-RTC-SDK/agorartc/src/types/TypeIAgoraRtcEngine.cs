@@ -1,5 +1,7 @@
 ﻿using System;
-namespace agora.rtc 
+using agora.rtc.LitJson;
+
+namespace agora.rtc
 {
 
     using int64_t = Int64;
@@ -712,17 +714,54 @@ The error codes of the local user's audio mixing file.
         public Rectangle regionRect { set; get; }
     }
 
-    public class AudioOptionsExternal
+    public class AudioOptionsExternal : OptionalJsonParse
     {
-        public bool enable_aec_external_custom_ { set; get; }
+        Optional<bool> enable_aec_external_custom_ = new Optional<bool>();
+        Optional<bool> enable_agc_external_custom_ = new Optional<bool>();
+        Optional<bool> enable_ans_external_custom_ = new Optional<bool>();
+        Optional<NLP_AGGRESSIVENESS> aec_aggressiveness_external_custom_ = new Optional<NLP_AGGRESSIVENESS>();
 
-        public bool enable_aec_external_loopback_ { set; get; }
+        Optional<bool> enable_aec_external_loopback_ = new Optional<bool>();
 
-        public bool enable_agc_external_custom_ { set; get; }
+        public override void ToJson(LitJson.JsonWriter writer)
+        {
+            writer.WriteObjectStart();
 
-        public bool enable_ans_external_custom_ { set; get; }
 
-        public bool aec_aggressiveness_external_custom_ { set; get; }
+            if (this.enable_aec_external_custom_.HasValue())
+            {
+                writer.WritePropertyName("enable_aec_external_custom_");
+                writer.Write(this.enable_aec_external_custom_.GetValue());
+            }
+
+            if (this.enable_agc_external_custom_.HasValue())
+            {
+                writer.WritePropertyName("enable_agc_external_custom_");
+                writer.Write(this.enable_agc_external_custom_.GetValue());
+            }
+
+            if (this.enable_ans_external_custom_.HasValue())
+            {
+                writer.WritePropertyName("enable_ans_external_custom_");
+                writer.Write(this.enable_ans_external_custom_.GetValue());
+            }
+
+            if (this.aec_aggressiveness_external_custom_.HasValue())
+            {
+                writer.WritePropertyName("aec_aggressiveness_external_custom_");
+                writer.Write((int)this.aec_aggressiveness_external_custom_.GetValue());
+            }
+
+            if (this.enable_aec_external_loopback_.HasValue())
+            {
+                writer.WritePropertyName("enable_aec_external_loopback_");
+                writer.Write(this.enable_aec_external_loopback_.GetValue());
+            }
+
+            writer.WriteObjectEnd();
+        }
+
+
     }
 
 
@@ -812,172 +851,172 @@ The error codes of the local user's audio mixing file.
     /**
  * The channel media options.
 */
-    public class ChannelMediaOptions
+    public class ChannelMediaOptions : OptionalJsonParse
     {
         /**
          * Determines whether to publish the video of the camera track.
          * - true: Publish the video track of the camera capturer.
          * - false: (Default) Do not publish the video track of the camera capturer.
          */
-        public bool publishCameraTrack;
+        public Optional<bool> publishCameraTrack = new Optional<bool>();
         /**
          * Determines whether to publish the video of the secondary camera track.
          * - true: Publish the video track of the secondary camera capturer.
          * - false: (Default) Do not publish the video track of the secondary camera capturer.
          */
-        public bool publishSecondaryCameraTrack;
+        public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
         /**
          * Determines whether to publish the recorded audio.
          * - true: Publish the recorded audio.
          * - false: (Default) Do not publish the recorded audio.
          */
-        public bool publishAudioTrack;
+        public Optional<bool> publishAudioTrack = new Optional<bool>();
         /**
          * Determines whether to publish the video of the screen track.
          * - true: Publish the video track of the screen capturer.
          * - false: (Default) Do not publish the video track of the screen capturer.
          */
-        public bool publishScreenTrack;
+        public Optional<bool> publishScreenTrack = new Optional<bool>();
         /**
          * Determines whether to publish the video of the secondary screen track.
          * - true: Publish the video track of the secondary screen capturer.
          * - false: (Default) Do not publish the video track of the secondary screen capturer.
          */
-        public bool publishSecondaryScreenTrack;
+        public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
         /**
          * Determines whether to publish the audio of the custom audio track.
          * - true: Publish the audio of the custom audio track.
          * - false: (Default) Do not publish the audio of the custom audio track.
          */
-        public bool publishCustomAudioTrack;
+        public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
         /**
          * Determines the source id of the custom audio, default is 0.
          */
-        public int publishCustomAudioSourceId;
+        public Optional<int> publishCustomAudioSourceId = new Optional<int>();
         /**
          * Determines whether to enable AEC when publish custom audio track.
          * - true: Enable AEC.
          * - false: (Default) Do not enable AEC.
          */
-        public bool publishCustomAudioTrackEnableAec;
+        public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
         /**
          * Determines whether to publish direct custom audio track.
          * - true: publish.
          * - false: (Default) Do not publish.
          */
-        public bool publishDirectCustomAudioTrack;
+        public Optional<bool> publishDirectCustomAudioTrack = new Optional<bool>();
         /**
          * Determines whether to publish AEC custom audio track.
          * - true: Publish AEC track.
          * - false: (Default) Do not publish AEC track.
          */
-        public bool publishCustomAudioTrackAec;
+        public Optional<bool> publishCustomAudioTrackAec = new Optional<bool>();
         /**
          * Determines whether to publish the video of the custom video track.
          * - true: Publish the video of the custom video track.
          * - false: (Default) Do not publish the video of the custom video track.
          */
-        public bool publishCustomVideoTrack;
+        public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
         /**
          * Determines whether to publish the video of the encoded video track.
          * - true: Publish the video of the encoded video track.
          * - false: (default) Do not publish the video of the encoded video track.
          */
-        public bool publishEncodedVideoTrack;
+        public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
         /**
         * Determines whether to publish the audio track of media player source.
         * - true: Publish the audio track of media player source.
         * - false: (default) Do not publish the audio track of media player source.
         */
-        public bool publishMediaPlayerAudioTrack;
+        public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
         /**
         * Determines whether to publish the video track of media player source.
         * - true: Publish the video track of media player source.
         * - false: (default) Do not publish the video track of media player source.
         */
-        public bool publishMediaPlayerVideoTrack;
+        public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
         /**
         * Determines whether to publish the local transcoded video track.
         * - true: Publish the video track of local transcoded video track.
         * - false: (default) Do not publish the local transcoded video track.
         */
-        public bool publishTrancodedVideoTrack;
+        public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
         /**
          * Determines whether to subscribe to all audio streams automatically. It can replace calling \ref IRtcEngine::setDefaultMuteAllRemoteAudioStreams
          * "setDefaultMuteAllRemoteAudioStreams" before joining a channel.
          * - true: Subscribe to all audio streams automatically.
          * - false: (Default) Do not subscribe to any audio stream automatically.
          */
-        public bool autoSubscribeAudio;
+        public Optional<bool> autoSubscribeAudio = new Optional<bool>();
         /**
          * Determines whether to subscribe to all video streams automatically. It can replace calling \ref IRtcEngine::setDefaultMuteAllRemoteVideoStreams
          * "setDefaultMuteAllRemoteVideoStreams" before joining a channel.
          * - true: Subscribe to all video streams automatically.
          * - false: (Default) do not subscribe to any video stream automatically.
          */
-        public bool autoSubscribeVideo;
+        public Optional<bool> autoSubscribeVideo = new Optional<bool>();
         /**
          * Determines whether to start preview when join channel if canvas have been set.
          * - true: (Default) start preview when join channel.
          * - false: Do not start preview.
          */
-        public bool startPreview;
+        public Optional<bool> startPreview = new Optional<bool>();
         /**
          * Determines whether to enable audio recording or playout.
          * - true: It's used to publish audio and mix microphone, or subscribe audio and playout
          * - false: It's used to publish extenal audio frame only without mixing microphone, or no need audio device to playout audio either
          */
-        public bool enableAudioRecordingOrPlayout;
+        public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
         /**
         * Determines which media player source should be published.
         * - DEFAULT_PLAYER_ID(0) is default.
         */
-        public int publishMediaPlayerId;
+        public Optional<int> publishMediaPlayerId = new Optional<int>();
         /**
          * The client role type: #CLIENT_ROLE_TYPE.
          */
-        public CLIENT_ROLE_TYPE clientRoleType;
+        public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
         /**
          * The audience latency level type. See \ref agora::rtc::AUDIENCE_LATENCY_LEVEL_TYPE "AUDIENCE_LATENCY_LEVEL_TYPE"
          */
-        public AUDIENCE_LATENCY_LEVEL_TYPE audienceLatencyLevel;
+        public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
         /**
          * The default video stream type: #VIDEO_STREAM_TYPE.
          */
-        public VIDEO_STREAM_TYPE defaultVideoStreamType;
+        public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
         /**
          * The channel profile: #CHANNEL_PROFILE_TYPE.
          */
-        public CHANNEL_PROFILE_TYPE channelProfile;
+        public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
         /**
          * The delay in ms for sending audio frames. This is used for explicit control of A/V sync.
          * To switch off the delay, set the value to zero.
          */
-        public int audioDelayMs;
+        public Optional<int> audioDelayMs = new Optional<int>();
         /**
          * The delay in ms for sending media player audio frames. This is used for explicit control of A/V sync.
          * To switch off the delay, set the value to zero.
          */
-        public int mediaPlayerAudioDelayMs;
+        public Optional<int> mediaPlayerAudioDelayMs = new Optional<int>();
         /**
          * The token
          */
-        public string token;
+        public Optional<string> token = new Optional<string>();
         /**
          * Enable media packet encryption.
          * This parameter is ignored when calling function updateChannelMediaOptions()
          * - false is default.
          */
-        public bool enableBuiltInMediaEncryption;
+        public Optional<bool> enableBuiltInMediaEncryption = new Optional<bool>();
         /**
          * Determines whether to publish the sound of the rhythm player to remote users.
          * - true: (Default) Publish the sound of the rhythm player.
          * - false: Do not publish the sound of the rhythm player.
          */
-        public bool publishRhythmPlayerTrack;
+        public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
 
 
-        AudioOptionsExternal audioOptionsExternal;
+        AudioOptionsExternal audioOptionsExternal = new AudioOptionsExternal();
 
         ChannelMediaOptions() { }
 
@@ -1013,6 +1052,199 @@ The error codes of the local user's audio mixing file.
             this.enableBuiltInMediaEncryption = change.enableBuiltInMediaEncryption;
             this.publishRhythmPlayerTrack = change.publishRhythmPlayerTrack;
         }
+
+        public override void ToJson(JsonWriter writer)
+        {
+            writer.WriteObjectStart();
+
+
+            if (this.publishCameraTrack.HasValue())
+            {
+                writer.WritePropertyName("publishCameraTrack");
+                writer.Write(this.publishCameraTrack.GetValue());
+            }
+
+            if (this.publishSecondaryCameraTrack.HasValue())
+            {
+                writer.WritePropertyName("publishSecondaryCameraTrack");
+                writer.Write(this.publishSecondaryCameraTrack.GetValue());
+            }
+
+            if (this.publishAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishAudioTrack");
+                writer.Write(this.publishAudioTrack.GetValue());
+            }
+
+
+            if (this.publishScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishScreenTrack");
+                writer.Write(this.publishScreenTrack.GetValue());
+            }
+
+
+            if (this.publishSecondaryScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishSecondaryScreenTrack");
+                writer.Write(this.publishSecondaryScreenTrack.GetValue());
+            }
+
+
+            if (this.publishCustomAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishCustomAudioTrack");
+                writer.Write(this.publishCustomAudioTrack.GetValue());
+            }
+
+
+            if (this.publishCustomAudioSourceId.HasValue())
+            {
+                writer.WritePropertyName("publishCustomAudioSourceId");
+                writer.Write(this.publishCustomAudioSourceId.GetValue());
+            }
+
+
+            if (this.publishCustomAudioTrackEnableAec.HasValue())
+            {
+                writer.WritePropertyName("publishCustomAudioTrackEnableAec");
+                writer.Write(this.publishCustomAudioTrackEnableAec.GetValue());
+            }
+
+
+            if (this.publishDirectCustomAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishDirectCustomAudioTrack");
+                writer.Write(this.publishDirectCustomAudioTrack.GetValue());
+            }
+
+
+            if (this.publishCustomAudioTrackAec.HasValue())
+            {
+                writer.WritePropertyName("publishCustomAudioTrackAec");
+                writer.Write(this.publishCustomAudioTrackAec.GetValue());
+            }
+
+            if (this.publishCustomVideoTrack.HasValue())
+            {
+                writer.WritePropertyName("publishCustomVideoTrack");
+                writer.Write(this.publishCustomVideoTrack.GetValue());
+            }
+
+            if (this.publishEncodedVideoTrack.HasValue())
+            {
+                writer.WritePropertyName("publishEncodedVideoTrack");
+                writer.Write(this.publishEncodedVideoTrack.GetValue());
+            }
+
+            if (this.publishMediaPlayerAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishMediaPlayerAudioTrack");
+                writer.Write(this.publishMediaPlayerAudioTrack.GetValue());
+            }
+
+            if (this.publishMediaPlayerVideoTrack.HasValue())
+            {
+                writer.WritePropertyName("publishMediaPlayerVideoTrack");
+                writer.Write(this.publishMediaPlayerVideoTrack.GetValue());
+            }
+
+            if (this.publishTrancodedVideoTrack.HasValue())
+            {
+                writer.WritePropertyName("publishTrancodedVideoTrack");
+                writer.Write(this.publishTrancodedVideoTrack.GetValue());
+            }
+
+            if (this.autoSubscribeAudio.HasValue())
+            {
+                writer.WritePropertyName("autoSubscribeAudio");
+                writer.Write(this.autoSubscribeAudio.GetValue());
+            }
+
+            if (this.autoSubscribeVideo.HasValue())
+            {
+                writer.WritePropertyName("autoSubscribeVideo");
+                writer.Write(this.autoSubscribeVideo.GetValue());
+            }
+
+            if (this.startPreview.HasValue())
+            {
+                writer.WritePropertyName("xxstartPreview");
+                writer.Write(this.startPreview.GetValue());
+            }
+
+            if (this.enableAudioRecordingOrPlayout.HasValue())
+            {
+                writer.WritePropertyName("enableAudioRecordingOrPlayout");
+                writer.Write(this.enableAudioRecordingOrPlayout.GetValue());
+            }
+
+            if (this.publishMediaPlayerId.HasValue())
+            {
+                writer.WritePropertyName("publishMediaPlayerId");
+                writer.Write(this.publishMediaPlayerId.GetValue());
+            }
+
+            if (this.clientRoleType.HasValue())
+            {
+                writer.WritePropertyName("clientRoleType");
+                writer.Write((int)this.clientRoleType.GetValue());
+            }
+
+            if (this.audienceLatencyLevel.HasValue())
+            {
+                writer.WritePropertyName("audienceLatencyLevel");
+                writer.Write((int)this.audienceLatencyLevel.GetValue());
+            }
+
+            if (this.defaultVideoStreamType.HasValue())
+            {
+                writer.WritePropertyName("defaultVideoStreamType");
+                writer.Write((int)this.defaultVideoStreamType.GetValue());
+            }
+
+            if (this.channelProfile.HasValue())
+            {
+                writer.WritePropertyName("channelProfile");
+                writer.Write((int)this.channelProfile.GetValue());
+            }
+
+            if (this.audioDelayMs.HasValue())
+            {
+                writer.WritePropertyName("audioDelayMs");
+                writer.Write((int)this.audioDelayMs.GetValue());
+            }
+
+            if (this.mediaPlayerAudioDelayMs.HasValue())
+            {
+                writer.WritePropertyName("mediaPlayerAudioDelayMs");
+                writer.Write((int)this.mediaPlayerAudioDelayMs.GetValue());
+            }
+
+            if (this.token.HasValue())
+            {
+                writer.WritePropertyName("token");
+                writer.Write(this.token.GetValue());
+            }
+
+            if (this.enableBuiltInMediaEncryption.HasValue())
+            {
+                writer.WritePropertyName("enableBuiltInMediaEncryption");
+                writer.Write(this.enableBuiltInMediaEncryption.GetValue());
+            }
+
+            if (this.publishRhythmPlayerTrack.HasValue())
+            {
+                writer.WritePropertyName("publishRhythmPlayerTrack");
+                writer.Write(this.publishRhythmPlayerTrack.GetValue());
+            }
+
+            writer.WritePropertyName("audioOptionsExternal");
+            audioOptionsExternal.ToJson(writer);
+
+            writer.WriteObjectEnd();
+        }
+
     }
 
     /** The local  proxy mode type. */
@@ -1221,9 +1453,9 @@ The error codes of the local user's audio mixing file.
         public LogConfig logConfig { set; get; }
 
         public AREA_CODE areaCode { set; get; }
-        
 
-        public  THREAD_PRIORITY_TYPE threadPriority { set; get; }
+
+        public THREAD_PRIORITY_TYPE threadPriority { set; get; }
 
         /**
          * Whether use egl context in current thread as sdk‘s root egl context 
@@ -1340,48 +1572,49 @@ The error codes of the local user's audio mixing file.
     };
 
 
-    public class DirectCdnStreamingMediaOptions
+    public class DirectCdnStreamingMediaOptions:OptionalJsonParse
     {
         /**
          * Determines whether to publish the video of the camera track.
          * - true: Publish the video track of the camera capturer.
          * - false: (Default) Do not publish the video track of the camera capturer.
          */
-        public bool publishCameraTrack { set; get; }
+        public Optional<bool> publishCameraTrack = new Optional<bool>();
         /**
          * Determines whether to publish the recorded audio.
          * - true: Publish the recorded audio.
          * - false: (Default) Do not publish the recorded audio.
          */
-        public bool publishMicrophoneTrack { set; get; }
+        public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
         /**
          * Determines whether to publish the audio of the custom audio track.
          * - true: Publish the audio of the custom audio track.
          * - false: (Default) Do not publish the audio of the custom audio track.
          */
-        public bool publishCustomAudioTrack { set; get; }
+        public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
         /**
          * Determines whether to publish the video of the custom video track.
          * - true: Publish the video of the custom video track.
          * - false: (Default) Do not publish the video of the custom video track.
          */
-        public bool publishCustomVideoTrack { set; get; }
+        public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
         /**
         * Determines whether to publish the audio track of media player source.
         * - true: Publish the audio track of media player source.
         * - false: (default) Do not publish the audio track of media player source.
         */
-        public bool publishMediaPlayerAudioTrack { set; get; }
+        public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
         /**
         * Determines which media player source should be published.
         * - DEFAULT_PLAYER_ID(0) is default.
         */
-        public int publishMediaPlayerId { set; get; }
+        public Optional<int> publishMediaPlayerId = new Optional<int>();
+
 
         public DirectCdnStreamingMediaOptions()
         {
-        }
 
+        }
 
         void SetAll(ref DirectCdnStreamingMediaOptions change)
         {
@@ -1392,6 +1625,51 @@ The error codes of the local user's audio mixing file.
             this.publishMediaPlayerAudioTrack = change.publishMediaPlayerAudioTrack;
             this.publishMediaPlayerId = change.publishMediaPlayerId;
         }
+
+        public override void ToJson(JsonWriter writer)
+        {
+            writer.WriteObjectStart();
+
+            if (this.publishCameraTrack.HasValue())
+            {
+                writer.WritePropertyName("publishCameraTrack");
+                writer.Write(this.publishCameraTrack.GetValue());
+            }
+
+            if (this.publishMicrophoneTrack.HasValue())
+            {
+                writer.WritePropertyName("publishMicrophoneTrack");
+                writer.Write(this.publishMicrophoneTrack.GetValue());
+            }
+
+            if (this.publishCustomAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishCustomAudioTrack");
+                writer.Write(this.publishCustomAudioTrack.GetValue());
+            }
+
+            if (this.publishCustomVideoTrack.HasValue())
+            {
+                writer.WritePropertyName("publishCustomVideoTrack");
+                writer.Write(this.publishCustomVideoTrack.GetValue());
+            }
+
+            if (this.publishMediaPlayerAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishMediaPlayerAudioTrack");
+                writer.Write(this.publishMediaPlayerAudioTrack.GetValue());
+            }
+
+            if (this.publishMediaPlayerId.HasValue())
+            {
+                writer.WritePropertyName("publishMediaPlayerId");
+                writer.Write(this.publishMediaPlayerId.GetValue());
+            }
+
+
+            writer.WriteObjectEnd();
+        }
+
 
     }
 

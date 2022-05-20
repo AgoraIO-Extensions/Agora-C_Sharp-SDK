@@ -50,6 +50,17 @@ namespace agora.rtc
         ROUTE_USB
     };
 
+    public enum NLP_AGGRESSIVENESS
+    {
+        NLP_NOT_SPECIFIED = 0,
+        NLP_MILD = 1,
+        NLP_NORMAL = 2,
+        NLP_AGGRESSIVE = 3,
+        NLP_SUPER_AGGRESSIVE = 4,
+        NLP_EXTREME = 5,
+    };
+
+
     /**
    * Bytes per sample
    */

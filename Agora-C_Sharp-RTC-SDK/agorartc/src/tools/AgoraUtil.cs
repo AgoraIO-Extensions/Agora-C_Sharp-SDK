@@ -139,18 +139,9 @@ namespace agora.rtc
             //return ret;
         }
 
-        internal static T JsonToStruct<T>(string data) where T:new()
+        internal static T JsonToStruct<T>(string data) where T : new()
         {
-            if (typeof(T).IsAssignableFrom(typeof(OptionalJsonParse)))
-            {
-                var ret = new T();
-                ((OptionalJsonParse)ret).Parse(data);
-                return ret;
-            }
-            else
-            {
-                return JsonMapper.ToObject<T>(data);
-            }
+            return JsonMapper.ToObject<T>(data);
         }
 
         internal static T JsonToStruct<T>(string data, string key) where T : new()
@@ -176,14 +167,7 @@ namespace agora.rtc
 
         internal static string ToJson<T>(T param)
         {
-            if (param is OptionalJsonParse)
-            {
-                return ((OptionalJsonParse)param).ToJson();
-            }
-            else
-            {
-                return JsonMapper.ToJson(param);
-            }
+            return JsonMapper.ToJson(param);
         }
 
     }

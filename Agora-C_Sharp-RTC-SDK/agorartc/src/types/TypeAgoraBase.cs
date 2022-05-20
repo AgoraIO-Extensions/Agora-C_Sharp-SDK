@@ -5412,7 +5412,6 @@ namespace agora.rtc
     /** 
      * Spatial audio parameters
      */
-    //todo Optional 
     public class SpatialAudioParams : OptionalJsonParse
     {
         /**
@@ -5441,64 +5440,48 @@ namespace agora.rtc
         public Optional<bool> enable_air_absorb = new Optional<bool>();
 
 
-        public string ToJson()
+        public override void ToJson(JsonWriter writer) 
         {
-            var jsonData = new JsonData();
+            writer.WriteObjectStart();
 
             if (this.speaker_azimuth.HasValue())
             {
-                jsonData["speaker_azimuth"] = this.speaker_azimuth.GetValue();
+                writer.WritePropertyName("speaker_azimuth");
+                writer.Write(this.speaker_azimuth.GetValue());
             }
 
             if (this.speaker_elevation.HasValue())
             {
-                jsonData["speaker_elevation"] = this.speaker_elevation.GetValue();
+                writer.WritePropertyName("speaker_elevation");
+                writer.Write(this.speaker_elevation.GetValue());
             }
 
             if (this.speaker_distance.HasValue())
             {
-                jsonData["speaker_distance"] = this.speaker_distance.GetValue();
+                writer.WritePropertyName("speaker_distance");
+                writer.Write(this.speaker_distance.GetValue());
             }
 
             if (this.speaker_orientation.HasValue())
             {
-                jsonData["speaker_orientation"] = this.speaker_orientation.GetValue();
+                writer.WritePropertyName("speaker_orientation");
+                writer.Write(this.speaker_orientation.GetValue());
             }
 
             if (this.enable_blur.HasValue())
             {
-                jsonData["enable_blur"] = this.enable_blur.GetValue();
+                writer.WritePropertyName("enable_blur");
+                writer.Write(this.enable_blur.GetValue());
+
             }
 
             if (this.enable_air_absorb.HasValue())
             {
-                jsonData["enable_air_absorb"] = this.enable_air_absorb.GetValue();
+                writer.WritePropertyName("enable_air_absorb");
+                writer.Write(this.enable_air_absorb.GetValue());
             }
 
-            return jsonData.ToJson();
-        }
-
-        public void Parse(string json)
-        {
-            LitJson.JsonData jsonData = JsonMapper.ToObject(json);
-
-            if (jsonData.ContainsKey("speaker_azimuth"))
-                this.speaker_azimuth.SetValue((double)jsonData["speaker_azimuth"]);
-
-            if (jsonData.ContainsKey("speaker_elevation"))
-                this.speaker_elevation.SetValue((double)jsonData["speaker_elevation"]);
-
-            if (jsonData.ContainsKey("speaker_distance"))
-                this.speaker_distance.SetValue((double)jsonData["speaker_distance"]);
-
-            if (jsonData.ContainsKey("speaker_orientation"))
-                this.speaker_orientation.SetValue((int)jsonData["speaker_orientation"]);
-
-            if (jsonData.ContainsKey("enable_blur"))
-                this.enable_blur.SetValue((bool)jsonData["enable_blur"]);
-
-            if (jsonData.ContainsKey("enable_air_absorb"))
-                this.enable_air_absorb.SetValue((bool)jsonData["enable_air_absorb"]);
+            writer.WriteObjectEnd();
         }
 
     }

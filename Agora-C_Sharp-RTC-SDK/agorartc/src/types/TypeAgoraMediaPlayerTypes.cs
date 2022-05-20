@@ -298,16 +298,37 @@ namespace agora.rtc
 
     /** Values when user trigger interface of opening
 */
-    public class PlayerUpdatedInfo
+    public class PlayerUpdatedInfo:OptionalJsonParse
     {
         /** player_id has value when user trigger interface of opening
         */
-        public string playerId { set; get; }
+        public Optional<string> playerId = new Optional<string>();
 
         /** device_id has value when user trigger interface of opening
         */
-        public string deviceId { set; get; }
-    };
+        public Optional<string> deviceId = new Optional<string>();
+
+
+        public override  void  ToJson(LitJson.JsonWriter writer)
+        {
+
+            writer.WriteObjectStart();
+
+            if (this.playerId.HasValue())
+            {
+                writer.WritePropertyName("playerId");
+                writer.Write(this.playerId.GetValue());
+            }
+              
+            if (this.deviceId.HasValue())
+            {
+                writer.WritePropertyName("deviceId");
+                writer.Write(this.deviceId.GetValue());
+            }
+
+            writer.WriteObjectEnd();
+        }
+    }
     #endregion
 
 
