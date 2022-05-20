@@ -236,7 +236,7 @@ namespace agora.rtc
     /**
      * The error codes.
      */
-    enum ERROR_CODE_TYPE
+    public enum ERROR_CODE_TYPE
     {
         /**
          * 0: No error occurs.
@@ -1008,7 +1008,7 @@ namespace agora.rtc
     /**
     * The network quality types.
     */
-    enum QUALITY_TYPE
+    public enum QUALITY_TYPE
     {
         /**
          * 0: The network quality is unknown.
@@ -3031,8 +3031,8 @@ namespace agora.rtc
     */
     public class DeviceInfo
     {
-        string deviceName;
-        string deviceId;
+        public string deviceName;
+        public string deviceId;
     };
 
 
@@ -3314,13 +3314,13 @@ namespace agora.rtc
 
     public class LiveStreamAdvancedFeature
     {
-        LiveStreamAdvancedFeature()
+        public LiveStreamAdvancedFeature()
         {
             featureName = null;
             opened = false;
         }
 
-        LiveStreamAdvancedFeature(string feat_name, bool open)
+        public LiveStreamAdvancedFeature(string feat_name, bool open)
         {
             featureName = feat_name;
             opened = open;
@@ -4244,7 +4244,7 @@ namespace agora.rtc
             _ss[4] = -4.4564f;
         }
 
-        FishCorrectionParams(float x_center, float y_center, float scale_factor, float focal_length, float pol_focal_length, float split_height, float[] ss)
+        public FishCorrectionParams(float x_center, float y_center, float scale_factor, float focal_length, float pol_focal_length, float split_height, float[] ss)
         {
             this._x_center = x_center;
             this._y_center = y_center;
@@ -4847,7 +4847,7 @@ namespace agora.rtc
         AREA_CODE_GLOB = 0xFFFFFFFF
     };
 
-    enum AREA_CODE_EX:uint
+    public enum AREA_CODE_EX:uint
     {
         /**
          * Oceania

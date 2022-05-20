@@ -423,7 +423,7 @@ The error codes of the local user's audio mixing file.
          */
         public double alpha { set; get; }
 
-        RENDER_MODE_TYPE renderMode;  // RENDER_MODE_HIDDEN: Crop, RENDER_MODE_FIT: Zoom to fit
+        public RENDER_MODE_TYPE renderMode;  // RENDER_MODE_HIDDEN: Crop, RENDER_MODE_FIT: Zoom to fit
 
         public Region()
         {
@@ -617,7 +617,7 @@ The error codes of the local user's audio mixing file.
         */
         public string extraInfo { set; get; }
 
-        PublisherConfiguration()
+        public PublisherConfiguration()
         {
             width = 640;
             height = 360;
@@ -751,14 +751,14 @@ The error codes of the local user's audio mixing file.
 
     public class ThumbImageBuffer
     {
-        public byte[] buffer { set; get; }
+        public Int64 buffer { set; get; }
         public uint length { set; get; }
         public uint width { set; get; }
         public uint height { set; get; }
 
         public ThumbImageBuffer()
         {
-            buffer = null;
+            buffer = 0;
             length = 0;
             width = 0;
             height = 0;
@@ -977,9 +977,9 @@ The error codes of the local user's audio mixing file.
         public bool publishRhythmPlayerTrack;
 
 
-        AudioOptionsExternal audioOptionsExternal;
+        public AudioOptionsExternal audioOptionsExternal;
 
-        ChannelMediaOptions() { }
+        public ChannelMediaOptions() { }
 
 
         void SetAll(ref ChannelMediaOptions change)
@@ -1152,12 +1152,11 @@ The error codes of the local user's audio mixing file.
         }
 
 
-        public RtcEngineContext(IAgoraRtcEngineEventHandler eventHandler, string appId, byte[] context,
+        public RtcEngineContext(string appId, byte[] context,
             bool enableAudioDevice, CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
             LogConfig logConfig = null)
         {
-            this.eventHandler = eventHandler;
             this.appId = appId;
             this.context = context;
             this.enableAudioDevice = enableAudioDevice;
@@ -1170,7 +1169,7 @@ The error codes of the local user's audio mixing file.
         /**
         * The event handler for IRtcEngine.
         */
-        public IAgoraRtcEngineEventHandler eventHandler { set; get; }
+        private IAgoraRtcEngineEventHandler eventHandler = null;
         /**
          * The App ID issued to you by Agora. See [How to get the App ID](https://docs.agora.io/en/Agora%20Platform/token#get-an-app-id).
          * Only users in apps with the same App ID can join the same channel and communicate with each other. Use an App ID to create only

@@ -9,7 +9,7 @@ namespace agora.rtc
             return true;
         }
 
-        public virtual bool OnPreEncodeVideoFrame(VideoFrame videoFrame)
+        public virtual bool OnPreEncodeVideoFrame(VideoFrame videoFrame, VideoFrameBufferConfig config)
         {
             return true;
         }

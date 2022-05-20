@@ -5153,24 +5153,24 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        // public override int GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
-        // {
-        //     var param = new
-        //     {
-        //         thumbSize,
-        //         iconSize,
-        //         includeScreen
-        //     };
+        public override ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
+        {
+            var param = new
+            {
+                thumbSize,
+                iconSize,
+                includeScreen
+            };
 
-        //     var json = JsonMapper.ToJson(param);
-        //     var jsonLength = Convert.ToUInt64(json.Length);
-        //     var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
-        //         json, jsonLength,
-        //         IntPtr.Zero, 0,
-        //         out _result);
-
-        //     return nRet;
-        // }
+            var json = JsonMapper.ToJson(param);
+            var jsonLength = Convert.ToUInt64(json.Length);
+            return AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
+                json, jsonLength,
+                IntPtr.Zero, 0,
+                out _result) != null ?
+                new ScreenCaptureSourceInfo[0]
+                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfo>(_result.Result, "result");
+        }
 
         #region CallIrisApiWithBuffer
 

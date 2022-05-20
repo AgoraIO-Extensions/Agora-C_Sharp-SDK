@@ -614,7 +614,7 @@ namespace agora.rtc
 
         public abstract int UploadLogFile(ref string requestId);
 
-        //public abstract int GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
+        public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
     };
 
     internal static partial class ObsoleteMethodWarning
