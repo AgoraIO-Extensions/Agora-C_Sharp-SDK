@@ -1370,7 +1370,7 @@ The error codes of the local user's audio mixing file.
    */
     public class RtcEngineContext : OptionalJsonParse
     {
-        RtcEngineContext()
+        public RtcEngineContext()
         {
             eventHandler = null;
             appId = null;
