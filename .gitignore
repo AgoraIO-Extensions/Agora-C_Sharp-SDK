@@ -16,3 +16,4 @@ obj/
 *.7z
 binx86/
 binx64/
+CSharp-API_Example/
