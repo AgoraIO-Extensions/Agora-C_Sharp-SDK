@@ -15,12 +15,13 @@ namespace agora.rtc
         private VIDEO_SOURCE_TYPE sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
 
         private bool _needResize = false;
+        private bool _needUpdateInfo = true;
         private bool isFresh = false;
 
         private IVideoStreamManager _videoStreamManager;
         private IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
 
-        // refrence count
+        // reference count
         private int refCount = 0;
 
         private Texture2D _texture;
@@ -36,14 +37,13 @@ namespace agora.rtc
 
         private void Awake()
         {
-            _cachedVideoFrame.y_buffer = IntPtr.Zero;
-            _cachedVideoFrame.u_buffer = IntPtr.Zero;
-            _cachedVideoFrame.v_buffer = IntPtr.Zero;
             InitTexture();
+            InitIrisVideoFrame();
         }
 
         private void Update()
         {
+            if (_needUpdateInfo) return;
             ReFreshTexture();
         }
 
@@ -59,6 +59,34 @@ namespace agora.rtc
 
             FreeMemory();
             DestroyTexture();
+        }
+
+        private void InitTexture()
+        {
+            try
+            {
+                _texture = new Texture2D(VideoPixelWidth, VideoPixelHeight, TextureFormat.RGBA32, false);
+                _texture.Apply();
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("Exception e = " + e);
+            }
+        }
+
+        private void InitIrisVideoFrame()
+        {
+            _cachedVideoFrame = new IrisVideoFrame
+            {
+                type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
+                y_stride = VideoPixelWidth * 4,
+                height = VideoPixelHeight,
+                width = VideoPixelWidth,
+                y_buffer = Marshal.AllocHGlobal(VideoPixelWidth * VideoPixelHeight * 4)
+            };
+            _cachedVideoFrame.y_buffer = IntPtr.Zero;
+            _cachedVideoFrame.u_buffer = IntPtr.Zero;
+            _cachedVideoFrame.v_buffer = IntPtr.Zero;
         }
 
         internal int GetRefCount()
@@ -79,30 +107,8 @@ namespace agora.rtc
                 if (_videoStreamManager != null)
                 {
                     _videoStreamManager.EnableVideoFrameBuffer(sourceType, Uid, ChannelId);
+                    _needUpdateInfo = false;
                 }
-            
-                FreeMemory();
-                _cachedVideoFrame = new IrisVideoFrame
-                {
-                    type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
-                    y_stride = VideoPixelWidth * 4,
-                    height = VideoPixelHeight,
-                    width = VideoPixelWidth,
-                    y_buffer = Marshal.AllocHGlobal(VideoPixelWidth * VideoPixelHeight * 4)
-                };
-            }
-        }
-
-        internal void InitTexture()
-        {
-            try
-            {
-                _texture = new Texture2D(VideoPixelWidth, VideoPixelHeight, TextureFormat.RGBA32, false);
-                _texture.Apply();
-            }
-            catch (Exception e)
-            {
-                AgoraLog.LogError("Exception e = " + e);
             }
         }
 

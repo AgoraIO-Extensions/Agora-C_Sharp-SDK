@@ -26,7 +26,7 @@ namespace agora.rtc
         private Component _renderer;
         private bool _needUpdateInfo = true;
 
-        private GameObject _CallbackGameObject;
+        private GameObject _TextureManagerGameObject;
         private TextureManager _textureManager;
         private Texture2D _texture;
 
@@ -44,20 +44,19 @@ namespace agora.rtc
             {
                 if (IsBlankTexture())
                 {
-                    _CallbackGameObject = GameObject.Find("TextureManager" + Uid.ToString());
+                    _TextureManagerGameObject = GameObject.Find("TextureManager" + Uid.ToString() + ChannelId + sourceType.ToString());
 
-                    if (_CallbackGameObject == null)
+                    if (_TextureManagerGameObject == null)
                     {
-                        AgoraLog.Log("VideoSurface can't find _textureManager in pool");
-                        _CallbackGameObject = new GameObject("TextureManager" + Uid.ToString());
-                        _CallbackGameObject.hideFlags = HideFlags.HideInHierarchy;
+                        _TextureManagerGameObject = new GameObject("TextureManager" + Uid.ToString() + ChannelId + sourceType.ToString());
+                        _TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
 
-                        _textureManager = _CallbackGameObject.AddComponent<TextureManager>();
+                        _textureManager = _TextureManagerGameObject.AddComponent<TextureManager>();
                         _texture = GetTexture();
                     }
                     else
                     {
-                        _textureManager = _CallbackGameObject.GetComponent<TextureManager>();
+                        _textureManager = _TextureManagerGameObject.GetComponent<TextureManager>();
                         _texture = _textureManager.texture;
                     }
                     ApplyTexture(_texture);
@@ -67,7 +66,6 @@ namespace agora.rtc
             {
                 if (!IsBlankTexture())
                 {
-                    DestroyTextureManager();
                     ApplyTexture(null);
                 }
             }
@@ -121,7 +119,7 @@ namespace agora.rtc
             _textureManager.Destroy();
             if (_textureManager.GetRefCount() == 0)
             {
-                Destroy(_CallbackGameObject);
+                Destroy(_TextureManagerGameObject);
             }
             _textureManager = null;
         }
