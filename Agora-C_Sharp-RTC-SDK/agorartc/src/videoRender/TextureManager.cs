@@ -1,28 +1,19 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Threading;
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.UI;
-#endif
-
 
 namespace agora.rtc
 {
- 
-
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-    internal class TextureManager
+    internal class TextureManager : MonoBehaviour
     {
-        private int VideoPixelWidth = 1080;
+        // texture identity
+        private int VideoPixelWidth = 1280;
         private int VideoPixelHeight = 720;
         private uint Uid = 0;
         private string ChannelId = "";
         private VIDEO_SOURCE_TYPE sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+
         private bool _needResize = false;
         private bool isFresh = false;
 
@@ -30,29 +21,49 @@ namespace agora.rtc
         private IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
 
         // refrence count
-        private int useCount = 0;
+        private int refCount = 0;
 
         private Texture2D _texture;
         public Texture2D texture
         {
             get 
             {
-                useCount++;
-                AgoraLog.Log("TextureManager UseCount Add, Now is: " + useCount);
+                refCount++;
+                AgoraLog.Log("TextureManager refCount Add, Now is: " + refCount);
                 return _texture;
             }
         }
 
-        public TextureManager()
+        private void Awake()
         {
             _cachedVideoFrame.y_buffer = IntPtr.Zero;
             _cachedVideoFrame.u_buffer = IntPtr.Zero;
             _cachedVideoFrame.v_buffer = IntPtr.Zero;
+            InitTexture();
         }
 
-        internal int GetUserCount()
+        private void Update()
         {
-            return useCount;
+            ReFreshTexture();
+        }
+
+        private void OnDestroy()
+        {
+            AgoraLog.Log(string.Format("VideoSurface channel: ${0}, user:{1} destroy", ChannelId, Uid));
+
+            if (_videoStreamManager != null)
+            {
+                _videoStreamManager.DisableVideoFrameBuffer(sourceType, Uid, ChannelId);
+                _videoStreamManager = null;
+            }
+
+            FreeMemory();
+            DestroyTexture();
+        }
+
+        internal int GetRefCount()
+        {
+            return refCount;
         }
 
         internal void EnableVideoFrameWithIdentity()
@@ -67,10 +78,9 @@ namespace agora.rtc
 
                 if (_videoStreamManager != null)
                 {
-                    _videoStreamManager.EnableVideoFrameBuffer(VideoPixelWidth, VideoPixelHeight, sourceType, Uid, ChannelId);
+                    _videoStreamManager.EnableVideoFrameBuffer(sourceType, Uid, ChannelId);
                 }
             
-                _needResize = true;
                 FreeMemory();
                 _cachedVideoFrame = new IrisVideoFrame
                 {
@@ -96,7 +106,7 @@ namespace agora.rtc
             }
         }
 
-        internal void RenewVideoFrame()
+        internal void ReFreshTexture()
         {
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, sourceType, Uid, ChannelId);
             AgoraLog.LogWarning("GetVideoFrame" + ret + " width:" + _cachedVideoFrame.width + " height:" + _cachedVideoFrame.height);
@@ -128,8 +138,6 @@ namespace agora.rtc
                     if (_needResize)
                     {
                         _texture.Resize(VideoPixelWidth, VideoPixelHeight);
-                        // _texture.LoadRawTextureData(_cachedVideoFrame.y_buffer,
-                        //     (int) VideoPixelWidth * (int) VideoPixelHeight * 4);
                         _texture.Apply();
                         _needResize = false;
                     }
@@ -148,32 +156,20 @@ namespace agora.rtc
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",
-            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY, 
-            int videoPixelWidth = 1080, int videoPixelHeight = 720)
+            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
             Uid = uid;
             ChannelId = channelId;
             sourceType = source_type;
-            VideoPixelWidth = videoPixelWidth;
-            VideoPixelHeight = videoPixelHeight;
         }
 
         internal void Destroy()
         {
             AgoraLog.Log(string.Format("VideoSurface channel: ${0}, user:{1} destroy", ChannelId, Uid));
 
-            useCount --;
-            AgoraLog.Log("TextureManager UseCount Minus, Now is: " + useCount);
-            if (useCount >= 1) return;
-
-            if (_videoStreamManager != null)
-            {
-                _videoStreamManager.DisableVideoFrameBuffer(sourceType, Uid, ChannelId);
-                _videoStreamManager = null;
-            }
-
-            FreeMemory();
-            DestroyTexture();
+            refCount --;
+            AgoraLog.Log("TextureManager refCount Minus, Now is: " + refCount);
+            return;
         }
 
         private void DestroyTexture()
@@ -194,5 +190,5 @@ namespace agora.rtc
         }
 
     }
-#endif
 }
+#endif

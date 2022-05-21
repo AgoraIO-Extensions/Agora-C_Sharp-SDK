@@ -1,7 +1,6 @@
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace agora.rtc
 {
@@ -9,7 +8,7 @@ namespace agora.rtc
     
     internal abstract class IVideoStreamManager
     {
-        internal abstract int EnableVideoFrameBuffer(int width, int height, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
+        internal abstract int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
 
         internal abstract void DisableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "");
 
@@ -37,7 +36,7 @@ namespace agora.rtc
             Dispose();
         }
 
-        internal override int EnableVideoFrameBuffer(int width, int height, VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "")
+        internal override int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "")
         {
             if (_agoraRtcEngine == null)
             {
@@ -53,8 +52,8 @@ namespace agora.rtc
                 _videoFrameBuffer = new IrisCVideoFrameBufferNative {
                     type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
                     OnVideoFrameReceived = IntPtr.Zero,
-                    resize_width = width,
-                    resize_height = height
+                    resize_width = 0,
+                    resize_height = 0
                 };
 
                 _videoFrameBufferConfig = new IrisVideoFrameBufferConfig

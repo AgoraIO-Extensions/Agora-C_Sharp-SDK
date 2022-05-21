@@ -1,7 +1,5 @@
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 
-using System;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,82 +11,53 @@ namespace agora.rtc
         RawImage = 1,
     };
 
-    public struct AgoraVideoStreamIdentity
-    {
-        public uint uid;
-        public string channelId;
-        public VIDEO_SOURCE_TYPE sourceType;
-    }
-
     public sealed class AgoraVideoSurface : MonoBehaviour
     {
         [SerializeField] private AgoraVideoSurfaceType VideoSurfaceType = AgoraVideoSurfaceType.Renderer;
+        [SerializeField] private bool Enable = true;
         [SerializeField] private bool FlipX = false;
         [SerializeField] private bool FlipY = false;
-        [SerializeField] private int VideoPixelWidth = 1080;
-        [SerializeField] private int VideoPixelHeight = 720;
+        [SerializeField] private int VideoPixelWidth = 0;
+        [SerializeField] private int VideoPixelHeight = 0;
         [SerializeField] private uint Uid = 0;
         [SerializeField] private string ChannelId = "";
-        [SerializeField] private bool Enable = true;
         [SerializeField] private VIDEO_SOURCE_TYPE sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
-
 
         private Component _renderer;
         private bool _needUpdateInfo = true;
-        private bool _needResize = false;
-        private Texture2D _texture;
-        private IVideoStreamManager _videoStreamManager;
-        private IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
 
-        private AgoraObjectPool<TextureManager, AgoraVideoStreamIdentity> _texturePool;
+        private GameObject _CallbackGameObject;
         private TextureManager _textureManager;
-        private bool isFirstUser = false;
+        private Texture2D _texture;
 
-        private AgoraVideoStreamIdentity _identity;
 
         void Start()
         {
             CheckVideoSurfaceType();
-
-            //instance AgoraObjectPool
-            _texturePool = AgoraObjectPool<TextureManager, AgoraVideoStreamIdentity>.Instacne;
         }
 
         void Update()
         {
-            var ret = false;
+            if (_renderer == null || _needUpdateInfo) return;
 
-            if (_renderer == null || _needUpdateInfo || _texturePool == null)
-            {
-                AgoraLog.LogError("VideoSurface need to initialize engine first");
-                return;
-            }
-
-            //GetVideoFrame
-            if (_textureManager != null && (isFirstUser || _textureManager.GetUserCount() == 1)) {
-                _textureManager.RenewVideoFrame();
-            }
-            
             if (Enable)
             {
                 if (IsBlankTexture())
                 {
-                    _identity = new AgoraVideoStreamIdentity();
-                    _identity.uid = Uid;
-                    _identity.channelId = ChannelId;
-                    _identity.sourceType = sourceType;
-                    _textureManager = _texturePool.GetObj(_identity);
+                    _CallbackGameObject = GameObject.Find("TextureManager" + Uid.ToString());
 
-                    if (_textureManager == null)
+                    if (_CallbackGameObject == null)
                     {
                         AgoraLog.Log("VideoSurface can't find _textureManager in pool");
-                        _textureManager = new TextureManager();
-                        _texturePool.AddObj(_identity, _textureManager);
+                        _CallbackGameObject = new GameObject("TextureManager" + Uid.ToString());
+                        _CallbackGameObject.hideFlags = HideFlags.HideInHierarchy;
+
+                        _textureManager = _CallbackGameObject.AddComponent<TextureManager>();
                         _texture = GetTexture();
-                        isFirstUser = true;
                     }
                     else
                     {
+                        _textureManager = _CallbackGameObject.GetComponent<TextureManager>();
                         _texture = _textureManager.texture;
                     }
                     ApplyTexture(_texture);
@@ -98,6 +67,7 @@ namespace agora.rtc
             {
                 if (!IsBlankTexture())
                 {
+                    DestroyTextureManager();
                     ApplyTexture(null);
                 }
             }
@@ -106,14 +76,7 @@ namespace agora.rtc
         void OnDestroy()
         {
             AgoraLog.Log(string.Format("VideoSurface channel: ${0}, user:{1} destroy", ChannelId, Uid));
-            isFirstUser = false;
-
-            _textureManager.Destroy();
-            if(_textureManager.GetUserCount() == 0)
-            {
-                _texturePool.DelObj(_identity);
-            }
-            _textureManager = null;
+            DestroyTextureManager();
         }
 
         private void CheckVideoSurfaceType()
@@ -147,10 +110,20 @@ namespace agora.rtc
 
         private Texture2D GetTexture()
         {
-            _textureManager.SetVideoStreamIdentity(Uid, ChannelId, sourceType, VideoPixelWidth, VideoPixelHeight);
-            _textureManager.InitTexture();
+            _textureManager.SetVideoStreamIdentity(Uid, ChannelId, sourceType);
             _textureManager.EnableVideoFrameWithIdentity();
             return _textureManager.texture;
+        }
+
+        private void DestroyTextureManager()
+        {
+            if (_textureManager == null) return;
+            _textureManager.Destroy();
+            if (_textureManager.GetRefCount() == 0)
+            {
+                Destroy(_CallbackGameObject);
+            }
+            _textureManager = null;
         }
 
         private bool IsBlankTexture()
@@ -195,14 +168,11 @@ namespace agora.rtc
         }
 
         public void SetForUser(uint uid = 0, string channelId = "",
-            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY, 
-            int videoPixelWidth = 1080, int videoPixelHeight = 720)
+            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
             Uid = uid;
             ChannelId = channelId;
             sourceType = source_type;
-            VideoPixelWidth = videoPixelWidth;
-            VideoPixelHeight = videoPixelHeight;
             _needUpdateInfo = false;
         }
 
