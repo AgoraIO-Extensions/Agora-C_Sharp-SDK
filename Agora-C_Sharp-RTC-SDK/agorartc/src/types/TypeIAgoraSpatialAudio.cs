@@ -97,7 +97,7 @@
         public IAgoraRtcEngine rtcEngine { set; get; }
         /** The SDK uses the eventHandler interface class to send callbacks to the app.
            */
-        public IAgoraRtcCloudSpatialAudioEngineEventHandler eventHandler { set; get; }
+        public IAgoraCloudSpatialAudioEventHandler eventHandler { set; get; }
         /** The App ID must be the same App ID used for initializing the IRtcEngine object.
            */
         public string appId { set; get; }

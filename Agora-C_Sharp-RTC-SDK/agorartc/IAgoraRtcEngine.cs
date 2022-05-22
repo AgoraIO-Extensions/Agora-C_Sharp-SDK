@@ -36,11 +36,11 @@ namespace agora.rtc
 
         public abstract IAgoraRtcVideoDeviceManager GetAgoraRtcVideoDeviceManager();
 
-        public abstract IAgoraRtcMediaPlayer GetAgoraRtcMediaPlayer();
+        public abstract IAgoraMediaPlayer GetAgoraMediaPlayer();
 
-        public abstract IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine();
+        public abstract IAgoraCloudSpatialAudioEngine GetAgoraCloudSpatialAudioEngine();
 
-        public abstract IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine();
+        public abstract IAgoraLocalSpatialAudioEngine GetAgoraLocalSpatialAudioEngine();
 
         public abstract string GetVersion();
 

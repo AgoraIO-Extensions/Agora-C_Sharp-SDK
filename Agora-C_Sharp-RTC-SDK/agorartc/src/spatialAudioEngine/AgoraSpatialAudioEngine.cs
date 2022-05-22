@@ -10,13 +10,13 @@ namespace agora.rtc
 
     using IrisEventHandlerHandleNative = IntPtr;
 
-    public sealed class AgoraRtcCloudSpatialAudioEngine : IAgoraRtcCloudSpatialAudioEngine
+    public sealed class AgoraCloudSpatialAudioEngine : IAgoraCloudSpatialAudioEngine
     {
         private bool _disposed = false;
         private static readonly string identifier = "AgoraRtcSpatialAudioEngine";
 
         private IrisApiEnginePtr _irisApiEngine;
-        private AgoraRtcCloudSpatialAudioEngineEventHandler _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
+        private AgoraCloudSpatialAudioEventHandler _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -28,14 +28,14 @@ namespace agora.rtc
         private AgoraCallbackObject _callbackObject;
 #endif
 
-        internal AgoraRtcCloudSpatialAudioEngine(IrisApiEnginePtr irisApiEngine)
+        internal AgoraCloudSpatialAudioEngine(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
             CreateEventHandler();
         }
 
-        ~AgoraRtcCloudSpatialAudioEngine()
+        ~AgoraCloudSpatialAudioEngine()
         {
             Dispose(false);
         }
@@ -84,11 +84,11 @@ namespace agora.rtc
                     AgoraRtcNative.SetIrisCloudAudioEngineEventHandler(_irisApiEngine, _irisCEngineEventHandlerNative);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
+                _callbackObject = new AgoraCallbackObject(identifier);
                 RtcCloudSpatialAudioEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance = AgoraRtcCloudSpatialAudioEngineEventHandler.GetInstance();
+            _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance = AgoraCloudSpatialAudioEventHandler.GetInstance();
             RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
         }
 
@@ -105,17 +105,17 @@ namespace agora.rtc
             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
-        public override AgoraRtcCloudSpatialAudioEngineEventHandler GetAgoraRtcCloudSpatialAudioEngineEventHandler()
+        public override AgoraCloudSpatialAudioEventHandler GetAgoraCloudSpatialAudioEventHandler()
         {
             return _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
         }
 
-        public override void InitEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler)
+        public override void InitEventHandler(IAgoraCloudSpatialAudioEventHandler engineEventHandler)
         {
             RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
         }
 
-        public override void RemoveEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler)
+        public override void RemoveEventHandler(IAgoraCloudSpatialAudioEventHandler engineEventHandler)
         {
             RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
         }
@@ -346,7 +346,7 @@ namespace agora.rtc
         }
     }
 
-    public sealed class AgoraRtcSpatialAudioEngine : IAgoraRtcSpatialAudioEngine
+    public sealed class AgoraLocalSpatialAudioEngine : IAgoraLocalSpatialAudioEngine
     {
         private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
@@ -354,13 +354,13 @@ namespace agora.rtc
         private bool _initialized = false;
         private const int UNINITIALIZED = -99;
 
-        internal AgoraRtcSpatialAudioEngine(IrisApiEnginePtr irisApiEngine)
+        internal AgoraLocalSpatialAudioEngine(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
         }
 
-        ~AgoraRtcSpatialAudioEngine()
+        ~AgoraLocalSpatialAudioEngine()
         {
             Dispose();
         }
@@ -622,7 +622,7 @@ namespace agora.rtc
 
     internal static class RtcCloudSpatialAudioEngineEventHandlerNative
     {
-        internal static IAgoraRtcCloudSpatialAudioEngineEventHandler CloudSpatialAudioEngineEventHandler = null;
+        internal static IAgoraCloudSpatialAudioEventHandler CloudSpatialAudioEngineEventHandler = null;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         internal static AgoraCallbackObject CallbackObject = null;
 #endif

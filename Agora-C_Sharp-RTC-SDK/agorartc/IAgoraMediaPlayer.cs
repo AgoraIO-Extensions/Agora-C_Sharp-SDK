@@ -2,23 +2,19 @@ using System;
 
 namespace agora.rtc
 {
-
-    public abstract class IAgoraRtcMediaPlayer : IRtcMediaPlayer
-    {
-    }
-
-    public abstract class IRtcMediaPlayer
+    public abstract class IAgoraMediaPlayer
     {
         public abstract void Dispose();
+
         public abstract int CreateMediaPlayer();
 
         public abstract int DestroyMediaPlayer(int playerId);
 
-        public abstract AgoraRtcMediaPlayerEventHandler GetAgoraRtcMediaPlayerEventHandler();
+        public abstract MediaPlayerSourceObserver GetAgoraRtcMediaPlayerEventHandler();
 
-        public abstract void InitEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler);
+        public abstract void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
-        public abstract void RemoveEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler);
+        public abstract void RemoveEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
         public abstract void RegisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer);
 
@@ -133,7 +129,7 @@ namespace agora.rtc
         public abstract int UnloadSrc(string src);
     }
 
-    public abstract class IAgoraRtcMediaPlayerEventHandler
+    public abstract class IMediaPlayerSourceObserver
     {
         public virtual void OnPlayerSourceStateChanged(int playerId, MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec) { }
 

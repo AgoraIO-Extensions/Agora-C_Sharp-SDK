@@ -78,9 +78,9 @@ namespace agora.rtc
 
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
-        private AgoraRtcMediaPlayer _mediaPlayerInstance;
-        private AgoraRtcCloudSpatialAudioEngine _cloudSpatialAudioEngineInstance;
-        private AgoraRtcSpatialAudioEngine _spatialAudioEngineInstance;
+        private AgoraMediaPlayer _mediaPlayerInstance;
+        private AgoraCloudSpatialAudioEngine _cloudSpatialAudioEngineInstance;
+        private AgoraLocalSpatialAudioEngine _spatialAudioEngineInstance;
 
         private AgoraRtcEngine()
         {
@@ -91,7 +91,7 @@ namespace agora.rtc
             _videoDeviceManagerInstance = new AgoraRtcVideoDeviceManager(_irisRtcEngine);
             _audioPlaybackDeviceManagerInstance = new AgoraRtcAudioPlaybackDeviceManager(_irisRtcEngine);
             _audioRecordingDeviceManagerInstance = new AgoraRtcAudioRecordingDeviceManager(_irisRtcEngine);
-            _mediaPlayerInstance = new AgoraRtcMediaPlayer(_irisRtcEngine);
+            _mediaPlayerInstance = new AgoraMediaPlayer(_irisRtcEngine);
             //_cloudSpatialAudioEngineInstance = new AgoraRtcCloudSpatialAudioEngine(_irisRtcEngine);
             //_spatialAudioEngineInstance = new AgoraRtcSpatialAudioEngine(_irisRtcEngine);
 
@@ -499,17 +499,17 @@ namespace agora.rtc
             return _videoDeviceManagerInstance;
         }
 
-        public override IAgoraRtcMediaPlayer GetAgoraRtcMediaPlayer()
+        public override IAgoraMediaPlayer GetAgoraMediaPlayer()
         {
             return _mediaPlayerInstance;
         }
 
-        public override IAgoraRtcCloudSpatialAudioEngine GetAgoraRtcCloudSpatialAudioEngine()
+        public override IAgoraCloudSpatialAudioEngine GetAgoraCloudSpatialAudioEngine()
         {
             return _cloudSpatialAudioEngineInstance;
         }
 
-        public override IAgoraRtcSpatialAudioEngine GetAgoraRtcSpatialAudioEngine()
+        public override IAgoraLocalSpatialAudioEngine GetAgoraLocalSpatialAudioEngine()
         {
             return _spatialAudioEngineInstance;
         }

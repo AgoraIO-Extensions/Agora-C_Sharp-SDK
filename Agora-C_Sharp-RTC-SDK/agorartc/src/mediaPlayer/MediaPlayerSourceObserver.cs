@@ -25,7 +25,7 @@ namespace agora.rtc
 
     public delegate void MediaPlayerOnAudioVolumeIndicationHandler(int playerId, int volume);
     
-    public class AgoraRtcMediaPlayerEventHandler : IAgoraRtcMediaPlayerEventHandler
+    public class MediaPlayerSourceObserver : IMediaPlayerSourceObserver
     {
         public event OnPlayerSourceStateChangedHandler EventOnPlayerSourceStateChanged;
         public event OnPositionChangedHandler EventOnPositionChanged;
@@ -38,11 +38,11 @@ namespace agora.rtc
         public event OnPlayerInfoUpdatedHandler EventOnPlayerInfoUpdated;
         public event MediaPlayerOnAudioVolumeIndicationHandler EventOnAudioVolumeIndication;
 
-        private static AgoraRtcMediaPlayerEventHandler eventInstance = null;
+        private static MediaPlayerSourceObserver eventInstance = null;
 
-        public static AgoraRtcMediaPlayerEventHandler GetInstance()
+        public static MediaPlayerSourceObserver GetInstance()
         {
-            return eventInstance ?? (eventInstance = new AgoraRtcMediaPlayerEventHandler());
+            return eventInstance ?? (eventInstance = new MediaPlayerSourceObserver());
         }
 
         public override void OnPlayerSourceStateChanged(int playerId, MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)

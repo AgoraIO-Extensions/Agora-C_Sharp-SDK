@@ -2,13 +2,13 @@ using System;
 
 namespace agora.rtc
 {
-    public abstract class IAgoraRtcCloudSpatialAudioEngine
+    public abstract class IAgoraCloudSpatialAudioEngine
     {
-        public abstract AgoraRtcCloudSpatialAudioEngineEventHandler GetAgoraRtcCloudSpatialAudioEngineEventHandler();
+        public abstract AgoraCloudSpatialAudioEventHandler GetAgoraCloudSpatialAudioEventHandler();
         
-        public abstract void InitEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler);
+        public abstract void InitEventHandler(IAgoraCloudSpatialAudioEventHandler engineEventHandler);
 
-        public abstract void RemoveEventHandler(IAgoraRtcCloudSpatialAudioEngineEventHandler engineEventHandler);
+        public abstract void RemoveEventHandler(IAgoraCloudSpatialAudioEventHandler engineEventHandler);
 
         public abstract int Initialize(CloudSpatialAudioConfig config);
 
@@ -47,7 +47,7 @@ namespace agora.rtc
         public abstract int RenewToken(string token);
     }
 
-    public abstract class IAgoraRtcSpatialAudioEngine
+    public abstract class IAgoraLocalSpatialAudioEngine
     {
         public abstract void Dispose();
 
@@ -84,7 +84,7 @@ namespace agora.rtc
         public abstract int ClearRemotePositionsEx(RtcConnection connection);
     }
 
-    public abstract class IAgoraRtcCloudSpatialAudioEngineEventHandler
+    public abstract class IAgoraCloudSpatialAudioEventHandler
     {
         public virtual void OnTokenWillExpire() {}
   

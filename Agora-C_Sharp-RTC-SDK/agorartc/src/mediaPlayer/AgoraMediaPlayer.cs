@@ -17,12 +17,12 @@ namespace agora.rtc
     using IrisMediaPlayerCAudioSpectrumObserverNativeMarshal = IntPtr;
     using IrisMediaPlayerCAudioSpectrumObserverHandleNative = IntPtr;
 
-    public sealed class AgoraRtcMediaPlayer : IAgoraRtcMediaPlayer
+    public sealed class AgoraMediaPlayer : IAgoraMediaPlayer
     {
         private bool _disposed = false;
 
         private IrisApiEnginePtr _irisApiEngine;
-        private AgoraRtcMediaPlayerEventHandler _mediaPlayerEventHandlerInstance;
+        private MediaPlayerSourceObserver _mediaPlayerEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -48,17 +48,17 @@ namespace agora.rtc
         
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         private AgoraCallbackObject _callbackObject;
-        private static readonly string identifier = "AgoraRtcMediaPlayer";
+        private static readonly string identifier = "AgoraMediaPlayer";
 #endif
 
-        internal AgoraRtcMediaPlayer(IrisApiEnginePtr irisApiEngine)
+        internal AgoraMediaPlayer(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
             CreateEventHandler();
         }
 
-        ~AgoraRtcMediaPlayer()
+        ~AgoraMediaPlayer()
         {
             Dispose(false);
         }
@@ -113,7 +113,7 @@ namespace agora.rtc
                 RtcMediaPlayerEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _mediaPlayerEventHandlerInstance = AgoraRtcMediaPlayerEventHandler.GetInstance();
+            _mediaPlayerEventHandlerInstance = MediaPlayerSourceObserver.GetInstance();
             RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = _mediaPlayerEventHandlerInstance;
         }
 
@@ -297,17 +297,17 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
 
-        public override AgoraRtcMediaPlayerEventHandler GetAgoraRtcMediaPlayerEventHandler()
+        public override MediaPlayerSourceObserver GetAgoraRtcMediaPlayerEventHandler()
         {
             return _mediaPlayerEventHandlerInstance;
         }
 
-        public override void InitEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler)
+        public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
             RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = engineEventHandler;
         }
 
-        public override void RemoveEventHandler(IAgoraRtcMediaPlayerEventHandler engineEventHandler)
+        public override void RemoveEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
             RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = null;
         }
@@ -942,7 +942,7 @@ namespace agora.rtc
 
     internal static class RtcMediaPlayerEventHandlerNative
     {
-        internal static IAgoraRtcMediaPlayerEventHandler RtcMediaPlayerEventHandler = null;
+        internal static IMediaPlayerSourceObserver RtcMediaPlayerEventHandler = null;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         internal static AgoraCallbackObject CallbackObject = null;
 #endif
