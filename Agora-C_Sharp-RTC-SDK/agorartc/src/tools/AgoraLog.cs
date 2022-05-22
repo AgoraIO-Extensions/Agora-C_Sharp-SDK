@@ -1,10 +1,3 @@
-//  AgoraLog.cs
-//
-//  Created by YuGuo Chen on October 6, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using UnityEngine;
 #elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER

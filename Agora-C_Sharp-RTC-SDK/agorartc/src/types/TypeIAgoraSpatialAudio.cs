@@ -1,9 +1,5 @@
-﻿using System;
-namespace agora.rtc
+﻿namespace agora.rtc
 {
-    using int64_t = Int64;
-    using view_t = UInt64;
-    using uint64_t = UInt64;
     #region IAgoraSpatialAudio.h
     public enum SAE_CONNECTION_STATE_TYPE
     {

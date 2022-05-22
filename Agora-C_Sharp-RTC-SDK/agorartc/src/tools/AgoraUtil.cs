@@ -1,11 +1,3 @@
-//  AgoraUtil.cs
-//
-//  Created by Yiqing Huang on Dec 15, 2020.
-//  Modified by Yiqing Huang on July 12, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-//
-
 using System;
 using System.Runtime.InteropServices;
 using System.Text;

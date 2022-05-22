@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -7,8 +6,6 @@ using AOT;
 
 namespace agora.rtc
 {
-    using LitJson;
-
     using IrisApiEnginePtr = IntPtr;
 
     using IrisEventHandlerHandleNative = IntPtr;

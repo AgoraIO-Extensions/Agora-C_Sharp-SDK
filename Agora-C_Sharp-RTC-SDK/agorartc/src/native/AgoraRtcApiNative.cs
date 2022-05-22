@@ -4,23 +4,14 @@ using System.Runtime.InteropServices;
 namespace agora.rtc
 {
     using IrisRtcEnginePtr = IntPtr;
-    using IrisRtcDeviceManagerPtr = IntPtr;
-    using IrisRtcRawDataPtr = IntPtr;
-    using IrisRtcRawDataPluginManagerPtr = IntPtr;
-    using IrisRtcRendererPtr = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
     using IrisRtcAudioFrameObserverHandle = IntPtr;
     using IrisAudioEncodedFrameObserverHandle = IntPtr;
     using IrisRtcVideoFrameObserverHandle = IntPtr;
-    using IrisRtcRendererCacheConfigHandle = IntPtr;
     using IrisVideoFrameBufferManagerPtr = IntPtr;
     using IrisVideoFrameBufferDelegateHandle = IntPtr;
     using IrisRtcVideoEncodedImageReceiverHandle = IntPtr;
-    using IrisMediaPlayerPtr = IntPtr;
     using IrisMediaPlayerAudioFrameObserverHandle = IntPtr;
-    using IrisCloudSpatialAudioEnginePtr = IntPtr;
-    using IrisLocalSpatialAudioEnginePtr = IntPtr;
-    using IrisMediaPlayerVideoFrameObserverHandle = IntPtr;
     using IrisMediaPlayerAudioSpectrumObserverHandle = IntPtr;
     using IrisMetaDataObserverHandle = IntPtr;
 
@@ -227,8 +218,7 @@ namespace agora.rtc
         internal static extern IrisEventHandlerHandle SetIrisCloudAudioEngineEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnsetIrisCloudAudioEngineEventHandler(IrisCloudSpatialAudioEnginePtr engine_ptr,
-                                        IrisEventHandlerHandle handle);
+        internal static extern void UnsetIrisCloudAudioEngineEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
 
 //IrisMetaDataObserver
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]

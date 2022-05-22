@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace agora.rtc
 {
     using int64_t = Int64;

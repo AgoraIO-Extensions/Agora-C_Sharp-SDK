@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -7,8 +6,6 @@ using AOT;
 
 namespace agora.rtc
 {
-    using LitJson;
-
     using IrisApiEnginePtr = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
     using IrisMediaPlayerCAudioFrameObserverNativeMarshal = IntPtr;
@@ -23,9 +20,6 @@ namespace agora.rtc
     public sealed class AgoraRtcMediaPlayer : IAgoraRtcMediaPlayer
     {
         private bool _disposed = false;
-        private static readonly string identifier = "AgoraRtcMediaPlayer";
-        private int playerId;
-        private static readonly int INVALID_RETURN = -99;
 
         private IrisApiEnginePtr _irisApiEngine;
         private AgoraRtcMediaPlayerEventHandler _mediaPlayerEventHandlerInstance;
@@ -54,6 +48,7 @@ namespace agora.rtc
         
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         private AgoraCallbackObject _callbackObject;
+        private static readonly string identifier = "AgoraRtcMediaPlayer";
 #endif
 
         internal AgoraRtcMediaPlayer(IrisApiEnginePtr irisApiEngine)
@@ -114,7 +109,7 @@ namespace agora.rtc
                     AgoraRtcNative.SetIrisMediaPlayerEventHandler(_irisApiEngine, _irisCEngineEventHandlerNative);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                _callbackObject = new AgoraCallbackObject("Agora MediaPlayer");
+                _callbackObject = new AgoraCallbackObject(identifier);
                 RtcMediaPlayerEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }

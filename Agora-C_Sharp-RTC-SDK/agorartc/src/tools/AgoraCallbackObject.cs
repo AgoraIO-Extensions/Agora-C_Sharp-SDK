@@ -1,12 +1,5 @@
-//  AgoraCallbackObject.cs
-//
-//  Created by YuGuo Chen on October 3, 2021.
-//
-//  Copyright © 2021 Agora. All rights reserved.
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 
-using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
