@@ -4,7 +4,7 @@ namespace agora.rtc
 {
     using view_t = IntPtr;
 
-    public abstract class IAgoraRtcVideoDeviceManager
+    public abstract class IVideoDeviceManager
     {
         public abstract DeviceInfo[] EnumerateVideoDevices();
 

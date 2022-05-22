@@ -1,5 +1,3 @@
-using System;
-
 namespace agora.rtc
 {
     public class IAgoraRtcVideoFrameObserver

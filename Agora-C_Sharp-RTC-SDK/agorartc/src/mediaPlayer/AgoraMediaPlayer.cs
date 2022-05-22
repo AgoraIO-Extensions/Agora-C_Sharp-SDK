@@ -139,7 +139,7 @@ namespace agora.rtc
             
             _irisMediaPlayerCAudioFrameObserver = new IrisMediaPlayerCAudioFrameObserver
             {
-                OnFrame = AgoraRtcMediaPlayerAudioFrameObserverNative.OnFrame
+                OnFrame = AgoraMediaPlayerAudioFrameObserverNative.OnFrame
             };
             
             var irisMediaPlayerCAudioFrameObserverNativeLocal = new IrisMediaPlayerCAudioFrameObserverNative
@@ -162,7 +162,7 @@ namespace agora.rtc
             
             _irisMediaPlayerCAudioFrameObserver = new IrisMediaPlayerCAudioFrameObserver
             {
-                OnFrame = AgoraRtcMediaPlayerAudioFrameObserverNative.OnFrame
+                OnFrame = AgoraMediaPlayerAudioFrameObserverNative.OnFrame
             };
             
             var irisMediaPlayerCAudioFrameObserverNativeLocal = new IrisMediaPlayerCAudioFrameObserverNative
@@ -188,47 +188,9 @@ namespace agora.rtc
                 _irisMediaPlayerAudioFrameObserverHandleNative, AgoraJson.ToJson(param)
             );
             _irisMediaPlayerAudioFrameObserverHandleNative = IntPtr.Zero;
-            AgoraRtcMediaPlayerAudioFrameObserverNative.AudioFrameObserver = null;
+            AgoraMediaPlayerAudioFrameObserverNative.AudioFrameObserver = null;
             _irisMediaPlayerCAudioFrameObserver = new IrisMediaPlayerCAudioFrameObserver();
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioFrameObserverNative);
-        }
-
-        private void SetIrisVideoFrameObserver()
-        {
-            // var param = new { };
-            // if (_irisMediaPlayerVideoFrameObserverHandleNative != IntPtr.Zero) return;
-            //
-            // _irisMediaPlayerCVideoFrameObserver = new IrisRtcCVideoFrameObserver
-            // {
-            //     OnCaptureVideoFrame = AgoraRtcMediaPlayerVideoFrameObserverNative.OnFrame,
-            // };
-            //
-            // var irisMediaPlayerCVideoFrameObserverNativeLocal = new IrisRtcCVideoFrameObserverNative
-            // {
-            //     OnCaptureVideoFrame = Marshal.GetFunctionPointerForDelegate(_irisMediaPlayerCVideoFrameObserver.OnCaptureVideoFrame)
-            // };
-            //
-            // _irisMediaPlayerCVideoFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCVideoFrameObserverNativeLocal));
-            // Marshal.StructureToPtr(irisMediaPlayerCVideoFrameObserverNativeLocal, _irisMediaPlayerCVideoFrameObserverNative, true);
-            // _irisMediaPlayerVideoFrameObserverHandleNative = AgoraRtcNative.RegisterMediaPlayerVideoFrameObserver(
-            //     _irisApiEngine,
-            //     _irisMediaPlayerCVideoFrameObserverNative, AgoraJson.ToJson(param)
-            // );
-        }
-
-        private void UnSetIrisVideoFrameObserver()
-        {
-            // var param = new { };
-            // if (_irisMediaPlayerVideoFrameObserverHandleNative == IntPtr.Zero) return;
-            //
-            // AgoraRtcNative.UnRegisterMediaPlayerVideoFrameObserver(
-            //     _irisApiEngine,
-            //     _irisMediaPlayerVideoFrameObserverHandleNative, AgoraJson.ToJson(param)
-            // );
-            // _irisMediaPlayerVideoFrameObserverHandleNative = IntPtr.Zero;
-            // AgoraRtcMediaPlayerVideoFrameObserverNative.VideoFrameObserver = null;
-            // _irisMediaPlayerCVideoFrameObserver = new IrisRtcCVideoFrameObserver();
-            // Marshal.FreeHGlobal(_irisMediaPlayerCVideoFrameObserverNative);
         }
 
         private int SetCustomSourceProvider(int playerId, Int64 startPos)
@@ -238,8 +200,8 @@ namespace agora.rtc
             
             _irisMediaPlayerCCustomProvider = new IrisMediaPlayerCCustomProvider
             {
-                OnSeek = AgoraRtcMediaPlayerCustomDataProviderNative.OnSeek,
-                OnReadData = AgoraRtcMediaPlayerCustomDataProviderNative.OnReadData
+                OnSeek = AgoraMediaPlayerCustomDataProviderNative.OnSeek,
+                OnReadData = AgoraMediaPlayerCustomDataProviderNative.OnReadData
             };
 
             var irisMediaPlayerCCustomProviderNativeLocal = new IrisMediaPlayerCCustomProviderNative
@@ -297,7 +259,7 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
 
-        public override MediaPlayerSourceObserver GetAgoraRtcMediaPlayerEventHandler()
+        public override MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver()
         {
             return _mediaPlayerEventHandlerInstance;
         }
@@ -312,36 +274,21 @@ namespace agora.rtc
             RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = null;
         }
 
-        public override void RegisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer)
+        public override void RegisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer)
         {
             SetIrisAudioFrameObserver();
-            AgoraRtcMediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
+            AgoraMediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
         }
 
-        public override void RegisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public override void RegisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             SetIrisAudioFrameObserverWithMode(mode);
-            AgoraRtcMediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
+            AgoraMediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
         }
 
-        public override void UnregisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer)
+        public override void UnregisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer)
         {
             UnSetIrisAudioFrameObserver();
-        }
-
-        
-        public override void RegisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer)
-        {
-            return;
-            // SetIrisVideoFrameObserver();
-            // AgoraRtcMediaPlayerVideoFrameObserverNative.VideoFrameObserver = observer;
-        }
-
-      
-        public override void UnregisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer)
-        {
-            return;
-            //UnSetIrisVideoFrameObserver();
         }
 
         public override void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer, int intervalInMS)
@@ -389,10 +336,10 @@ namespace agora.rtc
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int OpenWithCustomSource(int playerId, Int64 startPos, IAgoraRtcMediaPlayerCustomDataProvider provider)
+        public override int OpenWithCustomSource(int playerId, Int64 startPos, IAgoraMediaPlayerCustomDataProvider provider)
         {
             var ret = SetCustomSourceProvider(playerId, startPos);
-            AgoraRtcMediaPlayerCustomDataProviderNative.CustomDataProvider = provider;
+            AgoraMediaPlayerCustomDataProviderNative.CustomDataProvider = provider;
             return ret;
         }
 

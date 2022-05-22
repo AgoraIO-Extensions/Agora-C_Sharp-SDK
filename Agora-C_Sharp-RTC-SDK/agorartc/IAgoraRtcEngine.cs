@@ -18,23 +18,21 @@ namespace agora.rtc
 
         public abstract void RemoveEventHandler(IAgoraRtcEngineEventHandler engineEventHandler);
 
-        public abstract void RegisterAudioFrameObserver(IAgoraRtcAudioFrameObserver audioFrameObserver);
+        public abstract void RegisterAudioFrameObserver(IAgoraRtcAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode);
 
         public abstract void UnRegisterAudioFrameObserver();
 
-        public abstract void RegisterVideoFrameObserver(IAgoraRtcVideoFrameObserver videoFrameObserver);
+        public abstract void RegisterVideoFrameObserver(IAgoraRtcVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode);
 
         public abstract void UnRegisterVideoFrameObserver();
 
-        public abstract void RegisterVideoEncodedImageReceiver(IAgoraRtcVideoEncodedImageReceiver videoEncodedImageReceiver);
+        public abstract void RegisterVideoEncodedImageReceiver(IAgoraRtcVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode);
 
         public abstract void UnRegisterVideoEncodedImageReceiver();
 
-        public abstract IAgoraRtcAudioRecordingDeviceManager GetAgoraRtcAudioRecordingDeviceManager();
+        public abstract IAudioDeviceManager GetAudioDeviceManager();
 
-        public abstract IAgoraRtcAudioPlaybackDeviceManager GetAgoraRtcAudioPlaybackDeviceManager();
-
-        public abstract IAgoraRtcVideoDeviceManager GetAgoraRtcVideoDeviceManager();
+        public abstract IVideoDeviceManager GetVideoDeviceManager();
 
         public abstract IAgoraMediaPlayer GetAgoraMediaPlayer();
 

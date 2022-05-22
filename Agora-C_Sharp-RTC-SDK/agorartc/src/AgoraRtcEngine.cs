@@ -51,9 +51,8 @@ namespace agora.rtc
 #endif
 
         private AgoraRtcEngineEventHandler _engineEventHandlerInstance;
-        private AgoraRtcVideoDeviceManager _videoDeviceManagerInstance;
-        private AgoraRtcAudioPlaybackDeviceManager _audioPlaybackDeviceManagerInstance;
-        private AgoraRtcAudioRecordingDeviceManager _audioRecordingDeviceManagerInstance;
+        private VideoDeviceManager _videoDeviceManagerInstance;
+        private AudioDeviceManager _audioDeviceManagerInstance;
 
         private IrisRtcCAudioFrameObserverNativeMarshal _irisRtcCAudioFrameObserverNative;
         private IrisRtcCAudioFrameObserver _irisRtcCAudioFrameObserver;
@@ -88,9 +87,8 @@ namespace agora.rtc
 
             _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine();
 
-            _videoDeviceManagerInstance = new AgoraRtcVideoDeviceManager(_irisRtcEngine);
-            _audioPlaybackDeviceManagerInstance = new AgoraRtcAudioPlaybackDeviceManager(_irisRtcEngine);
-            _audioRecordingDeviceManagerInstance = new AgoraRtcAudioRecordingDeviceManager(_irisRtcEngine);
+            _videoDeviceManagerInstance = new VideoDeviceManager(_irisRtcEngine);
+            _audioDeviceManagerInstance = new AudioDeviceManager(_irisRtcEngine);
             _mediaPlayerInstance = new AgoraMediaPlayer(_irisRtcEngine);
             //_cloudSpatialAudioEngineInstance = new AgoraRtcCloudSpatialAudioEngine(_irisRtcEngine);
             //_spatialAudioEngineInstance = new AgoraRtcSpatialAudioEngine(_irisRtcEngine);
@@ -117,11 +115,8 @@ namespace agora.rtc
                 _videoDeviceManagerInstance.Dispose();
                 _videoDeviceManagerInstance = null;
 
-                _audioPlaybackDeviceManagerInstance.Dispose();
-                _audioPlaybackDeviceManagerInstance = null;
-
-                _audioRecordingDeviceManagerInstance.Dispose();
-                _audioRecordingDeviceManagerInstance = null;
+                _audioDeviceManagerInstance.Dispose();
+                _audioDeviceManagerInstance = null;
 
                 _mediaPlayerInstance.Dispose();
                 _mediaPlayerInstance = null;
@@ -268,10 +263,11 @@ namespace agora.rtc
             RtcEngineEventHandlerNative.EngineEventHandler = null;
         }
 
-        public override void RegisterAudioFrameObserver(IAgoraRtcAudioFrameObserver audioFrameObserver)
+        public override void RegisterAudioFrameObserver(IAgoraRtcAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode)
         {
             SetIrisAudioFrameObserver();
             AgoraRtcAudioFrameObserverNative.AudioFrameObserver = audioFrameObserver;
+            AgoraRtcAudioFrameObserverNative.mode = mode;
         }
 
         public override void UnRegisterAudioFrameObserver()
@@ -332,10 +328,11 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCAudioFrameObserverNative);
         }
 
-        public override void RegisterVideoFrameObserver(IAgoraRtcVideoFrameObserver videoFrameObserver)
+        public override void RegisterVideoFrameObserver(IAgoraRtcVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode)
         {
             SetIrisVideoFrameObserver();
             AgoraRtcVideoFrameObserverNative.VideoFrameObserver = videoFrameObserver;
+            AgoraRtcVideoFrameObserverNative.mode = mode;
         }
 
         public override void UnRegisterVideoFrameObserver()
@@ -391,7 +388,7 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
         }
 
-        public override void RegisterVideoEncodedImageReceiver(IAgoraRtcVideoEncodedImageReceiver videoEncodedImageReceiver)
+        public override void RegisterVideoEncodedImageReceiver(IAgoraRtcVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode)
         {
             SetIrisVideoEncodedImageReceiver();
             AgoraRtcVideoEncodedImageReceiver.VideoEncodedImageReceiver = videoEncodedImageReceiver;
@@ -484,17 +481,12 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCMetaDataObserverNative);
         }
 
-        public override IAgoraRtcAudioRecordingDeviceManager GetAgoraRtcAudioRecordingDeviceManager()
+        public override IAudioDeviceManager GetAudioDeviceManager()
         {
-            return _audioRecordingDeviceManagerInstance;
+            return _audioDeviceManagerInstance;
         }
 
-        public override IAgoraRtcAudioPlaybackDeviceManager GetAgoraRtcAudioPlaybackDeviceManager()
-        {
-            return _audioPlaybackDeviceManagerInstance;
-        }
-
-        public override IAgoraRtcVideoDeviceManager GetAgoraRtcVideoDeviceManager()
+        public override IVideoDeviceManager GetVideoDeviceManager()
         {
             return _videoDeviceManagerInstance;
         }

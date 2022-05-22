@@ -9,6 +9,7 @@ namespace agora.rtc
 {
     internal static class AgoraRtcAudioFrameObserverNative
     {
+        internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
         internal static IAgoraRtcAudioFrameObserver AudioFrameObserver;
         private static class LocalAudioFrames
         {
@@ -57,15 +58,19 @@ namespace agora.rtc
                 localAudioFrame = LocalAudioFrames.AudioFrameBeforeMixingEx[channelId][uid];
             }
 
-            if (localAudioFrame.channels != audioFrame.channels ||
+            if (mode == OBSERVER_MODE.RAW_DATA)
+            {
+                if (localAudioFrame.channels != audioFrame.channels ||
                 localAudioFrame.samplesPerChannel != audioFrame.samples ||
                 localAudioFrame.bytesPerSample != audioFrame.bytes_per_sample)
-            {
-                localAudioFrame.buffer = new byte[audioFrame.buffer_length];
+                {
+                    localAudioFrame.buffer = new byte[audioFrame.buffer_length];
+                }
+
+                if (audioFrame.buffer != IntPtr.Zero)
+                    Marshal.Copy(audioFrame.buffer, localAudioFrame.buffer, 0, (int)audioFrame.buffer_length);
             }
 
-            if (audioFrame.buffer != IntPtr.Zero)
-                Marshal.Copy(audioFrame.buffer, localAudioFrame.buffer, 0, (int) audioFrame.buffer_length);
             localAudioFrame.type = audioFrame.type;
             localAudioFrame.samplesPerChannel = audioFrame.samples;
             localAudioFrame.bufferPtr = audioFrame.buffer;

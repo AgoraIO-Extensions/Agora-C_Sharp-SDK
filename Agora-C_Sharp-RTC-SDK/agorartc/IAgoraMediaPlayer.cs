@@ -10,23 +10,17 @@ namespace agora.rtc
 
         public abstract int DestroyMediaPlayer(int playerId);
 
-        public abstract MediaPlayerSourceObserver GetAgoraRtcMediaPlayerEventHandler();
+        public abstract MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver();
 
         public abstract void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
         public abstract void RemoveEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
-        public abstract void RegisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer);
+        public abstract void RegisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer);
 
-        public abstract void RegisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
+        public abstract void RegisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
-        public abstract void UnregisterAudioFrameObserver(IAgoraRtcMediaPlayerAudioFrameObserver observer);
-
-        [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
-        public abstract void RegisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer);
-
-        [Obsolete(ObsoleteMethodWarning.GeneralWarning, false)]
-        public abstract void UnregisterVideoFrameObserver(IAgoraRtcMediaPlayerVideoFrameObserver observer);
+        public abstract void UnregisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer);
 
         public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer, int intervalInMS);
 
@@ -34,7 +28,7 @@ namespace agora.rtc
 
         public abstract int Open(int playerId, string url, Int64 startPos);
 
-        public abstract int OpenWithCustomSource(int playerId, Int64 startPos, IAgoraRtcMediaPlayerCustomDataProvider provider);
+        public abstract int OpenWithCustomSource(int playerId, Int64 startPos, IAgoraMediaPlayerCustomDataProvider provider);
 
         public abstract int Play(int playerId);
 

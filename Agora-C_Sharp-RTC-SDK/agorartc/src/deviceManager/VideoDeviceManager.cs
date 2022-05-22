@@ -5,19 +5,19 @@ namespace agora.rtc
     using LitJson;
     using IrisApiEnginePtr = IntPtr;
     using view_t = IntPtr;
-    public sealed class AgoraRtcVideoDeviceManager : IAgoraRtcVideoDeviceManager
+    public sealed class VideoDeviceManager : IVideoDeviceManager
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
 
-        internal AgoraRtcVideoDeviceManager(IrisApiEnginePtr irisApiEngine)
+        internal VideoDeviceManager(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
         }
 
-        ~AgoraRtcVideoDeviceManager()
+        ~VideoDeviceManager()
         {
             Dispose(false);
         }
