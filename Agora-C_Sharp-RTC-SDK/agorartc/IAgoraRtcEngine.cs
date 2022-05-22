@@ -2,11 +2,7 @@ using System;
 
 namespace agora.rtc
 {
-
-    public abstract class IAgoraRtcEngine : IRtcEngine
-    {
-    }
-    public abstract class IRtcEngine
+    public abstract class IAgoraRtcEngine
     {
         public abstract int Initialize(RtcEngineContext context);
 

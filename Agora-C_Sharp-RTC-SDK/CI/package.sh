@@ -32,7 +32,7 @@
 SDK_TYPE=$1
 API_KEY=$3
 DEMO_BRANCH=$2
-PLUGIN_NAME="Agora-Plugin"
+PLUGIN_NAME="Agora-RTC-Plugin"
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 CI_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK/CI
 UNITY_DIR=/Applications/Unity/Hub/Editor/$4/Unity.app/Contents/MacOS
