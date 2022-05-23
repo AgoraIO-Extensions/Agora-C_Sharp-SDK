@@ -20,7 +20,7 @@ namespace agora.rtc
 
         [SerializeField] private uint Uid = 0;
         [SerializeField] private string ChannelId = "";
-        [SerializeField] private VIDEO_SOURCE_TYPE sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+        [SerializeField] private VIDEO_SOURCE_TYPE SourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
 
         private Component _renderer;
         private bool _needUpdateInfo = true;
@@ -41,15 +41,15 @@ namespace agora.rtc
             {
                 if (IsBlankTexture())
                 {
-                    _TextureManagerGameObject = GameObject.Find("TextureManager" + Uid.ToString() + ChannelId + sourceType.ToString());
+                    _TextureManagerGameObject = GameObject.Find("TextureManager" + Uid.ToString() + ChannelId + SourceType.ToString());
 
                     if (_TextureManagerGameObject == null)
                     {
-                        _TextureManagerGameObject = new GameObject("TextureManager" + Uid.ToString() + ChannelId + sourceType.ToString());
+                        _TextureManagerGameObject = new GameObject("TextureManager" + Uid.ToString() + ChannelId + SourceType.ToString());
                         _TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
 
                         _textureManager = _TextureManagerGameObject.AddComponent<TextureManager>();
-                        _textureManager.SetVideoStreamIdentity(Uid, ChannelId, sourceType);
+                        _textureManager.SetVideoStreamIdentity(Uid, ChannelId, SourceType);
                         _textureManager.EnableVideoFrameWithIdentity();
                     }
                     else
@@ -160,7 +160,7 @@ namespace agora.rtc
         {
             Uid = uid;
             ChannelId = channelId;
-            sourceType = source_type;
+            SourceType = source_type;
             _needUpdateInfo = false;
         }
 

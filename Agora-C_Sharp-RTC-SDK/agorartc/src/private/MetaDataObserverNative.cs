@@ -46,12 +46,13 @@ namespace agora.rtc
                 if (metaData.buffer != IntPtr.Zero)
                     Marshal.Copy(metaData.buffer, localMetaData.buffer, 0, (int)metaData.size);
             }
-           
+
+            localMetaData.bufferPtr = metaData.buffer;
             localMetaData.uid = metaData.uid;
             localMetaData.size = metaData.size;
             localMetaData.timeStampMs = metaData.timeStampMs;
 
-            Observer.OnMetadataReceived(metadata, localMetaData);
+            Observer.OnMetadataReceived(localMetaData);
         }
     }
 }

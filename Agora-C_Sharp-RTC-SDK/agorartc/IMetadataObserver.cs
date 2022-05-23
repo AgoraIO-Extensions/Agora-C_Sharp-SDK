@@ -14,7 +14,7 @@ namespace agora.rtc
             return true;
         }
 
-        public virtual void OnMetadataReceived(IntPtr metadataPtr, Metadata metadata)
+        public virtual void OnMetadataReceived(Metadata metadata)
         {
 
         }

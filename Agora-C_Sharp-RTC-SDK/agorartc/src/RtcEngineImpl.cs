@@ -1208,11 +1208,10 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
         {
             SetIrisAudioEncodedFrameObserver(config);
             AudioEncodedFrameObserverNative.AudioEncodedFrameObserver = observer;
-            AudioEncodedFrameObserverNative.mode = mode;
         }
 
         public override void UnRegisterAudioEncodedFrameObserver()

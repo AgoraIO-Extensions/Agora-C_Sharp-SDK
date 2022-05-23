@@ -129,7 +129,7 @@ namespace agora.rtc
 
         public abstract int StartAudioRecording(AudioRecordingConfiguration config);
 
-        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer);
 
         public abstract void UnRegisterAudioEncodedFrameObserver();
 

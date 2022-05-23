@@ -327,11 +327,10 @@ namespace agora.rtc
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider)
         {
             var ret = SetCustomSourceProvider(playerId, startPos);
             MediaPlayerCustomDataProviderNative.CustomDataProvider = provider;
-            MediaPlayerCustomDataProviderNative.mode = mode;
             return ret;
         }
 

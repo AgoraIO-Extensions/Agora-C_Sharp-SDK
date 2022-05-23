@@ -8,7 +8,6 @@ namespace agora.rtc
 {
     internal static class VideoEncodedImageReceiverNative
     {
-        internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
         internal static IVideoEncodedImageReceiver VideoEncodedImageReceiver;
 
         private static class LocalVideoEncodedVideoFrameInfo
@@ -41,18 +40,8 @@ namespace agora.rtc
             localVideoEncodedFrameInfo.uid = videoEncodedFrameInfo.uid;
             localVideoEncodedFrameInfo.streamType = (VIDEO_STREAM_TYPE) videoEncodedFrameInfo.streamType;
 
-            byte[] Buffer = new byte[0];
-            if (mode == OBSERVER_MODE.RAW_DATA)
-            {
-                Buffer = new byte[length];
-                if (imageBuffer != IntPtr.Zero)
-                {
-                    Marshal.Copy(imageBuffer, Buffer, 0, (int)length);
-                }
-            }
-
             return VideoEncodedImageReceiver == null || 
-                VideoEncodedImageReceiver.OnEncodedVideoImageReceived(imageBuffer, Buffer, length, localVideoEncodedFrameInfo);
+                VideoEncodedImageReceiver.OnEncodedVideoImageReceived(imageBuffer, length, localVideoEncodedFrameInfo);
         }
     }
 }

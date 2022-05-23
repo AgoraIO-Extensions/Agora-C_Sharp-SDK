@@ -29,7 +29,7 @@ namespace agora.rtc
 
         public abstract int Open(int playerId, string url, Int64 startPos);
 
-        public abstract int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider);
 
         public abstract int Play(int playerId);
 
