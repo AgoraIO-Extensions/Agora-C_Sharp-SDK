@@ -16,28 +16,8 @@ namespace agora.rtc
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
-#endif 
-        internal static void OnEvent(string @event, string data)
-        {
-            if (EngineEventHandler == null) return;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
-            CallbackObject._CallbackQueue.EnQueue(() =>
-            {
 #endif
-            //switch (@event)
-            //{
-
-            //}
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            });
-#endif
-        }
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
-#endif
-        internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
+        internal static void OnEvent(string @event, string data, IntPtr buffer, uint length)
         {
             if (EngineEventHandler == null) return;
             var byteData = new byte[length];

@@ -162,14 +162,11 @@ namespace agora.rtc
                 _irisCEventHandler = new IrisCEventHandler
                 {
                     OnEvent = RtcEngineEventHandlerNative.OnEvent,
-                    OnEventWithBuffer = RtcEngineEventHandlerNative.OnEventWithBuffer
                 };
 
                 var cEventHandlerNativeLocal = new IrisCEventHandlerNative
                 {
-                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent),
-                    onEventWithBuffer =
-                        Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEventWithBuffer)
+                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent)
                 };
 
                 _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));

@@ -139,6 +139,7 @@ namespace agora.rtc
     {
         IRIS_TWO_BYTES_PER_SAMPLE = 2,
     };
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisAudioPcmFrame
     {

@@ -86,15 +86,12 @@ namespace agora.rtc
             {
                 _irisCEventHandler = new IrisCEventHandler
                 {
-                    OnEvent = RtcMediaPlayerEventHandlerNative.OnEvent,
-                    OnEventWithBuffer = RtcMediaPlayerEventHandlerNative.OnEventWithBuffer
+                    OnEvent = RtcMediaPlayerEventHandlerNative.OnEvent
                 };
 
                 var cEventHandlerNativeLocal = new IrisCEventHandlerNative
                 {
-                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent),
-                    onEventWithBuffer =
-                        Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEventWithBuffer)
+                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent)
                 };
 
                 _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
@@ -891,26 +888,7 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
-        internal static void OnEvent(string @event, string data)
-        {
-            if (RtcMediaPlayerEventHandler == null) return;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
-            CallbackObject._CallbackQueue.EnQueue(() =>
-            {
-#endif
-                // switch(@event)
-                // {
-                // }   
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            });
-#endif
-        }
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_EventWithBuffer_Native))]
-#endif
-        internal static void OnEventWithBuffer(string @event, string data, IntPtr buffer, uint length)
+        internal static void OnEvent(string @event, string data, IntPtr buffer, uint length)
         {
             if (RtcMediaPlayerEventHandler == null) return;
             var byteData = new byte[length];
