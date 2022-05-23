@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections;
-using agora.rtc.LitJson;
-
-namespace agora.rtc
+﻿namespace agora.rtc
 {
-   
+    public enum OBSERVER_MODE
+    {
+        RAW_DATA,
+        INTPTR
+    }
+
     public struct VideoFrameBufferConfig
     {
         public VIDEO_SOURCE_TYPE type;
