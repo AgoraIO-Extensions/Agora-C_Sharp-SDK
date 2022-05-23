@@ -12,18 +12,18 @@ namespace agora.rtc
 
     public delegate void OnTeammateJoinedHandler(uint uid);
 
-    public class AgoraCloudSpatialAudioEventHandler : IAgoraCloudSpatialAudioEventHandler
+    public class CloudSpatialAudioEventHandler : ICloudSpatialAudioEventHandler
     {
         public event OnTokenWillExpireHandler EventOnTokenWillExpire;
         public event OnConnectionStateChangeHandler EventOnConnectionStateChange;
         public event OnTeammateLeftHandler EventOnTeammateLeft;
         public event OnTeammateJoinedHandler EventOnTeammateJoined;
 
-        private static AgoraCloudSpatialAudioEventHandler eventInstance = null;
+        private static CloudSpatialAudioEventHandler eventInstance = null;
 
-        public static AgoraCloudSpatialAudioEventHandler GetInstance()
+        public static CloudSpatialAudioEventHandler GetInstance()
         {
-            return eventInstance ?? (eventInstance = new AgoraCloudSpatialAudioEventHandler());
+            return eventInstance ?? (eventInstance = new CloudSpatialAudioEventHandler());
         }
 
         public override void OnTokenWillExpire()

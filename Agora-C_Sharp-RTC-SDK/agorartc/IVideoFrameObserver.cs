@@ -1,6 +1,6 @@
 namespace agora.rtc
 {
-    public class IAgoraRtcVideoFrameObserver
+    public class IVideoFrameObserver
     {
         public virtual bool OnCaptureVideoFrame(VideoFrame videoFrame, VideoFrameBufferConfig config)
         {

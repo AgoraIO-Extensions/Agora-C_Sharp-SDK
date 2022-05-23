@@ -864,13 +864,5 @@ namespace agora.rtc
         ENCODED_VIDEO_FRAME,
     };
 
-    public enum OBSERVER_MODE
-    {
-        RAW_DATA,
-        INTPTR
-    }
-
     #endregion
-
-
 }

@@ -2,7 +2,8 @@ using System;
 
 namespace agora.rtc
 {
-    public abstract class IAgoraMediaPlayer
+    public abstract class IAgoraMediaPlayer : IMediaPlayer { }
+    public abstract class IMediaPlayer
     {
         public abstract void Dispose();
 
@@ -16,19 +17,19 @@ namespace agora.rtc
 
         public abstract void RemoveEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
-        public abstract void RegisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer);
+        public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
 
-        public abstract void RegisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
+        public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
-        public abstract void UnregisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer);
+        public abstract void UnregisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
 
-        public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer, int intervalInMS);
+        public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS);
 
-        public abstract void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
+        public abstract void UnregisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer);
 
         public abstract int Open(int playerId, string url, Int64 startPos);
 
-        public abstract int OpenWithCustomSource(int playerId, Int64 startPos, IAgoraMediaPlayerCustomDataProvider provider);
+        public abstract int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider);
 
         public abstract int Play(int playerId);
 
@@ -121,28 +122,5 @@ namespace agora.rtc
         public abstract int PlayPreloadedSrc(string src);
 
         public abstract int UnloadSrc(string src);
-    }
-
-    public abstract class IMediaPlayerSourceObserver
-    {
-        public virtual void OnPlayerSourceStateChanged(int playerId, MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec) { }
-
-        public virtual void OnPositionChanged(int playerId, Int64 position) { }
-
-        public virtual void OnPlayerEvent(int playerId, MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message) { }
-
-        public virtual void OnMetaData(int playerId, byte[] data, int length) { }
-
-        public virtual void OnPlayBufferUpdated(int playerId, Int64 playCachedBuffer) { }
-
-        public virtual void OnCompleted(int playerId) { }
-
-        public virtual void OnAgoraCDNTokenWillExpire(int playerId) { }
-
-        public virtual void OnPlayerSrcInfoChanged(int playerId, SrcInfo from, SrcInfo to) { }
-
-        public virtual void OnPlayerInfoUpdated(PlayerUpdatedInfo info) { }
-
-        public virtual void OnAudioVolumeIndication(int playerId, int volume) { }
     }
 }

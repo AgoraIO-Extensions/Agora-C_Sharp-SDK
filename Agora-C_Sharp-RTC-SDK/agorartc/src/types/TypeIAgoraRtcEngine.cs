@@ -1397,7 +1397,7 @@ The error codes of the local user's audio mixing file.
         /**
         * The event handler for IRtcEngine.
         */
-        private IAgoraRtcEngineEventHandler eventHandler = null;
+        private IRtcEngineEventHandler eventHandler = null;
         /**
          * The App ID issued to you by Agora. See [How to get the App ID](https://docs.agora.io/en/Agora%20Platform/token#get-an-app-id).
          * Only users in apps with the same App ID can join the same channel and communicate with each other. Use an App ID to create only

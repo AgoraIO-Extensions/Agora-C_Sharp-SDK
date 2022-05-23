@@ -2,27 +2,28 @@ using System;
 
 namespace agora.rtc
 {
-    public abstract class IAgoraRtcEngine
+    public abstract class IAgoraRtcEngine : IRtcEngine { }
+    public abstract class IRtcEngine
     {
         public abstract int Initialize(RtcEngineContext context);
 
         public abstract void Dispose(bool sync = false);
 
-        public abstract AgoraRtcEngineEventHandler GetAgoraRtcEngineEventHandler();
+        public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
 
-        public abstract void InitEventHandler(IAgoraRtcEngineEventHandler engineEventHandler);
+        public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
 
-        public abstract void RemoveEventHandler(IAgoraRtcEngineEventHandler engineEventHandler);
+        public abstract void RemoveEventHandler(IRtcEngineEventHandler engineEventHandler);
 
-        public abstract void RegisterAudioFrameObserver(IAgoraRtcAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode);
+        public abstract void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode);
 
         public abstract void UnRegisterAudioFrameObserver();
 
-        public abstract void RegisterVideoFrameObserver(IAgoraRtcVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode);
+        public abstract void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode);
 
         public abstract void UnRegisterVideoFrameObserver();
 
-        public abstract void RegisterVideoEncodedImageReceiver(IAgoraRtcVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode);
+        public abstract void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode);
 
         public abstract void UnRegisterVideoEncodedImageReceiver();
 
@@ -30,11 +31,11 @@ namespace agora.rtc
 
         public abstract IVideoDeviceManager GetVideoDeviceManager();
 
-        public abstract IAgoraMediaPlayer GetAgoraMediaPlayer();
+        public abstract IMediaPlayer GetMediaPlayer();
 
-        public abstract IAgoraCloudSpatialAudioEngine GetAgoraCloudSpatialAudioEngine();
+        public abstract ICloudSpatialAudioEngine GetCloudSpatialAudioEngine();
 
-        public abstract IAgoraLocalSpatialAudioEngine GetAgoraLocalSpatialAudioEngine();
+        public abstract ILocalSpatialAudioEngine GetLocalSpatialAudioEngine();
 
         public abstract string GetVersion();
 
@@ -128,7 +129,7 @@ namespace agora.rtc
 
         public abstract int StartAudioRecording(AudioRecordingConfiguration config);
 
-        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAgoraRtcAudioEncodedFrameObserver observer); //TODO
+        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer); //TODO
 
         public abstract void UnRegisterAudioEncodedFrameObserver();
 
@@ -266,9 +267,9 @@ namespace agora.rtc
 
         public abstract int DisableAudioSpectrumMonitor();
 
-        public abstract void RegisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
+        public abstract void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
 
-        public abstract void UnregisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer);
+        public abstract void UnregisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
 
         public abstract int AdjustRecordingSignalVolume(int volume);
 
@@ -444,7 +445,7 @@ namespace agora.rtc
 
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
-        public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options, IAgoraRtcEngineEventHandler eventHandler);
+        public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options, IRtcEngineEventHandler eventHandler);
 
         public abstract int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo);
 

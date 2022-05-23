@@ -18,11 +18,10 @@ namespace agora.rtc
 
     internal class VideoStreamManager : IVideoStreamManager, IDisposable
     {
-        private IAgoraRtcEngine _agoraRtcEngine;
+        private IRtcEngine _agoraRtcEngine;
         private IrisCVideoFrameBufferNative _videoFrameBuffer;
         private IrisVideoFrameBufferHandle _irisVideoFrameBufferHandle;
         private IrisVideoFrameBufferConfig _videoFrameBufferConfig;
-        private IntPtr videoFrameBufferConfigPtr;
 
         private bool _disposed;
 
@@ -44,8 +43,8 @@ namespace agora.rtc
                 return (int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
             }
 
-            IntPtr irisEngine = (_agoraRtcEngine as AgoraRtcEngine).GetNativeHandler();
-            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as AgoraRtcEngine).GetVideoFrameBufferManager();
+            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
 
             if (irisEngine != IntPtr.Zero)
             {
@@ -77,8 +76,8 @@ namespace agora.rtc
                 return;
             }
 
-            IntPtr irisEngine = (_agoraRtcEngine as AgoraRtcEngine).GetNativeHandler();
-            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as AgoraRtcEngine).GetVideoFrameBufferManager();
+            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
 
             if (irisEngine != IntPtr.Zero)
             {
@@ -100,8 +99,8 @@ namespace agora.rtc
                 return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
             }
 
-            IntPtr irisEngine = (_agoraRtcEngine as AgoraRtcEngine).GetNativeHandler();
-            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as AgoraRtcEngine).GetVideoFrameBufferManager();
+            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
+            IntPtr videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
 
             if (irisEngine != IntPtr.Zero)
             {

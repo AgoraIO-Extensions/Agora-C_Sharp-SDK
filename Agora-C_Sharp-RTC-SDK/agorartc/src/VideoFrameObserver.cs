@@ -7,10 +7,11 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class AgoraRtcVideoFrameObserverNative
+    internal static class VideoFrameObserverNative
     {
         internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
-        internal static IAgoraRtcVideoFrameObserver VideoFrameObserver;
+        internal static IVideoFrameObserver VideoFrameObserver;
+
         private static class LocalVideoFrames
         {
             internal static readonly VideoFrame CaptureVideoFrame = new VideoFrame();

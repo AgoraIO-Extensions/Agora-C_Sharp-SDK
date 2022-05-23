@@ -7,10 +7,11 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class AgoraRtcAudioFrameObserverNative
+    internal static class AudioFrameObserverNative
     {
         internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
-        internal static IAgoraRtcAudioFrameObserver AudioFrameObserver;
+        internal static IAudioFrameObserver AudioFrameObserver;
+
         private static class LocalAudioFrames
         {
             internal static readonly AudioFrame RecordAudioFrame = new AudioFrame();

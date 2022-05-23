@@ -6,9 +6,9 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class AgoraRtcAudioSpectrumObserverNative
+    internal static class AudioSpectrumObserverNative
     {
-        internal static IAgoraRtcAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
+        internal static IAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
 
         private static AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
         {

@@ -1,6 +1,6 @@
 ﻿namespace agora.rtc
 {
-    public class IAgoraRtcAudioSpectrumObserver
+    public class IAudioSpectrumObserver
     {
         public virtual bool OnLocalAudioSpectrum(AudioSpectrumData data)
         {

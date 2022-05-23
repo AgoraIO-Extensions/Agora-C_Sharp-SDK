@@ -8,7 +8,7 @@ namespace agora.rtc
 {
     internal static class RtcEngineEventHandlerNative
     {
-        internal static IAgoraRtcEngineEventHandler EngineEventHandler = null;
+        internal static IRtcEngineEventHandler EngineEventHandler = null;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         internal static AgoraCallbackObject CallbackObject = null;

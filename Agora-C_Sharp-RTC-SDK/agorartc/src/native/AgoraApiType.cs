@@ -1,6 +1,3 @@
-using System;
-using System.Runtime.InteropServices;
-
 namespace agora.rtc
 {
     internal static class AgoraApiType

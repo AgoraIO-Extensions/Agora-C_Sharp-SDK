@@ -5,20 +5,19 @@ using UnityEngine.UI;
 
 namespace agora.rtc
 {
-    public enum AgoraVideoSurfaceType
+    public enum VideoSurfaceType
     {
         Renderer = 0,
         RawImage = 1,
     };
 
-    public sealed class AgoraVideoSurface : MonoBehaviour
+    public sealed class VideoSurface : MonoBehaviour
     {
-        [SerializeField] private AgoraVideoSurfaceType VideoSurfaceType = AgoraVideoSurfaceType.Renderer;
+        [SerializeField] private VideoSurfaceType VideoSurfaceType = VideoSurfaceType.Renderer;
         [SerializeField] private bool Enable = true;
         [SerializeField] private bool FlipX = false;
         [SerializeField] private bool FlipY = false;
-        [SerializeField] private int VideoPixelWidth = 0;
-        [SerializeField] private int VideoPixelHeight = 0;
+
         [SerializeField] private uint Uid = 0;
         [SerializeField] private string ChannelId = "";
         [SerializeField] private VIDEO_SOURCE_TYPE sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
@@ -28,8 +27,6 @@ namespace agora.rtc
 
         private GameObject _TextureManagerGameObject;
         private TextureManager _textureManager;
-        private Texture2D _texture;
-
 
         void Start()
         {
@@ -52,14 +49,13 @@ namespace agora.rtc
                         _TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
 
                         _textureManager = _TextureManagerGameObject.AddComponent<TextureManager>();
-                        _texture = GetTexture();
+                        ApplyTexture(GetTexture());
                     }
                     else
                     {
                         _textureManager = _TextureManagerGameObject.GetComponent<TextureManager>();
-                        _texture = _textureManager.texture;
+                        ApplyTexture(_textureManager.texture);
                     }
-                    ApplyTexture(_texture);
                 }
             }
             else
@@ -79,17 +75,17 @@ namespace agora.rtc
 
         private void CheckVideoSurfaceType()
         {
-            if (VideoSurfaceType == AgoraVideoSurfaceType.Renderer)
+            if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 _renderer = GetComponent<Renderer>();
             }
 
-            if (_renderer == null || VideoSurfaceType == AgoraVideoSurfaceType.RawImage)
+            if (_renderer == null || VideoSurfaceType == VideoSurfaceType.RawImage)
             {
                 _renderer = GetComponent<RawImage>();
                 if (_renderer != null)
                 {
-                    VideoSurfaceType = AgoraVideoSurfaceType.RawImage;
+                    VideoSurfaceType = VideoSurfaceType.RawImage;
                 }
             }
 
@@ -126,12 +122,12 @@ namespace agora.rtc
 
         private bool IsBlankTexture()
         {
-            if (VideoSurfaceType == AgoraVideoSurfaceType.Renderer)
+            if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = (_renderer as Renderer);
                 return rd.material.mainTexture == null || !(rd.material.mainTexture is Texture2D);
             }
-            else if (VideoSurfaceType == AgoraVideoSurfaceType.RawImage)
+            else if (VideoSurfaceType == VideoSurfaceType.RawImage)
             {
                 var rd = (_renderer as RawImage);
                 return (rd.texture == null);
@@ -144,12 +140,12 @@ namespace agora.rtc
 
         private void ApplyTexture(Texture2D texture)
         {
-            if (VideoSurfaceType == AgoraVideoSurfaceType.Renderer)
+            if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
                 rd.material.mainTexture = texture;
             }
-            else if (VideoSurfaceType == AgoraVideoSurfaceType.RawImage)
+            else if (VideoSurfaceType == VideoSurfaceType.RawImage)
             {
                 var rd = _renderer as RawImage;
                 rd.texture = texture;

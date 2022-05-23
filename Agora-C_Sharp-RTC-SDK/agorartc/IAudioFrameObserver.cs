@@ -1,8 +1,6 @@
-using System;
-
 namespace agora.rtc
 {
-    public class IAgoraRtcAudioFrameObserver
+    public class IAudioFrameObserver
     {
         public virtual bool OnRecordAudioFrame(AudioFrame audioFrame)
         {
@@ -36,25 +34,4 @@ namespace agora.rtc
             return false;
         }
     }
-
-    public class IAgoraRtcAudioEncodedFrameObserver
-    {
-        public virtual void OnRecordAudioEncodedFrame(byte[] frameBuffer,  int length, 
-                                                    EncodedAudioFrameInfo audioEncodedFrameInfo)
-        {
-
-        }
-
-        public virtual void OnPlaybackAudioEncodedFrame(byte[] frameBuffer,  int length, 
-                                                    EncodedAudioFrameInfo audioEncodedFrameInfo)
-        {
-
-        }
-
-        public virtual void OnMixedAudioEncodedFrame(byte[] frameBuffer,  int length, 
-                                                    EncodedAudioFrameInfo audioEncodedFrameInfo)
-        {
-
-        }
-    };
 }

@@ -9,7 +9,8 @@ namespace agora.rtc
     internal static class AgoraRtcVideoEncodedImageReceiver
     {
         internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
-        internal static IAgoraRtcVideoEncodedImageReceiver VideoEncodedImageReceiver;
+        internal static IVideoEncodedImageReceiver VideoEncodedImageReceiver;
+
         private static class LocalVideoEncodedVideoFrameInfo
         {
             internal static readonly EncodedVideoFrameInfo info = new EncodedVideoFrameInfo();

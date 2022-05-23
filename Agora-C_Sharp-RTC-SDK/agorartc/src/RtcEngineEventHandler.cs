@@ -191,7 +191,7 @@ namespace agora.rtc
 
     public delegate void OnExtensionErroredHandler(string provider, string ext_name, int error, string msg);
 
-    public class AgoraRtcEngineEventHandler : IAgoraRtcEngineEventHandler
+    public class RtcEngineEventHandler : IRtcEngineEventHandler
     {
         public event OnJoinChannelSuccessHandler EventOnJoinChannelSuccess;
         public event OnLeaveChannelHandler EventOnLeaveChannel;
@@ -288,13 +288,13 @@ namespace agora.rtc
       
         public event OnExtensionErroredHandler EventOnExtensionErrored;
 
-        private static AgoraRtcEngineEventHandler eventInstance = null;
+        private static RtcEngineEventHandler eventInstance = null;
 
-        public static AgoraRtcEngineEventHandler GetInstance()
+        public static RtcEngineEventHandler GetInstance()
         {
             if (eventInstance == null)
             {
-                eventInstance = new AgoraRtcEngineEventHandler();
+                eventInstance = new RtcEngineEventHandler();
             }
 
             return eventInstance;

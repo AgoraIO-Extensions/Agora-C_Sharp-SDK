@@ -32,10 +32,10 @@ namespace agora.rtc
     using IrisRtcMetaDataObserverHandleNative = IntPtr;
 
 
-    public sealed class AgoraRtcEngine : IAgoraRtcEngine
+    public sealed class RtcEngineImpl : IAgoraRtcEngine
     {
         private bool _disposed = false;
-        private static AgoraRtcEngine engineInstance = null;
+        private static RtcEngineImpl engineInstance = null;
         private static readonly string identifier = "AgoraRtcEngine";
 
 
@@ -50,9 +50,9 @@ namespace agora.rtc
         private AgoraCallbackObject _callbackObject;
 #endif
 
-        private AgoraRtcEngineEventHandler _engineEventHandlerInstance;
-        private VideoDeviceManager _videoDeviceManagerInstance;
-        private AudioDeviceManager _audioDeviceManagerInstance;
+        private RtcEngineEventHandler _engineEventHandlerInstance;
+        private VideoDeviceManagerImpl _videoDeviceManagerInstance;
+        private AudioDeviceManagerImpl _audioDeviceManagerInstance;
 
         private IrisRtcCAudioFrameObserverNativeMarshal _irisRtcCAudioFrameObserverNative;
         private IrisRtcCAudioFrameObserver _irisRtcCAudioFrameObserver;
@@ -77,21 +77,21 @@ namespace agora.rtc
 
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
-        private AgoraMediaPlayer _mediaPlayerInstance;
-        private AgoraCloudSpatialAudioEngine _cloudSpatialAudioEngineInstance;
-        private AgoraLocalSpatialAudioEngine _spatialAudioEngineInstance;
+        private MediaPlayerImpl _mediaPlayerInstance;
+        private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineInstance;
+        private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
 
-        private AgoraRtcEngine()
+        private RtcEngineImpl()
         {
             _result = new CharAssistant();
 
             _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine();
 
-            _videoDeviceManagerInstance = new VideoDeviceManager(_irisRtcEngine);
-            _audioDeviceManagerInstance = new AudioDeviceManager(_irisRtcEngine);
-            _mediaPlayerInstance = new AgoraMediaPlayer(_irisRtcEngine);
-            //_cloudSpatialAudioEngineInstance = new AgoraRtcCloudSpatialAudioEngine(_irisRtcEngine);
-            //_spatialAudioEngineInstance = new AgoraRtcSpatialAudioEngine(_irisRtcEngine);
+            _videoDeviceManagerInstance = new VideoDeviceManagerImpl(_irisRtcEngine);
+            _audioDeviceManagerInstance = new AudioDeviceManagerImpl(_irisRtcEngine);
+            _mediaPlayerInstance = new MediaPlayerImpl(_irisRtcEngine);
+            //_cloudSpatialAudioEngineInstance = new CloudSpatialAudioEngineImpl(_irisRtcEngine);
+            //_spatialAudioEngineInstance = new SpatialAudioEngineImpl(_irisRtcEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
             AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
@@ -182,7 +182,7 @@ namespace agora.rtc
                 RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _engineEventHandlerInstance = AgoraRtcEngineEventHandler.GetInstance();
+            _engineEventHandlerInstance = RtcEngineEventHandler.GetInstance();
             RtcEngineEventHandlerNative.EngineEventHandler = _engineEventHandlerInstance;
         }
 
@@ -211,7 +211,7 @@ namespace agora.rtc
 
         public static IAgoraRtcEngine CreateAgoraRtcEngine()
         {
-            return engineInstance ?? (engineInstance = new AgoraRtcEngine());
+            return engineInstance ?? (engineInstance = new RtcEngineImpl());
         }
 
         public static IAgoraRtcEngine Get()
@@ -248,26 +248,26 @@ namespace agora.rtc
             GC.SuppressFinalize(this);
         }
 
-        public override AgoraRtcEngineEventHandler GetAgoraRtcEngineEventHandler()
+        public override RtcEngineEventHandler GetRtcEngineEventHandler()
         {
             return _engineEventHandlerInstance;
         }
 
-        public override void InitEventHandler(IAgoraRtcEngineEventHandler engineEventHandler)
+        public override void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
             RtcEngineEventHandlerNative.EngineEventHandler = engineEventHandler;
         }
 
-        public override void RemoveEventHandler(IAgoraRtcEngineEventHandler engineEventHandler)
+        public override void RemoveEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
             RtcEngineEventHandlerNative.EngineEventHandler = null;
         }
 
-        public override void RegisterAudioFrameObserver(IAgoraRtcAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode)
+        public override void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode)
         {
             SetIrisAudioFrameObserver();
-            AgoraRtcAudioFrameObserverNative.AudioFrameObserver = audioFrameObserver;
-            AgoraRtcAudioFrameObserverNative.mode = mode;
+            AudioFrameObserverNative.AudioFrameObserver = audioFrameObserver;
+            AudioFrameObserverNative.mode = mode;
         }
 
         public override void UnRegisterAudioFrameObserver()
@@ -281,12 +281,12 @@ namespace agora.rtc
 
             _irisRtcCAudioFrameObserver = new IrisRtcCAudioFrameObserver
             {
-                OnRecordAudioFrame = AgoraRtcAudioFrameObserverNative.OnRecordAudioFrame,
-                OnPlaybackAudioFrame = AgoraRtcAudioFrameObserverNative.OnPlaybackAudioFrame,
-                OnMixedAudioFrame = AgoraRtcAudioFrameObserverNative.OnMixedAudioFrame,
-                OnPlaybackAudioFrameBeforeMixing = AgoraRtcAudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixing,
-                IsMultipleChannelFrameWanted = AgoraRtcAudioFrameObserverNative.IsMultipleChannelFrameWanted,
-                OnPlaybackAudioFrameBeforeMixingEx = AgoraRtcAudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixingEx
+                OnRecordAudioFrame = AudioFrameObserverNative.OnRecordAudioFrame,
+                OnPlaybackAudioFrame = AudioFrameObserverNative.OnPlaybackAudioFrame,
+                OnMixedAudioFrame = AudioFrameObserverNative.OnMixedAudioFrame,
+                OnPlaybackAudioFrameBeforeMixing = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixing,
+                IsMultipleChannelFrameWanted = AudioFrameObserverNative.IsMultipleChannelFrameWanted,
+                OnPlaybackAudioFrameBeforeMixingEx = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixingEx
             };
 
             var irisRtcCAudioFrameObserverNativeLocal = new IrisRtcCAudioFrameObserverNative
@@ -323,16 +323,16 @@ namespace agora.rtc
                 _irisRtcAudioFrameObserverHandleNative, identifier
             );
             _irisRtcAudioFrameObserverHandleNative = IntPtr.Zero;
-            AgoraRtcAudioFrameObserverNative.AudioFrameObserver = null;
+            AudioFrameObserverNative.AudioFrameObserver = null;
             _irisRtcCAudioFrameObserver = new IrisRtcCAudioFrameObserver();
             Marshal.FreeHGlobal(_irisRtcCAudioFrameObserverNative);
         }
 
-        public override void RegisterVideoFrameObserver(IAgoraRtcVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode)
+        public override void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode)
         {
             SetIrisVideoFrameObserver();
-            AgoraRtcVideoFrameObserverNative.VideoFrameObserver = videoFrameObserver;
-            AgoraRtcVideoFrameObserverNative.mode = mode;
+            VideoFrameObserverNative.VideoFrameObserver = videoFrameObserver;
+            VideoFrameObserverNative.mode = mode;
         }
 
         public override void UnRegisterVideoFrameObserver()
@@ -346,11 +346,11 @@ namespace agora.rtc
 
             _irisRtcCVideoFrameObserver = new IrisRtcCVideoFrameObserver
             {
-                OnCaptureVideoFrame = AgoraRtcVideoFrameObserverNative.OnCaptureVideoFrame,
-                OnPreEncodeVideoFrame = AgoraRtcVideoFrameObserverNative.OnPreEncodeVideoFrame,
-                OnRenderVideoFrame = AgoraRtcVideoFrameObserverNative.OnRenderVideoFrame,
-                GetObservedFramePosition = AgoraRtcVideoFrameObserverNative.GetObservedFramePosition,
-                IsMultipleChannelFrameWanted = AgoraRtcVideoFrameObserverNative.IsMultipleChannelFrameWanted
+                OnCaptureVideoFrame = VideoFrameObserverNative.OnCaptureVideoFrame,
+                OnPreEncodeVideoFrame = VideoFrameObserverNative.OnPreEncodeVideoFrame,
+                OnRenderVideoFrame = VideoFrameObserverNative.OnRenderVideoFrame,
+                GetObservedFramePosition = VideoFrameObserverNative.GetObservedFramePosition,
+                IsMultipleChannelFrameWanted = VideoFrameObserverNative.IsMultipleChannelFrameWanted
             };
 
             var irisRtcCVideoFrameObserverNativeLocal = new IrisRtcCVideoFrameObserverNative
@@ -383,12 +383,12 @@ namespace agora.rtc
             AgoraRtcNative.UnRegisterVideoFrameObserver(_irisRtcEngine,
                 _irisRtcVideoFrameObserverHandleNative, identifier);
             _irisRtcVideoFrameObserverHandleNative = IntPtr.Zero;
-            AgoraRtcVideoFrameObserverNative.VideoFrameObserver = null;
+            VideoFrameObserverNative.VideoFrameObserver = null;
             _irisRtcCVideoFrameObserver = new IrisRtcCVideoFrameObserver();
             Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
         }
 
-        public override void RegisterVideoEncodedImageReceiver(IAgoraRtcVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode)
+        public override void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode)
         {
             SetIrisVideoEncodedImageReceiver();
             AgoraRtcVideoEncodedImageReceiver.VideoEncodedImageReceiver = videoEncodedImageReceiver;
@@ -491,17 +491,17 @@ namespace agora.rtc
             return _videoDeviceManagerInstance;
         }
 
-        public override IAgoraMediaPlayer GetAgoraMediaPlayer()
+        public override IMediaPlayer GetMediaPlayer()
         {
             return _mediaPlayerInstance;
         }
 
-        public override IAgoraCloudSpatialAudioEngine GetAgoraCloudSpatialAudioEngine()
+        public override ICloudSpatialAudioEngine GetCloudSpatialAudioEngine()
         {
             return _cloudSpatialAudioEngineInstance;
         }
 
-        public override IAgoraLocalSpatialAudioEngine GetAgoraLocalSpatialAudioEngine()
+        public override ILocalSpatialAudioEngine GetLocalSpatialAudioEngine()
         {
             return _spatialAudioEngineInstance;
         }
@@ -1211,10 +1211,10 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAgoraRtcAudioEncodedFrameObserver observer)
+        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
         {
             SetIrisAudioEncodedFrameObserver(config);
-            AgoraRtcAudioEncodedFrameObserverNative.AudioEncodedFrameObserver = observer;
+            AudioEncodedFrameObserverNative.AudioEncodedFrameObserver = observer;
         }
 
         public override void UnRegisterAudioEncodedFrameObserver()
@@ -1228,9 +1228,9 @@ namespace agora.rtc
 
             _irisRtcCAudioEncodedFrameObserver = new IrisRtcCAudioEncodedFrameObserver
             {
-                OnRecordAudioEncodedFrame = AgoraRtcAudioEncodedFrameObserverNative.OnRecordAudioEncodedFrame,
-                OnPlaybackAudioEncodedFrame = AgoraRtcAudioEncodedFrameObserverNative.OnPlaybackAudioEncodedFrame,
-                OnMixedAudioEncodedFrame = AgoraRtcAudioEncodedFrameObserverNative.OnMixedAudioEncodedFrame
+                OnRecordAudioEncodedFrame = AudioEncodedFrameObserverNative.OnRecordAudioEncodedFrame,
+                OnPlaybackAudioEncodedFrame = AudioEncodedFrameObserverNative.OnPlaybackAudioEncodedFrame,
+                OnMixedAudioEncodedFrame = AudioEncodedFrameObserverNative.OnMixedAudioEncodedFrame
             };
 
             var _irisRtcCAudioEncodeFrameObserverNativeLocal = new IrisRtcCAudioEncodedFrameObserverNative
@@ -1261,7 +1261,7 @@ namespace agora.rtc
                  identifier
             );
             _irisRtcAudioEncodedFrameObserverHandleNative = IntPtr.Zero;
-            AgoraRtcAudioEncodedFrameObserverNative.AudioEncodedFrameObserver = null;
+            AudioEncodedFrameObserverNative.AudioEncodedFrameObserver = null;
             Marshal.FreeHGlobal(_irisRtcCAudioEncodedFrameObserverNative);
             _irisRtcCAudioEncodedFrameObserverNative = IntPtr.Zero;
             _irisRtcCAudioEncodedFrameObserver = new IrisRtcCAudioEncodedFrameObserver();
@@ -2338,16 +2338,16 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override void RegisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
+        public override void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
             //todo wait for capi
-            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
+            AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
-        public override void UnregisterAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
+        public override void UnregisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
             //todo wait for capi
-            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
+            AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
         }
 
         public override int AdjustRecordingSignalVolume(int volume)
@@ -3767,7 +3767,7 @@ namespace agora.rtc
 
         public override int JoinChannelWithUserAccountEx(string token, string channelId,
                                                 string userAccount, ChannelMediaOptions options,
-                                                IAgoraRtcEngineEventHandler eventHandler)
+                                                IRtcEngineEventHandler eventHandler)
         {
             var param = new
             {
@@ -5511,7 +5511,7 @@ namespace agora.rtc
 
         #endregion CallIrisApiWithBuffer end
 
-        ~AgoraRtcEngine()
+        ~RtcEngineImpl()
         {
             Dispose(false, false);
         }

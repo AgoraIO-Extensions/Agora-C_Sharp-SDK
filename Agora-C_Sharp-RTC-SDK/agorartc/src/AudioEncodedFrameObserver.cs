@@ -6,9 +6,9 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class AgoraRtcAudioEncodedFrameObserverNative
+    internal static class AudioEncodedFrameObserverNative
     {
-        internal static IAgoraRtcAudioEncodedFrameObserver AudioEncodedFrameObserver = null;
+        internal static IAudioEncodedFrameObserver AudioEncodedFrameObserver = null;
 
 
         internal static EncodedAudioFrameInfo IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref IrisEncodedAudioFrameInfo from)

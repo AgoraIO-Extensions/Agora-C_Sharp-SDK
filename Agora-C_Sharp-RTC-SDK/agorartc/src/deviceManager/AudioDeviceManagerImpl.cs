@@ -4,19 +4,19 @@ namespace agora.rtc
 {
     using IrisApiEnginePtr = IntPtr;
 
-    public sealed class AudioDeviceManager : IAudioDeviceManager
+    public sealed class AudioDeviceManagerImpl : IAudioDeviceManager
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
 
-        internal AudioDeviceManager(IrisApiEnginePtr irisApiEngine)
+        internal AudioDeviceManagerImpl(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
         }
 
-        ~AudioDeviceManager()
+        ~AudioDeviceManagerImpl()
         {
             Dispose(false);
         }

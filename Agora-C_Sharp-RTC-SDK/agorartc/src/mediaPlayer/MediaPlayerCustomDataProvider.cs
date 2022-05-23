@@ -6,9 +6,9 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class AgoraMediaPlayerCustomDataProviderNative
+    internal static class MediaPlayerCustomDataProviderNative
     {
-        internal static IAgoraMediaPlayerCustomDataProvider CustomDataProvider;
+        internal static IMediaPlayerCustomDataProvider CustomDataProvider;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_OnSeek_Native))]

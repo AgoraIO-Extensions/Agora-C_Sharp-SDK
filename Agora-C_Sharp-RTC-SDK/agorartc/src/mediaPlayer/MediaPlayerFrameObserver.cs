@@ -6,9 +6,9 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class AgoraMediaPlayerAudioFrameObserverNative
+    internal static class MediaPlayerAudioFrameObserverNative
     {
-        internal static IAgoraMediaPlayerAudioFrameObserver AudioFrameObserver;
+        internal static IMediaPlayerAudioFrameObserver AudioFrameObserver;
         private static class LocalAudioPcmFrames
         {
             internal static readonly AudioPcmFrame AudioPcmFrame = new AudioPcmFrame();

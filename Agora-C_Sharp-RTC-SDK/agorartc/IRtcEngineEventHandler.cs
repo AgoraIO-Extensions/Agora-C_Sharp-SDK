@@ -2,7 +2,7 @@
 
 namespace agora.rtc
 {
-    public abstract class IAgoraRtcEngineEventHandler
+    public abstract class IRtcEngineEventHandler
     {
         public virtual void OnJoinChannelSuccess(RtcConnection connection, int elapsed) { }
 

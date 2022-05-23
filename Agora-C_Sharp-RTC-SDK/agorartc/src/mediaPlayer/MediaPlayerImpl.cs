@@ -10,14 +10,12 @@ namespace agora.rtc
     using IrisEventHandlerHandleNative = IntPtr;
     using IrisMediaPlayerCAudioFrameObserverNativeMarshal = IntPtr;
     using IrisMediaPlayerAudioFrameObserverHandleNative = IntPtr;
-    using IrisMediaPlayerCVideoFrameObserverNativeMarshal = IntPtr;
-    using IrisMediaPlayerVideoFrameObserverHandleNative = IntPtr;
     using IrisMediaPlayerCCustomProviderNativeMarshal = IntPtr;
     using IrisMediaPlayerCustomProviderHandleNative = IntPtr;
     using IrisMediaPlayerCAudioSpectrumObserverNativeMarshal = IntPtr;
     using IrisMediaPlayerCAudioSpectrumObserverHandleNative = IntPtr;
 
-    public sealed class AgoraMediaPlayer : IAgoraMediaPlayer
+    public sealed class MediaPlayerImpl : IAgoraMediaPlayer
     {
         private bool _disposed = false;
 
@@ -34,10 +32,6 @@ namespace agora.rtc
         private IrisMediaPlayerCAudioFrameObserver _irisMediaPlayerCAudioFrameObserver;
         private IrisMediaPlayerAudioFrameObserverHandleNative _irisMediaPlayerAudioFrameObserverHandleNative;
 
-        private IrisMediaPlayerCVideoFrameObserverNativeMarshal _irisMediaPlayerCVideoFrameObserverNative;
-        private IrisRtcCVideoFrameObserver _irisMediaPlayerCVideoFrameObserver;
-        private IrisMediaPlayerVideoFrameObserverHandleNative _irisMediaPlayerVideoFrameObserverHandleNative;
-
         private IrisMediaPlayerCCustomProviderNativeMarshal _irisMediaPlayerCCustomProviderNative;
         private IrisMediaPlayerCCustomProvider _irisMediaPlayerCCustomProvider;
         private IrisMediaPlayerCustomProviderHandleNative _irisMediaPlayerCustomProviderHandleNative;
@@ -51,14 +45,14 @@ namespace agora.rtc
         private static readonly string identifier = "AgoraMediaPlayer";
 #endif
 
-        internal AgoraMediaPlayer(IrisApiEnginePtr irisApiEngine)
+        internal MediaPlayerImpl(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
             _irisApiEngine = irisApiEngine;
             CreateEventHandler();
         }
 
-        ~AgoraMediaPlayer()
+        ~MediaPlayerImpl()
         {
             Dispose(false);
         }
@@ -139,7 +133,7 @@ namespace agora.rtc
             
             _irisMediaPlayerCAudioFrameObserver = new IrisMediaPlayerCAudioFrameObserver
             {
-                OnFrame = AgoraMediaPlayerAudioFrameObserverNative.OnFrame
+                OnFrame = MediaPlayerAudioFrameObserverNative.OnFrame
             };
             
             var irisMediaPlayerCAudioFrameObserverNativeLocal = new IrisMediaPlayerCAudioFrameObserverNative
@@ -162,7 +156,7 @@ namespace agora.rtc
             
             _irisMediaPlayerCAudioFrameObserver = new IrisMediaPlayerCAudioFrameObserver
             {
-                OnFrame = AgoraMediaPlayerAudioFrameObserverNative.OnFrame
+                OnFrame = MediaPlayerAudioFrameObserverNative.OnFrame
             };
             
             var irisMediaPlayerCAudioFrameObserverNativeLocal = new IrisMediaPlayerCAudioFrameObserverNative
@@ -188,7 +182,7 @@ namespace agora.rtc
                 _irisMediaPlayerAudioFrameObserverHandleNative, AgoraJson.ToJson(param)
             );
             _irisMediaPlayerAudioFrameObserverHandleNative = IntPtr.Zero;
-            AgoraMediaPlayerAudioFrameObserverNative.AudioFrameObserver = null;
+            MediaPlayerAudioFrameObserverNative.AudioFrameObserver = null;
             _irisMediaPlayerCAudioFrameObserver = new IrisMediaPlayerCAudioFrameObserver();
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioFrameObserverNative);
         }
@@ -200,8 +194,8 @@ namespace agora.rtc
             
             _irisMediaPlayerCCustomProvider = new IrisMediaPlayerCCustomProvider
             {
-                OnSeek = AgoraMediaPlayerCustomDataProviderNative.OnSeek,
-                OnReadData = AgoraMediaPlayerCustomDataProviderNative.OnReadData
+                OnSeek = MediaPlayerCustomDataProviderNative.OnSeek,
+                OnReadData = MediaPlayerCustomDataProviderNative.OnReadData
             };
 
             var irisMediaPlayerCCustomProviderNativeLocal = new IrisMediaPlayerCCustomProviderNative
@@ -226,8 +220,8 @@ namespace agora.rtc
             
             _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver
             {
-                OnLocalAudioSpectrum = AgoraRtcAudioSpectrumObserverNative.OnLocalAudioSpectrum,
-                OnRemoteAudioSpectrum = AgoraRtcAudioSpectrumObserverNative.OnRemoteAudioSpectrum
+                OnLocalAudioSpectrum = AudioSpectrumObserverNative.OnLocalAudioSpectrum,
+                OnRemoteAudioSpectrum = AudioSpectrumObserverNative.OnRemoteAudioSpectrum
             };
 
             var irisMediaPlayerCAudioSpectrumObserverNativeLocal = new IrisMediaPlayerCAudioSpectrumObserverNative
@@ -254,7 +248,7 @@ namespace agora.rtc
                 _irisMediaPlayerCAudioSpectrumObserverHandleNative, AgoraJson.ToJson(param)
             );
             _irisMediaPlayerCAudioSpectrumObserverNative = IntPtr.Zero;
-            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
+            AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
             _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver();
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
@@ -274,30 +268,30 @@ namespace agora.rtc
             RtcMediaPlayerEventHandlerNative.RtcMediaPlayerEventHandler = null;
         }
 
-        public override void RegisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer)
+        public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
         {
             SetIrisAudioFrameObserver();
-            AgoraMediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
+            MediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
         }
 
-        public override void RegisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             SetIrisAudioFrameObserverWithMode(mode);
-            AgoraMediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
+            MediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
         }
 
-        public override void UnregisterAudioFrameObserver(IAgoraMediaPlayerAudioFrameObserver observer)
+        public override void UnregisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
         {
             UnSetIrisAudioFrameObserver();
         }
 
-        public override void RegisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer, int intervalInMS)
+        public override void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
         {
             SetIrisAudioSpectrumObserver(intervalInMS);
-            AgoraRtcAudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
+            AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
-        public override void UnregisterMediaPlayerAudioSpectrumObserver(IAgoraRtcAudioSpectrumObserver observer)
+        public override void UnregisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
             UnSetIrisAudioSpectrumObserver();
         }
@@ -336,10 +330,10 @@ namespace agora.rtc
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int OpenWithCustomSource(int playerId, Int64 startPos, IAgoraMediaPlayerCustomDataProvider provider)
+        public override int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider)
         {
             var ret = SetCustomSourceProvider(playerId, startPos);
-            AgoraMediaPlayerCustomDataProviderNative.CustomDataProvider = provider;
+            MediaPlayerCustomDataProviderNative.CustomDataProvider = provider;
             return ret;
         }
 
