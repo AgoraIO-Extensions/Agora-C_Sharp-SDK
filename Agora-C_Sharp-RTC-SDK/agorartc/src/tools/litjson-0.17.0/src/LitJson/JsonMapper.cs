@@ -1510,6 +1510,13 @@ namespace agora.rtc.LitJson
                 return;
             }
 
+            if (obj is OptionalJsonParse)
+            {
+                ((OptionalJsonParse)obj).ToJson(writer);
+                return;
+            }
+
+
             if (obj is IJsonWrapper)
             {
                 if (writer_is_private)
