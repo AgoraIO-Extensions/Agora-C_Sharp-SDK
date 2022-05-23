@@ -4,6 +4,7 @@ namespace agora.rtc
     {
         // class IRtcEngine start
         internal const string FUNC_KEY_ERROR = "";
+        internal const string FUNC_RTCENGINE_SETPARAMETERS = "RtcEngine_setParameters";
         internal const string FUNC_RTCENGINE_SETAPPTYPE = "RtcEngine_setAppType";
         internal const string FUNC_RTCENGINE_RELEASE = "RtcEngine_release";
         internal const string FUNC_RTCENGINE_INITIALIZE = "RtcEngine_initialize";
@@ -281,6 +282,7 @@ namespace agora.rtc
         internal const string FUNC_RTCENGINEEX_SETVIDEOPROFILEEX = "RtcEngineEx_setVideoProfileEx";
         internal const string FUNC_RTCENGINEEX_ENABLEDUALSTREAMMODEEX = "RtcEngineEx_enableDualStreamModeEx";
         internal const string FUNC_RTCENGINEEX_ADDPUBLISHSTREAMURLEX = "RtcEngineEx_addPublishStreamUrlEx";
+        internal const string FUNC_RTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION = "RtcEngine_setAudioSessionOperationRestriction";
         // class IRtcEngineEx end
 
         // class IMediaPlayer start

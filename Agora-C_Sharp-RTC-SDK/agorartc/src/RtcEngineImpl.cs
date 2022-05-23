@@ -4386,7 +4386,7 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_KEY_ERROR, //todo no key
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION,
                 json, jsonLength,
                 IntPtr.Zero, 0,
                 out _result);
@@ -4438,7 +4438,7 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_KEY_ERROR,//todo no key
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETPARAMETERS,
                 json, jsonLength,
                 IntPtr.Zero, 0,
                 out _result);
@@ -4649,7 +4649,7 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
             var jsonLength = Convert.ToUInt64(json.Length);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_KEY_ERROR,//todo no key
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCHANNEL,
                 json, jsonLength,
                 IntPtr.Zero, 0,
                 out _result);
