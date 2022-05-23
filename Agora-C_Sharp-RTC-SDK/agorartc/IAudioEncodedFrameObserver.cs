@@ -4,19 +4,19 @@ namespace agora.rtc
 {
     public class IAudioEncodedFrameObserver
     {
-        public virtual void OnRecordAudioEncodedFrame(IntPtr frameBufferPtr, byte[] frameBuffer,  int length, 
+        public virtual void OnRecordAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
         {
 
         }
 
-        public virtual void OnPlaybackAudioEncodedFrame(IntPtr frameBufferPtr, byte[] frameBuffer,  int length, 
+        public virtual void OnPlaybackAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
         {
 
         }
 
-        public virtual void OnMixedAudioEncodedFrame(IntPtr frameBufferPtr, byte[] frameBuffer,  int length, 
+        public virtual void OnMixedAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
         {
 
