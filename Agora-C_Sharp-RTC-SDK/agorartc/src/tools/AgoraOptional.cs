@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Specialized;
 using agora.rtc.LitJson;
 
 namespace agora.rtc
@@ -36,171 +38,99 @@ namespace agora.rtc
 
     }
 
-    
+
     public class OptionalJsonParse : LitJson.IJsonWrapper
     {
-        public object this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public object this[object key] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsArray { get { return false; } }
+        public bool IsBoolean { get { return false; } }
+        public bool IsDouble { get { return false; } }
+        public bool IsInt { get { return false; } }
+        public bool IsLong { get { return false; } }
+        public bool IsObject { get { return false; } }
+        public bool IsString { get { return false; } }
 
-        public virtual bool IsArray => throw new NotImplementedException();
+        public bool GetBoolean() { return false; }
+        public double GetDouble() { return 0.0; }
+        public int GetInt() { return 0; }
+        public JsonType GetJsonType() { return JsonType.None; }
+        public long GetLong() { return 0L; }
+        public string GetString() { return ""; }
 
-        public virtual bool IsBoolean => throw new NotImplementedException();
+        public void SetBoolean(bool val) { }
+        public void SetDouble(double val) { }
+        public void SetInt(int val) { }
+        public void SetJsonType(JsonType type) { }
+        public void SetLong(long val) { }
+        public void SetString(string val) { }
 
-        public virtual bool IsDouble => throw new NotImplementedException();
+        public virtual string ToJson() { throw new NotImplementedException(); }
+        public virtual void ToJson(JsonWriter writer) { }
 
-        public virtual bool IsInt => throw new NotImplementedException();
 
-        public virtual bool IsLong => throw new NotImplementedException();
+        bool IList.IsFixedSize { get { return true; } }
+        bool IList.IsReadOnly { get { return true; } }
 
-        public virtual bool IsObject => throw new NotImplementedException();
-
-        public virtual bool IsString => throw new NotImplementedException();
-
-        public virtual bool IsFixedSize => throw new NotImplementedException();
-
-        public virtual bool IsReadOnly => throw new NotImplementedException();
-
-        public virtual ICollection Keys => throw new NotImplementedException();
-
-        public virtual ICollection Values => throw new NotImplementedException();
-
-        public virtual int Count => throw new NotImplementedException();
-
-        public virtual bool IsSynchronized => throw new NotImplementedException();
-
-        public virtual object SyncRoot => throw new NotImplementedException();
-
-        public virtual int Add(object value)
+        object IList.this[int index]
         {
-            throw new NotImplementedException();
+            get { return null; }
+            set { }
         }
 
-        public virtual void Add(object key, object value)
+        int IList.Add(object value) { return 0; }
+        void IList.Clear() { }
+        bool IList.Contains(object value) { return false; }
+        int IList.IndexOf(object value) { return -1; }
+        void IList.Insert(int i, object v) { }
+        void IList.Remove(object value) { }
+        void IList.RemoveAt(int index) { }
+
+
+        int ICollection.Count { get { return 0; } }
+        bool ICollection.IsSynchronized { get { return false; } }
+        object ICollection.SyncRoot { get { return null; } }
+
+        void ICollection.CopyTo(Array array, int index) { }
+
+
+        IEnumerator IEnumerable.GetEnumerator() { return null; }
+
+
+        bool IDictionary.IsFixedSize { get { return true; } }
+        bool IDictionary.IsReadOnly { get { return true; } }
+
+        ICollection IDictionary.Keys { get { return null; } }
+        ICollection IDictionary.Values { get { return null; } }
+
+        object IDictionary.this[object key]
         {
-            throw new NotImplementedException();
+            get { return null; }
+            set { }
         }
 
-        public virtual void Clear()
+        void IDictionary.Add(object k, object v) { }
+        void IDictionary.Clear() { }
+        bool IDictionary.Contains(object key) { return false; }
+        void IDictionary.Remove(object key) { }
+
+        IDictionaryEnumerator IDictionary.GetEnumerator() { return null; }
+
+
+        object IOrderedDictionary.this[int idx]
         {
-            throw new NotImplementedException();
+            get { return null; }
+            set { }
         }
 
-        public virtual bool Contains(object value)
+        IDictionaryEnumerator IOrderedDictionary.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return null;
         }
+        void IOrderedDictionary.Insert(int i, object k, object v) { }
+        void IOrderedDictionary.RemoveAt(int i) { }
 
-        public virtual void CopyTo(Array array, int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual bool GetBoolean()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual double GetDouble()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual IDictionaryEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual int GetInt()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual JsonType GetJsonType()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual long GetLong()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual string GetString()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual int IndexOf(object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void Insert(int index, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void Insert(int index, object key, object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void Remove(object value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void RemoveAt(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void SetBoolean(bool val)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void SetDouble(double val)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void SetInt(int val)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void SetJsonType(JsonType type)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void SetLong(long val)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void SetString(string val)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual string ToJson()
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual void ToJson(JsonWriter writer)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
 
         public void WriteEnum(LitJson.JsonWriter writer, Object obj)
+
         {
             Type obj_type = obj.GetType();
             Type e_type = Enum.GetUnderlyingType(obj_type);
@@ -222,6 +152,7 @@ namespace agora.rtc
             else
                 writer.Write((int)obj);
         }
+
     }
 
 }
