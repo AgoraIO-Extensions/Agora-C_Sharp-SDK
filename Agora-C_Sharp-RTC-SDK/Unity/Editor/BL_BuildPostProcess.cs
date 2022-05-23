@@ -1,4 +1,5 @@
 #if UNITY_IPHONE || UNITY_STANDALONE_OSX
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -6,6 +7,7 @@ using UnityEditor.Callbacks;
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
+using UnityEngine;
 
 public class BL_BuildPostProcess
 {
@@ -21,38 +23,27 @@ public class BL_BuildPostProcess
 #endif
         }
     }
-#if UNITY_IPHONE
-    public static void DisableBitcode(string projPath)
-    {
-        PBXProject proj = new PBXProject();
-        proj.ReadFromString(File.ReadAllText(projPath));
 
-        string target = GetTargetGuid(proj);
-        proj.SetBuildProperty(target, "ENABLE_BITCODE", "false");
-        File.WriteAllText(projPath, proj.WriteToString());
-    }
+    //public static void DisableBitcode(string projPath)
+    //{
+    //    PBXProject proj = new PBXProject();
+    //    proj.ReadFromString(File.ReadAllText(projPath));
+
+    //    string target = GetTargetGuid(proj);
+    //    proj.SetBuildProperty(target, "ENABLE_BITCODE", "false");
+    //    File.WriteAllText(projPath, proj.WriteToString());
+    //}
 
     static string GetTargetGuid(PBXProject proj)
     {
 #if UNITY_2019_3_OR_NEWER
-        return proj.GetUnityFrameworkTargetGuid();
+        return proj.GetUnityMainTargetGuid();
 #else
         return proj.TargetGuidByName("Unity-iPhone");
 #endif
     }
 
-    static string[] ProjectFrameworks = new string[] {
-        "Accelerate.framework",
-        "CoreTelephony.framework",
-        "CoreText.framework",
-        "CoreML.framework",
-        "Metal.framework",
-        "VideoToolbox.framework",
-        "libiPhone-lib.a",
-        "libresolv.tbd",
-    };
-
-
+  
     static void LinkLibraries(string path)
     {
         // linked library
@@ -62,66 +53,41 @@ public class BL_BuildPostProcess
         string target = GetTargetGuid(proj);
 
 
-        // embedded frameworks
-#if UNITY_2019_3_OR_NEWER
-        target = proj.GetUnityMainTargetGuid();
-#endif
-        string defaultLocationInProj = "Agora-Plugin/Agora-Unity-RTC-SDK/Plugins/iOS";
-        const string AgoraRtcWrapperFrameworkName = "AgoraRtcWrapper.framework";
-        const string AgoraRtcKitFrameworkName = "AgoraRtcKit.framework";
-        const string AgoraffmpegFrameworkName = "Agoraffmpeg.framework";
-        const string AgoraVideoProcessFrameworkName = "AgoraVideoProcessExtension.framework";
-        const string AgoraPvcExtensionFrameworkName = "AgoraPvcExtension.framework";
-        const string AgoraRTEFrameworkName = "AgoraRTE.framework";
-        const string AgoraVideoSegmentationExtensionFrameworkName = "AgoraVideoSegmentationExtension.framework";
-        const string BeQuicFrameworkName = "BeQuic.framework";
-        const string AgoraQualityEduVideoProcessFramework = "AgoraQualityEduVideoProcess.framework";
+        string defaultLocationInProj = "Agora-RTC-Plugin/Agora-Unity-RTC-SDK/Plugins/iOS";
+
+        DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(path, "Frameworks/"+ defaultLocationInProj));
+        FileInfo[] fileInfos = directoryInfo.GetFiles();
+        DirectoryInfo[] directoryInfos = directoryInfo.GetDirectories();
+
+        Debug.Log("fileInfo:"+ fileInfos.Length);
+        List<string> frameworks = new List<string>();
+        foreach (var fileInfo in fileInfos)
+        {
+            frameworks.Add(fileInfo.Name);
+            //Debug.Log(fileInfo.Name);
+        }
+
+        foreach (var fileInfo in directoryInfos)
+        {
+            frameworks.Add(fileInfo.Name);
+            //Debug.Log(fileInfo.Name);
+        }
 
 
-        string AgoraRtcWrapperFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcWrapperFrameworkName);
-        string AgoraRtcKitFrameworkPath = Path.Combine(defaultLocationInProj, AgoraRtcKitFrameworkName);
-        string AgoraffmpegFrameworkPath = Path.Combine(defaultLocationInProj, AgoraffmpegFrameworkName);
-        string AgoraVideoProcessPath = Path.Combine(defaultLocationInProj, AgoraVideoProcessFrameworkName);
-        string AgoraPvcExtensionPath = Path.Combine(defaultLocationInProj, AgoraPvcExtensionFrameworkName);
-        string AgoraRTEPath = Path.Combine(defaultLocationInProj, AgoraRTEFrameworkName);
-        string AgoraVideoSegmentationExtensionPath = Path.Combine(defaultLocationInProj, AgoraVideoSegmentationExtensionFrameworkName);
-        string BeQuicPath = Path.Combine(defaultLocationInProj, BeQuicFrameworkName);
-        string AgoraQualityEduVideoProcessPath = Path.Combine(defaultLocationInProj, AgoraQualityEduVideoProcessFramework); ;
+        foreach (var file in frameworks)
+        {
+            string fullPath = Path.Combine(defaultLocationInProj, file);
+            string fileGuid = proj.AddFile(fullPath, "Frameworks/" + fullPath, PBXSourceTree.Sdk);
+            PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
+        }
 
-
-        string fileGuid = proj.AddFile(AgoraRtcWrapperFrameworkPath, "Frameworks/" + AgoraRtcWrapperFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraRtcKitFrameworkPath, "Frameworks/" + AgoraRtcKitFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraPvcExtensionPath, "Frameworks/" + AgoraPvcExtensionPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraRTEPath, "Frameworks/" + AgoraRTEPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(BeQuicPath, "Frameworks/" + BeQuicPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraQualityEduVideoProcessPath, "Frameworks/" + AgoraQualityEduVideoProcessPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-
-
-        // Start Tag for video SDK only (If the framework is video only, please place it inside the scope)
-        fileGuid = proj.AddFile(AgoraffmpegFrameworkPath, "Frameworks/" + AgoraffmpegFrameworkPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraVideoProcessPath, "Frameworks/" + AgoraVideoProcessPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        fileGuid = proj.AddFile(AgoraVideoSegmentationExtensionPath, "Frameworks/" + AgoraVideoSegmentationExtensionPath, PBXSourceTree.Sdk);
-        PBXProjectExtensions.AddFileToEmbedFrameworks(proj, target, fileGuid);
-        // End Tag
-
+       
         proj.SetBuildProperty(target, "LD_RUNPATH_SEARCH_PATHS", "$(inherited) @executable_path/Frameworks");
 
         // done, write to the project file
         File.WriteAllText(projPath, proj.WriteToString());
     }
-#endif
-    /// <summary>
-    ///   Update the permission 
-    /// </summary>
-    /// <param name="pListPath">path to the Info.plist file</param>
+
     static void UpdatePermission(string pListPath)
     {
 #if UNITY_IPHONE
