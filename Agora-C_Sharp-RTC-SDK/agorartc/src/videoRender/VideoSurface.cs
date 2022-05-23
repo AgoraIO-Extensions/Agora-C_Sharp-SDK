@@ -49,13 +49,14 @@ namespace agora.rtc
                         _TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
 
                         _textureManager = _TextureManagerGameObject.AddComponent<TextureManager>();
-                        ApplyTexture(GetTexture());
+                        _textureManager.SetVideoStreamIdentity(Uid, ChannelId, sourceType);
+                        _textureManager.EnableVideoFrameWithIdentity();
                     }
                     else
                     {
                         _textureManager = _TextureManagerGameObject.GetComponent<TextureManager>();
-                        ApplyTexture(_textureManager.texture);
                     }
+                    ApplyTexture(_textureManager.texture);
                 }
             }
             else
@@ -100,13 +101,6 @@ namespace agora.rtc
                 UpdateShader();
 #endif
             }
-        }
-
-        private Texture2D GetTexture()
-        {
-            _textureManager.SetVideoStreamIdentity(Uid, ChannelId, sourceType);
-            _textureManager.EnableVideoFrameWithIdentity();
-            return _textureManager.texture;
         }
 
         private void DestroyTextureManager()

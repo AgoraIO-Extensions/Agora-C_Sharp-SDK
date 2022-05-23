@@ -2,9 +2,6 @@
 
 namespace agora.rtc
 {
-    using int64_t = Int64;
-    using view_t = UInt64;
-    using uint64_t = UInt64;
     #region IAgoraRhythmPlayer.h
 
     /**
