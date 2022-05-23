@@ -1,26 +1,23 @@
-#if UNITY_IPHONE || UNITY_STANDALONE_OSX
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
-#if UNITY_IPHONE
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
-#endif
+
 using UnityEngine;
 
 public class BL_BuildPostProcess
 {
-
     [PostProcessBuild]
     public static void OnPostprocessBuild(BuildTarget buildTarget, string path)
     {
         if (buildTarget == BuildTarget.iOS)
         {
-#if UNITY_IPHONE
+
             LinkLibraries(path);
             UpdatePermission(path + "/Info.plist");
-#endif
+
         }
     }
 
@@ -90,7 +87,7 @@ public class BL_BuildPostProcess
 
     static void UpdatePermission(string pListPath)
     {
-#if UNITY_IPHONE
+
         PlistDocument plist = new PlistDocument();
         plist.ReadFromString(File.ReadAllText(pListPath));
         PlistElementDict rootDic = plist.root;
@@ -99,8 +96,7 @@ public class BL_BuildPostProcess
         rootDic.SetString(cameraPermission, "Video need to use camera");
         rootDic.SetString(micPermission, "Voice call need to user mic");
         File.WriteAllText(pListPath, plist.WriteToString());
-#endif
     }
 
 }
-#endif
+
