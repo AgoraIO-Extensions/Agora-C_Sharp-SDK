@@ -8,6 +8,7 @@ namespace agora.rtc
 {
     internal static class MediaPlayerCustomDataProviderNative
     {
+        internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
         internal static IMediaPlayerCustomDataProvider CustomDataProvider;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -24,13 +25,18 @@ namespace agora.rtc
 #endif
         internal static int OnReadData(IntPtr buffer, int bufferSize, int playerId)
         {
-            byte[] Buffer = new byte[bufferSize];
-            if (buffer != IntPtr.Zero)
+            byte[] Buffer = new byte[0];
+            if (mode == OBSERVER_MODE.RAW_DATA)
             {
-                Marshal.Copy(buffer, Buffer, 0, (int) bufferSize);
+                Buffer = new byte[bufferSize];
+                if (buffer != IntPtr.Zero)
+                {
+                    Marshal.Copy(buffer, Buffer, 0, (int)bufferSize);
+                }
             }
+            
             return CustomDataProvider == null ? -1 :
-                CustomDataProvider.OnReadData(Buffer, bufferSize, playerId);
+                CustomDataProvider.OnReadData(buffer, Buffer, bufferSize, playerId);
         }
     }
 }

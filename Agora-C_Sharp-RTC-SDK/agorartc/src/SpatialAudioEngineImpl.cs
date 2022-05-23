@@ -7,7 +7,6 @@ using AOT;
 namespace agora.rtc
 {
     using IrisApiEnginePtr = IntPtr;
-
     using IrisEventHandlerHandleNative = IntPtr;
 
     public sealed class CloudSpatialAudioEngineImpl : ICloudSpatialAudioEngine
@@ -67,7 +66,7 @@ namespace agora.rtc
             {
                 _irisCEventHandler = new IrisCEventHandler
                 {
-                    OnEvent = RtcCloudSpatialAudioEngineEventHandlerNative.OnEvent
+                    OnEvent = CloudSpatialAudioEngineEventHandlerNative.OnEvent
                 };
 
                 var cEventHandlerNativeLocal = new IrisCEventHandlerNative
@@ -82,18 +81,18 @@ namespace agora.rtc
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                 _callbackObject = new AgoraCallbackObject(identifier);
-                RtcCloudSpatialAudioEngineEventHandlerNative.CallbackObject = _callbackObject;
+                CloudSpatialAudioEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
             _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance = CloudSpatialAudioEventHandler.GetInstance();
-            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
+            CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
         {
-            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
+            CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            RtcCloudSpatialAudioEngineEventHandlerNative.CallbackObject = null;
+            CloudSpatialAudioEngineEventHandlerNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
@@ -109,12 +108,12 @@ namespace agora.rtc
 
         public override void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
         {
-            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
+            CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
         }
 
         public override void RemoveEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
         {
-            RtcCloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
+            CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
         }
 
         public override int SetMaxAudioRecvCount(int maxCount)
@@ -615,52 +614,5 @@ namespace agora.rtc
         //         "", 0, IntPtr.Zero, 0, out _result);
         //     return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         // }
-    }
-
-    internal static class RtcCloudSpatialAudioEngineEventHandlerNative
-    {
-        internal static ICloudSpatialAudioEventHandler CloudSpatialAudioEngineEventHandler = null;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        internal static AgoraCallbackObject CallbackObject = null;
-#endif
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_Event_Native))]
-#endif
-        internal static void OnEvent(string @event, string data, IntPtr buffer, uint length)
-        {
-            var byteData = new byte[length];
-            if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int)length);
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
-            CallbackObject._CallbackQueue.EnQueue(() =>
-            {
-#endif
-            switch (@event)
-            {
-                case "onTokenWillExpire":
-                    CloudSpatialAudioEngineEventHandler.OnTokenWillExpire();
-                    break;
-                case "onConnectionStateChange":
-                    CloudSpatialAudioEngineEventHandler.OnConnectionStateChange(
-                        (SAE_CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
-                        (SAE_CONNECTION_CHANGED_REASON_TYPE)AgoraJson.GetData<int>(data, "reason")
-                    );
-                    break;
-                case "onTeammateLeft":
-                    CloudSpatialAudioEngineEventHandler.OnTeammateLeft(
-                        (uint)AgoraJson.GetData<uint>(data, "uid")
-                    );
-                    break;
-                case "onTeammateJoined":
-                    CloudSpatialAudioEngineEventHandler.OnTeammateJoined(
-                        (uint)AgoraJson.GetData<uint>(data, "uid")
-                    );
-                    break;
-            }
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            });
-#endif
-        }
     }
 }

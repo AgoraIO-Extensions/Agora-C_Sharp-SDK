@@ -8,8 +8,8 @@ namespace agora.rtc
 {
     internal static class AudioEncodedFrameObserverNative
     {
+        internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
         internal static IAudioEncodedFrameObserver AudioEncodedFrameObserver = null;
-
 
         internal static EncodedAudioFrameInfo IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref IrisEncodedAudioFrameInfo from)
         {
@@ -24,7 +24,6 @@ namespace agora.rtc
             return to;
         }
 
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_RecordAudioEncodedFrame_Native))]
 #endif
@@ -32,13 +31,17 @@ namespace agora.rtc
         {
             if (AudioEncodedFrameObserver == null) return;
 
-            byte[] frameBuffer = new byte[length];
-            Marshal.Copy(frameBuffer, 0, frame_buffer, length);
+            byte[] frameBuffer = new byte[0];
+            if (mode == OBSERVER_MODE.RAW_DATA)
+            {
+                frameBuffer = new byte[length];
+                Marshal.Copy(frameBuffer, 0, frame_buffer, length);
+            }
 
             IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
-            AudioEncodedFrameObserver.OnRecordAudioEncodedFrame(frameBuffer, length, to);
+            AudioEncodedFrameObserver.OnRecordAudioEncodedFrame(frame_buffer, frameBuffer, length, to);
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -48,13 +51,17 @@ namespace agora.rtc
         {
             if (AudioEncodedFrameObserver == null) return;
 
-            byte[] frameBuffer = new byte[length];
-            Marshal.Copy(frameBuffer, 0, frame_buffer, length);
+            byte[] frameBuffer = new byte[0];
+            if (mode == OBSERVER_MODE.RAW_DATA)
+            {
+                frameBuffer = new byte[length];
+                Marshal.Copy(frameBuffer, 0, frame_buffer, length);
+            }
 
             IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
-            AudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frameBuffer, length, to);
+            AudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frame_buffer, frameBuffer, length, to);
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -64,13 +71,17 @@ namespace agora.rtc
         {
             if (AudioEncodedFrameObserver == null) return;
 
-            byte[] frameBuffer = new byte[length];
-            Marshal.Copy(frameBuffer, 0, frame_buffer, length);
+            byte[] frameBuffer = new byte[0];
+            if (mode == OBSERVER_MODE.RAW_DATA)
+            {
+                frameBuffer = new byte[length];
+                Marshal.Copy(frameBuffer, 0, frame_buffer, length);
+            }
 
             IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
-            AudioEncodedFrameObserver.OnMixedAudioEncodedFrame(frameBuffer, length, to);
+            AudioEncodedFrameObserver.OnMixedAudioEncodedFrame(frame_buffer, frameBuffer, length, to);
         }
     }
 }

@@ -6,8 +6,9 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class MetadataObserver
+    internal static class MetadataObserverNative
     {
+        internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
         internal static IMetadataObserver Observer;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -39,15 +40,18 @@ namespace agora.rtc
                                                     new IrisMetadata());
             var localMetaData = new Metadata();
 
-            localMetaData.buffer = new byte[metaData.size];
-
-            if (metaData.buffer != IntPtr.Zero)
-                Marshal.Copy(metaData.buffer, localMetaData.buffer, 0, (int) metaData.size);
+            if (mode == OBSERVER_MODE.RAW_DATA)
+            {
+                localMetaData.buffer = new byte[metaData.size];
+                if (metaData.buffer != IntPtr.Zero)
+                    Marshal.Copy(metaData.buffer, localMetaData.buffer, 0, (int)metaData.size);
+            }
+           
             localMetaData.uid = metaData.uid;
             localMetaData.size = metaData.size;
             localMetaData.timeStampMs = metaData.timeStampMs;
 
-            Observer.OnMetadataReceived(localMetaData);
+            Observer.OnMetadataReceived(metadata, localMetaData);
         }
     }
 }

@@ -15,15 +15,15 @@ namespace agora.rtc
 
         public abstract void RemoveEventHandler(IRtcEngineEventHandler engineEventHandler);
 
-        public abstract void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode);
+        public abstract void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         public abstract void UnRegisterAudioFrameObserver();
 
-        public abstract void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode);
+        public abstract void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         public abstract void UnRegisterVideoFrameObserver();
 
-        public abstract void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode);
+        public abstract void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         public abstract void UnRegisterVideoEncodedImageReceiver();
 
@@ -129,7 +129,7 @@ namespace agora.rtc
 
         public abstract int StartAudioRecording(AudioRecordingConfiguration config);
 
-        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer); //TODO
+        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         public abstract void UnRegisterAudioEncodedFrameObserver();
 
@@ -431,7 +431,7 @@ namespace agora.rtc
 
         public abstract int SendCustomReportMessage(string id, string category, string @event, string label, int value);
 
-        public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
+        public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         public abstract void UnregisterMediaMetadataObserver(IMetadataObserver observer);
 

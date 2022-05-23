@@ -6,7 +6,7 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class AgoraRtcVideoEncodedImageReceiver
+    internal static class VideoEncodedImageReceiverNative
     {
         internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
         internal static IVideoEncodedImageReceiver VideoEncodedImageReceiver;

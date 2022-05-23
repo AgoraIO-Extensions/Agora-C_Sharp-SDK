@@ -260,7 +260,7 @@ namespace agora.rtc
             RtcEngineEventHandlerNative.EngineEventHandler = null;
         }
 
-        public override void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode)
+        public override void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisAudioFrameObserver();
             AudioFrameObserverNative.AudioFrameObserver = audioFrameObserver;
@@ -325,7 +325,7 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCAudioFrameObserverNative);
         }
 
-        public override void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode)
+        public override void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisVideoFrameObserver();
             VideoFrameObserverNative.VideoFrameObserver = videoFrameObserver;
@@ -385,10 +385,10 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
         }
 
-        public override void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode)
+        public override void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisVideoEncodedImageReceiver();
-            AgoraRtcVideoEncodedImageReceiver.VideoEncodedImageReceiver = videoEncodedImageReceiver;
+            VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = videoEncodedImageReceiver;
         }
 
         public override void UnRegisterVideoEncodedImageReceiver()
@@ -402,7 +402,7 @@ namespace agora.rtc
 
             _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver
             {
-                OnEncodedVideoImageReceived = AgoraRtcVideoEncodedImageReceiver.OnEncodedVideoImageReceived
+                OnEncodedVideoImageReceived = VideoEncodedImageReceiverNative.OnEncodedVideoImageReceived
             };
 
             var irisRtcCVideoEncodedImageReceiverNativeLocal = new IrisRtcCVideoEncodedImageReceiverNative
@@ -428,7 +428,7 @@ namespace agora.rtc
             AgoraRtcNative.UnRegisterVideoEncodedImageReceiver(_irisRtcEngine,
                 _irisRtcVideoEncodedImageReceiverHandleNative, identifier);
             _irisRtcVideoEncodedImageReceiverHandleNative = IntPtr.Zero;
-            AgoraRtcVideoEncodedImageReceiver.VideoEncodedImageReceiver = null;
+            VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = null;
             _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver();
             Marshal.FreeHGlobal(_irisRtcCVideoEncodedImageReceiverNative);
         }
@@ -439,9 +439,9 @@ namespace agora.rtc
 
             _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver
             {
-                GetMaxMetadataSize = MetadataObserver.GetMaxMetadataSize,
-                OnReadyToSendMetadata = MetadataObserver.OnReadyToSendMetadata,
-                OnMetadataReceived = MetadataObserver.OnMetadataReceived
+                GetMaxMetadataSize = MetadataObserverNative.GetMaxMetadataSize,
+                OnReadyToSendMetadata = MetadataObserverNative.OnReadyToSendMetadata,
+                OnMetadataReceived = MetadataObserverNative.OnMetadataReceived
             };
 
             var irisRtcCMetaDataObserverNativeLocal = new IrisCMediaMetadataObserverNative
@@ -473,7 +473,7 @@ namespace agora.rtc
 
             AgoraRtcNative.UnRegisterMediaMetadataObserver(_irisRtcEngine, _irisRtcMetaDataObserverHandleNative);
             _irisRtcMetaDataObserverHandleNative = IntPtr.Zero;
-            MetadataObserver.Observer = null;
+            MetadataObserverNative.Observer = null;
             _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver();
             Marshal.FreeHGlobal(_irisRtcCMetaDataObserverNative);
         }
@@ -1208,10 +1208,11 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
+        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisAudioEncodedFrameObserver(config);
             AudioEncodedFrameObserverNative.AudioEncodedFrameObserver = observer;
+            AudioEncodedFrameObserverNative.mode = mode;
         }
 
         public override void UnRegisterAudioEncodedFrameObserver()
@@ -3648,10 +3649,11 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
+        public override void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisMetaDataObserver(type);
-            MetadataObserver.Observer = observer;
+            MetadataObserverNative.Observer = observer;
+            MetadataObserverNative.mode = mode;
         }
 
         public override void UnregisterMediaMetadataObserver(IMetadataObserver observer)

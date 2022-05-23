@@ -9,7 +9,7 @@ namespace agora.rtc
             return 0;
         }
 
-        public virtual int OnReadData(byte[] buffer, int bufferSize, int playerId)
+        public virtual int OnReadData(IntPtr bufferPtr, byte[] buffer, int bufferSize, int playerId)
         {
             return 0;
         }
