@@ -15,6 +15,15 @@ namespace agora.rtc
     using IrisMediaPlayerAudioSpectrumObserverHandle = IntPtr;
     using IrisMetaDataObserverHandle = IntPtr;
 
+    internal enum IRIS_VIDEO_PROCESS_ERR
+    {
+        ERR_OK = 0,
+        ERR_NULL_POINTER = 1,
+        ERR_SIZE_NOT_MATCHING = 2,
+        ERR_BUFFER_EMPTY = 5,
+    };
+
+
     internal static class AgoraRtcNative
     {
         #region DllImport
