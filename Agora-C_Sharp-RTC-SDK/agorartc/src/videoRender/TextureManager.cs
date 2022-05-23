@@ -23,11 +23,12 @@ namespace agora.rtc
 
         // reference count
         private int _refCount = 0;
+        private bool _canAttach = false;
 
         private Texture2D _texture;
         public Texture2D texture
         {
-            get 
+            get
             {
                 _refCount++;
                 AgoraLog.Log("TextureManager refCount Add, Now is: " + _refCount);
@@ -94,6 +95,11 @@ namespace agora.rtc
             return _refCount;
         }
 
+        internal bool CanTextureAttach()
+        {
+            return _canAttach;
+        }
+
         internal void EnableVideoFrameWithIdentity()
         {
             var engine = RtcEngineImpl.Get();
@@ -101,7 +107,7 @@ namespace agora.rtc
             {
                 if (_videoStreamManager == null)
                 {
-                    _videoStreamManager = ((RtcEngineImpl) engine).GetVideoStreamManager();
+                    _videoStreamManager = ((RtcEngineImpl)engine).GetVideoStreamManager();
                 }
 
                 if (_videoStreamManager != null)
@@ -116,8 +122,9 @@ namespace agora.rtc
         {
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
             AgoraLog.LogWarning("GetVideoFrame" + ret + " width:" + _cachedVideoFrame.width + " height:" + _cachedVideoFrame.height);
-            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY)
+            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY ||ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
             {
+                _canAttach = false;
                 AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", _channelId, _uid));
                 return;
             }
@@ -136,6 +143,10 @@ namespace agora.rtc
                     y_buffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4)
                 };
             }
+            else
+            {
+                _canAttach = true;
+            }
 
             if (isFresh)
             {
@@ -150,7 +161,7 @@ namespace agora.rtc
                     else
                     {
                         _texture.LoadRawTextureData(_cachedVideoFrame.y_buffer,
-                            (int) _videoPixelWidth * (int) _videoPixelHeight * 4);
+                            (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
                         _texture.Apply();
                     }
                 }
