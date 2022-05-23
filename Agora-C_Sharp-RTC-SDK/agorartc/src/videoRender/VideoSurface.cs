@@ -56,7 +56,11 @@ namespace agora.rtc
                     {
                         _textureManager = _TextureManagerGameObject.GetComponent<TextureManager>();
                     }
-                    ApplyTexture(_textureManager.texture);
+
+                    if (_textureManager.CanTextureAttach())
+                    {
+                        ApplyTexture(_textureManager.texture);
+                    }
                 }
             }
             else
