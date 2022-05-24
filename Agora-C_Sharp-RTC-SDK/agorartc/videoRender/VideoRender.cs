@@ -18,14 +18,14 @@ namespace agora.rtc
 
     internal class VideoStreamManager : IVideoStreamManager, IDisposable
     {
-        private IRtcEngine _agoraRtcEngine;
+        private RtcEngineImpl _agoraRtcEngine;
         private IrisCVideoFrameBufferNative _videoFrameBuffer;
         private IrisVideoFrameBufferHandle _irisVideoFrameBufferHandle;
         private IrisVideoFrameBufferConfig _videoFrameBufferConfig;
 
         private bool _disposed;
 
-        public VideoStreamManager(IAgoraRtcEngine agoraRtcEngine)
+        public VideoStreamManager(RtcEngineImpl agoraRtcEngine)
         {
             _agoraRtcEngine = agoraRtcEngine;
         }

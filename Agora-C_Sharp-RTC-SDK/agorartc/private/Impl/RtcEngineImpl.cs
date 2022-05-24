@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -32,7 +32,7 @@ namespace agora.rtc
     using IrisRtcMetaDataObserverHandleNative = IntPtr;
 
 
-    public sealed class RtcEngineImpl : IAgoraRtcEngine
+    internal class RtcEngineImpl
     {
         private bool _disposed = false;
         private static RtcEngineImpl engineInstance = null;
@@ -206,17 +206,17 @@ namespace agora.rtc
             return _videoFrameBufferManagerPtr;
         }
 
-        public static IAgoraRtcEngine CreateAgoraRtcEngine()
+        public static RtcEngineImpl CreateRtcEngineImpl()
         {
             return engineInstance ?? (engineInstance = new RtcEngineImpl());
         }
 
-        public static IAgoraRtcEngine Get()
+        public static RtcEngineImpl Get()
         {
             return engineInstance;
         }
 
-        public override int Initialize(RtcEngineContext context)
+        public int Initialize(RtcEngineContext context)
         {
             var param = new
             {
@@ -239,35 +239,35 @@ namespace agora.rtc
             return ret;
         }
 
-        public override void Dispose(bool sync = false)
+        public void Dispose(bool sync = false)
         {
             Dispose(true, sync);
             GC.SuppressFinalize(this);
         }
 
-        public override RtcEngineEventHandler GetRtcEngineEventHandler()
+        public RtcEngineEventHandler GetRtcEngineEventHandler()
         {
             return _engineEventHandlerInstance;
         }
 
-        public override void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
+        public void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
             RtcEngineEventHandlerNative.EngineEventHandler = engineEventHandler;
         }
 
-        public override void RemoveEventHandler(IRtcEngineEventHandler engineEventHandler)
+        public void RemoveEventHandler()
         {
             RtcEngineEventHandlerNative.EngineEventHandler = null;
         }
 
-        public override void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisAudioFrameObserver();
             AudioFrameObserverNative.AudioFrameObserver = audioFrameObserver;
             AudioFrameObserverNative.mode = mode;
         }
 
-        public override void UnRegisterAudioFrameObserver()
+        public void UnRegisterAudioFrameObserver()
         {
             UnSetIrisAudioFrameObserver();
         }
@@ -325,14 +325,14 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCAudioFrameObserverNative);
         }
 
-        public override void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisVideoFrameObserver();
             VideoFrameObserverNative.VideoFrameObserver = videoFrameObserver;
             VideoFrameObserverNative.mode = mode;
         }
 
-        public override void UnRegisterVideoFrameObserver()
+        public void UnRegisterVideoFrameObserver()
         {
             UnSetIrisVideoFrameObserver();
         }
@@ -385,13 +385,13 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
         }
 
-        public override void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisVideoEncodedImageReceiver();
             VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = videoEncodedImageReceiver;
         }
 
-        public override void UnRegisterVideoEncodedImageReceiver()
+        public void UnRegisterVideoEncodedImageReceiver()
         {
             UnSetIrisVideoEncodedImageReceiver();
         }
@@ -478,27 +478,27 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCMetaDataObserverNative);
         }
 
-        public override IAudioDeviceManager GetAudioDeviceManager()
+        public AudioDeviceManagerImpl GetAudioDeviceManager()
         {
             return _audioDeviceManagerInstance;
         }
 
-        public override IVideoDeviceManager GetVideoDeviceManager()
+        public VideoDeviceManagerImpl GetVideoDeviceManager()
         {
             return _videoDeviceManagerInstance;
         }
 
-        public override IMediaPlayer GetMediaPlayer()
+        public MediaPlayerImpl GetMediaPlayer()
         {
             return _mediaPlayerInstance;
         }
 
-        public override ICloudSpatialAudioEngine GetCloudSpatialAudioEngine()
+        public CloudSpatialAudioEngineImpl GetCloudSpatialAudioEngine()
         {
             return _cloudSpatialAudioEngineInstance;
         }
 
-        public override ILocalSpatialAudioEngine GetLocalSpatialAudioEngine()
+        public LocalSpatialAudioEngineImpl GetLocalSpatialAudioEngine()
         {
             return _spatialAudioEngineInstance;
         }
@@ -510,7 +510,7 @@ namespace agora.rtc
         }
 #endif
 
-        public override string GetVersion()
+        public string GetVersion()
         {
             var param = new { };
             var json = AgoraJson.ToJson(param);
@@ -523,7 +523,7 @@ namespace agora.rtc
             return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
         }
 
-        public override string GetErrorDescription(int code)
+        public string GetErrorDescription(int code)
         {
             var param = new { };
             var json = AgoraJson.ToJson(param);
@@ -536,7 +536,7 @@ namespace agora.rtc
             return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
         }
 
-        public override int JoinChannel(string token, string channelId, string info = "",
+        public int JoinChannel(string token, string channelId, string info = "",
                                 uint uid = 0)
         {
             var param = new
@@ -557,7 +557,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int JoinChannel(string token, string channelId, uint uid,
+        public int JoinChannel(string token, string channelId, uint uid,
                                 ChannelMediaOptions options)
         {
             var param = new
@@ -577,7 +577,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateChannelMediaOptions(ChannelMediaOptions options)
+        public int UpdateChannelMediaOptions(ChannelMediaOptions options)
         {
             var param = new
             {
@@ -594,7 +594,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int LeaveChannel()
+        public int LeaveChannel()
         {
             var param = new { };
 
@@ -607,7 +607,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int LeaveChannel(LeaveChannelOptions options)
+        public int LeaveChannel(LeaveChannelOptions options)
         {
             var param = new
             {
@@ -623,7 +623,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RenewToken(string token)
+        public int RenewToken(string token)
         {
             var param = new
             {
@@ -639,7 +639,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetChannelProfile(CHANNEL_PROFILE_TYPE profile)
+        public int SetChannelProfile(CHANNEL_PROFILE_TYPE profile)
         {
             var param = new
             {
@@ -655,7 +655,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetClientRole(CLIENT_ROLE_TYPE role)
+        public int SetClientRole(CLIENT_ROLE_TYPE role)
         {
             var param = new
             {
@@ -670,7 +670,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options)
+        public int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options)
         {
             var param = new
             {
@@ -688,7 +688,7 @@ namespace agora.rtc
         }
 
 
-        public override int StartEchoTest()
+        public int StartEchoTest()
         {
             var param = new { };
 
@@ -701,7 +701,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartEchoTest(int intervalInSeconds)
+        public int StartEchoTest(int intervalInSeconds)
         {
             var param = new
             {
@@ -718,7 +718,7 @@ namespace agora.rtc
 
         }
 
-        public override int StopEchoTest()
+        public int StopEchoTest()
         {
             var param = new { };
 
@@ -731,7 +731,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableVideo()
+        public int EnableVideo()
         {
             var param = new { };
 
@@ -744,7 +744,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int DisableVideo()
+        public int DisableVideo()
         {
             var param = new { };
 
@@ -757,7 +757,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartPreview()
+        public int StartPreview()
         {
             var param = new { };
 
@@ -770,7 +770,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartPreview(VIDEO_SOURCE_TYPE sourceType)
+        public int StartPreview(VIDEO_SOURCE_TYPE sourceType)
         {
             var param = new
             {
@@ -786,7 +786,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopPreview()
+        public int StopPreview()
         {
             var param = new { };
 
@@ -799,7 +799,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopPreview(VIDEO_SOURCE_TYPE sourceType)
+        public int StopPreview(VIDEO_SOURCE_TYPE sourceType)
         {
             var param = new
             {
@@ -816,7 +816,7 @@ namespace agora.rtc
         }
 
 
-        public override int StartLastmileProbeTest(LastmileProbeConfig config)
+        public int StartLastmileProbeTest(LastmileProbeConfig config)
         {
             var param = new
             {
@@ -832,7 +832,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopLastmileProbeTest()
+        public int StopLastmileProbeTest()
         {
             var param = new { };
 
@@ -845,7 +845,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetVideoEncoderConfiguration(VideoEncoderConfiguration config)
+        public int SetVideoEncoderConfiguration(VideoEncoderConfiguration config)
         {
             var param = new
             {
@@ -861,7 +861,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetBeautyEffectOptions(bool enabled, BeautyOptions options)
+        public int SetBeautyEffectOptions(bool enabled, BeautyOptions options)
         {
             var param = new
             {
@@ -878,7 +878,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableAudio()
+        public int EnableAudio()
         {
             var param = new { };
 
@@ -892,7 +892,7 @@ namespace agora.rtc
         }
 
 
-        public override int DisableAudio()
+        public int DisableAudio()
         {
             var param = new { };
 
@@ -906,7 +906,7 @@ namespace agora.rtc
         }
 
 
-        public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
+        public int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
         {
             var param = new
             {
@@ -924,7 +924,7 @@ namespace agora.rtc
         }
 
 
-        public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile)
+        public int SetAudioProfile(AUDIO_PROFILE_TYPE profile)
         {
             var param = new
             {
@@ -940,7 +940,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableLocalAudio(bool enabled)
+        public int EnableLocalAudio(bool enabled)
         {
             var param = new
             {
@@ -956,7 +956,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteLocalAudioStream(bool mute)
+        public int MuteLocalAudioStream(bool mute)
         {
             var param = new
             {
@@ -972,7 +972,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteAllRemoteAudioStreams(bool mute)
+        public int MuteAllRemoteAudioStreams(bool mute)
         {
             var param = new
             {
@@ -988,7 +988,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetDefaultMuteAllRemoteAudioStreams(bool mute)
+        public int SetDefaultMuteAllRemoteAudioStreams(bool mute)
         {
             var param = new
             {
@@ -1004,7 +1004,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteRemoteAudioStream(uint uid, bool mute)
+        public int MuteRemoteAudioStream(uint uid, bool mute)
         {
             var param = new
             {
@@ -1021,7 +1021,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteLocalVideoStream(bool mute)
+        public int MuteLocalVideoStream(bool mute)
         {
             var param = new
             {
@@ -1037,7 +1037,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableLocalVideo(bool enabled)
+        public int EnableLocalVideo(bool enabled)
         {
             var param = new
             {
@@ -1053,7 +1053,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteAllRemoteVideoStreams(bool mute)
+        public int MuteAllRemoteVideoStreams(bool mute)
         {
             var param = new
             {
@@ -1069,7 +1069,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetDefaultMuteAllRemoteVideoStreams(bool mute)
+        public int SetDefaultMuteAllRemoteVideoStreams(bool mute)
         {
             var param = new
             {
@@ -1085,7 +1085,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteRemoteVideoStream(uint uid, bool mute)
+        public int MuteRemoteVideoStream(uint uid, bool mute)
         {
             var param = new
             {
@@ -1102,7 +1102,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType)
+        public int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType)
         {
             var param = new
             {
@@ -1119,7 +1119,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType)
+        public int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType)
         {
             var param = new
             {
@@ -1135,7 +1135,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
+        public int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
         {
             var param = new
             {
@@ -1153,7 +1153,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartAudioRecording(string filePath,
+        public int StartAudioRecording(string filePath,
                                         AUDIO_RECORDING_QUALITY_TYPE quality)
         {
             var param = new
@@ -1172,7 +1172,7 @@ namespace agora.rtc
         }
 
 
-        public override int StartAudioRecording(string filePath,
+        public int StartAudioRecording(string filePath,
                                         int sampleRate,
                                         AUDIO_RECORDING_QUALITY_TYPE quality)
         {
@@ -1192,7 +1192,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartAudioRecording(AudioRecordingConfiguration config)
+        public int StartAudioRecording(AudioRecordingConfiguration config)
         {
             var param = new
             {
@@ -1208,13 +1208,13 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
+        public void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
         {
             SetIrisAudioEncodedFrameObserver(config);
             AudioEncodedFrameObserverNative.AudioEncodedFrameObserver = observer;
         }
 
-        public override void UnRegisterAudioEncodedFrameObserver()
+        public void UnRegisterAudioEncodedFrameObserver()
         {
             UnSetIrisAudioEncodedFrameObserver();
         }
@@ -1265,7 +1265,7 @@ namespace agora.rtc
         }
 
 
-        public override int StopAudioRecording()
+        public int StopAudioRecording()
         {
             var param = new { };
 
@@ -1282,7 +1282,7 @@ namespace agora.rtc
 
         //DestroyMediaPlayer
 
-        public override int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
+        public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
         {
             var param = new
             {
@@ -1301,7 +1301,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos)
+        public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos)
         {
             var param = new
             {
@@ -1322,7 +1322,7 @@ namespace agora.rtc
         }
 
 
-        public override int StopAudioMixing()
+        public int StopAudioMixing()
         {
             var param = new { };
 
@@ -1335,7 +1335,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PauseAudioMixing()
+        public int PauseAudioMixing()
         {
             var param = new { };
 
@@ -1348,7 +1348,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ResumeAudioMixing()
+        public int ResumeAudioMixing()
         {
             var param = new { };
 
@@ -1361,7 +1361,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AdjustAudioMixingVolume(int volume)
+        public int AdjustAudioMixingVolume(int volume)
         {
             var param = new
             {
@@ -1377,7 +1377,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AdjustAudioMixingPublishVolume(int volume)
+        public int AdjustAudioMixingPublishVolume(int volume)
         {
             var param = new
             {
@@ -1393,7 +1393,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetAudioMixingPublishVolume()
+        public int GetAudioMixingPublishVolume()
         {
             var param = new { };
 
@@ -1406,7 +1406,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AdjustAudioMixingPlayoutVolume(int volume)
+        public int AdjustAudioMixingPlayoutVolume(int volume)
         {
             var param = new
             {
@@ -1422,7 +1422,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetAudioMixingPlayoutVolume()
+        public int GetAudioMixingPlayoutVolume()
         {
             var param = new { };
 
@@ -1435,7 +1435,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetAudioMixingDuration()
+        public int GetAudioMixingDuration()
         {
             var param = new { };
 
@@ -1448,7 +1448,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetAudioMixingCurrentPosition()
+        public int GetAudioMixingCurrentPosition()
         {
             var param = new { };
 
@@ -1461,7 +1461,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAudioMixingPosition(int pos /*in ms*/)
+        public int SetAudioMixingPosition(int pos /*in ms*/)
         {
             var param = new
             {
@@ -1477,7 +1477,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAudioMixingPitch(int pitch)
+        public int SetAudioMixingPitch(int pitch)
         {
             var param = new
             {
@@ -1493,7 +1493,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetEffectsVolume()
+        public int GetEffectsVolume()
         {
             var param = new { };
 
@@ -1506,7 +1506,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetEffectsVolume(int volume)
+        public int SetEffectsVolume(int volume)
         {
             var param = new
             {
@@ -1522,7 +1522,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PreloadEffect(int soundId, string filePath, int startPos = 0)
+        public int PreloadEffect(int soundId, string filePath, int startPos = 0)
         {
             var param = new
             {
@@ -1540,7 +1540,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
+        public int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
         {
             var param = new
             {
@@ -1563,7 +1563,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false)
+        public int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false)
         {
             var param = new
             {
@@ -1583,7 +1583,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetVolumeOfEffect(int soundId)
+        public int GetVolumeOfEffect(int soundId)
         {
             var param = new
             {
@@ -1599,7 +1599,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetVolumeOfEffect(int soundId, int volume)
+        public int SetVolumeOfEffect(int soundId, int volume)
         {
             var param = new
             {
@@ -1616,7 +1616,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PauseEffect(int soundId)
+        public int PauseEffect(int soundId)
         {
             var param = new
             {
@@ -1632,7 +1632,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PauseAllEffects()
+        public int PauseAllEffects()
         {
             var param = new { };
 
@@ -1645,7 +1645,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ResumeEffect(int soundId)
+        public int ResumeEffect(int soundId)
         {
             var param = new
             {
@@ -1661,7 +1661,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ResumeAllEffects()
+        public int ResumeAllEffects()
         {
             var param = new { };
 
@@ -1674,7 +1674,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopEffect(int soundId)
+        public int StopEffect(int soundId)
         {
             var param = new
             {
@@ -1690,7 +1690,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopAllEffects()
+        public int StopAllEffects()
         {
             var param = new { };
 
@@ -1703,7 +1703,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UnloadEffect(int soundId)
+        public int UnloadEffect(int soundId)
         {
             var param = new
             {
@@ -1719,7 +1719,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UnloadAllEffects()
+        public int UnloadAllEffects()
         {
             var param = new { };
 
@@ -1732,7 +1732,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableSoundPositionIndication(bool enabled)
+        public int EnableSoundPositionIndication(bool enabled)
         {
             var param = new
             {
@@ -1748,7 +1748,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteVoicePosition(uint uid, double pan, double gain)
+        public int SetRemoteVoicePosition(uint uid, double pan, double gain)
         {
             var param = new
             {
@@ -1766,7 +1766,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableSpatialAudio(bool enabled)
+        public int EnableSpatialAudio(bool enabled)
         {
             var param = new
             {
@@ -1782,7 +1782,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset)
+        public int SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset)
         {
             var param = new
             {
@@ -1798,7 +1798,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAudioEffectPreset(AUDIO_EFFECT_PRESET preset)
+        public int SetAudioEffectPreset(AUDIO_EFFECT_PRESET preset)
         {
             var param = new
             {
@@ -1814,7 +1814,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetVoiceConversionPreset(VOICE_CONVERSION_PRESET preset)
+        public int SetVoiceConversionPreset(VOICE_CONVERSION_PRESET preset)
         {
             var param = new
             {
@@ -1830,7 +1830,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAudioEffectParameters(AUDIO_EFFECT_PRESET preset, int param1, int param2)
+        public int SetAudioEffectParameters(AUDIO_EFFECT_PRESET preset, int param1, int param2)
         {
             var param = new
             {
@@ -1848,7 +1848,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetVoiceBeautifierParameters(VOICE_BEAUTIFIER_PRESET preset,
+        public int SetVoiceBeautifierParameters(VOICE_BEAUTIFIER_PRESET preset,
                                                   int param1, int param2)
         {
             var param = new
@@ -1867,7 +1867,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetVoiceConversionParameters(VOICE_CONVERSION_PRESET preset,
+        public int SetVoiceConversionParameters(VOICE_CONVERSION_PRESET preset,
                                                   int param1, int param2)
         {
             var param = new
@@ -1886,7 +1886,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLocalVoicePitch(double pitch)
+        public int SetLocalVoicePitch(double pitch)
         {
             var param = new
             {
@@ -1902,7 +1902,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency,
+        public int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency,
                                               int bandGain)
         {
             var param = new
@@ -1920,7 +1920,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value)
+        public int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value)
         {
             var param = new
             {
@@ -1938,7 +1938,7 @@ namespace agora.rtc
         }
 
         //todo not found in dcg
-        //public override int SetLocalVoiceReverbPreset(AUDIO_REVERB_PRESET reverbPreset)
+        //public int SetLocalVoiceReverbPreset(AUDIO_REVERB_PRESET reverbPreset)
         //{
         //    var param = new
         //    {
@@ -1954,7 +1954,7 @@ namespace agora.rtc
         //}
 
         //todo not found in dcg
-        //public override int SetLocalVoiceChanger(VOICE_CHANGER_PRESET voiceChanger)
+        //public int SetLocalVoiceChanger(VOICE_CHANGER_PRESET voiceChanger)
         //{
         //    var param = new
         //    {
@@ -1969,7 +1969,7 @@ namespace agora.rtc
         //        out _result);
         //}
 
-        public override int SetLogFile(string filePath)
+        public int SetLogFile(string filePath)
         {
             var param = new
             {
@@ -1986,7 +1986,7 @@ namespace agora.rtc
 
         }
 
-        public override int SetLogFilter(uint filter)
+        public int SetLogFilter(uint filter)
         {
             var param = new
             {
@@ -2002,7 +2002,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLogLevel(LOG_LEVEL level)
+        public int SetLogLevel(LOG_LEVEL level)
         {
             var param = new
             {
@@ -2018,7 +2018,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLogFileSize(uint fileSizeInKBytes)
+        public int SetLogFileSize(uint fileSizeInKBytes)
         {
             var param = new
             {
@@ -2034,7 +2034,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
+        public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
             var param = new
             {
@@ -2052,7 +2052,7 @@ namespace agora.rtc
         }
 
 
-        public override int SetRemoteRenderMode(uint userId, RENDER_MODE_TYPE renderMode,
+        public int SetRemoteRenderMode(uint userId, RENDER_MODE_TYPE renderMode,
             VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
             var param = new
@@ -2071,7 +2071,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
+        public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
         {
             var param = new
             {
@@ -2087,7 +2087,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode)
+        public int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
             var param = new
             {
@@ -2103,7 +2103,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableDualStreamMode(bool enabled)
+        public int EnableDualStreamMode(bool enabled)
         {
             var param = new
             {
@@ -2119,7 +2119,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled)
+        public int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled)
         {
             var param = new
             {
@@ -2136,7 +2136,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig)
+        public int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig)
         {
             var param = new
             {
@@ -2154,7 +2154,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetExternalAudioSink(int sampleRate, int channels)
+        public int SetExternalAudioSink(int sampleRate, int channels)
         {
             var param = new
             {
@@ -2171,7 +2171,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartPrimaryCustomAudioTrack(AudioTrackConfig config)
+        public int StartPrimaryCustomAudioTrack(AudioTrackConfig config)
         {
             var param = new
             {
@@ -2187,7 +2187,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopPrimaryCustomAudioTrack()
+        public int StopPrimaryCustomAudioTrack()
         {
             var param = new { };
 
@@ -2200,7 +2200,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartSecondaryCustomAudioTrack(AudioTrackConfig config)
+        public int StartSecondaryCustomAudioTrack(AudioTrackConfig config)
         {
             var param = new
             {
@@ -2216,7 +2216,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopSecondaryCustomAudioTrack()
+        public int StopSecondaryCustomAudioTrack()
         {
             var param = new { };
 
@@ -2229,7 +2229,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRecordingAudioFrameParameters(int sampleRate, int channel,
+        public int SetRecordingAudioFrameParameters(int sampleRate, int channel,
             RAW_AUDIO_FRAME_OP_MODE_TYPE mode,
             int samplesPerCall)
         {
@@ -2250,7 +2250,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetPlaybackAudioFrameParameters(int sampleRate, int channel,
+        public int SetPlaybackAudioFrameParameters(int sampleRate, int channel,
             RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
         {
             var param = new
@@ -2270,7 +2270,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall)
+        public int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall)
         {
             var param = new
             {
@@ -2288,7 +2288,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel)
+        public int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel)
         {
             var param = new
             {
@@ -2305,7 +2305,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableAudioSpectrumMonitor(int intervalInMS = 100)
+        public int EnableAudioSpectrumMonitor(int intervalInMS = 100)
         {
             var param = new
             {
@@ -2322,7 +2322,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int DisableAudioSpectrumMonitor()
+        public int DisableAudioSpectrumMonitor()
         {
             var param = new { };
 
@@ -2335,19 +2335,19 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
+        public void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
             //todo wait for capi
             AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
-        public override void UnregisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
+        public void UnregisterAudioSpectrumObserver()
         {
             //todo wait for capi
             AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
         }
 
-        public override int AdjustRecordingSignalVolume(int volume)
+        public int AdjustRecordingSignalVolume(int volume)
         {
             var param = new
             {
@@ -2363,7 +2363,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteRecordingSignal(bool mute)
+        public int MuteRecordingSignal(bool mute)
         {
             var param = new
             {
@@ -2379,7 +2379,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AdjustPlaybackSignalVolume(int volume)
+        public int AdjustPlaybackSignalVolume(int volume)
         {
             var param = new
             {
@@ -2395,7 +2395,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AdjustUserPlaybackSignalVolume(uint uid, int volume)
+        public int AdjustUserPlaybackSignalVolume(uint uid, int volume)
         {
             var param = new
             {
@@ -2412,7 +2412,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableLoopbackRecording(bool enabled)
+        public int EnableLoopbackRecording(bool enabled)
         {
             var param = new
             {
@@ -2428,7 +2428,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AdjustLoopbackRecordingVolume(int volume)
+        public int AdjustLoopbackRecordingVolume(int volume)
         {
             var param = new
             {
@@ -2444,7 +2444,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetLoopbackRecordingVolume()
+        public int GetLoopbackRecordingVolume()
         {
             var param = new { };
 
@@ -2457,7 +2457,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableInEarMonitoring(bool enabled, int includeAudioFilters)
+        public int EnableInEarMonitoring(bool enabled, int includeAudioFilters)
         {
             var param = new
             {
@@ -2474,7 +2474,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetInEarMonitoringVolume(int volume)
+        public int SetInEarMonitoringVolume(int volume)
         {
             var param = new
             {
@@ -2490,7 +2490,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int LoadExtensionProvider(string extension_lib_path)
+        public int LoadExtensionProvider(string extension_lib_path)
         {
             var param = new
             {
@@ -2506,7 +2506,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetExtensionProviderProperty(string provider, string key, string value)
+        public int SetExtensionProviderProperty(string provider, string key, string value)
         {
             var param = new
             {
@@ -2524,7 +2524,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableExtension(
+        public int EnableExtension(
           string provider, string extension, bool enable = true)
         {
             var param = new
@@ -2543,7 +2543,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetExtensionProperty(
+        public int SetExtensionProperty(
           string provider, string extension,
           string key, string value)
         {
@@ -2564,7 +2564,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetExtensionProperty(
+        public int GetExtensionProperty(
           string provider, string extension,
           string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
@@ -2598,7 +2598,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetCameraCapturerConfiguration(CameraCapturerConfiguration config)
+        public int SetCameraCapturerConfiguration(CameraCapturerConfiguration config)
         {
             var param = new
             {
@@ -2614,7 +2614,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SwitchCamera()
+        public int SwitchCamera()
         {
             var param = new { };
 
@@ -2627,7 +2627,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override bool IsCameraZoomSupported()
+        public bool IsCameraZoomSupported()
         {
             var param = new { };
 
@@ -2640,7 +2640,7 @@ namespace agora.rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
         }
 
-        public override bool IsCameraFaceDetectSupported()
+        public bool IsCameraFaceDetectSupported()
         {
             var param = new { };
 
@@ -2653,7 +2653,7 @@ namespace agora.rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
         }
 
-        public override bool IsCameraTorchSupported()
+        public bool IsCameraTorchSupported()
         {
             var param = new { };
 
@@ -2666,7 +2666,7 @@ namespace agora.rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
         }
 
-        public override bool IsCameraFocusSupported()
+        public bool IsCameraFocusSupported()
         {
             var param = new { };
 
@@ -2679,7 +2679,7 @@ namespace agora.rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
         }
 
-        public override bool IsCameraAutoFocusFaceModeSupported()
+        public bool IsCameraAutoFocusFaceModeSupported()
         {
             var param = new { };
 
@@ -2692,7 +2692,7 @@ namespace agora.rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
         }
 
-        public override int SetCameraZoomFactor(float factor)
+        public int SetCameraZoomFactor(float factor)
         {
             var param = new
             {
@@ -2708,7 +2708,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableFaceDetection(bool enabled)
+        public int EnableFaceDetection(bool enabled)
         {
             var param = new
             {
@@ -2724,7 +2724,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override float GetCameraMaxZoomFactor()
+        public float GetCameraMaxZoomFactor()
         {
             var param = new { };
 
@@ -2737,7 +2737,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetCameraFocusPositionInPreview(float positionX, float positionY)
+        public int SetCameraFocusPositionInPreview(float positionX, float positionY)
         {
             var param = new
             {
@@ -2754,7 +2754,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetCameraTorchOn(bool isOn)
+        public int SetCameraTorchOn(bool isOn)
         {
             var param = new
             {
@@ -2770,7 +2770,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetCameraAutoFocusFaceModeEnabled(bool enabled)
+        public int SetCameraAutoFocusFaceModeEnabled(bool enabled)
         {
             var param = new
             {
@@ -2787,7 +2787,7 @@ namespace agora.rtc
         }
 
 
-        public override bool IsCameraExposurePositionSupported()
+        public bool IsCameraExposurePositionSupported()
         {
             var param = new { };
 
@@ -2801,7 +2801,7 @@ namespace agora.rtc
         }
 
 
-        public override int SetCameraExposurePosition(float positionXinView, float positionYinView)
+        public int SetCameraExposurePosition(float positionXinView, float positionYinView)
         {
             var param = new
             {
@@ -2818,7 +2818,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override bool IsCameraAutoExposureFaceModeSupported()
+        public bool IsCameraAutoExposureFaceModeSupported()
         {
             var param = new { };
 
@@ -2831,7 +2831,7 @@ namespace agora.rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
         }
 
-        public override int SetCameraAutoExposureFaceModeEnabled(bool enabled)
+        public int SetCameraAutoExposureFaceModeEnabled(bool enabled)
         {
             var param = new
             {
@@ -2847,7 +2847,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker)
+        public int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker)
         {
             var param = new
             {
@@ -2864,7 +2864,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetEnableSpeakerphone(bool speakerOn)
+        public int SetEnableSpeakerphone(bool speakerOn)
         {
             var param = new
             {
@@ -2881,7 +2881,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override bool IsSpeakerphoneEnabled()
+        public bool IsSpeakerphoneEnabled()
         {
             var param = new { };
 
@@ -2894,7 +2894,7 @@ namespace agora.rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
         }
 
-        public override int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect,
+        public int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect,
                                                 ScreenCaptureParameters captureParams)
         {
             var param = new
@@ -2914,7 +2914,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartScreenCaptureByScreenRect(Rectangle screenRect,
+        public int StartScreenCaptureByScreenRect(Rectangle screenRect,
                                                  Rectangle regionRect,
                                                  ScreenCaptureParameters captureParams)
         {
@@ -2934,7 +2934,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect,
+        public int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect,
                                                ScreenCaptureParameters captureParams)
         {
             var param = new
@@ -2954,7 +2954,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetScreenCaptureContentHint(VIDEO_CONTENT_HINT contentHint)
+        public int SetScreenCaptureContentHint(VIDEO_CONTENT_HINT contentHint)
         {
             var param = new
             {
@@ -2971,7 +2971,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateScreenCaptureRegion(Rectangle regionRect)
+        public int UpdateScreenCaptureRegion(Rectangle regionRect)
         {
             var param = new
             {
@@ -2988,7 +2988,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateScreenCaptureParameters(ScreenCaptureParameters captureParams)
+        public int UpdateScreenCaptureParameters(ScreenCaptureParameters captureParams)
         {
             var param = new
             {
@@ -3005,7 +3005,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopScreenCapture()
+        public int StopScreenCapture()
         {
             var param = new { };
 
@@ -3019,7 +3019,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override string GetCallId()
+        public string GetCallId()
         {
             var param = new { };
 
@@ -3033,7 +3033,7 @@ namespace agora.rtc
             return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
         }
 
-        public override int Rate(string callId, int rating,
+        public int Rate(string callId, int rating,
                         string description)
         {
             var param = new
@@ -3053,7 +3053,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int Complain(string callId, string description)
+        public int Complain(string callId, string description)
         {
             var param = new
             {
@@ -3071,7 +3071,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AddPublishStreamUrl(string url, bool transcodingEnabled)
+        public int AddPublishStreamUrl(string url, bool transcodingEnabled)
         {
             var param = new
             {
@@ -3089,7 +3089,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RemovePublishStreamUrl(string url)
+        public int RemovePublishStreamUrl(string url)
         {
             var param = new
             {
@@ -3106,7 +3106,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLiveTranscoding(LiveTranscoding transcoding)
+        public int SetLiveTranscoding(LiveTranscoding transcoding)
         {
             var param = new
             {
@@ -3123,7 +3123,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartLocalVideoTranscoder(LocalTranscoderConfiguration config)
+        public int StartLocalVideoTranscoder(LocalTranscoderConfiguration config)
         {
             var param = new
             {
@@ -3141,7 +3141,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config)
+        public int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config)
         {
             var param = new
             {
@@ -3158,7 +3158,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopLocalVideoTranscoder()
+        public int StopLocalVideoTranscoder()
         {
             var param = new { };
 
@@ -3173,7 +3173,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartPrimaryCameraCapture(CameraCapturerConfiguration config)
+        public int StartPrimaryCameraCapture(CameraCapturerConfiguration config)
         {
             var param = new
             {
@@ -3190,7 +3190,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartSecondaryCameraCapture(CameraCapturerConfiguration config)
+        public int StartSecondaryCameraCapture(CameraCapturerConfiguration config)
         {
             var param = new
             {
@@ -3207,7 +3207,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopPrimaryCameraCapture()
+        public int StopPrimaryCameraCapture()
         {
             var param = new { };
 
@@ -3221,7 +3221,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopSecondaryCameraCapture()
+        public int StopSecondaryCameraCapture()
         {
             var param = new { };
 
@@ -3235,7 +3235,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
+        public int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
         {
             var param = new
             {
@@ -3253,7 +3253,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
+        public int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
         {
             var param = new
             {
@@ -3271,7 +3271,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartPrimaryScreenCapture(ScreenCaptureConfiguration config)
+        public int StartPrimaryScreenCapture(ScreenCaptureConfiguration config)
         {
             var param = new
             {
@@ -3288,7 +3288,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartSecondaryScreenCapture(ScreenCaptureConfiguration config)
+        public int StartSecondaryScreenCapture(ScreenCaptureConfiguration config)
         {
             var param = new
             {
@@ -3305,7 +3305,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopPrimaryScreenCapture()
+        public int StopPrimaryScreenCapture()
         {
             var param = new { };
 
@@ -3319,7 +3319,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopSecondaryScreenCapture()
+        public int StopSecondaryScreenCapture()
         {
             var param = new { };
 
@@ -3333,7 +3333,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override CONNECTION_STATE_TYPE GetConnectionState()
+        public CONNECTION_STATE_TYPE GetConnectionState()
         {
             var param = new { };
 
@@ -3348,7 +3348,7 @@ namespace agora.rtc
             return type;
         }
 
-        public override int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority)
+        public int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority)
         {
             var param = new
             {
@@ -3366,7 +3366,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        // public override int RegisterPacketObserver(IPacketObserver observer)
+        // public int RegisterPacketObserver(IPacketObserver observer)
         // {
         //     //todo 
         //     //var param = new
@@ -3380,7 +3380,7 @@ namespace agora.rtc
         // }
 
 
-        public override int SetEncryptionMode(string encryptionMode)
+        public int SetEncryptionMode(string encryptionMode)
         {
             var param = new
             {
@@ -3397,7 +3397,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetEncryptionSecret(string secret)
+        public int SetEncryptionSecret(string secret)
         {
             var param = new
             {
@@ -3414,7 +3414,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableEncryption(bool enabled, EncryptionConfig config)
+        public int EnableEncryption(bool enabled, EncryptionConfig config)
         {
             var param = new
             {
@@ -3432,7 +3432,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int CreateDataStream(ref int streamId, bool reliable, bool ordered)
+        public int CreateDataStream(ref int streamId, bool reliable, bool ordered)
         {
             var param = new
             {
@@ -3458,7 +3458,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int CreateDataStream(ref int streamId, DataStreamConfig config)
+        public int CreateDataStream(ref int streamId, DataStreamConfig config)
         {
             var param = new
             {
@@ -3483,7 +3483,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AddVideoWatermark(RtcImage watermark)
+        public int AddVideoWatermark(RtcImage watermark)
         {
             var param = new
             {
@@ -3501,7 +3501,7 @@ namespace agora.rtc
 
         }
 
-        public override int AddVideoWatermark(string watermarkUrl, WatermarkOptions options)
+        public int AddVideoWatermark(string watermarkUrl, WatermarkOptions options)
         {
             var param = new
             {
@@ -3519,7 +3519,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ClearVideoWatermark()
+        public int ClearVideoWatermark()
         {
             var param = new { };
 
@@ -3533,7 +3533,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ClearVideoWatermarks()
+        public int ClearVideoWatermarks()
         {
             var param = new { };
 
@@ -3547,7 +3547,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AddInjectStreamUrl(string url, InjectStreamConfig config)
+        public int AddInjectStreamUrl(string url, InjectStreamConfig config)
         {
             var param = new
             {
@@ -3564,7 +3564,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RemoveInjectStreamUrl(string url)
+        public int RemoveInjectStreamUrl(string url)
         {
             var param = new
             {
@@ -3581,7 +3581,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PauseAudio()
+        public int PauseAudio()
         {
             var param = new { };
 
@@ -3596,7 +3596,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ResumeAudio()
+        public int ResumeAudio()
         {
             var param = new { };
 
@@ -3610,7 +3610,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableWebSdkInteroperability(bool enabled)
+        public int EnableWebSdkInteroperability(bool enabled)
         {
             var param = new
             {
@@ -3627,7 +3627,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SendCustomReportMessage(string id, string category, string @event, string label, int value)
+        public int SendCustomReportMessage(string id, string category, string @event, string label, int value)
         {
             var param = new
             {
@@ -3648,19 +3648,19 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisMetaDataObserver(type);
             MetadataObserverNative.Observer = observer;
             MetadataObserverNative.mode = mode;
         }
 
-        public override void UnregisterMediaMetadataObserver(IMetadataObserver observer)
+        public void UnregisterMediaMetadataObserver()
         {
             UnSetIrisMetaDataObserver();
         }
 
-        public override int StartAudioFrameDump(string channel_id, uint user_id, string location,
+        public int StartAudioFrameDump(string channel_id, uint user_id, string location,
             string uuid, string passwd, long duration_ms, bool auto_upload)
         {
             var param = new
@@ -3684,7 +3684,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopAudioFrameDump(string channel_id, uint user_id, string location)
+        public int StopAudioFrameDump(string channel_id, uint user_id, string location)
         {
             var param = new
             {
@@ -3703,7 +3703,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RegisterLocalUserAccount(string appId, string userAccount)
+        public int RegisterLocalUserAccount(string appId, string userAccount)
         {
             var param = new
             {
@@ -3721,7 +3721,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int JoinChannelWithUserAccount(string token, string channelId,
+        public int JoinChannelWithUserAccount(string token, string channelId,
                                               string userAccount)
         {
             var param = new
@@ -3742,7 +3742,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int JoinChannelWithUserAccount(string token, string channelId,
+        public int JoinChannelWithUserAccount(string token, string channelId,
                                                 string userAccount, ChannelMediaOptions options)
         {
             var param = new
@@ -3763,17 +3763,15 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int JoinChannelWithUserAccountEx(string token, string channelId,
-                                                string userAccount, ChannelMediaOptions options,
-                                                IRtcEngineEventHandler eventHandler)
+        public int JoinChannelWithUserAccountEx(string token, string channelId,
+                                                string userAccount, ChannelMediaOptions options)
         {
             var param = new
             {
                 token,
                 channelId,
                 userAccount,
-                options,
-                eventHandler
+                options
             };
 
             var json = AgoraJson.ToJson(param);
@@ -3786,7 +3784,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo)
+        public int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo)
         {
             var param = new
             {
@@ -3813,7 +3811,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetUserInfoByUid(uint uid, out UserInfo userInfo)
+        public int GetUserInfoByUid(uint uid, out UserInfo userInfo)
         {
             var param = new
             {
@@ -3839,7 +3837,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
+        public int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
             var param = new
             {
@@ -3856,7 +3854,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
+        public int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
             var param = new
             {
@@ -3873,7 +3871,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopChannelMediaRelay()
+        public int StopChannelMediaRelay()
         {
             var param = new { };
 
@@ -3887,7 +3885,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile)
+        public int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile)
         {
             var param = new
             {
@@ -3904,7 +3902,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config)
+        public int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config)
         {
             var param = new
             {
@@ -3921,7 +3919,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
+        public int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
         {
             var param = new
             {
@@ -3937,7 +3935,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopDirectCdnStreaming()
+        public int StopDirectCdnStreaming()
         {
             var param = new { };
 
@@ -3951,7 +3949,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options)
+        public int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options)
         {
             var param = new
             {
@@ -3967,7 +3965,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
+        public int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
         {
             var param = new
             {
@@ -3986,7 +3984,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int LeaveChannelEx(RtcConnection connection)
+        public int LeaveChannelEx(RtcConnection connection)
         {
             var param = new
             {
@@ -4003,7 +4001,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnection connection)
+        public int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnection connection)
         {
             var param = new
             {
@@ -4020,7 +4018,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetVideoEncoderConfigurationEx(VideoEncoderConfiguration config, RtcConnection connection)
+        public int SetVideoEncoderConfigurationEx(VideoEncoderConfiguration config, RtcConnection connection)
         {
             var param = new
             {
@@ -4038,7 +4036,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection)
+        public int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection)
         {
             var param = new
             {
@@ -4057,7 +4055,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteRemoteVideoStreamEx(uint uid, bool mute, RtcConnection connection)
+        public int MuteRemoteVideoStreamEx(uint uid, bool mute, RtcConnection connection)
         {
             var param = new
             {
@@ -4076,7 +4074,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection)
+        public int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection)
         {
             var param = new
             {
@@ -4096,7 +4094,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams param, RtcConnection connection)
+        public int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams param, RtcConnection connection)
         {
             var param1 = new
             {
@@ -4114,7 +4112,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode,
+        public int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode,
                                           VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection)
         {
             var param = new
@@ -4135,7 +4133,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableLoopbackRecordingEx(bool enabled, RtcConnection connection)
+        public int EnableLoopbackRecordingEx(bool enabled, RtcConnection connection)
         {
             var param = new
             {
@@ -4153,7 +4151,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override CONNECTION_STATE_TYPE GetConnectionStateEx(RtcConnection connection)
+        public CONNECTION_STATE_TYPE GetConnectionStateEx(RtcConnection connection)
         {
             var param = new
             {
@@ -4171,7 +4169,7 @@ namespace agora.rtc
             return type;
         }
 
-        public override int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config)
+        public int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config)
         {
             var param = new
             {
@@ -4190,7 +4188,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection)
+        public int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection)
         {
             var param = new
             {
@@ -4209,7 +4207,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection)
+        public int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection)
         {
             var param = new
             {
@@ -4227,7 +4225,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
+        public int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
         {
             var param = new
             {
@@ -4246,7 +4244,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
+        public int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
         {
             var param = new
             {
@@ -4265,7 +4263,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ClearVideoWatermarkEx(RtcConnection connection)
+        public int ClearVideoWatermarkEx(RtcConnection connection)
         {
             var param = new
             {
@@ -4282,7 +4280,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection)
+        public int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection)
         {
             var param = new
             {
@@ -4320,7 +4318,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
+        public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
         {
             var param = new
             {
@@ -4339,7 +4337,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true)
+        public int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true)
         {
             var param = new
             {
@@ -4362,7 +4360,7 @@ namespace agora.rtc
         }
 
         //todo not found in dcg
-        //public override int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len)
+        //public int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len)
         //{
         //    var param = new
         //    {
@@ -4376,7 +4374,7 @@ namespace agora.rtc
         //        AgoraJson.ToJson(param), out _result);
         //}
 
-        public override int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction)
+        public int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction)
         {
 
             var param = new
@@ -4394,7 +4392,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AdjustCustomAudioPublishVolume(int sourceId, int volume)
+        public int AdjustCustomAudioPublishVolume(int sourceId, int volume)
         {
             var param = new
             {
@@ -4412,7 +4410,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AdjustCustomAudioPlayoutVolume(int sourceId, int volume)
+        public int AdjustCustomAudioPlayoutVolume(int sourceId, int volume)
         {
             var param = new
             {
@@ -4429,7 +4427,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetParameters(string parameters)
+        public int SetParameters(string parameters)
         {
             var param = new
             {
@@ -4445,7 +4443,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetAudioDeviceInfo(out DeviceInfo deviceInfo)
+        public int GetAudioDeviceInfo(out DeviceInfo deviceInfo)
         {
             var param = new { };
 
@@ -4468,7 +4466,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableCustomAudioLocalPlayback(int sourceId, bool enabled)
+        public int EnableCustomAudioLocalPlayback(int sourceId, bool enabled)
         {
             var param = new
             {
@@ -4486,7 +4484,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource)
+        public int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource)
         {
             var param = new
             {
@@ -4504,7 +4502,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option)
+        public int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option)
         {
             var param = new
             {
@@ -4521,7 +4519,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option)
+        public int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option)
         {
             var param = new
             {
@@ -4538,7 +4536,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PauseAllChannelMediaRelay()
+        public int PauseAllChannelMediaRelay()
         {
             var param = new { };
 
@@ -4552,7 +4550,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ResumeAllChannelMediaRelay()
+        public int ResumeAllChannelMediaRelay()
         {
             var param = new { };
 
@@ -4566,7 +4564,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay)
+        public int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay)
         {
             var param = new
             {
@@ -4584,7 +4582,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int TakeSnapshot(SnapShotConfig config)
+        public int TakeSnapshot(SnapShotConfig config)
         {
             var param = new
             {
@@ -4602,7 +4600,7 @@ namespace agora.rtc
         }
 
         //todo  not found in dcg
-        //public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
+        //public int EnableContentInspect(bool enabled, ContentInspectConfig config)
         //{
         //    var param = new
         //    {
@@ -4620,7 +4618,7 @@ namespace agora.rtc
         //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         //}
 
-        public override int SwitchChannel(string token, string channel)
+        public int SwitchChannel(string token, string channel)
         {
             var param = new
             {
@@ -4638,7 +4636,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SwitchChannel(string token, string channel, ChannelMediaOptions options)
+        public int SwitchChannel(string token, string channel, ChannelMediaOptions options)
         {
             var param = new
             {
@@ -4657,7 +4655,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config)
+        public int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config)
         {
             var param = new
             {
@@ -4676,7 +4674,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopRhythmPlayer()
+        public int StopRhythmPlayer()
         {
             var param = new { };
 
@@ -4690,7 +4688,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config)
+        public int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config)
         {
             var param = new
             {
@@ -4707,7 +4705,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param)
+        public int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param)
         {
             var param1 = new
             {
@@ -4726,7 +4724,7 @@ namespace agora.rtc
         }
 
         //todo not found in dcg
-        //public override int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options)
+        //public int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options)
         //{
         //    var param = new
         //    {
@@ -4745,7 +4743,7 @@ namespace agora.rtc
         //}
 
         //todo not found in dcg
-        //public override int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection)
+        //public int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection)
         //{
         //    var param = new
         //    {
@@ -4758,7 +4756,7 @@ namespace agora.rtc
         //        AgoraJson.ToJson(param), out _result);
         //}
 
-        public override int SetDirectExternalAudioSource(bool enable, bool localPlayback)
+        public int SetDirectExternalAudioSource(bool enable, bool localPlayback)
         {
             var param = new
             {
@@ -4776,7 +4774,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetCloudProxy(CLOUD_PROXY_TYPE proxyType)
+        public int SetCloudProxy(CLOUD_PROXY_TYPE proxyType)
         {
             var param = new
             {
@@ -4793,7 +4791,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetLocalAccessPoint(LocalAccessPointConfiguration config)
+        public int SetLocalAccessPoint(LocalAccessPointConfiguration config)
         {
             var param = new
             {
@@ -4810,7 +4808,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableFishCorrection(bool enabled, FishCorrectionParams @params)
+        public int EnableFishCorrection(bool enabled, FishCorrectionParams @params)
         {
             var param = new
             {
@@ -4828,7 +4826,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAdvancedAudioOptions(AdvancedAudioOptions options)
+        public int SetAdvancedAudioOptions(AdvancedAudioOptions options)
         {
             var param = new
             {
@@ -4845,7 +4843,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAVSyncSource(string channelId, uint uid)
+        public int SetAVSyncSource(string channelId, uint uid)
         {
             var param = new
             {
@@ -4863,7 +4861,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartRtmpStreamWithoutTranscoding(string url)
+        public int StartRtmpStreamWithoutTranscoding(string url)
         {
             var param = new
             {
@@ -4880,7 +4878,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
+        public int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
         {
             var param = new
             {
@@ -4898,7 +4896,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateRtmpTranscoding(LiveTranscoding transcoding)
+        public int UpdateRtmpTranscoding(LiveTranscoding transcoding)
         {
             var param = new
             {
@@ -4915,7 +4913,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopRtmpStream(string url)
+        public int StopRtmpStream(string url)
         {
             var param = new
             {
@@ -4932,7 +4930,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetUserInfoByUserAccountEx(string userAccount, out UserInfo userInfo, RtcConnection connection)
+        public int GetUserInfoByUserAccountEx(string userAccount, out UserInfo userInfo, RtcConnection connection)
         {
             var param = new
             {
@@ -4959,7 +4957,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetUserInfoByUidEx(uint uid, out UserInfo userInfo, RtcConnection connection)
+        public int GetUserInfoByUidEx(uint uid, out UserInfo userInfo, RtcConnection connection)
         {
             var param = new
             {
@@ -4986,7 +4984,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableRemoteSuperResolution(uint userId, bool enable)
+        public int EnableRemoteSuperResolution(uint userId, bool enable)
         {
             var param = new
             {
@@ -5004,7 +5002,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetContentInspect(ContentInspectConfig config)
+        public int SetContentInspect(ContentInspectConfig config)
         {
             var param = new
             {
@@ -5021,7 +5019,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection)
+        public int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection)
         {
             var param = new
             {
@@ -5040,7 +5038,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection)
+        public int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection)
         {
             var param = new
             {
@@ -5060,7 +5058,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetVideoProfileEx(int width, int height, int frameRate, int bitrate)
+        public int SetVideoProfileEx(int width, int height, int frameRate, int bitrate)
         {
             var param = new
             {
@@ -5080,7 +5078,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
+        public int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             var param = new
             {
@@ -5100,7 +5098,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
+        public int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
         {
             var param = new
             {
@@ -5119,7 +5117,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UploadLogFile(ref string requestId)
+        public int UploadLogFile(ref string requestId)
         {
             var param = new { };
 
@@ -5140,7 +5138,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
+        public ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
         {
             var param = new
             {
@@ -5161,7 +5159,7 @@ namespace agora.rtc
 
         #region CallIrisApiWithBuffer
 
-        public override int SetupRemoteVideo(VideoCanvas canvas)
+        public int SetupRemoteVideo(VideoCanvas canvas)
         {
             var param = new
             {
@@ -5186,7 +5184,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetupLocalVideo(VideoCanvas canvas)
+        public int SetupLocalVideo(VideoCanvas canvas)
         {
             var param = new
             {
@@ -5211,7 +5209,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StartScreenCapture(byte[] mediaProjectionPermissionResultData,
+        public int StartScreenCapture(byte[] mediaProjectionPermissionResultData,
                                     ScreenCaptureParameters captureParams)
         {
             var param = new
@@ -5229,7 +5227,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SendStreamMessage(int streamId, byte[] data, uint length)
+        public int SendStreamMessage(int streamId, byte[] data, uint length)
         {
             var param = new
             {
@@ -5247,7 +5245,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame)
+        public int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame)
         {
             var param = new
             {
@@ -5282,7 +5280,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection)
+        public int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection)
         {
             var param = new
             {
@@ -5309,7 +5307,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame,
+        public int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame,
                              bool wrap = false, int sourceId = 0)
         {
             var param = new
@@ -5339,7 +5337,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PushVideoFrame(ExternalVideoFrame frame)
+        public int PushVideoFrame(ExternalVideoFrame frame)
         {
             var param = new
             {
@@ -5374,7 +5372,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
+        public int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
         {
             var param = new
             {
@@ -5409,7 +5407,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PushEncodedVideoImage(byte[] imageBuffer, uint length,
+        public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
                                           EncodedVideoFrameInfo videoEncodedFrameInfo)
         {
             var param = new
@@ -5428,7 +5426,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PushEncodedVideoImage(byte[] imageBuffer, uint length,
+        public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
                                           EncodedVideoFrameInfo videoEncodedFrameInfo,
                                           RtcConnection connection)
         {
@@ -5449,7 +5447,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PushDirectAudioFrame(AudioFrame frame)
+        public int PushDirectAudioFrame(AudioFrame frame)
         {
             var param = new
             {
@@ -5475,7 +5473,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int PullAudioFrame(AudioFrame frame)
+        public int PullAudioFrame(AudioFrame frame)
         {
             var param = new { };
             var json = AgoraJson.ToJson(param);

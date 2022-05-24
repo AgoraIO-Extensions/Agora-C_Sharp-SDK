@@ -9,7 +9,7 @@ namespace agora.rtc
     using IrisApiEnginePtr = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
 
-    public sealed class CloudSpatialAudioEngineImpl : ICloudSpatialAudioEngine
+    public class CloudSpatialAudioEngineImpl
     {
         private bool _disposed = false;
         private static readonly string identifier = "AgoraRtcSpatialAudioEngine";
@@ -54,7 +54,7 @@ namespace agora.rtc
             _disposed = true;
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -101,22 +101,22 @@ namespace agora.rtc
             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
-        public override CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
+        public CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
         {
             return _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
         }
 
-        public override void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
+        public void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
         {
             CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
         }
 
-        public override void RemoveEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
+        public void RemoveEventHandler()
         {
             CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
         }
 
-        public override int SetMaxAudioRecvCount(int maxCount)
+        public int SetMaxAudioRecvCount(int maxCount)
         {
             var param = new
             {
@@ -129,7 +129,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAudioRecvRange(float range)
+        public int SetAudioRecvRange(float range)
         {
             var param = new
             {
@@ -142,7 +142,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetDistanceUnit(float unit)
+        public int SetDistanceUnit(float unit)
         {
             var param = new
             {
@@ -155,7 +155,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
+        public int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
         {
             var param = new
             {
@@ -171,7 +171,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
+        public int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
         {
             var param = new
             {
@@ -188,7 +188,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
+        public int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
         {
             RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
             var param = new
@@ -203,7 +203,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetParameters(string @params)
+        public int SetParameters(string @params)
         {
             var param = new
             {
@@ -216,7 +216,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int Initialize(CloudSpatialAudioConfig config)
+        public int Initialize(CloudSpatialAudioConfig config)
         {
             var param = new
             {
@@ -229,7 +229,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnableSpatializer(bool enable, bool applyToTeam)
+        public int EnableSpatializer(bool enable, bool applyToTeam)
         {
             var param = new
             {
@@ -243,7 +243,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetTeamId(int teamId)
+        public int SetTeamId(int teamId)
         {
             var param = new
             {
@@ -256,7 +256,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAudioRangeMode(AUDIO_RANGE_MODE_TYPE rangeMode)
+        public int SetAudioRangeMode(AUDIO_RANGE_MODE_TYPE rangeMode)
         {
             var param = new
             {
@@ -269,7 +269,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int EnterRoom(string token, string roomName, uint uid)
+        public int EnterRoom(string token, string roomName, uint uid)
         {
             var param = new
             {
@@ -284,7 +284,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ExitRoom()
+        public int ExitRoom()
         {
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_CLOUDSPATIALAUDIOENGINE_EXITROOM,
@@ -292,7 +292,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int GetTeammates(ref uint[] uids, ref int userCount)
+        public int GetTeammates(ref uint[] uids, ref int userCount)
         {
             //TODO
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
@@ -302,7 +302,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RenewToken(string token)
+        public int RenewToken(string token)
         {
             var param = new
             {
@@ -315,7 +315,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteLocalAudioStream(bool mute)
+        public int MuteLocalAudioStream(bool mute)
         {
             var param = new
             {
@@ -328,7 +328,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteAllRemoteAudioStreams(bool mute)
+        public int MuteAllRemoteAudioStreams(bool mute)
         {
             var param = new
             {
@@ -342,13 +342,13 @@ namespace agora.rtc
         }
     }
 
-    public sealed class LocalSpatialAudioEngineImpl : ILocalSpatialAudioEngine
+    public class LocalSpatialAudioEngineImpl
     {
         private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
         private bool _disposed = false;
         private bool _initialized = false;
-        private const int UNINITIALIZED = -99;
+        private const int UNINITIALIZED = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
         internal LocalSpatialAudioEngineImpl(IrisApiEnginePtr irisApiEngine)
         {
@@ -361,7 +361,7 @@ namespace agora.rtc
             Dispose();
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             if (!_disposed)
             {
@@ -374,7 +374,7 @@ namespace agora.rtc
             GC.SuppressFinalize(this);
         }
 
-        public override int SetMaxAudioRecvCount(int maxCount)
+        public int SetMaxAudioRecvCount(int maxCount)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -388,7 +388,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetAudioRecvRange(float range)
+        public int SetAudioRecvRange(float range)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -402,7 +402,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetDistanceUnit(float unit)
+        public int SetDistanceUnit(float unit)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -416,7 +416,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
+        public int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -433,7 +433,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
+        public int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -451,7 +451,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
+        public int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
         {
             if (!_initialized) return UNINITIALIZED;
             RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
@@ -467,7 +467,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int SetParameters(string @params)
+        public int SetParameters(string @params)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -481,7 +481,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteLocalAudioStream(bool mute)
+        public int MuteLocalAudioStream(bool mute)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -495,7 +495,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int MuteAllRemoteAudioStreams(bool mute)
+        public int MuteAllRemoteAudioStreams(bool mute)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -509,7 +509,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateRemotePosition(uint uid, float[] position, float[] forward)
+        public int UpdateRemotePosition(uint uid, float[] position, float[] forward)
         {
             if (!_initialized) return UNINITIALIZED;
             RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo(position, forward);
@@ -525,7 +525,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
+        public int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
         {
             if (!_initialized) return UNINITIALIZED;
             RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo(position, forward);
@@ -542,7 +542,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RemoveRemotePosition(uint uid)
+        public int RemoveRemotePosition(uint uid)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -556,7 +556,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int RemoveRemotePositionEx(uint uid, RtcConnection connection)
+        public int RemoveRemotePositionEx(uint uid, RtcConnection connection)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -571,7 +571,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ClearRemotePositions()
+        public int ClearRemotePositions()
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new { };
@@ -582,7 +582,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int ClearRemotePositionsEx(RtcConnection connection)
+        public int ClearRemotePositionsEx(RtcConnection connection)
         {
             if (!_initialized) return UNINITIALIZED;
             var param = new
@@ -596,23 +596,17 @@ namespace agora.rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int Initialize()
+        public int Initialize()
         {
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_INITIALIZE,
                 "", 0, IntPtr.Zero, 0, out _result);
             var init = (int)AgoraJson.GetData<int>(_result.Result, "result");
-
-            if (init == 0) _initialized = true;
-            return ret != 0 ? ret : init;
+            if (init == 0)
+            {
+                _initialized = true;
+            }
+            return init;
         }
-
-        // private int Release()
-        // {
-        //     var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-        //         AgoraApiType.Release,
-        //         "", 0, IntPtr.Zero, 0, out _result);
-        //     return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
-        // }
     }
 }

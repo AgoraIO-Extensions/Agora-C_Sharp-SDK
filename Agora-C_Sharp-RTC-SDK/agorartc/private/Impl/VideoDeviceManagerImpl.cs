@@ -5,7 +5,7 @@ namespace agora.rtc
     using IrisApiEnginePtr = IntPtr;
     using view_t = IntPtr;
 
-    public sealed class VideoDeviceManagerImpl : IVideoDeviceManager
+    public class VideoDeviceManagerImpl
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
@@ -41,7 +41,7 @@ namespace agora.rtc
             _disposed = true;
         }
 
-        public override DeviceInfo[] EnumerateVideoDevices()
+        public DeviceInfo[] EnumerateVideoDevices()
         {
             return AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES,
@@ -50,7 +50,7 @@ namespace agora.rtc
                 : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result, "devices");
         }
 
-        public override int SetDevice(string deviceIdUTF8)
+        public int SetDevice(string deviceIdUTF8)
         {
             var param = new
             {
@@ -63,7 +63,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override string GetDevice()
+        public string GetDevice()
         {
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETDEVICE,
@@ -71,7 +71,7 @@ namespace agora.rtc
             return ret != 0 ? ret.ToString() : (string) AgoraJson.GetData<string>(_result.Result, "result");
         }
 
-        public override int StartDeviceTest(view_t hwnd)
+        public int StartDeviceTest(view_t hwnd)
         {
             var param = new
             {
@@ -84,7 +84,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public override int StopDeviceTest()
+        public int StopDeviceTest()
         {
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST,

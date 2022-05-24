@@ -1,50 +1,129 @@
 namespace agora.rtc
 {
-    public abstract class IAudioDeviceManager
+    public class IAudioDeviceManager
     {
-        public abstract DeviceInfo[] EnumeratePlaybackDevices();
+        private static IAudioDeviceManager instance = null;
+        private AudioDeviceManagerImpl _audioDeviecManagerImpl = null;
 
-        public abstract int SetPlaybackDevice(string deviceId);
+        private IAudioDeviceManager(AudioDeviceManagerImpl impl)
+        {
+            _audioDeviecManagerImpl = impl;
+        }
 
-        public abstract string GetPlaybackDevice();
+        internal static IAudioDeviceManager GetInstance(AudioDeviceManagerImpl impl)
+        {
+            return instance ?? (instance = new IAudioDeviceManager(impl));
+        }
 
-        public abstract DeviceInfo GetPlaybackDeviceInfo();
+        public DeviceInfo[] EnumeratePlaybackDevices()
+        {
+            return _audioDeviecManagerImpl.EnumeratePlaybackDevices();
+        }
 
-        public abstract int SetPlaybackDeviceVolume(int volume);
+        public int SetPlaybackDevice(string deviceId)
+        {
+            return _audioDeviecManagerImpl.SetPlaybackDevice(deviceId);
+        }
 
-        public abstract int GetPlaybackDeviceVolume();
+        public string GetPlaybackDevice()
+        {
+            return _audioDeviecManagerImpl.GetPlaybackDevice();
+        }
 
-        public abstract int SetPlaybackDeviceMute(bool mute);
+        public DeviceInfo GetPlaybackDeviceInfo()
+        {
+            return _audioDeviecManagerImpl.GetPlaybackDeviceInfo();
+        }
 
-        public abstract bool GetPlaybackDeviceMute();
+        public int SetPlaybackDeviceVolume(int volume)
+        {
+            return _audioDeviecManagerImpl.SetPlaybackDeviceVolume(volume);
+        }
 
-        public abstract int StartPlaybackDeviceTest(string testAudioFilePath);
+        public int GetPlaybackDeviceVolume()
+        {
+            return _audioDeviecManagerImpl.GetPlaybackDeviceVolume();
+        }
 
-        public abstract int StopPlaybackDeviceTest();
+        public int SetPlaybackDeviceMute(bool mute)
+        {
+            return _audioDeviecManagerImpl.SetPlaybackDeviceMute(mute);
+        }
 
-        public abstract DeviceInfo[] EnumerateRecordingDevices();
+        public bool GetPlaybackDeviceMute()
+        {
+            return _audioDeviecManagerImpl.GetPlaybackDeviceMute();
+        }
 
-        public abstract int SetRecordingDevice(string deviceId);
+        public int StartPlaybackDeviceTest(string testAudioFilePath)
+        {
+            return _audioDeviecManagerImpl.StartPlaybackDeviceTest(testAudioFilePath);
+        }
 
-        public abstract string GetRecordingDevice();
+        public int StopPlaybackDeviceTest()
+        {
+            return _audioDeviecManagerImpl.StopPlaybackDeviceTest();
+        }
 
-        public abstract DeviceInfo GetRecordingDeviceInfo();
+        public DeviceInfo[] EnumerateRecordingDevices()
+        {
+            return _audioDeviecManagerImpl.EnumerateRecordingDevices();
+        }
 
-        public abstract int SetRecordingDeviceVolume(int volume);
+        public int SetRecordingDevice(string deviceId)
+        {
+            return _audioDeviecManagerImpl.SetRecordingDevice(deviceId);
+        }
 
-        public abstract int GetRecordingDeviceVolume();
+        public string GetRecordingDevice()
+        {
+            return _audioDeviecManagerImpl.GetRecordingDevice();
+        }
 
-        public abstract int SetRecordingDeviceMute(bool mute);
+        public DeviceInfo GetRecordingDeviceInfo()
+        {
+            return _audioDeviecManagerImpl.GetRecordingDeviceInfo();
+        }
 
-        public abstract bool GetRecordingDeviceMute();
+        public int SetRecordingDeviceVolume(int volume)
+        {
+            return _audioDeviecManagerImpl.SetRecordingDeviceVolume(volume);
+        }
 
-        public abstract int StartRecordingDeviceTest(int indicationInterval);
+        public int GetRecordingDeviceVolume()
+        {
+            return _audioDeviecManagerImpl.GetRecordingDeviceVolume();
+        }
 
-        public abstract int StopRecordingDeviceTest();
+        public int SetRecordingDeviceMute(bool mute)
+        {
+            return _audioDeviecManagerImpl.SetRecordingDeviceMute(mute);
+        }
 
-        public abstract int StartAudioDeviceLoopbackTest(int indicationInterval);
+        public bool GetRecordingDeviceMute()
+        {
+            return _audioDeviecManagerImpl.GetRecordingDeviceMute();
+        }
 
-        public abstract int StopAudioDeviceLoopbackTest();
+        public int StartRecordingDeviceTest(int indicationInterval)
+        {
+            return _audioDeviecManagerImpl.StartRecordingDeviceTest(indicationInterval);
+        }
+
+        public int StopRecordingDeviceTest()
+        {
+            return _audioDeviecManagerImpl.StopRecordingDeviceTest();
+        }
+
+        public int StartAudioDeviceLoopbackTest(int indicationInterval)
+        {
+            return _audioDeviecManagerImpl.StartAudioDeviceLoopbackTest(indicationInterval);
+        }
+
+        public int StopAudioDeviceLoopbackTest()
+        {
+            return _audioDeviecManagerImpl.StopAudioDeviceLoopbackTest();
+        }
     }
 
     internal static partial class ObsoleteMethodWarning

@@ -56,7 +56,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onJoinChannelSuccess":
+                case "onJoinChannelSuccessEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -70,7 +70,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRejoinChannelSuccess":
+                case "onRejoinChannelSuccessEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -84,7 +84,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onAudioQuality":
+                case "onAudioQualityEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -101,7 +101,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onLeaveChannel":
+                case "onLeaveChannelEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -115,7 +115,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onClientRoleChanged":
+                case "onClientRoleChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -130,7 +130,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnClientRoleChangeFailed":
+                case "OnClientRoleChangeFailedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -145,7 +145,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onUserJoined":
+                case "onUserJoinedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -160,7 +160,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onUserOffline":
+                case "onUserOfflineEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -201,7 +201,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onConnectionInterrupted":
+                case "onConnectionInterruptedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -214,7 +214,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onConnectionLost":
+                case "onConnectionLostEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -227,7 +227,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onConnectionBanned":
+                case "onConnectionBannedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -255,7 +255,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRequestToken":
+                case "onRequestTokenEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -268,7 +268,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onTokenPrivilegeWillExpire":
+                case "onTokenPrivilegeWillExpireEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -282,7 +282,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRtcStats":
+                case "onRtcStatsEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -296,7 +296,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onNetworkQuality":
+                case "onNetworkQualityEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -312,7 +312,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onLocalVideoStats":
+                case "onLocalVideoStatsEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -326,7 +326,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRemoteVideoStats":
+                case "onRemoteVideoStatsEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -340,7 +340,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onLocalAudioStats":
+                case "onLocalAudioStatsEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -354,7 +354,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRemoteAudioStats":
+                case "onRemoteAudioStatsEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -368,7 +368,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onLocalAudioStateChanged":
+                case "onLocalAudioStateChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -383,7 +383,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRemoteAudioStateChanged":
+                case "onRemoteAudioStateChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -466,7 +466,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onAudioVolumeIndication":
+                case "onAudioVolumeIndicationEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -485,7 +485,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onActiveSpeaker":
+                case "onActiveSpeakerEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -510,7 +510,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnFirstLocalVideoFrame":
+                case "OnFirstLocalVideoFrameEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -526,7 +526,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onFirstLocalVideoFramePublished":
+                case "onFirstLocalVideoFramePublishedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -540,7 +540,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnFirstRemoteVideoFrame":
+                case "OnFirstRemoteVideoFrameEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -557,7 +557,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onFirstRemoteVideoDecoded":
+                case "onFirstRemoteVideoDecodedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -574,7 +574,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                // case "OnUserMuteAudio":
+                // case "OnUserMuteAudioEx":
                 //     EngineEventHandler.OnUserMuteAudio(
                 //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                 //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -583,7 +583,7 @@ namespace agora.rtc
                 //     break;
 
 
-                // case "onUserMuteVideo":
+                // case "onUserMuteVideoEx":
                 //     EngineEventHandler.OnUserMuteVideo(
                 //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                 //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -591,7 +591,7 @@ namespace agora.rtc
                 //     );
                 //     break;
 
-                // case "onUserEnableVideo":
+                // case "onUserEnableVideoEx":
                 //     EngineEventHandler.OnUserEnableVideo(
                 //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                 //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -756,7 +756,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onLocalVideoStateChanged":
+                case "onLocalVideoStateChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -771,7 +771,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onVideoSizeChanged":
+                case "onVideoSizeChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -801,7 +801,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onSnapshotTaken":
+                case "onSnapshotTakenEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -818,7 +818,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRemoteVideoStateChanged":
+                case "onRemoteVideoStateChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -835,7 +835,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                // case "onUserEnableLocalVideo":
+                // case "onUserEnableLocalVideoEx":
                 //     UnityEngine.Debug.Log(data);
                 //     EngineEventHandler.OnUserEnableLocalVideo(
                 //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
@@ -844,7 +844,7 @@ namespace agora.rtc
                 //     );
                 //     break;
 
-                case "OnUserStateChanged":
+                case "OnUserStateChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -859,7 +859,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onStreamMessageError":
+                case "onStreamMessageErrorEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -904,7 +904,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onFirstLocalAudioFramePublished":
+                case "onFirstLocalAudioFramePublishedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -918,7 +918,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnFirstRemoteAudioFrame":
+                case "OnFirstRemoteAudioFrameEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -933,7 +933,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnFirstRemoteAudioDecoded":
+                case "OnFirstRemoteAudioDecodedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1042,7 +1042,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRemoteAudioTransportStats":
+                case "onRemoteAudioTransportStatsEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1059,7 +1059,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onRemoteVideoTransportStats":
+                case "onRemoteVideoTransportStatsEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1076,7 +1076,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onConnectionStateChanged":
+                case "onConnectionStateChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1091,7 +1091,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onNetworkTypeChanged":
+                case "onNetworkTypeChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1146,7 +1146,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onIntraRequestReceived":
+                case "onIntraRequestReceivedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1185,7 +1185,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onVideoSourceFrameSizeChanged":
+                case "onVideoSourceFrameSizeChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1201,7 +1201,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "onEncryptionError":
+                case "onEncryptionErrorEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1215,7 +1215,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnUploadLogResult":
+                case "OnUploadLogResultEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1231,7 +1231,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnUserAccountUpdated":
+                case "OnUserAccountUpdatedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1338,7 +1338,7 @@ namespace agora.rtc
                 #endregion no buffer end
 
                 #region withBuffer start
-                case "onStreamMessage":
+                case "onStreamMessageEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
