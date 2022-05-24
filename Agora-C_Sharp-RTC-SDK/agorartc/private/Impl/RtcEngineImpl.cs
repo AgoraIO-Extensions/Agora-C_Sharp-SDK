@@ -2412,11 +2412,12 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int EnableLoopbackRecording(bool enabled)
+        public int EnableLoopbackRecording(bool enabled, string deviceName = "")
         {
             var param = new
             {
-                enabled
+                enabled,
+                deviceName
             };
 
             var json = AgoraJson.ToJson(param);
@@ -2546,14 +2547,15 @@ namespace agora.rtc
 
         public int SetExtensionProperty(
           string provider, string extension,
-          string key, string value)
+          string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
             var param = new
             {
                 provider,
                 extension,
                 key,
-                value
+                value,
+                type
             };
 
             var json = AgoraJson.ToJson(param);

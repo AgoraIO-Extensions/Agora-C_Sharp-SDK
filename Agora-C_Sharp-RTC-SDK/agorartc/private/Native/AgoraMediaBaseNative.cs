@@ -19,7 +19,8 @@ namespace agora.rtc
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisEncodedAudioFrameInfo
-    { 
+    {
+        internal AUDIO_FRAME_TYPE type;
         internal AUDIO_CODEC_TYPE codec;
         internal int sampleRateHz;
         internal int samplesPerChannel;
@@ -127,10 +128,10 @@ namespace agora.rtc
     internal struct IrisAudioPcmFrame
     {
         internal UInt32 capture_timestamp;
-        internal UInt16 samples_per_channel_;
+        internal UInt64 samples_per_channel_;
         internal int sample_rate_hz_;
         internal IRIS_BYTES_PER_SAMPLE bytes_per_sample;
-        internal UInt16 num_channels_;
+        internal UInt64 num_channels_;
 
         [MarshalAs(UnmanagedType.LPArray, SizeConst = 3840)]
         internal Int16[] data_;

@@ -708,9 +708,9 @@ namespace agora.rtc
             return _rtcEngineImpl.AdjustUserPlaybackSignalVolume(uid, volume);
         }
 
-        public override int EnableLoopbackRecording(bool enabled)
+        public override int EnableLoopbackRecording(bool enabled, string deviceName = "")
         {
-            return _rtcEngineImpl.EnableLoopbackRecording(enabled);
+            return _rtcEngineImpl.EnableLoopbackRecording(enabled, deviceName);
         }
 
         public override int AdjustLoopbackRecordingVolume(int volume)
@@ -748,9 +748,9 @@ namespace agora.rtc
             return _rtcEngineImpl.EnableExtension(provider, extension, enable, type);
         }
 
-        public override int SetExtensionProperty(string provider, string extension, string key, string value)
+        public override int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
-            return _rtcEngineImpl.SetExtensionProperty(provider, extension, key, value);
+            return _rtcEngineImpl.SetExtensionProperty(provider, extension, key, value, type);
         }
 
         public override int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
