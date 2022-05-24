@@ -31,7 +31,6 @@ namespace agora.rtc
     using IrisRtcCMetaDataObserverNativeMarshal = IntPtr;
     using IrisRtcMetaDataObserverHandleNative = IntPtr;
 
-
     internal class RtcEngineImpl
     {
         private bool _disposed = false;
@@ -206,7 +205,7 @@ namespace agora.rtc
             return _videoFrameBufferManagerPtr;
         }
 
-        public static RtcEngineImpl CreateRtcEngineImpl()
+        public static RtcEngineImpl GetInstance()
         {
             return engineInstance ?? (engineInstance = new RtcEngineImpl());
         }

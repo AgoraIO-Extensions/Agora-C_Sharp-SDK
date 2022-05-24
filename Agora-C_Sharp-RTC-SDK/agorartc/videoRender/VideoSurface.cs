@@ -59,7 +59,7 @@ namespace agora.rtc
 
                     if (_textureManager.CanTextureAttach())
                     {
-                        ApplyTexture(_textureManager.texture);
+                        ApplyTexture(_textureManager.Texture);
                     }
                 }
             }

@@ -5,7 +5,7 @@ namespace agora.rtc
     using IrisApiEnginePtr = IntPtr;
     using view_t = IntPtr;
 
-    public class VideoDeviceManagerImpl
+    internal class VideoDeviceManagerImpl
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;

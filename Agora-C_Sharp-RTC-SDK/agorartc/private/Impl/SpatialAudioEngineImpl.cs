@@ -9,7 +9,7 @@ namespace agora.rtc
     using IrisApiEnginePtr = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
 
-    public class CloudSpatialAudioEngineImpl
+    internal class CloudSpatialAudioEngineImpl
     {
         private bool _disposed = false;
         private static readonly string identifier = "AgoraRtcSpatialAudioEngine";

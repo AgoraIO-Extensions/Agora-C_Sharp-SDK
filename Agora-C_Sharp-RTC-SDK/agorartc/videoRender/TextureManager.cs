@@ -26,7 +26,7 @@ namespace agora.rtc
         private bool _canAttach = false;
 
         private Texture2D _texture;
-        public Texture2D texture
+        public Texture2D Texture
         {
             get
             {
