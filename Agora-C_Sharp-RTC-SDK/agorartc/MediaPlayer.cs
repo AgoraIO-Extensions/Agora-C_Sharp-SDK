@@ -39,37 +39,37 @@ namespace agora.rtc
 
         public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
-            _mediaPlayerImpl.Dispose();
+            _mediaPlayerImpl.InitEventHandler(engineEventHandler);
         }
 
         public override void RemoveEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
-            _mediaPlayerImpl.Dispose();
+            _mediaPlayerImpl.RemoveEventHandler(engineEventHandler);
         }
 
         public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
         {
-            _mediaPlayerImpl.Dispose();
+            _mediaPlayerImpl.RegisterAudioFrameObserver(observer);
         }
 
         public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
-            _mediaPlayerImpl.Dispose();
+            _mediaPlayerImpl.RegisterAudioFrameObserver(observer, mode);
         }
 
-        public override void UnregisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
+        public override void UnregisterAudioFrameObserver()
         {
-            _mediaPlayerImpl.Dispose();
+            _mediaPlayerImpl.UnregisterAudioFrameObserver();
         }
 
         public override void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
         {
-            _mediaPlayerImpl.Dispose();
+            _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(observer, intervalInMS);
         }
 
-        public override void UnregisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer)
+        public override void UnregisterMediaPlayerAudioSpectrumObserver()
         {
-            _mediaPlayerImpl.Dispose();
+            _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver();
         }
 
         public override int Open(int playerId, string url, Int64 startPos)
