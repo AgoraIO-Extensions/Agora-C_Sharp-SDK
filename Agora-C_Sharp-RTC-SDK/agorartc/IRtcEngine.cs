@@ -82,7 +82,7 @@ namespace agora.rtc
 
         public abstract int SetVideoEncoderConfiguration(VideoEncoderConfiguration config);
 
-        public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options);
+        public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         public abstract int SetupRemoteVideo(VideoCanvas canvas);
 
