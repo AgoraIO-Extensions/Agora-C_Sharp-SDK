@@ -2,314 +2,124 @@ using System;
 
 namespace agora.rtc
 {
-    public class IMediaPlayer
+    public abstract class IMediaPlayer
     {
-        private static IMediaPlayer instance = null;
-        private MediaPlayerImpl _mediaPlayerImpl = null;
+        public abstract void Dispose();
 
-        private IMediaPlayer(MediaPlayerImpl impl)
-        {
-            _mediaPlayerImpl = impl;
-        }
+        public abstract int CreateMediaPlayer();
 
-        internal static IMediaPlayer GetInstance(MediaPlayerImpl impl)
-        {
-            return instance ?? (instance = new IMediaPlayer(impl));
-        }
+        public abstract int DestroyMediaPlayer(int playerId);
 
-        public void Dispose()
-        {
-            _mediaPlayerImpl.Dispose();
-        }
+        public abstract MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver();
 
-        public int CreateMediaPlayer()
-        {
-            return _mediaPlayerImpl.CreateMediaPlayer();
-        }
+        public abstract void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
-        public int DestroyMediaPlayer(int playerId)
-        {
-            return _mediaPlayerImpl.DestroyMediaPlayer(playerId);
-        }
+        public abstract void RemoveEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
-        public MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver()
-        {
-            return _mediaPlayerImpl.GetAgoraRtcMediaPlayerSourceObserver();
-        }
+        public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
 
-        public void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
-        {
-            _mediaPlayerImpl.Dispose();
-        }
+        public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
-        public void RemoveEventHandler(IMediaPlayerSourceObserver engineEventHandler)
-        {
-            _mediaPlayerImpl.Dispose();
-        }
+        public abstract void UnregisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
 
-        public void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
-        {
-            _mediaPlayerImpl.Dispose();
-        }
+        public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS);
 
-        public void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
-        {
-            _mediaPlayerImpl.Dispose();
-        }
+        public abstract void UnregisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer);
 
-        public void UnregisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
-        {
-            _mediaPlayerImpl.Dispose();
-        }
+        public abstract int Open(int playerId, string url, Int64 startPos);
 
-        public void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
-        {
-            _mediaPlayerImpl.Dispose();
-        }
+        public abstract int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider);
 
-        public void UnregisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer)
-        {
-            _mediaPlayerImpl.Dispose();
-        }
+        public abstract int Play(int playerId);
 
-        public int Open(int playerId, string url, Int64 startPos)
-        {
-            return _mediaPlayerImpl.Open(playerId, url, startPos);
-        }
+        public abstract int Pause(int playerId);
 
-        public int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider)
-        {
-            return _mediaPlayerImpl.OpenWithCustomSource(playerId, startPos, provider);
-        }
+        public abstract int Stop(int playerId);
 
-        public int Play(int playerId)
-        {
-            return _mediaPlayerImpl.Play(playerId);
-        }
+        public abstract int Resume(int playerId);
 
-        public int Pause(int playerId)
-        {
-            return _mediaPlayerImpl.Pause(playerId);
-        }
+        public abstract int Seek(int playerId, Int64 newPos);
 
-        public int Stop(int playerId)
-        {
-            return _mediaPlayerImpl.Stop(playerId);
-        }
+        public abstract int GetDuration(int playerId, ref Int64 duration);
 
-        public int Resume(int playerId)
-        {
-            return _mediaPlayerImpl.Resume(playerId);
-        }
+        public abstract int GetPlayPosition(int playerId, ref Int64 pos);
 
-        public int Seek(int playerId, Int64 newPos)
-        {
-            return _mediaPlayerImpl.Seek(playerId, newPos);
-        }
+        public abstract int GetStreamCount(int playerId, ref Int64 count);
 
-        public int GetDuration(int playerId, ref Int64 duration)
-        {
-            return _mediaPlayerImpl.GetDuration(playerId, ref duration);
-        }
+        public abstract int GetStreamInfo(int playerId, Int64 index, out PlayerStreamInfo info);
 
-        public int GetPlayPosition(int playerId, ref Int64 pos)
-        {
-            return _mediaPlayerImpl.GetPlayPosition(playerId, ref pos);
-        }
+        public abstract int SetLoopCount(int playerId, int loopCount);
 
-        public int GetStreamCount(int playerId, ref Int64 count)
-        {
-            return _mediaPlayerImpl.GetStreamCount(playerId, ref count);
-        }
+        public abstract int MuteAudio(int playerId, bool audio_mute);
 
-        public int GetStreamInfo(int playerId, Int64 index, out PlayerStreamInfo info)
-        {
-            return _mediaPlayerImpl.GetStreamInfo(playerId, index, out info);
-        }
+        public abstract bool IsAudioMuted(int playerId);
 
-        public int SetLoopCount(int playerId, int loopCount)
-        {
-            return _mediaPlayerImpl.SetLoopCount(playerId, loopCount);
-        }
+        public abstract int MuteVideo(int playerId, bool video_mute);
 
-        public int MuteAudio(int playerId, bool audio_mute)
-        {
-            return _mediaPlayerImpl.MuteAudio(playerId, audio_mute);
-        }
+        public abstract bool IsVideoMuted(int playerId);
 
-        public bool IsAudioMuted(int playerId)
-        {
-            return _mediaPlayerImpl.IsAudioMuted(playerId);
-        }
+        public abstract int SetPlaybackSpeed(int speed);
 
-        public int MuteVideo(int playerId, bool video_mute)
-        {
-            return _mediaPlayerImpl.MuteVideo(playerId, video_mute);
-        }
+        public abstract int SelectAudioTrack(int playerId, int index);
 
-        public bool IsVideoMuted(int playerId)
-        {
-            return _mediaPlayerImpl.IsVideoMuted(playerId);
-        }
+        public abstract int SetPlayerOption(int playerId, string key, int value);
 
-        public int SetPlaybackSpeed(int speed)
-        {
-            return _mediaPlayerImpl.SetPlaybackSpeed(speed);
-        }
+        public abstract int SetPlayerOption(int playerId, string key, string value);
 
-        public int SelectAudioTrack(int playerId, int index)
-        {
-            return _mediaPlayerImpl.SelectAudioTrack(playerId, index);
-        }
+        public abstract int TakeScreenshot(int playerId, string filename);
 
-        public int SetPlayerOption(int playerId, string key, int value)
-        {
-            return _mediaPlayerImpl.SetPlayerOption(playerId, key, value);
-        }
+        public abstract int SelectInternalSubtitle(int playerId, int index);
 
-        public int SetPlayerOption(int playerId, string key, string value)
-        {
-            return _mediaPlayerImpl.SetPlayerOption(playerId, key, value);
-        }
+        public abstract int SetExternalSubtitle(int playerId, string url);
 
-        public int TakeScreenshot(int playerId, string filename)
-        {
-            return _mediaPlayerImpl.TakeScreenshot(playerId, filename);
-        }
+        public abstract MEDIA_PLAYER_STATE GetState(int playerId);
 
-        public int SelectInternalSubtitle(int playerId, int index)
-        {
-            return _mediaPlayerImpl.SelectInternalSubtitle(playerId, index);
-        }
+        public abstract int Mute(int playerId, bool mute);
 
-        public int SetExternalSubtitle(int playerId, string url)
-        {
-            return _mediaPlayerImpl.SetExternalSubtitle(playerId, url);
-        }
+        public abstract int GetMute(int playerId, ref bool mute);
 
-        public MEDIA_PLAYER_STATE GetState(int playerId)
-        {
-            return _mediaPlayerImpl.GetState(playerId);
-        }
+        public abstract int AdjustPlayoutVolume(int playerId, int volume);
 
-        public int Mute(int playerId, bool mute)
-        {
-            return _mediaPlayerImpl.Mute(playerId, mute);
-        }
+        public abstract int GetPlayoutVolume(int playerId, ref int volume);
 
-        public int GetMute(int playerId, ref bool mute)
-        {
-            return _mediaPlayerImpl.GetMute(playerId, ref mute);
-        }
+        public abstract int AdjustPublishSignalVolume(int playerId, int volume);
 
-        public int AdjustPlayoutVolume(int playerId, int volume)
-        {
-            return _mediaPlayerImpl.AdjustPlayoutVolume(playerId, volume);
-        }
+        public abstract int GetPublishSignalVolume(int playerId, ref int volume);
 
-        public int GetPlayoutVolume(int playerId, ref int volume)
-        {
-            return _mediaPlayerImpl.GetPlayoutVolume(playerId, ref volume);
-        }
+        public abstract int SetView(int playerId);
 
-        public int AdjustPublishSignalVolume(int playerId, int volume)
-        {
-            return _mediaPlayerImpl.AdjustPublishSignalVolume(playerId, volume);
-        }
+        public abstract int SetRenderMode(int playerId, RENDER_MODE_TYPE renderMode);
 
-        public int GetPublishSignalVolume(int playerId, ref int volume)
-        {
-            return _mediaPlayerImpl.GetPublishSignalVolume(playerId, ref volume);
-        }
+        public abstract int SetAudioDualMonoMode(int playerId, AUDIO_DUAL_MONO_MODE mode);
 
-        public int SetView(int playerId)
-        {
-            return _mediaPlayerImpl.SetView(playerId);
-        }
+        public abstract string GetPlayerSdkVersion(int playerId);
 
-        public int SetRenderMode(int playerId, RENDER_MODE_TYPE renderMode)
-        {
-            return _mediaPlayerImpl.SetRenderMode(playerId, renderMode);
-        }
+        public abstract string GetPlaySrc(int playerId);
 
-        public int SetAudioDualMonoMode(int playerId, AUDIO_DUAL_MONO_MODE mode)
-        {
-            return _mediaPlayerImpl.SetAudioDualMonoMode(playerId, mode);
-        }
+        public abstract int SetAudioPitch(int pitch);
 
-        public string GetPlayerSdkVersion(int playerId)
-        {
-            return _mediaPlayerImpl.GetPlayerSdkVersion(playerId);
-        }
+        public abstract int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params);
 
-        public string GetPlaySrc(int playerId)
-        {
-            return _mediaPlayerImpl.GetPlaySrc(playerId);
-        }
+        public abstract int OpenWithAgoraCDNSrc(string src, Int64 startPos);
 
-        public int SetAudioPitch(int pitch)
-        {
-            return _mediaPlayerImpl.SetAudioPitch(pitch);
-        }
+        public abstract int GetAgoraCDNLineCount();
 
-        public int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params)
-        {
-            return _mediaPlayerImpl.SetSpatialAudioParams(playerId, spatial_audio_params);
-        }
+        public abstract int SwitchAgoraCDNLineByIndex(int index);
 
-        public int OpenWithAgoraCDNSrc(string src, Int64 startPos)
-        {
-            return _mediaPlayerImpl.OpenWithAgoraCDNSrc(src, startPos);
-        }
+        public abstract int GetCurrentAgoraCDNIndex();
 
-        public int GetAgoraCDNLineCount()
-        {
-            return _mediaPlayerImpl.GetAgoraCDNLineCount();
-        }
+        public abstract int EnableAutoSwitchAgoraCDN(bool enable);
 
-        public int SwitchAgoraCDNLineByIndex(int index)
-        {
-            return _mediaPlayerImpl.SwitchAgoraCDNLineByIndex(index);
-        }
+        public abstract int RenewAgoraCDNSrcToken(string token, Int64 ts);
 
-        public int GetCurrentAgoraCDNIndex()
-        {
-            return _mediaPlayerImpl.GetCurrentAgoraCDNIndex();
-        }
+        public abstract int SwitchAgoraCDNSrc(string src, bool syncPts = false);
 
-        public int EnableAutoSwitchAgoraCDN(bool enable)
-        {
-            return _mediaPlayerImpl.EnableAutoSwitchAgoraCDN(enable);
-        }
+        public abstract int SwitchSrc(string src, bool syncPts = true);
 
-        public int RenewAgoraCDNSrcToken(string token, Int64 ts)
-        {
-            return _mediaPlayerImpl.RenewAgoraCDNSrcToken(token, ts);
-        }
+        public abstract int PreloadSrc(string src, Int64 startPos);
 
-        public int SwitchAgoraCDNSrc(string src, bool syncPts = false)
-        {
-            return _mediaPlayerImpl.SwitchAgoraCDNSrc(src, syncPts);
-        }
+        public abstract int PlayPreloadedSrc(string src);
 
-        public int SwitchSrc(string src, bool syncPts = true)
-        {
-            return _mediaPlayerImpl.SwitchSrc(src, syncPts);
-        }
-
-        public int PreloadSrc(string src, Int64 startPos)
-        {
-            return _mediaPlayerImpl.PreloadSrc(src, startPos);
-        }
-
-        public int PlayPreloadedSrc(string src)
-        {
-            return _mediaPlayerImpl.PlayPreloadedSrc(src);
-        }
-
-        public int UnloadSrc(string src)
-        {
-            return _mediaPlayerImpl.UnloadSrc(src);
-        }
+        public abstract int UnloadSrc(string src);
     }
 }

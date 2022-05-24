@@ -1,230 +1,88 @@
-using System;
-
 namespace agora.rtc
 {
-    public class ICloudSpatialAudioEngine
+    public abstract class ICloudSpatialAudioEngine
     {
-        private static ICloudSpatialAudioEngine instance = null;
-        private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineImpl = null;
-
-        private ICloudSpatialAudioEngine(CloudSpatialAudioEngineImpl impl)
-        {
-            _cloudSpatialAudioEngineImpl = impl;
-        }
-
-        internal static ICloudSpatialAudioEngine GetInstance(CloudSpatialAudioEngineImpl impl)
-        {
-            return instance ?? (instance = new ICloudSpatialAudioEngine(impl));
-        }
-
-        public CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
-        {
-            return _cloudSpatialAudioEngineImpl.GetCloudSpatialAudioEventHandler();
-        }
+        public abstract CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler();
         
-        public void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
-        {
-            _cloudSpatialAudioEngineImpl.InitEventHandler(engineEventHandler);
-        }
+        public abstract void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler);
 
-        public void RemoveEventHandler()
-        {
-            _cloudSpatialAudioEngineImpl.RemoveEventHandler();
-        }
+        public abstract void RemoveEventHandler();
 
-        public int Initialize(CloudSpatialAudioConfig config)
-        {
-            return _cloudSpatialAudioEngineImpl.Initialize(config);
-        }
+        public abstract int Initialize(CloudSpatialAudioConfig config);
 
-        public void Dispose()
-        {
-            _cloudSpatialAudioEngineImpl.Dispose();
-        }
+        public abstract void Dispose();
 
-        public int SetMaxAudioRecvCount(int maxCount)
-        {
-            return _cloudSpatialAudioEngineImpl.SetMaxAudioRecvCount(maxCount);
-        }
+        public abstract int SetMaxAudioRecvCount(int maxCount);
 
-        public int SetAudioRecvRange(float range)
-        {
-            return _cloudSpatialAudioEngineImpl.SetAudioRecvRange(range);
-        }
+        public abstract int SetAudioRecvRange(float range);
 
-        public int SetDistanceUnit(float unit)
-        {
-            return _cloudSpatialAudioEngineImpl.SetDistanceUnit(unit);
-        }
+        public abstract int SetDistanceUnit(float unit);
 
-        public int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
-        {
-            return _cloudSpatialAudioEngineImpl.UpdateSelfPosition(position, axisForward, axisRight, axisUp);
-        }
+        public abstract int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp);
 
-        public int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
-        {
-            return _cloudSpatialAudioEngineImpl.UpdateSelfPositionEx(position, axisForward, axisRight, axisUp, connection);
-        }
+        public abstract int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection);
 
-        public int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
-        {
-            return _cloudSpatialAudioEngineImpl.UpdatePlayerPositionInfo(playerId, position, forward);
-        }
+        public abstract int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward);
 
-        public int SetParameters(string @params)
-        {
-            return _cloudSpatialAudioEngineImpl.SetParameters(@params);
-        }
+        public abstract int SetParameters(string @params);
 
-        public int MuteLocalAudioStream(bool mute)
-        {
-            return _cloudSpatialAudioEngineImpl.MuteLocalAudioStream(mute);
-        }
+        public abstract int MuteLocalAudioStream(bool mute);
 
-        public int MuteAllRemoteAudioStreams(bool mute)
-        {
-            return _cloudSpatialAudioEngineImpl.MuteAllRemoteAudioStreams(mute);
-        }
+        public abstract int MuteAllRemoteAudioStreams(bool mute);
 
-        public int EnableSpatializer(bool enable, bool applyToTeam)
-        {
-            return _cloudSpatialAudioEngineImpl.EnableSpatializer(enable, applyToTeam);
-        }
+        public abstract int EnableSpatializer(bool enable, bool applyToTeam);
 
-        public int SetTeamId(int teamId)
-        {
-            return _cloudSpatialAudioEngineImpl.SetTeamId(teamId);
-        }
+        public abstract int SetTeamId(int teamId);
   
-        public int SetAudioRangeMode(AUDIO_RANGE_MODE_TYPE rangeMode)
-        {
-            return _cloudSpatialAudioEngineImpl.SetAudioRangeMode(rangeMode);
-        }
+        public abstract int SetAudioRangeMode(AUDIO_RANGE_MODE_TYPE rangeMode);
 
-        public int EnterRoom(string token, string roomName, uint uid)
-        {
-            return _cloudSpatialAudioEngineImpl.EnterRoom(token, roomName, uid);
-        }
+        public abstract int EnterRoom(string token, string roomName, uint uid);
 
-        public int ExitRoom()
-        {
-            return _cloudSpatialAudioEngineImpl.ExitRoom();
-        }
+        public abstract int ExitRoom();
 
-        public int GetTeammates(ref uint[] uids, ref int userCount)
-        {
-            return _cloudSpatialAudioEngineImpl.GetTeammates(ref uids, ref userCount);
-        }
+        public abstract int GetTeammates(ref uint[] uids, ref int userCount);
 
-        public int RenewToken(string token)
-        {
-            return _cloudSpatialAudioEngineImpl.RenewToken(token);
-        }
+        public abstract int RenewToken(string token);
     }
 
-    public class ILocalSpatialAudioEngine
+    public abstract class ILocalSpatialAudioEngine
     {
-        private static ILocalSpatialAudioEngine instance = null;
-        private LocalSpatialAudioEngineImpl _localSpatialAudioEngineImpl = null;
+        public abstract void Dispose();
 
-        private ILocalSpatialAudioEngine(LocalSpatialAudioEngineImpl impl)
-        {
-            _localSpatialAudioEngineImpl = impl;
-        }
+        public abstract int Initialize();
 
-        internal static ILocalSpatialAudioEngine GetInstance(LocalSpatialAudioEngineImpl impl)
-        {
-            return instance ?? (instance = new ILocalSpatialAudioEngine(impl));
-        }
+        public abstract int SetMaxAudioRecvCount(int maxCount);
 
-        public void Dispose()
-        {
-            _localSpatialAudioEngineImpl.Dispose();
-        }
+        public abstract int SetAudioRecvRange(float range);
 
-        public int Initialize()
-        {
-            return _localSpatialAudioEngineImpl.Initialize();
-        }
+        public abstract int SetDistanceUnit(float unit);
 
-        public int SetMaxAudioRecvCount(int maxCount)
-        {
-            return _localSpatialAudioEngineImpl.SetMaxAudioRecvCount(maxCount);
-        }
+        public abstract int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp);
 
-        public int SetAudioRecvRange(float range)
-        {
-            return _localSpatialAudioEngineImpl.SetAudioRecvRange(range);
-        }
+        public abstract int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection);
 
-        public int SetDistanceUnit(float unit)
-        {
-            return _localSpatialAudioEngineImpl.SetDistanceUnit(unit);
-        }
+        public abstract int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward);
 
-        public int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
-        {
-            return _localSpatialAudioEngineImpl.UpdateSelfPosition(position, axisForward, axisRight, axisUp);
-        }
+        public abstract int SetParameters(string @params);
 
-        public int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
-        {
-            return _localSpatialAudioEngineImpl.UpdateSelfPositionEx(position, axisForward, axisRight, axisUp, connection);
-        }
+        public abstract int MuteLocalAudioStream(bool mute);
 
-        public int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
-        {
-            return _localSpatialAudioEngineImpl.UpdatePlayerPositionInfo(playerId, position, forward);
-        }
+        public abstract int MuteAllRemoteAudioStreams(bool mute);
 
-        public int SetParameters(string @params)
-        {
-            return _localSpatialAudioEngineImpl.SetParameters(@params);
-        }
+        public abstract int UpdateRemotePosition(uint uid, float[] position, float[] forward);
 
-        public int MuteLocalAudioStream(bool mute)
-        {
-            return _localSpatialAudioEngineImpl.MuteLocalAudioStream(mute);
-        }
+        public abstract int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection);
 
-        public int MuteAllRemoteAudioStreams(bool mute)
-        {
-            return _localSpatialAudioEngineImpl.MuteAllRemoteAudioStreams(mute);
-        }
+        public abstract int RemoveRemotePosition(uint uid);
 
-        public int UpdateRemotePosition(uint uid, float[] position, float[] forward)
-        {
-            return _localSpatialAudioEngineImpl.UpdateRemotePosition(uid, position, forward);
-        }
+        public abstract int RemoveRemotePositionEx(uint uid, RtcConnection connection);
 
-        public int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
-        {
-            return _localSpatialAudioEngineImpl.UpdateRemotePositionEx(uid, position, forward, connection);
-        }
+        public abstract int ClearRemotePositions();
 
-        public int RemoveRemotePosition(uint uid)
-        {
-            return _localSpatialAudioEngineImpl.RemoveRemotePosition(uid);
-        }
-
-        public int RemoveRemotePositionEx(uint uid, RtcConnection connection)
-        {
-            return _localSpatialAudioEngineImpl.RemoveRemotePositionEx(uid, connection);
-        }
-
-        public int ClearRemotePositions()
-        {
-            return _localSpatialAudioEngineImpl.ClearRemotePositions();
-        }
-
-        public int ClearRemotePositionsEx(RtcConnection connection)
-        {
-            return _localSpatialAudioEngineImpl.ClearRemotePositionsEx(connection);
-        }
+        public abstract int ClearRemotePositionsEx(RtcConnection connection);
     }
 
-    public class ICloudSpatialAudioEventHandler
+    public abstract class ICloudSpatialAudioEventHandler
     {
         public virtual void OnTokenWillExpire() {}
   

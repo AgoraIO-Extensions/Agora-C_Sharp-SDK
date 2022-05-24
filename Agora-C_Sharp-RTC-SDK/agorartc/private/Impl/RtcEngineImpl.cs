@@ -860,12 +860,13 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetBeautyEffectOptions(bool enabled, BeautyOptions options)
+        public int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
         {
             var param = new
             {
                 enabled,
-                options
+                options,
+                type
             };
 
             var json = AgoraJson.ToJson(param);
@@ -2524,13 +2525,14 @@ namespace agora.rtc
         }
 
         public int EnableExtension(
-          string provider, string extension, bool enable = true)
+          string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
             var param = new
             {
                 provider,
                 extension,
-                enable
+                enable,
+                type
             };
 
             var json = AgoraJson.ToJson(param);
