@@ -20,11 +20,11 @@ namespace agora.rtc
 
         public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
-        public abstract void UnregisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
+        public abstract void UnregisterAudioFrameObserver();
 
         public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS);
 
-        public abstract void UnregisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer);
+        public abstract void UnregisterMediaPlayerAudioSpectrumObserver();
 
         public abstract int Open(int playerId, string url, Int64 startPos);
 

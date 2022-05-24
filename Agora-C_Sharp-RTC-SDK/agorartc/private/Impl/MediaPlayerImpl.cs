@@ -277,7 +277,7 @@ namespace agora.rtc
             MediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
         }
 
-        public void UnregisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
+        public void UnregisterAudioFrameObserver()
         {
             UnSetIrisAudioFrameObserver();
         }
@@ -288,7 +288,7 @@ namespace agora.rtc
             AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
-        public void UnregisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer)
+        public void UnregisterMediaPlayerAudioSpectrumObserver()
         {
             UnSetIrisAudioSpectrumObserver();
         }
