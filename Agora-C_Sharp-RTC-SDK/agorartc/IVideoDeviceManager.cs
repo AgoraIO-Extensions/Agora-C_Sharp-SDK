@@ -4,17 +4,45 @@ namespace agora.rtc
 {
     using view_t = IntPtr;
 
-    public abstract class IVideoDeviceManager
+    public class IVideoDeviceManager
     {
-        public abstract DeviceInfo[] EnumerateVideoDevices();
+        private static IVideoDeviceManager instance = null;
+        private VideoDeviceManagerImpl _videoDeviecManagerImpl = null;
 
-        public abstract int SetDevice(string deviceIdUTF8);
+        private IVideoDeviceManager(VideoDeviceManagerImpl impl)
+        {
+            _videoDeviecManagerImpl = impl;
+        }
 
-        public abstract string GetDevice();
+        internal static IVideoDeviceManager GetInstance(VideoDeviceManagerImpl impl)
+        {
+            return instance ?? (instance = new IVideoDeviceManager(impl));
+        }
 
-        public abstract int StartDeviceTest(view_t hwnd);
+        public DeviceInfo[] EnumerateVideoDevices()
+        {
+            return _videoDeviecManagerImpl.EnumerateVideoDevices();
+        }
 
-        public abstract int StopDeviceTest();
+        public int SetDevice(string deviceIdUTF8)
+        {
+            return _videoDeviecManagerImpl.SetDevice(deviceIdUTF8);
+        }
+
+        public string GetDevice()
+        {
+            return _videoDeviecManagerImpl.GetDevice();
+        }
+
+        public int StartDeviceTest(view_t hwnd)
+        {
+            return _videoDeviecManagerImpl.StartDeviceTest(hwnd);
+        }
+
+        public int StopDeviceTest()
+        {
+            return _videoDeviecManagerImpl.StopDeviceTest();
+        }
     }
 
     internal static partial class ObsoleteMethodWarning

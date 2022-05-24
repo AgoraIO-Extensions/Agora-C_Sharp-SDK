@@ -94,7 +94,7 @@
         /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
            * the real-time audio and video communication functionality.
            */
-        public IAgoraRtcEngine rtcEngine { set; get; }
+        public IRtcEngine rtcEngine { set; get; }
         /** The SDK uses the eventHandler interface class to send callbacks to the app.
            */
         public ICloudSpatialAudioEventHandler eventHandler { set; get; }
@@ -118,7 +118,7 @@
         /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
          * the real-time audio and video communication functionality.
          */
-        public IAgoraRtcEngine rtcEngine { set; get; }
+        public IRtcEngine rtcEngine { set; get; }
 
         public LocalSpatialAudioConfig()
         {

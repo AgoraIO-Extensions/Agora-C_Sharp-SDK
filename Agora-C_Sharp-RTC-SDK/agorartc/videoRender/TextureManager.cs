@@ -180,10 +180,8 @@ namespace agora.rtc
             _sourceType = source_type;
         }
 
-        internal void Destroy()
+        internal void Detach()
         {
-            AgoraLog.Log(string.Format("VideoSurface channel: ${0}, user:{1} destroy", _channelId, _uid));
-
             _refCount--;
             AgoraLog.Log("TextureManager refCount Minus, Now is: " + _refCount);
             return;

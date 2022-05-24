@@ -67,6 +67,7 @@ namespace agora.rtc
             {
                 if (!IsBlankTexture())
                 {
+                    DestroyTextureManager();
                     ApplyTexture(null);
                 }
             }
@@ -110,7 +111,7 @@ namespace agora.rtc
         private void DestroyTextureManager()
         {
             if (_textureManager == null) return;
-            _textureManager.Destroy();
+            _textureManager.Detach();
             if (_textureManager.GetRefCount() == 0)
             {
                 Destroy(_TextureManagerGameObject);
