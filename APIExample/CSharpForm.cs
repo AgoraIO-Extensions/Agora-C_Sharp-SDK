@@ -1,12 +1,13 @@
-﻿/*
- * 须知：
- * 1. 准备好AppId、ChannelId，并通过界面设置（点更新ID按钮），避免应用程序重启重复输入
- * 2. 根据实际需要，准备好一定数量的“窗口”，用于显示，构造时传给各场景。
- * 3. 各场景APIs调用流程略有不同，具体请参考各场景的示例
- * 
- * 注意：多个频道Id请以“;”分隔，但都必须有效，此时，如果是单频道场景，则仅使用第一个频道Id。
- * 如输入了“123;456;789”，对于单频道场景，仅使用123；对于多频道场景，则频道1 Id为123，频道2 Id为456，频道3 Id为789。
- */
+﻿/// <summary>
+/// Knowlege：
+/// 1. Input AppId and ChannelId, click update button. 
+///    Avoid restart appliction because you need to input appid again.
+/// 2. You need to pass window parameter to every scene to show Video.
+/// 3. API call sequence is different in difference cases.
+/// 
+/// Note：Multiple channel id is seperated by ';', every channel id must be valid. If only use one channel, the case will use first channel id.
+/// For example, you input '123;456;789' in channel id edit. For one channel case, only use 123 as channel id. For multiple channels, 123 is channel id 1, 456 is channel id 2 and 789 is channel id 3.
+/// <summary>
 
 using System;
 using System.Drawing;

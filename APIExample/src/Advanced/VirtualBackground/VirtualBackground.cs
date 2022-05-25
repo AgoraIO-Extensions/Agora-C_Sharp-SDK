@@ -1,13 +1,13 @@
-﻿/*
- * [Virtual Background]Key Step：
- * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、EnableVideo、EnableVirtualBackground、JoinChannel）
- * 
- * 3. Leave Channel：（LeaveChannel）
- * 
- * 4. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Virtual Background]Key Step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、EnableVirtualBackground、JoinChannel）
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

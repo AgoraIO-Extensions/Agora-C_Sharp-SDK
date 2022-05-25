@@ -1,13 +1,13 @@
-﻿/*
- * [SetVideoEncoderConfiguration]Key Step：
- * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、EnableVideo、 SetVideoEncoderConfiguration JoinChannel）
- * 
- * 3. Leave Channel：（LeaveChannel）
- * 
- * 4. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [SetVideoEncoderConfiguration]Key Step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、 SetVideoEncoderConfiguration JoinChannel）
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;
@@ -86,11 +86,11 @@ namespace CSharp_API_Example
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info", 0, new ChannelMediaOptions(true, true, true, true));
                 CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "JoinChannel", ret);
-                /*string[] ipList = { "127.0.0.1", "127.0.0.2" };
-                string[] domainList = { "255.0.0.0", "255.255.0.0" };
-                LocalAccessPointConfiguration config = new LocalAccessPointConfiguration(ipList, 2, domainList, 2, "dnstest", LOCAL_PROXY_MODE.ConnectivityFirst);
-                ret = rtc_engine_.SetLocalAccessPoint(config);
-                CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "SetLocalAccessPoint", ret);*/
+                /// <summary>string[] ipList = { "127.0.0.1", "127.0.0.2" };
+                ///string[] domainList = { "255.0.0.0", "255.255.0.0" };
+                ///LocalAccessPointConfiguration config = new LocalAccessPointConfiguration(ipList, 2, domainList, 2, "dnstest", LOCAL_PROXY_MODE.ConnectivityFirst);
+                ///ret = rtc_engine_.SetLocalAccessPoint(config);
+                ///CSharpForm.dump_handler_(SetVideoEncoderConfiguration_TAG + "SetLocalAccessPoint", ret);
             }
             return ret;
         }

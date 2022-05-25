@@ -4,14 +4,14 @@ namespace CSharp_API_Example
     partial class ProcessRawDataView
     {
         /// <summary> 
-        /// 必需的设计器变量。
+        /// 
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
-        /// 清理所有正在使用的资源。
+        /// 
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">If release delegate resource, true; or fals</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,11 +21,11 @@ namespace CSharp_API_Example
             base.Dispose(disposing);
         }
 
-        #region 组件设计器生成的代码
+        #region Componet Designer Generated Code
 
         /// <summary> 
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// The method designer supported - don't modify
+        /// Modify the code by designer
         /// </summary>
         private void InitializeComponent()
         {

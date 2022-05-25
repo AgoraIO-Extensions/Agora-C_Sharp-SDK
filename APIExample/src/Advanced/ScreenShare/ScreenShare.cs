@@ -1,20 +1,20 @@
-﻿/*
- * Two Process [Camera + Screen] Key step：
- * 1. Create Camera Process Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- *    Create Screen Process Engine and Initialize：（CreateAgoraRtcEngine(AgoraEngineType.SubProcess)、Initialize、[InitEventHandler]）
- *    
- * 2. Join Channel
- *     Camera：（[EnableAudio]、[EnableVideo]、[MuteAllRemoteAudioStreams]、JoinChannel）
- *     Screen Share：（StartScreenCaptureByDisplayId、EnableVideo、JoinChannel）
- *     
- * 3. Leave Channel：（LeaveChannel）
- *    Screen Share：（StopScreenCapture、LeaveChannel）
- *    Camera：（LeaveChannel）
- *    
- * 4. Exit
- *    Screen Share：（LeaveChannel、Dispose）
- *    Camera：（LeaveChannel、Dispose）
- */
+﻿/// <summary>
+/// Two Process [Camera + Screen] Key step：
+/// 1. Create Camera Process Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+///    Create Screen Process Engine and Initialize：（CreateAgoraRtcEngine(AgoraEngineType.SubProcess)、Initialize、[InitEventHandler]）
+///    
+/// 2. Join Channel
+///     Camera：（[EnableAudio]、[EnableVideo]、[MuteAllRemoteAudioStreams]、JoinChannel）
+///     Screen Share：（StartScreenCaptureByDisplayId、EnableVideo、JoinChannel）
+///     
+/// 3. Leave Channel：（LeaveChannel）
+///    Screen Share：（StopScreenCapture、LeaveChannel）
+///    Camera：（LeaveChannel）
+///    
+/// 4. Exit
+///    Screen Share：（LeaveChannel、Dispose）
+///    Camera：（LeaveChannel、Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

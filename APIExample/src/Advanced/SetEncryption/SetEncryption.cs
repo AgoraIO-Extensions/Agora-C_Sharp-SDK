@@ -1,13 +1,13 @@
-﻿/*
- * [Encrypt] Key Step ：
- * 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio], EnableVideo, EnableEncryptionMode, JoinChannel）
- * 
- * 3. Leave Channel：（LeaveChannel）
- * 
- * 4. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Encrypt] Key Step ：
+/// 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio], EnableVideo, EnableEncryptionMode, JoinChannel）
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

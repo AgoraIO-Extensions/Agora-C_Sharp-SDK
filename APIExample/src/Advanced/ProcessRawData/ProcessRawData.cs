@@ -1,14 +1,14 @@
-﻿/*
- * [Raw data callback] Key Step ：
- * 1. Create Engine and initialize, override IAgoraRtcVideoFrameObserver and IAgoraRtcAudioFrameObserver, the register obsevers：
- * （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]、[RegisterVideoFrameObserver]）
- * 
- * 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 3. Leave Channel：（LeaveChannel）
- * 
- * 4. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Raw data callback] Key Step ：
+/// 1. Create Engine and initialize, override IAgoraRtcVideoFrameObserver and IAgoraRtcAudioFrameObserver, the register obsevers：
+/// （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]、[RegisterVideoFrameObserver]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using System.Threading;

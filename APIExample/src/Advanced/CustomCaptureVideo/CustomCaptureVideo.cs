@@ -1,16 +1,16 @@
-﻿/*
- * [自采集自渲染]Key Step：
- * 1. Create Engine and Initialize
- * （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（EnableVideo、SetExternalVideoSource、JoinChannel）
- * 
- * 3. 将视频帧传给SDK：（PushVideoFrame）
- * 
- * 4. Leave Channel：（LeaveChannel）
- * 
- * 5. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Custom capture and render]Key Step：
+/// 1. Create Engine and Initialize
+/// （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（EnableVideo、SetExternalVideoSource、JoinChannel）
+/// 
+/// 3. Push video to sdk：（PushVideoFrame）
+/// 
+/// 4. Leave Channel：（LeaveChannel）
+/// 
+/// 5. Exit：（Dispose）
+/// <summary>
 
 using System;
 using System.Drawing;

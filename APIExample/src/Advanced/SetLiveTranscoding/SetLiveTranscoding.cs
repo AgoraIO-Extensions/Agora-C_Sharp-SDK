@@ -1,19 +1,19 @@
-﻿/*
- *  SetLiveTranscoding：
- * 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. AddPublishStreamUrl with transcoding, SetLiveTranscoding
- * 
- * 3. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 4. SetLiveTranscoding(when user joined or offline)
- * 
- * 5. RemovePublishStreamUrl
- * 
- * 6. Leave Channel：（LeaveChannel）
- * 
- * 7. Exit：（Dispose）
- */
+﻿/// <summary>
+///  SetLiveTranscoding：
+/// 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. AddPublishStreamUrl with transcoding, SetLiveTranscoding
+/// 
+/// 3. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+/// 
+/// 4. SetLiveTranscoding(when user joined or offline)
+/// 
+/// 5. RemovePublishStreamUrl
+/// 
+/// 6. Leave Channel：（LeaveChannel）
+/// 
+/// 7. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

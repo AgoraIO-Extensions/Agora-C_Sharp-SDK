@@ -1,15 +1,15 @@
-﻿/*
- * [Voice Changer]Key Step：
- * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、SetVoiceBeautifierPreset  SetAudioEffectPreset 、JoinChannel）
- * 
- * 3. SetVoiceBeautifierParameters、SetAudioEffectParameters
- * 
- * 4. Leave Channel：（StopVoiceChanger、LeaveChannel）
- * 
- * 5. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Voice Changer]Key Step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、SetVoiceBeautifierPreset  SetAudioEffectPreset 、JoinChannel）
+/// 
+/// 3. SetVoiceBeautifierParameters、SetAudioEffectParameters
+/// 
+/// 4. Leave Channel：（StopVoiceChanger、LeaveChannel）
+/// 
+/// 5. Exit：（Dispose）
+/// <summary>
 using System;
 using agora.rtc;
 

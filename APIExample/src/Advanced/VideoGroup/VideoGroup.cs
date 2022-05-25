@@ -1,14 +1,14 @@
-﻿/*
- * [Multiple People]Key Step：
- * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
- *    Remote user initialize with the same appid and join the same channel
- * 
- * 3. Leave Channel：（LeaveChannel）
- * 
- * 4. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Multiple People]Key Step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+///    Remote user initialize with the same appid and join the same channel
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 using System;
 using agora.rtc;
 

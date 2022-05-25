@@ -1,15 +1,15 @@
-﻿/*
- *  RrmpStreaming：
- * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. AddPublishStreamUrl no transcoding
- * 
- * 3. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 4. Leave Channel ：（LeaveChannel）
- * 
- * 5. Exit：（Dispose）
- */
+﻿/// <summary>
+///  RrmpStreaming：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. AddPublishStreamUrl no transcoding
+/// 
+/// 3. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+/// 
+/// 4. Leave Channel ：（LeaveChannel）
+/// 
+/// 5. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

@@ -1,15 +1,15 @@
-﻿/*
- * [Send Message]Key Step：
- * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 3. Send Message: sendStreamMessage
- * 
- * 4. Leave Channel：（LeaveChannel）
- * 
- * 5. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Send Message]Key Step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+/// 
+/// 3. Send Message: sendStreamMessage
+/// 
+/// 4. Leave Channel：（LeaveChannel）
+/// 
+/// 5. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

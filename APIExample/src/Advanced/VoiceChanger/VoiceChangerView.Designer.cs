@@ -4,14 +4,14 @@ namespace CSharp_API_Example
     partial class VoiceChangerView
     {
         /// <summary> 
-        /// 必需的设计器变量。
+        /// 
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
-        /// 清理所有正在使用的资源。
+        /// 
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">If release delegate resource, true; or fals</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,11 +21,11 @@ namespace CSharp_API_Example
             base.Dispose(disposing);
         }
 
-        #region 组件设计器生成的代码
+        #region Componet Designer Generated Code
 
         /// <summary> 
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// The method designer supported - don't modify
+        /// Modify the code by designer
         /// </summary>
         private void InitializeComponent()
         {
@@ -71,7 +71,7 @@ namespace CSharp_API_Example
             "低沉",
             "圆润",
             "假音 \t",
-            "饱满。",
+            "饱满",
             "清澈",
             "高亢",
             "嘹亮"});
@@ -188,9 +188,9 @@ namespace CSharp_API_Example
             this.cmbAudioEffectParam1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAudioEffectParam1.FormattingEnabled = true;
             this.cmbAudioEffectParam1.Items.AddRange(new object[] {
-            "自然大调。",
-            " 自然小调。",
-            "和风小调。"});
+            "自然大调",
+            "自然小调",
+            "和风小调"});
             this.cmbAudioEffectParam1.Location = new System.Drawing.Point(570, 583);
             this.cmbAudioEffectParam1.Name = "cmbAudioEffectParam1";
             this.cmbAudioEffectParam1.Size = new System.Drawing.Size(115, 28);

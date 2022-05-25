@@ -1,13 +1,13 @@
-﻿/*
- * [Audio Mixing] key step：
- * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、StartAudioMixing、JoinChannel）
- * 
- * 3. Leave Channel：（StopAudioMixing、LeaveChannel）
- * 
- * 4. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Audio Mixing] key step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、StartAudioMixing、JoinChannel）
+/// 
+/// 3. Leave Channel：（StopAudioMixing、LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

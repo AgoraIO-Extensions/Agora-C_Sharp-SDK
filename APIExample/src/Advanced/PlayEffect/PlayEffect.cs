@@ -1,15 +1,15 @@
-﻿/*
- * [Audio Effect]Key Step：
- * 1. Create Engine and initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、JoinChannel）
- * 
- * 3. PlayEffect PauseEffect  ResumeEffect StopEffect 
- * 
- * 4. Leave Channel：（LeaveChannel）
- * 
- * 5. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Audio Effect]Key Step：
+/// 1. Create Engine and initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、JoinChannel）
+/// 
+/// 3. PlayEffect PauseEffect  ResumeEffect StopEffect 
+/// 
+/// 4. Leave Channel：（LeaveChannel）
+/// 
+/// 5. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

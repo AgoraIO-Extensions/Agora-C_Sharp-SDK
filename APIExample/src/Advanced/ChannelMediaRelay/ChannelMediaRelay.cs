@@ -1,17 +1,17 @@
-﻿/*
- * [Media Relay] key step：
- * 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 3. startChannelMediaRelay
- * 
- * 4. stopChannelMediaRelay
- * 
- * 5. Leave Channel：（LeaveChannel）
- * 
- * 6. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [Media Relay] key step：
+/// 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+/// 
+/// 3. startChannelMediaRelay
+/// 
+/// 4. stopChannelMediaRelay
+/// 
+/// 5. Leave Channel：（LeaveChannel）
+/// 
+/// 6. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;

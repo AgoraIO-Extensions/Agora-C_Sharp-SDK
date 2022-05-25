@@ -1,13 +1,13 @@
-﻿/*
- * [1v1 Video]Key Step：
- * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 3. Leave Channel：（LeaveChannel）
- * 
- * 4. Exit：（Dispose）
- */
+﻿/// <summary>
+/// [1v1 Video]Key Step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;
@@ -94,6 +94,8 @@ namespace CSharp_API_Example
                 ret = rtc_engine_.LeaveChannel();
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
             }
+            rtc_engine_.Dispose();
+            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Dispose", ret);
             return ret;
         }
 
