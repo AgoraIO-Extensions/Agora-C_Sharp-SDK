@@ -1,18 +1,18 @@
 ﻿/*
  *  SetLiveTranscoding：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+ * 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
  * 
  * 2. AddPublishStreamUrl with transcoding, SetLiveTranscoding
  * 
- * 3. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
+ * 3. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
  * 
  * 4. SetLiveTranscoding(when user joined or offline)
  * 
  * 5. RemovePublishStreamUrl
  * 
- * 6. 离开频道：（LeaveChannel）
+ * 6. Leave Channel：（LeaveChannel）
  * 
- * 7. 退出：（Dispose）
+ * 7. Exit：（Dispose）
  */
 
 using System;

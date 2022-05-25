@@ -1,13 +1,13 @@
 ﻿/*
- * 【祼数据回调】关键步骤：
- * 1. 创建Engine并初始化、重写IAgoraRtcVideoFrameObserver的相关接口并注册：
+ * [Raw data callback] Key Step ：
+ * 1. Create Engine and initialize, override IAgoraRtcVideoFrameObserver and IAgoraRtcAudioFrameObserver, the register obsevers：
  * （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]、[RegisterVideoFrameObserver]）
  * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
+ * 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
  * 
- * 3. 离开频道：（LeaveChannel）
+ * 3. Leave Channel：（LeaveChannel）
  * 
- * 4. 退出：（Dispose）
+ * 4. Exit：（Dispose）
  */
 
 using System;

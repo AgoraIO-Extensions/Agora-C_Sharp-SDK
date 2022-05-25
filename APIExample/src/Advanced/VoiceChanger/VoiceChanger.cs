@@ -1,14 +1,14 @@
 ﻿/*
- * 【变声】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+ * [Voice Changer]Key Step：
+ * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
  * 
- * 2. 加入频道：（[EnableAudio]、SetVoiceBeautifierPreset  SetAudioEffectPreset 、JoinChannel）
+ * 2. Join Channel：（[EnableAudio]、SetVoiceBeautifierPreset  SetAudioEffectPreset 、JoinChannel）
  * 
  * 3. SetVoiceBeautifierParameters、SetAudioEffectParameters
  * 
- * 4. 离开频道：（StopVoiceChanger、LeaveChannel）
+ * 4. Leave Channel：（StopVoiceChanger、LeaveChannel）
  * 
- * 5. 退出：（Dispose）
+ * 5. Exit：（Dispose）
  */
 using System;
 using agora.rtc;

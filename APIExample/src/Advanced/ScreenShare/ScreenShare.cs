@@ -1,19 +1,19 @@
 ﻿/*
- * 双进程【摄像头 + 屏幕共享】关键步骤：
- * 1. 创建共享摄像头的Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- *    创建共享屏幕的Engine并初始化：（CreateAgoraRtcEngine(AgoraEngineType.SubProcess)、Initialize、[InitEventHandler]）
+ * Two Process [Camera + Screen] Key step：
+ * 1. Create Camera Process Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+ *    Create Screen Process Engine and Initialize：（CreateAgoraRtcEngine(AgoraEngineType.SubProcess)、Initialize、[InitEventHandler]）
  *    
- * 2. 加入频道
- *     摄像头：（[EnableAudio]、[EnableVideo]、[MuteAllRemoteAudioStreams]、JoinChannel）
- *     共享屏幕：（StartScreenCaptureByDisplayId、EnableVideo、JoinChannel）
+ * 2. Join Channel
+ *     Camera：（[EnableAudio]、[EnableVideo]、[MuteAllRemoteAudioStreams]、JoinChannel）
+ *     Screen Share：（StartScreenCaptureByDisplayId、EnableVideo、JoinChannel）
  *     
- * 3. 离开频道：（LeaveChannel）
- *    共享屏幕：（StopScreenCapture、LeaveChannel）
- *    摄像头：（LeaveChannel）
+ * 3. Leave Channel：（LeaveChannel）
+ *    Screen Share：（StopScreenCapture、LeaveChannel）
+ *    Camera：（LeaveChannel）
  *    
- * 4. 退出
- *    共享屏幕：（LeaveChannel、Dispose）
- *    摄像头：（LeaveChannel、Dispose）
+ * 4. Exit
+ *    Screen Share：（LeaveChannel、Dispose）
+ *    Camera：（LeaveChannel、Dispose）
  */
 
 using System;

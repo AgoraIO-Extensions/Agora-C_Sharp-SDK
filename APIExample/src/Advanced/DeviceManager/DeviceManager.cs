@@ -1,22 +1,22 @@
 ﻿/*
- * 【设备管理】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler] EnableAudio、EnableVideo
+ * [Device Manager] Key Step：
+ * 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler] EnableAudio、EnableVideo
  * ）
  * 
- * 2. 枚举设备: GetAgoraRtcVideoDeviceManager  GetAgoraRtcAudioPlaybackDeviceManager GetAgoraRtcAudioRecordingDeviceManager
+ * 2. Enumerate Device: GetAgoraRtcVideoDeviceManager  GetAgoraRtcAudioPlaybackDeviceManager GetAgoraRtcAudioRecordingDeviceManager
  *    IAgoraRtcVideoDeviceManager::EnumerateVideoDevices  
  *    IAgoraRtcAudioPlaybackDeviceManager::EnumeratePlaybackDevices 
  *    IAgoraRtcAudioRecordingDeviceManager::EnumerateRecordingDevices
  *
- * 3. 加入频道：（JoinChannel）
+ * 3. Join Channel：（JoinChannel）
  * 
- * 4. 切换设备: IAgoraRtcVideoDeviceManager::SetDevice    
- *             IAgoraRtcAudioRecordingDeviceManager::SetRecordingDevice 
- *             IAgoraRtcAudioPlaybackDeviceManager::SetPlaybackDevice
+ * 4. Set device : IAgoraRtcVideoDeviceManager::SetDevice    
+ *                 IAgoraRtcAudioRecordingDeviceManager::SetRecordingDevice 
+ *                 IAgoraRtcAudioPlaybackDeviceManager::SetPlaybackDevice
  * 
- * 5. 离开频道：（LeaveChannel）
+ * 5. Leave Channel：（LeaveChannel）
  * 
- * 4. 退出：（Dispose）
+ * 4. Exit：（Dispose）
  */
 
 using System;

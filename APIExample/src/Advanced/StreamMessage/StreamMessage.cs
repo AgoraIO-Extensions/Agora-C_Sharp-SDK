@@ -1,14 +1,14 @@
 ﻿/*
- * 【发送消息】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+ * [Send Message]Key Step：
+ * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
  * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
+ * 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
  * 
- * 3. 发送消息 sendStreamMessage
+ * 3. Send Message: sendStreamMessage
  * 
- * 4. 离开频道：（LeaveChannel）
+ * 4. Leave Channel：（LeaveChannel）
  * 
- * 5. 退出：（Dispose）
+ * 5. Exit：（Dispose）
  */
 
 using System;

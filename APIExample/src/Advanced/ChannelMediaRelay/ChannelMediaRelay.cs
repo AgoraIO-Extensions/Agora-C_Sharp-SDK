@@ -1,16 +1,16 @@
 ﻿/*
- * 【跨频道视频】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+ * [Media Relay] key step：
+ * 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
  * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
+ * 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
  * 
  * 3. startChannelMediaRelay
  * 
  * 4. stopChannelMediaRelay
  * 
- * 5. 离开频道：（LeaveChannel）
+ * 5. Leave Channel：（LeaveChannel）
  * 
- * 6. 退出：（Dispose）
+ * 6. Exit：（Dispose）
  */
 
 using System;

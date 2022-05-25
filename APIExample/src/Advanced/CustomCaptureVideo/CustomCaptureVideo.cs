@@ -1,15 +1,15 @@
 ﻿/*
- * 【自采集自渲染】关键步骤：
- * 1. 创建Engine并初始化
+ * [自采集自渲染]Key Step：
+ * 1. Create Engine and Initialize
  * （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
  * 
- * 2. 加入频道：（EnableVideo、SetExternalVideoSource、JoinChannel）
+ * 2. Join Channel：（EnableVideo、SetExternalVideoSource、JoinChannel）
  * 
  * 3. 将视频帧传给SDK：（PushVideoFrame）
  * 
- * 4. 离开频道：（LeaveChannel）
+ * 4. Leave Channel：（LeaveChannel）
  * 
- * 5. 退出：（Dispose）
+ * 5. Exit：（Dispose）
  */
 
 using System;

@@ -1,12 +1,12 @@
 ﻿/*
- * 【虚拟背景】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+ * [Virtual Background]Key Step：
+ * 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
  * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、EnableVirtualBackground、JoinChannel）
+ * 2. Join Channel：（[EnableAudio]、EnableVideo、EnableVirtualBackground、JoinChannel）
  * 
- * 3. 离开频道：（LeaveChannel）
+ * 3. Leave Channel：（LeaveChannel）
  * 
- * 4. 退出：（Dispose）
+ * 4. Exit：（Dispose）
  */
 
 using System;
