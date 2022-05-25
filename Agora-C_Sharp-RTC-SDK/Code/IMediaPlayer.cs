@@ -46,7 +46,7 @@ namespace agora.rtc
 
         public abstract int GetStreamCount(int playerId, ref Int64 count);
 
-        public abstract int GetStreamInfo(int playerId, Int64 index, out PlayerStreamInfo info);
+        public abstract int GetStreamInfo(int playerId, Int64 index, ref PlayerStreamInfo info);
 
         public abstract int SetLoopCount(int playerId, int loopCount);
 

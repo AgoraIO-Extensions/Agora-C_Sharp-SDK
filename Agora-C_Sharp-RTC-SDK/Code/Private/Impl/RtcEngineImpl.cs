@@ -3787,7 +3787,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo)
+        public int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo)
         {
             var param = new
             {
@@ -3814,7 +3814,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetUserInfoByUid(uint uid, out UserInfo userInfo)
+        public int GetUserInfoByUid(uint uid, ref UserInfo userInfo)
         {
             var param = new
             {
@@ -4446,7 +4446,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetAudioDeviceInfo(out DeviceInfo deviceInfo)
+        public int GetAudioDeviceInfo(ref DeviceInfo deviceInfo)
         {
             var param = new { };
 
@@ -4933,7 +4933,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetUserInfoByUserAccountEx(string userAccount, out UserInfo userInfo, RtcConnection connection)
+        public int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection)
         {
             var param = new
             {
@@ -4960,7 +4960,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetUserInfoByUidEx(uint uid, out UserInfo userInfo, RtcConnection connection)
+        public int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection)
         {
             var param = new
             {

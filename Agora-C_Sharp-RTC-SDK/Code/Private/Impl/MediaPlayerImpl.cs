@@ -421,7 +421,7 @@ namespace agora.rtc
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetStreamInfo(int playerId, Int64 index, out PlayerStreamInfo info)
+        public int GetStreamInfo(int playerId, Int64 index, ref PlayerStreamInfo info)
         {
             var param = new
             {

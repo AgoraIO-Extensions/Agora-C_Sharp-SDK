@@ -446,9 +446,9 @@ namespace agora.rtc
 
         public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
-        public abstract int GetUserInfoByUserAccount(string userAccount, out UserInfo userInfo);
+        public abstract int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo);
 
-        public abstract int GetUserInfoByUid(uint uid, out UserInfo userInfo);
+        public abstract int GetUserInfoByUid(uint uid, ref UserInfo userInfo);
 
         public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
@@ -532,7 +532,7 @@ namespace agora.rtc
 
         public abstract int SetParameters(string parameters);
 
-        public abstract int GetAudioDeviceInfo(out DeviceInfo deviceInfo);
+        public abstract int GetAudioDeviceInfo(ref DeviceInfo deviceInfo);
 
         public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
 
@@ -588,9 +588,9 @@ namespace agora.rtc
 
         public abstract int StopRtmpStream(string url);
 
-        public abstract int GetUserInfoByUserAccountEx(string userAccount, out UserInfo userInfo, RtcConnection connection);
+        public abstract int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection);
 
-        public abstract int GetUserInfoByUidEx(uint uid, out UserInfo userInfo, RtcConnection connection);
+        public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
 
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
 
