@@ -178,11 +178,11 @@ namespace agora.rtc
         {
         }
 
-        public AudioFrameWithoutBuffer(AUDIO_FRAME_TYPE type, int samples, BYTES_PER_SAMPLE bytesPerSample, int channels,
+        public AudioFrameWithoutBuffer(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels,
             int samplesPerSec, long renderTimeMs, int avsync_type)
         {
             this.type = type;
-            this.samples = samples;
+            this.samplesPerChannel = samplesPerChannel;
             this.bytesPerSample = bytesPerSample;
             this.channels = channels;
             this.samplesPerSec = samplesPerSec;
@@ -196,7 +196,7 @@ namespace agora.rtc
 
         /** The number of samples per channel in the audio frame.
 		 */
-        public int samples { set; get; } //number of samples for each channel in this frame
+        public int samplesPerChannel { set; get; } //number of samples for each channel in this frame
 
         /**The number of bytes per audio sample, which is usually 16-bit (2-byte).
 		 */

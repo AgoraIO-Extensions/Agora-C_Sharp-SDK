@@ -45,7 +45,7 @@ namespace agora.rtc
         {
             return AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES,
-                "", 0, IntPtr.Zero, 0, out _result) != 0
+                "", 0, IntPtr.Zero, 0, ref _result) != 0
                 ? new DeviceInfo[0]
                 : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result, "devices");
         }
@@ -59,7 +59,7 @@ namespace agora.rtc
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_SETDEVICE,
-                jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
+                jsonParam, jsonParam.Length, IntPtr.Zero, 0, ref _result);
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
@@ -67,7 +67,7 @@ namespace agora.rtc
         {
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETDEVICE,
-                "", 0, IntPtr.Zero, 0, out _result);
+                "", 0, IntPtr.Zero, 0, ref _result);
             return ret != 0 ? ret.ToString() : (string) AgoraJson.GetData<string>(_result.Result, "result");
         }
 
@@ -80,7 +80,7 @@ namespace agora.rtc
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST,
-                jsonParam, (UInt64)jsonParam.Length, IntPtr.Zero, 0, out _result);
+                jsonParam, jsonParam.Length, IntPtr.Zero, 0, ref _result);
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
@@ -88,7 +88,7 @@ namespace agora.rtc
         {
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST,
-                "", 0, IntPtr.Zero, 0, out _result);
+                "", 0, IntPtr.Zero, 0, ref _result);
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
     }
