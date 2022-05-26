@@ -217,6 +217,7 @@ namespace agora.rtc
 
         public int Initialize(RtcEngineContext context)
         {
+            AgoraRtcNative.InitLogger(_irisRtcEngine, context.logConfig.filePath, 0);
             var param = new
             {
                 context
