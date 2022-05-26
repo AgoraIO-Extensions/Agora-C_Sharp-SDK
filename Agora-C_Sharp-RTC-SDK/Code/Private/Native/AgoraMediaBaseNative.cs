@@ -53,6 +53,12 @@ namespace agora.rtc
         internal int rotation;
         internal long render_time_ms;
         internal int av_sync_type;
+        internal IntPtr metadata_buffer;
+        internal int metadata_size;
+        internal IntPtr sharedContext;
+        internal int textureId;
+        [MarshalAs(UnmanagedType.LPArray, SizeConst = 16)]
+        internal float[] matrix;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -157,7 +163,7 @@ namespace agora.rtc
         internal int type;
         internal uint id;
         
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 65536)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
         internal string key;
     }
 

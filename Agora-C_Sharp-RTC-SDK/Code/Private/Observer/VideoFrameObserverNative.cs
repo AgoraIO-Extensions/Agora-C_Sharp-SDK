@@ -101,6 +101,11 @@ namespace agora.rtc
             localVideoFrame.rotation = videoFrameConverted.rotation;
             localVideoFrame.renderTimeMs = videoFrameConverted.render_time_ms;
             localVideoFrame.avsync_type = videoFrameConverted.av_sync_type;
+            localVideoFrame.metadata_size = videoFrameConverted.metadata_size;
+            localVideoFrame.metadata_buffer = videoFrameConverted.metadata_buffer;
+            localVideoFrame.sharedContext = videoFrameConverted.sharedContext;
+            localVideoFrame.matrix = videoFrameConverted.matrix;
+            localVideoFrame.textureId = videoFrameConverted.textureId;
 
             //if (ifConverted) AgoraRtcNative.ClearVideoFrame(ref videoFrameConverted);
 
