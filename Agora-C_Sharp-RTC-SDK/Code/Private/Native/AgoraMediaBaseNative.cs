@@ -57,7 +57,7 @@ namespace agora.rtc
         internal int metadata_size;
         internal IntPtr sharedContext;
         internal int textureId;
-        [MarshalAs(UnmanagedType.LPArray, SizeConst = 16)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         internal float[] matrix;
     }
 
