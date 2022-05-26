@@ -17,6 +17,11 @@ namespace agora.rtc
             return instance ?? (instance = new AudioDeviceManager(impl));
         }
 
+        internal static void ReleaseInstance()
+        {
+            instance = null;
+        }
+
         public override DeviceInfo[] EnumeratePlaybackDevices()
         {
             if (_audioDeviecManagerImpl == null)

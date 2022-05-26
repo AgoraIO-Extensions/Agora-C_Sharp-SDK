@@ -17,6 +17,11 @@ namespace agora.rtc
             return instance ?? (instance = new CloudSpatialAudioEngine(impl));
         }
 
+        internal static void ReleaseInstance()
+        {
+            instance = null;
+        }
+
         public override CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
         {
             if (_cloudSpatialAudioEngineImpl == null)
@@ -243,6 +248,11 @@ namespace agora.rtc
         internal static ILocalSpatialAudioEngine GetInstance(LocalSpatialAudioEngineImpl impl)
         {
             return instance ?? (instance = new LocalSpatialAudioEngine(impl));
+        }
+
+        internal static void ReleaseInstance()
+        {
+            instance = null;
         }
 
         public override void Dispose()

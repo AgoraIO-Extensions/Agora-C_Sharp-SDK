@@ -19,6 +19,11 @@ namespace agora.rtc
             return instance ?? (instance = new VideoDeviceManager(impl));
         }
 
+        internal static void ReleaseInstance()
+        {
+            instance = null;
+        }
+
         public override DeviceInfo[] EnumerateVideoDevices()
         {
             if (_videoDeviecManagerImpl == null)

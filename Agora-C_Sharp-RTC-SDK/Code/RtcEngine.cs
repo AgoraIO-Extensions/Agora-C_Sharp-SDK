@@ -53,6 +53,13 @@ namespace agora.rtc
             }
             _rtcEngineImpl.Dispose(sync);
             _rtcEngineImpl = null;
+
+            MediaPlayer.ReleaseInstance();
+            AudioDeviceManager.ReleaseInstance();
+            VideoDeviceManager.ReleaseInstance();
+            CloudSpatialAudioEngine.ReleaseInstance();
+            LocalSpatialAudioEngine.ReleaseInstance();
+            instance = null;
         }
 
         public override RtcEngineEventHandler GetRtcEngineEventHandler()

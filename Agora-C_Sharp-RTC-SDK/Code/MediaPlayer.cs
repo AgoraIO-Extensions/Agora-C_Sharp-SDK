@@ -19,6 +19,11 @@ namespace agora.rtc
             return instance ?? (instance = new MediaPlayer(impl));
         }
 
+        internal static void ReleaseInstance()
+        {
+            instance = null;
+        }
+
         public override void Dispose()
         {
             if (_mediaPlayerImpl == null)
