@@ -510,7 +510,7 @@ namespace agora.rtc
             rotation = 0;
             renderTimeMs = 0;
             avsync_type = 0;
-            metadata_buffer = null;
+            metadata_buffer = IntPtr.Zero;
             metadata_size = 0;
             sharedContext = IntPtr.Zero;
             textureId = 0;
