@@ -569,7 +569,7 @@ namespace agora.rtc
         * [Texture related parameter] The MetaData buffer.
         *  The default value is NULL
         */
-        public byte[] metadata_buffer;
+        public IntPtr metadata_buffer;
         /**
         * [Texture related parameter] The MetaData size.
         *  The default value is 0
