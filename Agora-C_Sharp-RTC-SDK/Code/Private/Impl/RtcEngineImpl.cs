@@ -5478,10 +5478,20 @@ namespace agora.rtc
 
         public int PullAudioFrame(AudioFrame frame)
         {
-            var param = new { };
+            var param = new
+            {
+                frame = new
+                {
+                    frame.type,
+                    frame.samplesPerChannel,
+                    frame.bytesPerSample,
+                    frame.channels,
+                    frame.samplesPerSec,
+                    frame.renderTimeMs,
+                    frame.avsync_type,
+                }
+            };
             var json = AgoraJson.ToJson(param);
-
-
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PULLAUDIOFRAME,
                 json, (UInt32)json.Length,
                 frame.bufferPtr, 1,
@@ -5497,13 +5507,7 @@ namespace agora.rtc
             frame.bytesPerSample = f.bytesPerSample;
             frame.renderTimeMs = f.renderTimeMs;
             frame.samplesPerSec = f.samplesPerSec;
-
-            int length = frame.channels * frame.samplesPerChannel * (int)frame.bytesPerSample;
-            frame.buffer = new byte[length];
-            if (frame.bufferPtr != IntPtr.Zero)
-            {
-                Marshal.Copy(frame.bufferPtr, frame.buffer, 0, length);
-            }
+            frame.bufferPtr = (IntPtr)f.bufferPtr;
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 

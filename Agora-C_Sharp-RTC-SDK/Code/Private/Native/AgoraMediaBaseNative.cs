@@ -208,6 +208,8 @@ namespace agora.rtc
 		 */
         public BYTES_PER_SAMPLE bytesPerSample { set; get; } //number of bytes per sample: 2 for PCM16
 
+        public UInt64 bufferPtr { set; get; }
+
         /** The number of audio channels.
 		 - 1: Mono
 		 - 2: Stereo (the data is interleaved)
