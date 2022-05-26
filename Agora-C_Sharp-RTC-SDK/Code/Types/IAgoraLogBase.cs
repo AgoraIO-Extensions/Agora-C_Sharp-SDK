@@ -7,7 +7,7 @@ namespace agora.rtc
     {
         public LogConfig()
         {
-            filePath = null;
+            filePath = "";
             fileSizeInKB = 0;
             level = LOG_LEVEL.LOG_LEVEL_INFO;
         }
