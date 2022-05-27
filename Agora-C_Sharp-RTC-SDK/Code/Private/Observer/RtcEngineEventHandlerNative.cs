@@ -1,5 +1,6 @@
 ﻿using System;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+using System.Runtime.InteropServices;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using AOT;
 #endif
 
@@ -16,9 +17,15 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
-        internal static void OnEvent(string @event, string data, IntPtr buffer, uint[] length, uint buffer_count)
+        internal static void OnEvent(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count)
         {
             if (EngineEventHandler == null) return;
+
+            int[] len = new int[buffer_count];
+            if (length != IntPtr.Zero)
+            {
+                Marshal.Copy(length, len, 0, (int)buffer_count);
+            }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
@@ -1344,7 +1351,7 @@ namespace agora.rtc
                         EngineEventHandler.OnStreamMessage(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                            (int)AgoraJson.GetData<int>(data, "streamId"), buffer, length[0],
+                            (int)AgoraJson.GetData<int>(data, "streamId"), buffer, (uint)len[0],
                             (UInt64)AgoraJson.GetData<UInt64>(data, "sentTs"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

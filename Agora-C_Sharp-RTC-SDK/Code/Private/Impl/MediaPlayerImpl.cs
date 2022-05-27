@@ -295,9 +295,10 @@ namespace agora.rtc
 
         public int CreateMediaPlayer()
         {
-            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_RTCENGINE_CREATEMEDIAPLAYER,
                 "", 0, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public int DestroyMediaPlayer(int playerId)
