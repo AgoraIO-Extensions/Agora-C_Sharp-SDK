@@ -470,10 +470,10 @@ The error codes of the local user's audio mixing file.
         {
             canvasWidth = 0;
             canvasHeight = 0;
-            backgroundColor = null;
+            backgroundColor = "";
             regions = new Region[0];
             regionCount = 0;
-            appData = null;
+            appData = "";
             appDataLength = 0;
         }
 
@@ -626,10 +626,10 @@ The error codes of the local user's audio mixing file.
             owner = true;
             injectStreamWidth = 0;
             injectStreamHeight = 0;
-            injectStreamUrl = null;
-            publishUrl = null;
-            rawStreamUrl = null;
-            extraInfo = null;
+            injectStreamUrl = "";
+            publishUrl = "";
+            rawStreamUrl = "";
+            extraInfo = "";
         }
     };
 
@@ -676,11 +676,13 @@ The error codes of the local user's audio mixing file.
     {
         public CameraCapturerConfiguration()
         {
-            cameraDirection = null;
+            deviceId = "";
+            cameraDirection = CAMERA_DIRECTION.CAMERA_FRONT;
+            format = new VideoFormat();
         }
 
         public CameraCapturerConfiguration(string deviceId, VideoFormat format,
-            CAMERA_DIRECTION? cameraDirection = null)
+            CAMERA_DIRECTION cameraDirection)
         {
             this.deviceId = deviceId;
             this.format = format;
@@ -691,7 +693,7 @@ The error codes of the local user's audio mixing file.
         public VideoFormat format { set; get; }
 
         /** Camera direction settings (for Android/iOS only). See: #CAMERA_DIRECTION. */
-        public CAMERA_DIRECTION? cameraDirection { set; get; }
+        public CAMERA_DIRECTION cameraDirection { set; get; }
     }
 
     public class ScreenCaptureConfiguration
@@ -827,9 +829,9 @@ The error codes of the local user's audio mixing file.
         {
             type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
             sourceId = 0;
-            sourceName = null;
-            processPath = null;
-            sourceTitle = null;
+            sourceName = "";
+            processPath = "";
+            sourceTitle = "";
             primaryMonitor = false;
             isOccluded = false;
             thumbImage = new ThumbImageBuffer();
@@ -1282,7 +1284,7 @@ The error codes of the local user's audio mixing file.
             ipListSize = 0;
             domainList = new string[0];
             domainListSize = 0;
-            verifyDomainName = null;
+            verifyDomainName = "";
             mode = LOCAL_PROXY_MODE.kConnectivityFirst;
         }
     };
@@ -1369,7 +1371,7 @@ The error codes of the local user's audio mixing file.
         public RtcEngineContext()
         {
             eventHandler = null;
-            appId = null;
+            appId = "";
             context = 0;
             enableAudioDevice = true;
             channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;

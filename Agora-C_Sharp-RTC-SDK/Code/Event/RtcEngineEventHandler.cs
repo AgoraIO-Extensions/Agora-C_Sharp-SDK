@@ -107,7 +107,7 @@ namespace agora.rtc
 
     public delegate void OnConnectionBannedHandler(RtcConnection connection);
 
-    public delegate void OnStreamMessageHandler(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs);
+    public delegate void OnStreamMessageHandler(RtcConnection connection, uint remoteUid, int streamId, IntPtr data, uint length, UInt64 sentTs);
 
     public delegate void OnStreamMessageErrorHandler(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached);
 
@@ -611,7 +611,7 @@ namespace agora.rtc
             EventOnConnectionBanned.Invoke(connection);
         }
 
-        public override void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs)
+        public override void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, IntPtr data, uint length, UInt64 sentTs)
         {
             if (EventOnStreamMessage == null) return;
             EventOnStreamMessage.Invoke(connection, remoteUid, streamId, data, length, sentTs);

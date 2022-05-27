@@ -226,7 +226,7 @@ namespace agora.rtc
 
     //event_handler
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate void Func_Event_Native(string @event, string data, IntPtr buffer, uint length);
+    internal delegate void Func_Event_Native(string @event, string data, IntPtr buffer, uint[] length, uint buffer_count);
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCEventHandlerNative

@@ -4,7 +4,6 @@ namespace agora.rtc
 {
     public sealed class RtcEngine : IRtcEngine
     {
-        private static IRtcEngine instance = null;
         private RtcEngineImpl _rtcEngineImpl = null;
         private IMediaPlayer _mediaPlayerInstance = null;
         private IAudioDeviceManager _audioDeviceManager = null;
@@ -17,21 +16,34 @@ namespace agora.rtc
         private RtcEngine()
         {
             _rtcEngineImpl = RtcEngineImpl.GetInstance();
-            _mediaPlayerInstance = MediaPlayer.GetInstance(_rtcEngineImpl.GetMediaPlayer());
-            _audioDeviceManager = AudioDeviceManager.GetInstance(_rtcEngineImpl.GetAudioDeviceManager());
-            _videoDeviceManager = VideoDeviceManager.GetInstance(_rtcEngineImpl.GetVideoDeviceManager());
-            _cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(_rtcEngineImpl.GetCloudSpatialAudioEngine());
-            _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(_rtcEngineImpl.GetLocalSpatialAudioEngine());
+            _mediaPlayerInstance = MediaPlayer.GetInstance(this, _rtcEngineImpl.GetMediaPlayer());
+            _audioDeviceManager = AudioDeviceManager.GetInstance(this, _rtcEngineImpl.GetAudioDeviceManager());
+            _videoDeviceManager = VideoDeviceManager.GetInstance(this, _rtcEngineImpl.GetVideoDeviceManager());
+            _cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
+            _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
+        }
+
+        ~RtcEngine()
+        {
+            _mediaPlayerInstance = null;
+            _audioDeviceManager = null;
+            _videoDeviceManager = null;
+            _cloudSpatialAudioEngine = null;
+            _localSpatialAudioEngine = null;
+        }
+
+        private static IRtcEngine instance = null;
+        public static IRtcEngine Instance
+        {
+            get
+            {
+                return instance ?? (instance = new RtcEngine());
+            }
         }
 
         public static IRtcEngine CreateAgoraRtcEngine()
         {
             return instance ?? (instance = new RtcEngine());
-        }
-
-        public static IRtcEngine Get()
-        {
-            return instance;
         }
 
         public override int Initialize(RtcEngineContext context)

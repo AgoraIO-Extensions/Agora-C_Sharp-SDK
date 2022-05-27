@@ -2,29 +2,34 @@ namespace agora.rtc
 {
     public sealed class CloudSpatialAudioEngine : ICloudSpatialAudioEngine
     {
-        private static ICloudSpatialAudioEngine instance = null;
+        private IRtcEngine _rtcEngineInstance = null;
         private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineImpl = null;
-        private const string ErrorMsgLog = "[CloudSpatialAudioEngine]:ICloudSpatialAudioEngine has not been created yet!";
+        private const string ErrorMsgLog = "[CloudSpatialAudioEngine]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
 
-        private CloudSpatialAudioEngine(CloudSpatialAudioEngineImpl impl)
+        private CloudSpatialAudioEngine(IRtcEngine rtcEngine, CloudSpatialAudioEngineImpl impl)
         {
+            _rtcEngineInstance = rtcEngine;
             _cloudSpatialAudioEngineImpl = impl;
         }
 
-        internal static ICloudSpatialAudioEngine GetInstance(CloudSpatialAudioEngineImpl impl)
+        ~CloudSpatialAudioEngine()
         {
-            return instance ?? (instance = new CloudSpatialAudioEngine(impl));
+            _rtcEngineInstance = null;
         }
 
-        internal static void ReleaseInstance()
+        private static ICloudSpatialAudioEngine instance = null;
+        public static ICloudSpatialAudioEngine Instance
         {
-            instance = null;
+            get
+            {
+                return instance;
+            }
         }
 
         public override CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -34,7 +39,7 @@ namespace agora.rtc
         
         public override void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -44,7 +49,7 @@ namespace agora.rtc
 
         public override void RemoveEventHandler()
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -54,7 +59,7 @@ namespace agora.rtc
 
         public override int Initialize(CloudSpatialAudioConfig config)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -64,7 +69,7 @@ namespace agora.rtc
 
         public override void Dispose()
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -74,7 +79,7 @@ namespace agora.rtc
 
         public override int SetMaxAudioRecvCount(int maxCount)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -84,7 +89,7 @@ namespace agora.rtc
 
         public override int SetAudioRecvRange(float range)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -94,7 +99,7 @@ namespace agora.rtc
 
         public override int SetDistanceUnit(float unit)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -104,7 +109,7 @@ namespace agora.rtc
 
         public override int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -114,7 +119,7 @@ namespace agora.rtc
 
         public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -124,7 +129,7 @@ namespace agora.rtc
 
         public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -134,7 +139,7 @@ namespace agora.rtc
 
         public override int SetParameters(string @params)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -144,7 +149,7 @@ namespace agora.rtc
 
         public override int MuteLocalAudioStream(bool mute)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -154,7 +159,7 @@ namespace agora.rtc
 
         public override int MuteAllRemoteAudioStreams(bool mute)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -164,7 +169,7 @@ namespace agora.rtc
 
         public override int EnableSpatializer(bool enable, bool applyToTeam)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -174,7 +179,7 @@ namespace agora.rtc
 
         public override int SetTeamId(int teamId)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -184,7 +189,7 @@ namespace agora.rtc
   
         public override int SetAudioRangeMode(AUDIO_RANGE_MODE_TYPE rangeMode)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -194,7 +199,7 @@ namespace agora.rtc
 
         public override int EnterRoom(string token, string roomName, uint uid)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -204,7 +209,7 @@ namespace agora.rtc
 
         public override int ExitRoom()
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -214,7 +219,7 @@ namespace agora.rtc
 
         public override int GetTeammates(ref uint[] uids, ref int userCount)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -224,40 +229,55 @@ namespace agora.rtc
 
         public override int RenewToken(string token)
         {
-            if (_cloudSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _cloudSpatialAudioEngineImpl.RenewToken(token);
         }
-    }
 
-    public sealed class LocalSpatialAudioEngine : ILocalSpatialAudioEngine
-    {
-        private static LocalSpatialAudioEngine instance = null;
-        private LocalSpatialAudioEngineImpl _localSpatialAudioEngineImpl = null;
-        private const string ErrorMsgLog = "[LocalSpatialAudioEngine]:ILocalSpatialAudioEngine has not been created yet!";
-        private const int ErrorCode = -1;
-
-        private LocalSpatialAudioEngine(LocalSpatialAudioEngineImpl impl)
+        internal static ICloudSpatialAudioEngine GetInstance(IRtcEngine rtcEngine, CloudSpatialAudioEngineImpl impl)
         {
-            _localSpatialAudioEngineImpl = impl;
-        }
-
-        internal static ILocalSpatialAudioEngine GetInstance(LocalSpatialAudioEngineImpl impl)
-        {
-            return instance ?? (instance = new LocalSpatialAudioEngine(impl));
+            return instance ?? (instance = new CloudSpatialAudioEngine(rtcEngine, impl));
         }
 
         internal static void ReleaseInstance()
         {
             instance = null;
         }
+    }
+
+    public sealed class LocalSpatialAudioEngine : ILocalSpatialAudioEngine
+    {
+        private IRtcEngine _rtcEngineInstance = null;
+        private LocalSpatialAudioEngineImpl _localSpatialAudioEngineImpl = null;
+        private const string ErrorMsgLog = "[LocalSpatialAudioEngine]:IRtcEngine has not been created yet!";
+        private const int ErrorCode = -1;
+
+        private LocalSpatialAudioEngine(IRtcEngine rtcEngine, LocalSpatialAudioEngineImpl impl)
+        {
+            _rtcEngineInstance = rtcEngine;
+            _localSpatialAudioEngineImpl = impl;
+        }
+
+        ~LocalSpatialAudioEngine()
+        {
+            _rtcEngineInstance = null;
+        }
+
+        private static ILocalSpatialAudioEngine instance = null;
+        public static ILocalSpatialAudioEngine Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
 
         public override void Dispose()
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -267,7 +287,7 @@ namespace agora.rtc
 
         public override int Initialize()
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -277,7 +297,7 @@ namespace agora.rtc
 
         public override int SetMaxAudioRecvCount(int maxCount)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -287,7 +307,7 @@ namespace agora.rtc
 
         public override int SetAudioRecvRange(float range)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -297,7 +317,7 @@ namespace agora.rtc
 
         public override int SetDistanceUnit(float unit)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -307,7 +327,7 @@ namespace agora.rtc
 
         public override int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -317,7 +337,7 @@ namespace agora.rtc
 
         public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -327,7 +347,7 @@ namespace agora.rtc
 
         public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -337,7 +357,7 @@ namespace agora.rtc
 
         public override int SetParameters(string @params)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -347,7 +367,7 @@ namespace agora.rtc
 
         public override int MuteLocalAudioStream(bool mute)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -357,7 +377,7 @@ namespace agora.rtc
 
         public override int MuteAllRemoteAudioStreams(bool mute)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -367,7 +387,7 @@ namespace agora.rtc
 
         public override int UpdateRemotePosition(uint uid, float[] position, float[] forward)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -377,7 +397,7 @@ namespace agora.rtc
 
         public override int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -387,7 +407,7 @@ namespace agora.rtc
 
         public override int RemoveRemotePosition(uint uid)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -397,7 +417,7 @@ namespace agora.rtc
 
         public override int RemoveRemotePositionEx(uint uid, RtcConnection connection)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -407,7 +427,7 @@ namespace agora.rtc
 
         public override int ClearRemotePositions()
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -417,12 +437,22 @@ namespace agora.rtc
 
         public override int ClearRemotePositionsEx(RtcConnection connection)
         {
-            if (_localSpatialAudioEngineImpl == null)
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.ClearRemotePositionsEx(connection);
+        }
+
+        internal static ILocalSpatialAudioEngine GetInstance(IRtcEngine rtcEngine, LocalSpatialAudioEngineImpl impl)
+        {
+            return instance ?? (instance = new LocalSpatialAudioEngine(rtcEngine, impl));
+        }
+
+        internal static void ReleaseInstance()
+        {
+            instance = null;
         }
     }
 }

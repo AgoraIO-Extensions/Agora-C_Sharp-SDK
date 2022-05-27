@@ -115,7 +115,7 @@ namespace agora.rtc
 
         public virtual void OnConnectionBanned(RtcConnection connection) { }
 
-        public virtual void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs) { }
+        public virtual void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, IntPtr data, uint length, UInt64 sentTs) { }
 
         public virtual void OnStreamMessageError(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached) { }
 

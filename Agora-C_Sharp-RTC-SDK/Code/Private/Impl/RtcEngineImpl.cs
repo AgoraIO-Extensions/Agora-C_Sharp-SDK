@@ -5487,6 +5487,7 @@ namespace agora.rtc
                     frame.samplesPerChannel,
                     frame.bytesPerSample,
                     frame.channels,
+                    frame.bufferPtr,
                     frame.samplesPerSec,
                     frame.renderTimeMs,
                     frame.avsync_type,
@@ -5508,7 +5509,6 @@ namespace agora.rtc
             frame.bytesPerSample = f.bytesPerSample;
             frame.renderTimeMs = f.renderTimeMs;
             frame.samplesPerSec = f.samplesPerSec;
-            frame.bufferPtr = (IntPtr)f.bufferPtr;
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 

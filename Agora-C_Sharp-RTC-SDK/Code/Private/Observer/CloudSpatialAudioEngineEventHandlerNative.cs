@@ -16,10 +16,8 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
-        internal static void OnEvent(string @event, string data, IntPtr buffer, uint length)
+        internal static void OnEvent(string @event, string data, IntPtr buffer, uint[] length, uint buffer_count)
         {
-            var byteData = new byte[length];
-            if (buffer != IntPtr.Zero) Marshal.Copy(buffer, byteData, 0, (int)length);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
             CallbackObject._CallbackQueue.EnQueue(() =>

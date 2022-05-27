@@ -4,29 +4,34 @@ namespace agora.rtc
 {
     public sealed class VideoDeviceManager : IVideoDeviceManager
     {
-        private static IVideoDeviceManager instance = null;
+        private IRtcEngine _rtcEngineInstance = null;
         private VideoDeviceManagerImpl _videoDeviecManagerImpl = null;
-        private const string ErrorMsgLog = "[VideoDeviceManager]:IVideoDeviceManager has not been created yet!";
+        private const string ErrorMsgLog = "[VideoDeviceManager]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
 
-        private VideoDeviceManager(VideoDeviceManagerImpl impl)
+        private VideoDeviceManager(IRtcEngine rtcEngine, VideoDeviceManagerImpl impl)
         {
+            _rtcEngineInstance = rtcEngine;
             _videoDeviecManagerImpl = impl;
         }
 
-        internal static IVideoDeviceManager GetInstance(VideoDeviceManagerImpl impl)
+        ~VideoDeviceManager()
         {
-            return instance ?? (instance = new VideoDeviceManager(impl));
+            _rtcEngineInstance = null;
         }
 
-        internal static void ReleaseInstance()
+        private static IVideoDeviceManager instance = null;
+        public static IVideoDeviceManager Instance
         {
-            instance = null;
+            get
+            {
+                return instance;
+            }
         }
 
         public override DeviceInfo[] EnumerateVideoDevices()
         {
-            if (_videoDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -36,7 +41,7 @@ namespace agora.rtc
 
         public override int SetDevice(string deviceIdUTF8)
         {
-            if (_videoDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -46,7 +51,7 @@ namespace agora.rtc
 
         public override string GetDevice()
         {
-            if (_videoDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -56,7 +61,7 @@ namespace agora.rtc
 
         public override int StartDeviceTest(IntPtr hwnd)
         {
-            if (_videoDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -66,12 +71,22 @@ namespace agora.rtc
 
         public override int StopDeviceTest()
         {
-            if (_videoDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _videoDeviecManagerImpl.StopDeviceTest();
+        }
+
+        internal static IVideoDeviceManager GetInstance(IRtcEngine rtcEngine, VideoDeviceManagerImpl impl)
+        {
+            return instance ?? (instance = new VideoDeviceManager(rtcEngine, impl));
+        }
+
+        internal static void ReleaseInstance()
+        {
+            instance = null;
         }
     }
 }

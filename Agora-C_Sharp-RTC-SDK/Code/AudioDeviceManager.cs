@@ -2,29 +2,34 @@ namespace agora.rtc
 {
     public sealed class AudioDeviceManager : IAudioDeviceManager
     {
-        private static IAudioDeviceManager instance = null;
+        private IRtcEngine _rtcEngineInstance = null;
         private AudioDeviceManagerImpl _audioDeviecManagerImpl = null;
-        private const string ErrorMsgLog = "[AudioDeviceManager]:IAudioDeviceManager has not been created yet!";
+        private const string ErrorMsgLog = "[AudioDeviceManager]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
 
-        private AudioDeviceManager(AudioDeviceManagerImpl impl)
+        private AudioDeviceManager(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
         {
+            _rtcEngineInstance = rtcEngine;
             _audioDeviecManagerImpl = impl;
         }
 
-        internal static IAudioDeviceManager GetInstance(AudioDeviceManagerImpl impl)
+        ~AudioDeviceManager()
         {
-            return instance ?? (instance = new AudioDeviceManager(impl));
+            _rtcEngineInstance = null;
         }
 
-        internal static void ReleaseInstance()
+        private static IAudioDeviceManager instance = null;
+        public static IAudioDeviceManager Instance
         {
-            instance = null;
+            get
+            {
+                return instance;
+            }
         }
 
         public override DeviceInfo[] EnumeratePlaybackDevices()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -34,7 +39,7 @@ namespace agora.rtc
 
         public override int SetPlaybackDevice(string deviceId)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -44,7 +49,7 @@ namespace agora.rtc
 
         public override string GetPlaybackDevice()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -54,7 +59,7 @@ namespace agora.rtc
 
         public override DeviceInfo GetPlaybackDeviceInfo()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -64,7 +69,7 @@ namespace agora.rtc
 
         public override int SetPlaybackDeviceVolume(int volume)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -74,7 +79,7 @@ namespace agora.rtc
 
         public override int GetPlaybackDeviceVolume()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -84,7 +89,7 @@ namespace agora.rtc
 
         public override int SetPlaybackDeviceMute(bool mute)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -94,7 +99,7 @@ namespace agora.rtc
 
         public override bool GetPlaybackDeviceMute()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return false;
@@ -104,7 +109,7 @@ namespace agora.rtc
 
         public override int StartPlaybackDeviceTest(string testAudioFilePath)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -114,7 +119,7 @@ namespace agora.rtc
 
         public override int StopPlaybackDeviceTest()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -124,7 +129,7 @@ namespace agora.rtc
 
         public override DeviceInfo[] EnumerateRecordingDevices()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -134,7 +139,7 @@ namespace agora.rtc
 
         public override int SetRecordingDevice(string deviceId)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -144,7 +149,7 @@ namespace agora.rtc
 
         public override string GetRecordingDevice()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -154,7 +159,7 @@ namespace agora.rtc
 
         public override DeviceInfo GetRecordingDeviceInfo()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -164,7 +169,7 @@ namespace agora.rtc
 
         public override int SetRecordingDeviceVolume(int volume)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -174,7 +179,7 @@ namespace agora.rtc
 
         public override int GetRecordingDeviceVolume()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -184,7 +189,7 @@ namespace agora.rtc
 
         public override int SetRecordingDeviceMute(bool mute)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -194,7 +199,7 @@ namespace agora.rtc
 
         public override bool GetRecordingDeviceMute()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return false;
@@ -204,7 +209,7 @@ namespace agora.rtc
 
         public override int StartRecordingDeviceTest(int indicationInterval)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -214,7 +219,7 @@ namespace agora.rtc
 
         public override int StopRecordingDeviceTest()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -224,7 +229,7 @@ namespace agora.rtc
 
         public override int StartAudioDeviceLoopbackTest(int indicationInterval)
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -234,12 +239,22 @@ namespace agora.rtc
 
         public override int StopAudioDeviceLoopbackTest()
         {
-            if (_audioDeviecManagerImpl == null)
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.StopAudioDeviceLoopbackTest();
+        }
+
+        internal static IAudioDeviceManager GetInstance(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
+        {
+            return instance ?? (instance = new AudioDeviceManager(rtcEngine, impl));
+        }
+
+        internal static void ReleaseInstance()
+        {
+            instance = null;
         }
     }
 }
