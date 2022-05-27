@@ -3058,5 +3058,15 @@ namespace agora.rtc
             }
             return _rtcEngineImpl.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
         }
+
+        public override bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir)
+        {
+            return _rtcEngineImpl.StartDumpVideo(type, dir);
+        }
+
+        public override bool StopDumpVideo()
+        {
+            return _rtcEngineImpl.StopDumpVideo();
+        }
     };
 }

@@ -163,7 +163,13 @@ namespace agora.rtc
                                     ref IrisVideoFrame video_frame, out bool is_new_frame,
                                     ref IrisVideoFrameBufferConfig config);
 
-// Iris Media Base
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool StartDumpVideo(IrisVideoFrameBufferManagerPtr manager_ptr, VIDEO_SOURCE_TYPE type, string dir);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern bool StopDumpVideo(IrisVideoFrameBufferManagerPtr manager_ptr);
+
+        // Iris Media Base
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisVideoFrame ConvertVideoFrame(ref IrisVideoFrame src, VIDEO_OBSERVER_FRAME_TYPE format);
 

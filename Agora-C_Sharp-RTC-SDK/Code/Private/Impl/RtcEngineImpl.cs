@@ -5515,6 +5515,16 @@ namespace agora.rtc
 
         #endregion CallIrisApiWithBuffer end
 
+        public bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir)
+        {
+            return AgoraRtcNative.StartDumpVideo(_videoFrameBufferManagerPtr, type, dir);
+        }
+
+        public bool StopDumpVideo()
+        {
+            return AgoraRtcNative.StopDumpVideo(_videoFrameBufferManagerPtr);
+        }
+
         ~RtcEngineImpl()
         {
             Dispose(false, false);

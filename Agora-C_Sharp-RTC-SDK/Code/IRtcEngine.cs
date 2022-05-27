@@ -609,5 +609,9 @@ namespace agora.rtc
         public abstract int UploadLogFile(ref string requestId);
 
         public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
+
+        public abstract bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir);
+
+        public abstract bool StopDumpVideo();
     };
 }
