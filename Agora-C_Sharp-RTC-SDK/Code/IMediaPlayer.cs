@@ -58,7 +58,7 @@ namespace agora.rtc
 
         public abstract bool IsVideoMuted(int playerId);
 
-        public abstract int SetPlaybackSpeed(int speed);
+        public abstract int SetPlaybackSpeed(int playerId, int speed);
 
         public abstract int SelectAudioTrack(int playerId, int index);
 
@@ -96,30 +96,30 @@ namespace agora.rtc
 
         public abstract string GetPlaySrc(int playerId);
 
-        public abstract int SetAudioPitch(int pitch);
+        public abstract int SetAudioPitch(int playerId, int pitch);
 
         public abstract int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params);
 
-        public abstract int OpenWithAgoraCDNSrc(string src, Int64 startPos);
+        public abstract int OpenWithAgoraCDNSrc(int playerId, string src, Int64 startPos);
 
-        public abstract int GetAgoraCDNLineCount();
+        public abstract int GetAgoraCDNLineCount(int playerId);
 
-        public abstract int SwitchAgoraCDNLineByIndex(int index);
+        public abstract int SwitchAgoraCDNLineByIndex(int playerId, int index);
 
-        public abstract int GetCurrentAgoraCDNIndex();
+        public abstract int GetCurrentAgoraCDNIndex(int playerId);
 
-        public abstract int EnableAutoSwitchAgoraCDN(bool enable);
+        public abstract int EnableAutoSwitchAgoraCDN(int playerId, bool enable);
 
-        public abstract int RenewAgoraCDNSrcToken(string token, Int64 ts);
+        public abstract int RenewAgoraCDNSrcToken(int playerId, string token, Int64 ts);
 
-        public abstract int SwitchAgoraCDNSrc(string src, bool syncPts = false);
+        public abstract int SwitchAgoraCDNSrc(int playerId, string src, bool syncPts = false);
 
-        public abstract int SwitchSrc(string src, bool syncPts = true);
+        public abstract int SwitchSrc(int playerId, string src, bool syncPts = true);
 
-        public abstract int PreloadSrc(string src, Int64 startPos);
+        public abstract int PreloadSrc(int playerId, string src, Int64 startPos);
 
-        public abstract int PlayPreloadedSrc(string src);
+        public abstract int PlayPreloadedSrc(int playerId, string src);
 
-        public abstract int UnloadSrc(string src);
+        public abstract int UnloadSrc(int playerId, string src);
     }
 }

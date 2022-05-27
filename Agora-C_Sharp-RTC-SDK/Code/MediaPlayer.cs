@@ -299,14 +299,14 @@ namespace agora.rtc
             return _mediaPlayerImpl.IsVideoMuted(playerId);
         }
 
-        public override int SetPlaybackSpeed(int speed)
+        public override int SetPlaybackSpeed(int playerId, int speed)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.SetPlaybackSpeed(speed);
+            return _mediaPlayerImpl.SetPlaybackSpeed(playerId, speed);
         }
 
         public override int SelectAudioTrack(int playerId, int index)
@@ -489,14 +489,14 @@ namespace agora.rtc
             return _mediaPlayerImpl.GetPlaySrc(playerId);
         }
 
-        public override int SetAudioPitch(int pitch)
+        public override int SetAudioPitch(int playerId, int pitch)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.SetAudioPitch(pitch);
+            return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
         }
 
         public override int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params)
@@ -509,114 +509,114 @@ namespace agora.rtc
             return _mediaPlayerImpl.SetSpatialAudioParams(playerId, spatial_audio_params);
         }
 
-        public override int OpenWithAgoraCDNSrc(string src, Int64 startPos)
+        public override int OpenWithAgoraCDNSrc(int playerId, string src, Int64 startPos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.OpenWithAgoraCDNSrc(src, startPos);
+            return _mediaPlayerImpl.OpenWithAgoraCDNSrc(playerId, src, startPos);
         }
 
-        public override int GetAgoraCDNLineCount()
+        public override int GetAgoraCDNLineCount(int playerId)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.GetAgoraCDNLineCount();
+            return _mediaPlayerImpl.GetAgoraCDNLineCount(playerId);
         }
 
-        public override int SwitchAgoraCDNLineByIndex(int index)
+        public override int SwitchAgoraCDNLineByIndex(int playerId, int index)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.SwitchAgoraCDNLineByIndex(index);
+            return _mediaPlayerImpl.SwitchAgoraCDNLineByIndex(playerId, index);
         }
 
-        public override int GetCurrentAgoraCDNIndex()
+        public override int GetCurrentAgoraCDNIndex(int playerId)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.GetCurrentAgoraCDNIndex();
+            return _mediaPlayerImpl.GetCurrentAgoraCDNIndex(playerId);
         }
 
-        public override int EnableAutoSwitchAgoraCDN(bool enable)
+        public override int EnableAutoSwitchAgoraCDN(int playerId, bool enable)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.EnableAutoSwitchAgoraCDN(enable);
+            return _mediaPlayerImpl.EnableAutoSwitchAgoraCDN(playerId, enable);
         }
 
-        public override int RenewAgoraCDNSrcToken(string token, Int64 ts)
+        public override int RenewAgoraCDNSrcToken(int playerId, string token, Int64 ts)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.RenewAgoraCDNSrcToken(token, ts);
+            return _mediaPlayerImpl.RenewAgoraCDNSrcToken(playerId, token, ts);
         }
 
-        public override int SwitchAgoraCDNSrc(string src, bool syncPts = false)
+        public override int SwitchAgoraCDNSrc(int playerId, string src, bool syncPts = false)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.SwitchAgoraCDNSrc(src, syncPts);
+            return _mediaPlayerImpl.SwitchAgoraCDNSrc(playerId, src, syncPts);
         }
 
-        public override int SwitchSrc(string src, bool syncPts = true)
+        public override int SwitchSrc(int playerId, string src, bool syncPts = true)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.SwitchSrc(src, syncPts);
+            return _mediaPlayerImpl.SwitchSrc(playerId, src, syncPts);
         }
 
-        public override int PreloadSrc(string src, Int64 startPos)
+        public override int PreloadSrc(int playerId, string src, Int64 startPos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.PreloadSrc(src, startPos);
+            return _mediaPlayerImpl.PreloadSrc(playerId, src, startPos);
         }
 
-        public override int PlayPreloadedSrc(string src)
+        public override int PlayPreloadedSrc(int playerId, string src)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.PlayPreloadedSrc(src);
+            return _mediaPlayerImpl.PlayPreloadedSrc(playerId, src);
         }
 
-        public override int UnloadSrc(string src)
+        public override int UnloadSrc(int playerId, string src)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.UnloadSrc(src);
+            return _mediaPlayerImpl.UnloadSrc(playerId, src);
         }
 
         internal static IMediaPlayer GetInstance(IRtcEngine rtcEngine, MediaPlayerImpl impl)
