@@ -36,6 +36,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnPlayerSourceStateChanged(
                             (int)AgoraJson.GetData<int>(data, "playerId"),
                             (MEDIA_PLAYER_STATE)AgoraJson.GetData<int>(data, "state"),
@@ -50,6 +51,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnPositionChanged(
                             (int)AgoraJson.GetData<int>(data, "playerId"),
                             (Int64)AgoraJson.GetData<Int64>(data, "position")
@@ -63,6 +65,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnPlayerEvent(
                             (int)AgoraJson.GetData<int>(data, "playerId"),
                             (MEDIA_PLAYER_EVENT)AgoraJson.GetData<int>(data, "event"),
@@ -78,6 +81,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnPlayBufferUpdated(
                             (int)AgoraJson.GetData<int>(data, "playerId"),
                             (Int64)AgoraJson.GetData<Int64>(data, "playCachedBuffer")
@@ -91,6 +95,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnCompleted(
                             (int)AgoraJson.GetData<int>(data, "playerId")
                         );
@@ -103,6 +108,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnAgoraCDNTokenWillExpire(
                             (int)AgoraJson.GetData<int>(data, "playerId")
                         );
@@ -115,6 +121,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnPlayerInfoUpdated(
                             AgoraJson.JsonToStruct<PlayerUpdatedInfo>(data, "info")
                         );
@@ -127,6 +134,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnPlayerSrcInfoChanged(
                             (int)AgoraJson.GetData<int>(data, "playerId"),
                             AgoraJson.JsonToStruct<SrcInfo>(data, "from"),
@@ -141,6 +149,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnAudioVolumeIndication(
                             (int)AgoraJson.GetData<int>(data, "playerId"),
                             (int)AgoraJson.GetData<int>(data, "volume")
@@ -154,6 +163,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (RtcMediaPlayerEventHandler == null) return;
                         RtcMediaPlayerEventHandler.OnMetaData((int)AgoraJson.GetData<int>(data, "playerId"),
                             buffer, len[0]);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

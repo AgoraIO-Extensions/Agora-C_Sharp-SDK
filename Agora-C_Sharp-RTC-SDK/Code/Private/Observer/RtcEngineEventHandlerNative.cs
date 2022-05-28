@@ -38,6 +38,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnWarning(
                             (int)AgoraJson.GetData<int>(data, "warn"),
                             (string)AgoraJson.GetData<string>(data, "msg")
@@ -52,6 +53,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnError(
                             (int)AgoraJson.GetData<int>(data, "err"),
                             (string)AgoraJson.GetData<string>(data, "msg")
@@ -66,6 +68,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnJoinChannelSuccess(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (int)AgoraJson.GetData<int>(data, "elapsed")
@@ -80,6 +83,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRejoinChannelSuccess(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (int)AgoraJson.GetData<int>(data, "elapsed")
@@ -94,6 +98,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioQuality(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -111,6 +116,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLeaveChannel(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             AgoraJson.JsonToStruct<RtcStats>(data, "stats")
@@ -125,6 +131,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnClientRoleChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(data, "oldRole"),
@@ -140,6 +147,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnClientRoleChangeFailed(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (CLIENT_ROLE_CHANGE_FAILED_REASON)AgoraJson.GetData<int>(data, "reason"),
@@ -155,6 +163,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnUserJoined(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -170,6 +179,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnUserOffline(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -185,6 +195,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLastmileQuality(
                             (int)AgoraJson.GetData<int>(data, "quality")
                         );
@@ -198,6 +209,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLastmileProbeResult(
                             AgoraJson.JsonToStruct<LastmileProbeResult>(data, "result")
                         );
@@ -211,6 +223,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnConnectionInterrupted(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
                         );
@@ -224,6 +237,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnConnectionLost(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
                         );
@@ -237,6 +251,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnConnectionBanned(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
                         );
@@ -250,6 +265,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnApiCallExecuted(
                             (int)AgoraJson.GetData<int>(data, "err"),
                             (string)AgoraJson.GetData<string>(data, "api"),
@@ -265,6 +281,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRequestToken(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
                         );
@@ -278,6 +295,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnTokenPrivilegeWillExpire(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (string)AgoraJson.GetData<string>(data, "token")
@@ -292,6 +310,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRtcStats(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             AgoraJson.JsonToStruct<RtcStats>(data, "stats")
@@ -306,6 +325,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnNetworkQuality(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -322,6 +342,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLocalVideoStats(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             AgoraJson.JsonToStruct<LocalVideoStats>(data, "stats")
@@ -336,6 +357,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRemoteVideoStats(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             AgoraJson.JsonToStruct<RemoteVideoStats>(data, "stats")
@@ -350,6 +372,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLocalAudioStats(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             AgoraJson.JsonToStruct<LocalAudioStats>(data, "stats")
@@ -364,6 +387,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRemoteAudioStats(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             AgoraJson.JsonToStruct<RemoteAudioStats>(data, "stats")
@@ -378,6 +402,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLocalAudioStateChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (LOCAL_AUDIO_STREAM_STATE)AgoraJson.GetData<int>(data, "state"),
@@ -393,6 +418,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRemoteAudioStateChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -410,6 +436,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioPublishStateChanged(
                             (string)AgoraJson.GetData<string>(data, "channel"),
                             (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "oldState"),
@@ -426,6 +453,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnVideoPublishStateChanged(
                             (string)AgoraJson.GetData<string>(data, "channel"),
                             (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "oldState"),
@@ -442,6 +470,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioSubscribeStateChanged(
                             (string)AgoraJson.GetData<string>(data, "channel"),
                             (uint)AgoraJson.GetData<uint>(data, "uid"),
@@ -459,6 +488,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnVideoSubscribeStateChanged(
                             (string)AgoraJson.GetData<string>(data, "channel"),
                             (uint)AgoraJson.GetData<uint>(data, "uid"),
@@ -476,6 +506,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         var speakerNumber = (uint)AgoraJson.GetData<uint>(data, "speakerNumber");
                         var speakers = AgoraJson.JsonToStructArray<AudioVolumeInfo>(data, "speakers", speakerNumber);
                         var totalVolume = (int)AgoraJson.GetData<int>(data, "totalVolume");
@@ -495,6 +526,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnActiveSpeaker(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "uid")
@@ -509,6 +541,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnVideoStopped();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -520,6 +553,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnFirstLocalVideoFrame(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (int)AgoraJson.GetData<int>(data, "width"),
@@ -536,6 +570,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnFirstLocalVideoFramePublished(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (int)AgoraJson.GetData<int>(data, "elapsed")
@@ -550,6 +585,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnFirstRemoteVideoFrame(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -567,6 +603,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnFirstRemoteVideoDecoded(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -579,36 +616,12 @@ namespace agora.rtc
 #endif
                     break;
 
-                // case "OnUserMuteAudioEx":
-                //     EngineEventHandler.OnUserMuteAudio(
-                //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                //         (bool)AgoraJson.GetData<bool>(data, "muted")
-                //     );
-                //     break;
-
-
-                // case "onUserMuteVideoEx":
-                //     EngineEventHandler.OnUserMuteVideo(
-                //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                //         (bool)AgoraJson.GetData<bool>(data, "muted")
-                //     );
-                //     break;
-
-                // case "onUserEnableVideoEx":
-                //     EngineEventHandler.OnUserEnableVideo(
-                //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                //         (bool)AgoraJson.GetData<bool>(data, "enabled")
-                //     );
-                //     break;
-
                 case "onAudioDeviceStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioDeviceStateChanged(
                             (string)AgoraJson.GetData<string>(data, "deviceId"),
                             (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(data, "deviceType"),
@@ -624,6 +637,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioDeviceVolumeChanged(
                             (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(data, "deviceType"),
                             (int)AgoraJson.GetData<int>(data, "volume"),
@@ -639,6 +653,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnCameraReady();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -650,6 +665,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnCameraFocusAreaChanged(
                             (int)AgoraJson.GetData<int>(data, "x"),
                             (int)AgoraJson.GetData<int>(data, "y"),
@@ -666,6 +682,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         var numFaces = (int)AgoraJson.GetData<int>(data, "numFaces");
                         EngineEventHandler.OnFacePositionChanged(
                             (int)AgoraJson.GetData<int>(data, "imageWidth"),
@@ -683,6 +700,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnCameraExposureAreaChanged(
                             (int)AgoraJson.GetData<int>(data, "x"),
                             (int)AgoraJson.GetData<int>(data, "y"),
@@ -699,6 +717,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioMixingFinished();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -710,6 +729,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioMixingStateChanged(
                             (AUDIO_MIXING_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
                             (AUDIO_MIXING_ERROR_TYPE)AgoraJson.GetData<int>(data, "errorCode")
@@ -724,6 +744,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRhythmPlayerStateChanged(
                             (RHYTHM_PLAYER_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
                             (RHYTHM_PLAYER_ERROR_TYPE)AgoraJson.GetData<int>(data, "errorCode")
@@ -738,6 +759,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioEffectFinished(
                             (int)AgoraJson.GetData<int>(data, "soundId")
                         );
@@ -751,6 +773,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnVideoDeviceStateChanged(
                             (string)AgoraJson.GetData<string>(data, "deviceId"),
                             (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(data, "deviceType"),
@@ -766,6 +789,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLocalVideoStateChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (LOCAL_VIDEO_STREAM_STATE)AgoraJson.GetData<int>(data, "state"),
@@ -781,6 +805,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnVideoSizeChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "uid"),
@@ -798,6 +823,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnContentInspectResult(
                             (CONTENT_INSPECT_RESULT)AgoraJson.GetData<int>(data, "result")
                         );
@@ -811,6 +837,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnSnapshotTaken(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (string)AgoraJson.GetData<string>(data, "filePath"),
@@ -828,6 +855,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRemoteVideoStateChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -854,6 +882,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnUserStateChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -869,6 +898,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnStreamMessageError(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -887,6 +917,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnChannelMediaRelayStateChanged(
                             (int)AgoraJson.GetData<int>(data, "state"),
                             (int)AgoraJson.GetData<int>(data, "code")  // int ?
@@ -901,6 +932,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnChannelMediaRelayEvent(
                             (int)AgoraJson.GetData<int>(data, "code") // int ?
                         );
@@ -914,6 +946,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnFirstLocalAudioFramePublished(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (int)AgoraJson.GetData<int>(data, "elapsed")
@@ -928,6 +961,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnFirstRemoteAudioFrame(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (int)AgoraJson.GetData<int>(data, "userId"),
@@ -943,6 +977,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnFirstRemoteAudioDecoded(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "uid"),
@@ -958,6 +993,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRtmpStreamingStateChanged(
                             (string)AgoraJson.GetData<string>(data, "url"),
                             (RTMP_STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "state"),
@@ -973,6 +1009,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRtmpStreamingEvent(
                             (string)AgoraJson.GetData<string>(data, "url"),
                             (RTMP_STREAMING_EVENT)AgoraJson.GetData<int>(data, "eventCode")
@@ -987,6 +1024,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnStreamPublished(
                             (string)AgoraJson.GetData<string>(data, "url"),
                             (int)AgoraJson.GetData<int>(data, "error")
@@ -1001,6 +1039,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnStreamUnpublished(
                             (string)AgoraJson.GetData<string>(data, "url")
                         );
@@ -1014,6 +1053,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnTranscodingUpdated();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1025,6 +1065,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLocalPublishFallbackToAudioOnly(
                             (bool)AgoraJson.GetData<bool>(data, "isFallbackOrRecover")
                         );
@@ -1038,6 +1079,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRemoteSubscribeFallbackToAudioOnly(
                             (uint)AgoraJson.GetData<uint>(data, "uid"),
                             (bool)AgoraJson.GetData<bool>(data, "isFallbackOrRecover")
@@ -1052,6 +1094,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRemoteAudioTransportStats(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -1069,6 +1112,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnRemoteVideoTransportStats(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -1086,6 +1130,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnConnectionStateChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
@@ -1101,6 +1146,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnNetworkTypeChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (NETWORK_TYPE)AgoraJson.GetData<int>(data, "type")
@@ -1115,6 +1161,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnLocalUserRegistered(
                             (uint)AgoraJson.GetData<uint>(data, "uid"),
                             (string)AgoraJson.GetData<string>(data, "userAccount")
@@ -1129,6 +1176,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnUserInfoUpdated(
                             (uint)AgoraJson.GetData<uint>(data, "uid"),
                             AgoraJson.JsonToStruct<UserInfo>(data, "info")
@@ -1143,6 +1191,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnMediaDeviceChanged(
                             (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(data, "deviceType")
                         );
@@ -1156,6 +1205,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnIntraRequestReceived(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
                         );
@@ -1169,6 +1219,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnUplinkNetworkInfoUpdated(
                             AgoraJson.JsonToStruct<UplinkNetworkInfo>(data, "info")
                         );
@@ -1182,6 +1233,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnDownlinkNetworkInfoUpdated(
                             AgoraJson.JsonToStruct<DownlinkNetworkInfo>(data, "info")
                         );
@@ -1195,6 +1247,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnVideoSourceFrameSizeChanged(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(data, "sourceType"),
@@ -1211,6 +1264,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnEncryptionError(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (ENCRYPTION_ERROR_TYPE)AgoraJson.GetData<int>(data, "info")
@@ -1225,6 +1279,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnUploadLogResult(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (string)AgoraJson.GetData<string>(data, "requestId"),
@@ -1241,6 +1296,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnUserAccountUpdated(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
@@ -1256,6 +1312,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnAudioRoutingChanged(
                             (int)AgoraJson.GetData<int>(data, "routing")
                         );
@@ -1273,6 +1330,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnPermissionError(
                             (PERMISSION_TYPE)AgoraJson.GetData<int>(data, "permissionType")
                         );
@@ -1286,6 +1344,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnExtensionEvent(
                             (string)AgoraJson.GetData<string>(data, "provider"),
                             (string)AgoraJson.GetData<string>(data, "ext_name"),
@@ -1302,6 +1361,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnExtensionStarted(
                             (string)AgoraJson.GetData<string>(data, "provider"),
                             (string)AgoraJson.GetData<string>(data, "ext_name")
@@ -1316,6 +1376,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnExtensionStopped(
                             (string)AgoraJson.GetData<string>(data, "provider"),
                             (string)AgoraJson.GetData<string>(data, "ext_name")
@@ -1330,6 +1391,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnExtensionErrored(
                             (string)AgoraJson.GetData<string>(data, "provider"),
                             (string)AgoraJson.GetData<string>(data, "ext_name"),
@@ -1348,6 +1410,7 @@ namespace agora.rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
+                        if (EngineEventHandler == null) return;
                         EngineEventHandler.OnStreamMessage(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
