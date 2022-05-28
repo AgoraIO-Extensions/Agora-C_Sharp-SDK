@@ -4,41 +4,16 @@ namespace agora.rtc
 {
     public abstract class IRtcEngine
     {
+        #region Channel management
         public abstract int Initialize(RtcEngineContext context);
 
         public abstract void Dispose(bool sync = false);
 
-        public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
+        public abstract int SetChannelProfile(CHANNEL_PROFILE_TYPE profile);
 
-        public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
+        public abstract int SetClientRole(CLIENT_ROLE_TYPE role);
 
-        public abstract void RemoveEventHandler();
-
-        public abstract void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
-
-        public abstract void UnRegisterAudioFrameObserver();
-
-        public abstract void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
-
-        public abstract void UnRegisterVideoFrameObserver();
-
-        public abstract void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
-
-        public abstract void UnRegisterVideoEncodedImageReceiver();
-
-        public abstract IAudioDeviceManager GetAudioDeviceManager();
-
-        public abstract IVideoDeviceManager GetVideoDeviceManager();
-
-        public abstract IMediaPlayer GetMediaPlayer();
-
-        public abstract ICloudSpatialAudioEngine GetCloudSpatialAudioEngine();
-
-        public abstract ILocalSpatialAudioEngine GetLocalSpatialAudioEngine();
-
-        public abstract string GetVersion();
-
-        public abstract string GetErrorDescription(int code);
+        public abstract int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options);
 
         public abstract int JoinChannel(string token, string channelId, string info = "", uint uid = 0);
 
@@ -52,18 +27,54 @@ namespace agora.rtc
 
         public abstract int RenewToken(string token);
 
-        public abstract int SetChannelProfile(CHANNEL_PROFILE_TYPE profile);
+        public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount);
 
-        public abstract int SetClientRole(CLIENT_ROLE_TYPE role);
+        public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
-        public abstract int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options);
+        public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
-        public abstract int StartEchoTest();
+        public abstract int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo);
 
-        public abstract int StartEchoTest(int intervalInSeconds);
+        public abstract int GetUserInfoByUid(uint uid, ref UserInfo userInfo);
+        #endregion
 
-        public abstract int StopEchoTest();
+        #region Event handler
+        public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
 
+        public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
+
+        public abstract void RemoveEventHandler();
+        #endregion
+
+        #region Audio management
+        public abstract int EnableAudio();
+
+        public abstract int DisableAudio();
+
+        public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario);
+
+        public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile);
+
+        public abstract int AdjustRecordingSignalVolume(int volume);
+
+        public abstract int MuteRecordingSignal(bool mute);
+
+        public abstract int AdjustPlaybackSignalVolume(int volume);
+
+        public abstract int AdjustUserPlaybackSignalVolume(uint uid, int volume);
+
+        public abstract int EnableLocalAudio(bool enabled);
+
+        public abstract int MuteLocalAudioStream(bool mute);
+
+        public abstract int MuteAllRemoteAudioStreams(bool mute);
+
+        public abstract int SetDefaultMuteAllRemoteAudioStreams(bool mute);
+
+        public abstract int MuteRemoteAudioStream(uint uid, bool mute);
+        #endregion
+
+        #region Video management
         public abstract int EnableVideo();
 
         public abstract int DisableVideo();
@@ -76,64 +87,80 @@ namespace agora.rtc
 
         public abstract int StopPreview(VIDEO_SOURCE_TYPE sourceType);
 
-        public abstract int StartLastmileProbeTest(LastmileProbeConfig config);
-
-        public abstract int StopLastmileProbeTest();
-
         public abstract int SetVideoEncoderConfiguration(VideoEncoderConfiguration config);
-
-        public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         public abstract int SetupRemoteVideo(VideoCanvas canvas);
 
         public abstract int SetupLocalVideo(VideoCanvas canvas);
 
-        public abstract int EnableAudio();
+        public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
-        public abstract int DisableAudio();
+        public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
-        public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario);
+        public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
 
-        public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile);
-
-        public abstract int EnableLocalAudio(bool enabled);
-
-        public abstract int MuteLocalAudioStream(bool mute);
-
-        public abstract int MuteAllRemoteAudioStreams(bool mute);
-
-        public abstract int SetDefaultMuteAllRemoteAudioStreams(bool mute);
-
-        public abstract int MuteRemoteAudioStream(uint uid, bool mute);
+        public abstract int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
         public abstract int MuteLocalVideoStream(bool mute);
+
+        public abstract int MuteRemoteVideoStream(uint uid, bool mute);
 
         public abstract int EnableLocalVideo(bool enabled);
 
         public abstract int MuteAllRemoteVideoStreams(bool mute);
 
         public abstract int SetDefaultMuteAllRemoteVideoStreams(bool mute);
+        #endregion
 
-        public abstract int MuteRemoteVideoStream(uint uid, bool mute);
+        #region Capture screenshots
+        public abstract int TakeSnapshot(SnapShotConfig config);
+        #endregion
 
-        public abstract int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType);
+        #region Multi-device capture
+        public abstract int StartPrimaryCameraCapture(CameraCapturerConfiguration config);
 
-        public abstract int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType);
+        public abstract int StartSecondaryCameraCapture(CameraCapturerConfiguration config);
 
-        public abstract int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad);
+        public abstract int StopPrimaryCameraCapture();
 
-        public abstract int StartAudioRecording(string filePath, AUDIO_RECORDING_QUALITY_TYPE quality);
+        public abstract int StopSecondaryCameraCapture();
 
-        public abstract int StartAudioRecording(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality);
+        public abstract int StartPrimaryScreenCapture(ScreenCaptureConfiguration config);
 
-        public abstract int StartAudioRecording(AudioRecordingConfiguration config);
+        public abstract int StartSecondaryScreenCapture(ScreenCaptureConfiguration config);
 
-        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer);
+        public abstract int StopPrimaryScreenCapture();
 
-        public abstract void UnRegisterAudioEncodedFrameObserver();
+        public abstract int StopSecondaryScreenCapture();
+        #endregion
 
-        public abstract int StopAudioRecording();
+        #region Media player
+        public abstract IMediaPlayer GetMediaPlayer();
+        #endregion
 
+        #region Audio pre-process and post-process
+        public abstract int SetAdvancedAudioOptions(AdvancedAudioOptions options);
+        #endregion
+
+        #region Video pre-process and post-process
+        public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+
+        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource);
+
+        public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
+        #endregion
+
+        #region Face detection
+        public abstract int EnableFaceDetection(bool enabled);
+        #endregion
+
+        #region In-ear monitoring
+        public abstract int EnableInEarMonitoring(bool enabled, int includeAudioFilters);
+
+        public abstract int SetInEarMonitoringVolume(int volume);
+        #endregion
+
+        #region Music file playback and mixing
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle);
 
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos);
@@ -161,7 +188,9 @@ namespace agora.rtc
         public abstract int SetAudioMixingPosition(int pos /*in ms*/);
 
         public abstract int SetAudioMixingPitch(int pitch);
+        #endregion
 
+        #region Audio effect file playback
         public abstract int GetEffectsVolume();
 
         public abstract int SetEffectsVolume(int volume);
@@ -191,15 +220,17 @@ namespace agora.rtc
         public abstract int UnloadEffect(int soundId);
 
         public abstract int UnloadAllEffects();
+        #endregion
 
-        public abstract int EnableSoundPositionIndication(bool enabled);
+        #region Virtual metronome
+        public abstract int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config);
 
-        public abstract int SetRemoteVoicePosition(uint uid, double pan, double gain);
+        public abstract int StopRhythmPlayer();
 
-        public abstract int EnableSpatialAudio(bool enabled);
+        public abstract int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config);
+        #endregion
 
-        public abstract int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param);
-
+        #region Voice changer and reverberation
         public abstract int SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset);
 
         public abstract int SetAudioEffectPreset(AUDIO_EFFECT_PRESET preset);
@@ -217,126 +248,22 @@ namespace agora.rtc
         public abstract int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency, int bandGain);
 
         public abstract int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value);
+        #endregion
 
-        //public abstract int SetLocalVoiceReverbPreset(AUDIO_REVERB_PRESET reverbPreset);
+        #region Pre-call network test
+        public abstract int StartEchoTest();
 
-        //public abstract int SetLocalVoiceChanger(VOICE_CHANGER_PRESET voiceChanger);
+        public abstract int StartEchoTest(int intervalInSeconds);
 
-        public abstract int SetLogFile(string filePath);
+        public abstract int StopEchoTest();
 
-        public abstract int SetLogFilter(uint filter);
+        public abstract int StartLastmileProbeTest(LastmileProbeConfig config);
 
-        public abstract int SetLogLevel(LOG_LEVEL level);
+        public abstract int StopLastmileProbeTest();
+        #endregion
 
-        public abstract int SetLogFileSize(uint fileSizeInKBytes);
-
-        public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
-
-        public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
-
-        public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
-
-        public abstract int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode);
-
-        public abstract int EnableDualStreamMode(bool enabled);
-
-        public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled);
-
-        public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig);
-
-        public abstract int SetExternalAudioSink(int sampleRate, int channels);
-
-        public abstract int StartPrimaryCustomAudioTrack(AudioTrackConfig config);
-
-        public abstract int StopPrimaryCustomAudioTrack();
-
-        public abstract int StartSecondaryCustomAudioTrack(AudioTrackConfig config);
-
-        public abstract int StopSecondaryCustomAudioTrack();
-
-        public abstract int SetRecordingAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
-
-        public abstract int SetPlaybackAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
-
-        public abstract int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall);
-
-        public abstract int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel);
-
-        public abstract int EnableAudioSpectrumMonitor(int intervalInMS = 100);
-
-        public abstract int DisableAudioSpectrumMonitor();
-
-        public abstract void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
-
-        public abstract void UnregisterAudioSpectrumObserver();
-
-        public abstract int AdjustRecordingSignalVolume(int volume);
-
-        public abstract int MuteRecordingSignal(bool mute);
-
-        public abstract int AdjustPlaybackSignalVolume(int volume);
-
-        public abstract int AdjustUserPlaybackSignalVolume(uint uid, int volume);
-
-        public abstract int EnableLoopbackRecording(bool enabled, string deviceName = "");
-
-        public abstract int AdjustLoopbackRecordingVolume(int volume);
-
-        public abstract int GetLoopbackRecordingVolume();
-
-        public abstract int EnableInEarMonitoring(bool enabled, int includeAudioFilters);
-
-        public abstract int SetInEarMonitoringVolume(int volume);
-
-        public abstract int LoadExtensionProvider(string extension_lib_path);
-
-        public abstract int SetExtensionProviderProperty(string provider, string key, string value);
-
-        public abstract int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
-
-        public abstract int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
-
-        public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
-
-        public abstract int SetCameraCapturerConfiguration(CameraCapturerConfiguration config);
-
-        public abstract int SwitchCamera();
-
-        public abstract bool IsCameraZoomSupported();
-
-        public abstract bool IsCameraFaceDetectSupported();
-
-        public abstract bool IsCameraTorchSupported();
-
-        public abstract bool IsCameraFocusSupported();
-
-        public abstract bool IsCameraAutoFocusFaceModeSupported();
-
-        public abstract int SetCameraZoomFactor(float factor);
-
-        public abstract int EnableFaceDetection(bool enabled);
-
-        public abstract float GetCameraMaxZoomFactor();
-
-        public abstract int SetCameraFocusPositionInPreview(float positionX, float positionY);
-
-        public abstract int SetCameraTorchOn(bool isOn);
-
-        public abstract int SetCameraAutoFocusFaceModeEnabled(bool enabled);
-
-        public abstract bool IsCameraExposurePositionSupported();
-
-        public abstract int SetCameraExposurePosition(float positionXinView, float positionYinView);
-
-        public abstract bool IsCameraAutoExposureFaceModeSupported();
-
-        public abstract int SetCameraAutoExposureFaceModeEnabled(bool enabled);
-
-        public abstract int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker);
-
-        public abstract int SetEnableSpeakerphone(bool speakerOn);
-
-        public abstract bool IsSpeakerphoneEnabled();
+        #region Screen sharing
+        public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
 
         public abstract int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
@@ -353,13 +280,45 @@ namespace agora.rtc
         public abstract int UpdateScreenCaptureParameters(ScreenCaptureParameters captureParams);
 
         public abstract int StopScreenCapture();
+        #endregion
 
-        public abstract string GetCallId();
+        #region Video dual stream
+        public abstract int EnableDualStreamMode(bool enabled);
 
-        public abstract int Rate(string callId, int rating, string description);
+        public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled);
 
-        public abstract int Complain(string callId, string description);
+        public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig);
 
+        public abstract int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType);
+
+        public abstract int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType);
+        #endregion
+
+        #region Watermark
+        public abstract int AddVideoWatermark(RtcImage watermark);
+
+        public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
+
+        public abstract int ClearVideoWatermark();
+
+        public abstract int ClearVideoWatermarks();
+        #endregion
+
+        #region Encryption
+        //public abstract int RegisterPacketObserver(IPacketObserver observer);
+
+        public abstract int SetEncryptionMode(string encryptionMode);
+
+        public abstract int SetEncryptionSecret(string secret);
+
+        public abstract int EnableEncryption(bool enabled, EncryptionConfig config);
+        #endregion
+
+        #region Sound localization
+        public abstract int EnableSoundPositionIndication(bool enabled);
+        #endregion
+
+        #region Media push
         public abstract int AddPublishStreamUrl(string url, bool transcodingEnabled);
 
         public abstract int RemovePublishStreamUrl(string url);
@@ -371,52 +330,239 @@ namespace agora.rtc
         public abstract int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config);
 
         public abstract int StopLocalVideoTranscoder();
+        #endregion
 
-        public abstract int StartPrimaryCameraCapture(CameraCapturerConfiguration config);
+        #region Channel media stream relay
+        public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
-        public abstract int StartSecondaryCameraCapture(CameraCapturerConfiguration config);
+        public abstract int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
-        public abstract int StopPrimaryCameraCapture();
+        public abstract int StopChannelMediaRelay();
 
-        public abstract int StopSecondaryCameraCapture();
+        public abstract int PauseAllChannelMediaRelay();
 
-        public abstract int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
+        public abstract int ResumeAllChannelMediaRelay();
+        #endregion
 
-        public abstract int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
+        #region Custom audio source
+        public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
 
-        public abstract int StartPrimaryScreenCapture(ScreenCaptureConfiguration config);
+        public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
+        #endregion
 
-        public abstract int StartSecondaryScreenCapture(ScreenCaptureConfiguration config);
+        #region Custom audio renderer
+        public abstract int SetExternalAudioSink(int sampleRate, int channels);
 
-        public abstract int StopPrimaryScreenCapture();
+        public abstract int PullAudioFrame(AudioFrame frame);
+        #endregion
 
-        public abstract int StopSecondaryScreenCapture();
+        #region Raw audio data
+        public abstract void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
-        public abstract CONNECTION_STATE_TYPE GetConnectionState();
+        public abstract void UnRegisterAudioFrameObserver();
 
-        public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
+        public abstract int SetRecordingAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
 
-        //public abstract int RegisterPacketObserver(IPacketObserver observer);
+        public abstract int SetPlaybackAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
 
-        public abstract int SetEncryptionMode(string encryptionMode);
+        public abstract int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall);
 
-        public abstract int SetEncryptionSecret(string secret);
+        public abstract int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel);
+        #endregion
 
-        public abstract int EnableEncryption(bool enabled, EncryptionConfig config);
+        #region Encoded audio data
+        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer);
 
+        public abstract void UnRegisterAudioEncodedFrameObserver();
+        #endregion
+
+        #region Audio spectrum
+        public abstract int EnableAudioSpectrumMonitor(int intervalInMS = 100);
+
+        public abstract int DisableAudioSpectrumMonitor();
+
+        public abstract void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
+
+        public abstract void UnregisterAudioSpectrumObserver();
+        #endregion
+
+        #region External video source
+        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType);
+
+        public abstract int PushVideoFrame(ExternalVideoFrame frame);
+
+        public abstract int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection);
+
+        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo);
+
+        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
+        #endregion
+
+        #region Raw video data
+        public abstract void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+
+        public abstract void UnRegisterVideoFrameObserver();
+
+        public abstract void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+
+        public abstract void UnRegisterVideoEncodedImageReceiver();
+        #endregion
+
+        #region Extension
+        public abstract int LoadExtensionProvider(string extension_lib_path);
+
+        public abstract int SetExtensionProviderProperty(string provider, string key, string value);
+
+        public abstract int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
+
+        public abstract int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
+
+        public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
+        #endregion
+
+        #region Media metadata
+        public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+
+        public abstract void UnregisterMediaMetadataObserver();
+        #endregion
+
+        #region Audio recording
+        public abstract int StartAudioRecording(string filePath, AUDIO_RECORDING_QUALITY_TYPE quality);
+
+        public abstract int StartAudioRecording(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality);
+
+        public abstract int StartAudioRecording(AudioRecordingConfiguration config);
+
+        public abstract int StopAudioRecording();
+        #endregion
+
+        #region Camera management
+        public abstract int SetCameraCapturerConfiguration(CameraCapturerConfiguration config);
+
+        public abstract int SwitchCamera();
+
+        public abstract bool IsCameraZoomSupported();
+
+        public abstract bool IsCameraFaceDetectSupported();
+
+        public abstract bool IsCameraTorchSupported();
+
+        public abstract bool IsCameraFocusSupported();
+
+        public abstract bool IsCameraAutoFocusFaceModeSupported();
+
+        public abstract int SetCameraZoomFactor(float factor);
+
+        public abstract float GetCameraMaxZoomFactor();
+
+        public abstract int SetCameraFocusPositionInPreview(float positionX, float positionY);
+
+        public abstract int SetCameraTorchOn(bool isOn);
+
+        public abstract int SetCameraAutoFocusFaceModeEnabled(bool enabled);
+
+        public abstract bool IsCameraExposurePositionSupported();
+
+        public abstract int SetCameraExposurePosition(float positionXinView, float positionYinView);
+
+        public abstract bool IsCameraAutoExposureFaceModeSupported();
+
+        public abstract int SetCameraAutoExposureFaceModeEnabled(bool enabled);
+        #endregion
+
+        #region Multiple channels
+        public abstract int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options);
+
+        public abstract int LeaveChannelEx(RtcConnection connection);
+        #endregion
+
+        #region Audio route : This group of methods are for Android and iOS only.
+        public abstract int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker);
+
+        public abstract int SetEnableSpeakerphone(bool speakerOn);
+
+        public abstract bool IsSpeakerphoneEnabled();
+        #endregion
+
+        #region Volume indication
+        public abstract int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad);
+        #endregion
+
+        #region Data stream
         public abstract int CreateDataStream(ref int streamId, bool reliable, bool ordered);
 
         public abstract int CreateDataStream(ref int streamId, DataStreamConfig config);
 
         public abstract int SendStreamMessage(int streamId, byte[] data, uint length);
+        #endregion
 
-        public abstract int AddVideoWatermark(RtcImage watermark);
+        #region Miscellaneous audio control
+        public abstract int EnableLoopbackRecording(bool enabled, string deviceName = "");
 
-        public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
+        public abstract int AdjustLoopbackRecordingVolume(int volume);
 
-        public abstract int ClearVideoWatermark();
+        public abstract int GetLoopbackRecordingVolume();
+        #endregion
 
-        public abstract int ClearVideoWatermarks();
+        #region Miscellaneous methods
+        public abstract int SetCloudProxy(CLOUD_PROXY_TYPE proxyType);
+
+        public abstract int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection);
+
+        public abstract string GetCallId();
+
+        public abstract int Rate(string callId, int rating, string description);
+
+        public abstract int Complain(string callId, string description);
+
+        public abstract string GetVersion();
+
+        public abstract string GetErrorDescription(int code);
+        #endregion
+
+        #region DeviceManager
+        public abstract IAudioDeviceManager GetAudioDeviceManager();
+
+        public abstract IVideoDeviceManager GetVideoDeviceManager();
+        #endregion
+
+        #region SpatialAudio
+        public abstract ICloudSpatialAudioEngine GetCloudSpatialAudioEngine();
+
+        public abstract ILocalSpatialAudioEngine GetLocalSpatialAudioEngine();
+
+        public abstract int SetRemoteVoicePosition(uint uid, double pan, double gain);
+
+        public abstract int EnableSpatialAudio(bool enabled);
+
+        public abstract int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param);
+        #endregion
+
+        public abstract int SetLogFile(string filePath);
+
+        public abstract int SetLogFilter(uint filter);
+
+        public abstract int SetLogLevel(LOG_LEVEL level);
+
+        public abstract int SetLogFileSize(uint fileSizeInKBytes);
+
+        public abstract int UploadLogFile(ref string requestId);
+
+        public abstract int StartPrimaryCustomAudioTrack(AudioTrackConfig config);
+
+        public abstract int StopPrimaryCustomAudioTrack();
+
+        public abstract int StartSecondaryCustomAudioTrack(AudioTrackConfig config);
+
+        public abstract int StopSecondaryCustomAudioTrack();
+
+        public abstract int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
+
+        public abstract int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
+
+        public abstract CONNECTION_STATE_TYPE GetConnectionState();
+
+        public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
 
         public abstract int AddInjectStreamUrl(string url, InjectStreamConfig config);
 
@@ -430,31 +576,11 @@ namespace agora.rtc
 
         public abstract int SendCustomReportMessage(string id, string category, string @event, string label, int value);
 
-        public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
-
-        public abstract void UnregisterMediaMetadataObserver();
-
         public abstract int StartAudioFrameDump(string channel_id, uint user_id, string location, string uuid, string passwd, long duration_ms, bool auto_upload);
 
         public abstract int StopAudioFrameDump(string channel_id, uint user_id, string location);
 
         public abstract int RegisterLocalUserAccount(string appId, string userAccount);
-
-        public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount);
-
-        public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
-
-        public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options);
-
-        public abstract int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo);
-
-        public abstract int GetUserInfoByUid(uint uid, ref UserInfo userInfo);
-
-        public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
-
-        public abstract int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
-
-        public abstract int StopChannelMediaRelay();
 
         public abstract int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile);
 
@@ -467,10 +593,6 @@ namespace agora.rtc
         public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
 
         public abstract int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame);
-
-        public abstract int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options);
-
-        public abstract int LeaveChannelEx(RtcConnection connection);
 
         public abstract int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnection connection);
 
@@ -504,26 +626,6 @@ namespace agora.rtc
 
         public abstract int ClearVideoWatermarkEx(RtcConnection connection);
 
-        public abstract int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection);
-
-        public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
-
-        public abstract int PullAudioFrame(AudioFrame frame);
-
-        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType);
-
-        public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
-
-        public abstract int PushVideoFrame(ExternalVideoFrame frame);
-
-        public abstract int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection);
-
-        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo);
-
-        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
-
-        //public abstract int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len);
-
         public abstract int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction);
 
         public abstract int AdjustCustomAudioPublishVolume(int sourceId, int volume);
@@ -536,31 +638,15 @@ namespace agora.rtc
 
         public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
 
-        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource);
-
         public abstract int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option);
 
         public abstract int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option);
 
-        public abstract int PauseAllChannelMediaRelay();
-
-        public abstract int ResumeAllChannelMediaRelay();
-
         public abstract int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay);
-
-        public abstract int TakeSnapshot(SnapShotConfig config);
-
-        //public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
 
         public abstract int SwitchChannel(string token, string channel);
 
         public abstract int SwitchChannel(string token, string channel, ChannelMediaOptions options);
-
-        public abstract int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config);
-
-        public abstract int StopRhythmPlayer();
-
-        public abstract int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config);
 
         //public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
 
@@ -570,13 +656,9 @@ namespace agora.rtc
 
         public abstract int PushDirectAudioFrame(AudioFrame frame);
 
-        public abstract int SetCloudProxy(CLOUD_PROXY_TYPE proxyType);
-
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
 
         public abstract int EnableFishCorrection(bool enabled, FishCorrectionParams @params);
-
-        public abstract int SetAdvancedAudioOptions(AdvancedAudioOptions options);
 
         public abstract int SetAVSyncSource(string channelId, uint uid);
 
@@ -592,8 +674,6 @@ namespace agora.rtc
 
         public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
 
-        public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
-
         public abstract int SetContentInspect(ContentInspectConfig config);
 
         public abstract int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection);
@@ -605,10 +685,6 @@ namespace agora.rtc
         public abstract int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
-
-        public abstract int UploadLogFile(ref string requestId);
-
-        public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
 
         public abstract bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir);
 

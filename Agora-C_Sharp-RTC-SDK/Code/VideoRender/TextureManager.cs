@@ -85,9 +85,6 @@ namespace agora.rtc
                 width = _videoPixelWidth,
                 y_buffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4)
             };
-            _cachedVideoFrame.y_buffer = IntPtr.Zero;
-            _cachedVideoFrame.u_buffer = IntPtr.Zero;
-            _cachedVideoFrame.v_buffer = IntPtr.Zero;
         }
 
         internal int GetRefCount()
