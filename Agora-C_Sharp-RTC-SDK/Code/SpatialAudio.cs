@@ -4,12 +4,12 @@ namespace agora.rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineImpl = null;
-        private const string ErrorMsgLog = "[CloudSpatialAudioEngine]:IRtcEngine has not been created yet!";
+        private const string ErrorMsgLog = "[CloudSpatialAudioEngine]:Api not supported!";
         private const int ErrorCode = -1;
 
         private CloudSpatialAudioEngine(IRtcEngine rtcEngine, CloudSpatialAudioEngineImpl impl)
         {
-            _rtcEngineInstance = rtcEngine;
+            _rtcEngineInstance = null;
             _cloudSpatialAudioEngineImpl = impl;
         }
 
@@ -252,12 +252,12 @@ namespace agora.rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private LocalSpatialAudioEngineImpl _localSpatialAudioEngineImpl = null;
-        private const string ErrorMsgLog = "[LocalSpatialAudioEngine]:IRtcEngine has not been created yet!";
+        private const string ErrorMsgLog = "[LocalSpatialAudioEngine]:Api not supported!";
         private const int ErrorCode = -1;
 
         private LocalSpatialAudioEngine(IRtcEngine rtcEngine, LocalSpatialAudioEngineImpl impl)
         {
-            _rtcEngineInstance = rtcEngine;
+            _rtcEngineInstance = null;
             _localSpatialAudioEngineImpl = impl;
         }
 

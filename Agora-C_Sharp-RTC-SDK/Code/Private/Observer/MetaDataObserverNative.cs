@@ -8,7 +8,6 @@ namespace agora.rtc
 {
     internal static class MetadataObserverNative
     {
-        internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
         internal static IMetadataObserver Observer;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -16,8 +15,7 @@ namespace agora.rtc
 #endif
         internal static int GetMaxMetadataSize()
         {
-            if (Observer == null) return 0;
-            return Observer.GetMaxMetadataSize();
+            return 0;
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -25,8 +23,7 @@ namespace agora.rtc
 #endif
         internal static bool OnReadyToSendMetadata(IntPtr metadata, VIDEO_SOURCE_TYPE source_type)
         {
-            if (Observer == null) return false;
-            return Observer.OnReadyToSendMetadata(metadata, source_type);
+            return false;
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -39,13 +36,6 @@ namespace agora.rtc
             var metaData = (IrisMetadata) (Marshal.PtrToStructure(metadata, typeof(IrisMetadata)) ??
                                                     new IrisMetadata());
             var localMetaData = new Metadata();
-
-            if (mode == OBSERVER_MODE.RAW_DATA)
-            {
-                localMetaData.buffer = new byte[metaData.size];
-                if (metaData.buffer != IntPtr.Zero)
-                    Marshal.Copy(metaData.buffer, localMetaData.buffer, 0, (int)metaData.size);
-            }
 
             localMetaData.bufferPtr = metaData.buffer;
             localMetaData.uid = metaData.uid;

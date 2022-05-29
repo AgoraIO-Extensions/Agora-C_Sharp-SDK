@@ -253,6 +253,8 @@ namespace agora.rtc
         internal const string FUNC_RTCENGINE_SETADVANCEDAUDIOOPTIONS = "RtcEngine_setAdvancedAudioOptions";
         internal const string FUNC_RTCENGINE_SETAVSYNCSOURCE = "RtcEngine_setAVSyncSource";
         internal const string FUNC_RTCENGINE_STARTSCREENCAPTUREBYDISPLAYID = "RtcEngine_startScreenCaptureByDisplayId";
+        internal const string FUNC_RTCENGINE_SETMAXMETADATASIZE = "RtcEngine_setMaxMetadataSize";
+        internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_sendMetaData";
         // class IRtcEngine end
 
         // class IRtcEngineEx start

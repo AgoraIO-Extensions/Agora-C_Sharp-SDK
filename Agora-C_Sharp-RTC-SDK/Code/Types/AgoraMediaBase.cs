@@ -637,7 +637,7 @@ namespace agora.rtc
             bytesPerSample = BYTES_PER_SAMPLE.TWO_BYTES_PER_SAMPLE;
             channels = 0;
             samplesPerSec = 0;
-            buffer = new byte[0];
+            RawBuffer = new byte[0];
             renderTimeMs = 0;
             avsync_type = 0;
         }
@@ -650,7 +650,7 @@ namespace agora.rtc
             this.bytesPerSample = bytesPerSample;
             this.channels = channels;
             this.samplesPerSec = samplesPerSec;
-            this.buffer = buffer;
+            this.RawBuffer = buffer;
             this.renderTimeMs = renderTimeMs;
             this.avsync_type = avsync_type;
         }
@@ -680,9 +680,11 @@ namespace agora.rtc
         /** The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.
 		 The size of the data buffer is as follows: `buffer` = `samples` × `channels` × `bytesPerSample`.
 		 */
-        public byte[] buffer { set; get; } //data buffer
+        public UInt64 buffer { set; get; } //data buffer
 
         public IntPtr bufferPtr { set; get; }
+
+        public byte[] RawBuffer { set; get; }
 
         /** The timestamp of the external audio frame. You can use this parameter for the following purposes:
 		 - Restore the order of the captured audio frame.

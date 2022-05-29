@@ -65,11 +65,11 @@ namespace agora.rtc
                 localAudioFrame.samplesPerChannel != audioFrame.samples ||
                 localAudioFrame.bytesPerSample != audioFrame.bytes_per_sample)
                 {
-                    localAudioFrame.buffer = new byte[audioFrame.buffer_length];
+                    localAudioFrame.RawBuffer = new byte[audioFrame.buffer_length];
                 }
 
                 if (audioFrame.buffer != IntPtr.Zero)
-                    Marshal.Copy(audioFrame.buffer, localAudioFrame.buffer, 0, (int)audioFrame.buffer_length);
+                    Marshal.Copy(audioFrame.buffer, localAudioFrame.RawBuffer, 0, (int)audioFrame.buffer_length);
             }
 
             localAudioFrame.type = audioFrame.type;

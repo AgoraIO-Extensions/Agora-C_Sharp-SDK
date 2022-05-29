@@ -421,9 +421,13 @@ namespace agora.rtc
         #endregion
 
         #region Media metadata
-        public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
         public abstract void UnregisterMediaMetadataObserver();
+
+        public abstract int SetMaxMetadataSize(int size);
+
+        public abstract bool SendMetaData(Metadata metadata);
         #endregion
 
         #region Audio recording

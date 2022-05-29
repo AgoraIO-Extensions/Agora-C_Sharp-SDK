@@ -1531,7 +1531,6 @@ The error codes of the local user's audio mixing file.
         public uint size;
         /** The metadata buffer.
             */
-        public byte[] buffer;
         public IntPtr bufferPtr;
         /** The NTP timestamp (ms) that the metadata sends.
             *

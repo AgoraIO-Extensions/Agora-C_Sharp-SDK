@@ -2163,14 +2163,14 @@ namespace agora.rtc
             return _rtcEngineImpl.SendCustomReportMessage(id, category, @event, label, value);
         }
 
-        public override void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-            _rtcEngineImpl.RegisterMediaMetadataObserver(observer, type, mode);
+            _rtcEngineImpl.RegisterMediaMetadataObserver(observer, type);
         }
 
         public override void UnregisterMediaMetadataObserver()
@@ -3067,6 +3067,16 @@ namespace agora.rtc
         public override bool StopDumpVideo()
         {
             return _rtcEngineImpl.StopDumpVideo();
+        }
+
+        public override int SetMaxMetadataSize(int size)
+        {
+            return _rtcEngineImpl.SetMaxMetadataSize(size);
+        }
+
+        public override bool SendMetaData(Metadata metadata)
+        {
+            return _rtcEngineImpl.SendMetaData(metadata);
         }
     };
 }

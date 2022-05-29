@@ -3652,11 +3652,10 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
         {
             SetIrisMetaDataObserver(type);
             MetadataObserverNative.Observer = observer;
-            MetadataObserverNative.mode = mode;
         }
 
         public void UnregisterMediaMetadataObserver()
@@ -5335,7 +5334,7 @@ namespace agora.rtc
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHAUDIOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5471,7 +5470,7 @@ namespace agora.rtc
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHDIRECTAUDIOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5487,8 +5486,8 @@ namespace agora.rtc
                     frame.samplesPerChannel,
                     frame.bytesPerSample,
                     frame.channels,
-                    frame.bufferPtr,
                     frame.samplesPerSec,
+                    frame.buffer,
                     frame.renderTimeMs,
                     frame.avsync_type,
                 }
@@ -5510,6 +5509,40 @@ namespace agora.rtc
             frame.renderTimeMs = f.renderTimeMs;
             frame.samplesPerSec = f.samplesPerSec;
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetMaxMetadataSize(int size)
+        {
+            var param = new
+            {
+                size
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public bool SendMetaData(Metadata metadata)
+        {
+            var param = new
+            {
+                metadata
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return (bool)AgoraJson.GetData<bool> (_result.Result, "result");
         }
 
 
