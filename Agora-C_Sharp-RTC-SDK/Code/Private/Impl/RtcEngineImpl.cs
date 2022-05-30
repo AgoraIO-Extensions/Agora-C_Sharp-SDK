@@ -3926,6 +3926,7 @@ namespace agora.rtc
         {
             var param = new
             {
+               publishUrl,
                options
             };
             var json = AgoraJson.ToJson(param);
@@ -5155,7 +5156,7 @@ namespace agora.rtc
             return AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
-                out _result) != null ?
+                out _result) != 0 ?
                 new ScreenCaptureSourceInfo[0]
                 : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfo>(_result.Result, "result");
         }
@@ -5180,9 +5181,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPREMOTEVIDEO,
                json, (UInt32)json.Length,
-               Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0), 1,
+               Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                out _result);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
@@ -5205,9 +5209,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPLOCALVIDEO,
                json, (UInt32)json.Length,
-               Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0), 1,
+               Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                out _result);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
@@ -5222,9 +5229,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(mediaProjectionPermissionResultData, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTURE,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(mediaProjectionPermissionResultData, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5240,9 +5250,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDSTREAMMESSAGE,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(data, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5302,9 +5315,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETUPREMOTEVIDEOEX,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5332,9 +5348,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHAUDIOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5421,9 +5440,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5442,9 +5464,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE2,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5468,9 +5493,12 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHDIRECTAUDIOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0), 1,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -5495,7 +5523,7 @@ namespace agora.rtc
             var json = AgoraJson.ToJson(param);
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PULLAUDIOFRAME,
                 json, (UInt32)json.Length,
-                frame.bufferPtr, 1,
+                IntPtr.Zero, 0,
                 out _result);
 
             var f = _result.Result.Length == 0
