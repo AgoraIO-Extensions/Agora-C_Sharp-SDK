@@ -5556,21 +5556,22 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public bool SendMetaData(Metadata metadata)
+        public int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
             var param = new
             {
-                metadata
+                metadata,
+                source_type
             };
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDMETADATA,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
 
-            return (bool)AgoraJson.GetData<bool> (_result.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
 

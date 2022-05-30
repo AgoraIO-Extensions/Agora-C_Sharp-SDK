@@ -26,21 +26,21 @@ namespace agora.rtc
 #endif
                 switch (@event)
                 {
-                    case "onTokenWillExpire":
+                    case "CloudSpatialAudioEventHandler_onTokenWillExpire":
                         CloudSpatialAudioEngineEventHandler.OnTokenWillExpire();
                         break;
-                    case "onConnectionStateChange":
+                    case "CloudSpatialAudioEventHandler_onConnectionStateChange":
                         CloudSpatialAudioEngineEventHandler.OnConnectionStateChange(
                             (SAE_CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
                             (SAE_CONNECTION_CHANGED_REASON_TYPE)AgoraJson.GetData<int>(data, "reason")
                         );
                         break;
-                    case "onTeammateLeft":
+                    case "CloudSpatialAudioEventHandler_onTeammateLeft":
                         CloudSpatialAudioEngineEventHandler.OnTeammateLeft(
                             (uint)AgoraJson.GetData<uint>(data, "uid")
                         );
                         break;
-                    case "onTeammateJoined":
+                    case "CloudSpatialAudioEventHandler_onTeammateJoined":
                         CloudSpatialAudioEngineEventHandler.OnTeammateJoined(
                             (uint)AgoraJson.GetData<uint>(data, "uid")
                         );

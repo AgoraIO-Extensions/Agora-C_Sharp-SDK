@@ -201,6 +201,10 @@ namespace agora.rtc
         public virtual void OnExtensionStopped(string provider, string ext_name) { }
 
         public virtual void OnExtensionErrored(string provider, string ext_name, int error, string msg) { }
+
+        public virtual void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message) { }
+
+        public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats) { }
     };
 
 }

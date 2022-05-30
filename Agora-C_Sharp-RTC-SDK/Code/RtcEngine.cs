@@ -3074,9 +3074,9 @@ namespace agora.rtc
             return _rtcEngineImpl.SetMaxMetadataSize(size);
         }
 
-        public override bool SendMetaData(Metadata metadata)
+        public override int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
-            return _rtcEngineImpl.SendMetaData(metadata);
+            return _rtcEngineImpl.SendMetaData(metadata, source_type);
         }
     };
 }

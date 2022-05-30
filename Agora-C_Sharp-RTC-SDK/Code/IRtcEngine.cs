@@ -427,7 +427,7 @@ namespace agora.rtc
 
         public abstract int SetMaxMetadataSize(int size);
 
-        public abstract bool SendMetaData(Metadata metadata);
+        public abstract int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
         #endregion
 
         #region Audio recording

@@ -142,7 +142,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnClientRoleChangeFailedEx":
+                case "onClientRoleChangeFailedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -548,7 +548,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnFirstLocalVideoFrameEx":
+                case "onFirstLocalVideoFrameEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -580,7 +580,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnFirstRemoteVideoFrameEx":
+                case "onFirstRemoteVideoFrameEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -739,7 +739,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnRhythmPlayerStateChanged":
+                case "onRhythmPlayerStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -818,7 +818,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnContentInspectResult":
+                case "onContentInspectResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -868,16 +868,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                // case "onUserEnableLocalVideoEx":
-                //     UnityEngine.Debug.Log(data);
-                //     EngineEventHandler.OnUserEnableLocalVideo(
-                //         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                //         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                //         (bool)AgoraJson.GetData<bool>(data, "enabled")
-                //     );
-                //     break;
-
-                case "OnUserStateChangedEx":
+                case "onUserStateChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -956,7 +947,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnFirstRemoteAudioFrameEx":
+                case "onFirstRemoteAudioFrameEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -972,7 +963,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnFirstRemoteAudioDecodedEx":
+                case "onFirstRemoteAudioDecodedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1004,7 +995,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnRtmpStreamingEvent":
+                case "onRtmpStreamingEvent":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1274,7 +1265,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnUploadLogResultEx":
+                case "onUploadLogResultEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1291,7 +1282,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnUserAccountUpdatedEx":
+                case "onUserAccountUpdatedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1320,10 +1311,6 @@ namespace agora.rtc
                     });
 #endif
                     break;
-
-                //case "onAudioSessionRestrictionResume":
-                //    EngineEventHandler.OnAudioSessionRestrictionResume();
-                //    break;
 
                 case "onPermissionError":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1386,7 +1373,7 @@ namespace agora.rtc
 #endif
                     break;
 
-                case "OnExtensionErrored":
+                case "onExtensionErrored":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1398,6 +1385,34 @@ namespace agora.rtc
                             (int)AgoraJson.GetData<int>(data, "error"),
                             (string)AgoraJson.GetData<string>(data, "msg")
                         );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                case "onDirectCdnStreamingStateChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandler == null) return;
+                        EngineEventHandler.OnDirectCdnStreamingStateChanged(
+                            (DIRECT_CDN_STREAMING_STATE)AgoraJson.GetData<int>(data, "state"),
+                            (DIRECT_CDN_STREAMING_ERROR)AgoraJson.GetData<int>(data, "error"),
+                            (string)AgoraJson.GetData<string>(data, "message")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                case "onDirectCdnStreamingStats":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandler == null) return;
+                        EngineEventHandler.OnDirectCdnStreamingStats(
+                            AgoraJson.JsonToStruct<DirectCdnStreamingStats>(data, "stats")
+                            );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif

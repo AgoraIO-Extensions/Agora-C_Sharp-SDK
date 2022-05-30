@@ -31,7 +31,7 @@ namespace agora.rtc
 #endif
             switch (@event)
             {
-                case "onPlayerSourceStateChanged":
+                case "MediaPlayerSourceObserver_onPlayerSourceStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -46,7 +46,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onPositionChanged":
+                case "MediaPlayerSourceObserver_onPositionChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -60,7 +60,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onPlayerEvent":
+                case "MediaPlayerSourceObserver_onPlayerEvent":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -76,7 +76,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onPlayBufferUpdated":
+                case "MediaPlayerSourceObserver_onPlayBufferUpdated":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -90,7 +90,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onCompleted":
+                case "MediaPlayerSourceObserver_onCompleted":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -103,7 +103,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onAgoraCDNTokenWillExpire":
+                case "MediaPlayerSourceObserver_onAgoraCDNTokenWillExpire":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -116,7 +116,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onPlayerInfoUpdated":
+                case "MediaPlayerSourceObserver_onPlayerInfoUpdated":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -129,7 +129,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onPlayerSrcInfoChanged":
+                case "MediaPlayerSourceObserver_onPlayerSrcInfoChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -144,7 +144,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onAudioVolumeIndication":
+                case "MediaPlayerSourceObserver_onAudioVolumeIndication":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -158,7 +158,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onMetaData":
+                case "MediaPlayerSourceObserver_onMetaData":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
