@@ -125,7 +125,7 @@ namespace agora.rtc
 
         public virtual void OnFirstLocalAudioFramePublished(RtcConnection connection, int elapsed) { }
 
-        public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, int userId, int elapsed) { }
+        public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed) { }
 
         public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) { }
 

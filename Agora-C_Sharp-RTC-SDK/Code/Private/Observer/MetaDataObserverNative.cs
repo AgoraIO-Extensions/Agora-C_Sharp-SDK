@@ -37,7 +37,7 @@ namespace agora.rtc
                                                     new IrisMetadata());
             var localMetaData = new Metadata();
 
-            localMetaData.bufferPtr = metaData.buffer;
+            localMetaData.buffer = metaData.buffer;
             localMetaData.uid = metaData.uid;
             localMetaData.size = metaData.size;
             localMetaData.timeStampMs = metaData.timeStampMs;

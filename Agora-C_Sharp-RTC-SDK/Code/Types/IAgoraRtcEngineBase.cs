@@ -1531,19 +1531,19 @@ The error codes of the local user's audio mixing file.
         public uint size;
         /** The metadata buffer.
             */
-        public IntPtr bufferPtr
+        public IntPtr buffer
         {
             set
             {
-                buffer = (UInt64) value;
+                _buffer = (UInt64) value;
             }
             get
             {
-                return (IntPtr)buffer;
+                return (IntPtr)_buffer;
             }
         }
 
-        private UInt64 buffer;
+        private UInt64 _buffer;
         /** The NTP timestamp (ms) that the metadata sends.
             *
             * @note If the metadata receiver is audience, this parameter does not work.

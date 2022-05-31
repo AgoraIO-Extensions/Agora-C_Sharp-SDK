@@ -4229,25 +4229,6 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
-        {
-            var param = new
-            {
-                streamId,
-                length,
-                connection
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDSTREAMMESSAGEEX,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
         public int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
         {
             var param = new
@@ -5261,6 +5242,28 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        public int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
+        {
+            var param = new
+            {
+                streamId,
+                length,
+                connection
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDSTREAMMESSAGEEX,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
         public int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame)
         {
             var param = new
@@ -5560,7 +5563,13 @@ namespace agora.rtc
         {
             var param = new
             {
-                metadata,
+                metadata = new
+                {
+                    uid = metadata.uid,
+                    size = metadata.size,
+                    timeStampMs = metadata.timeStampMs,
+                    buffer = (UInt64)metadata.buffer
+                },
                 source_type
             };
 

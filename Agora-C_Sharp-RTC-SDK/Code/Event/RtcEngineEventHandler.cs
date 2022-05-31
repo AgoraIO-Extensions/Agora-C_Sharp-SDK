@@ -117,7 +117,7 @@ namespace agora.rtc
 
     public delegate void OnFirstLocalAudioFramePublishedHandler(RtcConnection connection, int elapsed);
 
-    public delegate void OnFirstRemoteAudioFrameHandler(RtcConnection connection, int userId, int elapsed);
+    public delegate void OnFirstRemoteAudioFrameHandler(RtcConnection connection, uint userId, int elapsed);
 
     public delegate void OnFirstRemoteAudioDecodedHandler(RtcConnection connection, uint uid, int elapsed);
 
@@ -144,8 +144,6 @@ namespace agora.rtc
     public delegate void OnTranscodingUpdatedHandler();
 
     public delegate void OnAudioRoutingChangedHandler(int routing);
-
-    //public delegate void OnAudioSessionRestrictionResumeHandler();
 
     public delegate void OnChannelMediaRelayStateChangedHandler(int state, int code);
 
@@ -190,6 +188,10 @@ namespace agora.rtc
     public delegate void OnExtensionStoppedHandler(string provider, string ext_name);
 
     public delegate void OnExtensionErroredHandler(string provider, string ext_name, int error, string msg);
+
+    public delegate void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message);
+
+    public delegate void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats);
 
     public class RtcEngineEventHandler : IRtcEngineEventHandler
     {
@@ -263,7 +265,6 @@ namespace agora.rtc
         public event OnStreamUnpublishedHandler EventOnStreamUnpublished;
         public event OnTranscodingUpdatedHandler EventOnTranscodingUpdated;
         public event OnAudioRoutingChangedHandler EventOnAudioRoutingChanged;
-        //public event OnAudioSessionRestrictionResumeHandler EventOnAudioSessionRestrictionResume;
         public event OnChannelMediaRelayStateChangedHandler EventOnChannelMediaRelayStateChanged;
         public event OnChannelMediaRelayEventHandler EventOnChannelMediaRelayEvent;
         public event OnLocalPublishFallbackToAudioOnlyHandler EventOnLocalPublishFallbackToAudioOnly;
@@ -285,8 +286,9 @@ namespace agora.rtc
         public event OnExtensionEventHandler EventOnExtensionEvent;
         public event OnExtensionStartedHandler EventOnExtensionStarted;
         public event OnExtensionStoppedHandler EventOnExtensionStopped;
-      
         public event OnExtensionErroredHandler EventOnExtensionErrored;
+        public event OnDirectCdnStreamingStateChanged EventOnDirectCdnStreamingStateChanged;
+        public event OnDirectCdnStreamingStats EventOnDirectCdnStreamingStats;
 
         private static RtcEngineEventHandler eventInstance = null;
 
@@ -641,7 +643,7 @@ namespace agora.rtc
             EventOnFirstLocalAudioFramePublished.Invoke(connection, elapsed);
         }
 
-        public override void OnFirstRemoteAudioFrame(RtcConnection connection, int userId, int elapsed)
+        public override void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed)
         {
             if (EventOnFirstRemoteAudioFrame == null) return;
             EventOnFirstRemoteAudioFrame.Invoke(connection, userId, elapsed);
@@ -863,6 +865,18 @@ namespace agora.rtc
 
             if (EventOnExtensionErrored == null) return;
             EventOnExtensionErrored.Invoke(provider, ext_name, error, msg);
+        }
+
+        public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
+        {
+            if (EventOnExtensionErrored == null) return;
+            EventOnDirectCdnStreamingStateChanged.Invoke(state, error, message);
+        }
+
+        public override void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats)
+        {
+            if (EventOnExtensionErrored == null) return;
+            EventOnDirectCdnStreamingStats.Invoke(stats);
         }
     }
 }

@@ -955,7 +955,7 @@ namespace agora.rtc
                         if (EngineEventHandler == null) return;
                         EngineEventHandler.OnFirstRemoteAudioFrame(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                            (int)AgoraJson.GetData<int>(data, "userId"),
+                            (uint)AgoraJson.GetData<uint>(data, "uid"),
                             (int)AgoraJson.GetData<int>(data, "elapsed")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1429,7 +1429,8 @@ namespace agora.rtc
                         EngineEventHandler.OnStreamMessage(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                             (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                            (int)AgoraJson.GetData<int>(data, "streamId"), buffer, (uint)len[0],
+                            (int)AgoraJson.GetData<int>(data, "streamId"),
+                            (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(data, "data"), (uint)len[0],
                             (UInt64)AgoraJson.GetData<UInt64>(data, "sentTs"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
