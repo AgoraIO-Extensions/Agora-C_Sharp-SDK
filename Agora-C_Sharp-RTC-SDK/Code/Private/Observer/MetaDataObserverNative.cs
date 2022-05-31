@@ -22,21 +22,16 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_ReadyToSendMetadata_Native))]
 #endif
-        internal static bool OnReadyToSendMetadata(IntPtr metadata, VIDEO_SOURCE_TYPE source_type)
+        internal static bool OnReadyToSendMetadata(ref IrisMetadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
             if (Observer == null) return false;
             var localMetaData = new Metadata();
-            var irisMetaData = new IrisMetadata();
             var ret = Observer.OnReadyToSendMetadata(ref localMetaData, source_type);
 
-            irisMetaData.buffer = localMetaData.buffer;
-            irisMetaData.uid = localMetaData.uid;
-            irisMetaData.size = localMetaData.size;
-            irisMetaData.timeStampMs = localMetaData.timeStampMs;
-
-            IntPtr metaDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IrisMetadata)));
-            Marshal.StructureToPtr(irisMetaData, metaDataPtr, true);
-            metadata = metaDataPtr;
+            metadata.buffer = localMetaData.buffer;
+            metadata.uid = localMetaData.uid;
+            metadata.size = localMetaData.size;
+            metadata.timeStampMs = localMetaData.timeStampMs;
 
             return ret;
         }

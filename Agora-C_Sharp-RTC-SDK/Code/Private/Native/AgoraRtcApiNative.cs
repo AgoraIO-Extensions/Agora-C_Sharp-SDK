@@ -420,7 +420,7 @@ namespace agora.rtc
     internal delegate int Func_MaxMetadataSize_Native();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_ReadyToSendMetadata_Native(IntPtr metadata, VIDEO_SOURCE_TYPE source_type);
+    internal delegate bool Func_ReadyToSendMetadata_Native(ref IrisMetadata metaData, VIDEO_SOURCE_TYPE source_type);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate void Func_MetadataReceived_Native(IntPtr metadata);
