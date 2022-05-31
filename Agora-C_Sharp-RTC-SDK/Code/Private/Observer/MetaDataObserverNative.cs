@@ -15,7 +15,8 @@ namespace agora.rtc
 #endif
         internal static int GetMaxMetadataSize()
         {
-            return 0;
+            if (Observer == null) return 0;
+            return Observer.GetMaxMetadataSize();
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -23,7 +24,21 @@ namespace agora.rtc
 #endif
         internal static bool OnReadyToSendMetadata(IntPtr metadata, VIDEO_SOURCE_TYPE source_type)
         {
-            return false;
+            if (Observer == null) return false;
+            var localMetaData = new Metadata();
+            var irisMetaData = new IrisMetadata();
+            var ret = Observer.OnReadyToSendMetadata(ref localMetaData, source_type);
+
+            irisMetaData.buffer = localMetaData.buffer;
+            irisMetaData.uid = localMetaData.uid;
+            irisMetaData.size = localMetaData.size;
+            irisMetaData.timeStampMs = localMetaData.timeStampMs;
+
+            IntPtr metaDataPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(IrisMetadata)));
+            Marshal.StructureToPtr(irisMetaData, metaDataPtr, true);
+            metadata = metaDataPtr;
+
+            return ret;
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
