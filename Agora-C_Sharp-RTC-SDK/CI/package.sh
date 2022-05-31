@@ -73,6 +73,8 @@ PLUGIN_PATH="$CI_DIR/project/Assets/$PLUGIN_NAME"
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
 cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
+cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/StreamingAssets "$CI_DIR"/project/Assets/
+
 
 # Copy SDK
 echo "[Unity CI] copying scripts ..."
@@ -154,7 +156,7 @@ echo "[Unity CI] finish copying files"
 #--------------------------------------
 # Export Package
 #--------------------------------------
-$UNITY_DIR/Unity -quit -batchmode -nographics -openProjects  "$CI_DIR/project" -exportPackage "Assets/$PLUGIN_NAME" "$PLUGIN_NAME.unitypackage"
+$UNITY_DIR/Unity -quit -batchmode -nographics -openProjects  "$CI_DIR/project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage"
 
 #--------------------------------------
 # Copy to $CI_DIR/output
@@ -166,7 +168,8 @@ cp "$CI_DIR"/project/*.unitypackage "$CI_DIR"/output || exit 1
 if [ $BUILD_PACKAGE == "true" ] 
 then
     echo "[Unity CI] Build package. It may take a while ..."
-    cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets || exit 1
+    mkdir "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/Agora-RTC-Plugin
+    cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/Agora-RTC-Plugin || exit 1
     $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "$CI_DIR/temp/Agora-Unity-Quickstart/API-Example-Unity" -executeMethod CommandBuild.BuildAll
     cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/Build "$CI_DIR"/output || exit 1
     echo "[Unity CI] Build package finish"
