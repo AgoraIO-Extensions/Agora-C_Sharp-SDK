@@ -47,7 +47,7 @@ namespace agora.rtc
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES,
                 "", 0, IntPtr.Zero, 0, out _result) != 0
                 ? new DeviceInfo[0]
-                : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result, "devices");
+                : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result, "result");
         }
 
         public int SetDevice(string deviceIdUTF8)
