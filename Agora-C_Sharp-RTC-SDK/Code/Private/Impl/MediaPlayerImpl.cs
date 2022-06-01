@@ -207,7 +207,7 @@ namespace agora.rtc
                 _irisApiEngine,
                 _irisMediaPlayerCCustomProviderNative, AgoraJson.ToJson(param)
             );
-            return ret;
+            return 0;
         }
 
         private void SetIrisAudioSpectrumObserver(int intervalInMS)
@@ -330,9 +330,9 @@ namespace agora.rtc
 
         public int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider)
         {
-            var ret = SetCustomSourceProvider(playerId, startPos);
-            MediaPlayerCustomDataProviderNative.CustomDataProvider = provider;
-            return ret;
+            //var ret = SetCustomSourceProvider(playerId, startPos);
+            //MediaPlayerCustomDataProviderNative.CustomDataProvider = provider;
+            return -4;
         }
 
         public int Play(int playerId)

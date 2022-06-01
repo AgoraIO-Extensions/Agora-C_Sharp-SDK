@@ -471,7 +471,7 @@ namespace agora.rtc
         {
             if (_irisRtcMetaDataObserverHandleNative == IntPtr.Zero) return;
 
-            AgoraRtcNative.UnRegisterMediaMetadataObserver(_irisRtcEngine, _irisRtcMetaDataObserverHandleNative);
+            AgoraRtcNative.UnRegisterMediaMetadataObserver(_irisRtcEngine, _irisRtcMetaDataObserverHandleNative, "");
             _irisRtcMetaDataObserverHandleNative = IntPtr.Zero;
             MetadataObserverNative.Observer = null;
             _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver();

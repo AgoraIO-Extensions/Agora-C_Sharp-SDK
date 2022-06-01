@@ -342,16 +342,14 @@ namespace agora.rtc
     {
         internal int type;
         internal IntPtr OnVideoFrameReceived;
-        internal int resize_width;
-        internal int resize_height;
+        internal int bytes_per_row_alignment;
     }
 
     internal struct IrisCVideoFrameBuffer
     {
         internal VIDEO_OBSERVER_FRAME_TYPE type;
         internal Func_VideoFrame_Native OnVideoFrameReceived;
-        internal int resize_width;
-        internal int resize_height;
+        internal int bytes_per_row_alignment;
     }
 
     //encoded_video_image
