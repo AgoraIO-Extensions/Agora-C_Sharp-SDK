@@ -25,7 +25,13 @@ namespace agora.rtc
         internal static bool OnReadyToSendMetadata(ref IrisMetadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
             if (Observer == null) return false;
+
             var localMetaData = new Metadata();
+            localMetaData.buffer = metadata.buffer;
+            localMetaData.size = metadata.size;
+            localMetaData.uid = metadata.uid;
+            localMetaData.timeStampMs = metadata.timeStampMs;
+               
             var ret = Observer.OnReadyToSendMetadata(ref localMetaData, source_type);
 
             metadata.buffer = localMetaData.buffer;
