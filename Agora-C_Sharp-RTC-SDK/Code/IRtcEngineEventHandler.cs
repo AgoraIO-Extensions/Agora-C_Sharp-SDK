@@ -58,6 +58,8 @@ namespace agora.rtc
 
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }
 
+
+        public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode) { }
         //todo fix with dcg
         public virtual void OnSnapshotTaken(RtcConnection connection, string filePath, int width, int height, int errCode) { }
 
