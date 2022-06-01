@@ -14,6 +14,8 @@ namespace agora.rtc
     using IrisMediaPlayerAudioFrameObserverHandle = IntPtr;
     using IrisMediaPlayerAudioSpectrumObserverHandle = IntPtr;
     using IrisMetaDataObserverHandle = IntPtr;
+    using IrisMediaPlayerCustomDataProviderHandle = IntPtr;
+
 
     internal enum IRIS_VIDEO_PROCESS_ERR
     {
@@ -202,9 +204,14 @@ namespace agora.rtc
 
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int MediaPlayerOpenWithSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
+        internal static extern IrisMediaPlayerCustomDataProviderHandle MediaPlayerOpenWithSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
 
-//IrisCloudSpatialAudioEnginePtr
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int MediaPlayerUnOpenWithSource(IrisRtcEnginePtr engine_ptr,
+                            IrisMediaPlayerCustomDataProviderHandle handle);
+
+
+        //IrisCloudSpatialAudioEnginePtr
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisEventHandlerHandle SetIrisCloudAudioEngineEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
 
@@ -216,7 +223,7 @@ namespace agora.rtc
         internal static extern IrisMetaDataObserverHandle RegisterMediaMetadataObserver(IrisRtcEnginePtr engine_ptr, IntPtr observer, string @params);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnRegisterMediaMetadataObserver(IrisRtcEnginePtr engine_ptr, IrisMetaDataObserverHandle handle);
+        internal static extern void UnRegisterMediaMetadataObserver(IrisRtcEnginePtr engine_ptr, IrisMetaDataObserverHandle handle, string @params);
 
         #endregion
 
