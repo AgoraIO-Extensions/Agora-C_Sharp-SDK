@@ -5281,7 +5281,7 @@ namespace agora.rtc
 
         public byte[] encryptionKdfSalt
         {
-            set { Buffer.BlockCopy(encryptionKdfSalt, 0, encryptionKdfSalt32, 0, 32); }
+            set { Buffer.BlockCopy(value, 0, encryptionKdfSalt32, 0, 32); }
 
             get { return encryptionKdfSalt32; }
         }
