@@ -1258,7 +1258,7 @@ namespace agora.rtc
                         if (EngineEventHandler == null) return;
                         EngineEventHandler.OnEncryptionError(
                             AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                            (ENCRYPTION_ERROR_TYPE)AgoraJson.GetData<int>(data, "info")
+                            (ENCRYPTION_ERROR_TYPE)AgoraJson.GetData<int>(data, "errorType")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
