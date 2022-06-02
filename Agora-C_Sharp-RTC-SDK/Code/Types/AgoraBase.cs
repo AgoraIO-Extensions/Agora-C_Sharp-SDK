@@ -4196,7 +4196,7 @@ namespace agora.rtc
         {
             background_source_type = BACKGROUND_SOURCE_TYPE.BACKGROUND_COLOR;
             color = 0xffffff;
-            source = null;
+            source = "";
             blur_degree = BACKGROUND_BLUR_DEGREE.BLUR_DEGREE_HIGH;
         }
 
