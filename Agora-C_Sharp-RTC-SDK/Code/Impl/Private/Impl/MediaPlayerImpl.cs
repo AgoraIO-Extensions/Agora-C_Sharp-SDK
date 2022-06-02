@@ -105,13 +105,11 @@ namespace agora.rtc
 #endif
             }
             _mediaPlayerEventHandlerInstance = MediaPlayerSourceObserver.GetInstance();
-            //MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandler = _mediaPlayerEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
         {
             MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Clear();
-            //MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandler = null;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             MediaPlayerSourceObserverNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();

@@ -79,7 +79,7 @@ namespace agora.rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-            _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
+            //_mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
         }
 
         public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
@@ -89,7 +89,7 @@ namespace agora.rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-            _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
+            //_mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
         }
 
         public override void UnregisterAudioFrameObserver()
@@ -99,7 +99,7 @@ namespace agora.rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-            _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
+            //_mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
         }
 
         public override void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
@@ -109,7 +109,7 @@ namespace agora.rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-            _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
+            //_mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
         }
 
         public override void UnregisterMediaPlayerAudioSpectrumObserver()
@@ -119,7 +119,7 @@ namespace agora.rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-            _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver();
+            //_mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver();
         }
 
         public override int Open(string url, Int64 startPos)
