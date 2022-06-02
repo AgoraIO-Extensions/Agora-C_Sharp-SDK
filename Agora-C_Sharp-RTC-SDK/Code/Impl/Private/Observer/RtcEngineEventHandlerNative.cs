@@ -844,7 +844,7 @@ namespace agora.rtc
                             (string)AgoraJson.GetData<string>(data, "filePath"),
                             (int)AgoraJson.GetData<int>(data, "width"),
                             (int)AgoraJson.GetData<int>(data, "height"),
-                            (int)AgoraJson.GetData<int>(data, "errCode")
+                            (int)AgoraJson.GetData<int>(data, "errorCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

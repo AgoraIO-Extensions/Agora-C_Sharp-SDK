@@ -105,12 +105,13 @@ namespace agora.rtc
 #endif
             }
             _mediaPlayerEventHandlerInstance = MediaPlayerSourceObserver.GetInstance();
-            MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandler = _mediaPlayerEventHandlerInstance;
+            //MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandler = _mediaPlayerEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
         {
-            MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandler = null;
+            MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Clear();
+            //MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandler = null;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             MediaPlayerSourceObserverNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();
@@ -179,7 +180,6 @@ namespace agora.rtc
                 _irisMediaPlayerAudioFrameObserverHandleNative, AgoraJson.ToJson(param)
             );
             _irisMediaPlayerAudioFrameObserverHandleNative = IntPtr.Zero;
-            MediaPlayerAudioFrameObserverNative.AudioFrameObserver = null;
             _irisMediaPlayerCAudioFrameObserver = new IrisMediaPlayerCAudioFrameObserver();
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioFrameObserverNative);
         }
@@ -255,37 +255,56 @@ namespace agora.rtc
             return _mediaPlayerEventHandlerInstance;
         }
 
-        public void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
+        public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
         {
-            MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandler = engineEventHandler;
+            if (!MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
+            {
+                MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Add(playerId, engineEventHandler);
+            }
         }
 
-        public void RemoveEventHandler(IMediaPlayerSourceObserver engineEventHandler)
+        public void RemoveEventHandler(int playerId)
         {
-            MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandler = null;
+            if (MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
+            {
+                MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Remove(playerId);
+            }
         }
 
-        public void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
+        public void RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer)
         {
             SetIrisAudioFrameObserver();
-            MediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
+            if (!MediaPlayerAudioFrameObserverNative.AudioFrameObserverDic.ContainsKey(playerId))
+            {
+                MediaPlayerAudioFrameObserverNative.AudioFrameObserverDic.Add(playerId, observer);
+            }
         }
 
-        public void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public void RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             SetIrisAudioFrameObserverWithMode(mode);
-            MediaPlayerAudioFrameObserverNative.AudioFrameObserver = observer;
+            if (!MediaPlayerAudioFrameObserverNative.AudioFrameObserverDic.ContainsKey(playerId))
+            {
+                MediaPlayerAudioFrameObserverNative.AudioFrameObserverDic.Add(playerId, observer);
+            }
         }
 
-        public void UnregisterAudioFrameObserver()
+        public void UnregisterAudioFrameObserver(int playerId)
         {
+            if (MediaPlayerAudioFrameObserverNative.AudioFrameObserverDic.ContainsKey(playerId))
+            {
+                MediaPlayerAudioFrameObserverNative.AudioFrameObserverDic.Remove(playerId);
+            }
             UnSetIrisAudioFrameObserver();
         }
 
-        public void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
+        public void RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
         {
             SetIrisAudioSpectrumObserver(intervalInMS);
-            AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
+            if (!AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserverDic.ContainsKey(playerId))
+            {
+                AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserverDic.Add(playerId, observer);
+            }
         }
 
         public void UnregisterMediaPlayerAudioSpectrumObserver()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -9,6 +10,7 @@ namespace agora.rtc
     internal static class AudioSpectrumObserverNative
     {
         internal static IAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
+        internal static Dictionary<int, IAudioSpectrumObserver> AgoraRtcAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserver>();
 
         private static AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
         {

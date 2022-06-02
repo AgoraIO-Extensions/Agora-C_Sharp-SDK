@@ -5,25 +5,25 @@ using AOT;
 
 namespace agora.rtc
 {
-    public delegate void OnPlayerSourceStateChangedHandler(int playerId, MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec);
+    public delegate void OnPlayerSourceStateChangedHandler(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec);
 
-    public delegate void OnPositionChangedHandler(int playerId, Int64 position);
+    public delegate void OnPositionChangedHandler(Int64 position);
 
-    public delegate void OnPlayerEventHandler(int playerId, MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message);
+    public delegate void OnPlayerEventHandler(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message);
 
-    public delegate void OnMetaDataHandler(int playerId, IntPtr data, int length);
+    public delegate void OnMetaDataHandler(IntPtr data, int length);
 
-    public delegate void OnPlayBufferUpdatedHandler(int playerId, Int64 playCachedBuffer);
+    public delegate void OnPlayBufferUpdatedHandler(Int64 playCachedBuffer);
 
-    public delegate void OnCompletedHandler(int playerId);
+    public delegate void OnCompletedHandler();
 
-    public delegate void OnAgoraCDNTokenWillExpireHandler(int playerId);
+    public delegate void OnAgoraCDNTokenWillExpireHandler();
 
-    public delegate void OnPlayerSrcInfoChangedHandler(int playerId, SrcInfo from, SrcInfo to);
+    public delegate void OnPlayerSrcInfoChangedHandler(SrcInfo from, SrcInfo to);
 
     public delegate void OnPlayerInfoUpdatedHandler(PlayerUpdatedInfo info);
 
-    public delegate void MediaPlayerOnAudioVolumeIndicationHandler(int playerId, int volume);
+    public delegate void MediaPlayerOnAudioVolumeIndicationHandler(int volume);
     
     public class MediaPlayerSourceObserver : IMediaPlayerSourceObserver
     {
@@ -45,52 +45,52 @@ namespace agora.rtc
             return eventInstance ?? (eventInstance = new MediaPlayerSourceObserver());
         }
 
-        public override void OnPlayerSourceStateChanged(int playerId, MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
+        public override void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
         {
             if (EventOnPlayerSourceStateChanged == null) return;
-            EventOnPlayerSourceStateChanged.Invoke(playerId, state, ec);
+            EventOnPlayerSourceStateChanged.Invoke(state, ec);
         }
 
-        public override void OnPositionChanged(int playerId, Int64 position)
+        public override void OnPositionChanged(Int64 position)
         {
             if (EventOnPositionChanged == null) return;
-            EventOnPositionChanged.Invoke(playerId, position);
+            EventOnPositionChanged.Invoke(position);
         }
 
-        public override void OnPlayerEvent(int playerId, MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message)
+        public override void OnPlayerEvent(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message)
         {
             if (EventOnPlayerEvent == null) return;
-            EventOnPlayerEvent.Invoke(playerId, @event, elapsedTime, message);
+            EventOnPlayerEvent.Invoke(@event, elapsedTime, message);
         }
 
-        public override void OnMetaData(int playerId, IntPtr data, int length)
+        public override void OnMetaData(IntPtr data, int length)
         {
             if (EventOnMetaData == null) return;
-            EventOnMetaData.Invoke(playerId, data, length);
+            EventOnMetaData.Invoke(data, length);
         }
 
-        public override void OnPlayBufferUpdated(int playerId, Int64 playCachedBuffer)
+        public override void OnPlayBufferUpdated(Int64 playCachedBuffer)
         {
             if (EventOnPlayBufferUpdated == null) return;
-            EventOnPlayBufferUpdated.Invoke(playerId, playCachedBuffer);
+            EventOnPlayBufferUpdated.Invoke(playCachedBuffer);
         }
 
-        public override void OnCompleted(int playerId)
+        public override void OnCompleted()
         {
             if (EventOnCompleted == null) return;
-            EventOnCompleted.Invoke(playerId);
+            EventOnCompleted.Invoke();
         }
 
-        public override void OnAgoraCDNTokenWillExpire(int playerId)
+        public override void OnAgoraCDNTokenWillExpire()
         {
             if (EventOnAgoraCDNTokenWillExpire == null) return;
-            EventOnAgoraCDNTokenWillExpire.Invoke(playerId);
+            EventOnAgoraCDNTokenWillExpire.Invoke();
         }
 
-        public override void OnPlayerSrcInfoChanged(int playerId, SrcInfo from, SrcInfo to)
+        public override void OnPlayerSrcInfoChanged(SrcInfo from, SrcInfo to)
         {
             if (EventOnPlayerSrcInfoChanged == null) return;
-            EventOnPlayerSrcInfoChanged.Invoke(playerId, from, to);
+            EventOnPlayerSrcInfoChanged.Invoke(from, to);
         }
 
         public override void OnPlayerInfoUpdated(PlayerUpdatedInfo info)
@@ -99,10 +99,10 @@ namespace agora.rtc
             EventOnPlayerInfoUpdated.Invoke(info);
         }
 
-        public override void OnAudioVolumeIndication(int playerId, int volume)
+        public override void OnAudioVolumeIndication(int volume)
         {
             if (EventOnAudioVolumeIndication == null) return;
-            EventOnAudioVolumeIndication.Invoke(playerId, volume);
+            EventOnAudioVolumeIndication.Invoke(volume);
         }
     }
 }

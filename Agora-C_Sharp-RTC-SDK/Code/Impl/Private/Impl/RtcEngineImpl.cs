@@ -4344,21 +4344,6 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        //todo not found in dcg
-        //public int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len)
-        //{
-        //    var param = new
-        //    {
-        //        credential_buf,
-        //        credential_len,
-        //        certificate_buf,
-        //        certificate_len
-        //    };
-
-        //    return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine, ApiTypeEngine.kEngineGetCertificateVerifyResult,
-        //        AgoraJson.ToJson(param), out _result);
-        //}
-
         public int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction)
         {
 
@@ -4583,25 +4568,6 @@ namespace agora.rtc
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
-        //todo  not found in dcg
-        //public int EnableContentInspect(bool enabled, ContentInspectConfig config)
-        //{
-        //    var param = new
-        //    {
-        //        enabled,
-        //        config
-        //    };
-
-        //    var json = AgoraJson.ToJson(param);
-        //    var (UInt32)json.Length = Convert.ToUInt32((UInt32)json.Length);
-        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.ENABLECONTEN,
-        //        json, (UInt32)json.Length,
-        //        IntPtr.Zero, 0,
-        //        out _result);
-
-        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        //}
 
         public int SwitchChannel(string token, string channel)
         {

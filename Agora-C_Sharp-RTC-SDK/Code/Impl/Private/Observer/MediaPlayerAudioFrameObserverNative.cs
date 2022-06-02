@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -8,7 +9,7 @@ namespace agora.rtc
 {
     internal static class MediaPlayerAudioFrameObserverNative
     {
-        internal static IMediaPlayerAudioFrameObserver AudioFrameObserver;
+        internal static Dictionary<int, IMediaPlayerAudioFrameObserver> AudioFrameObserverDic = new Dictionary<int, IMediaPlayerAudioFrameObserver>();
         private static class LocalAudioPcmFrames
         {
             internal static readonly AudioPcmFrame AudioPcmFrame = new AudioPcmFrame();
@@ -32,8 +33,8 @@ namespace agora.rtc
             localAudioPcmFrame.sample_rate_hz_ = audioPcmFrame.sample_rate_hz_;
             localAudioPcmFrame.samples_per_channel_ = audioPcmFrame.samples_per_channel_;
 
-            return AudioFrameObserver == null || 
-                AudioFrameObserver.OnFrame(localAudioPcmFrame, mediaPlayerId);
+            return AudioFrameObserverDic.ContainsKey(mediaPlayerId) ||
+                AudioFrameObserverDic[mediaPlayerId].OnFrame(localAudioPcmFrame);
         }
     }
 }

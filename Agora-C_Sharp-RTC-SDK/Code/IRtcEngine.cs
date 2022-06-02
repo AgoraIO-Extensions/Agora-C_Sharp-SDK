@@ -31,8 +31,6 @@ namespace agora.rtc
 
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
-        public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options);
-
         public abstract int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo);
 
         public abstract int GetUserInfoByUid(uint uid, ref UserInfo userInfo);
@@ -135,7 +133,9 @@ namespace agora.rtc
         #endregion
 
         #region Media player
-        public abstract IMediaPlayer GetMediaPlayer();
+        public abstract IMediaPlayer CreateMediaPlayer();
+
+        public abstract void DestroyMediaPlayer(IMediaPlayer mediaPlayer);
         #endregion
 
         #region Audio pre-process and post-process
@@ -348,6 +348,10 @@ namespace agora.rtc
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
 
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
+
+        public abstract int AdjustCustomAudioPublishVolume(int sourceId, int volume);
+
+        public abstract int AdjustCustomAudioPlayoutVolume(int sourceId, int volume);
         #endregion
 
         #region Custom audio renderer
@@ -474,12 +478,6 @@ namespace agora.rtc
         public abstract int SetCameraAutoExposureFaceModeEnabled(bool enabled);
         #endregion
 
-        #region Multiple channels
-        public abstract int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options);
-
-        public abstract int LeaveChannelEx(RtcConnection connection);
-        #endregion
-
         #region Audio route : This group of methods are for Android and iOS only.
         public abstract int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker);
 
@@ -511,8 +509,6 @@ namespace agora.rtc
         #region Miscellaneous methods
         public abstract int SetCloudProxy(CLOUD_PROXY_TYPE proxyType);
 
-        public abstract int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection);
-
         public abstract string GetCallId();
 
         public abstract int Rate(string callId, int rating, string description);
@@ -542,6 +538,32 @@ namespace agora.rtc
         public abstract int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param);
         #endregion
 
+        #region RtmpStreaming
+        public abstract int AddInjectStreamUrl(string url, InjectStreamConfig config);
+
+        public abstract int RemoveInjectStreamUrl(string url);
+
+        public abstract int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile);
+
+        public abstract int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config);
+
+        public abstract int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options);
+
+        public abstract int StopDirectCdnStreaming();
+
+        public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
+
+        public abstract int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame);
+
+        public abstract int StartRtmpStreamWithoutTranscoding(string url);
+
+        public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
+
+        public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
+
+        public abstract int StopRtmpStream(string url);
+        #endregion
+
         public abstract int SetLogFile(string filePath);
 
         public abstract int SetLogFilter(uint filter);
@@ -568,10 +590,6 @@ namespace agora.rtc
 
         public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
 
-        public abstract int AddInjectStreamUrl(string url, InjectStreamConfig config);
-
-        public abstract int RemoveInjectStreamUrl(string url);
-
         public abstract int PauseAudio();
 
         public abstract int ResumeAudio();
@@ -586,17 +604,52 @@ namespace agora.rtc
 
         public abstract int RegisterLocalUserAccount(string appId, string userAccount);
 
-        public abstract int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile);
+        public abstract int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction);
 
-        public abstract int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config);
+        public abstract int SetParameters(string parameters);
 
-        public abstract int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options);
+        public abstract int GetAudioDeviceInfo(ref DeviceInfo deviceInfo);
 
-        public abstract int StopDirectCdnStreaming();
+        public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
 
-        public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
+        public abstract int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option);
 
-        public abstract int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame);
+        public abstract int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option);
+
+        public abstract int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay);
+
+        public abstract int SwitchChannel(string token, string channel);
+
+        public abstract int SwitchChannel(string token, string channel, ChannelMediaOptions options);
+
+        //public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
+
+        //public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
+
+        public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
+
+        public abstract int PushDirectAudioFrame(AudioFrame frame);
+
+        public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
+
+        public abstract int EnableFishCorrection(bool enabled, FishCorrectionParams @params);
+
+        public abstract int SetAVSyncSource(string channelId, uint uid);
+
+        public abstract int SetContentInspect(ContentInspectConfig config);
+
+        public abstract bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir);
+
+        public abstract bool StopDumpVideo();
+    };
+
+    public abstract class IRtcEngineEx : IRtcEngine
+    {
+        #region Multiple channels
+        public abstract int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options);
+
+        public abstract int LeaveChannelEx(RtcConnection connection);
+        #endregion
 
         public abstract int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnection connection);
 
@@ -630,55 +683,7 @@ namespace agora.rtc
 
         public abstract int ClearVideoWatermarkEx(RtcConnection connection);
 
-        public abstract int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction);
-
-        public abstract int AdjustCustomAudioPublishVolume(int sourceId, int volume);
-
-        public abstract int AdjustCustomAudioPlayoutVolume(int sourceId, int volume);
-
-        public abstract int SetParameters(string parameters);
-
-        public abstract int GetAudioDeviceInfo(ref DeviceInfo deviceInfo);
-
-        public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
-
-        public abstract int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option);
-
-        public abstract int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option);
-
-        public abstract int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay);
-
-        public abstract int SwitchChannel(string token, string channel);
-
-        public abstract int SwitchChannel(string token, string channel, ChannelMediaOptions options);
-
-        //public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
-
-        //public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
-
-        public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
-
-        public abstract int PushDirectAudioFrame(AudioFrame frame);
-
-        public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
-
-        public abstract int EnableFishCorrection(bool enabled, FishCorrectionParams @params);
-
-        public abstract int SetAVSyncSource(string channelId, uint uid);
-
-        public abstract int StartRtmpStreamWithoutTranscoding(string url);
-
-        public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
-
-        public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
-
-        public abstract int StopRtmpStream(string url);
-
-        public abstract int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection);
-
-        public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
-
-        public abstract int SetContentInspect(ContentInspectConfig config);
+        public abstract int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection);
 
         public abstract int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection);
 
@@ -690,8 +695,8 @@ namespace agora.rtc
 
         public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
 
-        public abstract bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir);
+        public abstract int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection);
 
-        public abstract bool StopDumpVideo();
-    };
+        public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
+    }
 }
