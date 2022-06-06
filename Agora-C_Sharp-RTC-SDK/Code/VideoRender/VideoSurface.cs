@@ -73,7 +73,7 @@ namespace agora.rtc
                 {
                     this._textureWidth = _textureManager.Width;
                     this._textureHeight = _textureManager.Height;
-                    if (this._textureWidth != 0 && this._textureHeight != 0)
+                    if (this._textureWidth != 0 && this._textureHeight != 0 && this.OnTextureSizeModify!= null)
                     {
                         this.OnTextureSizeModify.Invoke(this._textureWidth, this._textureHeight);
                     }
