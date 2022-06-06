@@ -25,6 +25,10 @@ namespace agora.rtc
         private int _refCount = 0;
         private bool _canAttach = false;
 
+        //texture width and height
+        public int Width = 0;
+        public int Height = 0;
+
         private Texture2D _texture;
         public Texture2D Texture
         {
@@ -118,6 +122,8 @@ namespace agora.rtc
         internal void ReFreshTexture()
         {
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
+            this.Width = _cachedVideoFrame.width;
+            this.Height = _cachedVideoFrame.height;
             //AgoraLog.LogWarning("GetVideoFrame" + ret + " width:" + _cachedVideoFrame.width + " height:" + _cachedVideoFrame.height);
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY ||ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
             {

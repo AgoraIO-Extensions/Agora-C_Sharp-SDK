@@ -11,6 +11,8 @@ namespace agora.rtc
         RawImage = 1,
     };
 
+    public delegate void OnTextureSizeModifyHandler(int width, int height);
+
     public sealed class VideoSurface : MonoBehaviour
     {
         [SerializeField] private VideoSurfaceType VideoSurfaceType = VideoSurfaceType.Renderer;
@@ -27,6 +29,10 @@ namespace agora.rtc
 
         private GameObject _TextureManagerGameObject;
         private TextureManager _textureManager;
+        private int _textureWidth = 0;
+        private int _textureHeight =0;
+
+        public event OnTextureSizeModifyHandler OnTextureSizeModify;
 
         void Start()
         {
@@ -60,6 +66,16 @@ namespace agora.rtc
                     if (_textureManager.CanTextureAttach())
                     {
                         ApplyTexture(_textureManager.Texture);
+                    }
+                }
+
+                if (_textureManager && (this._textureWidth != _textureManager.Width || this._textureHeight != _textureManager.Height))
+                {
+                    this._textureWidth = _textureManager.Width;
+                    this._textureHeight = _textureManager.Height;
+                    if (this._textureWidth != 0 && this._textureHeight != 0)
+                    {
+                        this.OnTextureSizeModify.Invoke(this._textureWidth, this._textureHeight);
                     }
                 }
             }
