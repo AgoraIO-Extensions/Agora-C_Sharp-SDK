@@ -806,7 +806,7 @@ namespace agora.rtc
             DeviceWork = false;
             CloudWork = true;
             DeviceworkType = CONTENT_INSPECT_DEVICE_TYPE.CONTENT_INSPECT_DEVICE_INVALID;
-            extraInfo = null;
+            extraInfo = "";
             moduleCount = 0;
         }
 
