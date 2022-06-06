@@ -118,7 +118,7 @@ namespace agora.rtc
         internal void ReFreshTexture()
         {
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
-            AgoraLog.LogWarning("GetVideoFrame" + ret + " width:" + _cachedVideoFrame.width + " height:" + _cachedVideoFrame.height);
+            //AgoraLog.LogWarning("GetVideoFrame" + ret + " width:" + _cachedVideoFrame.width + " height:" + _cachedVideoFrame.height);
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY ||ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
             {
                 _canAttach = false;
