@@ -140,13 +140,13 @@ namespace agora.rtc
     };
 
     /**
- * @brief The playback event.
- *
- */
+    * @brief The playback event.
+    *
+    */
     public enum MEDIA_PLAYER_EVENT
     {
         /** The player begins to seek to the new playback position.
-         */
+        */
         PLAYER_EVENT_SEEK_BEGIN = 0,
         /** The seek operation completes.
          */
@@ -181,6 +181,21 @@ namespace agora.rtc
         /** An application can render the video to less than a second
          */
         PLAYER_EVENT_FIRST_DISPLAYED = 13,
+        /** cache resources exceed the maximum file count
+         */
+        PLAYER_EVENT_REACH_CACHE_FILE_MAX_COUNT = 14,
+        /** cache resources exceed the maximum file size
+         */
+        PLAYER_EVENT_REACH_CACHE_FILE_MAX_SIZE = 15,
+        /** Triggered when a retry is required to open the media
+         */
+        PLAYER_EVENT_TRY_OPEN_START = 16,
+        /** Triggered when the retry to open the media is successful
+         */
+        PLAYER_EVENT_TRY_OPEN_SUCCEED = 17,
+        /** Triggered when retrying to open media fails
+         */
+        PLAYER_EVENT_TRY_OPEN_FAILED = 18,
     };
 
     /**

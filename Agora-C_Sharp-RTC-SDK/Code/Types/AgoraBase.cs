@@ -49,7 +49,7 @@ namespace agora.rtc
          * 2: Gaming.
          * @deprecated This profile is deprecated.
          */
-        [Obsolete("This profile is deprecated")]
+        [Obsolete]
         CHANNEL_PROFILE_GAME = 2,
         /**
          * 3: Cloud Gaming.
@@ -64,13 +64,6 @@ namespace agora.rtc
          * @deprecated This profile is deprecated.
          */
         CHANNEL_PROFILE_COMMUNICATION_1v1 = 4,
-
-        /**
-         * 5: Live Broadcast 2.
-         *
-         * This profile technical preview.
-         */
-        CHANNEL_PROFILE_LIVE_BROADCASTING_2 = 5,
     };
 
     /**
@@ -79,9 +72,9 @@ namespace agora.rtc
     public enum WARN_CODE_TYPE
     {
         /**
-        * 8: The specified view is invalid. To use the video function, you need to specify
-        * a valid view.
-        */
+    * 8: The specified view is invalid. To use the video function, you need to specify
+    * a valid view.
+    */
         WARN_INVALID_VIEW = 8,
         /**
          * 16: Fails to initialize the video function, probably due to a lack of
@@ -178,17 +171,6 @@ namespace agora.rtc
          */
         WARN_ADM_RECORD_MALFUNCTION = 1021,
         /**
-         * 1029: Audio Device Module: During a call, the audio session category should be
-         * set to `AVAudioSessionCategoryPlayAndRecord`, and the SDK monitors this value.
-         * If the audio session category is set to any other value, this warning occurs
-         * and the SDK forcefully sets it back to `AVAudioSessionCategoryPlayAndRecord`.
-         */
-        WARN_ADM_IOS_CATEGORY_NOT_PLAYANDRECORD = 1029,
-        /**
-         * 1030: Audio Device Module: An exception occurs when changing the audio sample rate.
-         */
-        WARN_ADM_IOS_SAMPLERATE_CHANGE = 1030,
-        /**
          * 1031: Audio Device Module: The recorded audio volume is too low.
          */
         WARN_ADM_RECORD_AUDIO_LOWLEVEL = 1031,
@@ -236,9 +218,9 @@ namespace agora.rtc
     };
 
     /**
-     * The error codes.
-     */
-    public enum ERROR_CODE_TYPE
+   * The error codes.
+   */
+    enum ERROR_CODE_TYPE
     {
         /**
          * 0: No error occurs.
@@ -491,6 +473,13 @@ namespace agora.rtc
          */
         ERR_INVALID_USER_ACCOUNT = 134,
 
+        /** 157: The necessary dynamical library is not integrated. For example, if you call
+         * the \ref agora::rtc::IRtcEngine::enableDeepLearningDenoise "enableDeepLearningDenoise" but do not integrate the dynamical
+         * library for the deep-learning noise reduction into your project, the SDK reports this error code.
+         *
+         */
+        ERR_MODULE_NOT_FOUND = 157,
+
         // Licensing, keep the license error code same as the main version
         ERR_CERT_RAW = 157,
         ERR_CERT_JSON_PART = 158,
@@ -699,25 +688,8 @@ namespace agora.rtc
          * 1206: Audio device module: Cannot activate the audio session.
          */
         ERR_ADM_IOS_ACTIVATE_SESSION_FAIL = 1206,
-        /**
-         * 1210: Audio device module: Fails to initialize the audio device,
-         * usually because the audio device parameters are not properly set.
-         */
-        ERR_ADM_IOS_VPIO_INIT_FAIL = 1210,
-        /**
-         * 1213: Audio device module: Fails to re-initialize the audio device,
-         * usually because the audio device parameters are not properly set.
-         */
-        ERR_ADM_IOS_VPIO_REINIT_FAIL = 1213,
-        /**
-         * 1214:  Audio device module: Fails to re-start up the Audio Unit, usually because the audio
-         * session category is not compatible with the settings of the Audio Unit.
-         */
-        ERR_ADM_IOS_VPIO_RESTART_FAIL = 1214,
-        ERR_ADM_IOS_SET_RENDER_CALLBACK_FAIL = 1219,
         /** @deprecated */
-        [Obsolete]
-        ERR_ADM_IOS_SESSION_SAMPLERATR_ZERO = 1221,
+        ERR_ADM_IOS_SESSION_SAMPLERATR_ZERO __deprecated = 1221,
         /**
          * 1301: Audio device module: An exception with the audio driver or a
          * compatibility issue occurs.
@@ -1005,6 +977,7 @@ namespace agora.rtc
         AGORA_IID_MEDIA_ENGINE_REGULATOR = 9,
         AGORA_IID_CLOUD_SPATIAL_AUDIO = 10,
         AGORA_IID_LOCAL_SPATIAL_AUDIO = 11,
+        AGORA_IID_MEDIA_RECORDER = 12,
     };
 
     /**
@@ -1326,6 +1299,102 @@ namespace agora.rtc
          * 20: JPEG.
          */
         VIDEO_CODEC_GENERIC_JPEG = 20,
+    };
+
+    /**
+    * The CC (Congestion Control) mode options.
+    */
+    public enum TCcMode
+    {
+        /**
+         * Enable CC mode.
+         */
+        CC_ENABLED,
+        /**
+         * Disable CC mode.
+         */
+        CC_DISABLED,
+    };
+
+
+    /**
+ * The configuration for creating a local video track with an encoded image sender.
+ */
+    public class SenderOptions
+    {
+        /**
+         * Whether to enable CC mode. See #TCcMode.
+         */
+        public TCcMode ccMode { set; get; }
+        /**
+         * The codec type used for the encoded images: \ref agora::rtc::VIDEO_CODEC_TYPE "VIDEO_CODEC_TYPE".
+         */
+        public VIDEO_CODEC_TYPE codecType { set; get; }
+
+        /**
+         * Target bitrate (Kbps) for video encoding.
+         *
+         * Choose one of the following options:
+         *
+         * - \ref agora::rtc::STANDARD_BITRATE "STANDARD_BITRATE": (Recommended) Standard bitrate.
+         *   - Communication profile: The encoding bitrate equals the base bitrate.
+         *   - Live-broadcast profile: The encoding bitrate is twice the base bitrate.
+         * - \ref agora::rtc::COMPATIBLE_BITRATE "COMPATIBLE_BITRATE": Compatible bitrate. The bitrate stays the same
+         * regardless of the profile.
+         *
+         * The Communication profile prioritizes smoothness, while the Live Broadcast
+         * profile prioritizes video quality (requiring a higher bitrate). Agora
+         * recommends setting the bitrate mode as \ref agora::rtc::STANDARD_BITRATE "STANDARD_BITRATE" or simply to
+         * address this difference.
+         *
+         * The following table lists the recommended video encoder configurations,
+         * where the base bitrate applies to the communication profile. Set your
+         * bitrate based on this table. If the bitrate you set is beyond the proper
+         * range, the SDK automatically sets it to within the range.
+
+         | Resolution             | Frame Rate (fps) | Base Bitrate (Kbps, for Communication) | Live Bitrate (Kbps, for Live Broadcast)|
+         |------------------------|------------------|----------------------------------------|----------------------------------------|
+         | 160 &times; 120        | 15               | 65                                     | 130 |
+         | 120 &times; 120        | 15               | 50                                     | 100 |
+         | 320 &times; 180        | 15               | 140                                    | 280 |
+         | 180 &times; 180        | 15               | 100                                    | 200 |
+         | 240 &times; 180        | 15               | 120                                    | 240 |
+         | 320 &times; 240        | 15               | 200                                    | 400 |
+         | 240 &times; 240        | 15               | 140                                    | 280 |
+         | 424 &times; 240        | 15               | 220                                    | 440 |
+         | 640 &times; 360        | 15               | 400                                    | 800 |
+         | 360 &times; 360        | 15               | 260                                    | 520 |
+         | 640 &times; 360        | 30               | 600                                    | 1200 |
+         | 360 &times; 360        | 30               | 400                                    | 800 |
+         | 480 &times; 360        | 15               | 320                                    | 640 |
+         | 480 &times; 360        | 30               | 490                                    | 980 |
+         | 640 &times; 480        | 15               | 500                                    | 1000 |
+         | 480 &times; 480        | 15               | 400                                    | 800 |
+         | 640 &times; 480        | 30               | 750                                    | 1500 |
+         | 480 &times; 480        | 30               | 600                                    | 1200 |
+         | 848 &times; 480        | 15               | 610                                    | 1220 |
+         | 848 &times; 480        | 30               | 930                                    | 1860 |
+         | 640 &times; 480        | 10               | 400                                    | 800 |
+         | 1280 &times; 720       | 15               | 1130                                   | 2260 |
+         | 1280 &times; 720       | 30               | 1710                                   | 3420 |
+         | 960 &times; 720        | 15               | 910                                    | 1820 |
+         | 960 &times; 720        | 30               | 1380                                   | 2760 |
+         | 1920 &times; 1080      | 15               | 2080                                   | 4160 |
+         | 1920 &times; 1080      | 30               | 3150                                   | 6300 |
+         | 1920 &times; 1080      | 60               | 4780                                   | 6500 |
+         | 2560 &times; 1440      | 30               | 4850                                   | 6500 |
+         | 2560 &times; 1440      | 60               | 6500                                   | 6500 |
+         | 3840 &times; 2160      | 30               | 6500                                   | 6500 |
+         | 3840 &times; 2160      | 60               | 6500                                   | 6500 |
+         */
+        public int targetBitrate { set; get; }
+
+        public SenderOptions()
+        {
+            ccMode = TCcMode.CC_ENABLED;
+            codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_GENERIC_H264;
+            targetBitrate = 6500;
+        }
     };
 
     /**
@@ -2320,6 +2389,31 @@ namespace agora.rtc
         EXPERIENCE_QUALITY_BAD = 1,
     };
 
+    /**
+    * The reason for poor QoE of the local user when receiving a remote audio stream.
+    *
+    */
+    public enum EXPERIENCE_POOR_REASON
+    {
+        /** 0: No reason, indicating good QoE of the local user.
+         */
+        EXPERIENCE_REASON_NONE = 0,
+        /** 1: The remote user's network quality is poor.
+         */
+        REMOTE_NETWORK_QUALITY_POOR = 1,
+        /** 2: The local user's network quality is poor.
+         */
+        LOCAL_NETWORK_QUALITY_POOR = 2,
+        /** 4: The local user's Wi-Fi or mobile network signal is weak.
+         */
+        WIRELESS_SIGNAL_POOR = 4,
+        /** 8: The local user enables both Wi-Fi and bluetooth, and their signals interfere with each other.
+         * As a result, audio transmission quality is undermined.
+         */
+        WIFI_BLUETOOTH_COEXIST = 8,
+    };
+
+
     /** Audio statistics of a remote user */
     public class RemoteAudioStats
     {
@@ -2466,7 +2560,7 @@ namespace agora.rtc
 
     /**
     * Audio application scenarios.
-*/
+    */
     public enum AUDIO_SCENARIO_TYPE
     {
         /**
@@ -2474,29 +2568,29 @@ namespace agora.rtc
         */
         AUDIO_SCENARIO_DEFAULT = 0,
         /**
-        * 3: (Recommended) The live gaming scenario, which needs to enable gaming
-        * audio effects in the speaker. Choose this scenario to achieve high-fidelity
-        * music playback.
-        */
+         * 3: (Recommended) The live gaming scenario, which needs to enable gaming
+         * audio effects in the speaker. Choose this scenario to achieve high-fidelity
+         * music playback.
+         */
         AUDIO_SCENARIO_GAME_STREAMING = 3,
         /**
-        * 5: The chatroom scenario, which needs to keep recording when setClientRole to audience.
-        * Normally, app developer can also use mute api to achieve the same result,
-        * and we implement this 'non-orthogonal' behavior only to make API backward compatible.
-        */
+         * 5: The chatroom scenario, which needs to keep recording when setClientRole to audience.
+         * Normally, app developer can also use mute api to achieve the same result,
+         * and we implement this 'non-orthogonal' behavior only to make API backward compatible.
+         */
         AUDIO_SCENARIO_CHATROOM = 5,
         /**
-        * 6: (Recommended) The scenario requiring high-quality audio.
-        */
-        AUDIO_SCENARIO_HIGH_DEFINITION = 6,
-        /**
-        * 7: Chorus
-        */
+         * 7: Chorus
+         */
         AUDIO_SCENARIO_CHORUS = 7,
         /**
-        * 8: Reserved.
-        */
-        AUDIO_SCENARIO_NUM = 8,
+         * 8: Meeting
+         */
+        AUDIO_SCENARIO_MEETING = 8,
+        /**
+         * 9: Reserved.
+         */
+        AUDIO_SCENARIO_NUM = 9,
     };
 
 
@@ -2566,6 +2660,36 @@ namespace agora.rtc
         CONTENT_HINT_DETAILS
     };
 
+    public enum SCREEN_SCENARIO_TYPE
+    {
+        SCREEN_SCENARIO_DOCUMENT = 1,
+        SCREEN_SCENARIO_GAMING = 2,
+        SCREEN_SCENARIO_VIDEO = 3,
+        SCREEN_SCENARIO_RDC = 4,
+    };
+
+
+    /**
+    * The brightness level of the video image captured by the local camera.
+    */
+    public enum CAPTURE_BRIGHTNESS_LEVEL_TYPE
+    {
+        /** -1: The SDK does not detect the brightness level of the video image.
+         * Wait a few seconds to get the brightness level from `CAPTURE_BRIGHTNESS_LEVEL_TYPE` in the next callback.
+         */
+        CAPTURE_BRIGHTNESS_LEVEL_INVALID = -1,
+        /** 0: The brightness level of the video image is normal.
+         */
+        CAPTURE_BRIGHTNESS_LEVEL_NORMAL = 0,
+        /** 1: The brightness level of the video image is too bright.
+         */
+        CAPTURE_BRIGHTNESS_LEVEL_BRIGHT = 1,
+        /** 2: The brightness level of the video image is too dark.
+         */
+        CAPTURE_BRIGHTNESS_LEVEL_DARK = 2,
+    };
+
+
     /**
     * States of the local audio.
 */
@@ -2591,7 +2715,7 @@ namespace agora.rtc
 
     /**
     * Reasons for the local audio failure.
-*/
+    */
     public enum LOCAL_AUDIO_STREAM_ERROR
     {
         /**
@@ -2599,26 +2723,42 @@ namespace agora.rtc
         */
         LOCAL_AUDIO_STREAM_ERROR_OK = 0,
         /**
-        * 1: No specified reason for the local audio failure.
-        */
+         * 1: No specified reason for the local audio failure.
+         */
         LOCAL_AUDIO_STREAM_ERROR_FAILURE = 1,
         /**
-        * 2: No permission to use the local audio device.
-        */
+         * 2: No permission to use the local audio device.
+         */
         LOCAL_AUDIO_STREAM_ERROR_DEVICE_NO_PERMISSION = 2,
         /**
-        * 3: The microphone is in use.
-        */
+         * 3: The microphone is in use.
+         */
         LOCAL_AUDIO_STREAM_ERROR_DEVICE_BUSY = 3,
         /**
-        * 4: The local audio recording fails. Check whether the recording device
-        * is working properly.
-        */
+         * 4: The local audio recording fails. Check whether the recording device
+         * is working properly.
+         */
         LOCAL_AUDIO_STREAM_ERROR_RECORD_FAILURE = 4,
         /**
-        * 5: The local audio encoding fails.
-        */
-        LOCAL_AUDIO_STREAM_ERROR_ENCODE_FAILURE = 5
+         * 5: The local audio encoding fails.
+         */
+        LOCAL_AUDIO_STREAM_ERROR_ENCODE_FAILURE = 5,
+        /** 6: The SDK cannot find the local audio recording device.
+         */
+        LOCAL_AUDIO_STREAM_ERROR_NO_RECORDING_DEVICE = 6,
+        /** 7: The SDK cannot find the local audio playback device.
+         */
+        LOCAL_AUDIO_STREAM_ERROR_NO_PLAYOUT_DEVICE = 7,
+        /**
+         * 8: The local audio capturing is interrupted by the system call.
+         */
+        LOCAL_AUDIO_STREAM_ERROR_INTERRUPTED = 8,
+        /** 9: An invalid audio capture device ID.
+         */
+        LOCAL_AUDIO_STREAM_ERROR_RECORD_INVALID_ID = 9,
+        /** 10: An invalid audio playback device ID.
+         */
+        LOCAL_AUDIO_STREAM_ERROR_PLAYOUT_INVALID_ID = 10,
     };
 
     /** Local video state types.
@@ -3232,6 +3372,8 @@ namespace agora.rtc
         RTMP_STREAM_PUBLISH_ERROR_NET_DOWN = 14,  // Note: match to ERR_NET_DOWN in AgoraBase.h
         /** User AppId have not authorized to push stream. */
         RTMP_STREAM_PUBLISH_ERROR_INVALID_APPID = 15,  // Note: match to ERR_PUBLISH_STREAM_APPID_INVALID in AgoraBase.h
+        /** invalid privilege. */
+        RTMP_STREAM_PUBLISH_ERROR_INVALID_PRIVILEGE = 16,
         /**
          * 100: The streaming has been stopped normally. After you call
          * \ref IRtcEngine::removePublishStreamUrl "removePublishStreamUrl"
@@ -3975,6 +4117,64 @@ namespace agora.rtc
         CLIENT_ROLE_CHANGE_FAILED_CONNECTION_FAILED = 4,
     };
 
+    /** 
+    * The reason of notifying the user of a message.
+    */
+    public enum WLACC_MESSAGE_REASON
+    {
+        /** 
+         * WIFI signal is weak.
+         */
+        WLACC_MESSAGE_REASON_WEAK_SIGNAL = 0,
+        /** 
+         * Channel congestion.
+         */
+        WLACC_MESSAGE_REASON_CHANNEL_CONGESTION = 1,
+    };
+
+
+    /** 
+    * Suggest an action for the user.
+    */
+    public enum WLACC_SUGGEST_ACTION
+    {
+        /** 
+         * Please get close to AP.
+         */
+        WLACC_SUGGEST_ACTION_CLOSE_TO_WIFI = 0,
+        /** 
+         * The user is advised to connect to the prompted SSID.
+         */
+        WLACC_SUGGEST_ACTION_CONNECT_SSID = 1,
+        /** 
+         * The user is advised to check whether the AP supports 5G band and enable 5G band (the aciton link is attached), or purchases an AP that supports 5G. AP does not support 5G band.
+         */
+        WLACC_SUGGEST_ACTION_CHECK_5G = 2,
+        /** 
+         * The user is advised to change the SSID of the 2.4G or 5G band (the aciton link is attached). The SSID of the 2.4G band AP is the same as that of the 5G band.
+         */
+        WLACC_SUGGEST_ACTION_MODIFY_SSID = 3,
+    };
+
+
+    /**
+    * Indicator optimization degree.
+    */
+    public class WlAccStats
+    {
+        /**
+         * End-to-end delay optimization percentage.
+         */
+        public ushort e2eDelayPercent { set; get; }
+        /**
+         * Frozen Ratio optimization percentage.
+         */
+        public ushort frozenRatioPercent { set; get; }
+        /**
+         * Loss Rate optimization percentage.
+         */
+        public ushort lossRatePercent { set; get; }
+    };
 
     /**
     * The network type.
@@ -4162,6 +4362,120 @@ namespace agora.rtc
         public float sharpnessLevel { set; get; }
     }
 
+
+    /**
+    * The low-light enhancement mode.
+    */
+    public enum LOW_LIGHT_ENHANCE_MODE
+    {
+        /** 0: (Default) Automatic mode. The SDK automatically enables or disables the low-light enhancement feature according to the ambient light to compensate for the lighting level or prevent overexposure, as necessary. */
+        LOW_LIGHT_ENHANCE_AUTO = 0,
+        /** Manual mode. Users need to enable or disable the low-light enhancement feature manually. */
+        LOW_LIGHT_ENHANCE_MANUAL
+    };
+
+    /**
+    * The low-light enhancement level.
+    */
+    public enum LOW_LIGHT_ENHANCE_LEVEL
+    {
+        /**
+         * 0: (Default) Promotes video quality during low-light enhancement. It processes the brightness, details, and noise of the video image. The performance consumption is moderate, the processing speed is moderate, and the overall video quality is optimal.
+         */
+        LOW_LIGHT_ENHANCE_LEVEL_HIGH_QUALITY = 0,
+        /**
+         * Promotes performance during low-light enhancement. It processes the brightness and details of the video image. The processing speed is faster.
+         */
+        LOW_LIGHT_ENHANCE_LEVEL_FAST
+    };
+
+    public class LowlightEnhanceOptions
+    {
+        /** The low-light enhancement mode. See #LOW_LIGHT_ENHANCE_MODE.
+        */
+        public LOW_LIGHT_ENHANCE_MODE mode { set; get; }
+
+        /** The low-light enhancement level. See #LOW_LIGHT_ENHANCE_LEVEL.
+         */
+        public LOW_LIGHT_ENHANCE_LEVEL level { set; get; }
+
+        public LowlightEnhanceOptions(LOW_LIGHT_ENHANCE_MODE lowlightMode, LOW_LIGHT_ENHANCE_LEVEL lowlightLevel)
+        {
+            mode = lowlightMode;
+            level = lowlightLevel;
+        }
+
+        public LowlightEnhanceOptions()
+        {
+            mode = LOW_LIGHT_ENHANCE_MODE.LOW_LIGHT_ENHANCE_AUTO;
+            level = LOW_LIGHT_ENHANCE_LEVEL.LOW_LIGHT_ENHANCE_LEVEL_HIGH_QUALITY;
+        }
+    }
+
+
+    /** The video noise reduction mode.
+    */
+    public enum VIDEO_DENOISER_MODE
+    {
+        /** 0: (Default) Automatic mode. The SDK automatically enables or disables the video noise reduction feature according to the ambient light. */
+        VIDEO_DENOISER_AUTO = 0,
+        /** Manual mode. Users need to enable or disable the video noise reduction feature manually. */
+        VIDEO_DENOISER_MANUAL
+    };
+
+    /**
+    * The video noise reduction level.
+    */
+    public enum VIDEO_DENOISER_LEVEL
+    {
+        /**
+         * 0: (Default) Promotes video quality during video noise reduction. `HIGH_QUALITY` balances performance consumption and video noise reduction quality.
+         * The performance consumption is moderate, the video noise reduction speed is moderate, and the overall video quality is optimal.
+         */
+        VIDEO_DENOISER_LEVEL_HIGH_QUALITY = 0,
+        /**
+         * Promotes reducing performance consumption during video noise reduction. `FAST` prioritizes reducing performance consumption over video noise reduction quality.
+         * The performance consumption is lower, and the video noise reduction speed is faster. To avoid a noticeable shadowing effect (shadows trailing behind moving objects) in the processed video, Agora recommends that you use `FAST` when the camera is fixed.
+         */
+        VIDEO_DENOISER_LEVEL_FAST,
+        /**
+         * Enhanced video noise reduction. `STRENGTH` prioritizes video noise reduction quality over reducing performance consumption.
+         * The performance consumption is higher, the video noise reduction speed is slower, and the video noise reduction quality is better.
+         * If `HIGH_QUALITY` is not enough for your video noise reduction needs, you can use `STRENGTH`.
+         */
+        VIDEO_DENOISER_LEVEL_STRENGTH
+    };
+
+    /**
+    * The video noise reduction options.
+     *
+    * @since v4.0.0
+    */
+    public class VideoDenoiserOptions
+    {
+        /** The video noise reduction mode. See #VIDEO_DENOISER_MODE.
+        */
+        public VIDEO_DENOISER_MODE mode { set; get; }
+
+        /** The video noise reduction level. See #VIDEO_DENOISER_LEVEL.
+         */
+        public VIDEO_DENOISER_LEVEL level { set; get; }
+
+
+        public VideoDenoiserOptions(VIDEO_DENOISER_MODE denoiserMode, VIDEO_DENOISER_LEVEL denoiserLevel)
+        {
+            mode = denoiserMode;
+            level = denoiserLevel;
+        }
+
+        public VideoDenoiserOptions()
+        {
+            mode = VIDEO_DENOISER_MODE.VIDEO_DENOISER_AUTO;
+            level = VIDEO_DENOISER_LEVEL.VIDEO_DENOISER_LEVEL_HIGH_QUALITY;
+        }
+
+    }
+
     /** The type of the custom background image.
     */
     public enum BACKGROUND_SOURCE_TYPE
@@ -4270,6 +4584,26 @@ namespace agora.rtc
         public float[] _ss = new float[5];
     };
 
+
+
+    public enum SEG_MODEL_TYPE
+    {
+        SEG_MODEL_AI = 1,
+        SEG_MODEL_GREEN = 2
+    };
+
+    public class SegmentationProperty
+    {
+        public SEG_MODEL_TYPE modelType { set; get; }
+        public float greenCapacity { set; get; }
+
+        SegmentationProperty()
+        {
+            modelType = SEG_MODEL_TYPE.SEG_MODEL_AI;
+            greenCapacity = 0.5f;
+        }
+    };
+
     /**
     * Preset local voice reverberation options.
     * bitmap allocation:
@@ -4357,12 +4691,12 @@ namespace agora.rtc
     };
 
     /** The options for SDK preset audio effects.
-*/
+    */
     [Flags]
     public enum AUDIO_EFFECT_PRESET
     {
         /** Turn off audio effects and use the original voice.
-         */
+        */
         AUDIO_EFFECT_OFF = 0x00000000,
         /** An audio effect typical of a KTV venue.
          *
@@ -4431,6 +4765,17 @@ namespace agora.rtc
          * the anticipated voice effect.
          */
         ROOM_ACOUSTICS_3D_VOICE = 0x02010800,
+        /** virtual suround sound.
+         *
+         * @note
+         * - Agora recommends using this enumerator to process virtual suround sound; otherwise, you may
+         * not hear the anticipated voice effect.
+         * - To achieve better audio effect quality, Agora recommends calling \ref
+         * IRtcEngine::setAudioProfile "setAudioProfile" and setting the `profile` parameter to
+         * `AUDIO_PROFILE_MUSIC_HIGH_QUALITY(4)` or `AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5)` before
+         * setting this enumerator.
+         */
+        ROOM_ACOUSTICS_VIRTUAL_SURROUND_SOUND = 0x02010900,
         /** The voice of an uncle.
          *
          * @note
@@ -4528,7 +4873,7 @@ namespace agora.rtc
          * `AUDIO_PROFILE_MUSIC_HIGH_QUALITY(4)` or `AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5)` before
          * setting this enumerator.
          */
-        PITCH_CORRECTION = 0x02040100
+        PITCH_CORRECTION = 0x02040100,
 
         /** Todo:  Electronic sound, Magic tone haven't been implemented.
          *
@@ -4679,13 +5024,17 @@ namespace agora.rtc
         */
         AUDIO_RECORDING_QUALITY_LOW = 0,
         /**
-        * 1: Medium audio recording quality.
-        */
+         * 1: Medium audio recording quality.
+         */
         AUDIO_RECORDING_QUALITY_MEDIUM = 1,
         /**
-        * 2: High audio recording quality.
-        */
+         * 2: High audio recording quality.
+         */
         AUDIO_RECORDING_QUALITY_HIGH = 2,
+        /**
+         * 3: Ultra high audio recording quality.
+         */
+        AUDIO_RECORDING_QUALITY_ULTRA_HIGH = 3,
     }
 
     /**
@@ -4850,10 +5199,10 @@ namespace agora.rtc
     };
 
 
-    public enum AREA_CODE_EX:uint
+    public enum AREA_CODE_EX : uint
     {
         /**
-         * Oceania
+        * Oceania
         */
         AREA_CODE_OC = 0x00000040,
         /**
@@ -4868,6 +5217,14 @@ namespace agora.rtc
          * South Korea
          */
         AREA_CODE_KR = 0x00000200,
+        /**
+         * Hong Kong and Macou
+         */
+        AREA_CODE_HKMC = 0x00000400,
+        /**
+         * United States
+         */
+        AREA_CODE_US = 0x00000800,
         /**
          * The global area (except China)
          */
@@ -5304,11 +5661,12 @@ namespace agora.rtc
     };
 
     /** Type of permission.
-*/
+    */
     public enum PERMISSION_TYPE
     {
         RECORD_AUDIO = 0,
         CAMERA = 1,
+        SCREEN_CAPTURE = 2,
     };
 
     /** Maximum length of user account.
@@ -5441,7 +5799,7 @@ namespace agora.rtc
         public Optional<bool> enable_air_absorb = new Optional<bool>();
 
 
-        public override void ToJson(JsonWriter writer) 
+        public override void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
 

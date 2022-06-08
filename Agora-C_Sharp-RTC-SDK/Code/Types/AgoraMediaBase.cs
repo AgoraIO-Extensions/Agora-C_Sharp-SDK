@@ -14,8 +14,8 @@ namespace agora.rtc
     public enum AudioRoute
     {
         /**
-         * -1: The default audio route.
-         */
+   * -1: The default audio route.
+   */
         ROUTE_DEFAULT = -1,
         /**
          * The headset.
@@ -48,20 +48,18 @@ namespace agora.rtc
         /**
          * The USB
          */
-        ROUTE_USB
+        ROUTE_USB,
+        /**
+         * The DISPLAYPORT
+         */
+        ROUTE_DISPLAYPORT,
+        /**
+         * The AIRPLAY
+         */
+        ROUTE_AIRPLAY
     };
 
-    public enum NLP_AGGRESSIVENESS
-    {
-        NLP_NOT_SPECIFIED = 0,
-        NLP_MILD = 1,
-        NLP_NORMAL = 2,
-        NLP_AGGRESSIVE = 3,
-        NLP_SUPER_AGGRESSIVE = 4,
-        NLP_EXTREME = 5,
-    };
-
-
+  
     /**
    * Bytes per sample
    */
@@ -200,19 +198,9 @@ namespace agora.rtc
 
     };
 
-    public enum AUDIO_PROCESSING_CHANNELS
-    {
-        AUDIO_PROCESSING_MONO = 1,
-        AUDIO_PROCESSING_STEREO = 2,
-    };
-
     public class AdvancedAudioOptions
     {
-        public AUDIO_PROCESSING_CHANNELS audioProcessingChannels { set; get; }
-        public AdvancedAudioOptions()
-        {
-            audioProcessingChannels = AUDIO_PROCESSING_CHANNELS.AUDIO_PROCESSING_MONO;
-        }
+        public Optional<int> audioProcessingChannels = new Optional<int>();
     };
 
     /**
@@ -282,40 +270,52 @@ namespace agora.rtc
     public enum VIDEO_PIXEL_FORMAT
     {
         /**
-        * 0: Unknown format.
-        */
-        VIDEO_PIXEL_UNKNOWN = 0,
+   * 0: Default format.
+   */
+        VIDEO_PIXEL_DEFAULT = 0,
         /**
-        * 1: I420.
-        */
+         * 1: I420.
+         */
         VIDEO_PIXEL_I420 = 1,
         /**
-        * 2: BGRA.
-        */
+         * 2: BGRA.
+         */
         VIDEO_PIXEL_BGRA = 2,
         /**
-        * 3: NV21.
-        */
+         * 3: NV21.
+         */
         VIDEO_PIXEL_NV21 = 3,
         /**
-        * 4: RGBA.
-        */
+         * 4: RGBA.
+         */
         VIDEO_PIXEL_RGBA = 4,
         /**
-        * 8: NV12.
-        */
+         * 8: NV12.
+         */
         VIDEO_PIXEL_NV12 = 8,
-        /** 
-        * 10: GL_TEXTURE_2D
-        */
+        /**
+         * 10: GL_TEXTURE_2D
+         */
         VIDEO_TEXTURE_2D = 10,
         /**
-        * 11: GL_TEXTURE_OES
-        */
+         * 11: GL_TEXTURE_OES
+         */
         VIDEO_TEXTURE_OES = 11,
-        /**
-        * 16: I422.
+        /*
+        12: pixel format for iOS CVPixelBuffer NV12
         */
+        VIDEO_CVPIXEL_NV12 = 12,
+        /*
+        13: pixel format for iOS CVPixelBuffer I420
+        */
+        VIDEO_CVPIXEL_I420 = 13,
+        /*
+        14: pixel format for iOS CVPixelBuffer BGRA
+        */
+        VIDEO_CVPIXEL_BGRA = 14,
+        /**
+         * 16: I422.
+         */
         VIDEO_PIXEL_I422 = 16,
     };
 
@@ -627,6 +627,11 @@ namespace agora.rtc
         FRAME_TYPE_PCM16 = 0, // PCM 16bit little endian
     }
 
+    public enum MAX_HANDLE_TIME_CNT
+    {
+        MAX_HANDLE_TIME_CNT = 10
+    };
+
     /** Definition of AudioFrame */
     public class AudioFrame
     {
@@ -698,6 +703,23 @@ namespace agora.rtc
     }
 
 
+    public enum AUDIO_FRAME_POSITION
+    {
+        AUDIO_FRAME_POSITION_NONE = 0x0000,
+        /** The position for observing the playback audio of all remote users after mixing
+         */
+        AUDIO_FRAME_POSITION_PLAYBACK = 0x0001,
+        /** The position for observing the recorded audio of the local user
+         */
+        AUDIO_FRAME_POSITION_RECORD = 0x0002,
+        /** The position for observing the mixed audio of the local user and all remote users
+         */
+        AUDIO_FRAME_POSITION_MIXED = 0x0004,
+        /** The position for observing the audio of a single remote user before mixing
+         */
+        AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
+    };
+
     public struct AudioSpectrumData
     {
 
@@ -761,11 +783,8 @@ namespace agora.rtc
     public enum CONTENT_INSPECT_DEVICE_TYPE
     {
         CONTENT_INSPECT_DEVICE_INVALID = 0,
-        CONTENT_INSPECT_DEVICE_AGORA = 1,
-        CONTENT_INSPECT_DEVICE_HIVE = 2,
-        CONTENT_INSPECT_DEVICE_TUPU = 3
+        CONTENT_INSPECT_DEVICE_AGORA = 1
     };
-
 
 
     public enum CONTENT_INSPECT_TYPE
@@ -773,15 +792,31 @@ namespace agora.rtc
         /**
         * (Default) content inspect type invalid
         */
-        CONTENT_INSPECT_INVALIDE = 0,
+        CONTENT_INSPECT_INVALID = 0,
         /**
-        * Content inspect type moderation
-        */
+         * Content inspect type moderation
+         */
         CONTENT_INSPECT_MODERATION = 1,
         /**
-        * Content inspect type supervise
-        */
-        CONTENT_INSPECT_SUPERVISE = 2
+         * Content inspect type supervise
+         */
+        CONTENT_INSPECT_SUPERVISION = 2
+    };
+
+    public enum CONTENT_INSPECT_WORK_TYPE
+    {
+        /**
+         * video moderation on device
+         */
+        CONTENT_INSPECT_WORK_DEVICE = 0,
+        /**
+         * video moderation on cloud
+         */
+        CONTENT_INSPECT_WORK_CLOUD = 1,
+        /**
+         * video moderation on cloud and device
+         */
+        CONTENT_INSPECT_WORK_DEVICE_CLOUD = 2
     };
 
     public class ContentInspectModule
@@ -864,6 +899,90 @@ namespace agora.rtc
         * 1: encoded video frame.
         */
         ENCODED_VIDEO_FRAME,
+    };
+
+    /**
+    * The format of the recording file.
+    *
+    * @since v3.5.2
+    */
+    public enum MediaRecorderContainerFormat
+    {
+        /**
+         * 1: (Default) MP4.
+         */
+        FORMAT_MP4 = 1,
+    };
+
+    /**
+    * The recording content.
+    *
+    * @since v3.5.2
+    */
+    public enum MediaRecorderStreamType
+    {
+        /**
+         * Only audio.
+         */
+        STREAM_TYPE_AUDIO = 0x01,
+        /**
+         * Only video.
+         */
+        STREAM_TYPE_VIDEO = 0x02,
+        /**
+         * (Default) Audio and video.
+         */
+        STREAM_TYPE_BOTH = STREAM_TYPE_AUDIO | STREAM_TYPE_VIDEO,
+    };
+
+    /**
+ * The current recording state.
+ *
+ * @since v3.5.2
+ */
+    public enum RecorderState
+    {
+        /**
+         * -1: An error occurs during the recording. See RecorderErrorCode for the reason.
+         */
+        RECORDER_STATE_ERROR = -1,
+        /**
+         * 2: The audio and video recording is started.
+         */
+        RECORDER_STATE_START = 2,
+        /**
+         * 3: The audio and video recording is stopped.
+         */
+        RECORDER_STATE_STOP = 3,
+    };
+
+    /**
+    * The reason for the state change
+    *
+    * @since v3.5.2
+    */
+    enum RecorderErrorCode
+    {
+        /**
+         * 0: No error occurs.
+         */
+        RECORDER_ERROR_NONE = 0,
+        /**
+         * 1: The SDK fails to write the recorded data to a file.
+         */
+        RECORDER_ERROR_WRITE_FAILED = 1,
+        /**
+         * 2: The SDK does not detect audio and video streams to be recorded, or audio and video streams are interrupted for more than five seconds during recording.
+         */
+        RECORDER_ERROR_NO_STREAM = 2,
+        /**
+         * 3: The recording duration exceeds the upper limit.
+         */
+        RECORDER_ERROR_OVER_MAX_DURATION = 3,
+        /**
+         * 4: The recording configuration changes.
+         */
+        RECORDER_ERROR_CONFIG_CHANGED = 4,
     };
 
     #endregion

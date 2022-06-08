@@ -38,8 +38,8 @@ namespace agora.rtc
     };
 
     /**
-The states of the local user's audio mixing file.
-*/
+    The states of the local user's audio mixing file.
+    */
     public enum AUDIO_MIXING_STATE_TYPE
     {
         /** 710: The audio mixing file is playing. */
@@ -49,33 +49,36 @@ The states of the local user's audio mixing file.
         /** 713: The audio mixing file stops playing. */
         AUDIO_MIXING_STATE_STOPPED = 713,
         /** 714: An exception occurs when playing the audio mixing file.
-        See #AUDIO_MIXING_ERROR_TYPE.
-        */
+         See #AUDIO_MIXING_REASON_TYPE.
+         */
         AUDIO_MIXING_STATE_FAILED = 714,
-        /** 715: The audio mixing file is played once. */
-        AUDIO_MIXING_STATE_COMPLETED = 715,
-        /** 716: The audio mixing file is all played out. */
-        AUDIO_MIXING_STATE_ALL_LOOPS_COMPLETED = 716,
     };
 
     /**
-The error codes of the local user's audio mixing file.
-*/
-    public enum AUDIO_MIXING_ERROR_TYPE
+    The reson codes of the local user's audio mixing file.
+    */
+    public enum AUDIO_MIXING_REASON_TYPE
     {
         /** 701: The SDK cannot open the audio mixing file. */
-        AUDIO_MIXING_ERROR_CAN_NOT_OPEN = 701,
+        AUDIO_MIXING_REASON_CAN_NOT_OPEN = 701,
         /** 702: The SDK opens the audio mixing file too frequently. */
-        AUDIO_MIXING_ERROR_TOO_FREQUENT_CALL = 702,
+        AUDIO_MIXING_REASON_TOO_FREQUENT_CALL = 702,
         /** 703: The audio mixing file playback is interrupted. */
-        AUDIO_MIXING_ERROR_INTERRUPTED_EOF = 703,
+        AUDIO_MIXING_REASON_INTERRUPTED_EOF = 703,
+        /** 715: The audio mixing file is played once. */
+        AUDIO_MIXING_REASON_ONE_LOOP_COMPLETED = 721,
+        /** 716: The audio mixing file is all played out. */
+        AUDIO_MIXING_REASON_ALL_LOOPS_COMPLETED = 723,
+        /** 716: The audio mixing file stopped by user */
+        AUDIO_MIXING_REASON_STOPPED_BY_USER = 724,
         /** 0: The SDK can open the audio mixing file. */
-        AUDIO_MIXING_ERROR_OK = 0,
+        AUDIO_MIXING_REASON_OK = 0,
     };
 
+   
     /**
     * The status of importing an external video stream in a live broadcast.
-*/
+    */
     public enum INJECT_STREAM_STATUS
     {
         /**
@@ -1256,6 +1259,27 @@ The error codes of the local user's audio mixing file.
         kLocalOnly = 1,
     };
 
+    public enum PROXY_TYPE
+    {
+        /** 0: Do not use the cloud proxy.
+         */
+        NONE_PROXY_TYPE = 0,
+        /** 1: The cloud proxy for the UDP protocol.
+         */
+        UDP_PROXY_TYPE = 1,
+        /// @cond
+        /** 2: The cloud proxy for the TCP (encrypted) protocol.
+         */
+        TCP_PROXY_TYPE = 2,
+        /// @endcond
+        /** 3: The local proxy.
+         */
+        LOCAL_PROXY_TYPE = 3,
+        /// @endcond
+        /** 4: auto fallback to tcp cloud proxy
+         */
+        TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
+    };
 
     public class LocalAccessPointConfiguration
     {
@@ -1512,8 +1536,6 @@ The error codes of the local user's audio mixing file.
 
     public enum MAX_METADATA_SIZE_TYPE
     {
-        INVALID_METADATA_SIZE_IN_BYTE = -1,
-        DEFAULT_METADATA_SIZE_IN_BYTE = 512,
         MAX_METADATA_SIZE_IN_BYTE = 1024
     };
 
