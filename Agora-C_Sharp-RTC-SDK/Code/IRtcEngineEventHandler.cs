@@ -8,6 +8,8 @@ namespace agora.rtc
 
         public virtual void OnRejoinChannelSuccess(RtcConnection connection, int elapsed) { }
 
+        public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed) { }
+
         public virtual void OnWarning(int warn, string msg) { }
 
         public virtual void OnError(int err, string msg) { }
@@ -58,10 +60,9 @@ namespace agora.rtc
 
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }
 
-
         public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode) { }
-        //todo fix with dcg
-        public virtual void OnSnapshotTaken(RtcConnection connection, string filePath, int width, int height, int errCode) { }
+
+        public virtual void OnSnapshotTaken(RtcConnection connection, uint remoteUid, string filePath, int width, int height, int errCode) { }
 
         public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
 
@@ -107,7 +108,7 @@ namespace agora.rtc
 
         public virtual void OnVideoStopped() { }
 
-        public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode) { }
+        public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE errorCode) { }
 
         public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) { }
 
@@ -173,6 +174,10 @@ namespace agora.rtc
         public virtual void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) { }
 
         public virtual void OnConnectionStateChanged(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason) { }
+
+        public virtual void OnWlAccMessage(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg) { }
+
+        public virtual void OnWlAccStats(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats) { }
 
         public virtual void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type) { }
 

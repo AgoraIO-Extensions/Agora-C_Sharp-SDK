@@ -15,6 +15,8 @@ namespace agora.rtc
 
     public delegate void OnRejoinChannelSuccessHandler(RtcConnection connection, int elapsed);
 
+    public delegate void OnProxyConnectedHandler(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed);
+
     public delegate void OnAudioQualityHandler(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost);
 
     public delegate void OnLastmileProbeResultHandler(LastmileProbeResult result);
@@ -57,7 +59,7 @@ namespace agora.rtc
 
     public delegate void OnSnapshotTakenHandler(string channel, uint uid, string filePath, int width, int height, int errCode);
 
-    public delegate void OnSnapshotTakenHandlerEx(RtcConnection connection, string filePath, int width, int height, int errCode);
+    public delegate void OnSnapshotTakenHandlerEx(RtcConnection connection, uint remoteUid, string filePath, int width, int height, int errCode);
 
     public delegate void OnLocalVideoStateChangedHandler(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode);
 
@@ -99,7 +101,7 @@ namespace agora.rtc
 
     public delegate void OnVideoStoppedHandler();
 
-    public delegate void OnAudioMixingStateChangedHandler(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode);
+    public delegate void OnAudioMixingStateChangedHandler(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE errorCode);
 
     public delegate void OnRhythmPlayerStateChangedHandler(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode);
 
@@ -161,6 +163,10 @@ namespace agora.rtc
 
     public delegate void OnConnectionStateChangedHandler(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason);
 
+    public delegate void OnWlAccMessageHandler(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg);
+
+    public delegate void OnWlAccStatsHandler(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats);
+
     public delegate void OnNetworkTypeChangedHandler(RtcConnection connection, NETWORK_TYPE type);
 
     public delegate void OnEncryptionErrorHandler(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType);
@@ -202,6 +208,7 @@ namespace agora.rtc
         public event OnWarningHandler EventOnWarning;
         public event OnErrorHandler EventOnError;
         public event OnRejoinChannelSuccessHandler EventOnRejoinChannelSuccess;
+        public event OnProxyConnectedHandler EventOnProxyConnected;
         public event OnAudioQualityHandler EventOnAudioQuality;
         public event OnLastmileProbeResultHandler EventOnLastmileProbeResult;
         public event OnAudioVolumeIndicationHandler EventOnAudioVolumeIndication;
@@ -275,6 +282,8 @@ namespace agora.rtc
         public event OnRemoteAudioTransportStatsHandler EventOnRemoteAudioTransportStats;
         public event OnRemoteVideoTransportStatsHandler EventOnRemoteVideoTransportStats;
         public event OnConnectionStateChangedHandler EventOnConnectionStateChanged;
+        public event OnWlAccMessageHandler EventOnWlAccMessage;
+        public event OnWlAccStatsHandler EventOnWlAccStats;
         public event OnNetworkTypeChangedHandler EventOnNetworkTypeChanged;
         public event OnEncryptionErrorHandler EventOnEncryptionError;
         public event OnUploadLogResultHandler EventOnUploadLogResult;
@@ -333,6 +342,12 @@ namespace agora.rtc
         {
             if (EventOnRejoinChannelSuccess == null) return;
             EventOnRejoinChannelSuccess.Invoke(connection, elapsed);
+        }
+
+        public override void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        {
+            if (EventOnProxyConnected == null) return;
+            EventOnProxyConnected.Invoke(channel, uid, proxyType, localProxyIp, elapsed);
         }
 
         public override void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost)
@@ -462,10 +477,10 @@ namespace agora.rtc
             EventOnSnapshotTaken.Invoke(channel, uid, filePath, width, height, errCode);
         }
 
-        public override void OnSnapshotTaken(RtcConnection connection, string filePath, int width, int height, int errCode)
+        public override void OnSnapshotTaken(RtcConnection connection, uint remoteUid, string filePath, int width, int height, int errCode)
         {
             if (EventOnSnapshotTakenEx == null) return;
-            EventOnSnapshotTakenEx.Invoke(connection, filePath, width, height, errCode);
+            EventOnSnapshotTakenEx.Invoke(connection, remoteUid, filePath, width, height, errCode);
         }
 
         public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
@@ -592,7 +607,7 @@ namespace agora.rtc
             EventOnVideoStopped.Invoke();
         }
 
-        public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode)
+        public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE errorCode)
         {
             if (EventOnAudioMixingStateChanged == null) return;
             EventOnAudioMixingStateChanged.Invoke(state, errorCode);
@@ -785,6 +800,18 @@ namespace agora.rtc
             EventOnConnectionStateChanged.Invoke(connection, state, reason);
         }
 
+        public override void OnWlAccMessage(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
+        {
+            if (EventOnWlAccMessage == null) return;
+            EventOnWlAccMessage.Invoke(connection, reason, action, wlAccMsg);
+        }
+
+        public override void OnWlAccStats(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats)
+        {
+            if (EventOnWlAccStats == null) return;
+            EventOnWlAccStats.Invoke(connection, currentStats, averageStats);
+        }
+
         public override void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type)
         {
             if (EventOnNetworkTypeChanged == null) return;
@@ -871,7 +898,6 @@ namespace agora.rtc
 
         public override void OnExtensionErrored(string provider, string ext_name, int error, string msg)
         {
-
             if (EventOnExtensionErrored == null) return;
             EventOnExtensionErrored.Invoke(provider, ext_name, error, msg);
         }
