@@ -5100,12 +5100,52 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
-            return AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
+            var infoInternal =  AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result) != 0 ?
-                new ScreenCaptureSourceInfo[0]
-                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfo>(_result.Result, "result");
+                new ScreenCaptureSourceInfoInternal[0]
+                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result.Result, "result");
+
+            var info = new ScreenCaptureSourceInfo[infoInternal.Length];
+            for (int i = 0; i < infoInternal.Length; i++)
+            {
+                var screenCaptureSourceInfo = new ScreenCaptureSourceInfo();
+                screenCaptureSourceInfo.type = infoInternal[i].type;
+                screenCaptureSourceInfo.isOccluded = infoInternal[i].isOccluded;
+                screenCaptureSourceInfo.primaryMonitor = infoInternal[i].primaryMonitor;
+                screenCaptureSourceInfo.processPath = infoInternal[i].processPath;
+                screenCaptureSourceInfo.sourceId = infoInternal[i].sourceId;
+                screenCaptureSourceInfo.sourceName = infoInternal[i].sourceName;
+                screenCaptureSourceInfo.sourceTitle = infoInternal[i].sourceTitle;
+                ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
+                imageBuffer.height = infoInternal[i].thumbImage.height;
+                imageBuffer.width = infoInternal[i].thumbImage.width;
+                imageBuffer.length = infoInternal[i].thumbImage.length;
+                byte[] thumbBuffer = new byte[imageBuffer.length];
+                if (imageBuffer.length > 0)
+                {
+                    Marshal.Copy((IntPtr)(infoInternal[i].thumbImage.buffer), thumbBuffer, 0, (int)imageBuffer.length);
+                }
+                imageBuffer.buffer = thumbBuffer;
+                screenCaptureSourceInfo.thumbImage = imageBuffer;
+
+                ThumbImageBuffer imageBuffer2 = new ThumbImageBuffer();
+                imageBuffer2.height = infoInternal[i].iconImage.height;
+                imageBuffer2.width = infoInternal[i].iconImage.width;
+                imageBuffer2.length = infoInternal[i].iconImage.length;
+                byte[] iconbBuffer = new byte[imageBuffer2.length];
+                if (imageBuffer2.length > 0)
+                {
+                    Marshal.Copy((IntPtr)(infoInternal[i].iconImage.buffer), iconbBuffer, 0, (int)imageBuffer2.length);
+                }
+                imageBuffer2.buffer = iconbBuffer;
+                screenCaptureSourceInfo.iconImage = imageBuffer2;
+                info[i] = screenCaptureSourceInfo;
+            }
+
+            ReleaseScreenCaptureSources();
+            return info;
         }
 
         #region CallIrisApiWithBuffer
@@ -5560,6 +5600,16 @@ namespace agora.rtc
         public bool StopDumpVideo()
         {
             return AgoraRtcNative.StopDumpVideo(_videoFrameBufferManagerPtr);
+        }
+
+        public int ReleaseScreenCaptureSources()
+        {
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES,
+                "", 0,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         ~RtcEngineImpl()
