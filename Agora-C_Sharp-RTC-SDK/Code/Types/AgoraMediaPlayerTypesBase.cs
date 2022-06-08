@@ -273,8 +273,8 @@ namespace agora.rtc
             audioChannels = 0;
             audioBitsPerSample = 0;
             duration = 0;
-            codecName = null;
-            language = null;
+            codecName = "";
+            language = "";
         }
     };
 
@@ -310,9 +310,22 @@ namespace agora.rtc
         PLAYER_METADATA_TYPE_SEI = 1,
     };
 
+    public class CacheStatistics
+    {
+        /**  total data size of uri
+         */
+        public Int64 fileSize { set; get; }
+        /**  data of uri has cached
+         */
+        public Int64 cacheSize { set; get; }
+        /**  data of uri has downloaded
+         */
+        public Int64 downloadSize { set; get; }
+    };
+
     /** Values when user trigger interface of opening
 */
-    public class PlayerUpdatedInfo:OptionalJsonParse
+    public class PlayerUpdatedInfo : OptionalJsonParse
     {
         /** player_id has value when user trigger interface of opening
         */
@@ -322,8 +335,11 @@ namespace agora.rtc
         */
         public Optional<string> deviceId = new Optional<string>();
 
+        /** cacheStatistics exist if you enable cache, triggered 1s at a time after openning url
+        */
+        public Optional<CacheStatistics> cacheStatistics = new Optional<CacheStatistics>();
 
-        public override  void  ToJson(LitJson.JsonWriter writer)
+        public override void ToJson(LitJson.JsonWriter writer)
         {
 
             writer.WriteObjectStart();
@@ -333,16 +349,119 @@ namespace agora.rtc
                 writer.WritePropertyName("playerId");
                 writer.Write(this.playerId.GetValue());
             }
-              
+
             if (this.deviceId.HasValue())
             {
                 writer.WritePropertyName("deviceId");
                 writer.Write(this.deviceId.GetValue());
             }
 
+            if (this.cacheStatistics.HasValue())
+            {
+                writer.WritePropertyName("cacheStatistics");
+                LitJson.JsonMapper.WriteValue(this.cacheStatistics.GetValue(), writer, false, 0);
+            }
+
             writer.WriteObjectEnd();
         }
     }
+
+    public class MediaSource : OptionalJsonParse
+    {
+        /**
+         * The URL of the media file that you want to play.
+         */
+        public string url { set; get; }
+        /**
+         * The URI of the media file
+         *
+         * When caching is enabled, if the url cannot distinguish the cache file name,
+         * the uri must be able to ensure that the cache file name corresponding to the url is unique.
+         */
+        public string uri { set; get; }
+        /**
+         * Set the starting position for playback, in ms.
+         */
+        public int64_t startPos { set; get; }
+        /**
+        * Autoplay when media source is opened
+        *
+        */
+        public bool autoPlay { set; get; }
+        /**
+         * Enable caching.
+         */
+        public bool enableCache { set; get; }
+        /**
+         * if the value is true, it means playing agora URL. 
+         * The default value is false
+         */
+        public Optional<bool> isAgoraSource = new Optional<bool>();
+        /**
+         * If it is set to true, it means that the live stream will be optimized for quick start. 
+         * The default value is false
+         */
+        public Optional<bool> isLiveSource = new Optional<bool>();
+        /**
+         * External custom data source object
+         */
+        public IMediaPlayerCustomDataProvider provider { set; get; }
+
+        public MediaSource()
+        {
+            url = "";
+            uri = "";
+            startPos = 0;
+            autoPlay = true;
+            enableCache = false;
+            provider = null;
+        }
+
+
+        public override void ToJson(LitJson.JsonWriter writer)
+        {
+            writer.WriteObjectStart();
+
+            writer.WritePropertyName("url");
+            writer.Write(url);
+
+            writer.WritePropertyName("uri");
+            writer.Write(uri);
+
+            writer.WritePropertyName("startPos");
+            writer.Write(startPos);
+
+            writer.WritePropertyName("autoPlay");
+            writer.Write(autoPlay);
+
+            writer.WritePropertyName("enableCache");
+            writer.Write(enableCache);
+
+            if (isAgoraSource.HasValue())
+            {
+                writer.WritePropertyName("isAgoraSource");
+                writer.Write(isAgoraSource.GetValue());
+            }
+
+            if (isLiveSource.HasValue())
+            {
+                writer.WritePropertyName("isLiveSource");
+                writer.Write(isLiveSource.GetValue());
+            }
+
+
+            //todo provider need special
+
+            writer.WriteObjectEnd();
+        }
+
+    };
+
+
+
+
+
+
     #endregion
 
 

@@ -1544,6 +1544,7 @@ namespace agora.rtc
             sampleRateHz = 0;
             samplesPerChannel = 0;
             numberOfChannels = 0;
+            captureTimeMs = 0;
         }
 
         public EncodedAudioFrameInfo(ref EncodedAudioFrameInfo rhs)
@@ -1553,6 +1554,7 @@ namespace agora.rtc
             samplesPerChannel = rhs.samplesPerChannel;
             numberOfChannels = rhs.numberOfChannels;
             advancedSettings = rhs.advancedSettings;
+            captureTimeMs = rhs.captureTimeMs;
         }
 
         /**
@@ -1577,6 +1579,11 @@ namespace agora.rtc
         * The advanced settings of the audio frame.
         */
         public EncodedAudioFrameAdvancedSettings advancedSettings { set; get; }
+
+        /**
+        * This is a input parameter which means the timestamp for capturing the audio frame.
+        */
+        int64_t captureTimeMs;
     }
 
     /**
@@ -1654,6 +1661,44 @@ namespace agora.rtc
         VIDEO_STREAM_LOW = 1,
     };
 
+
+    public class VideoSubscriptionOptions
+    {
+        /**
+         * The type of the video stream to subscribe to.
+         *
+         * The default value is `VIDEO_STREAM_HIGH`, which means the high-quality
+         * video stream.
+         */
+        public VIDEO_STREAM_TYPE type;
+        /**
+         * Whether to subscribe to encoded video data only:
+         * - `true`: Subscribe to encoded video data only.
+         * - `false`: (Default) Subscribe to decoded video data.
+         */
+        public bool encodedFrameOnly;
+
+        public VideoSubscriptionOptions()
+        {
+            type = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
+
+            encodedFrameOnly = false;
+        }
+
+        public VideoSubscriptionOptions(VIDEO_STREAM_TYPE streamtype)
+        {
+            type = streamtype;
+            encodedFrameOnly = false;
+        }
+
+        public VideoSubscriptionOptions(VIDEO_STREAM_TYPE streamtype, bool encoded_only)
+        {
+            type = streamtype;
+            encodedFrameOnly = encoded_only;
+        }
+    };
+
+
     /**
  * The definition of the EncodedVideoFrameInfo struct.
  */
@@ -1668,8 +1713,6 @@ namespace agora.rtc
             frameType = VIDEO_FRAME_TYPE_NATIVE.VIDEO_FRAME_TYPE_BLANK_FRAME;
             rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
             trackId = 0;
-            renderTimeMs = 0;
-            internalSendTs = 0;
             uid = 0;
             streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
 
@@ -1683,9 +1726,7 @@ namespace agora.rtc
             framesPerSecond = rhs.framesPerSecond;
             frameType = rhs.frameType;
             rotation = rhs.rotation;
-            trackId = rhs.trackId; ;
-            renderTimeMs = rhs.renderTimeMs;
-            internalSendTs = rhs.internalSendTs;
+            trackId = rhs.trackId;
             uid = rhs.uid;
             streamType = rhs.streamType;
         }
@@ -1722,14 +1763,12 @@ namespace agora.rtc
         */
         public int trackId { set; get; }  // This can be reserved for multiple video tracks, we need to create different ssrc
                                           // and additional payload for later implementation.
+
         /**
-        * The timestamp for rendering the video.
+        * This is a input parameter which means the timestamp for capturing the video.
         */
-        public int64_t renderTimeMs { set; get; }
-        /**
-        * Use this timestamp for audio and video sync. You can get this timestamp from the `OnEncodedVideoImageReceived` callback when `encodedFrameOnly` is `true`.
-        */
-        public uint64_t internalSendTs { set; get; }
+        public int64_t captureTimeMs { set; get; }
+
         /**
         * ID of the user.
         */
@@ -2419,11 +2458,26 @@ namespace agora.rtc
     {
         public RemoteAudioStats()
         {
+            uid = 0;
+            quality = 0;
+            networkTransportDelay = 0;
+            jitterBufferDelay = 0;
+            audioLossRate = 0;
+            numChannels = 0;
+            receivedSampleRate = 0;
+            receivedBitrate = 0;
+            totalFrozenTime = 0;
+            frozenRate = 0;
+            mosValue = 0;
+            totalActiveTime = 0;
+            publishDuration = 0;
+            qoeQuality = 0;
+            qualityChangedReason = 0;
         }
 
         public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay,
             int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime,
-            int frozenRate, int mosValue, int totalActiveTime, int publishDuration, int qoeQuality)
+            int frozenRate, int mosValue, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason)
         {
             this.uid = uid;
             this.quality = quality;
@@ -2439,6 +2493,7 @@ namespace agora.rtc
             this.totalActiveTime = totalActiveTime;
             this.publishDuration = publishDuration;
             this.qoeQuality = qoeQuality;
+            this.qualityChangedReason = qualityChangedReason;
         }
 
         /** User ID of the remote user sending the audio streams.
@@ -2515,6 +2570,11 @@ namespace agora.rtc
         * Quality of experience (QoE) of the local user when receiving a remote audio stream. See #EXPERIENCE_QUALITY_TYPE.
         */
         public int qoeQuality { set; get; }
+
+        /**
+         * The reason for poor QoE of the local user when receiving a remote audio stream. See #EXPERIENCE_POOR_REASON.
+        */
+        public int qualityChangedReason { set; get; }
     }
 
     /**
@@ -3279,13 +3339,14 @@ namespace agora.rtc
         {
         }
 
-        public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec, ushort txPacketLossRate)
+        public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec, ushort txPacketLossRate, int audioDeviceDelay)
         {
             this.numChannels = numChannels;
             this.sentSampleRate = sentSampleRate;
             this.sentBitrate = sentBitrate;
             this.internalCodec = internalCodec;
             this.txPacketLossRate = txPacketLossRate;
+            this.audioDeviceDelay = audioDeviceDelay;
         }
 
         /** The number of channels.
@@ -3307,6 +3368,11 @@ namespace agora.rtc
         * The audio packet loss rate (%) from the local client to the Agora edge server before applying the anti-packet loss strategies.
         */
         public ushort txPacketLossRate { set; get; }
+
+        /**
+        * The audio delay of the device, contains record and playout delay
+        */
+        public int audioDeviceDelay { set; get; }
     }
 
     /**
@@ -4478,6 +4544,39 @@ namespace agora.rtc
 
     /** The type of the custom background image.
     */
+
+    /** The color enhancement options.
+    *
+    * @since v4.0.0
+    */
+    public class ColorEnhanceOptions
+    {
+        /** The level of color enhancement. The value range is [0.0,1.0]. `0.0` is the default value, which means no color enhancement is applied to the video. The higher the value, the higher the level of color enhancement.
+         */
+        public float strengthLevel { set; get; }
+
+        /** The level of skin tone protection. The value range is [0.0,1.0]. `0.0` means no skin tone protection. The higher the value, the higher the level of skin tone protection.
+         * The default value is `1.0`. When the level of color enhancement is higher, the portrait skin tone can be significantly distorted, so you need to set the level of skin tone protection; when the level of skin tone protection is higher, the color enhancement effect can be slightly reduced.
+         * Therefore, to get the best color enhancement effect, Agora recommends that you adjust `strengthLevel` and `skinProtectLevel` to get the most appropriate values.
+         */
+        public float skinProtectLevel { set; get; }
+
+        public ColorEnhanceOptions(float stength, float skinProtect)
+        {
+            strengthLevel = stength;
+            skinProtectLevel = skinProtect;
+        }
+
+        public ColorEnhanceOptions()
+        {
+            strengthLevel = 0;
+            skinProtectLevel = 1;
+        }
+    };
+
+
+
+
     public enum BACKGROUND_SOURCE_TYPE
     {
         /**
@@ -4915,6 +5014,9 @@ namespace agora.rtc
             windowFocus = false;
             excludeWindowList = new view_t[0];
             excludeWindowCount = 0;
+            highLightWidth = 0;
+            highLightColor = 0;
+            enableHighLight = false;
         }
 
         public ScreenCaptureParameters(ref VideoDimensions d, int f, int b)
@@ -4926,6 +5028,9 @@ namespace agora.rtc
             windowFocus = false;
             excludeWindowList = new view_t[0];
             excludeWindowCount = 0;
+            highLightWidth = 0;
+            highLightColor = 0;
+            enableHighLight = false;
         }
 
         public ScreenCaptureParameters(int width, int height, int f, int b)
@@ -4937,6 +5042,9 @@ namespace agora.rtc
             windowFocus = false;
             excludeWindowList = new view_t[0];
             excludeWindowCount = 0;
+            highLightWidth = 0;
+            highLightColor = 0;
+            enableHighLight = false;
         }
 
         public ScreenCaptureParameters(int width, int height, int f, int b, bool cur, bool fcs)
@@ -4948,6 +5056,9 @@ namespace agora.rtc
             windowFocus = fcs;
             excludeWindowList = new view_t[0];
             excludeWindowCount = 0;
+            highLightWidth = 0;
+            highLightColor = 0;
+            enableHighLight = false;
         }
 
         public ScreenCaptureParameters(int width, int height, int f, int b, view_t[] ex, int cnt)
@@ -4959,6 +5070,9 @@ namespace agora.rtc
             windowFocus = false;
             excludeWindowList = ex;
             excludeWindowCount = cnt;
+            highLightWidth = 0;
+            highLightColor = 0;
+            enableHighLight = false;
         }
 
         public ScreenCaptureParameters(int width, int height, int f, int b, bool cur, bool fcs, view_t[] ex, int cnt)
@@ -4970,6 +5084,9 @@ namespace agora.rtc
             windowFocus = fcs;
             excludeWindowList = ex;
             excludeWindowCount = cnt;
+            highLightWidth = 0;
+            highLightColor = 0;
+            enableHighLight = false;
         }
 
         /** The maximum encoding dimensions of the shared region in terms of width * height.
@@ -5012,6 +5129,24 @@ namespace agora.rtc
         /** The number of windows to be blocked.
          */
         public int excludeWindowCount { set; get; }
+
+        /** (macOS only) The width (px) of the border. Defaults to 0, and the value range is [0,50].
+        *
+        */
+        public int highLightWidth { set; get; }
+        /** (macOS only) The color of the border in RGBA format. The default value is 0xFF8CBF26.
+         *
+         */
+        public uint highLightColor { set; get; }
+        /** (macOS only) Determines whether to place a border around the shared window or screen:
+         * - true: Place a border.
+         * - false: (Default) Do not place a border.
+         *
+         * @note When you share a part of a window or screen, the SDK places a border around the entire window or screen if you set `enableHighLight` as true.
+         *
+         */
+        public bool enableHighLight { set; get; }
+
     }
 
     /**
@@ -5082,30 +5217,33 @@ namespace agora.rtc
     {
         public AudioRecordingConfiguration()
         {
-            filePath = null;
+            filePath = "";
             encode = false;
             sampleRate = 32000;
             fileRecordingType = AUDIO_FILE_RECORDING_TYPE.AUDIO_FILE_RECORDING_MIXED;
             quality = AUDIO_RECORDING_QUALITY_TYPE.AUDIO_RECORDING_QUALITY_LOW;
+            recordingChannel = 1;
         }
 
-        public AudioRecordingConfiguration(string file_path, int sample_rate, AUDIO_RECORDING_QUALITY_TYPE quality_type)
+        public AudioRecordingConfiguration(string file_path, int sample_rate, AUDIO_RECORDING_QUALITY_TYPE quality_type, int channel)
         {
             this.filePath = file_path;
             this.encode = false;
             this.sampleRate = sample_rate;
             this.fileRecordingType = AUDIO_FILE_RECORDING_TYPE.AUDIO_FILE_RECORDING_MIXED;
             this.quality = quality_type;
+            recordingChannel = channel;
         }
 
         public AudioRecordingConfiguration(string file_path, bool enc, int sample_rate,
-                                        AUDIO_FILE_RECORDING_TYPE type, AUDIO_RECORDING_QUALITY_TYPE quality_type)
+                                        AUDIO_FILE_RECORDING_TYPE type, AUDIO_RECORDING_QUALITY_TYPE quality_type, int channel)
         {
             this.filePath = file_path;
             this.encode = enc;
             this.sampleRate = sample_rate;
             this.fileRecordingType = type;
             this.quality = quality_type;
+            this.recordingChannel = channel;
         }
 
         /**
@@ -5132,6 +5270,13 @@ namespace agora.rtc
         * The recording quality of audio data.
         */
         public AUDIO_RECORDING_QUALITY_TYPE quality { set; get; }
+
+        /**
+        * Recording channel. The following values are supported:
+        * - (Default) 1
+        * - 2
+        */
+        public int recordingChannel { set; get; }
     }
 
     /**
@@ -5447,7 +5592,7 @@ namespace agora.rtc
     {
         public PeerDownlinkInfo()
         {
-            uid = null;
+            uid = "";
             stream_type = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
             current_downscale_level = REMOTE_VIDEO_DOWNSCALE_LEVEL.REMOTE_VIDEO_DOWNSCALE_LEVEL_NONE;
             expected_bitrate_bps = -1;
@@ -5700,6 +5845,37 @@ namespace agora.rtc
         PUB_STATE_PUBLISHED = 3
     };
 
+
+    /**
+    * The EchoTestConfiguration struct.
+    */
+    public class EchoTestConfiguration
+    {
+        public view_t view { set; get; }
+        public bool enableAudio { set; get; }
+        public bool enableVideo { set; get; }
+        public string token { set; get; }
+        public string channelId { set; get; }
+
+        public EchoTestConfiguration(view_t v, bool ea, bool ev, string t, string c)
+        {
+            view = v;
+            enableAudio = ea;
+            enableVideo = ev;
+            token = t;
+            channelId = c;
+        }
+
+        public EchoTestConfiguration()
+        {
+            view = 0;
+            enableAudio = true;
+            enableVideo = true;
+            token = "";
+            channelId = "";
+        }
+    };
+
     public class UserInfo
     {
         /** * The user ID. */
@@ -5767,6 +5943,138 @@ namespace agora.rtc
     };
 
 
+    /**
+    * The video configuration for the shared screen stream.
+    * only in android or iPhone
+    */
+    public class ScreenVideoParameters
+    {
+        /**
+         * The dimensions of the video encoding resolution. The default value is `1280` x `720`.
+         * For recommended values, see [Recommended video
+         * profiles](https://docs.agora.io/en/Interactive%20Broadcast/game_streaming_video_profile?platform=Android#recommended-video-profiles).
+         * If the aspect ratio is different between width and height and the screen, the SDK adjusts the
+         * video encoding resolution according to the following rules (using an example where `width` ×
+         * `height` is 1280 × 720):
+         * - When the width and height of the screen are both lower than `width` and `height`, the SDK
+         * uses the resolution of the screen for video encoding. For example, if the screen is 640 ×
+         * 360, The SDK uses 640 × 360 for video encoding.
+         * - When either the width or height of the screen is higher than `width` or `height`, the SDK
+         * uses the maximum values that do not exceed those of `width` and `height` while maintaining
+         * the aspect ratio of the screen for video encoding. For example, if the screen is 2000 × 1500,
+         * the SDK uses 960 × 720 for video encoding.
+         *
+         * @note
+         * - The billing of the screen sharing stream is based on the values of width and height.
+         * When you do not pass in these values, Agora bills you at 1280 × 720;
+         * when you pass in these values, Agora bills you at those values.
+         * For details, see [Pricing for Real-time
+         * Communication](https://docs.agora.io/en/Interactive%20Broadcast/billing_rtc).
+         * - This value does not indicate the orientation mode of the output ratio.
+         * For how to set the video orientation, see `ORIENTATION_MODE`.
+         * - Whether the SDK can support a resolution at 720P depends on the performance of the device.
+         * If you set 720P but the device cannot support it, the video frame rate can be lower.
+         */
+        public VideoDimensions dimensions { set; get; }
+        /**
+         * The video encoding frame rate (fps). The default value is `15`.
+         * For recommended values, see [Recommended video
+         * profiles](https://docs.agora.io/en/Interactive%20Broadcast/game_streaming_video_profile?platform=Android#recommended-video-profiles).
+         */
+        public int frameRate { set; get; }
+        /**
+        * The video encoding bitrate (Kbps). For recommended values, see [Recommended video
+        * profiles](https://docs.agora.io/en/Interactive%20Broadcast/game_streaming_video_profile?platform=Android#recommended-video-profiles).
+        */
+        public int bitrate { set; get; }
+        /* 
+         * The content hint of the screen sharing:
+         */
+        public VIDEO_CONTENT_HINT contentHint = VIDEO_CONTENT_HINT.CONTENT_HINT_MOTION;
+
+        public ScreenVideoParameters()
+        {
+            dimensions = new VideoDimensions(1280, 720);
+            frameRate = 15;
+        }
+    };
+
+    /**
+     * The audio configuration for the shared screen stream.
+     */
+    public class ScreenAudioParameters
+    {
+
+        /**
+         * The audio sample rate (Hz). The default value is `16000`.
+         * only in android
+         */
+        public int sampleRate { set; get; }
+        /**
+         * The number of audio channels. The default value is `2`, indicating dual channels.
+         * only in android
+         */
+        public int channels { set; get; }
+
+        /**
+         * The volume of the captured system audio. The value range is [0,100]. The default value is
+         * `100`.
+         */
+        public int captureSignalVolume { set; get; }
+
+        public ScreenAudioParameters()
+        {
+            sampleRate = 16000;
+            channels = 2;
+            captureSignalVolume = 100;
+        }
+    };
+
+    /**
+     * The configuration of the screen sharing
+     * only in android or ios
+     */
+    public class ScreenCaptureParameters2
+    {
+        /**
+         * Determines whether to capture system audio during screen sharing:
+         * - `true`: Capture.
+         * - `false`: (Default)  Do not capture.
+         *
+         * **Note**
+         * Due to system limitations, capturing system audio is only available for Android API level 29
+         * and later (that is, Android 10 and later).
+         */
+        public bool captureAudio { set; get; }
+        /**
+         * The audio configuration for the shared screen stream.
+         */
+        public ScreenAudioParameters audioParams { set; get; }
+        /**
+         * Determines whether to capture the screen during screen sharing:
+         * - `true`: (Default) Capture.
+         * - `false`: Do not capture.
+         *
+         * **Note**
+         * Due to system limitations, screen capture is only available for Android API level 21 and later
+         * (that is, Android 5 and later).
+         */
+        public bool captureVideo { set; get; }
+        /**
+         * The video configuration for the shared screen stream. 
+         */
+        public ScreenVideoParameters videoParams { set; get; }
+
+        public ScreenCaptureParameters2()
+        {
+            captureAudio = false;
+            audioParams = new ScreenAudioParameters();
+            captureAudio = true;
+            videoParams = new ScreenVideoParameters();
+        }
+    };
+
+
     ////////////////////////////////////////////////////////////////////////////////////////engine
     /** 
      * Spatial audio parameters
@@ -5797,6 +6105,11 @@ namespace agora.rtc
         * enable air absorb or not for the speaker
         */
         public Optional<bool> enable_air_absorb = new Optional<bool>();
+
+        /**
+        * speaker attenuation factor
+        */
+        Optional<double> speaker_attenuation = new Optional<double>();
 
 
         public override void ToJson(JsonWriter writer)
@@ -5838,6 +6151,12 @@ namespace agora.rtc
             {
                 writer.WritePropertyName("enable_air_absorb");
                 writer.Write(this.enable_air_absorb.GetValue());
+            }
+
+            if (this.speaker_attenuation.HasValue())
+            {
+                writer.WritePropertyName("speaker_attenuation");
+                writer.Write(this.speaker_attenuation.GetValue());
             }
 
             writer.WriteObjectEnd();

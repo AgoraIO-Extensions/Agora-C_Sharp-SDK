@@ -59,7 +59,7 @@ namespace agora.rtc
         ROUTE_AIRPLAY
     };
 
-  
+
     /**
    * Bytes per sample
    */
@@ -198,11 +198,6 @@ namespace agora.rtc
 
     };
 
-    public class AdvancedAudioOptions
-    {
-        public Optional<int> audioProcessingChannels = new Optional<int>();
-    };
-
     /**
     * The detailed information of the incoming audio encoded frame.
     */
@@ -270,8 +265,8 @@ namespace agora.rtc
     public enum VIDEO_PIXEL_FORMAT
     {
         /**
-   * 0: Default format.
-   */
+        * 0: Default format.
+        */
         VIDEO_PIXEL_DEFAULT = 0,
         /**
          * 1: I420.
@@ -495,7 +490,7 @@ namespace agora.rtc
     {
         public VideoFrame()
         {
-            type = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_UNKNOWN;
+            type = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
             width = 0;
             height = 0;
             yStride = 0;
@@ -589,6 +584,14 @@ namespace agora.rtc
          */
         public float[] matrix;
 
+
+        /**
+        *  Portrait Segmentation meta buffer, dimension of which is the same as VideoFrame.
+        *  Pixl value is between 0-255, 0 represents totally background, 255 represents totally foreground.
+        *  The default value is NULL
+        */
+        public byte[] alphaBuffer;
+        public IntPtr alphaBufferPtr;
     };
 
     public enum MEDIA_PLAYER_SOURCE_TYPE
@@ -720,6 +723,53 @@ namespace agora.rtc
         AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
     };
 
+
+    public class AudioParams
+    {
+        /** The audio sample rate (Hz), which can be set as one of the following values:
+
+         - `8000`
+         - `16000` (Default)
+         - `32000`
+         - `44100 `
+         - `48000`
+         */
+        public int sample_rate { set; get; }
+
+        /* The number of audio channels, which can be set as either of the following values:
+
+         - `1`: Mono (Default)
+         - `2`: Stereo
+         */
+        public int channels { set; get; }
+
+        /* The use mode of the audio data. See AgoraAudioRawFrameOperationMode.
+         */
+        public RAW_AUDIO_FRAME_OP_MODE_TYPE mode { set; get; }
+
+        /** The number of samples. For example, set it as 1024 for RTMP or RTMPS
+         streaming.
+         */
+        public int samples_per_call { set; get; }
+
+        public AudioParams()
+        {
+            sample_rate = 0;
+            channels = 0;
+            mode = RAW_AUDIO_FRAME_OP_MODE_TYPE.RAW_AUDIO_FRAME_OP_MODE_READ_ONLY;
+            samples_per_call = 0;
+        }
+
+        public AudioParams(int samplerate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE type, int samplesPerCall)
+        {
+            sample_rate = samplerate;
+            channels = channel;
+            mode = type;
+            samples_per_call = samplesPerCall;
+        }
+    };
+
+
     public struct AudioSpectrumData
     {
 
@@ -780,6 +830,13 @@ namespace agora.rtc
         MAX_CONTENT_INSPECT_MODULE_COUNT = 32
     };
 
+    public enum CONTENT_INSPECT_VENDOR
+    {
+        CONTENT_INSPECT_VENDOR_AGORA = 1,
+        CONTENT_INSPECT_VENDOR_TUPU = 2,
+        ONTENT_INSPECT_VENDOR_HIVE = 3
+    };
+
     public enum CONTENT_INSPECT_DEVICE_TYPE
     {
         CONTENT_INSPECT_DEVICE_INVALID = 0,
@@ -822,68 +879,71 @@ namespace agora.rtc
     public class ContentInspectModule
     {
         /**
-        * The content inspect module type.
+         * The content inspect module type.
         */
         public CONTENT_INSPECT_TYPE type;
+        public CONTENT_INSPECT_VENDOR vendor;
+        public string callbackUrl;
+        public string token;
         /**The content inspect frequency, default is 0 second.
-        * the frequency <= 0 is invalid.
-        */
+         * the frequency <= 0 is invalid.
+         */
         public uint frequency;
+
+        public ContentInspectModule()
+        {
+            type = CONTENT_INSPECT_TYPE.CONTENT_INSPECT_INVALID;
+            frequency = 0;
+            vendor = CONTENT_INSPECT_VENDOR.CONTENT_INSPECT_VENDOR_AGORA;
+            callbackUrl = "";
+            token = "";
+        }
+
     };
 
     /** Definition of ContentInspectConfig.
 */
     public class ContentInspectConfig
     {
+        /** video moderation work type.*/
+        public CONTENT_INSPECT_WORK_TYPE ContentWorkType { set; get; }
+
+        /**the type of video moderation on device.*/
+        public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType { set; get; }
+        public string extraInfo { set; get; }
+
+        /**The content inspect modules, max length of modules is 32.
+         * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
+         */
+        public ContentInspectModule[] modules { set; get; }
+        /**The content inspect module count.
+         */
+        public int moduleCount { set; get; }
+
         public ContentInspectConfig()
         {
-            enable = false;
-            DeviceWork = false;
-            CloudWork = true;
+            ContentWorkType = CONTENT_INSPECT_WORK_TYPE.CONTENT_INSPECT_WORK_CLOUD;
             DeviceworkType = CONTENT_INSPECT_DEVICE_TYPE.CONTENT_INSPECT_DEVICE_INVALID;
             extraInfo = "";
             moduleCount = 0;
         }
 
-        /** enable content isnpect function*/
-        public bool enable { set; get; }
-
-        /** jh on device.*/
-        public bool DeviceWork { set; get; }
-
-        /** jh on cloud.*/
-        public bool CloudWork { set; get; }
-
-        /**the type of jh on device.*/
-        public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType { set; get; }
-
-        public string extraInfo { set; get; }
-
-        /**The content inspect modules, max length of modules is 32.
-        * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
-        */
-        public ContentInspectModule[] modules { set; get; }
-
-        /**The content inspect module count.
-        */
-        public int moduleCount { set; get; }
-
     };
 
 
-    public class SnapShotConfig
-    {
-        public SnapShotConfig()
-        {
-            channel = null;
-            uid = 0;
-            filePath = null;
-        }
+    //public class SnapShotConfig
+    //{
+    //    public SnapShotConfig()
+    //    {
+    //        channel = null;
+    //        uid = 0;
+    //        filePath = null;
+    //    }
 
-        public string channel;
-        public uint uid;
-        public string filePath;
-    }
+    //    public string channel;
+    //    public uint uid;
+    //    public string filePath;
+    //}
 
 
     /**
@@ -985,5 +1045,89 @@ namespace agora.rtc
         RECORDER_ERROR_CONFIG_CHANGED = 4,
     };
 
+    /**
+    * Configurations for the local audio and video recording.
+    *
+    * @since v3.5.2
+    */
+    public class MediaRecorderConfiguration
+    {
+        /**
+         * The absolute path (including the filename extensions) of the recording file.
+         * For example, `C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4` on Windows,
+         * `/App Sandbox/Library/Caches/example.mp4` on iOS, `/Library/Logs/example.mp4` on macOS, and
+         * `/storage/emulated/0/Android/data/<package name>/files/example.mp4` on Android.
+         *
+         * @note Ensure that the specified path exists and is writable.
+         */
+        public string storagePath { set; get; }
+        /**
+         * The format of the recording file. See \ref agora::rtc::MediaRecorderContainerFormat "MediaRecorderContainerFormat".
+         */
+        public MediaRecorderContainerFormat containerFormat { set; get; }
+        /**
+         * The recording content. See \ref agora::rtc::MediaRecorderStreamType "MediaRecorderStreamType".
+         */
+        public MediaRecorderStreamType streamType { set; get; }
+        /**
+         * The maximum recording duration, in milliseconds. The default value is 120000.
+         */
+        public int maxDurationMs { set; get; }
+        /**
+         * The interval (ms) of updating the recording information. The value range is
+         * [1000,10000]. Based on the set value of `recorderInfoUpdateInterval`, the
+         * SDK triggers the \ref IMediaRecorderObserver::onRecorderInfoUpdated "onRecorderInfoUpdated"
+         * callback to report the updated recording information.
+         */
+        public int recorderInfoUpdateInterval { set; get; }
+
+        public MediaRecorderConfiguration()
+        {
+            storagePath = "";
+            containerFormat = MediaRecorderContainerFormat.FORMAT_MP4;
+            streamType = MediaRecorderStreamType.STREAM_TYPE_BOTH;
+            maxDurationMs = 120000;
+            recorderInfoUpdateInterval = 0;
+        }
+
+        public MediaRecorderConfiguration(string path, MediaRecorderContainerFormat format, MediaRecorderStreamType type, int duration, int interval)
+        {
+            storagePath = path;
+            containerFormat = format;
+            streamType = type;
+            maxDurationMs = duration;
+            recorderInfoUpdateInterval = interval;
+        }
+    };
+
+    public class RecorderInfo
+    {
+        /**
+         * The absolute path of the recording file.
+         */
+        public string fileName { set; get; }
+        /**
+         * The recording duration, in milliseconds.
+         */
+        public uint durationMs { set; get; }
+        /**
+         * The size in bytes of the recording file.
+         */
+        public uint fileSize { set; get; }
+
+        public RecorderInfo()
+        {
+            fileName = "";
+            durationMs = 0;
+            fileSize = 0;
+        }
+
+        public RecorderInfo(string name, uint dur, uint size)
+        {
+            fileName = name;
+            durationMs = dur;
+            fileSize = size;
+        }
+    };
     #endregion
 }

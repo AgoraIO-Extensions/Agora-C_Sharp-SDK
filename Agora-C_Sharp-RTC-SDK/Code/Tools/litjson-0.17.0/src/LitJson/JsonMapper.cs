@@ -1364,24 +1364,24 @@ namespace agora.rtc.LitJson
             RegisterImporter(custom_importers_table,
                typeof(Optional<string>), typeof(string), importer);
 
-            //enum NLP_AGGRESSIVENESS
-            importer = delegate (object input)
-            {
-                Optional<NLP_AGGRESSIVENESS> ret = new Optional<NLP_AGGRESSIVENESS>();
-                ret.SetValue((NLP_AGGRESSIVENESS)Convert.ToInt16(input));
-                return ret;
-            };
-            RegisterImporter(custom_importers_table,
-              typeof(Optional<NLP_AGGRESSIVENESS>), typeof(int), importer);
+            ////enum NLP_AGGRESSIVENESS
+            //importer = delegate (object input)
+            //{
+            //    Optional<NLP_AGGRESSIVENESS> ret = new Optional<NLP_AGGRESSIVENESS>();
+            //    ret.SetValue((NLP_AGGRESSIVENESS)Convert.ToInt16(input));
+            //    return ret;
+            //};
+            //RegisterImporter(custom_importers_table,
+            //  typeof(Optional<NLP_AGGRESSIVENESS>), typeof(int), importer);
 
-            importer = delegate (object input)
-            {
-                Optional<NLP_AGGRESSIVENESS> ret = new Optional<NLP_AGGRESSIVENESS>();
-                ret.SetValue((NLP_AGGRESSIVENESS)Convert.ToUInt64(input));
-                return ret;
-            };
-            RegisterImporter(custom_importers_table,
-              typeof(Optional<NLP_AGGRESSIVENESS>), typeof(long), importer);
+            //importer = delegate (object input)
+            //{
+            //    Optional<NLP_AGGRESSIVENESS> ret = new Optional<NLP_AGGRESSIVENESS>();
+            //    ret.SetValue((NLP_AGGRESSIVENESS)Convert.ToUInt64(input));
+            //    return ret;
+            //};
+            //RegisterImporter(custom_importers_table,
+            //  typeof(Optional<NLP_AGGRESSIVENESS>), typeof(long), importer);
 
             //enum CLIENT_ROLE_TYPE
             importer = delegate (object input)
@@ -1479,6 +1479,16 @@ namespace agora.rtc.LitJson
             };
             RegisterImporter(custom_importers_table,
               typeof(Optional<THREAD_PRIORITY_TYPE>), typeof(long), importer);
+
+            //CacheStatistics
+            importer = delegate (object input)
+            {
+                Optional<CacheStatistics> ret = new Optional<CacheStatistics>();
+                ret.SetValue((CacheStatistics)JsonMapper.ToObject<CacheStatistics>((string)input));
+                return ret;
+            };
+            RegisterImporter(custom_importers_table,
+              typeof(Optional<CacheStatistics>), typeof(string), importer);
 
             #endregion
 
