@@ -33,20 +33,6 @@ namespace agora.rtc
             switch (@event)
             {
                 #region no buffer start
-                case "onWarning":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                    if (EngineEventHandler == null) return;
-                    EngineEventHandler.OnWarning(
-                        (int)AgoraJson.GetData<int>(data, "warn"),
-                        (string)AgoraJson.GetData<string>(data, "msg")
-                    );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
-#endif
-                    break;
 
                 case "onError":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

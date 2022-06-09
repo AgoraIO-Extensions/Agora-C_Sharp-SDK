@@ -10,8 +10,6 @@ namespace agora.rtc
 
         public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed) { }
 
-        public virtual void OnWarning(int warn, string msg) { }
-
         public virtual void OnError(int err, string msg) { }
 
         public virtual void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost) { }

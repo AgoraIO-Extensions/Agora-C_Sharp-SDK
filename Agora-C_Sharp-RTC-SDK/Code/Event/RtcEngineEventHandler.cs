@@ -7,8 +7,6 @@ namespace agora.rtc
 {
     public delegate void OnJoinChannelSuccessHandler(RtcConnection connection, int elapsed);
 
-    public delegate void OnWarningHandler(int warn, string msg);
-
     public delegate void OnErrorHandler(int err, string msg);
 
     public delegate void OnLeaveChannelHandler(RtcConnection connection, RtcStats stats);
@@ -205,7 +203,6 @@ namespace agora.rtc
     {
         public event OnJoinChannelSuccessHandler EventOnJoinChannelSuccess;
         public event OnLeaveChannelHandler EventOnLeaveChannel;
-        public event OnWarningHandler EventOnWarning;
         public event OnErrorHandler EventOnError;
         public event OnRejoinChannelSuccessHandler EventOnRejoinChannelSuccess;
         public event OnProxyConnectedHandler EventOnProxyConnected;
@@ -318,12 +315,6 @@ namespace agora.rtc
         {
             if (EventOnJoinChannelSuccess == null) return;
             EventOnJoinChannelSuccess.Invoke(connection, elapsed);
-        }
-
-        public override void OnWarning(int warn, string msg)
-        {
-            if (EventOnWarning == null) return;
-            EventOnWarning.Invoke(warn, msg);
         }
 
         public override void OnError(int err, string msg)
