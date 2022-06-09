@@ -2456,22 +2456,6 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int AdjustLoopbackRecordingVolume(int volume)
-        {
-            var param = new
-            {
-                volume
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTLOOPBACKRECORDINGVOLUME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
         public int GetLoopbackRecordingVolume()
         {
             var param = new { };
@@ -4581,43 +4565,6 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SwitchChannel(string token, string channel)
-        {
-            var param = new
-            {
-                token,
-                channel
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCHANNEL,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int SwitchChannel(string token, string channel, ChannelMediaOptions options)
-        {
-            var param = new
-            {
-                token,
-                channel,
-                options
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCHANNEL,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
         public int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config)
         {
             var param = new
@@ -4925,23 +4872,6 @@ namespace agora.rtc
             var json = AgoraJson.ToJson(param);
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEREMOTESUPERRESOLUTION,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int SetContentInspect(ContentInspectConfig config)
-        {
-            var param = new
-            {
-                config
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCONTENTINSPECT,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -5720,41 +5650,6 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame)
-        {
-            var param = new
-            {
-                frame = new
-                {
-                    frame.type,
-                    frame.format,
-                    frame.stride,
-                    frame.height,
-                    frame.cropLeft,
-                    frame.cropTop,
-                    frame.cropRight,
-                    frame.cropBottom,
-                    frame.rotation,
-                    frame.timestamp,
-                    frame.textureId,
-                    frame.metadata_size
-                }
-            };
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
-            IntPtr eglContextPtr = IntPtr.Zero;
-            IntPtr metadataPtr = IntPtr.Zero;
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PUSHDIRECTCDNSTREAMINGCUSTOMVIDEOFRAME,
-                json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 3,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
         public int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection)
         {
             var param = new
@@ -5854,88 +5749,6 @@ namespace agora.rtc
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
-        //public int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
-        //{
-        //    var param = new
-        //    {
-        //        frame = new
-        //        {
-        //            frame.type,
-        //            frame.format,
-        //            frame.stride,
-        //            frame.height,
-        //            frame.cropLeft,
-        //            frame.cropTop,
-        //            frame.cropRight,
-        //            frame.cropBottom,
-        //            frame.rotation,
-        //            frame.timestamp
-        //        },
-        //        connection
-        //    };
-
-        //    IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
-        //    IntPtr eglContextPtr = IntPtr.Zero;
-        //    IntPtr metadataPtr = IntPtr.Zero;
-        //    IntPtr[] arrayPtr = new IntPtr[] {bufferPtr, eglContextPtr, metadataPtr};
-
-        //    var json = AgoraJson.ToJson(param);
-
-        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME2,
-        //        json, (UInt32)json.Length,
-        //        Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 3,
-        //        out _result);
-
-        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        //}
-
-        public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
-                                          EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId)
-        {
-            var param = new
-            {
-                length,
-                videoEncodedFrameInfo,
-                videoTrackId
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE,
-                json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        //public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
-        //                                  EncodedVideoFrameInfo videoEncodedFrameInfo,
-        //                                  RtcConnection connection)
-        //{
-        //    var param = new
-        //    {
-        //        length,
-        //        videoEncodedFrameInfo,
-        //        connection
-        //    };
-
-        //    var json = AgoraJson.ToJson(param);
-
-        //    IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
-        //    IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
-
-        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE2,
-        //        json, (UInt32)json.Length,
-        //        Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-        //        out _result);
-
-        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        //}
 
         public int PushDirectAudioFrame(AudioFrame frame)
         {

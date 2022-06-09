@@ -422,11 +422,7 @@ namespace agora.rtc
 
         public abstract int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0);
 
-        //public abstract int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection);
-
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
-
-        //public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
 
         public abstract video_track_id_t CreateCustomEncodedVideoTrack(SenderOptions sender_option);
 
@@ -537,8 +533,6 @@ namespace agora.rtc
         #region Miscellaneous audio control
         public abstract int EnableLoopbackRecording(bool enabled, string deviceName = "");
 
-        public abstract int AdjustLoopbackRecordingVolume(int volume);
-
         public abstract int GetLoopbackRecordingVolume();
         #endregion
 
@@ -588,8 +582,6 @@ namespace agora.rtc
         public abstract int StopDirectCdnStreaming();
 
         public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
-
-        public abstract int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame);
 
         public abstract int StartRtmpStreamWithoutTranscoding(string url);
 
@@ -668,8 +660,6 @@ namespace agora.rtc
 
         public abstract int SwitchChannel(string token, string channel);
 
-        public abstract int SwitchChannel(string token, string channel, ChannelMediaOptions options);
-
         //public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
 
         //public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
@@ -683,8 +673,6 @@ namespace agora.rtc
         public abstract int EnableFishCorrection(bool enabled, FishCorrectionParams @params);
 
         public abstract int SetAVSyncSource(string channelId, uint uid);
-
-        public abstract int SetContentInspect(ContentInspectConfig config);
 
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
 

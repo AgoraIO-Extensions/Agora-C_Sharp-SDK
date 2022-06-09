@@ -1537,16 +1537,6 @@ namespace agora.rtc
             return _rtcEngineImpl.EnableLoopbackRecording(enabled, deviceName);
         }
 
-        public override int AdjustLoopbackRecordingVolume(int volume)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.AdjustLoopbackRecordingVolume(volume);
-        }
-
         public override int GetLoopbackRecordingVolume()
         {
             if (_rtcEngineImpl == null)
@@ -2479,16 +2469,6 @@ namespace agora.rtc
             return _rtcEngineImpl.UpdateDirectCdnStreamingMediaOptions(options);
         }
 
-        public override int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.PushDirectCdnStreamingCustomVideoFrame(frame);
-        }
-
         public override int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
         {
             if (_rtcEngineImpl == null)
@@ -2729,36 +2709,6 @@ namespace agora.rtc
             return _rtcEngineImpl.PushVideoFrame(frame, videoTrackId);
         }
 
-        //public override int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
-        //{
-        //    if (_rtcEngineImpl == null)
-        //    {
-        //        AgoraLog.LogError(ErrorMsgLog);
-        //        return ErrorCode;
-        //    }
-        //    return _rtcEngineImpl.PushVideoFrame(frame, connection);
-        //}
-
-        public override int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
-        }
-
-        //public override int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection)
-        //{
-        //    if (_rtcEngineImpl == null)
-        //    {
-        //        AgoraLog.LogError(ErrorMsgLog);
-        //        return ErrorCode;
-        //    }
-        //    return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, connection);
-        //}
-
         public override video_track_id_t CreateCustomEncodedVideoTrack(SenderOptions sender_option)
         {
             if (_rtcEngineImpl == null)
@@ -2927,26 +2877,6 @@ namespace agora.rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.TakeSnapshot(remoteUid, filePath);
-        }
-
-        public override int SwitchChannel(string token, string channel)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SwitchChannel(token, channel);
-        }
-
-        public override int SwitchChannel(string token, string channel, ChannelMediaOptions options)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SwitchChannel(token, channel, options);
         }
 
         public override int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config)
@@ -3185,16 +3115,6 @@ namespace agora.rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableRemoteSuperResolution(userId, enable);
-        }
-
-        public override int SetContentInspect(ContentInspectConfig config)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetContentInspect(config);
         }
 
         public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
