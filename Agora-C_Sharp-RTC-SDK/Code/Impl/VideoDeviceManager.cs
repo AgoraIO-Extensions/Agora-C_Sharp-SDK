@@ -79,6 +79,27 @@ namespace agora.rtc
             return _videoDeviecManagerImpl.StopDeviceTest();
         }
 
+        public override int GetCapability(string deviceIdUTF8, uint deviceCapabilityNumber, out VideoFormat capability)
+        {
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                capability = new VideoFormat();
+                return ErrorCode;
+            }
+            return _videoDeviecManagerImpl.GetCapability(deviceIdUTF8, deviceCapabilityNumber, out capability);
+        }
+
+        public override int NumberOfCapabilities(string deviceIdUTF8)
+        {
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _videoDeviecManagerImpl.NumberOfCapabilities(deviceIdUTF8);
+        }
+
         internal static IVideoDeviceManager GetInstance(IRtcEngine rtcEngine, VideoDeviceManagerImpl impl)
         {
             return instance ?? (instance = new VideoDeviceManager(rtcEngine, impl));

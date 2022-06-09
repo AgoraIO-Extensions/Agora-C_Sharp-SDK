@@ -417,6 +417,8 @@ namespace agora.rtc
         internal const string FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST = "VideoDeviceManager_startDeviceTest";
         internal const string FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST = "VideoDeviceManager_stopDeviceTest";
         internal const string FUNC_VIDEODEVICEMANAGER_RELEASE = "VideoDeviceManager_release";
+        internal const string FUNC_VIDEODEVICEMANAGER_NUMBEROFCAPABILITIES = "VideoDeviceManager_numberOfCapabilities";
+        internal const string FUNC_VIDEODEVICEMANAGER_GETCAPABILITY = "VideoDeviceManager_getCapability";
         #endregion
 
         #region ICloudSpatialAudioEngine start
