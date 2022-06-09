@@ -22,7 +22,6 @@ namespace agora.rtc
 
         public virtual void OnRtcStats(RtcConnection connection, RtcStats stats) { }
 
-        //todo fix with dcg
         public virtual void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
         [Obsolete("This method is deprecated, use onAudioMixingStateChanged instead")]
@@ -30,10 +29,8 @@ namespace agora.rtc
 
         public virtual void OnAudioEffectFinished(int soundId) { }
 
-        //todo fix with dcg
         public virtual void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
-        //todo fix with dcg
         public virtual void OnMediaDeviceChanged(MEDIA_DEVICE_TYPE deviceType) { }
 
         public virtual void OnNetworkQuality(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality) { }
@@ -57,8 +54,6 @@ namespace agora.rtc
         public virtual void OnVideoSizeChanged(RtcConnection connection, uint uid, int width, int height, int rotation) { }
 
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }
-
-        public virtual void OnSnapshotTaken(string channel, uint uid, string filePath, int width, int height, int errCode) { }
 
         public virtual void OnSnapshotTaken(RtcConnection connection, uint remoteUid, string filePath, int width, int height, int errCode) { }
 
