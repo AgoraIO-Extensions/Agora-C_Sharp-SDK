@@ -4303,13 +4303,14 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
+        public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
             var param = new
             {
                 enabled,
                 useTexture,
-                sourceType
+                sourceType,
+                encodedVideoOption
             };
 
             var json = AgoraJson.ToJson(param);

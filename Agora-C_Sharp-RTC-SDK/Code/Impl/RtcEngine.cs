@@ -2572,14 +2572,14 @@ namespace agora.rtc
             return _rtcEngineImpl.PullAudioFrame(frame);
         }
 
-        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
+        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType);
+            return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
         }
 
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true)

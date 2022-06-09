@@ -391,7 +391,7 @@ namespace agora.rtc
         #endregion
 
         #region External video source
-        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType);
+        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
 
         public abstract int PushVideoFrame(ExternalVideoFrame frame);
 
