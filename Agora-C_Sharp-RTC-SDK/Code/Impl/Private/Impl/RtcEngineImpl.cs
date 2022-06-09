@@ -5750,6 +5750,31 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+
+        public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
+                                          EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId)
+        {
+            var param = new
+            {
+                length,
+                videoEncodedFrameInfo,
+                videoTrackId
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+
         public int PushDirectAudioFrame(AudioFrame frame)
         {
             var param = new

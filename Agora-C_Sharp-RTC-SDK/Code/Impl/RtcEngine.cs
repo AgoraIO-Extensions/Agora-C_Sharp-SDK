@@ -2709,6 +2709,17 @@ namespace agora.rtc
             return _rtcEngineImpl.PushVideoFrame(frame, videoTrackId);
         }
 
+
+        public override int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
+        }
+
         public override video_track_id_t CreateCustomEncodedVideoTrack(SenderOptions sender_option)
         {
             if (_rtcEngineImpl == null)

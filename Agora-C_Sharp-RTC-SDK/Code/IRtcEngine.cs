@@ -658,12 +658,6 @@ namespace agora.rtc
 
         public abstract int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay);
 
-        public abstract int SwitchChannel(string token, string channel);
-
-        //public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
-
-        //public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
-
         public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
 
         public abstract int PushDirectAudioFrame(AudioFrame frame);
