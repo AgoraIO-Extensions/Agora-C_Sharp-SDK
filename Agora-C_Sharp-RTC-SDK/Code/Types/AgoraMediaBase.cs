@@ -375,7 +375,7 @@ namespace agora.rtc
         public ExternalVideoFrame()
         {
             this.type = VIDEO_BUFFER_TYPE.VIDEO_BUFFER_RAW_DATA;
-            this.format = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_UNKNOWN;
+            this.format = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
             this.buffer = null;
             this.stride = 0;
             this.height = 0;

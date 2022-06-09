@@ -689,7 +689,8 @@ namespace agora.rtc
          */
         ERR_ADM_IOS_ACTIVATE_SESSION_FAIL = 1206,
         /** @deprecated */
-        ERR_ADM_IOS_SESSION_SAMPLERATR_ZERO __deprecated = 1221,
+        [Obsolete]
+        ERR_ADM_IOS_SESSION_SAMPLERATR_ZERO  = 1221,
         /**
          * 1301: Audio device module: An exception with the audio driver or a
          * compatibility issue occurs.

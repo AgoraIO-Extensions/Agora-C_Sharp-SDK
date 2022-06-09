@@ -805,15 +805,23 @@ namespace agora.rtc
         public void release() { }
     };
 
-    public class AdvancedAudioOptions
+    public class AdvancedAudioOptions : OptionalJsonParse
     {
         /**
          * Audio processing channels, only support 1 or 2.
          */
         public Optional<int> audioProcessingChannels = new Optional<int>();
 
-    };
+        public override void ToJson(JsonWriter writer)
+        {
+            if (this.audioProcessingChannels.HasValue())
+            {
+                writer.WritePropertyName("audioProcessingChannels");
+                writer.Write(this.audioProcessingChannels.GetValue());
+            }
+        }
 
+    }
     public class ImageTrackOptions
     {
         public string imageUrl { set; get; }
@@ -1420,7 +1428,7 @@ namespace agora.rtc
             eventHandler = null;
             appId = "";
             context = 0;
-            enableAudioDevice = true;
+
             channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;
             audioScenario = AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT;
             areaCode = AREA_CODE.AREA_CODE_GLOB;
@@ -1430,13 +1438,12 @@ namespace agora.rtc
 
 
         public RtcEngineContext(string appId, UInt64 context,
-            bool enableAudioDevice, CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
+            CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
             LogConfig logConfig = null)
         {
             this.appId = appId;
             this.context = context;
-            this.enableAudioDevice = enableAudioDevice;
             this.channelProfile = channelProfile;
             this.audioScenario = audioScenario;
             this.areaCode = areaCode;

@@ -1,4 +1,5 @@
 using System;
+using video_track_id_t = System.UInt32;
 
 namespace agora.rtc
 {
@@ -53,11 +54,15 @@ namespace agora.rtc
 
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile);
 
+        public abstract int SetAudioScenario(AUDIO_SCENARIO_TYPE scenario);
+
         public abstract int AdjustRecordingSignalVolume(int volume);
 
         public abstract int MuteRecordingSignal(bool mute);
 
         public abstract int AdjustPlaybackSignalVolume(int volume);
+
+        public abstract int AdjustLoopbackSignalVolume(int volume);
 
         public abstract int AdjustUserPlaybackSignalVolume(uint uid, int volume);
 
@@ -108,10 +113,20 @@ namespace agora.rtc
         public abstract int MuteAllRemoteVideoStreams(bool mute);
 
         public abstract int SetDefaultMuteAllRemoteVideoStreams(bool mute);
+
+        public abstract int EnableVideoImageSource(bool enable, ImageTrackOptions options);
+
+        public abstract int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+
+        public abstract int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+
+        public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
+
+        public abstract int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
         #endregion
 
         #region Capture screenshots
-        public abstract int TakeSnapshot(SnapShotConfig config);
+        public abstract int TakeSnapshot(uint remoteUid, string filePath);
         #endregion
 
         #region Multi-device capture
@@ -145,7 +160,7 @@ namespace agora.rtc
         #region Video pre-process and post-process
         public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
-        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource);
+        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource, SegmentationProperty segproperty, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
         #endregion
@@ -164,6 +179,8 @@ namespace agora.rtc
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle);
 
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos);
+
+        public abstract int SetAudioMixingDualMonoMode(int mode);
 
         public abstract int StopAudioMixing();
 
@@ -255,6 +272,8 @@ namespace agora.rtc
 
         public abstract int StartEchoTest(int intervalInSeconds);
 
+        public abstract int StartEchoTest(EchoTestConfiguration config);
+
         public abstract int StopEchoTest();
 
         public abstract int StartLastmileProbeTest(LastmileProbeConfig config);
@@ -265,11 +284,19 @@ namespace agora.rtc
         #region Screen sharing
         public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
 
+        public abstract int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario);
+
         public abstract int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
         public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
         public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
+
+        //only in android 
+        public abstract int StartScreenCapture(ScreenCaptureParameters2 captureParams);
+
+        //only in android 
+        public abstract int UpdateScreenCapture(ScreenCaptureParameters2 captureParams);
 
         public abstract int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
@@ -400,6 +427,15 @@ namespace agora.rtc
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
 
         //public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
+
+        public abstract video_track_id_t CreateCustomEncodedVideoTrack(SenderOptions sender_option);
+
+        public abstract int DestroyCustomEncodedVideoTrack(video_track_id_t video_track_id);
+
+        public abstract video_track_id_t CreateCustomVideoTrack();
+
+        public abstract int DestroyCustomVideoTrack(video_track_id_t video_track_id);
+
         #endregion
 
         #region Raw video data
@@ -564,6 +600,7 @@ namespace agora.rtc
         public abstract int StopRtmpStream(string url);
         #endregion
 
+        #region Log
         public abstract int SetLogFile(string filePath);
 
         public abstract int SetLogFilter(uint filter);
@@ -573,6 +610,17 @@ namespace agora.rtc
         public abstract int SetLogFileSize(uint fileSizeInKBytes);
 
         public abstract int UploadLogFile(ref string requestId);
+        #endregion
+
+        #region black list and white list
+        public abstract int SetSubscribeAudioBlacklist(uint[] uidList, int uidNumber);
+
+        public abstract int SetSubscribeAudioWhitelist(uint[] uidList, int uidNumber);
+
+        public abstract int SetSubscribeVideoBlacklist(uint[] uidList, int uidNumber);
+
+        public abstract int SetSubscribeVideoWhitelist(uint[] uidList, int uidNumber);
+        #endregion
 
         public abstract int StartPrimaryCustomAudioTrack(AudioTrackConfig config);
 
@@ -638,9 +686,19 @@ namespace agora.rtc
 
         public abstract int SetContentInspect(ContentInspectConfig config);
 
+        public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
+
         public abstract bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir);
 
         public abstract bool StopDumpVideo();
+
+        public abstract int EnableWirelessAccelerate(bool enabled);
+
+        public abstract int GetAudioTrackCount();
+
+        public abstract int SelectAudioTrack(int index);
+
+
     };
 
     public abstract class IRtcEngineEx : IRtcEngine
@@ -698,5 +756,15 @@ namespace agora.rtc
         public abstract int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection);
 
         public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
+
+        public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
+
+        public abstract int SetSubscribeAudioBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
+
+        public abstract int SetSubscribeAudioWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
+
+        public abstract int SetSubscribeVideoBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
+
+        public abstract int SetSubscribeVideoWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
     }
 }
