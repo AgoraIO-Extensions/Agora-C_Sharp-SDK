@@ -40,6 +40,7 @@ namespace agora.rtc
             _disposed = true;
         }
 
+        #region PlaybackDevices
         public DeviceInfo[] EnumeratePlaybackDevices()
         {
             return AgoraRtcNative.CallIrisApi(_irisApiEngine,
@@ -142,27 +143,23 @@ namespace agora.rtc
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int StartAudioDeviceLoopbackTest(int indicationInterval)
+        public int FollowSystemPlaybackDevice(bool enable)
         {
-            var param = new 
+            var param = new
             {
-                indicationInterval
+                enable
             };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_AUDIODEVICEMANAGER_STARTAUDIODEVICELOOPBACKTEST,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMPLAYBACKDEVICE,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
+        #endregion
 
-        public int StopAudioDeviceLoopbackTest()
-        {
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_AUDIODEVICEMANAGER_STOPAUDIODEVICELOOPBACKTEST,
-                "", 0, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
-        }
 
+
+        #region PlaybackDevices
         public DeviceInfo[] EnumerateRecordingDevices()
         {
             return AgoraRtcNative.CallIrisApi(_irisApiEngine,
@@ -264,5 +261,42 @@ namespace agora.rtc
                 "", 0, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
+
+        public int FollowSystemRecordingDevice(bool enable)
+        {
+            var param = new
+            {
+                enable
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMRECORDINGDEVICE,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+        #endregion
+
+        #region AudioDevice
+        public int StartAudioDeviceLoopbackTest(int indicationInterval)
+        {
+            var param = new
+            {
+                indicationInterval
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_STARTAUDIODEVICELOOPBACKTEST,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int StopAudioDeviceLoopbackTest()
+        {
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_STOPAUDIODEVICELOOPBACKTEST,
+                "", 0, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+        #endregion
     }
 }
