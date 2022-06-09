@@ -291,6 +291,7 @@ namespace agora.rtc
         internal const string FUNC_MEDIAPLAYER_INITIALIZE = "MediaPlayer_initialize";
         internal const string FUNC_MEDIAPLAYER_GETMEDIAPLAYERID = "MediaPlayer_getMediaPlayerId";
         internal const string FUNC_MEDIAPLAYER_OPEN = "MediaPlayer_open";
+        internal const string FUNC_MEDIAPLAYER_OPENWITHMEDIASOURCE = "MediaPlayer_openWithMediaSource";
         internal const string FUNC_MEDIAPLAYER_OPENWITHCUSTOMSOURCE = "MediaPlayer_openWithCustomSource";
         internal const string FUNC_MEDIAPLAYER_PLAY = "MediaPlayer_play";
         internal const string FUNC_MEDIAPLAYER_PAUSE = "MediaPlayer_pause";
@@ -347,6 +348,7 @@ namespace agora.rtc
         internal const string FUNC_MEDIAPLAYER_PLAYPRELOADEDSRC = "MediaPlayer_playPreloadedSrc";
         internal const string FUNC_MEDIAPLAYER_UNLOADSRC = "MediaPlayer_unloadSrc";
         internal const string FUNC_MEDIAPLAYER_SETSPATIALAUDIOPARAMS = "MediaPlayer_setSpatialAudioParams";
+        internal const string FUNC_MEDIAPLAYER_SETSOUNDPOSITIONPARAMS = "MediaPlayer_setSoundPositionParams";
         // class IMediaPlayer end
 
         // class IAudioDeviceManager start

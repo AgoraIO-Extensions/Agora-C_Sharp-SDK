@@ -28,6 +28,10 @@ namespace agora.rtc
 
         public abstract int OpenWithCustomSource(Int64 startPos, IMediaPlayerCustomDataProvider provider);
 
+        public abstract int OpenWithMediaSource(MediaSource source);
+
+        public abstract int SetSoundPositionParams(float pan, float gain);
+
         public abstract int Play();
 
         public abstract int Pause();
