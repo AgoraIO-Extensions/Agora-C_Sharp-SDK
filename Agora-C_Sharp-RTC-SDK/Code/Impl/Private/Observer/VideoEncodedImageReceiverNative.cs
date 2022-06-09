@@ -6,9 +6,9 @@ using AOT;
 
 namespace agora.rtc
 {
-    internal static class VideoEncodedImageReceiverNative
+    internal static class VideoEncodedFrameObserverNative
     {
-        internal static IVideoEncodedImageReceiver VideoEncodedImageReceiver;
+        internal static IVideoEncodedFrameObserver VideoEncodedFrameObserver;
 
         private static class LocalVideoEncodedVideoFrameInfo
         {
@@ -18,10 +18,13 @@ namespace agora.rtc
 
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_EncodedVideoImageReceived_Native))]
+        [MonoPInvokeCallback(typeof(Func_EncodedVideoFrameObserver_Native))]
 #endif
-        internal static bool OnEncodedVideoImageReceived(IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
+        internal static bool OnEncodedVideoFrame(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
         {
+            if (VideoEncodedFrameObserver == null)
+                return true;
+
             var videoEncodedFrameInfo = (IrisEncodedVideoFrameInfo) (Marshal.PtrToStructure(videoEncodedFrameInfoPtr, typeof(IrisEncodedVideoFrameInfo)) ?? 
                 new IrisEncodedVideoFrameInfo());
             
@@ -35,13 +38,11 @@ namespace agora.rtc
             localVideoEncodedFrameInfo.frameType = (VIDEO_FRAME_TYPE_NATIVE) videoEncodedFrameInfo.frameType;
             localVideoEncodedFrameInfo.rotation = (VIDEO_ORIENTATION) videoEncodedFrameInfo.rotation;
             localVideoEncodedFrameInfo.trackId = videoEncodedFrameInfo.trackId;
-            localVideoEncodedFrameInfo.renderTimeMs = videoEncodedFrameInfo.renderTimeMs;
-            localVideoEncodedFrameInfo.internalSendTs = videoEncodedFrameInfo.internalSendTs;
+            localVideoEncodedFrameInfo.captureTimeMs = videoEncodedFrameInfo.captureTimeMs;
             localVideoEncodedFrameInfo.uid = videoEncodedFrameInfo.uid;
             localVideoEncodedFrameInfo.streamType = (VIDEO_STREAM_TYPE) videoEncodedFrameInfo.streamType;
 
-            return VideoEncodedImageReceiver == null || 
-                VideoEncodedImageReceiver.OnEncodedVideoImageReceived(imageBuffer, length, localVideoEncodedFrameInfo);
+            return VideoEncodedFrameObserver.OnEncodedVideoFrame(uid, imageBuffer, length, localVideoEncodedFrameInfo);
         }
     }
 }

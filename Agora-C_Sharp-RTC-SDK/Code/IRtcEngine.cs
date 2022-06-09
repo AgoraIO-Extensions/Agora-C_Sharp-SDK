@@ -355,7 +355,7 @@ namespace agora.rtc
         #endregion
 
         #region Custom audio renderer
-        public abstract int SetExternalAudioSink(int sampleRate, int channels);
+        public abstract int SetExternalAudioSink(bool enabled, int sampleRate, int channels);
 
         public abstract int PullAudioFrame(AudioFrame frame);
         #endregion
@@ -391,15 +391,15 @@ namespace agora.rtc
         #endregion
 
         #region External video source
-        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType);
+        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
 
-        public abstract int PushVideoFrame(ExternalVideoFrame frame);
+        public abstract int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0);
 
-        public abstract int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection);
+        //public abstract int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection);
 
-        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo);
+        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
 
-        public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
+        //public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
         #endregion
 
         #region Raw video data
@@ -407,9 +407,9 @@ namespace agora.rtc
 
         public abstract void UnRegisterVideoFrameObserver();
 
-        public abstract void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract void RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
-        public abstract void UnRegisterVideoEncodedImageReceiver();
+        public abstract void UnRegisterVideoEncodedFrameObserver();
         #endregion
 
         #region Extension

@@ -66,9 +66,9 @@ namespace agora.rtc
         private IrisRtcCVideoFrameObserver _irisRtcCVideoFrameObserver;
         private IrisRtcVideoFrameObserverHandleNative _irisRtcVideoFrameObserverHandleNative;
 
-        private IrisRtcCVideoEncodedImageReceiverNativeMarshal _irisRtcCVideoEncodedImageReceiverNative;
-        private IrisRtcCVideoEncodedImageReceiver _irisRtcCVideoEncodedImageReceiver;
-        private IrisRtcVideoEncodedImageReceiverHandleNative _irisRtcVideoEncodedImageReceiverHandleNative;
+        private IrisRtcCVideoEncodedImageReceiverNativeMarshal _irisRtcCVideoEncodedFrameObserverNative;
+        private IrisRtcCVideoEncodedFrameObserver _irisRtcCVideoEncodedFrameObserver;
+        private IrisRtcVideoEncodedImageReceiverHandleNative _irisRtcVideoEncodedFrameObserverHandleNative;
 
         private IrisRtcCMetaDataObserverNativeMarshal _irisRtcCMetaDataObserverNative;
         private IrisCMediaMetadataObserver _irisRtcCMetaDataObserver;
@@ -385,52 +385,57 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
         }
 
-        public void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public void RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            SetIrisVideoEncodedImageReceiver();
-            VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = videoEncodedImageReceiver;
+            SetIrisVideoEncodedFrameObserver();
+            VideoEncodedFrameObserverNative.VideoEncodedFrameObserver = videoEncodedImageReceiver;
         }
 
-        public void UnRegisterVideoEncodedImageReceiver()
+        public void UnRegisterVideoEncodedFrameObserver()
         {
-            UnSetIrisVideoEncodedImageReceiver();
+            UnSetIrisVideoEncodedFrameObserver();
         }
 
-        private void SetIrisVideoEncodedImageReceiver()
+        private void SetIrisVideoEncodedFrameObserver()
         {
-            if (_irisRtcVideoEncodedImageReceiverHandleNative != IntPtr.Zero) return;
+            throw new NotImplementedException();
 
-            _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver
+            if (_irisRtcVideoEncodedFrameObserverHandleNative != IntPtr.Zero) return;
+
+            _irisRtcCVideoEncodedFrameObserver = new IrisRtcCVideoEncodedFrameObserver
             {
-                OnEncodedVideoImageReceived = VideoEncodedImageReceiverNative.OnEncodedVideoImageReceived
+                OnEncodedVideoFrameObserver = VideoEncodedFrameObserverNative.OnEncodedVideoFrame
             };
 
-            var irisRtcCVideoEncodedImageReceiverNativeLocal = new IrisRtcCVideoEncodedImageReceiverNative
+            var irisRtcCVideoEncodedImageReceiverNativeLocal = new IrisRtcCVideoEncodedFrameObserverNative
             {
-                OnEncodedVideoImageReceived =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoEncodedImageReceiver.OnEncodedVideoImageReceived),
+                OnEncodedVideoFrameObserver =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoEncodedFrameObserver.OnEncodedVideoFrameObserver),
 
             };
 
-            _irisRtcCVideoEncodedImageReceiverNative =
+            _irisRtcCVideoEncodedFrameObserverNative =
                 Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCVideoEncodedImageReceiverNativeLocal));
-            Marshal.StructureToPtr(irisRtcCVideoEncodedImageReceiverNativeLocal, _irisRtcCVideoEncodedImageReceiverNative, true);
+            Marshal.StructureToPtr(irisRtcCVideoEncodedImageReceiverNativeLocal, _irisRtcCVideoEncodedFrameObserverNative, true);
 
-            _irisRtcVideoEncodedImageReceiverHandleNative = AgoraRtcNative.RegisterVideoEncodedImageReceiver(
-                _irisRtcEngine, _irisRtcCVideoEncodedImageReceiverNative, 0,
+            _irisRtcVideoEncodedFrameObserverHandleNative = AgoraRtcNative.RegisterVideoEncodedImageReceiver(
+                _irisRtcEngine, _irisRtcCVideoEncodedFrameObserverNative, 0,
                 identifier);
         }
 
-        private void UnSetIrisVideoEncodedImageReceiver()
+        private void UnSetIrisVideoEncodedFrameObserver()
         {
-            if (_irisRtcVideoEncodedImageReceiverHandleNative == IntPtr.Zero) return;
+            throw new NotImplementedException();
+
+            if (_irisRtcVideoEncodedFrameObserverHandleNative == IntPtr.Zero) return;
 
             AgoraRtcNative.UnRegisterVideoEncodedImageReceiver(_irisRtcEngine,
-                _irisRtcVideoEncodedImageReceiverHandleNative, identifier);
-            _irisRtcVideoEncodedImageReceiverHandleNative = IntPtr.Zero;
-            VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = null;
-            _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver();
-            Marshal.FreeHGlobal(_irisRtcCVideoEncodedImageReceiverNative);
+                _irisRtcVideoEncodedFrameObserverHandleNative, identifier);
+            _irisRtcVideoEncodedFrameObserverHandleNative = IntPtr.Zero;
+            VideoEncodedFrameObserverNative.VideoEncodedFrameObserver = null;
+            _irisRtcCVideoEncodedFrameObserver = new IrisRtcCVideoEncodedFrameObserver();
+            Marshal.FreeHGlobal(_irisRtcCVideoEncodedFrameObserverNative);
+            _irisRtcCVideoEncodedFrameObserverNative = IntPtr.Zero;
         }
 
         private void SetIrisMetaDataObserver(METADATA_TYPE type)
@@ -2155,10 +2160,11 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetExternalAudioSink(int sampleRate, int channels)
+        public int SetExternalAudioSink(bool enabled, int sampleRate, int channels)
         {
             var param = new
             {
+                enabled,
                 sampleRate,
                 channels
             };
@@ -4303,13 +4309,14 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
+        public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
             var param = new
             {
                 enabled,
                 useTexture,
-                sourceType
+                sourceType,
+                encodedVideoOption
             };
 
             var json = AgoraJson.ToJson(param);
@@ -5328,7 +5335,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int PushVideoFrame(ExternalVideoFrame frame)
+        public int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId)
         {
             var param = new
             {
@@ -5344,7 +5351,9 @@ namespace agora.rtc
                     frame.cropBottom,
                     frame.rotation,
                     frame.timestamp
-                }
+                },
+
+                videoTrackId
             };
 
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
@@ -5363,48 +5372,49 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
-        {
-            var param = new
-            {
-                frame = new
-                {
-                    frame.type,
-                    frame.format,
-                    frame.stride,
-                    frame.height,
-                    frame.cropLeft,
-                    frame.cropTop,
-                    frame.cropRight,
-                    frame.cropBottom,
-                    frame.rotation,
-                    frame.timestamp
-                },
-                connection
-            };
+        //public int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
+        //{
+        //    var param = new
+        //    {
+        //        frame = new
+        //        {
+        //            frame.type,
+        //            frame.format,
+        //            frame.stride,
+        //            frame.height,
+        //            frame.cropLeft,
+        //            frame.cropTop,
+        //            frame.cropRight,
+        //            frame.cropBottom,
+        //            frame.rotation,
+        //            frame.timestamp
+        //        },
+        //        connection
+        //    };
             
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
-            IntPtr eglContextPtr = IntPtr.Zero;
-            IntPtr metadataPtr = IntPtr.Zero;
-            IntPtr[] arrayPtr = new IntPtr[] {bufferPtr, eglContextPtr, metadataPtr};
+        //    IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
+        //    IntPtr eglContextPtr = IntPtr.Zero;
+        //    IntPtr metadataPtr = IntPtr.Zero;
+        //    IntPtr[] arrayPtr = new IntPtr[] {bufferPtr, eglContextPtr, metadataPtr};
 
-            var json = AgoraJson.ToJson(param);
+        //    var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME2,
-                json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 3,
-                out _result);
+        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME2,
+        //        json, (UInt32)json.Length,
+        //        Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 3,
+        //        out _result);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        //}
 
         public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
-                                          EncodedVideoFrameInfo videoEncodedFrameInfo)
+                                          EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId)
         {
             var param = new
             {
                 length,
-                videoEncodedFrameInfo
+                videoEncodedFrameInfo,
+                videoTrackId
             };
 
             var json = AgoraJson.ToJson(param);
@@ -5420,29 +5430,29 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
-                                          EncodedVideoFrameInfo videoEncodedFrameInfo,
-                                          RtcConnection connection)
-        {
-            var param = new
-            {
-                length,
-                videoEncodedFrameInfo,
-                connection
-            };
+        //public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
+        //                                  EncodedVideoFrameInfo videoEncodedFrameInfo,
+        //                                  RtcConnection connection)
+        //{
+        //    var param = new
+        //    {
+        //        length,
+        //        videoEncodedFrameInfo,
+        //        connection
+        //    };
 
-            var json = AgoraJson.ToJson(param);
+        //    var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+        //    IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
+        //    IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE2,
-                json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE2,
+        //        json, (UInt32)json.Length,
+        //        Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+        //        out _result);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        //}
 
         public int PushDirectAudioFrame(AudioFrame frame)
         {

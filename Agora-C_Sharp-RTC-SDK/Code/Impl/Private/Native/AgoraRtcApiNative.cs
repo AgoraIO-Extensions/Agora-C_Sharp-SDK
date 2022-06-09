@@ -354,7 +354,7 @@ namespace agora.rtc
 
     //encoded_video_image
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_EncodedVideoImageReceived_Native(IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfo);
+    internal delegate bool Func_EncodedVideoImageReceived_Native(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfo);
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcCVideoEncodedImageReceiverNative

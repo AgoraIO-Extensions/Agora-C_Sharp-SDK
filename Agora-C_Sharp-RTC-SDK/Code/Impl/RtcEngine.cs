@@ -120,7 +120,7 @@ namespace agora.rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-             _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
+            _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
         }
 
         public override void UnRegisterAudioFrameObserver()
@@ -153,24 +153,24 @@ namespace agora.rtc
             _rtcEngineImpl.UnRegisterVideoFrameObserver();
         }
 
-        public override void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override void RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-            _rtcEngineImpl.RegisterVideoEncodedImageReceiver(videoEncodedImageReceiver, mode);
+            _rtcEngineImpl.RegisterVideoEncodedFrameObserver(videoEncodedImageReceiver, mode);
         }
 
-        public override void UnRegisterVideoEncodedImageReceiver()
+        public override void UnRegisterVideoEncodedFrameObserver()
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
-            _rtcEngineImpl.UnRegisterVideoEncodedImageReceiver();
+            _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
         }
 
         public override IAudioDeviceManager GetAudioDeviceManager()
@@ -1253,14 +1253,14 @@ namespace agora.rtc
             return _rtcEngineImpl.EnableDualStreamMode(sourceType, enabled, streamConfig);
         }
 
-        public override int SetExternalAudioSink(int sampleRate, int channels)
+        public override int SetExternalAudioSink(bool enabled, int sampleRate, int channels)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetExternalAudioSink(sampleRate, channels);
+            return _rtcEngineImpl.SetExternalAudioSink(enabled, sampleRate, channels);
         }
 
         public override int StartPrimaryCustomAudioTrack(AudioTrackConfig config)
@@ -2015,10 +2015,10 @@ namespace agora.rtc
 
         //public override int RegisterPacketObserver(IPacketObserver observer)
         //{
-            // if (_rtcEngineImpl == null)
-            // {
-            //     AgoraLog.LogError(ErrorMsgLog);
-            // }
+        // if (_rtcEngineImpl == null)
+        // {
+        //     AgoraLog.LogError(ErrorMsgLog);
+        // }
         //    return _rtcEngineImpl.Initialize(context);
         //}
 
@@ -2572,14 +2572,14 @@ namespace agora.rtc
             return _rtcEngineImpl.PullAudioFrame(frame);
         }
 
-        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
+        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType);
+            return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType,encodedVideoOption);
         }
 
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true)
@@ -2592,52 +2592,52 @@ namespace agora.rtc
             return _rtcEngineImpl.SetExternalAudioSource(enabled, sampleRate, channels, sourceNumber, localPlayback, publish);
         }
 
-        public override int PushVideoFrame(ExternalVideoFrame frame)
+        public override int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.PushVideoFrame(frame);
+            return _rtcEngineImpl.PushVideoFrame(frame, videoTrackId);
         }
 
-        public override int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
+        //public override int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.PushVideoFrame(frame, connection);
+        //}
+
+        public override int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.PushVideoFrame(frame, connection);
+            return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
         }
 
-        public override int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo);
-        }
-
-        public override int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, connection);
-        }
+        //public override int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, connection);
+        //}
 
         //public override int GetCertificateVerifyResult(string credential_buf, int credential_len, string certificate_buf, int certificate_len)
         //{
-            // if (_rtcEngineImpl == null)
-            // {
-            //     AgoraLog.LogError(ErrorMsgLog);
-            // }
+        // if (_rtcEngineImpl == null)
+        // {
+        //     AgoraLog.LogError(ErrorMsgLog);
+        // }
         //    return _rtcEngineImpl.Initialize(context);
         //}
 
@@ -2773,10 +2773,10 @@ namespace agora.rtc
 
         //public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
         //{
-            // if (_rtcEngineImpl == null)
-            // {
-            //     AgoraLog.LogError(ErrorMsgLog);
-            // }
+        // if (_rtcEngineImpl == null)
+        // {
+        //     AgoraLog.LogError(ErrorMsgLog);
+        // }
         //    return _rtcEngineImpl.Initialize(context);
         //}
 
@@ -2832,19 +2832,19 @@ namespace agora.rtc
 
         //public override int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options)
         //{
-            // if (_rtcEngineImpl == null)
-            // {
-            //     AgoraLog.LogError(ErrorMsgLog);
-            // }
+        // if (_rtcEngineImpl == null)
+        // {
+        //     AgoraLog.LogError(ErrorMsgLog);
+        // }
         //    return _rtcEngineImpl.Initialize(context);
         //}
 
         //public override int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection)
         //{
-            // if (_rtcEngineImpl == null)
-            // {
-            //     AgoraLog.LogError(ErrorMsgLog);
-            // }
+        // if (_rtcEngineImpl == null)
+        // {
+        //     AgoraLog.LogError(ErrorMsgLog);
+        // }
         //    return _rtcEngineImpl.Initialize(context);
         //}
 
@@ -2895,7 +2895,7 @@ namespace agora.rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableFishCorrection(enabled , @params);
+            return _rtcEngineImpl.EnableFishCorrection(enabled, @params);
         }
 
         public override int SetAdvancedAudioOptions(AdvancedAudioOptions options)

@@ -119,8 +119,7 @@ namespace agora.rtc
         internal int frameType;
         internal int rotation;
         internal int trackId;
-        internal Int64 renderTimeMs;
-        internal UInt64 internalSendTs;
+        internal Int64 captureTimeMs;
         internal uint uid;
         internal int streamType;
     }
