@@ -52,9 +52,7 @@ namespace agora.rtc
 #endif
 
         private RtcEngineEventHandler _engineEventHandlerInstance;
-        private VideoDeviceManagerImpl _videoDeviceManagerInstance;
-        private AudioDeviceManagerImpl _audioDeviceManagerInstance;
-
+    
         private IrisRtcCAudioFrameObserverNativeMarshal _irisRtcCAudioFrameObserverNative;
         private IrisRtcCAudioFrameObserver _irisRtcCAudioFrameObserver;
         private IrisRtcAudioFrameObserverHandleNative _irisRtcAudioFrameObserverHandleNative;
@@ -78,9 +76,12 @@ namespace agora.rtc
 
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
+        private VideoDeviceManagerImpl _videoDeviceManagerInstance;
+        private AudioDeviceManagerImpl _audioDeviceManagerInstance;
         private MediaPlayerImpl _mediaPlayerInstance;
         private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineInstance;
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
+        private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
 
         private RtcEngineImpl()
         {
@@ -93,6 +94,7 @@ namespace agora.rtc
             _mediaPlayerInstance = new MediaPlayerImpl(_irisRtcEngine);
             //_cloudSpatialAudioEngineInstance = new CloudSpatialAudioEngineImpl(_irisRtcEngine);
             //_spatialAudioEngineInstance = new SpatialAudioEngineImpl(_irisRtcEngine);
+            _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
             AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
@@ -125,6 +127,9 @@ namespace agora.rtc
                 //_cloudSpatialAudioEngineInstance.Dispose();
                 _cloudSpatialAudioEngineInstance = null;
                 _spatialAudioEngineInstance = null;
+
+                _mediaPlayerCacheManager.Dispose();
+                _mediaPlayerCacheManager = null;
 
                 AgoraRtcNative.Detach(_irisRtcEngine, _videoFrameBufferManagerPtr);
             }
@@ -511,6 +516,12 @@ namespace agora.rtc
         {
             return _spatialAudioEngineInstance;
         }
+
+        public MediaPlayerCacheManagerImpl GetMediaPlayerCacheManager()
+        {
+            return _mediaPlayerCacheManager;
+        }
+
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         internal IVideoStreamManager GetVideoStreamManager()

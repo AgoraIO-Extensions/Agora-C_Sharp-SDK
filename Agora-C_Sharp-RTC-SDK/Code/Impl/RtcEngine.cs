@@ -10,6 +10,7 @@ namespace agora.rtc
         private IVideoDeviceManager _videoDeviceManager = null;
         private ICloudSpatialAudioEngine _cloudSpatialAudioEngine = null;
         private ILocalSpatialAudioEngine _localSpatialAudioEngine = null;
+        private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
         private const string ErrorMsgLog = "[RtcEngine]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
 
@@ -20,6 +21,7 @@ namespace agora.rtc
             _videoDeviceManager = VideoDeviceManager.GetInstance(this, _rtcEngineImpl.GetVideoDeviceManager());
             _cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
             _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
+            _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
         }
 
         ~RtcEngine()
@@ -28,6 +30,7 @@ namespace agora.rtc
             _videoDeviceManager = null;
             _cloudSpatialAudioEngine = null;
             _localSpatialAudioEngine = null;
+            _mediaPlayerCacheManager = null;
         }
 
         private static IRtcEngine instance = null;
@@ -194,6 +197,15 @@ namespace agora.rtc
             return _videoDeviceManager;
         }
 
+        public override IMediaPlayerCacheManager GetMediaPlayerCacheManager()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return null;
+            }
+            return _mediaPlayerCacheManager;
+        }
 
         public override IMediaPlayer CreateMediaPlayer()
         {
@@ -1855,7 +1867,7 @@ namespace agora.rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartScreenCapture( captureParams);
+            return _rtcEngineImpl.StartScreenCapture(captureParams);
         }
 
         //only in android 

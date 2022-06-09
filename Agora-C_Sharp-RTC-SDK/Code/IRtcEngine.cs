@@ -556,6 +556,8 @@ namespace agora.rtc
         public abstract IVideoDeviceManager GetVideoDeviceManager();
         #endregion
 
+        public abstract IMediaPlayerCacheManager GetMediaPlayerCacheManager();
+
         #region SpatialAudio
         public abstract ICloudSpatialAudioEngine GetCloudSpatialAudioEngine();
 

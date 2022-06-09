@@ -507,5 +507,20 @@ namespace agora.rtc
         internal const string FUNC_RTCRAWDATA_ATTACH = "RtcRawData_attach";
         internal const string FUNC_RTCRAWDATA_DETACH = "RtcRawData_detach";
         #endregion
+
+
+        #region IMediaPlayerCacheManager start
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_ENABLEAUTOREMOVECACHE ="MediaPlayerCacheManager_enableAutoRemoveCache";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEDIR ="MediaPlayerCacheManager_getCacheDir";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEFILECOUNT ="MediaPlayerCacheManager_getCacheFileCount";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILECOUNT ="MediaPlayerCacheManager_getMaxCacheFileCount";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILESIZE ="MediaPlayerCacheManager_getMaxCacheFileSize";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES ="MediaPlayerCacheManager_removeAllCaches";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVECACHEBYURI ="MediaPlayerCacheManager_removeCacheByUri";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEOLDCACHE ="MediaPlayerCacheManager_removeOldCache";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETCACHEDIR ="MediaPlayerCacheManager_setCacheDir";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILECOUNT ="MediaPlayerCacheManager_setMaxCacheFileCount";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILESIZE ="MediaPlayerCacheManager_setMaxCacheFileSize";
+        #endregion
     }
 }
