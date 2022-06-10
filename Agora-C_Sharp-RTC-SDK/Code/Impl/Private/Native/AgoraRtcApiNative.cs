@@ -118,15 +118,6 @@ namespace agora.rtc
         FreeIrisVideoFrameBufferManager(IrisVideoFrameBufferManagerPtr manager_ptr);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisEventHandlerHandle SetIrisVideoFrameBufferManagerEventHandler(
-            IrisVideoFrameBufferManagerPtr manager_ptr,
-            IrisCEventHandler event_handler);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnsetIrisVideoFrameBufferManagerEventHandler(
-            IrisVideoFrameBufferManagerPtr manager_ptr, IrisEventHandlerHandle handle);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisVideoFrameBufferDelegateHandle EnableVideoFrameBuffer(
             IrisVideoFrameBufferManagerPtr manager_ptr, ref IrisCVideoFrameBufferNative buffer,
             uint uid = 0, string channel_id = "");
