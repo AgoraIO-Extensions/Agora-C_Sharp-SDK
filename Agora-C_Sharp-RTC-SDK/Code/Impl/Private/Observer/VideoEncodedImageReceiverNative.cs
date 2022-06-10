@@ -12,7 +12,7 @@ namespace agora.rtc
 
         private static class LocalVideoEncodedVideoFrameInfo
         {
-            internal static readonly EncodedVideoFrameInfo info = new EncodedVideoFrameInfo();
+            internal static  readonly EncodedVideoFrameInfo info = new EncodedVideoFrameInfo();
 
         }
 
@@ -28,8 +28,8 @@ namespace agora.rtc
             var videoEncodedFrameInfo = (IrisEncodedVideoFrameInfo) (Marshal.PtrToStructure(videoEncodedFrameInfoPtr, typeof(IrisEncodedVideoFrameInfo)) ?? 
                 new IrisEncodedVideoFrameInfo());
             
-            var localVideoEncodedFrameInfo = new EncodedVideoFrameInfo();
-            localVideoEncodedFrameInfo = LocalVideoEncodedVideoFrameInfo.info;
+            //var localVideoEncodedFrameInfo = new EncodedVideoFrameInfo();
+            var localVideoEncodedFrameInfo = LocalVideoEncodedVideoFrameInfo.info;
 
             localVideoEncodedFrameInfo.codecType = (VIDEO_CODEC_TYPE) videoEncodedFrameInfo.codecType;
             localVideoEncodedFrameInfo.width = videoEncodedFrameInfo.width;

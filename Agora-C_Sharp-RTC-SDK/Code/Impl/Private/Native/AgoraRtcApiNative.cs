@@ -10,7 +10,7 @@ namespace agora.rtc
     using IrisRtcVideoFrameObserverHandle = IntPtr;
     using IrisVideoFrameBufferManagerPtr = IntPtr;
     using IrisVideoFrameBufferDelegateHandle = IntPtr;
-    using IrisRtcVideoEncodedImageReceiverHandle = IntPtr;
+    using IrisRtcVideoEncodedFrameObserverHandle = IntPtr;
     using IrisMediaPlayerAudioFrameObserverHandle = IntPtr;
     using IrisMediaPlayerAudioSpectrumObserverHandle = IntPtr;
     using IrisMetaDataObserverHandle = IntPtr;
@@ -90,13 +90,13 @@ namespace agora.rtc
 
  // Iris Video Encoded Image Receiver
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcVideoEncodedImageReceiverHandle RegisterVideoEncodedImageReceiver(IrisRtcEnginePtr engine_ptr,
+        internal static extern IrisRtcVideoEncodedFrameObserverHandle RegisterVideoEncodedFrameObserver(IrisRtcEnginePtr engine_ptr,
                                   IntPtr receiverNative,
                                   int order, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnRegisterVideoEncodedImageReceiver(IrisRtcEnginePtr engine_ptr,
-                                IrisRtcVideoEncodedImageReceiverHandle handle, string identifier);
+        internal static extern void UnRegisterVideoEncodedFrameObserver(IrisRtcEnginePtr engine_ptr,
+                                IrisRtcVideoEncodedFrameObserverHandle handle, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void Attach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);

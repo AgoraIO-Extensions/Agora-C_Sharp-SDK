@@ -1714,9 +1714,9 @@ namespace agora.rtc
             frameType = VIDEO_FRAME_TYPE_NATIVE.VIDEO_FRAME_TYPE_BLANK_FRAME;
             rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
             trackId = 0;
+            captureTimeMs = 0;
             uid = 0;
             streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
-
         }
 
         public EncodedVideoFrameInfo(ref EncodedVideoFrameInfo rhs)
@@ -1728,6 +1728,7 @@ namespace agora.rtc
             frameType = rhs.frameType;
             rotation = rhs.rotation;
             trackId = rhs.trackId;
+            captureTimeMs = rhs.captureTimeMs;
             uid = rhs.uid;
             streamType = rhs.streamType;
         }
@@ -4697,7 +4698,7 @@ namespace agora.rtc
         public SEG_MODEL_TYPE modelType { set; get; }
         public float greenCapacity { set; get; }
 
-        SegmentationProperty()
+        public SegmentationProperty()
         {
             modelType = SEG_MODEL_TYPE.SEG_MODEL_AI;
             greenCapacity = 0.5f;

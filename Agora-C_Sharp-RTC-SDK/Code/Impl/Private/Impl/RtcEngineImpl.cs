@@ -23,9 +23,9 @@ namespace agora.rtc
     using IrisRtcCVideoFrameObserverNativeMarshal = IntPtr;
     using IrisRtcVideoFrameObserverHandleNative = IntPtr;
 
-    //VideoEncodedImageReceiver
-    using IrisRtcCVideoEncodedImageReceiverNativeMarshal = IntPtr;
-    using IrisRtcVideoEncodedImageReceiverHandleNative = IntPtr;
+    //VideoEncodedFrameObserver
+    using IrisRtcCVideoEncodedFrameObserverNativeMarshal = IntPtr;
+    using IrisRtcVideoEncodedFrameObserverHandleNative = IntPtr;
 
     using IrisVideoFrameBufferManagerPtr = IntPtr;
 
@@ -66,9 +66,9 @@ namespace agora.rtc
         private IrisRtcCVideoFrameObserver _irisRtcCVideoFrameObserver;
         private IrisRtcVideoFrameObserverHandleNative _irisRtcVideoFrameObserverHandleNative;
 
-        private IrisRtcCVideoEncodedImageReceiverNativeMarshal _irisRtcCVideoEncodedFrameObserverNative;
+        private IrisRtcCVideoEncodedFrameObserverNativeMarshal _irisRtcCVideoEncodedFrameObserverNative;
         private IrisRtcCVideoEncodedFrameObserver _irisRtcCVideoEncodedFrameObserver;
-        private IrisRtcVideoEncodedImageReceiverHandleNative _irisRtcVideoEncodedFrameObserverHandleNative;
+        private IrisRtcVideoEncodedFrameObserverHandleNative _irisRtcVideoEncodedFrameObserverHandleNative;
 
         private IrisRtcCMetaDataObserverNativeMarshal _irisRtcCMetaDataObserverNative;
         private IrisCMediaMetadataObserver _irisRtcCMetaDataObserver;
@@ -397,10 +397,10 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
         }
 
-        public void RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public void RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver VideoEncodedFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisVideoEncodedFrameObserver();
-            VideoEncodedFrameObserverNative.VideoEncodedFrameObserver = videoEncodedImageReceiver;
+            VideoEncodedFrameObserverNative.VideoEncodedFrameObserver = VideoEncodedFrameObserver;
         }
 
         public void UnRegisterVideoEncodedFrameObserver()
@@ -410,9 +410,6 @@ namespace agora.rtc
 
         private void SetIrisVideoEncodedFrameObserver()
         {
-            //todo wait for iris
-            throw new NotImplementedException();
-
             if (_irisRtcVideoEncodedFrameObserverHandleNative != IntPtr.Zero) return;
 
             _irisRtcCVideoEncodedFrameObserver = new IrisRtcCVideoEncodedFrameObserver
@@ -420,7 +417,7 @@ namespace agora.rtc
                 OnEncodedVideoFrameObserver = VideoEncodedFrameObserverNative.OnEncodedVideoFrame
             };
 
-            var irisRtcCVideoEncodedImageReceiverNativeLocal = new IrisRtcCVideoEncodedFrameObserverNative
+            var irisRtcCVideoEncodedFrameObserverNativeLocal = new IrisRtcCVideoEncodedFrameObserverNative
             {
                 OnEncodedVideoFrameObserver =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoEncodedFrameObserver.OnEncodedVideoFrameObserver),
@@ -428,22 +425,20 @@ namespace agora.rtc
             };
 
             _irisRtcCVideoEncodedFrameObserverNative =
-                Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCVideoEncodedImageReceiverNativeLocal));
-            Marshal.StructureToPtr(irisRtcCVideoEncodedImageReceiverNativeLocal, _irisRtcCVideoEncodedFrameObserverNative, true);
+                Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCVideoEncodedFrameObserverNativeLocal));
+            Marshal.StructureToPtr(irisRtcCVideoEncodedFrameObserverNativeLocal, _irisRtcCVideoEncodedFrameObserverNative, true);
 
-            _irisRtcVideoEncodedFrameObserverHandleNative = AgoraRtcNative.RegisterVideoEncodedImageReceiver(
+            _irisRtcVideoEncodedFrameObserverHandleNative = AgoraRtcNative.RegisterVideoEncodedFrameObserver(
                 _irisRtcEngine, _irisRtcCVideoEncodedFrameObserverNative, 0,
                 identifier);
         }
 
         private void UnSetIrisVideoEncodedFrameObserver()
         {
-            //wait for iris
-            throw new NotImplementedException();
-
+          
             if (_irisRtcVideoEncodedFrameObserverHandleNative == IntPtr.Zero) return;
 
-            AgoraRtcNative.UnRegisterVideoEncodedImageReceiver(_irisRtcEngine,
+            AgoraRtcNative.UnRegisterVideoEncodedFrameObserver(_irisRtcEngine,
                 _irisRtcVideoEncodedFrameObserverHandleNative, identifier);
             _irisRtcVideoEncodedFrameObserverHandleNative = IntPtr.Zero;
             VideoEncodedFrameObserverNative.VideoEncodedFrameObserver = null;
