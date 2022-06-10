@@ -705,7 +705,7 @@ namespace agora.rtc
         public int avsync_type { set; get; }
     }
 
-
+    [Flags]
     public enum AUDIO_FRAME_POSITION
     {
         AUDIO_FRAME_POSITION_NONE = 0x0000,

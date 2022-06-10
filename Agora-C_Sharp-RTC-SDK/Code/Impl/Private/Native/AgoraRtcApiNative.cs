@@ -254,13 +254,43 @@ namespace agora.rtc
 
     //audio_frame
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_AudioFrameLocal_Native(IntPtr audio_frame);
+    internal delegate bool Func_AudioFrameLocal_Native(string channelId, IntPtr audio_frame);
+
+    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    //internal delegate bool Func_AudioFrameRemote_Native(string channelId, string uid, IntPtr audio_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_AudioFrameRemote_Native(uint uid, IntPtr audio_frame);
+    internal delegate bool Func_AudioFrameRemote_Native(string channel_id, uint uid, IntPtr audio_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_AudioFrameEx_Native(string channel_id, uint uid, IntPtr audio_frame);
+    internal delegate IrisAudioParams Func_AudioParams_Native();
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate IRIS_AUDIO_FRAME_POSITION Func_AudioFramePosition_Native();
+
+    public enum IRIS_AUDIO_FRAME_POSITION
+    {
+        IRIS_AUDIO_FRAME_POSITION_NONE = 0x0000,
+        IRIS_AUDIO_FRAME_POSITION_PLAYBACK = 0x0001,
+        IRIS_AUDIO_FRAME_POSITION_RECORD = 0x0002,
+        IRIS_AUDIO_FRAME_POSITION_MIXED = 0x0004,
+        IRIS_AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
+    };
+
+    public enum IRIS_RAW_AUDIO_FRAME_OP_MODE_TYPE
+    {
+        IRIS_RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
+        IRIS_RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
+    };
+    
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisAudioParams
+    {
+        internal int sample_rate;
+        internal int channels;
+        internal IRIS_RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
+        internal int samples_per_call;
+    };
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcCAudioFrameObserverNative
@@ -268,9 +298,12 @@ namespace agora.rtc
         internal IntPtr OnRecordAudioFrame;
         internal IntPtr OnPlaybackAudioFrame;
         internal IntPtr OnMixedAudioFrame;
+        //internal IntPtr OnPlaybackAudioFrameBeforeMixing;
         internal IntPtr OnPlaybackAudioFrameBeforeMixing;
-        internal IntPtr IsMultipleChannelFrameWanted;
-        internal IntPtr OnPlaybackAudioFrameBeforeMixingEx;
+        internal IntPtr GetPlaybackAudioParams;
+        internal IntPtr GetRecordAudioParams;
+        internal IntPtr GetMixedAudioParams;
+        internal IntPtr GetObservedAudioFramePosition;
     }
 
     internal struct IrisRtcCAudioFrameObserver
@@ -278,9 +311,12 @@ namespace agora.rtc
         internal Func_AudioFrameLocal_Native OnRecordAudioFrame;
         internal Func_AudioFrameLocal_Native OnPlaybackAudioFrame;
         internal Func_AudioFrameLocal_Native OnMixedAudioFrame;
+        //internal Func_AudioFrameRemote_Native OnPlaybackAudioFrameBeforeMixing;
         internal Func_AudioFrameRemote_Native OnPlaybackAudioFrameBeforeMixing;
-        internal Func_Bool_Native IsMultipleChannelFrameWanted;
-        internal Func_AudioFrameEx_Native OnPlaybackAudioFrameBeforeMixingEx;
+        internal Func_AudioParams_Native GetPlaybackAudioParams;
+        internal Func_AudioParams_Native GetRecordAudioParams;
+        internal Func_AudioParams_Native GetMixedAudioParams;
+        internal Func_AudioFramePosition_Native GetObservedAudioFramePosition;
     }
 
     //audio_encoded_frame

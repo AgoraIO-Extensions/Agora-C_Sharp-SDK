@@ -52,7 +52,7 @@ namespace agora.rtc
 #endif
 
         private RtcEngineEventHandler _engineEventHandlerInstance;
-    
+
         private IrisRtcCAudioFrameObserverNativeMarshal _irisRtcCAudioFrameObserverNative;
         private IrisRtcCAudioFrameObserver _irisRtcCAudioFrameObserver;
         private IrisRtcAudioFrameObserverHandleNative _irisRtcAudioFrameObserverHandleNative;
@@ -289,8 +289,10 @@ namespace agora.rtc
                 OnPlaybackAudioFrame = AudioFrameObserverNative.OnPlaybackAudioFrame,
                 OnMixedAudioFrame = AudioFrameObserverNative.OnMixedAudioFrame,
                 OnPlaybackAudioFrameBeforeMixing = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixing,
-                IsMultipleChannelFrameWanted = AudioFrameObserverNative.IsMultipleChannelFrameWanted,
-                OnPlaybackAudioFrameBeforeMixingEx = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixingEx
+                GetPlaybackAudioParams = AudioFrameObserverNative.GetPlaybackAudioParams,
+                GetRecordAudioParams = AudioFrameObserverNative.GetRecordAudioParams,
+                GetMixedAudioParams = AudioFrameObserverNative.GetMixedAudioParams,
+                GetObservedAudioFramePosition = AudioFrameObserverNative.GetObservedAudioFramePosition
             };
 
             var irisRtcCAudioFrameObserverNativeLocal = new IrisRtcCAudioFrameObserverNative
@@ -303,11 +305,14 @@ namespace agora.rtc
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnMixedAudioFrame),
                 OnPlaybackAudioFrameBeforeMixing =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing),
-                IsMultipleChannelFrameWanted =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.IsMultipleChannelFrameWanted),
-                OnPlaybackAudioFrameBeforeMixingEx =
-                    Marshal.GetFunctionPointerForDelegate(
-                        _irisRtcCAudioFrameObserver.OnPlaybackAudioFrameBeforeMixingEx)
+                GetPlaybackAudioParams =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetPlaybackAudioParams),
+                GetRecordAudioParams =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetRecordAudioParams),
+                GetMixedAudioParams =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetMixedAudioParams),
+                GetObservedAudioFramePosition =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetObservedAudioFramePosition),
             };
 
             _irisRtcCAudioFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCAudioFrameObserverNativeLocal));
