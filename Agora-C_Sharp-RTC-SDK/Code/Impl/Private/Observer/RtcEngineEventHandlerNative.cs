@@ -1476,7 +1476,39 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                    #endregion withBuffer end
+                #endregion withBuffer end
+
+
+                #region IMediaRecorderObserver
+                case "MediaRecorderObserver_onRecorderStateChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnRecorderStateChanged(
+                        (RecorderState)AgoraJson.GetData<RecorderState>(data, "state"),
+                        (RecorderErrorCode)AgoraJson.GetData<RecorderErrorCode>(data, "error")
+                     );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "MediaRecorderObserver_onRecorderInfoUpdated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnRecorderInfoUpdated(
+                        (RecorderInfo)AgoraJson.GetData<RecorderInfo>(data, "info")
+                     );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                    #endregion
             }
         }
     }

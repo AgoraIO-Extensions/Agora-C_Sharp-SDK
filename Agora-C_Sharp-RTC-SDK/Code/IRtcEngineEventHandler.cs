@@ -205,6 +205,12 @@ namespace agora.rtc
         public virtual void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message) { }
 
         public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats) { }
-    };
 
+        #region IMediaRecorderObserver
+        public virtual void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error) { }
+
+        public virtual void OnRecorderInfoUpdated(RecorderInfo info) { }
+        #endregion
+    };
+    
 }

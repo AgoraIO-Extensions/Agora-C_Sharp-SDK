@@ -1021,7 +1021,7 @@ namespace agora.rtc
     *
     * @since v3.5.2
     */
-    enum RecorderErrorCode
+    public enum RecorderErrorCode
     {
         /**
          * 0: No error occurs.

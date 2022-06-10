@@ -193,9 +193,15 @@ namespace agora.rtc
 
     public delegate void OnExtensionErroredHandler(string provider, string ext_name, int error, string msg);
 
-    public delegate void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message);
+    public delegate void OnDirectCdnStreamingStateChangedHandler(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message);
 
-    public delegate void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats);
+    public delegate void OnDirectCdnStreamingStatsHandler(DirectCdnStreamingStats stats);
+
+    #region IMediaRecorderObserver
+    public delegate void OnRecorderStateChangedHandler(RecorderState state, RecorderErrorCode error);
+
+    public delegate void OnRecorderInfoUpdatedHandler(RecorderInfo info);
+    #endregion
 
     public class RtcEngineEventHandler : IRtcEngineEventHandler
     {
@@ -293,8 +299,13 @@ namespace agora.rtc
         public event OnExtensionStartedHandler EventOnExtensionStarted;
         public event OnExtensionStoppedHandler EventOnExtensionStopped;
         public event OnExtensionErroredHandler EventOnExtensionErrored;
-        public event OnDirectCdnStreamingStateChanged EventOnDirectCdnStreamingStateChanged;
-        public event OnDirectCdnStreamingStats EventOnDirectCdnStreamingStats;
+        public event OnDirectCdnStreamingStateChangedHandler EventOnDirectCdnStreamingStateChanged;
+        public event OnDirectCdnStreamingStatsHandler EventOnDirectCdnStreamingStats;
+
+        #region IMediaRecorderObserver
+        public event OnRecorderStateChangedHandler EventOnRecorderStateChanged;
+        public event OnRecorderInfoUpdatedHandler EventOnRecorderInfoUpdated;
+        #endregion
 
         private static RtcEngineEventHandler eventInstance = null;
 
@@ -895,5 +906,19 @@ namespace agora.rtc
             if (EventOnExtensionErrored == null) return;
             EventOnDirectCdnStreamingStats.Invoke(stats);
         }
+
+        #region IMediaRecorderObserver
+        public override void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error)
+        {
+            if (EventOnRecorderStateChanged == null) return;
+            EventOnRecorderStateChanged.Invoke(state, error);
+        }
+
+        public override void OnRecorderInfoUpdated(RecorderInfo info)
+        {
+            if (EventOnRecorderInfoUpdated == null) return;
+            EventOnRecorderInfoUpdated.Invoke(info);
+        }
+        #endregion
     }
 }
