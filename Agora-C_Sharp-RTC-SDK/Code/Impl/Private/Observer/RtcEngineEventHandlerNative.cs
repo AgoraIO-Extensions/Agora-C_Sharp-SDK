@@ -743,7 +743,7 @@ namespace agora.rtc
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioMixingStateChanged(
                         (AUDIO_MIXING_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
-                        (AUDIO_MIXING_REASON_TYPE)AgoraJson.GetData<int>(data, "errorCode")
+                        (AUDIO_MIXING_REASON_TYPE)AgoraJson.GetData<int>(data, "reason")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

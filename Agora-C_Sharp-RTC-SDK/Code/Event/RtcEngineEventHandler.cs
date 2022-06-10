@@ -97,7 +97,7 @@ namespace agora.rtc
 
     public delegate void OnVideoStoppedHandler();
 
-    public delegate void OnAudioMixingStateChangedHandler(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE errorCode);
+    public delegate void OnAudioMixingStateChangedHandler(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason);
 
     public delegate void OnRhythmPlayerStateChangedHandler(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode);
 
@@ -600,10 +600,10 @@ namespace agora.rtc
             EventOnVideoStopped.Invoke();
         }
 
-        public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE errorCode)
+        public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason)
         {
             if (EventOnAudioMixingStateChanged == null) return;
-            EventOnAudioMixingStateChanged.Invoke(state, errorCode);
+            EventOnAudioMixingStateChanged.Invoke(state, reason);
         }
 
         public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode)
