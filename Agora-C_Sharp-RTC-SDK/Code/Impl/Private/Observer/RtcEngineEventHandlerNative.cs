@@ -27,6 +27,12 @@ namespace agora.rtc
                 Marshal.Copy(length, len, 0, (int)buffer_count);
             }
 
+            IntPtr[] bufferArray = new IntPtr[1];
+            if (buffer != IntPtr.Zero)
+            {
+                Marshal.Copy(buffer, bufferArray, 0, 1);
+            }
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
@@ -1470,7 +1476,7 @@ namespace agora.rtc
                         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
                         (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
                         (int)AgoraJson.GetData<int>(data, "streamId"),
-                        (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(data, "data"), (uint)len[0],
+                        bufferArray[0], (uint)len[0],
                         (UInt64)AgoraJson.GetData<UInt64>(data, "sentTs"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1504,6 +1510,7 @@ namespace agora.rtc
                     EngineEventHandler.OnRecorderInfoUpdated(
                         (RecorderInfo)AgoraJson.GetData<RecorderInfo>(data, "info")
                      );
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
