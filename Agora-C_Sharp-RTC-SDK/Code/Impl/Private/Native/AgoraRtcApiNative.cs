@@ -256,11 +256,11 @@ namespace agora.rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_AudioFrameLocal_Native(string channelId, IntPtr audio_frame);
 
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_AudioFrameRemote_Native(string channelId, string uid, IntPtr audio_frame);
-
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_AudioFrameRemote_Native(string channel_id, uint uid, IntPtr audio_frame);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate bool Func_AudioFrameRemoteStringUid_Native(string channel_id, string uid, IntPtr audio_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate IrisAudioParams Func_AudioParams_Native();
@@ -298,8 +298,8 @@ namespace agora.rtc
         internal IntPtr OnRecordAudioFrame;
         internal IntPtr OnPlaybackAudioFrame;
         internal IntPtr OnMixedAudioFrame;
-        //internal IntPtr OnPlaybackAudioFrameBeforeMixing;
         internal IntPtr OnPlaybackAudioFrameBeforeMixing;
+        internal IntPtr OnPlaybackAudioFrameBeforeMixing2;
         internal IntPtr GetPlaybackAudioParams;
         internal IntPtr GetRecordAudioParams;
         internal IntPtr GetMixedAudioParams;
@@ -311,8 +311,8 @@ namespace agora.rtc
         internal Func_AudioFrameLocal_Native OnRecordAudioFrame;
         internal Func_AudioFrameLocal_Native OnPlaybackAudioFrame;
         internal Func_AudioFrameLocal_Native OnMixedAudioFrame;
-        //internal Func_AudioFrameRemote_Native OnPlaybackAudioFrameBeforeMixing;
         internal Func_AudioFrameRemote_Native OnPlaybackAudioFrameBeforeMixing;
+        internal Func_AudioFrameRemoteStringUid_Native OnPlaybackAudioFrameBeforeMixing2;
         internal Func_AudioParams_Native GetPlaybackAudioParams;
         internal Func_AudioParams_Native GetRecordAudioParams;
         internal Func_AudioParams_Native GetMixedAudioParams;

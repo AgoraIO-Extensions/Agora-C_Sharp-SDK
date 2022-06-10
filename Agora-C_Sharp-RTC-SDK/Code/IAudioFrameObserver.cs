@@ -38,15 +38,16 @@ namespace agora.rtc
             return new AudioParams();
         }
 
-        //public virtual bool OnPlaybackAudioFrameBeforeMixing(string channel_id,
-        //                                                string uid,
-        //                                                AudioFrame audio_frame)
-        //{
-        //    return false;
-        //}
-
+     
         public virtual bool OnPlaybackAudioFrameBeforeMixing(string channel_id,
                                                         uint uid,
+                                                        AudioFrame audio_frame)
+        {
+            return false;
+        }
+
+        public virtual bool OnPlaybackAudioFrameBeforeMixing(string channel_id,
+                                                        string uid,
                                                         AudioFrame audio_frame)
         {
             return false;

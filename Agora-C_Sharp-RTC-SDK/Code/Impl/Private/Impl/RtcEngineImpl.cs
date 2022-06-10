@@ -289,6 +289,7 @@ namespace agora.rtc
                 OnPlaybackAudioFrame = AudioFrameObserverNative.OnPlaybackAudioFrame,
                 OnMixedAudioFrame = AudioFrameObserverNative.OnMixedAudioFrame,
                 OnPlaybackAudioFrameBeforeMixing = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixing,
+                OnPlaybackAudioFrameBeforeMixing2 = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixing2,
                 GetPlaybackAudioParams = AudioFrameObserverNative.GetPlaybackAudioParams,
                 GetRecordAudioParams = AudioFrameObserverNative.GetRecordAudioParams,
                 GetMixedAudioParams = AudioFrameObserverNative.GetMixedAudioParams,
@@ -305,6 +306,8 @@ namespace agora.rtc
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnMixedAudioFrame),
                 OnPlaybackAudioFrameBeforeMixing =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing),
+                OnPlaybackAudioFrameBeforeMixing2 =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing2),
                 GetPlaybackAudioParams =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetPlaybackAudioParams),
                 GetRecordAudioParams =
