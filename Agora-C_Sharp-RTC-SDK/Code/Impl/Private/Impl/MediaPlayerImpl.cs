@@ -201,7 +201,7 @@ namespace agora.rtc
 
             _irisMediaPlayerCCustomProviderNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCCustomProviderNativeLocal));
             Marshal.StructureToPtr(irisMediaPlayerCCustomProviderNativeLocal, _irisMediaPlayerCCustomProviderNative, true);
-            var ret = AgoraRtcNative.MediaPlayerOpenWithSource(
+            var ret = AgoraRtcNative.MediaPlayerOpenWithCustomSource(
                 _irisApiEngine,
                 _irisMediaPlayerCCustomProviderNative, AgoraJson.ToJson(param)
             );
