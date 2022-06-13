@@ -17,9 +17,7 @@ namespace agora.rtc
     {
         [SerializeField] private VideoSurfaceType VideoSurfaceType = VideoSurfaceType.Renderer;
         [SerializeField] private bool Enable = true;
-        [SerializeField] private bool FlipX = false;
-        [SerializeField] private bool FlipY = false;
-
+   
         [SerializeField] private uint Uid = 0;
         [SerializeField] private string ChannelId = "";
         [SerializeField] private VIDEO_SOURCE_TYPE SourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
@@ -183,23 +181,6 @@ namespace agora.rtc
             ChannelId = channelId;
             SourceType = source_type;
             _needUpdateInfo = false;
-        }
-
-        public void EnableFilpTextureApply(bool flipX, bool flipY)
-        {
-            if (FlipX != flipX)
-            {
-                transform.localScale =
-                    new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-                FlipX = flipX;
-            }
-
-            if (FlipY != flipY)
-            {
-                transform.localScale =
-                    new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
-                FlipY = flipY;
-            }
         }
 
         public void SetEnable(bool enable)
