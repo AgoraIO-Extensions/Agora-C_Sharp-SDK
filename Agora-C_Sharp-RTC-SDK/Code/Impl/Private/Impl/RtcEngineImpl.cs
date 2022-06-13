@@ -548,7 +548,7 @@ namespace agora.rtc
 
         public string GetErrorDescription(int code)
         {
-            var param = new { };
+            var param = new { code };
             var json = AgoraJson.ToJson(param);
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETERRORDESCRIPTION,
