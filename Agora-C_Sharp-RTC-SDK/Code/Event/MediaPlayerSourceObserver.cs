@@ -11,7 +11,7 @@ namespace agora.rtc
 
     public delegate void OnPlayerEventHandler(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message);
 
-    public delegate void OnMetaDataHandler(IntPtr data, int length);
+    public delegate void OnMetaDataHandler(byte[] data, int length);
 
     public delegate void OnPlayBufferUpdatedHandler(Int64 playCachedBuffer);
 
@@ -63,7 +63,7 @@ namespace agora.rtc
             EventOnPlayerEvent.Invoke(@event, elapsedTime, message);
         }
 
-        public override void OnMetaData(IntPtr data, int length)
+        public override void OnMetaData(byte[] data, int length)
         {
             if (EventOnMetaData == null) return;
             EventOnMetaData.Invoke(data, length);

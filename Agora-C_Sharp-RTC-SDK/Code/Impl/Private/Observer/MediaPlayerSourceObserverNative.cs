@@ -19,12 +19,6 @@ namespace agora.rtc
 #endif
         internal static void OnEvent(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count)
         {
-            int[] len = new int[buffer_count];
-            if (length != IntPtr.Zero)
-            {
-                Marshal.Copy(length, len, 0, (int)buffer_count);
-            }
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
@@ -149,12 +143,19 @@ namespace agora.rtc
 #endif
                     break;
                 case "MediaPlayerSourceObserver_onMetaData":
+                    var byteLength = (int)AgoraJson.GetData<int>(data, "length");
+                    var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(data, "data");
+                    var byteData = new byte[byteLength];
+                    if (byteLength != 0)
+                    {
+                        Marshal.Copy(bufferPtr, byteData, 0, (int)byteLength);
+                    }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (!RtcMediaPlayerEventHandlerDic.ContainsKey(playerId)) return;
-                        RtcMediaPlayerEventHandlerDic[playerId].OnMetaData(buffer, len[0]);
+                        RtcMediaPlayerEventHandlerDic[playerId].OnMetaData(byteData, byteLength);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif

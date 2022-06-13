@@ -10,7 +10,7 @@ namespace agora.rtc
 
         public virtual void OnPlayerEvent(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message) { }
 
-        public virtual void OnMetaData(IntPtr data, int length) { }
+        public virtual void OnMetaData(byte[] data, int length) { }
 
         public virtual void OnPlayBufferUpdated(Int64 playCachedBuffer) { }
 
