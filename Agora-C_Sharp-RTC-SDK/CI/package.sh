@@ -47,7 +47,7 @@ WAYANG_BRANCH=${11}
 #--------------------------------------
 echo "[Unity CI] start preparing resources"
 cd "$CI_DIR" || exit 1
-# mkdir temp
+mkdir temp
 ./download_plugin.sh "$SDK_TYPE" "$API_KEY" "$5" "$6" "$7" "$8"
 ANDROID_SRC_PATH="$CI_DIR"/temp/android/iris_*
 IOS_SRC_PATH=$CI_DIR/temp/ios/iris_*
