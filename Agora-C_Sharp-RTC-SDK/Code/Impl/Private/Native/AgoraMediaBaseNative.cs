@@ -277,4 +277,12 @@ namespace agora.rtc
             iconImage = new ThumbImageBufferInternal();
         }
     };
+
+    internal enum IrisLogLevel {
+        levelTrace,
+        levelDebug,
+        levelInfo,
+        levelWarn,
+        levelErr,
+    };
 }
