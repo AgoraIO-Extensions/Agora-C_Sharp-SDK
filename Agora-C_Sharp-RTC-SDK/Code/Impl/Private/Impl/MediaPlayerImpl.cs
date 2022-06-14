@@ -20,7 +20,6 @@ namespace agora.rtc
         private bool _disposed = false;
 
         private IrisApiEnginePtr _irisApiEngine;
-        private MediaPlayerSourceObserver _mediaPlayerEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -104,7 +103,6 @@ namespace agora.rtc
                 MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
 #endif
             }
-            _mediaPlayerEventHandlerInstance = MediaPlayerSourceObserver.GetInstance();
         }
 
         private void ReleaseEventHandler()
@@ -250,7 +248,7 @@ namespace agora.rtc
 
         public MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver()
         {
-            return _mediaPlayerEventHandlerInstance;
+            return new MediaPlayerSourceObserver();
         }
 
         public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
