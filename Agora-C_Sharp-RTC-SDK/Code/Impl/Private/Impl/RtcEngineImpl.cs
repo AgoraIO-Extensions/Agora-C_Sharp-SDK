@@ -255,11 +255,6 @@ namespace agora.rtc
             RtcEngineEventHandlerNative.EngineEventHandler = engineEventHandler;
         }
 
-        public void RemoveEventHandler()
-        {
-            RtcEngineEventHandlerNative.EngineEventHandler = null;
-        }
-
         public void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             SetIrisAudioFrameObserver();

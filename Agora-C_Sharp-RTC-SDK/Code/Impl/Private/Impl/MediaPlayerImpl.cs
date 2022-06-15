@@ -246,7 +246,7 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
 
-        public MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver()
+        public MediaPlayerSourceObserver GetMediaPlayerSourceObserver()
         {
             return new MediaPlayerSourceObserver();
         }
@@ -257,11 +257,8 @@ namespace agora.rtc
             {
                 MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Add(playerId, engineEventHandler);
             }
-        }
 
-        public void RemoveEventHandler(int playerId)
-        {
-            if (MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
+            if (engineEventHandler == null && MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
             {
                 MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Remove(playerId);
             }
