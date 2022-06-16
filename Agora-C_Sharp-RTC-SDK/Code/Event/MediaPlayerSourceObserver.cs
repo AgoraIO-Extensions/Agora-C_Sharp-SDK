@@ -38,13 +38,6 @@ namespace agora.rtc
         public event OnPlayerInfoUpdatedHandler EventOnPlayerInfoUpdated;
         public event MediaPlayerOnAudioVolumeIndicationHandler EventOnAudioVolumeIndication;
 
-        private static MediaPlayerSourceObserver eventInstance = null;
-
-        public static MediaPlayerSourceObserver GetInstance()
-        {
-            return eventInstance ?? (eventInstance = new MediaPlayerSourceObserver());
-        }
-
         public override void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
         {
             if (EventOnPlayerSourceStateChanged == null) return;
