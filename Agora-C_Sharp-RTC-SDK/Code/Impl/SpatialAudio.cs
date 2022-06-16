@@ -47,16 +47,6 @@ namespace agora.rtc
             _cloudSpatialAudioEngineImpl.InitEventHandler(engineEventHandler);
         }
 
-        public override void RemoveEventHandler()
-        {
-            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return;
-            }
-            _cloudSpatialAudioEngineImpl.RemoveEventHandler();
-        }
-
         public override int Initialize(CloudSpatialAudioConfig config)
         {
             if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)

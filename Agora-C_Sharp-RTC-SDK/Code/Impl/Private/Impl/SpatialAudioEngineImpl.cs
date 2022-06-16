@@ -110,12 +110,7 @@ namespace agora.rtc
         {
             CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
         }
-
-        public void RemoveEventHandler()
-        {
-            CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
-        }
-
+        
         public int SetMaxAudioRecvCount(int maxCount)
         {
             var param = new

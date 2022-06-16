@@ -41,8 +41,6 @@ namespace agora.rtc
         public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
 
         public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
-
-        public abstract void RemoveEventHandler();
         #endregion
 
         #region Audio management

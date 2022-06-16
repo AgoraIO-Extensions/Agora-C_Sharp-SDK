@@ -107,16 +107,6 @@ namespace agora.rtc
             _rtcEngineImpl.InitEventHandler(engineEventHandler);
         }
 
-        public override void RemoveEventHandler()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return;
-            }
-            _rtcEngineImpl.RemoveEventHandler();
-        }
-
         public override void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
