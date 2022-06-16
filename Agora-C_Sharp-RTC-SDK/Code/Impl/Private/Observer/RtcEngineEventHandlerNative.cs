@@ -1423,7 +1423,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onDirectCdnStreamingStateChanged":
+                case "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
@@ -1438,7 +1438,7 @@ namespace agora.rtc
                     });
 #endif
                     break;
-                case "onDirectCdnStreamingStats":
+                case "DirectCdnStreamingEventHandler_onDirectCdnStreamingStats":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {

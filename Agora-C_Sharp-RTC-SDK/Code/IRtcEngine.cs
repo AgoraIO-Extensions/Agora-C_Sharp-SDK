@@ -715,9 +715,9 @@ namespace agora.rtc
 
         public abstract int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config);
 
-        public abstract int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection);
+        public abstract int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection);
 
-        public abstract int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection);
+        public abstract int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection);
 
         public abstract int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection);
 
