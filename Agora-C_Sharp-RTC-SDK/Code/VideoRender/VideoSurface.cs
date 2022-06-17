@@ -24,11 +24,12 @@ namespace agora.rtc
 
         private Component _renderer;
         private bool _needUpdateInfo = true;
+        private bool _hasAttach = false;
 
         private GameObject _TextureManagerGameObject;
         private TextureManager _textureManager;
         private int _textureWidth = 0;
-        private int _textureHeight =0;
+        private int _textureHeight = 0;
 
         public event OnTextureSizeModifyHandler OnTextureSizeModify;
 
@@ -64,6 +65,7 @@ namespace agora.rtc
                     if (_textureManager.CanTextureAttach())
                     {
                         ApplyTexture(_textureManager.Texture);
+                        _hasAttach = true;
                     }
                 }
 
@@ -125,8 +127,14 @@ namespace agora.rtc
         private void DestroyTextureManager()
         {
             if (_textureManager == null) return;
-            _textureManager.Detach();
-            if (_textureManager.GetRefCount() == 0)
+
+            if (_hasAttach == true)
+            {
+                _textureManager.Detach();
+                _hasAttach = false;
+            }
+
+            if (_textureManager.GetRefCount() <= 0)
             {
                 Destroy(_TextureManagerGameObject);
             }
