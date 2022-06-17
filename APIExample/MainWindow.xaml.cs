@@ -11,7 +11,7 @@ namespace APIExample
         internal static IEngine usr_engine_ = null;
         internal static dumpHandler dump_handler_ = null;
 
-        private string app_id_ = "";  // cannot be empty!!!
+        private string app_id_ = "***REMOVED***";  // cannot be empty!!!
         private string channel_id_ = "123;456"; // 2 channel id for multichannel
         private readonly string app_name_ = "CSharp API Example ";
 
