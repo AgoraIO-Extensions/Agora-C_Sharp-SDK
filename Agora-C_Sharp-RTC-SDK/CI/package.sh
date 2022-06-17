@@ -185,7 +185,8 @@ then
     echo "[Unity CI] Build Wayang, It may take a while ..."
     cd temp
     git clone -b $WAYANG_BRANCH ssh://git@git.agoralab.co/apps/unitydemo.git
-    cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/unitydemo/Assets || exit 1
+    mkdir "$CI_DIR"/temp/unitydemo/Assets/Agora-RTC-Plugin
+    cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/unitydemo/Assets/Agora-RTC-Plugin || exit 1
     $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "$CI_DIR/temp/unitydemo" -executeMethod Wayang.CommandBuild.BuildAll
     cp -r "$CI_DIR"/temp/unitydemo/Wayang "$CI_DIR"/output || exit 1
     echo "[Unity CI] Build Wayang finish"
