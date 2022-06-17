@@ -60,6 +60,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="agorartc, Version=3.6.2.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Agora-C_Sharp-RTC-SDK\agorartc\obj\x64\Debug\netcoreapp20\agorartc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -78,7 +82,6 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="WindowsFormsIntegration" />
-    <PackageReference Include="agora_rtc_sdk" Version="3.6.2" />
   </ItemGroup>
   <PropertyGroup>
     <StartupObject />
