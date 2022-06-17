@@ -1,7 +1,4 @@
 using System;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-using AOT;
-#endif
 
 namespace agora.rtc
 {
@@ -37,13 +34,6 @@ namespace agora.rtc
         public event OnPlayerSrcInfoChangedHandler EventOnPlayerSrcInfoChanged;
         public event OnPlayerInfoUpdatedHandler EventOnPlayerInfoUpdated;
         public event MediaPlayerOnAudioVolumeIndicationHandler EventOnAudioVolumeIndication;
-
-        private static MediaPlayerSourceObserver eventInstance = null;
-
-        public static MediaPlayerSourceObserver GetInstance()
-        {
-            return eventInstance ?? (eventInstance = new MediaPlayerSourceObserver());
-        }
 
         public override void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
         {

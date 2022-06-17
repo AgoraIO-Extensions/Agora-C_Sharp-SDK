@@ -42,14 +42,14 @@ namespace agora.rtc
             return playerId;
         }
 
-        public override MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver()
+        public override MediaPlayerSourceObserver GetMediaPlayerSourceObserver()
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
-            return _mediaPlayerImpl.GetAgoraRtcMediaPlayerSourceObserver();
+            return _mediaPlayerImpl.GetMediaPlayerSourceObserver();
         }
 
         public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
@@ -60,16 +60,6 @@ namespace agora.rtc
                 return;
             }
             _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
-        }
-
-        public override void RemoveEventHandler()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return;
-            }
-            _mediaPlayerImpl.RemoveEventHandler(playerId);
         }
 
         public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)

@@ -103,16 +103,6 @@ namespace agora.rtc
             _rtcEngineImpl.InitEventHandler(engineEventHandler);
         }
 
-        public override void RemoveEventHandler()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return;
-            }
-            _rtcEngineImpl.RemoveEventHandler();
-        }
-
         public override void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
@@ -2492,24 +2482,24 @@ namespace agora.rtc
             return _rtcEngineImpl.EnableEncryptionEx(connection, enabled, config);
         }
 
-        public override int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection)
+        public override int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.CreateDataStreamEx(reliable, ordered, connection);
+            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, reliable, ordered, connection);
         }
 
-        public override int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection)
+        public override int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.CreateDataStreamEx(config, connection);
+            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, config, connection);
         }
 
         public override int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)

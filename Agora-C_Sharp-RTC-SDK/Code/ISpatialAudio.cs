@@ -5,9 +5,7 @@ namespace agora.rtc
         public abstract CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler();
         
         public abstract void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler);
-
-        public abstract void RemoveEventHandler();
-
+        
         public abstract int Initialize(CloudSpatialAudioConfig config);
 
         public abstract void Dispose();

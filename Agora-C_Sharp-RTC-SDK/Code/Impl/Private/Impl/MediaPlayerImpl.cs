@@ -20,7 +20,6 @@ namespace agora.rtc
         private bool _disposed = false;
 
         private IrisApiEnginePtr _irisApiEngine;
-        private MediaPlayerSourceObserver _mediaPlayerEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -104,7 +103,6 @@ namespace agora.rtc
                 MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
 #endif
             }
-            _mediaPlayerEventHandlerInstance = MediaPlayerSourceObserver.GetInstance();
         }
 
         private void ReleaseEventHandler()
@@ -248,9 +246,9 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
 
-        public MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver()
+        public MediaPlayerSourceObserver GetMediaPlayerSourceObserver()
         {
-            return _mediaPlayerEventHandlerInstance;
+            return new MediaPlayerSourceObserver();
         }
 
         public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
@@ -259,11 +257,8 @@ namespace agora.rtc
             {
                 MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Add(playerId, engineEventHandler);
             }
-        }
 
-        public void RemoveEventHandler(int playerId)
-        {
-            if (MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
+            if (engineEventHandler == null && MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
             {
                 MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Remove(playerId);
             }

@@ -217,7 +217,7 @@ namespace agora.rtc
 
         public int Initialize(RtcEngineContext context)
         {
-            AgoraRtcNative.InitLogger(_irisRtcEngine, context.logConfig.filePath, 0);
+            AgoraRtcNative.InitLogger(_irisRtcEngine, context.logConfig.filePath, 0, IrisLogLevel.levelInfo);
             var param = new
             {
                 context
@@ -253,11 +253,6 @@ namespace agora.rtc
         public void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
             RtcEngineEventHandlerNative.EngineEventHandler = engineEventHandler;
-        }
-
-        public void RemoveEventHandler()
-        {
-            RtcEngineEventHandlerNative.EngineEventHandler = null;
         }
 
         public void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
@@ -4192,7 +4187,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection)
+        public int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection)
         {
             var param = new
             {
@@ -4207,11 +4202,19 @@ namespace agora.rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
+            if (nRet == 0)
+            {
+                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
+            }
+            else
+            {
+                streamId = 0;
+            }
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection)
+        public int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection)
         {
             var param = new
             {
@@ -4225,6 +4228,14 @@ namespace agora.rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
+            if (nRet == 0)
+            {
+                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
+            }
+            else
+            {
+                streamId = 0;
+            }
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
