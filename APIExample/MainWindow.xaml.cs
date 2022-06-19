@@ -11,7 +11,7 @@ namespace APIExample
         internal static IEngine usr_engine_ = null;
         internal static dumpHandler dump_handler_ = null;
 
-        private string app_id_ = "***REMOVED***";  // cannot be empty!!!
+        private string app_id_ = "";  // cannot be empty!!!
         private string channel_id_ = "123;456"; // 2 channel id for multichannel
         private readonly string app_name_ = "CSharp API Example ";
 
@@ -21,10 +21,16 @@ namespace APIExample
 
             // just for debug
             dump_handler_ = new dumpHandler(DumpStatus);
-
             usr_engine_ = new JoinChannelVideo(localView.Handle, firstRemoteView.Handle);
         }
 
+        public void SwitchVideoCanvas(object sender, EventArgs e)
+        {
+            if (tabCtrl.SelectedItem == joinChannelVideoTab) // 一对一视频
+            {
+                usr_engine_.SwitchVideoCanvas();
+            }
+        }
         private void onJoinChannel(object sender, RoutedEventArgs e)
         {
             if (null != usr_engine_)
@@ -94,7 +100,6 @@ namespace APIExample
                 DumpStatus("support in future", -1024);
             }
         }
-
         private void onClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (null != usr_engine_)

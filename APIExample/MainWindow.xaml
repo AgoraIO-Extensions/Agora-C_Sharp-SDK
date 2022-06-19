@@ -27,7 +27,7 @@
             </WindowsFormsHost>
 
             <WindowsFormsHost>
-                <wfm:PictureBox x:Name="secondRemoteView" Height="180" Width="180"/>
+                <wfm:PictureBox x:Name="secondRemoteView" Height="180" Width="180" DoubleClick="SwitchVideoCanvas"/>
             </WindowsFormsHost>
 
             <TextBlock x:Name="statusTips" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto">

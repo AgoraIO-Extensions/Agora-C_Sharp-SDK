@@ -10,7 +10,7 @@ namespace APIExample
         internal abstract int UnInit();
         internal abstract int JoinChannel();
         internal abstract int LeaveChannel();
-
+        internal virtual void SwitchVideoCanvas() { }
         // not necessary
         internal abstract string GetSDKVersion();
         internal abstract IAgoraRtcEngine GetEngine();

@@ -24,11 +24,35 @@ namespace APIExample
         private IAgoraRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_win_id_ = IntPtr.Zero;
-
+        public uint remote_uid_ = 0;
+        bool bSwitch = false;
         public JoinChannelVideo(IntPtr localWindowId, IntPtr remoteWindowId)
         {
             local_win_id_ = localWindowId;
             remote_win_id_ = remoteWindowId;
+        }
+
+        internal override void SwitchVideoCanvas()
+        {
+            if (bSwitch)
+            {
+            
+                VideoCanvas vsRemote = new VideoCanvas((ulong)remote_win_id_, RENDER_MODE_TYPE.RENDER_MODE_FIT, channel_id_, remote_uid_);
+                int ret = rtc_engine_.SetupRemoteVideo(vsRemote);
+
+                VideoCanvas vs = new VideoCanvas((ulong)local_win_id_, RENDER_MODE_TYPE.RENDER_MODE_FIT, channel_id_);
+                ret = rtc_engine_.SetupLocalVideo(vs);
+            }
+            else
+            {
+              
+                VideoCanvas vsRemote = new VideoCanvas((ulong)local_win_id_, RENDER_MODE_TYPE.RENDER_MODE_FIT, channel_id_, remote_uid_);
+                int ret = rtc_engine_.SetupRemoteVideo(vsRemote);
+
+                VideoCanvas vs = new VideoCanvas((ulong)remote_win_id_, RENDER_MODE_TYPE.RENDER_MODE_FIT, channel_id_);
+                ret = rtc_engine_.SetupLocalVideo(vs);
+            }
+            bSwitch = !bSwitch;
         }
 
         internal override int Init(string appId, string channelId)
@@ -165,6 +189,7 @@ namespace APIExample
         {
             Console.WriteLine("----->OnUserJoined uid={0}", uid);
             if (joinChannelVideo_inst_.GetRemoteWinId() == IntPtr.Zero) return;
+            joinChannelVideo_inst_.remote_uid_ = uid;
             var vc = new VideoCanvas((ulong)joinChannelVideo_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, joinChannelVideo_inst_.GetChannelId(), uid);
             int ret = joinChannelVideo_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
