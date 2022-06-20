@@ -1361,7 +1361,7 @@ namespace agora.rtc
                     break;
                 case "onFirstRemoteVideoFrame":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (ChannelEventHandlerDict != null && ChannelEventHandlerDict.ContainsKey(channelId))

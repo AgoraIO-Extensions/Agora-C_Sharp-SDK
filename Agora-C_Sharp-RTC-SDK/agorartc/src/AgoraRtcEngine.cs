@@ -69,10 +69,12 @@ namespace agora.rtc
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
         private CharAssistant _result;
+        private CharAssistant1 _result1;
 
         private AgoraRtcEngine(EngineType type = EngineType.kEngineTypeNormal)
         {
             _result = new CharAssistant();
+            _result1 = new CharAssistant1();
             _channelInstance = new Dictionary<string, AgoraRtcChannel>();
             _irisRtcEngine = type == EngineType.kEngineTypeNormal
                 ? AgoraRtcNative.CreateIrisRtcEngine()
@@ -163,6 +165,7 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
             AgoraRtcNative.DestroyIrisRtcEngine(_irisRtcEngine);
             _irisRtcEngine = IntPtr.Zero;
+            _result1 = new CharAssistant1();
             _result = new CharAssistant();
             for (var i = 0; i < engineInstance.Length; i++)
             {
@@ -2938,9 +2941,11 @@ namespace agora.rtc
             {
                 
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineIsCameraZoomSupported, JsonMapper.ToJson(param),
                 out _result);
+            if (ret < 0) return false;
+            return ret == 1;
         }
 
         public override bool IsCameraFocusSupported()
@@ -2949,9 +2954,11 @@ namespace agora.rtc
             {
                 
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineIsCameraFocusSupported, JsonMapper.ToJson(param),
                 out _result);
+            if (ret < 0) return false;
+            return ret == 1;
         }
 
         public override bool IsCameraExposurePositionSupported()
@@ -2960,9 +2967,11 @@ namespace agora.rtc
             {
                 
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineIsCameraExposurePositionSupported, JsonMapper.ToJson(param),
                 out _result);
+            if (ret < 0) return false;
+            return ret == 1;
         }
 
         public override bool IsCameraAutoFocusFaceModeSupported()
@@ -2971,9 +2980,11 @@ namespace agora.rtc
             {
                 
             };
-            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
                 ApiTypeEngine.kEngineIsCameraAutoFocusFaceModeSupported, JsonMapper.ToJson(param),
                 out _result);
+            if (ret < 0) return false;
+            return ret == 1;
         }
 
         public override int SetCameraFocusPositionInPreview(float positionX, float positionY)
@@ -3019,14 +3030,12 @@ namespace agora.rtc
                 iconSize,
                 includeScreen
             };
-            var json = AgoraJson.ToJson(param);
 
-            var infoInternal =  AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result) != 0 ?
+            var infoInternal =  AgoraRtcNative.CallIrisRtcEngineApiMaxResult(_irisRtcEngine, ApiTypeEngine.kEngineGetScreenCaptureSources,
+                JsonMapper.ToJson(param),
+                out _result1) != 0 ?
                 new ScreenCaptureSourceInfoInternal[0]
-                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result.Result, "result");
+                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result1.Result, "result");
 
             var info = new ScreenCaptureSourceInfo[infoInternal.Length];
             for (int i = 0; i < infoInternal.Length; i++)
@@ -3065,7 +3074,6 @@ namespace agora.rtc
                 info[i] = screenCaptureSourceInfo;
             }
 
-            ReleaseScreenCaptureSources();
             return info;
         }
 

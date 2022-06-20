@@ -2118,7 +2118,7 @@ namespace agora.rtc
         REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK = 8,
 
         /**9: The remote audio-only stream switches back to the audio-and-video stream after the network conditions improve.*/
-        REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK_RECOVERY = 9
+        REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK_RECOVERY = 9,
 
         /** 10: The remote user sdk(only for iOS) in background.
         */
@@ -4202,7 +4202,7 @@ namespace agora.rtc
 
         public ScreenCaptureParameters(int width, int height, int frameRate, BITRATE bitrate, bool captureMouseCursor,
             bool windowFocus, view_t[] excludeWindowList = null, int excludeWindowCount = 0, int highLightWidth = 0,
-            int highLightColor = 0, bool enableHighLight = false)
+            uint highLightColor = 0, bool enableHighLight = false)
         {
             dimensions = new VideoDimensions(width, height);
             this.frameRate = frameRate;
@@ -4218,7 +4218,7 @@ namespace agora.rtc
 
         public ScreenCaptureParameters(VideoDimensions dimensions, int frameRate, BITRATE bitrate,
             bool captureMouseCursor, bool windowFocus, view_t[] excludeWindowList = null, int excludeWindowCount = 0, int highLightWidth = 0,
-            int highLightColor = 0, bool enableHighLight = false)
+            uint highLightColor = 0, bool enableHighLight = false)
         {
             this.dimensions = dimensions;
             this.frameRate = frameRate;
@@ -4293,6 +4293,51 @@ namespace agora.rtc
         */
         public bool enableHighLight { set; get; }
     }
+
+    internal class ThumbImageBufferInternal
+    {
+        public uint length { set; get; }
+        public uint width { set; get; }
+        public uint height { set; get; }
+
+        public Int64 buffer { set; get; }
+
+        public ThumbImageBufferInternal()
+        {
+            buffer = 0;
+            length = 0;
+            width = 0;
+            height = 0;
+        }
+    };
+
+    internal class ScreenCaptureSourceInfoInternal
+    {
+        public ScreenCaptureSourceType type { set; get; }
+        /** in Mac: pointer to NSNumber */
+        public view_t sourceId { set; get; }
+        public string sourceName { set; get; }
+        public ThumbImageBufferInternal thumbImage { set; get; }
+        public ThumbImageBufferInternal iconImage { set; get; }
+
+        public string processPath { set; get; }
+        public string sourceTitle { set; get; }
+        public bool primaryMonitor { set; get; }
+        public bool isOccluded { set; get; }
+
+        public ScreenCaptureSourceInfoInternal()
+        {
+            type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
+            sourceId = 0;
+            sourceName = "";
+            processPath = "";
+            sourceTitle = "";
+            primaryMonitor = false;
+            isOccluded = false;
+            thumbImage = new ThumbImageBufferInternal();
+            iconImage = new ThumbImageBufferInternal();
+        }
+    };
 
     /**
      *  Video display configurations. 
@@ -5714,6 +5759,81 @@ namespace agora.rtc
         /** 4: Remote control. This scenario prioritizes the video quality of screen sharing and reduces the latency of the shared video for the receiver. If you share the device desktop being remotely controlled, you can set this scenario.
         */
     SCREEN_SCENARIO_RDC = 4,
+    };
+
+    public class SIZE
+    {
+        /** The width of the screen shot.
+         */
+        public int width { set; get; }
+        /** The width of the screen shot.
+         */
+        public int height { set; get; }
+
+        public SIZE()
+        {
+            width = 0;
+            height = 0;
+        }
+
+        public SIZE(int ww, int hh)
+        {
+            width = ww;
+            height = hh;
+        }
+    };
+
+
+    public class ThumbImageBuffer
+    {
+        public byte[] buffer { set; get; }
+        public uint length { set; get; }
+        public uint width { set; get; }
+        public uint height { set; get; }
+
+        public ThumbImageBuffer()
+        {
+            buffer = new byte[0];
+            length = 0;
+            width = 0;
+            height = 0;
+        }
+    };
+
+    public enum ScreenCaptureSourceType
+    {
+        ScreenCaptureSourceType_Unknown = -1,
+        ScreenCaptureSourceType_Window = 0,
+        ScreenCaptureSourceType_Screen = 1,
+        ScreenCaptureSourceType_Custom = 2,
+    };
+
+    public class ScreenCaptureSourceInfo
+    {
+        public ScreenCaptureSourceType type { set; get; }
+        /** in Mac: pointer to NSNumber */
+        public view_t sourceId { set; get; }
+        public string sourceName { set; get; }
+        public ThumbImageBuffer thumbImage { set; get; }
+        public ThumbImageBuffer iconImage { set; get; }
+
+        public string processPath { set; get; }
+        public string sourceTitle { set; get; }
+        public bool primaryMonitor { set; get; }
+        public bool isOccluded { set; get; }
+
+        public ScreenCaptureSourceInfo()
+        {
+            type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
+            sourceId = 0;
+            sourceName = "";
+            processPath = "";
+            sourceTitle = "";
+            primaryMonitor = false;
+            isOccluded = false;
+            thumbImage = new ThumbImageBuffer();
+            iconImage = new ThumbImageBuffer();
+        }
     };
 
     public enum AgoraEngineType
