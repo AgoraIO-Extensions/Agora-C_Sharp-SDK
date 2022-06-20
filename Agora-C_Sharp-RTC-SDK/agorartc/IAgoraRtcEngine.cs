@@ -3031,6 +3031,8 @@ namespace agora.rtc
         * - < 0: Failure.
         */
         public abstract int SetCameraAutoFocusFaceModeEnabled(bool enabled);
+
+        public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
     }
 
     /**

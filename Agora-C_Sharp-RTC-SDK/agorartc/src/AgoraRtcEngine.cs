@@ -2917,7 +2917,7 @@ namespace agora.rtc
                 factor
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineSetCameraZoomFactor, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -2928,7 +2928,7 @@ namespace agora.rtc
                 
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineGetCameraMaxZoomFactor, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -2939,7 +2939,7 @@ namespace agora.rtc
                 
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineIsCameraZoomSupported, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -2950,7 +2950,7 @@ namespace agora.rtc
                 
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineIsCameraFocusSupported, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -2961,7 +2961,7 @@ namespace agora.rtc
                 
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineIsCameraExposurePositionSupported, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -2972,7 +2972,7 @@ namespace agora.rtc
                 
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineIsCameraAutoFocusFaceModeSupported, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -2984,7 +2984,7 @@ namespace agora.rtc
                 positionY
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineSetCameraFocusPositionInPreview, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -2996,7 +2996,7 @@ namespace agora.rtc
                 positionYinView
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineSetCameraExposurePosition, JsonMapper.ToJson(param),
                 out _result);
         }
 
@@ -3007,8 +3007,66 @@ namespace agora.rtc
                 enabled
             };
             return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                ApiTypeEngine.kEngineSetCameraAutoFocusFaceModeEnabled, JsonMapper.ToJson(param),
                 out _result);
+        }
+
+        public override ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
+        {
+            var param = new
+            {
+                thumbSize,
+                iconSize,
+                includeScreen
+            };
+            var json = AgoraJson.ToJson(param);
+
+            var infoInternal =  AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result) != 0 ?
+                new ScreenCaptureSourceInfoInternal[0]
+                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result.Result, "result");
+
+            var info = new ScreenCaptureSourceInfo[infoInternal.Length];
+            for (int i = 0; i < infoInternal.Length; i++)
+            {
+                var screenCaptureSourceInfo = new ScreenCaptureSourceInfo();
+                screenCaptureSourceInfo.type = infoInternal[i].type;
+                screenCaptureSourceInfo.isOccluded = infoInternal[i].isOccluded;
+                screenCaptureSourceInfo.primaryMonitor = infoInternal[i].primaryMonitor;
+                screenCaptureSourceInfo.processPath = infoInternal[i].processPath;
+                screenCaptureSourceInfo.sourceId = infoInternal[i].sourceId;
+                screenCaptureSourceInfo.sourceName = infoInternal[i].sourceName;
+                screenCaptureSourceInfo.sourceTitle = infoInternal[i].sourceTitle;
+                ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
+                imageBuffer.height = infoInternal[i].thumbImage.height;
+                imageBuffer.width = infoInternal[i].thumbImage.width;
+                imageBuffer.length = infoInternal[i].thumbImage.length;
+                byte[] thumbBuffer = new byte[imageBuffer.length];
+                if (imageBuffer.length > 0)
+                {
+                    Marshal.Copy((IntPtr)(infoInternal[i].thumbImage.buffer), thumbBuffer, 0, (int)imageBuffer.length);
+                }
+                imageBuffer.buffer = thumbBuffer;
+                screenCaptureSourceInfo.thumbImage = imageBuffer;
+
+                ThumbImageBuffer imageBuffer2 = new ThumbImageBuffer();
+                imageBuffer2.height = infoInternal[i].iconImage.height;
+                imageBuffer2.width = infoInternal[i].iconImage.width;
+                imageBuffer2.length = infoInternal[i].iconImage.length;
+                byte[] iconbBuffer = new byte[imageBuffer2.length];
+                if (imageBuffer2.length > 0)
+                {
+                    Marshal.Copy((IntPtr)(infoInternal[i].iconImage.buffer), iconbBuffer, 0, (int)imageBuffer2.length);
+                }
+                imageBuffer2.buffer = iconbBuffer;
+                screenCaptureSourceInfo.iconImage = imageBuffer2;
+                info[i] = screenCaptureSourceInfo;
+            }
+
+            ReleaseScreenCaptureSources();
+            return info;
         }
 
         ~AgoraRtcEngine()
