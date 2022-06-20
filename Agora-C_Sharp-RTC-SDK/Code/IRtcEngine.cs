@@ -411,7 +411,7 @@ namespace agora.rtc
         #endregion
 
         #region Extension
-        public abstract int LoadExtensionProvider(string extension_lib_path);
+        public abstract int LoadExtensionProvider(string path);
 
         public abstract int SetExtensionProviderProperty(string provider, string key, string value);
 

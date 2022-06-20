@@ -2487,11 +2487,11 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int LoadExtensionProvider(string extension_lib_path)
+        public int LoadExtensionProvider(string path)
         {
             var param = new
             {
-                extension_lib_path
+                path
             };
 
             var json = AgoraJson.ToJson(param);

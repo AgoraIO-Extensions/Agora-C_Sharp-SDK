@@ -1463,14 +1463,14 @@ namespace agora.rtc
             return _rtcEngineImpl.SetInEarMonitoringVolume(volume);
         }
 
-        public override int LoadExtensionProvider(string extension_lib_path)
+        public override int LoadExtensionProvider(string path)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.LoadExtensionProvider(extension_lib_path);
+            return _rtcEngineImpl.LoadExtensionProvider(path);
         }
 
         public override int SetExtensionProviderProperty(string provider, string key, string value)
