@@ -233,7 +233,10 @@ namespace agora.rtc
         kEngineEnableWirelessAccelerate = 204,
         kEngineMediaRecorderStart = 205,
         kEngineMediaRecorderStop = 206,
-        kEngineMediaRecorderRelease = 207,
+        kEngineEnableLocalVoicePitchCallback = 207,
+        kEngineEnableSpatialAudio = 208,
+        kEngineSetRemoteUserSpatialAudioParams = 209,
+        kEngineSetScreenCaptureScenario = 210,
     }
 
 
@@ -291,6 +294,7 @@ namespace agora.rtc
         kChannelStartRtmpStreamWithTranscoding = 49,
         kChannelUpdateRtmpTranscoding = 50,
         kChannelStopRtmpStream = 51,
+        kChannelSetRemoteUserSpatialAudioParams = 52,
     }
 
     internal enum ApiTypeAudioDeviceManager

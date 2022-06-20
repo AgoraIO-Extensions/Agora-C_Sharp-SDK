@@ -740,6 +740,19 @@ namespace agora.rtc
                 out _result);
         }
 
+        public override int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams spatial_audio_params)
+        {
+            var param = new
+            {
+                channelId = _channelId,
+                uid,
+                spatial_audio_params
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
+                ApiTypeChannel.kChannelSetRemoteUserSpatialAudioParams, JsonMapper.ToJson(param),
+                out _result);
+        }
+
         ~AgoraRtcChannel()
         {
             Dispose(false);
@@ -1340,6 +1353,24 @@ namespace agora.rtc
                                 (uint) AgoraJson.GetData<uint>(data, "uid"),
                                 (PROXY_TYPE) AgoraJson.GetData<int>(data, "proxyType"),
                                 (string) AgoraJson.GetData<string>(data, "localProxyIp"),
+                                (int) AgoraJson.GetData<int>(data, "elapsed"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onFirstRemoteVideoFrame":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (ChannelEventHandlerDict != null && ChannelEventHandlerDict.ContainsKey(channelId))
+                        {
+                            ChannelEventHandlerDict[channelId].OnFirstRemoteVideoFrame(
+                                (string) AgoraJson.GetData<string>(data, "channelId"),
+                                (uint) AgoraJson.GetData<uint>(data, "uid"),
+                                (int) AgoraJson.GetData<int>(data, "width"),
+                                (int) AgoraJson.GetData<int>(data, "height"),
                                 (int) AgoraJson.GetData<int>(data, "elapsed"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
