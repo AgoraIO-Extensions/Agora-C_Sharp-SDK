@@ -979,13 +979,6 @@ namespace agora.rtc
         public Optional<bool> autoSubscribeVideo = new Optional<bool>();
 
         /**
-         * Determines whether to start preview when join channel if canvas have been set.
-         * - true: (Default) start preview when join channel.
-         * - false: Do not start preview.
-         */
-        public Optional<bool> startPreview = new Optional<bool>();
-
-        /**
          * Determines whether to enable audio recording or playout.
          * - true: It's used to publish audio and mix microphone, or subscribe audio and playout
          * - false: It's used to publish extenal audio frame only without mixing microphone, or no need audio device to playout audio either
@@ -1189,12 +1182,6 @@ namespace agora.rtc
             {
                 writer.WritePropertyName("autoSubscribeVideo");
                 writer.Write(this.autoSubscribeVideo.GetValue());
-            }
-
-            if (this.startPreview.HasValue())
-            {
-                writer.WritePropertyName("startPreview");
-                writer.Write(this.startPreview.GetValue());
             }
 
             if (this.enableAudioRecordingOrPlayout.HasValue())

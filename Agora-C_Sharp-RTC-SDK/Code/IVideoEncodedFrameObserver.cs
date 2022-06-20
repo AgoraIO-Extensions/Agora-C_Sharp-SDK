@@ -4,7 +4,7 @@ namespace agora.rtc
 {
     public class IVideoEncodedFrameObserver
     {
-        public virtual bool OnEncodedVideoFrame(uint uid, IntPtr imageBufferPtr, UInt64 length, EncodedVideoFrameInfo videoEncodedFrameInfo)
+        public virtual bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBufferPtr, UInt64 length, EncodedVideoFrameInfo videoEncodedFrameInfo)
         {
             return true;
         }

@@ -393,12 +393,12 @@ namespace agora.rtc
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcCVideoEncodedFrameObserverNative
     {
-        internal IntPtr OnEncodedVideoFrameObserver;
+        internal IntPtr OnEncodedVideoFrameReceived;
     }
 
     internal struct IrisRtcCVideoEncodedFrameObserver
     {
-        internal Func_EncodedVideoFrameObserver_Native OnEncodedVideoFrameObserver;
+        internal Func_EncodedVideoFrameObserver_Native OnEncodedVideoFrameReceived;
     }
 
     //media player

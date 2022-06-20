@@ -52,7 +52,7 @@ namespace agora.rtc
 
     public delegate void OnContentInspectResultHandler(CONTENT_INSPECT_RESULT result);
 
-    public delegate void OnSnapshotTakenHandlerEx(RtcConnection connection, uint remoteUid, string filePath, int width, int height, int errCode);
+    public delegate void OnSnapshotTakenHandlerEx(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode);
 
     public delegate void OnLocalVideoStateChangedHandler(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode);
 
@@ -467,10 +467,10 @@ namespace agora.rtc
             EventOnContentInspectResult.Invoke(result);
         }
 
-        public override void OnSnapshotTaken(RtcConnection connection, uint remoteUid, string filePath, int width, int height, int errCode)
+        public override void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode)
         {
             if (EventOnSnapshotTakenEx == null) return;
-            EventOnSnapshotTakenEx.Invoke(connection, remoteUid, filePath, width, height, errCode);
+            EventOnSnapshotTakenEx.Invoke(connection, uid, filePath, width, height, errCode);
         }
 
         public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)

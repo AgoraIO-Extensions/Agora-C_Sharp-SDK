@@ -737,6 +737,56 @@ namespace agora.rtc
             return _rtcEngineImpl.SetRemoteDefaultVideoStreamType(streamType);
         }
 
+        public override int SetDualStreamMode(SIMULCAST_STREAM_MODE mode)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetDualStreamMode(mode);
+        }
+
+        public override int SsetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetDualStreamMode(sourceType, mode);
+        }
+
+        public override int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetDualStreamMode(sourceType, mode, streamConfig);
+        }
+
+        public override int SetDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetDualStreamModeEx(sourceType, mode, streamConfig, connection);
+        }
+
+        public override int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.TakeSnapshotEx(connection, uid, filePath);
+        }
+
         public override int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
         {
             if (_rtcEngineImpl == null)

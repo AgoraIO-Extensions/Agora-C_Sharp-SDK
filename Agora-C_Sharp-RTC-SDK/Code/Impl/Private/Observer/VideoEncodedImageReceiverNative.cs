@@ -20,7 +20,7 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_EncodedVideoFrameObserver_Native))]
 #endif
-        internal static bool OnEncodedVideoFrame(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
+        internal static bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
         {
             if (VideoEncodedFrameObserver == null)
                 return true;
@@ -42,7 +42,7 @@ namespace agora.rtc
             localVideoEncodedFrameInfo.uid = videoEncodedFrameInfo.uid;
             localVideoEncodedFrameInfo.streamType = (VIDEO_STREAM_TYPE) videoEncodedFrameInfo.streamType;
 
-            return VideoEncodedFrameObserver.OnEncodedVideoFrame(uid, imageBuffer, length, localVideoEncodedFrameInfo);
+            return VideoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, length, localVideoEncodedFrameInfo);
         }
     }
 }

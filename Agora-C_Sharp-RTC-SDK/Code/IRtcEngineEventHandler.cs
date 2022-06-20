@@ -55,7 +55,7 @@ namespace agora.rtc
 
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }
 
-        public virtual void OnSnapshotTaken(RtcConnection connection, uint remoteUid, string filePath, int width, int height, int errCode) { }
+        public virtual void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode) { }
 
         public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
 

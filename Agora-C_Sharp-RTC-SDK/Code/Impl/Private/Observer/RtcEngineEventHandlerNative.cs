@@ -839,7 +839,7 @@ namespace agora.rtc
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnSnapshotTaken(
                         AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(data, "uid"),
                         (string)AgoraJson.GetData<string>(data, "filePath"),
                         (int)AgoraJson.GetData<int>(data, "width"),
                         (int)AgoraJson.GetData<int>(data, "height"),

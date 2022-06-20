@@ -317,6 +317,12 @@ namespace agora.rtc
         public abstract int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType);
 
         public abstract int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType);
+
+        public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
+
+        public abstract int SsetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode);
+
+        public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
         #endregion
 
         #region Watermark
@@ -614,6 +620,11 @@ namespace agora.rtc
         public abstract int SetSubscribeVideoWhitelist(uint[] uidList, int uidNumber);
         #endregion
 
+
+        #region DualStream
+        #endregion
+
+
         public abstract int StartPrimaryCustomAudioTrack(AudioTrackConfig config);
 
         public abstract int StopPrimaryCustomAudioTrack();
@@ -748,5 +759,10 @@ namespace agora.rtc
         public abstract int SetSubscribeVideoBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
 
         public abstract int SetSubscribeVideoWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
+
+        public abstract int SetDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection);
+
+        public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
+
     }
 }

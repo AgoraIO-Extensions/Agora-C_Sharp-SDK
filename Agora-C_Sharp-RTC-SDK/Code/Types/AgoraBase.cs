@@ -1968,6 +1968,25 @@ namespace agora.rtc
         public bool ordered;
     }
 
+    /** 
+ * The definition of SIMULCAST_STREAM_MODE
+ */
+    public enum SIMULCAST_STREAM_MODE
+    {
+        /*
+        * disable simulcast stream until receive request for enable simulcast stream by other broadcaster
+        */
+        AUTO_SIMULCAST_STREAM = -1,
+        /*
+        * disable simulcast stream
+        */
+        DISABLE_SIMULCAST_STREM = 0,
+        /*
+        * always enable simulcast stream
+        */
+        ENABLE_SIMULCAST_STREAM = 1,
+    };
+
     /**
     * The definition of the of SimulcastStreamConfig struct.
     */
@@ -2390,14 +2409,10 @@ namespace agora.rtc
     /** Client role levels in a live broadcast. */
     public enum AUDIENCE_LATENCY_LEVEL_TYPE
     {
-        /** 1: Low latency. A low latency audience's jitter buffer is 1.2 second. */
+        /** 1: Low latency. */
         AUDIENCE_LATENCY_LEVEL_LOW_LATENCY = 1,
-        /** 2: Ultra low latency. A default ultra low latency audience's jitter buffer is 0.5 second. */
+        /** 2: Ultra low latency. */
         AUDIENCE_LATENCY_LEVEL_ULTRA_LOW_LATENCY = 2,
-        /**
-         * 3: High latency. For RTLS2.0
-         */
-        AUDIENCE_LATENCY_LEVEL_HIGH_LATENCY = 3,
     };
 
     /** The detailed options of a user.
@@ -2407,16 +2422,16 @@ namespace agora.rtc
         public ClientRoleOptions()
         {
             audienceLatencyLevel = AUDIENCE_LATENCY_LEVEL_TYPE.AUDIENCE_LATENCY_LEVEL_ULTRA_LOW_LATENCY;
-        }
-
-        public ClientRoleOptions(AUDIENCE_LATENCY_LEVEL_TYPE audienceLatencyLevel)
-        {
-            this.audienceLatencyLevel = audienceLatencyLevel;
+            stopMicrophoneRecording = true;
+            stopPreview = false;
         }
 
         /** The latency level of an audience member in interactive live streaming. See #AUDIENCE_LATENCY_LEVEL_TYPE.
      */
         public AUDIENCE_LATENCY_LEVEL_TYPE audienceLatencyLevel;
+
+        public bool stopMicrophoneRecording;
+        public bool stopPreview;
     }
 
     /**

@@ -879,24 +879,18 @@ namespace agora.rtc
     public class ContentInspectModule
     {
         /**
-         * The content inspect module type.
+        * The content inspect module type.
         */
         public CONTENT_INSPECT_TYPE type;
-        public CONTENT_INSPECT_VENDOR vendor;
-        public string callbackUrl;
-        public string token;
         /**The content inspect frequency, default is 0 second.
          * the frequency <= 0 is invalid.
          */
-        public uint frequency;
+        public uint interval;
 
         public ContentInspectModule()
         {
             type = CONTENT_INSPECT_TYPE.CONTENT_INSPECT_INVALID;
-            frequency = 0;
-            vendor = CONTENT_INSPECT_VENDOR.CONTENT_INSPECT_VENDOR_AGORA;
-            callbackUrl = "";
-            token = "";
+            interval = 0;
         }
 
     };
@@ -905,13 +899,6 @@ namespace agora.rtc
 */
     public class ContentInspectConfig
     {
-        /** video moderation work type.*/
-        public CONTENT_INSPECT_WORK_TYPE ContentWorkType { set; get; }
-
-        /**the type of video moderation on device.*/
-        public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType { set; get; }
-        public string extraInfo { set; get; }
-
         /**The content inspect modules, max length of modules is 32.
          * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
          */
@@ -922,9 +909,7 @@ namespace agora.rtc
 
         public ContentInspectConfig()
         {
-            ContentWorkType = CONTENT_INSPECT_WORK_TYPE.CONTENT_INSPECT_WORK_CLOUD;
-            DeviceworkType = CONTENT_INSPECT_DEVICE_TYPE.CONTENT_INSPECT_DEVICE_INVALID;
-            extraInfo = "";
+            modules = null;
             moduleCount = 0;
         }
 
