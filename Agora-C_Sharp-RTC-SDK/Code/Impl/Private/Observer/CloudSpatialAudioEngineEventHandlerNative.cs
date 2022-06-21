@@ -3,7 +3,7 @@ using System;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal static class CloudSpatialAudioEngineEventHandlerNative
     {

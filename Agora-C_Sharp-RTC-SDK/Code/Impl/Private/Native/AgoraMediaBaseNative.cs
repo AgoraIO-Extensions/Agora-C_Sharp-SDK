@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using view_t = UInt64;
     

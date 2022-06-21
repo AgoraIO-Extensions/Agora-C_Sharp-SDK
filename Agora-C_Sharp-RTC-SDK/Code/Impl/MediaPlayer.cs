@@ -1,6 +1,6 @@
 using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public sealed class MediaPlayer : IMediaPlayer
     {

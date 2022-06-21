@@ -1,7 +1,7 @@
 ﻿using System;
-using agora.rtc.LitJson;
+using Agora.Rtc.LitJson;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using view_t = UInt64;
 

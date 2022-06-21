@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public enum VideoSurfaceType
     {

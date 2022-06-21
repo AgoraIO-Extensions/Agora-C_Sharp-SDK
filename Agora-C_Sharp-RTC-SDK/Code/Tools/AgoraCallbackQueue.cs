@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal sealed class AgoraCallbackQueue : MonoBehaviour
     {

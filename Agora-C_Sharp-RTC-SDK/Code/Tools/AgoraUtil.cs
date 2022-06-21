@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using LitJson;
 

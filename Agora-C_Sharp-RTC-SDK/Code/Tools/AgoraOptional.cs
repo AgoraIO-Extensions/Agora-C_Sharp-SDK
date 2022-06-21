@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Specialized;
-using agora.rtc.LitJson;
+using Agora.Rtc.LitJson;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public class Optional<T>
     {

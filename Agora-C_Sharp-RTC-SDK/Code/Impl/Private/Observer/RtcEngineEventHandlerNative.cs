@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal static class RtcEngineEventHandlerNative
     {
