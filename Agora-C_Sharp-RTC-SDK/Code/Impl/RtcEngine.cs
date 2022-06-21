@@ -1,7 +1,7 @@
 using System;
 using video_track_id_t = System.UInt32;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public sealed class RtcEngine : IRtcEngineEx
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public delegate void OnPlayerSourceStateChangedHandler(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec);
 

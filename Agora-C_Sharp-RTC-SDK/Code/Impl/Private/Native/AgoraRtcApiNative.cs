@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using IrisRtcEnginePtr = IntPtr;
     using IrisEventHandlerHandle = IntPtr;

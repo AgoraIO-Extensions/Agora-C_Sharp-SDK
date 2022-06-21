@@ -2,8 +2,9 @@
 using agora.rtc.LitJson;
 using view_t = System.UInt64;
 using video_track_id_t = System.UInt32;
+using Agora.Rtc.LitJson;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     #region IAgoraRtcEngine.h
     /**

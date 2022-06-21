@@ -3,7 +3,7 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal class TextureManager : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using video_track_id_t = System.UInt32;
 
