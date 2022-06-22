@@ -426,10 +426,6 @@ namespace Agora.Rtc
         public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
         public abstract void UnregisterMediaMetadataObserver();
-
-        public abstract int SetMaxMetadataSize(int size);
-
-        public abstract int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
         #endregion
 
         #region Audio recording

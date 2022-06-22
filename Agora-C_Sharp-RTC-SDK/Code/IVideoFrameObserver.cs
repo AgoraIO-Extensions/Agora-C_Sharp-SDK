@@ -1,6 +1,6 @@
 namespace Agora.Rtc
 {
-    public class IVideoFrameObserver
+    public abstract class IVideoFrameObserver
     {
         public virtual bool OnCaptureVideoFrame(VideoFrame videoFrame, VideoFrameBufferConfig config)
         {

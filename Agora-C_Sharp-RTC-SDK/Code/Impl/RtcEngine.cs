@@ -3067,15 +3067,5 @@ namespace Agora.Rtc
         {
             return _rtcEngineImpl.StopDumpVideo();
         }
-
-        public override int SetMaxMetadataSize(int size)
-        {
-            return _rtcEngineImpl.SetMaxMetadataSize(size);
-        }
-
-        public override int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
-        {
-            return _rtcEngineImpl.SendMetaData(metadata, source_type);
-        }
     };
 }

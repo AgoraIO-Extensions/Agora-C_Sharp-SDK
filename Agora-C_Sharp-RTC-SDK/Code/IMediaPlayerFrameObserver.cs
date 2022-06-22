@@ -1,6 +1,6 @@
 namespace Agora.Rtc
 {
-    public class IMediaPlayerAudioFrameObserver
+    public abstract class IMediaPlayerAudioFrameObserver
     {
         public virtual bool OnFrame(AudioPcmFrame videoFrame)
         {

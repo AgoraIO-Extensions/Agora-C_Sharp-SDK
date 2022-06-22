@@ -1,6 +1,6 @@
 namespace Agora.Rtc
 {
-    public class IAudioFrameObserver
+    public abstract class IAudioFrameObserver
     {
         public virtual bool OnRecordAudioFrame(AudioFrame audioFrame)
         {
