@@ -134,7 +134,7 @@ cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/release/x86/*.so "$ANDROID_DST_PATH"/libs/
 echo "[Unity CI] copying iOS ..."
 IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-RTC-SDK/Plugins/iOS"
 cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/ALL_ARCHITECTURE/*.framework "$IOS_DST_PATH"
-cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/Release/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
 
 # macOS
 echo "[Unity CI] copying macOS ..."
