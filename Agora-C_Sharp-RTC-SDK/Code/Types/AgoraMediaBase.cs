@@ -560,7 +560,7 @@ namespace Agora.Rtc
          * - Synchronize audio and video frames in video-related scenarios, including scenarios where external video sources are used.
          * @note This timestamp is for rendering the video stream, and not for capturing the video stream.
          */
-        public long renderTimeMs;
+        public Int64 renderTimeMs;
 
         /** Reserved for future use. */
         public int avsync_type;
@@ -643,7 +643,7 @@ namespace Agora.Rtc
         }
 
         public AudioFrame(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels, int samplesPerSec,
-            byte[] buffer, long renderTimeMs, int avsync_type)
+            byte[] buffer, Int64 renderTimeMs, int avsync_type)
         {
             this.type = type;
             this.samplesPerChannel = samplesPerChannel;
@@ -690,7 +690,7 @@ namespace Agora.Rtc
 		 - Restore the order of the captured audio frame.
 		 - Synchronize audio and video frames in video-related scenarios, including where external video sources are used.
 		 */
-        public long renderTimeMs { set; get; }
+        public Int64 renderTimeMs { set; get; }
 
         /** Reserved parameter.
 		 */

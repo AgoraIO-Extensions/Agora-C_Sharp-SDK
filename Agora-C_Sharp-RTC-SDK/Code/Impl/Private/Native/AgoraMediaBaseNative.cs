@@ -53,7 +53,7 @@ namespace Agora.Rtc
         internal uint u_buffer_length;
         internal uint v_buffer_length;
         internal int rotation;
-        internal long render_time_ms;
+        internal Int64 render_time_ms;
         internal int av_sync_type;
         internal IntPtr metadata_buffer;
         internal int metadata_size;
@@ -187,7 +187,7 @@ namespace Agora.Rtc
         }
 
         public AudioFrameWithoutBuffer(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels,
-            int samplesPerSec, long renderTimeMs, int avsync_type)
+            int samplesPerSec, Int64 renderTimeMs, int avsync_type)
         {
             this.type = type;
             this.samplesPerChannel = samplesPerChannel;
@@ -226,7 +226,7 @@ namespace Agora.Rtc
 		 - Restore the order of the captured audio frame.
 		 - Synchronize audio and video frames in video-related scenarios, including where external video sources are used.
 		 */
-        public long renderTimeMs { set; get; }
+        public Int64 renderTimeMs { set; get; }
 
         /** Reserved parameter.
 		 */
