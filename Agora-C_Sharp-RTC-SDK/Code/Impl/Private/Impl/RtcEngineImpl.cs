@@ -4850,7 +4850,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int EnableFishCorrection(bool enabled, FishCorrectionParams @params)
+        public int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params)
         {
             var param = new
             {
@@ -4860,7 +4860,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEFISHCORRECTION,
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEFISHEYECORRECTION,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -5404,21 +5404,21 @@ namespace Agora.Rtc
 
 
         #region IMediaRecorder
-        public int SetMediaRecorderObserver(RtcConnection connection)
-        {
-            var param = new
-            {
-                connection
-            };
+        //public int SetMediaRecorderObserver(RtcConnection connection)
+        //{
+        //    var param = new
+        //    {
+        //        connection
+        //    };
 
-            var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+        //    var json = AgoraJson.ToJson(param);
+        //    int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
+        //        json, (UInt32)json.Length,
+        //        IntPtr.Zero, 0,
+        //        out _result);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        //}
 
         public int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
         {
@@ -5429,7 +5429,7 @@ namespace Agora.Rtc
             };
 
             var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTMEDIARECORDERRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -5445,7 +5445,7 @@ namespace Agora.Rtc
             };
 
             var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPMEDIARECORDERRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);

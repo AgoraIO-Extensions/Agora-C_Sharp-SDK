@@ -142,10 +142,10 @@ namespace Agora.Rtc
 
         public virtual void OnRtmpStreamingEvent(string url, RTMP_STREAMING_EVENT eventCode) { }
 
-        public virtual void OnStreamPublished(string url, int error) { }
+        //public virtual void OnStreamPublished(string url, int error) { }
 
-        [Obsolete("Use onRtmpStreamingStateChanged instead of")]
-        public virtual void OnStreamUnpublished(string url) { }
+        //[Obsolete("Use onRtmpStreamingStateChanged instead of")]
+        //public virtual void OnStreamUnpublished(string url) { }
 
         public virtual void OnTranscodingUpdated() { }
 

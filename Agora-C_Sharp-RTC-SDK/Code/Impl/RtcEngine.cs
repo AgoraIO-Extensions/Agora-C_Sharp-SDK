@@ -2032,35 +2032,35 @@ namespace Agora.Rtc
             return _rtcEngineImpl.Complain(callId, description);
         }
 
-        public override int AddPublishStreamUrl(string url, bool transcodingEnabled)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.AddPublishStreamUrl(url, transcodingEnabled);
-        }
+        //public override int AddPublishStreamUrl(string url, bool transcodingEnabled)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.AddPublishStreamUrl(url, transcodingEnabled);
+        //}
 
-        public override int RemovePublishStreamUrl(string url)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.RemovePublishStreamUrl(url);
-        }
+        //public override int RemovePublishStreamUrl(string url)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.RemovePublishStreamUrl(url);
+        //}
 
-        public override int SetLiveTranscoding(LiveTranscoding transcoding)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetLiveTranscoding(transcoding);
-        }
+        //public override int SetLiveTranscoding(LiveTranscoding transcoding)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.SetLiveTranscoding(transcoding);
+        //}
 
         public override int StartLocalVideoTranscoder(LocalTranscoderConfiguration config)
         {
@@ -3060,14 +3060,14 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetLocalAccessPoint(config);
         }
 
-        public override int EnableFishCorrection(bool enabled, FishCorrectionParams @params)
+        public override int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableFishCorrection(enabled, @params);
+            return _rtcEngineImpl.EnableFishEyeCorrection(enabled, @params);
         }
 
         public override int SetAdvancedAudioOptions(AdvancedAudioOptions options)
@@ -3260,15 +3260,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.EnableDualStreamModeEx(sourceType, enabled, streamConfig, connection);
         }
 
-        public override int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.AddPublishStreamUrlEx(url, transcodingEnabled, connection);
-        }
+        //public override int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.AddPublishStreamUrlEx(url, transcodingEnabled, connection);
+        //}
 
         public override int UploadLogFile(ref string requestId)
         {
@@ -3401,15 +3401,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SendMetaData(metadata, source_type);
         }
 
-        public override int SetMediaRecorderObserver(RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetMediaRecorderObserver(connection);
-        }
+        //public override int SetMediaRecorderObserver(RtcConnection connection)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.SetMediaRecorderObserver(connection);
+        //}
 
         public override int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
         {

@@ -357,11 +357,11 @@ namespace Agora.Rtc
         #endregion
 
         #region Media push
-        public abstract int AddPublishStreamUrl(string url, bool transcodingEnabled);
+        //public abstract int AddPublishStreamUrl(string url, bool transcodingEnabled);
 
-        public abstract int RemovePublishStreamUrl(string url);
+        //public abstract int RemovePublishStreamUrl(string url);
 
-        public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
+        //public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
 
         public abstract int StartLocalVideoTranscoder(LocalTranscoderConfiguration config);
 
@@ -682,7 +682,7 @@ namespace Agora.Rtc
 
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
 
-        public abstract int EnableFishCorrection(bool enabled, FishCorrectionParams @params);
+        public abstract int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params);
 
         public abstract int SetAVSyncSource(string channelId, uint uid);
 
@@ -699,7 +699,7 @@ namespace Agora.Rtc
         public abstract int SelectAudioTrack(int index);
 
         #region IMediaRecorder
-        public abstract int SetMediaRecorderObserver(RtcConnection connection);
+        //public abstract int SetMediaRecorderObserver(RtcConnection connection);
 
         public abstract int StartRecording(RtcConnection connection, MediaRecorderConfiguration config);
 
@@ -758,7 +758,7 @@ namespace Agora.Rtc
 
         public abstract int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
-        public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
+        //public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
 
         public abstract int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection);
 

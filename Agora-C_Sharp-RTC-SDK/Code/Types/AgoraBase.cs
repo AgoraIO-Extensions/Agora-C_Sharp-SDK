@@ -4668,42 +4668,34 @@ namespace Agora.Rtc
     {
         public FishCorrectionParams()
         {
-            _x_center = 0.49f;
-            _y_center = 0.48f;
-            _scale_factor = 4.5f;
-            _focal_length = 31;
-            _pol_focal_length = 31;
-            _split_height = 1.0f;
+            xCenter = 0.49f;
+            yCenter = 0.48f;
+            scaleFactor = 4.5f;
+            focalLength = 31;
+            polFocalLength = 31;
+            splitHeight = 1.0f;
 
-            _ss[0] = 0.9375f;
-            _ss[1] = 0.0f;
-            _ss[2] = -2.9440f;
-            _ss[3] = 5.7344f;
-            _ss[4] = -4.4564f;
+            ss[0] = 0.9375f;
+            ss[1] = 0.0f;
+            ss[2] = -2.9440f;
+            ss[3] = 5.7344f;
+            ss[4] = -4.4564f;
+
+            mirror = false;
+            rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
         }
 
-        public FishCorrectionParams(float x_center, float y_center, float scale_factor, float focal_length, float pol_focal_length, float split_height, float[] ss)
-        {
-            this._x_center = x_center;
-            this._y_center = y_center;
-            this._scale_factor = scale_factor;
-            this._focal_length = focal_length;
-            this._pol_focal_length = pol_focal_length;
-            this._split_height = split_height;
-            for (int i = 0; i < ss.Length; i++)
-            {
-                this._ss[i] = ss[i];
-            }
-        }
-
-
-        public float _x_center { set; get; }
-        public float _y_center { set; get; }
-        public float _scale_factor { set; get; }
-        public float _focal_length { set; get; }
-        public float _pol_focal_length { set; get; }
-        public float _split_height { set; get; }
-        public float[] _ss = new float[5];
+     
+        public float xCenter { set; get; }
+        public float yCenter { set; get; }
+        public float scaleFactor { set; get; }
+        public float focalLength { set; get; }
+        public float polFocalLength { set; get; }
+        public float splitHeight { set; get; }
+        public float[] ss = new float[5];
+        bool mirror;
+        /* 0, 90, 180, 270 */
+        VIDEO_ORIENTATION rotation;
     };
 
 

@@ -134,9 +134,9 @@ namespace Agora.Rtc
 
     public delegate void OnRtmpStreamingEventHandler(string url, RTMP_STREAMING_EVENT eventCode);
 
-    public delegate void OnStreamPublishedHandler(string url, int error);
+    //public delegate void OnStreamPublishedHandler(string url, int error);
 
-    public delegate void OnStreamUnpublishedHandler(string url);
+    //public delegate void OnStreamUnpublishedHandler(string url);
 
     public delegate void OnTranscodingUpdatedHandler();
 
@@ -268,8 +268,8 @@ namespace Agora.Rtc
         public event OnAudioDeviceVolumeChangedHandler EventOnAudioDeviceVolumeChanged;
         public event OnRtmpStreamingStateChangedHandler EventOnRtmpStreamingStateChanged;
         public event OnRtmpStreamingEventHandler EventOnRtmpStreamingEvent;
-        public event OnStreamPublishedHandler EventOnStreamPublished;
-        public event OnStreamUnpublishedHandler EventOnStreamUnpublished;
+        //public event OnStreamPublishedHandler EventOnStreamPublished;
+        //public event OnStreamUnpublishedHandler EventOnStreamUnpublished;
         public event OnTranscodingUpdatedHandler EventOnTranscodingUpdated;
         public event OnAudioRoutingChangedHandler EventOnAudioRoutingChanged;
         public event OnChannelMediaRelayStateChangedHandler EventOnChannelMediaRelayStateChanged;
@@ -717,18 +717,18 @@ namespace Agora.Rtc
             EventOnRtmpStreamingEvent.Invoke(url, eventCode);
         }
 
-        public override void OnStreamPublished(string url, int error)
-        {
-            if (EventOnStreamPublished == null) return;
-            EventOnStreamPublished.Invoke(url, error);
-        }
+        //public override void OnStreamPublished(string url, int error)
+        //{
+        //    if (EventOnStreamPublished == null) return;
+        //    EventOnStreamPublished.Invoke(url, error);
+        //}
 
-        [Obsolete]
-        public override void OnStreamUnpublished(string url)
-        {
-            if (EventOnStreamUnpublished == null) return;
-            EventOnStreamUnpublished.Invoke(url);
-        }
+        //[Obsolete]
+        //public override void OnStreamUnpublished(string url)
+        //{
+        //    if (EventOnStreamUnpublished == null) return;
+        //    EventOnStreamUnpublished.Invoke(url);
+        //}
 
         public override void OnTranscodingUpdated()
         {

@@ -68,7 +68,7 @@ namespace Agora.Rtc
             {
                 if (localAudioFrame.channels != audioFrame.channels ||
                 localAudioFrame.samplesPerChannel != audioFrame.samples ||
-                localAudioFrame.bytesPerSample != audioFrame.bytes_per_sample)
+                localAudioFrame.bytesPerSample != (BYTES_PER_SAMPLE)audioFrame.bytes_per_sample)
                 {
                     localAudioFrame.RawBuffer = new byte[audioFrame.buffer_length];
                 }
@@ -80,7 +80,7 @@ namespace Agora.Rtc
             localAudioFrame.type = audioFrame.type;
             localAudioFrame.samplesPerChannel = audioFrame.samples;
             localAudioFrame.bufferPtr = audioFrame.buffer;
-            localAudioFrame.bytesPerSample = audioFrame.bytes_per_sample;
+            localAudioFrame.bytesPerSample = (BYTES_PER_SAMPLE)audioFrame.bytes_per_sample;
             localAudioFrame.channels = audioFrame.channels;
             localAudioFrame.samplesPerSec = audioFrame.samples_per_sec;
             localAudioFrame.renderTimeMs = audioFrame.render_time_ms;
@@ -113,7 +113,7 @@ namespace Agora.Rtc
             {
                 if (localAudioFrame.channels != audioFrame.channels ||
                 localAudioFrame.samplesPerChannel != audioFrame.samples ||
-                localAudioFrame.bytesPerSample != audioFrame.bytes_per_sample)
+                localAudioFrame.bytesPerSample != (BYTES_PER_SAMPLE)audioFrame.bytes_per_sample)
                 {
                     localAudioFrame.RawBuffer = new byte[audioFrame.buffer_length];
                 }
@@ -125,7 +125,7 @@ namespace Agora.Rtc
             localAudioFrame.type = audioFrame.type;
             localAudioFrame.samplesPerChannel = audioFrame.samples;
             localAudioFrame.bufferPtr = audioFrame.buffer;
-            localAudioFrame.bytesPerSample = audioFrame.bytes_per_sample;
+            localAudioFrame.bytesPerSample = (BYTES_PER_SAMPLE)audioFrame.bytes_per_sample;
             localAudioFrame.channels = audioFrame.channels;
             localAudioFrame.samplesPerSec = audioFrame.samples_per_sec;
             localAudioFrame.renderTimeMs = audioFrame.render_time_ms;
