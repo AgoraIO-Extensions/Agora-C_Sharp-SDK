@@ -698,6 +698,13 @@ namespace Agora.Rtc
 
         public abstract int SelectAudioTrack(int index);
 
+        #region IMediaRecorder
+        public abstract int SetMediaRecorderObserver(RtcConnection connection);
+
+        public abstract int StartRecording(RtcConnection connection, MediaRecorderConfiguration config);
+
+        public abstract int StopRecording(RtcConnection connection);
+        #endregion
 
     };
 

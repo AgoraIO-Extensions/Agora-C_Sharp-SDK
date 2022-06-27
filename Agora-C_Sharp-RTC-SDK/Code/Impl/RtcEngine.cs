@@ -3383,14 +3383,52 @@ namespace Agora.Rtc
 
         public override int SetMaxMetadataSize(int size)
         {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
             return _rtcEngineImpl.SetMaxMetadataSize(size);
         }
 
         public override int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
             return _rtcEngineImpl.SendMetaData(metadata, source_type);
         }
 
+        public override int SetMediaRecorderObserver(RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetMediaRecorderObserver(connection);
+        }
 
+        public override int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.StartRecording(connection, config);
+        }
+
+        public override int StopRecording(RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.StopRecording(connection);
+        }
     }
 }

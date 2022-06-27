@@ -5403,6 +5403,57 @@ namespace Agora.Rtc
         }
 
 
+        #region IMediaRecorder
+        public int SetMediaRecorderObserver(RtcConnection connection)
+        {
+            var param = new
+            {
+                connection
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
+        {
+            var param = new
+            {
+                connection,
+                config
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int StopRecording(RtcConnection connection)
+        {
+            var param = new
+            {
+                connection,
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+        #endregion
+
         public int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
         {
             var param = new
