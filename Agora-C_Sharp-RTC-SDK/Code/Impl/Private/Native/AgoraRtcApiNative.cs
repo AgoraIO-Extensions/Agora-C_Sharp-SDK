@@ -242,10 +242,10 @@ namespace Agora.Rtc
 
     //audio_frame
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_AudioFrameLocal_Native(IntPtr audio_frame);
+    internal delegate bool Func_AudioFrameLocal_Native(string channelId, IntPtr audio_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_AudioFrameRemote_Native(uint uid, IntPtr audio_frame);
+    internal delegate bool Func_AudioFrameRemote_Native(string channelId, uint uid, IntPtr audio_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_AudioFrameEx_Native(string channel_id, uint uid, IntPtr audio_frame);
