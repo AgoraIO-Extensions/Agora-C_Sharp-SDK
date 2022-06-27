@@ -44,8 +44,8 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcEnginePtr CreateIrisApiEngine();
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void InitLogger(IrisRtcEnginePtr engine_ptr, string dir, int maxSize);
+        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        //internal static extern void InitLogger(IrisRtcEnginePtr engine_ptr, string dir, int maxSize);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisApiEngine(IrisRtcEnginePtr engine_ptr);
