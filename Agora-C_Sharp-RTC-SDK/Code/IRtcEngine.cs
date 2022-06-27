@@ -570,7 +570,7 @@ namespace Agora.Rtc
         public abstract IMediaPlayerCacheManager GetMediaPlayerCacheManager();
 
         #region SpatialAudio
-        public abstract ICloudSpatialAudioEngine GetCloudSpatialAudioEngine();
+        //public abstract ICloudSpatialAudioEngine GetCloudSpatialAudioEngine();
 
         public abstract ILocalSpatialAudioEngine GetLocalSpatialAudioEngine();
 

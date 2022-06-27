@@ -79,7 +79,7 @@ namespace Agora.Rtc
         private VideoDeviceManagerImpl _videoDeviceManagerInstance;
         private AudioDeviceManagerImpl _audioDeviceManagerInstance;
         private MediaPlayerImpl _mediaPlayerInstance;
-        private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineInstance;
+        //private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineInstance;
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
 
@@ -125,7 +125,7 @@ namespace Agora.Rtc
                 _mediaPlayerInstance = null;
 
                 //_cloudSpatialAudioEngineInstance.Dispose();
-                _cloudSpatialAudioEngineInstance = null;
+                //_cloudSpatialAudioEngineInstance = null;
                 _spatialAudioEngineInstance = null;
 
                 _mediaPlayerCacheManager.Dispose();
@@ -505,10 +505,10 @@ namespace Agora.Rtc
             return _mediaPlayerInstance;
         }
 
-        public CloudSpatialAudioEngineImpl GetCloudSpatialAudioEngine()
-        {
-            return _cloudSpatialAudioEngineInstance;
-        }
+        //public CloudSpatialAudioEngineImpl GetCloudSpatialAudioEngine()
+        //{
+        //    return _cloudSpatialAudioEngineInstance;
+        //}
 
         public LocalSpatialAudioEngineImpl GetLocalSpatialAudioEngine()
         {

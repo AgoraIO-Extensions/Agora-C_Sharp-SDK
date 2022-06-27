@@ -334,9 +334,32 @@ namespace Agora.Rtc
         * @deprecated
         * 3: This mode is deprecated.
         */
+        [Obsolete]
         RENDER_MODE_ADAPTIVE = 3,
     };
 
+
+    /**
+ * The video source type
+ */
+    namespace Media.Base
+    {
+        enum VIDEO_SOURCE_TYPE
+        {
+            /**
+             * 0: the video frame comes from the front camera
+             */
+            CAMERA_SOURCE_FRONT = 0,
+            /**
+             * 1: the video frame comes from the back camera
+             */
+            CAMERA_SOURCE_BACK = 1,
+            /**
+             * 1: the video frame source is unsepcified
+             */
+            VIDEO_SOURCE_UNSPECIFIED = 2,
+        };
+    }
 
     /**
    * The EGL context type.

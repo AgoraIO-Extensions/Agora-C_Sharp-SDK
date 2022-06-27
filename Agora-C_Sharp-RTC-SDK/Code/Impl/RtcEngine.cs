@@ -8,7 +8,7 @@ namespace Agora.Rtc
         private RtcEngineImpl _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
         private IVideoDeviceManager _videoDeviceManager = null;
-        private ICloudSpatialAudioEngine _cloudSpatialAudioEngine = null;
+        //private ICloudSpatialAudioEngine _cloudSpatialAudioEngine = null;
         private ILocalSpatialAudioEngine _localSpatialAudioEngine = null;
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
         private const string ErrorMsgLog = "[RtcEngine]:IRtcEngine has not been created yet!";
@@ -19,7 +19,7 @@ namespace Agora.Rtc
             _rtcEngineImpl = RtcEngineImpl.GetInstance();
             _audioDeviceManager = AudioDeviceManager.GetInstance(this, _rtcEngineImpl.GetAudioDeviceManager());
             _videoDeviceManager = VideoDeviceManager.GetInstance(this, _rtcEngineImpl.GetVideoDeviceManager());
-            _cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
+            //_cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
             _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
         }
@@ -28,7 +28,7 @@ namespace Agora.Rtc
         {
             _audioDeviceManager = null;
             _videoDeviceManager = null;
-            _cloudSpatialAudioEngine = null;
+            //_cloudSpatialAudioEngine = null;
             _localSpatialAudioEngine = null;
             _mediaPlayerCacheManager = null;
         }
@@ -82,7 +82,7 @@ namespace Agora.Rtc
 
             AudioDeviceManager.ReleaseInstance();
             VideoDeviceManager.ReleaseInstance();
-            CloudSpatialAudioEngine.ReleaseInstance();
+            //CloudSpatialAudioEngine.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
             instance = null;
         }
@@ -216,15 +216,15 @@ namespace Agora.Rtc
             mediaPlayer.Dispose();
         }
 
-        public override ICloudSpatialAudioEngine GetCloudSpatialAudioEngine()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _cloudSpatialAudioEngine;
-        }
+        //public override ICloudSpatialAudioEngine GetCloudSpatialAudioEngine()
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return null;
+        //    }
+        //    return _cloudSpatialAudioEngine;
+        //}
 
         public override ILocalSpatialAudioEngine GetLocalSpatialAudioEngine()
         {
