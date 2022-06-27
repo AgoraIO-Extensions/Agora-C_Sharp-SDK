@@ -6,7 +6,7 @@ namespace Agora.Rtc
 
     public delegate void OnPositionChangedHandler(Int64 position_ms);
 
-    public delegate void OnPlayerEventHandler(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message);
+    public delegate void OnPlayerEventHandler(MEDIA_PLAYER_EVENT eventCode, Int64 elapsedTime, string message);
 
     public delegate void OnMetaDataHandler(byte[] data, int length);
 
@@ -47,10 +47,10 @@ namespace Agora.Rtc
             EventOnPositionChanged.Invoke(position_ms);
         }
 
-        public override void OnPlayerEvent(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message)
+        public override void OnPlayerEvent(MEDIA_PLAYER_EVENT eventCode, Int64 elapsedTime, string message)
         {
             if (EventOnPlayerEvent == null) return;
-            EventOnPlayerEvent.Invoke(@event, elapsedTime, message);
+            EventOnPlayerEvent.Invoke(eventCode, elapsedTime, message);
         }
 
         public override void OnMetaData(byte[] data, int length)

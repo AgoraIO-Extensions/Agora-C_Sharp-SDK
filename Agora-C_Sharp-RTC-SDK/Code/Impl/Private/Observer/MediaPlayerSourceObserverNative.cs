@@ -59,7 +59,7 @@ namespace Agora.Rtc
 #endif
                         if (!RtcMediaPlayerEventHandlerDic.ContainsKey(playerId)) return;
                         RtcMediaPlayerEventHandlerDic[playerId].OnPlayerEvent(
-                            (MEDIA_PLAYER_EVENT)AgoraJson.GetData<int>(data, "event"),
+                            (MEDIA_PLAYER_EVENT)AgoraJson.GetData<int>(data, "eventCode"),
                             (Int64)AgoraJson.GetData<Int64>(data, "elapsedTime"),
                             (string)AgoraJson.GetData<string>(data, "message")
                         );

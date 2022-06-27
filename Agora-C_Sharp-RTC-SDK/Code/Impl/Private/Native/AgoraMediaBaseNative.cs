@@ -10,11 +10,11 @@ namespace Agora.Rtc
     {
         internal AUDIO_FRAME_TYPE type;
         internal int samples;
-        internal BYTES_PER_SAMPLE bytes_per_sample;
+        internal int bytes_per_sample;
         internal int channels;
         internal int samples_per_sec;
         internal IntPtr buffer;
-        internal uint buffer_length;
+        internal Int64 buffer_length;
         internal long render_time_ms;
         internal int av_sync_type;
     }
@@ -53,7 +53,7 @@ namespace Agora.Rtc
         internal uint u_buffer_length;
         internal uint v_buffer_length;
         internal int rotation;
-        internal long render_time_ms;
+        internal Int64 render_time_ms;
         internal int av_sync_type;
         internal IntPtr metadata_buffer;
         internal int metadata_size;
