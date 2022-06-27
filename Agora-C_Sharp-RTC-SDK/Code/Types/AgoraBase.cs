@@ -57,12 +57,14 @@ namespace Agora.Rtc
          * This profile prioritizes low end-to-end latency and applies to scenarios where users interact
          * with each other, and any delay affects the user experience.
          */
+        [Obsolete]
         CHANNEL_PROFILE_CLOUD_GAMING = 3,
 
         /**
          * 4: Communication 1v1.
          * @deprecated This profile is deprecated.
          */
+        [Obsolete]
         CHANNEL_PROFILE_COMMUNICATION_1v1 = 4,
     };
 
@@ -1663,7 +1665,7 @@ namespace Agora.Rtc
     };
 
 
-    public class VideoSubscriptionOptions
+    public class VideoSubscriptionOptions:OptionalJsonParse
     {
         /**
          * The type of the video stream to subscribe to.
@@ -1671,34 +1673,38 @@ namespace Agora.Rtc
          * The default value is `VIDEO_STREAM_HIGH`, which means the high-quality
          * video stream.
          */
-        public VIDEO_STREAM_TYPE type;
+        public Optional<VIDEO_STREAM_TYPE> type = new Optional<VIDEO_STREAM_TYPE>();
         /**
          * Whether to subscribe to encoded video data only:
          * - `true`: Subscribe to encoded video data only.
          * - `false`: (Default) Subscribe to decoded video data.
          */
-        public bool encodedFrameOnly;
+        public Optional<bool> encodedFrameOnly = new Optional<bool>();
 
         public VideoSubscriptionOptions()
         {
-            type = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
-
-            encodedFrameOnly = false;
+           
         }
 
-        public VideoSubscriptionOptions(VIDEO_STREAM_TYPE streamtype)
+        public override void ToJson(JsonWriter writer)
         {
-            type = streamtype;
-            encodedFrameOnly = false;
+            writer.WriteObjectStart();
+            if (this.type.HasValue())
+            {
+                writer.WritePropertyName("type");
+                this.WriteEnum(writer, this.type.GetValue());
+            }
+
+            if (this.encodedFrameOnly.HasValue())
+            {
+                writer.WritePropertyName("encodedFrameOnly");
+                writer.Write(this.encodedFrameOnly.GetValue());
+            }
+
+            writer.WriteObjectEnd();
         }
 
-        public VideoSubscriptionOptions(VIDEO_STREAM_TYPE streamtype, bool encoded_only)
-        {
-            type = streamtype;
-            encodedFrameOnly = encoded_only;
-        }
-    };
-
+    }
 
     /**
  * The definition of the EncodedVideoFrameInfo struct.

@@ -867,7 +867,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StartAudioMixing(filePath, loopback, replace, cycle);
         }
 
-        public override int SetAudioMixingDualMonoMode(int mode)
+        public override int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
         {
             if (_rtcEngineImpl == null)
             {
@@ -1156,6 +1156,36 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.UnloadAllEffects();
+        }
+
+        public override int GetEffectCurrentPosition(int soundId)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetEffectCurrentPosition(soundId);
+        }
+
+        public override int GetEffectDuration(string filePath)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetEffectDuration(filePath);
+        }
+
+        public override int SetEffectPosition(int soundId, int pos)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetEffectPosition(soundId, pos);
         }
 
         public override int EnableSoundPositionIndication(bool enabled)
@@ -3360,5 +3390,7 @@ namespace Agora.Rtc
         {
             return _rtcEngineImpl.SendMetaData(metadata, source_type);
         }
+
+
     }
 }

@@ -1368,7 +1368,7 @@ namespace Agora.Rtc
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnExtensionEvent(
                         (string)AgoraJson.GetData<string>(data, "provider"),
-                        (string)AgoraJson.GetData<string>(data, "ext_name"),
+                        (string)AgoraJson.GetData<string>(data, "extension"),
                         (string)AgoraJson.GetData<string>(data, "key"),
                         (string)AgoraJson.GetData<string>(data, "value")
                     );
@@ -1385,7 +1385,7 @@ namespace Agora.Rtc
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnExtensionStarted(
                         (string)AgoraJson.GetData<string>(data, "provider"),
-                        (string)AgoraJson.GetData<string>(data, "ext_name")
+                        (string)AgoraJson.GetData<string>(data, "extension")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1400,24 +1400,24 @@ namespace Agora.Rtc
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnExtensionStopped(
                         (string)AgoraJson.GetData<string>(data, "provider"),
-                        (string)AgoraJson.GetData<string>(data, "ext_name")
+                        (string)AgoraJson.GetData<string>(data, "extension")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
                     break;
 
-                case "onExtensionErrored":
+                case "onExtensionError":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                     if (EngineEventHandler == null) return;
-                    EngineEventHandler.OnExtensionErrored(
+                    EngineEventHandler.OnExtensionError(
                         (string)AgoraJson.GetData<string>(data, "provider"),
-                        (string)AgoraJson.GetData<string>(data, "ext_name"),
+                        (string)AgoraJson.GetData<string>(data, "extension"),
                         (int)AgoraJson.GetData<int>(data, "error"),
-                        (string)AgoraJson.GetData<string>(data, "msg")
+                        (string)AgoraJson.GetData<string>(data, "message")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

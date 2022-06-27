@@ -1857,6 +1857,56 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+
+        public int GetEffectCurrentPosition(int soundId)
+        {
+            var param = new
+            {
+                soundId
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEFFECTCURRENTPOSITION,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int GetEffectDuration(string filePath)
+        {
+            var param = new
+            {
+                filePath
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEFFECTDURATION,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetEffectPosition(int soundId, int pos)
+        {
+            var param = new
+            {
+                soundId,
+                pos
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEFFECTPOSITION,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
         public int EnableSoundPositionIndication(bool enabled)
         {
             var param = new
@@ -5353,7 +5403,7 @@ namespace Agora.Rtc
         }
 
 
-        public int SetAudioMixingDualMonoMode(int mode)
+        public int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
         {
             var param = new
             {

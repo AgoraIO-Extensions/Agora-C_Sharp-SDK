@@ -6,7 +6,7 @@ namespace Agora.Rtc
     {
         public virtual void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec) { }
 
-        public virtual void OnPositionChanged(Int64 position) { }
+        public virtual void OnPositionChanged(Int64 position_ms) { }
 
         public virtual void OnPlayerEvent(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message) { }
 

@@ -283,6 +283,9 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETDUALSTREAMMODE = "RtcEngine_setDualStreamMode";
         internal const string FUNC_RTCENGINE_SETDUALSTREAMMODE2 = "RtcEngine_setDualStreamMode2";
         internal const string FUNC_RTCENGINE_SETDUALSTREAMMODE3 = "RtcEngine_setDualStreamMode3";
+        internal const string FUNC_RTCENGINE_GETEFFECTCURRENTPOSITION ="RtcEngine_getEffectCurrentPosition";
+        internal const string FUNC_RTCENGINE_GETEFFECTDURATION = "RtcEngine_getEffectDuration";
+        internal const string FUNC_RTCENGINE_SETEFFECTPOSITION = "RtcEngine_setEffectPosition";
         #endregion
 
         #region IRtcEngineEx start

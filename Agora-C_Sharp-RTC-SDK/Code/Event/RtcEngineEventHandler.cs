@@ -182,13 +182,13 @@ namespace Agora.Rtc
 
     public delegate void OnVideoPublishStateChangedHandler(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState);
 
-    public delegate void OnExtensionEventHandler(string provider, string ext_name, string key, string value);
+    public delegate void OnExtensionEventHandler(string provider, string extension, string key, string value);
 
-    public delegate void OnExtensionStartedHandler(string provider, string ext_name);
+    public delegate void OnExtensionStartedHandler(string provider, string extension);
 
-    public delegate void OnExtensionStoppedHandler(string provider, string ext_name);
+    public delegate void OnExtensionStoppedHandler(string provider, string extension);
 
-    public delegate void OnExtensionErroredHandler(string provider, string ext_name, int error, string msg);
+    public delegate void OnExtensionErrorHandler(string provider, string extension, int error, string message);
 
     public delegate void OnDirectCdnStreamingStateChangedHandler(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message);
 
@@ -295,7 +295,7 @@ namespace Agora.Rtc
         public event OnExtensionEventHandler EventOnExtensionEvent;
         public event OnExtensionStartedHandler EventOnExtensionStarted;
         public event OnExtensionStoppedHandler EventOnExtensionStopped;
-        public event OnExtensionErroredHandler EventOnExtensionErrored;
+        public event OnExtensionErrorHandler EventOnExtensionErrored;
         public event OnDirectCdnStreamingStateChangedHandler EventOnDirectCdnStreamingStateChanged;
         public event OnDirectCdnStreamingStatsHandler EventOnDirectCdnStreamingStats;
 
@@ -868,28 +868,28 @@ namespace Agora.Rtc
             EventOnVideoPublishStateChanged.Invoke(channel, oldState, newState, elapseSinceLastState);
         }
 
-        public override void OnExtensionEvent(string provider, string ext_name, string key, string value)
+        public override void OnExtensionEvent(string provider, string extension, string key, string value)
         {
             if (EventOnExtensionEvent == null) return;
-            EventOnExtensionEvent.Invoke(provider, ext_name, key, value);
+            EventOnExtensionEvent.Invoke(provider, extension, key, value);
         }
 
-        public override void OnExtensionStarted(string provider, string ext_name)
+        public override void OnExtensionStarted(string provider, string extension)
         {
             if (EventOnExtensionStarted == null) return;
-            EventOnExtensionStarted.Invoke(provider, ext_name);
+            EventOnExtensionStarted.Invoke(provider, extension);
         }
 
-        public override void OnExtensionStopped(string provider, string ext_name)
+        public override void OnExtensionStopped(string provider, string extension)
         {
             if (EventOnExtensionStopped == null) return;
-            EventOnExtensionStopped.Invoke(provider, ext_name);
+            EventOnExtensionStopped.Invoke(provider, extension);
         }
 
-        public override void OnExtensionErrored(string provider, string ext_name, int error, string msg)
+        public override void OnExtensionError(string provider, string extension, int error, string message)
         {
             if (EventOnExtensionErrored == null) return;
-            EventOnExtensionErrored.Invoke(provider, ext_name, error, msg);
+            EventOnExtensionErrored.Invoke(provider, extension, error, message);
         }
 
         public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)

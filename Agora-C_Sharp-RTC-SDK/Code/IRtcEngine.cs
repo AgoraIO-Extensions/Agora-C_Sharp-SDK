@@ -178,7 +178,7 @@ namespace Agora.Rtc
 
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos);
 
-        public abstract int SetAudioMixingDualMonoMode(int mode);
+        public abstract int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode);
 
         public abstract int StopAudioMixing();
 
@@ -235,6 +235,13 @@ namespace Agora.Rtc
         public abstract int UnloadEffect(int soundId);
 
         public abstract int UnloadAllEffects();
+
+        public abstract int GetEffectCurrentPosition(int soundId);
+
+        public abstract int GetEffectDuration(string filePath);
+
+        public abstract int SetEffectPosition(int soundId, int pos);
+
         #endregion
 
         #region Virtual metronome
