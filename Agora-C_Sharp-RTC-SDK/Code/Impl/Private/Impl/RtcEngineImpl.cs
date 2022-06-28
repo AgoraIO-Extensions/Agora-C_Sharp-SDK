@@ -5676,11 +5676,11 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int TakeSnapshot(uint remoteUid, string filePath)
+        public int TakeSnapshot(uint uid, string filePath)
         {
             var param = new
             {
-                remoteUid,
+                uid,
                 filePath
             };
 

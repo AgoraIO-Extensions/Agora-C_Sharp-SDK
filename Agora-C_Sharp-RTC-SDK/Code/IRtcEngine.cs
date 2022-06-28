@@ -124,7 +124,7 @@ namespace Agora.Rtc
         #endregion
 
         #region Capture screenshots
-        public abstract int TakeSnapshot(uint remoteUid, string filePath);
+        public abstract int TakeSnapshot(uint uid, string filePath);
         #endregion
 
         #region Multi-device capture

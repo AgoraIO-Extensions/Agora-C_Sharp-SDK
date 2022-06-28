@@ -2962,14 +2962,14 @@ namespace Agora.Rtc
             return _rtcEngineImpl.EnableEchoCancellationExternal(enabled, audioSourceDelay);
         }
 
-        public override int TakeSnapshot(uint remoteUid, string filePath)
+        public override int TakeSnapshot(uint uid, string filePath)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.TakeSnapshot(remoteUid, filePath);
+            return _rtcEngineImpl.TakeSnapshot(uid, filePath);
         }
 
         public override int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config)
