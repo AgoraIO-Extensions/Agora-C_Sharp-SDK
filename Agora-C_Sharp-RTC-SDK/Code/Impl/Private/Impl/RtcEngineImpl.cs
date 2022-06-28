@@ -357,7 +357,7 @@ namespace Agora.Rtc
                 OnPreEncodeVideoFrame = VideoFrameObserverNative.OnPreEncodeVideoFrame,
                 OnRenderVideoFrame = VideoFrameObserverNative.OnRenderVideoFrame,
                 GetObservedFramePosition = VideoFrameObserverNative.GetObservedFramePosition,
-                IsMultipleChannelFrameWanted = VideoFrameObserverNative.IsMultipleChannelFrameWanted
+                //IsMultipleChannelFrameWanted = VideoFrameObserverNative.IsMultipleChannelFrameWanted
             };
 
             var irisRtcCVideoFrameObserverNativeLocal = new IrisRtcCVideoFrameObserverNative
@@ -370,8 +370,8 @@ namespace Agora.Rtc
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnRenderVideoFrame),
                 GetObservedFramePosition =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.GetObservedFramePosition),
-                IsMultipleChannelFrameWanted =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.IsMultipleChannelFrameWanted)
+                //IsMultipleChannelFrameWanted =
+                //    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.IsMultipleChannelFrameWanted)
             };
 
             _irisRtcCVideoFrameObserverNative =

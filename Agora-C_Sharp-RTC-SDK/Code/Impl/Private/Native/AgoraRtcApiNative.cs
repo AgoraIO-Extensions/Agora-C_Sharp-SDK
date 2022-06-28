@@ -359,7 +359,7 @@ namespace Agora.Rtc
         internal IntPtr OnPreEncodeVideoFrame;
         internal IntPtr OnRenderVideoFrame;
         internal IntPtr GetObservedFramePosition;
-        internal IntPtr IsMultipleChannelFrameWanted;
+        //internal IntPtr IsMultipleChannelFrameWanted;
     }
 
     internal struct IrisRtcCVideoFrameObserver
@@ -368,7 +368,7 @@ namespace Agora.Rtc
         internal Func_VideoCaptureLocal_Native OnPreEncodeVideoFrame;
         internal Func_VideoFrameRemote_Native OnRenderVideoFrame;
         internal Func_Uint32_t_Native GetObservedFramePosition;
-        internal Func_Bool_Native IsMultipleChannelFrameWanted;
+        //internal Func_Bool_Native IsMultipleChannelFrameWanted;
     }
 
     [StructLayout(LayoutKind.Sequential)]
