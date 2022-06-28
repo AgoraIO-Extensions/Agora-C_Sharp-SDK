@@ -1365,11 +1365,16 @@ namespace Agora.Rtc
             _irisRtcCAudioEncodedFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(_irisRtcCAudioEncodeFrameObserverNativeLocal));
             Marshal.StructureToPtr(_irisRtcCAudioEncodeFrameObserverNativeLocal, _irisRtcCAudioEncodedFrameObserverNative, true);
 
-            var param = AgoraJson.ToJson(config);
+            var param = new
+            {
+                config
+            };
+
+            var json = AgoraJson.ToJson(param);
             _irisRtcAudioEncodedFrameObserverHandleNative = AgoraRtcNative.RegisterAudioEncodedFrameObserver(
                 _irisRtcEngine,
                 _irisRtcCAudioEncodedFrameObserverNative,
-                param
+                json
              );
         }
 
@@ -5390,7 +5395,7 @@ namespace Agora.Rtc
         {
             var param = new
             {
-
+                index
             };
 
             var json = AgoraJson.ToJson(param);
