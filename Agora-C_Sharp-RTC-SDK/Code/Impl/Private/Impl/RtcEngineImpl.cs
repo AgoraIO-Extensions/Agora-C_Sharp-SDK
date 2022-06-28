@@ -1235,11 +1235,15 @@ namespace Agora.Rtc
             _irisRtcCAudioEncodedFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(_irisRtcCAudioEncodeFrameObserverNativeLocal));
             Marshal.StructureToPtr(_irisRtcCAudioEncodeFrameObserverNativeLocal, _irisRtcCAudioEncodedFrameObserverNative, true);
 
-            var param = AgoraJson.ToJson(config);
+            var param = new
+            {
+                config
+            };
+
             _irisRtcAudioEncodedFrameObserverHandleNative = AgoraRtcNative.RegisterAudioEncodedFrameObserver(
                 _irisRtcEngine,
                 _irisRtcCAudioEncodedFrameObserverNative,
-                param
+                AgoraJson.ToJson(param)
              );
         }
 
@@ -1272,10 +1276,6 @@ namespace Agora.Rtc
                 out _result);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
-        //CreateMediaPlayer
-
-        //DestroyMediaPlayer
 
         public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
         {
