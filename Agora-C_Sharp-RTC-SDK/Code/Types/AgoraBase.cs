@@ -1586,7 +1586,7 @@ namespace Agora.Rtc
         /**
         * This is a input parameter which means the timestamp for capturing the audio frame.
         */
-        int64_t captureTimeMs;
+        public int64_t captureTimeMs;
     }
 
     /**

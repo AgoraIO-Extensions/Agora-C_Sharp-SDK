@@ -22,12 +22,13 @@ namespace Agora.Rtc
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisEncodedAudioFrameInfo
     {
-        internal AUDIO_FRAME_TYPE type;
+        //internal AUDIO_FRAME_TYPE type;
         internal AUDIO_CODEC_TYPE codec;
         internal int sampleRateHz;
         internal int samplesPerChannel;
         internal int numberOfChannels;
         internal IrisEncodedAudioFrameAdvancedSettings advancedSettings;
+        internal Int64 captureTimeMs;
     }
 
     [StructLayout(LayoutKind.Sequential)]

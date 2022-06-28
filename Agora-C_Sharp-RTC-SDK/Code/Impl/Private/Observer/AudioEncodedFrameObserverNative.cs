@@ -20,6 +20,7 @@ namespace Agora.Rtc
             to.advancedSettings = new EncodedAudioFrameAdvancedSettings();
             to.advancedSettings.speech = from.advancedSettings.speech;
             to.advancedSettings.sendEvenIfEmpty = from.advancedSettings.sendEvenIfEmpty;
+            to.captureTimeMs = from.captureTimeMs;
             return to;
         }
 
