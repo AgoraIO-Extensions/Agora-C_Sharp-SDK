@@ -12,7 +12,7 @@ namespace Agora.Rtc
             return true;
         }
         
-        public virtual bool OnRenderVideoFrame(uint uid, VideoFrame videoFrame)
+        public virtual bool OnRenderVideoFrame(string channelId, uint uid, VideoFrame videoFrame)
         {
             return true;
         }

@@ -164,7 +164,7 @@ namespace Agora.Rtc
 
         // Iris Media Base
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisVideoFrame ConvertVideoFrame(ref IrisVideoFrame src, VIDEO_OBSERVER_FRAME_TYPE format);
+        internal static extern bool ConvertVideoFrame(ref IrisVideoFrame dst, ref IrisVideoFrame src);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void ClearVideoFrame(ref IrisVideoFrame video_frame);
@@ -344,7 +344,7 @@ namespace Agora.Rtc
     internal delegate bool Func_VideoCaptureLocal_Native(IntPtr video_frame, IntPtr config);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_VideoFrameRemote_Native(uint uid, IntPtr video_frame);
+    internal delegate bool Func_VideoFrameRemote_Native(string channel_id, uint uid, IntPtr video_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_VideoFrameEx_Native(string channel_id, uint uid, IntPtr video_frame);
