@@ -14,7 +14,7 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace agora.rtc.LitJson
+namespace Agora.Rtc.LitJson
 {
     public class JsonMockWrapper : IJsonWrapper
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using int64_t = Int64;
     using view_t = UInt64;
@@ -14,8 +14,8 @@ namespace agora.rtc
     public enum AudioRoute
     {
         /**
-         * -1: The default audio route.
-         */
+   * -1: The default audio route.
+   */
         ROUTE_DEFAULT = -1,
         /**
          * The headset.
@@ -48,17 +48,15 @@ namespace agora.rtc
         /**
          * The USB
          */
-        ROUTE_USB
-    };
-
-    public enum NLP_AGGRESSIVENESS
-    {
-        NLP_NOT_SPECIFIED = 0,
-        NLP_MILD = 1,
-        NLP_NORMAL = 2,
-        NLP_AGGRESSIVE = 3,
-        NLP_SUPER_AGGRESSIVE = 4,
-        NLP_EXTREME = 5,
+        ROUTE_USB,
+        /**
+         * The DISPLAYPORT
+         */
+        ROUTE_DISPLAYPORT,
+        /**
+         * The AIRPLAY
+         */
+        ROUTE_AIRPLAY
     };
 
 
@@ -200,21 +198,6 @@ namespace agora.rtc
 
     };
 
-    public enum AUDIO_PROCESSING_CHANNELS
-    {
-        AUDIO_PROCESSING_MONO = 1,
-        AUDIO_PROCESSING_STEREO = 2,
-    };
-
-    public class AdvancedAudioOptions
-    {
-        public AUDIO_PROCESSING_CHANNELS audioProcessingChannels { set; get; }
-        public AdvancedAudioOptions()
-        {
-            audioProcessingChannels = AUDIO_PROCESSING_CHANNELS.AUDIO_PROCESSING_MONO;
-        }
-    };
-
     /**
     * The detailed information of the incoming audio encoded frame.
     */
@@ -282,40 +265,52 @@ namespace agora.rtc
     public enum VIDEO_PIXEL_FORMAT
     {
         /**
-        * 0: Unknown format.
+        * 0: Default format.
         */
-        VIDEO_PIXEL_UNKNOWN = 0,
+        VIDEO_PIXEL_DEFAULT = 0,
         /**
-        * 1: I420.
-        */
+         * 1: I420.
+         */
         VIDEO_PIXEL_I420 = 1,
         /**
-        * 2: BGRA.
-        */
+         * 2: BGRA.
+         */
         VIDEO_PIXEL_BGRA = 2,
         /**
-        * 3: NV21.
-        */
+         * 3: NV21.
+         */
         VIDEO_PIXEL_NV21 = 3,
         /**
-        * 4: RGBA.
-        */
+         * 4: RGBA.
+         */
         VIDEO_PIXEL_RGBA = 4,
         /**
-        * 8: NV12.
-        */
+         * 8: NV12.
+         */
         VIDEO_PIXEL_NV12 = 8,
-        /** 
-        * 10: GL_TEXTURE_2D
-        */
+        /**
+         * 10: GL_TEXTURE_2D
+         */
         VIDEO_TEXTURE_2D = 10,
         /**
-        * 11: GL_TEXTURE_OES
-        */
+         * 11: GL_TEXTURE_OES
+         */
         VIDEO_TEXTURE_OES = 11,
-        /**
-        * 16: I422.
+        /*
+        12: pixel format for iOS CVPixelBuffer NV12
         */
+        VIDEO_CVPIXEL_NV12 = 12,
+        /*
+        13: pixel format for iOS CVPixelBuffer I420
+        */
+        VIDEO_CVPIXEL_I420 = 13,
+        /*
+        14: pixel format for iOS CVPixelBuffer BGRA
+        */
+        VIDEO_CVPIXEL_BGRA = 14,
+        /**
+         * 16: I422.
+         */
         VIDEO_PIXEL_I422 = 16,
     };
 
@@ -339,9 +334,32 @@ namespace agora.rtc
         * @deprecated
         * 3: This mode is deprecated.
         */
+        [Obsolete]
         RENDER_MODE_ADAPTIVE = 3,
     };
 
+
+    /**
+ * The video source type
+ */
+    namespace Media.Base
+    {
+        enum VIDEO_SOURCE_TYPE
+        {
+            /**
+             * 0: the video frame comes from the front camera
+             */
+            CAMERA_SOURCE_FRONT = 0,
+            /**
+             * 1: the video frame comes from the back camera
+             */
+            CAMERA_SOURCE_BACK = 1,
+            /**
+             * 1: the video frame source is unsepcified
+             */
+            VIDEO_SOURCE_UNSPECIFIED = 2,
+        };
+    }
 
     /**
    * The EGL context type.
@@ -380,7 +398,7 @@ namespace agora.rtc
         public ExternalVideoFrame()
         {
             this.type = VIDEO_BUFFER_TYPE.VIDEO_BUFFER_RAW_DATA;
-            this.format = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_UNKNOWN;
+            this.format = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
             this.buffer = null;
             this.stride = 0;
             this.height = 0;
@@ -495,7 +513,7 @@ namespace agora.rtc
     {
         public VideoFrame()
         {
-            type = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_UNKNOWN;
+            type = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
             width = 0;
             height = 0;
             yStride = 0;
@@ -589,6 +607,14 @@ namespace agora.rtc
          */
         public float[] matrix;
 
+
+        /**
+        *  Portrait Segmentation meta buffer, dimension of which is the same as VideoFrame.
+        *  Pixl value is between 0-255, 0 represents totally background, 255 represents totally foreground.
+        *  The default value is NULL
+        */
+        public byte[] alphaBuffer;
+        public IntPtr alphaBufferPtr;
     };
 
     public enum MEDIA_PLAYER_SOURCE_TYPE
@@ -626,6 +652,11 @@ namespace agora.rtc
         /** 0: PCM16. */
         FRAME_TYPE_PCM16 = 0, // PCM 16bit little endian
     }
+
+    public enum MAX_HANDLE_TIME_CNT
+    {
+        MAX_HANDLE_TIME_CNT = 10
+    };
 
     /** Definition of AudioFrame */
     public class AudioFrame
@@ -697,6 +728,70 @@ namespace agora.rtc
         public int avsync_type { set; get; }
     }
 
+    [Flags]
+    public enum AUDIO_FRAME_POSITION
+    {
+        AUDIO_FRAME_POSITION_NONE = 0x0000,
+        /** The position for observing the playback audio of all remote users after mixing
+         */
+        AUDIO_FRAME_POSITION_PLAYBACK = 0x0001,
+        /** The position for observing the recorded audio of the local user
+         */
+        AUDIO_FRAME_POSITION_RECORD = 0x0002,
+        /** The position for observing the mixed audio of the local user and all remote users
+         */
+        AUDIO_FRAME_POSITION_MIXED = 0x0004,
+        /** The position for observing the audio of a single remote user before mixing
+         */
+        AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
+    };
+
+
+    public class AudioParams
+    {
+        /** The audio sample rate (Hz), which can be set as one of the following values:
+
+         - `8000`
+         - `16000` (Default)
+         - `32000`
+         - `44100 `
+         - `48000`
+         */
+        public int sample_rate { set; get; }
+
+        /* The number of audio channels, which can be set as either of the following values:
+
+         - `1`: Mono (Default)
+         - `2`: Stereo
+         */
+        public int channels { set; get; }
+
+        /* The use mode of the audio data. See AgoraAudioRawFrameOperationMode.
+         */
+        public RAW_AUDIO_FRAME_OP_MODE_TYPE mode { set; get; }
+
+        /** The number of samples. For example, set it as 1024 for RTMP or RTMPS
+         streaming.
+         */
+        public int samples_per_call { set; get; }
+
+        public AudioParams()
+        {
+            sample_rate = 0;
+            channels = 0;
+            mode = RAW_AUDIO_FRAME_OP_MODE_TYPE.RAW_AUDIO_FRAME_OP_MODE_READ_ONLY;
+            samples_per_call = 0;
+        }
+
+        public AudioParams(int samplerate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE type, int samplesPerCall)
+        {
+            sample_rate = samplerate;
+            channels = channel;
+            mode = type;
+            samples_per_call = samplesPerCall;
+        }
+    };
+
 
     public struct AudioSpectrumData
     {
@@ -758,14 +853,18 @@ namespace agora.rtc
         MAX_CONTENT_INSPECT_MODULE_COUNT = 32
     };
 
+    public enum CONTENT_INSPECT_VENDOR
+    {
+        CONTENT_INSPECT_VENDOR_AGORA = 1,
+        CONTENT_INSPECT_VENDOR_TUPU = 2,
+        ONTENT_INSPECT_VENDOR_HIVE = 3
+    };
+
     public enum CONTENT_INSPECT_DEVICE_TYPE
     {
         CONTENT_INSPECT_DEVICE_INVALID = 0,
-        CONTENT_INSPECT_DEVICE_AGORA = 1,
-        CONTENT_INSPECT_DEVICE_HIVE = 2,
-        CONTENT_INSPECT_DEVICE_TUPU = 3
+        CONTENT_INSPECT_DEVICE_AGORA = 1
     };
-
 
 
     public enum CONTENT_INSPECT_TYPE
@@ -773,15 +872,31 @@ namespace agora.rtc
         /**
         * (Default) content inspect type invalid
         */
-        CONTENT_INSPECT_INVALIDE = 0,
+        CONTENT_INSPECT_INVALID = 0,
         /**
-        * Content inspect type moderation
-        */
+         * Content inspect type moderation
+         */
         CONTENT_INSPECT_MODERATION = 1,
         /**
-        * Content inspect type supervise
-        */
-        CONTENT_INSPECT_SUPERVISE = 2
+         * Content inspect type supervise
+         */
+        CONTENT_INSPECT_SUPERVISION = 2
+    };
+
+    public enum CONTENT_INSPECT_WORK_TYPE
+    {
+        /**
+         * video moderation on device
+         */
+        CONTENT_INSPECT_WORK_DEVICE = 0,
+        /**
+         * video moderation on cloud
+         */
+        CONTENT_INSPECT_WORK_CLOUD = 1,
+        /**
+         * video moderation on cloud and device
+         */
+        CONTENT_INSPECT_WORK_DEVICE_CLOUD = 2
     };
 
     public class ContentInspectModule
@@ -791,64 +906,52 @@ namespace agora.rtc
         */
         public CONTENT_INSPECT_TYPE type;
         /**The content inspect frequency, default is 0 second.
-        * the frequency <= 0 is invalid.
-        */
-        public uint frequency;
+         * the frequency <= 0 is invalid.
+         */
+        public uint interval;
+
+        public ContentInspectModule()
+        {
+            type = CONTENT_INSPECT_TYPE.CONTENT_INSPECT_INVALID;
+            interval = 0;
+        }
+
     };
 
     /** Definition of ContentInspectConfig.
 */
     public class ContentInspectConfig
     {
+        /**The content inspect modules, max length of modules is 32.
+         * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
+         */
+        public ContentInspectModule[] modules { set; get; }
+        /**The content inspect module count.
+         */
+        public int moduleCount { set; get; }
+
         public ContentInspectConfig()
         {
-            enable = false;
-            DeviceWork = false;
-            CloudWork = true;
-            DeviceworkType = CONTENT_INSPECT_DEVICE_TYPE.CONTENT_INSPECT_DEVICE_INVALID;
-            extraInfo = "";
+            modules = null;
             moduleCount = 0;
         }
-
-        /** enable content isnpect function*/
-        public bool enable { set; get; }
-
-        /** jh on device.*/
-        public bool DeviceWork { set; get; }
-
-        /** jh on cloud.*/
-        public bool CloudWork { set; get; }
-
-        /**the type of jh on device.*/
-        public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType { set; get; }
-
-        public string extraInfo { set; get; }
-
-        /**The content inspect modules, max length of modules is 32.
-        * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
-        */
-        public ContentInspectModule[] modules { set; get; }
-
-        /**The content inspect module count.
-        */
-        public int moduleCount { set; get; }
 
     };
 
 
-    public class SnapShotConfig
-    {
-        public SnapShotConfig()
-        {
-            channel = null;
-            uid = 0;
-            filePath = null;
-        }
+    //public class SnapShotConfig
+    //{
+    //    public SnapShotConfig()
+    //    {
+    //        channel = null;
+    //        uid = 0;
+    //        filePath = null;
+    //    }
 
-        public string channel;
-        public uint uid;
-        public string filePath;
-    }
+    //    public string channel;
+    //    public uint uid;
+    //    public string filePath;
+    //}
 
 
     /**
@@ -866,5 +969,173 @@ namespace agora.rtc
         ENCODED_VIDEO_FRAME,
     };
 
+    /**
+    * The format of the recording file.
+    *
+    * @since v3.5.2
+    */
+    public enum MediaRecorderContainerFormat
+    {
+        /**
+         * 1: (Default) MP4.
+         */
+        FORMAT_MP4 = 1,
+    };
+
+    /**
+    * The recording content.
+    *
+    * @since v3.5.2
+    */
+    public enum MediaRecorderStreamType
+    {
+        /**
+         * Only audio.
+         */
+        STREAM_TYPE_AUDIO = 0x01,
+        /**
+         * Only video.
+         */
+        STREAM_TYPE_VIDEO = 0x02,
+        /**
+         * (Default) Audio and video.
+         */
+        STREAM_TYPE_BOTH = STREAM_TYPE_AUDIO | STREAM_TYPE_VIDEO,
+    };
+
+    /**
+ * The current recording state.
+ *
+ * @since v3.5.2
+ */
+    public enum RecorderState
+    {
+        /**
+         * -1: An error occurs during the recording. See RecorderErrorCode for the reason.
+         */
+        RECORDER_STATE_ERROR = -1,
+        /**
+         * 2: The audio and video recording is started.
+         */
+        RECORDER_STATE_START = 2,
+        /**
+         * 3: The audio and video recording is stopped.
+         */
+        RECORDER_STATE_STOP = 3,
+    };
+
+    /**
+    * The reason for the state change
+    *
+    * @since v3.5.2
+    */
+    public enum RecorderErrorCode
+    {
+        /**
+         * 0: No error occurs.
+         */
+        RECORDER_ERROR_NONE = 0,
+        /**
+         * 1: The SDK fails to write the recorded data to a file.
+         */
+        RECORDER_ERROR_WRITE_FAILED = 1,
+        /**
+         * 2: The SDK does not detect audio and video streams to be recorded, or audio and video streams are interrupted for more than five seconds during recording.
+         */
+        RECORDER_ERROR_NO_STREAM = 2,
+        /**
+         * 3: The recording duration exceeds the upper limit.
+         */
+        RECORDER_ERROR_OVER_MAX_DURATION = 3,
+        /**
+         * 4: The recording configuration changes.
+         */
+        RECORDER_ERROR_CONFIG_CHANGED = 4,
+    };
+
+    /**
+    * Configurations for the local audio and video recording.
+    *
+    * @since v3.5.2
+    */
+    public class MediaRecorderConfiguration
+    {
+        /**
+         * The absolute path (including the filename extensions) of the recording file.
+         * For example, `C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4` on Windows,
+         * `/App Sandbox/Library/Caches/example.mp4` on iOS, `/Library/Logs/example.mp4` on macOS, and
+         * `/storage/emulated/0/Android/data/<package name>/files/example.mp4` on Android.
+         *
+         * @note Ensure that the specified path exists and is writable.
+         */
+        public string storagePath { set; get; }
+        /**
+         * The format of the recording file. See \ref agora::rtc::MediaRecorderContainerFormat "MediaRecorderContainerFormat".
+         */
+        public MediaRecorderContainerFormat containerFormat { set; get; }
+        /**
+         * The recording content. See \ref agora::rtc::MediaRecorderStreamType "MediaRecorderStreamType".
+         */
+        public MediaRecorderStreamType streamType { set; get; }
+        /**
+         * The maximum recording duration, in milliseconds. The default value is 120000.
+         */
+        public int maxDurationMs { set; get; }
+        /**
+         * The interval (ms) of updating the recording information. The value range is
+         * [1000,10000]. Based on the set value of `recorderInfoUpdateInterval`, the
+         * SDK triggers the \ref IMediaRecorderObserver::onRecorderInfoUpdated "onRecorderInfoUpdated"
+         * callback to report the updated recording information.
+         */
+        public int recorderInfoUpdateInterval { set; get; }
+
+        public MediaRecorderConfiguration()
+        {
+            storagePath = "";
+            containerFormat = MediaRecorderContainerFormat.FORMAT_MP4;
+            streamType = MediaRecorderStreamType.STREAM_TYPE_BOTH;
+            maxDurationMs = 120000;
+            recorderInfoUpdateInterval = 0;
+        }
+
+        public MediaRecorderConfiguration(string path, MediaRecorderContainerFormat format, MediaRecorderStreamType type, int duration, int interval)
+        {
+            storagePath = path;
+            containerFormat = format;
+            streamType = type;
+            maxDurationMs = duration;
+            recorderInfoUpdateInterval = interval;
+        }
+    };
+
+    public class RecorderInfo
+    {
+        /**
+         * The absolute path of the recording file.
+         */
+        public string fileName { set; get; }
+        /**
+         * The recording duration, in milliseconds.
+         */
+        public uint durationMs { set; get; }
+        /**
+         * The size in bytes of the recording file.
+         */
+        public uint fileSize { set; get; }
+
+        public RecorderInfo()
+        {
+            fileName = "";
+            durationMs = 0;
+            fileSize = 0;
+        }
+
+        public RecorderInfo(string name, uint dur, uint size)
+        {
+            fileName = name;
+            durationMs = dur;
+            fileSize = size;
+        }
+    };
     #endregion
 }

@@ -5,7 +5,7 @@ using System.Diagnostics;
 #endif
 
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal class AgoraLog
     {
@@ -50,7 +50,7 @@ namespace agora.rtc
 
 
 //#if NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
-//namespace agora.rtc
+//namespace Agora.Rtc
 //{
 //    internal class AgoraLog
 //    {

@@ -1,7 +1,7 @@
 #region Header
 /**
  * JsonException.cs
- *   Base class throwed by agora.rtc.LitJson when a parsing error occurs.
+ *   Base class throwed by Agora.Rtc.LitJson when a parsing error occurs.
  *
  * The authors disclaim copyright to this source code. For more details, see
  * the COPYING file included with this distribution.
@@ -11,7 +11,7 @@
 
 using System;
 
-namespace agora.rtc.LitJson
+namespace Agora.Rtc.LitJson
 {
     public class JsonException :
 #if NETSTANDARD1_5

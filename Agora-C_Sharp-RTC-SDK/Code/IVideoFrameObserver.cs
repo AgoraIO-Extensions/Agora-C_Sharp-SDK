@@ -1,4 +1,4 @@
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public class IVideoFrameObserver
     {
@@ -12,7 +12,7 @@ namespace agora.rtc
             return true;
         }
         
-        public virtual bool OnRenderVideoFrame(uint uid, VideoFrame videoFrame)
+        public virtual bool OnRenderVideoFrame(string channelId, uint uid, VideoFrame videoFrame)
         {
             return true;
         }
@@ -27,9 +27,9 @@ namespace agora.rtc
             return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
         }
 
-        public virtual bool IsMultipleChannelFrameWanted()
-        {
-            return true;
-        }
+        //public virtual bool IsMultipleChannelFrameWanted()
+        //{
+        //    return true;
+        //}
     }
 }

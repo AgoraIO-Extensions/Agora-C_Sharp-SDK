@@ -1,4 +1,4 @@
-﻿namespace agora.rtc
+﻿namespace Agora.Rtc
 {
     public class IAudioSpectrumObserver
     {

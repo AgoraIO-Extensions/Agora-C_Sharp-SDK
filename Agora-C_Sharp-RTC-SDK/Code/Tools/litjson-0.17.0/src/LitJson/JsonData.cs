@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 
-namespace agora.rtc.LitJson
+namespace Agora.Rtc.LitJson
 {
     public class JsonData : IJsonWrapper, IEquatable<JsonData>
     {
