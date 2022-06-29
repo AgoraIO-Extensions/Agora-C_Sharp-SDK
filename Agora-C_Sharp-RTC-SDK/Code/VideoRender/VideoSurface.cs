@@ -44,7 +44,7 @@ namespace Agora.Rtc
 
             if (Enable)
             {
-                if (IsBlankTexture())
+                if (_textureManager == null)
                 {
                     _TextureManagerGameObject = GameObject.Find("TextureManager" + Uid.ToString() + ChannelId + SourceType.ToString());
 
@@ -61,12 +61,11 @@ namespace Agora.Rtc
                     {
                         _textureManager = _TextureManagerGameObject.GetComponent<TextureManager>();
                     }
-
-                    if (_textureManager.CanTextureAttach())
-                    {
-                        ApplyTexture(_textureManager.Texture);
-                        _hasAttach = true;
-                    }
+                }
+                else if(_textureManager && !_hasAttach && _textureManager.CanTextureAttach())
+                {
+                    ApplyTexture(_textureManager.Texture);
+                    _hasAttach = true;
                 }
 
                 if (_textureManager && (this._textureWidth != _textureManager.Width || this._textureHeight != _textureManager.Height))
