@@ -1,7 +1,8 @@
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public abstract class IAudioDeviceManager
     {
+        #region PlaybackDevices
         public abstract DeviceInfo[] EnumeratePlaybackDevices();
 
         public abstract int SetPlaybackDevice(string deviceId);
@@ -22,6 +23,10 @@ namespace agora.rtc
 
         public abstract int StopPlaybackDeviceTest();
 
+        public abstract int FollowSystemPlaybackDevice(bool enable);
+        #endregion
+
+        #region RecordingDevices
         public abstract DeviceInfo[] EnumerateRecordingDevices();
 
         public abstract int SetRecordingDevice(string deviceId);
@@ -42,8 +47,13 @@ namespace agora.rtc
 
         public abstract int StopRecordingDeviceTest();
 
+        public abstract int FollowSystemRecordingDevice(bool enable);
+        #endregion
+
+        #region AudioDevice
         public abstract int StartAudioDeviceLoopbackTest(int indicationInterval);
 
         public abstract int StopAudioDeviceLoopbackTest();
+        #endregion
     }
 }

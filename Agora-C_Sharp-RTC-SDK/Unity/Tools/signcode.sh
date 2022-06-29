@@ -25,8 +25,8 @@ fi
 ENTITLEMENT="App.entitlements"
 APP="$1"
 
-AGORA_FRAMEWORKS="$APP/Contents/PlugIns/agoraSdkCWrapper.bundle/Contents/Resources"
-AGORA_CLIB="$APP/Contents/Plugins/agoraSdkCWrapper.bundle/Contents/MacOS/agoraSdkCWrapper"
+AGORA_FRAMEWORKS="$APP/Contents/Plugins/AgoraRtcWrapperUnity.bundle/Contents/Frameworks"
+AGORA_CLIB="$APP/Contents/PlugIns/AgoraRtcWrapperUnity.bundle/Contents/MacOS/AgoraRtcWrapperUnity"
 PROJ_BIN="$APP/Contents/MacOS"
 
 # with option the executable can't be run before notarization

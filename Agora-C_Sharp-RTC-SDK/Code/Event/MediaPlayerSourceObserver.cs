@@ -1,17 +1,14 @@
 using System;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-using AOT;
-#endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public delegate void OnPlayerSourceStateChangedHandler(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec);
 
-    public delegate void OnPositionChangedHandler(Int64 position);
+    public delegate void OnPositionChangedHandler(Int64 position_ms);
 
-    public delegate void OnPlayerEventHandler(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message);
+    public delegate void OnPlayerEventHandler(MEDIA_PLAYER_EVENT eventCode, Int64 elapsedTime, string message);
 
-    public delegate void OnMetaDataHandler(IntPtr data, int length);
+    public delegate void OnMetaDataHandler(byte[] data, int length);
 
     public delegate void OnPlayBufferUpdatedHandler(Int64 playCachedBuffer);
 
@@ -38,32 +35,25 @@ namespace agora.rtc
         public event OnPlayerInfoUpdatedHandler EventOnPlayerInfoUpdated;
         public event MediaPlayerOnAudioVolumeIndicationHandler EventOnAudioVolumeIndication;
 
-        private static MediaPlayerSourceObserver eventInstance = null;
-
-        public static MediaPlayerSourceObserver GetInstance()
-        {
-            return eventInstance ?? (eventInstance = new MediaPlayerSourceObserver());
-        }
-
         public override void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
         {
             if (EventOnPlayerSourceStateChanged == null) return;
             EventOnPlayerSourceStateChanged.Invoke(state, ec);
         }
 
-        public override void OnPositionChanged(Int64 position)
+        public override void OnPositionChanged(Int64 position_ms)
         {
             if (EventOnPositionChanged == null) return;
-            EventOnPositionChanged.Invoke(position);
+            EventOnPositionChanged.Invoke(position_ms);
         }
 
-        public override void OnPlayerEvent(MEDIA_PLAYER_EVENT @event, Int64 elapsedTime, string message)
+        public override void OnPlayerEvent(MEDIA_PLAYER_EVENT eventCode, Int64 elapsedTime, string message)
         {
             if (EventOnPlayerEvent == null) return;
-            EventOnPlayerEvent.Invoke(@event, elapsedTime, message);
+            EventOnPlayerEvent.Invoke(eventCode, elapsedTime, message);
         }
 
-        public override void OnMetaData(IntPtr data, int length)
+        public override void OnMetaData(byte[] data, int length)
         {
             if (EventOnMetaData == null) return;
             EventOnMetaData.Invoke(data, length);

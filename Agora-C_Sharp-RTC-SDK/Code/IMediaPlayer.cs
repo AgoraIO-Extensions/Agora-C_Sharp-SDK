@@ -1,6 +1,6 @@
 using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public abstract class IMediaPlayer
     {
@@ -8,11 +8,9 @@ namespace agora.rtc
 
         public abstract int GetId();
 
-        public abstract MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver();
+        public abstract MediaPlayerSourceObserver GetMediaPlayerSourceObserver();
 
         public abstract void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
-
-        public abstract void RemoveEventHandler();
 
         public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
 
@@ -27,6 +25,10 @@ namespace agora.rtc
         public abstract int Open(string url, Int64 startPos);
 
         public abstract int OpenWithCustomSource(Int64 startPos, IMediaPlayerCustomDataProvider provider);
+
+        public abstract int OpenWithMediaSource(MediaSource source);
+
+        public abstract int SetSoundPositionParams(float pan, float gain);
 
         public abstract int Play();
 

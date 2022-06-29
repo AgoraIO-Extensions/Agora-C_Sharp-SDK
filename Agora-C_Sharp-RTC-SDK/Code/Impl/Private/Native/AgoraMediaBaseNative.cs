@@ -1,18 +1,20 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
+    using view_t = UInt64;
+    
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisAudioFrame
     {
         internal AUDIO_FRAME_TYPE type;
         internal int samples;
-        internal BYTES_PER_SAMPLE bytes_per_sample;
+        internal int bytes_per_sample;
         internal int channels;
         internal int samples_per_sec;
         internal IntPtr buffer;
-        internal uint buffer_length;
+        internal Int64 buffer_length;
         internal long render_time_ms;
         internal int av_sync_type;
     }
@@ -20,12 +22,13 @@ namespace agora.rtc
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisEncodedAudioFrameInfo
     {
-        internal AUDIO_FRAME_TYPE type;
+        //internal AUDIO_FRAME_TYPE type;
         internal AUDIO_CODEC_TYPE codec;
         internal int sampleRateHz;
         internal int samplesPerChannel;
         internal int numberOfChannels;
         internal IrisEncodedAudioFrameAdvancedSettings advancedSettings;
+        internal Int64 captureTimeMs;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -51,7 +54,7 @@ namespace agora.rtc
         internal uint u_buffer_length;
         internal uint v_buffer_length;
         internal int rotation;
-        internal long render_time_ms;
+        internal Int64 render_time_ms;
         internal int av_sync_type;
         internal IntPtr metadata_buffer;
         internal int metadata_size;
@@ -119,8 +122,7 @@ namespace agora.rtc
         internal int frameType;
         internal int rotation;
         internal int trackId;
-        internal Int64 renderTimeMs;
-        internal UInt64 internalSendTs;
+        internal Int64 captureTimeMs;
         internal uint uid;
         internal int streamType;
     }
@@ -230,4 +232,49 @@ namespace agora.rtc
 		 */
         public int avsync_type { set; get; }
     }
+
+    internal class ThumbImageBufferInternal
+    {
+        public uint length { set; get; }
+        public uint width { set; get; }
+        public uint height { set; get; }
+
+        public Int64 buffer { set; get; }
+
+        public ThumbImageBufferInternal()
+        {
+            buffer = 0;
+            length = 0;
+            width = 0;
+            height = 0;
+        }
+    };
+
+    internal class ScreenCaptureSourceInfoInternal
+    {
+        public ScreenCaptureSourceType type { set; get; }
+        /** in Mac: pointer to NSNumber */
+        public view_t sourceId { set; get; }
+        public string sourceName { set; get; }
+        public ThumbImageBufferInternal thumbImage { set; get; }
+        public ThumbImageBufferInternal iconImage { set; get; }
+
+        public string processPath { set; get; }
+        public string sourceTitle { set; get; }
+        public bool primaryMonitor { set; get; }
+        public bool isOccluded { set; get; }
+
+        public ScreenCaptureSourceInfoInternal()
+        {
+            type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
+            sourceId = 0;
+            sourceName = "";
+            processPath = "";
+            sourceTitle = "";
+            primaryMonitor = false;
+            isOccluded = false;
+            thumbImage = new ThumbImageBufferInternal();
+            iconImage = new ThumbImageBufferInternal();
+        }
+    };
 }

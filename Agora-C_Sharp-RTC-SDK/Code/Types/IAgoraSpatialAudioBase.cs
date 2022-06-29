@@ -1,4 +1,4 @@
-﻿namespace agora.rtc
+﻿namespace Agora.Rtc
 {
     #region IAgoraSpatialAudio.h
     public enum SAE_CONNECTION_STATE_TYPE
@@ -81,35 +81,35 @@
 
     /** The definition of GMEngineContext
 */
-    public class CloudSpatialAudioConfig
-    {
-        public CloudSpatialAudioConfig()
-        {
-            rtcEngine = null;
-            eventHandler = null;
-            appId = null;
-            deployRegion = (int)SAE_DEPLOY_REGION.SAE_DEPLOY_REGION_CN;
-        }
+    //public class CloudSpatialAudioConfig
+    //{
+    //    public CloudSpatialAudioConfig()
+    //    {
+    //        rtcEngine = null;
+    //        eventHandler = null;
+    //        appId = null;
+    //        deployRegion = (int)SAE_DEPLOY_REGION.SAE_DEPLOY_REGION_CN;
+    //    }
 
-        /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
-           * the real-time audio and video communication functionality.
-           */
-        public IRtcEngine rtcEngine { set; get; }
-        /** The SDK uses the eventHandler interface class to send callbacks to the app.
-           */
-        public ICloudSpatialAudioEventHandler eventHandler { set; get; }
-        /** The App ID must be the same App ID used for initializing the IRtcEngine object.
-           */
-        public string appId { set; get; }
-        /**
-           * The region for connection. This advanced feature applies to scenarios that have regional restrictions.
-           *
-           * For the regions that Agora supports, see #SAE_DEPLOY_REGION. The area codes support bitwise operation.
-           *
-           * After specifying the region, the SDK connects to the Agora servers within that region.
-           */
-        public uint deployRegion { set; get; }
-    }
+    //    /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
+    //       * the real-time audio and video communication functionality.
+    //       */
+    //    public IRtcEngine rtcEngine { set; get; }
+    //    /** The SDK uses the eventHandler interface class to send callbacks to the app.
+    //       */
+    //    public ICloudSpatialAudioEventHandler eventHandler { set; get; }
+    //    /** The App ID must be the same App ID used for initializing the IRtcEngine object.
+    //       */
+    //    public string appId { set; get; }
+    //    /**
+    //       * The region for connection. This advanced feature applies to scenarios that have regional restrictions.
+    //       *
+    //       * For the regions that Agora supports, see #SAE_DEPLOY_REGION. The area codes support bitwise operation.
+    //       *
+    //       * After specifying the region, the SDK connects to the Agora servers within that region.
+    //       */
+    //    public uint deployRegion { set; get; }
+    //}
 
     /** The definition of LocalSpatialAudioConfig
  */

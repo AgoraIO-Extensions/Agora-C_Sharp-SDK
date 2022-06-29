@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal static class VideoFrameObserverNative
     {
@@ -16,23 +16,27 @@ namespace agora.rtc
         {
             internal static readonly VideoFrame CaptureVideoFrame = new VideoFrame();
             internal static readonly VideoFrame PreEncodeVideoFrame = new VideoFrame();
-            //internal static readonly VideoFrame RenderVideoFrame = new VideoFrame();
+            internal static readonly VideoFrame RenderVideoFrame = new VideoFrame();
             internal static readonly Dictionary<string, Dictionary<uint, VideoFrame>> RenderVideoFrameEx = 
                 new Dictionary<string, Dictionary<uint, VideoFrame>>();
         }
 
         private static VideoFrame ProcessVideoFrameReceived(IntPtr videoFramePtr, string channelId, uint uid)
         {
-            var videoFrameConverted = (IrisVideoFrame) (Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ?? 
+            var videoFrame = (IrisVideoFrame)(Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ??
                 new IrisVideoFrame());
-            
+
             var localVideoFrame = new VideoFrame();
 
-            // var ifConverted = VideoFrameObserver.GetVideoFormatPreference() != VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-            // var videoFrameConverted = ifConverted
-            //     ? AgoraRtcNative.ConvertVideoFrame(ref videoFrame, VideoFrameObserver.GetVideoFormatPreference())
-            //     : videoFrame;
-            
+            var ifConverted = VideoFrameObserver.GetVideoFormatPreference() != VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
+            var videoFrameConverted = new IrisVideoFrame();
+            videoFrameConverted.type = VideoFrameObserver.GetVideoFormatPreference();
+
+            if (ifConverted)
+            {
+                AgoraRtcNative.ConvertVideoFrame(ref videoFrameConverted, ref videoFrame);
+            }
+
             if (channelId == "")
             {
                 switch(uid)
@@ -43,9 +47,9 @@ namespace agora.rtc
                     case 1:
                         localVideoFrame = LocalVideoFrames.PreEncodeVideoFrame;
                         break;
-                    // case 2:
-                    //     localVideoFrame = LocalVideoFrames.RenderVideoFrame;
-                    //     break;
+                    case 2:
+                        localVideoFrame = LocalVideoFrames.RenderVideoFrame;
+                        break;
                 }
             }
             else
@@ -73,10 +77,6 @@ namespace agora.rtc
                     localVideoFrame.yBuffer = new byte[videoFrameConverted.y_buffer_length];
                     localVideoFrame.uBuffer = new byte[videoFrameConverted.u_buffer_length];
                     localVideoFrame.vBuffer = new byte[videoFrameConverted.v_buffer_length];
-                }
-                else
-                {
-                    return localVideoFrame;
                 }
 
                 if (videoFrameConverted.y_buffer != IntPtr.Zero)
@@ -107,7 +107,7 @@ namespace agora.rtc
             localVideoFrame.matrix = videoFrameConverted.matrix;
             localVideoFrame.textureId = videoFrameConverted.textureId;
 
-            //if (ifConverted) AgoraRtcNative.ClearVideoFrame(ref videoFrameConverted);
+            if (ifConverted) AgoraRtcNative.ClearVideoFrame(ref videoFrameConverted);
 
             return localVideoFrame;
         }
@@ -146,9 +146,10 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_VideoFrameRemote_Native))]
 #endif
-        internal static bool OnRenderVideoFrame(uint uid, IntPtr videoFramePtr)
+        internal static bool OnRenderVideoFrame(string channel_id, uint uid, IntPtr videoFramePtr)
         {
-            return true;
+            return VideoFrameObserver == null ||
+                   VideoFrameObserver.OnRenderVideoFrame(channel_id, uid, ProcessVideoFrameReceived(videoFramePtr, "", 2));
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -163,12 +164,12 @@ namespace agora.rtc
             return (uint) VideoFrameObserver.GetObservedFramePosition();
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_Bool_Native))]
-#endif
-        internal static bool IsMultipleChannelFrameWanted()
-        {
-            return VideoFrameObserver == null || VideoFrameObserver.IsMultipleChannelFrameWanted();
-        }
+//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+//        [MonoPInvokeCallback(typeof(Func_Bool_Native))]
+//#endif
+//        internal static bool IsMultipleChannelFrameWanted()
+//        {
+//            return VideoFrameObserver == null || VideoFrameObserver.IsMultipleChannelFrameWanted();
+//        }
     }
 }

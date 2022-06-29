@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal static class AudioEncodedFrameObserverNative
     {
@@ -20,6 +20,7 @@ namespace agora.rtc
             to.advancedSettings = new EncodedAudioFrameAdvancedSettings();
             to.advancedSettings.speech = from.advancedSettings.speech;
             to.advancedSettings.sendEvenIfEmpty = from.advancedSettings.sendEvenIfEmpty;
+            to.captureTimeMs = from.captureTimeMs;
             return to;
         }
 

@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public enum VideoSurfaceType
     {
@@ -17,20 +17,19 @@ namespace agora.rtc
     {
         [SerializeField] private VideoSurfaceType VideoSurfaceType = VideoSurfaceType.Renderer;
         [SerializeField] private bool Enable = true;
-        [SerializeField] private bool FlipX = false;
-        [SerializeField] private bool FlipY = false;
-
+   
         [SerializeField] private uint Uid = 0;
         [SerializeField] private string ChannelId = "";
         [SerializeField] private VIDEO_SOURCE_TYPE SourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
 
         private Component _renderer;
         private bool _needUpdateInfo = true;
+        private bool _hasAttach = false;
 
         private GameObject _TextureManagerGameObject;
         private TextureManager _textureManager;
         private int _textureWidth = 0;
-        private int _textureHeight =0;
+        private int _textureHeight = 0;
 
         public event OnTextureSizeModifyHandler OnTextureSizeModify;
 
@@ -45,7 +44,7 @@ namespace agora.rtc
 
             if (Enable)
             {
-                if (IsBlankTexture())
+                if (_textureManager == null)
                 {
                     _TextureManagerGameObject = GameObject.Find("TextureManager" + Uid.ToString() + ChannelId + SourceType.ToString());
 
@@ -62,11 +61,11 @@ namespace agora.rtc
                     {
                         _textureManager = _TextureManagerGameObject.GetComponent<TextureManager>();
                     }
-
-                    if (_textureManager.CanTextureAttach())
-                    {
-                        ApplyTexture(_textureManager.Texture);
-                    }
+                }
+                else if(_textureManager && !_hasAttach && _textureManager.CanTextureAttach())
+                {
+                    ApplyTexture(_textureManager.Texture);
+                    _hasAttach = true;
                 }
 
                 if (_textureManager && (this._textureWidth != _textureManager.Width || this._textureHeight != _textureManager.Height))
@@ -81,7 +80,7 @@ namespace agora.rtc
             }
             else
             {
-                if (!IsBlankTexture())
+                if (_hasAttach && !IsBlankTexture())
                 {
                     DestroyTextureManager();
                     ApplyTexture(null);
@@ -127,8 +126,14 @@ namespace agora.rtc
         private void DestroyTextureManager()
         {
             if (_textureManager == null) return;
-            _textureManager.Detach();
-            if (_textureManager.GetRefCount() == 0)
+
+            if (_hasAttach == true)
+            {
+                _textureManager.Detach();
+                _hasAttach = false;
+            }
+
+            if (_textureManager.GetRefCount() <= 0)
             {
                 Destroy(_TextureManagerGameObject);
             }
@@ -183,23 +188,6 @@ namespace agora.rtc
             ChannelId = channelId;
             SourceType = source_type;
             _needUpdateInfo = false;
-        }
-
-        public void EnableFilpTextureApply(bool flipX, bool flipY)
-        {
-            if (FlipX != flipX)
-            {
-                transform.localScale =
-                    new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-                FlipX = flipX;
-            }
-
-            if (FlipY != flipY)
-            {
-                transform.localScale =
-                    new Vector3(transform.localScale.x, -transform.localScale.y, transform.localScale.z);
-                FlipY = flipY;
-            }
         }
 
         public void SetEnable(bool enable)

@@ -3,13 +3,13 @@ using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal class TextureManager : MonoBehaviour
     {
         // texture identity
-        private int _videoPixelWidth = 1280;
-        private int _videoPixelHeight = 720;
+        private int _videoPixelWidth = 0;
+        private int _videoPixelHeight = 0;
         private uint _uid = 0;
         private string _channelId = "";
         private VIDEO_SOURCE_TYPE _sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
@@ -124,7 +124,6 @@ namespace agora.rtc
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
             this.Width = _cachedVideoFrame.width;
             this.Height = _cachedVideoFrame.height;
-            //AgoraLog.LogWarning("GetVideoFrame" + ret + " width:" + _cachedVideoFrame.width + " height:" + _cachedVideoFrame.height);
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY ||ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
             {
                 _canAttach = false;
@@ -185,8 +184,11 @@ namespace agora.rtc
 
         internal void Detach()
         {
-            _refCount--;
-            AgoraLog.Log("TextureManager refCount Minus, Now is: " + _refCount);
+            if (_refCount > 0)
+            {
+                _refCount--;
+                AgoraLog.Log("TextureManager refCount Minus, Now is: " + _refCount);
+            }
             return;
         }
 
