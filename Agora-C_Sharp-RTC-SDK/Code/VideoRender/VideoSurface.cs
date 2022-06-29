@@ -80,7 +80,7 @@ namespace Agora.Rtc
             }
             else
             {
-                if (!IsBlankTexture())
+                if (_hasAttach && !IsBlankTexture())
                 {
                     DestroyTextureManager();
                     ApplyTexture(null);
