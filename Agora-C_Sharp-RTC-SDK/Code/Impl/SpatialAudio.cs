@@ -26,16 +26,6 @@ namespace Agora.Rtc
                 return instance;
             }
         }
-
-        public override CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
-        {
-            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _cloudSpatialAudioEngineImpl.GetCloudSpatialAudioEventHandler();
-        }
         
         public override void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
         {

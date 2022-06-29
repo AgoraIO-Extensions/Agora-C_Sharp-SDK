@@ -15,7 +15,6 @@ namespace Agora.Rtc
         private static readonly string identifier = "AgoraRtcSpatialAudioEngine";
 
         private IrisApiEnginePtr _irisApiEngine;
-        private CloudSpatialAudioEventHandler _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -84,8 +83,6 @@ namespace Agora.Rtc
                 CloudSpatialAudioEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance = CloudSpatialAudioEventHandler.GetInstance();
-            CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
@@ -99,11 +96,6 @@ namespace Agora.Rtc
             AgoraRtcNative.UnsetIrisCloudAudioEngineEventHandler(_irisApiEngine, _irisEngineEventHandlerHandleNative);
             Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
-        }
-
-        public CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
-        {
-            return _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
         }
 
         public void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)

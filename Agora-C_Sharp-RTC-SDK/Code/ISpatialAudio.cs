@@ -1,9 +1,7 @@
 namespace Agora.Rtc
 {
     public abstract class ICloudSpatialAudioEngine
-    {
-        public abstract CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler();
-        
+    {        
         public abstract void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler);
         
         public abstract int Initialize(CloudSpatialAudioConfig config);

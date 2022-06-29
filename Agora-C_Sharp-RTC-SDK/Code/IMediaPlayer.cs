@@ -8,8 +8,6 @@ namespace Agora.Rtc
 
         public abstract int GetId();
 
-        public abstract MediaPlayerSourceObserver GetMediaPlayerSourceObserver();
-
         public abstract void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
         public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);

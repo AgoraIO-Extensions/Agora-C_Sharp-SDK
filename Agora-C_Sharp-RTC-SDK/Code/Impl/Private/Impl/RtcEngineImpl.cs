@@ -49,7 +49,6 @@ namespace Agora.Rtc
         private AgoraCallbackObject _callbackObject;
 #endif
 
-        private RtcEngineEventHandler _engineEventHandlerInstance;
         private VideoDeviceManagerImpl _videoDeviceManagerInstance;
         private AudioDeviceManagerImpl _audioDeviceManagerInstance;
 
@@ -178,8 +177,6 @@ namespace Agora.Rtc
                 RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _engineEventHandlerInstance = RtcEngineEventHandler.GetInstance();
-            RtcEngineEventHandlerNative.EngineEventHandler = _engineEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
@@ -242,11 +239,6 @@ namespace Agora.Rtc
         {
             Dispose(true, sync);
             GC.SuppressFinalize(this);
-        }
-
-        public RtcEngineEventHandler GetRtcEngineEventHandler()
-        {
-            return _engineEventHandlerInstance;
         }
 
         public void InitEventHandler(IRtcEngineEventHandler engineEventHandler)

@@ -42,16 +42,6 @@ namespace Agora.Rtc
             return playerId;
         }
 
-        public override MediaPlayerSourceObserver GetMediaPlayerSourceObserver()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _mediaPlayerImpl.GetMediaPlayerSourceObserver();
-        }
-
         public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)

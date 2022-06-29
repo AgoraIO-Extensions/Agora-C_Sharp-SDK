@@ -37,8 +37,6 @@ namespace Agora.Rtc
         #endregion
 
         #region Event handler
-        public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
-
         public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
         #endregion
 

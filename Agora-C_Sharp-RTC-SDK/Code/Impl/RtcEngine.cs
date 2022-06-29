@@ -83,16 +83,6 @@ namespace Agora.Rtc
             instance = null;
         }
 
-        public override RtcEngineEventHandler GetRtcEngineEventHandler()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _rtcEngineImpl.GetRtcEngineEventHandler();
-        }
-
         public override void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
             if (_rtcEngineImpl == null)
