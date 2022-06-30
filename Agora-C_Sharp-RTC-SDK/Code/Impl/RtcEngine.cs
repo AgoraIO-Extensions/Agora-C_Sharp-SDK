@@ -3060,15 +3060,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetLocalAccessPoint(config);
         }
 
-        public override int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.EnableFishEyeCorrection(enabled, @params);
-        }
+        //public override int EnableFishEyeCorrection(bool enabled, FishEyeCorrectionParams @params)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.EnableFishEyeCorrection(enabled, @params);
+        //}
 
         public override int SetAdvancedAudioOptions(AdvancedAudioOptions options)
         {

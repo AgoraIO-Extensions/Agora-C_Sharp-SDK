@@ -4305,39 +4305,39 @@ namespace Agora.Rtc
     };
 
 
-    public class FishCorrectionParams
-    {
-        public FishCorrectionParams()
-        {
-            xCenter = 0.49f;
-            yCenter = 0.48f;
-            scaleFactor = 4.5f;
-            focalLength = 31;
-            polFocalLength = 31;
-            splitHeight = 1.0f;
+    //public class FishEyeCorrectionParams
+    //{
+    //    public FishEyeCorrectionParams()
+    //    {
+    //        xCenter = 0.49f;
+    //        yCenter = 0.48f;
+    //        scaleFactor = 4.5f;
+    //        focalLength = 31;
+    //        polFocalLength = 31;
+    //        splitHeight = 1.0f;
 
-            ss[0] = 0.9375f;
-            ss[1] = 0.0f;
-            ss[2] = -2.9440f;
-            ss[3] = 5.7344f;
-            ss[4] = -4.4564f;
+    //        ss[0] = 0.9375f;
+    //        ss[1] = 0.0f;
+    //        ss[2] = -2.9440f;
+    //        ss[3] = 5.7344f;
+    //        ss[4] = -4.4564f;
 
-            mirror = false;
-            rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
-        }
+    //        mirror = false;
+    //        rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
+    //    }
 
      
-        public float xCenter { set; get; }
-        public float yCenter { set; get; }
-        public float scaleFactor { set; get; }
-        public float focalLength { set; get; }
-        public float polFocalLength { set; get; }
-        public float splitHeight { set; get; }
-        public float[] ss = new float[5];
-        bool mirror;
-        /* 0, 90, 180, 270 */
-        VIDEO_ORIENTATION rotation;
-    };
+    //    public float xCenter { set; get; }
+    //    public float yCenter { set; get; }
+    //    public float scaleFactor { set; get; }
+    //    public float focalLength { set; get; }
+    //    public float polFocalLength { set; get; }
+    //    public float splitHeight { set; get; }
+    //    public float[] ss = new float[5];
+    //    bool mirror;
+    //    /* 0, 90, 180, 270 */
+    //    VIDEO_ORIENTATION rotation;
+    //};
 
 
 

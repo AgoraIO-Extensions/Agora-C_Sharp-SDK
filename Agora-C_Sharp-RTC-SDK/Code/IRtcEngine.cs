@@ -682,7 +682,7 @@ namespace Agora.Rtc
 
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
 
-        public abstract int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params);
+        //public abstract int EnableFishEyeCorrection(bool enabled, FishEyeCorrectionParams @params);
 
         public abstract int SetAVSyncSource(string channelId, uint uid);
 
