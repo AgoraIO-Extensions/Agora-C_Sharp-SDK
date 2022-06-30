@@ -77,7 +77,7 @@ namespace CSharp_API_Example
             this.usrOneLabel.Name = "usrOneLabel";
             this.usrOneLabel.Size = new System.Drawing.Size(48, 20);
             this.usrOneLabel.TabIndex = 5;
-            this.usrOneLabel.Text = "用户1";
+            this.usrOneLabel.Text = "User1";
             // 
             // userTwoLabel
             // 
@@ -86,7 +86,7 @@ namespace CSharp_API_Example
             this.userTwoLabel.Name = "userTwoLabel";
             this.userTwoLabel.Size = new System.Drawing.Size(48, 20);
             this.userTwoLabel.TabIndex = 6;
-            this.userTwoLabel.Text = "用户2";
+            this.userTwoLabel.Text = "User2";
             // 
             // tipsLabel
             // 
@@ -95,7 +95,7 @@ namespace CSharp_API_Example
             this.tipsLabel.Name = "tipsLabel";
             this.tipsLabel.Size = new System.Drawing.Size(264, 20);
             this.tipsLabel.TabIndex = 7;
-            this.tipsLabel.Text = "多人视频（用户从远端加入相同频道）";
+            this.tipsLabel.Text = "Multiple Channel(Remoter user join channel)";
             // 
             // VideoGroupView
             // 

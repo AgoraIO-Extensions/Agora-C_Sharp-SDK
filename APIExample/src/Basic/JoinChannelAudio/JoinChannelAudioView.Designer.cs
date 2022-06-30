@@ -39,7 +39,7 @@ namespace CSharp_API_Example
             this.audioLabel.Name = "audioLabel";
             this.audioLabel.Size = new System.Drawing.Size(114, 20);
             this.audioLabel.TabIndex = 0;
-            this.audioLabel.Text = "一对一语音通话";
+            this.audioLabel.Text = "1v1 Audio";
             this.audioLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // JoinChannelAudioView

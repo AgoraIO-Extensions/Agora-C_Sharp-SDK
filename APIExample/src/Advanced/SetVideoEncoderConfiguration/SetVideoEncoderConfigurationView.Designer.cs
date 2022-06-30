@@ -67,9 +67,9 @@ namespace CSharp_API_Example
             this.label1.Location = new System.Drawing.Point(251, 16);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 20);
+            this.label1.Size = new System.Drawing.Size(195, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "视频转码参数";
+            this.label1.Text = "Video Encoder Parameter";
             // 
             // label2
             // 
@@ -90,7 +90,7 @@ namespace CSharp_API_Example
             "640x480",
             "1280x720"});
             this.comboBox1.Location = new System.Drawing.Point(117, 555);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(178, 28);
             this.comboBox1.TabIndex = 9;
@@ -105,7 +105,7 @@ namespace CSharp_API_Example
             "24",
             "30"});
             this.comboBox2.Location = new System.Drawing.Point(383, 555);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(115, 28);
             this.comboBox2.TabIndex = 11;
@@ -132,7 +132,7 @@ namespace CSharp_API_Example
             this.Controls.Add(this.label1);
             this.Controls.Add(this.localVideoView);
             this.Controls.Add(this.remoteVideoView);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SetVideoEncoderConfigurationView";
             this.Size = new System.Drawing.Size(760, 600);
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();

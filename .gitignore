@@ -17,3 +17,4 @@ obj/
 binx86/
 binx64/
 CSharp-API_Example/
+*.csproj.user

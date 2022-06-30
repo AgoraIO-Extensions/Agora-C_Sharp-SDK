@@ -64,7 +64,7 @@ namespace CSharp_API_Example
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(170, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "双进程（视频头+屏幕）";
+            this.label1.Text = "Doule Porcess(camera+screen)";
             // 
             // ScreenShareView
             // 

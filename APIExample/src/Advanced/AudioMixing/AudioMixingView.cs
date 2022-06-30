@@ -15,5 +15,10 @@ namespace CSharp_API_Example
         {
             InitializeComponent();
         }
+
+        public void SetUIText(ConfigHelper config)
+        {
+            this.audioMxingLabel.Text = config.GetUIValue("General", "AudioMixing");
+        }
     }
 }

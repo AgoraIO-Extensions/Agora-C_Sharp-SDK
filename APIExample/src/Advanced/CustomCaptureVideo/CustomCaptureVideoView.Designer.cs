@@ -62,9 +62,9 @@ namespace CSharp_API_Example
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(250, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 20);
+            this.label1.Size = new System.Drawing.Size(184, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "自采集自渲染";
+            this.label1.Text = "Custom Capture Render";
             // 
             // CustomCaptureVideoView
             // 

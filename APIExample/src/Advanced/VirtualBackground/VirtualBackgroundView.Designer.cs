@@ -62,9 +62,9 @@ namespace CSharp_API_Example
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(250, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 20);
+            this.label1.Size = new System.Drawing.Size(147, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "虚拟背景";
+            this.label1.Text = "Virtual Background";
             // 
             // VirtualBackgroundView
             // 

@@ -66,7 +66,7 @@ namespace CSharp_API_Example
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(92, 17);
             this.label1.TabIndex = 5;
-            this.label1.Text = "加密";
+            this.label1.Text = "Encrypt";
             // 
             // cmbMode
             // 

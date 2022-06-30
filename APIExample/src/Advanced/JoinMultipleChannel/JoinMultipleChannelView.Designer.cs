@@ -73,31 +73,31 @@ namespace CSharp_API_Example
             // channelOneLabel
             // 
             this.channelOneLabel.AutoSize = true;
-            this.channelOneLabel.Location = new System.Drawing.Point(56, 76);
+            this.channelOneLabel.Location = new System.Drawing.Point(48, 76);
             this.channelOneLabel.Name = "channelOneLabel";
-            this.channelOneLabel.Size = new System.Drawing.Size(48, 20);
+            this.channelOneLabel.Size = new System.Drawing.Size(76, 20);
             this.channelOneLabel.TabIndex = 5;
-            this.channelOneLabel.Text = "频道1";
+            this.channelOneLabel.Text = "Channel1";
             // 
             // channelTwoLabel
             // 
             this.channelTwoLabel.AutoSize = true;
             this.channelTwoLabel.Location = new System.Drawing.Point(651, 76);
             this.channelTwoLabel.Name = "channelTwoLabel";
-            this.channelTwoLabel.Size = new System.Drawing.Size(48, 20);
+            this.channelTwoLabel.Size = new System.Drawing.Size(76, 20);
             this.channelTwoLabel.TabIndex = 6;
-            this.channelTwoLabel.Text = "频道2";
+            this.channelTwoLabel.Text = "Channel2";
             // 
             // pushToLabel
             // 
             this.pushToLabel.AutoSize = true;
             this.pushToLabel.Location = new System.Drawing.Point(246, 16);
             this.pushToLabel.Name = "pushToLabel";
-            this.pushToLabel.Size = new System.Drawing.Size(309, 20);
+            this.pushToLabel.Size = new System.Drawing.Size(320, 20);
             this.pushToLabel.TabIndex = 7;
-            this.pushToLabel.Text = "加入到不同频道（同一时刻只能发布一路流）";
+            this.pushToLabel.Text = "Join different channels(Publish one stream)";
             // 
-            // MultiChannelView
+            // JoinMultipleChannelView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -107,7 +107,7 @@ namespace CSharp_API_Example
             this.Controls.Add(this.channelTwoLabel);
             this.Controls.Add(this.channelOneLabel);
             this.Controls.Add(this.localVideoView);
-            this.Name = "MultiChannelView";
+            this.Name = "JoinMultipleChannelView";
             this.Size = new System.Drawing.Size(760, 600);
             ((System.ComponentModel.ISupportInitialize)(this.firstChannelVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondChannelVideoView)).EndInit();

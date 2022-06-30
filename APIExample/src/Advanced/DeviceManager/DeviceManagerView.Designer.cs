@@ -70,7 +70,7 @@ namespace CSharp_API_Example
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "设备管理";
+            this.label1.Text = "Device Manager";
             // 
             // label2
             // 

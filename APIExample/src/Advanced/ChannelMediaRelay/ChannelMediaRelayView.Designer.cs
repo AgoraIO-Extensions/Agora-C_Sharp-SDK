@@ -67,7 +67,7 @@ namespace CSharp_API_Example
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "跨频道";
+            this.label1.Text = "Media Relay";
             // 
             // label2
             // 
@@ -76,7 +76,7 @@ namespace CSharp_API_Example
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(143, 20);
             this.label2.TabIndex = 7;
-            this.label2.Text = "MediaRelay 频道号";
+            this.label2.Text = "MediaRelay Channel";
             // 
             // textBoxMediaRelay
             // 

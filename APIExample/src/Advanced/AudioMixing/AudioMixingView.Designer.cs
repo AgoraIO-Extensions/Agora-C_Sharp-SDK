@@ -39,7 +39,7 @@ namespace CSharp_API_Example
             this.audioMxingLabel.Name = "audioMxingLabel";
             this.audioMxingLabel.Size = new System.Drawing.Size(39, 20);
             this.audioMxingLabel.TabIndex = 0;
-            this.audioMxingLabel.Text = "混音";
+            this.audioMxingLabel.Text = "Audio Mixing";
             this.audioMxingLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // AudioMixingView
