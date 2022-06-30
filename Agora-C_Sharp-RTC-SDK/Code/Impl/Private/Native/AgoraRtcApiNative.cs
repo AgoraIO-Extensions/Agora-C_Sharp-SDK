@@ -90,12 +90,12 @@ namespace Agora.Rtc
 
  // Iris Video Encoded Image Receiver
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcVideoEncodedFrameObserverHandle RegisterVideoEncodedFrameObserver(IrisRtcEnginePtr engine_ptr,
+        internal static extern IrisRtcVideoEncodedFrameObserverHandle RegisterVideoEncodedImageReceiver(IrisRtcEnginePtr engine_ptr,
                                   IntPtr receiverNative,
                                   int order, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void UnRegisterVideoEncodedFrameObserver(IrisRtcEnginePtr engine_ptr,
+        internal static extern void UnRegisterVideoEncodedImageReceiver(IrisRtcEnginePtr engine_ptr,
                                 IrisRtcVideoEncodedFrameObserverHandle handle, string identifier);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -261,6 +261,9 @@ namespace Agora.Rtc
     internal delegate bool Func_AudioFrameRemoteStringUid_Native(string channel_id, string uid, IntPtr audio_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate bool Func_AudioFrame_Native(IntPtr audio_frame);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate IrisAudioParams Func_AudioParams_Native();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -297,6 +300,9 @@ namespace Agora.Rtc
         internal IntPtr OnPlaybackAudioFrame;
         internal IntPtr OnMixedAudioFrame;
         internal IntPtr OnPlaybackAudioFrameBeforeMixing;
+        internal IntPtr OnEarMonitoringAudioFrame;
+        internal IntPtr IsMultipleChannelFrameWanted;
+
         internal IntPtr OnPlaybackAudioFrameBeforeMixing2;
         internal IntPtr GetPlaybackAudioParams;
         internal IntPtr GetRecordAudioParams;
@@ -310,6 +316,9 @@ namespace Agora.Rtc
         internal Func_AudioFrameLocal_Native OnPlaybackAudioFrame;
         internal Func_AudioFrameLocal_Native OnMixedAudioFrame;
         internal Func_AudioFrameRemote_Native OnPlaybackAudioFrameBeforeMixing;
+        internal Func_AudioFrame_Native OnEarMonitoringAudioFrame;
+        internal Func_Bool_Native IsMultipleChannelFrameWanted;
+
         internal Func_AudioFrameRemoteStringUid_Native OnPlaybackAudioFrameBeforeMixing2;
         internal Func_AudioParams_Native GetPlaybackAudioParams;
         internal Func_AudioParams_Native GetRecordAudioParams;
@@ -359,7 +368,7 @@ namespace Agora.Rtc
         internal IntPtr OnPreEncodeVideoFrame;
         internal IntPtr OnRenderVideoFrame;
         internal IntPtr GetObservedFramePosition;
-        //internal IntPtr IsMultipleChannelFrameWanted;
+        internal IntPtr IsMultipleChannelFrameWanted;
     }
 
     internal struct IrisRtcCVideoFrameObserver
@@ -368,7 +377,7 @@ namespace Agora.Rtc
         internal Func_VideoCaptureLocal_Native OnPreEncodeVideoFrame;
         internal Func_VideoFrameRemote_Native OnRenderVideoFrame;
         internal Func_Uint32_t_Native GetObservedFramePosition;
-        //internal Func_Bool_Native IsMultipleChannelFrameWanted;
+        internal Func_Bool_Native IsMultipleChannelFrameWanted;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -388,7 +397,7 @@ namespace Agora.Rtc
 
     //encoded_video_image
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_EncodedVideoFrameObserver_Native(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfo);
+    internal delegate bool Func_EncodedVideoImageReceived_Native(IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfo);
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcCVideoEncodedFrameObserverNative
@@ -398,7 +407,7 @@ namespace Agora.Rtc
 
     internal struct IrisRtcCVideoEncodedFrameObserver
     {
-        internal Func_EncodedVideoFrameObserver_Native OnEncodedVideoFrameReceived;
+        internal Func_EncodedVideoImageReceived_Native OnEncodedVideoFrameReceived;
     }
 
     //media player

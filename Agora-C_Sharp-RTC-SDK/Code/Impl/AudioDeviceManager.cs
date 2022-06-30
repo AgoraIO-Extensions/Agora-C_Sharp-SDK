@@ -127,16 +127,6 @@ namespace Agora.Rtc
             }
             return _audioDeviecManagerImpl.StopPlaybackDeviceTest();
         }
-
-        public override int FollowSystemPlaybackDevice(bool enable)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.FollowSystemPlaybackDevice(enable);
-        }
         #endregion
 
         #region RecordingDevices
@@ -238,16 +228,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.StopRecordingDeviceTest();
-        }
-
-        public override int FollowSystemRecordingDevice(bool enable)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _audioDeviecManagerImpl.FollowSystemRecordingDevice(enable);
         }
         #endregion
 
