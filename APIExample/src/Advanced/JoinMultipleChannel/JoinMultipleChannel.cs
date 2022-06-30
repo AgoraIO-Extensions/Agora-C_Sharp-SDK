@@ -1,27 +1,27 @@
-﻿/*
- * 【多频道】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]、SetChannelProfile）
- *    创建频道1：（CreateChannel、SetClientRole、InitEventHandler）
- *    创建频道2：（CreateChannel、SetClientRole、InitEventHandler）
- *    
- * 2. 加入频道
- *    Engine：（EnableAudio、EnableVideo、SetupLocalVideo）
- *    频道1：（JoinChannel、Publish）
- *    频道2：（JoinChannel）
- *    
- *    远端加入频道1观察效果。
- *    远端加入频道2观察效果。   
- *    
- * 3. 离开频道
- *    频道1：（LeaveChannel）
- *    频道2：（LeaveChannel）
- * 4. 退出
- *    频道1：（LeaveChannel、Dispose）
- *    频道2：（LeaveChannel、Dispose）
- *    Engine：（Dispose）
- *    
- *    注意：目前多频道的API_Example仅支持两个频道，用户可以根据需要扩展，流程都是一样的。
- */
+﻿/// <summary>
+/// [Multiple Channel] Key Step ：
+/// 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]、SetChannelProfile）
+///    Create Channel1：（CreateChannel、SetClientRole、InitEventHandler）
+///    Create Channel2：（CreateChannel、SetClientRole、InitEventHandler）
+///    
+/// 2. Join Channel
+///    Engine：（EnableAudio、EnableVideo、SetupLocalVideo）
+///    Channel1：（JoinChannel、Publish）
+///    Channel2：（JoinChannel）
+///    
+///    Remote user join Channel1
+///    Remote user join Channel2
+///    
+/// 3. Leave Channel
+///    Channel1：（LeaveChannel）
+///    Channel2：（LeaveChannel）
+/// 4. Exit
+///    Channel1：（LeaveChannel、Dispose）
+///    Chann3l2：（LeaveChannel、Dispose）
+///    Engine：（Dispose）
+///    
+///    Note：This case only show how to join tow channels. If you want to join multiple channels, the flow is similar.
+/// <summary>
 
 using System;
 using agora.rtc;

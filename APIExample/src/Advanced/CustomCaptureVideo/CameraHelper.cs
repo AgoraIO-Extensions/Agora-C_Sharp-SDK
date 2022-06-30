@@ -39,26 +39,26 @@ namespace CSharp_API_Example
             return GetVideoOutputFormat(pin);
         }
 
-        /*
-         * Create USB Camera. If device do not support the size, default size will applied.
-         * <param name="cameraIndex">Camera index in FindDevices() result.</param>
-         * <param name="size">
-         * Size you want to create. Normally use Size property of VideoFormat in GetVideoFormat() result.
-         */
+        /// <summary>
+        /// Create USB Camera. If device do not support the size, default size will applied.
+        /// <param name="cameraIndex">Camera index in FindDevices() result.</param>
+        /// <param name="size">
+        /// Size you want to create. Normally use Size property of VideoFormat in GetVideoFormat() result.
+        /// <summary>
         public CameraHelper(int cameraIndex, Size size) : this(cameraIndex, new VideoFormat() { Size = size })
         {
         }
 
-        /*
-         * Create USB Camera. If device do not support the format, default format will applied.
-         * <param name="cameraIndex">Camera index in FindDevices() result.</param>
-         * <param name="format">
-         * Normally use GetVideoFormat() result.
-         * You can change TimePerFrame value from Caps.MinFrameInterval to Caps.MaxFrameInterval.
-         * TimePerFrame = 10,000,000 / frame duration. (ex: 333333 in case 30fps).
-         * You can change Size value in case Caps.MaxOutputSize > Caps.MinOutputSize and OutputGranularityX/Y is not zero.
-         * Size = any value from Caps.MinOutputSize to Caps.MaxOutputSize step with OutputGranularityX/Y.
-         */
+        /// <summary>
+        /// Create USB Camera. If device do not support the format, default format will applied.
+        /// <param name="cameraIndex">Camera index in FindDevices() result.</param>
+        /// <param name="format">
+        /// Normally use GetVideoFormat() result.
+        /// You can change TimePerFrame value from Caps.MinFrameInterval to Caps.MaxFrameInterval.
+        /// TimePerFrame = 10,000,000 / frame duration. (ex: 333333 in case 30fps).
+        /// You can change Size value in case Caps.MaxOutputSize > Caps.MinOutputSize and OutputGranularityX/Y is not zero.
+        /// Size = any value from Caps.MinOutputSize to Caps.MaxOutputSize step with OutputGranularityX/Y.
+        /// <summary>
         public CameraHelper(int cameraIndex, VideoFormat format)
         {
             var camera_list = EnumDevices();
@@ -110,10 +110,10 @@ namespace CSharp_API_Example
 
                 Size = new Size(width, height);
 
-                /* fix screen tearing problem(issure #2)
-                 * you can use previous method if you swap the comment line below.
-                 * GetBitmap = () => GetBitmapFromSampleGrabberBuffer(i_grabber, width, height, stride);
-                 */
+                /// <summary> fix screen tearing problem(issure #2)
+                 /// you can use previous method if you swap the comment line below.
+                 /// GetBitmap = () => GetBitmapFromSampleGrabberBuffer(i_grabber, width, height, stride);
+                /// <summary>
                 GetBitmap = GetBitmapFromSampleGrabberCallback(i_grabber, width, height, stride);
             }
 

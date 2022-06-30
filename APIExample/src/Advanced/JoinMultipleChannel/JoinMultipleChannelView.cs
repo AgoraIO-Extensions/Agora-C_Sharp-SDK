@@ -15,5 +15,11 @@ namespace CSharp_API_Example
             InitializeComponent();
             //channelSelComboBox.SelectedIndex = channelSelComboBox.Items.IndexOf("ch1");
         }
+        public void SetUIText(ConfigHelper config)
+        {
+            this.pushToLabel.Text = config.GetUIValue("General", "MultipleChannel.Title");
+            this.channelTwoLabel.Text = config.GetUIValue("General", "VideoGroup.Channel2");
+            this.channelOneLabel.Text = config.GetUIValue("General", "VideoGroup.Channel1");
+        }
     }
 }

@@ -1,20 +1,20 @@
-﻿/*
- * 双进程【摄像头 + 屏幕共享】关键步骤：
- * 1. 创建共享摄像头的Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- *    创建共享屏幕的Engine并初始化：（CreateAgoraRtcEngine(AgoraEngineType.SubProcess)、Initialize、[InitEventHandler]）
- *    
- * 2. 加入频道
- *     摄像头：（[EnableAudio]、[EnableVideo]、[MuteAllRemoteAudioStreams]、JoinChannel）
- *     共享屏幕：（StartScreenCaptureByDisplayId、EnableVideo、JoinChannel）
- *     
- * 3. 离开频道：（LeaveChannel）
- *    共享屏幕：（StopScreenCapture、LeaveChannel）
- *    摄像头：（LeaveChannel）
- *    
- * 4. 退出
- *    共享屏幕：（LeaveChannel、Dispose）
- *    摄像头：（LeaveChannel、Dispose）
- */
+﻿/// <summary>
+/// Two Process [Camera + Screen] Key step：
+/// 1. Create Camera Process Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+///    Create Screen Process Engine and Initialize：（CreateAgoraRtcEngine(AgoraEngineType.SubProcess)、Initialize、[InitEventHandler]）
+///    
+/// 2. Join Channel
+///     Camera：（[EnableAudio]、[EnableVideo]、[MuteAllRemoteAudioStreams]、JoinChannel）
+///     Screen Share：（StartScreenCaptureByDisplayId、EnableVideo、JoinChannel）
+///     
+/// 3. Leave Channel：（LeaveChannel）
+///    Screen Share：（StopScreenCapture、LeaveChannel）
+///    Camera：（LeaveChannel）
+///    
+/// 4. Exit
+///    Screen Share：（LeaveChannel、Dispose）
+///    Camera：（LeaveChannel、Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;
@@ -50,13 +50,15 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
+
+            event_handler_ = new ScreenShareEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
+
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_("Initialize", ret);
-            event_handler_ = new ScreenShareEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
-
+         
             if (null == screen_share_engine_)
             {
                 screen_share_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine(AgoraEngineType.SubProcess);

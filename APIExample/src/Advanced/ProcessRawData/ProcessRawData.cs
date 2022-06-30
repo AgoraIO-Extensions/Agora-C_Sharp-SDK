@@ -1,14 +1,14 @@
-﻿/*
- * 【祼数据回调】关键步骤：
- * 1. 创建Engine并初始化、重写IAgoraRtcVideoFrameObserver的相关接口并注册：
- * （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]、[RegisterVideoFrameObserver]）
- * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 3. 离开频道：（LeaveChannel）
- * 
- * 4. 退出：（Dispose）
- */
+﻿/// <summary>
+/// [Raw data callback] Key Step ：
+/// 1. Create Engine and initialize, override IAgoraRtcVideoFrameObserver and IAgoraRtcAudioFrameObserver, the register obsevers：
+/// （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]、[RegisterVideoFrameObserver]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using System.Threading;
@@ -45,13 +45,14 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
+
+            event_handler_ = new ProcessRawDataEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
+
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(ProcessRawData_TAG + "Initialize", ret);
-
-            event_handler_ = new ProcessRawDataEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
 
             audio_frame_observer = new ProcessRawDataAudioFrameObserver();
             rtc_engine_.RegisterAudioFrameObserver(audio_frame_observer);
