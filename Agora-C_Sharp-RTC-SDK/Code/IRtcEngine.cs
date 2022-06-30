@@ -327,7 +327,7 @@ namespace Agora.Rtc
 
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
 
-        public abstract int SsetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode);
+        public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode);
 
         public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
         #endregion

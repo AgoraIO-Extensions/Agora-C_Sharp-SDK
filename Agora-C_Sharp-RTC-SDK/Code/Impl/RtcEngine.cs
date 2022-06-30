@@ -747,7 +747,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetDualStreamMode(mode);
         }
 
-        public override int SsetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode)
+        public override int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode)
         {
             if (_rtcEngineImpl == null)
             {
