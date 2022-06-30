@@ -117,7 +117,7 @@ fi
 
 mkdir "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
+#cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
 
 cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/*.so "$ANDROID_DST_PATH"/libs/arm64-v8a
