@@ -299,12 +299,6 @@ namespace Agora.Rtc
          */
         ERR_NET_DOWN = 14,
         /**
-         * 15: No network buffers are available. This is for internal
-         * use only, and does not return to the application through any method or
-         * callback.
-         */
-        ERR_NET_NOBUFS = 15,
-        /**
          * 17: The request to join the channel is rejected. This error usually occurs
          * when the user is already in the channel, and still calls the method to join
          * the channel, for example, \ref agora::rtc::IRtcEngine::joinChannel "joinChannel()".
@@ -435,30 +429,6 @@ namespace Agora.Rtc
          */
         ERR_CLIENT_IS_BANNED_BY_SERVER = 123,
         /**
-         * 124: Incorrect watermark file parameter.
-         */
-        ERR_WATERMARK_PARAM = 124,
-        /**
-         * 125: Incorrect watermark file path.
-         */
-        ERR_WATERMARK_PATH = 125,
-        /**
-         * 126: Incorrect watermark file format.
-         */
-        ERR_WATERMARK_PNG = 126,
-        /**
-         * 127: Incorrect watermark file information.
-         */
-        ERR_WATERMARKR_INFO = 127,
-        /**
-         * 128: Incorrect watermark file data format.
-         */
-        ERR_WATERMARK_ARGB = 128,
-        /**
-         * 129: An error occurs in reading the watermark file.
-         */
-        ERR_WATERMARK_READ = 129,
-        /**
          * 130: Encryption is enabled when the user calls the
          * \ref agora::rtc::IRtcEngine::addPublishStreamUrl "addPublishStreamUrl()" method
          * (CDN live streaming does not support encrypted streams).
@@ -502,41 +472,7 @@ namespace Agora.Rtc
 
         /// @cond
         // signaling: 400~600
-        ERR_LOGOUT_OTHER = 400,          //
-        ERR_LOGOUT_USER = 401,           // logout by user
-        ERR_LOGOUT_NET = 402,            // network failure
-        ERR_LOGOUT_KICKED = 403,         // login in other device
-        ERR_LOGOUT_PACKET = 404,         //
-        ERR_LOGOUT_TOKEN_EXPIRED = 405,  // token expired
-        ERR_LOGOUT_OLDVERSION = 406,     //
-        ERR_LOGOUT_TOKEN_WRONG = 407,
-        ERR_LOGOUT_ALREADY_LOGOUT = 408,
-        ERR_LOGIN_OTHER = 420,
-        ERR_LOGIN_NET = 421,
-        ERR_LOGIN_FAILED = 422,
-        ERR_LOGIN_CANCELED = 423,
-        ERR_LOGIN_TOKEN_EXPIRED = 424,
-        ERR_LOGIN_OLD_VERSION = 425,
-        ERR_LOGIN_TOKEN_WRONG = 426,
-        ERR_LOGIN_TOKEN_KICKED = 427,
         ERR_LOGIN_ALREADY_LOGIN = 428,
-        ERR_JOIN_CHANNEL_OTHER = 440,
-        ERR_SEND_MESSAGE_OTHER = 440,
-        ERR_SEND_MESSAGE_TIMEOUT = 441,
-        ERR_QUERY_USERNUM_OTHER = 450,
-        ERR_QUERY_USERNUM_TIMEOUT = 451,
-        ERR_QUERY_USERNUM_BYUSER = 452,
-        ERR_LEAVE_CHANNEL_OTHER = 460,
-        ERR_LEAVE_CHANNEL_KICKED = 461,
-        ERR_LEAVE_CHANNEL_BYUSER = 462,
-        ERR_LEAVE_CHANNEL_LOGOUT = 463,
-        ERR_LEAVE_CHANNEL_DISCONNECTED = 464,
-        ERR_INVITE_OTHER = 470,
-        ERR_INVITE_REINVITE = 471,
-        ERR_INVITE_NET = 472,
-        ERR_INVITE_PEER_OFFLINE = 473,
-        ERR_INVITE_TIMEOUT = 474,
-        ERR_INVITE_CANT_RECV = 475,
         /// @endcond
         // 1001~2000
         /**
@@ -544,31 +480,11 @@ namespace Agora.Rtc
          */
         ERR_LOAD_MEDIA_ENGINE = 1001,
         /**
-         * 1002: Fails to start the call after enabling the media engine.
-         */
-        ERR_START_CALL = 1002,
-        /**
-         * 1003: Fails to start the camera.
-         */
-        ERR_START_CAMERA = 1003,
-        /**
-         * 1004: Fails to start the video rendering module.
-         */
-        ERR_START_VIDEO_RENDER = 1004,
-        /**
          * 1005: Audio device module: A general error occurs in the Audio Device Module (no specified
          * reason). Check if the audio device is used by another app, or try
          * rejoining the channel.
          */
         ERR_ADM_GENERAL_ERROR = 1005,
-        /**
-         * 1006: Audio Device Module: An error occurs in using the Java resources.
-         */
-        ERR_ADM_JAVA_RESOURCE = 1006,
-        /**
-         * 1007: Audio Device Module: An error occurs in setting the sample rate
-         */
-        ERR_ADM_SAMPLE_RATE = 1007,
         /**
          * 1008: Audio Device Module: An error occurs in initializing the playback
          * device.
@@ -595,286 +511,11 @@ namespace Agora.Rtc
          * 1013: Audio Device Module: An error occurs in stopping the recording device.
          */
         ERR_ADM_STOP_RECORDING = 1013,
-        /**
-         * 1015: Audio Device Module: A playback error occurs. Check your playback
-         * device, or try rejoining the channel.
-         */
-        ERR_ADM_RUNTIME_PLAYOUT_ERROR = 1015,
-        /**
-         * 1017: Audio Device Module: A recording error occurs.
-         */
-        ERR_ADM_RUNTIME_RECORDING_ERROR = 1017,
-        /**
-         * 1018: Audio Device Module: The SDK fails to record audio.
-         */
-        ERR_ADM_RECORD_AUDIO_FAILED = 1018,
-        /**
-         * 1022: Audio Device Module: An error occurs in initializing the loopback
-         * device.
-         */
-        ERR_ADM_INIT_LOOPBACK = 1022,
-        /**
-         * 1023: Audio Device Module: An error occurs in starting the loopback
-         * device.
-         */
-        ERR_ADM_START_LOOPBACK = 1023,
-        /**
-         * 1027: Audio Device Module: No recording permission. Please check if the
-         * recording permission is granted.
-         */
-        ERR_ADM_NO_PERMISSION = 1027,
-        /**
-         * 1033: Audio device module: The device is occupied.
-         */
-        ERR_ADM_RECORD_AUDIO_IS_ACTIVE = 1033,
-        /**
-         * 1101: Audio device module: A fatal exception occurs.
-         */
-        ERR_ADM_ANDROID_JNI_JAVA_RESOURCE = 1101,
-        /**
-         * 1108: Audio device module: The recording frequency is lower than 50.
-         * 0 indicates that the recording is not yet started. Agora recommends
-         * checking your recording permission.
-         */
-        ERR_ADM_ANDROID_JNI_NO_RECORD_FREQUENCY = 1108,
-        /**
-         * 1109: The playback frequency is lower than 50. 0 indicates that the
-         * playback is not yet started. Agora recommends checking if you have created
-         * too many AudioTrack instances.
-         */
-        ERR_ADM_ANDROID_JNI_NO_PLAYBACK_FREQUENCY = 1109,
-        /**
-         * 1111: Audio device module: AudioRecord fails to start up. A ROM system
-         error occurs. Agora recommends the following options to debug:
-         - Restart your App.
-         - Restart your cellphone.
-         - Check your recording permission.
-         */
-        ERR_ADM_ANDROID_JNI_JAVA_START_RECORD = 1111,
-        /**
-         * 1112: Audio device module: AudioTrack fails to start up. A ROM system
-         error occurs. We recommend the following options to debug:
-         - Restart your App.
-         - Restart your cellphone.
-         - Check your playback permission.
-         */
-        ERR_ADM_ANDROID_JNI_JAVA_START_PLAYBACK = 1112,
-        /**
-         * 1115: Audio device module: AudioRecord returns error. The SDK will
-         * automatically restart AudioRecord.
-         */
-        ERR_ADM_ANDROID_JNI_JAVA_RECORD_ERROR = 1115,
-        /** @deprecated */
-        [Obsolete]
-        ERR_ADM_ANDROID_OPENSL_CREATE_ENGINE = 1151,
-        /** @deprecated */
-        [Obsolete]
-        ERR_ADM_ANDROID_OPENSL_CREATE_AUDIO_RECORDER = 1153,
-        /** @deprecated */
-        [Obsolete]
-        ERR_ADM_ANDROID_OPENSL_START_RECORDER_THREAD = 1156,
-        /** @deprecated */
-        [Obsolete]
-        ERR_ADM_ANDROID_OPENSL_CREATE_AUDIO_PLAYER = 1157,
-        /** @deprecated */
-        [Obsolete]
-        ERR_ADM_ANDROID_OPENSL_START_PLAYER_THREAD = 1160,
-        /**
-         * 1201: Audio device module: The current device does not support audio
-         * input, possibly because you have mistakenly configured the audio session
-         * category, or because some other app is occupying the input device. Agora
-         * recommends terminating all background apps and re-joining the channel.
-         */
-        ERR_ADM_IOS_INPUT_NOT_AVAILABLE = 1201,
-        /**
-         * 1206: Audio device module: Cannot activate the audio session.
-         */
-        ERR_ADM_IOS_ACTIVATE_SESSION_FAIL = 1206,
-        /** @deprecated */
-        [Obsolete]
-        ERR_ADM_IOS_SESSION_SAMPLERATR_ZERO  = 1221,
-        /**
-         * 1301: Audio device module: An exception with the audio driver or a
-         * compatibility issue occurs.
-         *
-         * Solutions: Disable and restart the audio
-         * device, or reboot the system.
-         */
-        ERR_ADM_WIN_CORE_INIT = 1301,
-        /**
-         * 1303: Audio device module: An exception with the recording driver or a
-         * compatibility issue occurs.
-         *
-         * Solutions: Disable and restart the audio device, or reboot the system.
-         */
-        ERR_ADM_WIN_CORE_INIT_RECORDING = 1303,
-        /**
-         * 1306: Audio device module: An exception with the playback driver or a
-         * compatibility issue occurs.
-         *
-         * Solutions: Disable and restart the audio device, or reboot the system.
-         */
-        ERR_ADM_WIN_CORE_INIT_PLAYOUT = 1306,
-        /**
-         * 1307: Audio device module: No audio device is available.
-         *
-         * Solutions: Plug in a proper audio device.
-         */
-        ERR_ADM_WIN_CORE_INIT_PLAYOUT_NULL = 1307,
-        /**
-         * 1309: Audio device module: An exception with the audio driver or a
-         * compatibility issue occurs.
-         *
-         * Solutions: Disable and restart the audio device, or reboot the system.
-         */
-        ERR_ADM_WIN_CORE_START_RECORDING = 1309,
-        /**
-         * 1311: Audio device module: Insufficient system memory or poor device
-         * performance.
-         *
-         * Solutions: Reboot the system or replace the device.
-         */
-        ERR_ADM_WIN_CORE_CREATE_REC_THREAD = 1311,
-        /**
-         * 1314: Audio device module: An exception with the audio driver occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Upgrade your audio card driver.
-         */
-        ERR_ADM_WIN_CORE_CAPTURE_NOT_STARTUP = 1314,
-        /**
-         * 1319: Audio device module: Insufficient system memory or poor device
-         * performance.
-         *
-         * Solutions: Reboot the system or replace the device.
-         */
-        ERR_ADM_WIN_CORE_CREATE_RENDER_THREAD = 1319,
-        /**
-         * 1320: Audio device module: An exception with the audio driver occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Replace the device.
-         */
-        ERR_ADM_WIN_CORE_RENDER_NOT_STARTUP = 1320,
-        /**
-         * 1322: Audio device module: No audio recording device is available.
-         *
-         * Solutions: Plug in a proper recording device.
-         */
-        ERR_ADM_WIN_CORE_NO_RECORDING_DEVICE = 1322,
-        /**
-         * 1323: Audio device module: No audio playback device is available.
-         *
-         * Solutions: Plug in a proper playback device.
-         */
-        ERR_ADM_WIN_CORE_NO_PLAYOUT_DEVICE = 1323,
-        /**
-         * 1351: Audio device module: An exception with the audio driver or a
-         * compatibility issue occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Upgrade your audio card driver.
-         */
-        ERR_ADM_WIN_WAVE_INIT = 1351,
-        /**
-         * 1353: Audio device module: An exception with the audio driver occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Upgrade your audio card driver.
-         */
-        ERR_ADM_WIN_WAVE_INIT_RECORDING = 1353,
-        /**
-         * 1354: Audio device module: An exception with the audio driver occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Upgrade your audio card driver.
-         */
-        ERR_ADM_WIN_WAVE_INIT_MICROPHONE = 1354,
-        /**
-         * 1355: Audio device module: An exception with the audio driver occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Upgrade your audio card driver.
-         */
-        ERR_ADM_WIN_WAVE_INIT_PLAYOUT = 1355,
-        /**
-         * 1356: Audio device module: An exception with the audio driver occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Upgrade your audio card driver.
-         */
-        ERR_ADM_WIN_WAVE_INIT_SPEAKER = 1356,
-        /**
-         * 1357: Audio device module: An exception with the audio driver occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Upgrade your audio card driver.
-         */
-        ERR_ADM_WIN_WAVE_START_RECORDING = 1357,
-        /**
-         * 1358: Audio device module: An exception with the audio driver occurs.
-         *
-         * Solutions:
-         * - Disable and then re-enable the audio device.
-         * - Reboot the system.
-         * - Upgrade your audio card driver.
-         */
-        ERR_ADM_WIN_WAVE_START_PLAYOUT = 1358,
-        /**
-         * 1359: Audio Device Module: No recording device.
-         */
-        ERR_ADM_NO_RECORDING_DEVICE = 1359,
-        /**
-         * 1360: Audio Device Module: No playback device.
-         */
-        ERR_ADM_NO_PLAYOUT_DEVICE = 1360,
-
-        // VDM error code starts from 1500
+        
         /**
          * 1501: Video Device Module: The camera is not authorized.
          */
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
-
-        // VDM error code starts from 1500
-        /**
-         * 1501: Video Device Module: The camera is in use.
-         */
-        ERR_VDM_WIN_DEVICE_IN_USE = 1502,
-
-        // VCM error code starts from 1600
-        /**
-         * 1600: Video Device Module: An unknown error occurs.
-         */
-        ERR_VCM_UNKNOWN_ERROR = 1600,
-        /**
-         * 1601: Video Device Module: An error occurs in initializing the video
-         * encoder.
-         */
-        ERR_VCM_ENCODER_INIT_ERROR = 1601,
-        /**
-         * 1602: Video Device Module: An error occurs in encoding.
-         */
-        ERR_VCM_ENCODER_ENCODE_ERROR = 1602,
-        /**
-         * 1603: Video Device Module: An error occurs in setting the video encoder.
-         */
-        ERR_VCM_ENCODER_SET_ERROR = 1603,
     };
 
     /**
