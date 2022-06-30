@@ -4,6 +4,8 @@ namespace Agora.Rtc
 {
     public delegate void OnJoinChannelSuccessHandler(RtcConnection connection, int elapsed);
 
+    public delegate void OnWarningHandler(int warn, string msg);
+
     public delegate void OnErrorHandler(int err, string msg);
 
     public delegate void OnLeaveChannelHandler(RtcConnection connection, RtcStats stats);
@@ -52,7 +54,7 @@ namespace Agora.Rtc
 
     public delegate void OnContentInspectResultHandler(CONTENT_INSPECT_RESULT result);
 
-    public delegate void OnSnapshotTakenHandlerEx(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode);
+    public delegate void OnSnapshotTakenHandler(uint uid, string filePath, int width, int height, int errCode);
 
     public delegate void OnLocalVideoStateChangedHandler(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode);
 
@@ -94,7 +96,7 @@ namespace Agora.Rtc
 
     public delegate void OnVideoStoppedHandler();
 
-    public delegate void OnAudioMixingStateChangedHandler(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason);
+    public delegate void OnAudioMixingStateChangedHandler(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode);
 
     public delegate void OnRhythmPlayerStateChangedHandler(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode);
 
@@ -134,9 +136,9 @@ namespace Agora.Rtc
 
     public delegate void OnRtmpStreamingEventHandler(string url, RTMP_STREAMING_EVENT eventCode);
 
-    //public delegate void OnStreamPublishedHandler(string url, int error);
+    public delegate void OnStreamPublishedHandler(string url, int error);
 
-    //public delegate void OnStreamUnpublishedHandler(string url);
+    public delegate void OnStreamUnpublishedHandler(string url);
 
     public delegate void OnTranscodingUpdatedHandler();
 
@@ -194,16 +196,11 @@ namespace Agora.Rtc
 
     public delegate void OnDirectCdnStreamingStatsHandler(DirectCdnStreamingStats stats);
 
-    #region IMediaRecorderObserver
-    public delegate void OnRecorderStateChangedHandler(RecorderState state, RecorderErrorCode error);
-
-    public delegate void OnRecorderInfoUpdatedHandler(RecorderInfo info);
-    #endregion
-
     public class RtcEngineEventHandler : IRtcEngineEventHandler
     {
         public event OnJoinChannelSuccessHandler EventOnJoinChannelSuccess;
         public event OnLeaveChannelHandler EventOnLeaveChannel;
+        public event OnWarningHandler EventOnWarning;
         public event OnErrorHandler EventOnError;
         public event OnRejoinChannelSuccessHandler EventOnRejoinChannelSuccess;
         public event OnProxyConnectedHandler EventOnProxyConnected;
@@ -227,7 +224,7 @@ namespace Agora.Rtc
         public event OnFirstRemoteVideoDecodedHandler EventOnFirstRemoteVideoDecoded;
         public event OnVideoSizeChangedHandler EventOnVideoSizeChanged;
         public event OnContentInspectResultHandler EventOnContentInspectResult;
-        public event OnSnapshotTakenHandlerEx EventOnSnapshotTakenEx;
+        public event OnSnapshotTakenHandler EventOnSnapshotTaken;
         public event OnLocalVideoStateChangedHandler EventOnLocalVideoStateChanged;
         public event OnRemoteVideoStateChangedHandler EventOnRemoteVideoStateChanged;
         public event OnFirstRemoteVideoFrameHandler EventOnFirstRemoteVideoFrame;
@@ -268,8 +265,8 @@ namespace Agora.Rtc
         public event OnAudioDeviceVolumeChangedHandler EventOnAudioDeviceVolumeChanged;
         public event OnRtmpStreamingStateChangedHandler EventOnRtmpStreamingStateChanged;
         public event OnRtmpStreamingEventHandler EventOnRtmpStreamingEvent;
-        //public event OnStreamPublishedHandler EventOnStreamPublished;
-        //public event OnStreamUnpublishedHandler EventOnStreamUnpublished;
+        public event OnStreamPublishedHandler EventOnStreamPublished;
+        public event OnStreamUnpublishedHandler EventOnStreamUnpublished;
         public event OnTranscodingUpdatedHandler EventOnTranscodingUpdated;
         public event OnAudioRoutingChangedHandler EventOnAudioRoutingChanged;
         public event OnChannelMediaRelayStateChangedHandler EventOnChannelMediaRelayStateChanged;
@@ -299,11 +296,6 @@ namespace Agora.Rtc
         public event OnDirectCdnStreamingStateChangedHandler EventOnDirectCdnStreamingStateChanged;
         public event OnDirectCdnStreamingStatsHandler EventOnDirectCdnStreamingStats;
 
-        #region IMediaRecorderObserver
-        public event OnRecorderStateChangedHandler EventOnRecorderStateChanged;
-        public event OnRecorderInfoUpdatedHandler EventOnRecorderInfoUpdated;
-        #endregion
-
         private static RtcEngineEventHandler eventInstance = null;
 
         public static RtcEngineEventHandler GetInstance()
@@ -320,6 +312,12 @@ namespace Agora.Rtc
         {
             if (EventOnJoinChannelSuccess == null) return;
             EventOnJoinChannelSuccess.Invoke(connection, elapsed);
+        }
+
+        public override void OnWarning(int warn, string msg)
+        {
+            if (EventOnWarning == null) return;
+            EventOnWarning.Invoke(warn, msg);
         }
 
         public override void OnError(int err, string msg)
@@ -467,10 +465,10 @@ namespace Agora.Rtc
             EventOnContentInspectResult.Invoke(result);
         }
 
-        public override void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode)
+        public override void OnSnapshotTaken(uint uid, string filePath, int width, int height, int errCode)
         {
-            if (EventOnSnapshotTakenEx == null) return;
-            EventOnSnapshotTakenEx.Invoke(connection, uid, filePath, width, height, errCode);
+            if (EventOnSnapshotTaken == null) return;
+            EventOnSnapshotTaken.Invoke(uid, filePath, width, height, errCode);
         }
 
         public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
@@ -597,10 +595,10 @@ namespace Agora.Rtc
             EventOnVideoStopped.Invoke();
         }
 
-        public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason)
+        public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode)
         {
             if (EventOnAudioMixingStateChanged == null) return;
-            EventOnAudioMixingStateChanged.Invoke(state, reason);
+            EventOnAudioMixingStateChanged.Invoke(state, errorCode);
         }
 
         public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode)
@@ -717,18 +715,17 @@ namespace Agora.Rtc
             EventOnRtmpStreamingEvent.Invoke(url, eventCode);
         }
 
-        //public override void OnStreamPublished(string url, int error)
-        //{
-        //    if (EventOnStreamPublished == null) return;
-        //    EventOnStreamPublished.Invoke(url, error);
-        //}
+        public override void OnStreamPublished(string url, int error)
+        {
+           if (EventOnStreamPublished == null) return;
+           EventOnStreamPublished.Invoke(url, error);
+        }
 
-        //[Obsolete]
-        //public override void OnStreamUnpublished(string url)
-        //{
-        //    if (EventOnStreamUnpublished == null) return;
-        //    EventOnStreamUnpublished.Invoke(url);
-        //}
+        public override void OnStreamUnpublished(string url)
+        {
+           if (EventOnStreamUnpublished == null) return;
+           EventOnStreamUnpublished.Invoke(url);
+        }
 
         public override void OnTranscodingUpdated()
         {
@@ -886,7 +883,7 @@ namespace Agora.Rtc
             EventOnExtensionStopped.Invoke(provider, extension);
         }
 
-        public override void OnExtensionError(string provider, string extension, int error, string message)
+        public override void OnExtensionErrored(string provider, string extension, int error, string message)
         {
             if (EventOnExtensionErrored == null) return;
             EventOnExtensionErrored.Invoke(provider, extension, error, message);
@@ -894,28 +891,14 @@ namespace Agora.Rtc
 
         public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
         {
-            if (EventOnExtensionErrored == null) return;
+            if (EventOnDirectCdnStreamingStateChanged == null) return;
             EventOnDirectCdnStreamingStateChanged.Invoke(state, error, message);
         }
 
         public override void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats)
         {
-            if (EventOnExtensionErrored == null) return;
+            if (EventOnDirectCdnStreamingStats == null) return;
             EventOnDirectCdnStreamingStats.Invoke(stats);
         }
-
-        #region IMediaRecorderObserver
-        public override void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error)
-        {
-            if (EventOnRecorderStateChanged == null) return;
-            EventOnRecorderStateChanged.Invoke(state, error);
-        }
-
-        public override void OnRecorderInfoUpdated(RecorderInfo info)
-        {
-            if (EventOnRecorderInfoUpdated == null) return;
-            EventOnRecorderInfoUpdated.Invoke(info);
-        }
-        #endregion
     }
 }

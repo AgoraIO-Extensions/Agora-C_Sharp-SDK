@@ -19,11 +19,7 @@ namespace Agora.Rtc
             internal static AudioFrame MixedAudioFrame = new AudioFrame();
             internal static Dictionary<string, Dictionary<uint, AudioFrame>> AudioFrameBeforeMixingEx =
                 new Dictionary<string, Dictionary<uint, AudioFrame>>();
-
-            internal static Dictionary<string, Dictionary<string, AudioFrame>> AudioFrameBeforeMixingEx2 =
-              new Dictionary<string, Dictionary<string, AudioFrame>>();
-
-            internal static IrisAudioParams irisAudioParams = new IrisAudioParams();
+            internal static AudioFrame EarMonitoringAudioFrame = new AudioFrame();
         }
 
         private static AudioFrame ProcessAudioFrameReceived(IntPtr audioFramePtr, string channelId, uint uid)
@@ -45,6 +41,9 @@ namespace Agora.Rtc
                         break;
                     case 2:
                         localAudioFrame = LocalAudioFrames.MixedAudioFrame;
+                        break;
+                    case 3:
+                        localAudioFrame = LocalAudioFrames.EarMonitoringAudioFrame;
                         break;
                 }
             }
@@ -89,60 +88,6 @@ namespace Agora.Rtc
             return localAudioFrame;
         }
 
-        private static AudioFrame ProcessAudioFrameReceived(IntPtr audioFramePtr, string channelId, string uid)
-        {
-            var audioFrame = (IrisAudioFrame)(Marshal.PtrToStructure(audioFramePtr, typeof(IrisAudioFrame)) ??
-                                                    new IrisAudioFrame());
-            AudioFrame localAudioFrame = null;
-
-            //Remote Audio Frame
-            if (!LocalAudioFrames.AudioFrameBeforeMixingEx2.ContainsKey(channelId))
-            {
-                LocalAudioFrames.AudioFrameBeforeMixingEx2[channelId] = new Dictionary<string, AudioFrame>();
-                LocalAudioFrames.AudioFrameBeforeMixingEx2[channelId][uid] = new AudioFrame();
-            }
-            else if (!LocalAudioFrames.AudioFrameBeforeMixingEx2[channelId].ContainsKey(uid))
-            {
-                LocalAudioFrames.AudioFrameBeforeMixingEx2[channelId][uid] = new AudioFrame();
-            }
-
-            localAudioFrame = LocalAudioFrames.AudioFrameBeforeMixingEx2[channelId][uid];
-
-
-            if (mode == OBSERVER_MODE.RAW_DATA)
-            {
-                if (localAudioFrame.channels != audioFrame.channels ||
-                localAudioFrame.samplesPerChannel != audioFrame.samples ||
-                localAudioFrame.bytesPerSample != (BYTES_PER_SAMPLE)audioFrame.bytes_per_sample)
-                {
-                    localAudioFrame.RawBuffer = new byte[audioFrame.buffer_length];
-                }
-
-                if (audioFrame.buffer != IntPtr.Zero)
-                    Marshal.Copy(audioFrame.buffer, localAudioFrame.RawBuffer, 0, (int)audioFrame.buffer_length);
-            }
-
-            localAudioFrame.type = audioFrame.type;
-            localAudioFrame.samplesPerChannel = audioFrame.samples;
-            localAudioFrame.bufferPtr = audioFrame.buffer;
-            localAudioFrame.bytesPerSample = (BYTES_PER_SAMPLE)audioFrame.bytes_per_sample;
-            localAudioFrame.channels = audioFrame.channels;
-            localAudioFrame.samplesPerSec = audioFrame.samples_per_sec;
-            localAudioFrame.renderTimeMs = audioFrame.render_time_ms;
-            localAudioFrame.avsync_type = audioFrame.av_sync_type;
-
-            return localAudioFrame;
-        }
-
-        private static IrisAudioParams ProcessAudioParams(AudioParams audioParams)
-        {
-            LocalAudioFrames.irisAudioParams.sample_rate = audioParams.sample_rate;
-            LocalAudioFrames.irisAudioParams.channels = audioParams.channels;
-            LocalAudioFrames.irisAudioParams.mode = (IRIS_RAW_AUDIO_FRAME_OP_MODE_TYPE)audioParams.mode;
-            LocalAudioFrames.irisAudioParams.samples_per_call = audioParams.samples_per_call;
-            return LocalAudioFrames.irisAudioParams;
-        }
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
 #endif
@@ -180,52 +125,6 @@ namespace Agora.Rtc
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_AudioFramePosition_Native))]
-#endif
-        internal static IRIS_AUDIO_FRAME_POSITION GetObservedAudioFramePosition()
-        {
-            if (AudioFrameObserver == null)
-                return (IRIS_AUDIO_FRAME_POSITION)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
-
-            return (IRIS_AUDIO_FRAME_POSITION)AudioFrameObserver.GetObservedAudioFramePosition();
-        }
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
-#endif
-        internal static IrisAudioParams GetPlaybackAudioParams()
-        {
-            if (AudioFrameObserver == null)
-                return LocalAudioFrames.irisAudioParams;
-
-            return ProcessAudioParams(AudioFrameObserver.GetPlaybackAudioParams());
-        }
-
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
-#endif
-        internal static IrisAudioParams GetRecordAudioParams()
-        {
-            if (AudioFrameObserver == null)
-                return LocalAudioFrames.irisAudioParams;
-
-            return ProcessAudioParams(AudioFrameObserver.GetRecordAudioParams());
-        }
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
-#endif
-        internal static IrisAudioParams GetMixedAudioParams()
-        {
-            if (AudioFrameObserver == null)
-                return LocalAudioFrames.irisAudioParams;
-
-            return ProcessAudioParams(AudioFrameObserver.GetMixedAudioParams());
-        }
-
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_AudioFrameRemote_Native))]
 #endif
         internal static bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, IntPtr audioFramePtr)
@@ -238,15 +137,22 @@ namespace Agora.Rtc
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_AudioFrameRemoteStringUid_Native))]
+        [MonoPInvokeCallback(typeof(Func_AudioFrame_Native))]
 #endif
-        internal static bool OnPlaybackAudioFrameBeforeMixing2(string channelId, string uid, IntPtr audioFramePtr)
+        internal static bool OnEarMonitoringAudioFrame(IntPtr audioFramePtr)
         {
             if (AudioFrameObserver == null)
                 return true;
+            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 3);
+            return AudioFrameObserver.OnEarMonitoringAudioFrame(audioFrame);
+        }
 
-            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, channelId, uid);
-            return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        [MonoPInvokeCallback(typeof(Func_Bool_Native))]
+#endif
+        internal static bool IsMultipleChannelFrameWanted()
+        {
+           return AudioFrameObserver == null || AudioFrameObserver.IsMultipleChannelFrameWanted();
         }
     }
 }

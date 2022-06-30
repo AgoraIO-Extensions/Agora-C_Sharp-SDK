@@ -142,19 +142,6 @@ namespace Agora.Rtc
                 "", 0, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
-
-        public int FollowSystemPlaybackDevice(bool enable)
-        {
-            var param = new
-            {
-                enable
-            };
-            string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMPLAYBACKDEVICE,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
         #endregion
 
 
@@ -259,19 +246,6 @@ namespace Agora.Rtc
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_AUDIODEVICEMANAGER_STOPRECORDINGDEVICETEST,
                 "", 0, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int FollowSystemRecordingDevice(bool enable)
-        {
-            var param = new
-            {
-                enable
-            };
-            string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMRECORDINGDEVICE,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
         #endregion

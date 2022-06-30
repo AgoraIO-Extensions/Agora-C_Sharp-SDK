@@ -8,19 +8,17 @@ namespace Agora.Rtc
 {
     internal static class VideoEncodedFrameObserverNative
     {
-        internal static IVideoEncodedFrameObserver VideoEncodedFrameObserver;
+        internal static IVideoEncodedImageReceiver VideoEncodedFrameObserver;
 
         private static class LocalVideoEncodedVideoFrameInfo
         {
-            internal static  readonly EncodedVideoFrameInfo info = new EncodedVideoFrameInfo();
-
+            internal static readonly EncodedVideoFrameInfo info = new EncodedVideoFrameInfo();
         }
 
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_EncodedVideoFrameObserver_Native))]
+        [MonoPInvokeCallback(typeof(Func_EncodedVideoImageReceived_Native))]
 #endif
-        internal static bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
+        internal static bool OnEncodedVideoFrameReceived(IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
         {
             if (VideoEncodedFrameObserver == null)
                 return true;
@@ -28,7 +26,6 @@ namespace Agora.Rtc
             var videoEncodedFrameInfo = (IrisEncodedVideoFrameInfo) (Marshal.PtrToStructure(videoEncodedFrameInfoPtr, typeof(IrisEncodedVideoFrameInfo)) ?? 
                 new IrisEncodedVideoFrameInfo());
             
-            //var localVideoEncodedFrameInfo = new EncodedVideoFrameInfo();
             var localVideoEncodedFrameInfo = LocalVideoEncodedVideoFrameInfo.info;
 
             localVideoEncodedFrameInfo.codecType = (VIDEO_CODEC_TYPE) videoEncodedFrameInfo.codecType;
@@ -42,7 +39,7 @@ namespace Agora.Rtc
             localVideoEncodedFrameInfo.uid = videoEncodedFrameInfo.uid;
             localVideoEncodedFrameInfo.streamType = (VIDEO_STREAM_TYPE) videoEncodedFrameInfo.streamType;
 
-            return VideoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, length, localVideoEncodedFrameInfo);
+            return VideoEncodedFrameObserver.OnEncodedVideoImageReceived(imageBuffer, length, localVideoEncodedFrameInfo);
         }
     }
 }

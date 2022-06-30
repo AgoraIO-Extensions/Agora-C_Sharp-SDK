@@ -38,8 +38,6 @@ namespace Agora.Rtc
         #endregion
 
         #region Event handler
-        public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
-
         public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
         #endregion
 
@@ -52,15 +50,11 @@ namespace Agora.Rtc
 
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile);
 
-        public abstract int SetAudioScenario(AUDIO_SCENARIO_TYPE scenario);
-
         public abstract int AdjustRecordingSignalVolume(int volume);
 
         public abstract int MuteRecordingSignal(bool mute);
 
         public abstract int AdjustPlaybackSignalVolume(int volume);
-
-        public abstract int AdjustLoopbackSignalVolume(int volume);
 
         public abstract int AdjustUserPlaybackSignalVolume(uint uid, int volume);
 
@@ -114,13 +108,7 @@ namespace Agora.Rtc
 
         public abstract int EnableVideoImageSource(bool enable, ImageTrackOptions options);
 
-        public abstract int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
-
-        public abstract int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
-
         public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
-
-        public abstract int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
         #endregion
 
         #region Capture screenshots
@@ -158,7 +146,7 @@ namespace Agora.Rtc
         #region Video pre-process and post-process
         public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
-        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource, SegmentationProperty segproperty, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
+        public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource);
 
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
         #endregion
@@ -177,8 +165,6 @@ namespace Agora.Rtc
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle);
 
         public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos);
-
-        public abstract int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode);
 
         public abstract int StopAudioMixing();
 
@@ -235,13 +221,6 @@ namespace Agora.Rtc
         public abstract int UnloadEffect(int soundId);
 
         public abstract int UnloadAllEffects();
-
-        public abstract int GetEffectCurrentPosition(int soundId);
-
-        public abstract int GetEffectDuration(string filePath);
-
-        public abstract int SetEffectPosition(int soundId, int pos);
-
         #endregion
 
         #region Virtual metronome
@@ -297,12 +276,6 @@ namespace Agora.Rtc
 
         public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
 
-        //only in android 
-        public abstract int StartScreenCapture(ScreenCaptureParameters2 captureParams);
-
-        //only in android 
-        public abstract int UpdateScreenCapture(ScreenCaptureParameters2 captureParams);
-
         public abstract int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
         public abstract int SetScreenCaptureContentHint(VIDEO_CONTENT_HINT contentHint);
@@ -324,12 +297,6 @@ namespace Agora.Rtc
         public abstract int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType);
 
         public abstract int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType);
-
-        public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
-
-        public abstract int SsetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode);
-
-        public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
         #endregion
 
         #region Watermark
@@ -357,11 +324,11 @@ namespace Agora.Rtc
         #endregion
 
         #region Media push
-        //public abstract int AddPublishStreamUrl(string url, bool transcodingEnabled);
+        public abstract int AddPublishStreamUrl(string url, bool transcodingEnabled);
 
-        //public abstract int RemovePublishStreamUrl(string url);
+        public abstract int RemovePublishStreamUrl(string url);
 
-        //public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
+        public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
 
         public abstract int StartLocalVideoTranscoder(LocalTranscoderConfiguration config);
 
@@ -393,7 +360,7 @@ namespace Agora.Rtc
         #endregion
 
         #region Custom audio renderer
-        public abstract int SetExternalAudioSink(bool enabled, int sampleRate, int channels);
+        public abstract int SetExternalAudioSink(int sampleRate, int channels);
 
         public abstract int PullAudioFrame(AudioFrame frame);
         #endregion
@@ -434,15 +401,6 @@ namespace Agora.Rtc
         public abstract int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0);
 
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
-
-        public abstract video_track_id_t CreateCustomEncodedVideoTrack(SenderOptions sender_option);
-
-        public abstract int DestroyCustomEncodedVideoTrack(video_track_id_t video_track_id);
-
-        public abstract video_track_id_t CreateCustomVideoTrack();
-
-        public abstract int DestroyCustomVideoTrack(video_track_id_t video_track_id);
-
         #endregion
 
         #region Raw video data
@@ -450,9 +408,9 @@ namespace Agora.Rtc
 
         public abstract void UnRegisterVideoFrameObserver();
 
-        public abstract void RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
-        public abstract void UnRegisterVideoEncodedFrameObserver();
+        public abstract void UnRegisterVideoEncodedImageReceiver();
         #endregion
 
         #region Extension
@@ -471,10 +429,6 @@ namespace Agora.Rtc
         public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
         public abstract void UnregisterMediaMetadataObserver();
-
-        public abstract int SetMaxMetadataSize(int size);
-
-        public abstract int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
         #endregion
 
         #region Audio recording
@@ -617,17 +571,6 @@ namespace Agora.Rtc
         public abstract int UploadLogFile(ref string requestId);
         #endregion
 
-        #region black list and white list
-        public abstract int SetSubscribeAudioBlacklist(uint[] uidList, int uidNumber);
-
-        public abstract int SetSubscribeAudioWhitelist(uint[] uidList, int uidNumber);
-
-        public abstract int SetSubscribeVideoBlacklist(uint[] uidList, int uidNumber);
-
-        public abstract int SetSubscribeVideoWhitelist(uint[] uidList, int uidNumber);
-        #endregion
-
-
         #region DualStream
         #endregion
 
@@ -662,8 +605,6 @@ namespace Agora.Rtc
 
         public abstract int RegisterLocalUserAccount(string appId, string userAccount);
 
-        public abstract int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction);
-
         public abstract int SetParameters(string parameters);
 
         public abstract int GetAudioDeviceInfo(ref DeviceInfo deviceInfo);
@@ -682,7 +623,7 @@ namespace Agora.Rtc
 
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
 
-        public abstract int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params);
+        public abstract int EnableFishCorrection(bool enabled, FishCorrectionParams @params);
 
         public abstract int SetAVSyncSource(string channelId, uint uid);
 
@@ -691,21 +632,6 @@ namespace Agora.Rtc
         public abstract bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir);
 
         public abstract bool StopDumpVideo();
-
-        public abstract int EnableWirelessAccelerate(bool enabled);
-
-        public abstract int GetAudioTrackCount();
-
-        public abstract int SelectAudioTrack(int index);
-
-        #region IMediaRecorder
-        //public abstract int SetMediaRecorderObserver(RtcConnection connection);
-
-        public abstract int StartRecording(RtcConnection connection, MediaRecorderConfiguration config);
-
-        public abstract int StopRecording(RtcConnection connection);
-        #endregion
-
     };
 
     public abstract class IRtcEngineEx : IRtcEngine
@@ -758,25 +684,12 @@ namespace Agora.Rtc
 
         public abstract int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
-        //public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
+        public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
 
         public abstract int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection);
 
         public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
 
         public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
-
-        public abstract int SetSubscribeAudioBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
-
-        public abstract int SetSubscribeAudioWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
-
-        public abstract int SetSubscribeVideoBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
-
-        public abstract int SetSubscribeVideoWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
-
-        public abstract int SetDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection);
-
-        public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
-
     }
 }
