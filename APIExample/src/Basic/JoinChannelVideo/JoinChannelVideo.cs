@@ -41,6 +41,8 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
+            event_handler_ = new JoinChannelVideoEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
 
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
@@ -49,9 +51,7 @@ namespace CSharp_API_Example
             //ret = rtc_engine_.SetLogFile(log_file_path);
             //CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetLogFile", ret);
 
-            event_handler_ = new JoinChannelVideoEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
-
+     
             return ret;
         }
 

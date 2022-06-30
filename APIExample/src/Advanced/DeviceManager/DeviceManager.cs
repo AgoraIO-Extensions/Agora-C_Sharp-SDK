@@ -54,6 +54,8 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
+            event_handler_ = new DeviceManagerEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
 
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
@@ -62,10 +64,6 @@ namespace CSharp_API_Example
             // second way to set logfile
             //ret = rtc_engine_.SetLogFile(log_file_path);
             //CSharpForm.dump_handler_(DeviceManager_TAG + "SetLogFile", ret);
-
-            event_handler_ = new DeviceManagerEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
-
             ret = rtc_engine_.EnableAudio();
             CSharpForm.dump_handler_(DeviceManager_TAG + "EnableAudio", ret);
 

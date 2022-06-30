@@ -45,13 +45,14 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
+
+            event_handler_ = new ProcessRawDataEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
+
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(ProcessRawData_TAG + "Initialize", ret);
-
-            event_handler_ = new ProcessRawDataEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
 
             audio_frame_observer = new ProcessRawDataAudioFrameObserver();
             rtc_engine_.RegisterAudioFrameObserver(audio_frame_observer);
