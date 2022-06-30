@@ -250,48 +250,17 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPLAYOUTVOLUME = "RtcEngine_adjustCustomAudioPlayoutVolume";
         internal const string FUNC_RTCENGINE_SETCLOUDPROXY = "RtcEngine_setCloudProxy";
         internal const string FUNC_RTCENGINE_SETLOCALACCESSPOINT = "RtcEngine_setLocalAccessPoint";
-        //internal const string FUNC_RTCENGINE_ENABLEFISHCORRECTION = "RtcEngine_enableFishCorrection";
-        internal const string FUNC_RTCENGINE_ENABLEFISHEYECORRECTION ="RtcEngine_enableFishEyeCorrection";
-
+        internal const string FUNC_RTCENGINE_ENABLEFISHCORRECTION = "RtcEngine_enableFishCorrection";
         internal const string FUNC_RTCENGINE_SETADVANCEDAUDIOOPTIONS = "RtcEngine_setAdvancedAudioOptions";
         internal const string FUNC_RTCENGINE_SETAVSYNCSOURCE = "RtcEngine_setAVSyncSource";
         internal const string FUNC_RTCENGINE_STARTSCREENCAPTUREBYDISPLAYID = "RtcEngine_startScreenCaptureByDisplayId";
         internal const string FUNC_RTCENGINE_SETMAXMETADATASIZE = "RtcEngine_setMaxMetadataSize";
         internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_sendMetaData";
         internal const string FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES = "RtcEngine_releaseScreenCaptureSources";
-        internal const string FUNC_RTCENGINE_ADJUSTLOOPBACKSIGNALVOLUME = "RtcEngine_adjustLoopbackSignalVolume";
-        internal const string FUNC_RTCENGINE_SETAUDIOMIXINGDUALMONOMODE = "RtcEngine_setAudioMixingDualMonoMode";
-        internal const string FUNC_RTCENGINE_CREATECUSTOMENCODEDVIDEOTRACK = "RtcEngine_createCustomEncodedVideoTrack";
-        internal const string FUNC_RTCENGINE_CREATECUSTOMVIDEOTRACK = "RtcEngine_createCustomVideoTrack";
-        internal const string FUNC_RTCENGINE_DESTROYCUSTOMENCODEDVIDEOTRACK = "RtcEngine_destroyCustomEncodedVideoTrack";
-        internal const string FUNC_RTCENGINE_DESTROYCUSTOMVIDEOTRACK = "RtcEngine_destroyCustomVideoTrack";
         internal const string FUNC_RTCENGINE_ENABLECONTENTINSPECT = "RtcEngine_enableContentInspect";
         internal const string FUNC_RTCENGINE_ENABLEVIDEOIMAGESOURCE = "RtcEngine_enableVideoImageSource";
-        internal const string FUNC_RTCENGINE_ENABLEWIRELESSACCELERATE = "RtcEngine_enableWirelessAccelerate";
-        internal const string FUNC_RTCENGINE_UPDATESCREENCAPTURE = "RtcEngine_updateScreenCapture";
-        internal const string FUNC_RTCENGINE_SELECTAUDIOTRACK = "RtcEngine_selectAudioTrack";
-        internal const string FUNC_RTCENGINE_GETAUDIOTRACKCOUNT = "RtcEngine_getAudioTrackCount";
-        internal const string FUNC_RTCENGINE_SETCOLORENHANCEOPTIONS = "RtcEngine_setColorEnhanceOptions";
-        internal const string FUNC_RTCENGINE_SETLOWLIGHTENHANCEOPTIONS = "RtcEngine_setLowlightEnhanceOptions";
         internal const string FUNC_RTCENGINE_SETREMOTEVIDEOSUBSCRIPTIONOPTIONS = "RtcEngine_setRemoteVideoSubscriptionOptions";
         internal const string FUNC_RTCENGINE_SETSCREENCAPTURESCENARIO = "RtcEngine_setScreenCaptureScenario";
-        internal const string FUNC_RTCENGINE_SETSUBSCRIBEVIDEOBLACKLIST = "RtcEngineEx_setSubscribeVideoBlacklist";
-        internal const string FUNC_RTCENGINE_SETSUBSCRIBEAUDIOBLACKLIST = "RtcEngineEx_setSubscribeAudioBlacklist";
-        internal const string FUNC_RTCENGINE_SETSUBSCRIBEAUDIOWHITELIST = "RtcEngineEx_setSubscribeAudioWhitelist";
-        internal const string FUNC_RTCENGINE_SETSUBSCRIBEVIDEOWHITELIST = "RtcEngineEx_setSubscribeVideoWhitelist";
-        internal const string FUNC_RTCENGINE_SETVIDEODENOISEROPTIONS = "RtcEngine_setVideoDenoiserOptions";
-        internal const string FUNC_RTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION = "RtcEngine_setAudioSessionOperationRestriction";
-        internal const string FUNC_RTCENGINE_SETAUDIOSCENARIO = "RtcEngine_setAudioScenario";
-        internal const string FUNC_RTCENGINE_SETDUALSTREAMMODE = "RtcEngine_setDualStreamMode";
-        internal const string FUNC_RTCENGINE_SETDUALSTREAMMODE2 = "RtcEngine_setDualStreamMode2";
-        internal const string FUNC_RTCENGINE_SETDUALSTREAMMODE3 = "RtcEngine_setDualStreamMode3";
-        internal const string FUNC_RTCENGINE_GETEFFECTCURRENTPOSITION ="RtcEngine_getEffectCurrentPosition";
-        internal const string FUNC_RTCENGINE_GETEFFECTDURATION = "RtcEngine_getEffectDuration";
-        internal const string FUNC_RTCENGINE_SETEFFECTPOSITION = "RtcEngine_setEffectPosition";
-
-        internal const string FUNC_RTCENGINE_STARTMEDIARECORDERRECORDING ="RtcEngine_startMediaRecorderRecording";
-        internal const string FUNC_RTCENGINE_STOPMEDIARECORDERRECORDING ="RtcEngine_stopMediaRecorderRecording";
-
         #endregion
 
         #region IRtcEngineEx start
@@ -322,14 +291,6 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_ENABLEDUALSTREAMMODEEX = "RtcEngineEx_enableDualStreamModeEx";
         internal const string FUNC_RTCENGINEEX_ADDPUBLISHSTREAMURLEX = "RtcEngineEx_addPublishStreamUrlEx";
         internal const string FUNC_RTCENGINEEX_SETREMOTEVIDEOSUBSCRIPTIONOPTIONSEX = "RtcEngineEx_setRemoteVideoSubscriptionOptionsEx";
-        internal const string FUNC_RTCENGINEEX_SETSUBSCRIBEVIDEOBLACKLISTEX = "RtcEngineEx_setSubscribeVideoBlacklistEx";
-        internal const string FUNC_RTCENGINEEX_SETSUBSCRIBEAUDIOBLACKLISTEX = "RtcEngineEx_setSubscribeAudioBlacklistEx";
-        internal const string FUNC_RTCENGINEEX_SETSUBSCRIBEAUDIOWHITELISTEX = "RtcEngineEx_setSubscribeAudioWhitelistEx";
-        internal const string FUNC_RTCENGINEEX_SETSUBSCRIBEVIDEOWHITELISTEX = "RtcEngineEx_setSubscribeVideoWhitelistEx";
-        internal const string FUNC_RTCENGINEEX_SETREMOTEVIDEOSUBSCRIPTIONOPTIONS = "RtcEngineEx_setRemoteVideoSubscriptionOptions";
-        internal const string FUNC_RTCENGINEEX_ENABLEWIRELESSACCELERATE = "RtcEngineEx_enableWirelessAccelerate";
-        internal const string FUNC_RTCENGINEEX_SETDUALSTREAMMODEEX = "RtcEngineEx_setDualStreamModeEx";
-        internal const string FUNC_RTCENGINEEX_TAKESNAPSHOTEX = "RtcEngine_takeSnapshotEx";
         #endregion
 
         #region IMediaPlayer start
@@ -393,7 +354,6 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYER_PLAYPRELOADEDSRC = "MediaPlayer_playPreloadedSrc";
         internal const string FUNC_MEDIAPLAYER_UNLOADSRC = "MediaPlayer_unloadSrc";
         internal const string FUNC_MEDIAPLAYER_SETSPATIALAUDIOPARAMS = "MediaPlayer_setSpatialAudioParams";
-        internal const string FUNC_MEDIAPLAYER_SETSOUNDPOSITIONPARAMS = "MediaPlayer_setSoundPositionParams";
         #endregion
 
         #region IAudioDeviceManager start
@@ -420,8 +380,6 @@ namespace Agora.Rtc
         internal const string FUNC_AUDIODEVICEMANAGER_STARTAUDIODEVICELOOPBACKTEST = "AudioDeviceManager_startAudioDeviceLoopbackTest";
         internal const string FUNC_AUDIODEVICEMANAGER_STOPAUDIODEVICELOOPBACKTEST = "AudioDeviceManager_stopAudioDeviceLoopbackTest";
         internal const string FUNC_AUDIODEVICEMANAGER_RELEASE = "AudioDeviceManager_release";
-        internal const string FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMRECORDINGDEVICE = "AudioDeviceManager_followSystemRecordingDevice";
-        internal const string FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMPLAYBACKDEVICE = "AudioDeviceManager_followSystemPlaybackDevice";
         #endregion
 
         #region IVideoDeviceManager start
@@ -524,17 +482,17 @@ namespace Agora.Rtc
 
 
         #region IMediaPlayerCacheManager start
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_ENABLEAUTOREMOVECACHE ="MediaPlayerCacheManager_enableAutoRemoveCache";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEDIR ="MediaPlayerCacheManager_getCacheDir";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEFILECOUNT ="MediaPlayerCacheManager_getCacheFileCount";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILECOUNT ="MediaPlayerCacheManager_getMaxCacheFileCount";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILESIZE ="MediaPlayerCacheManager_getMaxCacheFileSize";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES ="MediaPlayerCacheManager_removeAllCaches";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVECACHEBYURI ="MediaPlayerCacheManager_removeCacheByUri";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEOLDCACHE ="MediaPlayerCacheManager_removeOldCache";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETCACHEDIR ="MediaPlayerCacheManager_setCacheDir";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILECOUNT ="MediaPlayerCacheManager_setMaxCacheFileCount";
-        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILESIZE ="MediaPlayerCacheManager_setMaxCacheFileSize";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_ENABLEAUTOREMOVECACHE = "MediaPlayerCacheManager_enableAutoRemoveCache";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEDIR = "MediaPlayerCacheManager_getCacheDir";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEFILECOUNT = "MediaPlayerCacheManager_getCacheFileCount";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILECOUNT = "MediaPlayerCacheManager_getMaxCacheFileCount";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILESIZE = "MediaPlayerCacheManager_getMaxCacheFileSize";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES = "MediaPlayerCacheManager_removeAllCaches";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVECACHEBYURI = "MediaPlayerCacheManager_removeCacheByUri";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEOLDCACHE = "MediaPlayerCacheManager_removeOldCache";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETCACHEDIR = "MediaPlayerCacheManager_setCacheDir";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILECOUNT = "MediaPlayerCacheManager_setMaxCacheFileCount";
+        internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILESIZE = "MediaPlayerCacheManager_setMaxCacheFileSize";
         #endregion
     }
 }

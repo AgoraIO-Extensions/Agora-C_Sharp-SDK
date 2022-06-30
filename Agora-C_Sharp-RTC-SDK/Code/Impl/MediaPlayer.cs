@@ -42,16 +42,6 @@ namespace Agora.Rtc
             return playerId;
         }
 
-        public override MediaPlayerSourceObserver GetMediaPlayerSourceObserver()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _mediaPlayerImpl.GetMediaPlayerSourceObserver();
-        }
-
         public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
@@ -141,16 +131,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _mediaPlayerImpl.OpenWithMediaSource(source);
-        }
-
-        public override int SetSoundPositionParams(float pan, float gain)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.SetSoundPositionParams(pan, gain);
         }
 
         public override int Play()

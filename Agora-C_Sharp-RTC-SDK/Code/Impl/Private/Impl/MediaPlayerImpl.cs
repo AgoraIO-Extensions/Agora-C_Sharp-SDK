@@ -246,11 +246,6 @@ namespace Agora.Rtc
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
 
-        public MediaPlayerSourceObserver GetMediaPlayerSourceObserver()
-        {
-            return new MediaPlayerSourceObserver();
-        }
-
         public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
         {
             if (!MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
@@ -352,21 +347,6 @@ namespace Agora.Rtc
             //source.
             return -4;
         }
-
-        public int SetSoundPositionParams(float pan, float gain)
-        {
-            var param = new
-            {
-                pan,
-                gain,
-            };
-            string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_MEDIAPLAYER_SETSOUNDPOSITIONPARAMS,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
 
         public int Play(int playerId)
         {

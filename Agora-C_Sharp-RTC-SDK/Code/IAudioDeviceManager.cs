@@ -22,8 +22,6 @@ namespace Agora.Rtc
         public abstract int StartPlaybackDeviceTest(string testAudioFilePath);
 
         public abstract int StopPlaybackDeviceTest();
-
-        public abstract int FollowSystemPlaybackDevice(bool enable);
         #endregion
 
         #region RecordingDevices
@@ -46,8 +44,6 @@ namespace Agora.Rtc
         public abstract int StartRecordingDeviceTest(int indicationInterval);
 
         public abstract int StopRecordingDeviceTest();
-
-        public abstract int FollowSystemRecordingDevice(bool enable);
         #endregion
 
         #region AudioDevice

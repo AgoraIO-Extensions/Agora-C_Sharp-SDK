@@ -906,36 +906,39 @@ namespace Agora.Rtc
         */
         public CONTENT_INSPECT_TYPE type;
         /**The content inspect frequency, default is 0 second.
-         * the frequency <= 0 is invalid.
-         */
-        public uint interval;
-
-        public ContentInspectModule()
-        {
-            type = CONTENT_INSPECT_TYPE.CONTENT_INSPECT_INVALID;
-            interval = 0;
-        }
-
+        * the frequency <= 0 is invalid.
+        */
+        public uint frequency;
     };
 
-    /** Definition of ContentInspectConfig.
-*/
+   /** Definition of ContentInspectConfig.
+    */
     public class ContentInspectConfig
     {
-        /**The content inspect modules, max length of modules is 32.
-         * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
-         */
-        public ContentInspectModule[] modules { set; get; }
-        /**The content inspect module count.
-         */
-        public int moduleCount { set; get; }
-
         public ContentInspectConfig()
         {
-            modules = null;
+            ContentWorkType = CONTENT_INSPECT_WORK_TYPE.CONTENT_INSPECT_WORK_CLOUD;
+            DeviceworkType = CONTENT_INSPECT_DEVICE_TYPE.CONTENT_INSPECT_DEVICE_INVALID;
+            extraInfo = "";
             moduleCount = 0;
         }
 
+        /** video moderation work type.*/
+        public CONTENT_INSPECT_WORK_TYPE ContentWorkType { set; get; }
+
+        /**the type of jh on device.*/
+        public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType { set; get; }
+
+        public string extraInfo { set; get; }
+
+        /**The content inspect modules, max length of modules is 32.
+        * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
+        */
+        public ContentInspectModule[] modules { set; get; }
+
+        /**The content inspect module count.
+        */
+        public int moduleCount { set; get; }
     };
 
 

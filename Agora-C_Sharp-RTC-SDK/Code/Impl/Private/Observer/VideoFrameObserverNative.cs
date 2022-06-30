@@ -164,12 +164,12 @@ namespace Agora.Rtc
             return (uint) VideoFrameObserver.GetObservedFramePosition();
         }
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-//        [MonoPInvokeCallback(typeof(Func_Bool_Native))]
-//#endif
-//        internal static bool IsMultipleChannelFrameWanted()
-//        {
-//            return VideoFrameObserver == null || VideoFrameObserver.IsMultipleChannelFrameWanted();
-//        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+       [MonoPInvokeCallback(typeof(Func_Bool_Native))]
+#endif
+       internal static bool IsMultipleChannelFrameWanted()
+       {
+           return VideoFrameObserver == null || VideoFrameObserver.IsMultipleChannelFrameWanted();
+       }
     }
 }

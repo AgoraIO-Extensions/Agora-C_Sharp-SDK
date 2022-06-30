@@ -10,6 +10,8 @@ namespace Agora.Rtc
 
         public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed) { }
 
+        public virtual void OnWarning(int warn, string msg) { }
+
         public virtual void OnError(int err, string msg) { }
 
         public virtual void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost) { }
@@ -55,7 +57,7 @@ namespace Agora.Rtc
 
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }
 
-        public virtual void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode) { }
+        public virtual void OnSnapshotTaken(uint uid, string filePath, int width, int height, int errCode) { }
 
         public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
 
@@ -101,7 +103,7 @@ namespace Agora.Rtc
 
         public virtual void OnVideoStopped() { }
 
-        public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason) { }
+        public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode) { }
 
         public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) { }
 
@@ -142,17 +144,13 @@ namespace Agora.Rtc
 
         public virtual void OnRtmpStreamingEvent(string url, RTMP_STREAMING_EVENT eventCode) { }
 
-        //public virtual void OnStreamPublished(string url, int error) { }
+        public virtual void OnStreamPublished(string url, int error) { }
 
-        //[Obsolete("Use onRtmpStreamingStateChanged instead of")]
-        //public virtual void OnStreamUnpublished(string url) { }
+        public virtual void OnStreamUnpublished(string url) { }
 
         public virtual void OnTranscodingUpdated() { }
 
         public virtual void OnAudioRoutingChanged(int routing) { }
-
-        //todo delete with dcg
-        //public virtual void OnAudioSessionRestrictionResume() { }
 
         public virtual void OnChannelMediaRelayStateChanged(int state, int code) { }
 
@@ -200,17 +198,10 @@ namespace Agora.Rtc
 
         public virtual void OnExtensionStopped(string provider, string extension) { }
 
-        public virtual void OnExtensionError(string provider, string extension, int error, string message) { }
+        public virtual void OnExtensionErrored(string provider, string ext_name, int error, string msg) { }
 
         public virtual void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message) { }
 
         public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats) { }
-
-        #region IMediaRecorderObserver
-        public virtual void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error) { }
-
-        public virtual void OnRecorderInfoUpdated(RecorderInfo info) { }
-        #endregion
     };
-    
 }

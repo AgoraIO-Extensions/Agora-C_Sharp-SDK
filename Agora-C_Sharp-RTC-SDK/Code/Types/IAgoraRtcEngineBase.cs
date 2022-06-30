@@ -55,26 +55,18 @@ namespace Agora.Rtc
     };
 
     /**
-    The reson codes of the local user's audio mixing file.
+    The error codes of the local user's audio mixing file.
     */
-    public enum AUDIO_MIXING_REASON_TYPE
-    {
+    public enum AUDIO_MIXING_ERROR_TYPE {
         /** 701: The SDK cannot open the audio mixing file. */
-        AUDIO_MIXING_REASON_CAN_NOT_OPEN = 701,
+        AUDIO_MIXING_ERROR_CAN_NOT_OPEN = 701,
         /** 702: The SDK opens the audio mixing file too frequently. */
-        AUDIO_MIXING_REASON_TOO_FREQUENT_CALL = 702,
+        AUDIO_MIXING_ERROR_TOO_FREQUENT_CALL = 702,
         /** 703: The audio mixing file playback is interrupted. */
-        AUDIO_MIXING_REASON_INTERRUPTED_EOF = 703,
-        /** 715: The audio mixing file is played once. */
-        AUDIO_MIXING_REASON_ONE_LOOP_COMPLETED = 721,
-        /** 716: The audio mixing file is all played out. */
-        AUDIO_MIXING_REASON_ALL_LOOPS_COMPLETED = 723,
-        /** 716: The audio mixing file stopped by user */
-        AUDIO_MIXING_REASON_STOPPED_BY_USER = 724,
+        AUDIO_MIXING_ERROR_INTERRUPTED_EOF = 703,
         /** 0: The SDK can open the audio mixing file. */
-        AUDIO_MIXING_REASON_OK = 0,
+        AUDIO_MIXING_ERROR_OK = 0,
     };
-
 
     /**
     * The status of importing an external video stream in a live broadcast.
@@ -844,124 +836,88 @@ namespace Agora.Rtc
          * - false: (Default) Do not publish the video track of the camera capturer.
          */
         public Optional<bool> publishCameraTrack = new Optional<bool>();
-
         /**
          * Determines whether to publish the video of the secondary camera track.
          * - true: Publish the video track of the secondary camera capturer.
          * - false: (Default) Do not publish the video track of the secondary camera capturer.
          */
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
-
         /**
-        * Determines whether to publish the recorded audio.
-        * - true: Publish the recorded audio.
-        * - false: (Default) Do not publish the recorded audio.
-        */
-        public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
-
-        /**
-        * Determines whether to publish the video track of the screen capturer.
-        * - true: Publish the video track of the screen capturer.
-        * - false: (Default) Do not publish the video track of the screen capturer.
-        *   only in android or iPhone
+         * Determines whether to publish the recorded audio.
+         * - true: Publish the recorded audio.
+         * - false: (Default) Do not publish the recorded audio.
          */
-
-        public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
-
-        /**
-        * Determines whether to publish the audio track of the screen capturer.
-        * - true: Publish the video audio of the screen capturer.
-        * - false: (Default) Do not publish the audio track of the screen capturer.
-        *   only in android or iPhone
-        */
-        public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
-
-
+        public Optional<bool> publishAudioTrack = new Optional<bool>();
         /**
          * Determines whether to publish the video of the screen track.
-        * - true: Publish the video track of the screen capturer.
-        * - false: (Default) Do not publish the video track of the screen capturer.
-        *   only not in android or iPhone
-        */
+         * - true: Publish the video track of the screen capturer.
+         * - false: (Default) Do not publish the video track of the screen capturer.
+         */
         public Optional<bool> publishScreenTrack = new Optional<bool>();
-
         /**
-        * Determines whether to publish the video of the secondary screen track.
-        * - true: Publish the video track of the secondary screen capturer.
-        * - false: (Default) Do not publish the video track of the secondary screen capturer.
-        *  only not in android or iPhone
-        */
+         * Determines whether to publish the video of the secondary screen track.
+         * - true: Publish the video track of the secondary screen capturer.
+         * - false: (Default) Do not publish the video track of the secondary screen capturer.
+         */
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
-
-
         /**
-        * Determines whether to publish the audio of the custom audio track.
-        * - true: Publish the audio of the custom audio track.
-        * - false: (Default) Do not publish the audio of the custom audio track.
-        */
+         * Determines whether to publish the audio of the custom audio track.
+         * - true: Publish the audio of the custom audio track.
+         * - false: (Default) Do not publish the audio of the custom audio track.
+         */
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
-
         /**
-        * Determines the source id of the custom audio, default is 0.
-        */
+         * Determines the source id of the custom audio, default is 0.
+         */
         public Optional<int> publishCustomAudioSourceId = new Optional<int>();
-
         /**
          * Determines whether to enable AEC when publish custom audio track.
          * - true: Enable AEC.
          * - false: (Default) Do not enable AEC.
          */
         public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
-
         /**
-       * Determines whether to publish direct custom audio track.
-       * - true: publish.
-       * - false: (Default) Do not publish.
-       */
+         * Determines whether to publish direct custom audio track.
+         * - true: publish.
+         * - false: (Default) Do not publish.
+         */
         public Optional<bool> publishDirectCustomAudioTrack = new Optional<bool>();
-
         /**
-        * Determines whether to publish AEC custom audio track.
-        * - true: Publish AEC track.
-        * - false: (Default) Do not publish AEC track.
-        */
+         * Determines whether to publish AEC custom audio track.
+         * - true: Publish AEC track.
+         * - false: (Default) Do not publish AEC track.
+         */
         public Optional<bool> publishCustomAudioTrackAec = new Optional<bool>();
-
         /**
          * Determines whether to publish the video of the custom video track.
          * - true: Publish the video of the custom video track.
          * - false: (Default) Do not publish the video of the custom video track.
          */
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
-
         /**
          * Determines whether to publish the video of the encoded video track.
          * - true: Publish the video of the encoded video track.
          * - false: (default) Do not publish the video of the encoded video track.
          */
         public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
-
         /**
         * Determines whether to publish the audio track of media player source.
         * - true: Publish the audio track of media player source.
         * - false: (default) Do not publish the audio track of media player source.
         */
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
-
         /**
         * Determines whether to publish the video track of media player source.
         * - true: Publish the video track of media player source.
         * - false: (default) Do not publish the video track of media player source.
         */
         public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
-
         /**
         * Determines whether to publish the local transcoded video track.
         * - true: Publish the video track of local transcoded video track.
         * - false: (default) Do not publish the local transcoded video track.
         */
         public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
-
         /**
          * Determines whether to subscribe to all audio streams automatically. It can replace calling \ref IRtcEngine::setDefaultMuteAllRemoteAudioStreams
          * "setDefaultMuteAllRemoteAudioStreams" before joining a channel.
@@ -969,7 +925,6 @@ namespace Agora.Rtc
          * - false: (Default) Do not subscribe to any audio stream automatically.
          */
         public Optional<bool> autoSubscribeAudio = new Optional<bool>();
-
         /**
          * Determines whether to subscribe to all video streams automatically. It can replace calling \ref IRtcEngine::setDefaultMuteAllRemoteVideoStreams
          * "setDefaultMuteAllRemoteVideoStreams" before joining a channel.
@@ -977,64 +932,59 @@ namespace Agora.Rtc
          * - false: (Default) do not subscribe to any video stream automatically.
          */
         public Optional<bool> autoSubscribeVideo = new Optional<bool>();
-
+        /**
+         * Determines whether to start preview when join channel if canvas have been set.
+         * - true: (Default) start preview when join channel.
+         * - false: Do not start preview.
+         */
+        public Optional<bool> startPreview = new Optional<bool>();
         /**
          * Determines whether to enable audio recording or playout.
          * - true: It's used to publish audio and mix microphone, or subscribe audio and playout
          * - false: It's used to publish extenal audio frame only without mixing microphone, or no need audio device to playout audio either
          */
         public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
-
         /**
         * Determines which media player source should be published.
         * - DEFAULT_PLAYER_ID(0) is default.
         */
         public Optional<int> publishMediaPlayerId = new Optional<int>();
-
         /**
          * The client role type: #CLIENT_ROLE_TYPE.
          */
         public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
-
         /**
          * The audience latency level type. See \ref agora::rtc::AUDIENCE_LATENCY_LEVEL_TYPE "AUDIENCE_LATENCY_LEVEL_TYPE"
          */
         public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
-
         /**
          * The default video stream type: #VIDEO_STREAM_TYPE.
          */
         public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
-
         /**
          * The channel profile: #CHANNEL_PROFILE_TYPE.
          */
         public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
-
         /**
          * The delay in ms for sending audio frames. This is used for explicit control of A/V sync.
          * To switch off the delay, set the value to zero.
          */
         public Optional<int> audioDelayMs = new Optional<int>();
-
         /**
          * The delay in ms for sending media player audio frames. This is used for explicit control of A/V sync.
          * To switch off the delay, set the value to zero.
          */
         public Optional<int> mediaPlayerAudioDelayMs = new Optional<int>();
-
         /**
          * The token
          */
         public Optional<string> token = new Optional<string>();
-
         /**
          * Enable media packet encryption.
          * This parameter is ignored when calling function updateChannelMediaOptions()
          * - false is default.
          */
         public Optional<bool> enableBuiltInMediaEncryption = new Optional<bool>();
-
         /**
          * Determines whether to publish the sound of the rhythm player to remote users.
          * - true: (Default) Publish the sound of the rhythm player.
@@ -1042,32 +992,42 @@ namespace Agora.Rtc
          */
         public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
 
-        /**
-        * This mode is only used for audience. In PK mode, client might join one
-        * channel as broadcaster, and join another channel as interactive audience to
-        * achieve low lentancy and smooth video from remote user.
-        * - true: Enable low lentancy and smooth video when joining as an audience.
-        * - false: (Default) Use default settings for audience role.
-        */
         public Optional<bool> isInteractiveAudience = new Optional<bool>();
-
-
-        /**
-        * The custom video track id which will used to publish or preview
-        */
-        public Optional<video_track_id_t> customVideoTrackId = new Optional<video_track_id_t>();
-
-        /**
-        * Determines whether local audio stream can be filtered .
-        * - true: (Default) Can be filtered when audio level is low.
-        * - false: Do not Filter this audio stream.
-        */
-        public Optional<bool> isAudioFilterable = new Optional<bool>();
-
-
 
         public ChannelMediaOptions() { }
 
+
+        void SetAll(ref ChannelMediaOptions change)
+        {
+            this.publishCameraTrack = change.publishCameraTrack;
+            this.publishSecondaryCameraTrack = change.publishSecondaryCameraTrack;
+            this.publishAudioTrack = change.publishAudioTrack;
+            this.publishScreenTrack = change.publishScreenTrack;
+            this.publishSecondaryScreenTrack = change.publishSecondaryScreenTrack;
+            this.publishTrancodedVideoTrack = change.publishTrancodedVideoTrack;
+            this.publishCustomAudioTrack = change.publishCustomAudioTrack;
+            this.publishDirectCustomAudioTrack = change.publishDirectCustomAudioTrack;
+            this.publishCustomAudioSourceId = change.publishCustomAudioSourceId;
+            this.publishCustomAudioTrackEnableAec = change.publishCustomAudioTrackEnableAec;
+            this.publishCustomAudioTrackAec = change.publishCustomAudioTrackAec;
+            this.publishCustomVideoTrack = change.publishCustomVideoTrack;
+            this.publishEncodedVideoTrack = change.publishEncodedVideoTrack;
+            this.publishMediaPlayerAudioTrack = change.publishMediaPlayerAudioTrack;
+            this.publishMediaPlayerVideoTrack = change.publishMediaPlayerVideoTrack;
+            this.autoSubscribeAudio = change.autoSubscribeAudio;
+            this.autoSubscribeVideo = change.autoSubscribeVideo;
+            this.publishMediaPlayerId = change.publishMediaPlayerId;
+            this.enableAudioRecordingOrPlayout = change.enableAudioRecordingOrPlayout;
+            this.clientRoleType = change.clientRoleType;
+            this.audienceLatencyLevel = change.audienceLatencyLevel;
+            this.defaultVideoStreamType = change.defaultVideoStreamType;
+            this.channelProfile = change.channelProfile;
+            this.audioDelayMs = change.audioDelayMs;
+            this.mediaPlayerAudioDelayMs = change.mediaPlayerAudioDelayMs;
+            this.token = change.token;
+            this.enableBuiltInMediaEncryption = change.enableBuiltInMediaEncryption;
+            this.publishRhythmPlayerTrack = change.publishRhythmPlayerTrack;
+        }
 
         public override void ToJson(JsonWriter writer)
         {
@@ -1079,41 +1039,32 @@ namespace Agora.Rtc
                 writer.Write(this.publishCameraTrack.GetValue());
             }
 
-
             if (this.publishSecondaryCameraTrack.HasValue())
             {
                 writer.WritePropertyName("publishSecondaryCameraTrack");
                 writer.Write(this.publishSecondaryCameraTrack.GetValue());
             }
 
-            if (this.publishMicrophoneTrack.HasValue())
+            if (this.publishAudioTrack.HasValue())
             {
-                writer.WritePropertyName("publishMicrophoneTrack");
-                writer.Write(this.publishMicrophoneTrack.GetValue());
+                writer.WritePropertyName("publishAudioTrack");
+                writer.Write(this.publishAudioTrack.GetValue());
             }
 
-            if (this.publishScreenCaptureVideo.HasValue())
-            {
-                writer.WritePropertyName("publishScreenCaptureVideo");
-                writer.Write(this.publishScreenCaptureVideo.GetValue());
-            }
-
-            if (this.publishScreenCaptureAudio.HasValue())
-            {
-                writer.WritePropertyName("publishScreenCaptureAudio");
-                writer.Write(this.publishScreenCaptureAudio.GetValue());
-            }
 
             if (this.publishScreenTrack.HasValue())
             {
                 writer.WritePropertyName("publishScreenTrack");
                 writer.Write(this.publishScreenTrack.GetValue());
             }
+
+
             if (this.publishSecondaryScreenTrack.HasValue())
             {
                 writer.WritePropertyName("publishSecondaryScreenTrack");
                 writer.Write(this.publishSecondaryScreenTrack.GetValue());
             }
+
 
             if (this.publishCustomAudioTrack.HasValue())
             {
@@ -1121,22 +1072,27 @@ namespace Agora.Rtc
                 writer.Write(this.publishCustomAudioTrack.GetValue());
             }
 
+
             if (this.publishCustomAudioSourceId.HasValue())
             {
                 writer.WritePropertyName("publishCustomAudioSourceId");
                 writer.Write(this.publishCustomAudioSourceId.GetValue());
             }
+
+
             if (this.publishCustomAudioTrackEnableAec.HasValue())
             {
                 writer.WritePropertyName("publishCustomAudioTrackEnableAec");
                 writer.Write(this.publishCustomAudioTrackEnableAec.GetValue());
             }
 
+
             if (this.publishDirectCustomAudioTrack.HasValue())
             {
                 writer.WritePropertyName("publishDirectCustomAudioTrack");
                 writer.Write(this.publishDirectCustomAudioTrack.GetValue());
             }
+
 
             if (this.publishCustomAudioTrackAec.HasValue())
             {
@@ -1155,6 +1111,7 @@ namespace Agora.Rtc
                 writer.WritePropertyName("publishEncodedVideoTrack");
                 writer.Write(this.publishEncodedVideoTrack.GetValue());
             }
+
             if (this.publishMediaPlayerAudioTrack.HasValue())
             {
                 writer.WritePropertyName("publishMediaPlayerAudioTrack");
@@ -1172,6 +1129,7 @@ namespace Agora.Rtc
                 writer.WritePropertyName("publishTrancodedVideoTrack");
                 writer.Write(this.publishTrancodedVideoTrack.GetValue());
             }
+
             if (this.autoSubscribeAudio.HasValue())
             {
                 writer.WritePropertyName("autoSubscribeAudio");
@@ -1182,6 +1140,12 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("autoSubscribeVideo");
                 writer.Write(this.autoSubscribeVideo.GetValue());
+            }
+
+            if (this.startPreview.HasValue())
+            {
+                writer.WritePropertyName("xxstartPreview");
+                writer.Write(this.startPreview.GetValue());
             }
 
             if (this.enableAudioRecordingOrPlayout.HasValue())
@@ -1195,69 +1159,65 @@ namespace Agora.Rtc
                 writer.WritePropertyName("publishMediaPlayerId");
                 writer.Write(this.publishMediaPlayerId.GetValue());
             }
+
             if (this.clientRoleType.HasValue())
             {
                 writer.WritePropertyName("clientRoleType");
-                WriteEnum(writer, this.clientRoleType.GetValue());
+                this.WriteEnum(writer, this.clientRoleType.GetValue());
             }
 
             if (this.audienceLatencyLevel.HasValue())
             {
                 writer.WritePropertyName("audienceLatencyLevel");
-                WriteEnum(writer, this.audienceLatencyLevel.GetValue());
+                this.WriteEnum(writer, this.audienceLatencyLevel.GetValue());
             }
 
             if (this.defaultVideoStreamType.HasValue())
             {
                 writer.WritePropertyName("defaultVideoStreamType");
-                WriteEnum(writer, this.defaultVideoStreamType.GetValue());
+                this.WriteEnum(writer, this.defaultVideoStreamType.GetValue());
             }
 
             if (this.channelProfile.HasValue())
             {
                 writer.WritePropertyName("channelProfile");
-                WriteEnum(writer, this.channelProfile.GetValue());
+                this.WriteEnum(writer, this.channelProfile.GetValue());
             }
 
             if (this.audioDelayMs.HasValue())
             {
                 writer.WritePropertyName("audioDelayMs");
-                writer.Write(this.audioDelayMs.GetValue());
+                writer.Write((int)this.audioDelayMs.GetValue());
             }
+
             if (this.mediaPlayerAudioDelayMs.HasValue())
             {
-                writer.WritePropertyName("xxmediaPlayerAudioDelayMs");
-                writer.Write(this.mediaPlayerAudioDelayMs.GetValue());
+                writer.WritePropertyName("mediaPlayerAudioDelayMs");
+                writer.Write((int)this.mediaPlayerAudioDelayMs.GetValue());
             }
+
             if (this.token.HasValue())
             {
                 writer.WritePropertyName("token");
                 writer.Write(this.token.GetValue());
             }
+
             if (this.enableBuiltInMediaEncryption.HasValue())
             {
                 writer.WritePropertyName("enableBuiltInMediaEncryption");
                 writer.Write(this.enableBuiltInMediaEncryption.GetValue());
             }
+
             if (this.publishRhythmPlayerTrack.HasValue())
             {
                 writer.WritePropertyName("publishRhythmPlayerTrack");
                 writer.Write(this.publishRhythmPlayerTrack.GetValue());
             }
+
             if (this.isInteractiveAudience.HasValue())
             {
                 writer.WritePropertyName("isInteractiveAudience");
                 writer.Write(this.isInteractiveAudience.GetValue());
-            }
-            if (this.customVideoTrackId.HasValue())
-            {
-                writer.WritePropertyName("customVideoTrackId");
-                writer.Write(this.customVideoTrackId.GetValue());
-            }
-            if (this.isAudioFilterable.HasValue())
-            {
-                writer.WritePropertyName("isAudioFilterable");
-                writer.Write(this.isAudioFilterable.GetValue());
             }
 
             writer.WriteObjectEnd();
@@ -1362,49 +1322,6 @@ namespace Agora.Rtc
         public bool stopMicrophoneRecording { set; get; }
     };
 
-
-    //useless in C#
-    /**
-    * The IVideoDeviceCollection class.
-    */
-    //public class IVideoDeviceCollection
-    //{
-
-    //    /**
-    //     * Gets the total number of the indexed video capture devices in the system.
-    //     *
-    //     * @return The total number of the indexed video capture devices.
-    //     */
-    //    public virtual int getCount() { return 0; }
-
-    //    /**
-    //     * Specifies a device with the device ID.
-    //     *
-    //     * @param deviceIdUTF8 The device ID.
-    //     * @return
-    //     * - 0: Success.
-    //     * - < 0: Failure.
-    //     */
-    //    public virtual int setDevice(string deviceIdUTF8) { return 0; }
-
-    //    /**
-    //     * Gets the information of a specified video capture device.
-    //     *
-    //     * @param index An input parameter that specifies the device. It is a specified
-    //     * index and must be smaller than the return value of \ref getCount "getCount".
-    //     * @param deviceNameUTF8 An output parameter that indicates the device name.
-    //     * @param deviceIdUTF8 An output parameter that indicates the device ID.
-    //     * @return
-    //     * - 0: Success.
-    //     * - < 0: Failure.
-    //     */
-    //    public virtual int getDevice(int index, string deviceNameUTF8, string deviceIdUTF8) { return 0; }
-
-    //    /**
-    //     * Releases all IVideoDeviceCollection resources.
-    //     */
-    //    public virtual void release() { }
-    //};
     /** Definition of RtcEngineContext.
    */
     public class RtcEngineContext : OptionalJsonParse
@@ -1414,7 +1331,7 @@ namespace Agora.Rtc
             eventHandler = null;
             appId = "";
             context = 0;
-
+            enableAudioDevice = true;
             channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;
             audioScenario = AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT;
             areaCode = AREA_CODE.AREA_CODE_GLOB;
@@ -1423,13 +1340,14 @@ namespace Agora.Rtc
         }
 
 
-        public RtcEngineContext(string appId, UInt64 context,
+        public RtcEngineContext(string appId, UInt64 context, bool enableAudioDevice,
             CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
             LogConfig logConfig = null)
         {
             this.appId = appId;
             this.context = context;
+            this.enableAudioDevice = enableAudioDevice;
             this.channelProfile = channelProfile;
             this.audioScenario = audioScenario;
             this.areaCode = areaCode;
@@ -1455,6 +1373,13 @@ namespace Agora.Rtc
         */
         public UInt64 context { set; get; }
 
+        /**
+        * Determines whether to enable audio device
+        * -true: (Default) enable audio device
+        * -false, disable audio device. If you want to pull the decoded and mixed audio data for playback from
+        * \ref agora::media::IMediaEngine::pullAudioFrame "pullAudioFrame". This value must be false
+        */
+        public bool enableAudioDevice { set; get; }
 
         /**
         * The channel profile. See #CHANNEL_PROFILE_TYPE.
