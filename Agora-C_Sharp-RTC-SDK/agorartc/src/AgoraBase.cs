@@ -738,6 +738,14 @@ namespace agora.rtc
         /**8: Fails to find a local video capture device.*/
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_NOT_FOUND = 8,
 
+        /**
+        * 9: (macOS only) The external camera currently in use is disconnected
+        * (such as being unplugged).
+        *
+        * @since v3.5.0
+        */
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_DISCONNECTED = 9,
+
         /**11: When calling StartScreenCaptureByWindowId to share the window, the shared window is in a minimized state.*/
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
 
@@ -2110,7 +2118,11 @@ namespace agora.rtc
         REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK = 8,
 
         /**9: The remote audio-only stream switches back to the audio-and-video stream after the network conditions improve.*/
-        REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK_RECOVERY = 9
+        REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK_RECOVERY = 9,
+
+        /** 10: The remote user sdk(only for iOS) in background.
+        */
+        REMOTE_VIDEO_STATE_REASON_SDK_IN_BACKGROUND = 10
     }
 
     /**
@@ -4183,10 +4195,14 @@ namespace agora.rtc
             windowFocus = false;
             excludeWindowList = new view_t[0];
             excludeWindowCount = 0;
+            highLightWidth = 0;
+            highLightColor = 0;
+            enableHighLight = false;
         }
 
         public ScreenCaptureParameters(int width, int height, int frameRate, BITRATE bitrate, bool captureMouseCursor,
-            bool windowFocus, view_t[] excludeWindowList = null, int excludeWindowCount = 0)
+            bool windowFocus, view_t[] excludeWindowList = null, int excludeWindowCount = 0, int highLightWidth = 0,
+            uint highLightColor = 0, bool enableHighLight = false)
         {
             dimensions = new VideoDimensions(width, height);
             this.frameRate = frameRate;
@@ -4195,10 +4211,14 @@ namespace agora.rtc
             this.windowFocus = windowFocus;
             this.excludeWindowList = excludeWindowList ?? new view_t[0];
             this.excludeWindowCount = excludeWindowCount;
+            this.highLightWidth = highLightWidth;
+            this.highLightColor = highLightColor;
+            this.enableHighLight = enableHighLight;
         }
 
         public ScreenCaptureParameters(VideoDimensions dimensions, int frameRate, BITRATE bitrate,
-            bool captureMouseCursor, bool windowFocus, view_t[] excludeWindowList = null, int excludeWindowCount = 0)
+            bool captureMouseCursor, bool windowFocus, view_t[] excludeWindowList = null, int excludeWindowCount = 0, int highLightWidth = 0,
+            uint highLightColor = 0, bool enableHighLight = false)
         {
             this.dimensions = dimensions;
             this.frameRate = frameRate;
@@ -4207,6 +4227,9 @@ namespace agora.rtc
             this.windowFocus = windowFocus;
             this.excludeWindowList = excludeWindowList ?? new view_t[0];
             this.excludeWindowCount = excludeWindowCount;
+            this.highLightWidth = highLightWidth;
+            this.highLightColor = highLightColor;
+            this.enableHighLight = enableHighLight;
         }
 
         /**
@@ -4249,7 +4272,72 @@ namespace agora.rtc
          *  
          */
         public int excludeWindowCount { set; get; }
+
+        /** (macOS only) The width (px) of the border. Defaults to 0, and the value range is [0,50].
+        *
+        * @since v3.7.0
+        */
+        public int highLightWidth { set; get; }
+        /** (macOS only) The color of the border in RGBA format. The default value is 0xFF8CBF26.
+        *
+        * @since v3.7.0
+        */
+        public uint highLightColor { set; get; }
+        /** (macOS only) Determines whether to place a border around the shared window or screen:
+        * - true: Place a border.
+        * - false: (Default) Do not place a border.
+        *
+        * @note When you share a part of a window or screen, the SDK places a border around the entire window or screen if you set `enableHighLight` as true.
+        *
+        * @since v3.7.0
+        */
+        public bool enableHighLight { set; get; }
     }
+
+    internal class ThumbImageBufferInternal
+    {
+        public uint length { set; get; }
+        public uint width { set; get; }
+        public uint height { set; get; }
+
+        public Int64 buffer { set; get; }
+
+        public ThumbImageBufferInternal()
+        {
+            buffer = 0;
+            length = 0;
+            width = 0;
+            height = 0;
+        }
+    };
+
+    internal class ScreenCaptureSourceInfoInternal
+    {
+        public ScreenCaptureSourceType type { set; get; }
+        /** in Mac: pointer to NSNumber */
+        public view_t sourceId { set; get; }
+        public string sourceName { set; get; }
+        public ThumbImageBufferInternal thumbImage { set; get; }
+        public ThumbImageBufferInternal iconImage { set; get; }
+
+        public string processPath { set; get; }
+        public string sourceTitle { set; get; }
+        public bool primaryMonitor { set; get; }
+        public bool isOccluded { set; get; }
+
+        public ScreenCaptureSourceInfoInternal()
+        {
+            type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
+            sourceId = 0;
+            sourceName = "";
+            processPath = "";
+            sourceTitle = "";
+            primaryMonitor = false;
+            isOccluded = false;
+            thumbImage = new ThumbImageBufferInternal();
+            iconImage = new ThumbImageBufferInternal();
+        }
+    };
 
     /**
      *  Video display configurations. 
@@ -5606,6 +5694,147 @@ namespace agora.rtc
         public string[] verifyDomainName;
         public LOCAL_PROXY_MODE mode;
     }
+
+    /**
+    * Spatial audio effect parameters.
+    *
+    * @since v3.7.0
+    */
+    public struct SpatialAudioParams
+    {
+        /**
+        * The azimuthal angle in degrees of the remote user relative to the local user in the spherical coordinate system (taking the position of the local user as its origin). The value range is [0,360], as defined by the following main directions:
+        * - `0`: (Default) 0 degrees, which means the remote user is directly in front of the local user.
+        * - `90`: 90 degrees, which means the remote user is directly to the left of the local user.
+        * - `180`: 180 degrees, which means the remote user is directly behind the local user.
+        * - `270`: 270 degrees, which means the remote user is directly to the right of the local user.
+        */
+        public double speaker_azimuth;
+        /**
+        * The elevation angle in degrees of the remote user relative to the local user in the spherical coordinate system (taking the position of the local user as its origin). The value range is [-90,90], as defined by the following main directions:
+        * - `0`: (Default) 0 degrees, which means the remote user is at the same horizontal level as the local user.
+        * - `-90`: -90 degrees, which means the remote user is directly above the local user.
+        * - `90`: 90 degrees, which means the remote user is directly below the local user.
+        */
+        public double speaker_elevation;
+        /**
+        * The distance in meters of the remote user relative to the local user in the spherical coordinate system (taking the position of the local user as its origin). The value range is [1,50]. The default value is 1 meter.
+        */
+        public double speaker_distance;
+        /**
+        * The orientation in degrees of the remote user's head relative to the local user's head in a spherical coordinate system (taking the position of the local user as its origin). The value range is [0,180], as defined by the following main directions:
+        * - `0`: (Default) 0 degrees, which means the remote user's head and the local user's head face the same direction.
+        * - `180`: 180 degrees, which means the remote user's head and the local user's head face opposite directions.
+        */
+        public int speaker_orientation;
+        /**
+        * Whether to enable audio blurring:
+        * - true: Enable blurring.
+        * - false: (Default) Disables blurring.
+        */
+        public bool enable_blur;
+        /**
+        * Whether to enable air absorption. This function simulates the energy attenuation of audio when the audio transmits in the air:
+        * - true: (Default) Enables air absorption.
+        * - false: Disable air absorption.
+        */
+        public bool enable_air_absorb;
+    };
+
+    /**
+    * The screen sharing scenario.
+    *
+    * @since v3.7.0
+    */
+    public enum SCREEN_SCENARIO_TYPE {
+        /** 1: (Default) Document. This scenario prioritizes the video quality of screen sharing and reduces the latency of the shared video for the receiver. If you share documents, slides, and tables, you can set this scenario.
+        */
+        SCREEN_SCENARIO_DOCUMENT = 1,
+        /** 2: Game. This scenario prioritizes the smoothness of screen sharing. If you share games, you can set this scenario.
+        */
+        SCREEN_SCENARIO_GAMING = 2,
+        /** 3: Video. This scenario prioritizes the smoothness of screen sharing. If you share movies or live videos, you can set this scenario.
+        */
+        SCREEN_SCENARIO_VIDEO = 3,
+        /** 4: Remote control. This scenario prioritizes the video quality of screen sharing and reduces the latency of the shared video for the receiver. If you share the device desktop being remotely controlled, you can set this scenario.
+        */
+    SCREEN_SCENARIO_RDC = 4,
+    };
+
+    public class SIZE
+    {
+        /** The width of the screen shot.
+         */
+        public int width { set; get; }
+        /** The width of the screen shot.
+         */
+        public int height { set; get; }
+
+        public SIZE()
+        {
+            width = 0;
+            height = 0;
+        }
+
+        public SIZE(int ww, int hh)
+        {
+            width = ww;
+            height = hh;
+        }
+    };
+
+
+    public class ThumbImageBuffer
+    {
+        public byte[] buffer { set; get; }
+        public uint length { set; get; }
+        public uint width { set; get; }
+        public uint height { set; get; }
+
+        public ThumbImageBuffer()
+        {
+            buffer = new byte[0];
+            length = 0;
+            width = 0;
+            height = 0;
+        }
+    };
+
+    public enum ScreenCaptureSourceType
+    {
+        ScreenCaptureSourceType_Unknown = -1,
+        ScreenCaptureSourceType_Window = 0,
+        ScreenCaptureSourceType_Screen = 1,
+        ScreenCaptureSourceType_Custom = 2,
+    };
+
+    public class ScreenCaptureSourceInfo
+    {
+        public ScreenCaptureSourceType type { set; get; }
+        /** in Mac: pointer to NSNumber */
+        public view_t sourceId { set; get; }
+        public string sourceName { set; get; }
+        public ThumbImageBuffer thumbImage { set; get; }
+        public ThumbImageBuffer iconImage { set; get; }
+
+        public string processPath { set; get; }
+        public string sourceTitle { set; get; }
+        public bool primaryMonitor { set; get; }
+        public bool isOccluded { set; get; }
+
+        public ScreenCaptureSourceInfo()
+        {
+            type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
+            sourceId = 0;
+            sourceName = "";
+            processPath = "";
+            sourceTitle = "";
+            primaryMonitor = false;
+            isOccluded = false;
+            thumbImage = new ThumbImageBuffer();
+            iconImage = new ThumbImageBuffer();
+        }
+    };
 
     public enum AgoraEngineType
     {
