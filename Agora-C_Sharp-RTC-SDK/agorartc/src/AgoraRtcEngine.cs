@@ -104,7 +104,6 @@ namespace agora.rtc
 
             if (disposing)
             {
-                ReleaseRecorder();
                 ReleaseEventHandler();
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
