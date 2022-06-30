@@ -4,14 +4,14 @@ namespace CSharp_API_Example
     partial class CustomCaptureVideoView
     {
         /// <summary> 
-        /// 必需的设计器变量。
+        /// 
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
-        /// 清理所有正在使用的资源。
+        /// 
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">If release delegate resource, true; or fals</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,11 +21,11 @@ namespace CSharp_API_Example
             base.Dispose(disposing);
         }
 
-        #region 组件设计器生成的代码
+        #region Componet Designer Generated Code
 
         /// <summary> 
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// The method designer supported - don't modify
+        /// Modify the code by designer
         /// </summary>
         private void InitializeComponent()
         {
@@ -62,9 +62,9 @@ namespace CSharp_API_Example
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(250, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 20);
+            this.label1.Size = new System.Drawing.Size(184, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "自采集自渲染";
+            this.label1.Text = "Custom Capture Render";
             // 
             // CustomCaptureVideoView
             // 

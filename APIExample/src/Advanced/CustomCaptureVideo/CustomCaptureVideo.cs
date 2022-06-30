@@ -1,16 +1,16 @@
-﻿/*
- * 【自采集自渲染】关键步骤：
- * 1. 创建Engine并初始化
- * （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. 加入频道：（EnableVideo、SetExternalVideoSource、JoinChannel）
- * 
- * 3. 将视频帧传给SDK：（PushVideoFrame）
- * 
- * 4. 离开频道：（LeaveChannel）
- * 
- * 5. 退出：（Dispose）
- */
+﻿/// <summary>
+/// [Custom capture and render]Key Step：
+/// 1. Create Engine and Initialize
+/// （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（EnableVideo、SetExternalVideoSource、JoinChannel）
+/// 
+/// 3. Push video to sdk：（PushVideoFrame）
+/// 
+/// 4. Leave Channel：（LeaveChannel）
+/// 
+/// 5. Exit：（Dispose）
+/// <summary>
 
 using System;
 using System.Drawing;
@@ -53,13 +53,13 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
+            event_handler_ = new CustomCaptureVideoEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
+
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(CustomCaptureVideo_TAG + "Initialize", ret);
-
-            event_handler_ = new CustomCaptureVideoEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
 
             return ret;
         }
