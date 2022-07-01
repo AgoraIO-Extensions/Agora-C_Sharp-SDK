@@ -4,14 +4,14 @@ namespace CSharp_API_Example
     partial class SendStreamMessageView
     {
         /// <summary> 
-        /// 必需的设计器变量。
+        /// 
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
-        /// 清理所有正在使用的资源。
+        /// 
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">If release delegate resource, true; or fals</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,11 +21,11 @@ namespace CSharp_API_Example
             base.Dispose(disposing);
         }
 
-        #region 组件设计器生成的代码
+        #region Componet Designer Generated Code
 
         /// <summary> 
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// The method designer supported - don't modify
+        /// Modify the code by designer
         /// </summary>
         private void InitializeComponent()
         {
@@ -65,33 +65,33 @@ namespace CSharp_API_Example
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(250, 17);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 20);
+            this.label1.Size = new System.Drawing.Size(115, 20);
             this.label1.TabIndex = 5;
-            this.label1.Text = "发消息";
+            this.label1.Text = "Send Message";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(10, 571);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(69, 20);
+            this.label2.Size = new System.Drawing.Size(115, 20);
             this.label2.TabIndex = 7;
-            this.label2.Text = "发送消息";
+            this.label2.Text = "Send Message";
             // 
             // sendTextBox
             // 
-            this.sendTextBox.Location = new System.Drawing.Point(105, 571);
+            this.sendTextBox.Location = new System.Drawing.Point(131, 564);
             this.sendTextBox.Name = "sendTextBox";
             this.sendTextBox.Size = new System.Drawing.Size(372, 27);
             this.sendTextBox.TabIndex = 9;
             // 
             // btnSend
             // 
-            this.btnSend.Location = new System.Drawing.Point(507, 572);
+            this.btnSend.Location = new System.Drawing.Point(521, 566);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(77, 25);
             this.btnSend.TabIndex = 13;
-            this.btnSend.Text = "发送";
+            this.btnSend.Text = "Send";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.btnSend_Click);
             // 

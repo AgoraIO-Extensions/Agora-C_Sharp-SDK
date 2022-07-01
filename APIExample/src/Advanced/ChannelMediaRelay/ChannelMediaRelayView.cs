@@ -8,9 +8,13 @@ using System.Windows.Forms;
 
 namespace CSharp_API_Example
 {
+  
     public partial class ChannelMediaRelayView : UserControl
     {
         private bool relay = false;
+
+        private string startText = "";
+        private string stopText = "";
         public ChannelMediaRelayView()
         {                             
             InitializeComponent();
@@ -30,14 +34,22 @@ namespace CSharp_API_Example
             if (relay)
             {
                 CSharpForm.usr_engine_.StopMediaRelay();
-                btnStart.Text = "StartMediaRelay";
+                btnStart.Text = startText;
             }
             else
             {
                 CSharpForm.usr_engine_.StartMediaRelay(textBoxMediaRelay.Text);
-                btnStart.Text = "StopMediaRelay";
+                btnStart.Text = stopText;
             }
             relay = !relay;
+        }
+
+        public void SetUIText(ConfigHelper config)
+        {
+            label1.Text = config.GetUIValue("General", "MediaRelay");
+            label2.Text = config.GetUIValue("General", "MediaRelay.Channel");
+            btnStart.Text = startText = config.GetUIValue("General", "MediaRelay.Start");
+            stopText = config.GetUIValue("General", "MediaRelay.Stop");
         }
     }
 }

@@ -1,23 +1,23 @@
-﻿/*
- * 【设备管理】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler] EnableAudio、EnableVideo
- * ）
- * 
- * 2. 枚举设备: GetAgoraRtcVideoDeviceManager  GetAgoraRtcAudioPlaybackDeviceManager GetAgoraRtcAudioRecordingDeviceManager
- *    IAgoraRtcVideoDeviceManager::EnumerateVideoDevices  
- *    IAgoraRtcAudioPlaybackDeviceManager::EnumeratePlaybackDevices 
- *    IAgoraRtcAudioRecordingDeviceManager::EnumerateRecordingDevices
- *
- * 3. 加入频道：（JoinChannel）
- * 
- * 4. 切换设备: IAgoraRtcVideoDeviceManager::SetDevice    
- *             IAgoraRtcAudioRecordingDeviceManager::SetRecordingDevice 
- *             IAgoraRtcAudioPlaybackDeviceManager::SetPlaybackDevice
- * 
- * 5. 离开频道：（LeaveChannel）
- * 
- * 4. 退出：（Dispose）
- */
+﻿/// <summary>
+/// [Device Manager] Key Step：
+/// 1. Create Engine and Initialize ：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler] EnableAudio、EnableVideo
+/// ）
+/// 
+/// 2. Enumerate Device: GetAgoraRtcVideoDeviceManager  GetAgoraRtcAudioPlaybackDeviceManager GetAgoraRtcAudioRecordingDeviceManager
+///    IAgoraRtcVideoDeviceManager::EnumerateVideoDevices  
+///    IAgoraRtcAudioPlaybackDeviceManager::EnumeratePlaybackDevices 
+///    IAgoraRtcAudioRecordingDeviceManager::EnumerateRecordingDevices
+///
+/// 3. Join Channel：（JoinChannel）
+/// 
+/// 4. Set device : IAgoraRtcVideoDeviceManager::SetDevice    
+///                 IAgoraRtcAudioRecordingDeviceManager::SetRecordingDevice 
+///                 IAgoraRtcAudioPlaybackDeviceManager::SetPlaybackDevice
+/// 
+/// 5. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;
@@ -54,6 +54,8 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
+            event_handler_ = new DeviceManagerEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
 
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
@@ -62,10 +64,6 @@ namespace CSharp_API_Example
             // second way to set logfile
             //ret = rtc_engine_.SetLogFile(log_file_path);
             //CSharpForm.dump_handler_(DeviceManager_TAG + "SetLogFile", ret);
-
-            event_handler_ = new DeviceManagerEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
-
             ret = rtc_engine_.EnableAudio();
             CSharpForm.dump_handler_(DeviceManager_TAG + "EnableAudio", ret);
 
