@@ -14,12 +14,23 @@ namespace CSharp_API_Example
         private static extern long WritePrivateProfileString(string section, string key,
             string val, string filePath);
 
+        [DllImport("kernel32.dll")]
+        private static extern int GetUserDefaultLCID();
+
+        [DllImport("kernel32.dll")]
+
+        private static extern int GetGeoInfo(int geoid, int geoType, StringBuilder lpGeoData, int cchData, int langid);
         string config_file_path_
         {
             get;
             set;
         }
 
+        string config_ui_path_
+        {
+            get;
+            set;
+        }
         public ConfigHelper()
         {
             // path to res/config/API_Example.ini
@@ -27,6 +38,20 @@ namespace CSharp_API_Example
             if (!File.Exists(config_file_path_))
             {
                 CSharpForm.dump_handler_(config_file_path_ + " not Exists!!!!", -1);
+            }
+            int lcid = GetUserDefaultLCID();
+            if (lcid == 2052)//chinese
+            {
+                config_ui_path_ = System.IO.Directory.GetCurrentDirectory() + "\\zh-cn.ini";
+            }
+            else//english
+            {
+                config_ui_path_ = System.IO.Directory.GetCurrentDirectory() + "\\en.ini";
+            }
+
+            if (!File.Exists(config_ui_path_))
+            {
+                CSharpForm.dump_handler_(config_ui_path_ + " not Exists!!!!", -1);
             }
         }
 
@@ -45,6 +70,13 @@ namespace CSharp_API_Example
         {
             StringBuilder temp = new StringBuilder(1024);
             GetPrivateProfileString(Section, Key, "", temp, 1024, config_file_path_);
+            return temp.ToString();
+        }
+
+        public string GetUIValue(string Section, string Key)
+        {
+            StringBuilder temp = new StringBuilder(1024);
+            GetPrivateProfileString(Section, Key, "", temp, 1024, config_ui_path_);
             return temp.ToString();
         }
 

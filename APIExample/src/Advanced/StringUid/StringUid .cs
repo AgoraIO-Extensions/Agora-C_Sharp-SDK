@@ -1,13 +1,13 @@
-﻿/*
- * 【字符串uid】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannelWithUserAccount）
- * 
- * 3. 离开频道：（LeaveChannel）
- * 
- * 4. 退出：（Dispose）
- */
+﻿/// <summary>
+/// [String uid]Key Step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannelWithUserAccount）
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;
@@ -44,6 +44,8 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
+            event_handler_ = new StringUidEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
 
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
@@ -53,9 +55,7 @@ namespace CSharp_API_Example
             //ret = rtc_engine_.SetLogFile(log_file_path);
             //CSharpForm.dump_handler_(StringUid_TAG + "SetLogFile", ret);
 
-            event_handler_ = new StringUidEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
-
+      
             return ret;
         }
 

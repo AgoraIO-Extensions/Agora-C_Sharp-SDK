@@ -4,14 +4,14 @@ namespace CSharp_API_Example
     partial class VideoGroupView
     {
         /// <summary> 
-        /// 必需的设计器变量。
+        /// 
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
-        /// 清理所有正在使用的资源。
+        /// 
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">If release delegate resource, true; or fals</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,11 +21,11 @@ namespace CSharp_API_Example
             base.Dispose(disposing);
         }
 
-        #region 组件设计器生成的代码
+        #region Componet Designer Generated Code
 
         /// <summary> 
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// The method designer supported - don't modify
+        /// Modify the code by designer
         /// </summary>
         private void InitializeComponent()
         {
@@ -77,7 +77,7 @@ namespace CSharp_API_Example
             this.usrOneLabel.Name = "usrOneLabel";
             this.usrOneLabel.Size = new System.Drawing.Size(48, 20);
             this.usrOneLabel.TabIndex = 5;
-            this.usrOneLabel.Text = "用户1";
+            this.usrOneLabel.Text = "User1";
             // 
             // userTwoLabel
             // 
@@ -86,7 +86,7 @@ namespace CSharp_API_Example
             this.userTwoLabel.Name = "userTwoLabel";
             this.userTwoLabel.Size = new System.Drawing.Size(48, 20);
             this.userTwoLabel.TabIndex = 6;
-            this.userTwoLabel.Text = "用户2";
+            this.userTwoLabel.Text = "User2";
             // 
             // tipsLabel
             // 
@@ -95,7 +95,7 @@ namespace CSharp_API_Example
             this.tipsLabel.Name = "tipsLabel";
             this.tipsLabel.Size = new System.Drawing.Size(264, 20);
             this.tipsLabel.TabIndex = 7;
-            this.tipsLabel.Text = "多人视频（用户从远端加入相同频道）";
+            this.tipsLabel.Text = "Multiple Channel(Remoter user join channel)";
             // 
             // VideoGroupView
             // 
