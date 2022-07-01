@@ -762,6 +762,8 @@ namespace agora.rtc
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_OCCLUDED = 13,
         /**20: (Windows only) The SDK does not support sharing this type of window.*/
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
+        /**21: The screen capture fails.*/
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_FAILURE = 21,
     }
 
     /**
