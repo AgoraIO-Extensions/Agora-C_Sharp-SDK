@@ -3009,7 +3009,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public string GetCallId()
+        public int GetCallId(ref string callId)
         {
             var param = new { };
 
@@ -3020,7 +3020,16 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 out _result);
 
-            return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
+            if (nRet == 0)
+            {
+                callId = (string)AgoraJson.GetData<string>(_result.Result, "callId");
+            }
+            else
+            {
+                value = "";
+            }
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public int Rate(string callId, int rating,

@@ -1783,14 +1783,14 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StopScreenCapture();
         }
 
-        public override string GetCallId()
+        public override int GetCallId(ref string callId)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
-            return _rtcEngineImpl.GetCallId();
+            return _rtcEngineImpl.GetCallId(ref callId);
         }
 
         public override int Rate(string callId, int rating, string description)

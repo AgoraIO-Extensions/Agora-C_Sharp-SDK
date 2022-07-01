@@ -501,7 +501,7 @@ namespace Agora.Rtc
         #region Miscellaneous methods
         public abstract int SetCloudProxy(CLOUD_PROXY_TYPE proxyType);
 
-        public abstract string GetCallId();
+        public abstract int GetCallId(ref string callId);
 
         public abstract int Rate(string callId, int rating, string description);
 
