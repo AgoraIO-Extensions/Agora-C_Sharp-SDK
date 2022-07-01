@@ -3077,6 +3077,29 @@ namespace agora.rtc
             return info;
         }
 
+        public override int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId)
+        {
+            var param = new
+            {
+                enabled,
+                mode,
+                userId
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineEnableRemoteSuperResolution2, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int setCameraCaptureRotation(int rotation)
+        {
+            var param = new
+            {
+                rotation
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraCaptureRotation, JsonMapper.ToJson(param),
+                out _result);
+        }
         ~AgoraRtcEngine()
         {
             Dispose(false, false);
