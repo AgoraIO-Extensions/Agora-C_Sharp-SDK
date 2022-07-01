@@ -1269,6 +1269,9 @@ namespace agora.rtc
 
         /**3: The device does not support using super resolution.*/
         SR_STATE_REASON_DEVICE_NOT_SUPPORTED = 3,
+        /** 4: Insufficient device performance，It is recommended to turn off super resolution.
+         */
+        SR_STATE_REASON_INSUFFICIENT_PERFORMANCE = 4,
     }
 
     /// @endcond
@@ -1293,6 +1296,10 @@ namespace agora.rtc
         // The device is not supported
         /**3: The device does not support using the virtual background.*/
         VIRTUAL_BACKGROUND_SOURCE_STATE_REASON_DEVICE_NOT_SUPPORTED = 3,
+        /**
+        * 4: Insufficient device performance，It is recommended to turn off virtual background.
+        */
+        VIRTUAL_BACKGROUND_SOURCE_STATE_REASON_INSUFFICIENT_PERFORMANCE = 4,
     }
 
     /**
@@ -5835,6 +5842,15 @@ namespace agora.rtc
             iconImage = new ThumbImageBuffer();
         }
     };
+
+    /** Super Resolution modes. */
+    public enum SR_MODE
+    {
+        /** 0: manual select uid to do super resolution */
+        SR_MODE_MANUAL = 0,
+        /** 1: auto select.*/
+        SR_MODE_AUTO,
+    }
 
     public enum AgoraEngineType
     {

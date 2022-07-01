@@ -752,7 +752,18 @@ namespace agora.rtc
                 ApiTypeChannel.kChannelSetRemoteUserSpatialAudioParams, JsonMapper.ToJson(param),
                 out _result);
         }
-
+        public override int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId)
+        {
+            var param = new
+            {
+                enabled,
+                mode,
+                userId
+            };
+            return AgoraRtcNative.CallIrisRtcChannelApi(_irisRtcChannel,
+                ApiTypeChannel.kChannelEnableRemoteSuperResolution2, JsonMapper.ToJson(param),
+                out _result);
+        }
         ~AgoraRtcChannel()
         {
             Dispose(false);
