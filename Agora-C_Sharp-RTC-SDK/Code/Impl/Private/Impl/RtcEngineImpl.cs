@@ -3026,7 +3026,7 @@ namespace Agora.Rtc
             }
             else
             {
-                value = "";
+                callId = "";
             }
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");

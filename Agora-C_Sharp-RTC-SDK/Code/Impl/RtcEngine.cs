@@ -1788,7 +1788,7 @@ namespace Agora.Rtc
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
-                return null;
+                return ErrorCode;
             }
             return _rtcEngineImpl.GetCallId(ref callId);
         }
