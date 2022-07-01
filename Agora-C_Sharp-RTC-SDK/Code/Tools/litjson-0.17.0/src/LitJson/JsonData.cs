@@ -25,7 +25,9 @@ namespace Agora.Rtc.LitJson
         private bool                          inst_boolean;
         private double                        inst_double;
         private int                           inst_int;
+        private uint                          inst_uint;
         private long                          inst_long;
+        private ulong                         inst_ulong;
         private IDictionary<string, JsonData> inst_object;
         private string                        inst_string;
         private string                        json;
@@ -57,8 +59,16 @@ namespace Agora.Rtc.LitJson
             get { return type == JsonType.Int; }
         }
 
+        public bool IsUInt{
+            get { return type == JsonType.UInt; }
+        }
+
         public bool IsLong {
             get { return type == JsonType.Long; }
+        }
+
+        public bool IsULong{
+            get { return type == JsonType.ULong; }
         }
 
         public bool IsObject {
@@ -167,8 +177,17 @@ namespace Agora.Rtc.LitJson
             get { return IsInt; }
         }
 
+        bool IJsonWrapper.IsUInt {
+            get { return IsUInt; }
+        }
+
+
         bool IJsonWrapper.IsLong {
             get { return IsLong; }
+        }
+
+        bool IJsonWrapper.IsULong{
+            get { return IsULong; }
         }
 
         bool IJsonWrapper.IsObject {
@@ -559,6 +578,15 @@ namespace Agora.Rtc.LitJson
             return inst_int;
         }
 
+        uint IJsonWrapper.GetUInt()
+        {
+            if(type != JsonType.UInt)
+                throw new InvalidOperationException(
+                    "JsonData instance doesn't hold an uint");
+
+            return inst_uint;
+        }
+
         long IJsonWrapper.GetLong ()
         {
             if (type != JsonType.Long)
@@ -566,6 +594,15 @@ namespace Agora.Rtc.LitJson
                     "JsonData instance doesn't hold a long");
 
             return inst_long;
+        }
+
+        ulong IJsonWrapper.GetULong()
+        {
+            if (type != JsonType.ULong)
+                throw new InvalidOperationException(
+                    "JsonData instance doesn't hold a ulong");
+
+            return inst_ulong;
         }
 
         string IJsonWrapper.GetString ()
@@ -598,10 +635,24 @@ namespace Agora.Rtc.LitJson
             json = null;
         }
 
+        void IJsonWrapper.SetUInt(uint val)
+        {
+            type = JsonType.UInt;
+            inst_uint = val;
+            json = null;
+        }
+
         void IJsonWrapper.SetLong (long val)
         {
             type = JsonType.Long;
             inst_long = val;
+            json = null;
+        }
+
+        void IJsonWrapper.SetULong(ulong val)
+        {
+            type = JsonType.ULong;
+            inst_ulong = val;
             json = null;
         }
 
@@ -780,8 +831,18 @@ namespace Agora.Rtc.LitJson
                 return;
             }
 
+            if (obj.IsUInt) {
+                writer.Write(obj.GetUInt());
+                return;
+            }
+
             if (obj.IsLong) {
                 writer.Write (obj.GetLong ());
+                return;
+            }
+
+            if (obj.IsULong) {
+                writer.Write(obj.GetULong());
                 return;
             }
 
@@ -889,6 +950,7 @@ namespace Agora.Rtc.LitJson
                 return this.inst_int.Equals(x.inst_int);
             }
 
+
             case JsonType.Long:
             {
                 if (x.IsInt)
@@ -941,8 +1003,16 @@ namespace Agora.Rtc.LitJson
                 inst_int = default (Int32);
                 break;
 
+            case JsonType.UInt:
+                inst_uint = default(UInt32);
+                break;
+
             case JsonType.Long:
                 inst_long = default (Int64);
+                break;
+
+            case JsonType.ULong:
+                inst_ulong = default(UInt64);
                 break;
 
             case JsonType.Double:
@@ -998,8 +1068,14 @@ namespace Agora.Rtc.LitJson
             case JsonType.Int:
                 return inst_int.ToString ();
 
+            case JsonType.UInt:
+                return inst_uint.ToString();
+
             case JsonType.Long:
                 return inst_long.ToString ();
+
+            case JsonType.ULong:
+                return inst_ulong.ToString();
 
             case JsonType.Object:
                 return "JsonData object";

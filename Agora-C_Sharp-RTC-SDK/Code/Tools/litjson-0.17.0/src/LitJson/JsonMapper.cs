@@ -632,9 +632,21 @@ namespace Agora.Rtc.LitJson
                 return instance;
             }
 
+            if (reader.Token == JsonToken.UInt)
+            {
+                instance.SetUInt((uint)reader.Value);
+                return instance;
+            }
+
             if (reader.Token == JsonToken.Long)
             {
                 instance.SetLong((long)reader.Value);
+                return instance;
+            }
+
+            if (reader.Token == JsonToken.ULong)
+            {
+                instance.SetULong((ulong)reader.Value);
                 return instance;
             }
 
