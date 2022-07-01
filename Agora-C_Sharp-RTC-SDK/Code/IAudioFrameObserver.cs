@@ -18,9 +18,9 @@ namespace Agora.Rtc
         }
 
      
-        public virtual AUDIO_FRAME_POSITION GetObservedAudioFramePosition()
+        public virtual int GetObservedAudioFramePosition()
         {
-            return AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE; 
+            return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE; 
         }
 
         public virtual AudioParams GetPlaybackAudioParams()
