@@ -59,16 +59,54 @@ namespace Agora.Rtc.LitJson
             get { return type == JsonType.Int; }
         }
 
-        public bool IsUInt{
-            get { return type == JsonType.UInt; }
+        public bool IsUInt
+        {
+            get
+            {
+                if (type == JsonType.UInt)
+                    return true;
+
+                if (type == JsonType.Int && inst_int >= 0)
+                    return true;
+
+                return false;
+            }
         }
 
-        public bool IsLong {
-            get { return type == JsonType.Long; }
+        public bool IsLong
+        {
+            get
+            {
+                if (type == JsonType.Long)
+                    return true;
+
+                if (type == JsonType.UInt)
+                    return true;
+
+                if (type == JsonType.Int)
+                    return true;
+
+                return false;
+            }
         }
 
-        public bool IsULong{
-            get { return type == JsonType.ULong; }
+        public bool IsULong
+        {
+            get {
+                if (type == JsonType.ULong)
+                    return true;
+
+                if (type == JsonType.Long && inst_long >= 0)
+                    return true;
+
+                if (type == JsonType.UInt)
+                    return true;
+
+                if (type == JsonType.Int && inst_int >= 0)
+                    return true;
+
+                return false;
+            }
         }
 
         public bool IsObject {
@@ -580,29 +618,50 @@ namespace Agora.Rtc.LitJson
 
         uint IJsonWrapper.GetUInt()
         {
-            if(type != JsonType.UInt)
-                throw new InvalidOperationException(
-                    "JsonData instance doesn't hold an uint");
+            if (type == JsonType.UInt)
+                return inst_uint;
 
-            return inst_uint;
+            if (type == JsonType.Int && inst_int >= 0)
+                return (uint)inst_int;
+
+            throw new InvalidOperationException(
+                   "JsonData instance doesn't hold an uint");
+
         }
 
-        long IJsonWrapper.GetLong ()
+        long IJsonWrapper.GetLong()
         {
-            if (type != JsonType.Long)
-                throw new InvalidOperationException (
-                    "JsonData instance doesn't hold a long");
+            if (type == JsonType.Long)
+                return inst_long;
 
-            return inst_long;
+            if (type == JsonType.UInt)
+                return (long)inst_uint;
+
+            if (type == JsonType.Int)
+                return (long)inst_int;
+
+            throw new InvalidOperationException(
+                  "JsonData instance doesn't hold a long");
+
         }
 
         ulong IJsonWrapper.GetULong()
         {
-            if (type != JsonType.ULong)
-                throw new InvalidOperationException(
-                    "JsonData instance doesn't hold a ulong");
+            if (type == JsonType.ULong)
+                return inst_ulong;
 
-            return inst_ulong;
+            if (type == JsonType.Long && inst_long >= 0)
+                return (ulong)inst_long;
+
+            if (type == JsonType.UInt)
+                return (ulong)inst_uint;
+
+            if (type == JsonType.Int && inst_int >= 0)
+                return (ulong)inst_int;
+
+            throw new InvalidOperationException(
+                   "JsonData instance doesn't hold a ulong");
+
         }
 
         string IJsonWrapper.GetString ()
