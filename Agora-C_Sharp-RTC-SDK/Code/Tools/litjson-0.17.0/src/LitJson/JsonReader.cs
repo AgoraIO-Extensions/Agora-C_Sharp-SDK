@@ -28,7 +28,9 @@ namespace Agora.Rtc.LitJson
         ArrayEnd,
 
         Int,
+        UInt,
         Long,
+        ULong,
         Double,
 
         String,
@@ -283,6 +285,14 @@ namespace Agora.Rtc.LitJson
                 return;
             }
 
+            uint n_uint32;
+            if(uint.TryParse(number, NumberStyles.Integer, CultureInfo.InvariantCulture, out n_uint32)){
+                token = JsonToken.UInt;
+                token_value = n_uint32;
+
+                return;
+            }
+
             long n_int64;
             if (long.TryParse (number, NumberStyles.Integer, CultureInfo.InvariantCulture, out n_int64)) {
                 token = JsonToken.Long;
@@ -294,7 +304,7 @@ namespace Agora.Rtc.LitJson
             ulong n_uint64;
             if (ulong.TryParse(number, NumberStyles.Integer, CultureInfo.InvariantCulture, out n_uint64))
             {
-                token = JsonToken.Long;
+                token = JsonToken.ULong;
                 token_value = n_uint64;
 
                 return;
