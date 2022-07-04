@@ -28,6 +28,7 @@ namespace Agora.Rtc
         public VideoStreamManager(RtcEngineImpl agoraRtcEngine)
         {
             _agoraRtcEngine = agoraRtcEngine;
+            _videoFrameBufferConfig = new IrisVideoFrameBufferConfig();
         }
 
         ~VideoStreamManager()
@@ -54,12 +55,9 @@ namespace Agora.Rtc
                     bytes_per_row_alignment = 2
                 };
 
-                _videoFrameBufferConfig = new IrisVideoFrameBufferConfig
-                {
-                  type = (int)sourceType,
-                  id = uid,
-                  key = channel_id
-                };
+                _videoFrameBufferConfig.type = (int)sourceType;
+                _videoFrameBufferConfig.id = uid;
+                _videoFrameBufferConfig.key = channel_id;
                 _irisVideoFrameBufferHandle = AgoraRtcNative.EnableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBuffer, ref _videoFrameBufferConfig);
 
                 return (int)ERROR_CODE_TYPE.ERR_OK;
@@ -80,12 +78,9 @@ namespace Agora.Rtc
 
             if (irisEngine != IntPtr.Zero)
             {
-                _videoFrameBufferConfig = new IrisVideoFrameBufferConfig
-                {
-                    type = (int)sourceType,
-                    id = uid,
-                    key = key
-                };
+                _videoFrameBufferConfig.type = (int)sourceType;
+                _videoFrameBufferConfig.id = uid;
+                _videoFrameBufferConfig.key = key;
                 AgoraRtcNative.DisableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBufferConfig);
             }
         }
@@ -103,13 +98,9 @@ namespace Agora.Rtc
 
             if (irisEngine != IntPtr.Zero)
             {
-
-                _videoFrameBufferConfig = new IrisVideoFrameBufferConfig
-                 {
-                     type = (int)sourceType,
-                     id = uid,
-                     key = key
-                 };
+                _videoFrameBufferConfig.type = (int)sourceType;
+                _videoFrameBufferConfig.id = uid;
+                _videoFrameBufferConfig.key = key;
                 return AgoraRtcNative.GetVideoFrameByConfig(videoFrameBufferManagerPtr, ref video_frame, out is_new_frame, ref _videoFrameBufferConfig);
             }
             return IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER;
