@@ -68,7 +68,21 @@ namespace CSharp_API_Example
 
             //screen_share_event_handler_ = new ScreenShareEventHandler(this);
             //screen_share_engine_.InitEventHandler(screen_share_event_handler_);
+            SIZE thumbSize = new SIZE(20, 20);
+            SIZE iconSize = new SIZE(20, 20);
 
+            ScreenCaptureSourceInfo[] info = rtc_engine_.GetScreenCaptureSources(thumbSize, iconSize, false);
+            for(int i = 0; i < info.Length; ++i)
+            {
+                if(info[i].thumbImage.length > 0)
+                {
+                    byte[] buffer = info[i].thumbImage.buffer;//thumb image buffer
+                }
+                if (info[i].iconImage.length > 0)
+                {
+                    byte[] buffer = info[i].iconImage.buffer;//icon image buffer
+                }
+            }
             return ret;
         }
 
