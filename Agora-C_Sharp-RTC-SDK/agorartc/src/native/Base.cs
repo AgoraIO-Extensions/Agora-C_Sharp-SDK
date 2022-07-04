@@ -218,9 +218,9 @@ namespace agora.rtc
         kEngineGetNativeHandle,
 
 
-        kEngineGetScreenCaptureSources,
-        kEngineTakeSnapshot,
-        kEngineEnableContentInspect,
+        kEngineGetScreenCaptureSources=193,
+        kEngineTakeSnapshot=194,
+        kEngineEnableContentInspect=195,
 
         kEngineSetAVSyncSource = 196,
         kEngineStartRtmpStreamWithoutTranscoding = 197,
@@ -239,6 +239,7 @@ namespace agora.rtc
         kEngineSetScreenCaptureScenario = 210,
         kEngineEnableRemoteSuperResolution2 = 211,
         kEngineSetCameraCaptureRotation = 212,
+        kEngineGetScreenCaptureSourcesCount = 1024,
     }
 
 

@@ -3031,11 +3031,11 @@ namespace agora.rtc
                 includeScreen
             };
 
-            var infoInternal =  AgoraRtcNative.CallIrisRtcEngineApiMaxResult(_irisRtcEngine, ApiTypeEngine.kEngineGetScreenCaptureSources,
+            var infoInternal = AgoraRtcNative.CallIrisRtcEngineApiMaxResult(_irisRtcEngine, ApiTypeEngine.kEngineGetScreenCaptureSources,
                 JsonMapper.ToJson(param),
                 out _result1) != 0 ?
                 new ScreenCaptureSourceInfoInternal[0]
-                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result1.Result, "result");
+                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result1.Result);
 
             var info = new ScreenCaptureSourceInfo[infoInternal.Length];
             for (int i = 0; i < infoInternal.Length; i++)
@@ -3073,7 +3073,6 @@ namespace agora.rtc
                 screenCaptureSourceInfo.iconImage = imageBuffer2;
                 info[i] = screenCaptureSourceInfo;
             }
-
             return info;
         }
 

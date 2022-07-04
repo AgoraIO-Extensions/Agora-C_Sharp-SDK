@@ -20,6 +20,7 @@ The Agora RTC SDK is applicable to scenarios that encourage active engagement, s
 **For more detail information, please visit our [website](https://docs.agora.io/en/Interactive Broadcast/product_live?platform=All Platforms) and [GitHub repository](https://github.com/AgoraIO-Community/Agora-Python-SDK); and for some quick-start demos, please visit [Agora-Python-QuickStart](https://github.com/AgoraIO-Community/Agora-Python-QuickStart).**</Description>
     <PackageProjectUrl>https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK/tree/release/3.6.2</PackageProjectUrl>
     <PackageId>agora_rtc_sdk</PackageId>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
