@@ -1,7 +1,7 @@
 ﻿using System;
-using agora.rtc.LitJson;
+using Agora.Rtc.LitJson;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using int64_t = Int64;
     using view_t = UInt64;
@@ -5486,6 +5486,101 @@ namespace agora.rtc
         }
 
     }
+
+        /**
+    * The CC (Congestion Control) mode options.
+    */
+    public enum TCcMode
+    {
+        /**
+        * Enable CC mode.
+        */
+        CC_ENABLED,
+        /**
+        * Disable CC mode.
+        */
+        CC_DISABLED,
+    };
+
+    /**
+    * The configuration for creating a local video track with an encoded image sender.
+    */
+    public class SenderOptions
+    {
+        /**
+        * Whether to enable CC mode. See #TCcMode.
+        */
+        public TCcMode ccMode { set; get; }
+        /**
+        * The codec type used for the encoded images: \ref agora::rtc::VIDEO_CODEC_TYPE "VIDEO_CODEC_TYPE".
+        */
+        public VIDEO_CODEC_TYPE codecType { set; get; }
+
+        /**
+        * Target bitrate (Kbps) for video encoding.
+        *
+        * Choose one of the following options:
+        *
+        * - \ref agora::rtc::STANDARD_BITRATE "STANDARD_BITRATE": (Recommended) Standard bitrate.
+        *   - Communication profile: The encoding bitrate equals the base bitrate.
+        *   - Live-broadcast profile: The encoding bitrate is twice the base bitrate.
+        * - \ref agora::rtc::COMPATIBLE_BITRATE "COMPATIBLE_BITRATE": Compatible bitrate. The bitrate stays the same
+        * regardless of the profile.
+        *
+        * The Communication profile prioritizes smoothness, while the Live Broadcast
+        * profile prioritizes video quality (requiring a higher bitrate). Agora
+        * recommends setting the bitrate mode as \ref agora::rtc::STANDARD_BITRATE "STANDARD_BITRATE" or simply to
+        * address this difference.
+        *
+        * The following table lists the recommended video encoder configurations,
+        * where the base bitrate applies to the communication profile. Set your
+        * bitrate based on this table. If the bitrate you set is beyond the proper
+        * range, the SDK automatically sets it to within the range.
+
+        | Resolution             | Frame Rate (fps) | Base Bitrate (Kbps, for Communication) | Live Bitrate (Kbps, for Live Broadcast)|
+        |------------------------|------------------|----------------------------------------|----------------------------------------|
+        | 160 &times; 120        | 15               | 65                                     | 130 |
+        | 120 &times; 120        | 15               | 50                                     | 100 |
+        | 320 &times; 180        | 15               | 140                                    | 280 |
+        | 180 &times; 180        | 15               | 100                                    | 200 |
+        | 240 &times; 180        | 15               | 120                                    | 240 |
+        | 320 &times; 240        | 15               | 200                                    | 400 |
+        | 240 &times; 240        | 15               | 140                                    | 280 |
+        | 424 &times; 240        | 15               | 220                                    | 440 |
+        | 640 &times; 360        | 15               | 400                                    | 800 |
+        | 360 &times; 360        | 15               | 260                                    | 520 |
+        | 640 &times; 360        | 30               | 600                                    | 1200 |
+        | 360 &times; 360        | 30               | 400                                    | 800 |
+        | 480 &times; 360        | 15               | 320                                    | 640 |
+        | 480 &times; 360        | 30               | 490                                    | 980 |
+        | 640 &times; 480        | 15               | 500                                    | 1000 |
+        | 480 &times; 480        | 15               | 400                                    | 800 |
+        | 640 &times; 480        | 30               | 750                                    | 1500 |
+        | 480 &times; 480        | 30               | 600                                    | 1200 |
+        | 848 &times; 480        | 15               | 610                                    | 1220 |
+        | 848 &times; 480        | 30               | 930                                    | 1860 |
+        | 640 &times; 480        | 10               | 400                                    | 800 |
+        | 1280 &times; 720       | 15               | 1130                                   | 2260 |
+        | 1280 &times; 720       | 30               | 1710                                   | 3420 |
+        | 960 &times; 720        | 15               | 910                                    | 1820 |
+        | 960 &times; 720        | 30               | 1380                                   | 2760 |
+        | 1920 &times; 1080      | 15               | 2080                                   | 4160 |
+        | 1920 &times; 1080      | 30               | 3150                                   | 6300 |
+        | 1920 &times; 1080      | 60               | 4780                                   | 6500 |
+        | 2560 &times; 1440      | 30               | 4850                                   | 6500 |
+        | 2560 &times; 1440      | 60               | 6500                                   | 6500 |
+        | 3840 &times; 2160      | 30               | 6500                                   | 6500 |
+        | 3840 &times; 2160      | 60               | 6500                                   | 6500 |
+        */
+        public int targetBitrate { set; get; }
+
+        public SenderOptions()
+        {
+            ccMode = TCcMode.CC_ENABLED;
+            codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
+            targetBitrate = 6500;
+        }
+    };
 
 
     #endregion

@@ -15,7 +15,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 
-namespace agora.rtc.LitJson
+namespace Agora.Rtc.LitJson
 {
     internal enum Condition
     {

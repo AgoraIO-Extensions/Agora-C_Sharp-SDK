@@ -1,4 +1,4 @@
-﻿namespace agora.rtc
+﻿namespace Agora.Rtc
 {
     #region IAgoraSpatialAudio.h
     public enum SAE_CONNECTION_STATE_TYPE

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     #region IAgoraRhythmPlayer.h
 

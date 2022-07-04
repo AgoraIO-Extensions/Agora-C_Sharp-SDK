@@ -1,23 +1,23 @@
-namespace agora.rtc
+namespace Agora.Rtc
 {
-    public class IAudioFrameObserver
+    public abstract class IAudioFrameObserver
     {
-        public virtual bool OnRecordAudioFrame(AudioFrame audioFrame)
+        public virtual bool OnRecordAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
 
-        public virtual bool OnPlaybackAudioFrame(AudioFrame audio_frame)
+        public virtual bool OnPlaybackAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
 
-        public virtual bool OnMixedAudioFrame(AudioFrame audio_frame)
+        public virtual bool OnMixedAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
 
-        public virtual bool OnPlaybackAudioFrameBeforeMixing(uint uid, AudioFrame audio_frame)
+        public virtual bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, AudioFrame audioFrame)
         {
             return true;
         }
@@ -27,9 +27,9 @@ namespace agora.rtc
             return true; 
         }
 
-        public virtual bool OnPlaybackAudioFrameBeforeMixingEx(string channel_id,
+        public virtual bool OnPlaybackAudioFrameBeforeMixingEx(string channelId,
                                                         uint uid,
-                                                        AudioFrame audio_frame)
+                                                        AudioFrame audioFrame)
         {
             return false;
         }

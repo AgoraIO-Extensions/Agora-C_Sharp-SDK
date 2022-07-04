@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
@@ -15,7 +15,6 @@ namespace agora.rtc
         private static readonly string identifier = "AgoraRtcSpatialAudioEngine";
 
         private IrisApiEnginePtr _irisApiEngine;
-        private CloudSpatialAudioEventHandler _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -84,8 +83,6 @@ namespace agora.rtc
                 CloudSpatialAudioEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance = CloudSpatialAudioEventHandler.GetInstance();
-            CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
@@ -101,21 +98,11 @@ namespace agora.rtc
             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
-        public CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
-        {
-            return _AgoraRtcCloudSpatialAudioEngineEventHandlerInstance;
-        }
-
         public void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
         {
             CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = engineEventHandler;
         }
-
-        public void RemoveEventHandler()
-        {
-            CloudSpatialAudioEngineEventHandlerNative.CloudSpatialAudioEngineEventHandler = null;
-        }
-
+        
         public int SetMaxAudioRecvCount(int maxCount)
         {
             var param = new

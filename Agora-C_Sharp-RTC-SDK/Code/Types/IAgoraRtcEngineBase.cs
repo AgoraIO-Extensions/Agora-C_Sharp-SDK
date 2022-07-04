@@ -1,7 +1,7 @@
 ﻿using System;
-using agora.rtc.LitJson;
+using Agora.Rtc.LitJson;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using view_t = UInt64;
 
@@ -788,14 +788,14 @@ The error codes of the local user's audio mixing file.
 
     public class ThumbImageBuffer
     {
-        public Int64 buffer { set; get; }
+        public byte[] buffer { set; get; }
         public uint length { set; get; }
         public uint width { set; get; }
         public uint height { set; get; }
 
         public ThumbImageBuffer()
         {
-            buffer = 0;
+            buffer = new byte[0];
             length = 0;
             width = 0;
             height = 0;
@@ -809,7 +809,6 @@ The error codes of the local user's audio mixing file.
         ScreenCaptureSourceType_Screen = 1,
         ScreenCaptureSourceType_Custom = 2,
     };
-
 
     public class ScreenCaptureSourceInfo
     {

@@ -1,4 +1,4 @@
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal static class AgoraApiType
     {
@@ -255,6 +255,7 @@ namespace agora.rtc
         internal const string FUNC_RTCENGINE_STARTSCREENCAPTUREBYDISPLAYID = "RtcEngine_startScreenCaptureByDisplayId";
         internal const string FUNC_RTCENGINE_SETMAXMETADATASIZE = "RtcEngine_setMaxMetadataSize";
         internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_sendMetaData";
+        internal const string FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES = "RtcEngine_releaseScreenCaptureSources";
         // class IRtcEngine end
 
         // class IRtcEngineEx start
