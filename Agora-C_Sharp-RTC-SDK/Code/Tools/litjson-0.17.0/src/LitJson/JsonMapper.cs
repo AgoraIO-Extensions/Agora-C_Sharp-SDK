@@ -16,7 +16,7 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 
-namespace agora.rtc.LitJson
+namespace Agora.Rtc.LitJson
 {
     internal struct PropertyMetadata
     {
@@ -632,9 +632,21 @@ namespace agora.rtc.LitJson
                 return instance;
             }
 
+            if (reader.Token == JsonToken.UInt)
+            {
+                instance.SetUInt((uint)reader.Value);
+                return instance;
+            }
+
             if (reader.Token == JsonToken.Long)
             {
                 instance.SetLong((long)reader.Value);
+                return instance;
+            }
+
+            if (reader.Token == JsonToken.ULong)
+            {
+                instance.SetULong((ulong)reader.Value);
                 return instance;
             }
 

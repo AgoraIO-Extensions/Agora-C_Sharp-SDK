@@ -1,4 +1,4 @@
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public sealed class CloudSpatialAudioEngine : ICloudSpatialAudioEngine
     {
@@ -26,16 +26,6 @@ namespace agora.rtc
                 return instance;
             }
         }
-
-        public override CloudSpatialAudioEventHandler GetCloudSpatialAudioEventHandler()
-        {
-            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _cloudSpatialAudioEngineImpl.GetCloudSpatialAudioEventHandler();
-        }
         
         public override void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
         {
@@ -45,16 +35,6 @@ namespace agora.rtc
                 return;
             }
             _cloudSpatialAudioEngineImpl.InitEventHandler(engineEventHandler);
-        }
-
-        public override void RemoveEventHandler()
-        {
-            if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return;
-            }
-            _cloudSpatialAudioEngineImpl.RemoveEventHandler();
         }
 
         public override int Initialize(CloudSpatialAudioConfig config)

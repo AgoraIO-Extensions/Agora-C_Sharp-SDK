@@ -1,6 +1,6 @@
 using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public abstract class IRtcEngine
     {
@@ -37,11 +37,7 @@ namespace agora.rtc
         #endregion
 
         #region Event handler
-        public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
-
         public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
-
-        public abstract void RemoveEventHandler();
         #endregion
 
         #region Audio management
@@ -391,7 +387,7 @@ namespace agora.rtc
         #endregion
 
         #region External video source
-        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType);
+        public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
 
         public abstract int PushVideoFrame(ExternalVideoFrame frame);
 
@@ -413,7 +409,7 @@ namespace agora.rtc
         #endregion
 
         #region Extension
-        public abstract int LoadExtensionProvider(string extension_lib_path);
+        public abstract int LoadExtensionProvider(string path);
 
         public abstract int SetExtensionProviderProperty(string provider, string key, string value);
 
@@ -428,10 +424,6 @@ namespace agora.rtc
         public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
         public abstract void UnregisterMediaMetadataObserver();
-
-        public abstract int SetMaxMetadataSize(int size);
-
-        public abstract int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
         #endregion
 
         #region Audio recording
@@ -509,7 +501,7 @@ namespace agora.rtc
         #region Miscellaneous methods
         public abstract int SetCloudProxy(CLOUD_PROXY_TYPE proxyType);
 
-        public abstract string GetCallId();
+        public abstract int GetCallId(ref string callId);
 
         public abstract int Rate(string callId, int rating, string description);
 
@@ -673,9 +665,9 @@ namespace agora.rtc
 
         public abstract int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config);
 
-        public abstract int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection);
+        public abstract int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection);
 
-        public abstract int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection);
+        public abstract int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection);
 
         public abstract int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection);
 

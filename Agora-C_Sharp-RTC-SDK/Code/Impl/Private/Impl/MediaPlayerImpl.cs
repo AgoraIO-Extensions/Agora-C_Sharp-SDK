@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
@@ -20,7 +20,6 @@ namespace agora.rtc
         private bool _disposed = false;
 
         private IrisApiEnginePtr _irisApiEngine;
-        private MediaPlayerSourceObserver _mediaPlayerEventHandlerInstance;
 
         private CharAssistant _result;
 
@@ -104,7 +103,6 @@ namespace agora.rtc
                 MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
 #endif
             }
-            _mediaPlayerEventHandlerInstance = MediaPlayerSourceObserver.GetInstance();
         }
 
         private void ReleaseEventHandler()
@@ -248,22 +246,14 @@ namespace agora.rtc
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
 
-        public MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver()
-        {
-            return _mediaPlayerEventHandlerInstance;
-        }
-
         public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
         {
             if (!MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
             {
                 MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Add(playerId, engineEventHandler);
             }
-        }
 
-        public void RemoveEventHandler(int playerId)
-        {
-            if (MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
+            if (engineEventHandler == null && MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
             {
                 MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Remove(playerId);
             }
@@ -450,7 +440,7 @@ namespace agora.rtc
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETSTREAMINFO,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            info = _result.Result.Length == 0 ? new PlayerStreamInfo() : AgoraJson.JsonToStruct<PlayerStreamInfo>(_result.Result);
+            info = ret != 0 ? new PlayerStreamInfo() : AgoraJson.JsonToStruct<PlayerStreamInfo>(_result.Result, "info");
             return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
         }
 

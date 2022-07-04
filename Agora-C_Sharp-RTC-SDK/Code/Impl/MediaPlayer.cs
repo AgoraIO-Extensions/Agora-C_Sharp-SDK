@@ -1,6 +1,6 @@
 using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public sealed class MediaPlayer : IMediaPlayer
     {
@@ -42,16 +42,6 @@ namespace agora.rtc
             return playerId;
         }
 
-        public override MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _mediaPlayerImpl.GetAgoraRtcMediaPlayerSourceObserver();
-        }
-
         public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
@@ -60,16 +50,6 @@ namespace agora.rtc
                 return;
             }
             _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
-        }
-
-        public override void RemoveEventHandler()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return;
-            }
-            _mediaPlayerImpl.RemoveEventHandler(playerId);
         }
 
         public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)

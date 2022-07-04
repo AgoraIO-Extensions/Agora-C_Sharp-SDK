@@ -1,6 +1,6 @@
 using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public sealed class RtcEngine : IRtcEngineEx
     {
@@ -83,16 +83,6 @@ namespace agora.rtc
             instance = null;
         }
 
-        public override RtcEngineEventHandler GetRtcEngineEventHandler()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _rtcEngineImpl.GetRtcEngineEventHandler();
-        }
-
         public override void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
             if (_rtcEngineImpl == null)
@@ -101,16 +91,6 @@ namespace agora.rtc
                 return;
             }
             _rtcEngineImpl.InitEventHandler(engineEventHandler);
-        }
-
-        public override void RemoveEventHandler()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return;
-            }
-            _rtcEngineImpl.RemoveEventHandler();
         }
 
         public override void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
@@ -1473,14 +1453,14 @@ namespace agora.rtc
             return _rtcEngineImpl.SetInEarMonitoringVolume(volume);
         }
 
-        public override int LoadExtensionProvider(string extension_lib_path)
+        public override int LoadExtensionProvider(string path)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.LoadExtensionProvider(extension_lib_path);
+            return _rtcEngineImpl.LoadExtensionProvider(path);
         }
 
         public override int SetExtensionProviderProperty(string provider, string key, string value)
@@ -1803,14 +1783,14 @@ namespace agora.rtc
             return _rtcEngineImpl.StopScreenCapture();
         }
 
-        public override string GetCallId()
+        public override int GetCallId(ref string callId)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
-                return null;
+                return ErrorCode;
             }
-            return _rtcEngineImpl.GetCallId();
+            return _rtcEngineImpl.GetCallId(ref callId);
         }
 
         public override int Rate(string callId, int rating, string description)
@@ -2492,24 +2472,24 @@ namespace agora.rtc
             return _rtcEngineImpl.EnableEncryptionEx(connection, enabled, config);
         }
 
-        public override int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection)
+        public override int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.CreateDataStreamEx(reliable, ordered, connection);
+            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, reliable, ordered, connection);
         }
 
-        public override int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection)
+        public override int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.CreateDataStreamEx(config, connection);
+            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, config, connection);
         }
 
         public override int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
@@ -2572,14 +2552,14 @@ namespace agora.rtc
             return _rtcEngineImpl.PullAudioFrame(frame);
         }
 
-        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
+        public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType);
+            return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
         }
 
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true)
@@ -3076,16 +3056,6 @@ namespace agora.rtc
         public override bool StopDumpVideo()
         {
             return _rtcEngineImpl.StopDumpVideo();
-        }
-
-        public override int SetMaxMetadataSize(int size)
-        {
-            return _rtcEngineImpl.SetMaxMetadataSize(size);
-        }
-
-        public override int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
-        {
-            return _rtcEngineImpl.SendMetaData(metadata, source_type);
         }
     };
 }

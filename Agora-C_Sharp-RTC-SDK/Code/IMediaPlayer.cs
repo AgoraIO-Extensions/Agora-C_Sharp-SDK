@@ -1,6 +1,6 @@
 using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public abstract class IMediaPlayer
     {
@@ -8,11 +8,7 @@ namespace agora.rtc
 
         public abstract int GetId();
 
-        public abstract MediaPlayerSourceObserver GetAgoraRtcMediaPlayerSourceObserver();
-
         public abstract void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
-
-        public abstract void RemoveEventHandler();
 
         public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
 

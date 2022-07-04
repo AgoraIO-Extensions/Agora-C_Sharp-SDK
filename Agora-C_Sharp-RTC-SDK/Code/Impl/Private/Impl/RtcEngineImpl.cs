@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using IrisRtcEnginePtr = IntPtr;
     using IrisEventHandlerHandleNative = IntPtr;
@@ -49,7 +49,6 @@ namespace agora.rtc
         private AgoraCallbackObject _callbackObject;
 #endif
 
-        private RtcEngineEventHandler _engineEventHandlerInstance;
         private VideoDeviceManagerImpl _videoDeviceManagerInstance;
         private AudioDeviceManagerImpl _audioDeviceManagerInstance;
 
@@ -178,8 +177,6 @@ namespace agora.rtc
                 RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _engineEventHandlerInstance = RtcEngineEventHandler.GetInstance();
-            RtcEngineEventHandlerNative.EngineEventHandler = _engineEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
@@ -217,7 +214,6 @@ namespace agora.rtc
 
         public int Initialize(RtcEngineContext context)
         {
-            AgoraRtcNative.InitLogger(_irisRtcEngine, context.logConfig.filePath, 0);
             var param = new
             {
                 context
@@ -245,19 +241,9 @@ namespace agora.rtc
             GC.SuppressFinalize(this);
         }
 
-        public RtcEngineEventHandler GetRtcEngineEventHandler()
-        {
-            return _engineEventHandlerInstance;
-        }
-
         public void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
             RtcEngineEventHandlerNative.EngineEventHandler = engineEventHandler;
-        }
-
-        public void RemoveEventHandler()
-        {
-            RtcEngineEventHandlerNative.EngineEventHandler = null;
         }
 
         public void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
@@ -525,7 +511,7 @@ namespace agora.rtc
 
         public string GetErrorDescription(int code)
         {
-            var param = new { };
+            var param = new { code };
             var json = AgoraJson.ToJson(param);
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETERRORDESCRIPTION,
@@ -1241,11 +1227,15 @@ namespace agora.rtc
             _irisRtcCAudioEncodedFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(_irisRtcCAudioEncodeFrameObserverNativeLocal));
             Marshal.StructureToPtr(_irisRtcCAudioEncodeFrameObserverNativeLocal, _irisRtcCAudioEncodedFrameObserverNative, true);
 
-            var param = AgoraJson.ToJson(config);
+            var param = new
+            {
+                config
+            };
+
             _irisRtcAudioEncodedFrameObserverHandleNative = AgoraRtcNative.RegisterAudioEncodedFrameObserver(
                 _irisRtcEngine,
                 _irisRtcCAudioEncodedFrameObserverNative,
-                param
+                AgoraJson.ToJson(param)
              );
         }
 
@@ -1278,10 +1268,6 @@ namespace agora.rtc
                 out _result);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
-        //CreateMediaPlayer
-
-        //DestroyMediaPlayer
 
         public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
         {
@@ -2492,11 +2478,11 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int LoadExtensionProvider(string extension_lib_path)
+        public int LoadExtensionProvider(string path)
         {
             var param = new
             {
-                extension_lib_path
+                path
             };
 
             var json = AgoraJson.ToJson(param);
@@ -3023,7 +3009,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public string GetCallId()
+        public int GetCallId(ref string callId)
         {
             var param = new { };
 
@@ -3034,7 +3020,16 @@ namespace agora.rtc
                 IntPtr.Zero, 0,
                 out _result);
 
-            return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
+            if (nRet == 0)
+            {
+                callId = (string)AgoraJson.GetData<string>(_result.Result, "callId");
+            }
+            else
+            {
+                callId = "";
+            }
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public int Rate(string callId, int rating,
@@ -4192,7 +4187,7 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int CreateDataStreamEx(bool reliable, bool ordered, RtcConnection connection)
+        public int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection)
         {
             var param = new
             {
@@ -4207,11 +4202,19 @@ namespace agora.rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
+            if (nRet == 0)
+            {
+                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
+            }
+            else
+            {
+                streamId = 0;
+            }
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int CreateDataStreamEx(DataStreamConfig config, RtcConnection connection)
+        public int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection)
         {
             var param = new
             {
@@ -4225,6 +4228,14 @@ namespace agora.rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
+            if (nRet == 0)
+            {
+                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
+            }
+            else
+            {
+                streamId = 0;
+            }
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
@@ -4303,13 +4314,14 @@ namespace agora.rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType)
+        public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
             var param = new
             {
                 enabled,
                 useTexture,
-                sourceType
+                sourceType,
+                encodedVideoOption
             };
 
             var json = AgoraJson.ToJson(param);
@@ -5100,12 +5112,52 @@ namespace agora.rtc
 
             var json = AgoraJson.ToJson(param);
 
-            return AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
+            var infoInternal =  AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result) != 0 ?
-                new ScreenCaptureSourceInfo[0]
-                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfo>(_result.Result, "result");
+                new ScreenCaptureSourceInfoInternal[0]
+                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result.Result, "result");
+
+            var info = new ScreenCaptureSourceInfo[infoInternal.Length];
+            for (int i = 0; i < infoInternal.Length; i++)
+            {
+                var screenCaptureSourceInfo = new ScreenCaptureSourceInfo();
+                screenCaptureSourceInfo.type = infoInternal[i].type;
+                screenCaptureSourceInfo.isOccluded = infoInternal[i].isOccluded;
+                screenCaptureSourceInfo.primaryMonitor = infoInternal[i].primaryMonitor;
+                screenCaptureSourceInfo.processPath = infoInternal[i].processPath;
+                screenCaptureSourceInfo.sourceId = infoInternal[i].sourceId;
+                screenCaptureSourceInfo.sourceName = infoInternal[i].sourceName;
+                screenCaptureSourceInfo.sourceTitle = infoInternal[i].sourceTitle;
+                ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
+                imageBuffer.height = infoInternal[i].thumbImage.height;
+                imageBuffer.width = infoInternal[i].thumbImage.width;
+                imageBuffer.length = infoInternal[i].thumbImage.length;
+                byte[] thumbBuffer = new byte[imageBuffer.length];
+                if (imageBuffer.length > 0)
+                {
+                    Marshal.Copy((IntPtr)(infoInternal[i].thumbImage.buffer), thumbBuffer, 0, (int)imageBuffer.length);
+                }
+                imageBuffer.buffer = thumbBuffer;
+                screenCaptureSourceInfo.thumbImage = imageBuffer;
+
+                ThumbImageBuffer imageBuffer2 = new ThumbImageBuffer();
+                imageBuffer2.height = infoInternal[i].iconImage.height;
+                imageBuffer2.width = infoInternal[i].iconImage.width;
+                imageBuffer2.length = infoInternal[i].iconImage.length;
+                byte[] iconbBuffer = new byte[imageBuffer2.length];
+                if (imageBuffer2.length > 0)
+                {
+                    Marshal.Copy((IntPtr)(infoInternal[i].iconImage.buffer), iconbBuffer, 0, (int)imageBuffer2.length);
+                }
+                imageBuffer2.buffer = iconbBuffer;
+                screenCaptureSourceInfo.iconImage = imageBuffer2;
+                info[i] = screenCaptureSourceInfo;
+            }
+
+            ReleaseScreenCaptureSources();
+            return info;
         }
 
         #region CallIrisApiWithBuffer
@@ -5560,6 +5612,16 @@ namespace agora.rtc
         public bool StopDumpVideo()
         {
             return AgoraRtcNative.StopDumpVideo(_videoFrameBufferManagerPtr);
+        }
+
+        public int ReleaseScreenCaptureSources()
+        {
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES,
+                "", 0,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         ~RtcEngineImpl()

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
     using view_t = IntPtr;

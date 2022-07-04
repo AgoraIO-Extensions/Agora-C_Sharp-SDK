@@ -1,9 +1,9 @@
-namespace agora.rtc.LitJson
+namespace Agora.Rtc.LitJson
 {
 #if NETSTANDARD1_5
 using System;
 using System.Reflection;
-namespace agora.rtc.LitJson
+namespace Agora.Rtc.LitJson
 {
     internal static class Netstandard15Polyfill
     {

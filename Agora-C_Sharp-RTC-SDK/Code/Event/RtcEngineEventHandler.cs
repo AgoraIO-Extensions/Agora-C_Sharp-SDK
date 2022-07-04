@@ -1,9 +1,6 @@
 using System;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-using AOT;
-#endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     public delegate void OnJoinChannelSuccessHandler(RtcConnection connection, int elapsed);
 
@@ -109,7 +106,7 @@ namespace agora.rtc
 
     public delegate void OnConnectionBannedHandler(RtcConnection connection);
 
-    public delegate void OnStreamMessageHandler(RtcConnection connection, uint remoteUid, int streamId, IntPtr data, uint length, UInt64 sentTs);
+    public delegate void OnStreamMessageHandler(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs);
 
     public delegate void OnStreamMessageErrorHandler(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached);
 
@@ -622,7 +619,7 @@ namespace agora.rtc
             EventOnConnectionBanned.Invoke(connection);
         }
 
-        public override void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, IntPtr data, uint length, UInt64 sentTs)
+        public override void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs)
         {
             if (EventOnStreamMessage == null) return;
             EventOnStreamMessage.Invoke(connection, remoteUid, streamId, data, length, sentTs);

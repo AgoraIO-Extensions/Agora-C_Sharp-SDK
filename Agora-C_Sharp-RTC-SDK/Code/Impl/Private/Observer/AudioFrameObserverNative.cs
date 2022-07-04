@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal static class AudioFrameObserverNative
     {
@@ -23,8 +23,8 @@ namespace agora.rtc
 
         private static AudioFrame ProcessAudioFrameReceived(IntPtr audioFramePtr, string channelId, uint uid)
         {
-            var audioFrame = (IrisAudioFrame) (Marshal.PtrToStructure(audioFramePtr, typeof(IrisAudioFrame)) ??
-                                                    new IrisAudioFrame());
+            var audioFrame = (IrisAudioFrame)(Marshal.PtrToStructure(audioFramePtr, typeof(IrisAudioFrame)) ??
+                new IrisAudioFrame());
             var localAudioFrame = new AudioFrame();
 
             if (channelId == "")
@@ -63,7 +63,7 @@ namespace agora.rtc
             {
                 if (localAudioFrame.channels != audioFrame.channels ||
                 localAudioFrame.samplesPerChannel != audioFrame.samples ||
-                localAudioFrame.bytesPerSample != audioFrame.bytes_per_sample)
+                localAudioFrame.bytesPerSample != (BYTES_PER_SAMPLE)audioFrame.bytes_per_sample)
                 {
                     localAudioFrame.RawBuffer = new byte[audioFrame.buffer_length];
                 }
@@ -75,7 +75,7 @@ namespace agora.rtc
             localAudioFrame.type = audioFrame.type;
             localAudioFrame.samplesPerChannel = audioFrame.samples;
             localAudioFrame.bufferPtr = audioFrame.buffer;
-            localAudioFrame.bytesPerSample = audioFrame.bytes_per_sample;
+            localAudioFrame.bytesPerSample = (BYTES_PER_SAMPLE)audioFrame.bytes_per_sample;
             localAudioFrame.channels = audioFrame.channels;
             localAudioFrame.samplesPerSec = audioFrame.samples_per_sec;
             localAudioFrame.renderTimeMs = audioFrame.render_time_ms;
@@ -87,34 +87,34 @@ namespace agora.rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
 #endif
-        internal static bool OnRecordAudioFrame(IntPtr audioFramePtr)
+        internal static bool OnRecordAudioFrame(string channelId, IntPtr audioFramePtr)
         {
             return AudioFrameObserver == null || 
-                AudioFrameObserver.OnRecordAudioFrame(ProcessAudioFrameReceived(audioFramePtr, "", 0));
+                AudioFrameObserver.OnRecordAudioFrame(channelId, ProcessAudioFrameReceived(audioFramePtr, "", 0));
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
 #endif
-        internal static bool OnPlaybackAudioFrame(IntPtr audioFramePtr)
+        internal static bool OnPlaybackAudioFrame(string channelId, IntPtr audioFramePtr)
         {
             return AudioFrameObserver == null ||
-                AudioFrameObserver.OnPlaybackAudioFrame(ProcessAudioFrameReceived(audioFramePtr, "", 1));
+                AudioFrameObserver.OnPlaybackAudioFrame(channelId, ProcessAudioFrameReceived(audioFramePtr, "", 1));
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
 #endif
-        internal static bool OnMixedAudioFrame(IntPtr audioFramePtr)
+        internal static bool OnMixedAudioFrame(string channelId, IntPtr audioFramePtr)
         {
             return AudioFrameObserver == null ||
-                AudioFrameObserver.OnMixedAudioFrame(ProcessAudioFrameReceived(audioFramePtr, "", 2));
+                AudioFrameObserver.OnMixedAudioFrame(channelId, ProcessAudioFrameReceived(audioFramePtr, "", 2));
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_AudioFrameRemote_Native))]
 #endif
-        internal static bool OnPlaybackAudioFrameBeforeMixing(uint uid, IntPtr audioFramePtr)
+        internal static bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, IntPtr audioFramePtr)
         {
             return true;
         }

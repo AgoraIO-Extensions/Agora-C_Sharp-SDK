@@ -14,7 +14,7 @@ using System;
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace agora.rtc.LitJson
+namespace Agora.Rtc.LitJson
 {
     public class JsonMockWrapper : IJsonWrapper
     {
@@ -22,22 +22,28 @@ namespace agora.rtc.LitJson
         public bool IsBoolean { get { return false; } }
         public bool IsDouble  { get { return false; } }
         public bool IsInt     { get { return false; } }
+        public bool IsUInt    { get { return false; } }
         public bool IsLong    { get { return false; } }
+        public bool IsULong   { get { return false; } }
         public bool IsObject  { get { return false; } }
         public bool IsString  { get { return false; } }
 
         public bool     GetBoolean ()  { return false; }
         public double   GetDouble ()   { return 0.0; }
         public int      GetInt ()      { return 0; }
+        public uint     GetUInt()      { return 0; }
         public JsonType GetJsonType () { return JsonType.None; }
         public long     GetLong ()     { return 0L; }
+        public ulong    GetULong()     { return 0L; }
         public string   GetString ()   { return ""; }
 
         public void SetBoolean  (bool val)      {}
         public void SetDouble   (double val)    {}
         public void SetInt      (int val)       {}
+        public void SetUInt     (uint val)      {}
         public void SetJsonType (JsonType type) {}
         public void SetLong     (long val)      {}
+        public void SetULong    (ulong val)      {}
         public void SetString   (string val)    {}
 
         public string ToJson ()                  { return ""; }

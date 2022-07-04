@@ -3,7 +3,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace agora.rtc
+namespace Agora.Rtc
 {
     internal sealed class AgoraCallbackObject
     {
