@@ -5,6 +5,7 @@ namespace Agora.Rtc
 {
     public sealed class RtcEngine : IRtcEngineEx
     {
+        private bool _disposed = false;
         private RtcEngineImpl _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
         private IVideoDeviceManager _videoDeviceManager = null;
@@ -26,6 +27,7 @@ namespace Agora.Rtc
 
         ~RtcEngine()
         {
+            Dispose();
             _audioDeviceManager = null;
             _videoDeviceManager = null;
             //_cloudSpatialAudioEngine = null;
@@ -72,6 +74,7 @@ namespace Agora.Rtc
 
         public override void Dispose(bool sync = false)
         {
+            if (_disposed) return;
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
@@ -85,6 +88,8 @@ namespace Agora.Rtc
             //CloudSpatialAudioEngine.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
             instance = null;
+
+            _disposed = true;
         }
 
         public override RtcEngineEventHandler GetRtcEngineEventHandler()
