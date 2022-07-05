@@ -41,8 +41,8 @@
         <OutputPath>binx64\Release</OutputPath>
     </PropertyGroup>
 
-     <ItemGroup>
-      <PackageReference Include="agora_rtc_sdk" Version="3.6.2" />
+    <ItemGroup>
+      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
     </ItemGroup>
 
     <ItemGroup>
