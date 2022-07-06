@@ -367,7 +367,9 @@ namespace Agora.Rtc.LitJson
 
             if (reader.Token == JsonToken.Double ||
                 reader.Token == JsonToken.Int ||
+                reader.Token == JsonToken.UInt ||
                 reader.Token == JsonToken.Long ||
+                reader.Token == JsonToken.ULong ||
                 reader.Token == JsonToken.String ||
                 reader.Token == JsonToken.Boolean)
             {
@@ -1040,6 +1042,13 @@ namespace Agora.Rtc.LitJson
 
             importer = delegate (object input)
             {
+                return Convert.ToUInt32((int)input);
+            };
+            RegisterImporter(base_importers_table, typeof(int),
+                              typeof(uint), importer);
+
+            importer = delegate (object input)
+            {
                 return Convert.ToSByte((int)input);
             };
             RegisterImporter(base_importers_table, typeof(int),
@@ -1080,6 +1089,23 @@ namespace Agora.Rtc.LitJson
             RegisterImporter(base_importers_table, typeof(int),
                               typeof(double), importer);
 
+
+            importer = delegate (object input)
+            {
+                return Convert.ToInt64((uint)input);
+            };
+            RegisterImporter(base_importers_table, typeof(uint),
+                              typeof(long), importer);
+
+
+            importer = delegate (object input)
+            {
+                return Convert.ToUInt64((uint)input);
+            };
+            RegisterImporter(base_importers_table, typeof(uint),
+                              typeof(ulong), importer);
+
+
             importer = delegate (object input)
             {
                 return Convert.ToDecimal((double)input);
@@ -1100,6 +1126,13 @@ namespace Agora.Rtc.LitJson
             };
             RegisterImporter(base_importers_table, typeof(long),
                               typeof(uint), importer);
+
+            importer = delegate (object input)
+            {
+                return Convert.ToUInt64((long)input);
+            };
+            RegisterImporter(base_importers_table, typeof(long),
+                              typeof(ulong), importer);
 
             importer = delegate (object input)
             {
