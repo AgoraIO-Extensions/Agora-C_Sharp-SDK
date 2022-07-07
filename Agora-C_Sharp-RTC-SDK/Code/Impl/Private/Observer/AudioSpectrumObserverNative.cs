@@ -9,7 +9,7 @@ namespace Agora.Rtc
 {
     internal static class AudioSpectrumObserverNative
     {
-        internal static IAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
+        internal static IAudioSpectrumObserver AgoraRtcAudioSpectrumObserver = null;
         internal static Dictionary<int, IAudioSpectrumObserver> AgoraRtcAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserver>();
 
         private static AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
@@ -28,21 +28,25 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_LocalAudioSpectrum_Native))]
 #endif
-        internal static bool OnLocalAudioSpectrum(IntPtr data)
+        internal static bool OnLocalAudioSpectrum(int playerId, IntPtr data)
         {
-            if (AgoraRtcAudioSpectrumObserver == null) return false;
-
+            if (!AgoraRtcAudioSpectrumObserverDic.ContainsKey(playerId) && AgoraRtcAudioSpectrumObserver == null) return false;
             var irisAudioSpectrumData = (IrisAudioSpectrumData)Marshal.PtrToStructure(data, typeof(IrisAudioSpectrumData));
 
-            return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(ProcessAudioSpectrumData(irisAudioSpectrumData.audioSpectrumData, irisAudioSpectrumData.dataLength));
+            if (playerId == 0)
+            {
+                return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(ProcessAudioSpectrumData(irisAudioSpectrumData.audioSpectrumData, irisAudioSpectrumData.dataLength));
+            }
+
+            return AgoraRtcAudioSpectrumObserverDic[playerId].OnLocalAudioSpectrum(ProcessAudioSpectrumData(irisAudioSpectrumData.audioSpectrumData, irisAudioSpectrumData.dataLength));
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_RemoteAudioSpectrum_Native))]
 #endif
-        internal static bool OnRemoteAudioSpectrum(IntPtr dataspectrums, uint spectrumNumber)
+        internal static bool OnRemoteAudioSpectrum(int playerId, IntPtr dataspectrums, uint spectrumNumber)
         {
-            if (AgoraRtcAudioSpectrumObserver == null) return false;
+            if (!AgoraRtcAudioSpectrumObserverDic.ContainsKey(playerId) && AgoraRtcAudioSpectrumObserver == null) return false;
 
             UserAudioSpectrumInfo[] SpectrumInfos = new UserAudioSpectrumInfo[spectrumNumber];
             for (int i = 0; i < spectrumNumber; i++)
@@ -53,7 +57,12 @@ namespace Agora.Rtc
                 SpectrumInfos[i].spectrumData = ProcessAudioSpectrumData(dataspectrum.spectrumData.audioSpectrumData, dataspectrum.spectrumData.dataLength);
             }
 
-            return AgoraRtcAudioSpectrumObserver.OnRemoteAudioSpectrum(SpectrumInfos, spectrumNumber);
+            if (playerId == 0)
+            {
+                return AgoraRtcAudioSpectrumObserver.OnRemoteAudioSpectrum(SpectrumInfos, spectrumNumber);
+            }
+
+            return AgoraRtcAudioSpectrumObserverDic[playerId].OnRemoteAudioSpectrum(SpectrumInfos, spectrumNumber);
         }
     }
 }

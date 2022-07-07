@@ -81,6 +81,10 @@ namespace Agora.Rtc
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
 
+        private IntPtr _irisRtcCAudioSpectrumObserverNative;
+        private IrisMediaPlayerCAudioSpectrumObserver _irisRtcCAudioSpectrumObserver;
+        private IntPtr _irisRtcCAudioSpectrumObserverHandleNative;
+
         private RtcEngineImpl()
         {
             _result = new CharAssistant();
@@ -112,6 +116,7 @@ namespace Agora.Rtc
                 UnSetIrisVideoFrameObserver();
                 UnSetIrisMetaDataObserver();
                 UnSetIrisAudioEncodedFrameObserver();
+                UnSetIrisAudioSpectrumObserver();
 
                 _videoDeviceManagerInstance.Dispose();
                 _videoDeviceManagerInstance = null;
@@ -220,7 +225,6 @@ namespace Agora.Rtc
 
         public int Initialize(RtcEngineContext context)
         {
-            //AgoraRtcNative.InitLogger(_irisRtcEngine, context.logConfig.filePath, 0);
             var param = new
             {
                 context
@@ -2334,7 +2338,6 @@ namespace Agora.Rtc
                 intervalInMS
             };
 
-
             var json = AgoraJson.ToJson(param);
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEAUDIOSPECTRUMMONITOR,
@@ -2357,16 +2360,53 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        private void SetIrisAudioSpectrumObserver()
+        {
+            if (_irisRtcCAudioSpectrumObserverNative != IntPtr.Zero) return;
+            var param = new { };
+            _irisRtcCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver
+            {
+                OnLocalAudioSpectrum = AudioSpectrumObserverNative.OnLocalAudioSpectrum,
+                OnRemoteAudioSpectrum = AudioSpectrumObserverNative.OnRemoteAudioSpectrum
+            };
+
+            var irisMediaPlayerCAudioSpectrumObserverNativeLocal = new IrisMediaPlayerCAudioSpectrumObserverNative
+            {
+                onLocalAudioSpectrum = Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioSpectrumObserver.OnLocalAudioSpectrum),
+                onRemoteAudioSpectrum = Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioSpectrumObserver.OnRemoteAudioSpectrum)
+            };
+
+            _irisRtcCAudioSpectrumObserverHandleNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCAudioSpectrumObserverNativeLocal));
+            Marshal.StructureToPtr(irisMediaPlayerCAudioSpectrumObserverNativeLocal, _irisRtcCAudioSpectrumObserverHandleNative, true);
+            _irisRtcCAudioSpectrumObserverNative = AgoraRtcNative.RegisterRtcAudioSpectrumObserver(
+                _irisRtcEngine,
+                _irisRtcCAudioSpectrumObserverHandleNative, AgoraJson.ToJson(param)
+            );
+        }
+
+        private void UnSetIrisAudioSpectrumObserver()
+        {
+            if (_irisRtcCAudioSpectrumObserverNative == IntPtr.Zero) return;
+            var param = new { };
+            AgoraRtcNative.UnRegisterRtcAudioSpectrumObserver(
+                _irisRtcEngine,
+                _irisRtcCAudioSpectrumObserverNative, AgoraJson.ToJson(param)
+            );
+            _irisRtcCAudioSpectrumObserverNative = IntPtr.Zero;
+            _irisRtcCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver();
+            Marshal.FreeHGlobal(_irisRtcCAudioSpectrumObserverHandleNative);
+        }
+
         public void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
-            //todo wait for capi
+            SetIrisAudioSpectrumObserver();
             AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
         public void UnregisterAudioSpectrumObserver()
         {
-            //todo wait for capi
             AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
+            UnSetIrisAudioSpectrumObserver();
         }
 
         public int AdjustRecordingSignalVolume(int volume)
