@@ -94,7 +94,7 @@ namespace CSharp_API_Example
                 ret = rtc_engine_.LeaveChannel();
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
             }
-            rtc_engine_.Dispose();
+            
             CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Dispose", ret);
             return ret;
         }
