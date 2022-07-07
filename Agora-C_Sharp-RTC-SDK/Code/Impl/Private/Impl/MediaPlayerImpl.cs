@@ -118,8 +118,6 @@ namespace Agora.Rtc
             _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
-
-
         private void SetIrisAudioFrameObserver()
         {
             var param = new { };
@@ -208,9 +206,9 @@ namespace Agora.Rtc
 
         private void SetIrisAudioSpectrumObserver(int intervalInMS)
         {
-            var param = new { intervalInMS };
             if (_irisMediaPlayerCAudioSpectrumObserverNative != IntPtr.Zero) return;
 
+            var param = new { intervalInMS };
             _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver
             {
                 OnLocalAudioSpectrum = AudioSpectrumObserverNative.OnLocalAudioSpectrum,
@@ -233,15 +231,13 @@ namespace Agora.Rtc
 
         private void UnSetIrisAudioSpectrumObserver()
         {
-            var param = new { };
             if (_irisMediaPlayerCAudioSpectrumObserverNative == IntPtr.Zero) return;
-
+            var param = new { };
             AgoraRtcNative.UnRegisterMediaPlayerAudioSpectrumObserver(
                 _irisApiEngine,
-                _irisMediaPlayerCAudioSpectrumObserverHandleNative, AgoraJson.ToJson(param)
-            );
+                _irisMediaPlayerCAudioSpectrumObserverNative, AgoraJson.ToJson(param));
             _irisMediaPlayerCAudioSpectrumObserverNative = IntPtr.Zero;
-            AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
+            AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserverDic.Clear();
             _irisMediaPlayerCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver();
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
@@ -283,7 +279,6 @@ namespace Agora.Rtc
             {
                 MediaPlayerAudioFrameObserverNative.AudioFrameObserverDic.Remove(playerId);
             }
-            UnSetIrisAudioFrameObserver();
         }
 
         public void RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
@@ -295,9 +290,12 @@ namespace Agora.Rtc
             }
         }
 
-        public void UnregisterMediaPlayerAudioSpectrumObserver()
+        public void UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
         {
-            UnSetIrisAudioSpectrumObserver();
+            if (!AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserverDic.ContainsKey(playerId))
+            {
+                AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserverDic.Remove(playerId);
+            }
         }
 
         public int CreateMediaPlayer()

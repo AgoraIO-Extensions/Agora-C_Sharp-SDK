@@ -9,7 +9,7 @@ namespace Agora.Rtc
 {
     internal static class AudioSpectrumObserverNative
     {
-        internal static IAudioSpectrumObserver AgoraRtcAudioSpectrumObserver;
+        internal static IAudioSpectrumObserver AgoraRtcAudioSpectrumObserver = null;
         internal static Dictionary<int, IAudioSpectrumObserver> AgoraRtcAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserver>();
 
         private static AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
@@ -28,32 +28,49 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_LocalAudioSpectrum_Native))]
 #endif
-        internal static bool OnLocalAudioSpectrum(IntPtr data)
+        internal static bool OnLocalAudioSpectrum(int playerId, IntPtr data)
         {
-            if (AgoraRtcAudioSpectrumObserver == null) return false;
+            if (playerId == 0)
+            {
+                if (AgoraRtcAudioSpectrumObserver == null) return true;
+                var irisAudioSpectrumData = (IrisAudioSpectrumData)Marshal.PtrToStructure(data, typeof(IrisAudioSpectrumData));
+                return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(ProcessAudioSpectrumData(irisAudioSpectrumData.audioSpectrumData, irisAudioSpectrumData.dataLength));
+            }
 
-            var irisAudioSpectrumData = (IrisAudioSpectrumData)Marshal.PtrToStructure(data, typeof(IrisAudioSpectrumData));
-
-            return AgoraRtcAudioSpectrumObserver.OnLocalAudioSpectrum(ProcessAudioSpectrumData(irisAudioSpectrumData.audioSpectrumData, irisAudioSpectrumData.dataLength));
+            if (!AgoraRtcAudioSpectrumObserverDic.ContainsKey(playerId)) return false;
+            var irisMediaPlayerAudioSpectrumData = (IrisAudioSpectrumData)Marshal.PtrToStructure(data, typeof(IrisAudioSpectrumData));
+            return AgoraRtcAudioSpectrumObserverDic[playerId].OnLocalAudioSpectrum(ProcessAudioSpectrumData(irisMediaPlayerAudioSpectrumData.audioSpectrumData, irisMediaPlayerAudioSpectrumData.dataLength));
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         [MonoPInvokeCallback(typeof(Func_RemoteAudioSpectrum_Native))]
 #endif
-        internal static bool OnRemoteAudioSpectrum(IntPtr dataspectrums, uint spectrumNumber)
+        internal static bool OnRemoteAudioSpectrum(int playerId, IntPtr dataspectrums, uint spectrumNumber)
         {
-            if (AgoraRtcAudioSpectrumObserver == null) return false;
+            if (playerId == 0)
+            {
+                if (AgoraRtcAudioSpectrumObserver == null) return true;
+                UserAudioSpectrumInfo[] SpectrumInfos = new UserAudioSpectrumInfo[spectrumNumber];
+                for (int i = 0; i < spectrumNumber; i++)
+                {
+                    IntPtr p = new IntPtr(dataspectrums.ToInt64() + Marshal.SizeOf(typeof(IrisUserAudioSpectrumInfo)) * i);
+                    var dataspectrum = (IrisUserAudioSpectrumInfo)Marshal.PtrToStructure(p, typeof(IrisUserAudioSpectrumInfo));
+                    SpectrumInfos[i].uid = dataspectrum.uid;
+                    SpectrumInfos[i].spectrumData = ProcessAudioSpectrumData(dataspectrum.spectrumData.audioSpectrumData, dataspectrum.spectrumData.dataLength);
+                }
+                return AgoraRtcAudioSpectrumObserver.OnRemoteAudioSpectrum(SpectrumInfos, spectrumNumber);
+            }
 
-            UserAudioSpectrumInfo[] SpectrumInfos = new UserAudioSpectrumInfo[spectrumNumber];
+            if (!AgoraRtcAudioSpectrumObserverDic.ContainsKey(playerId)) return false;
+            UserAudioSpectrumInfo[] MediaPlayerSpectrumInfos = new UserAudioSpectrumInfo[spectrumNumber];
             for (int i = 0; i < spectrumNumber; i++)
             {
                 IntPtr p = new IntPtr(dataspectrums.ToInt64() + Marshal.SizeOf(typeof(IrisUserAudioSpectrumInfo)) * i);
                 var dataspectrum = (IrisUserAudioSpectrumInfo)Marshal.PtrToStructure(p, typeof(IrisUserAudioSpectrumInfo));
-                SpectrumInfos[i].uid = dataspectrum.uid;
-                SpectrumInfos[i].spectrumData = ProcessAudioSpectrumData(dataspectrum.spectrumData.audioSpectrumData, dataspectrum.spectrumData.dataLength);
+                MediaPlayerSpectrumInfos[i].uid = dataspectrum.uid;
+                MediaPlayerSpectrumInfos[i].spectrumData = ProcessAudioSpectrumData(dataspectrum.spectrumData.audioSpectrumData, dataspectrum.spectrumData.dataLength);
             }
-
-            return AgoraRtcAudioSpectrumObserver.OnRemoteAudioSpectrum(SpectrumInfos, spectrumNumber);
+            return AgoraRtcAudioSpectrumObserverDic[playerId].OnRemoteAudioSpectrum(MediaPlayerSpectrumInfos, spectrumNumber);
         }
     }
 }
