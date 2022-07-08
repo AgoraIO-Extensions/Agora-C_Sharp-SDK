@@ -7,8 +7,18 @@
     ///
     public enum OBSERVER_MODE
     {
+        ///
+        /// <summary>
+        /// Raw data mode, which means the SDK sends you raw data.
+        /// </summary>
+        ///
         RAW_DATA,
 
+        ///
+        /// <summary>
+        /// Pointer mode, which means the SDK sends you the pointer to the raw data.
+        /// </summary>
+        ///
         INTPTR
     };
 
@@ -21,29 +31,14 @@
         public string key;
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum VIDEO_OBSERVER_FRAME_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         FRAME_TYPE_YUV420 = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         FRAME_TYPE_YUV422 = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         FRAME_TYPE_RGBA = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         FRAME_TYPE_BGRA = 3,
     };
 }

@@ -4,65 +4,29 @@ namespace Agora.Rtc
 {
     #region IAgoraRhythmPlayer.h
 
-    ///
-    /// TODO(doc)
-    ///
     public enum RHYTHM_PLAYER_STATE_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_STATE_IDLE = 810,
 
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_STATE_OPENING = 811,
 
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_STATE_DECODING = 812,
 
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_STATE_PLAYING = 813,
 
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_STATE_FAILED = 814,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum RHYTHM_PLAYER_ERROR_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_ERROR_OK = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_ERROR_FAILED = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_ERROR_CAN_NOT_OPEN = 801,
 
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_ERROR_CAN_NOT_PLAY = 802,
 
-        ///
-        /// TODO(doc)
-        ///
         RHYTHM_PLAYER_ERROR_FILE_OVER_DURATION_LIMIT = 803,
     };
 

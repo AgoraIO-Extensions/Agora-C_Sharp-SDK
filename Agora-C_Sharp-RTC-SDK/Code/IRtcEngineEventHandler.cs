@@ -33,14 +33,8 @@ namespace Agora.Rtc
         ///
         public virtual void OnRejoinChannelSuccess(RtcConnection connection, int elapsed) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnWarning(int warn, string msg) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnError(int err, string msg) { }
 
         ///
@@ -168,15 +162,9 @@ namespace Agora.Rtc
         public virtual void OnAudioEffectFinished(int soundId) { }
 
         //todo fix with dcg
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
         //todo fix with dcg
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnMediaDeviceChanged(MEDIA_DEVICE_TYPE deviceType) { }
 
         ///
@@ -213,9 +201,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnNetworkQuality(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnIntraRequestReceived(RtcConnection connection) { }
 
         ///
@@ -229,9 +214,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnUplinkNetworkInfoUpdated(UplinkNetworkInfo info) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info) { }
 
         ///
@@ -284,9 +266,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnVideoSourceFrameSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, int width, int height) { }
 
         ///
@@ -391,7 +370,7 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information.  RtcConnection </param>
         ///
-        /// <param name="null"> The ID of the remote user whose video state changes.</param>
+        /// <param name="remoteUid"> The ID of the remote user whose video state changes.</param>
         ///
         /// <param name="state"> The state of the remote video, see REMOTE_VIDEO_STATE .</param>
         ///
@@ -464,9 +443,6 @@ namespace Agora.Rtc
         [Obsolete("Use onRemoteVideoStateChanged instead of")]
         public virtual void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnUserStateChanged(RtcConnection connection, uint remoteUid, uint state) { }
 
         ///
@@ -618,9 +594,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_ERROR_TYPE errorCode) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) { }
 
         ///
@@ -843,14 +816,8 @@ namespace Agora.Rtc
         ///
         public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted) { }
 
         ///
@@ -962,9 +929,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnChannelMediaRelayEvent(int code) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnLocalPublishFallbackToAudioOnly(bool isFallbackOrRecover) { }
 
         ///
@@ -1066,14 +1030,8 @@ namespace Agora.Rtc
         ///
         public virtual void OnEncryptionError(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnUploadLogResult(RtcConnection connection, string requestId, bool success, UPLOAD_ERROR_REASON reason) { }
 
-        ///
-        /// TODO(doc)
-        ///
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) { }
 
         ///

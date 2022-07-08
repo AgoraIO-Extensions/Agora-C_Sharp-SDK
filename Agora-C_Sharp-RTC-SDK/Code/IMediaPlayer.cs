@@ -74,14 +74,10 @@ namespace Agora.Rtc
         ///
         public abstract void UnregisterAudioFrameObserver();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract void UnregisterMediaPlayerAudioSpectrumObserver();
 
         ///
@@ -255,29 +251,19 @@ namespace Agora.Rtc
         ///
         public abstract int SetLoopCount(int loopCount);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int MuteAudio(bool audio_mute);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract bool IsAudioMuted();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int MuteVideo(bool video_mute);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract bool IsVideoMuted();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetPlaybackSpeed(int speed);
 
         ///
@@ -296,29 +282,19 @@ namespace Agora.Rtc
         ///
         public abstract int SelectAudioTrack(int index);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetPlayerOption(string key, int value);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetPlayerOption(string key, string value);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int TakeScreenshot(string filename);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SelectInternalSubtitle(int index);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetExternalSubtitle(string url);
 
         ///
@@ -455,18 +431,25 @@ namespace Agora.Rtc
         public abstract int SetRenderMode(RENDER_MODE_TYPE renderMode);
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// Sets the channel mode of the current audio file.
+        /// In a stereo music file, the left and right channels can store different audio data. According to your needs, you can set the channel mode to original mode, left channel mode, right channel mode, or mixed channel mode. For example, in the KTV scenario, the left channel of the music file stores the musical accompaniment, and the right channel stores the singing voice. If you only need to listen to the accompaniment, call this method to set the channel mode of the music file to left channel mode; if you need to listen to the accompaniment and the singing voice at the same time, call this method to set the channel mode to mixed channel mode. Call this method after calling Open .
+        /// This method only applies to stereo audio files.
+        /// </summary>
+        ///
+        /// <param name="mode"> The channel mode. See AUDIO_DUAL_MONO_MODE .</param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetAudioDualMonoMode(AUDIO_DUAL_MONO_MODE mode);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract string GetPlayerSdkVersion();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract string GetPlaySrc();
 
         ///

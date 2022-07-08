@@ -15,9 +15,6 @@ namespace Agora.Rtc
         /// After calling RegisterAudioEncodedFrameObserver and setting the encoded audio as AUDIO_ENCODED_FRAME_OBSERVER_POSITION_RECORD, you can get the encoded audio data of the local user from this callback.
         /// </summary>
         ///
-        /// <param name="channels"> The number of channels. 1: Mono.
-        ///  2: Stereo. If the channel uses stereo, the data is interleaved. </param>
-        ///
         /// <param name="frameBufferPtr"> The audio buffer.</param>
         ///
         /// <param name="length"> The data length (byte).</param>
@@ -27,7 +24,6 @@ namespace Agora.Rtc
         public virtual void OnRecordAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
         {
-
         }
 
         ///
@@ -35,13 +31,6 @@ namespace Agora.Rtc
         /// Gets the encoded audio data of all remote users.
         /// AfterAUDIO_ENCODED_FRAME_OBSERVER_POSITION_PLAYBACK calling RegisterAudioEncodedFrameObserver and setting the encoded audio as , you can get encoded audio data of all remote users through this callback.
         /// </summary>
-        ///
-        /// <param name="samplesPerSec"> Recording sample rate (Hz).</param>
-        ///
-        /// <param name="channels"> The number of channels. 1: Mono.
-        ///  2: Stereo. If the channel uses stereo, the data is interleaved. </param>
-        ///
-        /// <param name="samplesPerChannel"> The number of samples per channel in the audio frame.</param>
         ///
         /// <param name="frameBufferPtr"> The audio buffer.</param>
         ///
@@ -52,7 +41,6 @@ namespace Agora.Rtc
         public virtual void OnPlaybackAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
         {
-
         }
 
         ///
@@ -60,13 +48,6 @@ namespace Agora.Rtc
         /// Gets the mixed and encoded audio data of the local and all remote users.
         /// AfterAUDIO_ENCODED_FRAME_OBSERVER_POSITION_MIXED calling RegisterAudioEncodedFrameObserver and setting the audio profile as , you can get the mixed and encoded audio data of the local and all remote users through this callback.
         /// </summary>
-        ///
-        /// <param name="samplesPerSec"> Recording sample rate (Hz).</param>
-        ///
-        /// <param name="channels"> The number of channels. 1: Mono.
-        ///  2: Stereo. If the channel uses stereo, the data is interleaved. </param>
-        ///
-        /// <param name="samplesPerChannel"> The number of samples per channel in the audio frame.</param>
         ///
         /// <param name="frameBufferPtr"> The audio buffer.</param>
         ///
@@ -77,7 +58,6 @@ namespace Agora.Rtc
         public virtual void OnMixedAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
         {
-
         }
     };
 }

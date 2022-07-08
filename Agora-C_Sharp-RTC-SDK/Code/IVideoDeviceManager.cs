@@ -47,14 +47,8 @@ namespace Agora.Rtc
         ///
         public abstract string GetDevice();
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int StartDeviceTest(IntPtr hwnd);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int StopDeviceTest();
     }
 }

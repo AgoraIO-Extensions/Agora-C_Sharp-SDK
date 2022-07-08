@@ -129,9 +129,6 @@ namespace Agora.Rtc
         ///
         public abstract int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection);
 
         ///
@@ -151,9 +148,6 @@ namespace Agora.Rtc
         ///
         public abstract int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int SetParameters(string @params);
 
         ///
@@ -431,9 +425,6 @@ namespace Agora.Rtc
         ///
         public abstract int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection);
 
         ///
@@ -453,9 +444,6 @@ namespace Agora.Rtc
         ///
         public abstract int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int SetParameters(string @params);
 
         ///
@@ -513,9 +501,6 @@ namespace Agora.Rtc
         ///
         public abstract int UpdateRemotePosition(uint uid, float[] position, float[] forward);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection);
 
         ///
@@ -534,9 +519,6 @@ namespace Agora.Rtc
         ///
         public abstract int RemoveRemotePosition(uint uid);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int RemoveRemotePositionEx(uint uid, RtcConnection connection);
 
         ///
@@ -553,9 +535,6 @@ namespace Agora.Rtc
         ///
         public abstract int ClearRemotePositions();
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int ClearRemotePositionsEx(RtcConnection connection);
     }
 
