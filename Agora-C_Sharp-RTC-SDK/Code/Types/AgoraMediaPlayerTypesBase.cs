@@ -70,39 +70,18 @@ namespace Agora.Rtc
         ///
         PLAYER_STATE_STOPPED = 7,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_STATE_PAUSING_INTERNAL = 50,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_STATE_STOPPING_INTERNAL = 51,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_STATE_SEEKING_INTERNAL = 52,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_STATE_GETTING_INTERNAL = 53,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_STATE_NONE_INTERNAL = 54,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_STATE_DO_NOTHING_INTERNAL = 55,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_STATE_SET_TRACK_INTERNAL = 56,
 
         ///
@@ -134,9 +113,6 @@ namespace Agora.Rtc
         ///
         PLAYER_ERROR_INVALID_ARGUMENTS = -1,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_ERROR_INTERNAL = -2,
 
         ///
@@ -230,9 +206,6 @@ namespace Agora.Rtc
         ///
         PLAYER_ERROR_TOKEN_EXPIRED = -15,
 
-        ///
-        /// TODO(doc)
-        ///
         PLAYER_ERROR_IP_EXPIRED = -16,
 
         ///
@@ -371,12 +344,32 @@ namespace Agora.Rtc
         PLAYER_EVENT_FIRST_DISPLAYED = 13,
     };
 
+    ///
+    /// <summary>
+    /// Events that occur when media resources are preloaded.
+    /// </summary>
+    ///
     enum PLAYER_PRELOAD_EVENT
     {
+        ///
+        /// <summary>
+        /// 0: Starts preloading media resources.
+        /// </summary>
+        ///
         PLAYER_PRELOAD_EVENT_BEGIN = 0,
 
+        ///
+        /// <summary>
+        /// 1: Preloading media resources is complete.
+        /// </summary>
+        ///
         PLAYER_PRELOAD_EVENT_COMPLETE = 1,
 
+        ///
+        /// <summary>
+        /// 2: An error occurs when preloading media resources.
+        /// </summary>
+        ///
         PLAYER_PRELOAD_EVENT_ERROR = 2,
     };
 
@@ -422,9 +415,6 @@ namespace Agora.Rtc
         ///
         public int videoFrameRate { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int videoBitRate { set; get; }
 
         ///
@@ -539,17 +529,14 @@ namespace Agora.Rtc
         PLAYER_METADATA_TYPE_SEI = 1,
     };
 
-    /* class_playerupdatedinfo:optionaljsonparse */
     public class PlayerUpdatedInfo:OptionalJsonParse
     {
         public Optional<string> playerId = new Optional<string>();
 
         public Optional<string> deviceId = new Optional<string>();
 
-
         public override  void  ToJson(LitJson.JsonWriter writer)
         {
-
             writer.WriteObjectStart();
 
             if (this.playerId.HasValue())

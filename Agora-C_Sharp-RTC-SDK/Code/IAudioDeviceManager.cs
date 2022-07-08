@@ -55,24 +55,12 @@ namespace Agora.Rtc
         ///
         public abstract DeviceInfo GetPlaybackDeviceInfo();
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int SetPlaybackDeviceVolume(int volume);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int GetPlaybackDeviceVolume();
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int SetPlaybackDeviceMute(bool mute);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract bool GetPlaybackDeviceMute();
 
         ///
@@ -155,24 +143,12 @@ namespace Agora.Rtc
         ///
         public abstract DeviceInfo GetRecordingDeviceInfo();
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int SetRecordingDeviceVolume(int volume);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int GetRecordingDeviceVolume();
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract int SetRecordingDeviceMute(bool mute);
 
-        ///
-        /// TODO(doc)
-        ///
         public abstract bool GetRecordingDeviceMute();
 
         ///

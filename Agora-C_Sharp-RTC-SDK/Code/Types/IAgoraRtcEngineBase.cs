@@ -439,29 +439,14 @@ namespace Agora.Rtc
         ///
         public int captureFrameRate { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int captureFrameWidth { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int captureFrameHeight { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int regulatedCaptureFrameRate { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int regulatedCaptureFrameWidth { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int regulatedCaptureFrameHeight { set; get; }
 
         ///
@@ -667,44 +652,20 @@ namespace Agora.Rtc
         public int superResolutionType { set; get; }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class Region
     {
-        ///
-        /// TODO(doc)
-        ///
         public uint uid { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public double x { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public double y { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public double width { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public double height { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int zOrder { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public double alpha { set; get; }
 
         public RENDER_MODE_TYPE renderMode;
@@ -722,45 +683,20 @@ namespace Agora.Rtc
         }
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public class VideoCompositingLayout
     {
-        ///
-        /// TODO(doc)
-        ///
         public int canvasWidth { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int canvasHeight { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string backgroundColor { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public Region[] regions { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int regionCount { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string appData { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int appDataLength { set; get; }
 
         public VideoCompositingLayout()
@@ -774,7 +710,6 @@ namespace Agora.Rtc
             appDataLength = 0;
         }
     };
-
 
     ///
     /// <summary>
@@ -829,9 +764,6 @@ namespace Agora.Rtc
         ///
         public int videoGop { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int videoFramerate { set; get; }
 
         ///
@@ -891,74 +823,32 @@ namespace Agora.Rtc
         RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class PublisherConfiguration
     {
-        ///
-        /// TODO(doc)
-        ///
         public int width { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int height { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int framerate { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int bitrate { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int defaultLayout { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int lifecycle { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool owner { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int injectStreamWidth { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int injectStreamHeight { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string injectStreamUrl { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string publishUrl { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string rawStreamUrl { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string extraInfo { set; get; }
 
         public PublisherConfiguration()
@@ -979,9 +869,6 @@ namespace Agora.Rtc
         }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class AudioTrackConfig
     {
         public AudioTrackConfig()
@@ -989,9 +876,6 @@ namespace Agora.Rtc
             enableLocalPlayback = true;
         }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool enableLocalPlayback { set; get; }
     };
 
@@ -1017,24 +901,12 @@ namespace Agora.Rtc
         CAMERA_FRONT = 1,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum CLOUD_PROXY_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         NONE_PROXY = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         UDP_PROXY = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         TCP_PROXY = 2,
     };
 
@@ -1141,7 +1013,6 @@ namespace Agora.Rtc
         public Rectangle regionRect { set; get; }
     };
 
-    /* class_audiooptionsexternal : optionaljsonparse */
     public class AudioOptionsExternal : OptionalJsonParse
     {
         public Optional<bool> enable_aec_external_custom_ = new Optional<bool>();
@@ -1157,7 +1028,6 @@ namespace Agora.Rtc
         public override void ToJson(LitJson.JsonWriter writer)
         {
             writer.WriteObjectStart();
-
 
             if (this.enable_aec_external_custom_.HasValue())
             {
@@ -1193,20 +1063,10 @@ namespace Agora.Rtc
         }
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public class SIZE
     {
-        ///
-        /// TODO(doc)
-        ///
         public int width { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int height { set; get; }
 
         public SIZE()
@@ -1221,7 +1081,6 @@ namespace Agora.Rtc
             height = hh;
         }
     };
-
 
     ///
     /// <summary>
@@ -1369,9 +1228,6 @@ namespace Agora.Rtc
         ///
         public bool primaryMonitor { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool isOccluded { set; get; }
 
         public ScreenCaptureSourceInfo()
@@ -1388,37 +1244,191 @@ namespace Agora.Rtc
         }
     };
 
-    /* class_channelmediaoptions : optionaljsonparse */
+    ///
+    /// <summary>
+    /// The channel media options.
+    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection . For example, publishAudioTrack, publishCustomAudioTrack and publishMediaPlayerAudioTrack can be true at the same time; but only one of publishCameraTrack, publishScreenTrack, publishCustomVideoTrack, and publishEncodedVideoTrack can be true at the same time.
+    /// </summary>
+    ///
     public class ChannelMediaOptions : OptionalJsonParse
     {
+        ///
+        /// <summary>
+        /// Whether to publish the video captured by the camera:
+        /// true: (Default) Publish the video captured by the camera.
+        /// false: Do not publish the video captured by the camera.
+        /// </summary>
+        ///
         public Optional<bool> publishCameraTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the video captured by the second camera:
+        /// true: (Default) Publish the video captured by the second camera.
+        /// false: Do not publish the video captured by the second camera.
+        /// </summary>
+        ///
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the captured audio:
+        /// true: (Default) Publish the captured audio.
+        /// false: Do not publish the captured audio.
+        /// </summary>
+        ///
         public Optional<bool> publishAudioTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the captured video from the screen:
+        /// true: Publish the captured video from the screen.
+        /// false: (Default) Do not publish the captured video from the screen. 
+        /// </summary>
+        ///
         public Optional<bool> publishScreenTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the captured video from the secondary screen:
+        /// true: Publish the captured video from the second screen.
+        /// false: (Default) Do not publish the captured video from the second screen. 
+        /// </summary>
+        ///
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the captured audio from a custom source:
+        /// true: Publish the captured audio from a custom source.
+        /// false: (Default) Do not publish the captured audio from the custom source.
+        /// </summary>
+        ///
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// The ID of the custom audio source to publish. The default value is 0.If you have set the value of sourceNumber greater than 1 in SetExternalAudioSource , the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track starting from 0.
+        /// </summary>
+        ///
         public Optional<int> publishCustomAudioSourceId = new Optional<int>();
+        ///
+        /// <summary>
+        /// Whether to enable AEC when publishing the captured audio from a custom source:
+        /// true Enable AEC when publishing the captured audio from a custom source.
+        /// false : (Default) Do not enable AEC when publishing the captured audio from a custom source.
+        /// </summary>
+        ///
         public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
+
         public Optional<bool> publishDirectCustomAudioTrack = new Optional<bool>();
+
         public Optional<bool> publishCustomAudioTrackAec = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the captured video from a custom source:
+        /// true: Publish the captured video from a custom source.
+        /// false: (Default) Do not publish the captured video from the custom source.
+        /// </summary>
+        ///
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the encoded video:
+        /// true: Publish the encoded video.
+        /// false: (Default) Do not publish the encoded video.
+        /// </summary>
+        ///
         public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the audio from the media player:
+        /// true: Publish the audio from the media player.
+        /// false: (Default) Do not publish the audio from the media player.
+        /// </summary>
+        ///
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the video from the media player:
+        /// true: Publish the video from the media player.
+        /// false: (Default) Do not publish the video from the media player.
+        /// </summary>
+        ///
         public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to publish the local transcoded video.
+        /// true: Publish the local transcoded video.
+        /// false: (Default) Do not publish the local transcoded video. 
+        /// </summary>
+        ///
         public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to automatically subscribe to all remote audio streams when the user joins a channel:
+        /// true: (Default) Subscribe to all remote audio streams.
+        /// false: Do not subscribe to any remote audio stream.
+        /// </summary>
+        ///
         public Optional<bool> autoSubscribeAudio = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to subscribe to all remote video streams when the user joins the channel:
+        /// true: (Default) Subscribe to all remote video streams.
+        /// false: Do not subscribe to any remote video stream.
+        /// </summary>
+        ///
         public Optional<bool> autoSubscribeVideo = new Optional<bool>();
+
         public Optional<bool> startPreview = new Optional<bool>();
+        ///
+        /// <summary>
+        /// Whether to enable audio capturing or playback.
+        /// true: (Default) Enable audio capturing and playback.
+        /// false Do not enable audio capturing or playback.
+        /// </summary>
+        ///
         public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
+        ///
+        /// <summary>
+        /// The ID of the media player to be published. The default value is 0.
+        /// </summary>
+        ///
         public Optional<int> publishMediaPlayerId = new Optional<int>();
+        ///
+        /// <summary>
+        /// The user role. See CLIENT_ROLE_TYPE .
+        /// </summary>
+        ///
         public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
+
         public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
+        ///
+        /// <summary>
+        /// The default video-stream type, see VIDEO_STREAM_TYPE .
+        /// </summary>
+        ///
         public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
+        ///
+        /// <summary>
+        /// The channel profile. See CHANNEL_PROFILE_TYPE .
+        /// </summary>
+        ///
         public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
+        ///
+        /// <summary>
+        /// The delay in ms for sending audio frames. This is used for explicit control of A/V sync.
+        /// To switch off the delay, set the value to 0.
+        /// </summary>
+        ///
         public Optional<int> audioDelayMs = new Optional<int>();
+
         public Optional<int> mediaPlayerAudioDelayMs = new Optional<int>();
+        ///
+        /// <summary>
+        /// (Optional) The token generated on your server for authentication. This parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx .
+        /// Ensure that the App ID, channel name, and user name used for creating the token are the same ones as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel.
+        /// </summary>
+        ///
         public Optional<string> token = new Optional<string>();
+
         public Optional<bool> enableBuiltInMediaEncryption = new Optional<bool>();
+
         public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
 
 
@@ -1426,7 +1436,6 @@ namespace Agora.Rtc
 
 
         public ChannelMediaOptions() { }
-
 
         void SetAll(ref ChannelMediaOptions change)
         {
@@ -1482,13 +1491,11 @@ namespace Agora.Rtc
                 writer.Write(this.publishAudioTrack.GetValue());
             }
 
-
             if (this.publishScreenTrack.HasValue())
             {
                 writer.WritePropertyName("publishScreenTrack");
                 writer.Write(this.publishScreenTrack.GetValue());
             }
-
 
             if (this.publishSecondaryScreenTrack.HasValue())
             {
@@ -1496,13 +1503,11 @@ namespace Agora.Rtc
                 writer.Write(this.publishSecondaryScreenTrack.GetValue());
             }
 
-
             if (this.publishCustomAudioTrack.HasValue())
             {
                 writer.WritePropertyName("publishCustomAudioTrack");
                 writer.Write(this.publishCustomAudioTrack.GetValue());
             }
-
 
             if (this.publishCustomAudioSourceId.HasValue())
             {
@@ -1510,20 +1515,17 @@ namespace Agora.Rtc
                 writer.Write(this.publishCustomAudioSourceId.GetValue());
             }
 
-
             if (this.publishCustomAudioTrackEnableAec.HasValue())
             {
                 writer.WritePropertyName("publishCustomAudioTrackEnableAec");
                 writer.Write(this.publishCustomAudioTrackEnableAec.GetValue());
             }
 
-
             if (this.publishDirectCustomAudioTrack.HasValue())
             {
                 writer.WritePropertyName("publishDirectCustomAudioTrack");
                 writer.Write(this.publishDirectCustomAudioTrack.GetValue());
             }
-
 
             if (this.publishCustomAudioTrackAec.HasValue())
             {
@@ -1652,56 +1654,25 @@ namespace Agora.Rtc
         }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum LOCAL_PROXY_MODE
     {
-        ///
-        /// TODO(doc)
-        ///
         kConnectivityFirst = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         kLocalOnly = 1,
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public class LocalAccessPointConfiguration
     {
-        ///
-        /// TODO(doc)
-        ///
         public string[] ipList { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int ipListSize { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string[] domainList { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int domainListSize { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string verifyDomainName { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public LOCAL_PROXY_MODE mode { set; get; }
 
         public LocalAccessPointConfiguration()
@@ -1754,7 +1725,6 @@ namespace Agora.Rtc
         public bool stopMicrophoneRecording { set; get; }
     };
 
-    /* class_rtcenginecontext : optionaljsonparse */
     public class RtcEngineContext : OptionalJsonParse
     {
         public RtcEngineContext()
@@ -1786,30 +1756,22 @@ namespace Agora.Rtc
 
         private IRtcEngineEventHandler eventHandler = null;
 
-        /* class_rtcenginecontext : optionaljsonparse_appId */
         public string appId { set; get; }
 
-        /* class_rtcenginecontext : optionaljsonparse_context */
         public UInt64 context { set; get; }
 
-        /* class_rtcenginecontext : optionaljsonparse_enableAudioDevice */
         public bool enableAudioDevice { set; get; }
 
-        /* class_rtcenginecontext : optionaljsonparse_channelProfile */
         public CHANNEL_PROFILE_TYPE channelProfile { set; get; }
 
-        /* class_rtcenginecontext : optionaljsonparse_audioScenario */
         public AUDIO_SCENARIO_TYPE audioScenario { set; get; }
 
-        /* class_rtcenginecontext : optionaljsonparse_logConfig */
         public LogConfig logConfig { set; get; }
 
-        /* class_rtcenginecontext : optionaljsonparse_areaCode */
         public AREA_CODE areaCode { set; get; }
 
         public Optional<THREAD_PRIORITY_TYPE> threadPriority = new Optional<THREAD_PRIORITY_TYPE>();
 
-        /* class_rtcenginecontext : optionaljsonparse_useExternalEglContext */
         public bool useExternalEglContext { set; get; }
 
         public override void ToJson(JsonWriter writer)
@@ -1834,10 +1796,8 @@ namespace Agora.Rtc
             writer.WritePropertyName("areaCode");
             this.WriteEnum(writer, this.areaCode);
 
-
             writer.WritePropertyName("logConfig");
             JsonMapper.WriteValue(this.logConfig, writer, false, 0);
-
 
             if (this.threadPriority.HasValue())
             {
@@ -1874,24 +1834,12 @@ namespace Agora.Rtc
         VIDEO_METADATA = 0,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum MAX_METADATA_SIZE_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         INVALID_METADATA_SIZE_IN_BYTE = -1,
 
-        ///
-        /// TODO(doc)
-        ///
         DEFAULT_METADATA_SIZE_IN_BYTE = 512,
 
-        ///
-        /// TODO(doc)
-        ///
         MAX_METADATA_SIZE_IN_BYTE = 1024
     };
 
@@ -1902,10 +1850,27 @@ namespace Agora.Rtc
     ///
     public class Metadata
     {
+        ///
+        /// <summary>
+        /// The user ID.
+        /// For the recipient:the ID of the remote user who sent the Metadata.
+        /// Ignore it for sender.
+        /// </summary>
+        ///
         public uint uid;
 
+        ///
+        /// <summary>
+        /// Buffer size for received or sent Metadata.
+        /// </summary>
+        ///
         public uint size;
 
+        ///
+        /// <summary>
+        /// The buffer address of the received or sent Metadata.
+        /// </summary>
+        ///
         public IntPtr buffer
         {
             set
@@ -1919,6 +1884,12 @@ namespace Agora.Rtc
         }
 
         private UInt64 _buffer;
+
+        ///
+        /// <summary>
+        /// The timestamp (ms) of Metadata.
+        /// </summary>
+        ///
         public long timeStampMs;
     };
 
@@ -2060,7 +2031,6 @@ namespace Agora.Rtc
         public int audioBitrate { set; get; }
     };
 
-    /* class_directcdnstreamingmediaoptions : optionaljsonparse */
     public class DirectCdnStreamingMediaOptions : OptionalJsonParse
     {
         public Optional<bool> publishCameraTrack = new Optional<bool>();
@@ -2072,7 +2042,6 @@ namespace Agora.Rtc
 
         public DirectCdnStreamingMediaOptions()
         {
-
         }
 
         void SetAll(ref DirectCdnStreamingMediaOptions change)
@@ -2421,24 +2390,12 @@ namespace Agora.Rtc
         ///
         VIDEO_PROFILE_LANDSCAPE_1080P_5 = 64,  // 1920x1080 60
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_PROFILE_LANDSCAPE_1440P = 66,  // 2560x1440 30
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_PROFILE_LANDSCAPE_1440P_2 = 67,  // 2560x1440 60
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_PROFILE_LANDSCAPE_4K = 70,  // 3840x2160 30
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_PROFILE_LANDSCAPE_4K_3 = 72,     // 3840x2160 60
 
         ///
@@ -2661,24 +2618,12 @@ namespace Agora.Rtc
         ///
         VIDEO_PROFILE_PORTRAIT_1080P_5 = 1064,  // 1080x1920 60
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_PROFILE_PORTRAIT_1440P = 1066,  // 1440x2560 30
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_PROFILE_PORTRAIT_1440P_2 = 1067,  // 1440x2560 60
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_PROFILE_PORTRAIT_4K = 1070,       // 2160x3840 30
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_PROFILE_PORTRAIT_4K_3 = 1072,  // 2160x3840 60
 
         ///

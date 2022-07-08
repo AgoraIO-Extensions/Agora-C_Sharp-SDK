@@ -10,7 +10,6 @@
     {
         public RtcConnection()
         {
-
         }
 
         public RtcConnection(string channelId, uint localUid)
