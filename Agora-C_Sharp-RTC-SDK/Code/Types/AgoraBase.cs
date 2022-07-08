@@ -64,648 +64,324 @@ namespace Agora.Rtc
         ///
         CHANNEL_PROFILE_CLOUD_GAMING = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         CHANNEL_PROFILE_COMMUNICATION_1v1 = 4,
 
-        ///
-        /// TODO(doc)
-        ///
         CHANNEL_PROFILE_LIVE_BROADCASTING_2 = 5,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum WARN_CODE_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         WARN_INVALID_VIEW = 8,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_INIT_VIDEO = 16,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_PENDING = 20,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_NO_AVAILABLE_CHANNEL = 103,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_LOOKUP_CHANNEL_TIMEOUT = 104,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_LOOKUP_CHANNEL_REJECTED = 105,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_OPEN_CHANNEL_TIMEOUT = 106,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_OPEN_CHANNEL_REJECTED = 107,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_SWITCH_LIVE_VIDEO_TIMEOUT = 111,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_SET_CLIENT_ROLE_TIMEOUT = 118,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_OPEN_CHANNEL_INVALID_TICKET = 121,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_OPEN_CHANNEL_TRY_NEXT_VOS = 122,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_CHANNEL_CONNECTION_UNRECOVERABLE = 131,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_CHANNEL_CONNECTION_IP_CHANGED = 132,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_CHANNEL_CONNECTION_PORT_CHANGED = 133,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_CHANNEL_SOCKET_ERROR = 134,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_AUDIO_MIXING_OPEN_ERROR = 701,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_RUNTIME_PLAYOUT_WARNING = 1014,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_RUNTIME_RECORDING_WARNING = 1016,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_RECORD_AUDIO_SILENCE = 1019,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_PLAYOUT_MALFUNCTION = 1020,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_RECORD_MALFUNCTION = 1021,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_IOS_CATEGORY_NOT_PLAYANDRECORD = 1029,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_IOS_SAMPLERATE_CHANGE = 1030,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_RECORD_AUDIO_LOWLEVEL = 1031,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_PLAYOUT_AUDIO_LOWLEVEL = 1032,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_WINDOWS_NO_DATA_READY_EVENT = 1040,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_APM_HOWLING = 1051,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_GLITCH_STATE = 1052,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_IMPROPER_SETTINGS = 1053,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_WIN_CORE_NO_RECORDING_DEVICE = 1322,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_WIN_CORE_NO_PLAYOUT_DEVICE = 1323,
-        ///
-        /// TODO(doc)
-        ///
+
         WARN_ADM_WIN_CORE_IMPROPER_CAPTURE_RELEASE = 1324,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum ERROR_CODE_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         ERR_OK = 0,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_FAILED = 1,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVALID_ARGUMENT = 2,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_NOT_READY = 3,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_NOT_SUPPORTED = 4,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_REFUSED = 5,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_BUFFER_TOO_SMALL = 6,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_NOT_INITIALIZED = 7,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVALID_STATE = 8,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_NO_PERMISSION = 9,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_TIMEDOUT = 10,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CANCELED = 11,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_TOO_OFTEN = 12,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_BIND_SOCKET = 13,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_NET_DOWN = 14,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_NET_NOBUFS = 15,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_JOIN_CHANNEL_REJECTED = 17,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LEAVE_CHANNEL_REJECTED = 18,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ALREADY_IN_USE = 19,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ABORTED = 20,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INIT_NET_ENGINE = 21,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_RESOURCE_LIMITED = 22,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVALID_APP_ID = 101,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVALID_CHANNEL_NAME = 102,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_NO_SERVER_RESOURCES = 103,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_TOKEN_EXPIRED = 109,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVALID_TOKEN = 110,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CONNECTION_INTERRUPTED = 111,  // only used in web sdk
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CONNECTION_LOST = 112,  // only used in web sdk
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_NOT_IN_CHANNEL = 113,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_SIZE_TOO_LARGE = 114,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_BITRATE_LIMIT = 115,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_TOO_MANY_DATA_STREAMS = 116,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_STREAM_MESSAGE_TIMEOUT = 117,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_SET_CLIENT_ROLE_NOT_AUTHORIZED = 119,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_DECRYPTION_FAILED = 120,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVALID_USER_ID = 121,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CLIENT_IS_BANNED_BY_SERVER = 123,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_WATERMARK_PARAM = 124,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_WATERMARK_PATH = 125,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_WATERMARK_PNG = 126,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_WATERMARKR_INFO = 127,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_WATERMARK_ARGB = 128,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_WATERMARK_READ = 129,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ENCRYPTED_STREAM_NOT_ALLOWED_PUBLISH = 130,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LICENSE_CREDENTIAL_INVALID = 131,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVALID_USER_ACCOUNT = 134,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_RAW = 157,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_JSON_PART = 158,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_JSON_INVAL = 159,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_JSON_NOMEM = 160,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_CUSTOM = 161,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_CREDENTIAL = 162,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_SIGN = 163,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_FAIL = 164,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_BUF = 165,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_NULL = 166,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_DUEDATE = 167,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_CERT_REQUEST = 168,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_PCMSEND_FORMAT = 200,           // unsupport pcm format
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_PCMSEND_BUFFEROVERFLOW = 201,  // buffer overflow, the pcm send rate too quickly
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_OTHER = 400,          //
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_USER = 401,           // logout by user
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_NET = 402,            // network failure
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_KICKED = 403,         // login in other device
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_PACKET = 404,         //
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_TOKEN_EXPIRED = 405,  // token expired
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_OLDVERSION = 406,     //
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_TOKEN_WRONG = 407,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGOUT_ALREADY_LOGOUT = 408,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_OTHER = 420,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_NET = 421,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_FAILED = 422,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_CANCELED = 423,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_TOKEN_EXPIRED = 424,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_OLD_VERSION = 425,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_TOKEN_WRONG = 426,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_TOKEN_KICKED = 427,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOGIN_ALREADY_LOGIN = 428,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_JOIN_CHANNEL_OTHER = 440,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_SEND_MESSAGE_OTHER = 440,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_SEND_MESSAGE_TIMEOUT = 441,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_QUERY_USERNUM_OTHER = 450,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_QUERY_USERNUM_TIMEOUT = 451,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_QUERY_USERNUM_BYUSER = 452,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LEAVE_CHANNEL_OTHER = 460,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LEAVE_CHANNEL_KICKED = 461,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LEAVE_CHANNEL_BYUSER = 462,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LEAVE_CHANNEL_LOGOUT = 463,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LEAVE_CHANNEL_DISCONNECTED = 464,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVITE_OTHER = 470,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVITE_REINVITE = 471,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVITE_NET = 472,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVITE_PEER_OFFLINE = 473,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVITE_TIMEOUT = 474,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_INVITE_CANT_RECV = 475,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_LOAD_MEDIA_ENGINE = 1001,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_START_CALL = 1002,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_START_CAMERA = 1003,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_START_VIDEO_RENDER = 1004,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_GENERAL_ERROR = 1005,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_JAVA_RESOURCE = 1006,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_SAMPLE_RATE = 1007,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_INIT_PLAYOUT = 1008,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_START_PLAYOUT = 1009,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_STOP_PLAYOUT = 1010,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_INIT_RECORDING = 1011,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_START_RECORDING = 1012,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_STOP_RECORDING = 1013,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_RUNTIME_PLAYOUT_ERROR = 1015,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_RUNTIME_RECORDING_ERROR = 1017,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_RECORD_AUDIO_FAILED = 1018,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_INIT_LOOPBACK = 1022,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_START_LOOPBACK = 1023,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_NO_PERMISSION = 1027,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_RECORD_AUDIO_IS_ACTIVE = 1033,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_ANDROID_JNI_JAVA_RESOURCE = 1101,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_ANDROID_JNI_NO_RECORD_FREQUENCY = 1108,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_ANDROID_JNI_NO_PLAYBACK_FREQUENCY = 1109,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_ANDROID_JNI_JAVA_START_RECORD = 1111,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_ANDROID_JNI_JAVA_START_PLAYBACK = 1112,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_ANDROID_JNI_JAVA_RECORD_ERROR = 1115,
         [Obsolete]
         ERR_ADM_ANDROID_OPENSL_CREATE_ENGINE = 1151,
@@ -717,135 +393,71 @@ namespace Agora.Rtc
         ERR_ADM_ANDROID_OPENSL_CREATE_AUDIO_PLAYER = 1157,
         [Obsolete]
         ERR_ADM_ANDROID_OPENSL_START_PLAYER_THREAD = 1160,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_IOS_INPUT_NOT_AVAILABLE = 1201,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_IOS_ACTIVATE_SESSION_FAIL = 1206,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_IOS_VPIO_INIT_FAIL = 1210,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_IOS_VPIO_REINIT_FAIL = 1213,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_IOS_VPIO_RESTART_FAIL = 1214,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_IOS_SET_RENDER_CALLBACK_FAIL = 1219,
         [Obsolete]
         ERR_ADM_IOS_SESSION_SAMPLERATR_ZERO = 1221,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_INIT = 1301,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_INIT_RECORDING = 1303,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_INIT_PLAYOUT = 1306,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_INIT_PLAYOUT_NULL = 1307,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_START_RECORDING = 1309,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_CREATE_REC_THREAD = 1311,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_CAPTURE_NOT_STARTUP = 1314,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_CREATE_RENDER_THREAD = 1319,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_RENDER_NOT_STARTUP = 1320,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_NO_RECORDING_DEVICE = 1322,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_CORE_NO_PLAYOUT_DEVICE = 1323,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_WAVE_INIT = 1351,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_WAVE_INIT_RECORDING = 1353,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_WAVE_INIT_MICROPHONE = 1354,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_WAVE_INIT_PLAYOUT = 1355,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_WAVE_INIT_SPEAKER = 1356,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_WAVE_START_RECORDING = 1357,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_WIN_WAVE_START_PLAYOUT = 1358,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_NO_RECORDING_DEVICE = 1359,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_ADM_NO_PLAYOUT_DEVICE = 1360,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_VDM_WIN_DEVICE_IN_USE = 1502,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_VCM_UNKNOWN_ERROR = 1600,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_VCM_ENCODER_INIT_ERROR = 1601,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_VCM_ENCODER_ENCODE_ERROR = 1602,
-        ///
-        /// TODO(doc)
-        ///
+
         ERR_VCM_ENCODER_SET_ERROR = 1603,
     };
 
@@ -942,29 +554,14 @@ namespace Agora.Rtc
         ///
         AGORA_IID_VIDEO_DEVICE_MANAGER = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         AGORA_IID_PARAMETER_ENGINE = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         AGORA_IID_MEDIA_ENGINE = 4,
 
-        ///
-        /// TODO(doc)
-        ///
         AGORA_IID_AUDIO_ENGINE = 5,
 
-        ///
-        /// TODO(doc)
-        ///
         AGORA_IID_VIDEO_ENGINE = 6,
 
-        ///
-        /// TODO(doc)
-        ///
         AGORA_IID_RTC_CONNECTION = 7,
 
         ///
@@ -974,19 +571,10 @@ namespace Agora.Rtc
         ///
         AGORA_IID_SIGNALING_ENGINE = 8,
 
-        ///
-        /// TODO(doc)
-        ///
         AGORA_IID_MEDIA_ENGINE_REGULATOR = 9,
 
-        ///
-        /// TODO(doc)
-        ///
         AGORA_IID_CLOUD_SPATIAL_AUDIO = 10,
 
-        ///
-        /// TODO(doc)
-        ///
         AGORA_IID_LOCAL_SPATIAL_AUDIO = 11,
     };
 
@@ -1057,19 +645,10 @@ namespace Agora.Rtc
         QUALITY_DETECTING = 8
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum FIT_MODE_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         MODE_COVER = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         MODE_CONTAIN = 2,
     };
 
@@ -1167,25 +746,13 @@ namespace Agora.Rtc
         FRAME_RATE_FPS_60 = 60,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum FRAME_WIDTH
     {
-        ///
-        /// TODO(doc)
-        ///
         FRAME_WIDTH_640 = 640,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum FRAME_HEIGHT
     {
-        ///
-        /// TODO(doc)
-        ///
         FRAME_HEIGHT_360 = 360,
     };
 
@@ -1239,34 +806,16 @@ namespace Agora.Rtc
         VIDEO_FRAME_TYPE_UNKNOW = 7,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum VIDEO_FRAME_TYPE_NATIVE
     {
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_FRAME_TYPE_BLANK_FRAME = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_FRAME_TYPE_KEY_FRAME = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_FRAME_TYPE_DELTA_FRAME = 4,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_FRAME_TYPE_B_FRAME = 5,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_FRAME_TYPE_DROPPABLE_FRAME = 6,
 
         VIDEO_FRAME_TYPE_UNKNOW
@@ -1289,12 +838,16 @@ namespace Agora.Rtc
         ORIENTATION_MODE_ADAPTIVE = 0,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 1: In this mode, the SDK always outputs videos in landscape (horizontal) mode. If the captured video is in portrait mode, the video encoder crops it to fit the output. Applies to situations where the receiving end cannot process the rotational information. For example, CDN live streaming.
+        /// </summary>
         ///
         ORIENTATION_MODE_FIXED_LANDSCAPE = 1,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 2: In this mode, the SDK always outputs video in portrait (portrait) mode. If the captured video is in landscape mode, the video encoder crops it to fit the output.\nApplies to situations where the receiving end cannot process the rotational information. For example, CDN live streaming.
+        /// </summary>
         ///
         ORIENTATION_MODE_FIXED_PORTRAIT = 2,
     };
@@ -1323,19 +876,18 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 
+        /// 2: Reduces the video frame rate and video quality simultaneously during video encoding under limited bandwidth. The MAINTAIN_BALANCED has a lower reduction than MAINTAIN_QUALITY and MAINTAIN_FRAMERATE, and this preference is suitable for scenarios where both smoothness and video quality are a priority.
         /// </summary>
         ///
         MAINTAIN_BALANCED = 2,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 3: When the bandwidth is limited, the video frame rate is preferentially reduced during video encoding.
+        /// </summary>
         ///
         MAINTAIN_RESOLUTION = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         DISABLED = 100,
     };
 
@@ -1393,14 +945,8 @@ namespace Agora.Rtc
         ///
         COMPATIBLE_BITRATE = -1,
 
-        ///
-        /// TODO(doc)
-        ///
         DEFAULT_MIN_BITRATE = -1,
 
-        ///
-        /// TODO(doc)
-        ///
         DEFAULT_MIN_BITRATE_EQUAL_TO_TARGET_BITRATE = -2,
     }
 
@@ -1411,9 +957,6 @@ namespace Agora.Rtc
     ///
     public enum VIDEO_CODEC_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_CODEC_NONE = 0,
 
         ///
@@ -1437,9 +980,6 @@ namespace Agora.Rtc
         ///
         VIDEO_CODEC_H265 = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_CODEC_VP9 = 5,
 
         ///
@@ -1450,14 +990,8 @@ namespace Agora.Rtc
         ///
         VIDEO_CODEC_GENERIC = 6,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_CODEC_GENERIC_H264 = 7,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_CODEC_AV1 = 12,
 
         ///
@@ -1531,9 +1065,6 @@ namespace Agora.Rtc
         ///
         AUDIO_CODEC_HEAAC2 = 11,
 
-        ///
-        /// TODO(doc)
-        ///
         AUDIO_CODEC_LPCNET = 12,
     };
 
@@ -1634,9 +1165,6 @@ namespace Agora.Rtc
         FIT_MODE_USE_IMAGE_RATIO
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class EncodedAudioFrameAdvancedSettings
     {
         public EncodedAudioFrameAdvancedSettings()
@@ -1645,14 +1173,8 @@ namespace Agora.Rtc
             sendEvenIfEmpty = true;
         }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool speech { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool sendEvenIfEmpty { set; get; }
     };
 
@@ -1716,9 +1238,6 @@ namespace Agora.Rtc
         public EncodedAudioFrameAdvancedSettings advancedSettings { set; get; }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class AudioPcmDataInfo
     {
         public AudioPcmDataInfo()
@@ -1739,45 +1258,21 @@ namespace Agora.Rtc
             ntpTimeMs = rhs.ntpTimeMs;
         }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint samplesPerChannel { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public short channelNum { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint samplesOut { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int64_t elapsedTimeMs { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int64_t ntpTimeMs { set; get; }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum H264PacketizeMode
     {
-        ///
-        /// TODO(doc)
-        ///
         NonInterleaved = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         SingleNalUnit = 1,
     };
 
@@ -1898,9 +1393,6 @@ namespace Agora.Rtc
         ///
         public int64_t renderTimeMs { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint64_t internalSendTs { set; get; }
 
         ///
@@ -2506,49 +1998,22 @@ namespace Agora.Rtc
         ///
         public int connectTimeMs { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int firstAudioPacketDuration { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int firstVideoPacketDuration { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int firstVideoKeyFramePacketDuration { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int packetsBeforeFirstKeyFramePacket { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int firstAudioPacketDurationAfterUnmute { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int firstVideoPacketDurationAfterUnmute { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int firstVideoKeyFramePacketDurationAfterUnmute { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int firstVideoKeyFrameDecodedDurationAfterUnmute { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int firstVideoKeyFrameRenderedDurationAfterUnmute { set; get; }
 
         ///
@@ -2573,6 +2038,9 @@ namespace Agora.Rtc
     ///
     public enum VIDEO_SOURCE_TYPE
     {
+        ///
+        /// @ignore
+        ///
         VIDEO_SOURCE_CAMERA_PRIMARY,
         ///
         /// <summary>
@@ -2580,7 +2048,17 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
+        ///
+        /// <summary>
+        /// The secondary camera.
+        /// </summary>
+        ///
         VIDEO_SOURCE_CAMERA_SECONDARY,
+        ///
+        /// <summary>
+        /// The primary screen.
+        /// </summary>
+        ///
         VIDEO_SOURCE_SCREEN_PRIMARY,
         ///
         /// <summary>
@@ -2588,13 +2066,53 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
+        ///
+        /// <summary>
+        /// The secondary screen.
+        /// </summary>
+        ///
         VIDEO_SOURCE_SCREEN_SECONDARY,
+        ///
+        /// <summary>
+        /// The custom video source.
+        /// </summary>
+        ///
         VIDEO_SOURCE_CUSTOM,
+        ///
+        /// <summary>
+        /// The video source from the media player.
+        /// </summary>
+        ///
         VIDEO_SOURCE_MEDIA_PLAYER,
+        ///
+        /// <summary>
+        /// The video source is a PNG image.
+        /// </summary>
+        ///
         VIDEO_SOURCE_RTC_IMAGE_PNG,
+        ///
+        /// <summary>
+        /// The video source is a JPEG image.
+        /// </summary>
+        ///
         VIDEO_SOURCE_RTC_IMAGE_JPEG,
+        ///
+        /// <summary>
+        /// The video source is a GIF image.
+        /// </summary>
+        ///
         VIDEO_SOURCE_RTC_IMAGE_GIF,
+        ///
+        /// <summary>
+        /// The video source is remote video acquired by the network.
+        /// </summary>
+        ///
         VIDEO_SOURCE_REMOTE,
+        ///
+        /// <summary>
+        /// A transcoded video source.
+        /// </summary>
+        ///
         VIDEO_SOURCE_TRANSCODED,
         ///
         /// <summary>
@@ -2655,7 +2173,6 @@ namespace Agora.Rtc
         ADAPT_DOWN_BANDWIDTH = 2,
     };
 
-
     ///
     /// <summary>
     /// The latency level of an audience member in interactive live streaming. This enum takes effect only when the user role is set to CLIENT_ROLE_AUDIENCE .
@@ -2677,9 +2194,6 @@ namespace Agora.Rtc
         ///
         AUDIENCE_LATENCY_LEVEL_ULTRA_LOW_LATENCY = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         AUDIENCE_LATENCY_LEVEL_HIGH_LATENCY = 3,
     };
 
@@ -2987,7 +2501,6 @@ namespace Agora.Rtc
         AUDIO_SCENARIO_NUM = 8,
     };
 
-
     ///
     /// <summary>
     /// The format of the video frame.
@@ -2995,36 +2508,24 @@ namespace Agora.Rtc
     ///
     public class VideoFormat
     {
-        ///
-        /// TODO(doc)
-        ///
         public enum OPTIONAL_ENUM_SIZE_T
         {
-        /* enum_optionalenumsizet_    kMaxWidthInPixels */
             kMaxWidthInPixels = 3840,
-        /* enum_optionalenumsizet_    kMaxHeightInPixels */
             kMaxHeightInPixels = 2160,
-        /* enum_optionalenumsizet_    kMaxFps */
             kMaxFps = 60,
         }
 
         public VideoFormat()
         {
-        /* enum_optionalenumsizet_    width */
             width = (int)FRAME_WIDTH.FRAME_WIDTH_640;
-        /* enum_optionalenumsizet_    height */
             height = (int)FRAME_HEIGHT.FRAME_HEIGHT_360;
-        /* enum_optionalenumsizet_    fps */
             fps = (int)FRAME_RATE.FRAME_RATE_FPS_15;
         }
 
         public VideoFormat(int w, int h, int f)
         {
-        /* enum_optionalenumsizet_    this.width */
             this.width = w;
-        /* enum_optionalenumsizet_    this.height */
             this.height = h;
-        /* enum_optionalenumsizet_    this.fps */
             this.fps = f;
         }
 
@@ -3122,34 +2623,16 @@ namespace Agora.Rtc
     ///
     public enum LOCAL_AUDIO_STREAM_ERROR
     {
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_AUDIO_STREAM_ERROR_OK = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_AUDIO_STREAM_ERROR_FAILURE = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_AUDIO_STREAM_ERROR_DEVICE_NO_PERMISSION = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_AUDIO_STREAM_ERROR_DEVICE_BUSY = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_AUDIO_STREAM_ERROR_RECORD_FAILURE = 4,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_AUDIO_STREAM_ERROR_ENCODE_FAILURE = 5
     };
 
@@ -3259,19 +2742,10 @@ namespace Agora.Rtc
         ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_NOT_FOUND = 8,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_DISCONNECTED = 9,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_INVALID_ID = 10,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_SYSTEM_PRESSURE = 101,
 
         ///
@@ -3292,14 +2766,8 @@ namespace Agora.Rtc
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_CLOSED = 12,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_OCCLUDED = 13,
 
-        ///
-        /// TODO(doc)
-        ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
     };
 
@@ -3354,42 +2822,58 @@ namespace Agora.Rtc
     public enum REMOTE_AUDIO_STATE_REASON
     {
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 0: The SDK reports this reason when the audio state changes.
+        /// </summary>
         ///
         REMOTE_AUDIO_REASON_INTERNAL = 0,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 1: Network congestion.
+        /// </summary>
         ///
         REMOTE_AUDIO_REASON_NETWORK_CONGESTION = 1,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 2: Network recovery.
+        /// </summary>
         ///
         REMOTE_AUDIO_REASON_NETWORK_RECOVERY = 2,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 3: The local user stops receiving the remote audio stream or disables the audio module.
+        /// </summary>
         ///
         REMOTE_AUDIO_REASON_LOCAL_MUTED = 3,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 4: The local user resumes receiving the remote audio stream or enables the audio module.
+        /// </summary>
         ///
         REMOTE_AUDIO_REASON_LOCAL_UNMUTED = 4,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 5: The remote user stops sending the audio stream or disables the audio module.
+        /// </summary>
         ///
         REMOTE_AUDIO_REASON_REMOTE_MUTED = 5,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 6: The remote user resumes sending the audio stream or enables the audio module.
+        /// </summary>
         ///
         REMOTE_AUDIO_REASON_REMOTE_UNMUTED = 6,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 7: The remote user leaves the channel.
+        /// </summary>
         ///
         REMOTE_AUDIO_REASON_REMOTE_OFFLINE = 7,
     };
@@ -3500,58 +2984,27 @@ namespace Agora.Rtc
         ///
         REMOTE_VIDEO_STATE_REASON_REMOTE_OFFLINE = 7,
 
-        ///
-        /// TODO(doc)
-        ///
         REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK = 8,
 
-        ///
-        /// TODO(doc)
-        ///
         REMOTE_VIDEO_STATE_REASON_AUDIO_FALLBACK_RECOVERY = 9,
 
-        ///
-        /// TODO(doc)
-        ///
         REMOTE_VIDEO_STATE_REASON_VIDEO_STREAM_TYPE_CHANGE_TO_LOW = 10,
 
-        ///
-        /// TODO(doc)
-        ///
         REMOTE_VIDEO_STATE_REASON_VIDEO_STREAM_TYPE_CHANGE_TO_HIGH = 11,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     [Flags]
     public enum REMOTE_USER_STATE
     {
-        ///
-        /// TODO(doc)
-        ///
         USER_STATE_MUTE_AUDIO = (1 << 0),
 
-        ///
-        /// TODO(doc)
-        ///
         USER_STATE_MUTE_VIDEO = (1 << 1),
 
-        ///
-        /// TODO(doc)
-        ///
         USER_STATE_ENABLE_VIDEO = (1 << 4),
 
-        ///
-        /// TODO(doc)
-        ///
         USER_STATE_ENABLE_LOCAL_VIDEO = (1 << 8),
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public class VideoTrackInfo
     {
         public VideoTrackInfo()
@@ -3583,55 +3036,25 @@ namespace Agora.Rtc
             this.observationPosition = observationPosition;
         }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool isLocal { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint ownerUid { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint trackId { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string channelId { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public VIDEO_STREAM_TYPE streamType { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public VIDEO_CODEC_TYPE codecType { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool encodedFrameOnly { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public VIDEO_SOURCE_TYPE sourceType { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint observationPosition { set; get; }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum REMOTE_VIDEO_DOWNSCALE_LEVEL
     {
         REMOTE_VIDEO_DOWNSCALE_LEVEL_NONE,
@@ -4364,7 +3787,6 @@ namespace Agora.Rtc
     };
 
 
-
     ///
     /// <summary>
     /// Transcoding configurations for Media Push.
@@ -4455,9 +3877,6 @@ namespace Agora.Rtc
         ///
         public int videoBitrate { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int videoFramerate { set; get; }
 
         ///
@@ -5050,63 +4469,53 @@ namespace Agora.Rtc
         CONNECTION_CHANGED_KEEP_ALIVE_TIMEOUT = 14,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 14: Timeout for the keep-alive of the connection between the SDK and the Agora edge server. The connection state changes to .
+        /// </summary>
         ///
         CONNECTION_CHANGED_REJOIN_SUCCESS = 15,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 14: Timeout for the keep-alive of the connection between the SDK and the Agora edge server. The connection state changes to .
+        /// </summary>
         ///
         CONNECTION_CHANGED_LOST = 16,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// (15): The SDK has rejoined the channel successfully.
+        /// </summary>
         ///
         CONNECTION_CHANGED_ECHO_TEST = 17,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// (16): The connection between the SDK and the server is lost.
+        /// </summary>
         ///
         CONNECTION_CHANGED_CLIENT_IP_ADDRESS_CHANGED_BY_USER = 18,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// (17): The connection state changes due to the echo test.
+        /// </summary>
         ///
         CONNECTION_CHANGED_SAME_UID_LOGIN = 19,
 
-        ///
-        /// TODO(doc)
-        ///
         CONNECTION_CHANGED_TOO_MANY_BROADCASTERS = 20,
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public enum CLIENT_ROLE_CHANGE_FAILED_REASON
     {
-        ///
-        /// TODO(doc)
-        ///
         CLIENT_ROLE_CHANGE_FAILED_TOO_MANY_BROADCASTERS = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         CLIENT_ROLE_CHANGE_FAILED_NOT_AUTHORIZED = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         CLIENT_ROLE_CHANGE_FAILED_REQUEST_TIME_OUT = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         CLIENT_ROLE_CHANGE_FAILED_CONNECTION_FAILED = 4,
     };
-
 
     ///
     /// <summary>
@@ -5165,25 +4574,12 @@ namespace Agora.Rtc
         NETWORK_TYPE_MOBILE_4G = 5,
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public enum VIDEO_VIEW_SETUP_MODE
     {
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_VIEW_SETUP_REPLACE = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_VIEW_SETUP_ADD = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_VIEW_SETUP_REMOVE = 2,
     };
 
@@ -5265,19 +4661,10 @@ namespace Agora.Rtc
         ///
         public uint uid { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool isScreenView { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public byte[] priv { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint priv_size { set; get; }
 
         ///
@@ -5287,14 +4674,8 @@ namespace Agora.Rtc
         ///
         public VIDEO_SOURCE_TYPE sourceType { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public Rectangle cropArea { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public VIDEO_VIEW_SETUP_MODE setupMode { set; get; }
 
     };
@@ -5312,7 +4693,17 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LIGHTENING_CONTRAST_LOW = 0,
+        ///
+        /// <summary>
+        /// Normal contrast level.
+        /// </summary>
+        ///
         LIGHTENING_CONTRAST_NORMAL,
+        ///
+        /// <summary>
+        /// High contrast level.
+        /// </summary>
+        ///
         LIGHTENING_CONTRAST_HIGH
     };
 
@@ -5452,7 +4843,6 @@ namespace Agora.Rtc
             blur_degree = BACKGROUND_BLUR_DEGREE.BLUR_DEGREE_HIGH;
         }
 
-
         ///
         /// <summary>
         /// The type of the custom background image. See BACKGROUND_SOURCE_TYPE .
@@ -5482,10 +4872,6 @@ namespace Agora.Rtc
         public BACKGROUND_BLUR_DEGREE blur_degree { set; get; }
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public class FishCorrectionParams
     {
         public FishCorrectionParams()
@@ -5518,34 +4904,16 @@ namespace Agora.Rtc
             }
         }
 
-        ///
-        /// TODO(doc)
-        ///
         public float _x_center { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public float _y_center { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public float _scale_factor { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public float _focal_length { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public float _pol_focal_length { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public float _split_height { set; get; }
 
         public float[] _ss = new float[5];
@@ -5654,9 +5022,6 @@ namespace Agora.Rtc
         ///
         TIMBRE_TRANSFORMATION_RINGING = 0x01030800,
 
-        ///
-        /// TODO(doc)
-        ///
         ULTRA_HIGH_QUALITY_VOICE = 0x01040100
     };
 
@@ -6006,19 +5371,10 @@ namespace Agora.Rtc
     ///
     public enum AUDIO_RECORDING_QUALITY_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         AUDIO_RECORDING_QUALITY_LOW = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         AUDIO_RECORDING_QUALITY_MEDIUM = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         AUDIO_RECORDING_QUALITY_HIGH = 2,
     };
 
@@ -6249,38 +5605,18 @@ namespace Agora.Rtc
         AREA_CODE_GLOB = 0xFFFFFFFF
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public enum AREA_CODE_EX : uint
     {
-        ///
-        /// TODO(doc)
-        ///
         AREA_CODE_OC = 0x00000040,
 
-        ///
-        /// TODO(doc)
-        ///
         AREA_CODE_SA = 0x00000080,
 
-        ///
-        /// TODO(doc)
-        ///
         AREA_CODE_AF = 0x00000100,
 
-        ///
-        /// TODO(doc)
-        ///
         AREA_CODE_KR = 0x00000200,
 
-        ///
-        /// TODO(doc)
-        ///
         AREA_CODE_OVS = 0xFFFFFFFE
     };
-
 
     ///
     /// <summary>
@@ -6375,7 +5711,6 @@ namespace Agora.Rtc
         ///
         RELAY_ERROR_DEST_TOKEN_EXPIRED = 11,
     };
-
 
     //callback event
     ///
@@ -6647,9 +5982,6 @@ namespace Agora.Rtc
         public int video_encoder_target_bitrate_bps;
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class PeerDownlinkInfo
     {
         public PeerDownlinkInfo()
@@ -6668,30 +6000,16 @@ namespace Agora.Rtc
             this.current_downscale_level = current_downscale_level;
             this.expected_bitrate_bps = expected_bitrate_bps;
         }
-        ///
-        /// TODO(doc)
-        ///
+
         public string uid { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public VIDEO_STREAM_TYPE stream_type { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public REMOTE_VIDEO_DOWNSCALE_LEVEL current_downscale_level { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int expected_bitrate_bps { set; get; }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class DownlinkNetworkInfo
     {
         public DownlinkNetworkInfo()
@@ -6730,29 +6048,14 @@ namespace Agora.Rtc
             this.total_received_video_count = total_received_video_count;
         }
 
-        ///
-        /// TODO(doc)
-        ///
         public int lastmile_buffer_delay_time_ms { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int bandwidth_estimation_bps { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int total_downscale_level_count { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public PeerDownlinkInfo[] peer_downlink_info { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int total_received_video_count { set; get; }
     };
 
@@ -6930,24 +6233,12 @@ namespace Agora.Rtc
         ENCRYPTION_ERROR_ENCRYPTION_FAILURE = 2,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum UPLOAD_ERROR_REASON
     {
-        ///
-        /// TODO(doc)
-        ///
         UPLOAD_SUCCESS = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         UPLOAD_NET_ERROR = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         UPLOAD_SERVER_ERROR = 2,
     };
 
@@ -7120,38 +6411,21 @@ namespace Agora.Rtc
         EAR_MONITORING_FILTER_NOISE_SUPPRESSION = (1 << 2)
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum THREAD_PRIORITY_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         LOWEST = 0,
-        ///
-        /// TODO(doc)
-        ///
+
         LOW = 1,
-        ///
-        /// TODO(doc)
-        ///
+
         NORMAL = 2,
-        ///
-        /// TODO(doc)
-        ///
+
         HIGH = 3,
-        ///
-        /// TODO(doc)
-        ///
+
         HIGHEST = 4,
-        ///
-        /// TODO(doc)
-        ///
+
         CRITICAL = 5,
     };
 
-    /* class_spatialaudioparams : optionaljsonparse */
     public class SpatialAudioParams : OptionalJsonParse
     {
         public Optional<double> speaker_azimuth = new Optional<double>();
@@ -7206,40 +6480,19 @@ namespace Agora.Rtc
         }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum TCcMode
     {
-        ///
-        /// TODO(doc)
-        ///
         CC_ENABLED = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         CC_DISABLED = 1,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class SenderOptions
     {
-        ///
-        /// TODO(doc)
-        ///
         public TCcMode ccMode { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public VIDEO_CODEC_TYPE codecType { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int targetBitrate { set; get; }
 
         public SenderOptions()

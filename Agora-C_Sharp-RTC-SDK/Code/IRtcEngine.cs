@@ -350,6 +350,12 @@ namespace Agora.Rtc
         /// After a remote user joins the channel, the SDK gets the UID and user account of the remote user, caches them in a mapping table object, and triggers the OnUserInfoUpdated callback on the local client. After receiving the callback, you can call this method to get the user account of the remote user from the UserInfo object by passing in the user ID.
         /// </summary>
         ///
+        /// <param name="userInfo"> Input and output parameter. The UserInfo object that identifies the user information.
+        ///  Input: A UserInfo object.
+        ///  Output: A UserInfo object that contains the user account and user ID of the user.</param>
+        ///
+        /// <param name="userAccount"> The user account.</param>
+        ///
         /// <returns>
         /// 0: Success.
         /// &lt; 0: Failure.
@@ -365,7 +371,9 @@ namespace Agora.Rtc
         ///
         /// <param name="uid"> The user ID.</param>
         ///
-        /// <param name="userInfo"> </param>
+        /// <param name="userInfo"> Input and output parameter. The UserInfo object that identifies the user information.
+        ///  Input: A UserInfo object.
+        ///  Output: A UserInfo object that contains the user account and user ID of the user.</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -1998,9 +2006,7 @@ namespace Agora.Rtc
         ///
         public abstract int SetVoiceBeautifierParameters(VOICE_BEAUTIFIER_PRESET preset, int param1, int param2);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetVoiceConversionParameters(VOICE_CONVERSION_PRESET preset, int param1, int param2);
 
         ///
@@ -2455,9 +2461,7 @@ namespace Agora.Rtc
         ///
         public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int ClearVideoWatermark();
 
         ///
@@ -2624,19 +2628,13 @@ namespace Agora.Rtc
         ///
         public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int StartLocalVideoTranscoder(LocalTranscoderConfiguration config);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int StopLocalVideoTranscoder();
         #endregion
 
@@ -2739,6 +2737,9 @@ namespace Agora.Rtc
         ///  true: Use the placeholder.
         ///  false: (Default) Do not use the placeholder.</param>
         ///
+        /// <param name="sourceId">
+        ///  The ID of the external audio source. If you want to publish a custom external audio source, set this parameter to the ID of the corresponding custom audio track you want to publish. </param>
+        ///
         /// <returns>
         /// 0: Success.
         /// &lt; 0: Failure.
@@ -2777,14 +2778,10 @@ namespace Agora.Rtc
         ///
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int AdjustCustomAudioPublishVolume(int sourceId, int volume);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int AdjustCustomAudioPlayoutVolume(int sourceId, int volume);
         #endregion
 
@@ -2967,7 +2964,7 @@ namespace Agora.Rtc
         /// If you want to obtain the audio spectrum data of local or remote users, please register the audio spectrum observer and enable audio spectrum monitoring. You can call this method either before or after joining a channel.
         /// </summary>
         ///
-        /// <param name="null"> The interval (in milliseconds)at which the SDK triggers the OnLocalAudioSpectrum and OnRemoteAudioSpectrum callbacks. The default value is 100. Do not set this parameter to less than 10 milliseconds, otherwise the callback will not be triggered.</param>
+        /// <param name="intervalInMS"> The interval (in milliseconds)at which the SDK triggers the OnLocalAudioSpectrum and OnRemoteAudioSpectrum callbacks. The default value is 100. Do not set this parameter to less than 10 milliseconds, otherwise the callback will not be triggered.</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -3047,7 +3044,19 @@ namespace Agora.Rtc
         public abstract int PushVideoFrame(ExternalVideoFrame frame);
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// Pushes the external raw video frame to the SDK.
+        /// If you call SetExternalVideoSource and set the enabled parameter as true and the encodedFrame parameter as false, you can call this method to push the external raw video frame to the SDK.
+        /// </summary>
+        ///
+        /// <param name="frame"> The external raw video frame to be pushed. See ExternalVideoFrame .</param>
+        ///
+        /// <param name="connection"> The connection information. See RtcConnection .</param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection);
 
@@ -3071,7 +3080,23 @@ namespace Agora.Rtc
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo);
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// Pushes the external encoded video frame to the SDK.
+        /// After calling SetExternalVideoSource to enable external video source and set the sourceType parameter to ENCODED_VIDEO_FRAME, you can call this method to push the encoded external video frame to the SDK.
+        /// </summary>
+        ///
+        /// <param name="imageBuffer"> The buffer of the external encoded video frame.</param>
+        ///
+        /// <param name="length"> The length of the external encoded video frame.</param>
+        ///
+        /// <param name="videoEncodedFrameInfo"> The information about the external encoded video frame. See EncodedVideoFrameInfo .</param>
+        ///
+        /// <param name="connection"> The connection information. See RtcConnection .</param>
+        ///
+        /// <returns>
+        /// 0: Pushes the external encoded video frame to the SDK successfully.
+        /// &lt; 0: Fails to push the external encoded video frame to the SDK.
+        /// </returns>
         ///
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, uint length, EncodedVideoFrameInfo videoEncodedFrameInfo, RtcConnection connection);
         #endregion
@@ -3209,9 +3234,7 @@ namespace Agora.Rtc
         ///
         public abstract int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
         #endregion
 
@@ -3753,9 +3776,7 @@ namespace Agora.Rtc
         ///
         public abstract int AdjustLoopbackRecordingVolume(int volume);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int GetLoopbackRecordingVolume();
         #endregion
 
@@ -3890,14 +3911,10 @@ namespace Agora.Rtc
         #endregion
 
         #region SpatialAudio
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract ICloudSpatialAudioEngine GetCloudSpatialAudioEngine();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract ILocalSpatialAudioEngine GetLocalSpatialAudioEngine();
 
         ///
@@ -4062,9 +4079,7 @@ namespace Agora.Rtc
         ///
         public abstract int StopDirectCdnStreaming();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options);
 
         ///
@@ -4224,29 +4239,19 @@ namespace Agora.Rtc
         ///
         public abstract int SetLogFileSize(uint fileSizeInKBytes);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int UploadLogFile(ref string requestId);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int StartPrimaryCustomAudioTrack(AudioTrackConfig config);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int StopPrimaryCustomAudioTrack();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int StartSecondaryCustomAudioTrack(AudioTrackConfig config);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int StopSecondaryCustomAudioTrack();
 
         ///
@@ -4266,9 +4271,7 @@ namespace Agora.Rtc
         ///
         public abstract int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
 
         ///
@@ -4283,19 +4286,13 @@ namespace Agora.Rtc
         ///
         public abstract CONNECTION_STATE_TYPE GetConnectionState();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int PauseAudio();
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int ResumeAudio();
 
         ///
@@ -4325,14 +4322,10 @@ namespace Agora.Rtc
         ///
         public abstract int SendCustomReportMessage(string id, string category, string @event, string label, int value);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int StartAudioFrameDump(string channel_id, uint user_id, string location, string uuid, string passwd, long duration_ms, bool auto_upload);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int StopAudioFrameDump(string channel_id, uint user_id, string location);
 
         ///
@@ -4412,14 +4405,10 @@ namespace Agora.Rtc
         ///
         public abstract int GetAudioDeviceInfo(ref DeviceInfo deviceInfo);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option);
 
         ///
@@ -4460,9 +4449,7 @@ namespace Agora.Rtc
         ///
         public abstract int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SwitchChannel(string token, string channel);
         public abstract int SwitchChannel(string token, string channel, ChannelMediaOptions options);
 
@@ -4470,24 +4457,16 @@ namespace Agora.Rtc
 
         //public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int PushDirectAudioFrame(AudioFrame frame);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int EnableFishCorrection(bool enabled, FishCorrectionParams @params);
 
         ///
@@ -4508,19 +4487,13 @@ namespace Agora.Rtc
         ///
         public abstract int SetAVSyncSource(string channelId, uint uid);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetContentInspect(ContentInspectConfig config);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract bool StopDumpVideo();
     };
 
@@ -4697,9 +4670,7 @@ namespace Agora.Rtc
         ///
         public abstract int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams param, RtcConnection connection);
 
         ///
@@ -4757,9 +4728,7 @@ namespace Agora.Rtc
         ///
         public abstract CONNECTION_STATE_TYPE GetConnectionStateEx(RtcConnection connection);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config);
 
         ///
@@ -4887,24 +4856,16 @@ namespace Agora.Rtc
         ///
         public abstract int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int SetVideoProfileEx(int width, int height, int frameRate, int bitrate);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         ///
@@ -4933,14 +4894,10 @@ namespace Agora.Rtc
         ///
         public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection);
 
-        ///
-        /// TODO(doc)
-        ///
+
         public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
     }
 }

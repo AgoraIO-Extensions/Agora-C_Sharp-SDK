@@ -77,57 +77,26 @@ namespace Agora.Rtc
         ROUTE_USB = 7
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum NLP_AGGRESSIVENESS
     {
-        ///
-        /// TODO(doc)
-        ///
         NLP_NOT_SPECIFIED = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         NLP_MILD = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         NLP_NORMAL = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         NLP_AGGRESSIVE = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         NLP_SUPER_AGGRESSIVE = 4,
 
-        ///
-        /// TODO(doc)
-        ///
         NLP_EXTREME = 5,
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public enum BYTES_PER_SAMPLE
     {
-        ///
-        /// TODO(doc)
-        ///
         TWO_BYTES_PER_SAMPLE = 2,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class AudioParameters
     {
         public AudioParameters()
@@ -144,22 +113,12 @@ namespace Agora.Rtc
             this.frames_per_buffer = frames_per_buffer;
         }
 
-        ///
-        /// TODO(doc)
-        ///
         public int sample_rate { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint channels { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint frames_per_buffer { set; get; }
     };
-
 
     ///
     /// <summary>
@@ -204,87 +163,40 @@ namespace Agora.Rtc
         ///
         AUDIO_RECORDING_SOURCE = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         PRIMARY_CAMERA_SOURCE = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         SECONDARY_CAMERA_SOURCE = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         PRIMARY_SCREEN_SOURCE = 4,
 
-        ///
-        /// TODO(doc)
-        ///
         SECONDARY_SCREEN_SOURCE = 5,
 
-        ///
-        /// TODO(doc)
-        ///
         CUSTOM_VIDEO_SOURCE = 6,
 
-        ///
-        /// TODO(doc)
-        ///
         MEDIA_PLAYER_SOURCE = 7,
 
-        ///
-        /// TODO(doc)
-        ///
         RTC_IMAGE_PNG_SOURCE = 8,
 
-        ///
-        /// TODO(doc)
-        ///
         RTC_IMAGE_JPEG_SOURCE = 9,
 
-        ///
-        /// TODO(doc)
-        ///
         RTC_IMAGE_GIF_SOURCE = 10,
 
-        ///
-        /// TODO(doc)
-        ///
         REMOTE_VIDEO_SOURCE = 11,
 
-        ///
-        /// TODO(doc)
-        ///
         TRANSCODED_VIDEO_SOURCE = 12,
 
-        ///
-        /// TODO(doc)
-        ///
         UNKNOWN_MEDIA_SOURCE = 100
     }
 
-    ///
-    /// TODO(doc)
-    ///
     public class PacketOptions
     {
-        ///
-        /// TODO(doc)
-        ///
         public uint timestamp { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public byte audioLevelIndication { set; get; }
 
         public PacketOptions()
         {
-        /* enum_mediasourcetype_    timestamp */
             timestamp = 0;
-        /* enum_mediasourcetype_    audioLevelIndication */
             audioLevelIndication = 127;
         }
     };
@@ -346,19 +258,10 @@ namespace Agora.Rtc
         }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class AudioEncodedFrameInfo
     {
-        ///
-        /// TODO(doc)
-        ///
         public uint64_t sendTs { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public Byte codec { set; get; }
 
         public AudioEncodedFrameInfo()
@@ -419,7 +322,6 @@ namespace Agora.Rtc
         AUDIO_DUAL_MONO_MIX = 3
     };
 
-
     ///
     /// <summary>
     /// The video pixel format.
@@ -469,14 +371,8 @@ namespace Agora.Rtc
         ///
         VIDEO_PIXEL_NV12 = 8,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_TEXTURE_2D = 10,
 
-        ///
-        /// TODO(doc)
-        ///
         VIDEO_TEXTURE_OES = 11,
 
         ///
@@ -508,26 +404,13 @@ namespace Agora.Rtc
         ///
         RENDER_MODE_FIT = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         RENDER_MODE_ADAPTIVE = 3,
     };
 
-
-    ///
-    /// TODO(doc)
-    ///
     public enum EGL_CONTEXT_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         EGL_CONTEXT10 = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         EGL_CONTEXT14 = 1,
     };
 
@@ -546,12 +429,16 @@ namespace Agora.Rtc
         VIDEO_BUFFER_RAW_DATA = 1,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 2: The video buffer in the format of raw data.
+        /// </summary>
         ///
         VIDEO_BUFFER_ARRAY = 2,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 3: The video buffer in the format of Texture.
+        /// </summary>
         ///
         VIDEO_BUFFER_TEXTURE = 3,
     };
@@ -802,9 +689,6 @@ namespace Agora.Rtc
         ///
         public byte[] yBuffer { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public IntPtr yBufferPtr { set; get; }
 
         ///
@@ -814,9 +698,6 @@ namespace Agora.Rtc
         ///
         public byte[] uBuffer { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public IntPtr uBufferPtr { set; get; }
 
         ///
@@ -826,9 +707,6 @@ namespace Agora.Rtc
         ///
         public byte[] vBuffer { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public IntPtr vBufferPtr { set; get; }
 
         ///
@@ -852,77 +730,35 @@ namespace Agora.Rtc
         ///
         public int avsync_type { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public IntPtr metadata_buffer { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int metadata_size { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public IntPtr sharedContext { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int textureId { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public float[] matrix { set; get; }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public enum MEDIA_PLAYER_SOURCE_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         MEDIA_PLAYER_SOURCE_DEFAULT = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         MEDIA_PLAYER_SOURCE_FULL_FEATURED = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         MEDIA_PLAYER_SOURCE_SIMPLE = 2,
     };
 
-    ///
-    /// TODO(doc)
-    ///
     [Flags]
     public enum VIDEO_MODULE_POSITION
     {
-        ///
-        /// TODO(doc)
-        ///
         POSITION_POST_CAPTURER = 1 << 0,
 
-        ///
-        /// TODO(doc)
-        ///
         POSITION_PRE_RENDERER = 1 << 1,
 
-        ///
-        /// TODO(doc)
-        ///
         POSITION_PRE_ENCODER = 1 << 2,
 
-        ///
-        /// TODO(doc)
-        ///
         POSITION_POST_FILTERS = 1 << 3,
     };
 
@@ -1010,14 +846,8 @@ namespace Agora.Rtc
         ///
         public int samplesPerSec { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public UInt64 buffer { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public IntPtr bufferPtr { set; get; }
 
         ///
@@ -1044,10 +874,25 @@ namespace Agora.Rtc
         public int avsync_type { set; get; }
     };
 
+    ///
+    /// <summary>
+    /// The audio spectrum data.
+    /// </summary>
+    ///
     public struct AudioSpectrumData
     {
+        ///
+        /// <summary>
+        /// The audio spectrum data. Agora divides the audio frequency into 160 frequency domains, and reports the energy value of each frequency domain through this parameter. The value range of each energy type is [0, 1].
+        /// </summary>
+        ///
         public float[] audioSpectrumData;
 
+        ///
+        /// <summary>
+        /// The length of the audio spectrum data in byte.
+        /// </summary>
+        ///
         public int dataLength;
     };
 
@@ -1116,9 +961,6 @@ namespace Agora.Rtc
         ///
         CONTENT_INSPECT_PORN = 3,
 
-        ///
-        /// TODO(doc)
-        ///
         MAX_CONTENT_INSPECT_MODULE_COUNT = 32
     };
 
@@ -1129,24 +971,12 @@ namespace Agora.Rtc
     ///
     public enum CONTENT_INSPECT_DEVICE_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         CONTENT_INSPECT_DEVICE_INVALID = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         CONTENT_INSPECT_DEVICE_AGORA = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         CONTENT_INSPECT_DEVICE_HIVE = 2,
 
-        ///
-        /// TODO(doc)
-        ///
         CONTENT_INSPECT_DEVICE_TUPU = 3
     };
 
@@ -1157,19 +987,10 @@ namespace Agora.Rtc
     ///
     public enum CONTENT_INSPECT_TYPE
     {
-        ///
-        /// TODO(doc)
-        ///
         CONTENT_INSPECT_INVALIDE = 0,
 
-        ///
-        /// TODO(doc)
-        ///
         CONTENT_INSPECT_MODERATION = 1,
 
-        ///
-        /// TODO(doc)
-        ///
         CONTENT_INSPECT_SUPERVISE = 2
     };
 
@@ -1189,15 +1010,9 @@ namespace Agora.Rtc
         ///
         public CONTENT_INSPECT_TYPE type { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public uint frequency { set; get; }
     };
 
-    ///
-    /// TODO(doc)
-    ///
     public class ContentInspectConfig
     {
         public ContentInspectConfig()
@@ -1210,39 +1025,18 @@ namespace Agora.Rtc
             moduleCount = 0;
         }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool enable { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool DeviceWork { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public bool CloudWork { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public string extraInfo { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public ContentInspectModule[] modules { set; get; }
 
-        ///
-        /// TODO(doc)
-        ///
         public int moduleCount { set; get; }
     };
 
