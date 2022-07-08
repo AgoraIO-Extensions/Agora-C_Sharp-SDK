@@ -6023,22 +6023,30 @@ namespace Agora.Rtc
     };
 
     ///
-    /// TODO(doc)
+    /// <summary>
+    /// Recording content. Set in StartAudioRecording [3/3] .
+    /// </summary>
     ///
     public enum AUDIO_FILE_RECORDING_TYPE
     {
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 1: Only records the audio of the local user.
+        /// </summary>
         ///
         AUDIO_FILE_RECORDING_MIC = 1,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 2: Only records the audio of all remote users.
+        /// </summary>
         ///
         AUDIO_FILE_RECORDING_PLAYBACK = 2,
 
         ///
-        /// TODO(doc)
+        /// <summary>
+        /// 3: Records the mixed audio of the local and all remote users.
+        /// </summary>
         ///
         AUDIO_FILE_RECORDING_MIXED = 3,
     };
