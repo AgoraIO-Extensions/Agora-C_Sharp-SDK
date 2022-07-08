@@ -6192,48 +6192,92 @@ namespace Agora.Rtc
         public AUDIO_ENCODING_TYPE encodingType { set; get; }
     };
 
-    /* enum_areacode : uint */
+    ///
+    /// <summary>
+    /// The region for connection, i.e., the region where the server the SDK connects to is located.
+    /// </summary>
+    ///
     public enum AREA_CODE : uint
     {
-        /* enum_areacode : uint_AREA_CODE_CN */
+        ///
+        /// <summary>
+        /// Mainland China.
+        /// </summary>
+        ///
         AREA_CODE_CN = 0x00000001,
 
-        /* enum_areacode : uint_AREA_CODE_NA */
+        ///
+        /// <summary>
+        /// North America.
+        /// </summary>
+        ///
         AREA_CODE_NA = 0x00000002,
 
-        /* enum_areacode : uint_AREA_CODE_EU */
+        ///
+        /// <summary>
+        /// Europe.
+        /// </summary>
+        ///
         AREA_CODE_EU = 0x00000004,
 
-        /* enum_areacode : uint_AREA_CODE_AS */
+        ///
+        /// <summary>
+        /// Asia, excluding Mainland China.
+        /// </summary>
+        ///
         AREA_CODE_AS = 0x00000008,
 
-        /* enum_areacode : uint_AREA_CODE_JP */
+        ///
+        /// <summary>
+        /// Japan.
+        /// </summary>
+        ///
         AREA_CODE_JP = 0x00000010,
 
-        /* enum_areacode : uint_AREA_CODE_IN */
+        ///
+        /// <summary>
+        /// India.
+        /// </summary>
+        ///
         AREA_CODE_IN = 0x00000020,
 
-        /* enum_areacode : uint_AREA_CODE_GLOB */
+        ///
+        /// <summary>
+        /// Global.
+        /// </summary>
+        ///
         AREA_CODE_GLOB = 0xFFFFFFFF
     };
 
 
-    /* enum_areacodeex : uint */
+    ///
+    /// TODO(doc)
+    ///
     public enum AREA_CODE_EX : uint
     {
-        /* enum_areacodeex : uint_AREA_CODE_OC */
+        ///
+        /// TODO(doc)
+        ///
         AREA_CODE_OC = 0x00000040,
 
-        /* enum_areacodeex : uint_AREA_CODE_SA */
+        ///
+        /// TODO(doc)
+        ///
         AREA_CODE_SA = 0x00000080,
 
-        /* enum_areacodeex : uint_AREA_CODE_AF */
+        ///
+        /// TODO(doc)
+        ///
         AREA_CODE_AF = 0x00000100,
 
-        /* enum_areacodeex : uint_AREA_CODE_KR */
+        ///
+        /// TODO(doc)
+        ///
         AREA_CODE_KR = 0x00000200,
 
-        /* enum_areacodeex : uint_AREA_CODE_OVS */
+        ///
+        /// TODO(doc)
+        ///
         AREA_CODE_OVS = 0xFFFFFFFE
     };
 
