@@ -933,42 +933,17 @@ namespace Agora.Rtc
         POSITION_PRE_ENCODER = 1 << 2,
     };
 
-    ///
-    /// <summary>
-    /// 鉴黄结果。
-    /// </summary>
-    ///
     public enum CONTENT_INSPECT_RESULT
     {
-        ///
-        /// <summary>
-        /// 1：正常图片。
-        /// </summary>
-        ///
         CONTENT_INSPECT_NEUTRAL = 1,
 
-        ///
-        /// <summary>
-        /// 2：性感图片。
-        /// </summary>
-        ///
         CONTENT_INSPECT_SEXY = 2,
 
-        ///
-        /// <summary>
-        /// 3：色情图片。
-        /// </summary>
-        ///
         CONTENT_INSPECT_PORN = 3,
 
         MAX_CONTENT_INSPECT_MODULE_COUNT = 32
     };
 
-    ///
-    /// <summary>
-    /// 在设备端进行内容审核的类型。
-    /// </summary>
-    ///
     public enum CONTENT_INSPECT_DEVICE_TYPE
     {
         CONTENT_INSPECT_DEVICE_INVALID = 0,
@@ -980,11 +955,6 @@ namespace Agora.Rtc
         CONTENT_INSPECT_DEVICE_TUPU = 3
     };
 
-    ///
-    /// <summary>
-    /// 内容审核类型。
-    /// </summary>
-    ///
     public enum CONTENT_INSPECT_TYPE
     {
         CONTENT_INSPECT_INVALIDE = 0,
@@ -994,20 +964,8 @@ namespace Agora.Rtc
         CONTENT_INSPECT_SUPERVISE = 2
     };
 
-    ///
-    /// <summary>
-    ///  ContentInspectModule 结构体，用于配置内容审核模块的类型和频率。 
-    /// </summary>
-    ///
     public class ContentInspectModule
     {
-        ///
-        /// <summary>
-        /// 内容审核模块的类型。 0: （默认）该功能模块无实际功能。 请不要设为该值。
-        /// 1: 鉴黄。 The SDK will take screenshots and pornography of videos sent by local users, and upload the screenshots and audit results.
-        /// 2: 截图。 SDK 会对视频流进行截图并上传。 
-        /// </summary>
-        ///
         public CONTENT_INSPECT_TYPE type { set; get; }
 
         public uint frequency { set; get; }
@@ -1040,11 +998,6 @@ namespace Agora.Rtc
         public int moduleCount { set; get; }
     };
 
-    ///
-    /// <summary>
-    /// 视频截图设置。
-    /// </summary>
-    ///
     public class SnapShotConfig
     {
         public SnapShotConfig()
@@ -1054,30 +1007,10 @@ namespace Agora.Rtc
             filePath = null;
         }
 
-        ///
-        /// <summary>
-        /// The channel name.
-        /// </summary>
-        ///
         public string channel { set; get; }
 
-        ///
-        /// <summary>
-        /// The user ID. Set uid as 0 if you want to take a snapshot of the local user's video.
-        /// </summary>
-        ///
         public uint uid { set; get; }
 
-        ///
-        /// <summary>
-        /// 截图的本地保存路径，需精确到文件名及格式， 例如： 
-        /// Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.jpg
-        /// iOS: /App Sandbox/Library/Caches/example.jpg
-        /// macOS: ～/Library/Logs/example.jpg
-        /// Android: /storage/emulated/0/Android/data/<package name>/files/example.jpg
-        /// Ensure that the path you specify exists and is writable.
-        /// </summary>
-        ///
         public string filePath { set; get; }
     };
 
