@@ -1988,46 +1988,16 @@ namespace Agora.Rtc
         DIRECT_CDN_STREAMING_STATE_RECOVERING = 4,
     };
 
-    ///
-    /// <summary>
-    /// 当前 CDN 推流的统计数据。
-    /// </summary>
-    ///
     public class DirectCdnStreamingStats
     {
-        ///
-        /// <summary>
-        /// 视频的宽度（px）。
-        /// </summary>
-        ///
         public int videoWidth { set; get; }
 
-        ///
-        /// <summary>
-        /// 视频的高度（px）。
-        /// </summary>
-        ///
         public int videoHeight { set; get; }
 
-        ///
-        /// <summary>
-        /// 当前视频帧率（fps）。
-        /// </summary>
-        ///
         public int fps { set; get; }
 
-        ///
-        /// <summary>
-        /// 当前视频码率（bps）。
-        /// </summary>
-        ///
         public int videoBitrate { set; get; }
 
-        ///
-        /// <summary>
-        /// 当前音频码率（bps）。
-        /// </summary>
-        ///
         public int audioBitrate { set; get; }
     };
 
