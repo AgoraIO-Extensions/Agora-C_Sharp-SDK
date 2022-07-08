@@ -6,422 +6,708 @@ namespace Agora.Rtc
     using view_t = UInt64;
 
     #region IAgoraRtcEngine.h
-    /**
-    * The media device types.
-*/
+    ///
+    /// <summary>
+    /// Media device types.
+    /// </summary>
+    ///
     public enum MEDIA_DEVICE_TYPE
     {
-        /**
-        * -1: Unknown device type.
-        */
+        ///
+        /// <summary>
+        /// -1: Unknown device type.
+        /// </summary>
+        ///
         UNKNOWN_AUDIO_DEVICE = -1,
-        /**
-        * 0: The audio playback device.
-        */
+
+        ///
+        /// <summary>
+        /// 0: Audio playback device.
+        /// </summary>
+        ///
         AUDIO_PLAYOUT_DEVICE = 0,
-        /**
-        * 1: The audio recording device.
-        */
+
+        ///
+        /// <summary>
+        /// 1: Audio capturing device.
+        /// </summary>
+        ///
         AUDIO_RECORDING_DEVICE = 1,
-        /**
-        * 2: The video renderer.
-        */
+
+        ///
+        /// <summary>
+        /// 2: Video renderer.
+        /// </summary>
+        ///
         VIDEO_RENDER_DEVICE = 2,
-        /**
-        * 3: The video capturer.
-        */
+
+        ///
+        /// <summary>
+        /// 3: Video capturer.
+        /// </summary>
+        ///
         VIDEO_CAPTURE_DEVICE = 3,
-        /**
-        * 4: The audio playback device of the app.
-        */
+
+        ///
+        /// <summary>
+        /// 4: Application audio playback device.
+        /// </summary>
+        ///
         AUDIO_APPLICATION_PLAYOUT_DEVICE = 4,
     };
 
-    /**
-The states of the local user's audio mixing file.
-*/
+    ///
+    /// <summary>
+    /// The playback state of the music file.
+    /// </summary>
+    ///
     public enum AUDIO_MIXING_STATE_TYPE
     {
-        /** 710: The audio mixing file is playing. */
+        ///
+        /// <summary>
+        /// 710: The music file is playing.
+        /// </summary>
+        ///
         AUDIO_MIXING_STATE_PLAYING = 710,
-        /** 711: The audio mixing file pauses playing. */
+
+        ///
+        /// <summary>
+        /// 711: The music file pauses playing.
+        /// </summary>
+        ///
         AUDIO_MIXING_STATE_PAUSED = 711,
-        /** 713: The audio mixing file stops playing. */
+
+        ///
+        /// <summary>
+        /// 713: The music file stops playing.
+        /// </summary>
+        ///
         AUDIO_MIXING_STATE_STOPPED = 713,
-        /** 714: An exception occurs when playing the audio mixing file.
-        See #AUDIO_MIXING_ERROR_TYPE.
-        */
+
+        ///
+        /// <summary>
+        /// 714: An error occurs during the playback of the audio mixing file.
+        /// </summary>
+        ///
         AUDIO_MIXING_STATE_FAILED = 714,
-        /** 715: The audio mixing file is played once. */
+
+        ///
+        /// <summary>
+        /// (715): The music file is played once.
+        /// </summary>
+        ///
         AUDIO_MIXING_STATE_COMPLETED = 715,
-        /** 716: The audio mixing file is all played out. */
+
+        ///
+        /// <summary>
+        /// (716): The music file is all played out.
+        /// </summary>
+        ///
         AUDIO_MIXING_STATE_ALL_LOOPS_COMPLETED = 716,
     };
 
-    /**
-The error codes of the local user's audio mixing file.
-*/
+    ///
+    /// <summary>
+    /// Errors that may occur when playing a music file.
+    /// </summary>
+    ///
     public enum AUDIO_MIXING_ERROR_TYPE
     {
-        /** 701: The SDK cannot open the audio mixing file. */
+        ///
+        /// <summary>
+        /// The SDK cannot open the music file.
+        /// </summary>
+        ///
         AUDIO_MIXING_ERROR_CAN_NOT_OPEN = 701,
-        /** 702: The SDK opens the audio mixing file too frequently. */
+
+        ///
+        /// <summary>
+        /// The SDK opens the music file too frequently.
+        /// </summary>
+        ///
         AUDIO_MIXING_ERROR_TOO_FREQUENT_CALL = 702,
-        /** 703: The audio mixing file playback is interrupted. */
+
+        ///
+        /// <summary>
+        /// The playback of the music file is interrupted.
+        /// </summary>
+        ///
         AUDIO_MIXING_ERROR_INTERRUPTED_EOF = 703,
-        /** 0: The SDK can open the audio mixing file. */
+
+        ///
+        /// <summary>
+        /// 710: The music file is playing.
+        /// </summary>
+        ///
         AUDIO_MIXING_ERROR_OK = 0,
     };
 
-    /**
-    * The status of importing an external video stream in a live broadcast.
-*/
+    ///
+    /// <summary>
+    /// States of importing an external video stream in the interactive live streaming.
+    /// </summary>
+    ///
     public enum INJECT_STREAM_STATUS
     {
-        /**
-        * 0: The media stream is injected successfully.
-        */
+        ///
+        /// <summary>
+        /// 0: The external video stream is imported successfully.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_START_SUCCESS = 0,
-        /**
-        * 1: The media stream already exists.
-        */
+
+        ///
+        /// <summary>
+        /// 1: The external video stream already exists.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_START_ALREADY_EXISTS = 1,
-        /**
-        * 2: The media stream injection is unauthorized.
-        */
+
+        ///
+        /// <summary>
+        /// 2: The external video stream to be imported is unauthorized.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_START_UNAUTHORIZED = 2,
-        /**
-        * 3: Timeout occurs when injecting a media stream.
-        */
+
+        ///
+        /// <summary>
+        /// 3: A timeout occurs when importing the external video stream.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_START_TIMEDOUT = 3,
-        /**
-        * 4: The media stream injection fails.
-        */
+
+        ///
+        /// <summary>
+        /// 4: The SDK fails to import the external video stream.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_START_FAILED = 4,
-        /**
-        * 5: The media stream stops being injected successfully.
-        */
+
+        ///
+        /// <summary>
+        /// 5: The SDK successfully stops importing the external video stream.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_STOP_SUCCESS = 5,
-        /**
-        * 6: The media stream injection that you want to stop is found.
-        */
+
+        ///
+        /// <summary>
+        /// 6: The external video stream to be stopped importing is not found.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_STOP_NOT_FOUND = 6,
-        /**
-        * 7: You are not authorized to stop the media stream injection.
-        */
+
+        ///
+        /// <summary>
+        /// 7: The external video stream to be stopped importing is unauthorized.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_STOP_UNAUTHORIZED = 7,
-        /**
-        * 8: Timeout occurs when you stop injecting the media stream.
-        */
+
+        ///
+        /// <summary>
+        /// 8: A timeout occurs when stopping importing the external video stream.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_STOP_TIMEDOUT = 8,
-        /**
-        * 9: Stopping injecting the media stream fails.
-        */
+
+        ///
+        /// <summary>
+        /// 9: The SDK fails to stop importing the external video stream.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_STOP_FAILED = 9,
-        /**
-        * 10: The media stream is broken.
-        */
+
+        ///
+        /// <summary>
+        /// 10: The external video stream is corrupted.
+        /// </summary>
+        ///
         INJECT_STREAM_STATUS_BROKEN = 10,
     };
 
-    /**
-    * The audio equalization band frequency.
-*/
+    ///
+    /// <summary>
+    /// The midrange frequency for audio equalization.
+    /// </summary>
+    ///
     public enum AUDIO_EQUALIZATION_BAND_FREQUENCY
     {
-        /**
-        * 0: 31 Hz.
-        */
+        ///
+        /// <summary>
+        /// 0: 31 Hz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_31 = 0,
-        /**
-        * 1: 62 Hz.
-        */
+
+        ///
+        /// <summary>
+        /// 1: 62 Hz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_62 = 1,
-        /**
-        * 2: 125 Hz.
-        */
+
+        ///
+        /// <summary>
+        /// 2: 125 Hz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_125 = 2,
-        /**
-        * 3: 250 Hz.
-        */
+
+        ///
+        /// <summary>
+        /// 3: 250 Hz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_250 = 3,
-        /**
-        * 4: 500 Hz.
-        */
+
+        ///
+        /// <summary>
+        /// 4: 500 Hz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_500 = 4,
-        /**
-        * 5: 1 KHz.
-        */
+
+        ///
+        /// <summary>
+        /// 5: 1 kHz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_1K = 5,
-        /**
-        * 6: 2 KHz.
-        */
+
+        ///
+        /// <summary>
+        /// 6: 2 kHz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_2K = 6,
-        /**
-        * 7: 4 KHz.
-        */
+
+        ///
+        /// <summary>
+        /// 7: 4 kHz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_4K = 7,
-        /**
-        * 8: 8 KHz.
-        */
+
+        ///
+        /// <summary>
+        /// 8: 8 kHz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_8K = 8,
-        /**
-        * 9: 16 KHz.
-        */
+
+        ///
+        /// <summary>
+        /// 9: 16 kHz
+        /// </summary>
+        ///
         AUDIO_EQUALIZATION_BAND_16K = 9,
     };
 
-    /**
-    * The audio reverberation type.
-*/
+    ///
+    /// <summary>
+    /// Audio reverberation types.
+    /// </summary>
+    ///
     public enum AUDIO_REVERB_TYPE
     {
-        /**
-        * 0: (-20 to 10 dB), the level of the dry signal.
-        */
+        ///
+        /// <summary>
+        /// 0: The level of the dry signal (dB). The value is between -20 and 10.
+        /// </summary>
+        ///
         AUDIO_REVERB_DRY_LEVEL = 0,
-        /**
-        * 1: (-20 to 10 dB), the level of the early reflection signal (wet signal).
-        */
+
+        ///
+        /// <summary>
+        /// 1: The level of the early reflection signal (wet signal) (dB). The value is between -20 and 10.
+        /// </summary>
+        ///
         AUDIO_REVERB_WET_LEVEL = 1,
-        /**
-        * 2: (0 to 100 dB), the room size of the reflection.
-        */
+
+        ///
+        /// <summary>
+        /// 2: The room size of the reflection. The value is between 0 and 100.
+        /// </summary>
+        ///
         AUDIO_REVERB_ROOM_SIZE = 2,
-        /**
-        * 3: (0 to 200 ms), the length of the initial delay of the wet signal in ms.
-        */
+
+        ///
+        /// <summary>
+        /// 3: The length of the initial delay of the wet signal (ms). The value is between 0 and 200.
+        /// </summary>
+        ///
         AUDIO_REVERB_WET_DELAY = 3,
-        /**
-        * 4: (0 to 100), the strength of the late reverberation.
-        */
+
+        ///
+        /// <summary>
+        /// 4: The reverberation strength. The value is between 0 and 100.
+        /// </summary>
+        ///
         AUDIO_REVERB_STRENGTH = 4,
     };
 
+    ///
+    /// <summary>
+    /// Stream fallback options.
+    /// </summary>
+    ///
     public enum STREAM_FALLBACK_OPTIONS
     {
-        /** 0: (Default) No fallback operation for the stream when the network
-            condition is poor. The stream quality cannot be guaranteed. */
-
+        ///
+        /// <summary>
+        /// 0: No fallback behavior for the local/remote video stream when the uplink/downlink network conditions are poor. The quality of the stream is not guaranteed.
+        /// </summary>
+        ///
         STREAM_FALLBACK_OPTION_DISABLED = 0,
-        /** 1: Under poor network conditions, the SDK will send or receive
-            agora::rtc::VIDEO_STREAM_LOW. You can only set this option in
-            RtcEngineParameters::setRemoteSubscribeFallbackOption. Nothing happens when
-            you set this in RtcEngineParameters::setLocalPublishFallbackOption. */
+
+        ///
+        /// <summary>
+        /// 1: Under poor downlink network conditions, the remote video stream, to which you subscribe, falls back to the low-quality (low resolution and low bitrate) video stream.
+        /// This option is only valid for SetRemoteSubscribeFallbackOption . 
+        /// </summary>
+        ///
         STREAM_FALLBACK_OPTION_VIDEO_STREAM_LOW = 1,
-        /** 2: Under poor network conditions, the SDK may receive
-            agora::rtc::VIDEO_STREAM_LOW first, but if the network still does
-            not allow displaying the video, the SDK will send or receive audio only. */
+
+        ///
+        /// <summary>
+        /// 2: Under poor uplink network conditions, the published video stream falls back to audio-only. Under poor downlink network conditions, the remote video stream, to which you subscribe, first falls back to the low-quality (low resolution and low bitrate) video stream; and then to an audio-only stream if the network conditions worsen.
+        /// </summary>
+        ///
         STREAM_FALLBACK_OPTION_AUDIO_ONLY = 2,
     };
 
+    ///
+    /// <summary>
+    /// The priority of the remote user.
+    /// </summary>
+    ///
     public enum PRIORITY_TYPE
     {
-        /** 50: High priority.
-        */
+        ///
+        /// <summary>
+        /// The user's priority is high.
+        /// </summary>
+        ///
         PRIORITY_HIGH = 50,
-        /** 100: (Default) normal priority.
-        */
+
+        ///
+        /// <summary>
+        /// (Default) The user's priority is normal.
+        /// </summary>
+        ///
         PRIORITY_NORMAL = 100,
     };
 
-    /** Statistics of the local video stream.
-     */
+    ///
+    /// <summary>
+    /// The statistics of the local video stream.
+    /// </summary>
+    ///
     public class LocalVideoStats
     {
         public LocalVideoStats()
         {
         }
 
-        /**
-        * ID of the local user.
-        */
+        ///
+        /// <summary>
+        /// The ID of the local user.
+        /// </summary>
+        ///
         public uint uid { set; get; }
 
-        /** Bitrate (Kbps) sent in the reported interval, which does not include
-         * the bitrate of the retransmission video after packet loss.
-         */
+        ///
+        /// <summary>
+        /// The actual bitrate (Kbps) while sending the local video stream.This value does not include the bitrate for resending the video after packet loss.
+        /// </summary>
+        ///
         public int sentBitrate { set; get; }
 
-        /** Frame rate (fps) sent in the reported interval, which does not include
-         * the frame rate of the retransmission video after packet loss.
-         */
+        ///
+        /// <summary>
+        /// The actual frame rate (fps) while sending the local video stream.This value does not include the frame rate for resending the video after packet loss.
+        /// </summary>
+        ///
         public int sentFrameRate { set; get; }
 
-        /** The capture frame rate (fps) of the local video.
-         */
+        ///
+        /// <summary>
+        /// The frame rate (fps) for capturing the local video stream.
+        /// </summary>
+        ///
         public int captureFrameRate { set; get; }
 
-        /** The width of the capture frame (px).
-        */
+        ///
+        /// TODO(doc)
+        ///
         public int captureFrameWidth { set; get; }
-        /** The height of the capture frame (px).
-         */
+
+        ///
+        /// TODO(doc)
+        ///
         public int captureFrameHeight { set; get; }
 
-        /**
-        * The regulated frame rate of capture frame rate according to video encoder configuration.
-        */
+        ///
+        /// TODO(doc)
+        ///
         public int regulatedCaptureFrameRate { set; get; }
-        /**
-         * The regulated frame width (pixel) of capture frame width according to video encoder configuration.
-         */
+
+        ///
+        /// TODO(doc)
+        ///
         public int regulatedCaptureFrameWidth { set; get; }
-        /**
-         * The regulated frame height (pixel) of capture frame height according to video encoder configuration.
-         */
+
+        ///
+        /// TODO(doc)
+        ///
         public int regulatedCaptureFrameHeight { set; get; }
 
-        /** The encoder output frame rate (fps) of the local video.
-         */
+        ///
+        /// <summary>
+        /// The output frame rate (fps) of the local video encoder.
+        /// </summary>
+        ///
         public int encoderOutputFrameRate { set; get; }
 
-        /** The width of the encoding frame (px).
-        */
+        ///
+        /// <summary>
+        /// The width of the encoded video (px).
+        /// </summary>
+        ///
         public int encodedFrameWidth { set; get; }
 
-        /** The height of the encoding frame (px).
-        */
+        ///
+        /// <summary>
+        /// The height of the encoded video (px).
+        /// </summary>
+        ///
         public int encodedFrameHeight { set; get; }
 
-        /** The render output frame rate (fps) of the local video.
-         */
+        ///
+        /// <summary>
+        /// The output frame rate (fps) of the local video renderer.
+        /// </summary>
+        ///
         public int rendererOutputFrameRate { set; get; }
 
-        /** The target bitrate (Kbps) of the current encoder. This value is estimated by the SDK based on the current network conditions.
-         */
+        ///
+        /// <summary>
+        /// The target bitrate (Kbps) of the current encoder. This is an estimate made by the SDK based on the current network conditions.
+        /// </summary>
+        ///
         public int targetBitrate { set; get; }
 
-        /** The target frame rate (fps) of the current encoder.
-         */
+        ///
+        /// <summary>
+        /// The target frame rate (fps) of the current encoder.
+        /// </summary>
+        ///
         public int targetFrameRate { set; get; }
 
-        /** Quality change of the local video in terms of target frame rate and
-        * target bit rate in this reported interval. See #QUALITY_ADAPT_INDICATION.
-        */
+        ///
+        /// <summary>
+        /// Quality adaption of the local video stream in the reported interval (based on the target frame rate and target bitrate). See QUALITY_ADAPT_INDICATION .
+        /// </summary>
+        ///
         public QUALITY_ADAPT_INDICATION qualityAdaptIndication { set; get; }
+
+        ///
+        /// <summary>
+        /// The bitrate (Kbps) while encoding the local video stream.This value does not include the bitrate for resending the video after packet loss.
+        /// </summary>
+        ///
         public int encodedBitrate { set; get; }
 
-
-        /** The value of the sent frames, represented by an aggregate value.
-         */
+        ///
+        /// <summary>
+        /// The number of the sent video frames, represented by an aggregate value.
+        /// </summary>
+        ///
         public int encodedFrameCount { set; get; }
 
-        /** The codec type of the local video:
-         * - VIDEO_CODEC_VP8 = 1: VP8.
-         * - VIDEO_CODEC_H264 = 2: (Default) H.264.
-         */
+        ///
+        /// <summary>
+        /// The codec type of the local video. See VIDEO_CODEC_TYPE .
+        /// </summary>
+        ///
         public VIDEO_CODEC_TYPE codecType { set; get; }
 
-        /**
-        * The video packet loss rate (%) from the local client to the Agora edge server before applying the anti-packet loss strategies.
-        */
+        ///
+        /// <summary>
+        /// The video packet loss rate (%) from the local client to the Agora server before applying the anti-packet loss strategies.
+        /// </summary>
+        ///
         public ushort txPacketLossRate { set; get; }
-    }
+    };
 
-    /** Statistics of the remote video stream.
-     */
+    ///
+    /// <summary>
+    /// The statistics of the remote video stream.
+    /// </summary>
+    ///
     public class RemoteVideoStats
     {
-        /**
- * ID of the remote user sending the video stream.
- */
+        ///
+        /// <summary>
+        /// The ID of the remote user sending the video stream.
+        /// </summary>
+        ///
         public uint uid { set; get; }
-        /**
-         * @deprecated Time delay (ms).
-         *
-         * In scenarios where audio and video is synchronized, you can use the
-         * value of `networkTransportDelay` and `jitterBufferDelay` in `RemoteAudioStats`
-         * to know the delay statistics of the remote video.
-         */
+
+        ///
+        /// <summary>
+        ///  Deprecated:
+        /// In scenarios where audio and video are synchronized, you can get the video delay datafrom networkTransportDelay and jitterBufferDelay in RemoteAudioStats . Delay (ms).
+        /// </summary>
+        ///
         [Obsolete]
         public int delay { set; get; }
-        /**
-         * The width (pixels) of the video stream.
-         */
-        public int width { set; get; }
-        /**
-         * The height (pixels) of the video stream.
-         */
-        public int height { set; get; }
-        /**
-         * Bitrate (Kbps) received since the last count.
-         */
-        public int receivedBitrate { set; get; }
-        /** The decoder output frame rate (fps) of the remote video.
-         */
-        public int decoderOutputFrameRate { set; get; }
-        /** The render output frame rate (fps) of the remote video.
-         */
-        public int rendererOutputFrameRate { set; get; }
-        /** The video frame loss rate (%) of the remote video stream in the reported interval.
-         */
-        public int frameLossRate { set; get; }
-        /** Packet loss rate (%) of the remote video stream after using the anti-packet-loss method.
-         */
-        public int packetLossRate { set; get; }
-        /**
-         * The type of the remote video stream: #VIDEO_STREAM_TYPE.
-         */
-        public VIDEO_STREAM_TYPE rxStreamType { set; get; }
-        /**
-           The total freeze time (ms) of the remote video stream after the remote user joins the channel.
-           In a video session where the frame rate is set to no less than 5 fps, video freeze occurs when
-           the time interval between two adjacent renderable video frames is more than 500 ms.
-           */
-        public int totalFrozenTime { set; get; }
-        /**
-         The total video freeze time as a percentage (%) of the total time when the video is available.
-         */
-        public int frozenRate { set; get; }
-        /**
-         The offset (ms) between audio and video stream. A positive value indicates the audio leads the
-         video, and a negative value indicates the audio lags the video.
-         */
-        public int avSyncTimeMs { set; get; }
-        /**
-         * The total time (ms) when the remote user neither stops sending the audio
-         * stream nor disables the audio module after joining the channel.
-         */
-        public int totalActiveTime { set; get; }
-        /**
-         * The total publish duration (ms) of the remote audio stream.
-         */
-        public int publishDuration { set; get; }
-        /**
-         * The SuperResolution stats. 0 is not ok. >0 is ok. 
-         */
-        public int superResolutionType { set; get; }
-    }
 
+        ///
+        /// <summary>
+        /// Width (pixels) of the video stream.
+        /// </summary>
+        ///
+        public int width { set; get; }
+
+        ///
+        /// <summary>
+        /// Height (pixels) of the video stream.
+        /// </summary>
+        ///
+        public int height { set; get; }
+
+        ///
+        /// <summary>
+        /// Bitrate (Kbps) received since the last count.
+        /// </summary>
+        ///
+        public int receivedBitrate { set; get; }
+
+        ///
+        /// <summary>
+        /// The decoder output frame rate (fps) of the remote video.
+        /// </summary>
+        ///
+        public int decoderOutputFrameRate { set; get; }
+
+        ///
+        /// <summary>
+        /// The render output frame rate (fps) of the remote video.
+        /// </summary>
+        ///
+        public int rendererOutputFrameRate { set; get; }
+
+        ///
+        /// <summary>
+        /// Remote video packet loss rate (%).
+        /// </summary>
+        ///
+        public int frameLossRate { set; get; }
+
+        ///
+        /// <summary>
+        /// Packet loss rate (%) of the remote video stream after using the anti-packet-loss method.
+        /// </summary>
+        ///
+        public int packetLossRate { set; get; }
+
+        ///
+        /// <summary>
+        /// The type of the remote video stream. See VIDEO_STREAM_TYPE .
+        /// </summary>
+        ///
+        public VIDEO_STREAM_TYPE rxStreamType { set; get; }
+
+        ///
+        /// <summary>
+        /// The total freeze time (ms) of the remote video stream after the remote user joins the channel. In a video session where the frame rate is set to no less than 5 fps, video freeze occurs when the time interval between two adjacent renderable video frames is more than 500 ms.
+        /// </summary>
+        ///
+        public int totalFrozenTime { set; get; }
+
+        ///
+        /// <summary>
+        /// The total video freeze time as a percentage (%) of the total time when the video is available. The video is considered available when the remote user neither stops sending the audio stream nor disables the audio module after joining the channel.
+        /// </summary>
+        ///
+        public int frozenRate { set; get; }
+
+        ///
+        /// <summary>
+        /// The amount of time (ms) that the audio is ahead of the video.If this value is negative, the audio is lagging behind the video.
+        /// </summary>
+        ///
+        public int avSyncTimeMs { set; get; }
+
+        ///
+        /// <summary>
+        /// The total freeze time (ms) of the remote video stream after the remote user joins the channel.
+        /// The total effective duration of the video is the duration of the call after the remote user or host joins the channel and neither stops sending the video stream nor disables the video module.
+        /// </summary>
+        ///
+        public int totalActiveTime { set; get; }
+
+        ///
+        /// <summary>
+        /// The total duration (ms) of the remote video stream.
+        /// </summary>
+        ///
+        public int publishDuration { set; get; }
+
+        ///
+        /// <summary>
+        /// The state of super resolution:
+        /// >0: Super resolution is enabled.
+        /// =0: Super resolution is not enabled.
+        /// </summary>
+        ///
+        public int superResolutionType { set; get; }
+    };
+
+    ///
+    /// TODO(doc)
+    ///
     public class Region
     {
-        /** User ID of the user whose video is to be displayed in the region.
-         */
+        ///
+        /// TODO(doc)
+        ///
         public uint uid { set; get; }
-        /** Horizontal position of the region on the screen.
-         */
-        public double x { set; get; } // [0,1]
-        /** Vertical position of the region on the screen.
-         */
-        public double y { set; get; }  // [0,1]
-        /**
-         Actual width of the region.
-        */
-        public double width { set; get; } // [0,1]
-        /** Actual height of the region. */
-        public double height { set; get; }  // [0,1]
-        /** 0 means the region is at the bottom, and 100 means the region is at the
-         * top.
-         */
-        public int zOrder { set; get; } // optional, [0, 100] //0 (default): bottom most, 100: top most
 
-        /** 0 means the region is transparent, and 1 means the region is opaque. The
-         * default value is 1.0.
-         */
+        ///
+        /// TODO(doc)
+        ///
+        public double x { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
+        public double y { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
+        public double width { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
+        public double height { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
+        public int zOrder { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
         public double alpha { set; get; }
 
-        public RENDER_MODE_TYPE renderMode;  // RENDER_MODE_HIDDEN: Crop, RENDER_MODE_FIT: Zoom to fit
+        public RENDER_MODE_TYPE renderMode;
 
         public Region()
         {
@@ -437,33 +723,44 @@ The error codes of the local user's audio mixing file.
     };
 
 
+    ///
+    /// TODO(doc)
+    ///
     public class VideoCompositingLayout
     {
-        /** Ignore this parameter. The width of the canvas is set by
-        agora::rtc::IRtcEngine::configPublisher, and not by
-        agora::rtc::VideoCompositingLayout::canvasWidth.
-        */
+        ///
+        /// TODO(doc)
+        ///
         public int canvasWidth { set; get; }
-        /** Ignore this parameter. The height of the canvas is set by
-         agora::rtc::IRtcEngine::configPublisher, and not by
-         agora::rtc::VideoCompositingLayout::canvasHeight.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int canvasHeight { set; get; }
-        /** Enter any of the 6-digit symbols defined in RGB.
-         */
-        public string backgroundColor { set; get; } // e.g. "#C0C0C0" in RGB
-        /** Region array. Each host in the channel can have a region to display the
-         * video on the screen.
-         */
+
+        ///
+        /// TODO(doc)
+        ///
+        public string backgroundColor { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
         public Region[] regions { set; get; }
-        /** Number of users in the channel.
-         */
+
+        ///
+        /// TODO(doc)
+        ///
         public int regionCount { set; get; }
-        /** User-defined data.
-         */
+
+        ///
+        /// TODO(doc)
+        ///
         public string appData { set; get; }
-        /** Length of the user-defined data.
-         */
+
+        ///
+        /// TODO(doc)
+        ///
         public int appDataLength { set; get; }
 
         public VideoCompositingLayout()
@@ -476,12 +773,14 @@ The error codes of the local user's audio mixing file.
             appData = "";
             appDataLength = 0;
         }
+    };
 
-    }
 
-
-    /** Configuration of the injected media stream.
-     */
+    ///
+    /// <summary>
+    /// Configurations of injecting an external audio or video stream.
+    /// </summary>
+    ///
     public class InjectStreamConfig
     {
         public InjectStreamConfig()
@@ -509,110 +808,157 @@ The error codes of the local user's audio mixing file.
             this.audioChannels = audioChannels;
         }
 
-        /** Width of the injected stream in the live interactive streaming. The default value is 0 (same width as the original stream).
-         */
+        ///
+        /// <summary>
+        /// The width of the external video stream after injecting. The default value is 0, which represents the same width as the original.
+        /// </summary>
+        ///
         public int width { set; get; }
 
-        /** Height of the injected stream in the live interactive streaming. The default value is 0 (same height as the original stream).
-         */
+        ///
+        /// <summary>
+        /// The height of the external video stream after injecting. The default value is 0, which represents the same height as the original.
+        /// </summary>
+        ///
         public int height { set; get; }
 
-        /** Video GOP (in frames) of the injected stream in the live interactive streaming. The default value is 30 fps.
-         */
+        ///
+        /// <summary>
+        /// The GOP (in frames) of injecting the external video stream. The default value is 30.
+        /// </summary>
+        ///
         public int videoGop { set; get; }
 
-        /** Video frame rate of the injected stream in the live interactive streaming. The default value is 15 fps.
-         */
+        ///
+        /// TODO(doc)
+        ///
         public int videoFramerate { set; get; }
 
-        /** Video bitrate of the injected stream in the live interactive streaming. The default value is 400 Kbps.
-         @note The setting of the video bitrate is closely linked to the resolution. If the video bitrate you set is beyond a reasonable range, the SDK sets it within a reasonable range.
-         */
+        ///
+        /// <summary>
+        /// The bitrate (Kbps) of injecting the external video stream. The default value is 400 Kbps.
+        /// The bitrate setting is closely linked to the video resolution. If the bitrate you set is beyond a reasonable range, the SDK sets it within a reasonable range.
+        /// </summary>
+        ///
         public int videoBitrate { set; get; }
 
-        /** Audio-sample rate of the injected stream in the live interactive streaming: #AUDIO_SAMPLE_RATE_TYPE. The default value is 48000 Hz.
-         @note We recommend setting the default value.
-         */
+        ///
+        /// <summary>
+        /// The sampling rate (Hz) of injecting the external audio stream. The default value is 48000 Hz. See AUDIO_SAMPLE_RATE_TYPE .
+        /// Agora recommends using the default value. 
+        /// </summary>
+        ///
         public AUDIO_SAMPLE_RATE_TYPE audioSampleRate { set; get; }
 
-        /** Audio bitrate of the injected stream in the live interactive streaming. The default value is 48.
-         @note We recommend setting the default value.
-         */
+        ///
+        /// <summary>
+        /// The bitrate (Kbps) of injecting the external audio stream. The default value is 48 Kbps.
+        /// Agora recommends using the default value. 
+        /// </summary>
+        ///
         public int audioBitrate { set; get; }
 
-        /** Audio channels in the live interactive streaming.
-         - 1: (Default) Mono
-         - 2: Two-channel stereo
-         @note We recommend setting the default value.
-         */
+        ///
+        /// <summary>
+        /// The number of channels of the external audio stream after injecting.
+        /// 1: (Default) Mono.
+        /// 2: Stereo. Agora recommends using the default value. 
+        /// </summary>
+        ///
         public int audioChannels { set; get; }
     }
 
-    /** The video stream lifecycle of CDN Live.
- */
+    ///
+    /// <summary>
+    /// Lifecycle of the CDN live video stream.
+    /// Deprecated
+    /// </summary>
+    ///
     public enum RTMP_STREAM_LIFE_CYCLE_TYPE
     {
-        /** Bound to the channel lifecycle.
-        */
+        ///
+        /// <summary>
+        /// Bind to the channel lifecycle. If all hosts leave the channel, the CDN live streaming stops after 30 seconds.
+        /// </summary>
+        ///
         RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL = 1,
-        /** Bound to the owner identity of the RTMP stream.
-        */
+
+        ///
+        /// <summary>
+        /// Bind to the owner of the RTMP stream. If the owner leaves the channel, the CDN live streaming stops immediately.
+        /// </summary>
+        ///
         RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
     };
 
-    /** The definition of PublisherConfiguration.
-*/
+    ///
+    /// TODO(doc)
+    ///
     public class PublisherConfiguration
     {
-        /** Width of the output data stream set for CDN Live. The default value is
-        360.
-        */
+        ///
+        /// TODO(doc)
+        ///
         public int width { set; get; }
-        /** Height of the output data stream set for CDN Live. The default value is
-        640.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int height { set; get; }
-        /** Frame rate of the output data stream set for CDN Live. The default value
-        is 15 fps.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int framerate { set; get; }
-        /** Bitrate of the output data stream set for CDN Live. The default value is
-        500 Kbps.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int bitrate { set; get; }
-        /** The default layout:
-        - 0: Tile horizontally
-        - 1: Layered windows
-        - 2: Tile vertically
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int defaultLayout { set; get; }
-        /** The video stream lifecycle of CDN Live: RTMP_STREAM_LIFE_CYCLE_TYPE
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int lifecycle { set; get; }
-        /** Whether the current user is the owner of the RTMP stream:
-        - True: Yes (default). The push-stream configuration takes effect.
-        - False: No. The push-stream configuration will not work.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public bool owner { set; get; }
-        /** Width of the stream to be injected. Set it as 0.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int injectStreamWidth { set; get; }
-        /** Height of the stream to be injected. Set it as 0.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int injectStreamHeight { set; get; }
-        /** URL address of the stream to be injected to the channel.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public string injectStreamUrl { set; get; }
-        /** Push-stream URL address for the picture-in-picture layouts. The default
-        value is NULL.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public string publishUrl { set; get; }
-        /** Push-stream URL address of the original stream which does not require
-         picture-blending. The default value is NULL.
-         */
+
+        ///
+        /// TODO(doc)
+        ///
         public string rawStreamUrl { set; get; }
-        /** Reserved field. The default value is NULL.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public string extraInfo { set; get; }
 
         public PublisherConfiguration()
@@ -633,6 +979,9 @@ The error codes of the local user's audio mixing file.
         }
     };
 
+    ///
+    /// TODO(doc)
+    ///
     public class AudioTrackConfig
     {
         public AudioTrackConfig()
@@ -640,38 +989,60 @@ The error codes of the local user's audio mixing file.
             enableLocalPlayback = true;
         }
 
+        ///
+        /// TODO(doc)
+        ///
         public bool enableLocalPlayback { set; get; }
     };
 
+    ///
+    /// <summary>
+    /// The camera direction.
+    /// </summary>
+    ///
     public enum CAMERA_DIRECTION
     {
-        /** The rear camera. */
+        ///
+        /// <summary>
+        /// The rear camera.
+        /// </summary>
+        ///
         CAMERA_REAR = 0,
-        /** The front camera. */
+
+        ///
+        /// <summary>
+        /// The front camera.
+        /// </summary>
+        ///
         CAMERA_FRONT = 1,
     };
 
-    /** The cloud proxy type.
-    *
-    * @since v3.3.0
-    */
+    ///
+    /// TODO(doc)
+    ///
     public enum CLOUD_PROXY_TYPE
     {
-        /** 0: Do not use the cloud proxy.
-        */
+        ///
+        /// TODO(doc)
+        ///
         NONE_PROXY = 0,
-        /** 1: The cloud proxy for the UDP protocol.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         UDP_PROXY = 1,
-        /// @cond
-        /** 2: The cloud proxy for the TCP (encrypted) protocol.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         TCP_PROXY = 2,
-        /// @endcond
     };
 
-    /** Camera capturer configuration.
-     */
+    ///
+    /// <summary>
+    /// The camera capturer preference.
+    /// </summary>
+    ///
     public class CameraCapturerConfiguration
     {
         public CameraCapturerConfiguration()
@@ -689,13 +1060,33 @@ The error codes of the local user's audio mixing file.
             this.cameraDirection = cameraDirection;
         }
 
+        ///
+        /// <summary>
+        /// The device ID of the playback device. 
+        /// </summary>
+        ///
         public string deviceId { set; get; }
+
+        ///
+        /// <summary>
+        /// See VideoFormat .
+        /// </summary>
+        ///
         public VideoFormat format { set; get; }
 
-        /** Camera direction settings (for Android/iOS only). See: #CAMERA_DIRECTION. */
+        ///
+        /// <summary>
+        /// This parameter applies to Android and iOS only.The camera direction.  CAMERA_DIRECTION 
+        /// </summary>
+        ///
         public CAMERA_DIRECTION cameraDirection { set; get; }
-    }
+    };
 
+    ///
+    /// <summary>
+    /// The configuration of the captured screen.
+    /// </summary>
+    ///
     public class ScreenCaptureConfiguration
     {
         public ScreenCaptureConfiguration()
@@ -704,19 +1095,61 @@ The error codes of the local user's audio mixing file.
             displayId = 0;
         }
 
-        public bool isCaptureWindow { set; get; } // true - capture window, false - capture display
-        public uint displayId { set; get; } // MacOS only
-        public Rectangle screenRect { set; get; } //Windows only
-        public uint windowId { set; get; }
-        public ScreenCaptureParameters parameters { set; get; }
-        public Rectangle regionRect { set; get; }
-    }
+        ///
+        /// <summary>
+        /// Whether to capture the window on the screen:
+        /// true: Capture the window.
+        /// false: (Default) Capture the screen, not the window.
+        /// </summary>
+        ///
+        public bool isCaptureWindow { set; get; }
 
+        ///
+        /// <summary>
+        /// (macOS only) The display ID of the screen.This parameter takes effect only when you want to capture the screen on macOS.
+        /// </summary>
+        ///
+        public uint displayId { set; get; }
+
+        ///
+        /// <summary>
+        /// (Windows only) The relative position of the shared screen to the virtual screen.This parameter takes effect only when you want to capture the screen on Windows.
+        /// </summary>
+        ///
+        public Rectangle screenRect { set; get; }
+
+        ///
+        /// <summary>
+        /// (For Windows and macOS only) Window ID.This parameter takes effect only when you want to capture the window.
+        /// </summary>
+        ///
+        public uint windowId { set; get; }
+
+        ///
+        /// <summary>
+        /// (For Windows and macOS only) The screen capture configuration. See ScreenCaptureParameters .
+        /// </summary>
+        ///
+        public ScreenCaptureParameters parameters { set; get; }
+
+        ///
+        /// <summary>
+        /// (For Windows and macOS only) The relative position of the shared region to the whole screen. See Rectangle .
+        /// If you do not set this parameter, the SDK shares the whole screen. If the region you set exceeds the boundary of the screen, only the region within in the screen is shared. If you setwidth or height in Rectangle as 0, the whole screen is shared.
+        /// </summary>
+        ///
+        public Rectangle regionRect { set; get; }
+    };
+
+    /* class_audiooptionsexternal : optionaljsonparse */
     public class AudioOptionsExternal : OptionalJsonParse
     {
         public Optional<bool> enable_aec_external_custom_ = new Optional<bool>();
+
         public Optional<bool> enable_agc_external_custom_ = new Optional<bool>();
+
         public Optional<bool> enable_ans_external_custom_ = new Optional<bool>();
+
         public Optional<NLP_AGGRESSIVENESS> aec_aggressiveness_external_custom_ = new Optional<NLP_AGGRESSIVENESS>();
 
         public Optional<bool> enable_aec_external_loopback_ = new Optional<bool>();
@@ -758,18 +1191,22 @@ The error codes of the local user's audio mixing file.
 
             writer.WriteObjectEnd();
         }
+    };
 
 
-    }
-
-
+    ///
+    /// TODO(doc)
+    ///
     public class SIZE
     {
-        /** The width of the screen shot.
-         */
+        ///
+        /// TODO(doc)
+        ///
         public int width { set; get; }
-        /** The width of the screen shot.
-         */
+
+        ///
+        /// TODO(doc)
+        ///
         public int height { set; get; }
 
         public SIZE()
@@ -786,11 +1223,40 @@ The error codes of the local user's audio mixing file.
     };
 
 
+    ///
+    /// <summary>
+    /// The image content of the thumbnail or icon. Set in ScreenCaptureSourceInfo .
+    /// The default image is in the RGBA format. If you need to use another format, you need to convert the image on your own.
+    /// </summary>
+    ///
     public class ThumbImageBuffer
     {
+        ///
+        /// <summary>
+        /// The buffer of the thumbnail ot icon.
+        /// </summary>
+        ///
         public byte[] buffer { set; get; }
+
+        ///
+        /// <summary>
+        /// The buffer length of the thumbnail or icon, in bytes.
+        /// </summary>
+        ///
         public uint length { set; get; }
+
+        ///
+        /// <summary>
+        /// The actual width (px) of the thumbnail or icon.
+        /// </summary>
+        ///
         public uint width { set; get; }
+
+        ///
+        /// <summary>
+        /// The actual height (px) of the thumbnail or icon.
+        /// </summary>
+        ///
         public uint height { set; get; }
 
         public ThumbImageBuffer()
@@ -802,26 +1268,110 @@ The error codes of the local user's audio mixing file.
         }
     };
 
+    ///
+    /// <summary>
+    /// The type of the shared target. Set in ScreenCaptureSourceInfo .
+    /// </summary>
+    ///
     public enum ScreenCaptureSourceType
     {
+        ///
+        /// <summary>
+        /// -1: Unknown type.
+        /// </summary>
+        ///
         ScreenCaptureSourceType_Unknown = -1,
+
+        ///
+        /// <summary>
+        /// 0: The shared target is a window.
+        /// </summary>
+        ///
         ScreenCaptureSourceType_Window = 0,
+
+        ///
+        /// <summary>
+        /// 1: The share target is the screen of a particular monitor.
+        /// </summary>
+        ///
         ScreenCaptureSourceType_Screen = 1,
+
+        ///
+        /// <summary>
+        /// 6: Reserved parameter
+        /// </summary>
+        ///
         ScreenCaptureSourceType_Custom = 2,
     };
 
+    ///
+    /// <summary>
+    /// The information about the specified shareable window or screen. 
+    /// </summary>
+    ///
     public class ScreenCaptureSourceInfo
     {
+        ///
+        /// <summary>
+        /// The type of the shared target. See ScreenCaptureSourceType .
+        /// </summary>
+        ///
         public ScreenCaptureSourceType type { set; get; }
-        /** in Mac: pointer to NSNumber */
+
+        ///
+        /// <summary>
+        /// The window ID for a window or the display ID for a screen.
+        /// </summary>
+        ///
         public view_t sourceId { set; get; }
+
+        ///
+        /// <summary>
+        /// The name of the window or screen. UTF-8 encoding.
+        /// </summary>
+        ///
         public string sourceName { set; get; }
+
+        ///
+        /// <summary>
+        /// The image content of the thumbnail. See ThumbImageBuffer .
+        /// </summary>
+        ///
         public ThumbImageBuffer thumbImage { set; get; }
+
+        ///
+        /// <summary>
+        /// The image content of the icon. See ThumbImageBuffer .
+        /// </summary>
+        ///
         public ThumbImageBuffer iconImage { set; get; }
 
+        ///
+        /// <summary>
+        /// The process to which the window belongs. UTF-8 encoding.
+        /// </summary>
+        ///
         public string processPath { set; get; }
+
+        ///
+        /// <summary>
+        /// The title of the window. UTF-8 encoding.
+        /// </summary>
+        ///
         public string sourceTitle { set; get; }
+
+        ///
+        /// <summary>
+        /// Determines whether the screen is the primary display:
+        /// true: The screen is the primary display.
+        /// false: The screen is not the primary display.
+        /// </summary>
+        ///
         public bool primaryMonitor { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
         public bool isOccluded { set; get; }
 
         public ScreenCaptureSourceInfo()
@@ -838,178 +1388,37 @@ The error codes of the local user's audio mixing file.
         }
     };
 
-    public class IScreenCaptureSourceList
-    {
-        public uint getCount() { return 0; }
-        public ScreenCaptureSourceInfo getSourceInfo(uint index) { return null; }
-        public void release() { }
-    };
-
-    /**
- * The channel media options.
-*/
+    /* class_channelmediaoptions : optionaljsonparse */
     public class ChannelMediaOptions : OptionalJsonParse
     {
-        /**
-         * Determines whether to publish the video of the camera track.
-         * - true: Publish the video track of the camera capturer.
-         * - false: (Default) Do not publish the video track of the camera capturer.
-         */
         public Optional<bool> publishCameraTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the video of the secondary camera track.
-         * - true: Publish the video track of the secondary camera capturer.
-         * - false: (Default) Do not publish the video track of the secondary camera capturer.
-         */
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the recorded audio.
-         * - true: Publish the recorded audio.
-         * - false: (Default) Do not publish the recorded audio.
-         */
         public Optional<bool> publishAudioTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the video of the screen track.
-         * - true: Publish the video track of the screen capturer.
-         * - false: (Default) Do not publish the video track of the screen capturer.
-         */
         public Optional<bool> publishScreenTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the video of the secondary screen track.
-         * - true: Publish the video track of the secondary screen capturer.
-         * - false: (Default) Do not publish the video track of the secondary screen capturer.
-         */
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the audio of the custom audio track.
-         * - true: Publish the audio of the custom audio track.
-         * - false: (Default) Do not publish the audio of the custom audio track.
-         */
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
-        /**
-         * Determines the source id of the custom audio, default is 0.
-         */
         public Optional<int> publishCustomAudioSourceId = new Optional<int>();
-        /**
-         * Determines whether to enable AEC when publish custom audio track.
-         * - true: Enable AEC.
-         * - false: (Default) Do not enable AEC.
-         */
         public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
-        /**
-         * Determines whether to publish direct custom audio track.
-         * - true: publish.
-         * - false: (Default) Do not publish.
-         */
         public Optional<bool> publishDirectCustomAudioTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish AEC custom audio track.
-         * - true: Publish AEC track.
-         * - false: (Default) Do not publish AEC track.
-         */
         public Optional<bool> publishCustomAudioTrackAec = new Optional<bool>();
-        /**
-         * Determines whether to publish the video of the custom video track.
-         * - true: Publish the video of the custom video track.
-         * - false: (Default) Do not publish the video of the custom video track.
-         */
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the video of the encoded video track.
-         * - true: Publish the video of the encoded video track.
-         * - false: (default) Do not publish the video of the encoded video track.
-         */
         public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
-        /**
-        * Determines whether to publish the audio track of media player source.
-        * - true: Publish the audio track of media player source.
-        * - false: (default) Do not publish the audio track of media player source.
-        */
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
-        /**
-        * Determines whether to publish the video track of media player source.
-        * - true: Publish the video track of media player source.
-        * - false: (default) Do not publish the video track of media player source.
-        */
         public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
-        /**
-        * Determines whether to publish the local transcoded video track.
-        * - true: Publish the video track of local transcoded video track.
-        * - false: (default) Do not publish the local transcoded video track.
-        */
         public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
-        /**
-         * Determines whether to subscribe to all audio streams automatically. It can replace calling \ref IRtcEngine::setDefaultMuteAllRemoteAudioStreams
-         * "setDefaultMuteAllRemoteAudioStreams" before joining a channel.
-         * - true: Subscribe to all audio streams automatically.
-         * - false: (Default) Do not subscribe to any audio stream automatically.
-         */
         public Optional<bool> autoSubscribeAudio = new Optional<bool>();
-        /**
-         * Determines whether to subscribe to all video streams automatically. It can replace calling \ref IRtcEngine::setDefaultMuteAllRemoteVideoStreams
-         * "setDefaultMuteAllRemoteVideoStreams" before joining a channel.
-         * - true: Subscribe to all video streams automatically.
-         * - false: (Default) do not subscribe to any video stream automatically.
-         */
         public Optional<bool> autoSubscribeVideo = new Optional<bool>();
-        /**
-         * Determines whether to start preview when join channel if canvas have been set.
-         * - true: (Default) start preview when join channel.
-         * - false: Do not start preview.
-         */
         public Optional<bool> startPreview = new Optional<bool>();
-        /**
-         * Determines whether to enable audio recording or playout.
-         * - true: It's used to publish audio and mix microphone, or subscribe audio and playout
-         * - false: It's used to publish extenal audio frame only without mixing microphone, or no need audio device to playout audio either
-         */
         public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
-        /**
-        * Determines which media player source should be published.
-        * - DEFAULT_PLAYER_ID(0) is default.
-        */
         public Optional<int> publishMediaPlayerId = new Optional<int>();
-        /**
-         * The client role type: #CLIENT_ROLE_TYPE.
-         */
         public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
-        /**
-         * The audience latency level type. See \ref agora::rtc::AUDIENCE_LATENCY_LEVEL_TYPE "AUDIENCE_LATENCY_LEVEL_TYPE"
-         */
         public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
-        /**
-         * The default video stream type: #VIDEO_STREAM_TYPE.
-         */
         public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
-        /**
-         * The channel profile: #CHANNEL_PROFILE_TYPE.
-         */
         public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
-        /**
-         * The delay in ms for sending audio frames. This is used for explicit control of A/V sync.
-         * To switch off the delay, set the value to zero.
-         */
         public Optional<int> audioDelayMs = new Optional<int>();
-        /**
-         * The delay in ms for sending media player audio frames. This is used for explicit control of A/V sync.
-         * To switch off the delay, set the value to zero.
-         */
         public Optional<int> mediaPlayerAudioDelayMs = new Optional<int>();
-        /**
-         * The token
-         */
         public Optional<string> token = new Optional<string>();
-        /**
-         * Enable media packet encryption.
-         * This parameter is ignored when calling function updateChannelMediaOptions()
-         * - false is default.
-         */
         public Optional<bool> enableBuiltInMediaEncryption = new Optional<bool>();
-        /**
-         * Determines whether to publish the sound of the rhythm player to remote users.
-         * - true: (Default) Publish the sound of the rhythm player.
-         * - false: Do not publish the sound of the rhythm player.
-         */
         public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
 
 
@@ -1241,40 +1650,58 @@ The error codes of the local user's audio mixing file.
 
             writer.WriteObjectEnd();
         }
+    };
 
-    }
-
-    /** The local  proxy mode type. */
+    ///
+    /// TODO(doc)
+    ///
     public enum LOCAL_PROXY_MODE
     {
-        /** 0: Connect local proxy with high priority, if not connected to local proxy, fallback to sdrtn.
-        */
+        ///
+        /// TODO(doc)
+        ///
         kConnectivityFirst = 0,
-        /** 1: Only connect local proxy
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         kLocalOnly = 1,
     };
 
 
+    ///
+    /// TODO(doc)
+    ///
     public class LocalAccessPointConfiguration
     {
-        /** local access point ip address list.
-        */
+        ///
+        /// TODO(doc)
+        ///
         public string[] ipList { set; get; }
-        /** the number of local access point ip address.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int ipListSize { set; get; }
-        /** local access point domain list.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public string[] domainList { set; get; }
-        /** the number of local access point domain.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public int domainListSize { set; get; }
-        /** certificate domain name installed on specific local access point. pass "" means using sni domain on specific local access point
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public string verifyDomainName { set; get; }
-        /** local proxy connection mode, connectivity first or local only.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         public LOCAL_PROXY_MODE mode { set; get; }
 
         public LocalAccessPointConfiguration()
@@ -1288,9 +1715,11 @@ The error codes of the local user's audio mixing file.
         }
     };
 
-    /**
-    * The leave channel options.
-    */
+    ///
+    /// <summary>
+    /// The options for leaving a channel.
+    /// </summary>
+    ///
     public class LeaveChannelOptions
     {
         public LeaveChannelOptions()
@@ -1300,71 +1729,32 @@ The error codes of the local user's audio mixing file.
             stopMicrophoneRecording = true;
         }
 
-        /**
-        * Determines whether to stop playing and mixing the music file when leave channel.
-        * - true: (Default) Stop playing and mixing the music file.
-        * - false: Do not stop playing and mixing the music file.
-        */
+        ///
+        /// <summary>
+        /// Whether to stop playing and mixing the music file when a user leaves the channel. true: (Default) Stop playing and mixing the music file.
+        /// false: Do not stop playing and mixing the music file.
+        /// </summary>
+        ///
         public bool stopAudioMixing { set; get; }
-        /**
-        * Determines whether to stop all music effects when leave channel.
-        * - true: (Default) Stop all music effects.
-        * - false: Do not stop the music effect.
-        */
+
+        ///
+        /// <summary>
+        /// Whether to stop playing all audio effects when a user leaves the channel. true: (Default) Stop playing all audio effects.
+        /// false: Do not stop playing any audio effect.
+        /// </summary>
+        ///
         public bool stopAllEffect { set; get; }
-        /**
-        * Determines whether to stop microphone recording when leave channel.
-        * - true: (Default) Stop microphone recording.
-        * - false: Do not stop microphone recording.
-        */
+
+        ///
+        /// <summary>
+        /// Whether to stop microphone recording when a user leaves the channel. true: (Default) Stop microphone recording.
+        /// false: Do not stop microphone recording.
+        /// </summary>
+        ///
         public bool stopMicrophoneRecording { set; get; }
     };
 
-
-    //useless in C#
-    /**
-    * The IVideoDeviceCollection class.
-    */
-    //public class IVideoDeviceCollection
-    //{
-
-    //    /**
-    //     * Gets the total number of the indexed video capture devices in the system.
-    //     *
-    //     * @return The total number of the indexed video capture devices.
-    //     */
-    //    public virtual int getCount() { return 0; }
-
-    //    /**
-    //     * Specifies a device with the device ID.
-    //     *
-    //     * @param deviceIdUTF8 The device ID.
-    //     * @return
-    //     * - 0: Success.
-    //     * - < 0: Failure.
-    //     */
-    //    public virtual int setDevice(string deviceIdUTF8) { return 0; }
-
-    //    /**
-    //     * Gets the information of a specified video capture device.
-    //     *
-    //     * @param index An input parameter that specifies the device. It is a specified
-    //     * index and must be smaller than the return value of \ref getCount "getCount".
-    //     * @param deviceNameUTF8 An output parameter that indicates the device name.
-    //     * @param deviceIdUTF8 An output parameter that indicates the device ID.
-    //     * @return
-    //     * - 0: Success.
-    //     * - < 0: Failure.
-    //     */
-    //    public virtual int getDevice(int index, string deviceNameUTF8, string deviceIdUTF8) { return 0; }
-
-    //    /**
-    //     * Releases all IVideoDeviceCollection resources.
-    //     */
-    //    public virtual void release() { }
-    //};
-    /** Definition of RtcEngineContext.
-   */
+    /* class_rtcenginecontext : optionaljsonparse */
     public class RtcEngineContext : OptionalJsonParse
     {
         public RtcEngineContext()
@@ -1380,7 +1770,6 @@ The error codes of the local user's audio mixing file.
             useExternalEglContext = false;
         }
 
-
         public RtcEngineContext(string appId, UInt64 context,
             bool enableAudioDevice, CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
@@ -1395,73 +1784,33 @@ The error codes of the local user's audio mixing file.
             this.logConfig = logConfig ?? new LogConfig();
         }
 
-        /**
-        * The event handler for IRtcEngine.
-        */
         private IRtcEngineEventHandler eventHandler = null;
-        /**
-         * The App ID issued to you by Agora. See [How to get the App ID](https://docs.agora.io/en/Agora%20Platform/token#get-an-app-id).
-         * Only users in apps with the same App ID can join the same channel and communicate with each other. Use an App ID to create only
-         * one `IRtcEngine` instance. To change your App ID, call `release` to destroy the current `IRtcEngine` instance and then call `createAgoraRtcEngine`
-         * and `initialize` to create an `IRtcEngine` instance with the new App ID.
-         */
+
+        /* class_rtcenginecontext : optionaljsonparse_appId */
         public string appId { set; get; }
 
-        /**
-        * - For Android, it is the context of Activity or Application.
-        * - For Windows, it is the window handle of app. Once set, this parameter enables you to plug
-        * or unplug the video devices while they are powered.
-        */
+        /* class_rtcenginecontext : optionaljsonparse_context */
         public UInt64 context { set; get; }
 
-        /**
-        * Determines whether to enable audio device
-        * -true: (Default) enable audio device
-        * -false, disable audio device. If you want to pull the decoded and mixed audio data for playback from
-        * \ref agora::media::IMediaEngine::pullAudioFrame "pullAudioFrame". This value must be false
-        */
+        /* class_rtcenginecontext : optionaljsonparse_enableAudioDevice */
         public bool enableAudioDevice { set; get; }
 
-        /**
-        * The channel profile. See #CHANNEL_PROFILE_TYPE.
-        */
+        /* class_rtcenginecontext : optionaljsonparse_channelProfile */
         public CHANNEL_PROFILE_TYPE channelProfile { set; get; }
 
-        /**
-        * The audio application scenario. See #AUDIO_SCENARIO_TYPE.
-        *
-        * @note Agora recommends the following scenarios:
-        * - `AUDIO_SCENARIO_DEFAULT(0)`
-        * - `AUDIO_SCENARIO_GAME_STREAMING(3)`
-        * - `AUDIO_SCENARIO_HIGH_DEFINITION(6)`
-        */
+        /* class_rtcenginecontext : optionaljsonparse_audioScenario */
         public AUDIO_SCENARIO_TYPE audioScenario { set; get; }
 
-        /**
-         * The region for connection. This advanced feature applies to scenarios that have regional restrictions.
-         *
-         * For the regions that Agora supports, see #AREA_CODE. After specifying the region, the SDK connects to the Agora servers within that region.
-         *
-         * @note The SDK supports specify only one region.
-         */
-        //private uint _areaCode;
-
+        /* class_rtcenginecontext : optionaljsonparse_logConfig */
         public LogConfig logConfig { set; get; }
 
+        /* class_rtcenginecontext : optionaljsonparse_areaCode */
         public AREA_CODE areaCode { set; get; }
-
 
         public Optional<THREAD_PRIORITY_TYPE> threadPriority = new Optional<THREAD_PRIORITY_TYPE>();
 
-        /**
-         * Whether use egl context in current thread as sdk‘s root egl context 
-         * which shared by all egl related modules. eg. camera capture, video renderer.
-         * 
-         * @note
-         * This property applies to Android only.
-         */
+        /* class_rtcenginecontext : optionaljsonparse_useExternalEglContext */
         public bool useExternalEglContext { set; get; }
-
 
         public override void ToJson(JsonWriter writer)
         {
@@ -1501,35 +1850,62 @@ The error codes of the local user's audio mixing file.
 
             writer.WriteObjectEnd();
         }
+    };
 
-    }
+    ///
+    /// <summary>
+    /// Metadata type of the observer. We only support video Metadata for now.
+    /// </summary>
+    ///
     public enum METADATA_TYPE
     {
+        ///
+        /// <summary>
+        /// The type of metadata is unknown.
+        /// </summary>
+        ///
         UNKNOWN_METADATA = -1,
+
+        ///
+        /// <summary>
+        /// The type of metadata is video.
+        /// </summary>
+        ///
         VIDEO_METADATA = 0,
     };
 
+    ///
+    /// TODO(doc)
+    ///
     public enum MAX_METADATA_SIZE_TYPE
     {
+        ///
+        /// TODO(doc)
+        ///
         INVALID_METADATA_SIZE_IN_BYTE = -1,
+
+        ///
+        /// TODO(doc)
+        ///
         DEFAULT_METADATA_SIZE_IN_BYTE = 512,
+
+        ///
+        /// TODO(doc)
+        ///
         MAX_METADATA_SIZE_IN_BYTE = 1024
     };
 
-    /** Metadata.
-       */
+    ///
+    /// <summary>
+    /// Media metadata.
+    /// </summary>
+    ///
     public class Metadata
     {
-        /** The User ID that sent the metadata.
-            * For the receiver: the remote track User ID.
-            * For the sender: ignore it.
-            */
         public uint uid;
-        /** The metadata size.
-            */
+
         public uint size;
-        /** The metadata buffer.
-            */
+
         public IntPtr buffer
         {
             set
@@ -1543,119 +1919,156 @@ The error codes of the local user's audio mixing file.
         }
 
         private UInt64 _buffer;
-        /** The NTP timestamp (ms) that the metadata sends.
-            *
-            * @note If the metadata receiver is audience, this parameter does not work.
-            */
         public long timeStampMs;
     };
 
-    // The error codes for media streaming
-    // GENERATED_JAVA_ENUM_PACKAGE: io.agora.streaming
+    ///
+    /// <summary>
+    /// The reason for the CDN streaming error.
+    /// </summary>
+    ///
     public enum DIRECT_CDN_STREAMING_ERROR
     {
-        // No error occurs.
+        ///
+        /// <summary>
+        /// 0: No error.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_ERROR_OK = 0,
-        // A general error occurs (no specified reason).
+
+        ///
+        /// <summary>
+        /// 1: General error, no clear reason. You can try to push the stream again.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_ERROR_FAILED = 1,
-        // Audio publication error.
+
+        ///
+        /// <summary>
+        /// 2: An error occurs when pushing audio streams. For example, the local audio capture device is not working properly, is occupied by another process, or does not get the permission.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_ERROR_AUDIO_PUBLICATION = 2,
-        // Video publication error.
+
+        ///
+        /// <summary>
+        /// 3: An error occurs when pushing video streams. For example, the local video capture device is not working properly, is occupied by another process, or does not get the permission.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_ERROR_VIDEO_PUBLICATION = 3,
 
+        ///
+        /// <summary>
+        /// 4: Fails to connect to the CDN.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_ERROR_NET_CONNECT = 4,
-        // Already exist stream name.
+
+        ///
+        /// <summary>
+        /// 5: The URL is already being used. Use a new media push URL.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_ERROR_BAD_NAME = 5,
     };
 
-
-    // The connection state of media streaming
-    // GENERATED_JAVA_ENUM_PACKAGE: io.agora.streaming
+    ///
+    /// <summary>
+    /// The current CDN streaming state.
+    /// </summary>
+    ///
     public enum DIRECT_CDN_STREAMING_STATE
     {
-
+        ///
+        /// <summary>
+        /// 0: The initial state before the CDN streaming starts.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_STATE_IDLE = 0,
 
+        ///
+        /// <summary>
+        /// 1: Streams are being pushed to the CDN. 
+        /// After you call StartDirectCdnStreaming to stop streaming, the SDK returns this value.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_STATE_RUNNING = 1,
 
+        ///
+        /// <summary>
+        /// 100: The streaming has been stopped normally. 2: Stops pushing streams to the CDN. After you call StopDirectCdnStreaming to stop streaming, the SDK returns this value.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_STATE_STOPPED = 2,
 
+        ///
+        /// <summary>
+        /// 3: Fails to push streams to the CDN.
+        /// You can troubleshoot the issue with the information reported by the OnDirectCdnStreamingStateChanged callback, and then push streams to the CDN again.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_STATE_FAILED = 3,
 
+        ///
+        /// <summary>
+        /// 4: Tries to reconnect Agora server to the CDN. The SDK attempts to reconnect a maximum of 10 times, if the connection is not restored, the streaming state becomes DIRECT_CDN_STREAMING_STATE_FAILED.
+        /// </summary>
+        ///
         DIRECT_CDN_STREAMING_STATE_RECOVERING = 4,
     };
 
-
-    /**
- * The statistics of the Direct Cdn Streams.
- */
+    ///
+    /// <summary>
+    /// 当前 CDN 推流的统计数据。
+    /// </summary>
+    ///
     public class DirectCdnStreamingStats
     {
-        /**
-         * Width of the video pushed by rtmp.
-         */
+        ///
+        /// <summary>
+        /// 视频的宽度（px）。
+        /// </summary>
+        ///
         public int videoWidth { set; get; }
 
-        /**
-         * Height of the video pushed by rtmp.
-         */
+        ///
+        /// <summary>
+        /// 视频的高度（px）。
+        /// </summary>
+        ///
         public int videoHeight { set; get; }
 
-        /**
-         * The frame rate of the video pushed by rtmp.
-         */
+        ///
+        /// <summary>
+        /// 当前视频帧率（fps）。
+        /// </summary>
+        ///
         public int fps { set; get; }
 
-        /**
-         * Real-time bit rate of the video streamed by rtmp.
-         */
+        ///
+        /// <summary>
+        /// 当前视频码率（bps）。
+        /// </summary>
+        ///
         public int videoBitrate { set; get; }
 
-        /**
-         * Real-time bit rate of the audio pushed by rtmp.
-         */
+        ///
+        /// <summary>
+        /// 当前音频码率（bps）。
+        /// </summary>
+        ///
         public int audioBitrate { set; get; }
     };
 
-
+    /* class_directcdnstreamingmediaoptions : optionaljsonparse */
     public class DirectCdnStreamingMediaOptions : OptionalJsonParse
     {
-        /**
-         * Determines whether to publish the video of the camera track.
-         * - true: Publish the video track of the camera capturer.
-         * - false: (Default) Do not publish the video track of the camera capturer.
-         */
         public Optional<bool> publishCameraTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the recorded audio.
-         * - true: Publish the recorded audio.
-         * - false: (Default) Do not publish the recorded audio.
-         */
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the audio of the custom audio track.
-         * - true: Publish the audio of the custom audio track.
-         * - false: (Default) Do not publish the audio of the custom audio track.
-         */
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
-        /**
-         * Determines whether to publish the video of the custom video track.
-         * - true: Publish the video of the custom video track.
-         * - false: (Default) Do not publish the video of the custom video track.
-         */
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
-        /**
-        * Determines whether to publish the audio track of media player source.
-        * - true: Publish the audio track of media player source.
-        * - false: (default) Do not publish the audio track of media player source.
-        */
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
-        /**
-        * Determines which media player source should be published.
-        * - DEFAULT_PLAYER_ID(0) is default.
-        */
         public Optional<int> publishMediaPlayerId = new Optional<int>();
-
 
         public DirectCdnStreamingMediaOptions()
         {
@@ -1712,189 +2125,568 @@ The error codes of the local user's audio mixing file.
                 writer.Write(this.publishMediaPlayerId.GetValue());
             }
 
-
             writer.WriteObjectEnd();
         }
+    };
 
-
-    }
-
-    // The following types are either deprecated or not implmented yet.
+    ///
+    /// <summary>
+    /// Formats of the quality report.
+    /// </summary>
+    ///
     public enum QUALITY_REPORT_FORMAT_TYPE
     {
-        /** 0: The quality report in JSON format,
-         */
+        ///
+        /// <summary>
+        /// 0: The quality report in JSON format.
+        /// </summary>
+        ///
         QUALITY_REPORT_JSON = 0,
-        /** 1: The quality report in HTML format.
-         */
+
+        ///
+        /// <summary>
+        /// 1: The quality report in HTML format.
+        /// </summary>
+        ///
         QUALITY_REPORT_HTML = 1,
     };
 
-    /** Media device states. */
+    ///
+    /// <summary>
+    /// Media device states.
+    /// </summary>
+    ///
     public enum MEDIA_DEVICE_STATE_TYPE
     {
-        /** 0: The device is available
-         */
+        ///
+        /// <summary>
+        /// 0: The device is ready for use.
+        /// </summary>
+        ///
         MEDIA_DEVICE_STATE_IDLE = 0,
-        /** 1: The device is active.
-         */
+
+        ///
+        /// <summary>
+        /// 1: The device is in use.
+        /// </summary>
+        ///
         MEDIA_DEVICE_STATE_ACTIVE = 1,
-        /** 2: The device is disabled.
-         */
+
+        ///
+        /// <summary>
+        /// 2: The device is disabled.
+        /// </summary>
+        ///
         MEDIA_DEVICE_STATE_DISABLED = 2,
-        /** 4: The device is not present.
-         */
+
+        ///
+        /// <summary>
+        /// 4: The device is not found.
+        /// </summary>
+        ///
         MEDIA_DEVICE_STATE_NOT_PRESENT = 4,
-        /** 8: The device is unplugged.
-         */
+
+        ///
+        /// <summary>
+        /// 8: The device is not connected.
+        /// </summary>
+        ///
         MEDIA_DEVICE_STATE_UNPLUGGED = 8
     };
 
+    ///
+    /// <summary>
+    /// The video profile.
+    /// </summary>
+    ///
     public enum VIDEO_PROFILE_TYPE
     {
-        /** 0: 160 x 120  @ 15 fps */      // res       fps
+        ///
+        /// <summary>
+        /// 0: 160 × 120, frame rate 15 fps, bitrate 65 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_120P = 0,  // 160x120   15
-        /** 2: 120 x 120 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 2: 120 × 120, frame rate 15 fps, bitrate 50 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_120P_3 = 2,   // 120x120   15
-        /** 10: 320 x 180 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 10: 320 × 180, frame rate 15 fps, bitrate 140 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_180P = 10,    // 320x180   15
-        /** 12: 180 x 180  @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 12: 180 × 180, frame rate 15 fps, bitrate 100 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_180P_3 = 12,  // 180x180   15
-        /** 13: 240 x 180 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 13: 240 × 180, frame rate 15 fps, bitrate 120 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_180P_4 = 13,  // 240x180   15
-        /** 20: 320 x 240 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 20: 320 × 240, frame rate 15 fps, bitrate 200 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_240P = 20,    // 320x240   15
-        /** 22: 240 x 240 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 22: 240 × 240, frame rate 15 fps, bitrate 140 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_240P_3 = 22,  // 240x240   15
-        /** 23: 424 x 240 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 23: 424 × 240, frame rate 15 fps, bitrate 220 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_240P_4 = 23,  // 424x240   15
-        /** 30: 640 x 360 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 30: 640 × 360, frame rate 15 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P = 30,  // 640x360   15
-        /** 32: 360 x 360 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 32: 360 × 360, frame rate 15 fps, bitrate 260 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P_3 = 32,  // 360x360   15
-        /** 33: 640 x 360 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 33: 640 × 360, frame rate 30 fps, bitrate 600 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P_4 = 33,  // 640x360   30
-        /** 35: 360 x 360 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 35: 360 × 360, frame rate 30 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P_6 = 35,  // 360x360   30
-        /** 36: 480 x 360 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 36: 480 × 360, frame rate 15 fps, bitrate 320 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P_7 = 36,  // 480x360   15
-        /** 37: 480 x 360 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 37: 480 × 360, frame rate 30 fps, bitrate 490 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P_8 = 37,  // 480x360   30
-        /** 38: 640 x 360 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 38: 640 × 360, frame rate 15 fps, bitrate 800 Kbps.
+        /// This profile applies only to the live streaming channel profile. 
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P_9 = 38,   // 640x360   15
-        /** 39: 640 x 360 @ 24 fps */
+
+        ///
+        /// <summary>
+        /// 39: 640 × 360, frame rate 24 fps, bitrate 800 Kbps.
+        /// This profile applies only to the live streaming channel profile.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P_10 = 39,  // 640x360   24
-        /** 100: 640 x 360 @ 24 fps */
+
+        ///
+        /// <summary>
+        /// 100: 640 × 360, frame rate 24 fps, bitrate 1000 Kbps.
+        /// This profile applies only to the live streaming channel profile.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_360P_11 = 100,  // 640x360   24
-        /** 40: 640 x 480 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 40: 640 × 480, frame rate 15 fps, bitrate 500 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_480P = 40,  // 640x480   15
-        /** 42: 480 x 480 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 42: 480 × 480, frame rate 15 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_480P_3 = 42,  // 480x480   15
-        /** 43: 640 x 480 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 43: 640 × 480, frame rate 30 fps, bitrate 750 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_480P_4 = 43,  // 640x480   30
-        /** 45: 480 x 480 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 45: 480 × 480, frame rate 30 fps, bitrate 600 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_480P_6 = 45,  // 480x480   30
-        /** 47: 848 x 480 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 47: 848 × 480, frame rate 15 fps, bitrate 610 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_480P_8 = 47,  // 848x480   15
-        /** 48: 848 x 480 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 48: 848 × 480, frame rate 30 fps, bitrate 930 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_480P_9 = 48,  // 848x480   30
-        /** 49: 640 x 480 @ 10 fps */
+
+        ///
+        /// <summary>
+        /// 49: 640 × 480, frame rate 10 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_480P_10 = 49,  // 640x480   10
-        /** 50: 1280 x 720 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 50: 1280 × 720, frame rate 15 fps, bitrate 1130 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_720P = 50,  // 1280x720  15
-        /** 52: 1280 x 720 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 52: 1280 × 720, frame rate 30 fps, bitrate 1710 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_720P_3 = 52,  // 1280x720  30
-        /** 54: 960 x 720 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 54: 960 × 720, frame rate 15 fps, bitrate 910 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_720P_5 = 54,  // 960x720   15
-        /** 55: 960 x 720 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 55: 960 × 720, frame rate 30 fps, bitrate 1380 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_720P_6 = 55,  // 960x720   30
-        /** 60: 1920 x 1080 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 60: 1920 × 1080, frame rate 15 fps, bitrate 2080 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_1080P = 60,  // 1920x1080 15
-        /** 62: 1920 x 1080 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 60: 1920 × 1080, frame rate 30 fps, bitrate 3150 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_1080P_3 = 62,  // 1920x1080 30
-        /** 64: 1920 x 1080 @ 60 fps */
+
+        ///
+        /// <summary>
+        /// 64: 1920 × 1080, frame rate 60 fps, bitrate 4780 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_LANDSCAPE_1080P_5 = 64,  // 1920x1080 60
-        /** 66: 2560 x 1440 @ 30 fps */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_PROFILE_LANDSCAPE_1440P = 66,  // 2560x1440 30
-        /** 67: 2560 x 1440 @ 60 fps */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_PROFILE_LANDSCAPE_1440P_2 = 67,  // 2560x1440 60
-        /** 70: 3840 x 2160 @ 30 fps */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_PROFILE_LANDSCAPE_4K = 70,  // 3840x2160 30
-        /** 72: 3840 x 2160 @ 60 fps */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_PROFILE_LANDSCAPE_4K_3 = 72,     // 3840x2160 60
-        /** 1000: 120 x 160 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1000: 120 × 160, frame rate 15 fps, bitrate 65 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_120P = 1000,    // 120x160   15
-        /** 1002: 120 x 120 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1002: 120 × 120, frame rate 15 fps, bitrate 50 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_120P_3 = 1002,  // 120x120   15
-        /** 1010: 180 x 320 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1010: 180 × 320, frame rate 15 fps, bitrate 140 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_180P = 1010,    // 180x320   15
-        /** 1012: 180 x 180 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1012: 180 × 180, frame rate 15 fps, bitrate 100 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_180P_3 = 1012,  // 180x180   15
-        /** 1013: 180 x 240 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1013: 180 × 240, frame rate 15 fps, bitrate 120 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_180P_4 = 1013,  // 180x240   15
-        /** 1020: 240 x 320 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1020: 240 × 320, frame rate 15 fps, bitrate 200 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_240P = 1020,  // 240x320   15
-        /** 1022: 240 x 240 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1022: 240 × 240, frame rate 15 fps, bitrate 140 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_240P_3 = 1022,  // 240x240   15
-        /** 1023: 240 x 424 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1023: 240 × 424, frame rate 15 fps, bitrate 220 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_240P_4 = 1023,  // 240x424   15
-        /** 1030: 360 x 640 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1030: 360 × 640, frame rate 15 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P = 1030,  // 360x640   15
-        /** 1032: 360 x 360 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1032: 360 × 360, frame rate 15 fps, bitrate 260 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P_3 = 1032,  // 360x360   15
-        /** 1033: 360 x 640 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1033: 360 × 640, frame rate 15 fps, bitrate 600 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P_4 = 1033,  // 360x640   30
-        /** 1035: 360 x 360 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1035: 360 × 360, frame rate 30 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P_6 = 1035,  // 360x360   30
-        /** 1036: 360 x 480 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1036: 360 × 480, frame rate 15 fps, bitrate 320 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P_7 = 1036,  // 360x480   15
-        /** 1037: 360 x 480 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1037: 360 × 480, frame rate 30 fps, bitrate 490 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P_8 = 1037,  // 360x480   30
-        /** 1038: 360 x 640 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1038: 360 × 640, frame rate 15 fps, bitrate 800 Kbps.
+        /// This profile applies only to the live streaming channel profile. 
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P_9 = 1038,  // 360x640   15
-        /** 1039: 360 x 640 @ 24 fps */
+
+        ///
+        /// <summary>
+        /// 1039: 360 × 640, frame rate 24 fps, bitrate 800 Kbps.
+        /// This profile applies only to the live streaming channel profile. 
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P_10 = 1039,  // 360x640   24
-        /** 1100: 360 x 640 @ 24 fps */
+
+        ///
+        /// <summary>
+        /// 1100: 360 × 640, frame rate 24 fps, bitrate 1000 Kbps.
+        /// This profile applies only to the live streaming channel profile. 
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_360P_11 = 1100,  // 360x640   24
-        /** 1040: 480 x 640 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1040: 480 × 640, frame rate 15 fps, bitrate 500 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_480P = 1040,  // 480x640   15
-        /** 1042: 480 x 480 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1042: 480 × 480, frame rate 15 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_480P_3 = 1042,  // 480x480   15
-        /** 1043: 480 x 640 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1043: 480 × 640, frame rate 30 fps, bitrate 750 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_480P_4 = 1043,  // 480x640   30
-        /** 1045: 480 x 480 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1045: 480 × 480, frame rate 30 fps, bitrate 600 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_480P_6 = 1045,  // 480x480   30
-        /** 1047: 480 x 848 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1047: 480 × 848, frame rate 15 fps, bitrate 610 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_480P_8 = 1047,  // 480x848   15
-        /** 1048: 480 x 848 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1048: 480 × 848, frame rate 30 fps, bitrate 930 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_480P_9 = 1048,  // 480x848   30
-        /** 1049: 480 x 640 @ 10 fps */
+
+        ///
+        /// <summary>
+        /// 1049: 480 × 640, frame rate 10 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_480P_10 = 1049,  // 480x640   10
-        /** 1050: 720 x 1280 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1050: 720 × 1280, frame rate 15 fps, bitrate 1130 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_720P = 1050,  // 720x1280  15
-        /** 1052: 720 x 1280 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1052: 720 × 1280, frame rate 30 fps, bitrate 1710 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_720P_3 = 1052,  // 720x1280  30
-        /** 1054: 720 x 960 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1054: 720 × 960, frame rate 15 fps, bitrate 910 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_720P_5 = 1054,  // 720x960   15
-        /** 1055: 720 x 960 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1055: 720 × 960, frame rate 30 fps, bitrate 1380 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_720P_6 = 1055,  // 720x960   30
-        /** 1060: 1080 x 1920 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// 1060: 1080 × 1920, frame rate 15 fps, bitrate 2080 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_1080P = 1060,    // 1080x1920 15
-        /** 1062: 1080 x 1920 @ 30 fps */
+
+        ///
+        /// <summary>
+        /// 1062: 1080 × 1920, frame rate 30 fps, bitrate 3150 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_1080P_3 = 1062,  // 1080x1920 30
-        /** 1064: 1080 x 1920 @ 60 fps */
+
+        ///
+        /// <summary>
+        /// 1064: 1080 × 1920, frame rate 60 fps, bitrate 4780 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_PORTRAIT_1080P_5 = 1064,  // 1080x1920 60
-        /** 1066: 1440 x 2560 @ 30 fps */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_PROFILE_PORTRAIT_1440P = 1066,  // 1440x2560 30
-        /** 1067: 1440 x 2560 @ 60 fps */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_PROFILE_PORTRAIT_1440P_2 = 1067,  // 1440x2560 60
-        /** 1070: 2160 x 3840 @ 30 fps */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_PROFILE_PORTRAIT_4K = 1070,       // 2160x3840 30
-        /** 1072: 2160 x 3840 @ 60 fps */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_PROFILE_PORTRAIT_4K_3 = 1072,  // 2160x3840 60
-        /** Default 640 x 360 @ 15 fps */
+
+        ///
+        /// <summary>
+        /// (Default) 640 × 360, frame rate 15 fps, bitrate 400 Kbps.
+        /// </summary>
+        ///
         VIDEO_PROFILE_DEFAULT = VIDEO_PROFILE_LANDSCAPE_360P,
     };
     #endregion
-
 }

@@ -1,49 +1,122 @@
 ﻿namespace Agora.Rtc
 {
     #region IAgoraSpatialAudio.h
+    ///
+    /// <summary>
+    /// SDK 与 Agora 空间音效服务器的连接状态。
+    /// </summary>
+    ///
     public enum SAE_CONNECTION_STATE_TYPE
     {
-        /* The SDK is connecting to the spatial audio server. */
+        ///
+        /// <summary>
+        /// 0: 建立连接中。
+        /// </summary>
+        ///
         SAE_CONNECTION_STATE_CONNECTING = 0,
-        /* The SDK is connected to the spatial audio server. */
-        SAE_CONNECTION_STATE_CONNECTED,
-        /* The SDK is disconnected from the spatial audio server. */
-        SAE_CONNECTION_STATE_DISCONNECTED,
-        /* The SDK is reconnecting to the spatial audio server. */
-        SAE_CONNECTION_STATE_RECONNECTING,
-        /* The SDK is reconnected to the spatial audio server. */
-        SAE_CONNECTION_STATE_RECONNECTED
+
+        ///
+        /// <summary>
+        /// 1: 已连接。 该状态下， UpdateSelfPosition 等空间音效设置才会生效。
+        /// </summary>
+        ///
+        SAE_CONNECTION_STATE_CONNECTED = 1,
+
+        ///
+        /// <summary>
+        /// 2: 连接断开。
+        /// </summary>
+        ///
+        SAE_CONNECTION_STATE_DISCONNECTED = 2,
+
+        ///
+        /// <summary>
+        /// 3: 重新建立连接中。
+        /// </summary>
+        ///
+        SAE_CONNECTION_STATE_RECONNECTING = 3,
+
+        ///
+        /// <summary>
+        /// 4: 已重新建立连接。
+        /// </summary>
+        ///
+        SAE_CONNECTION_STATE_RECONNECTED = 4
     };
 
-    /** reason of connection state change of GME
-*/
+    ///
+    /// <summary>
+    /// SDK 与 Agora 空间音效服务器连接状态发生改变的原因。
+    /// </summary>
+    ///
     public enum SAE_CONNECTION_CHANGED_REASON_TYPE
     {
-        /* The connection state is changed. */
+        ///
+        /// <summary>
+        /// 0: 正常。
+        /// </summary>
+        ///
         SAE_CONNECTION_CHANGED_DEFAULT = 0,
-        /* The SDK is connecting to the game server. */
-        SAE_CONNECTION_CHANGED_CONNECTING,
-        /* The SDK fails to create the game room. */
-        SAE_CONNECTION_CHANGED_CREATE_ROOM_FAIL,
-        /* The SDK is disconnected from the Agora RTM system. */
-        SAE_CONNECTION_CHANGED_RTM_DISCONNECT,
-        /* The SDK is kicked out of the Agora RTM system. */
-        SAE_CONNECTION_CHANGED_RTM_ABORTED,
-        /* The SDK recieved no message from server after long time */
-        SAE_CONNECTION_CHANGED_LOST_SYNC
+
+        ///
+        /// <summary>
+        /// 1: SDK 建立连接中。
+        /// </summary>
+        ///
+        SAE_CONNECTION_CHANGED_CONNECTING = 1,
+
+        ///
+        /// <summary>
+        /// 2: SDK 创建房间失败。
+        /// </summary>
+        ///
+        SAE_CONNECTION_CHANGED_CREATE_ROOM_FAIL = 2,
+
+        ///
+        /// <summary>
+        /// 3: SDK 与 RTM 系统连接中断。
+        /// </summary>
+        ///
+        SAE_CONNECTION_CHANGED_RTM_DISCONNECT = 3,
+
+        ///
+        /// <summary>
+        /// 4: 用户被 RTM 系统踢出。
+        /// </summary>
+        ///
+        SAE_CONNECTION_CHANGED_RTM_ABORTED = 4,
+
+        ///
+        /// <summary>
+        /// 5: SDK 超过 15 秒未收到 Agora 空间音效服务器的消息。
+        /// </summary>
+        ///
+        SAE_CONNECTION_CHANGED_LOST_SYNC = 5
     };
 
-    /** audio range mode type
- */
+    ///
+    /// <summary>
+    /// The audio range mode.
+    /// </summary>
+    ///
     public enum AUDIO_RANGE_MODE_TYPE
     {
-        /* In world mode, you can hear players whose mode are also world mode in other teams */
+        ///
+        /// TODO(doc)
+        ///
         AUDIO_RANGE_MODE_WORLD = 0,
-        /* In team mode, you can hear teammates only */
-        AUDIO_RANGE_MODE_TEAM
+
+        ///
+        /// TODO(doc)
+        ///
+        AUDIO_RANGE_MODE_TEAM = 1
     };
 
-    // The information of remote voice position
+    ///
+    /// <summary>
+    /// The spatial position of the remote user or the media player.
+    /// </summary>
+    ///
     public class RemoteVoicePositionInfo
     {
         public RemoteVoicePositionInfo(float[] position, float[] forward)
@@ -51,36 +124,63 @@
             this.position = position;
             this.forward = forward;
         }
-        // The coordnate of remote voice source, (x, y, z)
+
+        ///
+        /// <summary>
+        /// The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// </summary>
+        ///
         public float[] position { set; get; }
-        // The forward vector of remote voice, (x, y, z). When it's not set, the vector is forward to listner.
+
+        ///
+        /// <summary>
+        /// The unit vector of the x axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// </summary>
+        ///
         public float[] forward { set; get; }
     };
 
-    /** IP areas.
-*/
+    ///
+    /// <summary>
+    /// Agora 空间音效服务器的访问区域。
+    /// </summary>
+    ///
     public enum SAE_DEPLOY_REGION
     {
-        /**
-        * Mainland China.
-        */
+        ///
+        /// <summary>
+        /// （默认）中国大陆。
+        /// </summary>
+        ///
         SAE_DEPLOY_REGION_CN = 0x00000001,
-        /**
-        * North America.
-        */
+
+        ///
+        /// <summary>
+        /// North America.
+        /// </summary>
+        ///
         SAE_DEPLOY_REGION_NA = 0x00000002,
-        /**
-        * Europe.
-        */
+
+        ///
+        /// <summary>
+        /// Europe.
+        /// </summary>
+        ///
         SAE_DEPLOY_REGION_EU = 0x00000004,
-        /**
-        * Asia, excluding Mainland China.
-        */
+
+        ///
+        /// <summary>
+        /// Asia, excluding Mainland China.
+        /// </summary>
+        ///
         SAE_DEPLOY_REGION_AS = 0x00000008
     };
 
-    /** The definition of GMEngineContext
-*/
+    ///
+    /// <summary>
+    /// The configuration of ICloudSpatialAudioEngine.
+    /// </summary>
+    ///
     public class CloudSpatialAudioConfig
     {
         public CloudSpatialAudioConfig()
@@ -91,33 +191,37 @@
             deployRegion = (int)SAE_DEPLOY_REGION.SAE_DEPLOY_REGION_CN;
         }
 
-        /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
-           * the real-time audio and video communication functionality.
-           */
+        ///
+        /// TODO(doc)
+        ///
         public IRtcEngine rtcEngine { set; get; }
-        /** The SDK uses the eventHandler interface class to send callbacks to the app.
-           */
+
+        ///
+        /// TODO(doc)
+        ///
         public ICloudSpatialAudioEventHandler eventHandler { set; get; }
-        /** The App ID must be the same App ID used for initializing the IRtcEngine object.
-           */
+
+        ///
+        /// TODO(doc)
+        ///
         public string appId { set; get; }
-        /**
-           * The region for connection. This advanced feature applies to scenarios that have regional restrictions.
-           *
-           * For the regions that Agora supports, see #SAE_DEPLOY_REGION. The area codes support bitwise operation.
-           *
-           * After specifying the region, the SDK connects to the Agora servers within that region.
-           */
+
+        ///
+        /// TODO(doc)
+        ///
         public uint deployRegion { set; get; }
     }
 
-    /** The definition of LocalSpatialAudioConfig
- */
+    ///
+    /// <summary>
+    /// The configuration of ILocalSpatialAudioEngine .
+    /// </summary>
+    ///
     public class LocalSpatialAudioConfig
     {
-        /*The reference to \ref IRtcEngine, which is the base interface class of the Agora RTC SDK and provides
-         * the real-time audio and video communication functionality.
-         */
+        ///
+        /// TODO(doc)
+        ///
         public IRtcEngine rtcEngine { set; get; }
 
         public LocalSpatialAudioConfig()
@@ -126,5 +230,4 @@
         }
     };
     #endregion
-
 }

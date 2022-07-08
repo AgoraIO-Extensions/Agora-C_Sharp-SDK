@@ -2,77 +2,132 @@
 
 namespace Agora.Rtc
 {
-    using int64_t = Int64;
-    using view_t = UInt64;
     using uint64_t = UInt64;
 
     #region AgoraMediaBase.h
 
-    /**
-  * Audio routes.
-  */
+    ///
+    /// <summary>
+    /// The type of the audio route.
+    /// </summary>
+    ///
     public enum AudioRoute
     {
-        /**
-         * -1: The default audio route.
-         */
+        ///
+        /// <summary>
+        /// -1: Default audio route.
+        /// </summary>
+        ///
         ROUTE_DEFAULT = -1,
-        /**
-         * The headset.
-         */
-        ROUTE_HEADSET,
-        /**
-         * The earpiece.
-         */
-        ROUTE_EARPIECE,
-        /**
-         * The headset with no microphone.
-         */
-        ROUTE_HEADSETNOMIC,
-        /**
-         * The speakerphone.
-         */
-        ROUTE_SPEAKERPHONE,
-        /**
-         * The loudspeaker.
-         */
-        ROUTE_LOUDSPEAKER,
-        /**
-         * The Bluetooth headset.
-         */
-        ROUTE_HEADSETBLUETOOTH,
-        /**
-         * The HDMI
-         */
-        ROUTE_HDMI,
-        /**
-         * The USB
-         */
-        ROUTE_USB
+
+        ///
+        /// <summary>
+        /// Audio output routing is a headset with microphone.
+        /// </summary>
+        ///
+        ROUTE_HEADSET = 0,
+
+        ///
+        /// <summary>
+        /// 1: The audio route is an earpiece.
+        /// </summary>
+        ///
+        ROUTE_EARPIECE = 1,
+
+        ///
+        /// <summary>
+        /// 2: The audio route is a headset without a microphone.
+        /// </summary>
+        ///
+        ROUTE_HEADSETNOMIC = 2,
+
+        ///
+        /// <summary>
+        /// 3: The audio route is the speaker that comes with the device.
+        /// </summary>
+        ///
+        ROUTE_SPEAKERPHONE = 3,
+
+        ///
+        /// <summary>
+        /// 4: The audio route is an external speaker. (iOS and macOS only)
+        /// </summary>
+        ///
+        ROUTE_LOUDSPEAKER = 4,
+
+        ///
+        /// <summary>
+        /// 5: The audio route is a bluetooth headset.
+        /// </summary>
+        ///
+        ROUTE_HEADSETBLUETOOTH = 5,
+
+        ///
+        /// <summary>
+        /// 7: (macOS only) The audio route is an HDMI peripheral device.
+        /// </summary>
+        ///
+        ROUTE_HDMI = 6,
+
+        ///
+        /// <summary>
+        /// 6: (macOS only) The audio route is a USB peripheral device.
+        /// </summary>
+        ///
+        ROUTE_USB = 7
     };
 
+    ///
+    /// TODO(doc)
+    ///
     public enum NLP_AGGRESSIVENESS
     {
+        ///
+        /// TODO(doc)
+        ///
         NLP_NOT_SPECIFIED = 0,
+
+        ///
+        /// TODO(doc)
+        ///
         NLP_MILD = 1,
+
+        ///
+        /// TODO(doc)
+        ///
         NLP_NORMAL = 2,
+
+        ///
+        /// TODO(doc)
+        ///
         NLP_AGGRESSIVE = 3,
+
+        ///
+        /// TODO(doc)
+        ///
         NLP_SUPER_AGGRESSIVE = 4,
+
+        ///
+        /// TODO(doc)
+        ///
         NLP_EXTREME = 5,
     };
 
 
-    /**
-   * Bytes per sample
-   */
+    ///
+    /// TODO(doc)
+    ///
     public enum BYTES_PER_SAMPLE
     {
-        /**
-        * two bytes per sample
-        */
+        ///
+        /// TODO(doc)
+        ///
         TWO_BYTES_PER_SAMPLE = 2,
     };
 
+    ///
+    /// TODO(doc)
+    ///
     public class AudioParameters
     {
         public AudioParameters()
@@ -81,300 +136,431 @@ namespace Agora.Rtc
             channels = 0;
             frames_per_buffer = 0;
         }
+
         public AudioParameters(int sample_rate, uint channels, uint frames_per_buffer)
         {
             this.sample_rate = sample_rate;
             this.channels = channels;
             this.frames_per_buffer = frames_per_buffer;
         }
+
+        ///
+        /// TODO(doc)
+        ///
         public int sample_rate { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
         public uint channels { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
         public uint frames_per_buffer { set; get; }
-    }
+    };
 
 
+    ///
+    /// <summary>
+    /// The use mode of the audio data.
+    /// </summary>
+    ///
     public enum RAW_AUDIO_FRAME_OP_MODE_TYPE
     {
-        /** 0: Read-only mode: Users only read the
-            agora::media::IAudioFrameObserver::AudioFrame data without modifying
-            anything. For example, when users acquire data with the Agora SDK then push
-            the RTMP streams. */
+        ///
+        /// <summary>
+        /// 0: Read-only mode: 
+        /// </summary>
+        ///
         RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
 
-        /** 2: Read and write mode: Users read the data from AudioFrame, modify it,
-            and then play it. For example, when users have their own sound-effect
-            processing module and do some voice pre-processing such as a voice change.
-        */
+        ///
+        /// <summary>
+        /// 2: Read and write mode: 
+        /// </summary>
+        ///
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
     };
 
-
+    ///
+    /// <summary>
+    /// Media source type.
+    /// </summary>
+    ///
     public enum MEDIA_SOURCE_TYPE
     {
-        /** 
-        * 0: The audio playback device.
-        */
+        ///
+        /// <summary>
+        /// 0: Audio playback device.
+        /// </summary>
+        ///
         AUDIO_PLAYOUT_SOURCE = 0,
-        /** 
-        * 1: Microphone.
-        */
+
+        ///
+        /// <summary>
+        /// 1: Audio capturing device.
+        /// </summary>
+        ///
         AUDIO_RECORDING_SOURCE = 1,
-        /**
-        * 2: Video captured by primary camera.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         PRIMARY_CAMERA_SOURCE = 2,
-        /**
-        * 3: Video captured by secondary camera.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         SECONDARY_CAMERA_SOURCE = 3,
-        /**
-        * 4: Video captured by primary screen capturer.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         PRIMARY_SCREEN_SOURCE = 4,
-        /**
-        * 5: Video captured by secondary screen capturer.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         SECONDARY_SCREEN_SOURCE = 5,
-        /**
-        * 6: Video captured by custom video source.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         CUSTOM_VIDEO_SOURCE = 6,
-        /**
-        * 7: Video for media player sharing.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         MEDIA_PLAYER_SOURCE = 7,
-        /**
-        * 8: Video for png image.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         RTC_IMAGE_PNG_SOURCE = 8,
-        /**
-        * 9: Video for jpeg image.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         RTC_IMAGE_JPEG_SOURCE = 9,
-        /**
-        * 10: Video for gif image.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         RTC_IMAGE_GIF_SOURCE = 10,
-        /**
-        * 11: Remote video received from network.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         REMOTE_VIDEO_SOURCE = 11,
-        /**
-        * 12: Video for transcoded.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         TRANSCODED_VIDEO_SOURCE = 12,
-        /**
-        * 100: unknown media source.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         UNKNOWN_MEDIA_SOURCE = 100
     }
 
-    //same in iagoraBase
-    /**
-  * The maximum metadata size.
-  */
-    //enum MAX_METADATA_SIZE_TYPE
-    //{
-    //    MAX_METADATA_SIZE_IN_BYTE = 1024
-    //};
-
-    /**
- * The definition of the PacketOptions struct, which contains infomation of the packet
- * in the RTP (Real-time Transport Protocal) header.
- */
+    ///
+    /// TODO(doc)
+    ///
     public class PacketOptions
     {
-        /**
-         * The timestamp of the packet.
-         */
+        ///
+        /// TODO(doc)
+        ///
         public uint timestamp { set; get; }
-        // Audio level indication.
-        public byte audioLevelIndication { set; get; }
 
+        ///
+        /// TODO(doc)
+        ///
+        public byte audioLevelIndication { set; get; }
 
         public PacketOptions()
         {
+        /* enum_mediasourcetype_    timestamp */
             timestamp = 0;
+        /* enum_mediasourcetype_    audioLevelIndication */
             audioLevelIndication = 127;
         }
-
     };
 
+    ///
+    /// <summary>
+    /// The number of channels for audio preprocessing.
+    /// In scenarios that require enhanced realism, such as concerts, local users might need to capture stereo audio and send stereo signals to remote users. For example, the singer, guitarist, and drummer are standing in different positions on the stage. The audio capture device captures their stereo audio and sends stereo signals to remote users. Remote users can hear the song, guitar, and drum from different directions as if they were at the auditorium.
+    /// You can set the dual-channel processing to implement stereo audio in this class. Agora recommends the following settings:
+    /// Preprocessing: call SetAdvancedAudioOptions and set audioProcessingChannels to AdvancedAudioOptions (2) in AUDIO_PROCESSING_STEREO.
+    /// Post-processing: call SetAudioProfile [2/2] profile to AUDIO_PROFILE_MUSIC_STANDARD_STEREO (3) or AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO (5). 
+    /// The stereo setting only takes effect when the SDK uses the media volume. See and .
+    /// On iOS, stereo audio requires high device performance. Stereo audio is only supported on the following devices using iOS 14.0 and later:
+    /// iPhone XS
+    /// iPhone XS Max
+    /// iPhone XR
+    /// iPhone 11
+    /// iPhone 11 Pro
+    /// iPhone 11 Pro Max
+    /// iPhone SE (2020)
+    /// iPad Pro 11" and 12.9" (3rd generation)
+    /// iPad Pro 11" and 12.9" (4th generation)
+    /// </summary>
+    ///
     public enum AUDIO_PROCESSING_CHANNELS
     {
+        ///
+        /// <summary>
+        /// 1: (Default) Mono.
+        /// </summary>
+        ///
         AUDIO_PROCESSING_MONO = 1,
-        AUDIO_PROCESSING_STEREO = 2,
+
+        ///
+        /// <summary>
+        /// 2: Stereo (two channels).
+        /// </summary>
+        ///
+        AUDIO_PROCESSING_STEREO = 2
     };
 
+    ///
+    /// <summary>
+    /// The advanced options for audio.
+    /// </summary>
+    ///
     public class AdvancedAudioOptions
     {
+        ///
+        /// <summary>
+        /// The number of channels for audio preprocessing. See AUDIO_PROCESSING_CHANNELS .
+        /// </summary>
+        ///
         public AUDIO_PROCESSING_CHANNELS audioProcessingChannels { set; get; }
+
         public AdvancedAudioOptions()
         {
             audioProcessingChannels = AUDIO_PROCESSING_CHANNELS.AUDIO_PROCESSING_MONO;
         }
     };
 
-    /**
-    * The detailed information of the incoming audio encoded frame.
-    */
+    ///
+    /// TODO(doc)
+    ///
     public class AudioEncodedFrameInfo
     {
-        /**
-        * The send time of the packet.
-        */
-        public uint64_t sendTs;
-        /**
-        * The codec of the packet.
-        */
-        public Byte codec;
+        ///
+        /// TODO(doc)
+        ///
+        public uint64_t sendTs { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
+        public Byte codec { set; get; }
 
         public AudioEncodedFrameInfo()
         {
             sendTs = 0;
             codec = 0;
         }
-
     };
 
-    /**
- * The detailed information of the incoming audio frame in the PCM format.
- */
     public struct AudioPcmFrame
     {
-        /** The timestamp (ms) of the audio frame.
-        */
         public UInt32 capture_timestamp;
-        /** The number of samples per channel.
-        */
+
         public UInt64 samples_per_channel_;
-        /** The sample rate (Hz) of the audio data.
-        */
+
         public int sample_rate_hz_;
-        /** The channel number.
-        */
+
         public UInt64 num_channels_;
-        /** The number of bytes per sample.
-        */
+
         public BYTES_PER_SAMPLE bytes_per_sample;
-        /** The audio frame data. */
+
         public Int16[] data_;
     };
 
-    /** Audio dual-mono output mode
-    */
+    ///
+    /// <summary>
+    /// The channel mode.
+    /// </summary>
+    ///
     public enum AUDIO_DUAL_MONO_MODE
     {
-        /**< ChanLOut=ChanLin, ChanRout=ChanRin */
+        ///
+        /// <summary>
+        /// 0: Original mode.
+        /// </summary>
+        ///
         AUDIO_DUAL_MONO_STEREO = 0,
-        /**< ChanLOut=ChanRout=ChanLin */
+
+        ///
+        /// <summary>
+        /// 1: Left channel mode. This mode replaces the audio of the right channel with the audio of the left channel, which means the user can only hear the audio of the left channel.
+        /// </summary>
+        ///
         AUDIO_DUAL_MONO_L = 1,
-        /**< ChanLOut=ChanRout=ChanRin */
+
+        ///
+        /// <summary>
+        /// 2: Right channel mode. This mode replaces the audio of the left channel with the audio of the right channel, which means the user can only hear the audio of the right channel.
+        /// </summary>
+        ///
         AUDIO_DUAL_MONO_R = 2,
-        /**< ChanLout=ChanRout=(ChanLin+ChanRin)/2 */
+
+        ///
+        /// <summary>
+        /// 3: Mixed channel mode. This mode mixes the audio of the left channel and the right channel, which means the user can hear the audio of the left channel and the right channel at the same time.
+        /// </summary>
+        ///
         AUDIO_DUAL_MONO_MIX = 3
     };
 
 
-    /**
-    * Video pixel formats.
-    */
+    ///
+    /// <summary>
+    /// The video pixel format.
+    /// </summary>
+    ///
     public enum VIDEO_PIXEL_FORMAT
     {
-        /**
-        * 0: Unknown format.
-        */
+        ///
+        /// <summary>
+        /// 0: The format is known.
+        /// </summary>
+        ///
         VIDEO_PIXEL_UNKNOWN = 0,
-        /**
-        * 1: I420.
-        */
+
+        ///
+        /// <summary>
+        /// 1: The format is I420.
+        /// </summary>
+        ///
         VIDEO_PIXEL_I420 = 1,
-        /**
-        * 2: BGRA.
-        */
+
+        ///
+        /// <summary>
+        /// 2: The format is BGRA.
+        /// </summary>
+        ///
         VIDEO_PIXEL_BGRA = 2,
-        /**
-        * 3: NV21.
-        */
+
+        ///
+        /// <summary>
+        /// 3: The format is NV21.
+        /// </summary>
+        ///
         VIDEO_PIXEL_NV21 = 3,
-        /**
-        * 4: RGBA.
-        */
+
+        ///
+        /// <summary>
+        /// 4: The format is RGBA.
+        /// </summary>
+        ///
         VIDEO_PIXEL_RGBA = 4,
-        /**
-        * 8: NV12.
-        */
+
+        ///
+        /// <summary>
+        /// 8: The format is NV12.
+        /// </summary>
+        ///
         VIDEO_PIXEL_NV12 = 8,
-        /** 
-        * 10: GL_TEXTURE_2D
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_TEXTURE_2D = 10,
-        /**
-        * 11: GL_TEXTURE_OES
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         VIDEO_TEXTURE_OES = 11,
-        /**
-        * 16: I422.
-        */
+
+        ///
+        /// <summary>
+        /// 16: The format is I422.
+        /// </summary>
+        ///
         VIDEO_PIXEL_I422 = 16,
     };
 
-    /**
- * The video display mode.
- */
+    ///
+    /// <summary>
+    /// Video display modes.
+    /// </summary>
+    ///
     public enum RENDER_MODE_TYPE
     {
-        /**
-        * 1: Uniformly scale the video until it fills the visible boundaries
-        * (cropped). One dimension of the video may have clipped contents.
-        */
+        ///
+        /// <summary>
+        /// 1: Uniformly scale the video until one of its dimension fits the boundary (zoomed to fit). The window is filled. One dimension of the video might have clipped contents.
+        /// </summary>
+        ///
         RENDER_MODE_HIDDEN = 1,
-        /**
-        * 2: Uniformly scale the video until one of its dimension fits the boundary
-        * (zoomed to fit). Areas that are not filled due to the disparity in the
-        * aspect ratio will be filled with black.
-        */
+
+        ///
+        /// <summary>
+        /// 2: Uniformly scale the video until one of its dimension fits the boundary (zoomed to fit). Priority is to ensuring that all video content is displayed. Areas that are not filled due to disparity in the aspect ratio are filled with black.
+        /// </summary>
+        ///
         RENDER_MODE_FIT = 2,
-        /**
-        * @deprecated
-        * 3: This mode is deprecated.
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         RENDER_MODE_ADAPTIVE = 3,
     };
 
 
-    /**
-   * The EGL context type.
-   */
+    ///
+    /// TODO(doc)
+    ///
     public enum EGL_CONTEXT_TYPE
     {
-        /**
-        * 0: When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos
-        */
+        ///
+        /// TODO(doc)
+        ///
         EGL_CONTEXT10 = 0,
-        /**
-        * 0: When using the OpenGL interface (android.opengl.*) defined by Android
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         EGL_CONTEXT14 = 1,
     };
 
-    /** The video buffer type. */
+    ///
+    /// <summary>
+    /// The video buffer type.
+    /// </summary>
+    ///
     public enum VIDEO_BUFFER_TYPE
     {
-        /** 1: The video buffer in the format of raw data. */
+        ///
+        /// <summary>
+        /// 1: The video buffer in the format of raw data.
+        /// </summary>
+        ///
         VIDEO_BUFFER_RAW_DATA = 1,
-        /**
-        * 2: The same as VIDEO_BUFFER_RAW_DATA.
-        */
-        VIDEO_BUFFER_ARRAY = 2,
-        /**
-        * 3: The video buffer in the format of texture.
-        */
-        VIDEO_BUFFER_TEXTURE = 3,
-    }
 
-    /** The external video frame.
-   */
+        ///
+        /// TODO(doc)
+        ///
+        VIDEO_BUFFER_ARRAY = 2,
+
+        ///
+        /// TODO(doc)
+        ///
+        VIDEO_BUFFER_TEXTURE = 3,
+    };
+
+    ///
+    /// <summary>
+    /// The external video frame.
+    /// </summary>
+    ///
     public class ExternalVideoFrame
     {
         public ExternalVideoFrame()
@@ -420,77 +606,127 @@ namespace Agora.Rtc
             this.metadata_size = metadata_size;
         }
 
-        /** The buffer type. See #VIDEO_BUFFER_TYPE
-		 */
+        ///
+        /// <summary>
+        /// The buffer type. See VIDEO_BUFFER_TYPE .
+        /// </summary>
+        ///
         public VIDEO_BUFFER_TYPE type { set; get; }
 
-        /** The pixel format. See #VIDEO_PIXEL_FORMAT
-		 */
+        ///
+        /// <summary>
+        /// The pixel format. See VIDEO_PIXEL_FORMAT .
+        /// </summary>
+        ///
         public VIDEO_PIXEL_FORMAT format { set; get; }
 
-        /** The video buffer.
-		 */
+        ///
+        /// <summary>
+        /// Video frame buffer.
+        /// </summary>
+        ///
         public byte[] buffer { set; get; }
 
-        /** Line spacing of the incoming video frame, which must be in pixels instead of bytes. For textures, it is the width of the texture.
-		 */
+        ///
+        /// <summary>
+        /// Line spacing of the incoming video frame, which must be in pixels instead of bytes. For textures, it is the width of the texture.
+        /// </summary>
+        ///
         public int stride { set; get; }
 
-        /** Height of the incoming video frame.
-		 */
+        ///
+        /// <summary>
+        /// Height of the incoming video frame.
+        /// </summary>
+        ///
         public int height { set; get; }
 
-        /** [Raw data related parameter] The number of pixels trimmed from the left. The default value is 0.
-		 */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The number of pixels trimmed from the left. The default value is 0.
+        /// </summary>
+        ///
         public int cropLeft { set; get; }
 
-        /** [Raw data related parameter] The number of pixels trimmed from the top. The default value is 0.
-		 */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The number of pixels trimmed from the top. The default value is 0.
+        /// </summary>
+        ///
         public int cropTop { set; get; }
 
-        /** [Raw data related parameter] The number of pixels trimmed from the right. The default value is 0.
-		 */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The number of pixels trimmed from the right. The default value is 0.
+        /// </summary>
+        ///
         public int cropRight { set; get; }
 
-        /** [Raw data related parameter] The number of pixels trimmed from the bottom. The default value is 0.
-		 */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The number of pixels trimmed from the bottom. The default value is 0.
+        /// </summary>
+        ///
         public int cropBottom { set; get; }
 
-        /** [Raw data related parameter] The clockwise rotation of the video frame. You can set the rotation angle as 0, 90, 180, or 270. The default value is 0.
-		 */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The clockwise rotation of the video frame. You can set the rotation angle as 0, 90, 180, or 270. The default value is 0.
+        /// </summary>
+        ///
         public int rotation { set; get; }
 
-        /** Timestamp of the incoming video frame (ms). An incorrect timestamp results in frame loss or unsynchronized audio and video.
-		 */
+        ///
+        /// <summary>
+        /// Timestamp (ms) of the incoming video frame. An incorrect timestamp results in frame loss or unsynchronized audio and video.
+        /// </summary>
+        ///
         public long timestamp { set; get; }
 
-        /** 
-        * [Texture-related parameter]
-        * When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos, set EGLContext to this field.
-        * When using the OpenGL interface (android.opengl.*) defined by Android, set EGLContext to this field.
-        */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format.
+        /// When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos, set eglContext to this field.
+        /// When using the OpenGL interface (android.opengl.*) defined by Android, set eglContext to this field.
+        /// </summary>
+        ///
         public byte[] eglContext { set; get; }
-        /** 
-        * [Texture related parameter] Texture ID used by the video frame.
-        */
-        public EGL_CONTEXT_TYPE eglType { set; get; }
-        /** 
-        * [Texture related parameter] Incoming 4 &times; 4 transformational matrix. The typical value is a unit matrix.
-        */
-        public int textureId { set; get; }
-        /**
-        * [Texture related parameter] The MetaData buffer.
-        *  The default value is NULL
-        */
-        public byte[] metadata_buffer { set; get; }
-        /**
-        * [Texture related parameter] The MetaData size.
-        *  The default value is 0
-        */
-        public int metadata_size { set; get; }
-    }
 
-    /** Video frame containing the Agora RTC SDK's encoded video data. */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. Texture ID of the frame.
+        /// </summary>
+        ///
+        public EGL_CONTEXT_TYPE eglType { set; get; }
+
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. Incoming 4 x 4 transformational matrix. The typical value is a unit matrix.
+        /// </summary>
+        ///
+        public int textureId { set; get; }
+
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
+        /// </summary>
+        ///
+        public byte[] metadata_buffer { set; get; }
+
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
+        /// </summary>
+        ///
+        public int metadata_size { set; get; }
+    };
+
+    ///
+    /// <summary>
+    /// Video frame information.
+    /// The video data format is YUV420. The buffer provides a pointer to a pointer. This interface cannot modify the pointer of the buffer but can modify the content of the buffer.
+    /// </summary>
+    ///
     public class VideoFrame
     {
         public VideoFrame()
@@ -517,117 +753,199 @@ namespace Agora.Rtc
             matrix = new float[16];
         }
 
+        ///
+        /// <summary>
+        /// The pixel format. See VIDEO_PIXEL_FORMAT .
+        /// </summary>
+        ///
+        public VIDEO_PIXEL_FORMAT type { set; get; }
 
-        /** The video frame type: #VIDEO_PIXEL_FORMAT. */
-        public VIDEO_PIXEL_FORMAT type;
+        ///
+        /// <summary>
+        /// Video pixel width.
+        /// </summary>
+        ///
+        public int width { set; get; }
 
-        /** Width (pixel) of the video frame.*/
-        public int width;
+        ///
+        /// <summary>
+        /// Video pixel height.
+        /// </summary>
+        ///
+        public int height { set; get; }
 
-        /** Height (pixel) of the video frame. */
-        public int height;
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the Y buffer; for RGBA data, the total data length.
+        /// </summary>
+        ///
+        public int yStride { set; get; }
 
-        /** Line span of the Y buffer within the YUV data. */
-        public int yStride; //stride of Y data buffer
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the U buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
+        public int uStride { set; get; }
 
-        /** Line span of the U buffer within the YUV data. */
-        public int uStride; //stride of U data buffer
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the V buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
+        public int vStride { set; get; }
 
-        /** Line span of the V buffer within the YUV data. */
-        public int vStride; //stride of V data buffer
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the Y buffer; for RGBA data, the data buffer.
+        /// </summary>
+        ///
+        public byte[] yBuffer { set; get; }
 
-        /** Pointer to the Y buffer pointer within the YUV data. */
-        public byte[] yBuffer; //Y data buffer
+        ///
+        /// TODO(doc)
+        ///
+        public IntPtr yBufferPtr { set; get; }
 
-        public IntPtr yBufferPtr;
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the U buffer; for RGBA data, the value is NULL.
+        /// </summary>
+        ///
+        public byte[] uBuffer { set; get; }
 
-        /** Pointer to the U buffer pointer within the YUV data. */
-        public byte[] uBuffer; //U data buffer
+        ///
+        /// TODO(doc)
+        ///
+        public IntPtr uBufferPtr { set; get; }
 
-        public IntPtr uBufferPtr;
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the V buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
+        public byte[] vBuffer { set; get; }
 
-        /** Pointer to the V buffer pointer within the YUV data. */
-        public byte[] vBuffer; //V data buffer
+        ///
+        /// TODO(doc)
+        ///
+        public IntPtr vBufferPtr { set; get; }
 
-        public IntPtr vBufferPtr;
+        ///
+        /// <summary>
+        /// The clockwise rotation angle of the video frame before rendering. The supported values are 0, 90, 180, or 270 degrees.
+        /// </summary>
+        ///
+        public int rotation { set; get; }
 
-        /** Set the rotation of this frame before rendering the video. Supports 0, 90, 180, 270 degrees clockwise. */
-        /** Set the rotation of this frame before rendering the video. Supports 0, 90, 180, 270 degrees clockwise. */
-        public int rotation; // rotation of this frame (0, 90, 180, 270)
+        ///
+        /// <summary>
+        /// The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. It is required.
+        /// </summary>
+        ///
+        public Int64 renderTimeMs { set; get; }
 
-        /** The timestamp of the external audio frame. It is mandatory. You can use this parameter for the following purposes:
-         * - Restore the order of the captured audio frame.
-         * - Synchronize audio and video frames in video-related scenarios, including scenarios where external video sources are used.
-         * @note This timestamp is for rendering the video stream, and not for capturing the video stream.
-         */
-        public Int64 renderTimeMs;
+        ///
+        /// <summary>
+        /// Reserved for future use.
+        /// </summary>
+        ///
+        public int avsync_type { set; get; }
 
-        /** Reserved for future use. */
-        public int avsync_type;
+        ///
+        /// TODO(doc)
+        ///
+        public IntPtr metadata_buffer { set; get; }
 
-        /**
-        * [Texture related parameter] The MetaData buffer.
-        *  The default value is NULL
-        */
-        public IntPtr metadata_buffer;
-        /**
-        * [Texture related parameter] The MetaData size.
-        *  The default value is 0
-        */
-        public int metadata_size;
+        ///
+        /// TODO(doc)
+        ///
+        public int metadata_size { set; get; }
 
-        /**
-        * [Texture related parameter], egl context.
-        */
-        public IntPtr sharedContext;
-        /**
-         * [Texture related parameter], Texture ID used by the video frame.
-         */
-        public int textureId;
-        /**
-         * [Texture related parameter], Incoming 4 &times; 4 transformational matrix.
-         */
-        public float[] matrix;
+        ///
+        /// TODO(doc)
+        ///
+        public IntPtr sharedContext { set; get; }
 
+        ///
+        /// TODO(doc)
+        ///
+        public int textureId { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
+        public float[] matrix { set; get; }
     };
 
+    ///
+    /// TODO(doc)
+    ///
     public enum MEDIA_PLAYER_SOURCE_TYPE
     {
-        /**
-         * The real type of media player when use MEDIA_PLAYER_SOURCE_DEFAULT is decided by the
-         * type of SDK package. It is full feature media player in full-featured SDK, or simple
-         * media player in others.
-         */
-        MEDIA_PLAYER_SOURCE_DEFAULT,
-        /**
-         * Full featured media player is designed to support more codecs and media format, which
-         * requires more package size than simple player. If you need this player enabled, you
-         * might need to download a full-featured SDK.
-         */
-        MEDIA_PLAYER_SOURCE_FULL_FEATURED,
-        /**
-         * Simple media player with limit codec supported, which requires minimal package size
-         * requirement and is enabled by default
-         */
-        MEDIA_PLAYER_SOURCE_SIMPLE,
+        ///
+        /// TODO(doc)
+        ///
+        MEDIA_PLAYER_SOURCE_DEFAULT = 0,
+
+        ///
+        /// TODO(doc)
+        ///
+        MEDIA_PLAYER_SOURCE_FULL_FEATURED = 1,
+
+        ///
+        /// TODO(doc)
+        ///
+        MEDIA_PLAYER_SOURCE_SIMPLE = 2,
     };
 
+    ///
+    /// TODO(doc)
+    ///
     [Flags]
     public enum VIDEO_MODULE_POSITION
     {
+        ///
+        /// TODO(doc)
+        ///
         POSITION_POST_CAPTURER = 1 << 0,
+
+        ///
+        /// TODO(doc)
+        ///
         POSITION_PRE_RENDERER = 1 << 1,
+
+        ///
+        /// TODO(doc)
+        ///
         POSITION_PRE_ENCODER = 1 << 2,
+
+        ///
+        /// TODO(doc)
+        ///
         POSITION_POST_FILTERS = 1 << 3,
     };
 
+    ///
+    /// <summary>
+    /// Audio frame type.
+    /// </summary>
+    ///
     public enum AUDIO_FRAME_TYPE
     {
-        /** 0: PCM16. */
+        ///
+        /// <summary>
+        /// 0: PCM 16
+        /// </summary>
+        ///
         FRAME_TYPE_PCM16 = 0, // PCM 16bit little endian
-    }
+    };
 
-    /** Definition of AudioFrame */
+    ///
+    /// <summary>
+    ///  AudioFrame 
+    /// </summary>
+    ///
     public class AudioFrame
     {
         public AudioFrame()
@@ -655,149 +973,231 @@ namespace Agora.Rtc
             this.avsync_type = avsync_type;
         }
 
-        /** The type of the audio frame. See #AUDIO_FRAME_TYPE
-		 */
+        ///
+        /// <summary>
+        /// The type of the audio frame. See AUDIO_FRAME_TYPE .
+        /// </summary>
+        ///
         public AUDIO_FRAME_TYPE type { set; get; }
 
-        /** The number of samples per channel in the audio frame.
-		 */
-        public int samplesPerChannel { set; get; } //number of samples for each channel in this frame
+        ///
+        /// <summary>
+        /// The number of samples per channel in the audio frame.
+        /// </summary>
+        ///
+        public int samplesPerChannel { set; get; }
 
-        /**The number of bytes per audio sample, which is usually 16-bit (2-byte).
-		 */
-        public BYTES_PER_SAMPLE bytesPerSample { set; get; } //number of bytes per sample: 2 for PCM16
+        ///
+        /// <summary>
+        /// The number of bytes per audio sample, which is usually 16-bit (2 bytes).
+        /// </summary>
+        ///
+        public BYTES_PER_SAMPLE bytesPerSample { set; get; }
 
-        /** The number of audio channels.
-		 - 1: Mono
-		 - 2: Stereo (the data is interleaved)
-		 */
-        public int channels { set; get; } //number of channels (data are interleaved if stereo)
+        ///
+        /// <summary>
+        /// The number of audio channels (the data are interleaved if it is stereo).
+        /// 1: Mono.
+        /// 2: Stereo. 
+        /// </summary>
+        ///
+        public int channels { set; get; }
 
-        /** The sample rate.
-		 */
-        public int samplesPerSec { set; get; } //sampling rate
+        ///
+        /// <summary>
+        /// The number of samples per channel in the audio frame.
+        /// </summary>
+        ///
+        public int samplesPerSec { set; get; }
 
-        /** The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.
-		 The size of the data buffer is as follows: `buffer` = `samples` × `channels` × `bytesPerSample`.
-		 */
-        public UInt64 buffer { set; get; } //data buffer
+        ///
+        /// TODO(doc)
+        ///
+        public UInt64 buffer { set; get; }
 
+        ///
+        /// TODO(doc)
+        ///
         public IntPtr bufferPtr { set; get; }
 
+        ///
+        /// <summary>
+        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.
+        /// The size of the data buffer is as follows: buffer = samples × channels × bytesPerSample.
+        /// </summary>
+        ///
         public byte[] RawBuffer { set; get; }
 
-        /** The timestamp of the external audio frame. You can use this parameter for the following purposes:
-		 - Restore the order of the captured audio frame.
-		 - Synchronize audio and video frames in video-related scenarios, including where external video sources are used.
-		 */
+        ///
+        /// <summary>
+        /// The timestamp (ms) of the external audio frame.
+        /// You can use this timestamp to restore the order of the captured audio frame, and synchronize audio and video frames in video scenarios, including scenarios where external video sources are used.
+        /// </summary>
+        ///
         public Int64 renderTimeMs { set; get; }
 
-        /** Reserved parameter.
-		 */
+        ///
+        /// <summary>
+        /// Reserved for future use.
+        /// </summary>
+        ///
         public int avsync_type { set; get; }
-    }
-
+    };
 
     public struct AudioSpectrumData
     {
-
         public float[] audioSpectrumData;
-        /**
-        * The data length of audio spectrum data.
-        */
+
         public int dataLength;
     };
 
-
-
     public struct UserAudioSpectrumInfo
     {
-        /**
-        * User ID of the speaker.
-        */
         public uint uid;
-        /**
-        * The audio spectrum data of audio.
-        */
+
         public AudioSpectrumData spectrumData;
     };
 
-
-    /**
-   * The frame position of the video observer.
-   */
+    ///
+    /// <summary>
+    /// The frame position of the video observer.
+    /// </summary>
+    ///
     [Flags]
     public enum VIDEO_OBSERVER_POSITION
     {
-        /**USER_OFFLINE_REASON_TYPE
-     * 1: The post-capturer position, which corresponds to the video data in the onCaptureVideoFrame callback.
-     */
+        ///
+        /// <summary>
+        /// 1: The post-capturer position, which corresponds to the video data in the OnCaptureVideoFrame callback.
+        /// </summary>
+        ///
         POSITION_POST_CAPTURER = 1 << 0,
 
-        /**
-     * 2: The pre-renderer position, which corresponds to the video data in the onRenderVideoFrame callback.
-     */
+        ///
+        /// <summary>
+        /// 2: The pre-renderer position, which corresponds to the video data in the OnRenderVideoFrame callback.
+        /// </summary>
+        ///
         POSITION_PRE_RENDERER = 1 << 1,
 
-        /**
-     * 4: The pre-encoder position, which corresponds to the video data in the onPreEncodeVideoFrame callback.
-     */
+        ///
+        /// <summary>
+        /// 4: The pre-encoder position, which corresponds to the video data in the OnPreEncodeVideoFrame callback.
+        /// </summary>
+        ///
         POSITION_PRE_ENCODER = 1 << 2,
     };
 
-
-
-    /** Definition of contentinspect
-*/
-    //#define MAX_CONTENT_INSPECT_MODULE_COUNT 32
+    ///
+    /// <summary>
+    /// 鉴黄结果。
+    /// </summary>
+    ///
     public enum CONTENT_INSPECT_RESULT
     {
+        ///
+        /// <summary>
+        /// 1：正常图片。
+        /// </summary>
+        ///
         CONTENT_INSPECT_NEUTRAL = 1,
+
+        ///
+        /// <summary>
+        /// 2：性感图片。
+        /// </summary>
+        ///
         CONTENT_INSPECT_SEXY = 2,
+
+        ///
+        /// <summary>
+        /// 3：色情图片。
+        /// </summary>
+        ///
         CONTENT_INSPECT_PORN = 3,
+
+        ///
+        /// TODO(doc)
+        ///
         MAX_CONTENT_INSPECT_MODULE_COUNT = 32
     };
 
+    ///
+    /// <summary>
+    /// 在设备端进行内容审核的类型。
+    /// </summary>
+    ///
     public enum CONTENT_INSPECT_DEVICE_TYPE
     {
+        ///
+        /// TODO(doc)
+        ///
         CONTENT_INSPECT_DEVICE_INVALID = 0,
+
+        ///
+        /// TODO(doc)
+        ///
         CONTENT_INSPECT_DEVICE_AGORA = 1,
+
+        ///
+        /// TODO(doc)
+        ///
         CONTENT_INSPECT_DEVICE_HIVE = 2,
+
+        ///
+        /// TODO(doc)
+        ///
         CONTENT_INSPECT_DEVICE_TUPU = 3
     };
 
-
-
+    ///
+    /// <summary>
+    /// 内容审核类型。
+    /// </summary>
+    ///
     public enum CONTENT_INSPECT_TYPE
     {
-        /**
-        * (Default) content inspect type invalid
-        */
+        ///
+        /// TODO(doc)
+        ///
         CONTENT_INSPECT_INVALIDE = 0,
-        /**
-        * Content inspect type moderation
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         CONTENT_INSPECT_MODERATION = 1,
-        /**
-        * Content inspect type supervise
-        */
+
+        ///
+        /// TODO(doc)
+        ///
         CONTENT_INSPECT_SUPERVISE = 2
     };
 
+    ///
+    /// <summary>
+    ///  ContentInspectModule 结构体，用于配置内容审核模块的类型和频率。 
+    /// </summary>
+    ///
     public class ContentInspectModule
     {
-        /**
-        * The content inspect module type.
-        */
-        public CONTENT_INSPECT_TYPE type;
-        /**The content inspect frequency, default is 0 second.
-        * the frequency <= 0 is invalid.
-        */
-        public uint frequency;
+        ///
+        /// <summary>
+        /// 内容审核模块的类型。 0: （默认）该功能模块无实际功能。 请不要设为该值。
+        /// 1: 鉴黄。 The SDK will take screenshots and pornography of videos sent by local users, and upload the screenshots and audit results.
+        /// 2: 截图。 SDK 会对视频流进行截图并上传。 
+        /// </summary>
+        ///
+        public CONTENT_INSPECT_TYPE type { set; get; }
+
+        ///
+        /// TODO(doc)
+        ///
+        public uint frequency { set; get; }
     };
 
-    /** Definition of ContentInspectConfig.
-*/
+    ///
+    /// TODO(doc)
+    ///
     public class ContentInspectConfig
     {
         public ContentInspectConfig()
@@ -810,32 +1210,47 @@ namespace Agora.Rtc
             moduleCount = 0;
         }
 
-        /** enable content isnpect function*/
+        ///
+        /// TODO(doc)
+        ///
         public bool enable { set; get; }
 
-        /** jh on device.*/
+        ///
+        /// TODO(doc)
+        ///
         public bool DeviceWork { set; get; }
 
-        /** jh on cloud.*/
+        ///
+        /// TODO(doc)
+        ///
         public bool CloudWork { set; get; }
 
-        /**the type of jh on device.*/
+        ///
+        /// TODO(doc)
+        ///
         public CONTENT_INSPECT_DEVICE_TYPE DeviceworkType { set; get; }
 
+        ///
+        /// TODO(doc)
+        ///
         public string extraInfo { set; get; }
 
-        /**The content inspect modules, max length of modules is 32.
-        * the content(snapshot of send video stream, image) can be used to max of 32 types functions.
-        */
+        ///
+        /// TODO(doc)
+        ///
         public ContentInspectModule[] modules { set; get; }
 
-        /**The content inspect module count.
-        */
+        ///
+        /// TODO(doc)
+        ///
         public int moduleCount { set; get; }
-
     };
 
-
+    ///
+    /// <summary>
+    /// 视频截图设置。
+    /// </summary>
+    ///
     public class SnapShotConfig
     {
         public SnapShotConfig()
@@ -845,25 +1260,53 @@ namespace Agora.Rtc
             filePath = null;
         }
 
-        public string channel;
-        public uint uid;
-        public string filePath;
-    }
+        ///
+        /// <summary>
+        /// The channel name.
+        /// </summary>
+        ///
+        public string channel { set; get; }
 
+        ///
+        /// <summary>
+        /// The user ID. Set uid as 0 if you want to take a snapshot of the local user's video.
+        /// </summary>
+        ///
+        public uint uid { set; get; }
 
-    /**
-    * The external video source type.
-    */
+        ///
+        /// <summary>
+        /// 截图的本地保存路径，需精确到文件名及格式， 例如： 
+        /// Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.jpg
+        /// iOS: /App Sandbox/Library/Caches/example.jpg
+        /// macOS: ～/Library/Logs/example.jpg
+        /// Android: /storage/emulated/0/Android/data/<package name>/files/example.jpg
+        /// Ensure that the path you specify exists and is writable.
+        /// </summary>
+        ///
+        public string filePath { set; get; }
+    };
+
+    ///
+    /// <summary>
+    /// The external video frame encoding type.
+    /// </summary>
+    ///
     public enum EXTERNAL_VIDEO_SOURCE_TYPE
     {
-        /**
-        * 0: non-encoded video frame.
-        */
+        ///
+        /// <summary>
+        /// 0: The video frame is not encoded.
+        /// </summary>
+        ///
         VIDEO_FRAME = 0,
-        /**
-        * 1: encoded video frame.
-        */
-        ENCODED_VIDEO_FRAME,
+
+        ///
+        /// <summary>
+        /// 1: The video frame is encoded.
+        /// </summary>
+        ///
+        ENCODED_VIDEO_FRAME = 1,
     };
 
     #endregion
