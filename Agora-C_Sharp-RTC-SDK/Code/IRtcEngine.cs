@@ -327,7 +327,7 @@ namespace Agora.Rtc
 
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
 
-        public abstract int SsetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode);
+        public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode);
 
         public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
         #endregion
@@ -472,9 +472,9 @@ namespace Agora.Rtc
 
         public abstract void UnregisterMediaMetadataObserver();
 
-        public abstract int SetMaxMetadataSize(int size);
+        //public abstract int SetMaxMetadataSize(int size);
 
-        public abstract int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
+        //public abstract int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
         #endregion
 
         #region Audio recording
@@ -682,7 +682,7 @@ namespace Agora.Rtc
 
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
 
-        public abstract int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params);
+        //public abstract int EnableFishEyeCorrection(bool enabled, FishEyeCorrectionParams @params);
 
         public abstract int SetAVSyncSource(string channelId, uint uid);
 

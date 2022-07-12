@@ -5,6 +5,7 @@ namespace Agora.Rtc
 {
     public sealed class RtcEngine : IRtcEngineEx
     {
+        private bool _disposed = false;
         private RtcEngineImpl _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
         private IVideoDeviceManager _videoDeviceManager = null;
@@ -26,6 +27,7 @@ namespace Agora.Rtc
 
         ~RtcEngine()
         {
+            Dispose();
             _audioDeviceManager = null;
             _videoDeviceManager = null;
             //_cloudSpatialAudioEngine = null;
@@ -72,6 +74,7 @@ namespace Agora.Rtc
 
         public override void Dispose(bool sync = false)
         {
+            if (_disposed) return;
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
@@ -85,6 +88,8 @@ namespace Agora.Rtc
             //CloudSpatialAudioEngine.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
             instance = null;
+
+            _disposed = true;
         }
 
         public override RtcEngineEventHandler GetRtcEngineEventHandler()
@@ -747,7 +752,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetDualStreamMode(mode);
         }
 
-        public override int SsetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode)
+        public override int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3060,15 +3065,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetLocalAccessPoint(config);
         }
 
-        public override int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.EnableFishEyeCorrection(enabled, @params);
-        }
+        //public override int EnableFishEyeCorrection(bool enabled, FishEyeCorrectionParams @params)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.EnableFishEyeCorrection(enabled, @params);
+        //}
 
         public override int SetAdvancedAudioOptions(AdvancedAudioOptions options)
         {
@@ -3381,25 +3386,25 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SelectAudioTrack(index);
         }
 
-        public override int SetMaxMetadataSize(int size)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetMaxMetadataSize(size);
-        }
+        //public override int SetMaxMetadataSize(int size)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.SetMaxMetadataSize(size);
+        //}
 
-        public override int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SendMetaData(metadata, source_type);
-        }
+        //public override int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
+        //{
+        //    if (_rtcEngineImpl == null)
+        //    {
+        //        AgoraLog.LogError(ErrorMsgLog);
+        //        return ErrorCode;
+        //    }
+        //    return _rtcEngineImpl.SendMetaData(metadata, source_type);
+        //}
 
         //public override int SetMediaRecorderObserver(RtcConnection connection)
         //{

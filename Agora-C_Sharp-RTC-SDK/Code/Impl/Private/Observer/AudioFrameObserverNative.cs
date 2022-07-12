@@ -182,12 +182,12 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_AudioFramePosition_Native))]
 #endif
-        internal static IRIS_AUDIO_FRAME_POSITION GetObservedAudioFramePosition()
+        internal static int GetObservedAudioFramePosition()
         {
             if (AudioFrameObserver == null)
-                return (IRIS_AUDIO_FRAME_POSITION)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
+                return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
 
-            return (IRIS_AUDIO_FRAME_POSITION)AudioFrameObserver.GetObservedAudioFramePosition();
+            return AudioFrameObserver.GetObservedAudioFramePosition();
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

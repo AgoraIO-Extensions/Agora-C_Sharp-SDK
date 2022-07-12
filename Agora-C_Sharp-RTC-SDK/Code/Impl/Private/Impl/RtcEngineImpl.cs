@@ -4855,23 +4855,23 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int EnableFishEyeCorrection(bool enabled, FishCorrectionParams @params)
-        {
-            var param = new
-            {
-                enabled,
-                @params
-            };
+        //public int EnableFishEyeCorrection(bool enabled, FishEyeCorrectionParams @params)
+        //{
+        //    var param = new
+        //    {
+        //        enabled,
+        //        @params
+        //    };
 
-            var json = AgoraJson.ToJson(param);
+        //    var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEFISHEYECORRECTION,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEFISHEYECORRECTION,
+        //        json, (UInt32)json.Length,
+        //        IntPtr.Zero, 0,
+        //        out _result);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        //}
 
         public int SetAdvancedAudioOptions(AdvancedAudioOptions options)
         {
@@ -6100,46 +6100,46 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetMaxMetadataSize(int size)
-        {
-            var param = new
-            {
-                size
-            };
+        //public int SetMaxMetadataSize(int size)
+        //{
+        //    var param = new
+        //    {
+        //        size
+        //    };
 
-            var json = AgoraJson.ToJson(param);
+        //    var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
+        //        json, (UInt32)json.Length,
+        //        IntPtr.Zero, 0,
+        //        out _result);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        //}
 
-        public int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
-        {
-            var param = new
-            {
-                metadata = new
-                {
-                    uid = metadata.uid,
-                    size = metadata.size,
-                    timeStampMs = metadata.timeStampMs,
-                    buffer = (UInt64)metadata.buffer
-                },
-                source_type
-            };
+        //public int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
+        //{
+        //    var param = new
+        //    {
+        //        metadata = new
+        //        {
+        //            uid = metadata.uid,
+        //            size = metadata.size,
+        //            timeStampMs = metadata.timeStampMs,
+        //            buffer = (UInt64)metadata.buffer
+        //        },
+        //        source_type
+        //    };
 
-            var json = AgoraJson.ToJson(param);
+        //    var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDMETADATA,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDMETADATA,
+        //        json, (UInt32)json.Length,
+        //        IntPtr.Zero, 0,
+        //        out _result);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        //}
 
         #endregion CallIrisApiWithBuffer end
 
