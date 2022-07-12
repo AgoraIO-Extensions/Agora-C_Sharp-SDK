@@ -124,10 +124,11 @@ namespace Agora.Rtc
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
             this.Width = _cachedVideoFrame.width;
             this.Height = _cachedVideoFrame.height;
-            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY ||ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
+
+            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY || ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
             {
                 _canAttach = false;
-                AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", _channelId, _uid));
+                //AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", _channelId, _uid));
                 return;
             }
             else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_SIZE_NOT_MATCHING)
@@ -136,14 +137,12 @@ namespace Agora.Rtc
                 _videoPixelWidth = _cachedVideoFrame.width;
                 _videoPixelHeight = _cachedVideoFrame.height;
                 FreeMemory();
-                _cachedVideoFrame = new IrisVideoFrame
-                {
-                    type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
-                    y_stride = _videoPixelWidth * 4,
-                    height = _videoPixelHeight,
-                    width = _videoPixelWidth,
-                    y_buffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4)
-                };
+
+                _cachedVideoFrame.type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
+                _cachedVideoFrame.y_stride = _videoPixelWidth * 4;
+                _cachedVideoFrame.height = _videoPixelHeight;
+                _cachedVideoFrame.width = _videoPixelWidth;
+                _cachedVideoFrame.y_buffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
             }
             else
             {

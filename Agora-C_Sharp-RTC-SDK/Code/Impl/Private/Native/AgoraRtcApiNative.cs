@@ -264,7 +264,7 @@ namespace Agora.Rtc
     internal delegate IrisAudioParams Func_AudioParams_Native();
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate IRIS_AUDIO_FRAME_POSITION Func_AudioFramePosition_Native();
+    internal delegate int Func_AudioFramePosition_Native();
 
     public enum IRIS_AUDIO_FRAME_POSITION
     {
