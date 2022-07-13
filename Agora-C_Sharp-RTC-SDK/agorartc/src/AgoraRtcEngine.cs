@@ -4531,7 +4531,7 @@ namespace agora.rtc
                     break;
                 case "onLocalVoicePitchInHz":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (EngineEventHandlerArr[0] != null)
