@@ -178,32 +178,6 @@ namespace Agora.Rtc
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioFrameObserverNative);
         }
 
-        private int SetCustomSourceProvider(int playerId, Int64 startPos)
-        {
-            var param = new { playerId, startPos };
-            if (_irisMediaPlayerCustomProviderHandleNative != IntPtr.Zero) return -1;
-
-            _irisMediaPlayerCCustomProvider = new IrisMediaPlayerCCustomProvider
-            {
-                OnSeek = MediaPlayerCustomDataProviderNative.OnSeek,
-                OnReadData = MediaPlayerCustomDataProviderNative.OnReadData
-            };
-
-            var irisMediaPlayerCCustomProviderNativeLocal = new IrisMediaPlayerCCustomProviderNative
-            {
-                onSeek = Marshal.GetFunctionPointerForDelegate(_irisMediaPlayerCCustomProvider.OnSeek),
-                onReadData = Marshal.GetFunctionPointerForDelegate(_irisMediaPlayerCCustomProvider.OnReadData)
-            };
-
-            _irisMediaPlayerCCustomProviderNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCCustomProviderNativeLocal));
-            Marshal.StructureToPtr(irisMediaPlayerCCustomProviderNativeLocal, _irisMediaPlayerCCustomProviderNative, true);
-            var ret = AgoraRtcNative.MediaPlayerOpenWithCustomSource(
-                _irisApiEngine,
-                _irisMediaPlayerCCustomProviderNative, AgoraJson.ToJson(param)
-            );
-            return 0;
-        }
-
         private void SetIrisAudioSpectrumObserver(int intervalInMS)
         {
             if (_irisMediaPlayerCAudioSpectrumObserverNative != IntPtr.Zero) return;
@@ -331,19 +305,6 @@ namespace Agora.Rtc
                 AgoraApiType.FUNC_MEDIAPLAYER_OPEN,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider)
-        {
-            //var ret = SetCustomSourceProvider(playerId, startPos);
-            //MediaPlayerCustomDataProviderNative.CustomDataProvider = provider;
-            return -4;
-        }
-
-        public int OpenWithMediaSource(MediaSource source)
-        {
-            //source.
-            return -4;
         }
 
         public int Play(int playerId)
