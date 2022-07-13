@@ -22,10 +22,6 @@ namespace Agora.Rtc
 
         public abstract int Open(string url, Int64 startPos);
 
-        public abstract int OpenWithCustomSource(Int64 startPos, IMediaPlayerCustomDataProvider provider);
-
-        public abstract int OpenWithMediaSource(MediaSource source);
-
         public abstract int Play();
 
         public abstract int Pause();
