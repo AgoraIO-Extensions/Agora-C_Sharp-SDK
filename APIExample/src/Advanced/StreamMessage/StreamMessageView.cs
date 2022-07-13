@@ -22,5 +22,12 @@ namespace CSharp_API_Example
 
             CSharpForm.usr_engine_.SendStreamMessage(sendTextBox.Text);
         }
+
+        public void SetUIText(ConfigHelper config)
+        {
+            label1.Text = config.GetUIValue("General", "SendStreamMessage");
+            label2.Text = config.GetUIValue("General", "SendStreamMessage.SendMessage");
+            btnSend.Text = config.GetUIValue("General", "SendStreamMessage.Send");
+        }
     }
 }

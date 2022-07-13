@@ -55,5 +55,13 @@ namespace CSharp_API_Example
             }
             cmbUrl.Items.Clear();
         }
+
+        public void SetUIText(ConfigHelper config)
+        {
+            this.label1.Text = config.GetUIValue("General", "RtmpStreaming");
+            label2.Text = config.GetUIValue("General", "RtmpStreaming.Url");
+            btnAdd.Text = config.GetUIValue("General", "RtmpStreaming.Add");
+            btnRemove.Text = config.GetUIValue("General", "RtmpStreaming.Remove");
+        }
     }
 }

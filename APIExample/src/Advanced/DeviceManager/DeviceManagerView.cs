@@ -84,5 +84,14 @@ namespace CSharp_API_Example
                 CSharpForm.usr_engine_.SetPlaybackDevice(playbackDevices_[cmbPlayback.SelectedIndex].deviceId);
             }
         }
+
+        public void SetUIText(ConfigHelper config)
+        {
+            
+            this.label1.Text = config.GetUIValue("General", "DeviceManager");
+            label2.Text  = config.GetUIValue("General", "DeviceManager.VideoDevice");
+            label3.Text = config.GetUIValue("General", "DeviceManager.RecordDevice");
+            label4.Text = config.GetUIValue("General", "DeviceManager.PlayDevice");
+        }
     }
 }

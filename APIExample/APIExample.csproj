@@ -41,10 +41,6 @@
         <OutputPath>binx64\Release</OutputPath>
     </PropertyGroup>
 
-     <ItemGroup>
-      <PackageReference Include="agora_rtc_sdk" Version="3.6.2" />
-    </ItemGroup>
-
     <ItemGroup>
       <Compile Update="Properties\Resources.Designer.cs">
         <DesignTime>True</DesignTime>

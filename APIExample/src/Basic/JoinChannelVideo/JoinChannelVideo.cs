@@ -1,13 +1,13 @@
-﻿/*
- * 【一对一视频】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 3. 离开频道：（LeaveChannel）
- * 
- * 4. 退出：（Dispose）
- */
+﻿/// <summary>
+/// [1v1 Video]Key Step：
+/// 1. Create Engine and Initialize：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
+/// 
+/// 2. Join Channel：（[EnableAudio]、EnableVideo、JoinChannel）
+/// 
+/// 3. Leave Channel：（LeaveChannel）
+/// 
+/// 4. Exit：（Dispose）
+/// <summary>
 
 using System;
 using agora.rtc;
@@ -40,18 +40,18 @@ namespace CSharp_API_Example
             if (null == rtc_engine_)
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
-            } 
-            LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, AREA_CODE.AREA_CODE_GLOB, log_config);
+            }
+            event_handler_ = new JoinChannelVideoEventHandler(this);
+            rtc_engine_.InitEventHandler(event_handler_);
+
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Initialize", ret);
             // second way to set logfile
             //ret = rtc_engine_.SetLogFile(log_file_path);
             //CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetLogFile", ret);
 
-            event_handler_ = new JoinChannelVideoEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
-
+     
             return ret;
         }
 
@@ -94,6 +94,8 @@ namespace CSharp_API_Example
                 ret = rtc_engine_.LeaveChannel();
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
             }
+           
+            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Dispose", ret);
             return ret;
         }
 

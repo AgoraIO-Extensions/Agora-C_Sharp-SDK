@@ -18,5 +18,10 @@ namespace CSharp_API_Example
         private void button1_Click(object sender, EventArgs e)
         {
         }
+
+        public void SetUIText(ConfigHelper config)
+        {
+            label1.Text = config.GetUIValue("General", "StringUid");
+        }
     }
 }

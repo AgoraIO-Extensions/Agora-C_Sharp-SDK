@@ -14,5 +14,10 @@ namespace CSharp_API_Example
         {
             InitializeComponent();
         }
+
+        public void SetUIText(ConfigHelper config)
+        {
+            this.label1.Text = config.GetUIValue("General", "ScreenShare.Title");
+        }
     }
 }

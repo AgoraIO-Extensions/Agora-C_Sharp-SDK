@@ -173,10 +173,10 @@ namespace agora.rtc
     internal struct CharAssistant1
     {
         internal CharAssistant1(int param = 0) {
-            resultChar = new byte[65536];
+            resultChar = new byte[32768];
         }
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32768)]
         private byte[] resultChar;
 
         public string Result
