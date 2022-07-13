@@ -3031,11 +3031,11 @@ namespace agora.rtc
                 includeScreen
             };
 
-            var infoInternal =  AgoraRtcNative.CallIrisRtcEngineApiMaxResult(_irisRtcEngine, ApiTypeEngine.kEngineGetScreenCaptureSources,
+            var infoInternal = AgoraRtcNative.CallIrisRtcEngineApiMaxResult(_irisRtcEngine, ApiTypeEngine.kEngineGetScreenCaptureSources,
                 JsonMapper.ToJson(param),
                 out _result1) != 0 ?
                 new ScreenCaptureSourceInfoInternal[0]
-                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result1.Result, "result");
+                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result1.Result);
 
             var info = new ScreenCaptureSourceInfo[infoInternal.Length];
             for (int i = 0; i < infoInternal.Length; i++)
@@ -3073,10 +3073,32 @@ namespace agora.rtc
                 screenCaptureSourceInfo.iconImage = imageBuffer2;
                 info[i] = screenCaptureSourceInfo;
             }
-
             return info;
         }
 
+        public override int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId)
+        {
+            var param = new
+            {
+                enabled,
+                mode,
+                userId
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineEnableRemoteSuperResolution2, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int setCameraCaptureRotation(int rotation)
+        {
+            var param = new
+            {
+                rotation
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraCaptureRotation, JsonMapper.ToJson(param),
+                out _result);
+        }
         ~AgoraRtcEngine()
         {
             Dispose(false, false);
@@ -4509,7 +4531,7 @@ namespace agora.rtc
                     break;
                 case "onLocalVoicePitchInHz":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    CallbackObjectArr[0]._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (EngineEventHandlerArr[0] != null)

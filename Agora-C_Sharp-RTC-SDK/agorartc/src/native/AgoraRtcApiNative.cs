@@ -64,8 +64,7 @@ namespace agora.rtc
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisRtcEngineApiMaxResult(IrisRtcEnginePtr engine_ptr, ApiTypeEngine api_type,
-                                           string @params,
-                                           out CharAssistant1 result);
+                                           string @params, out CharAssistant1 result);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcDeviceManagerPtr GetIrisRtcDeviceManager(IrisRtcEnginePtr engine_ptr);

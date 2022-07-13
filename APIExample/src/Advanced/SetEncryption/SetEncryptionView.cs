@@ -16,6 +16,10 @@ namespace CSharp_API_Example
             cmbMode.SelectedIndex = 0;
         }
 
+        public void SetUIText(ConfigHelper config)
+        {
+            this.label1.Text = config.GetUIValue("General", "Encrypt");
+        }
         private void cmbMode_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (null != CSharpForm.usr_engine_)
