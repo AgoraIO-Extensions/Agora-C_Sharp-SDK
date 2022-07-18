@@ -1,11 +1,10 @@
 using System;
-using video_track_id_t = System.UInt32;
+using UnityEngine;
 
 namespace Agora.Rtc
 {
     public sealed class RtcEngine : IRtcEngineEx
     {
-        private bool _disposed = false;
         private RtcEngineImpl _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
         private IVideoDeviceManager _videoDeviceManager = null;
@@ -15,6 +14,8 @@ namespace Agora.Rtc
         private const string ErrorMsgLog = "[RtcEngine]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
 
+        private GameObject _agoraEngineObject;
+
         private RtcEngine()
         {
             _rtcEngineImpl = RtcEngineImpl.GetInstance();
@@ -23,11 +24,12 @@ namespace Agora.Rtc
             //_cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
             _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
+
+            InitAgoraEngineObject();
         }
 
         ~RtcEngine()
         {
-            Dispose();
             _audioDeviceManager = null;
             _videoDeviceManager = null;
             //_cloudSpatialAudioEngine = null;
@@ -62,6 +64,23 @@ namespace Agora.Rtc
             return (IRtcEngineEx)(instance ?? (instance = new RtcEngine()));
         }
 
+        public static IRtcEngine Get()
+        {
+            return instance;
+        }
+
+        private void InitAgoraEngineObject()
+        {
+            _agoraEngineObject = GameObject.Find("AgoraRtcEngineObj");
+            if (_agoraEngineObject == null)
+            {
+                _agoraEngineObject = new GameObject("AgoraRtcEngineObj");
+                UnityEngine.Object.DontDestroyOnLoad(_agoraEngineObject);
+                _agoraEngineObject.hideFlags = HideFlags.HideInHierarchy;
+                _agoraEngineObject.AddComponent<AgoraGameObject>();
+            }
+        }
+
         public override int Initialize(RtcEngineContext context)
         {
             if (_rtcEngineImpl == null)
@@ -74,7 +93,6 @@ namespace Agora.Rtc
 
         public override void Dispose(bool sync = false)
         {
-            if (_disposed) return;
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
@@ -88,8 +106,6 @@ namespace Agora.Rtc
             //CloudSpatialAudioEngine.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
             instance = null;
-
-            _disposed = true;
         }
 
         public override void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
