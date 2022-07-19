@@ -38,6 +38,10 @@ namespace Agora.Rtc
 
         PLAYER_STATE_SET_TRACK_INTERNAL = 56,
 
+        /** Copyright music license verification completed (internal)
+        */
+        PLAYER_STATE_AUTH_COMPLETED_INTERNAL = 57,
+
         PLAYER_STATE_FAILED = 100,
     };
 
@@ -78,6 +82,10 @@ namespace Agora.Rtc
         PLAYER_ERROR_IP_EXPIRED = -16,
 
         PLAYER_ERROR_UNKNOWN = -17,
+
+        /** Copyright music license verification failed.
+        */
+        PLAYER_ERROR_AUTH_FAILED,
     };
 
     public enum MEDIA_STREAM_TYPE

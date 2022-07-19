@@ -192,11 +192,11 @@ namespace Agora.Rtc
 
         public virtual void OnVideoPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) { }
 
-        public virtual void OnExtensionEvent(string provider, string extension, string key, string value) { }
+        public virtual void OnExtensionEvent(string provider, string ext_name, string key, string value) { }
 
-        public virtual void OnExtensionStarted(string provider, string extension) { }
+        public virtual void OnExtensionStarted(string provider, string ext_name) { }
 
-        public virtual void OnExtensionStopped(string provider, string extension) { }
+        public virtual void OnExtensionStopped(string provider, string ext_name) { }
 
         public virtual void OnExtensionErrored(string provider, string ext_name, int error, string msg) { }
 
