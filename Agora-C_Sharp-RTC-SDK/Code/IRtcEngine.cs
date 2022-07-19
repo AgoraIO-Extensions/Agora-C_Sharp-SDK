@@ -521,6 +521,8 @@ namespace Agora.Rtc
         public abstract IVideoDeviceManager GetVideoDeviceManager();
         #endregion
 
+        public abstract IMusicContentCenter GetMusicContentCenter();
+
         public abstract IMediaPlayerCacheManager GetMediaPlayerCacheManager();
 
         #region SpatialAudio
