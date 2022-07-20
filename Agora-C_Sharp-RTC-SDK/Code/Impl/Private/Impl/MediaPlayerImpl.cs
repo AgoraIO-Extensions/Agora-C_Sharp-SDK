@@ -11,6 +11,7 @@ namespace Agora.Rtc
     using IrisMediaPlayerCAudioFrameObserverNativeMarshal = IntPtr;
     using IrisMediaPlayerAudioFrameObserverHandleNative = IntPtr;
     using IrisMediaPlayerCCustomProviderNativeMarshal = IntPtr;
+
     using IrisMediaPlayerCustomProviderHandleNative = IntPtr;
     using IrisMediaPlayerCAudioSpectrumObserverNativeMarshal = IntPtr;
     using IrisMediaPlayerCAudioSpectrumObserverHandleNative = IntPtr;
