@@ -64,7 +64,6 @@ namespace Agora.Rtc
             _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
         }
 
-
         public void RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
