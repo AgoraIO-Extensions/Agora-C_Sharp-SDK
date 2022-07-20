@@ -129,5 +129,15 @@ namespace Agora.Rtc
             }
             return _musicContentCenterImpl.UnregisterEventHandler();
         }
+
+        public override int DestroyMusicPlayer(IMusicPlayer player)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.DestroyMusicPlayer(player);
+        }
     }
 }

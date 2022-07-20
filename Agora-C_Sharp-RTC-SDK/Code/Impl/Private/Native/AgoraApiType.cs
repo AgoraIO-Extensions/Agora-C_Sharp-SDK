@@ -494,5 +494,19 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILECOUNT = "MediaPlayerCacheManager_setMaxCacheFileCount";
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILESIZE = "MediaPlayerCacheManager_setMaxCacheFileSize";
         #endregion
+
+        #region IMusicContentCenter
+        internal const string FUNC_MUSICCONTENTCENTER_INITIALIZE = "MusicContentCenter_initialize";
+        internal const string FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER = "MusicContentCenter_registerEventHandler";
+        internal const string FUNC_MUSICCONTENTCENTER_UNREGISTEREVENTHANDLER = "MusicContentCenter_unregisterEventHandler";
+        internal const string FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER = "MusicContentCenter_createMusicPlayer";
+        internal const string FUNC_MUSICCONTENTCENTER_DESTROYMUSICPLAYER = "MusicContentCenter_destroyMusicPlayer";
+        internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCHARTS = "MusicContentCenter_getMusicCharts";
+        internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCHART = "MusicContentCenter_getMusicChart";
+        internal const string FUNC_MUSICCONTENTCENTER_SEARCHSONG = "MusicContentCenter_searchSong";
+        internal const string FUNC_MUSICCONTENTCENTER_PRELOAD = "MusicContentCenter_preload";
+        internal const string FUNC_MUSICCONTENTCENTER_ISPRELOADED = "MusicContentCenter_isPreloaded";
+        internal const string FUNC_MUSICCONTENTCENTER_GETLYRIC = "MusicContentCenter_getLyric";
+        #endregion
     }
 }

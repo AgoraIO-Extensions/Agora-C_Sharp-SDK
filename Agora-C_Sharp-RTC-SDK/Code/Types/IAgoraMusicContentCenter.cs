@@ -46,7 +46,7 @@ namespace Agora.Rtc
     {
         public int count { get; set; }
 
-        public MusicChartsType[] musicCharts;
+        public MusicChartsType[] musicChart;
     };
 
     public class MvProperty
@@ -72,30 +72,44 @@ namespace Agora.Rtc
         public int type { get; set; }
 
         public int lyricCount { get; set; }
-        public int[] lyricTypes;
+        public int[] lyricType;
 
         public int climaxSegmentCount { get; set; }
-        public ClimaxSegment[] climaxSegments;
+        public ClimaxSegment[] climaxSegment;
 
         public int mvCount { get; set; }
-        public MvProperty[] mvProperties;
+        public MvProperty[] mvPropertie;
 
     }
 
     public class MusicListResult {
         public int count { get; set; }
+        public Music[] music;
+
         public int total { get; set; }
         public int page { get; set; }
 
         public int pageSize { get; set; }
-        public Music[] musics;
+     
     }
 
 
     public class AgoraMusicContentCenterConfiguration {
-        public string  appId;
+        public string appId;
         public string rtmToken;
         public UInt64 uid;
+
+        public AgoraMusicContentCenterConfiguration() {
+            appId = "";
+            rtmToken = "";
+            uid = 0;
+        }
+
+        public AgoraMusicContentCenterConfiguration(string appId, string rtmToken, UInt64 uid) {
+            this.appId = appId;
+            this.rtmToken = rtmToken;
+            this.uid = uid;
+        }
     }
 
 
