@@ -78,7 +78,7 @@ namespace Agora.Rtc
         public ClimaxSegment[] climaxSegment;
 
         public int mvCount { get; set; }
-        public MvProperty[] mvPropertie;
+        public MvProperty[] mv;
 
     }
 

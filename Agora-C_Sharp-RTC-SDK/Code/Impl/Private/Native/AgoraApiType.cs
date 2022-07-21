@@ -356,6 +356,10 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYER_SETSPATIALAUDIOPARAMS = "MediaPlayer_setSpatialAudioParams";
         #endregion
 
+        #region MusicPlayer
+        internal const string FUNC_MUSICPLAYER_OPEN = "MusicPlayer_open";
+        #endregion
+
         #region IAudioDeviceManager start
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATEPLAYBACKDEVICES = "AudioDeviceManager_enumeratePlaybackDevices";
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATERECORDINGDEVICES = "AudioDeviceManager_enumerateRecordingDevices";

@@ -11,7 +11,7 @@ namespace Agora.Rtc
         private int playerId;
 
 
-        internal public MusicPlayer(MusicPlayerImpl impl, int id)
+        internal  MusicPlayer(MusicPlayerImpl impl, int id)
         {
             this._musicPlayerImpl = impl;
             this.playerId = id;

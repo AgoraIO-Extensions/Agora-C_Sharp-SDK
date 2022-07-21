@@ -103,13 +103,15 @@ namespace Agora.Rtc
 
         public IMusicPlayer CreateMusicPlayer()
         {
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,AgoraApiType.FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER,
+            var ret = AgoraRtcNative.CallIrisApi(
+                _irisApiEngine,AgoraApiType.FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER,
                 "", 0,
                 IntPtr.Zero, 0,
                 out _result);
 
             if (ret != 0)
             {
+
                 return null;
             }
             else

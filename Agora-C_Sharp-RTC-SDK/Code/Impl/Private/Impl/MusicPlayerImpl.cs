@@ -333,7 +333,7 @@ namespace Agora.Rtc
             string jsonParam = AgoraJson.ToJson(param);
 
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.xxxxxxx,
+                AgoraApiType.FUNC_MUSICPLAYER_OPEN,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
