@@ -46,7 +46,7 @@ namespace Agora.Rtc
     {
         public int count { get; set; }
 
-        public MusicChartsType[] musicChart;
+        public MusicChartsType[] type;
     };
 
     public class MvProperty

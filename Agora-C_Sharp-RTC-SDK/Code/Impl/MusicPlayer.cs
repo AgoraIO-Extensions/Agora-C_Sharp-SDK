@@ -3,7 +3,7 @@ namespace Agora.Rtc
 {
     public sealed class MusicPlayer : IMusicPlayer
     {
-        private IRtcEngine _rtcEngineInstance = null;
+        //private IRtcEngine _rtcEngineInstance = null;
         private MusicPlayerImpl _musicPlayerImpl = null;
         private const string ErrorMsgLog = "[MusicPlayer]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
@@ -11,8 +11,9 @@ namespace Agora.Rtc
         private int playerId;
 
 
-        internal  MusicPlayer(MusicPlayerImpl impl, int id)
+        internal MusicPlayer(MusicPlayerImpl impl, int id)
         {
+
             this._musicPlayerImpl = impl;
             this.playerId = id;
         }
@@ -21,12 +22,12 @@ namespace Agora.Rtc
         ~MusicPlayer()
         {
             _musicPlayerImpl = null;
-            _rtcEngineInstance = null;
+            //_rtcEngineInstance = null;
         }
 
         public override void Dispose()
         {
-            AgoraLog.LogWarning("Please use IMusicContentCenter.DestroyMusicPlayer instead of");
+            AgoraLog.LogError("Please use IMusicContentCenter.DestroyMusicPlayer instead of");
         }
 
 
@@ -37,7 +38,7 @@ namespace Agora.Rtc
 
         public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -47,7 +48,7 @@ namespace Agora.Rtc
 
         public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -57,7 +58,7 @@ namespace Agora.Rtc
 
         public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -67,7 +68,7 @@ namespace Agora.Rtc
 
         public override void UnregisterAudioFrameObserver()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -77,7 +78,7 @@ namespace Agora.Rtc
 
         public override void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -87,7 +88,7 @@ namespace Agora.Rtc
 
         public override void UnregisterMediaPlayerAudioSpectrumObserver()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
@@ -97,7 +98,7 @@ namespace Agora.Rtc
 
         public override int Open(string url, Int64 startPos)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -107,7 +108,7 @@ namespace Agora.Rtc
 
         public override int Play()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -117,7 +118,7 @@ namespace Agora.Rtc
 
         public override int Pause()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -127,7 +128,7 @@ namespace Agora.Rtc
 
         public override int Stop()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -137,7 +138,7 @@ namespace Agora.Rtc
 
         public override int Resume()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -147,7 +148,7 @@ namespace Agora.Rtc
 
         public override int Seek(Int64 newPos)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -157,7 +158,7 @@ namespace Agora.Rtc
 
         public override int GetDuration(ref Int64 duration)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -167,7 +168,7 @@ namespace Agora.Rtc
 
         public override int GetPlayPosition(ref Int64 pos)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -177,7 +178,7 @@ namespace Agora.Rtc
 
         public override int GetStreamCount(ref Int64 count)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -187,7 +188,7 @@ namespace Agora.Rtc
 
         public override int GetStreamInfo(Int64 index, ref PlayerStreamInfo info)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -197,7 +198,7 @@ namespace Agora.Rtc
 
         public override int SetLoopCount(int loopCount)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -207,7 +208,7 @@ namespace Agora.Rtc
 
         public override int MuteAudio(bool audio_mute)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -217,7 +218,7 @@ namespace Agora.Rtc
 
         public override bool IsAudioMuted()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return false;
@@ -227,7 +228,7 @@ namespace Agora.Rtc
 
         public override int MuteVideo(bool video_mute)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -237,7 +238,7 @@ namespace Agora.Rtc
 
         public override bool IsVideoMuted()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return false;
@@ -247,7 +248,7 @@ namespace Agora.Rtc
 
         public override int SetPlaybackSpeed(int speed)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -257,7 +258,7 @@ namespace Agora.Rtc
 
         public override int SelectAudioTrack(int index)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -267,7 +268,7 @@ namespace Agora.Rtc
 
         public override int SetPlayerOption(string key, int value)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -277,7 +278,7 @@ namespace Agora.Rtc
 
         public override int SetPlayerOption(string key, string value)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -287,7 +288,7 @@ namespace Agora.Rtc
 
         public override int TakeScreenshot(string filename)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -297,7 +298,7 @@ namespace Agora.Rtc
 
         public override int SelectInternalSubtitle(int index)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -307,7 +308,7 @@ namespace Agora.Rtc
 
         public override int SetExternalSubtitle(string url)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -317,7 +318,7 @@ namespace Agora.Rtc
 
         public override MEDIA_PLAYER_STATE GetState()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return MEDIA_PLAYER_STATE.PLAYER_STATE_DO_NOTHING_INTERNAL;
@@ -327,7 +328,7 @@ namespace Agora.Rtc
 
         public override int Mute(bool mute)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -337,7 +338,7 @@ namespace Agora.Rtc
 
         public override int GetMute(ref bool mute)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -347,7 +348,7 @@ namespace Agora.Rtc
 
         public override int AdjustPlayoutVolume(int volume)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -357,7 +358,7 @@ namespace Agora.Rtc
 
         public override int GetPlayoutVolume(ref int volume)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -367,7 +368,7 @@ namespace Agora.Rtc
 
         public override int AdjustPublishSignalVolume(int volume)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -377,7 +378,7 @@ namespace Agora.Rtc
 
         public override int GetPublishSignalVolume(ref int volume)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -387,7 +388,7 @@ namespace Agora.Rtc
 
         public override int SetView()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -397,7 +398,7 @@ namespace Agora.Rtc
 
         public override int SetRenderMode(RENDER_MODE_TYPE renderMode)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -407,7 +408,7 @@ namespace Agora.Rtc
 
         public override int SetAudioDualMonoMode(AUDIO_DUAL_MONO_MODE mode)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -417,7 +418,7 @@ namespace Agora.Rtc
 
         public override string GetPlayerSdkVersion()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -427,7 +428,7 @@ namespace Agora.Rtc
 
         public override string GetPlaySrc()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return null;
@@ -437,7 +438,7 @@ namespace Agora.Rtc
 
         public override int SetAudioPitch(int pitch)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -447,7 +448,7 @@ namespace Agora.Rtc
 
         public override int SetSpatialAudioParams(SpatialAudioParams spatial_audio_params)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -457,7 +458,7 @@ namespace Agora.Rtc
 
         public override int OpenWithAgoraCDNSrc(string src, Int64 startPos)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -467,7 +468,7 @@ namespace Agora.Rtc
 
         public override int GetAgoraCDNLineCount()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -477,7 +478,7 @@ namespace Agora.Rtc
 
         public override int SwitchAgoraCDNLineByIndex(int index)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -487,7 +488,7 @@ namespace Agora.Rtc
 
         public override int GetCurrentAgoraCDNIndex()
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -497,7 +498,7 @@ namespace Agora.Rtc
 
         public override int EnableAutoSwitchAgoraCDN(bool enable)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -507,7 +508,7 @@ namespace Agora.Rtc
 
         public override int RenewAgoraCDNSrcToken(string token, Int64 ts)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -517,7 +518,7 @@ namespace Agora.Rtc
 
         public override int SwitchAgoraCDNSrc(string src, bool syncPts = false)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -527,7 +528,7 @@ namespace Agora.Rtc
 
         public override int SwitchSrc(string src, bool syncPts = true)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -537,7 +538,7 @@ namespace Agora.Rtc
 
         public override int PreloadSrc(string src, Int64 startPos)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -547,7 +548,7 @@ namespace Agora.Rtc
 
         public override int PlayPreloadedSrc(string src)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -557,7 +558,7 @@ namespace Agora.Rtc
 
         public override int UnloadSrc(string src)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
@@ -568,12 +569,12 @@ namespace Agora.Rtc
 
         public override int Open(long songCode, AgoraMediaType type, string resolution, uint startPos)
         {
-            if (_rtcEngineInstance == null || _musicPlayerImpl == null)
+            if (_musicPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _musicPlayerImpl.Open(songCode, type, resolution, startPos);
+            return _musicPlayerImpl.Open(this.playerId, songCode, type, resolution, startPos);
         }
 
     }

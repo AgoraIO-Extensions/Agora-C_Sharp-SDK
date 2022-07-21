@@ -322,9 +322,10 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.PlayPreloadedSrc(playerId, src);
         }
 
-        public int Open(Int64 songCode, AgoraMediaType type, string resolution, Int64 startPos = 0)
+        public int Open(int playerId, Int64 songCode, AgoraMediaType type, string resolution, Int64 startPos = 0)
         {
             var param = new {
+                playerId,
                 songCode,
                 type,
                 resolution,
