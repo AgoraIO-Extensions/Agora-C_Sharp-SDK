@@ -104,7 +104,7 @@ namespace Agora.Rtc
         public IMusicPlayer CreateMusicPlayer()
         {
             var ret = AgoraRtcNative.CallIrisApi(
-                _irisApiEngine,AgoraApiType.FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER,
+                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER,
                 "", 0,
                 IntPtr.Zero, 0,
                 out _result);
@@ -127,7 +127,7 @@ namespace Agora.Rtc
             var param = new
             {
                 playerId = player.GetId()
-              
+
             };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
@@ -138,22 +138,26 @@ namespace Agora.Rtc
         }
 
 
-        public int GetLyric(string requestId, long songCode, int LyricType = 0)
+        public int GetLyric(ref string requestId, long songCode, int LyricType = 0)
         {
-            var param = new {
+            var param = new
+            {
                 requestId,
                 songCode,
                 LyricType
             };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
-                _irisApiEngine,AgoraApiType.FUNC_MUSICCONTENTCENTER_GETLYRIC,
+                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETLYRIC,
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0, out _result);
+
+            requestId = (string)AgoraJson.GetData<string>(_result.Result, "requestId");
+
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetMusicChart(string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")
+        public int GetMusicChart(ref string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")
         {
             var param = new
             {
@@ -168,10 +172,13 @@ namespace Agora.Rtc
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETMUSICCHART,
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0, out _result);
+
+            requestId = (string)AgoraJson.GetData<string>(_result.Result, "requestId");
+
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetMusicCharts(string requestId)
+        public int GetMusicCharts(ref string requestId)
         {
             var param = new
             {
@@ -182,6 +189,9 @@ namespace Agora.Rtc
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETMUSICCHARTS,
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0, out _result);
+
+            requestId = (string)AgoraJson.GetData<string>(_result.Result, "requestId");
+
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
@@ -245,7 +255,7 @@ namespace Agora.Rtc
             return 0;
         }
 
-        public int SearchSong(string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
+        public int SearchSong(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
         {
             var param = new
             {
@@ -260,9 +270,12 @@ namespace Agora.Rtc
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_SEARCHSONG,
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0, out _result);
+
+            requestId = (string)AgoraJson.GetData<string>(_result.Result, "requestId");
+
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-      
+
     }
 }

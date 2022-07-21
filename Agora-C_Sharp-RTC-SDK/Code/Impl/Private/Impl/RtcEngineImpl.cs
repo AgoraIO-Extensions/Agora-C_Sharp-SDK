@@ -2088,6 +2088,40 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
+        {
+            var param = new
+            {
+                renderMode,
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_SOURCE_TYPE sourceType)
+        {
+            var param = new
+            {
+                renderMode,
+                mirrorMode,
+                sourceType
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE3,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
 
         public int SetRemoteRenderMode(uint userId, RENDER_MODE_TYPE renderMode,
             VIDEO_MIRROR_MODE_TYPE mirrorMode)
@@ -2102,22 +2136,6 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(param);
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTERENDERMODE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
-        {
-            var param = new
-            {
-                renderMode,
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE2,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);

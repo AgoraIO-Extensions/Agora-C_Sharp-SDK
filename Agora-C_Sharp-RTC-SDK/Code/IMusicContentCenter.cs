@@ -13,16 +13,16 @@ namespace Agora.Rtc
 
         public abstract int DestroyMusicPlayer(IMusicPlayer player);
 
-        public abstract int GetMusicCharts(string requestId);
+        public abstract int GetMusicCharts(ref string requestId);
 
-        public abstract int GetMusicChart(string requestId, int musicChartType, int page, int pageSize, string jsonOption = "");
+        public abstract int GetMusicChart(ref string requestId, int musicChartType, int page, int pageSize, string jsonOption = "");
 
-        public abstract int SearchSong(string requestId, string keyWord, int page, int pageSize, string jsonOption = "");
+        public abstract int SearchSong(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "");
 
         public abstract int Preload(Int64 songCode, AgoraMediaType type, string resolution);
 
         public abstract int IsPreloaded(Int64 songCode, AgoraMediaType type, string resolution);
 
-        public abstract int GetLyric(string requestId, Int64 songCode, int LyricType = 0);
+        public abstract int GetLyric(ref string requestId, Int64 songCode, int LyricType = 0);
     }
 }

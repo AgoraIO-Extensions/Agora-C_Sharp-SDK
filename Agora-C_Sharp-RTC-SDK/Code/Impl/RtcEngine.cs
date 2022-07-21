@@ -1285,6 +1285,16 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetLocalRenderMode(renderMode);
         }
 
+        public override int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_SOURCE_TYPE sourceType)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetLocalRenderMode(renderMode, mirrorMode, sourceType);
+        }
+
         public override int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
             if (_rtcEngineImpl == null)

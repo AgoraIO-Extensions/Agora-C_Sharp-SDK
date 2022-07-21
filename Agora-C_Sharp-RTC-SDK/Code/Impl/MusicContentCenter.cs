@@ -40,34 +40,34 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.CreateMusicPlayer();
         }
 
-        public override int GetLyric(string requestId, long songCode, int LyricType = 0)
+        public override int GetLyric(ref string requestId, long songCode, int LyricType = 0)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetLyric(requestId, songCode, LyricType);
+            return _musicContentCenterImpl.GetLyric(ref requestId, songCode, LyricType);
         }
 
-        public override int GetMusicChart(string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")
+        public override int GetMusicChart(ref string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetMusicChart(requestId, musicChartType, page, pageSize, jsonOption);
+            return _musicContentCenterImpl.GetMusicChart(ref requestId, musicChartType, page, pageSize, jsonOption);
         }
 
-        public override int GetMusicCharts(string requestId)
+        public override int GetMusicCharts(ref string requestId)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetMusicCharts(requestId);
+            return _musicContentCenterImpl.GetMusicCharts(ref requestId);
         }
 
         public override int Initialize(AgoraMusicContentCenterConfiguration configuration)
@@ -110,14 +110,14 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.RegisterEventHandler(eventHandler);
         }
 
-        public override int SearchSong(string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
+        public override int SearchSong(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.SearchSong(requestId, keyWord, page, pageSize, jsonOption);
+            return _musicContentCenterImpl.SearchSong(ref requestId, keyWord, page, pageSize, jsonOption);
         }
 
         public override int UnregisterEventHandler()
