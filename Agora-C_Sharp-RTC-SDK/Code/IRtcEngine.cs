@@ -88,11 +88,13 @@ namespace Agora.Rtc
 
         public abstract int SetupLocalVideo(VideoCanvas canvas);
 
+        public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
+
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
-        public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
+        public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_SOURCE_TYPE sourceType);
 
-        public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
+        public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
         public abstract int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
@@ -520,6 +522,8 @@ namespace Agora.Rtc
 
         public abstract IVideoDeviceManager GetVideoDeviceManager();
         #endregion
+
+        public abstract IMusicContentCenter GetMusicContentCenter();
 
         public abstract IMediaPlayerCacheManager GetMediaPlayerCacheManager();
 

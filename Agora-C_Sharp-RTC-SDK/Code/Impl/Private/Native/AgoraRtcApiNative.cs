@@ -17,6 +17,9 @@ namespace Agora.Rtc
     using IrisMediaPlayerCustomDataProviderHandle = IntPtr;
     using IrisRtcAudioSpectrumObserverHandle = IntPtr;
     using IrisRtcCAudioSpectrumObserver = IntPtr;
+    using IrisMusicCenterEventHandler = IntPtr;
+    using IrisMusicCenterEventHandlerHandle = IntPtr;
+
 
 
     internal enum IRIS_VIDEO_PROCESS_ERR
@@ -213,6 +216,14 @@ namespace Agora.Rtc
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void UnRegisterMediaMetadataObserver(IrisRtcEnginePtr engine_ptr, IrisMetaDataObserverHandle handle, string @params);
+
+        //MusicCenter
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisMusicCenterEventHandlerHandle SetMusicCenterEventHandler(IrisRtcEnginePtr engine_ptr, IrisMusicCenterEventHandler handle);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void UnsetMusicCenterEventHandler(IrisRtcEnginePtr engine_ptr, IrisMusicCenterEventHandlerHandle handle);
+
 
         #endregion
     }

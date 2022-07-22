@@ -1,5 +1,7 @@
 using System;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using UnityEngine;
+#endif
 
 namespace Agora.Rtc
 {
@@ -8,19 +10,22 @@ namespace Agora.Rtc
         private RtcEngineImpl _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
         private IVideoDeviceManager _videoDeviceManager = null;
+        private IMusicContentCenter _musicContentCenter = null;
         //private ICloudSpatialAudioEngine _cloudSpatialAudioEngine = null;
         private ILocalSpatialAudioEngine _localSpatialAudioEngine = null;
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
         private const string ErrorMsgLog = "[RtcEngine]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
-
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private GameObject _agoraEngineObject;
-
+#endif
         private RtcEngine()
         {
             _rtcEngineImpl = RtcEngineImpl.GetInstance();
             _audioDeviceManager = AudioDeviceManager.GetInstance(this, _rtcEngineImpl.GetAudioDeviceManager());
             _videoDeviceManager = VideoDeviceManager.GetInstance(this, _rtcEngineImpl.GetVideoDeviceManager());
+            _musicContentCenter = MusicContentCenter.GetInstance(this, _rtcEngineImpl.GetMusicContentCenter());
+
             //_cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
             _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
@@ -32,6 +37,7 @@ namespace Agora.Rtc
         {
             _audioDeviceManager = null;
             _videoDeviceManager = null;
+            _musicContentCenter = null;
             //_cloudSpatialAudioEngine = null;
             _localSpatialAudioEngine = null;
             _mediaPlayerCacheManager = null;
@@ -71,6 +77,7 @@ namespace Agora.Rtc
 
         private void InitAgoraEngineObject()
         {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             _agoraEngineObject = GameObject.Find("AgoraRtcEngineObj");
             if (_agoraEngineObject == null)
             {
@@ -79,6 +86,7 @@ namespace Agora.Rtc
                 _agoraEngineObject.hideFlags = HideFlags.HideInHierarchy;
                 _agoraEngineObject.AddComponent<AgoraGameObject>();
             }
+#endif
         }
 
         public override int Initialize(RtcEngineContext context)
@@ -103,6 +111,7 @@ namespace Agora.Rtc
 
             AudioDeviceManager.ReleaseInstance();
             VideoDeviceManager.ReleaseInstance();
+            MusicContentCenter.ReleaseInstance();
             //CloudSpatialAudioEngine.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
             instance = null;
@@ -196,6 +205,16 @@ namespace Agora.Rtc
                 return null;
             }
             return _videoDeviceManager;
+        }
+
+        public override IMusicContentCenter GetMusicContentCenter()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return null;
+            }
+            return _musicContentCenter;
         }
 
         public override IMediaPlayerCacheManager GetMediaPlayerCacheManager()
@@ -1267,6 +1286,16 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetLocalRenderMode(renderMode);
         }
 
+        public override int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_SOURCE_TYPE sourceType)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetLocalRenderMode(renderMode, mirrorMode, sourceType);
+        }
+
         public override int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
             if (_rtcEngineImpl == null)
@@ -1879,32 +1908,32 @@ namespace Agora.Rtc
 
         public override int AddPublishStreamUrl(string url, bool transcodingEnabled)
         {
-           if (_rtcEngineImpl == null)
-           {
-               AgoraLog.LogError(ErrorMsgLog);
-               return ErrorCode;
-           }
-           return _rtcEngineImpl.AddPublishStreamUrl(url, transcodingEnabled);
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.AddPublishStreamUrl(url, transcodingEnabled);
         }
 
         public override int RemovePublishStreamUrl(string url)
         {
-           if (_rtcEngineImpl == null)
-           {
-               AgoraLog.LogError(ErrorMsgLog);
-               return ErrorCode;
-           }
-           return _rtcEngineImpl.RemovePublishStreamUrl(url);
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.RemovePublishStreamUrl(url);
         }
 
         public override int SetLiveTranscoding(LiveTranscoding transcoding)
         {
-           if (_rtcEngineImpl == null)
-           {
-               AgoraLog.LogError(ErrorMsgLog);
-               return ErrorCode;
-           }
-           return _rtcEngineImpl.SetLiveTranscoding(transcoding);
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetLiveTranscoding(transcoding);
         }
 
         public override int StartLocalVideoTranscoder(LocalTranscoderConfiguration config)
@@ -2989,12 +3018,12 @@ namespace Agora.Rtc
 
         public override int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
         {
-           if (_rtcEngineImpl == null)
-           {
-               AgoraLog.LogError(ErrorMsgLog);
-               return ErrorCode;
-           }
-           return _rtcEngineImpl.AddPublishStreamUrlEx(url, transcodingEnabled, connection);
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.AddPublishStreamUrlEx(url, transcodingEnabled, connection);
         }
 
         public override int UploadLogFile(ref string requestId)

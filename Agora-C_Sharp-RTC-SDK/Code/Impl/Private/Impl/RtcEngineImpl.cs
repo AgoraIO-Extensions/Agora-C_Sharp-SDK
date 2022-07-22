@@ -77,6 +77,8 @@ namespace Agora.Rtc
         private VideoDeviceManagerImpl _videoDeviceManagerInstance;
         private AudioDeviceManagerImpl _audioDeviceManagerInstance;
         private MediaPlayerImpl _mediaPlayerInstance;
+        private MusicContentCenterImpl _musicContentCenterImpl;
+
         //private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineInstance;
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
@@ -94,6 +96,7 @@ namespace Agora.Rtc
             _videoDeviceManagerInstance = new VideoDeviceManagerImpl(_irisRtcEngine);
             _audioDeviceManagerInstance = new AudioDeviceManagerImpl(_irisRtcEngine);
             _mediaPlayerInstance = new MediaPlayerImpl(_irisRtcEngine);
+            _musicContentCenterImpl = new MusicContentCenterImpl(_irisRtcEngine, _mediaPlayerInstance);
             //_cloudSpatialAudioEngineInstance = new CloudSpatialAudioEngineImpl(_irisRtcEngine);
             _spatialAudioEngineInstance = new LocalSpatialAudioEngineImpl(_irisRtcEngine);
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
@@ -126,6 +129,9 @@ namespace Agora.Rtc
 
                 _mediaPlayerInstance.Dispose();
                 _mediaPlayerInstance = null;
+
+                _musicContentCenterImpl.Dispose();
+                _musicContentCenterImpl = null;
 
                 //_cloudSpatialAudioEngineInstance.Dispose();
                 //_cloudSpatialAudioEngineInstance = null;
@@ -249,7 +255,6 @@ namespace Agora.Rtc
         public void Dispose(bool sync = false)
         {
             Dispose(true, sync);
-            GC.SuppressFinalize(this);
         }
 
         public void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
@@ -489,6 +494,11 @@ namespace Agora.Rtc
         public MediaPlayerImpl GetMediaPlayer()
         {
             return _mediaPlayerInstance;
+        }
+
+        public MusicContentCenterImpl GetMusicContentCenter()
+        {
+            return _musicContentCenterImpl; 
         }
 
         //public CloudSpatialAudioEngineImpl GetCloudSpatialAudioEngine()
@@ -2077,6 +2087,40 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
+        {
+            var param = new
+            {
+                renderMode,
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_SOURCE_TYPE sourceType)
+        {
+            var param = new
+            {
+                renderMode,
+                mirrorMode,
+                sourceType
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE3,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
 
         public int SetRemoteRenderMode(uint userId, RENDER_MODE_TYPE renderMode,
             VIDEO_MIRROR_MODE_TYPE mirrorMode)
@@ -2091,22 +2135,6 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(param);
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTERENDERMODE,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
-        {
-            var param = new
-            {
-                renderMode,
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE2,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);

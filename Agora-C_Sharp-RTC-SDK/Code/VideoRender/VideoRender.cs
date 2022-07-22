@@ -120,7 +120,6 @@ namespace Agora.Rtc
         public void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }
