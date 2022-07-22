@@ -25,7 +25,6 @@ namespace Agora.Rtc
         internal void Dispose()
         {
             Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         internal void Dispose(bool disposing)

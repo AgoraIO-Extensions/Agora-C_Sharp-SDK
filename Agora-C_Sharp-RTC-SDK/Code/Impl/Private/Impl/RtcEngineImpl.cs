@@ -255,7 +255,6 @@ namespace Agora.Rtc
         public void Dispose(bool sync = false)
         {
             Dispose(true, sync);
-            GC.SuppressFinalize(this);
         }
 
         public void InitEventHandler(IRtcEngineEventHandler engineEventHandler)

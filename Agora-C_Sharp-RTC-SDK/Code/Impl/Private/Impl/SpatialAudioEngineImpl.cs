@@ -366,7 +366,6 @@ namespace Agora.Rtc
 
             _irisApiEngine = IntPtr.Zero;
             _result = new CharAssistant();
-            GC.SuppressFinalize(this);
         }
 
         public int SetMaxAudioRecvCount(int maxCount)
