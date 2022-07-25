@@ -862,14 +862,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StopAudioRecording();
         }
 
-        public override int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
+        public override int StartAudioMixing(string filePath, bool loopback, int cycle)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartAudioMixing(filePath, loopback, replace, cycle);
+            return _rtcEngineImpl.StartAudioMixing(filePath, loopback, cycle);
+        }
+
+        public override int StartAudioMixing(string filePath, bool loopback, int cycle, int startPos)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.StartAudioMixing(filePath, loopback, cycle, startPos);
         }
 
         public override int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
@@ -882,16 +892,6 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetAudioMixingDualMonoMode(mode);
         }
 
-
-        public override int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.StartAudioMixing(filePath, loopback, replace, cycle, startPos);
-        }
 
         public override int StopAudioMixing()
         {
@@ -1654,14 +1654,14 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetInEarMonitoringVolume(volume);
         }
 
-        public override int LoadExtensionProvider(string path)
+        public override int LoadExtensionProvider(string path, bool unload_after_use = false)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.LoadExtensionProvider(path);
+            return _rtcEngineImpl.LoadExtensionProvider(path, unload_after_use);
         }
 
         public override int SetExtensionProviderProperty(string provider, string key, string value)

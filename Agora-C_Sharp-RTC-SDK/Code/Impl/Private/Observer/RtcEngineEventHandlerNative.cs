@@ -454,6 +454,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnVideoPublishStateChanged(
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(data, "source"),
                         (string)AgoraJson.GetData<string>(data, "channel"),
                         (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "oldState"),
                         (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "newState"),
@@ -1010,34 +1011,34 @@ namespace Agora.Rtc
 #endif
                     break;
 
-//                case "onStreamPublished":
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//                    CallbackObject._CallbackQueue.EnQueue(() =>
-//                    {
-//#endif
-//                    if (EngineEventHandler == null) return;
-//                    EngineEventHandler.OnStreamPublished(
-//                        (string)AgoraJson.GetData<string>(data, "url"),
-//                        (int)AgoraJson.GetData<int>(data, "error")
-//                    );
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//                    });
-//#endif
-//                    break;
+                //                case "onStreamPublished":
+                //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                //                    CallbackObject._CallbackQueue.EnQueue(() =>
+                //                    {
+                //#endif
+                //                    if (EngineEventHandler == null) return;
+                //                    EngineEventHandler.OnStreamPublished(
+                //                        (string)AgoraJson.GetData<string>(data, "url"),
+                //                        (int)AgoraJson.GetData<int>(data, "error")
+                //                    );
+                //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                //                    });
+                //#endif
+                //                    break;
 
-//                case "onStreamUnpublished":
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//                    CallbackObject._CallbackQueue.EnQueue(() =>
-//                    {
-//#endif
-//                    if (EngineEventHandler == null) return;
-//                    EngineEventHandler.OnStreamUnpublished(
-//                        (string)AgoraJson.GetData<string>(data, "url")
-//                    );
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//                    });
-//#endif
-//                    break;
+                //                case "onStreamUnpublished":
+                //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                //                    CallbackObject._CallbackQueue.EnQueue(() =>
+                //                    {
+                //#endif
+                //                    if (EngineEventHandler == null) return;
+                //                    EngineEventHandler.OnStreamUnpublished(
+                //                        (string)AgoraJson.GetData<string>(data, "url")
+                //                    );
+                //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                //                    });
+                //#endif
+                //                    break;
 
                 case "onTranscodingUpdated":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

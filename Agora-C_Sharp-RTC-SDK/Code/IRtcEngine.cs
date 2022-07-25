@@ -174,9 +174,9 @@ namespace Agora.Rtc
         #endregion
 
         #region Music file playback and mixing
-        public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle);
+        public abstract int StartAudioMixing(string filePath, bool loopback, int cycle);
 
-        public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos);
+        public abstract int StartAudioMixing(string filePath, bool loopback, int cycle, int startPos);
 
         public abstract int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode);
 
@@ -456,7 +456,7 @@ namespace Agora.Rtc
         #endregion
 
         #region Extension
-        public abstract int LoadExtensionProvider(string path);
+        public abstract int LoadExtensionProvider(string path, bool unload_after_use = false);
 
         public abstract int SetExtensionProviderProperty(string provider, string key, string value);
 

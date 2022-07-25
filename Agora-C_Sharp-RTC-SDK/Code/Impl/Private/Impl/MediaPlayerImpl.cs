@@ -485,56 +485,6 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int MuteAudio(int playerId, bool audio_mute)
-        {
-            var param = new
-            {
-                playerId,
-                audio_mute
-            };
-            string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_MEDIAPLAYER_MUTEAUDIO,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public bool IsAudioMuted(int playerId)
-        {
-            //TODO CHECK
-            var param = new { playerId };
-            string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_MEDIAPLAYER_ISAUDIOMUTED,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return (bool)AgoraJson.GetData<bool>(_result.Result, "result");
-        }
-
-        public int MuteVideo(int playerId, bool video_mute)
-        {
-            var param = new
-            {
-                playerId,
-                video_mute
-            };
-            string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_MEDIAPLAYER_MUTEVIDEO,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public bool IsVideoMuted(int playerId)
-        {
-            //TODO CHECK
-            var param = new { playerId };
-            string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
-                AgoraApiType.FUNC_MEDIAPLAYER_ISVIDEOMUTED,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return (bool)AgoraJson.GetData<bool>(_result.Result, "result");
-        }
-
         public int SetPlaybackSpeed(int playerId, int speed)
         {
             var param = new
@@ -646,12 +596,12 @@ namespace Agora.Rtc
             return (MEDIA_PLAYER_STATE)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int Mute(int playerId, bool mute)
+        public int Mute(int playerId, bool muted)
         {
             var param = new
             {
                 playerId,
-                mute
+                muted
             };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
@@ -660,14 +610,14 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetMute(int playerId, ref bool mute)
+        public int GetMute(int playerId, ref bool muted)
         {
             var param = new { playerId };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETMUTE,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            mute = (bool)AgoraJson.GetData<bool>(_result.Result, "mute");
+            muted = (bool)AgoraJson.GetData<bool>(_result.Result, "mute");
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
