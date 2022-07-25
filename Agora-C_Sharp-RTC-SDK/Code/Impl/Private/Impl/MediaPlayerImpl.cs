@@ -32,9 +32,17 @@ namespace Agora.Rtc
         private IrisMediaPlayerCAudioFrameObserver _irisMediaPlayerCAudioFrameObserver;
         private IrisMediaPlayerAudioFrameObserverHandleNative _irisMediaPlayerAudioFrameObserverHandleNative;
 
+        //openWithCustomSource
         private Dictionary<int, IrisMediaPlayerCCustomProviderNativeMarshal> _irisMediaPlayerCCustomProviderNatives = new Dictionary<int, IrisMediaPlayerCCustomProviderNativeMarshal>();
         private Dictionary<int, IrisMediaPlayerCCustomProvider> _irisMediaPlayerCCustomProviders = new Dictionary<int, IrisMediaPlayerCCustomProvider>();
         private Dictionary<int, IrisMediaPlayerCustomProviderHandleNative> _irisMediaPlayerCustomProviderHandleNatives = new Dictionary<int, IrisMediaPlayerCustomProviderHandleNative>();
+
+        //openWithMediaSource
+        private Dictionary<int, IrisMediaPlayerCCustomProviderNativeMarshal> _irisMediaPlayerCMediaProviderNatives = new Dictionary<int, IrisMediaPlayerCCustomProviderNativeMarshal>();
+        private Dictionary<int, IrisMediaPlayerCCustomProvider> _irisMediaPlayerCMediaProviders = new Dictionary<int, IrisMediaPlayerCCustomProvider>();
+        private Dictionary<int, IrisMediaPlayerCustomProviderHandleNative> _irisMediaPlayerMediaProviderHandleNatives = new Dictionary<int, IrisMediaPlayerCustomProviderHandleNative>();
+
+
 
         private IrisMediaPlayerCAudioSpectrumObserverNativeMarshal _irisMediaPlayerCAudioSpectrumObserverNative;
         private IrisMediaPlayerCAudioSpectrumObserver _irisMediaPlayerCAudioSpectrumObserver;
@@ -74,6 +82,13 @@ namespace Agora.Rtc
                 {
                     this.UnSetMediaPlayerOpenWithCustomSource(playerId);
                 }
+
+                keys = this._irisMediaPlayerCMediaProviderNatives.Keys;
+                foreach (var playerId in keys)
+                {
+                    this.UnsetMediaPlayerOpenWithMediaSource(playerId);
+                }
+
             }
 
             _irisApiEngine = IntPtr.Zero;
@@ -189,8 +204,6 @@ namespace Agora.Rtc
 
         private int SetMediaPlayerOpenWithCustomSource(int playerId, Int64 startPos, bool hadPovider)
         {
-            UnSetMediaPlayerOpenWithCustomSource(playerId);
-
             IntPtr _irisMediaPlayerCCustomProviderNative = IntPtr.Zero;
 
             if (hadPovider)
@@ -235,11 +248,13 @@ namespace Agora.Rtc
             if (_irisMediaPlayerCustomProviderHandleNatives.ContainsKey(playerId) == false)
                 return 0;
 
-            var _irisMediaPlayerCustomProviderHandleNative = _irisMediaPlayerCustomProviderHandleNatives[playerId];
 
+            var param = new { playerId };
+            var _irisMediaPlayerCustomProviderHandleNative = _irisMediaPlayerCustomProviderHandleNatives[playerId];
             AgoraRtcNative.MediaPlayerUnOpenWithCustomSource(
                   _irisApiEngine,
-                 _irisMediaPlayerCustomProviderHandleNative
+                 _irisMediaPlayerCustomProviderHandleNative,
+                 AgoraJson.ToJson(param)
               );
 
             var _irisMediaPlayerCCustomProviderNative = this._irisMediaPlayerCCustomProviderNatives[playerId];
@@ -255,40 +270,39 @@ namespace Agora.Rtc
 
         private int SetMediaPlayerOpenWithMediaSource(int playerId, MediaSource source, bool hadProvider)
         {
-            UnsetMediaPlayerOpenWithMediaSource(playerId);
 
-            IntPtr _irisMediaPlayerCCustomProviderNative = IntPtr.Zero;
+            IntPtr _irisMediaPlayerCMediaProviderNative = IntPtr.Zero;
             if (hadProvider)
             {
-                var _irisMediaPlayerCCustomProvider = new IrisMediaPlayerCCustomProvider
+                var _irisMediaPlayerCMediaProvider = new IrisMediaPlayerCCustomProvider
                 {
                     OnSeek = MediaPlayerCustomDataProviderNative.OnSeek,
                     OnReadData = MediaPlayerCustomDataProviderNative.OnReadData
                 };
 
-                var irisMediaPlayerCCustomProviderNativeLocal = new IrisMediaPlayerCCustomProviderNative
+                var irisMediaPlayerCMediaProviderNativeLocal = new IrisMediaPlayerCCustomProviderNative
                 {
-                    onSeek = Marshal.GetFunctionPointerForDelegate(_irisMediaPlayerCCustomProvider.OnSeek),
-                    onReadData = Marshal.GetFunctionPointerForDelegate(_irisMediaPlayerCCustomProvider.OnReadData)
+                    onSeek = Marshal.GetFunctionPointerForDelegate(_irisMediaPlayerCMediaProvider.OnSeek),
+                    onReadData = Marshal.GetFunctionPointerForDelegate(_irisMediaPlayerCMediaProvider.OnReadData)
                 };
 
-                _irisMediaPlayerCCustomProviderNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCCustomProviderNativeLocal));
-                Marshal.StructureToPtr(irisMediaPlayerCCustomProviderNativeLocal, _irisMediaPlayerCCustomProviderNative, true);
+                _irisMediaPlayerCMediaProviderNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCMediaProviderNativeLocal));
+                Marshal.StructureToPtr(irisMediaPlayerCMediaProviderNativeLocal, _irisMediaPlayerCMediaProviderNative, true);
 
-                this._irisMediaPlayerCCustomProviderNatives.Add(playerId, _irisMediaPlayerCCustomProviderNative);
-                this._irisMediaPlayerCCustomProviders.Add(playerId, _irisMediaPlayerCCustomProvider);
+                this._irisMediaPlayerCMediaProviderNatives.Add(playerId, _irisMediaPlayerCMediaProviderNative);
+                this._irisMediaPlayerCMediaProviders.Add(playerId, _irisMediaPlayerCMediaProvider);
 
             }
             var param = new { playerId, source };
 
-            var _irisMediaPlayerCustomProviderHandleNative = AgoraRtcNative.MediaPlayerOpenWithMediaSource(
+            var _irisMediaPlayerMediaProviderHandleNative = AgoraRtcNative.MediaPlayerOpenWithMediaSource(
                   _irisApiEngine,
-                  _irisMediaPlayerCCustomProviderNative, AgoraJson.ToJson(param)
+                  _irisMediaPlayerCMediaProviderNative, AgoraJson.ToJson(param)
               );
 
-            if (_irisMediaPlayerCustomProviderHandleNative != IntPtr.Zero)
+            if (_irisMediaPlayerMediaProviderHandleNative != IntPtr.Zero)
             {
-                this._irisMediaPlayerCustomProviderHandleNatives.Add(playerId, _irisMediaPlayerCustomProviderHandleNative);
+                this._irisMediaPlayerMediaProviderHandleNatives.Add(playerId, _irisMediaPlayerMediaProviderHandleNative);
             }
 
             return 0;
@@ -296,7 +310,27 @@ namespace Agora.Rtc
 
         private int UnsetMediaPlayerOpenWithMediaSource(int playerId)
         {
-            return UnSetMediaPlayerOpenWithCustomSource(playerId);
+            if (_irisMediaPlayerMediaProviderHandleNatives.ContainsKey(playerId) == false)
+                return 0;
+
+
+            var param = new { playerId };
+            var _irisMediaPlayerMediaProviderHandleNative = _irisMediaPlayerMediaProviderHandleNatives[playerId];
+            AgoraRtcNative.MediaPlayerUnOpenWithCustomSource(
+                  _irisApiEngine,
+                 _irisMediaPlayerMediaProviderHandleNative,
+                 AgoraJson.ToJson(param)
+              );
+
+            var _irisMediaPlayerCMediaProviderNative = this._irisMediaPlayerCMediaProviderNatives[playerId];
+            Marshal.FreeHGlobal(_irisMediaPlayerCMediaProviderNative);
+
+
+            this._irisMediaPlayerCMediaProviderNatives.Remove(playerId);
+            this._irisMediaPlayerCMediaProviders.Remove(playerId);
+            this._irisMediaPlayerMediaProviderHandleNatives.Remove(playerId);
+
+            return 0;
         }
 
         private void SetIrisAudioSpectrumObserver(int intervalInMS)
@@ -435,7 +469,10 @@ namespace Agora.Rtc
 
         public int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider)
         {
-            SetMediaPlayerOpenWithCustomSource(playerId, startPos, provider!= null);
+            UnsetMediaPlayerOpenWithMediaSource(playerId);
+            UnSetMediaPlayerOpenWithCustomSource(playerId);
+
+            SetMediaPlayerOpenWithCustomSource(playerId, startPos, provider != null);
 
             if (provider != null)
             {
@@ -460,7 +497,10 @@ namespace Agora.Rtc
 
         public int OpenWithMediaSource(int playerId, MediaSource source)
         {
-            SetMediaPlayerOpenWithMediaSource(playerId, source, source.provider!=null);
+            UnsetMediaPlayerOpenWithMediaSource(playerId);
+            UnSetMediaPlayerOpenWithCustomSource(playerId);
+
+            SetMediaPlayerOpenWithMediaSource(playerId, source, source.provider != null);
 
             var provider = source.provider;
             if (provider != null)
