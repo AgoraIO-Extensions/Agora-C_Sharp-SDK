@@ -209,14 +209,14 @@ namespace Agora.Rtc
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int MediaPlayerUnOpenWithCustomSource(IrisRtcEnginePtr engine_ptr,
-                            IrisMediaPlayerCustomDataProviderHandle handle);
+                            IrisMediaPlayerCustomDataProviderHandle handle, string @params);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisMediaPlayerCustomDataProviderHandle MediaPlayerOpenWithMediaSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int MediaPlayerUnOpenWithMediaSource(IrisRtcEnginePtr engine_ptr,
-                            IrisMediaPlayerCustomDataProviderHandle handle);
+                            IrisMediaPlayerCustomDataProviderHandle handle, string @params);
 
 
         //IrisCloudSpatialAudioEnginePtr
