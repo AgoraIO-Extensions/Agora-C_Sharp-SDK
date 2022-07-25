@@ -180,7 +180,7 @@ namespace Agora.Rtc
 
     public delegate void OnAudioPublishStateChangedHandler(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState);
 
-    public delegate void OnVideoPublishStateChangedHandler(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState);
+    public delegate void OnVideoPublishStateChangedHandler(VIDEO_SOURCE_TYPE source, string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState);
 
     public delegate void OnExtensionEventHandler(string provider, string extension, string key, string value);
 
@@ -862,10 +862,10 @@ namespace Agora.Rtc
             EventOnAudioPublishStateChanged.Invoke(channel, oldState, newState, elapseSinceLastState);
         }
 
-        public override void OnVideoPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
+        public override void OnVideoPublishStateChanged(VIDEO_SOURCE_TYPE source, string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
         {
             if (EventOnVideoPublishStateChanged == null) return;
-            EventOnVideoPublishStateChanged.Invoke(channel, oldState, newState, elapseSinceLastState);
+            EventOnVideoPublishStateChanged.Invoke(source, channel, oldState, newState, elapseSinceLastState);
         }
 
         public override void OnExtensionEvent(string provider, string extension, string key, string value)
