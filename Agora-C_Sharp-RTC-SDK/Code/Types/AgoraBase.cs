@@ -2069,16 +2069,11 @@ namespace Agora.Rtc
         public ClientRoleOptions()
         {
             audienceLatencyLevel = AUDIENCE_LATENCY_LEVEL_TYPE.AUDIENCE_LATENCY_LEVEL_ULTRA_LOW_LATENCY;
-            stopMicrophoneRecording = true;
-            stopPreview = false;
         }
 
         /** The latency level of an audience member in interactive live streaming. See #AUDIENCE_LATENCY_LEVEL_TYPE.
      */
         public AUDIENCE_LATENCY_LEVEL_TYPE audienceLatencyLevel;
-
-        public bool stopMicrophoneRecording;
-        public bool stopPreview;
     }
 
     /**
