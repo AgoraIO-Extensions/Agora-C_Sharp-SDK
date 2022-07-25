@@ -450,8 +450,6 @@ namespace Agora.Rtc
             }
 
 
-            //todo provider need special
-
             writer.WriteObjectEnd();
         }
 

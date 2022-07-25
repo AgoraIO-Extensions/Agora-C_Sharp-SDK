@@ -212,7 +212,7 @@ namespace Agora.Rtc
                             IrisMediaPlayerCustomDataProviderHandle handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisMediaPlayerCustomDataProviderHandle MediaPlayerUnOpenWithMediaSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
+        internal static extern IrisMediaPlayerCustomDataProviderHandle MediaPlayerOpenWithMediaSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int MediaPlayerUnOpenWithMediaSource(IrisRtcEnginePtr engine_ptr,
