@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
@@ -7,15 +8,20 @@ namespace Agora.Rtc
 {
     internal static class MediaPlayerCustomDataProviderNative
     {
-        internal static IMediaPlayerCustomDataProvider CustomDataProvider;
+        internal static Dictionary<int, IMediaPlayerCustomDataProvider> CustomDataProviders = new Dictionary<int, IMediaPlayerCustomDataProvider>();
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_OnSeek_Native))]
 #endif
         internal static Int64 OnSeek(Int64 offset, int whence, int playerId)
         {
-            return CustomDataProvider == null ? -1 : 
-                CustomDataProvider.OnSeek(offset, whence, playerId);
+            if (CustomDataProviders.ContainsKey(playerId))
+            {
+                return CustomDataProviders[playerId].OnSeek(offset, whence);
+            }
+
+            return 0;
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -23,10 +29,12 @@ namespace Agora.Rtc
 #endif
         internal static int OnReadData(IntPtr buffer, int bufferSize, int playerId)
         {
-            byte[] Buffer = new byte[0];
-            
-            return CustomDataProvider == null ? -1 :
-                CustomDataProvider.OnReadData(buffer, bufferSize, playerId);
+            if (CustomDataProviders.ContainsKey(playerId))
+            {
+                return CustomDataProviders[playerId].OnReadData(buffer, bufferSize);
+            }
+
+            return 0;
         }
     }
 }
