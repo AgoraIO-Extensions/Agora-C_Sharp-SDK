@@ -15,6 +15,8 @@ namespace Agora.Rtc
     using IrisMediaPlayerAudioSpectrumObserverHandle = IntPtr;
     using IrisMetaDataObserverHandle = IntPtr;
     using IrisMediaPlayerCustomDataProviderHandle = IntPtr;
+    using IrisRtcAudioSpectrumObserverHandle = IntPtr;
+    using IrisRtcCAudioSpectrumObserver = IntPtr;
 
 
     internal enum IRIS_VIDEO_PROCESS_ERR
@@ -61,6 +63,14 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name, 
             string @params, UInt32 paramLength, IntPtr bufferPtr, UInt32 bufferLength, out CharAssistant result);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisRtcAudioSpectrumObserverHandle RegisterRtcAudioSpectrumObserver(IrisRtcEnginePtr engine_ptr,
+                                 IrisRtcCAudioSpectrumObserver observer, string @params);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int UnRegisterRtcAudioSpectrumObserver(IrisRtcEnginePtr engine_ptr, IrisRtcAudioSpectrumObserverHandle handle,
+                                string @params);
 
 // IrisRtcRawData
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -412,10 +422,10 @@ namespace Agora.Rtc
     internal delegate int Func_onReadData_Native(IntPtr buffer, int bufferSize, int playerId);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_LocalAudioSpectrum_Native(IntPtr data);
+    internal delegate bool Func_LocalAudioSpectrum_Native(int playerId, IntPtr data);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_RemoteAudioSpectrum_Native(IntPtr audio_frame, uint spectrumNumber);
+    internal delegate bool Func_RemoteAudioSpectrum_Native(int playerId, IntPtr audio_frame, uint spectrumNumber);
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisMediaPlayerCAudioSpectrumObserverNative
