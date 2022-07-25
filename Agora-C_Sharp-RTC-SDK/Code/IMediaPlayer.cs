@@ -50,14 +50,6 @@ namespace Agora.Rtc
 
         public abstract int SetLoopCount(int loopCount);
 
-        public abstract int MuteAudio(bool audio_mute);
-
-        public abstract bool IsAudioMuted();
-
-        public abstract int MuteVideo(bool video_mute);
-
-        public abstract bool IsVideoMuted();
-
         public abstract int SetPlaybackSpeed(int speed);
 
         public abstract int SelectAudioTrack(int index);
@@ -74,9 +66,9 @@ namespace Agora.Rtc
 
         public abstract MEDIA_PLAYER_STATE GetState();
 
-        public abstract int Mute(bool mute);
+        public abstract int Mute(bool muted);
 
-        public abstract int GetMute(ref bool mute);
+        public abstract int GetMute(ref bool muted);
 
         public abstract int AdjustPlayoutVolume(int volume);
 

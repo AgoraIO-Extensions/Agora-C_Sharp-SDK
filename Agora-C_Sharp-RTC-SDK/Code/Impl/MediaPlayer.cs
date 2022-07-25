@@ -253,46 +253,6 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetLoopCount(playerId, loopCount);
         }
 
-        public override int MuteAudio(bool audio_mute)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.MuteAudio(playerId, audio_mute);
-        }
-
-        public override bool IsAudioMuted()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return false;
-            }
-            return _mediaPlayerImpl.IsAudioMuted(playerId);
-        }
-
-        public override int MuteVideo(bool video_mute)
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _mediaPlayerImpl.MuteVideo(playerId, video_mute);
-        }
-
-        public override bool IsVideoMuted()
-        {
-            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return false;
-            }
-            return _mediaPlayerImpl.IsVideoMuted(playerId);
-        }
-
         public override int SetPlaybackSpeed(int speed)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
@@ -373,24 +333,24 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetState(playerId);
         }
 
-        public override int Mute(bool mute)
+        public override int Mute(bool muted)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.Mute(playerId, mute);
+            return _mediaPlayerImpl.Mute(playerId, muted);
         }
 
-        public override int GetMute(ref bool mute)
+        public override int GetMute(ref bool muted)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.GetMute(playerId, ref mute);
+            return _mediaPlayerImpl.GetMute(playerId, ref muted);
         }
 
         public override int AdjustPlayoutVolume(int volume)

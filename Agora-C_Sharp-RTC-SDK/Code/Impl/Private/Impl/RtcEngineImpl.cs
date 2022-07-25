@@ -1411,15 +1411,14 @@ namespace Agora.Rtc
         //CreateMediaPlayer
 
         //DestroyMediaPlayer
-
-        public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
+        public int StartAudioMixing(string filePath, bool loopback, int cycle)
         {
             var param = new
             {
                 filePath,
                 loopback,
-                replace,
-                cycle
+                cycle,
+
             };
 
             var json = AgoraJson.ToJson(param);
@@ -1431,13 +1430,12 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos)
+        public int StartAudioMixing(string filePath, bool loopback, int cycle, int startPos)
         {
             var param = new
             {
                 filePath,
                 loopback,
-                replace,
                 cycle,
                 startPos
             };
@@ -1450,7 +1448,6 @@ namespace Agora.Rtc
                 out _result);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
 
         public int StopAudioMixing()
         {
@@ -2656,11 +2653,12 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int LoadExtensionProvider(string path)
+        public int LoadExtensionProvider(string path, bool unload_after_use = false)
         {
             var param = new
             {
-                path
+                path,
+                unload_after_use
             };
 
             var json = AgoraJson.ToJson(param);
