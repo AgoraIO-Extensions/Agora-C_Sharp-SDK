@@ -72,7 +72,7 @@ namespace Agora.Rtc
         public int type { get; set; }
 
         public int lyricCount { get; set; }
-        public int[] lyricType;
+        public int[] lyric;
 
         public int climaxSegmentCount { get; set; }
         public ClimaxSegment[] climaxSegment;
