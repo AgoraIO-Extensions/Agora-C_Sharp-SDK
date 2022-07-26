@@ -140,7 +140,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.OpenWithMediaSource(source);
+            return _mediaPlayerImpl.OpenWithMediaSource(playerId, source);
         }
 
         public override int SetSoundPositionParams(float pan, float gain)
