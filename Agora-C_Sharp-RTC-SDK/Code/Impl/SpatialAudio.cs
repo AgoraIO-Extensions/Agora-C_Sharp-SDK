@@ -247,7 +247,7 @@ namespace Agora.Rtc
 
         private LocalSpatialAudioEngine(IRtcEngine rtcEngine, LocalSpatialAudioEngineImpl impl)
         {
-            _rtcEngineInstance = null;
+            _rtcEngineInstance = rtcEngine;
             _localSpatialAudioEngineImpl = impl;
         }
 
