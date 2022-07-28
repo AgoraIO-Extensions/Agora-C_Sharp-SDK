@@ -787,7 +787,7 @@ namespace Agora.Rtc
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETMUTE,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            muted = (bool)AgoraJson.GetData<bool>(_result.Result, "mute");
+            muted = (bool)AgoraJson.GetData<bool>(_result.Result, "muted");
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
