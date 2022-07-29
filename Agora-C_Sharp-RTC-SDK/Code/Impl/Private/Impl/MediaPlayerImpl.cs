@@ -371,11 +371,6 @@ namespace Agora.Rtc
             Marshal.FreeHGlobal(_irisMediaPlayerCAudioSpectrumObserverHandleNative);
         }
 
-        public MediaPlayerSourceObserver GetMediaPlayerSourceObserver()
-        {
-            return new MediaPlayerSourceObserver();
-        }
-
         public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
         {
             if (!MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.ContainsKey(playerId))
