@@ -194,12 +194,6 @@ namespace Agora.Rtc
 
     public delegate void OnDirectCdnStreamingStatsHandler(DirectCdnStreamingStats stats);
 
-    #region IMediaRecorderObserver
-    public delegate void OnRecorderStateChangedHandler(RecorderState state, RecorderErrorCode error);
-
-    public delegate void OnRecorderInfoUpdatedHandler(RecorderInfo info);
-    #endregion
-
     public class RtcEngineEventHandler : IRtcEngineEventHandler
     {
         public event OnJoinChannelSuccessHandler EventOnJoinChannelSuccess;
@@ -298,11 +292,6 @@ namespace Agora.Rtc
         public event OnExtensionErrorHandler EventOnExtensionErrored;
         public event OnDirectCdnStreamingStateChangedHandler EventOnDirectCdnStreamingStateChanged;
         public event OnDirectCdnStreamingStatsHandler EventOnDirectCdnStreamingStats;
-
-        #region IMediaRecorderObserver
-        public event OnRecorderStateChangedHandler EventOnRecorderStateChanged;
-        public event OnRecorderInfoUpdatedHandler EventOnRecorderInfoUpdated;
-        #endregion
 
         private static RtcEngineEventHandler eventInstance = null;
 
@@ -903,19 +892,5 @@ namespace Agora.Rtc
             if (EventOnExtensionErrored == null) return;
             EventOnDirectCdnStreamingStats.Invoke(stats);
         }
-
-        #region IMediaRecorderObserver
-        public override void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error)
-        {
-            if (EventOnRecorderStateChanged == null) return;
-            EventOnRecorderStateChanged.Invoke(state, error);
-        }
-
-        public override void OnRecorderInfoUpdated(RecorderInfo info)
-        {
-            if (EventOnRecorderInfoUpdated == null) return;
-            EventOnRecorderInfoUpdated.Invoke(info);
-        }
-        #endregion
     }
 }

@@ -51,8 +51,6 @@ namespace Agora.Rtc
         private AgoraCallbackObject _callbackObject;
 #endif
 
-        private RtcEngineEventHandler _engineEventHandlerInstance;
-
         private IrisRtcCAudioFrameObserverNativeMarshal _irisRtcCAudioFrameObserverNative;
         private IrisRtcCAudioFrameObserver _irisRtcCAudioFrameObserver;
         private IrisRtcAudioFrameObserverHandleNative _irisRtcAudioFrameObserverHandleNative;
@@ -82,6 +80,7 @@ namespace Agora.Rtc
         //private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineInstance;
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
+        private MediaRecorderImpl _mediaRecorderInstance;
 
         private IntPtr _irisRtcCAudioSpectrumObserverNative;
         private IrisMediaPlayerCAudioSpectrumObserver _irisRtcCAudioSpectrumObserver;
@@ -99,6 +98,7 @@ namespace Agora.Rtc
             //_cloudSpatialAudioEngineInstance = new CloudSpatialAudioEngineImpl(_irisRtcEngine);
             _spatialAudioEngineInstance = new LocalSpatialAudioEngineImpl(_irisRtcEngine);
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
+            _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
             AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
@@ -135,6 +135,9 @@ namespace Agora.Rtc
 
                 _mediaPlayerCacheManager.Dispose();
                 _mediaPlayerCacheManager = null;
+
+                _mediaRecorderInstance.Dispose();
+                _mediaRecorderInstance = null;
 
                 AgoraRtcNative.Detach(_irisRtcEngine, _videoFrameBufferManagerPtr);
             }
@@ -190,8 +193,6 @@ namespace Agora.Rtc
                 RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _engineEventHandlerInstance = RtcEngineEventHandler.GetInstance();
-            RtcEngineEventHandlerNative.EngineEventHandler = _engineEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
@@ -254,11 +255,6 @@ namespace Agora.Rtc
         {
             Dispose(true, sync);
             GC.SuppressFinalize(this);
-        }
-
-        public RtcEngineEventHandler GetRtcEngineEventHandler()
-        {
-            return _engineEventHandlerInstance;
         }
 
         public void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
@@ -522,6 +518,11 @@ namespace Agora.Rtc
         public MediaPlayerCacheManagerImpl GetMediaPlayerCacheManager()
         {
             return _mediaPlayerCacheManager;
+        }
+
+        public MediaRecorderImpl GetMediaRecorder()
+        {
+            return _mediaRecorderInstance;
         }
 
 
@@ -5444,58 +5445,6 @@ namespace Agora.Rtc
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
-
-        #region IMediaRecorder
-        //public int SetMediaRecorderObserver(RtcConnection connection)
-        //{
-        //    var param = new
-        //    {
-        //        connection
-        //    };
-
-        //    var json = AgoraJson.ToJson(param);
-        //    int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
-        //        json, (UInt32)json.Length,
-        //        IntPtr.Zero, 0,
-        //        out _result);
-
-        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        //}
-
-        public int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
-        {
-            var param = new
-            {
-                connection,
-                config
-            };
-
-            var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTMEDIARECORDERRECORDING,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int StopRecording(RtcConnection connection)
-        {
-            var param = new
-            {
-                connection,
-            };
-
-            var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPMEDIARECORDERRECORDING,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-        #endregion
 
         public int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
         {
