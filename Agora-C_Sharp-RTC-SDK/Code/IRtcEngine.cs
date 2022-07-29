@@ -38,8 +38,6 @@ namespace Agora.Rtc
         #endregion
 
         #region Event handler
-        public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
-
         public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
         #endregion
 
@@ -698,14 +696,7 @@ namespace Agora.Rtc
 
         public abstract int SelectAudioTrack(int index);
 
-        #region IMediaRecorder
-        //public abstract int SetMediaRecorderObserver(RtcConnection connection);
-
-        public abstract int StartRecording(RtcConnection connection, MediaRecorderConfiguration config);
-
-        public abstract int StopRecording(RtcConnection connection);
-        #endregion
-
+        public abstract IMediaRecorder GetMediaRecorder();
     };
 
     public abstract class IRtcEngineEx : IRtcEngine

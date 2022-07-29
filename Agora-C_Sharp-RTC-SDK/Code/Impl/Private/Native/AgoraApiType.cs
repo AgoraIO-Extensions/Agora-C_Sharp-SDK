@@ -536,5 +536,11 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILECOUNT ="MediaPlayerCacheManager_setMaxCacheFileCount";
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILESIZE ="MediaPlayerCacheManager_setMaxCacheFileSize";
         #endregion
+
+        #region IMediaRecorder start
+        internal const string FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER = "MediaRecorder_setMediaRecorderObserver";
+        internal const string FUNC_MEDIARECORDER_STARTRECORDING = "MediaRecorder_startRecording";
+        internal const string FUNC_MEDIARECORDER_STOPRECORDING = "MediaRecorder_stopRecording";
+        #endregion
     }
 }
