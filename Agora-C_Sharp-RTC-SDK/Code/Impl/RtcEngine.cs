@@ -12,6 +12,7 @@ namespace Agora.Rtc
         //private ICloudSpatialAudioEngine _cloudSpatialAudioEngine = null;
         private ILocalSpatialAudioEngine _localSpatialAudioEngine = null;
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
+        private IMediaRecorder _mediaRecorder = null;
         private const string ErrorMsgLog = "[RtcEngine]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
 
@@ -23,6 +24,7 @@ namespace Agora.Rtc
             //_cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
             _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
+            _mediaRecorder = MediaRecorder.GetInstance(this, _rtcEngineImpl.GetMediaRecorder());
         }
 
         ~RtcEngine()
@@ -33,6 +35,7 @@ namespace Agora.Rtc
             //_cloudSpatialAudioEngine = null;
             _localSpatialAudioEngine = null;
             _mediaPlayerCacheManager = null;
+            _mediaRecorder = null;
         }
 
         private static IRtcEngine instance = null;
@@ -87,19 +90,11 @@ namespace Agora.Rtc
             VideoDeviceManager.ReleaseInstance();
             //CloudSpatialAudioEngine.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
+            MediaPlayerCacheManager.ReleaseInstance();
+            MediaRecorder.ReleaseInstance();
             instance = null;
 
             _disposed = true;
-        }
-
-        public override RtcEngineEventHandler GetRtcEngineEventHandler()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return null;
-            }
-            return _rtcEngineImpl.GetRtcEngineEventHandler();
         }
 
         public override void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
@@ -200,6 +195,16 @@ namespace Agora.Rtc
                 return null;
             }
             return _mediaPlayerCacheManager;
+        }
+
+        public override IMediaRecorder GetMediaRecorder()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                AgoraLog.LogError(ErrorMsgLog);
+                return null;
+            }
+            return _mediaRecorder;
         }
 
         public override IMediaPlayer CreateMediaPlayer()
@@ -3384,56 +3389,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.SelectAudioTrack(index);
-        }
-
-        //public override int SetMaxMetadataSize(int size)
-        //{
-        //    if (_rtcEngineImpl == null)
-        //    {
-        //        AgoraLog.LogError(ErrorMsgLog);
-        //        return ErrorCode;
-        //    }
-        //    return _rtcEngineImpl.SetMaxMetadataSize(size);
-        //}
-
-        //public override int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
-        //{
-        //    if (_rtcEngineImpl == null)
-        //    {
-        //        AgoraLog.LogError(ErrorMsgLog);
-        //        return ErrorCode;
-        //    }
-        //    return _rtcEngineImpl.SendMetaData(metadata, source_type);
-        //}
-
-        //public override int SetMediaRecorderObserver(RtcConnection connection)
-        //{
-        //    if (_rtcEngineImpl == null)
-        //    {
-        //        AgoraLog.LogError(ErrorMsgLog);
-        //        return ErrorCode;
-        //    }
-        //    return _rtcEngineImpl.SetMediaRecorderObserver(connection);
-        //}
-
-        public override int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.StartRecording(connection, config);
-        }
-
-        public override int StopRecording(RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                AgoraLog.LogError(ErrorMsgLog);
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.StopRecording(connection);
         }
     }
 }

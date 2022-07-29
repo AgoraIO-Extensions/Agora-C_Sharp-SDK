@@ -219,7 +219,7 @@ namespace Agora.Rtc
                             IrisMediaPlayerCustomDataProviderHandle handle, string @params);
 
 
-        //IrisCloudSpatialAudioEnginePtr
+//IrisCloudSpatialAudioEnginePtr
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisEventHandlerHandle SetIrisCloudAudioEngineEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
 
@@ -233,8 +233,14 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void UnRegisterMediaMetadataObserver(IrisRtcEnginePtr engine_ptr, IrisMetaDataObserverHandle handle, string @params);
 
-        #endregion
+//IrisMediaRecorderObserver
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisEventHandlerHandle SetIrisMediaRecorderEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
 
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void UnsetIrisMediaRecorderEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
+
+        #endregion
     }
 
     #region callback native
