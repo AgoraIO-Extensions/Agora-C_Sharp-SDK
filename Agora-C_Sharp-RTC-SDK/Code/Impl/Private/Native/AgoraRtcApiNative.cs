@@ -255,15 +255,20 @@ namespace Agora.Rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate void Func_Event_Native(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Func_EventEx_Native(string @event, string data, IntPtr result, IntPtr buffer, IntPtr length, uint buffer_count);
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCEventHandlerNative
     {
         internal IntPtr onEvent;
+        internal IntPtr onEventEx;
     }
 
     internal struct IrisCEventHandler
     {
         internal Func_Event_Native OnEvent;
+        internal Func_EventEx_Native OnEventEx;
     }
 
     //audio_frame
