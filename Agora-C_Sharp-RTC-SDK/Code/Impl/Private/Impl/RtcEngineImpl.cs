@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if !UNITY_WEBGL
+
+using System;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -5630,3 +5632,5 @@ namespace Agora.Rtc
         }
     }
 }
+
+#endif

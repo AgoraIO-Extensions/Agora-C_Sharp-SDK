@@ -9,3 +9,4 @@ CSharp-API_Example/binx64/
 agora_cpp.dll
 agora_rtc_sdk.dll
 obj/
+*.meta
