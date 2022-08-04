@@ -1,6 +1,8 @@
-﻿using System;
+﻿#if !UNITY_WEBGL
+
+using System;
 using System.Runtime.InteropServices;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using AOT;
 #endif
 
@@ -39,7 +41,7 @@ namespace Agora.Rtc
         private IrisMediaPlayerCAudioSpectrumObserver _irisMediaPlayerCAudioSpectrumObserver;
         private IrisMediaPlayerCAudioSpectrumObserverHandleNative _irisMediaPlayerCAudioSpectrumObserverHandleNative;
         
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private AgoraCallbackObject _callbackObject;
         private static readonly string identifier = "AgoraMediaPlayer";
 #endif
@@ -98,7 +100,7 @@ namespace Agora.Rtc
                 _irisEngineEventHandlerHandleNative =
                     AgoraRtcNative.SetIrisMediaPlayerEventHandler(_irisApiEngine, _irisCEngineEventHandlerNative);
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                 _callbackObject = new AgoraCallbackObject(identifier);
                 MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
 #endif
@@ -108,7 +110,7 @@ namespace Agora.Rtc
         private void ReleaseEventHandler()
         {
             MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Clear();
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             MediaPlayerSourceObserverNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
@@ -889,3 +891,5 @@ namespace Agora.Rtc
         }
     }
 }
+
+#endif

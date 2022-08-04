@@ -27,7 +27,7 @@ namespace Agora.Rtc
     using IrisRtcCVideoEncodedImageReceiverNativeMarshal = IntPtr;
     using IrisRtcVideoEncodedImageReceiverHandleNative = IntPtr;
 
-    using IrisVideoFrameBufferManagerPtr = IntPtr;
+    using IrisVideoFrameBufferManagerPtr = System.Int32;
 
     //MetadataObserver
     using IrisRtcCMetaDataObserverNativeMarshal = IntPtr;
@@ -41,7 +41,7 @@ namespace Agora.Rtc
 
 
         private IrisRtcEnginePtr _irisRtcEngine;
-        private CharAssistant _result;
+        //private CharAssistant _result;
 
         private IrisEventHandlerHandleNative _irisEngineEventHandlerHandleNative;
         private IrisCEventHandler _irisCEventHandler;
@@ -83,7 +83,7 @@ namespace Agora.Rtc
 
         private RtcEngineImpl()
         {
-            _result = new CharAssistant();
+            //_result = new CharAssistant();
 
             _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine();
 
@@ -107,10 +107,10 @@ namespace Agora.Rtc
             {
                 ReleaseEventHandler();
                 // TODO: Unmanaged resources.
-                UnSetIrisAudioFrameObserver();
-                UnSetIrisVideoFrameObserver();
-                UnSetIrisMetaDataObserver();
-                UnSetIrisAudioEncodedFrameObserver();
+                //UnSetIrisAudioFrameObserver();
+                //UnSetIrisVideoFrameObserver();
+                //UnSetIrisMetaDataObserver();
+                //UnSetIrisAudioEncodedFrameObserver();
 
                 _videoDeviceManagerInstance.Dispose();
                 _videoDeviceManagerInstance = null;
@@ -145,34 +145,33 @@ namespace Agora.Rtc
             AgoraRtcNative.CallIrisApi(
                 _irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RELEASE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0);
 
             AgoraRtcNative.DestroyIrisApiEngine(_irisRtcEngine);
-            _irisRtcEngine = IntPtr.Zero;
-            _result = new CharAssistant();
+            _irisRtcEngine = 0;
+            //_result = new CharAssistant();
 
             engineInstance = null;
         }
 
         private void CreateEventHandler()
         {
-            if (_irisEngineEventHandlerHandleNative == IntPtr.Zero)
+            if (_irisEngineEventHandlerHandleNative == 0)
             {
-                _irisCEventHandler = new IrisCEventHandler
-                {
-                    OnEvent = RtcEngineEventHandlerNative.OnEvent,
-                };
+                //_irisCEventHandler = new IrisCEventHandler
+                //{
+                //    OnEvent = RtcEngineEventHandlerNative.OnEvent,
+                //};
 
-                var cEventHandlerNativeLocal = new IrisCEventHandlerNative
-                {
-                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent)
-                };
+                //var cEventHandlerNativeLocal = new IrisCEventHandlerNative
+                //{
+                //    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent)
+                //};
 
-                _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
-                Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
+                //_irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
+                //Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
                 _irisEngineEventHandlerHandleNative =
-                    AgoraRtcNative.SetIrisRtcEngineEventHandler(_irisRtcEngine, _irisCEngineEventHandlerNative);
+                    AgoraRtcNative.SetIrisRtcEngineEventHandler(_irisRtcEngine, RtcEngineEventHandlerNative.OnEvent);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
@@ -190,8 +189,8 @@ namespace Agora.Rtc
             _callbackObject = null;
 #endif
             AgoraRtcNative.UnsetIrisRtcEngineEventHandler(_irisRtcEngine, _irisEngineEventHandlerHandleNative);
-            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
-            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
+            //Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
+            _irisEngineEventHandlerHandleNative = 0;
         }
 
         internal IrisRtcEnginePtr GetNativeHandler()
@@ -222,12 +221,13 @@ namespace Agora.Rtc
             };
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(
+            var result = AgoraRtcNative.CallIrisApi(
                 _irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_INITIALIZE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            var ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0);
+
+
+            var ret = (int)AgoraJson.GetData<int>(result, "result");
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             if (ret == 0) SetAppType(AppType.APP_TYPE_UNITY);
@@ -250,221 +250,227 @@ namespace Agora.Rtc
 
         public void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            SetIrisAudioFrameObserver();
-            AudioFrameObserverNative.AudioFrameObserver = audioFrameObserver;
-            AudioFrameObserverNative.mode = mode;
+            //SetIrisAudioFrameObserver();
+            //AudioFrameObserverNative.AudioFrameObserver = audioFrameObserver;
+            //AudioFrameObserverNative.mode = mode;
+            AgoraLog.LogError("RegisterAudioFrameObserver not support in this platform");
         }
 
         public void UnRegisterAudioFrameObserver()
         {
-            UnSetIrisAudioFrameObserver();
+            //UnSetIrisAudioFrameObserver();
+            AgoraLog.LogError("UnRegisterAudioFrameObserver not support in this platform");
         }
 
-        private void SetIrisAudioFrameObserver()
-        {
-            if (_irisRtcAudioFrameObserverHandleNative != IntPtr.Zero) return;
+        //private void SetIrisAudioFrameObserver()
+        //{
+        //    if (_irisRtcAudioFrameObserverHandleNative != IntPtr.Zero) return;
 
-            _irisRtcCAudioFrameObserver = new IrisRtcCAudioFrameObserver
-            {
-                OnRecordAudioFrame = AudioFrameObserverNative.OnRecordAudioFrame,
-                OnPlaybackAudioFrame = AudioFrameObserverNative.OnPlaybackAudioFrame,
-                OnMixedAudioFrame = AudioFrameObserverNative.OnMixedAudioFrame,
-                OnPlaybackAudioFrameBeforeMixing = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixing,
-                IsMultipleChannelFrameWanted = AudioFrameObserverNative.IsMultipleChannelFrameWanted,
-                OnPlaybackAudioFrameBeforeMixingEx = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixingEx
-            };
+        //    _irisRtcCAudioFrameObserver = new IrisRtcCAudioFrameObserver
+        //    {
+        //        OnRecordAudioFrame = AudioFrameObserverNative.OnRecordAudioFrame,
+        //        OnPlaybackAudioFrame = AudioFrameObserverNative.OnPlaybackAudioFrame,
+        //        OnMixedAudioFrame = AudioFrameObserverNative.OnMixedAudioFrame,
+        //        OnPlaybackAudioFrameBeforeMixing = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixing,
+        //        IsMultipleChannelFrameWanted = AudioFrameObserverNative.IsMultipleChannelFrameWanted,
+        //        OnPlaybackAudioFrameBeforeMixingEx = AudioFrameObserverNative.OnPlaybackAudioFrameBeforeMixingEx
+        //    };
 
-            var irisRtcCAudioFrameObserverNativeLocal = new IrisRtcCAudioFrameObserverNative
-            {
-                OnRecordAudioFrame =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnRecordAudioFrame),
-                OnPlaybackAudioFrame =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnPlaybackAudioFrame),
-                OnMixedAudioFrame =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnMixedAudioFrame),
-                OnPlaybackAudioFrameBeforeMixing =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing),
-                IsMultipleChannelFrameWanted =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.IsMultipleChannelFrameWanted),
-                OnPlaybackAudioFrameBeforeMixingEx =
-                    Marshal.GetFunctionPointerForDelegate(
-                        _irisRtcCAudioFrameObserver.OnPlaybackAudioFrameBeforeMixingEx)
-            };
+        //    var irisRtcCAudioFrameObserverNativeLocal = new IrisRtcCAudioFrameObserverNative
+        //    {
+        //        OnRecordAudioFrame =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnRecordAudioFrame),
+        //        OnPlaybackAudioFrame =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnPlaybackAudioFrame),
+        //        OnMixedAudioFrame =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnMixedAudioFrame),
+        //        OnPlaybackAudioFrameBeforeMixing =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing),
+        //        IsMultipleChannelFrameWanted =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.IsMultipleChannelFrameWanted),
+        //        OnPlaybackAudioFrameBeforeMixingEx =
+        //            Marshal.GetFunctionPointerForDelegate(
+        //                _irisRtcCAudioFrameObserver.OnPlaybackAudioFrameBeforeMixingEx)
+        //    };
 
-            _irisRtcCAudioFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCAudioFrameObserverNativeLocal));
-            Marshal.StructureToPtr(irisRtcCAudioFrameObserverNativeLocal, _irisRtcCAudioFrameObserverNative, true);
-            _irisRtcAudioFrameObserverHandleNative = AgoraRtcNative.RegisterAudioFrameObserver(
-                _irisRtcEngine,
-                _irisRtcCAudioFrameObserverNative, 0, identifier
-            );
-        }
+        //    _irisRtcCAudioFrameObserverNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCAudioFrameObserverNativeLocal));
+        //    Marshal.StructureToPtr(irisRtcCAudioFrameObserverNativeLocal, _irisRtcCAudioFrameObserverNative, true);
+        //    _irisRtcAudioFrameObserverHandleNative = AgoraRtcNative.RegisterAudioFrameObserver(
+        //        _irisRtcEngine,
+        //        _irisRtcCAudioFrameObserverNative,0 identifier
+        //    );
+        //}
 
-        private void UnSetIrisAudioFrameObserver()
-        {
-            if (_irisRtcAudioFrameObserverHandleNative == IntPtr.Zero) return;
+        //private void UnSetIrisAudioFrameObserver()
+        //{
+        //    if (_irisRtcAudioFrameObserverHandleNative == IntPtr.Zero) return;
 
-            AgoraRtcNative.UnRegisterAudioFrameObserver(
-                _irisRtcEngine,
-                _irisRtcAudioFrameObserverHandleNative, identifier
-            );
-            _irisRtcAudioFrameObserverHandleNative = IntPtr.Zero;
-            AudioFrameObserverNative.AudioFrameObserver = null;
-            _irisRtcCAudioFrameObserver = new IrisRtcCAudioFrameObserver();
-            Marshal.FreeHGlobal(_irisRtcCAudioFrameObserverNative);
-        }
+        //    AgoraRtcNative.UnRegisterAudioFrameObserver(
+        //        _irisRtcEngine,
+        //        _irisRtcAudioFrameObserverHandleNative, identifier
+        //    );
+        //    _irisRtcAudioFrameObserverHandleNative = IntPtr.Zero;
+        //    AudioFrameObserverNative.AudioFrameObserver = null;
+        //    _irisRtcCAudioFrameObserver = new IrisRtcCAudioFrameObserver();
+        //    Marshal.FreeHGlobal(_irisRtcCAudioFrameObserverNative);
+        //}
 
         public void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            SetIrisVideoFrameObserver();
-            VideoFrameObserverNative.VideoFrameObserver = videoFrameObserver;
-            VideoFrameObserverNative.mode = mode;
+            //SetIrisVideoFrameObserver();
+            //VideoFrameObserverNative.VideoFrameObserver = videoFrameObserver;
+            //VideoFrameObserverNative.mode = mode;
+            AgoraLog.LogError("RegisterVideoFrameObserver not support in this platform");
         }
 
         public void UnRegisterVideoFrameObserver()
         {
-            UnSetIrisVideoFrameObserver();
+            //UnSetIrisVideoFrameObserver();
+            AgoraLog.LogError("UnRegisterVideoFrameObserver not support in this platform");
         }
 
-        private void SetIrisVideoFrameObserver()
-        {
-            if (_irisRtcVideoFrameObserverHandleNative != IntPtr.Zero) return;
+        //private void SetIrisVideoFrameObserver()
+        //{
+        //    if (_irisRtcVideoFrameObserverHandleNative != IntPtr.Zero) return;
 
-            _irisRtcCVideoFrameObserver = new IrisRtcCVideoFrameObserver
-            {
-                OnCaptureVideoFrame = VideoFrameObserverNative.OnCaptureVideoFrame,
-                OnPreEncodeVideoFrame = VideoFrameObserverNative.OnPreEncodeVideoFrame,
-                OnRenderVideoFrame = VideoFrameObserverNative.OnRenderVideoFrame,
-                GetObservedFramePosition = VideoFrameObserverNative.GetObservedFramePosition,
-                IsMultipleChannelFrameWanted = VideoFrameObserverNative.IsMultipleChannelFrameWanted
-            };
+        //    _irisRtcCVideoFrameObserver = new IrisRtcCVideoFrameObserver
+        //    {
+        //        OnCaptureVideoFrame = VideoFrameObserverNative.OnCaptureVideoFrame,
+        //        OnPreEncodeVideoFrame = VideoFrameObserverNative.OnPreEncodeVideoFrame,
+        //        OnRenderVideoFrame = VideoFrameObserverNative.OnRenderVideoFrame,
+        //        GetObservedFramePosition = VideoFrameObserverNative.GetObservedFramePosition,
+        //        IsMultipleChannelFrameWanted = VideoFrameObserverNative.IsMultipleChannelFrameWanted
+        //    };
 
-            var irisRtcCVideoFrameObserverNativeLocal = new IrisRtcCVideoFrameObserverNative
-            {
-                OnCaptureVideoFrame =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnCaptureVideoFrame),
-                OnPreEncodeVideoFrame =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnPreEncodeVideoFrame),
-                OnRenderVideoFrame =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnRenderVideoFrame),
-                GetObservedFramePosition =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.GetObservedFramePosition),
-                IsMultipleChannelFrameWanted =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.IsMultipleChannelFrameWanted)
-            };
+        //    var irisRtcCVideoFrameObserverNativeLocal = new IrisRtcCVideoFrameObserverNative
+        //    {
+        //        OnCaptureVideoFrame =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnCaptureVideoFrame),
+        //        OnPreEncodeVideoFrame =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnPreEncodeVideoFrame),
+        //        OnRenderVideoFrame =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.OnRenderVideoFrame),
+        //        GetObservedFramePosition =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.GetObservedFramePosition),
+        //        IsMultipleChannelFrameWanted =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoFrameObserver.IsMultipleChannelFrameWanted)
+        //    };
 
-            _irisRtcCVideoFrameObserverNative =
-                Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCVideoFrameObserverNativeLocal));
-            Marshal.StructureToPtr(irisRtcCVideoFrameObserverNativeLocal, _irisRtcCVideoFrameObserverNative, true);
+        //    _irisRtcCVideoFrameObserverNative =
+        //        Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCVideoFrameObserverNativeLocal));
+        //    Marshal.StructureToPtr(irisRtcCVideoFrameObserverNativeLocal, _irisRtcCVideoFrameObserverNative, true);
 
-            _irisRtcVideoFrameObserverHandleNative = AgoraRtcNative.RegisterVideoFrameObserver(
-                _irisRtcEngine, _irisRtcCVideoFrameObserverNative, 0,
-                identifier);
-        }
+        //    _irisRtcVideoFrameObserverHandleNative = AgoraRtcNative.RegisterVideoFrameObserver(
+        //        _irisRtcEngine, _irisRtcCVideoFrameObserverNative,0
+        //        identifier);
+        //}
 
-        private void UnSetIrisVideoFrameObserver()
-        {
-            if (_irisRtcVideoFrameObserverHandleNative == IntPtr.Zero) return;
+        //private void UnSetIrisVideoFrameObserver()
+        //{
+        //    if (_irisRtcVideoFrameObserverHandleNative == IntPtr.Zero) return;
 
-            AgoraRtcNative.UnRegisterVideoFrameObserver(_irisRtcEngine,
-                _irisRtcVideoFrameObserverHandleNative, identifier);
-            _irisRtcVideoFrameObserverHandleNative = IntPtr.Zero;
-            VideoFrameObserverNative.VideoFrameObserver = null;
-            _irisRtcCVideoFrameObserver = new IrisRtcCVideoFrameObserver();
-            Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
-        }
+        //    AgoraRtcNative.UnRegisterVideoFrameObserver(_irisRtcEngine,
+        //        _irisRtcVideoFrameObserverHandleNative, identifier);
+        //    _irisRtcVideoFrameObserverHandleNative = IntPtr.Zero;
+        //    VideoFrameObserverNative.VideoFrameObserver = null;
+        //    _irisRtcCVideoFrameObserver = new IrisRtcCVideoFrameObserver();
+        //    Marshal.FreeHGlobal(_irisRtcCVideoFrameObserverNative);
+        //}
 
         public void RegisterVideoEncodedImageReceiver(IVideoEncodedImageReceiver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            SetIrisVideoEncodedImageReceiver();
-            VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = videoEncodedImageReceiver;
+            //SetIrisVideoEncodedImageReceiver();
+            //VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = videoEncodedImageReceiver;
+            AgoraLog.LogError("RegisterVideoEncodedImageReceiver not support in this platform");
         }
 
         public void UnRegisterVideoEncodedImageReceiver()
         {
-            UnSetIrisVideoEncodedImageReceiver();
+            //UnSetIrisVideoEncodedImageReceiver();
+            AgoraLog.LogError("UnRegisterVideoEncodedImageReceiver not support in this platform");
         }
 
-        private void SetIrisVideoEncodedImageReceiver()
-        {
-            if (_irisRtcVideoEncodedImageReceiverHandleNative != IntPtr.Zero) return;
+        //private void SetIrisVideoEncodedImageReceiver()
+        //{
+        //    if (_irisRtcVideoEncodedImageReceiverHandleNative != IntPtr.Zero) return;
 
-            _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver
-            {
-                OnEncodedVideoImageReceived = VideoEncodedImageReceiverNative.OnEncodedVideoImageReceived
-            };
+        //    _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver
+        //    {
+        //        OnEncodedVideoImageReceived = VideoEncodedImageReceiverNative.OnEncodedVideoImageReceived
+        //    };
 
-            var irisRtcCVideoEncodedImageReceiverNativeLocal = new IrisRtcCVideoEncodedImageReceiverNative
-            {
-                OnEncodedVideoImageReceived =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoEncodedImageReceiver.OnEncodedVideoImageReceived),
+        //    var irisRtcCVideoEncodedImageReceiverNativeLocal = new IrisRtcCVideoEncodedImageReceiverNative
+        //    {
+        //        OnEncodedVideoImageReceived =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCVideoEncodedImageReceiver.OnEncodedVideoImageReceived),
 
-            };
+        //    };
 
-            _irisRtcCVideoEncodedImageReceiverNative =
-                Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCVideoEncodedImageReceiverNativeLocal));
-            Marshal.StructureToPtr(irisRtcCVideoEncodedImageReceiverNativeLocal, _irisRtcCVideoEncodedImageReceiverNative, true);
+        //    _irisRtcCVideoEncodedImageReceiverNative =
+        //        Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCVideoEncodedImageReceiverNativeLocal));
+        //    Marshal.StructureToPtr(irisRtcCVideoEncodedImageReceiverNativeLocal, _irisRtcCVideoEncodedImageReceiverNative, true);
 
-            _irisRtcVideoEncodedImageReceiverHandleNative = AgoraRtcNative.RegisterVideoEncodedImageReceiver(
-                _irisRtcEngine, _irisRtcCVideoEncodedImageReceiverNative, 0,
-                identifier);
-        }
+        //    _irisRtcVideoEncodedImageReceiverHandleNative = AgoraRtcNative.RegisterVideoEncodedImageReceiver(
+        //        _irisRtcEngine, _irisRtcCVideoEncodedImageReceiverNative,0
+        //        identifier);
+        //}
 
-        private void UnSetIrisVideoEncodedImageReceiver()
-        {
-            if (_irisRtcVideoEncodedImageReceiverHandleNative == IntPtr.Zero) return;
+        //private void UnSetIrisVideoEncodedImageReceiver()
+        //{
+        //    if (_irisRtcVideoEncodedImageReceiverHandleNative == IntPtr.Zero) return;
 
-            AgoraRtcNative.UnRegisterVideoEncodedImageReceiver(_irisRtcEngine,
-                _irisRtcVideoEncodedImageReceiverHandleNative, identifier);
-            _irisRtcVideoEncodedImageReceiverHandleNative = IntPtr.Zero;
-            VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = null;
-            _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver();
-            Marshal.FreeHGlobal(_irisRtcCVideoEncodedImageReceiverNative);
-        }
+        //    AgoraRtcNative.UnRegisterVideoEncodedImageReceiver(_irisRtcEngine,
+        //        _irisRtcVideoEncodedImageReceiverHandleNative, identifier);
+        //    _irisRtcVideoEncodedImageReceiverHandleNative = IntPtr.Zero;
+        //    VideoEncodedImageReceiverNative.VideoEncodedImageReceiver = null;
+        //    _irisRtcCVideoEncodedImageReceiver = new IrisRtcCVideoEncodedImageReceiver();
+        //    Marshal.FreeHGlobal(_irisRtcCVideoEncodedImageReceiverNative);
+        //}
 
-        private void SetIrisMetaDataObserver(METADATA_TYPE type)
-        {
-            if (_irisRtcMetaDataObserverHandleNative != IntPtr.Zero) return;
+        //private void SetIrisMetaDataObserver(METADATA_TYPE type)
+        //{
+        //    if (_irisRtcMetaDataObserverHandleNative != IntPtr.Zero) return;
 
-            _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver
-            {
-                GetMaxMetadataSize = MetadataObserverNative.GetMaxMetadataSize,
-                OnReadyToSendMetadata = MetadataObserverNative.OnReadyToSendMetadata,
-                OnMetadataReceived = MetadataObserverNative.OnMetadataReceived
-            };
+        //    _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver
+        //    {
+        //        GetMaxMetadataSize = MetadataObserverNative.GetMaxMetadataSize,
+        //        OnReadyToSendMetadata = MetadataObserverNative.OnReadyToSendMetadata,
+        //        OnMetadataReceived = MetadataObserverNative.OnMetadataReceived
+        //    };
 
-            var irisRtcCMetaDataObserverNativeLocal = new IrisCMediaMetadataObserverNative
-            {
-                getMaxMetadataSize =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.GetMaxMetadataSize),
-                onReadyToSendMetadata =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.OnReadyToSendMetadata),
-                onMetadataReceived =
-                    Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.OnMetadataReceived)
-            };
+        //    var irisRtcCMetaDataObserverNativeLocal = new IrisCMediaMetadataObserverNative
+        //    {
+        //        getMaxMetadataSize =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.GetMaxMetadataSize),
+        //        onReadyToSendMetadata =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.OnReadyToSendMetadata),
+        //        onMetadataReceived =
+        //            Marshal.GetFunctionPointerForDelegate(_irisRtcCMetaDataObserver.OnMetadataReceived)
+        //    };
 
-            _irisRtcCMetaDataObserverNative =
-                Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCMetaDataObserverNativeLocal));
-            Marshal.StructureToPtr(irisRtcCMetaDataObserverNativeLocal, _irisRtcCMetaDataObserverNative, true);
+        //    _irisRtcCMetaDataObserverNative =
+        //        Marshal.AllocHGlobal(Marshal.SizeOf(irisRtcCMetaDataObserverNativeLocal));
+        //    Marshal.StructureToPtr(irisRtcCMetaDataObserverNativeLocal, _irisRtcCMetaDataObserverNative, true);
 
-            var param = new
-            {
-                type
-            };
-            var json = AgoraJson.ToJson(param);
-            _irisRtcMetaDataObserverHandleNative = AgoraRtcNative.RegisterMediaMetadataObserver(_irisRtcEngine,
-                _irisRtcCMetaDataObserverNative, json);
-        }
+        //    var param = new
+        //    {
+        //        type
+        //    };
+        //    var json = AgoraJson.ToJson(param);
+        //    _irisRtcMetaDataObserverHandleNative = AgoraRtcNative.RegisterMediaMetadataObserver(_irisRtcEngine,
+        //        _irisRtcCMetaDataObserverNative, json);
+        //}
 
-        private void UnSetIrisMetaDataObserver()
-        {
-            if (_irisRtcMetaDataObserverHandleNative == IntPtr.Zero) return;
+        //private void UnSetIrisMetaDataObserver()
+        //{
+        //    if (_irisRtcMetaDataObserverHandleNative == IntPtr.Zero) return;
 
-            AgoraRtcNative.UnRegisterMediaMetadataObserver(_irisRtcEngine, _irisRtcMetaDataObserverHandleNative, "");
-            _irisRtcMetaDataObserverHandleNative = IntPtr.Zero;
-            MetadataObserverNative.Observer = null;
-            _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver();
-            Marshal.FreeHGlobal(_irisRtcCMetaDataObserverNative);
-        }
+        //    AgoraRtcNative.UnRegisterMediaMetadataObserver(_irisRtcEngine, _irisRtcMetaDataObserverHandleNative, "");
+        //    _irisRtcMetaDataObserverHandleNative = IntPtr.Zero;
+        //    MetadataObserverNative.Observer = null;
+        //    _irisRtcCMetaDataObserver = new IrisCMediaMetadataObserver();
+        //    Marshal.FreeHGlobal(_irisRtcCMetaDataObserverNative);
+        //}
 
         public AudioDeviceManagerImpl GetAudioDeviceManager()
         {
@@ -491,7 +497,7 @@ namespace Agora.Rtc
             return _spatialAudioEngineInstance;
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
         internal IVideoStreamManager GetVideoStreamManager()
         {
             return new VideoStreamManager(this);
@@ -503,12 +509,11 @@ namespace Agora.Rtc
             var param = new { };
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETVERSION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETVERSION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0);
 
-            return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
+            return (string)AgoraJson.GetData<string>(result, "result");
         }
 
         public string GetErrorDescription(int code)
@@ -516,12 +521,11 @@ namespace Agora.Rtc
             var param = new { code };
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETERRORDESCRIPTION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETERRORDESCRIPTION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0);
 
-            return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
+            return (string)AgoraJson.GetData<string>(result, "result");
         }
 
         public int JoinChannel(string token, string channelId, string info = "",
@@ -537,12 +541,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNEL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNEL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int JoinChannel(string token, string channelId, uint uid,
@@ -558,11 +561,10 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNEL2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNEL2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0);
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UpdateChannelMediaOptions(ChannelMediaOptions options)
@@ -574,12 +576,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATECHANNELMEDIAOPTIONS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATECHANNELMEDIAOPTIONS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int LeaveChannel()
@@ -588,11 +590,10 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_LEAVECHANNEL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_LEAVECHANNEL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0);
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int LeaveChannel(LeaveChannelOptions options)
@@ -604,11 +605,10 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_LEAVECHANNEL2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_LEAVECHANNEL2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0);
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int RenewToken(string token)
@@ -620,11 +620,10 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RENEWTOKEN,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RENEWTOKEN,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0);
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetChannelProfile(CHANNEL_PROFILE_TYPE profile)
@@ -636,11 +635,10 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCHANNELPROFILE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCHANNELPROFILE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0);
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetClientRole(CLIENT_ROLE_TYPE role)
@@ -651,11 +649,11 @@ namespace Agora.Rtc
             };
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCLIENTROLE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCLIENTROLE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options)
@@ -668,11 +666,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCLIENTROLE2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCLIENTROLE2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -682,11 +680,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTECHOTEST,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTECHOTEST,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartEchoTest(int intervalInSeconds)
@@ -698,11 +696,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTECHOTEST2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTECHOTEST2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
 
         }
 
@@ -712,11 +710,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPECHOTEST,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPECHOTEST,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableVideo()
@@ -725,11 +723,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEVIDEO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEVIDEO,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int DisableVideo()
@@ -738,11 +736,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_DISABLEVIDEO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_DISABLEVIDEO,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartPreview()
@@ -751,11 +749,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPREVIEW,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPREVIEW,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartPreview(VIDEO_SOURCE_TYPE sourceType)
@@ -767,11 +765,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPREVIEW2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPREVIEW2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopPreview()
@@ -780,11 +778,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPREVIEW,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPREVIEW,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopPreview(VIDEO_SOURCE_TYPE sourceType)
@@ -796,11 +794,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPREVIEW2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPREVIEW2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -813,11 +811,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTLASTMILEPROBETEST,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTLASTMILEPROBETEST,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopLastmileProbeTest()
@@ -826,11 +824,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPLASTMILEPROBETEST,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPLASTMILEPROBETEST,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetVideoEncoderConfiguration(VideoEncoderConfiguration config)
@@ -842,11 +840,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVIDEOENCODERCONFIGURATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVIDEOENCODERCONFIGURATION,
               json, (UInt32)json.Length,
-              IntPtr.Zero, 0,
-              out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+              IntPtr.Zero, 0
+             );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE)
@@ -860,11 +858,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETBEAUTYEFFECTOPTIONS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETBEAUTYEFFECTOPTIONS,
               json, (UInt32)json.Length,
-              IntPtr.Zero, 0,
-              out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+              IntPtr.Zero, 0
+             );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableAudio()
@@ -873,11 +871,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEAUDIO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEAUDIO,
               json, (UInt32)json.Length,
-              IntPtr.Zero, 0,
-              out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+              IntPtr.Zero, 0
+             );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -887,11 +885,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_DISABLEAUDIO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_DISABLEAUDIO,
               json, (UInt32)json.Length,
-              IntPtr.Zero, 0,
-              out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+              IntPtr.Zero, 0
+             );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -905,11 +903,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOPROFILE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOPROFILE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -922,11 +920,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOPROFILE2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOPROFILE2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableLocalAudio(bool enabled)
@@ -938,11 +936,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLELOCALAUDIO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLELOCALAUDIO,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteLocalAudioStream(bool mute)
@@ -954,11 +952,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTELOCALAUDIOSTREAM,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTELOCALAUDIOSTREAM,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteAllRemoteAudioStreams(bool mute)
@@ -970,11 +968,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTEALLREMOTEAUDIOSTREAMS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTEALLREMOTEAUDIOSTREAMS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetDefaultMuteAllRemoteAudioStreams(bool mute)
@@ -986,11 +984,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDEFAULTMUTEALLREMOTEAUDIOSTREAMS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDEFAULTMUTEALLREMOTEAUDIOSTREAMS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteRemoteAudioStream(uint uid, bool mute)
@@ -1003,11 +1001,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTEREMOTEAUDIOSTREAM,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTEREMOTEAUDIOSTREAM,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteLocalVideoStream(bool mute)
@@ -1019,11 +1017,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTELOCALVIDEOSTREAM,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTELOCALVIDEOSTREAM,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableLocalVideo(bool enabled)
@@ -1035,11 +1033,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLELOCALVIDEO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLELOCALVIDEO,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteAllRemoteVideoStreams(bool mute)
@@ -1051,11 +1049,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTEALLREMOTEVIDEOSTREAMS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTEALLREMOTEVIDEOSTREAMS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetDefaultMuteAllRemoteVideoStreams(bool mute)
@@ -1067,11 +1065,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDEFAULTMUTEALLREMOTEVIDEOSTREAMS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDEFAULTMUTEALLREMOTEVIDEOSTREAMS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteRemoteVideoStream(uint uid, bool mute)
@@ -1084,11 +1082,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTEREMOTEVIDEOSTREAM,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTEREMOTEVIDEOSTREAM,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType)
@@ -1101,11 +1099,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEVIDEOSTREAMTYPE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEVIDEOSTREAMTYPE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType)
@@ -1117,11 +1115,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEDEFAULTVIDEOSTREAMTYPE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEDEFAULTVIDEOSTREAMTYPE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
@@ -1135,11 +1133,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEAUDIOVOLUMEINDICATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEAUDIOVOLUMEINDICATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartAudioRecording(string filePath,
@@ -1153,11 +1151,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIORECORDING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIORECORDING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -1174,11 +1172,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIORECORDING2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIORECORDING2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartAudioRecording(AudioRecordingConfiguration config)
@@ -1190,11 +1188,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIORECORDING3,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIORECORDING3,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
@@ -1264,11 +1262,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPAUDIORECORDING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPAUDIORECORDING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
@@ -1283,11 +1281,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIOMIXING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIOMIXING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos)
@@ -1303,11 +1301,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIOMIXING2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIOMIXING2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -1317,11 +1315,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPAUDIOMIXING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPAUDIOMIXING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PauseAudioMixing()
@@ -1330,11 +1328,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEAUDIOMIXING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEAUDIOMIXING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ResumeAudioMixing()
@@ -1343,11 +1341,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEAUDIOMIXING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEAUDIOMIXING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AdjustAudioMixingVolume(int volume)
@@ -1359,11 +1357,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTAUDIOMIXINGVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTAUDIOMIXINGVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AdjustAudioMixingPublishVolume(int volume)
@@ -1375,11 +1373,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTAUDIOMIXINGPUBLISHVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTAUDIOMIXINGPUBLISHVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetAudioMixingPublishVolume()
@@ -1388,11 +1386,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIOMIXINGPUBLISHVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIOMIXINGPUBLISHVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AdjustAudioMixingPlayoutVolume(int volume)
@@ -1404,11 +1402,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTAUDIOMIXINGPLAYOUTVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTAUDIOMIXINGPLAYOUTVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetAudioMixingPlayoutVolume()
@@ -1417,11 +1415,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIOMIXINGPLAYOUTVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIOMIXINGPLAYOUTVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetAudioMixingDuration()
@@ -1430,11 +1428,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIOMIXINGDURATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIOMIXINGDURATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetAudioMixingCurrentPosition()
@@ -1443,11 +1441,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIOMIXINGCURRENTPOSITION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIOMIXINGCURRENTPOSITION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetAudioMixingPosition(int pos /*in ms*/)
@@ -1459,11 +1457,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOMIXINGPOSITION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOMIXINGPOSITION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetAudioMixingPitch(int pitch)
@@ -1475,11 +1473,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOMIXINGPITCH,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOMIXINGPITCH,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetEffectsVolume()
@@ -1488,11 +1486,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEFFECTSVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEFFECTSVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetEffectsVolume(int volume)
@@ -1504,11 +1502,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEFFECTSVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEFFECTSVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PreloadEffect(int soundId, string filePath, int startPos = 0)
@@ -1522,11 +1520,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PRELOADEFFECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PRELOADEFFECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
@@ -1545,11 +1543,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PLAYEFFECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PLAYEFFECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false)
@@ -1565,11 +1563,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PLAYALLEFFECTS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PLAYALLEFFECTS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetVolumeOfEffect(int soundId)
@@ -1581,11 +1579,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETVOLUMEOFEFFECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETVOLUMEOFEFFECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetVolumeOfEffect(int soundId, int volume)
@@ -1598,11 +1596,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOLUMEOFEFFECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOLUMEOFEFFECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PauseEffect(int soundId)
@@ -1614,11 +1612,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEEFFECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEEFFECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PauseAllEffects()
@@ -1627,11 +1625,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEALLEFFECTS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEALLEFFECTS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ResumeEffect(int soundId)
@@ -1643,11 +1641,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEEFFECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEEFFECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ResumeAllEffects()
@@ -1656,11 +1654,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEALLEFFECTS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEALLEFFECTS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopEffect(int soundId)
@@ -1672,11 +1670,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPEFFECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPEFFECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopAllEffects()
@@ -1685,11 +1683,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPALLEFFECTS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPALLEFFECTS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UnloadEffect(int soundId)
@@ -1701,11 +1699,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNLOADEFFECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNLOADEFFECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UnloadAllEffects()
@@ -1714,11 +1712,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNLOADALLEFFECTS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNLOADALLEFFECTS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableSoundPositionIndication(bool enabled)
@@ -1730,11 +1728,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLESOUNDPOSITIONINDICATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLESOUNDPOSITIONINDICATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteVoicePosition(uint uid, double pan, double gain)
@@ -1748,11 +1746,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEVOICEPOSITION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEVOICEPOSITION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableSpatialAudio(bool enabled)
@@ -1764,11 +1762,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLESPATIALAUDIO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLESPATIALAUDIO,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset)
@@ -1780,11 +1778,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOICEBEAUTIFIERPRESET,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOICEBEAUTIFIERPRESET,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetAudioEffectPreset(AUDIO_EFFECT_PRESET preset)
@@ -1796,11 +1794,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOEFFECTPRESET,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOEFFECTPRESET,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetVoiceConversionPreset(VOICE_CONVERSION_PRESET preset)
@@ -1812,11 +1810,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOICECONVERSIONPRESET,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOICECONVERSIONPRESET,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetAudioEffectParameters(AUDIO_EFFECT_PRESET preset, int param1, int param2)
@@ -1830,11 +1828,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOEFFECTPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOEFFECTPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetVoiceBeautifierParameters(VOICE_BEAUTIFIER_PRESET preset,
@@ -1849,11 +1847,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOICEBEAUTIFIERPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOICEBEAUTIFIERPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetVoiceConversionParameters(VOICE_CONVERSION_PRESET preset,
@@ -1868,11 +1866,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOICECONVERSIONPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETVOICECONVERSIONPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLocalVoicePitch(double pitch)
@@ -1884,11 +1882,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVOICEPITCH,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVOICEPITCH,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency,
@@ -1902,11 +1900,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVOICEEQUALIZATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVOICEEQUALIZATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value)
@@ -1919,11 +1917,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVOICEREVERB,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVOICEREVERB,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         //todo not found in dcg
@@ -1938,8 +1936,8 @@ namespace Agora.Rtc
         //    var (UInt32)json.Length = Convert.ToUInt32((UInt32)json.Length);
         //    return AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVOICEREVERB,
         //        json, (UInt32)json.Length,
-        //        IntPtr.Zero, 0,
-        //        out _result);
+        //        IntPtr.Zero,0
+        //       );
         //}
 
         //todo not found in dcg
@@ -1954,8 +1952,8 @@ namespace Agora.Rtc
         //    var (UInt32)json.Length = Convert.ToUInt32((UInt32)json.Length);
         //    return AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVOICEREVERB,
         //        json, (UInt32)json.Length,
-        //        IntPtr.Zero, 0,
-        //        out _result);
+        //        IntPtr.Zero,0
+        //       );
         //}
 
         public int SetLogFile(string filePath)
@@ -1967,11 +1965,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOGFILE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOGFILE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
 
         }
 
@@ -1984,11 +1982,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOGFILTER,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOGFILTER,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLogLevel(LOG_LEVEL level)
@@ -2000,11 +1998,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOGLEVEL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOGLEVEL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLogFileSize(uint fileSizeInKBytes)
@@ -2016,11 +2014,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOGFILESIZE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOGFILESIZE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
@@ -2033,11 +2031,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -2053,11 +2051,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTERENDERMODE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTERENDERMODE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLocalRenderMode(RENDER_MODE_TYPE renderMode)
@@ -2069,11 +2067,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALRENDERMODE2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode)
@@ -2085,11 +2083,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVIDEOMIRRORMODE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALVIDEOMIRRORMODE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableDualStreamMode(bool enabled)
@@ -2101,11 +2099,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled)
@@ -2118,11 +2116,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig)
@@ -2136,11 +2134,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE3,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE3,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetExternalAudioSink(int sampleRate, int channels)
@@ -2153,11 +2151,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETEXTERNALAUDIOSINK,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETEXTERNALAUDIOSINK,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartPrimaryCustomAudioTrack(AudioTrackConfig config)
@@ -2169,11 +2167,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPRIMARYCUSTOMAUDIOTRACK,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPRIMARYCUSTOMAUDIOTRACK,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopPrimaryCustomAudioTrack()
@@ -2182,11 +2180,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPRIMARYCUSTOMAUDIOTRACK,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPRIMARYCUSTOMAUDIOTRACK,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartSecondaryCustomAudioTrack(AudioTrackConfig config)
@@ -2198,11 +2196,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSECONDARYCUSTOMAUDIOTRACK,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSECONDARYCUSTOMAUDIOTRACK,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopSecondaryCustomAudioTrack()
@@ -2211,11 +2209,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPSECONDARYCUSTOMAUDIOTRACK,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPSECONDARYCUSTOMAUDIOTRACK,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRecordingAudioFrameParameters(int sampleRate, int channel,
@@ -2232,11 +2230,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETRECORDINGAUDIOFRAMEPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETRECORDINGAUDIOFRAMEPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetPlaybackAudioFrameParameters(int sampleRate, int channel,
@@ -2252,11 +2250,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETPLAYBACKAUDIOFRAMEPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETPLAYBACKAUDIOFRAMEPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall)
@@ -2270,11 +2268,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMIXEDAUDIOFRAMEPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMIXEDAUDIOFRAMEPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel)
@@ -2287,11 +2285,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETPLAYBACKAUDIOFRAMEBEFOREMIXINGPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETPLAYBACKAUDIOFRAMEBEFOREMIXINGPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableAudioSpectrumMonitor(int intervalInMS = 100)
@@ -2304,11 +2302,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEAUDIOSPECTRUMMONITOR,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEAUDIOSPECTRUMMONITOR,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int DisableAudioSpectrumMonitor()
@@ -2317,11 +2315,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_DISABLEAUDIOSPECTRUMMONITOR,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_DISABLEAUDIOSPECTRUMMONITOR,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
@@ -2345,11 +2343,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTRECORDINGSIGNALVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTRECORDINGSIGNALVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteRecordingSignal(bool mute)
@@ -2361,11 +2359,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTERECORDINGSIGNAL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_MUTERECORDINGSIGNAL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AdjustPlaybackSignalVolume(int volume)
@@ -2377,11 +2375,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTPLAYBACKSIGNALVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTPLAYBACKSIGNALVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AdjustUserPlaybackSignalVolume(uint uid, int volume)
@@ -2394,11 +2392,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTUSERPLAYBACKSIGNALVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTUSERPLAYBACKSIGNALVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableLoopbackRecording(bool enabled, string deviceName = "")
@@ -2411,11 +2409,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLELOOPBACKRECORDING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLELOOPBACKRECORDING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AdjustLoopbackRecordingVolume(int volume)
@@ -2427,11 +2425,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTLOOPBACKRECORDINGVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTLOOPBACKRECORDINGVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetLoopbackRecordingVolume()
@@ -2440,11 +2438,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETLOOPBACKRECORDINGVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETLOOPBACKRECORDINGVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableInEarMonitoring(bool enabled, int includeAudioFilters)
@@ -2457,11 +2455,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEINEARMONITORING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEINEARMONITORING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetInEarMonitoringVolume(int volume)
@@ -2473,11 +2471,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETINEARMONITORINGVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETINEARMONITORINGVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int LoadExtensionProvider(string path)
@@ -2489,11 +2487,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_LOADEXTENSIONPROVIDER,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_LOADEXTENSIONPROVIDER,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetExtensionProviderProperty(string provider, string key, string value)
@@ -2507,11 +2505,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROVIDERPROPERTY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROVIDERPROPERTY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableExtension(
@@ -2527,11 +2525,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetExtensionProperty(
@@ -2549,11 +2547,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetExtensionProperty(
@@ -2565,29 +2563,24 @@ namespace Agora.Rtc
                 provider,
                 extension,
                 key,
-                value,
+                //value,
                 buf_len,
                 type
             };
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
 
-                value = (string)AgoraJson.GetData<string>(_result.Result, "value");
-            }
-            else
-            {
-                value = "";
-            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            value = "";
+
+
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetCameraCapturerConfiguration(CameraCapturerConfiguration config)
@@ -2599,11 +2592,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERACAPTURERCONFIGURATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERACAPTURERCONFIGURATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SwitchCamera()
@@ -2612,11 +2605,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCAMERA,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCAMERA,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public bool IsCameraZoomSupported()
@@ -2625,11 +2618,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAZOOMSUPPORTED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAZOOMSUPPORTED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (bool)AgoraJson.GetData<bool>(result, "result");
         }
 
         public bool IsCameraFaceDetectSupported()
@@ -2638,11 +2631,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAFACEDETECTSUPPORTED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAFACEDETECTSUPPORTED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (bool)AgoraJson.GetData<bool>(result, "result");
         }
 
         public bool IsCameraTorchSupported()
@@ -2651,11 +2644,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERATORCHSUPPORTED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERATORCHSUPPORTED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (bool)AgoraJson.GetData<bool>(result, "result");
         }
 
         public bool IsCameraFocusSupported()
@@ -2664,11 +2657,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAFOCUSSUPPORTED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAFOCUSSUPPORTED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (bool)AgoraJson.GetData<bool>(result, "result");
         }
 
         public bool IsCameraAutoFocusFaceModeSupported()
@@ -2677,11 +2670,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAAUTOFOCUSFACEMODESUPPORTED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAAUTOFOCUSFACEMODESUPPORTED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (bool)AgoraJson.GetData<bool>(result, "result");
         }
 
         public int SetCameraZoomFactor(float factor)
@@ -2693,11 +2686,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAZOOMFACTOR,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAZOOMFACTOR,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableFaceDetection(bool enabled)
@@ -2709,11 +2702,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEFACEDETECTION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEFACEDETECTION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public float GetCameraMaxZoomFactor()
@@ -2722,11 +2715,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETCAMERAMAXZOOMFACTOR,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETCAMERAMAXZOOMFACTOR,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetCameraFocusPositionInPreview(float positionX, float positionY)
@@ -2739,11 +2732,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAFOCUSPOSITIONINPREVIEW,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAFOCUSPOSITIONINPREVIEW,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetCameraTorchOn(bool isOn)
@@ -2755,11 +2748,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERATORCHON,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERATORCHON,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetCameraAutoFocusFaceModeEnabled(bool enabled)
@@ -2771,11 +2764,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAAUTOFOCUSFACEMODEENABLED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAAUTOFOCUSFACEMODEENABLED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -2785,11 +2778,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAEXPOSUREPOSITIONSUPPORTED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAEXPOSUREPOSITIONSUPPORTED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (bool)AgoraJson.GetData<bool>(result, "result");
         }
 
 
@@ -2803,11 +2796,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAEXPOSUREPOSITION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAEXPOSUREPOSITION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public bool IsCameraAutoExposureFaceModeSupported()
@@ -2816,11 +2809,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAAUTOEXPOSUREFACEMODESUPPORTED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAAUTOEXPOSUREFACEMODESUPPORTED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (bool)AgoraJson.GetData<bool>(result, "result");
         }
 
         public int SetCameraAutoExposureFaceModeEnabled(bool enabled)
@@ -2832,11 +2825,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAAUTOEXPOSUREFACEMODEENABLED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAAUTOEXPOSUREFACEMODEENABLED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker)
@@ -2849,11 +2842,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDEFAULTAUDIOROUTETOSPEAKERPHONE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDEFAULTAUDIOROUTETOSPEAKERPHONE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetEnableSpeakerphone(bool speakerOn)
@@ -2866,11 +2859,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETENABLESPEAKERPHONE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETENABLESPEAKERPHONE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public bool IsSpeakerphoneEnabled()
@@ -2879,11 +2872,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISSPEAKERPHONEENABLED,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISSPEAKERPHONEENABLED,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (bool)AgoraJson.GetData<bool>(result, "result");
         }
 
         public int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect,
@@ -2899,11 +2892,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTUREBYDISPLAYID,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTUREBYDISPLAYID,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartScreenCaptureByScreenRect(Rectangle screenRect,
@@ -2919,11 +2912,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTUREBYSCREENRECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTUREBYSCREENRECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect,
@@ -2938,12 +2931,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTUREBYWINDOWID,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTUREBYWINDOWID,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetScreenCaptureContentHint(VIDEO_CONTENT_HINT contentHint)
@@ -2955,12 +2948,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETSCREENCAPTURECONTENTHINT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETSCREENCAPTURECONTENTHINT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UpdateScreenCaptureRegion(Rectangle regionRect)
@@ -2972,12 +2965,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATESCREENCAPTUREREGION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATESCREENCAPTUREREGION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UpdateScreenCaptureParameters(ScreenCaptureParameters captureParams)
@@ -2989,12 +2982,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATESCREENCAPTUREPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATESCREENCAPTUREPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopScreenCapture()
@@ -3003,12 +2996,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPSCREENCAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPSCREENCAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetCallId(ref string callId)
@@ -3017,21 +3010,16 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETCALLID,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETCALLID,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
-                callId = (string)AgoraJson.GetData<string>(_result.Result, "callId");
-            }
-            else
-            {
-                callId = "";
-            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            callId = (string)AgoraJson.GetData<string>(result, "callId");
+
+
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int Rate(string callId, int rating,
@@ -3046,12 +3034,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RATE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RATE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int Complain(string callId, string description)
@@ -3064,12 +3052,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_COMPLAIN,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_COMPLAIN,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AddPublishStreamUrl(string url, bool transcodingEnabled)
@@ -3082,12 +3070,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDPUBLISHSTREAMURL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDPUBLISHSTREAMURL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int RemovePublishStreamUrl(string url)
@@ -3099,12 +3087,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REMOVEPUBLISHSTREAMURL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REMOVEPUBLISHSTREAMURL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLiveTranscoding(LiveTranscoding transcoding)
@@ -3116,12 +3104,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLIVETRANSCODING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLIVETRANSCODING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartLocalVideoTranscoder(LocalTranscoderConfiguration config)
@@ -3134,12 +3122,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTLOCALVIDEOTRANSCODER,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTLOCALVIDEOTRANSCODER,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config)
@@ -3151,12 +3139,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATELOCALTRANSCODERCONFIGURATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATELOCALTRANSCODERCONFIGURATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopLocalVideoTranscoder()
@@ -3166,12 +3154,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPLOCALVIDEOTRANSCODER,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPLOCALVIDEOTRANSCODER,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartPrimaryCameraCapture(CameraCapturerConfiguration config)
@@ -3183,12 +3171,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPRIMARYCAMERACAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPRIMARYCAMERACAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartSecondaryCameraCapture(CameraCapturerConfiguration config)
@@ -3200,12 +3188,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSECONDARYCAMERACAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSECONDARYCAMERACAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopPrimaryCameraCapture()
@@ -3214,12 +3202,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPRIMARYCAMERACAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPRIMARYCAMERACAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopSecondaryCameraCapture()
@@ -3228,12 +3216,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPSECONDARYCAMERACAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPSECONDARYCAMERACAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
@@ -3246,12 +3234,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERADEVICEORIENTATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERADEVICEORIENTATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
@@ -3264,12 +3252,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETSCREENCAPTUREORIENTATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETSCREENCAPTUREORIENTATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartPrimaryScreenCapture(ScreenCaptureConfiguration config)
@@ -3281,12 +3269,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPRIMARYSCREENCAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTPRIMARYSCREENCAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartSecondaryScreenCapture(ScreenCaptureConfiguration config)
@@ -3298,12 +3286,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSECONDARYSCREENCAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSECONDARYSCREENCAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopPrimaryScreenCapture()
@@ -3312,12 +3300,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPRIMARYSCREENCAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPPRIMARYSCREENCAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopSecondaryScreenCapture()
@@ -3326,12 +3314,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPSECONDARYSCREENCAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPSECONDARYSCREENCAPTURE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public CONNECTION_STATE_TYPE GetConnectionState()
@@ -3340,12 +3328,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETCONNECTIONSTATE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETCONNECTIONSTATE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            CONNECTION_STATE_TYPE type = (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(_result.Result, "result");
+            CONNECTION_STATE_TYPE type = (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(result, "result");
             return type;
         }
 
@@ -3359,12 +3347,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEUSERPRIORITY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEUSERPRIORITY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         // public int RegisterPacketObserver(IPacketObserver observer)
@@ -3377,7 +3365,7 @@ namespace Agora.Rtc
         //     //return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
         //     //    ApiTypeEngine.kEngineRegisterPacketObserver,
         //     //    AgoraJson.ToJson(param),
-        //     //    out _result);
+        //     //   );
         // }
 
 
@@ -3390,12 +3378,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETENCRYPTIONMODE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETENCRYPTIONMODE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetEncryptionSecret(string secret)
@@ -3407,12 +3395,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETENCRYPTIONSECRET,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETENCRYPTIONSECRET,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableEncryption(bool enabled, EncryptionConfig config)
@@ -3425,12 +3413,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEENCRYPTION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEENCRYPTION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int CreateDataStream(ref int streamId, bool reliable, bool ordered)
@@ -3443,20 +3431,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CREATEDATASTREAM,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CREATEDATASTREAM,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
-                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
-            }
-            else
-            {
+           
                 streamId = 0;
-            }
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int CreateDataStream(ref int streamId, DataStreamConfig config)
@@ -3468,20 +3451,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CREATEDATASTREAM2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CREATEDATASTREAM2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
-                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
-            }
-            else
-            {
+          
                 streamId = 0;
-            }
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AddVideoWatermark(RtcImage watermark)
@@ -3493,12 +3471,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
 
         }
 
@@ -3512,12 +3490,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDVIDEOWATERMARK2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ClearVideoWatermark()
@@ -3526,12 +3504,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CLEARVIDEOWATERMARK,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CLEARVIDEOWATERMARK,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ClearVideoWatermarks()
@@ -3540,12 +3518,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CLEARVIDEOWATERMARKS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CLEARVIDEOWATERMARKS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AddInjectStreamUrl(string url, InjectStreamConfig config)
@@ -3557,12 +3535,12 @@ namespace Agora.Rtc
             };
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDINJECTSTREAMURL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDINJECTSTREAMURL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int RemoveInjectStreamUrl(string url)
@@ -3574,12 +3552,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REMOVEINJECTSTREAMURL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REMOVEINJECTSTREAMURL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PauseAudio()
@@ -3589,12 +3567,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEAUDIO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEAUDIO,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ResumeAudio()
@@ -3603,12 +3581,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEAUDIO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEAUDIO,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableWebSdkInteroperability(bool enabled)
@@ -3620,12 +3598,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEWEBSDKINTEROPERABILITY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEWEBSDKINTEROPERABILITY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SendCustomReportMessage(string id, string category, string @event, string label, int value)
@@ -3641,23 +3619,23 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDCUSTOMREPORTMESSAGE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDCUSTOMREPORTMESSAGE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
         {
-            SetIrisMetaDataObserver(type);
+            //SetIrisMetaDataObserver(type);
             MetadataObserverNative.Observer = observer;
         }
 
         public void UnregisterMediaMetadataObserver()
         {
-            UnSetIrisMetaDataObserver();
+            //UnSetIrisMetaDataObserver();
         }
 
         public int StartAudioFrameDump(string channel_id, uint user_id, string location,
@@ -3676,12 +3654,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIOFRAMEDUMP,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTAUDIOFRAMEDUMP,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopAudioFrameDump(string channel_id, uint user_id, string location)
@@ -3695,12 +3673,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPAUDIOFRAMEDUMP,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPAUDIOFRAMEDUMP,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int RegisterLocalUserAccount(string appId, string userAccount)
@@ -3713,12 +3691,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERLOCALUSERACCOUNT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERLOCALUSERACCOUNT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int JoinChannelWithUserAccount(string token, string channelId,
@@ -3734,12 +3712,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNELWITHUSERACCOUNT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNELWITHUSERACCOUNT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int JoinChannelWithUserAccount(string token, string channelId,
@@ -3755,12 +3733,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNELWITHUSERACCOUNT2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNELWITHUSERACCOUNT2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int JoinChannelWithUserAccountEx(string token, string channelId,
@@ -3776,12 +3754,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNELWITHUSERACCOUNTEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_JOINCHANNELWITHUSERACCOUNTEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo)
@@ -3794,21 +3772,14 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETUSERINFOBYUSERACCOUNT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETUSERINFOBYUSERACCOUNT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
-                userInfo = AgoraJson.JsonToStruct<UserInfo>(_result.Result, "userInfo");
-            }
-            else
-            {
-                userInfo = new UserInfo();
-            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            userInfo = AgoraJson.JsonToStruct<UserInfo>(result, "userInfo");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetUserInfoByUid(uint uid, ref UserInfo userInfo)
@@ -3820,21 +3791,16 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETUSERINFOBYUID,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETUSERINFOBYUID,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
-                userInfo = AgoraJson.JsonToStruct<UserInfo>(_result.Result, "userInfo");
-            }
-            else
-            {
-                userInfo = new UserInfo();
-            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            userInfo = AgoraJson.JsonToStruct<UserInfo>(result, "userInfo");
+
+
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
@@ -3846,12 +3812,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTCHANNELMEDIARELAY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTCHANNELMEDIARELAY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
@@ -3863,12 +3829,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATECHANNELMEDIARELAY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATECHANNELMEDIARELAY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopChannelMediaRelay()
@@ -3877,12 +3843,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPCHANNELMEDIARELAY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPCHANNELMEDIARELAY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile)
@@ -3894,12 +3860,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDIRECTCDNSTREAMINGAUDIOCONFIGURATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDIRECTCDNSTREAMINGAUDIOCONFIGURATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetDirectCdnStreamingVideoConfiguration(VideoEncoderConfiguration config)
@@ -3911,12 +3877,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDIRECTCDNSTREAMINGVIDEOCONFIGURATION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDIRECTCDNSTREAMINGVIDEOCONFIGURATION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
@@ -3928,12 +3894,12 @@ namespace Agora.Rtc
             };
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTDIRECTCDNSTREAMING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTDIRECTCDNSTREAMING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopDirectCdnStreaming()
@@ -3942,12 +3908,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPDIRECTCDNSTREAMING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPDIRECTCDNSTREAMING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UpdateDirectCdnStreamingMediaOptions(DirectCdnStreamingMediaOptions options)
@@ -3958,12 +3924,12 @@ namespace Agora.Rtc
             };
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATEDIRECTCDNSTREAMINGMEDIAOPTIONS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATEDIRECTCDNSTREAMINGMEDIAOPTIONS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
@@ -3977,12 +3943,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_JOINCHANNELEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_JOINCHANNELEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int LeaveChannelEx(RtcConnection connection)
@@ -3994,12 +3960,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_LEAVECHANNELEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_LEAVECHANNELEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnection connection)
@@ -4011,12 +3977,12 @@ namespace Agora.Rtc
             };
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_UPDATECHANNELMEDIAOPTIONSEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_UPDATECHANNELMEDIAOPTIONSEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetVideoEncoderConfigurationEx(VideoEncoderConfiguration config, RtcConnection connection)
@@ -4029,12 +3995,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETVIDEOENCODERCONFIGURATIONEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETVIDEOENCODERCONFIGURATIONEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection)
@@ -4048,12 +4014,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_MUTEREMOTEAUDIOSTREAMEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_MUTEREMOTEAUDIOSTREAMEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int MuteRemoteVideoStreamEx(uint uid, bool mute, RtcConnection connection)
@@ -4067,12 +4033,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_MUTEREMOTEVIDEOSTREAMEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_MUTEREMOTEVIDEOSTREAMEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection)
@@ -4087,12 +4053,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTEVOICEPOSITIONEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTEVOICEPOSITIONEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams param, RtcConnection connection)
@@ -4105,12 +4071,12 @@ namespace Agora.Rtc
             };
             var json = AgoraJson.ToJson(param1);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTEUSERSPATIALAUDIOPARAMSEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTEUSERSPATIALAUDIOPARAMSEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode,
@@ -4126,12 +4092,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTERENDERMODEEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTERENDERMODEEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableLoopbackRecordingEx(bool enabled, RtcConnection connection)
@@ -4144,12 +4110,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLELOOPBACKRECORDINGEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLELOOPBACKRECORDINGEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public CONNECTION_STATE_TYPE GetConnectionStateEx(RtcConnection connection)
@@ -4161,12 +4127,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_GETCONNECTIONSTATEEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_GETCONNECTIONSTATEEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            CONNECTION_STATE_TYPE type = (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(_result.Result, "result");
+            CONNECTION_STATE_TYPE type = (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(result, "result");
             return type;
         }
 
@@ -4181,12 +4147,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEENCRYPTIONEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEENCRYPTIONEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection)
@@ -4200,20 +4166,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_CREATEDATASTREAMEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_CREATEDATASTREAMEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            if (nRet == 0)
-            {
-                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
-            }
-            else
-            {
-                streamId = 0;
-            }
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            streamId = (int)AgoraJson.GetData<int>(result, "streamId");
+
+
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection)
@@ -4226,20 +4187,13 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_CREATEDATASTREAMEX2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_CREATEDATASTREAMEX2,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            if (nRet == 0)
-            {
-                streamId = (int)AgoraJson.GetData<int>(_result.Result, "streamId");
-            }
-            else
-            {
-                streamId = 0;
-            }
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            streamId = (int)AgoraJson.GetData<int>(result, "streamId");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
@@ -4253,12 +4207,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ADDVIDEOWATERMARKEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ADDVIDEOWATERMARKEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ClearVideoWatermarkEx(RtcConnection connection)
@@ -4270,12 +4224,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_CLEARVIDEOWATERMARKEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_CLEARVIDEOWATERMARKEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection)
@@ -4292,12 +4246,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDCUSTOMREPORTMESSAGEEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDCUSTOMREPORTMESSAGEEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         private int SetAppType(AppType appType)
@@ -4309,11 +4263,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAPPTYPE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAPPTYPE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
@@ -4328,12 +4282,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETEXTERNALVIDEOSOURCE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETEXTERNALVIDEOSOURCE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true)
@@ -4350,12 +4304,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETEXTERNALAUDIOSOURCE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETEXTERNALAUDIOSOURCE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction)
@@ -4368,12 +4322,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AdjustCustomAudioPublishVolume(int sourceId, int volume)
@@ -4386,12 +4340,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPUBLISHVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPUBLISHVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AdjustCustomAudioPlayoutVolume(int sourceId, int volume)
@@ -4404,11 +4358,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPLAYOUTVOLUME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPLAYOUTVOLUME,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetParameters(string parameters)
@@ -4420,11 +4374,11 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETPARAMETERS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETPARAMETERS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetAudioDeviceInfo(ref DeviceInfo deviceInfo)
@@ -4433,21 +4387,14 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIODEVICEINFO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETAUDIODEVICEINFO,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
-                deviceInfo = AgoraJson.JsonToStruct<DeviceInfo>(_result.Result, "deviceInfo");
-            }
-            else
-            {
-                deviceInfo = new DeviceInfo();
-            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            deviceInfo = AgoraJson.JsonToStruct<DeviceInfo>(result, "deviceInfo");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableCustomAudioLocalPlayback(int sourceId, bool enabled)
@@ -4460,12 +4407,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLECUSTOMAUDIOLOCALPLAYBACK,//todo two key found.
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLECUSTOMAUDIOLOCALPLAYBACK,//todo two key found.
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource)
@@ -4478,12 +4425,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEVIRTUALBACKGROUND,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEVIRTUALBACKGROUND,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLocalPublishFallbackOption(STREAM_FALLBACK_OPTIONS option)
@@ -4495,12 +4442,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALPUBLISHFALLBACKOPTION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALPUBLISHFALLBACKOPTION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option)
@@ -4512,12 +4459,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTESUBSCRIBEFALLBACKOPTION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTESUBSCRIBEFALLBACKOPTION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PauseAllChannelMediaRelay()
@@ -4526,12 +4473,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEALLCHANNELMEDIARELAY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PAUSEALLCHANNELMEDIARELAY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ResumeAllChannelMediaRelay()
@@ -4540,12 +4487,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEALLCHANNELMEDIARELAY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RESUMEALLCHANNELMEDIARELAY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay)
@@ -4558,12 +4505,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEECHOCANCELLATIONEXTERNAL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEECHOCANCELLATIONEXTERNAL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int TakeSnapshot(SnapShotConfig config)
@@ -4575,12 +4522,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_TAKESNAPSHOT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_TAKESNAPSHOT,
                json, (UInt32)json.Length,
-               IntPtr.Zero, 0,
-               out _result);
+               IntPtr.Zero, 0
+              );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SwitchChannel(string token, string channel)
@@ -4593,12 +4540,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCHANNEL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCHANNEL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SwitchChannel(string token, string channel, ChannelMediaOptions options)
@@ -4612,12 +4559,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCHANNEL,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SWITCHCHANNEL,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config)
@@ -4631,12 +4578,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTRHYTHMPLAYER,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTRHYTHMPLAYER,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopRhythmPlayer()
@@ -4645,12 +4592,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPRHYTHMPLAYER,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPRHYTHMPLAYER,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config)
@@ -4662,12 +4609,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CONFIGRHYTHMPLAYER,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_CONFIGRHYTHMPLAYER,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param)
@@ -4680,12 +4627,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEUSERSPATIALAUDIOPARAMS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEUSERSPATIALAUDIOPARAMS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         //todo not found in dcg
@@ -4699,12 +4646,12 @@ namespace Agora.Rtc
 
         //    var json = AgoraJson.ToJson(param);
         //    var (UInt32)json.Length = Convert.ToUInt32((UInt32)json.Length);
-        //    var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.SETREMOTEVIDEOSUB,
+        //    var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.SETREMOTEVIDEOSUB,
         //        json, (UInt32)json.Length,
-        //        IntPtr.Zero, 0,
-        //        out _result);
+        //        IntPtr.Zero,0
+        //       );
 
-        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        //    return  (int)AgoraJson.GetData<int>(result, "result");
         //}
 
         //todo not found in dcg
@@ -4718,7 +4665,7 @@ namespace Agora.Rtc
         //    };
         //    return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
         //        ApiTypeEngine.kEngineSetRemoteVideoSubscriptionOptionsEx,
-        //        AgoraJson.ToJson(param), out _result);
+        //        AgoraJson.ToJson(param),);
         //}
 
         public int SetDirectExternalAudioSource(bool enable, bool localPlayback)
@@ -4731,12 +4678,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETDIRECTEXTERNALAUDIOSOURCE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_SETDIRECTEXTERNALAUDIOSOURCE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetCloudProxy(CLOUD_PROXY_TYPE proxyType)
@@ -4748,12 +4695,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCLOUDPROXY,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCLOUDPROXY,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetLocalAccessPoint(LocalAccessPointConfiguration config)
@@ -4765,12 +4712,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALACCESSPOINT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETLOCALACCESSPOINT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableFishCorrection(bool enabled, FishCorrectionParams @params)
@@ -4783,12 +4730,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEFISHCORRECTION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEFISHCORRECTION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetAdvancedAudioOptions(AdvancedAudioOptions options)
@@ -4800,12 +4747,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETADVANCEDAUDIOOPTIONS,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETADVANCEDAUDIOOPTIONS,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetAVSyncSource(string channelId, uint uid)
@@ -4818,12 +4765,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAVSYNCSOURCE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAVSYNCSOURCE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartRtmpStreamWithoutTranscoding(string url)
@@ -4835,12 +4782,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTRTMPSTREAMWITHOUTTRANSCODING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTRTMPSTREAMWITHOUTTRANSCODING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
@@ -4853,12 +4800,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTRTMPSTREAMWITHTRANSCODING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTRTMPSTREAMWITHTRANSCODING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UpdateRtmpTranscoding(LiveTranscoding transcoding)
@@ -4870,12 +4817,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATERTMPTRANSCODING,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATERTMPTRANSCODING,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StopRtmpStream(string url)
@@ -4887,12 +4834,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPRTMPSTREAM,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPRTMPSTREAM,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection)
@@ -4905,21 +4852,14 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_GETUSERINFOBYUSERACCOUNTEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_GETUSERINFOBYUSERACCOUNTEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
-                userInfo = AgoraJson.JsonToStruct<UserInfo>(_result.Result, "userInfo");
-            }
-            else
-            {
-                userInfo = new UserInfo();
-            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            userInfo = AgoraJson.JsonToStruct<UserInfo>(result, "userInfo");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection)
@@ -4932,21 +4872,14 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_GETUSERINFOBYUIDEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_GETUSERINFOBYUIDEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            if (nRet == 0)
-            {
-                userInfo = AgoraJson.JsonToStruct<UserInfo>(_result.Result, "userInfo");
-            }
-            else
-            {
-                userInfo = new UserInfo();
-            }
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            userInfo = AgoraJson.JsonToStruct<UserInfo>(result, "userInfo");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableRemoteSuperResolution(uint userId, bool enable)
@@ -4959,12 +4892,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEREMOTESUPERRESOLUTION,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEREMOTESUPERRESOLUTION,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetContentInspect(ContentInspectConfig config)
@@ -4976,12 +4909,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCONTENTINSPECT,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCONTENTINSPECT,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection)
@@ -4995,12 +4928,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTEVIDEOSTREAMTYPEEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETREMOTEVIDEOSTREAMTYPEEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection)
@@ -5015,12 +4948,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEAUDIOVOLUMEINDICATIONEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEAUDIOVOLUMEINDICATIONEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetVideoProfileEx(int width, int height, int frameRate, int bitrate)
@@ -5035,12 +4968,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETVIDEOPROFILEEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETVIDEOPROFILEEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
@@ -5055,12 +4988,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEDUALSTREAMMODEEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEDUALSTREAMMODEEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
@@ -5074,12 +5007,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ADDPUBLISHSTREAMURLEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ADDPUBLISHSTREAMURLEX,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int UploadLogFile(ref string requestId)
@@ -5088,19 +5021,13 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPLOADLOGFILE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPLOADLOGFILE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            if (nRet == 0)
-            {
-                requestId = (string)AgoraJson.GetData<string>(_result.Result, "requestId");
-            }
-            else
-            {
-                requestId = "";
-            }
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                IntPtr.Zero, 0
+               );
+
+            requestId = (string)AgoraJson.GetData<string>(result, "requestId");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
@@ -5114,12 +5041,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var infoInternal = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result) != 0 ?
-                new ScreenCaptureSourceInfoInternal[0]
-                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result.Result, "result");
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSCREENCAPTURESOURCES,
+             json, (UInt32)json.Length,
+             IntPtr.Zero, 0);
+
+            ScreenCaptureSourceInfoInternal[] infoInternal;
+            infoInternal = AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(result, "result");
 
             var info = new ScreenCaptureSourceInfo[infoInternal.Length];
             for (int i = 0; i < infoInternal.Length; i++)
@@ -5158,7 +5085,6 @@ namespace Agora.Rtc
                 info[i] = screenCaptureSourceInfo;
             }
 
-            ReleaseScreenCaptureSources();
             return info;
         }
 
@@ -5182,14 +5108,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPREMOTEVIDEO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPREMOTEVIDEO,
                json, (UInt32)json.Length,
-               Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-               out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+               IntPtr.Zero, 0
+              );
+
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetupLocalVideo(VideoCanvas canvas)
@@ -5210,14 +5137,14 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPLOCALVIDEO,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPLOCALVIDEO,
                json, (UInt32)json.Length,
-               Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-               out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+               IntPtr.Zero, 0
+              );
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int StartScreenCapture(byte[] mediaProjectionPermissionResultData,
@@ -5230,15 +5157,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(mediaProjectionPermissionResultData, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(mediaProjectionPermissionResultData, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTURE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTSCREENCAPTURE,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SendStreamMessage(int streamId, byte[] data, uint length)
@@ -5251,15 +5178,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDSTREAMMESSAGE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDSTREAMMESSAGE,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+               IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
@@ -5273,15 +5200,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(data, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDSTREAMMESSAGEEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SENDSTREAMMESSAGEEX,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+               IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PushDirectCdnStreamingCustomVideoFrame(ExternalVideoFrame frame)
@@ -5304,19 +5231,19 @@ namespace Agora.Rtc
                     frame.metadata_size
                 }
             };
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
-            IntPtr eglContextPtr = IntPtr.Zero;
-            IntPtr metadataPtr = IntPtr.Zero;
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
+            //IntPtr eglContextPtr = IntPtr.Zero;
+            //IntPtr metadataPtr = IntPtr.Zero;
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr };
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PUSHDIRECTCDNSTREAMINGCUSTOMVIDEOFRAME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PUSHDIRECTCDNSTREAMINGCUSTOMVIDEOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 3,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection)
@@ -5338,15 +5265,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETUPREMOTEVIDEOEX,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETUPREMOTEVIDEOEX,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame,
@@ -5371,15 +5298,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHAUDIOFRAME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHAUDIOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PushVideoFrame(ExternalVideoFrame frame)
@@ -5401,20 +5328,20 @@ namespace Agora.Rtc
                 }
             };
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
-            IntPtr eglContextPtr = IntPtr.Zero;
-            IntPtr metadataPtr = IntPtr.Zero;
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
+            //IntPtr eglContextPtr = IntPtr.Zero;
+            //IntPtr metadataPtr = IntPtr.Zero;
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr };
 
             var json = AgoraJson.ToJson(param);
 
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 3,
-                out _result);
+               IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PushVideoFrame(ExternalVideoFrame frame, RtcConnection connection)
@@ -5437,19 +5364,19 @@ namespace Agora.Rtc
                 connection
             };
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
-            IntPtr eglContextPtr = IntPtr.Zero;
-            IntPtr metadataPtr = IntPtr.Zero;
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
+            //IntPtr eglContextPtr = IntPtr.Zero;
+            //IntPtr metadataPtr = IntPtr.Zero;
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr };
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME2,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 3,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
@@ -5463,15 +5390,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+               IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PushEncodedVideoImage(byte[] imageBuffer, uint length,
@@ -5487,15 +5414,15 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(imageBuffer, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE2,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHENCODEDVIDEOIMAGE2,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PushDirectAudioFrame(AudioFrame frame)
@@ -5516,50 +5443,51 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            //IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.RawBuffer, 0);
+            //IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHDIRECTAUDIOFRAME,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHDIRECTAUDIOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int PullAudioFrame(AudioFrame frame)
         {
-            var param = new
-            {
-                frame = new
-                {
-                    frame.type,
-                    frame.samplesPerChannel,
-                    frame.bytesPerSample,
-                    frame.channels,
-                    frame.samplesPerSec,
-                    frame.buffer,
-                    frame.renderTimeMs,
-                    frame.avsync_type,
-                }
-            };
-            var json = AgoraJson.ToJson(param);
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PULLAUDIOFRAME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+            //var param = new
+            //{
+            //    frame = new
+            //    {
+            //        frame.type,
+            //        frame.samplesPerChannel,
+            //        frame.bytesPerSample,
+            //        frame.channels,
+            //        frame.samplesPerSec,
+            //        frame.buffer,
+            //        frame.renderTimeMs,
+            //        frame.avsync_type,
+            //    }
+            //};
+            //var json = AgoraJson.ToJson(param);
+            //var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PULLAUDIOFRAME,
+            //    json, (UInt32)json.Length,
+            //    IntPtr.Zero, 0
+            //   );
 
-            var f = _result.Result.Length == 0
-               ? new AudioFrameWithoutBuffer()
-               : AgoraJson.JsonToStruct<AudioFrameWithoutBuffer>(_result.Result, "frame");
-            frame.avsync_type = f.avsync_type;
-            frame.channels = f.channels;
-            frame.samplesPerChannel = f.samplesPerChannel;
-            frame.type = f.type;
-            frame.bytesPerSample = f.bytesPerSample;
-            frame.renderTimeMs = f.renderTimeMs;
-            frame.samplesPerSec = f.samplesPerSec;
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            //var f = result.Length == 0
+            //   ? new AudioFrameWithoutBuffer()
+            //   : AgoraJson.JsonToStruct<AudioFrameWithoutBuffer>(result, "frame");
+            //frame.avsync_type = f.avsync_type;
+            //frame.channels = f.channels;
+            //frame.samplesPerChannel = f.samplesPerChannel;
+            //frame.type = f.type;
+            //frame.bytesPerSample = f.bytesPerSample;
+            //frame.renderTimeMs = f.renderTimeMs;
+            //frame.samplesPerSec = f.samplesPerSec;
+            //return (int)AgoraJson.GetData<int>(result, "result");
+            return -(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED;
         }
 
         public int SetMaxMetadataSize(int size)
@@ -5571,12 +5499,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
         public int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
@@ -5595,12 +5523,12 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDMETADATA,
+            var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDMETADATA,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
+                IntPtr.Zero, 0
+               );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return (int)AgoraJson.GetData<int>(result, "result");
         }
 
 
@@ -5608,23 +5536,25 @@ namespace Agora.Rtc
 
         public bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir)
         {
-            return AgoraRtcNative.StartDumpVideo(_videoFrameBufferManagerPtr, type, dir);
+            //return AgoraRtcNative.StartDumpVideo(_videoFrameBufferManagerPtr, type, dir);
+            return false;
         }
 
         public bool StopDumpVideo()
         {
-            return AgoraRtcNative.StopDumpVideo(_videoFrameBufferManagerPtr);
+            //return AgoraRtcNative.StopDumpVideo(_videoFrameBufferManagerPtr);
+            return false;
         }
 
-        public int ReleaseScreenCaptureSources()
-        {
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES,
-                "", 0,
-                IntPtr.Zero, 0,
-                out _result);
+        //public int ReleaseScreenCaptureSources()
+        //{
+        //    var result = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES,
+        //        "", 0
+        //        IntPtr.Zero, 0
+        //       );
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
+        //    return (int)AgoraJson.GetData<int>(result, "result");
+        //}
 
         ~RtcEngineImpl()
         {

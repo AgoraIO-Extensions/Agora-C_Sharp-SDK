@@ -1,3 +1,5 @@
+#if !UNITY_WEBGL
+
 using System;
 
 namespace Agora.Rtc
@@ -266,3 +268,5 @@ namespace Agora.Rtc
         }
     }
 }
+
+#endif

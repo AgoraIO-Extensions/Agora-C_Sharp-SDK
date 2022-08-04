@@ -29,6 +29,10 @@ namespace Agora.Rtc
         public int Width = 0;
         public int Height = 0;
 
+#if UNITY_WEBGL
+        private int[] _size = new int[2];
+#endif
+
         private Texture2D _texture;
         public Texture2D Texture
         {
@@ -87,7 +91,7 @@ namespace Agora.Rtc
                 y_stride = _videoPixelWidth * 4,
                 height = _videoPixelHeight,
                 width = _videoPixelWidth,
-                y_buffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4)
+                y_buffer = IntPtr.Zero
             };
         }
 
@@ -121,6 +125,34 @@ namespace Agora.Rtc
 
         internal void ReFreshTexture()
         {
+
+#if UNITY_WEBGL
+            var nativeTexturePtr= _texture.GetNativeTexturePtr();
+            var ret = _videoStreamManager.GetVideoFrame(nativeTexturePtr, _size, _sourceType, _uid, _channelId);
+            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY || ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
+            {
+                _canAttach = false;
+                //AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", _channelId, _uid));
+                return;
+            }
+            else if (_size[0] != _videoPixelWidth || _size[1] != _videoPixelHeight)
+            {
+                _needResize = true;
+                _videoPixelWidth = _size[0];
+                _videoPixelHeight = _size[1];
+
+            }
+            else {
+
+                _canAttach = true;
+            }
+
+            if (_needResize) {
+                _texture.Resize(_videoPixelWidth, _videoPixelHeight);
+                _texture.Apply();
+                _needResize = false;
+            }
+#else
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
             this.Width = _cachedVideoFrame.width;
             this.Height = _cachedVideoFrame.height;
@@ -171,6 +203,7 @@ namespace Agora.Rtc
                     AgoraLog.Log("Exception e = " + e);
                 }
             }
+#endif
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",
