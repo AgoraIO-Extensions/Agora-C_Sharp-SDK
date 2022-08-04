@@ -567,7 +567,7 @@ namespace Agora.Rtc
         }
 
 
-        public override int Open(long songCode, AgoraMediaType type, string resolution, uint startPos)
+        public override int Open(long songCode, MusicMediaType type, string resolution, uint startPos)
         {
             if (_musicPlayerImpl == null)
             {

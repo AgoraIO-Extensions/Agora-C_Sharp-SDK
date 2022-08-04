@@ -50,14 +50,14 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.GetLyric(ref requestId, songCode, LyricType);
         }
 
-        public override int GetMusicChart(ref string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")
+        public override int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.GetMusicChart(ref requestId, musicChartType, page, pageSize, jsonOption);
+            return _musicContentCenterImpl.GetMusicCollectionByMusicChartId(ref requestId, musicChartType, page, pageSize, jsonOption);
         }
 
         public override int GetMusicCharts(ref string requestId)
@@ -70,7 +70,7 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.GetMusicCharts(ref requestId);
         }
 
-        public override int Initialize(AgoraMusicContentCenterConfiguration configuration)
+        public override int Initialize(MusicContentCenterConfiguration configuration)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
@@ -80,7 +80,7 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.Initialize(configuration);
         }
 
-        public override int IsPreloaded(long songCode, AgoraMediaType type, string resolution)
+        public override int IsPreloaded(long songCode, MusicMediaType type, string resolution)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
@@ -90,7 +90,7 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.IsPreloaded(songCode, type, resolution);
         }
 
-        public override int Preload(long songCode, AgoraMediaType type, string resolution)
+        public override int Preload(long songCode, MusicMediaType type, string resolution)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
@@ -100,7 +100,7 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.Preload(songCode, type, resolution);
         }
 
-        public override int RegisterEventHandler(IAgoraMusicContentCenterEventHandler eventHandler)
+        public override int RegisterEventHandler(IMusicContentCenterEventHandler eventHandler)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
@@ -110,14 +110,14 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.RegisterEventHandler(eventHandler);
         }
 
-        public override int SearchSong(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
+        public override int SearchMusic(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _musicContentCenterImpl.SearchSong(ref requestId, keyWord, page, pageSize, jsonOption);
+            return _musicContentCenterImpl.SearchMusic(ref requestId, keyWord, page, pageSize, jsonOption);
         }
 
         public override int UnregisterEventHandler()
