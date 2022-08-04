@@ -15,6 +15,13 @@ var AgoraRtc = {
                 return UTF8ToString(ptrToSomeCString);
         },
 
+        bufferFromString: function (str) {
+            var bufferSize = lengthBytesUTF8(str) + 1;
+            var buffer = _malloc(bufferSize);
+            stringToUTF8(str, buffer, bufferSize);
+            return buffer;
+        },
+
         //key:value => int, object
         ptrMap: {},
         mapIndex: 0,
@@ -64,10 +71,14 @@ var AgoraRtc = {
         AgoraTool.clearPtr(mapIndex);
     },
 
-    SetIrisRtcEngineEventHandler: function (engine_ptr_map_index, onEvent) {
+    SetIrisRtcEngineEventHandler: function (engine_ptr_map_index, onEvent_ptr) {
         var engine_ptr = AgoraTool.getPtr(engine_ptr_map_index);
         var eventHandler = {
-            onEvent: onEvent
+            onEvent: function (event, data, buffer, length, buffer_count) {
+                var event_buffer = AgoraTool.bufferFromString(event);
+                var data_buffer = AgoraTool.bufferFromString(data);
+                AgoraTool.agoraDynCall("viiiii", onEvent_ptr, [event_buffer, data_buffer, 0, 0, 0])
+            }
         };
         var irisEventHandlerHandle = AgoraWrapper.SetIrisRtcEngineEventHandler(engine_ptr, eventHandler);
         var handlerHandleMapIndex = AgoraTool.ptrMap(irisEventHandlerHandle);
@@ -81,15 +92,15 @@ var AgoraRtc = {
         AgoraTool.clearPtr(handle_map_index);
     },
 
-    CallIrisApi: function (engine_ptr_map_index, func_name, params, paramLength, bufferPtr, bufferLength) {
+    CallIrisApi: function (engine_ptr_map_index, func_name_ptr, params_ptr, paramLength, bufferPtr, bufferLength) {
         var engine_ptr = AgoraTool.getPtr(engine_ptr_map_index);
+        func_name = AgoraTool.agoraToString(func_name_ptr);
+        params = AgoraTool.agoraToString(params_ptr);
         var result = {};
         AgoraWrapper.CallIrisApi(engine_ptr, func_name, params, paramLength, null, null, result);
         var str = JSON.stringify(result);
-        var bufferSize = lengthBytesUTF8(str) + 1;
-        var buffer = _malloc(bufferSize);
         //如果一个_malloc 出来的buffer,作为返回值返回给C#了，那么ILL2CPP会帮助你去_free这个buffer.否则需要显示的调用_free(buffer)才行
-        stringToUTF8(str, buffer, bufferSize);
+        var buffer = AgoraTool.bufferFromString(str);
         return buffer;
     },
 
@@ -120,8 +131,9 @@ var AgoraRtc = {
 
     EnableVideoFrameBufferByConfig: function (manager_ptr_map_index,
         buffer_type, buffer_onVideoFrameReceived, buffer_bytes_per_row_alignment,
-        config_type, config_id, config_key
+        config_type, config_id, config_key_ptr
     ) {
+        var config_key = AgoraTool.agoraToString(config_key_ptr);
         var buffer = {
             type: buffer_type,
             OnVideoFrameReceived: buffer_onVideoFrameReceived,
@@ -146,7 +158,8 @@ var AgoraRtc = {
     },
 
     DisableVideoFrameBufferByConfig: function (manager_ptr_map_index,
-        config_type, config_id, config_key) {
+        config_type, config_id, config_key_ptr) {
+        var config_key = AgoraTool.agoraToString(config_key_ptr);
         var manager_ptr = AgoraTool.getPtr(manager_ptr_map_index);
         var config = {
             type: config_type,
