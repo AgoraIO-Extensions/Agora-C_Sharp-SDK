@@ -49,14 +49,14 @@ namespace Agora.Rtc
             return _videoDeviecManagerImpl.SetDevice(deviceIdUTF8);
         }
 
-        public override string GetDevice()
+        public override int GetDevice(ref string deviceIdUTF8)
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
-                return null;
+                return ErrorCode;
             }
-            return _videoDeviecManagerImpl.GetDevice();
+            return _videoDeviecManagerImpl.GetDevice(ref deviceIdUTF8);
         }
 
         public override int StartDeviceTest(IntPtr hwnd)
