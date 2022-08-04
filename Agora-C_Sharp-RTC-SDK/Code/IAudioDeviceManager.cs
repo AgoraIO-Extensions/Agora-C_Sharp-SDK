@@ -7,17 +7,17 @@ namespace Agora.Rtc
 
         public abstract int SetPlaybackDevice(string deviceId);
 
-        public abstract string GetPlaybackDevice();
+        public abstract int GetPlaybackDevice(ref string deviceId);
 
-        public abstract DeviceInfo GetPlaybackDeviceInfo();
+        public abstract int GetPlaybackDeviceInfo(ref string deviceId, ref string deviceName);
 
         public abstract int SetPlaybackDeviceVolume(int volume);
 
-        public abstract int GetPlaybackDeviceVolume();
+        public abstract int GetPlaybackDeviceVolume(ref int volume);
 
         public abstract int SetPlaybackDeviceMute(bool mute);
 
-        public abstract bool GetPlaybackDeviceMute();
+        public abstract int GetPlaybackDeviceMute(ref bool mute);
 
         public abstract int StartPlaybackDeviceTest(string testAudioFilePath);
 
@@ -31,17 +31,17 @@ namespace Agora.Rtc
 
         public abstract int SetRecordingDevice(string deviceId);
 
-        public abstract string GetRecordingDevice();
+        public abstract int GetRecordingDevice(ref string deviceId);
 
-        public abstract DeviceInfo GetRecordingDeviceInfo();
+        public abstract int GetRecordingDeviceInfo(ref string deviceId, ref string deviceName);
 
         public abstract int SetRecordingDeviceVolume(int volume);
 
-        public abstract int GetRecordingDeviceVolume();
+        public abstract int GetRecordingDeviceVolume(ref int volume);
 
         public abstract int SetRecordingDeviceMute(bool mute);
 
-        public abstract bool GetRecordingDeviceMute();
+        public abstract int GetRecordingDeviceMute(ref bool mute);
 
         public abstract int StartRecordingDeviceTest(int indicationInterval);
 

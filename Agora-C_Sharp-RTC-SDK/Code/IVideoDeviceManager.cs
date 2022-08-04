@@ -8,7 +8,7 @@ namespace Agora.Rtc
 
         public abstract int SetDevice(string deviceIdUTF8);
 
-        public abstract string GetDevice();
+        public abstract int GetDevice(ref string deviceIdUTF8);
 
         public abstract int StartDeviceTest(IntPtr hwnd);
 
