@@ -4,9 +4,9 @@ using AOT;
 #endif
 namespace Agora.Rtc
 {
-    public class AgoraMusicContentCenterEventHandlerNative
+    public class MusicContentCenterEventHandlerNative
     {
-        internal static IAgoraMusicContentCenterEventHandler EventHandler = null;
+        internal static IMusicContentCenterEventHandler EventHandler = null;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         internal static AgoraCallbackObject CallbackObject = null;
@@ -26,32 +26,32 @@ namespace Agora.Rtc
             switch (@event)
             {
 
-                case "AgoraMusicContentCenterEventHandler_onMusicChartsTypeResult":
+                case "AgoraMusicContentCenterEventHandler_onMusicChartsResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                     if (EventHandler == null) return;
-                    EventHandler.OnMusicChartsTypeResult(
+                    EventHandler.OnMusicChartsResult(
                         (string)AgoraJson.GetData<string>(data, "requestId"),
-                        (CopyRightMusicStatusCode)AgoraJson.GetData<int>(data, "status"),
-                        (MusicChartsResult)AgoraJson.JsonToStruct<MusicChartsResult>(data, "result")
+                        (MusicContentCenterStatusCode)AgoraJson.GetData<int>(data, "status"),
+                        (MusicChartCollection)AgoraJson.JsonToStruct<MusicChartCollection>(data, "result")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
                     break;
 
-                case "AgoraMusicContentCenterEventHandler_onSongListResult":
+                case "AgoraMusicContentCenterEventHandler_onMusicCollectionResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                     if (EventHandler == null) return;
-                    EventHandler.OnSongListResult(
+                    EventHandler.OnMusicCollectionResult(
                         (string)AgoraJson.GetData<string>(data, "requestId"),
-                        (CopyRightMusicStatusCode)AgoraJson.GetData<int>(data, "status"),
-                        (MusicListResult)AgoraJson.JsonToStruct<MusicListResult>(data, "result")
+                        (MusicContentCenterStatusCode)AgoraJson.GetData<int>(data, "status"),
+                        (MusicCollection)AgoraJson.JsonToStruct<MusicCollection>(data, "result")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

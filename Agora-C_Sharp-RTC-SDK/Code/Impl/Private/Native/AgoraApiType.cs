@@ -507,8 +507,8 @@ namespace Agora.Rtc
         internal const string FUNC_MUSICCONTENTCENTER_CREATEMUSICPLAYER = "MusicContentCenter_createMusicPlayer";
         internal const string FUNC_MUSICCONTENTCENTER_DESTROYMUSICPLAYER = "MusicContentCenter_destroyMusicPlayer";
         internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCHARTS = "MusicContentCenter_getMusicCharts";
-        internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCHART = "MusicContentCenter_getMusicChart";
-        internal const string FUNC_MUSICCONTENTCENTER_SEARCHSONG = "MusicContentCenter_searchSong";
+        internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCOLLECTIONBYMUSICCHARTID = "MusicContentCenter_getMusicCollectionByMusicChartId";
+        internal const string FUNC_MUSICCONTENTCENTER_SEARCHMUSIC = "MusicContentCenter_searchMusic";
         internal const string FUNC_MUSICCONTENTCENTER_PRELOAD = "MusicContentCenter_preload";
         internal const string FUNC_MUSICCONTENTCENTER_ISPRELOADED = "MusicContentCenter_isPreloaded";
         internal const string FUNC_MUSICCONTENTCENTER_GETLYRIC = "MusicContentCenter_getLyric";
