@@ -6,6 +6,9 @@ namespace Agora.Rtc
 
 
 #if UNITY_WEBGL
+    //if you set uid_t = uint, there will a bug, when a big uint pass to js, it will become negative
+    //so we can only use string
+    using uid_t = System.String;
     using IrisRtcEnginePtr = System.Int32;
     using IrisEventHandlerHandle = System.Int32;
     using IrisVideoFrameBufferManagerPtr = System.Int32;
@@ -57,7 +60,8 @@ namespace Agora.Rtc
 
 #if UNITY_WEBGL
 
-        public delegate void OnEventDelegate(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count);
+   
+        //public delegate void OnEventDelegate(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count);
 
         [DllImport(AgoraRtcLibName)]
         internal static extern IrisRtcEnginePtr CreateIrisApiEngine();
@@ -67,7 +71,7 @@ namespace Agora.Rtc
 
         [DllImport(AgoraRtcLibName)]
         internal static extern IrisEventHandlerHandle SetIrisRtcEngineEventHandler(IrisRtcEnginePtr engine_ptr,
-         OnEventDelegate event_handler);
+         Func_Event_Native event_handler);
 
         [DllImport(AgoraRtcLibName)]
         internal static extern void UnsetIrisRtcEngineEventHandler(IrisRtcEnginePtr engine_ptr,
@@ -132,24 +136,24 @@ namespace Agora.Rtc
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //internal static extern IrisVideoFrameBufferDelegateHandle EnableVideoFrameBuffer(
         //    IrisVideoFrameBufferManagerPtr manager_ptr, ref IrisCVideoFrameBufferNative buffer,
-        //    uint uid = 0, string channel_id = "");
+        //    uid_t uid = 0, string channel_id = "");
 
         //[DllImport(AgoraRtcLibName)]
         //internal static extern IrisVideoFrameBufferDelegateHandle EnableVideoFrameBuffer(
         //    IrisVideoFrameBufferManagerPtr manager_ptr,
         //    int buffer_type, Func_VideoFrame_Native buffer_OnVideoFrameReceived, int bytes_per_row_alignment,
-        //    uint uid = 0, string channel_id = "");
+        //    uid_t uid = 0, string channel_id = "");
 
         [DllImport(AgoraRtcLibName)]
         internal static extern void
         DisableVideoFrameBufferByUid(IrisVideoFrameBufferManagerPtr manager_ptr,
-                                    uint uid = 0, string channel_id = "");
+                                    uid_t uid , string channel_id = "");
 
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //internal static extern IRIS_VIDEO_PROCESS_ERR GetVideoFrame(IrisVideoFrameBufferManagerPtr manager_ptr,
         //                            ref IrisVideoFrame video_frame, out bool is_new_frame,
-        //                            uint uid, string channel_id = "");
- 
+        //                            uid_t uid, string channel_id = "");
+
         //[DllImport(AgoraRtcLibName)]
         //internal static extern IrisVideoFrameBufferDelegateHandle EnableVideoFrameBufferByConfig(
         //    IrisVideoFrameBufferManagerPtr manager_ptr, ref IrisCVideoFrameBufferNative buffer,
@@ -159,7 +163,7 @@ namespace Agora.Rtc
         internal static extern IrisVideoFrameBufferDelegateHandle EnableVideoFrameBufferByConfig(
             IrisVideoFrameBufferManagerPtr manager_ptr,
             int buffer_type, Func_VideoFrame_Native buffer_OnVideoFrameReceived, int buffer_bytes_per_row_alignment,
-            int config_type,  uint config_id, string config_key 
+            int config_type,  uid_t config_id, string config_key 
         );
 
         [DllImport(AgoraRtcLibName)]
@@ -179,7 +183,7 @@ namespace Agora.Rtc
 
         [DllImport(AgoraRtcLibName)]
         internal static extern bool
-        UpdateTextureRawData(IrisVideoFrameBufferManagerPtr manager_ptr, IntPtr nativeTexturePtr, int type, uint id, string channelName, int[] size);
+        UpdateTextureRawData(IrisVideoFrameBufferManagerPtr manager_ptr, IntPtr nativeTexturePtr, int type, uid_t id, string channelName, int[] size);
 
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //internal static extern IRIS_VIDEO_PROCESS_ERR GetVideoFrameByConfig(IrisVideoFrameBufferManagerPtr manager_ptr,

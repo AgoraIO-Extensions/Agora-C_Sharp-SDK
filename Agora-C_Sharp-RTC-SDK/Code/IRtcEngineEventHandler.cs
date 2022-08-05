@@ -9,6 +9,9 @@ namespace Agora.Rtc
     ///
     public abstract class IRtcEngineEventHandler
     {
+
+
+        public virtual void OnDeviceEnumerated() { }
         ///
         /// <summary>
         /// Occurs when a user joins a channel.

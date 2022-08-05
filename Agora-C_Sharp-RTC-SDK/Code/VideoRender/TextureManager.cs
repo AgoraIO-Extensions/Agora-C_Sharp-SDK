@@ -1,4 +1,4 @@
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID ||  UNITY_WEBGL
 using System;
 using System.Runtime.InteropServices;
 using UnityEngine;
@@ -128,7 +128,7 @@ namespace Agora.Rtc
 
 #if UNITY_WEBGL
             var nativeTexturePtr= _texture.GetNativeTexturePtr();
-            var ret = _videoStreamManager.GetVideoFrame(nativeTexturePtr, _size, _sourceType, _uid, _channelId);
+            var ret = _videoStreamManager.GetVideoFrame(nativeTexturePtr,ref _size, _sourceType, _uid, _channelId);
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY || ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
             {
                 _canAttach = false;
@@ -138,6 +138,8 @@ namespace Agora.Rtc
             else if (_size[0] != _videoPixelWidth || _size[1] != _videoPixelHeight)
             {
                 _needResize = true;
+                Width = _size[0];
+                Height = _size[1];
                 _videoPixelWidth = _size[0];
                 _videoPixelHeight = _size[1];
 

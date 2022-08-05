@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
 using AOT;
 #endif
 
@@ -14,7 +14,7 @@ namespace Agora.Rtc
         internal static AgoraCallbackObject CallbackObject = null;
 #endif
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID || UNITY_WEBGL
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
         internal static void OnEvent(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count)
@@ -1430,6 +1430,21 @@ namespace Agora.Rtc
                     });
 #endif
                     break;
+
+                case "WebGL_onDeviceEnumerated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandler == null) return;
+                        EngineEventHandler.OnDeviceEnumerated(
+                           
+                         );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 #endregion no buffer end
 
                 #region withBuffer start
@@ -1458,7 +1473,7 @@ namespace Agora.Rtc
                     });
 #endif
                     break;
-                 #endregion withBuffer end
+                #endregion withBuffer end
             }
         }
     }

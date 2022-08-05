@@ -16,12 +16,12 @@ namespace Agora.Rtc
         internal abstract void DisableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "");
 
 #if UNITY_WEBGL
-        internal abstract IRIS_VIDEO_PROCESS_ERR GetVideoFrame(IntPtr nativeTexturePtr, int[] size, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
+        internal abstract IRIS_VIDEO_PROCESS_ERR GetVideoFrame(IntPtr nativeTexturePtr, ref int[] size, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
 #else
         internal abstract IRIS_VIDEO_PROCESS_ERR GetVideoFrame(ref IrisVideoFrame video_frame,
             ref bool is_new_frame, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
 #endif
-      
+
 
     }
 
@@ -67,7 +67,7 @@ namespace Agora.Rtc
 #if UNITY_WEBGL
                 _irisVideoFrameBufferHandle = AgoraRtcNative.EnableVideoFrameBufferByConfig(videoFrameBufferManagerPtr,
                     (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA, null, 2,
-                    _videoFrameBufferConfig.type, _videoFrameBufferConfig.id, _videoFrameBufferConfig.key);
+                    _videoFrameBufferConfig.type, _videoFrameBufferConfig.id.ToString(), _videoFrameBufferConfig.key);
 #else
                 _videoFrameBuffer = new IrisCVideoFrameBufferNative {
                     type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
@@ -115,17 +115,19 @@ namespace Agora.Rtc
 
 
 #if UNITY_WEBGL
-        internal override IRIS_VIDEO_PROCESS_ERR GetVideoFrame(IntPtr nativeTexturePtr, int[] size, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "")
+        internal override IRIS_VIDEO_PROCESS_ERR GetVideoFrame(IntPtr nativeTexturePtr, ref int[] size, VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "")
         {
             var irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
             var videoFrameBufferManagerPtr = (_agoraRtcEngine as RtcEngineImpl).GetVideoFrameBufferManager();
-            if (irisEngine != 0) {
-                bool sucess= AgoraRtcNative.UpdateTextureRawData(videoFrameBufferManagerPtr, nativeTexturePtr, (int)sourceType, uid, key, size);
+            if (irisEngine != 0)
+            { 
+                bool sucess = AgoraRtcNative.UpdateTextureRawData(videoFrameBufferManagerPtr, nativeTexturePtr, (int)sourceType, uid.ToString(), key, size);
                 if (sucess)
                 {
                     return IRIS_VIDEO_PROCESS_ERR.ERR_OK;
                 }
-                else {
+                else
+                {
                     return IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY;
                 }
             }

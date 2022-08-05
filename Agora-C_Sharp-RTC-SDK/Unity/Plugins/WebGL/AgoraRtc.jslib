@@ -52,7 +52,20 @@ var AgoraRtc = {
             // 返回不生成数组的 HEAP 子数组（值复制）
             var startIndex = ptr / heap.BYTES_PER_ELEMENT;
             return heap.subarray(startIndex, startIndex + size);
-        }
+        },
+
+        getUid: function (uid_ptr) {
+            var str = null;
+            if (typeof UTF8ToString == "undefined")
+                str = Pointer_stringify(uid_ptr);
+            else
+                str = UTF8ToString(uid_ptr);
+
+            return parseInt(str);
+        },
+
+
+        rtcEngineEventPtr: null,
 
     },
 
@@ -73,15 +86,19 @@ var AgoraRtc = {
 
     SetIrisRtcEngineEventHandler: function (engine_ptr_map_index, onEvent_ptr) {
         var engine_ptr = AgoraTool.getPtr(engine_ptr_map_index);
+        AgoraTool.rtcEngineEventPtr = onEvent_ptr;
         var eventHandler = {
             onEvent: function (event, data, buffer, length, buffer_count) {
+                console.log("[jslib: onEvent]: event" + event);
+                console.log("[jslib: onEvent]: data" + data);
+
                 var event_buffer = AgoraTool.bufferFromString(event);
                 var data_buffer = AgoraTool.bufferFromString(data);
-                AgoraTool.agoraDynCall("viiiii", onEvent_ptr, [event_buffer, data_buffer, 0, 0, 0])
+                AgoraTool.agoraDynCall("viiiii", AgoraTool.rtcEngineEventPtr, [event_buffer, data_buffer, 0, 0, 0])
             }
         };
         var irisEventHandlerHandle = AgoraWrapper.SetIrisRtcEngineEventHandler(engine_ptr, eventHandler);
-        var handlerHandleMapIndex = AgoraTool.ptrMap(irisEventHandlerHandle);
+        var handlerHandleMapIndex = AgoraTool.putPtr(irisEventHandlerHandle);
         return handlerHandleMapIndex;
     },
 
@@ -114,7 +131,6 @@ var AgoraRtc = {
         var engine_ptr = AgoraTool.getPtr(engine_ptr_map_index);
         var manager_ptr = AgoraTool.getPtr(manager_ptr_map_index);
         AgoraWrapper.Detach(engine_ptr, manager_ptr);
-        AgoraTool.clearPtr(manager_ptr_map_index);
     },
 
     CreateIrisVideoFrameBufferManager: function () {
@@ -131,9 +147,10 @@ var AgoraRtc = {
 
     EnableVideoFrameBufferByConfig: function (manager_ptr_map_index,
         buffer_type, buffer_onVideoFrameReceived, buffer_bytes_per_row_alignment,
-        config_type, config_id, config_key_ptr
+        config_type, config_id_ptr, config_key_ptr
     ) {
         var config_key = AgoraTool.agoraToString(config_key_ptr);
+        var config_id = AgoraTool.getUid(config_id_ptr);
         var buffer = {
             type: buffer_type,
             OnVideoFrameReceived: buffer_onVideoFrameReceived,
@@ -174,8 +191,10 @@ var AgoraRtc = {
         AgoraWrapper.DisableAllVideoFrameBuffer(manager_ptr);
     },
 
-    UpdateTextureRawData: function (manager_ptr_map_index, nativeTexturePtr, type, id, channelName, sizePtr) {
+    UpdateTextureRawData: function (manager_ptr_map_index, nativeTexturePtr, type, uid_ptr, channelName_ptr, sizePtr) {
         var manager_ptr = AgoraTool.getPtr(manager_ptr_map_index);
+        var channelName = AgoraTool.agoraToString(channelName_ptr);
+        var id = AgoraTool.getUid(uid_ptr);
         var config = {
             type: type,
             id: id,
@@ -183,11 +202,10 @@ var AgoraRtc = {
         };
         var videoParams = AgoraWrapper.GetVideoFrameByConfig(manager_ptr, config);
 
-        console.log(videoParams);
-
-
-        if (videoParams == null)
+        if (videoParams == null) {
+            console.log(config);
             return false;
+        }
 
         if (videoParams.is_new_frame == false)
             return false;
@@ -197,7 +215,8 @@ var AgoraRtc = {
         if (!videoTrack.isPlaying)
             return false;
 
-        var v = videoTrackAny._player.videoElement;
+        //v: HTMLVideoElement
+        var v = videoTrack._player.videoElement;
 
         if (!(v.videoWidth > 0 && v.videoHeight > 0)) {
             return false;
