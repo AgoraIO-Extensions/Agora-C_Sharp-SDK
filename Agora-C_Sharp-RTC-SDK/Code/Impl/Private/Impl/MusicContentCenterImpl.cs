@@ -156,12 +156,11 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartType, int page, int pageSize, string jsonOption = "")
+        public int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartId, int page, int pageSize, string jsonOption = "")
         {
             var param = new
             {
-                requestId,
-                musicChartType,
+                musicChartId,
                 page,
                 pageSize,
                 jsonOption
@@ -258,7 +257,6 @@ namespace Agora.Rtc
         {
             var param = new
             {
-                requestId,
                 keyWord,
                 page,
                 pageSize,
