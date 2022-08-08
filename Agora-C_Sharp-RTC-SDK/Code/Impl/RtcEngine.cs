@@ -390,7 +390,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartPreview();
+            return _rtcEngineImpl.StartPreview(sourceType);
         }
 
         public override int StopPreview()
