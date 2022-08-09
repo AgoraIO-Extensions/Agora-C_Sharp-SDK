@@ -2234,12 +2234,12 @@ namespace Agora.Rtc
         }
 
 
-        public int SetRemoteRenderMode(uint userId, RENDER_MODE_TYPE renderMode,
+        public int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode,
             VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
             var param = new
             {
-                userId,
+                uid,
                 renderMode,
                 mirrorMode
             };
