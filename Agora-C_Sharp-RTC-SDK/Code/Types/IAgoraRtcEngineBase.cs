@@ -540,7 +540,7 @@ namespace Agora.Rtc
                 writer.Write(this.audioProcessingChannels.GetValue());
             }
 
-            writer.WriteArrayEnd();
+            writer.WriteObjectEnd();
         }
     };
 

@@ -14,6 +14,8 @@ namespace Agora.Rtc
 
         public virtual void OnPlayBufferUpdated(Int64 playCachedBuffer) { }
 
+        public virtual void OnPreloadEvent(string src, PLAYER_PRELOAD_EVENT @event) { }
+
         public virtual void OnCompleted() { }
 
         public virtual void OnAgoraCDNTokenWillExpire() { }
