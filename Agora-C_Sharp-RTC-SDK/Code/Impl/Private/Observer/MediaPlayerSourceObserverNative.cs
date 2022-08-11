@@ -80,6 +80,22 @@ namespace Agora.Rtc
                     });
 #endif
                     break;
+
+                case "MediaPlayerSourceObserver_onPreloadEvent":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (!RtcMediaPlayerEventHandlerDic.ContainsKey(playerId)) return;
+                    RtcMediaPlayerEventHandlerDic[playerId].OnPreloadEvent(
+                        (string)AgoraJson.GetData<string>(data, "src"),
+                        (PLAYER_PRELOAD_EVENT)AgoraJson.GetData<int>(data, "event")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 case "MediaPlayerSourceObserver_onCompleted":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
