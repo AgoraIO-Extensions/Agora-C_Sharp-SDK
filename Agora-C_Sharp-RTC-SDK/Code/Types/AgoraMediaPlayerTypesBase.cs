@@ -128,7 +128,7 @@ namespace Agora.Rtc
         PLAYER_EVENT_TRY_OPEN_FAILED = 18,
     };
 
-    enum PLAYER_PRELOAD_EVENT
+    public enum PLAYER_PRELOAD_EVENT
     {
         PLAYER_PRELOAD_EVENT_BEGIN = 0,
 
