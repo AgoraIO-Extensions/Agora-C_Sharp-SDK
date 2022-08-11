@@ -532,11 +532,15 @@ namespace Agora.Rtc
 
         public override void ToJson(JsonWriter writer)
         {
+            writer.WriteObjectStart();
+
             if (this.audioProcessingChannels.HasValue())
             {
                 writer.WritePropertyName("audioProcessingChannels");
                 writer.Write(this.audioProcessingChannels.GetValue());
             }
+
+            writer.WriteArrayEnd();
         }
     };
 
