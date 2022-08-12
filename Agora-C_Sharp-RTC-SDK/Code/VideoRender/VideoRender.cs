@@ -81,7 +81,7 @@ namespace Agora.Rtc
                 _videoFrameBufferConfig.type = (int)sourceType;
                 _videoFrameBufferConfig.id = uid;
                 _videoFrameBufferConfig.key = key;
-                AgoraRtcNative.DisableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBufferConfig);
+                AgoraRtcNative.DisableVideoFrameBufferByConfig(videoFrameBufferManagerPtr, ref _videoFrameBufferConfig, _irisVideoFrameBufferHandle);
             }
         }
 
