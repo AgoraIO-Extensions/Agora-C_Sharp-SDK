@@ -155,7 +155,7 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void
         DisableVideoFrameBufferByConfig(IrisVideoFrameBufferManagerPtr manager_ptr,
-                                    ref IrisVideoFrameBufferConfig config);
+                                    ref IrisVideoFrameBufferConfig config, IrisVideoFrameBufferDelegateHandle handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void
