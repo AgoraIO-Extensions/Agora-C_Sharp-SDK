@@ -89,12 +89,12 @@ var AgoraRtc = {
         AgoraTool.rtcEngineEventPtr = onEvent_ptr;
         var eventHandler = {
             onEvent: function (event, data, buffer, length, buffer_count) {
-                console.log("[jslib: onEvent]: event" + event);
-                console.log("[jslib: onEvent]: data" + data);
-
+                console.log("[jslib: onEvent]: event: " + event + " : " + data);
                 var event_buffer = AgoraTool.bufferFromString(event);
                 var data_buffer = AgoraTool.bufferFromString(data);
                 AgoraTool.agoraDynCall("viiiii", AgoraTool.rtcEngineEventPtr, [event_buffer, data_buffer, 0, 0, 0])
+                _free(event_buffer);
+                _free(data_buffer);
             }
         };
         var irisEventHandlerHandle = AgoraWrapper.SetIrisRtcEngineEventHandler(engine_ptr, eventHandler);
