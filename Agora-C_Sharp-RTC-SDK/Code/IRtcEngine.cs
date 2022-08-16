@@ -542,7 +542,7 @@ namespace Agora.Rtc
 
         public abstract int Complain(string callId, string description);
 
-        public abstract string GetVersion();
+        public abstract string GetVersion(ref int build);
 
         public abstract string GetErrorDescription(int code);
         #endregion
