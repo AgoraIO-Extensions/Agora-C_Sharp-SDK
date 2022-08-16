@@ -1,11 +1,13 @@
 using System;
 using video_track_id_t = System.UInt32;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+using UnityEngine;
+#endif
 
 namespace Agora.Rtc
 {
     public sealed class RtcEngine : IRtcEngineEx
     {
-        private bool _disposed = false;
         private RtcEngineImpl _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
         private IVideoDeviceManager _videoDeviceManager = null;
@@ -16,6 +18,10 @@ namespace Agora.Rtc
         private const string ErrorMsgLog = "[RtcEngine]:IRtcEngine has not been created yet!";
         private const int ErrorCode = -1;
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        private GameObject _agoraEngineObject;
+#endif
+
         private RtcEngine()
         {
             _rtcEngineImpl = RtcEngineImpl.GetInstance();
@@ -24,12 +30,15 @@ namespace Agora.Rtc
             //_cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
             _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
+
             _mediaRecorder = MediaRecorder.GetInstance(this, _rtcEngineImpl.GetMediaRecorder());
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            InitAgoraEngineObject();
+#endif
         }
 
         ~RtcEngine()
         {
-            Dispose();
             _audioDeviceManager = null;
             _videoDeviceManager = null;
             //_cloudSpatialAudioEngine = null;
@@ -65,6 +74,25 @@ namespace Agora.Rtc
             return (IRtcEngineEx)(instance ?? (instance = new RtcEngine()));
         }
 
+        public static IRtcEngine Get()
+        {
+            return instance;
+        }
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        private void InitAgoraEngineObject()
+        {
+            _agoraEngineObject = GameObject.Find("AgoraRtcEngineObj");
+            if (_agoraEngineObject == null)
+            {
+                _agoraEngineObject = new GameObject("AgoraRtcEngineObj");
+                UnityEngine.Object.DontDestroyOnLoad(_agoraEngineObject);
+                _agoraEngineObject.hideFlags = HideFlags.HideInHierarchy;
+                _agoraEngineObject.AddComponent<AgoraGameObject>();
+            }
+        }
+#endif
+
         public override int Initialize(RtcEngineContext context)
         {
             if (_rtcEngineImpl == null)
@@ -77,7 +105,6 @@ namespace Agora.Rtc
 
         public override void Dispose(bool sync = false)
         {
-            if (_disposed) return;
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
@@ -93,8 +120,6 @@ namespace Agora.Rtc
             MediaPlayerCacheManager.ReleaseInstance();
             MediaRecorder.ReleaseInstance();
             instance = null;
-
-            _disposed = true;
         }
 
         public override void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
