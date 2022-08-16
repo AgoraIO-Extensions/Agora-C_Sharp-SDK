@@ -246,14 +246,15 @@ namespace Agora.Rtc
             return _localSpatialAudioEngine;
         }
 
-        public override string GetVersion()
+        public override string GetVersion(ref int build)
         {
             if (_rtcEngineImpl == null)
             {
                 AgoraLog.LogError(ErrorMsgLog);
+                build = 0;
                 return null;
             }
-            return _rtcEngineImpl.GetVersion();
+            return _rtcEngineImpl.GetVersion(ref build);
         }
 
         public override string GetErrorDescription(int code)
