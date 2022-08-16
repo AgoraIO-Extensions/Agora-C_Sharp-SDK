@@ -533,7 +533,7 @@ namespace Agora.Rtc
         }
 #endif
 
-        public string GetVersion()
+        public string GetVersion(ref int build)
         {
             var param = new { };
             var json = AgoraJson.ToJson(param);
@@ -543,6 +543,14 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 out _result);
 
+            if (nRet == 0)
+            {
+                build = (int)AgoraJson.GetData<int>(_result.Result, "build");
+            }
+            else
+            {
+                build = 0;
+            }
             return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
         }
 
