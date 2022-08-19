@@ -10,3 +10,4 @@ agora_cpp.dll
 agora_rtc_sdk.dll
 obj/
 .DS_Store
+*.meta
