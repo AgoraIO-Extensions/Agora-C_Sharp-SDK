@@ -793,7 +793,7 @@ namespace Agora.Rtc
                     EngineEventHandler.OnLocalVideoStateChanged(
                         (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(data, "source"),
                         (LOCAL_VIDEO_STREAM_STATE)AgoraJson.GetData<int>(data, "state"),
-                        (LOCAL_VIDEO_STREAM_ERROR)AgoraJson.GetData<int>(data, "errorCode")
+                        (LOCAL_VIDEO_STREAM_ERROR)AgoraJson.GetData<int>(data, "error")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
