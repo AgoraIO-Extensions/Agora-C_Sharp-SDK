@@ -784,6 +784,22 @@ namespace Agora.Rtc
 #endif
                     break;
 
+                case "onLocalVideoStateChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnLocalVideoStateChanged(
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(data, "source"),
+                        (LOCAL_VIDEO_STREAM_STATE)AgoraJson.GetData<int>(data, "state"),
+                        (LOCAL_VIDEO_STREAM_ERROR)AgoraJson.GetData<int>(data, "error")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 case "onLocalVideoStateChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
