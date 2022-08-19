@@ -54,7 +54,9 @@ namespace Agora.Rtc
 
     public delegate void OnSnapshotTakenHandlerEx(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode);
 
-    public delegate void OnLocalVideoStateChangedHandler(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode);
+    public delegate void OnLocalVideoStateChangedHandler(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode);
+
+    public delegate void OnLocalVideoStateChangedHandlerEx(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode);
 
     public delegate void OnRemoteVideoStateChangedHandler(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed);
 
@@ -223,6 +225,7 @@ namespace Agora.Rtc
         public event OnContentInspectResultHandler EventOnContentInspectResult;
         public event OnSnapshotTakenHandlerEx EventOnSnapshotTakenEx;
         public event OnLocalVideoStateChangedHandler EventOnLocalVideoStateChanged;
+        public event OnLocalVideoStateChangedHandlerEx EventOnLocalVideoStateChangedEx;
         public event OnRemoteVideoStateChangedHandler EventOnRemoteVideoStateChanged;
         public event OnFirstRemoteVideoFrameHandler EventOnFirstRemoteVideoFrame;
         public event OnUserJoinedHandler EventOnUserJoined;
@@ -462,10 +465,16 @@ namespace Agora.Rtc
             EventOnSnapshotTakenEx.Invoke(connection, uid, filePath, width, height, errCode);
         }
 
-        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
         {
             if (EventOnLocalVideoStateChanged == null) return;
-            EventOnLocalVideoStateChanged.Invoke(connection, state, errorCode);
+            EventOnLocalVideoStateChanged.Invoke(source, state, errorCode);
+        }
+
+        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        {
+            if (EventOnLocalVideoStateChangedEx == null) return;
+            EventOnLocalVideoStateChangedEx.Invoke(connection, state, errorCode);
         }
 
         public override void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
