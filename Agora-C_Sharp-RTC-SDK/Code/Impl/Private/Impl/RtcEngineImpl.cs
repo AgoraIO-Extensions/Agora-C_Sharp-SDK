@@ -86,6 +86,9 @@ namespace Agora.Rtc
         private IrisMediaPlayerCAudioSpectrumObserver _irisRtcCAudioSpectrumObserver;
         private IntPtr _irisRtcCAudioSpectrumObserverHandleNative;
 
+
+        public event Action<RtcEngineImpl> OnRtcEngineImpleWillDispose;
+
         private RtcEngineImpl()
         {
             _result = new CharAssistant();
@@ -112,6 +115,11 @@ namespace Agora.Rtc
 
             if (disposing)
             {
+                if (this.OnRtcEngineImpleWillDispose != null)
+                {
+                    this.OnRtcEngineImpleWillDispose.Invoke(this);
+                }
+
                 ReleaseEventHandler();
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
@@ -529,7 +537,7 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         internal IVideoStreamManager GetVideoStreamManager()
         {
-           return new VideoStreamManager(this);
+            return new VideoStreamManager(this);
         }
 #endif
 
