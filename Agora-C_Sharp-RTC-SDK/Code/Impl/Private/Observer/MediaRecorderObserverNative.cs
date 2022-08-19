@@ -21,9 +21,9 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
-            RtcConnection connection = AgoraJson.JsonToStruct<RtcConnection>(data, "connection");
+            var jsonData = AgoraJson.ToObject(data);
+            RtcConnection connection = AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
             string key = connection.localUid.ToString() + connection.channelId;
-
             switch (@event)
             {
                 case "MediaRecorderObserver_onRecorderStateChanged":
@@ -33,8 +33,8 @@ namespace Agora.Rtc
 #endif
                         if (!MediaRecorderObserverDic.ContainsKey(key)) return;
                         MediaRecorderObserverDic[key].OnRecorderStateChanged(
-                            (RecorderState)AgoraJson.GetData<int>(data, "state"),
-                            (RecorderErrorCode)AgoraJson.GetData<int>(data, "error")
+                            (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
+                            (RecorderErrorCode)AgoraJson.GetData<int>(jsonData, "error")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -48,7 +48,7 @@ namespace Agora.Rtc
 #endif
                         if (!MediaRecorderObserverDic.ContainsKey(key)) return;
                         MediaRecorderObserverDic[key].OnRecorderInfoUpdated(
-                            AgoraJson.JsonToStruct<RecorderInfo>(data, "info")
+                            AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
