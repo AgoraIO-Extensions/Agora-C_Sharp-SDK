@@ -110,6 +110,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
+           
             _rtcEngineImpl.Dispose(sync);
             _rtcEngineImpl = null;
 
