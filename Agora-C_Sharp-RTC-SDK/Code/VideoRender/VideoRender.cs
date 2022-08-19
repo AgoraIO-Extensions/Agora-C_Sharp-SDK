@@ -1,4 +1,4 @@
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 
 using System;
 
@@ -34,10 +34,10 @@ namespace Agora.Rtc
             _videoFrameBufferConfig = new IrisVideoFrameBufferConfig();
         }
 
-        //~VideoStreamManager()
-        //{
-        //    Dispose();
-        //}
+        ~VideoStreamManager()
+        {
+            Dispose();
+        }
 
         internal override int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "")
         {
@@ -140,6 +140,7 @@ namespace Agora.Rtc
         public override void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
