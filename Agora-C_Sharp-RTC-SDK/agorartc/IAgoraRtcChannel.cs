@@ -734,7 +734,7 @@ namespace agora.rtc
         */
         public abstract int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams spatial_audio_params);
 
-        public abstract int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId);
+        public abstract int EnableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId);
     }
 
     /**

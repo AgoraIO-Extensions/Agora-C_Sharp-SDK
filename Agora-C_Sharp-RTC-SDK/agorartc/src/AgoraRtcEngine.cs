@@ -3076,7 +3076,7 @@ namespace agora.rtc
             return info;
         }
 
-        public override int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId)
+        public override int EnableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId)
         {
             var param = new
             {
@@ -3089,7 +3089,7 @@ namespace agora.rtc
                 out _result);
         }
 
-        public override int setCameraCaptureRotation(int rotation)
+        public override int SetCameraCaptureRotation(int rotation)
         {
             var param = new
             {
