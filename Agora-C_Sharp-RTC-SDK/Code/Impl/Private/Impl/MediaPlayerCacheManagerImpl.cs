@@ -196,7 +196,7 @@ namespace Agora.Rtc
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0,
                 out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return ret != 0 ? ret : (long)AgoraJson.GetData<long>(_result.Result, "result");
         }
 
         public int GetCacheFileCount()
