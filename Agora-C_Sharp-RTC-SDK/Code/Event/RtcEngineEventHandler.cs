@@ -48,7 +48,7 @@ namespace Agora.Rtc
 
     public delegate void OnFirstRemoteVideoDecodedHandler(RtcConnection connection, uint remoteUid, int width, int height, int elapsed);
 
-    public delegate void OnVideoSizeChangedHandler(RtcConnection connection, uint uid, int width, int height, int rotation);
+    public delegate void OnVideoSizeChangedHandler(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation);
 
     public delegate void OnContentInspectResultHandler(CONTENT_INSPECT_RESULT result);
 
@@ -447,10 +447,10 @@ namespace Agora.Rtc
             EventOnFirstRemoteVideoDecoded.Invoke(connection, remoteUid, width, height, elapsed);
         }
 
-        public override void OnVideoSizeChanged(RtcConnection connection, uint uid, int width, int height, int rotation)
+        public override void OnVideoSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation)
         {
             if (EventOnVideoSizeChanged == null) return;
-            EventOnVideoSizeChanged.Invoke(connection, uid, width, height, rotation);
+            EventOnVideoSizeChanged.Invoke(connection, sourceType, uid, width, height, rotation);
         }
 
         public override void OnContentInspectResult(CONTENT_INSPECT_RESULT result)

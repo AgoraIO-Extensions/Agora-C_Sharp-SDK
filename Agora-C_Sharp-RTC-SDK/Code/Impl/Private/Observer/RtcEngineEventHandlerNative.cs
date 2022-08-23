@@ -824,6 +824,7 @@ namespace Agora.Rtc
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnVideoSizeChanged(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (int)AgoraJson.GetData<int>(jsonData, "width"),
                         (int)AgoraJson.GetData<int>(jsonData, "height"),
