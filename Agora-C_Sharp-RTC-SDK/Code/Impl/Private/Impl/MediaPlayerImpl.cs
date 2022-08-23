@@ -55,6 +55,18 @@ namespace Agora.Rtc
         private static readonly string identifier = "AgoraMediaPlayer";
 #endif
 
+        private List<T> GetDicKeys<T, D>(Dictionary<T, D> dic)
+        {
+            List<T> list = new List<T>();
+            foreach (var e in dic)
+            {
+                list.Add(e.Key);
+            }
+
+            return list;
+        }
+
+
         internal MediaPlayerImpl(IrisApiEnginePtr irisApiEngine)
         {
             _result = new CharAssistant();
@@ -77,13 +89,13 @@ namespace Agora.Rtc
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisAudioSpectrumObserver();
 
-                var keys = this._irisMediaPlayerCCustomProviderNatives.Keys;
+                var keys = GetDicKeys<int, IrisMediaPlayerCCustomProviderNativeMarshal>(this._irisMediaPlayerCCustomProviderNatives);
                 foreach (var playerId in keys)
                 {
                     this.UnSetMediaPlayerOpenWithCustomSource(playerId);
                 }
 
-                keys = this._irisMediaPlayerCMediaProviderNatives.Keys;
+                keys = GetDicKeys<int, IrisMediaPlayerCCustomProviderNativeMarshal>(this._irisMediaPlayerCMediaProviderNatives);
                 foreach (var playerId in keys)
                 {
                     this.UnsetMediaPlayerOpenWithMediaSource(playerId);
