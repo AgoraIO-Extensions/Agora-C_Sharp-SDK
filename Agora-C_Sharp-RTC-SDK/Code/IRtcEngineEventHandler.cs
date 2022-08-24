@@ -51,7 +51,7 @@ namespace Agora.Rtc
 
         public virtual void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed) { }
 
-        public virtual void OnVideoSizeChanged(RtcConnection connection, uint uid, int width, int height, int rotation) { }
+        public virtual void OnVideoSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation) { }
 
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }
 
