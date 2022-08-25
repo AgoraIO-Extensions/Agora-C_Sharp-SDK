@@ -25,5 +25,4 @@ namespace Agora.Rtc
        
         public abstract int GetCacheFileCount();
     };
-
 }
