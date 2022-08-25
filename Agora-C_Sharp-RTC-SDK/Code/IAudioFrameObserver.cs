@@ -7,17 +7,16 @@ namespace Agora.Rtc
             return true;
         }
 
-        public virtual bool OnPlaybackAudioFrame(string channelId, AudioFrame audio_frame)
+        public virtual bool OnPlaybackAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
 
-        public virtual bool OnMixedAudioFrame(string channelId, AudioFrame audio_frame)
+        public virtual bool OnMixedAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
 
-     
         public virtual int GetObservedAudioFramePosition()
         {
             return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE; 
@@ -38,21 +37,14 @@ namespace Agora.Rtc
             return new AudioParams();
         }
 
-     
-        public virtual bool OnPlaybackAudioFrameBeforeMixing(string channel_id,
-                                                        uint uid,
-                                                        AudioFrame audio_frame)
+        public virtual bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, AudioFrame audioFrame)
         {
             return false;
         }
 
-        public virtual bool OnPlaybackAudioFrameBeforeMixing(string channel_id,
-                                                        string uid,
-                                                        AudioFrame audio_frame)
+        public virtual bool OnPlaybackAudioFrameBeforeMixing(string channelId, string uid, AudioFrame audioFrame)
         {
             return false;
         }
     }
-
-
 }
