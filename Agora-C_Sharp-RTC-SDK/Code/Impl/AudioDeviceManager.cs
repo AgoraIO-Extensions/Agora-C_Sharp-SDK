@@ -4,8 +4,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private AudioDeviceManagerImpl _audioDeviecManagerImpl = null;
-        private const string ErrorMsgLog = "[AudioDeviceManager]:IRtcEngine has not been created yet!";
-        private const int ErrorCode = -1;
+        private const int ErrorCode = -7;
 
         private AudioDeviceManager(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
         {
@@ -32,7 +31,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _audioDeviecManagerImpl.EnumeratePlaybackDevices();
@@ -42,7 +40,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.SetPlaybackDevice(deviceId);
@@ -52,7 +49,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetPlaybackDevice(ref deviceId);
@@ -62,7 +58,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetPlaybackDeviceInfo(ref deviceId, ref deviceName);
@@ -72,7 +67,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.SetPlaybackDeviceVolume(volume);
@@ -82,7 +76,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetPlaybackDeviceVolume(ref volume);
@@ -92,7 +85,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.SetPlaybackDeviceMute(mute);
@@ -102,7 +94,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetPlaybackDeviceMute(ref mute);
@@ -112,7 +103,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.StartPlaybackDeviceTest(testAudioFilePath);
@@ -122,7 +112,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.StopPlaybackDeviceTest();
@@ -132,7 +121,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.FollowSystemPlaybackDevice(enable);
@@ -144,7 +132,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _audioDeviecManagerImpl.EnumerateRecordingDevices();
@@ -154,7 +141,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.SetRecordingDevice(deviceId);
@@ -164,7 +150,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetRecordingDevice(ref deviceId);
@@ -174,7 +159,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetRecordingDeviceInfo(ref deviceId, ref deviceName);
@@ -184,7 +168,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.SetRecordingDeviceVolume(volume);
@@ -194,7 +177,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetRecordingDeviceVolume(ref volume);
@@ -204,7 +186,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.SetRecordingDeviceMute(mute);
@@ -214,7 +195,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.GetRecordingDeviceMute(ref mute);
@@ -224,7 +204,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.StartRecordingDeviceTest(indicationInterval);
@@ -234,7 +213,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.StopRecordingDeviceTest();
@@ -244,7 +222,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.FollowSystemRecordingDevice(enable);
@@ -256,7 +233,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.StartAudioDeviceLoopbackTest(indicationInterval);
@@ -266,7 +242,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _audioDeviecManagerImpl.StopAudioDeviceLoopbackTest();
