@@ -6,8 +6,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private MediaPlayerImpl _mediaPlayerImpl = null;
-        private const string ErrorMsgLog = "[MediaPlayer]:IRtcEngine has not been created yet!";
-        private const int ErrorCode = -1;
+        private const int ErrorCode = -7;
 
         private int playerId;
 
@@ -30,7 +29,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _mediaPlayerImpl.DestroyMediaPlayer(playerId);
@@ -46,7 +44,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
@@ -56,7 +53,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
@@ -66,7 +62,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
@@ -76,7 +71,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
@@ -86,7 +80,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
@@ -96,7 +89,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
@@ -106,7 +98,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.Open(playerId, url, startPos);
@@ -116,7 +107,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.OpenWithCustomSource(playerId, startPos, provider);
@@ -127,7 +117,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.OpenWithMediaSource(playerId, source);
@@ -137,7 +126,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetSoundPositionParams(pan, gain);
@@ -147,7 +135,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.Play(playerId);
@@ -157,7 +144,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.Pause(playerId);
@@ -167,7 +153,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.Stop(playerId);
@@ -177,7 +162,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.Resume(playerId);
@@ -187,7 +171,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.Seek(playerId, newPos);
@@ -197,7 +180,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetDuration(playerId, ref duration);
@@ -207,7 +189,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetPlayPosition(playerId, ref pos);
@@ -217,7 +198,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetStreamCount(playerId, ref count);
@@ -227,7 +207,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetStreamInfo(playerId, index, ref info);
@@ -237,7 +216,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetLoopCount(playerId, loopCount);
@@ -247,7 +225,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetPlaybackSpeed(playerId, speed);
@@ -257,7 +234,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SelectAudioTrack(playerId, index);
@@ -267,7 +243,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetPlayerOption(playerId, key, value);
@@ -277,7 +252,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetPlayerOption(playerId, key, value);
@@ -287,7 +261,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.TakeScreenshot(playerId, filename);
@@ -297,7 +270,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SelectInternalSubtitle(playerId, index);
@@ -307,7 +279,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetExternalSubtitle(playerId, url);
@@ -317,7 +288,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return MEDIA_PLAYER_STATE.PLAYER_STATE_DO_NOTHING_INTERNAL;
             }
             return _mediaPlayerImpl.GetState(playerId);
@@ -327,7 +297,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.Mute(playerId, muted);
@@ -337,7 +306,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetMute(playerId, ref muted);
@@ -347,7 +315,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.AdjustPlayoutVolume(playerId, volume);
@@ -357,7 +324,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetPlayoutVolume(playerId, ref volume);
@@ -367,7 +333,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.AdjustPublishSignalVolume(playerId, volume);
@@ -377,7 +342,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetPublishSignalVolume(playerId, ref volume);
@@ -387,7 +351,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetView(playerId);
@@ -397,7 +360,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetRenderMode(playerId, renderMode);
@@ -407,7 +369,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetAudioDualMonoMode(playerId, mode);
@@ -417,7 +378,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _mediaPlayerImpl.GetPlayerSdkVersion(playerId);
@@ -427,7 +387,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _mediaPlayerImpl.GetPlaySrc(playerId);
@@ -437,7 +396,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
@@ -447,7 +405,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SetSpatialAudioParams(playerId, spatial_audio_params);
@@ -457,7 +414,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.OpenWithAgoraCDNSrc(playerId, src, startPos);
@@ -467,7 +423,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetAgoraCDNLineCount(playerId);
@@ -477,7 +432,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SwitchAgoraCDNLineByIndex(playerId, index);
@@ -487,7 +441,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.GetCurrentAgoraCDNIndex(playerId);
@@ -497,7 +450,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.EnableAutoSwitchAgoraCDN(playerId, enable);
@@ -507,7 +459,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.RenewAgoraCDNSrcToken(playerId, token, ts);
@@ -517,7 +468,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SwitchAgoraCDNSrc(playerId, src, syncPts);
@@ -527,7 +477,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SwitchSrc(playerId, src, syncPts);
@@ -537,7 +486,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.PreloadSrc(playerId, src, startPos);
@@ -547,7 +495,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.PlayPreloadedSrc(playerId, src);
@@ -557,7 +504,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerImpl.UnloadSrc(playerId, src);

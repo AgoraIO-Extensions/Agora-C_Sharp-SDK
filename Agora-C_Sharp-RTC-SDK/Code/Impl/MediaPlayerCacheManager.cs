@@ -5,8 +5,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManagerImpl = null;
-        private const string ErrorMsgLog = "[MediaPlayerCacheManager]:IRtcEngine has not been created yet!";
-        private const int ErrorCode = -1;
+        private const int ErrorCode = -7;
 
 
         private MediaPlayerCacheManager(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)
@@ -44,7 +43,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.RemoveAllCaches();
@@ -54,7 +52,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.RemoveOldCache();
@@ -64,7 +61,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.RemoveCacheByUri(uri);
@@ -74,7 +70,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.SetCacheDir(path);
@@ -84,7 +79,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.SetMaxCacheFileCount(count);
@@ -94,7 +88,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.SetMaxCacheFileSize(cacheSize);
@@ -104,7 +97,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.EnableAutoRemoveCache(enable);
@@ -114,7 +106,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 path = "";
                 return ErrorCode;
             }
@@ -125,7 +116,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.GetMaxCacheFileCount();
@@ -135,7 +125,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.GetMaxCacheFileSize();
@@ -145,7 +134,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _mediaPlayerCacheManagerImpl.GetCacheFileCount();

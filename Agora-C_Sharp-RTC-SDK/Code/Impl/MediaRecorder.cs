@@ -4,8 +4,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private MediaRecorderImpl _mediaRecorderImpl = null;
-        private const string ErrorMsgLog = "[MediaRecorder]:IRtcEngine has not been created yet!";
-        private const int ErrorCode = -1;
+        private const int ErrorCode = -7;
 
         internal MediaRecorder(IRtcEngine rtcEngine, MediaRecorderImpl impl)
         {
@@ -42,8 +41,7 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
-                return -1;
+                return ErrorCode;
             }
             return _mediaRecorderImpl.SetMediaRecorderObserver(connection, callback);
         }
@@ -52,8 +50,7 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
-                return -1;
+                return ErrorCode;
             }
             return _mediaRecorderImpl.StartRecording(connection, config);
         }
@@ -62,8 +59,7 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
-                return -1;
+                return ErrorCode;
             }
             return _mediaRecorderImpl.StopRecording(connection);
         }
