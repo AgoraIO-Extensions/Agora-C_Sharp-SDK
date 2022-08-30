@@ -5,7 +5,7 @@ namespace Agora.Rtc
     //    private IRtcEngine _rtcEngineInstance = null;
     //    private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineImpl = null;
     //    private const string ErrorMsgLog = "[CloudSpatialAudioEngine]:Api not supported!";
-    //    private const int ErrorCode = -1;
+    //    private const int ErrorCode = -7;
 
     //    private CloudSpatialAudioEngine(IRtcEngine rtcEngine, CloudSpatialAudioEngineImpl impl)
     //    {
@@ -242,8 +242,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private LocalSpatialAudioEngineImpl _localSpatialAudioEngineImpl = null;
-        private const string ErrorMsgLog = "[LocalSpatialAudioEngine]:Api not supported!";
-        private const int ErrorCode = -1;
+        private const int ErrorCode = -7;
 
         private LocalSpatialAudioEngine(IRtcEngine rtcEngine, LocalSpatialAudioEngineImpl impl)
         {
@@ -269,7 +268,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _localSpatialAudioEngineImpl.Dispose();
@@ -279,7 +277,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.Initialize();
@@ -289,7 +286,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.SetMaxAudioRecvCount(maxCount);
@@ -299,7 +295,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.SetAudioRecvRange(range);
@@ -309,7 +304,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.SetDistanceUnit(unit);
@@ -319,7 +313,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.UpdateSelfPosition(position, axisForward, axisRight, axisUp);
@@ -329,7 +322,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.UpdateSelfPositionEx(position, axisForward, axisRight, axisUp, connection);
@@ -339,7 +331,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.UpdatePlayerPositionInfo(playerId, position, forward);
@@ -349,7 +340,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.SetParameters(@params);
@@ -359,7 +349,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.MuteLocalAudioStream(mute);
@@ -369,7 +358,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.MuteAllRemoteAudioStreams(mute);
@@ -379,7 +367,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.UpdateRemotePosition(uid, position, forward);
@@ -389,7 +376,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.UpdateRemotePositionEx(uid, position, forward, connection);
@@ -399,7 +385,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.RemoveRemotePosition(uid);
@@ -409,7 +394,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.RemoveRemotePositionEx(uid, connection);
@@ -419,7 +403,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.ClearRemotePositions();
@@ -429,7 +412,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _localSpatialAudioEngineImpl.ClearRemotePositionsEx(connection);

@@ -15,8 +15,7 @@ namespace Agora.Rtc
         private ILocalSpatialAudioEngine _localSpatialAudioEngine = null;
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
         private IMediaRecorder _mediaRecorder = null;
-        private const string ErrorMsgLog = "[RtcEngine]:IRtcEngine has not been created yet!";
-        private const int ErrorCode = -1;
+        private const int ErrorCode = -7;
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private GameObject _agoraEngineObject;
@@ -97,7 +96,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.Initialize(context);
@@ -107,7 +105,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
            
@@ -127,7 +124,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.InitEventHandler(engineEventHandler);
@@ -137,7 +133,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
@@ -147,7 +142,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.UnRegisterAudioFrameObserver();
@@ -157,7 +151,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, mode);
@@ -167,7 +160,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.UnRegisterVideoFrameObserver();
@@ -177,7 +169,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.RegisterVideoEncodedFrameObserver(videoEncodedImageReceiver, mode);
@@ -187,7 +178,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
@@ -197,7 +187,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _audioDeviceManager;
@@ -207,7 +196,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _videoDeviceManager;
@@ -217,7 +205,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _mediaPlayerCacheManager;
@@ -227,7 +214,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _mediaRecorder;
@@ -237,7 +223,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return new MediaPlayer(this, _rtcEngineImpl.GetMediaPlayer());
@@ -247,7 +232,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null || mediaPlayer == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
             }
             mediaPlayer.Dispose();
         }
@@ -266,7 +250,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _localSpatialAudioEngine;
@@ -276,7 +259,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 build = 0;
                 return null;
             }
@@ -287,7 +269,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _rtcEngineImpl.GetErrorDescription(code);
@@ -297,7 +278,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.JoinChannel(token, channelId, info, uid);
@@ -307,7 +287,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.JoinChannel(token, channelId, uid, options);
@@ -317,7 +296,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateChannelMediaOptions(options);
@@ -327,7 +305,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.LeaveChannel();
@@ -337,7 +314,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.LeaveChannel(options);
@@ -347,7 +323,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.RenewToken(token);
@@ -357,7 +332,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetChannelProfile(profile);
@@ -367,7 +341,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetClientRole(role);
@@ -377,7 +350,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetClientRole(role, ref options);
@@ -387,7 +359,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartEchoTest();
@@ -397,7 +368,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartEchoTest(intervalInSeconds);
@@ -407,7 +377,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartEchoTest(config);
@@ -417,7 +386,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopEchoTest();
@@ -427,7 +395,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableVideo();
@@ -437,7 +404,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.DisableVideo();
@@ -447,7 +413,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartPreview();
@@ -457,7 +422,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartPreview();
@@ -467,7 +431,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopPreview();
@@ -477,7 +440,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopPreview(sourceType);
@@ -487,7 +449,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartLastmileProbeTest(config);
@@ -497,7 +458,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopLastmileProbeTest();
@@ -507,7 +467,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVideoEncoderConfiguration(config);
@@ -517,7 +476,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetBeautyEffectOptions(enabled, options, type);
@@ -527,7 +485,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableVirtualBackground(enabled, backgroundSource, segproperty, type);
@@ -537,7 +494,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetupRemoteVideo(canvas);
@@ -547,7 +503,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetupLocalVideo(canvas);
@@ -557,7 +512,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableAudio();
@@ -567,7 +521,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.DisableAudio();
@@ -577,7 +530,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioProfile(profile, scenario);
@@ -587,7 +539,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioScenario(scenario);
@@ -597,7 +548,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioProfile(profile);
@@ -607,7 +557,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableLocalAudio(enabled);
@@ -617,7 +566,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteLocalAudioStream(mute);
@@ -627,7 +575,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteAllRemoteAudioStreams(mute);
@@ -637,7 +584,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDefaultMuteAllRemoteAudioStreams(mute);
@@ -647,7 +593,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteRemoteAudioStream(uid, mute);
@@ -657,7 +602,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteLocalVideoStream(mute);
@@ -667,7 +611,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableLocalVideo(enabled);
@@ -677,7 +620,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteAllRemoteVideoStreams(mute);
@@ -687,7 +629,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDefaultMuteAllRemoteVideoStreams(mute);
@@ -697,7 +638,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableVideoImageSource(enable, options);
@@ -707,7 +647,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetColorEnhanceOptions(enabled, options, type);
@@ -717,7 +656,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLowlightEnhanceOptions(enabled, options, type);
@@ -727,7 +665,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteVideoSubscriptionOptions(uid, options);
@@ -737,7 +674,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVideoDenoiserOptions(enabled, options, type);
@@ -748,7 +684,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteRemoteVideoStream(uid, mute);
@@ -758,7 +693,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteVideoStreamType(uid, streamType);
@@ -768,7 +702,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteDefaultVideoStreamType(streamType);
@@ -778,7 +711,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDualStreamMode(mode);
@@ -788,7 +720,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDualStreamMode(sourceType, mode);
@@ -798,7 +729,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDualStreamMode(sourceType, mode, streamConfig);
@@ -808,7 +738,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDualStreamModeEx(sourceType, mode, streamConfig, connection);
@@ -818,7 +747,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.TakeSnapshotEx(connection, uid, filePath);
@@ -828,7 +756,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableAudioVolumeIndication(interval, smooth, reportVad);
@@ -838,7 +765,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartAudioRecording(filePath, quality);
@@ -848,7 +774,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartAudioRecording(filePath, sampleRate, quality);
@@ -858,7 +783,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartAudioRecording(config);
@@ -868,7 +792,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.RegisterAudioEncodedFrameObserver(config, observer);
@@ -878,7 +801,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.UnRegisterAudioEncodedFrameObserver();
@@ -888,7 +810,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopAudioRecording();
@@ -898,7 +819,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartAudioMixing(filePath, loopback, cycle);
@@ -908,7 +828,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartAudioMixing(filePath, loopback, cycle, startPos);
@@ -918,7 +837,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioMixingDualMonoMode(mode);
@@ -929,7 +847,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopAudioMixing();
@@ -939,7 +856,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PauseAudioMixing();
@@ -949,7 +865,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ResumeAudioMixing();
@@ -959,7 +874,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustAudioMixingVolume(volume);
@@ -969,7 +883,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustAudioMixingPublishVolume(volume);
@@ -979,7 +892,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetAudioMixingPublishVolume();
@@ -989,7 +901,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustAudioMixingPlayoutVolume(volume);
@@ -999,7 +910,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetAudioMixingPlayoutVolume();
@@ -1009,7 +919,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetAudioMixingDuration();
@@ -1019,7 +928,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetAudioMixingCurrentPosition();
@@ -1029,7 +937,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioMixingPosition(pos);
@@ -1039,7 +946,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioMixingPitch(pitch);
@@ -1049,7 +955,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetEffectsVolume();
@@ -1059,7 +964,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetEffectsVolume(volume);
@@ -1069,7 +973,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PreloadEffect(soundId, filePath, startPos);
@@ -1079,7 +982,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PlayEffect(soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
@@ -1089,7 +991,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PlayAllEffects(loopCount, pitch, pan, gain, publish);
@@ -1099,7 +1000,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetVolumeOfEffect(soundId);
@@ -1109,7 +1009,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVolumeOfEffect(soundId, volume);
@@ -1119,7 +1018,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PauseEffect(soundId);
@@ -1129,7 +1027,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PauseAllEffects();
@@ -1139,7 +1036,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ResumeEffect(soundId);
@@ -1149,7 +1045,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ResumeAllEffects();
@@ -1159,7 +1054,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopEffect(soundId);
@@ -1169,7 +1063,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopAllEffects();
@@ -1179,7 +1072,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UnloadEffect(soundId);
@@ -1189,7 +1081,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UnloadAllEffects();
@@ -1199,7 +1090,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetEffectCurrentPosition(soundId);
@@ -1209,7 +1099,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetEffectDuration(filePath);
@@ -1219,7 +1108,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetEffectPosition(soundId, pos);
@@ -1229,7 +1117,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableSoundPositionIndication(enabled);
@@ -1239,7 +1126,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteVoicePosition(uid, pan, gain);
@@ -1249,7 +1135,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableSpatialAudio(enabled);
@@ -1259,7 +1144,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteUserSpatialAudioParams(uid, param);
@@ -1269,7 +1153,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVoiceBeautifierPreset(preset);
@@ -1279,7 +1162,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioEffectPreset(preset);
@@ -1289,7 +1171,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVoiceConversionPreset(preset);
@@ -1299,7 +1180,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioEffectParameters(preset, param1, param2);
@@ -1309,7 +1189,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVoiceBeautifierParameters(preset, param1, param2);
@@ -1319,7 +1198,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVoiceConversionParameters(preset, param1, param2);
@@ -1329,7 +1207,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLocalVoicePitch(pitch);
@@ -1339,7 +1216,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLocalVoiceEqualization(bandFrequency, bandGain);
@@ -1349,7 +1225,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLocalVoiceReverb(reverbKey, value);
@@ -1359,7 +1234,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLogFile(filePath);
@@ -1369,7 +1243,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLogFilter(filter);
@@ -1379,7 +1252,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLogLevel(level);
@@ -1389,7 +1261,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLogFileSize(fileSizeInKBytes);
@@ -1399,7 +1270,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLocalRenderMode(renderMode, mirrorMode);
@@ -1409,7 +1279,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteRenderMode(uid, renderMode, mirrorMode);
@@ -1419,7 +1288,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLocalRenderMode(renderMode);
@@ -1429,7 +1297,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLocalVideoMirrorMode(mirrorMode);
@@ -1439,7 +1306,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableDualStreamMode(enabled);
@@ -1449,7 +1315,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableDualStreamMode(sourceType, enabled);
@@ -1459,7 +1324,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableDualStreamMode(sourceType, enabled, streamConfig);
@@ -1469,7 +1333,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetExternalAudioSink(enabled, sampleRate, channels);
@@ -1479,7 +1342,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartPrimaryCustomAudioTrack(config);
@@ -1489,7 +1351,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopPrimaryCustomAudioTrack();
@@ -1499,7 +1360,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartSecondaryCustomAudioTrack(config);
@@ -1509,7 +1369,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopSecondaryCustomAudioTrack();
@@ -1519,7 +1378,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRecordingAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
@@ -1529,7 +1387,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetPlaybackAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
@@ -1539,7 +1396,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetMixedAudioFrameParameters(sampleRate, channel, samplesPerCall);
@@ -1549,7 +1405,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel);
@@ -1559,7 +1414,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableAudioSpectrumMonitor(intervalInMS);
@@ -1569,7 +1423,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.DisableAudioSpectrumMonitor();
@@ -1579,7 +1432,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.RegisterAudioSpectrumObserver(observer);
@@ -1589,7 +1441,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.UnregisterAudioSpectrumObserver();
@@ -1599,7 +1450,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustRecordingSignalVolume(volume);
@@ -1609,7 +1459,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteRecordingSignal(mute);
@@ -1619,7 +1468,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustPlaybackSignalVolume(volume);
@@ -1629,7 +1477,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustLoopbackSignalVolume(volume);
@@ -1640,7 +1487,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustUserPlaybackSignalVolume(uid, volume);
@@ -1650,7 +1496,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableLoopbackRecording(enabled, deviceName);
@@ -1660,7 +1505,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetLoopbackRecordingVolume();
@@ -1670,7 +1514,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableInEarMonitoring(enabled, includeAudioFilters);
@@ -1680,7 +1523,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetInEarMonitoringVolume(volume);
@@ -1690,7 +1532,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.LoadExtensionProvider(path, unload_after_use);
@@ -1700,7 +1541,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetExtensionProviderProperty(provider, key, value);
@@ -1710,7 +1550,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableExtension(provider, extension, enable, type);
@@ -1720,7 +1559,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetExtensionProperty(provider, extension, key, value, type);
@@ -1730,7 +1568,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetExtensionProperty(provider, extension, key, ref value, buf_len, type);
@@ -1740,7 +1577,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCameraCapturerConfiguration(config);
@@ -1750,7 +1586,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SwitchCamera();
@@ -1760,7 +1595,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return false;
             }
             return _rtcEngineImpl.IsCameraZoomSupported();
@@ -1770,7 +1604,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return false;
             }
             return _rtcEngineImpl.IsCameraFaceDetectSupported();
@@ -1780,7 +1613,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return false;
             }
             return _rtcEngineImpl.IsCameraTorchSupported();
@@ -1790,7 +1622,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return false;
             }
             return _rtcEngineImpl.IsCameraFocusSupported();
@@ -1800,7 +1631,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return false;
             }
             return _rtcEngineImpl.IsCameraAutoFocusFaceModeSupported();
@@ -1810,7 +1640,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCameraZoomFactor(factor);
@@ -1820,7 +1649,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableFaceDetection(enabled);
@@ -1830,7 +1658,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetCameraMaxZoomFactor();
@@ -1840,7 +1667,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCameraFocusPositionInPreview(positionX, positionY);
@@ -1850,7 +1676,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCameraTorchOn(isOn);
@@ -1860,7 +1685,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCameraAutoFocusFaceModeEnabled(enabled);
@@ -1870,7 +1694,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return false;
             }
             return _rtcEngineImpl.IsCameraExposurePositionSupported();
@@ -1880,7 +1703,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCameraExposurePosition(positionXinView, positionYinView);
@@ -1890,7 +1712,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return false;
             }
             return _rtcEngineImpl.IsCameraAutoExposureFaceModeSupported();
@@ -1900,7 +1721,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCameraAutoExposureFaceModeEnabled(enabled);
@@ -1910,7 +1730,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDefaultAudioRouteToSpeakerphone(defaultToSpeaker);
@@ -1920,7 +1739,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetEnableSpeakerphone(speakerOn);
@@ -1930,7 +1748,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return false;
             }
             return _rtcEngineImpl.IsSpeakerphoneEnabled();
@@ -1940,7 +1757,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartScreenCaptureByDisplayId(displayId, regionRect, captureParams);
@@ -1950,7 +1766,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
@@ -1960,7 +1775,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartScreenCapture(mediaProjectionPermissionResultData, captureParams);
@@ -1971,7 +1785,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartScreenCapture(captureParams);
@@ -1982,7 +1795,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateScreenCapture(captureParams);
@@ -1993,7 +1805,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartScreenCaptureByWindowId(windowId, regionRect, captureParams);
@@ -2003,7 +1814,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetScreenCaptureContentHint(contentHint);
@@ -2013,7 +1823,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateScreenCaptureRegion(regionRect);
@@ -2023,7 +1832,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateScreenCaptureParameters(captureParams);
@@ -2033,7 +1841,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopScreenCapture();
@@ -2043,7 +1850,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _rtcEngineImpl.GetCallId();
@@ -2053,7 +1859,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.Rate(callId, rating, description);
@@ -2063,7 +1868,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.Complain(callId, description);
@@ -2103,7 +1907,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartLocalVideoTranscoder(config);
@@ -2113,7 +1916,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateLocalTranscoderConfiguration(config);
@@ -2123,7 +1925,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopLocalVideoTranscoder();
@@ -2133,7 +1934,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartPrimaryCameraCapture(config);
@@ -2143,7 +1943,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartSecondaryCameraCapture(config);
@@ -2153,7 +1952,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopPrimaryCameraCapture();
@@ -2163,7 +1961,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopSecondaryCameraCapture();
@@ -2173,7 +1970,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCameraDeviceOrientation(type, orientation);
@@ -2183,7 +1979,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetScreenCaptureOrientation(type, orientation);
@@ -2193,7 +1988,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartPrimaryScreenCapture(config);
@@ -2203,7 +1997,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartSecondaryScreenCapture(config);
@@ -2213,7 +2006,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopPrimaryScreenCapture();
@@ -2223,7 +2015,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopSecondaryScreenCapture();
@@ -2233,7 +2024,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
             }
             return _rtcEngineImpl.GetConnectionState();
@@ -2243,7 +2033,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteUserPriority(uid, userPriority);
@@ -2262,7 +2051,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetEncryptionMode(encryptionMode);
@@ -2272,7 +2060,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetEncryptionSecret(secret);
@@ -2282,7 +2069,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableEncryption(enabled, config);
@@ -2292,7 +2078,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.CreateDataStream(ref streamId, reliable, ordered);
@@ -2302,7 +2087,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.CreateDataStream(ref streamId, config);
@@ -2312,7 +2096,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SendStreamMessage(streamId, data, length);
@@ -2322,7 +2105,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AddVideoWatermark(watermark);
@@ -2332,7 +2114,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AddVideoWatermark(watermarkUrl, options);
@@ -2342,7 +2123,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ClearVideoWatermark();
@@ -2352,7 +2132,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ClearVideoWatermarks();
@@ -2362,7 +2141,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AddInjectStreamUrl(url, config);
@@ -2372,7 +2150,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.RemoveInjectStreamUrl(url);
@@ -2382,7 +2159,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PauseAudio();
@@ -2392,7 +2168,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ResumeAudio();
@@ -2402,7 +2177,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableWebSdkInteroperability(enabled);
@@ -2412,7 +2186,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SendCustomReportMessage(id, category, @event, label, value);
@@ -2422,7 +2195,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.RegisterMediaMetadataObserver(observer, type);
@@ -2432,7 +2204,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return;
             }
             _rtcEngineImpl.UnregisterMediaMetadataObserver();
@@ -2442,7 +2213,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartAudioFrameDump(channel_id, user_id, location, uuid, passwd, duration_ms, auto_upload);
@@ -2452,7 +2222,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopAudioFrameDump(channel_id, user_id, location);
@@ -2462,7 +2231,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.RegisterLocalUserAccount(appId, userAccount);
@@ -2472,7 +2240,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.JoinChannelWithUserAccount(token, channelId, userAccount);
@@ -2482,7 +2249,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.JoinChannelWithUserAccount(token, channelId, userAccount, options);
@@ -2492,7 +2258,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetUserInfoByUserAccount(userAccount, ref userInfo);
@@ -2502,7 +2267,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetUserInfoByUid(uid, ref userInfo);
@@ -2512,7 +2276,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartChannelMediaRelay(configuration);
@@ -2522,7 +2285,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateChannelMediaRelay(configuration);
@@ -2532,7 +2294,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopChannelMediaRelay();
@@ -2542,7 +2303,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDirectCdnStreamingAudioConfiguration(profile);
@@ -2552,7 +2312,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDirectCdnStreamingVideoConfiguration(config);
@@ -2562,7 +2321,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartDirectCdnStreaming(publishUrl, options);
@@ -2572,7 +2330,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopDirectCdnStreaming();
@@ -2582,7 +2339,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateDirectCdnStreamingMediaOptions(options);
@@ -2592,7 +2348,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.JoinChannelEx(token, connection, options);
@@ -2602,7 +2357,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.LeaveChannelEx(connection);
@@ -2612,7 +2366,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateChannelMediaOptionsEx(options, connection);
@@ -2622,7 +2375,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVideoEncoderConfigurationEx(config, connection);
@@ -2632,7 +2384,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetupRemoteVideoEx(canvas, connection);
@@ -2642,7 +2393,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteRemoteAudioStreamEx(uid, mute, connection);
@@ -2652,7 +2402,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.MuteRemoteVideoStreamEx(uid, mute, connection);
@@ -2662,7 +2411,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteVoicePositionEx(uid, pan, gain, connection);
@@ -2672,7 +2420,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteUserSpatialAudioParamsEx(uid, param, connection);
@@ -2682,7 +2429,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
@@ -2692,7 +2438,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableLoopbackRecordingEx(enabled, connection);
@@ -2702,7 +2447,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
             }
             return _rtcEngineImpl.GetConnectionStateEx(connection);
@@ -2712,7 +2456,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableEncryptionEx(connection, enabled, config);
@@ -2722,7 +2465,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.CreateDataStreamEx(ref streamId, reliable, ordered, connection);
@@ -2732,7 +2474,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.CreateDataStreamEx(ref streamId, config, connection);
@@ -2742,7 +2483,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SendStreamMessageEx(streamId, data, length, connection);
@@ -2752,7 +2492,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AddVideoWatermarkEx(watermarkUrl, options, connection);
@@ -2762,7 +2501,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ClearVideoWatermarkEx(connection);
@@ -2772,7 +2510,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SendCustomReportMessageEx(id, category, @event, label, value, connection);
@@ -2782,7 +2519,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PushAudioFrame(type, frame, wrap, sourceId);
@@ -2792,7 +2528,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PullAudioFrame(frame);
@@ -2802,7 +2537,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
@@ -2812,7 +2546,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetExternalAudioSource(enabled, sampleRate, channels, sourceNumber, localPlayback, publish);
@@ -2822,7 +2555,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PushVideoFrame(frame, videoTrackId);
@@ -2833,7 +2565,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
@@ -2843,7 +2574,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return 0;
             }
             return _rtcEngineImpl.CreateCustomEncodedVideoTrack(sender_option);
@@ -2853,7 +2583,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.DestroyCustomEncodedVideoTrack(video_track_id);
@@ -2863,7 +2592,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return 0;
             }
             return _rtcEngineImpl.CreateCustomVideoTrack();
@@ -2873,7 +2601,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return 0;
             }
             return _rtcEngineImpl.DestroyCustomVideoTrack(video_track_id);
@@ -2893,7 +2620,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAudioSessionOperationRestriction(restriction);
@@ -2903,7 +2629,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustCustomAudioPublishVolume(sourceId, volume);
@@ -2913,7 +2638,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.AdjustCustomAudioPlayoutVolume(sourceId, volume);
@@ -2923,7 +2647,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetParameters(parameters);
@@ -2933,7 +2656,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetAudioDeviceInfo(ref deviceInfo);
@@ -2943,7 +2665,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableCustomAudioLocalPlayback(sourceId, enabled);
@@ -2953,7 +2674,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLocalPublishFallbackOption(option);
@@ -2963,7 +2683,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteSubscribeFallbackOption(option);
@@ -2973,7 +2692,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PauseAllChannelMediaRelay();
@@ -2983,7 +2701,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ResumeAllChannelMediaRelay();
@@ -2993,7 +2710,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableEchoCancellationExternal(enabled, audioSourceDelay);
@@ -3003,7 +2719,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.TakeSnapshot(uid, filePath);
@@ -3013,7 +2728,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartRhythmPlayer(sound1, sound2, config);
@@ -3023,7 +2737,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopRhythmPlayer();
@@ -3033,7 +2746,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.ConfigRhythmPlayer(config);
@@ -3061,7 +2773,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetDirectExternalAudioSource(enable, localPlayback);
@@ -3071,7 +2782,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.PushDirectAudioFrame(frame);
@@ -3081,7 +2791,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetCloudProxy(proxyType);
@@ -3091,7 +2800,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetLocalAccessPoint(config);
@@ -3111,7 +2819,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAdvancedAudioOptions(options);
@@ -3121,7 +2828,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetAVSyncSource(channelId, uid);
@@ -3131,7 +2837,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartRtmpStreamWithoutTranscoding(url);
@@ -3141,7 +2846,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StartRtmpStreamWithTranscoding(url, transcoding);
@@ -3151,7 +2855,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UpdateRtmpTranscoding(transcoding);
@@ -3161,7 +2864,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.StopRtmpStream(url);
@@ -3171,7 +2873,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetUserInfoByUserAccountEx(userAccount, ref userInfo, connection);
@@ -3181,7 +2882,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetUserInfoByUidEx(uid, ref userInfo, connection);
@@ -3191,7 +2891,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteVideoSubscriptionOptionsEx(uid, options, connection);
@@ -3201,7 +2900,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetSubscribeAudioBlacklistEx(uidList, uidNumber, connection);
@@ -3211,7 +2909,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetSubscribeAudioWhitelistEx(uidList, uidNumber, connection);
@@ -3221,7 +2918,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetSubscribeVideoBlacklistEx(uidList, uidNumber, connection);
@@ -3231,7 +2927,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetSubscribeVideoWhitelistEx(uidList, uidNumber, connection);
@@ -3241,7 +2936,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableRemoteSuperResolution(userId, enable);
@@ -3251,7 +2945,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableContentInspect(enabled, config);
@@ -3261,7 +2954,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetRemoteVideoStreamTypeEx(uid, streamType, connection);
@@ -3271,7 +2963,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connection);
@@ -3281,7 +2972,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetVideoProfileEx(width, height, frameRate, bitrate);
@@ -3291,7 +2981,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableDualStreamModeEx(sourceType, enabled, streamConfig, connection);
@@ -3311,7 +3000,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.UploadLogFile(ref requestId);
@@ -3321,7 +3009,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetSubscribeAudioBlacklist(uidList, uidNumber);
@@ -3331,7 +3018,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetSubscribeAudioWhitelist(uidList, uidNumber);
@@ -3341,7 +3027,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetSubscribeVideoBlacklist(uidList, uidNumber);
@@ -3351,7 +3036,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetSubscribeVideoWhitelist(uidList, uidNumber);
@@ -3361,7 +3045,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _rtcEngineImpl.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
@@ -3371,7 +3054,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SetScreenCaptureScenario(screenScenario);
@@ -3392,7 +3074,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableWirelessAccelerate(enabled);
@@ -3402,7 +3083,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetAudioTrackCount();
@@ -3412,7 +3092,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _rtcEngineImpl.SelectAudioTrack(index);

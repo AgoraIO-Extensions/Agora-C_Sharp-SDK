@@ -6,8 +6,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private VideoDeviceManagerImpl _videoDeviecManagerImpl = null;
-        private const string ErrorMsgLog = "[VideoDeviceManager]:IRtcEngine has not been created yet!";
-        private const int ErrorCode = -1;
+        private const int ErrorCode = -7;
 
         private VideoDeviceManager(IRtcEngine rtcEngine, VideoDeviceManagerImpl impl)
         {
@@ -33,7 +32,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return null;
             }
             return _videoDeviecManagerImpl.EnumerateVideoDevices();
@@ -43,7 +41,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _videoDeviecManagerImpl.SetDevice(deviceIdUTF8);
@@ -53,7 +50,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _videoDeviecManagerImpl.GetDevice(ref deviceIdUTF8);
@@ -63,7 +59,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _videoDeviecManagerImpl.StartDeviceTest(hwnd);
@@ -73,7 +68,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _videoDeviecManagerImpl.StopDeviceTest();
@@ -83,7 +77,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 capability = new VideoFormat();
                 return ErrorCode;
             }
@@ -94,7 +87,6 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
             {
-                AgoraLog.LogError(ErrorMsgLog);
                 return ErrorCode;
             }
             return _videoDeviecManagerImpl.NumberOfCapabilities(deviceIdUTF8);
