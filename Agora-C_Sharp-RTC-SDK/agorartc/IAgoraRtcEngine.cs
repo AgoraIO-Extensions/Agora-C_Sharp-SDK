@@ -3034,9 +3034,9 @@ namespace agora.rtc
 
         public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
 
-        public abstract int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId);
+        public abstract int EnableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId);
 
-        public abstract int setCameraCaptureRotation(int rotation);
+        public abstract int SetCameraCaptureRotation(int rotation);
     }
 
     /**

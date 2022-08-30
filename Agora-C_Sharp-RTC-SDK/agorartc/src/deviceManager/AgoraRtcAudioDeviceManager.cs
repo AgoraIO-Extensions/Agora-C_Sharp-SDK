@@ -104,9 +104,10 @@ namespace agora.rtc
         {
             var param = new { };
 
-            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+            var ret = AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
                 ApiTypeAudioDeviceManager.kADMGetPlaybackDeviceVolume,
                 JsonMapper.ToJson(param), out _result);
+            return ret == 0 ? Convert.ToInt32(_result.Result) : ret;
         }
 
         public override int SetPlaybackDeviceMute(bool mute)
@@ -267,9 +268,10 @@ namespace agora.rtc
         {
             var param = new { };
 
-            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+            var ret = AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
                 ApiTypeAudioDeviceManager.kADMGetRecordingDeviceVolume,
                 JsonMapper.ToJson(param), out _result);
+            return ret == 0 ? Convert.ToInt32(_result.Result) : ret;
         }
 
         public override int SetRecordingDeviceMute(bool mute)
