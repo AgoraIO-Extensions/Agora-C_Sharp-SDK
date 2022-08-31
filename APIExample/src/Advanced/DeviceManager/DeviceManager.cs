@@ -104,6 +104,12 @@ namespace CSharp_API_Example
 
                 ret = rtc_engine_.JoinChannel("", channel_id_, "info");
                 CSharpForm.dump_handler_(DeviceManager_TAG + "JoinChannel", ret);
+
+                playbackDeviceManager_.SetPlaybackDeviceMute(true);
+                CSharpForm.dump_handler_("PlaybackDeviceMute " + playbackDeviceManager_.GetPlaybackDeviceMute(), 0);
+
+                playbackDeviceManager_.SetPlaybackDeviceVolume(55);
+                CSharpForm.dump_handler_("PlaybackDeviceVolume " + playbackDeviceManager_.GetPlaybackDeviceVolume(), 0);
             }
             return ret;
         }
