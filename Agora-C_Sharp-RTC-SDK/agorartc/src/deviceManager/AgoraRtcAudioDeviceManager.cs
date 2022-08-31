@@ -104,9 +104,10 @@ namespace agora.rtc
         {
             var param = new { };
 
-            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+            AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
                 ApiTypeAudioDeviceManager.kADMGetPlaybackDeviceVolume,
                 JsonMapper.ToJson(param), out _result);
+            return Convert.ToInt32(_result.Result);
         }
 
         public override int SetPlaybackDeviceMute(bool mute)
@@ -127,7 +128,7 @@ namespace agora.rtc
 
             return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
                 ApiTypeAudioDeviceManager.kADMGetPlaybackDeviceMute,
-                JsonMapper.ToJson(param), out _result) == 1;
+                JsonMapper.ToJson(param), out _result) != 0 ? false : _result.Result == "1";
         }
 
         public override string GetPlaybackDevice()
@@ -267,9 +268,10 @@ namespace agora.rtc
         {
             var param = new { };
 
-            return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
+            AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
                 ApiTypeAudioDeviceManager.kADMGetRecordingDeviceVolume,
                 JsonMapper.ToJson(param), out _result);
+            return Convert.ToInt32(_result.Result);
         }
 
         public override int SetRecordingDeviceMute(bool mute)
@@ -290,7 +292,7 @@ namespace agora.rtc
 
             return AgoraRtcNative.CallIrisRtcAudioDeviceManagerApi(_irisRtcDeviceManager,
                 ApiTypeAudioDeviceManager.kADMGetRecordingDeviceMute,
-                JsonMapper.ToJson(param), out _result) == 1;
+                JsonMapper.ToJson(param), out _result) !=0 ? false : _result.Result == "1";
         }
 
         public override int StartRecordingDeviceTest(int indicationInterval)
