@@ -34,7 +34,14 @@ namespace Agora.Rtc
             IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
-            AudioEncodedFrameObserver.OnRecordAudioEncodedFrame(frame_buffer, length, to);
+            try
+            {
+                AudioEncodedFrameObserver.OnRecordAudioEncodedFrame(frame_buffer, length, to);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioEncodedFrameObserver.OnRecordAudioEncodedFrame: " + e);
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -47,7 +54,14 @@ namespace Agora.Rtc
             IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
-            AudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frame_buffer, length, to);
+            try
+            {
+                AudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frame_buffer, length, to);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame: " + e);
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -60,7 +74,14 @@ namespace Agora.Rtc
             IrisEncodedAudioFrameInfo from = (IrisEncodedAudioFrameInfo)Marshal.PtrToStructure(encoded_audio_frame_info, typeof(IrisEncodedAudioFrameInfo));
             EncodedAudioFrameInfo to = IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref from);
 
-            AudioEncodedFrameObserver.OnMixedAudioEncodedFrame(frame_buffer, length, to);
+            try
+            {
+                AudioEncodedFrameObserver.OnMixedAudioEncodedFrame(frame_buffer, length, to);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioEncodedFrameObserver.OnMixedAudioEncodedFrame: " + e);
+            }
         }
     }
 }

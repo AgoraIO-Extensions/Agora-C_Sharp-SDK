@@ -33,8 +33,16 @@ namespace Agora.Rtc
             localAudioPcmFrame.sample_rate_hz_ = audioPcmFrame.sample_rate_hz_;
             localAudioPcmFrame.samples_per_channel_ = audioPcmFrame.samples_per_channel_;
 
-            return AudioFrameObserverDic.ContainsKey(mediaPlayerId) ||
+            try
+            {
+                return AudioFrameObserverDic.ContainsKey(mediaPlayerId) ||
                 AudioFrameObserverDic[mediaPlayerId].OnFrame(localAudioPcmFrame);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IMediaPlayerAudioFrameObserver.OnFrame: " + e);
+                return true;
+            }
         }
     }
 }

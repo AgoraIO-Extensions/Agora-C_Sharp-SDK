@@ -18,7 +18,15 @@ namespace Agora.Rtc
         {
             if (CustomDataProviders.ContainsKey(playerId))
             {
-                return CustomDataProviders[playerId].OnSeek(offset, whence);
+                try
+                {
+                    return CustomDataProviders[playerId].OnSeek(offset, whence);
+                }
+                catch (Exception e)
+                {
+                    AgoraLog.LogError("[Exception] IMediaPlayerCustomDataProvider.OnSeek: " + e);
+                    return 0;
+                }
             }
 
             return 0;
@@ -31,7 +39,15 @@ namespace Agora.Rtc
         {
             if (CustomDataProviders.ContainsKey(playerId))
             {
-                return CustomDataProviders[playerId].OnReadData(buffer, bufferSize);
+                try
+                {
+                    return CustomDataProviders[playerId].OnReadData(buffer, bufferSize);
+                }
+                catch (Exception e)
+                {
+                    AgoraLog.LogError("[Exception] IMediaPlayerCustomDataProvider.OnReadData: " + e);
+                    return 0;
+                }
             }
 
             return 0;
