@@ -54,7 +54,7 @@ IOS_SRC_PATH=$CI_DIR/temp/ios/iris_*
 MAC_SRC_PATH="$CI_DIR"/temp/mac/iris_*
 WIN_SRC_PATH="$CI_DIR"/temp/win/iris_*
 cd temp || exit 1
-git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-rtc-quickstart-ng.git
+git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
 cd "$CI_DIR" || exit 1
 echo "[Unity CI] finish preparing resources"
 
