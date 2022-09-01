@@ -709,7 +709,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options)
+        public int SetClientRole(CLIENT_ROLE_TYPE role, ClientRoleOptions options)
         {
             var param = new
             {

@@ -14,7 +14,7 @@ namespace Agora.Rtc
 
         public abstract int SetClientRole(CLIENT_ROLE_TYPE role);
 
-        public abstract int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options);
+        public abstract int SetClientRole(CLIENT_ROLE_TYPE role, ClientRoleOptions options);
 
         public abstract int JoinChannel(string token, string channelId, string info = "", uint uid = 0);
 
@@ -295,10 +295,8 @@ namespace Agora.Rtc
 
         public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
 
-        //only in android 
         public abstract int StartScreenCapture(ScreenCaptureParameters2 captureParams);
 
-        //only in android 
         public abstract int UpdateScreenCapture(ScreenCaptureParameters2 captureParams);
 
         public abstract int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
@@ -750,6 +748,5 @@ namespace Agora.Rtc
         public abstract int SetDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
-
     }
 }

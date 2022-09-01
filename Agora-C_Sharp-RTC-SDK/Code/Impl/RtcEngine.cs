@@ -346,13 +346,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetClientRole(role);
         }
 
-        public override int SetClientRole(CLIENT_ROLE_TYPE role, ref ClientRoleOptions options)
+        public override int SetClientRole(CLIENT_ROLE_TYPE role, ClientRoleOptions options)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetClientRole(role, ref options);
+            return _rtcEngineImpl.SetClientRole(role, options);
         }
 
         public override int StartEchoTest()

@@ -134,7 +134,8 @@ namespace Agora.Rtc
                     EngineEventHandler.OnClientRoleChanged(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(jsonData, "oldRole"),
-                        (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(jsonData, "newRole")
+                        (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(jsonData, "newRole"),
+                        AgoraJson.JsonToStruct<ClientRoleOptions>(jsonData, "newRoleOptions")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

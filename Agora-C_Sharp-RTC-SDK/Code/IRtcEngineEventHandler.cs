@@ -131,10 +131,9 @@ namespace Agora.Rtc
 
         public virtual void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed) { }
 
-        //todo fix with dcg
         public virtual void OnActiveSpeaker(RtcConnection connection, uint uid) { }
 
-        public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole) { }
+        public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions) { }
 
         public virtual void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) { }
 
@@ -144,17 +143,9 @@ namespace Agora.Rtc
 
         public virtual void OnRtmpStreamingEvent(string url, RTMP_STREAMING_EVENT eventCode) { }
 
-        //public virtual void OnStreamPublished(string url, int error) { }
-
-        //[Obsolete("Use onRtmpStreamingStateChanged instead of")]
-        //public virtual void OnStreamUnpublished(string url) { }
-
         public virtual void OnTranscodingUpdated() { }
 
         public virtual void OnAudioRoutingChanged(int routing) { }
-
-        //todo delete with dcg
-        //public virtual void OnAudioSessionRestrictionResume() { }
 
         public virtual void OnChannelMediaRelayStateChanged(int state, int code) { }
 
@@ -208,5 +199,4 @@ namespace Agora.Rtc
 
         public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats) { }
     };
-    
 }
