@@ -48,7 +48,14 @@ namespace Agora.Rtc
             {
                 while (_queue.Count > 0)
                 {
-                    _queue.Dequeue().Invoke();
+                    try
+                    {
+                        _queue.Dequeue().Invoke();
+                    }
+                    catch(Exception e)
+                    {
+                        AgoraLog.LogError("[Exception] AgoraCallbackQueue: " + e);
+                    }
                 }
             }
         }

@@ -152,7 +152,16 @@ namespace Agora.Rtc
                 return true;
 
             var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 0);
-            return AudioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
+
+            try
+            {
+                return AudioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnRecordAudioFrame: " + e);
+                return true;
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -164,8 +173,17 @@ namespace Agora.Rtc
                 return true;
 
             var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 1);
-            return AudioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
-        }
+
+            try
+            {
+                return AudioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrame: " + e);
+                return true;
+            }
+}
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
@@ -176,7 +194,16 @@ namespace Agora.Rtc
                 return true;
 
             var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 2);
-            return AudioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
+            
+            try
+            {
+                return AudioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnMixedAudioFrame: " + e);
+                return true;
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -187,8 +214,16 @@ namespace Agora.Rtc
             if (AudioFrameObserver == null)
                 return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
 
-            return AudioFrameObserver.GetObservedAudioFramePosition();
-        }
+            try
+            {
+                return AudioFrameObserver.GetObservedAudioFramePosition();
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetObservedAudioFramePosition: " + e);
+                return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
+            }
+}
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
@@ -198,7 +233,15 @@ namespace Agora.Rtc
             if (AudioFrameObserver == null)
                 return LocalAudioFrames.irisAudioParams;
 
-            return ProcessAudioParams(AudioFrameObserver.GetPlaybackAudioParams());
+            try
+            {
+                return ProcessAudioParams(AudioFrameObserver.GetPlaybackAudioParams());
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetPlaybackAudioParams: " + e);
+                return LocalAudioFrames.irisAudioParams;
+            }
         }
 
 
@@ -210,7 +253,15 @@ namespace Agora.Rtc
             if (AudioFrameObserver == null)
                 return LocalAudioFrames.irisAudioParams;
 
-            return ProcessAudioParams(AudioFrameObserver.GetRecordAudioParams());
+            try
+            {
+                return ProcessAudioParams(AudioFrameObserver.GetRecordAudioParams());
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetRecordAudioParams: " + e);
+                return LocalAudioFrames.irisAudioParams;
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -221,7 +272,15 @@ namespace Agora.Rtc
             if (AudioFrameObserver == null)
                 return LocalAudioFrames.irisAudioParams;
 
-            return ProcessAudioParams(AudioFrameObserver.GetMixedAudioParams());
+            try
+            {
+                return ProcessAudioParams(AudioFrameObserver.GetMixedAudioParams());
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetMixedAudioParams: " + e);
+                return LocalAudioFrames.irisAudioParams;
+            }
         }
 
 
@@ -234,7 +293,16 @@ namespace Agora.Rtc
                 return true;
 
             var audioFrame = ProcessAudioFrameReceived(audioFramePtr, channelId, uid);
-            return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+
+            try
+            {
+                return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing: " + e);
+                return true;
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -246,7 +314,16 @@ namespace Agora.Rtc
                 return true;
 
             var audioFrame = ProcessAudioFrameReceived(audioFramePtr, channelId, uid);
-            return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+
+            try
+            {
+                return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing2: " + e);
+                return true;
+            }
         }
     }
 }
