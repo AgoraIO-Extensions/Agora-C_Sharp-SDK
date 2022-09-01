@@ -124,8 +124,16 @@ namespace Agora.Rtc
             config.id = videoFrameBufferConfig.id;
             config.key = videoFrameBufferConfig.key;
             
-            return VideoFrameObserver == null || 
-                VideoFrameObserver.OnCaptureVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 0), config);
+            try
+            {
+                return VideoFrameObserver == null || 
+                    VideoFrameObserver.OnCaptureVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 0), config);
+            }
+            catch(Exception e)
+            {
+                AgoraLog.LogError("[Exception] IVideoFrameObserver.OnCaptureVideoFrame: " + e);
+                return true;
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -139,8 +147,17 @@ namespace Agora.Rtc
             config.type = (VIDEO_SOURCE_TYPE) videoFrameBufferConfig.type;
             config.id = videoFrameBufferConfig.id;
             config.key = videoFrameBufferConfig.key;
-            return VideoFrameObserver == null ||
-                   VideoFrameObserver.OnPreEncodeVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 1), config);
+
+            try
+            {
+                return VideoFrameObserver == null ||
+                    VideoFrameObserver.OnPreEncodeVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 1), config);
+            }
+            catch(Exception e)
+            {
+                AgoraLog.LogError("[Exception] IVideoFrameObserver.OnPreEncodeVideoFrame: " + e);
+                return true;
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -148,8 +165,16 @@ namespace Agora.Rtc
 #endif
         internal static bool OnRenderVideoFrame(string channel_id, uint uid, IntPtr videoFramePtr)
         {
-            return VideoFrameObserver == null ||
-                   VideoFrameObserver.OnRenderVideoFrame(channel_id, uid, ProcessVideoFrameReceived(videoFramePtr, "", 2));
+            try
+            {
+                return VideoFrameObserver == null ||
+                    VideoFrameObserver.OnRenderVideoFrame(channel_id, uid, ProcessVideoFrameReceived(videoFramePtr, "", 2));
+            }
+            catch(Exception e)
+            {
+                AgoraLog.LogError("[Exception] IVideoFrameObserver.OnRenderVideoFrame: " + e);
+                return true;
+            }
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -161,15 +186,15 @@ namespace Agora.Rtc
                 return (uint) (VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER |
                                VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER);
 
-            return (uint) VideoFrameObserver.GetObservedFramePosition();
+            try
+            {
+                return (uint) VideoFrameObserver.GetObservedFramePosition();
+            }
+            catch(Exception e)
+            {
+                AgoraLog.LogError("[Exception] IVideoFrameObserver.GetObservedFramePosition: " + e);
+                return 0;
+            }
         }
-
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-//        [MonoPInvokeCallback(typeof(Func_Bool_Native))]
-//#endif
-//        internal static bool IsMultipleChannelFrameWanted()
-//        {
-//            return VideoFrameObserver == null || VideoFrameObserver.IsMultipleChannelFrameWanted();
-//        }
     }
 }

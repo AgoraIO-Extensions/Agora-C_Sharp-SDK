@@ -63,12 +63,22 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public string GetDevice()
+        public int GetDevice(ref string deviceIdUTF8)
         {
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETDEVICE,
                 "", 0, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret.ToString() : (string)AgoraJson.GetData<string>(_result.Result, "result");
+
+            if (ret == 0)
+            {
+                deviceIdUTF8 = (string)AgoraJson.GetData<string>(_result.Result, "deviceIdUTF8");
+            }
+            else
+            {
+                deviceIdUTF8 = "";
+            }
+
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
         public int StartDeviceTest(view_t hwnd)

@@ -51,8 +51,6 @@ namespace Agora.Rtc
         private AgoraCallbackObject _callbackObject;
 #endif
 
-        private RtcEngineEventHandler _engineEventHandlerInstance;
-
         private IrisRtcCAudioFrameObserverNativeMarshal _irisRtcCAudioFrameObserverNative;
         private IrisRtcCAudioFrameObserver _irisRtcCAudioFrameObserver;
         private IrisRtcAudioFrameObserverHandleNative _irisRtcAudioFrameObserverHandleNative;
@@ -82,6 +80,14 @@ namespace Agora.Rtc
         //private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineInstance;
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
+        private MediaRecorderImpl _mediaRecorderInstance;
+
+        private IntPtr _irisRtcCAudioSpectrumObserverNative;
+        private IrisMediaPlayerCAudioSpectrumObserver _irisRtcCAudioSpectrumObserver;
+        private IntPtr _irisRtcCAudioSpectrumObserverHandleNative;
+
+
+        public event Action<RtcEngineImpl> OnRtcEngineImpleWillDispose;
 
         private RtcEngineImpl()
         {
@@ -93,8 +99,9 @@ namespace Agora.Rtc
             _audioDeviceManagerInstance = new AudioDeviceManagerImpl(_irisRtcEngine);
             _mediaPlayerInstance = new MediaPlayerImpl(_irisRtcEngine);
             //_cloudSpatialAudioEngineInstance = new CloudSpatialAudioEngineImpl(_irisRtcEngine);
-            //_spatialAudioEngineInstance = new SpatialAudioEngineImpl(_irisRtcEngine);
+            _spatialAudioEngineInstance = new LocalSpatialAudioEngineImpl(_irisRtcEngine);
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
+            _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
             AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
@@ -108,12 +115,18 @@ namespace Agora.Rtc
 
             if (disposing)
             {
+                if (this.OnRtcEngineImpleWillDispose != null)
+                {
+                    this.OnRtcEngineImpleWillDispose.Invoke(this);
+                }
+
                 ReleaseEventHandler();
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
                 UnSetIrisMetaDataObserver();
                 UnSetIrisAudioEncodedFrameObserver();
+                UnSetIrisAudioSpectrumObserver();
 
                 _videoDeviceManagerInstance.Dispose();
                 _videoDeviceManagerInstance = null;
@@ -130,6 +143,9 @@ namespace Agora.Rtc
 
                 _mediaPlayerCacheManager.Dispose();
                 _mediaPlayerCacheManager = null;
+
+                _mediaRecorderInstance.Dispose();
+                _mediaRecorderInstance = null;
 
                 AgoraRtcNative.Detach(_irisRtcEngine, _videoFrameBufferManagerPtr);
             }
@@ -185,8 +201,6 @@ namespace Agora.Rtc
                 RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
 #endif
             }
-            _engineEventHandlerInstance = RtcEngineEventHandler.GetInstance();
-            RtcEngineEventHandlerNative.EngineEventHandler = _engineEventHandlerInstance;
         }
 
         private void ReleaseEventHandler()
@@ -224,7 +238,6 @@ namespace Agora.Rtc
 
         public int Initialize(RtcEngineContext context)
         {
-            //AgoraRtcNative.InitLogger(_irisRtcEngine, context.logConfig.filePath, 0);
             var param = new
             {
                 context
@@ -250,11 +263,6 @@ namespace Agora.Rtc
         {
             Dispose(true, sync);
             GC.SuppressFinalize(this);
-        }
-
-        public RtcEngineEventHandler GetRtcEngineEventHandler()
-        {
-            return _engineEventHandlerInstance;
         }
 
         public void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
@@ -520,15 +528,20 @@ namespace Agora.Rtc
             return _mediaPlayerCacheManager;
         }
 
+        public MediaRecorderImpl GetMediaRecorder()
+        {
+            return _mediaRecorderInstance;
+        }
+
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         internal IVideoStreamManager GetVideoStreamManager()
         {
-           return new VideoStreamManager(this);
+            return new VideoStreamManager(this);
         }
 #endif
 
-        public string GetVersion()
+        public string GetVersion(ref int build)
         {
             var param = new { };
             var json = AgoraJson.ToJson(param);
@@ -538,6 +551,14 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 out _result);
 
+            if (nRet == 0)
+            {
+                build = (int)AgoraJson.GetData<int>(_result.Result, "build");
+            }
+            else
+            {
+                build = 0;
+            }
             return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_result.Result, "result");
         }
 
@@ -1411,15 +1432,14 @@ namespace Agora.Rtc
         //CreateMediaPlayer
 
         //DestroyMediaPlayer
-
-        public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle)
+        public int StartAudioMixing(string filePath, bool loopback, int cycle)
         {
             var param = new
             {
                 filePath,
                 loopback,
-                replace,
-                cycle
+                cycle,
+
             };
 
             var json = AgoraJson.ToJson(param);
@@ -1431,13 +1451,12 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos)
+        public int StartAudioMixing(string filePath, bool loopback, int cycle, int startPos)
         {
             var param = new
             {
                 filePath,
                 loopback,
-                replace,
                 cycle,
                 startPos
             };
@@ -1450,7 +1469,6 @@ namespace Agora.Rtc
                 out _result);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
 
         public int StopAudioMixing()
         {
@@ -2232,12 +2250,12 @@ namespace Agora.Rtc
         }
 
 
-        public int SetRemoteRenderMode(uint userId, RENDER_MODE_TYPE renderMode,
+        public int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode,
             VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
             var param = new
             {
-                userId,
+                uid,
                 renderMode,
                 mirrorMode
             };
@@ -2493,7 +2511,6 @@ namespace Agora.Rtc
                 intervalInMS
             };
 
-
             var json = AgoraJson.ToJson(param);
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEAUDIOSPECTRUMMONITOR,
@@ -2516,16 +2533,53 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        private void SetIrisAudioSpectrumObserver()
+        {
+            if (_irisRtcCAudioSpectrumObserverNative != IntPtr.Zero) return;
+            var param = new { };
+            _irisRtcCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver
+            {
+                OnLocalAudioSpectrum = AudioSpectrumObserverNative.OnLocalAudioSpectrum,
+                OnRemoteAudioSpectrum = AudioSpectrumObserverNative.OnRemoteAudioSpectrum
+            };
+
+            var irisMediaPlayerCAudioSpectrumObserverNativeLocal = new IrisMediaPlayerCAudioSpectrumObserverNative
+            {
+                onLocalAudioSpectrum = Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioSpectrumObserver.OnLocalAudioSpectrum),
+                onRemoteAudioSpectrum = Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioSpectrumObserver.OnRemoteAudioSpectrum)
+            };
+
+            _irisRtcCAudioSpectrumObserverHandleNative = Marshal.AllocHGlobal(Marshal.SizeOf(irisMediaPlayerCAudioSpectrumObserverNativeLocal));
+            Marshal.StructureToPtr(irisMediaPlayerCAudioSpectrumObserverNativeLocal, _irisRtcCAudioSpectrumObserverHandleNative, true);
+            _irisRtcCAudioSpectrumObserverNative = AgoraRtcNative.RegisterRtcAudioSpectrumObserver(
+                _irisRtcEngine,
+                _irisRtcCAudioSpectrumObserverHandleNative, AgoraJson.ToJson(param)
+            );
+        }
+
+        private void UnSetIrisAudioSpectrumObserver()
+        {
+            if (_irisRtcCAudioSpectrumObserverNative == IntPtr.Zero) return;
+            var param = new { };
+            AgoraRtcNative.UnRegisterRtcAudioSpectrumObserver(
+                _irisRtcEngine,
+                _irisRtcCAudioSpectrumObserverNative, AgoraJson.ToJson(param)
+            );
+            _irisRtcCAudioSpectrumObserverNative = IntPtr.Zero;
+            _irisRtcCAudioSpectrumObserver = new IrisMediaPlayerCAudioSpectrumObserver();
+            Marshal.FreeHGlobal(_irisRtcCAudioSpectrumObserverHandleNative);
+        }
+
         public void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
-            //todo wait for capi
+            SetIrisAudioSpectrumObserver();
             AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = observer;
         }
 
         public void UnregisterAudioSpectrumObserver()
         {
-            //todo wait for capi
             AudioSpectrumObserverNative.AgoraRtcAudioSpectrumObserver = null;
+            UnSetIrisAudioSpectrumObserver();
         }
 
         public int AdjustRecordingSignalVolume(int volume)
@@ -2656,11 +2710,12 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int LoadExtensionProvider(string path)
+        public int LoadExtensionProvider(string path, bool unload_after_use = false)
         {
             var param = new
             {
-                path
+                path,
+                unload_after_use
             };
 
             var json = AgoraJson.ToJson(param);
@@ -5406,58 +5461,6 @@ namespace Agora.Rtc
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
-
-        #region IMediaRecorder
-        //public int SetMediaRecorderObserver(RtcConnection connection)
-        //{
-        //    var param = new
-        //    {
-        //        connection
-        //    };
-
-        //    var json = AgoraJson.ToJson(param);
-        //    int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.xxx,
-        //        json, (UInt32)json.Length,
-        //        IntPtr.Zero, 0,
-        //        out _result);
-
-        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        //}
-
-        public int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
-        {
-            var param = new
-            {
-                connection,
-                config
-            };
-
-            var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTMEDIARECORDERRECORDING,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int StopRecording(RtcConnection connection)
-        {
-            var param = new
-            {
-                connection,
-            };
-
-            var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPMEDIARECORDERRECORDING,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-        #endregion
 
         public int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode)
         {

@@ -275,10 +275,10 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETLOWLIGHTENHANCEOPTIONS = "RtcEngine_setLowlightEnhanceOptions";
         internal const string FUNC_RTCENGINE_SETREMOTEVIDEOSUBSCRIPTIONOPTIONS = "RtcEngine_setRemoteVideoSubscriptionOptions";
         internal const string FUNC_RTCENGINE_SETSCREENCAPTURESCENARIO = "RtcEngine_setScreenCaptureScenario";
-        internal const string FUNC_RTCENGINE_SETSUBSCRIBEVIDEOBLACKLIST = "RtcEngineEx_setSubscribeVideoBlacklist";
-        internal const string FUNC_RTCENGINE_SETSUBSCRIBEAUDIOBLACKLIST = "RtcEngineEx_setSubscribeAudioBlacklist";
-        internal const string FUNC_RTCENGINE_SETSUBSCRIBEAUDIOWHITELIST = "RtcEngineEx_setSubscribeAudioWhitelist";
-        internal const string FUNC_RTCENGINE_SETSUBSCRIBEVIDEOWHITELIST = "RtcEngineEx_setSubscribeVideoWhitelist";
+        internal const string FUNC_RTCENGINE_SETSUBSCRIBEVIDEOBLACKLIST = "RtcEngine_setSubscribeVideoBlacklist";
+        internal const string FUNC_RTCENGINE_SETSUBSCRIBEAUDIOBLACKLIST = "RtcEngine_setSubscribeAudioBlacklist";
+        internal const string FUNC_RTCENGINE_SETSUBSCRIBEAUDIOWHITELIST = "RtcEngine_setSubscribeAudioWhitelist";
+        internal const string FUNC_RTCENGINE_SETSUBSCRIBEVIDEOWHITELIST = "RtcEngine_setSubscribeVideoWhitelist";
         internal const string FUNC_RTCENGINE_SETVIDEODENOISEROPTIONS = "RtcEngine_setVideoDenoiserOptions";
         internal const string FUNC_RTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION = "RtcEngine_setAudioSessionOperationRestriction";
         internal const string FUNC_RTCENGINE_SETAUDIOSCENARIO = "RtcEngine_setAudioScenario";
@@ -329,7 +329,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_SETREMOTEVIDEOSUBSCRIPTIONOPTIONS = "RtcEngineEx_setRemoteVideoSubscriptionOptions";
         internal const string FUNC_RTCENGINEEX_ENABLEWIRELESSACCELERATE = "RtcEngineEx_enableWirelessAccelerate";
         internal const string FUNC_RTCENGINEEX_SETDUALSTREAMMODEEX = "RtcEngineEx_setDualStreamModeEx";
-        internal const string FUNC_RTCENGINEEX_TAKESNAPSHOTEX = "RtcEngine_takeSnapshotEx";
+        internal const string FUNC_RTCENGINEEX_TAKESNAPSHOTEX = "RtcEngineEx_takeSnapshotEx";
         #endregion
 
         #region IMediaPlayer start
@@ -535,6 +535,12 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETCACHEDIR ="MediaPlayerCacheManager_setCacheDir";
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILECOUNT ="MediaPlayerCacheManager_setMaxCacheFileCount";
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILESIZE ="MediaPlayerCacheManager_setMaxCacheFileSize";
+        #endregion
+
+        #region IMediaRecorder start
+        internal const string FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER = "MediaRecorder_setMediaRecorderObserver";
+        internal const string FUNC_MEDIARECORDER_STARTRECORDING = "MediaRecorder_startRecording";
+        internal const string FUNC_MEDIARECORDER_STOPRECORDING = "MediaRecorder_stopRecording";
         #endregion
     }
 }

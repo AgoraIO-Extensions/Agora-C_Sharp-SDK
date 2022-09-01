@@ -51,11 +51,13 @@ namespace Agora.Rtc
 
         public virtual void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed) { }
 
-        public virtual void OnVideoSizeChanged(RtcConnection connection, uint uid, int width, int height, int rotation) { }
+        public virtual void OnVideoSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation) { }
 
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }
 
         public virtual void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode) { }
+
+        public virtual void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
 
         public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
 
@@ -192,7 +194,7 @@ namespace Agora.Rtc
 
         public virtual void OnAudioPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) { }
 
-        public virtual void OnVideoPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) { }
+        public virtual void OnVideoPublishStateChanged(VIDEO_SOURCE_TYPE source, string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState) { }
 
         public virtual void OnExtensionEvent(string provider, string extension, string key, string value) { }
 
@@ -205,12 +207,6 @@ namespace Agora.Rtc
         public virtual void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message) { }
 
         public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats) { }
-
-        #region IMediaRecorderObserver
-        public virtual void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error) { }
-
-        public virtual void OnRecorderInfoUpdated(RecorderInfo info) { }
-        #endregion
     };
     
 }

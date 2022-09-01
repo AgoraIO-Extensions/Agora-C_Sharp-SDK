@@ -15,6 +15,8 @@ namespace Agora.Rtc
     using IrisMediaPlayerAudioSpectrumObserverHandle = IntPtr;
     using IrisMetaDataObserverHandle = IntPtr;
     using IrisMediaPlayerCustomDataProviderHandle = IntPtr;
+    using IrisRtcAudioSpectrumObserverHandle = IntPtr;
+    using IrisRtcCAudioSpectrumObserver = IntPtr;
 
 
     internal enum IRIS_VIDEO_PROCESS_ERR
@@ -61,6 +63,14 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name, 
             string @params, UInt32 paramLength, IntPtr bufferPtr, UInt32 bufferLength, out CharAssistant result);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisRtcAudioSpectrumObserverHandle RegisterRtcAudioSpectrumObserver(IrisRtcEnginePtr engine_ptr,
+                                 IrisRtcCAudioSpectrumObserver observer, string @params);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int UnRegisterRtcAudioSpectrumObserver(IrisRtcEnginePtr engine_ptr, IrisRtcAudioSpectrumObserverHandle handle,
+                                string @params);
 
 // IrisRtcRawData
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
@@ -145,7 +155,7 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void
         DisableVideoFrameBufferByConfig(IrisVideoFrameBufferManagerPtr manager_ptr,
-                                    ref IrisVideoFrameBufferConfig config);
+                                    ref IrisVideoFrameBufferConfig config, IrisVideoFrameBufferDelegateHandle handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void
@@ -199,17 +209,17 @@ namespace Agora.Rtc
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int MediaPlayerUnOpenWithCustomSource(IrisRtcEnginePtr engine_ptr,
-                            IrisMediaPlayerCustomDataProviderHandle handle);
+                            IrisMediaPlayerCustomDataProviderHandle handle, string @params);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisMediaPlayerCustomDataProviderHandle MediaPlayerUnOpenWithMediaSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
+        internal static extern IrisMediaPlayerCustomDataProviderHandle MediaPlayerOpenWithMediaSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int MediaPlayerUnOpenWithMediaSource(IrisRtcEnginePtr engine_ptr,
-                            IrisMediaPlayerCustomDataProviderHandle handle);
+                            IrisMediaPlayerCustomDataProviderHandle handle, string @params);
 
 
-        //IrisCloudSpatialAudioEnginePtr
+//IrisCloudSpatialAudioEnginePtr
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisEventHandlerHandle SetIrisCloudAudioEngineEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
 
@@ -223,8 +233,14 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void UnRegisterMediaMetadataObserver(IrisRtcEnginePtr engine_ptr, IrisMetaDataObserverHandle handle, string @params);
 
-        #endregion
+//IrisMediaRecorderObserver
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisEventHandlerHandle SetIrisMediaRecorderEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
 
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void UnsetIrisMediaRecorderEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
+
+        #endregion
     }
 
     #region callback native
@@ -239,15 +255,20 @@ namespace Agora.Rtc
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate void Func_Event_Native(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count);
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Func_EventEx_Native(string @event, string data, IntPtr result, IntPtr buffer, IntPtr length, uint buffer_count);
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCEventHandlerNative
     {
         internal IntPtr onEvent;
+        internal IntPtr onEventEx;
     }
 
     internal struct IrisCEventHandler
     {
         internal Func_Event_Native OnEvent;
+        internal Func_EventEx_Native OnEventEx;
     }
 
     //audio_frame
@@ -412,10 +433,10 @@ namespace Agora.Rtc
     internal delegate int Func_onReadData_Native(IntPtr buffer, int bufferSize, int playerId);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_LocalAudioSpectrum_Native(IntPtr data);
+    internal delegate bool Func_LocalAudioSpectrum_Native(int playerId, IntPtr data);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_RemoteAudioSpectrum_Native(IntPtr audio_frame, uint spectrumNumber);
+    internal delegate bool Func_RemoteAudioSpectrum_Native(int playerId, IntPtr audio_frame, uint spectrumNumber);
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisMediaPlayerCAudioSpectrumObserverNative

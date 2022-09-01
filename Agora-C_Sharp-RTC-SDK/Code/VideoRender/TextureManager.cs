@@ -59,6 +59,7 @@ namespace Agora.Rtc
             if (_videoStreamManager != null)
             {
                 _videoStreamManager.DisableVideoFrameBuffer(_sourceType, _uid, _channelId);
+                _videoStreamManager.Dispose();
                 _videoStreamManager = null;
             }
 

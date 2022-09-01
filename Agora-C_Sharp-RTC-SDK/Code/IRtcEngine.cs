@@ -38,8 +38,6 @@ namespace Agora.Rtc
         #endregion
 
         #region Event handler
-        public abstract RtcEngineEventHandler GetRtcEngineEventHandler();
-
         public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
         #endregion
 
@@ -174,9 +172,9 @@ namespace Agora.Rtc
         #endregion
 
         #region Music file playback and mixing
-        public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle);
+        public abstract int StartAudioMixing(string filePath, bool loopback, int cycle);
 
-        public abstract int StartAudioMixing(string filePath, bool loopback, bool replace, int cycle, int startPos);
+        public abstract int StartAudioMixing(string filePath, bool loopback, int cycle, int startPos);
 
         public abstract int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode);
 
@@ -343,8 +341,6 @@ namespace Agora.Rtc
         #endregion
 
         #region Encryption
-        //public abstract int RegisterPacketObserver(IPacketObserver observer);
-
         public abstract int SetEncryptionMode(string encryptionMode);
 
         public abstract int SetEncryptionSecret(string secret);
@@ -357,12 +353,6 @@ namespace Agora.Rtc
         #endregion
 
         #region Media push
-        //public abstract int AddPublishStreamUrl(string url, bool transcodingEnabled);
-
-        //public abstract int RemovePublishStreamUrl(string url);
-
-        //public abstract int SetLiveTranscoding(LiveTranscoding transcoding);
-
         public abstract int StartLocalVideoTranscoder(LocalTranscoderConfiguration config);
 
         public abstract int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config);
@@ -456,7 +446,7 @@ namespace Agora.Rtc
         #endregion
 
         #region Extension
-        public abstract int LoadExtensionProvider(string path);
+        public abstract int LoadExtensionProvider(string path, bool unload_after_use = false);
 
         public abstract int SetExtensionProviderProperty(string provider, string key, string value);
 
@@ -471,10 +461,6 @@ namespace Agora.Rtc
         public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
         public abstract void UnregisterMediaMetadataObserver();
-
-        //public abstract int SetMaxMetadataSize(int size);
-
-        //public abstract int SendMetaData(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
         #endregion
 
         #region Audio recording
@@ -556,7 +542,7 @@ namespace Agora.Rtc
 
         public abstract int Complain(string callId, string description);
 
-        public abstract string GetVersion();
+        public abstract string GetVersion(ref int build);
 
         public abstract string GetErrorDescription(int code);
         #endregion
@@ -570,8 +556,6 @@ namespace Agora.Rtc
         public abstract IMediaPlayerCacheManager GetMediaPlayerCacheManager();
 
         #region SpatialAudio
-        //public abstract ICloudSpatialAudioEngine GetCloudSpatialAudioEngine();
-
         public abstract ILocalSpatialAudioEngine GetLocalSpatialAudioEngine();
 
         public abstract int SetRemoteVoicePosition(uint uid, double pan, double gain);
@@ -682,8 +666,6 @@ namespace Agora.Rtc
 
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
 
-        //public abstract int EnableFishEyeCorrection(bool enabled, FishEyeCorrectionParams @params);
-
         public abstract int SetAVSyncSource(string channelId, uint uid);
 
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
@@ -698,14 +680,7 @@ namespace Agora.Rtc
 
         public abstract int SelectAudioTrack(int index);
 
-        #region IMediaRecorder
-        //public abstract int SetMediaRecorderObserver(RtcConnection connection);
-
-        public abstract int StartRecording(RtcConnection connection, MediaRecorderConfiguration config);
-
-        public abstract int StopRecording(RtcConnection connection);
-        #endregion
-
+        public abstract IMediaRecorder GetMediaRecorder();
     };
 
     public abstract class IRtcEngineEx : IRtcEngine
@@ -757,8 +732,6 @@ namespace Agora.Rtc
         public abstract int SetVideoProfileEx(int width, int height, int frameRate, int bitrate);
 
         public abstract int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
-
-        //public abstract int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection);
 
         public abstract int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection);
 

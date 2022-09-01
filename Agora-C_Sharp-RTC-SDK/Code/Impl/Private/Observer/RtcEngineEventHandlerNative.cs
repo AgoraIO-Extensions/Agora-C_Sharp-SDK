@@ -20,7 +20,7 @@ namespace Agora.Rtc
         internal static void OnEvent(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count)
         {
             if (EngineEventHandler == null) return;
-
+            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
@@ -35,8 +35,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnError(
-                        (int)AgoraJson.GetData<int>(data, "err"),
-                        (string)AgoraJson.GetData<string>(data, "msg")
+                        (int)AgoraJson.GetData<int>(jsonData, "err"),
+                        (string)AgoraJson.GetData<string>(jsonData, "msg")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -50,8 +50,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnJoinChannelSuccess(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -65,8 +65,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRejoinChannelSuccess(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -81,11 +81,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnProxyConnected(
-                        (string)AgoraJson.GetData<string>(data, "channel"),
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (PROXY_TYPE)AgoraJson.GetData<int>(data, "proxyType"),
-                        (string)AgoraJson.GetData<string>(data, "localProxyIp"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        (string)AgoraJson.GetData<string>(jsonData, "channel"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (PROXY_TYPE)AgoraJson.GetData<int>(jsonData, "proxyType"),
+                        (string)AgoraJson.GetData<string>(jsonData, "localProxyIp"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -99,11 +99,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioQuality(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed"),
-                        (UInt16)AgoraJson.GetData<UInt16>(data, "delay"),
-                        (UInt16)AgoraJson.GetData<UInt16>(data, "lost")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed"),
+                        (UInt16)AgoraJson.GetData<UInt16>(jsonData, "delay"),
+                        (UInt16)AgoraJson.GetData<UInt16>(jsonData, "lost")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -117,8 +117,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLeaveChannel(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        AgoraJson.JsonToStruct<RtcStats>(data, "stats")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        AgoraJson.JsonToStruct<RtcStats>(jsonData, "stats")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -132,9 +132,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnClientRoleChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(data, "oldRole"),
-                        (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(data, "newRole")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(jsonData, "oldRole"),
+                        (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(jsonData, "newRole")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -148,9 +148,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnClientRoleChangeFailed(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (CLIENT_ROLE_CHANGE_FAILED_REASON)AgoraJson.GetData<int>(data, "reason"),
-                        (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(data, "currentRole")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (CLIENT_ROLE_CHANGE_FAILED_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
+                        (CLIENT_ROLE_TYPE)AgoraJson.GetData<int>(jsonData, "currentRole")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -164,9 +164,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnUserJoined(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -180,9 +180,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnUserOffline(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (USER_OFFLINE_REASON_TYPE)AgoraJson.GetData<int>(data, "reason")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (USER_OFFLINE_REASON_TYPE)AgoraJson.GetData<int>(jsonData, "reason")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -196,7 +196,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLastmileQuality(
-                        (int)AgoraJson.GetData<int>(data, "quality")
+                        (int)AgoraJson.GetData<int>(jsonData, "quality")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -210,7 +210,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLastmileProbeResult(
-                        AgoraJson.JsonToStruct<LastmileProbeResult>(data, "result")
+                        AgoraJson.JsonToStruct<LastmileProbeResult>(jsonData, "result")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -224,7 +224,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnConnectionInterrupted(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -238,7 +238,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnConnectionLost(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -252,7 +252,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnConnectionBanned(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -266,9 +266,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnApiCallExecuted(
-                        (int)AgoraJson.GetData<int>(data, "err"),
-                        (string)AgoraJson.GetData<string>(data, "api"),
-                        (string)AgoraJson.GetData<string>(data, "result")
+                        (int)AgoraJson.GetData<int>(jsonData, "err"),
+                        (string)AgoraJson.GetData<string>(jsonData, "api"),
+                        (string)AgoraJson.GetData<string>(jsonData, "result")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -282,7 +282,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRequestToken(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -296,8 +296,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnTokenPrivilegeWillExpire(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (string)AgoraJson.GetData<string>(data, "token")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (string)AgoraJson.GetData<string>(jsonData, "token")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -311,8 +311,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRtcStats(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        AgoraJson.JsonToStruct<RtcStats>(data, "stats")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        AgoraJson.JsonToStruct<RtcStats>(jsonData, "stats")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -326,10 +326,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnNetworkQuality(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(data, "txQuality"),
-                        (int)AgoraJson.GetData<int>(data, "rxQuality")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "txQuality"),
+                        (int)AgoraJson.GetData<int>(jsonData, "rxQuality")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -343,8 +343,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLocalVideoStats(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        AgoraJson.JsonToStruct<LocalVideoStats>(data, "stats")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        AgoraJson.JsonToStruct<LocalVideoStats>(jsonData, "stats")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -358,8 +358,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRemoteVideoStats(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        AgoraJson.JsonToStruct<RemoteVideoStats>(data, "stats")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        AgoraJson.JsonToStruct<RemoteVideoStats>(jsonData, "stats")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -373,8 +373,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLocalAudioStats(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        AgoraJson.JsonToStruct<LocalAudioStats>(data, "stats")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        AgoraJson.JsonToStruct<LocalAudioStats>(jsonData, "stats")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -388,8 +388,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRemoteAudioStats(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        AgoraJson.JsonToStruct<RemoteAudioStats>(data, "stats")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        AgoraJson.JsonToStruct<RemoteAudioStats>(jsonData, "stats")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -403,9 +403,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLocalAudioStateChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (LOCAL_AUDIO_STREAM_STATE)AgoraJson.GetData<int>(data, "state"),
-                        (LOCAL_AUDIO_STREAM_ERROR)AgoraJson.GetData<int>(data, "error")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (LOCAL_AUDIO_STREAM_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (LOCAL_AUDIO_STREAM_ERROR)AgoraJson.GetData<int>(jsonData, "error")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -419,11 +419,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRemoteAudioStateChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (REMOTE_AUDIO_STATE)AgoraJson.GetData<int>(data, "state"),
-                        (REMOTE_AUDIO_STATE_REASON)AgoraJson.GetData<int>(data, "reason"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (REMOTE_AUDIO_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (REMOTE_AUDIO_STATE_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -437,10 +437,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioPublishStateChanged(
-                        (string)AgoraJson.GetData<string>(data, "channel"),
-                        (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "oldState"),
-                        (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "newState"),
-                        (int)AgoraJson.GetData<int>(data, "elapseSinceLastState")
+                        (string)AgoraJson.GetData<string>(jsonData, "channel"),
+                        (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(jsonData, "oldState"),
+                        (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(jsonData, "newState"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapseSinceLastState")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -454,10 +454,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnVideoPublishStateChanged(
-                        (string)AgoraJson.GetData<string>(data, "channel"),
-                        (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "oldState"),
-                        (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "newState"),
-                        (int)AgoraJson.GetData<int>(data, "elapseSinceLastState")
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source"),
+                        (string)AgoraJson.GetData<string>(jsonData, "channel"),
+                        (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(jsonData, "oldState"),
+                        (STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(jsonData, "newState"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapseSinceLastState")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -471,11 +472,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioSubscribeStateChanged(
-                        (string)AgoraJson.GetData<string>(data, "channel"),
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (STREAM_SUBSCRIBE_STATE)AgoraJson.GetData<int>(data, "oldState"),
-                        (STREAM_SUBSCRIBE_STATE)AgoraJson.GetData<int>(data, "newState"),
-                        (int)AgoraJson.GetData<int>(data, "elapseSinceLastState")
+                        (string)AgoraJson.GetData<string>(jsonData, "channel"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (STREAM_SUBSCRIBE_STATE)AgoraJson.GetData<int>(jsonData, "oldState"),
+                        (STREAM_SUBSCRIBE_STATE)AgoraJson.GetData<int>(jsonData, "newState"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapseSinceLastState")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -489,11 +490,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnVideoSubscribeStateChanged(
-                        (string)AgoraJson.GetData<string>(data, "channel"),
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (STREAM_SUBSCRIBE_STATE)AgoraJson.GetData<int>(data, "oldState"),
-                        (STREAM_SUBSCRIBE_STATE)AgoraJson.GetData<int>(data, "newState"),
-                        (int)AgoraJson.GetData<int>(data, "elapseSinceLastState")
+                        (string)AgoraJson.GetData<string>(jsonData, "channel"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (STREAM_SUBSCRIBE_STATE)AgoraJson.GetData<int>(jsonData, "oldState"),
+                        (STREAM_SUBSCRIBE_STATE)AgoraJson.GetData<int>(jsonData, "newState"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapseSinceLastState")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -506,11 +507,11 @@ namespace Agora.Rtc
                     {
 #endif
                     if (EngineEventHandler == null) return;
-                    var speakerNumber = (uint)AgoraJson.GetData<uint>(data, "speakerNumber");
-                    var speakers = AgoraJson.JsonToStructArray<AudioVolumeInfo>(data, "speakers", speakerNumber);
-                    var totalVolume = (int)AgoraJson.GetData<int>(data, "totalVolume");
+                    var speakerNumber = (uint)AgoraJson.GetData<uint>(jsonData, "speakerNumber");
+                    var speakers = AgoraJson.JsonToStructArray<AudioVolumeInfo>(jsonData, "speakers", speakerNumber);
+                    var totalVolume = (int)AgoraJson.GetData<int>(jsonData, "totalVolume");
                     EngineEventHandler.OnAudioVolumeIndication(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         speakers,
                         speakerNumber,
                         totalVolume
@@ -527,8 +528,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnActiveSpeaker(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "uid")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -554,10 +555,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnFirstLocalVideoFrame(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (int)AgoraJson.GetData<int>(data, "width"),
-                        (int)AgoraJson.GetData<int>(data, "height"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -571,8 +572,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnFirstLocalVideoFramePublished(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -586,11 +587,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnFirstRemoteVideoFrame(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(data, "width"),
-                        (int)AgoraJson.GetData<int>(data, "height"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -604,11 +605,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnFirstRemoteVideoDecoded(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(data, "width"),
-                        (int)AgoraJson.GetData<int>(data, "height"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -622,9 +623,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioDeviceStateChanged(
-                        (string)AgoraJson.GetData<string>(data, "deviceId"),
-                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(data, "deviceType"),
-                        (MEDIA_DEVICE_STATE_TYPE)AgoraJson.GetData<int>(data, "deviceState")
+                        (string)AgoraJson.GetData<string>(jsonData, "deviceId"),
+                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceType"),
+                        (MEDIA_DEVICE_STATE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceState")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -638,9 +639,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioDeviceVolumeChanged(
-                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(data, "deviceType"),
-                        (int)AgoraJson.GetData<int>(data, "volume"),
-                        (bool)AgoraJson.GetData<bool>(data, "muted")
+                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceType"),
+                        (int)AgoraJson.GetData<int>(jsonData, "volume"),
+                        (bool)AgoraJson.GetData<bool>(jsonData, "muted")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -666,10 +667,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnCameraFocusAreaChanged(
-                        (int)AgoraJson.GetData<int>(data, "x"),
-                        (int)AgoraJson.GetData<int>(data, "y"),
-                        (int)AgoraJson.GetData<int>(data, "width"),
-                        (int)AgoraJson.GetData<int>(data, "height")
+                        (int)AgoraJson.GetData<int>(jsonData, "x"),
+                        (int)AgoraJson.GetData<int>(jsonData, "y"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -682,13 +683,13 @@ namespace Agora.Rtc
                     {
 #endif
                     if (EngineEventHandler == null) return;
-                    var numFaces = (int)AgoraJson.GetData<int>(data, "numFaces");
+                    var numFaces = (int)AgoraJson.GetData<int>(jsonData, "numFaces");
                     EngineEventHandler.OnFacePositionChanged(
-                        (int)AgoraJson.GetData<int>(data, "imageWidth"),
-                        (int)AgoraJson.GetData<int>(data, "imageHeight"),
+                        (int)AgoraJson.GetData<int>(jsonData, "imageWidth"),
+                        (int)AgoraJson.GetData<int>(jsonData, "imageHeight"),
                         AgoraJson.JsonToStruct<Rectangle>(
-                            (string)AgoraJson.GetData<string>(data, "vecRectangle")),
-                        AgoraJson.JsonToStructArray<int>(data, "vecDistance", (uint)numFaces), numFaces);
+                            (string)AgoraJson.GetData<string>(jsonData, "vecRectangle")),
+                        AgoraJson.JsonToStructArray<int>(jsonData, "vecDistance", (uint)numFaces), numFaces);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
@@ -701,10 +702,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnCameraExposureAreaChanged(
-                        (int)AgoraJson.GetData<int>(data, "x"),
-                        (int)AgoraJson.GetData<int>(data, "y"),
-                        (int)AgoraJson.GetData<int>(data, "width"),
-                        (int)AgoraJson.GetData<int>(data, "height")
+                        (int)AgoraJson.GetData<int>(jsonData, "x"),
+                        (int)AgoraJson.GetData<int>(jsonData, "y"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -730,8 +731,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioMixingStateChanged(
-                        (AUDIO_MIXING_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
-                        (AUDIO_MIXING_REASON_TYPE)AgoraJson.GetData<int>(data, "reason")
+                        (AUDIO_MIXING_STATE_TYPE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (AUDIO_MIXING_REASON_TYPE)AgoraJson.GetData<int>(jsonData, "reason")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -745,8 +746,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRhythmPlayerStateChanged(
-                        (RHYTHM_PLAYER_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
-                        (RHYTHM_PLAYER_ERROR_TYPE)AgoraJson.GetData<int>(data, "errorCode")
+                        (RHYTHM_PLAYER_STATE_TYPE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (RHYTHM_PLAYER_ERROR_TYPE)AgoraJson.GetData<int>(jsonData, "errorCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -760,7 +761,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioEffectFinished(
-                        (int)AgoraJson.GetData<int>(data, "soundId")
+                        (int)AgoraJson.GetData<int>(jsonData, "soundId")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -774,9 +775,25 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnVideoDeviceStateChanged(
-                        (string)AgoraJson.GetData<string>(data, "deviceId"),
-                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(data, "deviceType"),
-                        (MEDIA_DEVICE_STATE_TYPE)AgoraJson.GetData<int>(data, "deviceState")
+                        (string)AgoraJson.GetData<string>(jsonData, "deviceId"),
+                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceType"),
+                        (MEDIA_DEVICE_STATE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceState")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "onLocalVideoStateChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnLocalVideoStateChanged(
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source"),
+                        (LOCAL_VIDEO_STREAM_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (LOCAL_VIDEO_STREAM_ERROR)AgoraJson.GetData<int>(jsonData, "error")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -790,9 +807,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLocalVideoStateChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (LOCAL_VIDEO_STREAM_STATE)AgoraJson.GetData<int>(data, "state"),
-                        (LOCAL_VIDEO_STREAM_ERROR)AgoraJson.GetData<int>(data, "errorCode")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (LOCAL_VIDEO_STREAM_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (LOCAL_VIDEO_STREAM_ERROR)AgoraJson.GetData<int>(jsonData, "errorCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -806,11 +823,12 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnVideoSizeChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (int)AgoraJson.GetData<int>(data, "width"),
-                        (int)AgoraJson.GetData<int>(data, "height"),
-                        (int)AgoraJson.GetData<int>(data, "rotation")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height"),
+                        (int)AgoraJson.GetData<int>(jsonData, "rotation")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -824,7 +842,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnContentInspectResult(
-                        (CONTENT_INSPECT_RESULT)AgoraJson.GetData<int>(data, "result")
+                        (CONTENT_INSPECT_RESULT)AgoraJson.GetData<int>(jsonData, "result")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -838,12 +856,12 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnSnapshotTaken(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (string)AgoraJson.GetData<string>(data, "filePath"),
-                        (int)AgoraJson.GetData<int>(data, "width"),
-                        (int)AgoraJson.GetData<int>(data, "height"),
-                        (int)AgoraJson.GetData<int>(data, "errCode")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (string)AgoraJson.GetData<string>(jsonData, "filePath"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height"),
+                        (int)AgoraJson.GetData<int>(jsonData, "errCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -857,11 +875,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRemoteVideoStateChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (REMOTE_VIDEO_STATE)AgoraJson.GetData<int>(data, "state"),
-                        (REMOTE_VIDEO_STATE_REASON)AgoraJson.GetData<int>(data, "reason"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (REMOTE_VIDEO_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (REMOTE_VIDEO_STATE_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -875,9 +893,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnUserStateChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (uint)AgoraJson.GetData<uint>(data, "state")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "state")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -891,12 +909,12 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnStreamMessageError(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(data, "streamId"),
-                        (int)AgoraJson.GetData<int>(data, "code"),
-                        (int)AgoraJson.GetData<int>(data, "missed"),
-                        (int)AgoraJson.GetData<int>(data, "cached")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "streamId"),
+                        (int)AgoraJson.GetData<int>(jsonData, "code"),
+                        (int)AgoraJson.GetData<int>(jsonData, "missed"),
+                        (int)AgoraJson.GetData<int>(jsonData, "cached")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -910,8 +928,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnChannelMediaRelayStateChanged(
-                        (int)AgoraJson.GetData<int>(data, "state"),
-                        (int)AgoraJson.GetData<int>(data, "code")  // int ?
+                        (int)AgoraJson.GetData<int>(jsonData, "state"),
+                        (int)AgoraJson.GetData<int>(jsonData, "code")  // int ?
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -925,7 +943,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnChannelMediaRelayEvent(
-                        (int)AgoraJson.GetData<int>(data, "code") // int ?
+                        (int)AgoraJson.GetData<int>(jsonData, "code") // int ?
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -939,8 +957,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnFirstLocalAudioFramePublished(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -954,9 +972,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnFirstRemoteAudioFrame(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -970,9 +988,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnFirstRemoteAudioDecoded(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (int)AgoraJson.GetData<int>(data, "elapsed")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -986,9 +1004,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRtmpStreamingStateChanged(
-                        (string)AgoraJson.GetData<string>(data, "url"),
-                        (RTMP_STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(data, "state"),
-                        (RTMP_STREAM_PUBLISH_ERROR_TYPE)AgoraJson.GetData<int>(data, "errCode")
+                        (string)AgoraJson.GetData<string>(jsonData, "url"),
+                        (RTMP_STREAM_PUBLISH_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (RTMP_STREAM_PUBLISH_ERROR_TYPE)AgoraJson.GetData<int>(jsonData, "errCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1002,42 +1020,42 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRtmpStreamingEvent(
-                        (string)AgoraJson.GetData<string>(data, "url"),
-                        (RTMP_STREAMING_EVENT)AgoraJson.GetData<int>(data, "eventCode")
+                        (string)AgoraJson.GetData<string>(jsonData, "url"),
+                        (RTMP_STREAMING_EVENT)AgoraJson.GetData<int>(jsonData, "eventCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
                     break;
 
-//                case "onStreamPublished":
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//                    CallbackObject._CallbackQueue.EnQueue(() =>
-//                    {
-//#endif
-//                    if (EngineEventHandler == null) return;
-//                    EngineEventHandler.OnStreamPublished(
-//                        (string)AgoraJson.GetData<string>(data, "url"),
-//                        (int)AgoraJson.GetData<int>(data, "error")
-//                    );
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//                    });
-//#endif
-//                    break;
+                //                case "onStreamPublished":
+                //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                //                    CallbackObject._CallbackQueue.EnQueue(() =>
+                //                    {
+                //#endif
+                //                    if (EngineEventHandler == null) return;
+                //                    EngineEventHandler.OnStreamPublished(
+                //                        (string)AgoraJson.GetData<string>(data, "url"),
+                //                        (int)AgoraJson.GetData<int>(data, "error")
+                //                    );
+                //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                //                    });
+                //#endif
+                //                    break;
 
-//                case "onStreamUnpublished":
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//                    CallbackObject._CallbackQueue.EnQueue(() =>
-//                    {
-//#endif
-//                    if (EngineEventHandler == null) return;
-//                    EngineEventHandler.OnStreamUnpublished(
-//                        (string)AgoraJson.GetData<string>(data, "url")
-//                    );
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//                    });
-//#endif
-//                    break;
+                //                case "onStreamUnpublished":
+                //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                //                    CallbackObject._CallbackQueue.EnQueue(() =>
+                //                    {
+                //#endif
+                //                    if (EngineEventHandler == null) return;
+                //                    EngineEventHandler.OnStreamUnpublished(
+                //                        (string)AgoraJson.GetData<string>(data, "url")
+                //                    );
+                //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                //                    });
+                //#endif
+                //                    break;
 
                 case "onTranscodingUpdated":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1058,7 +1076,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLocalPublishFallbackToAudioOnly(
-                        (bool)AgoraJson.GetData<bool>(data, "isFallbackOrRecover")
+                        (bool)AgoraJson.GetData<bool>(jsonData, "isFallbackOrRecover")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1072,8 +1090,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRemoteSubscribeFallbackToAudioOnly(
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (bool)AgoraJson.GetData<bool>(data, "isFallbackOrRecover")
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (bool)AgoraJson.GetData<bool>(jsonData, "isFallbackOrRecover")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1087,11 +1105,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRemoteAudioTransportStats(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (UInt16)AgoraJson.GetData<UInt16>(data, "delay"),
-                        (UInt16)AgoraJson.GetData<UInt16>(data, "lost"),
-                        (UInt16)AgoraJson.GetData<UInt16>(data, "rxKBitRate")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (UInt16)AgoraJson.GetData<UInt16>(jsonData, "delay"),
+                        (UInt16)AgoraJson.GetData<UInt16>(jsonData, "lost"),
+                        (UInt16)AgoraJson.GetData<UInt16>(jsonData, "rxKBitRate")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1105,11 +1123,11 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnRemoteVideoTransportStats(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (UInt16)AgoraJson.GetData<UInt16>(data, "delay"),
-                        (UInt16)AgoraJson.GetData<UInt16>(data, "lost"),
-                        (UInt16)AgoraJson.GetData<UInt16>(data, "rxKBitRate")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (UInt16)AgoraJson.GetData<UInt16>(jsonData, "delay"),
+                        (UInt16)AgoraJson.GetData<UInt16>(jsonData, "lost"),
+                        (UInt16)AgoraJson.GetData<UInt16>(jsonData, "rxKBitRate")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1123,9 +1141,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnConnectionStateChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(data, "state"),
-                        (CONNECTION_CHANGED_REASON_TYPE)AgoraJson.GetData<int>(data, "reason")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (CONNECTION_CHANGED_REASON_TYPE)AgoraJson.GetData<int>(jsonData, "reason")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1139,10 +1157,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnWlAccMessage(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (WLACC_MESSAGE_REASON)AgoraJson.GetData<int>(data, "reason"),
-                        (WLACC_SUGGEST_ACTION)AgoraJson.GetData<int>(data, "action"),
-                        (string)AgoraJson.GetData<string>(data, "wlAccMsg")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (WLACC_MESSAGE_REASON)AgoraJson.GetData<int>(jsonData, "reason"),
+                        (WLACC_SUGGEST_ACTION)AgoraJson.GetData<int>(jsonData, "action"),
+                        (string)AgoraJson.GetData<string>(jsonData, "wlAccMsg")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1156,9 +1174,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnWlAccStats(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (WlAccStats)AgoraJson.JsonToStruct<WlAccStats>(data, "currentStats"),
-                        (WlAccStats)AgoraJson.JsonToStruct<WlAccStats>(data, "averageStats")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (WlAccStats)AgoraJson.JsonToStruct<WlAccStats>(jsonData, "currentStats"),
+                        (WlAccStats)AgoraJson.JsonToStruct<WlAccStats>(jsonData, "averageStats")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1173,8 +1191,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnNetworkTypeChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (NETWORK_TYPE)AgoraJson.GetData<int>(data, "type")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (NETWORK_TYPE)AgoraJson.GetData<int>(jsonData, "type")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1188,8 +1206,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnLocalUserRegistered(
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        (string)AgoraJson.GetData<string>(data, "userAccount")
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (string)AgoraJson.GetData<string>(jsonData, "userAccount")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1203,8 +1221,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnUserInfoUpdated(
-                        (uint)AgoraJson.GetData<uint>(data, "uid"),
-                        AgoraJson.JsonToStruct<UserInfo>(data, "info")
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        AgoraJson.JsonToStruct<UserInfo>(jsonData, "info")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1218,7 +1236,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnMediaDeviceChanged(
-                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(data, "deviceType")
+                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceType")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1232,7 +1250,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnIntraRequestReceived(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1246,7 +1264,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnUplinkNetworkInfoUpdated(
-                        AgoraJson.JsonToStruct<UplinkNetworkInfo>(data, "info")
+                        AgoraJson.JsonToStruct<UplinkNetworkInfo>(jsonData, "info")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1260,7 +1278,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnDownlinkNetworkInfoUpdated(
-                        AgoraJson.JsonToStruct<DownlinkNetworkInfo>(data, "info")
+                        AgoraJson.JsonToStruct<DownlinkNetworkInfo>(jsonData, "info")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1274,10 +1292,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnVideoSourceFrameSizeChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(data, "sourceType"),
-                        (int)AgoraJson.GetData<int>(data, "width"),
-                        (int)AgoraJson.GetData<int>(data, "height")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1291,8 +1309,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnEncryptionError(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (ENCRYPTION_ERROR_TYPE)AgoraJson.GetData<int>(data, "errorType")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (ENCRYPTION_ERROR_TYPE)AgoraJson.GetData<int>(jsonData, "errorType")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1306,10 +1324,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnUploadLogResult(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (string)AgoraJson.GetData<string>(data, "requestId"),
-                        (bool)AgoraJson.GetData<bool>(data, "success"),
-                        (UPLOAD_ERROR_REASON)AgoraJson.GetData<int>(data, "reason")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (string)AgoraJson.GetData<string>(jsonData, "requestId"),
+                        (bool)AgoraJson.GetData<bool>(jsonData, "success"),
+                        (UPLOAD_ERROR_REASON)AgoraJson.GetData<int>(jsonData, "reason")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1323,9 +1341,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnUserAccountUpdated(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (string)AgoraJson.GetData<string>(data, "userAccount")
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (string)AgoraJson.GetData<string>(jsonData, "userAccount")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1339,7 +1357,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnAudioRoutingChanged(
-                        (int)AgoraJson.GetData<int>(data, "routing")
+                        (int)AgoraJson.GetData<int>(jsonData, "routing")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1353,7 +1371,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnPermissionError(
-                        (PERMISSION_TYPE)AgoraJson.GetData<int>(data, "permissionType")
+                        (PERMISSION_TYPE)AgoraJson.GetData<int>(jsonData, "permissionType")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1367,10 +1385,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnExtensionEvent(
-                        (string)AgoraJson.GetData<string>(data, "provider"),
-                        (string)AgoraJson.GetData<string>(data, "extension"),
-                        (string)AgoraJson.GetData<string>(data, "key"),
-                        (string)AgoraJson.GetData<string>(data, "value")
+                        (string)AgoraJson.GetData<string>(jsonData, "provider"),
+                        (string)AgoraJson.GetData<string>(jsonData, "extension"),
+                        (string)AgoraJson.GetData<string>(jsonData, "key"),
+                        (string)AgoraJson.GetData<string>(jsonData, "value")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1384,8 +1402,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnExtensionStarted(
-                        (string)AgoraJson.GetData<string>(data, "provider"),
-                        (string)AgoraJson.GetData<string>(data, "extension")
+                        (string)AgoraJson.GetData<string>(jsonData, "provider"),
+                        (string)AgoraJson.GetData<string>(jsonData, "extension")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1399,8 +1417,8 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnExtensionStopped(
-                        (string)AgoraJson.GetData<string>(data, "provider"),
-                        (string)AgoraJson.GetData<string>(data, "extension")
+                        (string)AgoraJson.GetData<string>(jsonData, "provider"),
+                        (string)AgoraJson.GetData<string>(jsonData, "extension")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1414,10 +1432,10 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnExtensionError(
-                        (string)AgoraJson.GetData<string>(data, "provider"),
-                        (string)AgoraJson.GetData<string>(data, "extension"),
-                        (int)AgoraJson.GetData<int>(data, "error"),
-                        (string)AgoraJson.GetData<string>(data, "message")
+                        (string)AgoraJson.GetData<string>(jsonData, "provider"),
+                        (string)AgoraJson.GetData<string>(jsonData, "extension"),
+                        (int)AgoraJson.GetData<int>(jsonData, "error"),
+                        (string)AgoraJson.GetData<string>(jsonData, "message")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1430,9 +1448,9 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnDirectCdnStreamingStateChanged(
-                        (DIRECT_CDN_STREAMING_STATE)AgoraJson.GetData<int>(data, "state"),
-                        (DIRECT_CDN_STREAMING_ERROR)AgoraJson.GetData<int>(data, "error"),
-                        (string)AgoraJson.GetData<string>(data, "message")
+                        (DIRECT_CDN_STREAMING_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                        (DIRECT_CDN_STREAMING_ERROR)AgoraJson.GetData<int>(jsonData, "error"),
+                        (string)AgoraJson.GetData<string>(jsonData, "message")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1445,7 +1463,7 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnDirectCdnStreamingStats(
-                        AgoraJson.JsonToStruct<DirectCdnStreamingStats>(data, "stats")
+                        AgoraJson.JsonToStruct<DirectCdnStreamingStats>(jsonData, "stats")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -1455,8 +1473,8 @@ namespace Agora.Rtc
 
                 #region withBuffer start
                 case "onStreamMessageEx":
-                    var byteLength = (uint)AgoraJson.GetData<uint>(data, "length");
-                    var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(data, "data");
+                    var byteLength = (uint)AgoraJson.GetData<uint>(jsonData, "length");
+                    var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");
                     var byteData = new byte[byteLength];
                     if (byteLength != 0)
                     {
@@ -1469,49 +1487,17 @@ namespace Agora.Rtc
 #endif
                     if (EngineEventHandler == null) return;
                     EngineEventHandler.OnStreamMessage(
-                        AgoraJson.JsonToStruct<RtcConnection>(data, "connection"),
-                        (uint)AgoraJson.GetData<uint>(data, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(data, "streamId"),
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "streamId"),
                         byteData,
                         byteLength,
-                        (UInt64)AgoraJson.GetData<UInt64>(data, "sentTs"));
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "sentTs"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
                     break;
                 #endregion withBuffer end
-
-
-                #region IMediaRecorderObserver
-                case "MediaRecorderObserver_onRecorderStateChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                    if (EngineEventHandler == null) return;
-                    EngineEventHandler.OnRecorderStateChanged(
-                        (RecorderState)AgoraJson.GetData<RecorderState>(data, "state"),
-                        (RecorderErrorCode)AgoraJson.GetData<RecorderErrorCode>(data, "error")
-                     );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
-#endif
-                    break;
-
-                case "MediaRecorderObserver_onRecorderInfoUpdated":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                    if (EngineEventHandler == null) return;
-                    EngineEventHandler.OnRecorderInfoUpdated(
-                        (RecorderInfo)AgoraJson.GetData<RecorderInfo>(data, "info")
-                    );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
-#endif
-                    break;
-                    #endregion
             }
         }
     }

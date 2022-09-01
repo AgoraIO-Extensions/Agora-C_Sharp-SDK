@@ -26,10 +26,5 @@ namespace Agora.Rtc
         {
             return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
         }
-
-        //public virtual bool IsMultipleChannelFrameWanted()
-        //{
-        //    return true;
-        //}
     }
 }
