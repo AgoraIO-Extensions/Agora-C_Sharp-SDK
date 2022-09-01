@@ -126,7 +126,7 @@ namespace Agora.Rtc
 
     public delegate void OnActiveSpeakerHandler(RtcConnection connection, uint uid);
 
-    public delegate void OnClientRoleChangedHandler(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions);
+    public delegate void OnClientRoleChangedHandler(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole);
 
     public delegate void OnClientRoleChangeFailedHandler(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole);
 
@@ -685,10 +685,10 @@ namespace Agora.Rtc
             EventOnActiveSpeaker.Invoke(connection, uid);
         }
 
-        public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
+        public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole)
         {
             if (EventOnClientRoleChanged == null) return;
-            EventOnClientRoleChanged.Invoke(connection, oldRole, newRole, newRoleOptions);
+            EventOnClientRoleChanged.Invoke(connection, oldRole, newRole);
         }
 
         public override void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
