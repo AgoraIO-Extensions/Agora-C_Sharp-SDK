@@ -6,7 +6,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The basic interface of the Agora SDK that implements the core functions of real-time communication.
-    /// IRtcEngine provides the main methods that your app can call.Before calling other APIs, you must call CreateAgoraRtcEngine to create anIRtcEngine object.
+    /// IRtcEngine provides the main methods that your app can call.Before calling other APIs, you must call CreateAgoraRtcEngine to create an IRtcEngine object.
     /// </summary>
     ///
     public abstract class IRtcEngine
@@ -14,38 +14,38 @@ namespace Agora.Rtc
         #region Channel management
         ///
         /// <summary>
-        /// InitializesIRtcEngine.
-        /// All called methods provided by theIRtcEngine class are executed asynchronously. Agora recommends calling these methods in the same thread.The SDK supports creating only oneIRtcEngine instance for an app.
+        /// Initializes IRtcEngine.
+        /// All called methods provided by the IRtcEngine class are executed asynchronously. Agora recommends calling these methods in the same thread.The SDK supports creating only one IRtcEngine instance for an app.
         /// </summary>
         ///
         /// <param name="context"> Configurations for the IRtcEngine instance. See RtcEngineContext .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-1: A general error occurs (no specified reason).-2: An invalid parameter is used.-7: The SDK is not initialized.-22: The resource request failed. The SDK fails to allocate resources because your app consumes too many system resources or the system resources are insufficient.-101: The App ID is invalid.
+        /// 0: Success.&lt; 0: Failure.-1: A general error occurs (no specified reason).-2: An invalid parameter is used.-7: The SDK is not initialized.-22: The resource request failed. The SDK fails to allocate resources because your app consumes too many system resources or the system resources are insufficient.-101: The App ID is invalid.
         /// </returns>
         ///
         public abstract int Initialize(RtcEngineContext context);
 
         ///
         /// <summary>
-        /// Releases theIRtcEngine instance.
-        /// This method releases all resources used by the Agora SDK. Use this method for apps in which users occasionally make voice or video calls. When users do not make calls, you can free up resources for other operations.After a successful method call, you can no longer use any method or callback in the SDK anymore. If you want to use the real-time communication functions again, you must call CreateAgoraRtcEngine and Initialize to create a newIRtcEngine instance.If you want to create a newIRtcEngine instance after destroying the current one, ensure that you wait till theDispose method execution to complete.
+        /// Releases the IRtcEngine instance.
+        /// This method releases all resources used by the Agora SDK. Use this method for apps in which users occasionally make voice or video calls. When users do not make calls, you can free up resources for other operations.After a successful method call, you can no longer use any method or callback in the SDK anymore. If you want to use the real-time communication functions again, you must call CreateAgoraRtcEngine and Initialize to create a new IRtcEngine instance.If you want to create a new IRtcEngine instance after destroying the current one, ensure that you wait till the Dispose method execution to complete.
         /// </summary>
         ///
-        /// <param name="sync"> true: Synchronous call. Agora suggests calling this method in a sub-thread to avoid congestion in the main thread because the synchronous call and the app cannot move on to another task until the resources used byIRtcEngine are released. Besides, you cannot callDispose in any method or callback of the SDK. Otherwise, the SDK cannot release the resources until the callbacks return results, which may result in a deadlock. The SDK automatically detects the deadlock and converts this method into an asynchronous call, causing the test to take additional time.false: Asynchronous call. The app can move on to another task, no matter the resources used byIRtcEngine are released or not. Do not immediately uninstall the SDK's dynamic library after the call; otherwise, it may cause a crash due to the SDK clean-up thread not quitting.</param>
+        /// <param name="sync"> true: Synchronous call. Agora suggests calling this method in a sub-thread to avoid congestion in the main thread because the synchronous call and the app cannot move on to another task until the resources used by IRtcEngine are released. Besides, you cannot call Dispose in any method or callback of the SDK. Otherwise, the SDK cannot release the resources until the callbacks return results, which may result in a deadlock. The SDK automatically detects the deadlock and converts this method into an asynchronous call, causing the test to take additional time.false: Asynchronous call. The app can move on to another task, no matter the resources used by IRtcEngine are released or not. Do not immediately uninstall the SDK's dynamic library after the call; otherwise, it may cause a crash due to the SDK clean-up thread not quitting.</param>
         ///
         public abstract void Dispose(bool sync = false);
 
         ///
         /// <summary>
         /// Sets the channel profile.
-        /// After initializing the SDK, the default channel profile is the live streaming profile. You can call this method to set the usage scenario of Agora channel. The Agora SDK differentiates channel profiles and applies optimization algorithms accordingly. For example, it prioritizes smoothness and low latency for a video call and prioritizes video quality for interactive live video streaming.To ensure the quality of real-time communication, Agora recommends that all users in a channel use the same channel profile.This method must be called and set beforeJoinChannel [2/2], and cannot be set again after joining the channel.
+        /// After initializing the SDK, the default channel profile is the live streaming profile. You can call this method to set the usage scenario of Agora channel. The Agora SDK differentiates channel profiles and applies optimization algorithms accordingly. For example, it prioritizes smoothness and low latency for a video call and prioritizes video quality for interactive live video streaming.To ensure the quality of real-time communication, Agora recommends that all users in a channel use the same channel profile.This method must be called and set before JoinChannel [2/2], and cannot be set again after joining the channel.
         /// </summary>
         ///
         /// <param name="profile"> The channel profile. See CHANNEL_PROFILE_TYPE .</param>
         ///
         /// <returns>
-        /// 0(ERR_OK): Success.< 0: Failure.-2(ERR_INVALID_ARGUMENT): The parameter is invalid.-7(ERR_NOT_INITIALIZED): The SDK is not initialized.
+        /// 0(ERR_OK): Success.&lt; 0: Failure.-2(ERR_INVALID_ARGUMENT): The parameter is invalid.-7(ERR_NOT_INITIALIZED): The SDK is not initialized.
         /// </returns>
         ///
         public abstract int SetChannelProfile(CHANNEL_PROFILE_TYPE profile);
@@ -59,7 +59,7 @@ namespace Agora.Rtc
         /// <param name="role"> The user role. See CLIENT_ROLE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-1: A general error occurs (no specified reason).-2: The parameter is invalid.-7: The SDK is not initialized.
+        /// 0: Success.&lt; 0: Failure.-1: A general error occurs (no specified reason).-2: The parameter is invalid.-7: The SDK is not initialized.
         /// </returns>
         ///
         public abstract int SetClientRole(CLIENT_ROLE_TYPE role);
@@ -67,15 +67,15 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the user role and level in an interactive live streaming channel.
-        /// In the interactive live streaming profile, the SDK sets the user role as audience by default. You can call this method to set the user role as host.You can call this method either before or after joining a channel.If you call this method to switch the user role after joining a channel, the SDK automatically does the following:Calls MuteLocalAudioStream and MuteLocalVideoStream to change the publishing state.Triggers OnClientRoleChanged on the local client.Triggers OnUserJoined or OnUserOffline on the remote client.The difference between this method and SetClientRole [1/2] is that this method can set the user level in addition to the user role.The user role (role) determines the permissions that the SDK grants to a user, such as permission to send local streams, receive remote streams, and push streams to a CDN address.The user level (level) determines the level of services that a user can enjoy within the permissions of the user's role. For example, an audience member can choose to receive remote streams with low latency or ultra-low latency.User level affects the pricing of services.This method applies to the interactive live streaming profile (theprofile parameter of SetChannelProfile isCHANNEL_PROFILE_LIVE_BROADCASTING) only.
+        /// In the interactive live streaming profile, the SDK sets the user role as audience by default. You can call this method to set the user role as host.You can call this method either before or after joining a channel.If you call this method to switch the user role after joining a channel, the SDK automatically does the following:Calls MuteLocalAudioStream and MuteLocalVideoStream to change the publishing state.Triggers OnClientRoleChanged on the local client.Triggers OnUserJoined or OnUserOffline on the remote client.The difference between this method and SetClientRole [1/2] is that this method can set the user level in addition to the user role.The user role (role) determines the permissions that the SDK grants to a user, such as permission to send local streams, receive remote streams, and push streams to a CDN address.The user level (level) determines the level of services that a user can enjoy within the permissions of the user's role. For example, an audience member can choose to receive remote streams with low latency or ultra-low latency. User level affects the pricing of services.This method applies to the interactive live streaming profile (the profile parameter of SetChannelProfile is CHANNEL_PROFILE_LIVE_BROADCASTING) only.
         /// </summary>
         ///
-        /// <param name="role"> The user role in the interactive live streaming.For details, see CLIENT_ROLE_TYPE .</param>
+        /// <param name="role"> The user role in the interactive live streaming. See CLIENT_ROLE_TYPE .</param>
         ///
         /// <param name="options"> The detailed options of a user, including the user level. See ClientRoleOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-1: A general error occurs (no specified reason).-2: The parameter is invalid.-5: The request is rejected.-7: The SDK is not initialized.
+        /// 0: Success.&lt; 0: Failure.-1: A general error occurs (no specified reason).-2: The parameter is invalid.-5: The request is rejected.-7: The SDK is not initialized.
         /// </returns>
         ///
         public abstract int SetClientRole(CLIENT_ROLE_TYPE role, ClientRoleOptions options);
@@ -87,7 +87,7 @@ namespace Agora.Rtc
         /// A successful call of this method triggers the following callbacks: 
         /// The local client: The OnJoinChannelSuccess and OnConnectionStateChanged callbacks.
         /// The remote client: OnUserJoined , if the user joining the channel is in the Communication profile or is a host in the Live-broadcasting profile. This method enables users to join a channel. Users in the same channel can talk to each other, and multiple users in the same channel can start a group chat. Users with different App IDs cannot call each other.
-        /// Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the correspondingmute methods.
+        /// Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods.
         /// </summary>
         ///
         /// <param name="channelId"> The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters:
@@ -101,11 +101,11 @@ namespace Agora.Rtc
         ///
         /// <param name="info"> (Optional) Reserved for future use.</param>
         ///
-        /// <param name="uid"> The user ID. This parameter is used to identify the user in the channel for real-time audio and video interaction. You need to set and manage user IDs yourself, and ensure that each user ID in the same channel is unique. This parameter is a 32-bit unsigned integer. The value range is 1 to232-1. If the user ID is not assigned (or set to 0), the SDK assigns a random user ID and returns it in theOnJoinChannelSuccess callback. Your application must record and maintain the returned user ID, because the SDK does not do so.</param>
+        /// <param name="uid"> The user ID. This parameter is used to identify the user in the channel for real-time audio and video interaction. You need to set and manage user IDs yourself, and ensure that each user ID in the same channel is unique. This parameter is a 32-bit unsigned integer. The value range is 1 to 232-1. If the user ID is not assigned (or set to 0), the SDK assigns a random user ID and returns it in the OnJoinChannelSuccess callback. Your application must record and maintain the returned user ID, because the SDK does not do so.</param>
         ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure.
+        /// &lt; 0: Failure.
         /// -2: The parameter is invalid. For example, the token is invalid, the uid parameter is not set to an integer, or the value of a member in the ChannelMediaOptions structure is invalid. You need to pass in a valid parameter and join the channel again.
         /// -3: Failes to initialize the IRtcEngine object. You need to reinitialize the IRtcEngine object.
         /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
@@ -120,19 +120,19 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Joins a channel with media options.
-        /// This method enables users to join a channel. Users in the same channel can talk to each other, and multiple users in the same channel can start a group chat. Users with different App IDs cannot call each other.A successful call of this method triggers the following callbacks:The local client: The OnJoinChannelSuccess and OnConnectionStateChanged callbacks.The remote client: OnUserJoined , if the user joining the channel is in the Communication profile or is a host in the Live-broadcasting profile.When the connection between the client and Agora's server is interrupted due to poor network conditions, the SDK tries reconnecting to the server. When the local client successfully rejoins the channel, the SDK triggers the OnRejoinChannelSuccess callback on the local client.Compared to JoinChannel [1/2] , this method adds theoptions parameter to configure whether to automatically subscribe to all remote audio and video streams in the channel when the user joins the channel. By default, the user subscribes to the audio and video streams of all the other users in the channel, giving rise to usage and billings. To unsubscribe, set theoptions parameter or call themute methods accordingly.This method allows users to join only one channel at a time.Ensure that the app ID you use to generate the token is the same app ID that you pass in the Initialize method; otherwise, you may fail to join the channel by token.
+        /// This method enables users to join a channel. Users in the same channel can talk to each other, and multiple users in the same channel can start a group chat. Users with different App IDs cannot call each other.A successful call of this method triggers the following callbacks: The local client: The OnJoinChannelSuccess and OnConnectionStateChanged callbacks.The remote client: OnUserJoined , if the user joining the channel is in the Communication profile or is a host in the Live-broadcasting profile.When the connection between the client and Agora's server is interrupted due to poor network conditions, the SDK tries reconnecting to the server. When the local client successfully rejoins the channel, the SDK triggers the OnRejoinChannelSuccess callback on the local client.Compared to JoinChannel [1/2] , this method adds the options parameter to configure whether to automatically subscribe to all remote audio and video streams in the channel when the user joins the channel. By default, the user subscribes to the audio and video streams of all the other users in the channel, giving rise to usage and billings. To unsubscribe, set the options parameter or call the mute methods accordingly.This method allows users to join only one channel at a time.Ensure that the app ID you use to generate the token is the same app ID that you pass in the Initialize method; otherwise, you may fail to join the channel by token.
         /// </summary>
         ///
-        /// <param name="token"> The token generated on your server for authentication. See</param>
+        /// <param name="token"> The token generated on your server for authentication. See </param>
         ///
         /// <param name="channelId"> The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters:All lowercase English letters: a to z.All uppercase English letters: A to Z.All numeric characters: 0 to 9.Space"!", "#", "$", "%", "&amp;", "(", ")", "+", "-", ":", ";", "&lt;", "= ", ".", "&gt;", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
-        /// <param name="uid"> The user ID. This parameter is used to identify the user in the channel for real-time audio and video interaction. You need to set and manage user IDs yourself, and ensure that each user ID in the same channel is unique. This parameter is a 32-bit unsigned integer. The value range is 1 to 232-1. If the user ID is not assigned (or set to 0), the SDK assigns a random user ID and returns it in theOnJoinChannelSuccess callback. Your application must record and maintain the returned user ID, because the SDK does not do so.</param>
+        /// <param name="uid"> The user ID. This parameter is used to identify the user in the channel for real-time audio and video interaction. You need to set and manage user IDs yourself, and ensure that each user ID in the same channel is unique. This parameter is a 32-bit unsigned integer. The value range is 1 to 232-1. If the user ID is not assigned (or set to 0), the SDK assigns a random user ID and returns it in the OnJoinChannelSuccess callback. Your application must record and maintain the returned user ID, because the SDK does not do so.</param>
         ///
         /// <param name="options"> The channel media options. See ChannelMediaOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2: The parameter is invalid. For example, the token is invalid, theuid parameter is not set to an integer, or the value of a member in the ChannelMediaOptions structure is invalid. You need to pass in a valid parameter and join the channel again.-3: Failes to initialize the IRtcEngine object. You need to reinitialize theIRtcEngine object.-7: TheIRtcEngine object has not been initialized. You need to initialize theIRtcEngine object before calling this method.-8:IRtcEngineThe internal state of the object is wrong. The typical cause is that you call this method to join the channel without calling StopEchoTest to stop the test after calling StartEchoTest [2/2] to start a call loop test. You need to callStopEchoTest before calling this method.-17: The request to join the channel is rejected. The typical cause is that the user is in the channel. Agora recommends using the OnConnectionStateChanged callback to get whether the user is in the channel. Do not call this method to join the channel unless you receive theCONNECTION_STATE_DISCONNECTED(1) state.-102: The channel name is invalid. You need to pass in a valid channel name inchannelId to rejoin the channel.-121: The user ID is invalid. You need to pass in a valid user ID inuid to rejoin the channel.
+        /// 0: Success.&lt; 0: Failure.-2: The parameter is invalid. For example, the token is invalid, the uid parameter is not set to an integer, or the value of a member in the ChannelMediaOptions structure is invalid. You need to pass in a valid parameter and join the channel again.-3: Failes to initialize the IRtcEngine object. You need to reinitialize the IRtcEngine object.-7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.-8: IRtcEngineThe internal state of the object is wrong. The typical cause is that you call this method to join the channel without calling StopEchoTest to stop the test after calling StartEchoTest [2/2] to start a call loop test. You need to call StopEchoTest before calling this method.-17: The request to join the channel is rejected. The typical cause is that the user is in the channel. Agora recommends using the OnConnectionStateChanged callback to get whether the user is in the channel. Do not call this method to join the channel unless you receive the CONNECTION_STATE_DISCONNECTED(1) state.-102: The channel name is invalid. You need to pass in a valid channel name inchannelId to rejoin the channel.-121: The user ID is invalid. You need to pass in a valid user ID in uid to rejoin the channel.
         /// </returns>
         ///
         public abstract int JoinChannel(string token, string channelId, uint uid, ChannelMediaOptions options);
@@ -145,7 +145,7 @@ namespace Agora.Rtc
         /// <param name="options"> The channel media options. See ChannelMediaOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2: The value of a member in the ChannelMediaOptions structure is invalid. For example, the token or the user ID is invalid. You need to fill in a valid parameter.-7: TheIRtcEngine object has not been initialized. You need to initialize theIRtcEngine object before calling this method.-8: The internal state of theIRtcEngine object is wrong. The possible reason is that the user is not in the channel. Agora recommends using the OnConnectionStateChanged callback to get whether the user is in the channel. If you receive theCONNECTION_STATE_DISCONNECTED (1) orCONNECTION_STATE_FAILED (5) state, the user is not in the channel. You need to call JoinChannel [2/2] to join a channel before calling this method.
+        /// 0: Success.&lt; 0: Failure.-2: The value of a member in the ChannelMediaOptions structure is invalid. For example, the token or the user ID is invalid. You need to fill in a valid parameter.-7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.-8: The internal state of the IRtcEngine object is wrong. The possible reason is that the user is not in the channel. Agora recommends using the OnConnectionStateChanged callback to get whether the user is in the channel. If you receive the CONNECTION_STATE_DISCONNECTED (1) or CONNECTION_STATE_FAILED (5) state, the user is not in the channel. You need to call JoinChannel [2/2] to join a channel before calling this method.
         /// </returns>
         ///
         public abstract int UpdateChannelMediaOptions(ChannelMediaOptions options);
@@ -153,11 +153,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Leaves a channel.
-        /// This method releases all resources related to the session. This method call is asynchronous. When this method returns, it does not necessarily mean that the user has left the channel.After joining the channel, you must call this method orLeaveChannel [2/2] to end the call, otherwise, the next call cannot be started.If you successfully call this method and leave the channel, the following callbacks are triggered:The local client: OnLeaveChannel .The remote client: OnUserOffline , if the user joining the channel is in the Communication profile, or is a host in the Live-broadcasting profile.If you call Dispose immediately after calling this method, the SDK does not trigger theOnLeaveChannel callback.
+        /// This method releases all resources related to the session. This method call is asynchronous. When this method returns, it does not necessarily mean that the user has left the channel.After joining the channel, you must call this method or LeaveChannel [2/2] to end the call, otherwise, the next call cannot be started.If you successfully call this method and leave the channel, the following callbacks are triggered:The local client: OnLeaveChannel .The remote client: OnUserOffline , if the user joining the channel is in the Communication profile, or is a host in the Live-broadcasting profile.If you call Dispose immediately after calling this method, the SDK does not trigger the OnLeaveChannel callback.
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-1(ERR_FAILED): A general error occurs (no specified reason).-2 (ERR_INVALID_ARGUMENT): The parameter is invalid.-7(ERR_NOT_INITIALIZED): The SDK is not initialized.
+        /// 0: Success.&lt; 0: Failure.-1(ERR_FAILED): A general error occurs (no specified reason).-2 (ERR_INVALID_ARGUMENT): The parameter is invalid.-7(ERR_NOT_INITIALIZED): The SDK is not initialized.
         /// </returns>
         ///
         public abstract int LeaveChannel();
@@ -165,14 +165,14 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Leaves a channel.
-        /// If you call Dispose immediately after calling this method, the SDK does not trigger theOnLeaveChannel callback.This method lets the user leave the channel, for example, by hanging up or exiting the call.After joining the channel, you must call this method or LeaveChannel [1/2] No matter whether you are currently in a call or not, you can call this method without side effects. This method releases all resources related to the session.This method call is asynchronous. When this method returns, it does not necessarily mean that the user has left the channel. After you leave the channel, the SDK triggers the OnLeaveChannel callback. A successful call of this method triggers the following callbacks: The local client:OnLeaveChannel
+        /// If you call Dispose immediately after calling this method, the SDK does not trigger the OnLeaveChannel callback.This method lets the user leave the channel, for example, by hanging up or exiting the call.After joining the channel, you must call this method or LeaveChannel [1/2] No matter whether you are currently in a call or not, you can call this method without side effects. This method releases all resources related to the session.This method call is asynchronous. When this method returns, it does not necessarily mean that the user has left the channel. After you leave the channel, the SDK triggers the OnLeaveChannel callback. A successful call of this method triggers the following callbacks: The local client: OnLeaveChannel
         /// The remote client: OnUserOffline , if the user joining the channel is in the COMMUNICATION profile, or is a host in the LIVE_BROADCASTING profile.
         /// </summary>
         ///
         /// <param name="options"> The options for leaving the channel. See LeaveChannelOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int LeaveChannel(LeaveChannelOptions options);
@@ -180,13 +180,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets a new token when the current token expires after a period of time.
-        /// You can use this method to pass a new token to the SDK. A token expires after a certain period of time. In the following two cases, the app should call this method to pass in a new token. Failure to do so will result in the SDK disconnecting from the server.The SDK triggers the OnTokenPrivilegeWillExpire callback.The OnConnectionStateChanged callback reportsCONNECTION_CHANGED_TOKEN_EXPIRED(9).
+        /// You can use this method to pass a new token to the SDK. A token expires after a certain period of time. In the following two cases, the app should call this method to pass in a new token. Failure to do so will result in the SDK disconnecting from the server.The SDK triggers the OnTokenPrivilegeWillExpire callback.The OnConnectionStateChanged callback reports CONNECTION_CHANGED_TOKEN_EXPIRED(9).
         /// </summary>
         ///
         /// <param name="token"> The new token.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2: The parameter is invalid. For example, the token is invalid. You need to fill in a valid parameter.-7: TheIRtcEngine object has not been initialized. You need to initialize theIRtcEngine object before calling this method.
+        /// 0: Success.&lt; 0: Failure.-2: The parameter is invalid. For example, the token is invalid. You need to fill in a valid parameter.-7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
         /// </returns>
         ///
         public abstract int RenewToken(string token);
@@ -194,7 +194,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Joins a channel with a User Account and Token.
-        /// This method allows a user to join the channel with the user account and a token. After the user successfully joins the channel, the SDK triggers the following callbacks:The local client: OnLocalUserRegistered , OnJoinChannelSuccess and OnConnectionStateChanged callbacks.The remote client: OnUserJoined and OnUserInfoUpdated , if the user joining the channel is in the communication profile or is a host in the live streaming profile.Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the correspondingmute methods.To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.
+        /// This method allows a user to join the channel with the user account and a token. After the user successfully joins the channel, the SDK triggers the following callbacks:The local client: OnLocalUserRegistered , OnJoinChannelSuccess and OnConnectionStateChanged callbacks.The remote client: OnUserJoined and OnUserInfoUpdated , if the user joining the channel is in the communication profile or is a host in the live streaming profile.Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods.To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.
         /// </summary>
         ///
         /// <param name="userAccount"> The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are (89 in total):
@@ -214,7 +214,7 @@ namespace Agora.Rtc
         ///  "!", "#", "$", "%", "&amp;", "(", ")", "+", "-", ":", ";", "&lt;", "= ", ".", "&gt;", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", "," </param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.2: The parameter is invalid.3: The initialization of the SDK fails. You can try to initialize the SDK again.5: The request is rejected.17: The request to join the channel is rejected. Since the SDK only supports users to join one IRtcEngine channel at a time; this error code will be returned when the user who has joined the IRtcEngine channel calls the join channel method in the IRtcEngine class again with a valid channel name.
+        /// 0: Success.&lt; 0: Failure.2: The parameter is invalid.3: The initialization of the SDK fails. You can try to initialize the SDK again.5: The request is rejected.17: The request to join the channel is rejected. Since the SDK only supports users to join one IRtcEngine channel at a time; this error code will be returned when the user who has joined the IRtcEngine channel calls the join channel method in the IRtcEngine class again with a valid channel name.
         /// </returns>
         ///
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount);
@@ -222,19 +222,19 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Joins the channel with a user account, and configures whether to automatically subscribe to audio or video streams after joining the channel.
-        /// This method allows a user to join the channel with the user account. After the user successfully joins the channel, the SDK triggers the following callbacks:The local client: OnLocalUserRegistered , OnJoinChannelSuccess and OnConnectionStateChanged callbacks.The remote client: The OnUserJoined callback if the user is in the COMMUNICATION profile, and the OnUserInfoUpdated callback if the user is a host in the LIVE_BROADCASTING profile.Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the correspondingmute methods.To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.
+        /// This method allows a user to join the channel with the user account. After the user successfully joins the channel, the SDK triggers the following callbacks:The local client: OnLocalUserRegistered , OnJoinChannelSuccess and OnConnectionStateChanged callbacks.The remote client: The OnUserJoined callback if the user is in the COMMUNICATION profile, and the OnUserInfoUpdated callback if the user is a host in the LIVE_BROADCASTING profile.Once a user joins the channel, the user subscribes to the audio and video streams of all the other users in the channel by default, giving rise to usage and billing calculation. To stop subscribing to a specified stream or all remote streams, call the corresponding mute methods.To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.
         /// </summary>
         ///
         /// <param name="options"> The channel media options. See ChannelMediaOptions .</param>
         ///
-        /// <param name="token"> The token generated on your server for authentication. See</param>
+        /// <param name="token"> The token generated on your server for authentication. See </param>
         ///
         /// <param name="channelId"> The channel name. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters:All lowercase English letters: a to z.All uppercase English letters: A to Z.All numeric characters: 0 to 9.Space"!", "#", "$", "%", "&amp;", "(", ")", "+", "-", ":", ";", "&lt;", "= ", ".", "&gt;", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
-        /// <param name="userAccount"> The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it asNULL. Supported characters are (89 in total):The 26 lowercase English letters: a to z.The 26 uppercase English letters: A to Z.All numeric characters: 0 to 9.Space"!", "#", "$", "%", "&amp;", "(", ")", "+", "-", ":", ";", "&lt;", "= ", ".", "&gt;", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        /// <param name="userAccount"> The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are (89 in total):The 26 lowercase English letters: a to z.The 26 uppercase English letters: A to Z.All numeric characters: 0 to 9.Space"!", "#", "$", "%", "&amp;", "(", ")", "+", "-", ":", ";", "&lt;", "= ", ".", "&gt;", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2: The parameter is invalid. For example, the token is invalid, theuid parameter is not set to an integer, or the value of a member in the ChannelMediaOptions structure is invalid. You need to pass in a valid parameter and join the channel again.-3: Failes to initialize the IRtcEngine object. You need to reinitialize theIRtcEngine object.-7: TheIRtcEngine object has not been initialized. You need to initialize theIRtcEngine object before calling this method.-8:IRtcEngineThe internal state of the object is wrong. The typical cause is that you call this method to join the channel without calling StopEchoTest to stop the test after calling StartEchoTest [2/2] to start a call loop test. You need to callStopEchoTest before calling this method.-17: The request to join the channel is rejected. The typical cause is that the user is in the channel. Agora recommends using the OnConnectionStateChanged callback to get whether the user is in the channel. Do not call this method to join the channel unless you receive theCONNECTION_STATE_DISCONNECTED(1) state.-102: The channel name is invalid. You need to pass in a valid channel name inchannelId to rejoin the channel.-121: The user ID is invalid. You need to pass in a valid user ID inuid to rejoin the channel.
+        /// 0: Success.&lt; 0: Failure.-2: The parameter is invalid. For example, the token is invalid, the uid parameter is not set to an integer, or the value of a member in the ChannelMediaOptions structure is invalid. You need to pass in a valid parameter and join the channel again.-3: Failes to initialize the IRtcEngine object. You need to reinitialize the IRtcEngine object.-7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.-8: IRtcEngineThe internal state of the object is wrong. The typical cause is that you call this method to join the channel without calling StopEchoTest to stop the test after calling StartEchoTest [2/2] to start a call loop test. You need to call StopEchoTest before calling this method.-17: The request to join the channel is rejected. The typical cause is that the user is in the channel. Agora recommends using the OnConnectionStateChanged callback to get whether the user is in the channel. Do not call this method to join the channel unless you receive the CONNECTION_STATE_DISCONNECTED(1) state.-102: The channel name is invalid. You need to pass in a valid channel name inchannelId to rejoin the channel.-121: The user ID is invalid. You need to pass in a valid user ID in uid to rejoin the channel.
         /// </returns>
         ///
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
@@ -245,9 +245,15 @@ namespace Agora.Rtc
         /// After a remote user joins the channel, the SDK gets the UID and user account of the remote user, caches them in a mapping table object, and triggers the OnUserInfoUpdated callback on the local client. After receiving the callback, you can call this method to get the user account of the remote user from the UserInfo object by passing in the user ID.
         /// </summary>
         ///
+        /// <param name="userInfo"> Input and output parameter. The UserInfo object that identifies the user information.
+        ///  Input: A UserInfo object.
+        ///  Output: A UserInfo object that contains the user account and user ID of the user.</param>
+        ///
+        /// <param name="userAccount"> The user account.</param>
+        ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure.
+        /// &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo);
@@ -263,7 +269,7 @@ namespace Agora.Rtc
         /// <param name="userInfo"> </param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetUserInfoByUid(uint uid, ref UserInfo userInfo);
@@ -273,7 +279,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Adds event handlers.
-        /// The SDK uses the IRtcEngineEventHandler class to send callbacks to the app. The app inherits the methods of this class to receive these callbacks. All methods in this interface class have default (empty) implementations. Therefore, the application can only inherit some required events. In the callbacks, avoid time-consuming tasks or calling APIs that can block the thread, such as theSendStreamMessage method.
+        /// The SDK uses the IRtcEngineEventHandler class to send callbacks to the app. The app inherits the methods of this class to receive these callbacks. All methods in this interface class have default (empty) implementations. Therefore, the application can only inherit some required events. In the callbacks, avoid time-consuming tasks or calling APIs that can block the thread, such as the SendStreamMessage method.
         /// Otherwise, the SDK may not work properly.
         /// </summary>
         ///
@@ -290,7 +296,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableAudio();
@@ -302,7 +308,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int DisableAudio();
@@ -310,15 +316,15 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the audio profile and audio scenario.
-        /// Deprecated:This method is deprecated. If you need to set the audio profile, use SetAudioProfile [2/2] ; if you need to set the audio scenario, use SetAudioScenario .You can call this method either before or after joining a channel.In scenarios requiring high-quality audio, such as online music tutoring, Agora recommends you setprofile asAUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) andscenario asAUDIO_SCENARIO_GAME_STREAMING(3).
+        /// Deprecated:This method is deprecated. If you need to set the audio profile, use SetAudioProfile [2/2] ; if you need to set the audio scenario, use SetAudioScenario .You can call this method either before or after joining a channel.In scenarios requiring high-quality audio, such as online music tutoring, Agora recommends you set profile as AUDIO_PROFILE_MUSIC_HIGH_QUALITY(4)and scenario as AUDIO_SCENARIO_GAME_STREAMING(3).
         /// </summary>
         ///
-        /// <param name="profile"> The audio profile, including the sampling rate, bitrate, encoding mode, and the number of channels.See AUDIO_PROFILE_TYPE .</param>
+        /// <param name="profile"> The audio profile, including the sampling rate, bitrate, encoding mode, and the number of channels. See AUDIO_PROFILE_TYPE .</param>
         ///
-        /// <param name="scenario"> The audio scenario.For more details, see AUDIO_SCENARIO_TYPE .Under different audio scenarios, the device uses different volume types.</param>
+        /// <param name="scenario"> The audio scenarios. See AUDIO_SCENARIO_TYPE . Under different audio scenarios, the device uses different volume types.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario);
@@ -326,13 +332,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the audio parameters and application scenarios.
-        /// You can call this method either before or after joining a channel.In scenarios requiring high-quality audio, such as online music tutoring, Agora recommends you setprofile asAUDIO_PROFILE_MUSIC_HIGH_QUALITY (4).If you want to set the audio scenario, call Initialize and set RtcEngineContext struct.
+        /// You can call this method either before or after joining a channel.In scenarios requiring high-quality audio, such as online music tutoring, Agora recommends you set profile as AUDIO_PROFILE_MUSIC_HIGH_QUALITY (4).If you want to set the audio scenario, call Initialize and set RtcEngineContext struct.
         /// </summary>
         ///
         /// <param name="profile"> The audio profile, including the sampling rate, bitrate, encoding mode, and the number of channels. See AUDIO_PROFILE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile);
@@ -346,7 +352,7 @@ namespace Agora.Rtc
         /// <param name="scenario"> The audio scenarios. See AUDIO_SCENARIO_TYPE . Under different audio scenarios, the device uses different volume types.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioScenario(AUDIO_SCENARIO_TYPE scenario);
@@ -360,7 +366,7 @@ namespace Agora.Rtc
         /// <param name="volume"> The volume of the user. The value range is [0,400].0: Mute.100: (Default) The original volume.400: Four times the original volume (amplifying the audio signals by four times).</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AdjustRecordingSignalVolume(int volume);
@@ -373,7 +379,7 @@ namespace Agora.Rtc
         /// <param name="mute"> true: Mute the recording signal.false: (Default) Do not mute the recording signal.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteRecordingSignal(bool mute);
@@ -390,7 +396,7 @@ namespace Agora.Rtc
         ///  400: Four times the original volume (amplifying the audio signals by four times). </param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AdjustPlaybackSignalVolume(int volume);
@@ -404,7 +410,7 @@ namespace Agora.Rtc
         /// <param name="volume"> Audio mixing volume. The value ranges between 0 and 100. The default value is 100, which means the original volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AdjustLoopbackSignalVolume(int volume);
@@ -420,7 +426,7 @@ namespace Agora.Rtc
         /// <param name="uid"> The user ID of the remote user.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AdjustUserPlaybackSignalVolume(uint uid, int volume);
@@ -428,13 +434,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables/Disables the local audio capture.
-        /// The audio function is enabled by default. This method disables or re-enables the local audio function to stop or restart local audio capturing.This method does not affect receiving or playing the remote audio streams, and EnableLocalAudio (false) is applicable to scenarios where the user wants to receive remote audio streams without sending any audio stream to other users in the channel.Once the local audio function is disabled or re-enabled, the SDK triggers the OnLocalAudioStateChanged callback, which reportsLOCAL_AUDIO_STREAM_STATE_STOPPED (0) orLOCAL_AUDIO_STREAM_STATE_RECORDING (1).This method is different from the MuteLocalAudioStream method:EnableLocalAudio: Disables/Re-enables the local audio capturing and processing. If you disable or re-enable local audio capturing using theEnableLocalAudio method, the local user might hear a pause in the remote audio playback.MuteLocalAudioStream: Sends/Stops sending the local audio streams.You can call this method either before or after joining a channel. Calling it before joining a channel only sets the device state, and it takes effect immediately after you join the channel.
+        /// The audio function is enabled by default. This method disables or re-enables the local audio function to stop or restart local audio capturing.This method does not affect receiving or playing the remote audio streams, and EnableLocalAudio (false) is applicable to scenarios where the user wants to receive remote audio streams without sending any audio stream to other users in the channel.Once the local audio function is disabled or re-enabled, the SDK triggers the OnLocalAudioStateChanged callback, which reports LOCAL_AUDIO_STREAM_STATE_STOPPED (0) or LOCAL_AUDIO_STREAM_STATE_RECORDING (1).This method is different from the MuteLocalAudioStream method:EnableLocalAudio: Disables/Re-enables the local audio capturing and processing. If you disable or re-enable local audio capturing using the EnableLocalAudio method, the local user might hear a pause in the remote audio playback.MuteLocalAudioStream: Sends/Stops sending the local audio streams.You can call this method either before or after joining a channel. Calling it before joining a channel only sets the device state, and it takes effect immediately after you join the channel.
         /// </summary>
         ///
         /// <param name="enabled"> true: (Default) Re-enable the local audio function, that is, to start the local audio capturing device (for example, the microphone).false: Disable the local audio function, that is, to stop local audio capturing.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableLocalAudio(bool enabled);
@@ -448,7 +454,7 @@ namespace Agora.Rtc
         /// <param name="mute"> Whether to stop publishing the local audio stream.true: Stop publishing the local audio stream.false: (Default) Resumes publishing the local audio stream.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteLocalAudioStream(bool mute);
@@ -456,13 +462,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Stops or resumes subscribing to the audio streams of all remote users.
-        /// After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all remote users, including all subsequent users.Call this method after joining a channel.If you do not want to subscribe the audio streams of remote users before joining a channel, you can call JoinChannel [2/2] and setautoSubscribeAudio asfalse.
+        /// After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all remote users, including all subsequent users.Call this method after joining a channel.If you do not want to subscribe the audio streams of remote users before joining a channel, you can call JoinChannel [2/2] and set autoSubscribeAudio as false.
         /// </summary>
         ///
         /// <param name="mute"> Whether to stop subscribing to the audio streams of all remote users:true: Stop subscribing to the audio streams of all remote users.false: (Default) Subscribe to the audio streams of all remote users by default.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteAllRemoteAudioStreams(bool mute);
@@ -470,13 +476,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Stops or resumes subscribing to the audio streams of all remote users by default.
-        /// Call this method after joining a channel. After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all subsequent users.If you need to resume subscribing to the audio streams of remote users in the channel after calling this method, do the following:To resume subscribing to the audio stream of a specified user, call MuteRemoteAudioStream (false), and specify the user ID.To resume subscribing to the audio streams of multiple remote users, callMuteRemoteAudioStream(false) multiple times.
+        /// Call this method after joining a channel. After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all subsequent users.If you need to resume subscribing to the audio streams of remote users in the channel after calling this method, do the following:To resume subscribing to the audio stream of a specified user, call MuteRemoteAudioStream (false), and specify the user ID.To resume subscribing to the audio streams of multiple remote users, call MuteRemoteAudioStream(false) multiple times.
         /// </summary>
         ///
         /// <param name="mute"> Whether to stop subscribing to the audio streams of all remote users by default.true: Stop subscribing to the audio streams of all remote users by default.false: (Default) Subscribe to the audio streams of all remote users by default.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetDefaultMuteAllRemoteAudioStreams(bool mute);
@@ -489,10 +495,11 @@ namespace Agora.Rtc
         ///
         /// <param name="uid"> The user ID of the specified user.</param>
         ///
-        /// <param name="mute"> Whether to stop subscribing to the audio stream of the specified user.true: Unsubscribe from the specified user's audio stream.false: (Default) Subscribes to the specified user's audio stream.</param>
+        /// <param name="mute"> Whether to stop subscribing to the audio stream of the specified user.
+        ///  true: Unsubscribe from the specified user's audio stream.false: (Default) Subscribes to the specified user's audio stream.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteRemoteAudioStream(uint uid, bool mute);
@@ -506,7 +513,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableVideo();
@@ -518,7 +525,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int DisableVideo();
@@ -530,7 +537,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartPreview();
@@ -545,7 +552,7 @@ namespace Agora.Rtc
         /// <param name="sourceType"> The type of the video source, see VIDEO_SOURCE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartPreview(VIDEO_SOURCE_TYPE sourceType);
@@ -557,7 +564,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopPreview();
@@ -571,7 +578,7 @@ namespace Agora.Rtc
         /// <param name="sourceType"> The type of the video source, see VIDEO_SOURCE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopPreview(VIDEO_SOURCE_TYPE sourceType);
@@ -586,7 +593,7 @@ namespace Agora.Rtc
         /// <param name="config"> Video profile. See VideoEncoderConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetVideoEncoderConfiguration(VideoEncoderConfiguration config);
@@ -612,7 +619,7 @@ namespace Agora.Rtc
         /// <param name="mirrorMode"> The rendering mode of the local video view. See VIDEO_MIRROR_MODE_TYPE .If you use a front camera, the SDK enables the mirror mode by default; if you use a rear camera, the SDK disables the mirror mode by default.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
@@ -630,7 +637,7 @@ namespace Agora.Rtc
         /// <param name="mirrorMode"> The mirror mode of the remote user view. For details, see VIDEO_MIRROR_MODE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
@@ -644,7 +651,7 @@ namespace Agora.Rtc
         /// <param name="renderMode"> The local video display mode. See RENDER_MODE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
@@ -658,7 +665,7 @@ namespace Agora.Rtc
         /// <param name="mirrorMode"> The local video mirror mode. See VIDEO_MIRROR_MODE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode);
@@ -672,7 +679,7 @@ namespace Agora.Rtc
         /// <param name="mute"> Whether to stop publishing the local video stream.true: Stop publishing the local video stream.false: (Default) Publish the local video stream.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteLocalVideoStream(bool mute);
@@ -688,7 +695,7 @@ namespace Agora.Rtc
         /// <param name="mute"> Whether to subscribe to the specified remote user's video stream.true: Unsubscribe from the specified user's video stream.false: (Default) Subscribes to the specified user's video stream.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteRemoteVideoStream(uint uid, bool mute);
@@ -696,13 +703,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables/Disables the local video capture.
-        /// This method disables or re-enables the local video capturer, and does not affect receiving the remote video stream.After calling EnableVideo , the local video capturer is enabled by default. You can call EnableLocalVideo (false) to disable the local video capturer. If you want to re-enable the local video, callEnableLocalVideo(true).After the local video capturer is successfully disabled or re-enabled, the SDK triggers the OnRemoteVideoStateChanged callback on the remote client.You can call this method either before or after joining a channel.This method enables the internal engine and is valid after leaving the channel.
+        /// This method disables or re-enables the local video capturer, and does not affect receiving the remote video stream.After calling EnableVideo , the local video capturer is enabled by default. You can call EnableLocalVideo (false) to disable the local video capturer. If you want to re-enable the local video, call EnableLocalVideo(true).After the local video capturer is successfully disabled or re-enabled, the SDK triggers the OnRemoteVideoStateChanged callback on the remote client.You can call this method either before or after joining a channel.This method enables the internal engine and is valid after leaving the channel.
         /// </summary>
         ///
-        /// <param name="enabled"> Whether to enable the local video capture.true: (Default) Enable the local video capture.false: Disables the local video capture. Once the local video is disabled, the remote users can no longer receive the video stream of this user, while this user can still receive the video streams of the other remote users. When set tofalse, this method does not require a local camera.</param>
+        /// <param name="enabled"> Whether to enable the local video capture.true: (Default) Enable the local video capture.false: Disables the local video capture. Once the local video is disabled, the remote users can no longer receive the video stream of this user, while this user can still receive the video streams of the other remote users. When set to false, this method does not require a local camera.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableLocalVideo(bool enabled);
@@ -710,13 +717,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Stops or resumes subscribing to the video streams of all remote users.
-        /// After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all remote users, including all subsequent users.Call this method after joining a channel.If you do not want to subscribe the video streams of remote users before joining a channel, you can call JoinChannel [2/2] and setautoSubscribeVideo asfalse.
+        /// After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all remote users, including all subsequent users.Call this method after joining a channel.If you do not want to subscribe the video streams of remote users before joining a channel, you can call JoinChannel [2/2] and set autoSubscribeVideo as false.
         /// </summary>
         ///
         /// <param name="mute"> Whether to stop subscribing to the video streams of all remote users.true: Stop subscribing to the video streams of all remote users.false: (Default) Subscribe to the audio streams of all remote users by default.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteAllRemoteVideoStreams(bool mute);
@@ -724,13 +731,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Stops or resumes subscribing to the video streams of all remote users by default.
-        /// Call this method after joining a channel. After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all subsequent users.If you need to resume subscribing to the audio streams of remote users in the channel after calling this method, do the following:To resume subscribing to the audio stream of a specified user, call MuteRemoteVideoStream (false), and specify the user ID.To resume subscribing to the audio streams of multiple remote users, callMuteRemoteVideoStream(false) multiple times.
+        /// Call this method after joining a channel. After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all subsequent users.If you need to resume subscribing to the audio streams of remote users in the channel after calling this method, do the following:To resume subscribing to the audio stream of a specified user, call MuteRemoteVideoStream (false), and specify the user ID.To resume subscribing to the audio streams of multiple remote users, call MuteRemoteVideoStream(false) multiple times.
         /// </summary>
         ///
         /// <param name="mute"> Whether to stop subscribing to the audio streams of all remote users by default.true: Stop subscribing to the audio streams of all remote users by default.false: (Default) Resume subscribing to the audio streams of all remote users by default.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetDefaultMuteAllRemoteVideoStreams(bool mute);
@@ -746,7 +753,7 @@ namespace Agora.Rtc
         /// <param name="options"> Image configurations. See ImageTrackOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableVideoImageSource(bool enable, ImageTrackOptions options);
@@ -754,7 +761,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets color enhancement.
-        /// The video images captured by the camera can have color distortion. The color enhancement feature intelligently adjusts video characteristics such as saturation and contrast to enhance the video color richness and color reproduction, making the video more vivid.You can call this method to enable the color enhancement feature and set the options of the color enhancement effect.Call this method after calling EnableVideo .The color enhancement feature has certain performance requirements on devices. With color enhancement turned on, Agora recommends that you change the color enhancement level to one that consumes less performance or turn off color enhancement if your device is experiencing severe heat problems.Both this method and SetExtensionProperty can turn on color enhancement:When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends usingSetExtensionProperty.
+        /// The video images captured by the camera can have color distortion. The color enhancement feature intelligently adjusts video characteristics such as saturation and contrast to enhance the video color richness and color reproduction, making the video more vivid.You can call this method to enable the color enhancement feature and set the options of the color enhancement effect.Call this method after calling EnableVideo .The color enhancement feature has certain performance requirements on devices. With color enhancement turned on, Agora recommends that you change the color enhancement level to one that consumes less performance or turn off color enhancement if your device is experiencing severe heat problems.Both this method and SetExtensionProperty can turn on color enhancement:When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends using SetExtensionProperty.
         /// </summary>
         ///
         /// <param name="type"> The type of the video source. See MEDIA_SOURCE_TYPE .</param>
@@ -764,7 +771,7 @@ namespace Agora.Rtc
         /// <param name="options"> The color enhancement options. See ColorEnhanceOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetColorEnhanceOptions(bool enabled, ColorEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
@@ -772,7 +779,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets low-light enhancement.
-        /// The low-light enhancement feature can adaptively adjust the brightness value of the video captured in situations with low or uneven lighting, such as backlit, cloudy, or dark scenes. It restores or highlights the image details and improves the overall visual effect of the video.You can call this method to enable the color enhancement feature and set the options of the color enhancement effect.Call this method after calling EnableVideo .Dark light enhancement has certain requirements for equipment performance. The low-light enhancement feature has certain performance requirements on devices. If your device overheats after you enable low-light enhancement, Agora recommends modifying the low-light enhancement options to a less performance-consuming level or disabling low-light enhancement entirely.Both this method and SetExtensionProperty can turn on low-light enhancement:When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends usingSetExtensionProperty.
+        /// The low-light enhancement feature can adaptively adjust the brightness value of the video captured in situations with low or uneven lighting, such as backlit, cloudy, or dark scenes. It restores or highlights the image details and improves the overall visual effect of the video.You can call this method to enable the color enhancement feature and set the options of the color enhancement effect.Call this method after calling EnableVideo .Dark light enhancement has certain requirements for equipment performance. The low-light enhancement feature has certain performance requirements on devices. If your device overheats after you enable low-light enhancement, Agora recommends modifying the low-light enhancement options to a less performance-consuming level or disabling low-light enhancement entirely.Both this method and SetExtensionProperty can turn on low-light enhancement:When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends using SetExtensionProperty.
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable low-light enhancement function:true: Enable low-light enhancement function.false: (Default) Disable low-light enhancement function.</param>
@@ -782,31 +789,20 @@ namespace Agora.Rtc
         /// <param name="type"> The type of the video source. See MEDIA_SOURCE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLowlightEnhanceOptions(bool enabled, LowlightEnhanceOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
         ///
-        /// <summary>
-        /// Options for subscribing remote video streams.
-        /// When a remote user has enabled the dual-stream mode, you can call this method to choose the option for subscribing the video streams sent by the remote user.Agora recommends calling this method after receiving the OnUserJoined callback.
-        /// </summary>
-        ///
-        /// <param name="uid"> The user ID of the remote user.</param>
-        ///
-        /// <param name="options"> The video subscription options. See VideoSubscriptionOptions .</param>
-        ///
-        /// <returns>
-        /// 0: Success.< 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
 
         ///
         /// <summary>
         /// Sets video noise reduction.
-        /// Underlit environments and low-end video capture devices can cause video images to contain significant noise, which affects video quality. In real-time interactive scenarios, video noise also consumes bitstream resources and reduces encoding efficiency during encoding.You can call this method to enable the video noise reduction feature and set the options of the video noise reduction effect.Call this method after calling EnableVideo .Video noise reduction has certain requirements for equipment performance. If your device overheats after you enable video noise reduction, Agora recommends modifying the video noise reduction options to a less performance-consuming level or disabling video noise reduction entirely.Both this method and SetExtensionProperty can turn on video noise reduction function:When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends usingSetExtensionProperty.
+        /// Underlit environments and low-end video capture devices can cause video images to contain significant noise, which affects video quality. In real-time interactive scenarios, video noise also consumes bitstream resources and reduces encoding efficiency during encoding.You can call this method to enable the video noise reduction feature and set the options of the video noise reduction effect.Call this method after calling EnableVideo .Video noise reduction has certain requirements for equipment performance. If your device overheats after you enable video noise reduction, Agora recommends modifying the video noise reduction options to a less performance-consuming level or disabling video noise reduction entirely.Both this method and SetExtensionProperty can turn on video noise reduction function:When you use the SDK to capture video, Agora recommends this method (this method only works for video captured by the SDK).When you use an external video source to implement custom video capture, or send an external video source to the SDK, Agora recommends using SetExtensionProperty.
         /// </summary>
         ///
         /// <param name="type"> The type of the video source. See MEDIA_SOURCE_TYPE .</param>
@@ -816,7 +812,7 @@ namespace Agora.Rtc
         /// <param name="options"> The video noise reduction options. See VideoDenoiserOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetVideoDenoiserOptions(bool enabled, VideoDenoiserOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
@@ -831,10 +827,10 @@ namespace Agora.Rtc
         ///
         /// <param name="uid"> The user ID. Set uid as 0 if you want to take a snapshot of the local user's video.</param>
         ///
-        /// <param name="filePath"> The local path (including filename extensions) of the snapshot. For example:Windows:C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.jpgiOS:/App Sandbox/Library/Caches/example.jpgmacOS:～/Library/Logs/example.jpgAndroid:/storage/emulated/0/Android/data/<package name>/files/example.jpgEnsure that the path you specify exists and is writable.</param>
+        /// <param name="filePath"> The local path (including filename extensions) of the snapshot. For example:Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.jpgiOS: /App Sandbox/Library/Caches/example.jpgmacOS: ～/Library/Logs/example.jpgAndroid: /storage/emulated/0/Android/data/<package name>/files/example.jpgEnsure that the path you specify exists and is writable.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int TakeSnapshot(uint uid, string filePath);
@@ -849,7 +845,7 @@ namespace Agora.Rtc
         /// <param name="config"> The configuration of the video capture with a primary camera. See CameraCapturerConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartPrimaryCameraCapture(CameraCapturerConfiguration config);
@@ -870,7 +866,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopPrimaryCameraCapture();
@@ -882,7 +878,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopSecondaryCameraCapture();
@@ -912,7 +908,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopPrimaryScreenCapture();
@@ -924,7 +920,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopSecondaryScreenCapture();
@@ -933,11 +929,11 @@ namespace Agora.Rtc
         #region Media player
         ///
         /// <summary>
-        /// 
+        /// Creates a media player instance. 
         /// </summary>
         ///
         /// <returns>
-        /// The IMediaPlayer instance, if the method call succeeds.An empty pointer, if the method call fails.
+        /// The IMediaPlayer instance, if the method call succeeds.An empty pointer , if the method call fails.
         /// </returns>
         ///
         public abstract IMediaPlayer CreateMediaPlayer();
@@ -962,7 +958,7 @@ namespace Agora.Rtc
         /// <param name="options"> The advanced options for audio. See AdvancedAudioOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAdvancedAudioOptions(AdvancedAudioOptions options);
@@ -982,7 +978,7 @@ namespace Agora.Rtc
         /// <param name="options"> The image enhancement options. See BeautyOptions .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetBeautyEffectOptions(bool enabled, BeautyOptions options, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
@@ -999,8 +995,10 @@ namespace Agora.Rtc
         ///
         /// <param name="segproperty"> Processing properties for background images. See SegmentationProperty .</param>
         ///
+        /// <param name="type"> Type of the video source. See MEDIA_SOURCE_TYPE .In this method, this parameter supports only the following two settings:The default value is PRIMARY_CAMERA_SOURCE.If you want to use the second camera to capture video, set this parameter to SECONDARY_CAMERA_SOURCE.</param>
+        ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-1: The custom background image does not exist. Check the value ofsource in VirtualBackgroundSource .-2: The color format of the custom background image is invalid. Check the value ofcolor in VirtualBackgroundSource .-3: The device does not support virtual background.
+        /// 0: Success.&lt; 0: Failure.-1: The custom background image does not exist. Check the value of source in VirtualBackgroundSource .-2: The color format of the custom background image is invalid. Check the value of color in VirtualBackgroundSource .-3: The device does not support virtual background.
         /// </returns>
         ///
         public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource, SegmentationProperty segproperty, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
@@ -1008,7 +1006,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables/Disables the super resolution algorithm for a remote user's video stream.
-        /// This function can effectively improve the resolution of the remote video picture seen by the local user, that is, the width and height (pixels) of the video received by the specified remote user are enlarged to 2 times original size.After calling this method, you can confirm whether super resolution is successfully enabled through the remote video stream statistics ( RemoteVideoStats ) in the OnRemoteVideoStats callback:If the parametersuperResolutionType >0: Super resolution is enabled.If parametersuperResolutionType =0: Super resolution is not enabled.The super resolution feature requires extra system resources. To balance the visual experience and system resource consumption, this feature can only be enabled for a single remote user. If the local user uses super resolution on Android, the original resolution of the remote user's video cannot exceed 640 × 360 pixels; if the local user uses super resolution on iOS, the original resolution of the remote user's video cannot exceed 640 × 480 pixels.This method is for Android and iOS only.Before calling this method, ensure that you have integrated the following dynamic libraries:Android:libagora_super_resolution_extension.soiOS:AgoraSuperResolutionExtension.xcframeworkBecause this method has certain system performance requirements, Agora recommends that you use the following devices or better:Android:VIVO: V1821A, NEX S, 1914A, 1916A, 1962A, 1824BA, X60, X60 ProOPPO: PCCM00, Find X3OnePlus: A6000Xiaomi: Mi 8, Mi 9, Mi 10, Mi 11, MIX3, Redmi K20 ProSAMSUNG: SM-G9600, SM-G9650, SM-N9600, SM-G9708, SM-G960U, SM-G9750, S20, S21HUAWEI: SEA-AL00, ELE-AL00, VOG-AL00, YAL-AL10, HMA-AL00, EVR-AN00, nova 4, nova 5 Pro, nova 6 5G, nova 7 5G, Mate 30, Mate 30 Pro, Mate 40, Mate 40 Pro, P40, P40 Pro, Huawei M6, MatePad 10.8iOS:iPhone XRiPhone XSiPhone XS MaxiPhone 11iPhone 11 ProiPhone 11 Pro MaxiPhone 12iPhone 12 miniiPhone 12 ProiPhone 12 Pro MaxiPhone 12 SE (2nd generation)iPad Pro 11-inch (3rd generation)iPad Pro 12.9-inch (3rd generation)iPad Air 3 (3rd generation)iPad Air 3 (4th generation)
+        /// This function can effectively improve the resolution of the remote video picture seen by the local user, that is, the width and height (pixels) of the video received by the specified remote user are enlarged to 2 times original size.After calling this method, you can confirm whether super resolution is successfully enabled through the remote video stream statistics ( RemoteVideoStats ) in the OnRemoteVideoStats callback:If the parameter superResolutionType >0: Super resolution is enabled.If parameter superResolutionType =0: Super resolution is not enabled.The super resolution feature requires extra system resources. To balance the visual experience and system resource consumption, this feature can only be enabled for a single remote user. If the local user uses super resolution on Android, the original resolution of the remote user's video cannot exceed 640 × 360 pixels; if the local user uses super resolution on iOS, the original resolution of the remote user's video cannot exceed 640 × 480 pixels.This method is for Android and iOS only.Before calling this method, ensure that you have integrated the following dynamic libraries:Android: libagora_super_resolution_extension.soiOS: AgoraSuperResolutionExtension.xcframeworkBecause this method has certain system performance requirements, Agora recommends that you use the following devices or better:Android:VIVO: V1821A, NEX S, 1914A, 1916A, 1962A, 1824BA, X60, X60 ProOPPO: PCCM00, Find X3OnePlus: A6000Xiaomi: Mi 8, Mi 9, Mi 10, Mi 11, MIX3, Redmi K20 ProSAMSUNG: SM-G9600, SM-G9650, SM-N9600, SM-G9708, SM-G960U, SM-G9750, S20, S21HUAWEI: SEA-AL00, ELE-AL00, VOG-AL00, YAL-AL10, HMA-AL00, EVR-AN00, nova 4, nova 5 Pro, nova 6 5G, nova 7 5G, Mate 30, Mate 30 Pro, Mate 40, Mate 40 Pro, P40, P40 Pro, Huawei M6, MatePad 10.8iOS:iPhone XRiPhone XSiPhone XS MaxiPhone 11iPhone 11 ProiPhone 11 Pro MaxiPhone 12iPhone 12 miniiPhone 12 ProiPhone 12 Pro MaxiPhone 12 SE (2nd generation)iPad Pro 11-inch (3rd generation)iPad Pro 12.9-inch (3rd generation)iPad Air 3 (3rd generation)iPad Air 3 (4th generation)
         /// </summary>
         ///
         /// <param name="userId"> The user ID of the remote user.</param>
@@ -1016,7 +1014,7 @@ namespace Agora.Rtc
         /// <param name="enable"> Whether to enable super resolution for the remote user’s video:true: Enable super resolution.false: Disable super resolution.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
@@ -1026,13 +1024,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables/Disables face detection for the local user.
-        /// You can call this method either before or after joining a channel.This method is for Android and iOS only.Once face detection is enabled, the SDK triggers the OnFacePositionChanged callback to report the face information of the local user, which includes the following:The width and height of the local video.The position of the human face in the local view.The distance between the human face and the screen.This method needs to be called after the camera is started (for example, by callingStartPreview [1/2]JoinChannel [2/2]).
+        /// You can call this method either before or after joining a channel.This method is for Android and iOS only.Once face detection is enabled, the SDK triggers the OnFacePositionChanged callback to report the face information of the local user, which includes the following:The width and height of the local video.The position of the human face in the local view.The distance between the human face and the screen.This method needs to be called after the camera is started (for example, by calling StartPreview [1/2]JoinChannel [2/2]).
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable face detection for the local user:true: Enable face detection.false: (Default) Disable face detection.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableFaceDetection(bool enabled);
@@ -1050,7 +1048,7 @@ namespace Agora.Rtc
         /// <param name="includeAudioFilters"> The audio filter of in-ear monitoring: See EAR_MONITORING_FILTER_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableInEarMonitoring(bool enabled, int includeAudioFilters);
@@ -1064,7 +1062,7 @@ namespace Agora.Rtc
         /// <param name="volume"> Sets the volume of the in-ear monitor. The value ranges between 0 and 100. The default value is 100.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetInEarMonitoringVolume(int volume);
@@ -1074,19 +1072,17 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts playing the music file.
-        /// This method mixes the specified local or online audio file with the audio from the microphone, or replaces the microphone's audio with the specified local or remote audio file. A successful method call triggers the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback. When the audio mixing file playback finishes, the SDK triggers theOnAudioMixingStateChanged (AUDIO_MIXING_STATE_STOPPED) callback on the local client.You can call this method either before or after joining a channel. If you need to callStartAudioMixing [1/2] multiple times, ensure that the call interval is longer than 500 ms.If the local music file does not exist, the SDK does not support the file format, or the the SDK cannot access the music file URL, the SDK reports the warn code 701.On Android, there are following considerations:To use this method, ensure that the Android device is v4.2 or later, and the API version is v16 or later.If you need to play an online music file, Agora does not recommend using the redirected URL address. Some Android devices may fail to open a redirected URL address.If you call this method on an emulator, ensure that the music file is in the/sdcard/ directory and the format is MP3.
+        /// This method mixes the specified local or online audio file with the audio from the microphone, or replaces the microphone's audio with the specified local or remote audio file. A successful method call triggers the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback. When the audio mixing file playback finishes, the SDK triggers the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_STOPPED) callback on the local client.You can call this method either before or after joining a channel. If you need to call StartAudioMixing [1/2] multiple times, ensure that the time interval between calling this method is more than 500 ms.If the local music file does not exist, the SDK does not support the file format, or the the SDK cannot access the music file URL, the SDK reports the warn code 701.On Android, there are following considerations:To use this method, ensure that the Android device is v4.2 or later, and the API version is v16 or later.If you need to play an online music file, Agora does not recommend using the redirected URL address. Some Android devices may fail to open a redirected URL address.If you call this method on an emulator, ensure that the music file is in the /sdcard/ directory and the format is MP3.
         /// </summary>
         ///
         /// <param name="filePath"> If you have loaded the audio effect into memory via PreloadEffect , make sure this parameter is the same as the filePath set in PreloadEffect. </param>
         ///
         /// <param name="loopback"> Whether to play music files only on the local client:true: Only play music files on the local client so that only the local user can hear the music.false: Publish music files to remote clients so that both the local user and remote users can hear the music.</param>
         ///
-        /// <param name="replace"> Whether to replace the audio captured by the microphone with a music file:true: Replace the audio captured by the microphone with a music file. Users can only hear the music.false: Do not replace the audio captured by the microphone with a music file. Users can hear both music and audio captured by the microphone.</param>
-        ///
-        /// <param name="cycle"> The number of times the music file plays.≥ 0: The number of playback times. For example, 0 means that the SDK does not play the music file while 1 means that the SDK plays once.-1: Play the music file in an infinite loop.</param>
+        /// <param name="cycle"> The number of times the music file plays.≥ 0: The number of playback times. For example, 0 means that the SDK does not play the music file while 1 means that the SDK plays once.-1: Play the audio file in an infinite loop.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartAudioMixing(string filePath, bool loopback, int cycle);
@@ -1094,19 +1090,19 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts playing the music file.
-        /// This method mixes the specified local or online audio file with the audio from the microphone, or replaces the microphone's audio with the specified local or remote audio file. A successful method call triggers the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback. When the audio mixing file playback finishes, the SDK triggers theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_STOPPED) callback on the local client.On Android, there are following considerations:To use this method, ensure that the Android device is v4.2 or later, and the API version is v16 or later.If you need to play an online music file, Agora does not recommend using the redirected URL address. Some Android devices may fail to open a redirected URL address.If you call this method on an emulator, ensure that the music file is in the/sdcard/ directory and the format is MP3.For the audio file formats supported by this method, seeWhat formats of audio files the Agora RTC SDK support.You can call this method either before or after joining a channel. If you need to callStartAudioMixing [2/2] multiple times, ensure that the call interval is longer than 500 ms.If the local music file does not exist, the SDK does not support the file format, or the the SDK cannot access the music file URL, the SDK reports the warn code 701.
+        /// This method mixes the specified local or online audio file with the audio from the microphone, or replaces the microphone's audio with the specified local or remote audio file. A successful method call triggers the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback. When the audio mixing file playback finishes, the SDK triggers the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_STOPPED) callback on the local client.On Android, there are following considerations:To use this method, ensure that the Android device is v4.2 or later, and the API version is v16 or later.If you need to play an online music file, Agora does not recommend using the redirected URL address. Some Android devices may fail to open a redirected URL address.If you call this method on an emulator, ensure that the music file is in the /sdcard/ directory and the format is MP3.For the audio file formats supported by this method, see What formats of audio files the Agora RTC SDK support.You can call this method either before or after joining a channel. If you need to call StartAudioMixing [2/2] multiple times, ensure that the time interval between calling this method is more than 500 ms.If the local music file does not exist, the SDK does not support the file format, or the the SDK cannot access the music file URL, the SDK reports the warn code 701.
         /// </summary>
         ///
-        /// <param name="filePath"> File path:Android: The file path, which needs to be accurate to the file name and suffix. Agora supports using a URI address, an absolute path, or a path that starts with/assets/. You might encounter permission issues if you use an absolute path to access a local file, so Agora recommends using a URI address instead. For example:content://com.android.providers.media.documents/document/audio%3A14441.Windows: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example:C:\music\audio.mp4.iOS or macOS: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example:/var/mobile/Containers/Data/audio.mp4.</param>
+        /// <param name="filePath"> File path:Android: The file path, which needs to be accurate to the file name and suffix. Agora supports using a URI address, an absolute path, or a path that starts with /assets/. You might encounter permission issues if you use an absolute path to access a local file, so Agora recommends using a URI address instead. For example: content://com.android.providers.media.documents/document/audio%3A14441.Windows: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example: C:\music\audio.mp4.iOS or macOS: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example: /var/mobile/Containers/Data/audio.mp4.</param>
         ///
-        /// <param name="loopback"> Whether to play music files only on the local client:true: Only play music files on the local client so that only the local user can hear the music.false: Publish music files to remote clients so that both the local user and remote users can hear the music.</param>
+        /// <param name="loopback"> Whether to only play music files on the local client:true: Only play music files on the local client so that only the local user can hear the music.false: Publish music files to remote clients so that both the local user and remote users can hear the music.</param>
         ///
-        /// <param name="cycle"> The number of times the music file plays.≥ 0: The number of playback times. For example, 0 means that the SDK does not play the music file while 1 means that the SDK plays once.-1: Play the music file in an infinite loop.</param>
+        /// <param name="cycle"> The number of times the music file plays.≥ 0: The number of playback times. For example, 0 means that the SDK does not play the music file while 1 means that the SDK plays once.-1: Play the audio file in an infinite loop.</param>
         ///
         /// <param name="startPos"> The playback position (ms) of the music file.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartAudioMixing(string filePath, bool loopback, int cycle, int startPos);
@@ -1120,7 +1116,7 @@ namespace Agora.Rtc
         /// <param name="mode"> The channel mode. See AUDIO_MIXING_DUAL_MONO_MODE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioMixingDualMonoMode(AUDIO_MIXING_DUAL_MONO_MODE mode);
@@ -1132,7 +1128,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopAudioMixing();
@@ -1144,7 +1140,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PauseAudioMixing();
@@ -1156,7 +1152,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int ResumeAudioMixing();
@@ -1170,7 +1166,7 @@ namespace Agora.Rtc
         /// <param name="volume"> Audio mixing volume. The value ranges between 0 and 100. The default value is 100, which means the original volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AdjustAudioMixingVolume(int volume);
@@ -1178,13 +1174,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Adjusts the volume of audio mixing for publishing.
-        /// This method adjusts the audio mixing volume on the remote clients.Call this method after calling StartAudioMixing [2/2] and receiving theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
+        /// This method adjusts the audio mixing volume on the remote clients.Call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
         /// <param name="volume"> The volume of audio mixing for local playback. The value ranges between 0 and 100 (default). 100 represents the original volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AdjustAudioMixingPublishVolume(int volume);
@@ -1192,11 +1188,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Retrieves the audio mixing volume for publishing.
-        /// This method helps to troubleshoot audio volume‑related issues.You need to call this method after calling StartAudioMixing [2/2] and receiving theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
+        /// This method helps to troubleshoot audio volume‑related issues.You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
         /// <returns>
-        /// The audio mixing volume, if this method call succeeds. The value range is [0,100].< 0: Failure.
+        /// The audio mixing volume, if this method call succeeds. The value range is [0,100].&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetAudioMixingPublishVolume();
@@ -1204,13 +1200,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Adjusts the volume of audio mixing for local playback.
-        /// Call this method after calling StartAudioMixing [2/2] and receiving theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
+        /// Call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
         /// <param name="volume"> The volume of audio mixing for local playback. The value ranges between 0 and 100 (default). 100 represents the original volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AdjustAudioMixingPlayoutVolume(int volume);
@@ -1218,11 +1214,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Retrieves the audio mixing volume for local playback.
-        /// This method retrieves the audio mixing volume for local playback. You can use it to troubleshoot audio volume related issues.You need to call this method after calling StartAudioMixing [2/2] and receiving theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
+        /// This method retrieves the audio mixing volume for local playback. You can use it to troubleshoot audio volume related issues.You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
         /// <returns>
-        /// The audio mixing volume, if this method call succeeds. The value range is [0,100].< 0: Failure.
+        /// The audio mixing volume, if this method call succeeds. The value range is [0,100].&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetAudioMixingPlayoutVolume();
@@ -1234,7 +1230,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// ≥ 0: The audio mixing duration, if this method call succeeds.< 0: Failure.
+        /// ≥ 0: The audio mixing duration, if this method call succeeds.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetAudioMixingDuration();
@@ -1242,11 +1238,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Retrieves the playback position (ms) of the music file.
-        /// Retrieves the playback position (ms) of the audio.You need to call this method after calling StartAudioMixing [2/2] and receiving theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.If you need to callGetAudioMixingCurrentPosition multiple times, ensure that the time interval between calling this method is more than 500 ms.
+        /// Retrieves the playback position (ms) of the audio.You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.If you need to call GetAudioMixingCurrentPosition multiple times, ensure that the time interval between calling this method is more than 500 ms.
         /// </summary>
         ///
         /// <returns>
-        /// ≥ 0: The current playback position (ms) of the audio mixing, if this method call succeeds. 0 represents that the current music file does not start playing.< 0: Failure.
+        /// ≥ 0: The current playback position (ms) of the audio mixing, if this method call succeeds. 0 represents that the current music file does not start playing.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetAudioMixingCurrentPosition();
@@ -1254,13 +1250,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the audio mixing position.
-        /// Call this method to set the playback position of the music file to a different starting position, rather than playing the file from the beginning.You need to call this method after callingStartAudioMixing [2/2] and receiving theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
+        /// Call this method to set the playback position of the music file to a different starting position, rather than playing the file from the beginning.You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
         /// <param name="pos"> Integer. The playback position (ms).</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioMixingPosition(int pos /*in ms*/);
@@ -1268,13 +1264,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the pitch of the local music file.
-        /// When a local music file is mixed with a local human voice, call this method to set the pitch of the local music file only.You need to call this method after callingStartAudioMixing [2/2] and receiving theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
+        /// When a local music file is mixed with a local human voice, call this method to set the pitch of the local music file only.You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
         /// <param name="pitch"> Sets the pitch of the local music file by the chromatic scale. The default value is 0, which means keeping the original pitch. The value ranges from -12 to 12, and the pitch value between consecutive values is a chromatic value. The greater the absolute value of this parameter, the higher or lower the pitch of the local music file.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioMixingPitch(int pitch);
@@ -1288,7 +1284,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// Volume of the audio effects, if this method call succeeds.< 0: Failure.
+        /// Volume of the audio effects, if this method call succeeds.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetEffectsVolume();
@@ -1302,7 +1298,7 @@ namespace Agora.Rtc
         /// <param name="volume"> The playback volume. The value range is [0, 100]. The default value is 100, which represents the original volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetEffectsVolume(int volume);
@@ -1310,17 +1306,17 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Preloads a specified audio effect file into the memory.
-        /// To ensure smooth communication, limit the size of the audio effect file. Agora recommends using this method to preload the audio effect before callingJoinChannel [2/2].This method does not support online audio effect files.For the audio file formats supported by this method, seeWhat formats of audio files the Agora RTC SDK support.
+        /// To ensure smooth communication, limit the size of the audio effect file. Agora recommends using this method to preload the audio effect before calling JoinChannel [2/2].This method does not support online audio effect files.For the audio file formats supported by this method, see What formats of audio files the Agora RTC SDK support.
         /// </summary>
         ///
         /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique.</param>
         ///
-        /// <param name="filePath"> File path:Android: The file path, which needs to be accurate to the file name and suffix. Agora supports using a URI address, an absolute path, or a path that starts with/assets/. You might encounter permission issues if you use an absolute path to access a local file, so Agora recommends using a URI address instead. For example:content://com.android.providers.media.documents/document/audio%3A14441.Windows: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example:C:\music\audio.mp4.iOS or macOS: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example:/var/mobile/Containers/Data/audio.mp4.</param>
+        /// <param name="filePath"> File path:Android: The file path, which needs to be accurate to the file name and suffix. Agora supports using a URI address, an absolute path, or a path that starts with /assets/. You might encounter permission issues if you use an absolute path to access a local file, so Agora recommends using a URI address instead. For example: content://com.android.providers.media.documents/document/audio%3A14441.Windows: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example: C:\music\audio.mp4.iOS or macOS: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example: /var/mobile/Containers/Data/audio.mp4.</param>
         ///
         /// <param name="startPos"> The playback position (ms) of the audio effect file.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PreloadEffect(int soundId, string filePath, int startPos = 0);
@@ -1328,12 +1324,12 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Plays the specified local or online sound effect file.
-        /// To play multiple audio effect files at the same time, call this method multiple times with differentsoundId andfilePath. For the best user experience, Agora recommends playing no more than three audio effect files at the same time. After the playback of an audio effect file completes, the SDK triggers theOnAudioEffectFinished callback.Call this method after joining a channel.
+        /// To play multiple audio effect files at the same time, call this method multiple times with different soundId and filePath. For the best user experience, Agora recommends playing no more than three audio effect files at the same time. After the playback of an audio effect file completes, the SDK triggers the OnAudioEffectFinished callback.Call this method after joining a channel.
         /// </summary>
         ///
-        /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique.If you have loaded the audio effect into memory via PreloadEffect , make sure this parameter is the same as thesoundId set inPreloadEffect.</param>
+        /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique. If you have loaded the audio effect into memory via PreloadEffect , make sure this parameter is the same as the soundId set in PreloadEffect.</param>
         ///
-        /// <param name="filePath"> Windows: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example:C:\music\audio.mp4. Supported audio formats include MP3, AAC, M4A, MP4, WAV, and 3GP. Seesupported audio formats.If you have loaded the audio effect into memory via PreloadEffect , make sure this parameter is the same as thefilePath set inPreloadEffect.</param>
+        /// <param name="filePath"> Windows: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example: C:\music\audio.mp4. Supported audio formats include MP3, AAC, M4A, MP4, WAV, and 3GP. See supported audio formats.If you have loaded the audio effect into memory via PreloadEffect , make sure this parameter is the same as the filePath set in PreloadEffect.</param>
         ///
         /// <param name="loopCount"> The number of times the audio effect loops.≥ 0: The number of playback times. For example, 1 means loop one time, which means playing the audio effect two times in total.-1: Play the music file in an infinite loop.</param>
         ///
@@ -1348,7 +1344,7 @@ namespace Agora.Rtc
         /// <param name="startPos"> The playback position (ms) of the audio effect file.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0);
@@ -1370,7 +1366,7 @@ namespace Agora.Rtc
         /// <param name="publish"> Whether to publish the audio effect to the remote users:true: Publish the audio effect to the remote users. Both the local user and remote users can hear the audio effect.false: Do not publish the audio effect to the remote users. Only the local user can hear the audio effect.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false);
@@ -1383,7 +1379,7 @@ namespace Agora.Rtc
         /// <param name="soundId"> The ID of the audio effect.</param>
         ///
         /// <returns>
-        /// The volume of the specified audio effect, if the method call succeeds. The value range is [0,100]. 100 represents the original volume. < 0: Failure.
+        /// The volume of the specified audio effect, if the method call succeeds. The value range is [0,100]. 100 represents the original volume. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetVolumeOfEffect(int soundId);
@@ -1398,7 +1394,7 @@ namespace Agora.Rtc
         /// <param name="volume"> The playback volume. The value range is [0, 100]. The default value is 100, which represents the original volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetVolumeOfEffect(int soundId, int volume);
@@ -1411,7 +1407,7 @@ namespace Agora.Rtc
         /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PauseEffect(int soundId);
@@ -1422,7 +1418,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PauseAllEffects();
@@ -1435,7 +1431,7 @@ namespace Agora.Rtc
         /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int ResumeEffect(int soundId);
@@ -1446,7 +1442,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int ResumeAllEffects();
@@ -1459,7 +1455,7 @@ namespace Agora.Rtc
         /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopEffect(int soundId);
@@ -1470,7 +1466,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopAllEffects();
@@ -1483,7 +1479,7 @@ namespace Agora.Rtc
         /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int UnloadEffect(int soundId);
@@ -1494,7 +1490,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int UnloadAllEffects();
@@ -1502,13 +1498,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Retrieves the playback position of the audio effect file.
-        /// Call this method after thePlayEffect method.
+        /// Call this method after the PlayEffect method.
         /// </summary>
         ///
         /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique.</param>
         ///
         /// <returns>
-        /// The playback position (ms) of the specified audio effect file, if the method call succeeds.< 0: Failure.
+        /// The playback position (ms) of the specified audio effect file, if the method call succeeds.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetEffectCurrentPosition(int soundId);
@@ -1525,7 +1521,7 @@ namespace Agora.Rtc
         ///  iOS or macOS: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example: /var/mobile/Containers/Data/audio.mp4.</param>
         ///
         /// <returns>
-        /// The total duration (ms) of the specified audio effect file, if the method call succeeds.< 0: Failure.
+        /// The total duration (ms) of the specified audio effect file, if the method call succeeds.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetEffectDuration(string filePath);
@@ -1533,7 +1529,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the playback position of an audio effect file.
-        /// After a successful setting, the local audio effect file starts playing at the specified position.Call this method afterplayEffect.
+        /// After a successful setting, the local audio effect file starts playing at the specified position.Call this method after playEffect.
         /// </summary>
         ///
         /// <param name="soundId"> The audio effect ID. The ID of each audio effect file is unique.</param>
@@ -1541,7 +1537,7 @@ namespace Agora.Rtc
         /// <param name="pos"> The playback position (ms) of the audio effect file.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetEffectPosition(int soundId, int pos);
@@ -1552,17 +1548,17 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables the virtual metronome.
-        /// In music education, physical education, and other scenarios, teachers might need to use a metronome so that students can practice with the correct beat. The meter is composed of a downbeat and upbeats. The first beat of each measure is called a downbeat, and the rest are called upbeats.In this method, you need to set the paths of the upbeat and downbeat files, the number of beats per measure, the tempo, and whether to send the sound of the metronome to remote users.This method is for Android and iOS only.After enabling the virtual metronome, the SDK plays the specified audio effect file from the beginning and controls the playback duration of each file according tobeatsPerMinuteyou set in AgoraRhythmPlayerConfig . For example, if you setbeatsPerMinute as60, the SDK plays one beat every second. If the file duration exceeds the beat duration, the SDK only plays the audio within the beat duration.By default, the sound of the virtual metronome is published in the channel. If you do not want the sound to be heard by the remote users, you can setpublishRhythmPlayerTrack in ChannelMediaOptions asfalse.
+        /// In music education, physical education, and other scenarios, teachers might need to use a metronome so that students can practice with the correct beat. The meter is composed of a downbeat and upbeats. The first beat of each measure is called a downbeat, and the rest are called upbeats.In this method, you need to set the paths of the upbeat and downbeat files, the number of beats per measure, the tempo, and whether to send the sound of the metronome to remote users.This method is for Android and iOS only.After enabling the virtual metronome, the SDK plays the specified audio effect file from the beginning and controls the playback duration of each file according to beatsPerMinuteyou set in AgoraRhythmPlayerConfig . For example, if you set beatsPerMinute as 60, the SDK plays one beat every second. If the file duration exceeds the beat duration, the SDK only plays the audio within the beat duration.By default, the sound of the virtual metronome is published in the channel. If you do not want the sound to be heard by the remote users, you can set publishRhythmPlayerTrack in ChannelMediaOptions as false.
         /// </summary>
         ///
-        /// <param name="sound1"> The absolute path or URL address (including the filename extensions) of the file for the downbeat. For example:C:\music\audio.mp4. For the audio file formats supported by this method, seeWhat formats of audio files does the Agora RTC SDK v4.0.0 support.</param>
+        /// <param name="sound1"> The absolute path or URL address (including the filename extensions) of the file for the downbeat. For example: C:\music\audio.mp4. For the audio file formats supported by this method, see What formats of audio files does the Agora RTC SDK v4.0.0 support.</param>
         ///
-        /// <param name="sound2"> The absolute path or URL address (including the filename extensions) of the file for the upbeats. For example:C:\music\audio.mp4. For the audio file formats supported by this method, seeWhat formats of audio files does the Agora RTC SDK v4.0.0 support.</param>
+        /// <param name="sound2"> The absolute path or URL address (including the filename extensions) of the file for the upbeats. For example: C:\music\audio.mp4. For the audio file formats supported by this method, see What formats of audio files does the Agora RTC SDK v4.0.0 support.</param>
         ///
         /// <param name="config"> The metronome configuration. See AgoraRhythmPlayerConfig .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-22: Cannot find audio effect files. You need to set the correct paths forsound1 andsound2.
+        /// 0: Success.&lt; 0: Failure.-22: Cannot find audio effect files. You need to set the correct paths for sound1 and sound2.
         /// </returns>
         ///
         public abstract int StartRhythmPlayer(string sound1, string sound2, AgoraRhythmPlayerConfig config);
@@ -1574,7 +1570,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopRhythmPlayer();
@@ -1582,13 +1578,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Configures the virtual metronome.
-        /// This method is for Android and iOS only.After enabling the virtual metronome, the SDK plays the specified audio effect file from the beginning and controls the playback duration of each file according tobeatsPerMinuteyou set in AgoraRhythmPlayerConfig . For example, if you setbeatsPerMinute as60, the SDK plays one beat every second. If the file duration exceeds the beat duration, the SDK only plays the audio within the beat duration.By default, the sound of the virtual metronome is published in the channel. If you do not want the sound to be heard by the remote users, you can setpublishRhythmPlayerTrack in ChannelMediaOptions asfalse.After calling StartRhythmPlayer , you can call this method to reconfigure the virtual metronome.
+        /// This method is for Android and iOS only.After enabling the virtual metronome, the SDK plays the specified audio effect file from the beginning and controls the playback duration of each file according to beatsPerMinuteyou set in AgoraRhythmPlayerConfig . For example, if you set beatsPerMinute as 60, the SDK plays one beat every second. If the file duration exceeds the beat duration, the SDK only plays the audio within the beat duration.By default, the sound of the virtual metronome is published in the channel. If you do not want the sound to be heard by the remote users, you can set publishRhythmPlayerTrack in ChannelMediaOptions as false.After calling StartRhythmPlayer , you can call this method to reconfigure the virtual metronome.
         /// </summary>
         ///
         /// <param name="config"> The metronome configuration. See AgoraRhythmPlayerConfig .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int ConfigRhythmPlayer(AgoraRhythmPlayerConfig config);
@@ -1598,13 +1594,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets a preset voice beautifier effect.
-        /// Call this method to set a preset voice beautifier effect for the local user who sends an audio stream. After setting a voice beautifier effect, all users in the channel can hear the effect. You can set different voice beautifier effects for different scenarios.For better voice effects, Agora recommends that you call SetAudioProfile [1/2] and setscenario toAUDIO_SCENARIO_GAME_STREAMING(3) andprofile toAUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) orAUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) before calling this method.You can call this method either before or after joining a channel.Do not set theprofile parameter inSetAudioProfile [1/2] toAUDIO_PROFILE_SPEECH_STANDARD(1)This method works best with the human voice. Agora does not recommend using this method for audio containing music.After callingSetVoiceBeautifierPreset, Agora recommends not calling the following methods, because they can override settings inSetVoiceBeautifierPreset: SetAudioEffectPreset SetAudioEffectParameters SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb SetVoiceBeautifierParameters SetVoiceConversionPreset
+        /// Call this method to set a preset voice beautifier effect for the local user who sends an audio stream. After setting a voice beautifier effect, all users in the channel can hear the effect. You can set different voice beautifier effects for different scenarios. For better voice effects, Agora recommends that you call SetAudioProfile [1/2] and set scenario to AUDIO_SCENARIO_GAME_STREAMING(3) and profile to AUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) or AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) before calling this method.You can call this method either before or after joining a channel.Do not set the profile parameter in SetAudioProfile [1/2] to AUDIO_PROFILE_SPEECH_STANDARD(1)This method works best with the human voice. Agora does not recommend using this method for audio containing music.After calling SetVoiceBeautifierPreset, Agora recommends not calling the following methods, because they can override settings in SetVoiceBeautifierPreset: SetAudioEffectPreset SetAudioEffectParameters SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb SetVoiceBeautifierParameters SetVoiceConversionPreset
         /// </summary>
         ///
         /// <param name="preset"> The preset voice beautifier effect options: VOICE_BEAUTIFIER_PRESET .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetVoiceBeautifierPreset(VOICE_BEAUTIFIER_PRESET preset);
@@ -1612,13 +1608,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets an SDK preset audio effect.
-        /// Call this method to set an SDK preset audio effect for the local user who sends an audio stream. This audio effect does not change the gender characteristics of the original voice. After setting an audio effect, all users in the channel can hear the effect.To get better audio effect quality, Agora recommends calling and settingscenario in SetAudioProfile [1/2] asAUDIO_SCENARIO_GAME_STREAMING(3) before calling this method.You can call this method either before or after joining a channel.Do not set theprofile parameter inSetAudioProfile [1/2] toAUDIO_PROFILE_SPEECH_STANDARD(1), or the method does not take effect.This method works best with the human voice. Agora does not recommend using this method for audio containing music.If you callSetAudioEffectPreset and set enumerators except forROOM_ACOUSTICS_3D_VOICE orPITCH_CORRECTION, do not call SetAudioEffectParameters ; otherwise,SetAudioEffectPreset is overridden.After callingSetAudioEffectPreset, Agora recommends not calling the following methods, or the settings inSetAudioEffectPreset are overridden: SetVoiceBeautifierPreset SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb SetVoiceBeautifierParameters SetVoiceConversionPreset
+        /// Call this method to set an SDK preset audio effect for the local user who sends an audio stream. This audio effect does not change the gender characteristics of the original voice. After setting an audio effect, all users in the channel can hear the effect.To get better audio effect quality, Agora recommends calling and setting scenario in SetAudioProfile [1/2] as AUDIO_SCENARIO_GAME_STREAMING(3) before calling this method.You can call this method either before or after joining a channel.Do not set the profile parameter in SetAudioProfile [1/2] to AUDIO_PROFILE_SPEECH_STANDARD(1), or the method does not take effect.This method works best with the human voice. Agora does not recommend using this method for audio containing music.If you call SetAudioEffectPreset and set enumerators except for ROOM_ACOUSTICS_3D_VOICE or PITCH_CORRECTION, do not call SetAudioEffectParameters ; otherwise, SetAudioEffectPreset is overridden.After calling SetAudioEffectPreset, Agora recommends not calling the following methods, or the settings in SetAudioEffectPreset are overridden: SetVoiceBeautifierPreset SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb SetVoiceBeautifierParameters SetVoiceConversionPreset
         /// </summary>
         ///
         /// <param name="preset"> The options for SDK preset audio effects. See AUDIO_EFFECT_PRESET .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioEffectPreset(AUDIO_EFFECT_PRESET preset);
@@ -1626,13 +1622,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets a preset voice beautifier effect.
-        /// Call this method to set a preset voice beautifier effect for the local user who sends an audio stream. After setting an audio effect, all users in the channel can hear the effect. You can set different voice beautifier effects for different scenarios.To achieve better audio effect quality, Agora recommends that you call SetAudioProfile [1/2] and set theprofile toAUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) orAUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) andscenario toAUDIO_SCENARIO_GAME_STREAMING(3) before calling this method.You can call this method either before or after joining a channel.Do not set theprofile parameter inSetAudioProfile [1/2] toAUDIO_PROFILE_SPEECH_STANDARD(1)This method works best with the human voice. Agora does not recommend using this method for audio containing music.After callingSetVoiceConversionPreset, Agora recommends not calling the following methods, or the settings inSetVoiceConversionPreset are overridden: SetAudioEffectPreset SetAudioEffectParameters SetVoiceBeautifierPreset SetVoiceBeautifierParameters SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb
+        /// Call this method to set a preset voice beautifier effect for the local user who sends an audio stream. After setting an audio effect, all users in the channel can hear the effect. You can set different voice beautifier effects for different scenarios. To achieve better audio effect quality, Agora recommends that you call SetAudioProfile [1/2] and set the profile to AUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) or AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) and scenario to AUDIO_SCENARIO_GAME_STREAMING(3) before calling this method.You can call this method either before or after joining a channel.Do not set the profile parameter in SetAudioProfile [1/2] to AUDIO_PROFILE_SPEECH_STANDARD(1)This method works best with the human voice. Agora does not recommend using this method for audio containing music.After calling SetVoiceConversionPreset, Agora recommends not calling the following methods, or the settings in SetVoiceConversionPreset are overridden: SetAudioEffectPreset SetAudioEffectParameters SetVoiceBeautifierPreset SetVoiceBeautifierParameters SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb
         /// </summary>
         ///
         /// <param name="preset"> The options for the preset voice beautifier effects: VOICE_CONVERSION_PRESET .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetVoiceConversionPreset(VOICE_CONVERSION_PRESET preset);
@@ -1640,17 +1636,17 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets parameters for SDK preset audio effects.
-        /// Call this method to set the following parameters for the local user who sends an audio stream:3D voice effect: Sets the cycle period of the 3D voice effect.Pitch correction effect: Sets the basic mode and tonic pitch of the pitch correction effect. Different songs have different modes and tonic pitches. Agora recommends bounding this method with interface elements to enable users to adjust the pitch correction interactively.After setting the audio parameters, all users in the channel can hear the effect.You can call this method either before or after joining a channel.To get better audio effect quality, Agora recommends calling and settingscenario in SetAudioProfile [1/2] asAUDIO_SCENARIO_GAME_STREAMING(3) before calling this method.Do not set theprofile parameter inSetAudioProfile [1/2] toAUDIO_PROFILE_SPEECH_STANDARD(1), or the method does not take effect.This method works best with the human voice. Agora does not recommend using this method for audio containing music.After callingSetAudioEffectParameters, Agora recommends not calling the following methods, or the settings inSetAudioEffectParameters are overridden: SetAudioEffectPreset SetVoiceBeautifierPreset SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb SetVoiceBeautifierParameters SetVoiceConversionPreset
+        /// Call this method to set the following parameters for the local user who sends an audio stream:3D voice effect: Sets the cycle period of the 3D voice effect.Pitch correction effect: Sets the basic mode and tonic pitch of the pitch correction effect. Different songs have different modes and tonic pitches. Agora recommends bounding this method with interface elements to enable users to adjust the pitch correction interactively.After setting the audio parameters, all users in the channel can hear the effect.You can call this method either before or after joining a channel.To get better audio effect quality, Agora recommends calling and setting scenario in SetAudioProfile [1/2] as AUDIO_SCENARIO_GAME_STREAMING(3) before calling this method.Do not set the profile parameter in SetAudioProfile [1/2] to AUDIO_PROFILE_SPEECH_STANDARD(1), or the method does not take effect.This method works best with the human voice. Agora does not recommend using this method for audio containing music.After calling SetAudioEffectParameters, Agora recommends not calling the following methods, or the settings in SetAudioEffectParameters are overridden: SetAudioEffectPreset SetVoiceBeautifierPreset SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb SetVoiceBeautifierParameters SetVoiceConversionPreset
         /// </summary>
         ///
-        /// <param name="preset"> The options for SDK preset audio effects:ROOM_ACOUSTICS_3D_VOICE, 3D voice effect:You need to set theprofile parameter inSetAudioProfile [1/2] toAUDIO_PROFILE_MUSIC_STANDARD_STEREO(3) orAUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) before setting this enumerator; otherwise, the enumerator setting does not take effect.If the 3D voice effect is enabled, users need to use stereo audio playback devices to hear the anticipated voice effect.PITCH_CORRECTION; pitch correction effect: To achieve better audio effect quality, Agora recommends setting theprofile parameter inSetAudioProfile [1/2] toAUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) orAUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) before setting this enumerator.</param>
+        /// <param name="preset"> The options for SDK preset audio effects:ROOM_ACOUSTICS_3D_VOICE, 3D voice effect:You need to set the profile parameter in SetAudioProfile [1/2] to AUDIO_PROFILE_MUSIC_STANDARD_STEREO(3) or AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) before setting this enumerator; otherwise, the enumerator setting does not take effect.If the 3D voice effect is enabled, users need to use stereo audio playback devices to hear the anticipated voice effect.PITCH_CORRECTION; pitch correction effect: To achieve better audio effect quality, Agora recommends setting the profile parameter in SetAudioProfile [1/2] to AUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) or AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) before setting this enumerator.</param>
         ///
-        /// <param name="param1"> If you setpreset toROOM_ACOUSTICS_3D_VOICE,param1 indicates the cycle period of the 3D voice effect. The value range is [1,60], in seconds. The default value is 10, indicating that the voice moves around you every 10 seconds. If you setpreset toPITCH_CORRECTION,param1 indicates the basic mode of the pitch correction effect:1: (Default) Natural major scale.2: Natural minor scale.3: Japanese pentatonic scale.</param>
+        /// <param name="param1"> If you set preset to ROOM_ACOUSTICS_3D_VOICE, param1 indicates the cycle period of the 3D voice effect. The value range is [1,60], in seconds. The default value is 10, indicating that the voice moves around you every 10 seconds. If you set preset to PITCH_CORRECTION, param1 indicates the basic mode of the pitch correction effect:1: (Default) Natural major scale.2: Natural minor scale.3: Japanese pentatonic scale.</param>
         ///
-        /// <param name="param2"> If you setpreset toROOM_ACOUSTICS_3D_VOICE, you need to setparam2 to0. If you setpreset toPITCH_CORRECTION,param2 indicates the tonic pitch of the pitch correction effect:1: A2: A#3: B4: (Default) C5: C#6: D7: D#8: E9: F10: F#11: G12: G#</param>
+        /// <param name="param2"> If you set preset to ROOM_ACOUSTICS_3D_VOICE, you need to set param2 to 0. If you set preset to PITCH_CORRECTION, param2 indicates the tonic pitch of the pitch correction effect:1: A2: A#3: B4: (Default) C5: C#6: D7: D#8: E9: F10: F#11: G12: G#</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioEffectParameters(AUDIO_EFFECT_PRESET preset, int param1, int param2);
@@ -1658,7 +1654,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets parameters for the preset voice beautifier effects.
-        /// Call this method to set a gender characteristic and a reverberation effect for the singing beautifier effect. This method sets parameters for the local user who sends an audio stream. After setting the audio parameters, all users in the channel can hear the effect.For better voice effects, Agora recommends that you call SetAudioProfile [1/2] and setscenario toAUDIO_SCENARIO_GAME_STREAMING(3) andprofile toAUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) orAUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) before calling this method.You can call this method either before or after joining a channel.Do not set theprofile parameter inSetAudioProfile [1/2] toAUDIO_PROFILE_SPEECH_STANDARD(1)This method works best with the human voice. Agora does not recommend using this method for audio containing music.After callingSetVoiceBeautifierParameters, Agora recommends not calling the following methods, because they can override settings inSetVoiceBeautifierParameters: SetAudioEffectPreset SetAudioEffectParameters SetVoiceBeautifierPreset SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb SetVoiceConversionPreset
+        /// Call this method to set a gender characteristic and a reverberation effect for the singing beautifier effect. This method sets parameters for the local user who sends an audio stream. After setting the audio parameters, all users in the channel can hear the effect.For better voice effects, Agora recommends that you call SetAudioProfile [1/2] and set scenario to AUDIO_SCENARIO_GAME_STREAMING(3) and profile to AUDIO_PROFILE_MUSIC_HIGH_QUALITY(4) or AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5) before calling this method.You can call this method either before or after joining a channel.Do not set the profile parameter in SetAudioProfile [1/2] to AUDIO_PROFILE_SPEECH_STANDARD(1)This method works best with the human voice. Agora does not recommend using this method for audio containing music.After calling SetVoiceBeautifierParameters, Agora recommends not calling the following methods, because they can override settings in SetVoiceBeautifierParameters: SetAudioEffectPreset SetAudioEffectParameters SetVoiceBeautifierPreset SetLocalVoicePitch SetLocalVoiceEqualization SetLocalVoiceReverb SetVoiceConversionPreset
         /// </summary>
         ///
         /// <param name="preset"> The option for the preset audio effect:SINGING_BEAUTIFIER: The singing beautifier effect.</param>
@@ -1668,7 +1664,7 @@ namespace Agora.Rtc
         /// <param name="param2"> The reverberation effect options for the singing voice:1: The reverberation effect sounds like singing in a small room.2: The reverberation effect sounds like singing in a large room.3: The reverberation effect sounds like singing in a hall.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetVoiceBeautifierParameters(VOICE_BEAUTIFIER_PRESET preset, int param1, int param2);
@@ -1687,7 +1683,7 @@ namespace Agora.Rtc
         /// <param name="pitch"> The local voice pitch. The value range is [0.5,2.0]. The lower the value, the lower the pitch. The default value is 1 (no change to the pitch).</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLocalVoicePitch(double pitch);
@@ -1703,7 +1699,7 @@ namespace Agora.Rtc
         /// <param name="bandGain"> The gain of each band in dB. The value ranges between -15 and 15. The default value is 0.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency, int bandGain);
@@ -1719,7 +1715,7 @@ namespace Agora.Rtc
         /// <param name="value"> The value of the reverberation key.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value);
@@ -1729,11 +1725,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts an audio call test.
-        /// Deprecated:This method is deprecated, use StartEchoTest [2/2] instead.This method starts an audio call test to determine whether the audio devices (for example, headset and speaker) and the network connection are working properly. To conduct the test, the user speaks, and the recording is played back within 10 seconds. If the user can hear the recording within the interval, the audio devices and network connection are working properly.Call this method before joining a channel.After callingStartEchoTest [1/2], you must call StopEchoTest to end the test. Otherwise, the app cannot perform the next echo test, and you cannot join the channel.In the live streaming channels, only a host can call this method.
+        /// Deprecated:This method is deprecated, use StartEchoTest [2/2] instead.This method starts an audio call test to determine whether the audio devices (for example, headset and speaker) and the network connection are working properly. To conduct the test, the user speaks, and the recording is played back within 10 seconds. If the user can hear the recording within the interval, the audio devices and network connection are working properly.Call this method before joining a channel.After calling StartEchoTest [1/2], you must call StopEchoTest to end the test. Otherwise, the app cannot perform the next echo test, and you cannot join the channel.In the live streaming channels, only a host can call this method.
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartEchoTest();
@@ -1741,13 +1737,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts an audio call test.
-        /// This method starts an audio call test to determine whether the audio devices (for example, headset and speaker) and the network connection are working properly. To conduct the test, let the user speak for a while, and the recording is played back within the set interval. If the user can hear the recording within the interval, the audio devices and network connection are working properly.Call this method before joining a channel.After callingStartEchoTest [2/2], you must call StopEchoTest to end the test. Otherwise, the app cannot perform the next echo test, and you cannot join the channel.In the live streaming channels, only a host can call this method.
+        /// This method starts an audio call test to determine whether the audio devices (for example, headset and speaker) and the network connection are working properly. To conduct the test, let the user speak for a while, and the recording is played back within the set interval. If the user can hear the recording within the interval, the audio devices and network connection are working properly.Call this method before joining a channel.After calling StartEchoTest [2/2], you must call StopEchoTest to end the test. Otherwise, the app cannot perform the next echo test, and you cannot join the channel.In the live streaming channels, only a host can call this method.
         /// </summary>
         ///
         /// <param name="intervalInSeconds"> The time interval (s) between when you speak and when the recording plays back. The value range is [2, 10], and the default value is 10.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartEchoTest(int intervalInSeconds);
@@ -1761,7 +1757,7 @@ namespace Agora.Rtc
         /// <param name="config"> The configuration of the audio and video call loop test. See EchoTestConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartEchoTest(EchoTestConfiguration config);
@@ -1773,7 +1769,7 @@ namespace Agora.Rtc
         ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure.-5(ERR_REFUSED): Failed to stop the echo test. The echo test may not be running.
+        /// &lt; 0: Failure.-5(ERR_REFUSED): Failed to stop the echo test. The echo test may not be running.
         /// </returns>
         ///
         public abstract int StopEchoTest();
@@ -1781,13 +1777,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts the last mile network probe test.
-        /// This method starts the last-mile network probe test before joining a channel to get the uplink and downlink last mile network statistics, including the bandwidth, packet loss, jitter, and round-trip time (RTT).Once this method is enabled, the SDK returns the following callbacks: OnLastmileQuality : The SDK triggers this callback within two seconds depending on the network conditions. This callback rates the network conditions and is more closely linked to the user experience. OnLastmileProbeResult : The SDK triggers this callback within 30 seconds depending on the network conditions. This callback returns the real-time statistics of the network conditions and is more objective.This method applies to the following scenarios:Before a user joins a channel, call this method to check the uplink network quality.In a live streaming channel, call this method to check the uplink network quality before an audience member switches to a host.Do not call other methods before receiving theOnLastmileQuality andOnLastmileProbeResult callbacks. Otherwise, the callbacks may be interrupted.A host should not call this method after joining a channel (when in a call).
+        /// This method starts the last-mile network probe test before joining a channel to get the uplink and downlink last mile network statistics, including the bandwidth, packet loss, jitter, and round-trip time (RTT).Once this method is enabled, the SDK returns the following callbacks: OnLastmileQuality : The SDK triggers this callback within two seconds depending on the network conditions. This callback rates the network conditions and is more closely linked to the user experience. OnLastmileProbeResult : The SDK triggers this callback within 30 seconds depending on the network conditions. This callback returns the real-time statistics of the network conditions and is more objective.This method applies to the following scenarios:Before a user joins a channel, call this method to check the uplink network quality.In a live streaming channel, call this method to check the uplink network quality before an audience member switches to a host.Do not call other methods before receiving the OnLastmileQuality and OnLastmileProbeResult callbacks. Otherwise, the callbacks may be interrupted.A host should not call this method after joining a channel (when in a call).
         /// </summary>
         ///
         /// <param name="config"> The configurations of the last-mile network probe test. See LastmileProbeConfig .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartLastmileProbeTest(LastmileProbeConfig config);
@@ -1798,7 +1794,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopLastmileProbeTest();
@@ -1811,9 +1807,9 @@ namespace Agora.Rtc
         /// You can call this method before sharing a screen or window to get a list of shareable screens and windows, which enables a user to use thumbnails in the list to choose a particular screen or window to share. This list also contains important information such as window ID and screen ID, with which you can call StartScreenCaptureByWindowId or StartScreenCaptureByDisplayId to start the sharing.
         /// </summary>
         ///
-        /// <param name="thumbSize"> The target size of the screen or window thumbnail (the width and height are in pixels).The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 andthumbSize is 100 × 100, the actual size of the thumbnail is 100 × 75. If the target size is larger than the original size, the thumbnail is the original image and the SDK does not scale it.</param>
+        /// <param name="thumbSize"> The target size of the screen or window thumbnail (the width and height are in pixels). The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and thumbSize is 100 × 100, the actual size of the thumbnail is 100 × 75. If the target size is larger than the original size, the thumbnail is the original image and the SDK does not scale it.</param>
         ///
-        /// <param name="iconSize"> The target size of the icon corresponding to the application program (the width and height are in pixels).The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 andiconSize is 100 × 100, the actual size of the icon is 100 × 75. If the target size is larger than the original size, the icon is the original image and the SDK does not scale it.</param>
+        /// <param name="iconSize"> The target size of the icon corresponding to the application program (the width and height are in pixels). The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and iconSize is 100 × 100, the actual size of the icon is 100 × 75. If the target size is larger than the original size, the icon is the original image and the SDK does not scale it.</param>
         ///
         /// <param name="includeScreen"> Whether the SDK returns the screen information in addition to the window information:true: The SDK returns screen and window information.false: The SDK returns the window information only.</param>
         ///
@@ -1832,7 +1828,7 @@ namespace Agora.Rtc
         /// <param name="screenScenario"> The screen sharing scenario. See SCREEN_SCENARIO_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario);
@@ -1840,7 +1836,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Shares the screen by specifying the display ID.
-        /// This method shares a screen or part of the screen.There are two ways to start screen sharing, you can choose one according to the actual needs:Call this method before joining a channel, and then call JoinChannel [2/2] to join a channel and setpublishScreenTrack orpublishSecondaryScreenTrack totrue to start screen sharing.Call this method after joining a channel, and then call UpdateChannelMediaOptions and setpublishScreenTrack orpublishSecondaryScreenTrack totrue to start screen sharing.This method is for Windows and macOS only.
+        /// This method shares a screen or part of the screen.There are two ways to start screen sharing, you can choose one according to the actual needs:Call this method before joining a channel, and then call JoinChannel [2/2] to join a channel and set publishScreenTrack or publishSecondaryScreenTrack to true to start screen sharing.Call this method after joining a channel, and then call UpdateChannelMediaOptions and set publishScreenTrack or publishSecondaryScreenTrack to true to start screen sharing.This method is for Windows and macOS only.
         /// </summary>
         ///
         /// <param name="displayId"> The display ID of the screen to be shared.</param>
@@ -1850,7 +1846,7 @@ namespace Agora.Rtc
         /// <param name="captureParams"> Screen sharing configurations. The default video dimension is 1920 x 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.ERR_INVALID_ARGUMENT: The parameter is invalid.
+        /// 0: Success.&lt; 0: Failure.ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
         ///
         public abstract int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams);
@@ -1860,7 +1856,7 @@ namespace Agora.Rtc
         /// Shares the whole or part of a screen by specifying the screen rect.
         /// There are two ways to start screen sharing, you can choose one according to the actual needs:
         /// Call this method before joining a channel, and then call JoinChannel [2/2] to join a channel and set publishScreenTrack or publishSecondaryScreenTrack to true to start screen sharing.
-        /// Call this method after joining a channel, and then call UpdateChannelMediaOptions and set publishScreenTrack or publishSecondaryScreenTrack to true to start screen sharing. Deprecated:This method is deprecated. Use StartScreenCaptureByDisplayId instead. Agora strongly recommends usingStartScreenCaptureByDisplayId if you need to start screen sharing on a device connected to another display.This method shares a screen or part of the screen. You need to specify the area of the screen to be shared.This method applies to Windows only.
+        /// Call this method after joining a channel, and then call UpdateChannelMediaOptions and set publishScreenTrack or publishSecondaryScreenTrack to true to start screen sharing. Deprecated:This method is deprecated. Use StartScreenCaptureByDisplayId instead. Agora strongly recommends using StartScreenCaptureByDisplayId if you need to start screen sharing on a device connected to another display.This method shares a screen or part of the screen. You need to specify the area of the screen to be shared.This method applies to Windows only.
         /// </summary>
         ///
         /// <param name="screenRect"> Sets the relative location of the screen to the virtual screen.</param>
@@ -1870,7 +1866,7 @@ namespace Agora.Rtc
         /// <param name="captureParams"> The screen sharing encoding parameters. The default video dimension is 1920 x 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.
         /// ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
@@ -1878,21 +1874,21 @@ namespace Agora.Rtc
         public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
         ///
+        /// @ignore
+        ///
+        public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
+
+        ///
         /// <summary>
         /// Starts screen sharing.
-        /// There are two ways to start screen sharing, you can choose one according to the actual needs:Call this method before joining a channel, and then call JoinChannel [2/2] to join a channel and setpublishScreenCaptureVideo orpublishSecondaryScreenTrack totrue to start screen sharing.Call this method after joining a channel, and then call UpdateChannelMediaOptions and setpublishScreenCaptureVideo orpublishSecondaryScreenTrack totrue to start screen sharing.This method is for Android only.The billing for the screen sharing stream is based on thedimensions inScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value. See for details.
+        /// There are two ways to start screen sharing, you can choose one according to the actual needs:Call this method before joining a channel, and then call JoinChannel [2/2] to join a channel and set publishScreenCaptureVideo or publishSecondaryScreenTrack to true to start screen sharing.Call this method after joining a channel, and then call UpdateChannelMediaOptions and set publishScreenCaptureVideo or publishSecondaryScreenTrack to true to start screen sharing.This method is for Android only.The billing for the screen sharing stream is based on the dimensions in ScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value. See for details.
         /// </summary>
         ///
         /// <param name="captureParams"> The screen sharing encoding parameters. The default video dimension is 1920 x 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters2 .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2: The parameter is null.
+        /// 0: Success.&lt; 0: Failure.-2: The parameter is null.
         /// </returns>
-        ///
-        public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
-
-        ///
-        /// @ignore
         ///
         public abstract int StartScreenCapture(ScreenCaptureParameters2 captureParams);
 
@@ -1904,7 +1900,7 @@ namespace Agora.Rtc
         /// <param name="captureParams"> The screen sharing encoding parameters. The default video dimension is 1920 x 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters2 .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.
         /// ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
@@ -1916,7 +1912,7 @@ namespace Agora.Rtc
         /// Shares the whole or part of a window by specifying the window ID.
         /// There are two ways to start screen sharing, you can choose one according to the actual needs:
         /// Call this method before joining a channel, and then call JoinChannel [2/2] to join a channel and set publishScreenTrack or publishSecondaryScreenTrack to true to start screen sharing.
-        /// Call this method after joining a channel, and then call UpdateChannelMediaOptions and set publishScreenTrack or publishSecondaryScreenTrack to true to start screen sharing. This method shares a window or part of the window. You need to specify the ID of the window to be shared.Applies to the macOS and Windows platforms only.The window sharing feature of the Agora SDK relies on WGC (Windows Graphics Capture) or GDI (Graphics Device Interface) capture, and WGC cannot be set to disable mouse capture on systems earlier than Windows 10 2004. Therefore,captureMouseCursor(false) might not work when you start window sharing on a device with a system earlier than Windows 10 2004. See ScreenCaptureParameters .
+        /// Call this method after joining a channel, and then call UpdateChannelMediaOptions and set publishScreenTrack or publishSecondaryScreenTrack to true to start screen sharing. This method shares a window or part of the window. You need to specify the ID of the window to be shared.Applies to the macOS and Windows platforms only.The window sharing feature of the Agora SDK relies on WGC (Windows Graphics Capture) or GDI (Graphics Device Interface) capture, and WGC cannot be set to disable mouse capture on systems earlier than Windows 10 2004. Therefore, captureMouseCursor(false) might not work when you start window sharing on a device with a system earlier than Windows 10 2004. See ScreenCaptureParameters .
         /// </summary>
         ///
         /// <param name="windowId"> The ID of the window to be shared.</param>
@@ -1926,7 +1922,7 @@ namespace Agora.Rtc
         /// <param name="captureParams"> Screen sharing configurations. The default video dimension is 1920 x 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.
         /// ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
@@ -1936,13 +1932,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the content hint for screen sharing.
-        /// A content hint suggests the type of the content being shared, so that the SDK applies different optimization algorithms to different types of content. If you don't call this method, the default content hint isCONTENT_HINT_NONE.You can call this method either before or after you start screen sharing.
+        /// A content hint suggests the type of the content being shared, so that the SDK applies different optimization algorithms to different types of content. If you don't call this method, the default content hint is CONTENT_HINT_NONE.You can call this method either before or after you start screen sharing.
         /// </summary>
         ///
         /// <param name="contentHint"> The content hint for screen sharing. See VIDEO_CONTENT_HINT .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.
         /// ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
@@ -1958,7 +1954,7 @@ namespace Agora.Rtc
         /// <param name="regionRect"> The relative location of the screen-share area to the screen or window. If you do not set this parameter, the SDK shares the whole screen or window. See Rectangle . If the specified region overruns the screen or window, the SDK shares only the region within it; if you set width or height as 0, the SDK shares the whole screen or window.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.ERR_INVALID_ARGUMENT: The parameter is invalid.
+        /// 0: Success.&lt; 0: Failure.ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
         ///
         public abstract int UpdateScreenCaptureRegion(Rectangle regionRect);
@@ -1972,7 +1968,7 @@ namespace Agora.Rtc
         /// <param name="captureParams"> The screen sharing encoding parameters. The default video dimension is 1920 x 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges. See ScreenCaptureParameters </param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// ERR_INVALID_STATE: The screen sharing state is invalid. Probably because you have shared other screens or windows. Try calling StopScreenCapture to stop the current sharing and start sharing the screen again.
         /// ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
@@ -1985,7 +1981,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopScreenCapture();
@@ -2001,7 +1997,7 @@ namespace Agora.Rtc
         /// <param name="enabled"> Whether to enable dual-stream mode.true: Enable dual-stream mode.false: Disable dual-stream mode.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableDualStreamMode(bool enabled);
@@ -2017,7 +2013,7 @@ namespace Agora.Rtc
         /// <param name="enabled"> Whether to enable dual-stream mode.true: Enable dual-stream mode.false: Disable dual-stream mode.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled);
@@ -2039,7 +2035,7 @@ namespace Agora.Rtc
         /// <param name="streamConfig"> The configuration of the low-quality video stream. See SimulcastStreamConfig .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig);
@@ -2047,7 +2043,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the stream type of the remote video.
-        /// Under limited network conditions, if the publisher has not disabled the dual-stream mode using EnableDualStreamMode [3/3] (false), the receiver can choose to receive either the high-quality video stream (the high resolution, and high bitrate video stream) or the low-quality video stream (the low resolution, and low bitrate video stream). The high-quality video stream has a higher resolution and bitrate, and the low-quality video stream has a lower resolution and bitrate.By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. This method allows the app to adjust the corresponding video stream type based on the size of the video window to reduce the bandwidth and resources. The aspect ratio of the low-quality video stream is the same as the high-quality video stream. Once the resolution of the high-quality video stream is set, the system automatically sets the resolution, frame rate, and bitrate of the low-quality video stream.The method result returns in the OnApiCallExecuted callback.You can call this method either before or after joining a channel. If you call bothSetRemoteVideoStreamType and SetRemoteDefaultVideoStreamType , the setting ofSetRemoteVideoStreamType takes effect.
+        /// Under limited network conditions, if the publisher has not disabled the dual-stream mode using EnableDualStreamMode [3/3] (false), the receiver can choose to receive either the high-quality video stream (the high resolution, and high bitrate video stream) or the low-quality video stream (the low resolution, and low bitrate video stream). The high-quality video stream has a higher resolution and bitrate, and the low-quality video stream has a lower resolution and bitrate.By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. This method allows the app to adjust the corresponding video stream type based on the size of the video window to reduce the bandwidth and resources. The aspect ratio of the low-quality video stream is the same as the high-quality video stream. Once the resolution of the high-quality video stream is set, the system automatically sets the resolution, frame rate, and bitrate of the low-quality video stream.The method result returns in the OnApiCallExecuted callback.You can call this method either before or after joining a channel. If you call both SetRemoteVideoStreamType and SetRemoteDefaultVideoStreamType , the setting of SetRemoteVideoStreamType takes effect.
         /// </summary>
         ///
         /// <param name="uid"> The user ID.</param>
@@ -2055,7 +2051,7 @@ namespace Agora.Rtc
         /// <param name="streamType"> The video stream type: VIDEO_STREAM_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType);
@@ -2063,13 +2059,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the default stream type of subscrption for remote video streams.
-        /// Under limited network conditions, if the publisher has not disabled the dual-stream mode using EnableDualStreamMode [3/3] (false), the receiver can choose to receive either the high-quality video stream or the low-quality video stream. The high-quality video stream has a higher resolution and bitrate, and the low-quality video stream has a lower resolution and bitrate.By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. This method allows the app to adjust the corresponding video stream type based on the size of the video window to reduce the bandwidth and resources. The aspect ratio of the low-quality video stream is the same as the high-quality video stream. Once the resolution of the high-quality video stream is set, the system automatically sets the resolution, frame rate, and bitrate of the low-quality video stream.The result of this method is returned in the OnApiCallExecuted callback.Call this method before joining a channel. Agora does not support changing the default subscribed video stream type after joining a channel.If you call both this method and SetRemoteVideoStreamType , the SDK applies the settings in theSetRemoteVideoStreamType method.
+        /// Under limited network conditions, if the publisher has not disabled the dual-stream mode using EnableDualStreamMode [3/3] (false), the receiver can choose to receive either the high-quality video stream or the low-quality video stream. The high-quality video stream has a higher resolution and bitrate, and the low-quality video stream has a lower resolution and bitrate.By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. This method allows the app to adjust the corresponding video stream type based on the size of the video window to reduce the bandwidth and resources. The aspect ratio of the low-quality video stream is the same as the high-quality video stream. Once the resolution of the high-quality video stream is set, the system automatically sets the resolution, frame rate, and bitrate of the low-quality video stream.The result of this method is returned in the OnApiCallExecuted callback.Call this method before joining a channel. Agora does not support changing the default subscribed video stream type after joining a channel.If you call both this method and SetRemoteVideoStreamType , the SDK applies the settings in the SetRemoteVideoStreamType method.
         /// </summary>
         ///
         /// <param name="streamType"> The default video-stream type. See VIDEO_STREAM_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetRemoteDefaultVideoStreamType(VIDEO_STREAM_TYPE streamType);
@@ -2101,7 +2097,7 @@ namespace Agora.Rtc
         /// <param name="watermark"> The watermark image to be added to the local live streaming: RtcImage .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AddVideoWatermark(RtcImage watermark);
@@ -2117,7 +2113,7 @@ namespace Agora.Rtc
         /// <param name="options"> The options of the watermark image to be added. </param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
@@ -2133,7 +2129,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int ClearVideoWatermarks();
@@ -2143,13 +2139,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the built-in encryption mode.
-        /// Deprecated:Use EnableEncryption instead.The Agora SDK supports built-in encryption, which is set to the AES-128-GCM mode by default. Call this method to use other encryption modes. All users in the same channel must use the same encryption mode andsecret. Refer to the information related to the AES encryption algorithm on the differences between the encryption modes.Before calling this method, please call SetEncryptionSecret to enable the built-in encryption function.
+        /// Deprecated:Use EnableEncryption instead.The Agora SDK supports built-in encryption, which is set to the AES-128-GCM mode by default. Call this method to use other encryption modes. All users in the same channel must use the same encryption mode and secret. Refer to the information related to the AES encryption algorithm on the differences between the encryption modes.Before calling this method, please call SetEncryptionSecret to enable the built-in encryption function.
         /// </summary>
         ///
         /// <param name="encryptionMode"> The following encryption modes:"aes-128-xts": 128-bit AES encryption, XTS mode."aes-128-ecb": 128-bit AES encryption, ECB mode."aes-256-xts": 256-bit AES encryption, XTS mode."sm4-128-ecb": 128-bit SM4 encryption, ECB mode."aes-128-gcm": 128-bit AES encryption, GCM mode."aes-256-gcm": 256-bit AES encryption, GCM mode."": When this parameter is set as null, the encryption mode is set as "aes-128-gcm" by default.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetEncryptionMode(string encryptionMode);
@@ -2157,13 +2153,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables built-in encryption with an encryption password before users join a channel.
-        /// Deprecated:This method is deprecated. Use EnableEncryption instead.Before joining the channel, you need to call this method to set thesecret parameter to enable the built-in encryption. All users in the same channel should use the samesecret. Thesecret is automatically cleared once a user leaves the channel. If you do not specify thesecret orsecret is set as null, the built-in encryption is disabled.Do not use this method for CDN live streaming.For optimal transmission, ensure that the encrypted data size does not exceed the original data size + 16 bytes. 16 bytes is the maximum padding size for AES encryption.
+        /// Deprecated:This method is deprecated. Use EnableEncryption instead.Before joining the channel, you need to call this method to set the secret parameter to enable the built-in encryption. All users in the same channel should use the same secret. The secret is automatically cleared once a user leaves the channel. If you do not specify the secret or secret is set as null, the built-in encryption is disabled.Do not use this method for CDN live streaming.For optimal transmission, ensure that the encrypted data size does not exceed the original data size + 16 bytes. 16 bytes is the maximum padding size for AES encryption.
         /// </summary>
         ///
         /// <param name="secret"> The encryption password.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetEncryptionSecret(string secret);
@@ -2179,7 +2175,7 @@ namespace Agora.Rtc
         /// <param name="config"> Built-in encryption configurations. See EncryptionConfig .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2: An invalid parameter is used. Set the parameter with a valid value.-4: The built-in encryption mode is incorrect or the SDK fails to load the external encryption library. Check the enumeration or reload the external encryption library.-7: The SDK is not initialized. Initialize the IRtcEngine instance before calling this method.
+        /// 0: Success.&lt; 0: Failure.-2: An invalid parameter is used. Set the parameter with a valid value.-4: The built-in encryption mode is incorrect or the SDK fails to load the external encryption library. Check the enumeration or reload the external encryption library.-7: The SDK is not initialized. Initialize the IRtcEngine instance before calling this method.
         /// </returns>
         ///
         public abstract int EnableEncryption(bool enabled, EncryptionConfig config);
@@ -2189,13 +2185,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables/Disables stereo panning for remote users.
-        /// Ensure that you call this method before joining a channel to enable stereo panning for remote users so that the local user can track the position of a remote user by callingSetRemoteVoicePosition.
+        /// Ensure that you call this method before joining a channel to enable stereo panning for remote users so that the local user can track the position of a remote user by calling SetRemoteVoicePosition.
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable stereo panning for remote users:true: Enable stereo panning.false: Disable stereo panning.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableSoundPositionIndication(bool enabled);
@@ -2211,7 +2207,7 @@ namespace Agora.Rtc
         /// <param name="config"> Configuration of the local video mixing. See LocalTranscoderConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartLocalVideoTranscoder(LocalTranscoderConfiguration config);
@@ -2225,7 +2221,7 @@ namespace Agora.Rtc
         /// <param name="config"> Configuration of the local video mixing, see LocalTranscoderConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config);
@@ -2237,7 +2233,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopLocalVideoTranscoder();
@@ -2247,13 +2243,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts relaying media streams across channels. This method can be used to implement scenarios such as co-host across channels.
-        /// After a successful method call, the SDK triggers the OnChannelMediaRelayStateChanged and OnChannelMediaRelayEvent callbacks, and these callbacks return the state and events of the media stream relay.If theOnChannelMediaRelayStateChanged callback returnsRELAY_STATE_RUNNING (2) andRELAY_OK (0), and theOnChannelMediaRelayEvent callback returnsRELAY_EVENT_PACKET_SENT_TO_DEST_CHANNEL (4); it means that the SDK starts relaying media streams between the source channel and the destination channel.If theOnChannelMediaRelayStateChanged callback returnsRELAY_STATE_FAILURE (3), an exception occurs during the media stream relay.Call this method after joining the channel.This method takes effect only when you are a host in a live streaming channel.After a successful method call, if you want to call this method again, ensure that you call the StopChannelMediaRelay method to quit the current relay.You need to before implementing this function.We do not support string type of UID in this API.
+        /// After a successful method call, the SDK triggers the OnChannelMediaRelayStateChanged and OnChannelMediaRelayEvent callbacks, and these callbacks return the state and events of the media stream relay.If the OnChannelMediaRelayStateChanged callback returns RELAY_STATE_RUNNING (2) and RELAY_OK (0), and the OnChannelMediaRelayEvent callback returns RELAY_EVENT_PACKET_SENT_TO_DEST_CHANNEL (4); it means that the SDK starts relaying media streams between the source channel and the destination channel.If the OnChannelMediaRelayStateChanged callback returns RELAY_STATE_FAILURE (3), an exception occurs during the media stream relay.Call this method after joining the channel.This method takes effect only when you are a host in a live streaming channel.After a successful method call, if you want to call this method again, ensure that you call the StopChannelMediaRelay method to quit the current relay.You need to before implementing this function.We do not support string type of UID in this API.
         /// </summary>
         ///
         /// <param name="configuration"> The configuration of the media stream relay. See ChannelMediaRelayConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
@@ -2261,13 +2257,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Updates the channels for media stream relay.
-        /// After the media relay starts, if you want to relay the media stream to more channels, or leave the current relay channel, you can call this method.After a successful method call, the SDK triggers the OnChannelMediaRelayEvent callback with theRELAY_EVENT_PACKET_UPDATE_DEST_CHANNEL (7) state code.Call the method after successfully calling the StartChannelMediaRelay method and receiving OnChannelMediaRelayStateChanged (RELAY_STATE_RUNNING,RELAY_OK); otherwise, the method call fails.
+        /// After the media relay starts, if you want to relay the media stream to more channels, or leave the current relay channel, you can call this method.After a successful method call, the SDK triggers the OnChannelMediaRelayEvent callback with the RELAY_EVENT_PACKET_UPDATE_DEST_CHANNEL (7) state code.Call the method after successfully calling the StartChannelMediaRelay method and receiving OnChannelMediaRelayStateChanged (RELAY_STATE_RUNNING, RELAY_OK); otherwise, the method call fails.
         /// </summary>
         ///
         /// <param name="configuration"> The configuration of the media stream relay. </param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
@@ -2275,11 +2271,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Stops the media stream relay. Once the relay stops, the host quits all the destination channels.
-        /// After a successful method call, the SDK triggers the OnChannelMediaRelayStateChanged callback. If the callback reportsRELAY_STATE_IDLE (0) andRELAY_OK (0), the host successfully stops the relay.If the method call fails, the SDK triggers theOnChannelMediaRelayStateChanged callback with theRELAY_ERROR_SERVER_NO_RESPONSE (2) orRELAY_ERROR_SERVER_CONNECTION_LOST (8) status code. You can call the LeaveChannel [1/2]
+        /// After a successful method call, the SDK triggers the OnChannelMediaRelayStateChanged callback. If the callback reports RELAY_STATE_IDLE (0) and RELAY_OK (0), the host successfully stops the relay.If the method call fails, the SDK triggers the OnChannelMediaRelayStateChanged callback with the RELAY_ERROR_SERVER_NO_RESPONSE (2) or RELAY_ERROR_SERVER_CONNECTION_LOST (8) status code. You can call the LeaveChannel [1/2]
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopChannelMediaRelay();
@@ -2291,7 +2287,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PauseAllChannelMediaRelay();
@@ -2303,7 +2299,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int ResumeAllChannelMediaRelay();
@@ -2324,7 +2320,7 @@ namespace Agora.Rtc
         /// <param name="sourceId"> The ID of external audio source. If you want to publish a custom external audio source, set this parameter to the ID of the corresponding custom audio track you want to publish.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
@@ -2337,18 +2333,18 @@ namespace Agora.Rtc
         ///
         /// <param name="enabled"> Whether to enable the external audio source:true: Enable the external audio source.false: (Default) Disable the external audio source.</param>
         ///
-        /// <param name="sampleRate"> The sample rate (Hz) of the external audio source, which can be set as8000,16000,32000,44100, or48000.</param>
+        /// <param name="sampleRate"> The sample rate (Hz) of the external audio source, which can be set as 8000, 16000, 32000, 44100, or 48000.</param>
         ///
-        /// <param name="channels"> The number of channels of the external audio source, which can be set as1 (Mono) or2 (Stereo).</param>
+        /// <param name="channels"> The number of channels of the external audio source, which can be set as 1 (Mono) or 2 (Stereo).</param>
         ///
-        /// <param name="sourceNumber"> The number of external audio sources. The value of this parameter should be larger than 0.The SDK creates a corresponding number of custom audio tracks based on this parameter value and names the audio tracks starting from 0. In ChannelMediaOptions , you can setpublishCustomAudioSourceId to the ID of the audio track you want to publish.</param>
+        /// <param name="sourceNumber"> The number of external audio sources. The value of this parameter should be larger than 0. The SDK creates a corresponding number of custom audio tracks based on this parameter value and names the audio tracks starting from 0. In ChannelMediaOptions , you can set publishCustomAudioSourceId to the ID of the audio track you want to publish.</param>
         ///
         /// <param name="localPlayback"> Whether to play the external audio source:true: Play the external audio source.false: (Default) Do not play the external source.</param>
         ///
         /// <param name="publish"> Whether to publish audio to the remote users:true: (Default) Publish audio to the remote users.false: Do not publish audio to the remote users</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
@@ -2364,7 +2360,7 @@ namespace Agora.Rtc
         /// <param name="volume"> The volume of the audio source. The value can range from 0 to 100. 0 means mute; 100 means the original volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AdjustCustomAudioPublishVolume(int sourceId, int volume);
@@ -2389,7 +2385,7 @@ namespace Agora.Rtc
         /// <param name="channels"> The number of audio channels of the external audio sink:1: Mono.2: Stereo.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetExternalAudioSink(bool enabled, int sampleRate, int channels);
@@ -2397,13 +2393,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Pulls the remote audio data.
-        /// Before calling this method, you need to call SetExternalAudioSink to notify the app to enable and set the external rendering.After a successful method call, the app pulls the decoded and mixed audio data for playback.This method only supports pulling data from custom audio source. If you need to pull the data captured by the SDK, do not call this method.Call this method after joining a channel.Once you enable the external audio sink, the app will not retrieve any audio data from the OnPlaybackAudioFrame callback.The difference between this method and theOnPlaybackAudioFrame callback is as follows:The SDK sends the audio data to the app through theOnPlaybackAudioFrame callback. Any delay in processing the audio frames may result in audio jitter.After a successful method call, the app automatically pulls the audio data from the SDK. After setting the audio data parameters, the SDK adjusts the frame buffer and avoids problems caused by jitter in the external audio playback.
+        /// Before calling this method, you need to call SetExternalAudioSink to notify the app to enable and set the external rendering.After a successful method call, the app pulls the decoded and mixed audio data for playback.This method only supports pulling data from custom audio source. If you need to pull the data captured by the SDK, do not call this method.Call this method after joining a channel.Once you enable the external audio sink, the app will not retrieve any audio data from the OnPlaybackAudioFrame callback.The difference between this method and the OnPlaybackAudioFrame callback is as follows:The SDK sends the audio data to the app through the OnPlaybackAudioFrame callback. Any delay in processing the audio frames may result in audio jitter.After a successful method call, the app automatically pulls the audio data from the SDK. After setting the audio data parameters, the SDK adjusts the frame buffer and avoids problems caused by jitter in the external audio playback.
         /// </summary>
         ///
         /// <param name="frame"> Pointers to AudioFrame .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PullAudioFrame(AudioFrame frame);
@@ -2416,7 +2412,7 @@ namespace Agora.Rtc
         /// Call this method to register an audio frame observer object (register a callback). When you need the SDK to trigger OnRecordAudioFrame or OnPlaybackAudioFrame callback, you need to use this method to register the callbacks.Ensure that you call this method before joining a channel.
         /// </summary>
         ///
-        /// <param name="audioFrameObserver"> The observer object instance. See IAudioFrameObserver .Set the value asNULL to release the instance.Agora recommends calling after receiving OnLeaveChannel to release the audio observer object.</param>
+        /// <param name="audioFrameObserver"> The observer object instance. See IAudioFrameObserver . Set the value as NULL to release the instance. Agora recommends calling after receiving OnLeaveChannel to release the audio observer object.</param>
         ///
         /// <param name="mode"> The video data callback mode. See OBSERVER_MODE .</param>
         ///
@@ -2432,19 +2428,19 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the format of the captured raw audio data.
-        /// Sets the audio format for the OnRecordAudioFrame callback.Ensure that you call this method before joining a channel.The SDK calculates the sampling interval based on thesamplesPerCall,sampleRate andchannel parameters set in this method.Sample interval =samplePerCall/(sampleRate ×channel). Ensure that the sample interval ≥ 0.01 (s).The SDK triggers theOnRecordAudioFrame callback according to the sampling interval.
+        /// Sets the audio format for the OnRecordAudioFrame callback.Ensure that you call this method before joining a channel.The SDK calculates the sampling interval based on the samplesPerCall, sampleRate and channel parameters set in this method.Sample interval = samplePerCall/(sampleRate × channel). Ensure that the sample interval ≥ 0.01 (s). The SDK triggers the OnRecordAudioFrame callback according to the sampling interval.
         /// </summary>
         ///
-        /// <param name="sampleRate"> The sample rate returned in theOnRecordAudioFrame callback, which can be set as 8000, 16000, 32000, 44100, or 48000 Hz.</param>
+        /// <param name="sampleRate"> The sample rate returned in the OnRecordAudioFrame callback, which can be set as 8000, 16000, 32000, 44100, or 48000 Hz.</param>
         ///
-        /// <param name="channel"> The number of channels returned in theOnRecordAudioFrame callback:1: Mono.2: Stereo.</param>
+        /// <param name="channel"> The number of channels returned in the OnRecordAudioFrame callback:1: Mono.2: Stereo.</param>
         ///
         /// <param name="mode"> The use mode of the audio frame. See RAW_AUDIO_FRAME_OP_MODE_TYPE .</param>
         ///
-        /// <param name="samplesPerCall"> The number of data samples returned in theOnRecordAudioFrame callback, such as 1024 for the Media Push.</param>
+        /// <param name="samplesPerCall"> The number of data samples returned in the OnRecordAudioFrame callback, such as 1024 for the Media Push.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetRecordingAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
@@ -2452,19 +2448,19 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the audio data format for playback.
-        /// Sets the data format for the OnPlaybackAudioFrame callback.Ensure that you call this method before joining a channel.The SDK calculates the sampling interval based on thesamplesPerCall,sampleRate andchannel parameters set in this method.Sample interval =samplePerCall/(sampleRate ×channel). Ensure that the sample interval ≥ 0.01 (s). The SDK triggers theOnPlaybackAudioFrame callback according to the sampling interval.
+        /// Sets the data format for the OnPlaybackAudioFrame callback.Ensure that you call this method before joining a channel.The SDK calculates the sampling interval based on the samplesPerCall, sampleRate and channel parameters set in this method.Sample interval = samplePerCall/(sampleRate × channel). Ensure that the sample interval ≥ 0.01 (s). The SDK triggers the OnPlaybackAudioFrame callback according to the sampling interval.
         /// </summary>
         ///
-        /// <param name="sampleRate"> The sample rate returned in theOnPlaybackAudioFrame callback, which can be set as 8000, 16000, 32000, 44100, or 48000 Hz.</param>
+        /// <param name="sampleRate"> The sample rate returned in the OnPlaybackAudioFrame callback, which can be set as 8000, 16000, 32000, 44100, or 48000 Hz.</param>
         ///
-        /// <param name="channel"> The number of channels returned in theOnPlaybackAudioFrame callback:1: Mono.2: Stereo.</param>
+        /// <param name="channel"> The number of channels returned in the OnPlaybackAudioFrame callback:1: Mono.2: Stereo.</param>
         ///
         /// <param name="mode"> The use mode of the audio frame. See RAW_AUDIO_FRAME_OP_MODE_TYPE .</param>
         ///
-        /// <param name="samplesPerCall"> The number of data samples returned in theOnPlaybackAudioFrame callback, such as 1024 for the Media Push.</param>
+        /// <param name="samplesPerCall"> The number of data samples returned in the OnPlaybackAudioFrame callback, such as 1024 for the Media Push.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetPlaybackAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
@@ -2474,14 +2470,14 @@ namespace Agora.Rtc
         /// Sets the audio data format reported by OnMixedAudioFrame .
         /// </summary>
         ///
-        /// <param name="sampleRate"> The sample rate (Hz) of the audio data, which can be set as8000,16000,32000,44100, or48000.</param>
+        /// <param name="sampleRate"> The sample rate (Hz) of the audio data, which can be set as 8000, 16000, 32000, 44100, or 48000.</param>
         ///
-        /// <param name="channel"> The number of channels of the audio data, which can be set as1 (Mono) or2 (Stereo).</param>
+        /// <param name="channel"> The number of channels of the audio data, which can be set as 1 (Mono) or 2 (Stereo).</param>
         ///
-        /// <param name="samplesPerCall"> Sets the number of samples. In Media Push scenarios, set it as1024.</param>
+        /// <param name="samplesPerCall"> Sets the number of samples. In Media Push scenarios, set it as 1024.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall);
@@ -2491,12 +2487,12 @@ namespace Agora.Rtc
         /// Sets the audio data format reported by OnPlaybackAudioFrameBeforeMixing [1/2] .
         /// </summary>
         ///
-        /// <param name="null"> The sample rate (Hz) of the audio data, which can be set as8000,16000,32000,44100, or48000.</param>
+        /// <param name="null"> The sample rate (Hz) of the audio data, which can be set as 8000, 16000, 32000, 44100, or 48000.</param>
         ///
-        /// <param name="channel"> The number of channels of the external audio source, which can be set as1(Mono) or2(Stereo).</param>
+        /// <param name="channel"> The number of channels of the external audio source, which can be set as 1(Mono) or 2(Stereo).</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel);
@@ -2506,7 +2502,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Registers an encoded audio observer.
-        /// Call this method after joining a channel.You can call this method or the StartAudioRecording [3/3] method to set the audio content and audio quality. Agora recommends not using this method andStartAudioRecording [3/3] at the same time; otherwise, only the method called later takes effect.
+        /// Call this method after joining a channel.You can call this method or the StartAudioRecording [3/3] method to set the audio content and audio quality. Agora recommends not using this method and StartAudioRecording [3/3] at the same time; otherwise, only the method called later takes effect.
         /// </summary>
         ///
         /// <param name="config"> Observer settings for the encoded audio. See AudioEncodedFrameObserverConfig .</param>
@@ -2530,10 +2526,10 @@ namespace Agora.Rtc
         /// If you want to obtain the audio spectrum data of local or remote users, you can register the audio spectrum observer and enable audio spectrum monitoring.You can call this method either before or after joining a channel.
         /// </summary>
         ///
-        /// <param name="null"> The interval (in milliseconds) at which the SDK triggers the OnLocalAudioSpectrum and OnRemoteAudioSpectrum callbacks. The default value is 100. Do not set this parameter to less than 10 milliseconds, otherwise the calling of this method fails.</param>
+        /// <param name="intervalInMS"> The interval (in milliseconds) at which the SDK triggers the OnLocalAudioSpectrum and OnRemoteAudioSpectrum callbacks. The default value is 100. Do not set this parameter to less than 10 milliseconds, otherwise the calling of this method fails.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2: Invalid parameters.
+        /// 0: Success.&lt; 0: Failure.-2: Invalid parameters.
         /// </returns>
         ///
         public abstract int EnableAudioSpectrumMonitor(int intervalInMS = 100);
@@ -2545,7 +2541,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int DisableAudioSpectrumMonitor();
@@ -2553,7 +2549,8 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Registers an audio spectrum observer.
-        /// After successfully registering the audio spectrum observer and calling EnableAudioSpectrumMonitor to enable the audio spectrum monitoring, the SDK reports the callback that you implement in the IAudioSpectrumObserver class at the time interval you set.You can call this method either before or after joining a channel.
+        /// After successfully registering the audio spectrum observer and calling 
+        /// EnableAudioSpectrumMonitor to enable the audio spectrum monitoring, the SDK reports the callback that you implement in the IAudioSpectrumObserver class at the time interval you set.You can call this method either before or after joining a channel.
         /// </summary>
         ///
         /// <param name="observer"> The Audio spectrum observer. See IAudioSpectrumObserver .</param>
@@ -2582,10 +2579,10 @@ namespace Agora.Rtc
         ///
         /// <param name="sourceType"> Whether to encode the external video frame, see EXTERNAL_VIDEO_SOURCE_TYPE .</param>
         ///
-        /// <param name="encodedVideoOption"> Video encoding options. This parameter needs to be set ifsourceType isENCODED_VIDEO_FRAME. To set this parameter, contact.</param>
+        /// <param name="encodedVideoOption"> Video encoding options. This parameter needs to be set if sourceType is ENCODED_VIDEO_FRAME. To set this parameter, contact .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
@@ -2593,7 +2590,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Pushes the external raw video frame to the SDK.
-        /// To push the unencoded external raw video frame to the SDK, call SetExternalVideoSource , setenabled astrue, and setencodedFrame asfalse.
+        /// To push the unencoded external raw video frame to the SDK, call SetExternalVideoSource , set enabled as true, and set encodedFrame as false.
         /// </summary>
         ///
         /// <param name="frame"> The external raw video frame to be pushed. See ExternalVideoFrame .</param>
@@ -2601,7 +2598,7 @@ namespace Agora.Rtc
         /// <param name="videoTrackId"> The video track ID returned by calling the createCustomVideoTrack method. The default value is 0.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0);
@@ -2624,7 +2621,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Creates a customized video track.
-        /// When you need to publish multiple custom captured videos in the channel, you can refer to the following steps:Call this method to create a video track and get the video track ID.In each channel's ChannelMediaOptions , set thecustomVideoTrackId parameter to the ID of the video track you want to publish, and setpublishCustomVideoTrack totrue.
+        /// When you need to publish multiple custom captured videos in the channel, you can refer to the following steps:Call this method to create a video track and get the video track ID.In each channel's ChannelMediaOptions , set the customVideoTrackId parameter to the ID of the video track you want to publish, and set publishCustomVideoTrack to true.
         /// </summary>
         ///
         /// <returns>
@@ -2639,7 +2636,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int DestroyCustomVideoTrack(video_track_id_t video_track_id);
@@ -2650,10 +2647,10 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Registers a video frame observer object.
-        /// You need to implement the IVideoFrameObserver class in this method and register callbacks according to your scenarios. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.When handling the video data returned in the callbacks, pay attention to the changes in thewidth andheight parameters, which may be adapted under the following circumstances:When the network condition deteriorates, the video resolution decreases incrementally.If the user adjusts the video profile, the resolution of the video returned in the callbacks also changes.Ensure that you call this method before joining a channel.
+        /// You need to implement the IVideoFrameObserver class in this method and register callbacks according to your scenarios. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.When handling the video data returned in the callbacks, pay attention to the changes in the width and height parameters, which may be adapted under the following circumstances:When the network condition deteriorates, the video resolution decreases incrementally.If the user adjusts the video profile, the resolution of the video returned in the callbacks also changes.Ensure that you call this method before joining a channel.
         /// </summary>
         ///
-        /// <param name="videoFrameObserver"> The observer object instance. See IVideoFrameObserver .To release the instance, set the value asNULL.</param>
+        /// <param name="videoFrameObserver"> The observer object instance. See IVideoFrameObserver . To release the instance, set the value as NULL.</param>
         ///
         /// <param name="mode"> The video data callback mode. See OBSERVER_MODE .</param>
         ///
@@ -2693,12 +2690,12 @@ namespace Agora.Rtc
         /// (For Windows and Android only)
         /// </summary>
         ///
-        /// <param name="path"> The extension library path and name. For example:/library/libagora_segmentation_extension.dll.</param>
+        /// <param name="path"> The extension library path and name. For example: /library/libagora_segmentation_extension.dll.</param>
         ///
         /// <param name="unload_after_use"> Whether to uninstall the current extension when you no longer using it:true: Uninstall the extension when the IRtcEngine is destroyed.false: (Rcommended) Do not uninstall the extension until the process terminates.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int LoadExtensionProvider(string path, bool unload_after_use = false);
@@ -2716,7 +2713,7 @@ namespace Agora.Rtc
         /// <param name="provider"> The name of the extension provider.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetExtensionProviderProperty(string provider, string key, string value);
@@ -2733,10 +2730,10 @@ namespace Agora.Rtc
         ///
         /// <param name="enable"> Whether to enable the extension:true: Enable the extension.false: Disable the extension.</param>
         ///
-        /// <param name="type"> Type of media source. See MEDIA_SOURCE_TYPE .In this method, this parameter supports only the following two settings:The default value isUNKNOWN_MEDIA_SOURCE.If you want to use the second camera to capture video, set this parameter toSECONDARY_CAMERA_SOURCE.</param>
+        /// <param name="type"> Type of media source. See MEDIA_SOURCE_TYPE . In this method, this parameter supports only the following two settings:The default value is UNKNOWN_MEDIA_SOURCE.If you want to use the second camera to capture video, set this parameter to SECONDARY_CAMERA_SOURCE.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
@@ -2758,7 +2755,7 @@ namespace Agora.Rtc
         /// <param name="type"> The type of the video source. See MEDIA_SOURCE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
@@ -2777,7 +2774,7 @@ namespace Agora.Rtc
         /// <param name="sourceType"> Source type of the extension. See MEDIA_SOURCE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
@@ -2788,12 +2785,12 @@ namespace Agora.Rtc
         /// <summary>
         /// Registers the metadata observer.
         /// You need to implement the IMetadataObserver class and specify the metadata type in this method. This method enables you to add synchronized metadata in the video stream for more diversified
-        /// live interactive streaming, such as sending shopping links, digital coupons, and online quizzes.A successful call of this method triggers the GetMaxMetadataSize callback.Call this method beforeJoinChannel [2/2].
+        /// live interactive streaming, such as sending shopping links, digital coupons, and online quizzes.A successful call of this method triggers the GetMaxMetadataSize callback.Call this method before JoinChannel [2/2].
         /// </summary>
         ///
         /// <param name="observer"> The metadata observer. See IMetadataObserver .</param>
         ///
-        /// <param name="type"> The metadata type. The SDK currently only supportsVIDEO_METADATA.See METADATA_TYPE .</param>
+        /// <param name="type"> The metadata type. The SDK currently only supports VIDEO_METADATA. See METADATA_TYPE .</param>
         ///
         public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
@@ -2812,12 +2809,13 @@ namespace Agora.Rtc
         /// Deprecated:This method is deprecated as of v2.9.1. It has a fixed recording sample rate of 32 kHz. Use StartAudioRecording [3/3] instead.The Agora SDK allows recording during a call. This method records the audio of all the users in the channel and generates an audio recording file. Supported formats of the recording file are as follows:.wav: Large file size with high fidelity..aac: Small file size with low fidelity.Ensure that the directory for the recording file exists and is writable. This method should be called after the JoinChannel [1/2] LeaveChannel [1/2]
         /// </summary>
         ///
-        /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example:C:\music\audio.mp4.Ensure that the path for the recording file exists and is writable.</param>
+        /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.mp4.
+        ///  Ensure that the path for the recording file exists and is writable.</param>
         ///
-        /// <param name="quality"> Audio recording quality.See AUDIO_RECORDING_QUALITY_TYPE .</param>
+        /// <param name="quality"> Audio recording quality. See AUDIO_RECORDING_QUALITY_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartAudioRecording(string filePath, AUDIO_RECORDING_QUALITY_TYPE quality);
@@ -2825,17 +2823,18 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts the audio recording on the client.
-        /// Deprecated:This method is deprecated. Use StartAudioRecording [3/3] instead.The Agora SDK allows recording during a call. After successfully calling this method, you can record the audio of all the users in the channel and get an audio recording file. Supported formats of the recording file are as follows:.wav: Large file size with high fidelity..aac: Small file size with low fidelity.Ensure that the directory you use to save the recording file exists and is writable.This method should be called after theJoinChannel [2/2] method. The recording automatically stops when you call the LeaveChannel [1/2] For better recording effects, setquality toAUDIO_RECORDING_QUALITY_MEDIUM orAUDIO_RECORDING_QUALITY_HIGH whensampleRate is 44.1 kHz or 48 kHz.
+        /// Deprecated:This method is deprecated. Use StartAudioRecording [3/3] instead.The Agora SDK allows recording during a call. After successfully calling this method, you can record the audio of all the users in the channel and get an audio recording file. Supported formats of the recording file are as follows:.wav: Large file size with high fidelity..aac: Small file size with low fidelity.Ensure that the directory you use to save the recording file exists and is writable.This method should be called after the JoinChannel [2/2] method. The recording automatically stops when you call the LeaveChannel [1/2] For better recording effects, set quality to AUDIO_RECORDING_QUALITY_MEDIUM or AUDIO_RECORDING_QUALITY_HIGH when sampleRate is 44.1 kHz or 48 kHz.
         /// </summary>
         ///
-        /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example:C:\music\audio.mp4.Ensure that the path for the recording file exists and is writable.</param>
+        /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.mp4.
+        ///  Ensure that the path for the recording file exists and is writable.</param>
         ///
         /// <param name="sampleRate"> The sample rate (kHz) of the recording file. Supported values are as follows:16000(Default) 320004410048000</param>
         ///
         /// <param name="quality"> Recording quality. For more details, see AUDIO_RECORDING_QUALITY_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartAudioRecording(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality);
@@ -2843,13 +2842,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts the audio recording on the client.
-        /// The Agora SDK allows recording during a call. After successfully calling this method, you can record the audio of all the users in the channel and get an audio recording file. Supported formats of the recording file are as follows:WAV: High-fidelity files with typically larger file sizes. For example, the size of a WAV file with a sample rate of 32,000 Hz and a recording duration of 10 minutes is around 73 MB.AAC: Low-fidelity files with typically smaller file sizes. For example, if the sample rate is 32,000 Hz and the recording quality isAUDIO_RECORDING_QUALITY_MEDIUM, the file size for a 10-minute recording is approximately 2 MB.Once the user leaves the channel, the recording automatically stops.Call this method after joining a channel.
+        /// The Agora SDK allows recording during a call. After successfully calling this method, you can record the audio of all the users in the channel and get an audio recording file. Supported formats of the recording file are as follows:WAV: High-fidelity files with typically larger file sizes. For example, the size of a WAV file with a sample rate of 32,000 Hz and a recording duration of 10 minutes is around 73 MB.AAC: Low-fidelity files with typically smaller file sizes. For example, if the sample rate is 32,000 Hz and the recording quality is AUDIO_RECORDING_QUALITY_MEDIUM, the file size for a 10-minute recording is approximately 2 MB.Once the user leaves the channel, the recording automatically stops.Call this method after joining a channel.
         /// </summary>
         ///
         /// <param name="config"> Recording configuration. See AudioFileRecordingConfig .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartAudioRecording(AudioRecordingConfiguration config);
@@ -2860,7 +2859,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopAudioRecording();
@@ -2876,7 +2875,7 @@ namespace Agora.Rtc
         /// <param name="config"> The camera capturer configuration. See CameraCapturerConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetCameraCapturerConfiguration(CameraCapturerConfiguration config);
@@ -2888,7 +2887,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SwitchCamera();
@@ -2921,7 +2920,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Checks whether the device supports camera flash.
         /// Call this method after enabling the local camera, for example, by calling JoinChannel [2/2] , EnableVideo , or EnableLocalVideo ,depending on which method you use to turn on your local camera.
-        /// This method is for Android and iOS only.The app enables the front camera by default. If your front camera does not support enabling the flash, this method returnsfalse. If you want to check whether the rear camera supports the flash function, call SwitchCamera before this method.On iPads with system version 15, even if IsCameraTorchSupported returnstrue, you might fail to successfully enable the flash by calling SetCameraTorchOn due to system issues.
+        /// This method is for Android and iOS only.The app enables the front camera by default. If your front camera does not support enabling the flash, this method returns false. If you want to check whether the rear camera supports the flash function, call SwitchCamera before this method.On iPads with system version 15, even if IsCameraTorchSupported returns true, you might fail to successfully enable the flash by calling SetCameraTorchOn due to system issues.
         /// </summary>
         ///
         /// <returns>
@@ -2963,7 +2962,7 @@ namespace Agora.Rtc
         /// <param name="factor"> The camera zoom ratio. The value ranges between 1.0 and the maximum zoom supported by the device. You can get the maximum zoom ratio supported by the device by calling the GetCameraMaxZoomFactor method.</param>
         ///
         /// <returns>
-        /// The camera zoomfactor value, if successful.< 0: Failure.
+        /// The camera zoom factor value, if successful.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetCameraZoomFactor(float factor);
@@ -2991,7 +2990,7 @@ namespace Agora.Rtc
         /// <param name="positionY"> The vertical coordinate of the touchpoint in the view.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetCameraFocusPositionInPreview(float positionX, float positionY);
@@ -3005,7 +3004,7 @@ namespace Agora.Rtc
         /// <param name="isOn"> Whether to turn on the camera flash:true: Turn on the flash.false: (Default) Turn off the flash.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetCameraTorchOn(bool isOn);
@@ -3019,7 +3018,7 @@ namespace Agora.Rtc
         /// <param name="enabled"> Whether to enable face autofocus:true: Enable face autofocus.false: Disable face autofocus.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetCameraAutoFocusFaceModeEnabled(bool enabled);
@@ -3048,7 +3047,7 @@ namespace Agora.Rtc
         /// <param name="positionYinView"> The vertical coordinate of the touchpoint in the view.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetCameraExposurePosition(float positionXinView, float positionYinView);
@@ -3071,10 +3070,11 @@ namespace Agora.Rtc
         /// This method applies to iOS only.Call this method before calling JoinChannel [2/2] , EnableVideo , or EnableLocalVideo , depending on which method you use to turn on your local camera.
         /// </summary>
         ///
-        /// <param name="enabled"> Whether to enable auto exposure:true: Enable auto exposure.false: Disable auto exposure.</param>
+        /// <param name="enabled"> Whether to enable auto exposure:
+        ///  true: Enable auto exposure.false: Disable auto exposure.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetCameraAutoExposureFaceModeEnabled(bool enabled);
@@ -3090,7 +3090,7 @@ namespace Agora.Rtc
         /// <param name="defaultToSpeaker"> Whether to set the speakerphone as the default audio route:true: Set the speakerphone as the default audio route.false: Set the earpiece as the default audio route.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetDefaultAudioRouteToSpeakerphone(bool defaultToSpeaker);
@@ -3098,13 +3098,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables/Disables the audio route to the speakerphone.
-        /// This method is for Android and iOS only.After a successful method call, the SDK triggers the OnAudioRoutingChanged callback.You can call this method before joining a channel, when in a channel, or after leaving a channel. However, Agora recommends calling this method only when you are in a channel to change the audio route temporarily.If you do not have a clear requirement for transient settings, Agora recommends calling SetDefaultAudioRouteToSpeakerphone to set the audio route.Any user behavior or audio-related API call might change the transient setting ofSetEnableSpeakerphone.Due to system limitations, if the user uses an external audio playback device such as a Bluetooth or wired headset on an iOS device, this method does not take effect.
+        /// This method is for Android and iOS only.After a successful method call, the SDK triggers the OnAudioRoutingChanged callback.You can call this method before joining a channel, when in a channel, or after leaving a channel. However, Agora recommends calling this method only when you are in a channel to change the audio route temporarily.If you do not have a clear requirement for transient settings, Agora recommends calling SetDefaultAudioRouteToSpeakerphone to set the audio route.Any user behavior or audio-related API call might change the transient setting of SetEnableSpeakerphone. Due to system limitations, if the user uses an external audio playback device such as a Bluetooth or wired headset on an iOS device, this method does not take effect.
         /// </summary>
         ///
         /// <param name="speakerOn"> Whether to set the speakerphone as the default audio route:true: Set the speakerphone as the audio route temporarily.false: Do not set the speakerphone as the audio route.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetEnableSpeakerphone(bool speakerOn);
@@ -3133,10 +3133,10 @@ namespace Agora.Rtc
         ///
         /// <param name="smooth"> The smoothing factor sets the sensitivity of the audio volume indicator. The value ranges between 0 and 10. The recommended value is 3. The greater the value, the more sensitive the indicator.</param>
         ///
-        /// <param name="reportVad"> true: Enable the voice activity detection of the local user. Once it is enabled,thevad parameter of theOnAudioVolumeIndication callback reports the voice activity status of the local user.false: (Default) Disable the voice activity detection of the local user. Once it is disabled, thevad parameter of theOnAudioVolumeIndication callback does not report the voice activity status of the local user, except for the scenario where the engine automatically detects the voice activity of the local user.</param>
+        /// <param name="reportVad"> true: Enable the voice activity detection of the local user. Once it is enabled,the vad parameter of the OnAudioVolumeIndication callback reports the voice activity status of the local user.false: (Default) Disable the voice activity detection of the local user. Once it is disabled, the vad parameter of the OnAudioVolumeIndication callback does not report the voice activity status of the local user, except for the scenario where the engine automatically detects the voice activity of the local user.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad);
@@ -3146,7 +3146,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Creates a data stream.
-        /// Each user can create up to five data streams during the lifecycle of IRtcEngine .Call this method after joining a channel.Agora does not support settingreliable astrue andordered astrue.
+        /// Each user can create up to five data streams during the lifecycle of IRtcEngine .Call this method after joining a channel.Agora does not support setting reliable as true and ordered as true.
         /// </summary>
         ///
         /// <param name="streamId"> Output parameter. Pointer to the ID of the created data stream.</param>
@@ -3156,7 +3156,7 @@ namespace Agora.Rtc
         /// <param name="ordered"> Whether or not the recipients receive the data stream in the sent order:true: The recipients receive the data in the sent order.false: The recipients do not receive the data in the sent order.</param>
         ///
         /// <returns>
-        /// ID of the created data stream, if the method call succeeds.< 0: Failure.
+        /// ID of the created data stream, if the method call succeeds.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int CreateDataStream(ref int streamId, bool reliable, bool ordered);
@@ -3172,7 +3172,7 @@ namespace Agora.Rtc
         /// <param name="config"> The configurations for the data stream. See DataStreamConfig .</param>
         ///
         /// <returns>
-        /// ID of the created data stream, if the method call succeeds.< 0: Failure.
+        /// ID of the created data stream, if the method call succeeds.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int CreateDataStream(ref int streamId, DataStreamConfig config);
@@ -3184,14 +3184,14 @@ namespace Agora.Rtc
         /// A failed method call triggers the OnStreamMessageError callback on the remote client.Ensure that you call CreateDataStream [2/2] to create a data channel before calling this method.In live streaming scenarios, this method only applies to hosts.
         /// </summary>
         ///
-        /// <param name="streamId"> The data stream ID. You can get the data stream ID by callingCreateDataStream [2/2].</param>
+        /// <param name="streamId"> The data stream ID. You can get the data stream ID by calling CreateDataStream [2/2].</param>
         ///
         /// <param name="data"> The data to be sent.</param>
         ///
         /// <param name="length"> The length of the data.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SendStreamMessage(int streamId, byte[] data, uint length);
@@ -3201,7 +3201,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables loopback audio capture.
-        /// If you enable loopback audio capture, the output of the sound card is mixed into the audio stream sent to the other end.Applies to the macOS and Windows platforms only.macOS does not support loopback audio capture of the default sound card. If you need to use this method, use a virtual sound card and pass its name to thedeviceName parameter. Agora recommends that you use Soundflower for loopback audio capture.You can call this method either before or after joining a channel.
+        /// If you enable loopback audio capture, the output of the sound card is mixed into the audio stream sent to the other end.Applies to the macOS and Windows platforms only.macOS does not support loopback audio capture of the default sound card. If you need to use this method, use a virtual sound card and pass its name to the deviceName parameter. Agora recommends that you use Soundflower for loopback audio capture.You can call this method either before or after joining a channel.
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable loopback audio capture.true: Enable loopback audio capture.false: (Default) Disable loopback audio capture.</param>
@@ -3209,7 +3209,7 @@ namespace Agora.Rtc
         /// <param name="deviceName"> macOS: The device name of the virtual sound card. The default is set to null, which means the SDK uses Soundflower for loopback audio capture.Windows: The device name of the sound card. The default is set to null, which means the SDK uses the sound card of your device for loopback audio capture.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableLoopbackRecording(bool enabled, string deviceName = "");
@@ -3224,13 +3224,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the Agora cloud proxy service.
-        /// When users' network access is restricted by a firewall, configure the firewall to allow specific IP addresses and ports provided by Agora; then, call this method to enable the cloud proxy and set the cloud proxy type with theproxyType parameter.After successfully connecting to the cloud proxy, the SDK triggers the OnConnectionStateChanged (CONNECTION_STATE_CONNECTING,CONNECTION_CHANGED_SETTING_PROXY_SERVER) callback.To disable the cloud proxy that has been set, call theSetCloudProxy (NONE_PROXY).To change the cloud proxy type that has been set, call theSetCloudProxy (NONE_PROXY) first, and then call theSetCloudProxy to set theproxyType you want.Agora recommends that you call this method before joining the channel or after leaving the channel.When a user is behind a firewall and uses the Force UDP cloud proxy, the services for the Media Push and cohosting across channels are not available.When you use the Force TCP cloud proxy, note that an error would occur when calling the StartAudioMixing [2/2] method to play online music files in the HTTP protocol. The services for the Media Push and cohosting across channels use the cloud proxy with the TCP protocol.
+        /// When users' network access is restricted by a firewall, configure the firewall to allow specific IP addresses and ports provided by Agora; then, call this method to enable the cloud proxy and set the cloud proxy type with the proxyType parameter.After successfully connecting to the cloud proxy, the SDK triggers the OnConnectionStateChanged (CONNECTION_STATE_CONNECTING, CONNECTION_CHANGED_SETTING_PROXY_SERVER) callback.To disable the cloud proxy that has been set, call the SetCloudProxy (NONE_PROXY).To change the cloud proxy type that has been set, call the SetCloudProxy (NONE_PROXY) first, and then call the SetCloudProxy to set the proxyType you want.Agora recommends that you call this method before joining the channel or after leaving the channel.When a user is behind a firewall and uses the Force UDP cloud proxy, the services for the Media Push and cohosting across channels are not available.When you use the Force TCP cloud proxy, note that an error would occur when calling the StartAudioMixing [2/2] method to play online music files in the HTTP protocol. The services for the Media Push and cohosting across channels use the cloud proxy with the TCP protocol.
         /// </summary>
         ///
         /// <param name="proxyType"> The type of the cloud proxy. See CLOUD_PROXY_TYPE .This parameter is mandatory. The SDK reports an error if you do not pass in a value.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.-2: The parameter is invalid.-7: The SDK is not initialized.
+        /// 0: Success. &lt; 0: Failure.-2: The parameter is invalid.-7: The SDK is not initialized.
         /// </returns>
         ///
         public abstract int SetCloudProxy(CLOUD_PROXY_TYPE proxyType);
@@ -3238,7 +3238,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Retrieves the call ID.
-        /// When a user joins a channel on a client, acallId is generated to identify the call from the client. Some methods, such as Rate and Complain , must be called after the call ends to submit feedback to the SDK. These methods require thecallId parameter.Call this method after joining a channel.
+        /// When a user joins a channel on a client, a callId is generated to identify the call from the client. Some methods, such as Rate and Complain , must be called after the call ends to submit feedback to the SDK. These methods require the callId parameter.Call this method after joining a channel.
         /// </summary>
         ///
         /// <returns>
@@ -3260,7 +3260,7 @@ namespace Agora.Rtc
         /// <param name="description"> (Optional) A description of the call. The string length should be less than 800 bytes.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2 (ERR_INVALID_ARGUMENT).-3 (ERR_NOT_READY).
+        /// 0: Success.&lt; 0: Failure.-2 (ERR_INVALID_ARGUMENT).-3 (ERR_NOT_READY).
         /// </returns>
         ///
         public abstract int Rate(string callId, int rating, string description);
@@ -3276,7 +3276,7 @@ namespace Agora.Rtc
         /// <param name="description"> (Optional) A description of the call. The string length should be less than 800 bytes.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.-2: The parameter is invalid.3: The SDK is not ready. Possible reasons include the following:The initialization of IRtcEngine fails. Reinitialize theIRtcEngine.No user has joined the channel when the method is called. Please check your code logic.The user has not left the channel when the Rate or Complain method is called. Please check your code logic.The audio module is disabled. The program is not complete.
+        /// 0: Success.&lt; 0: Failure.-2: The parameter is invalid.3: The SDK is not ready. Possible reasons include the following:The initialization of IRtcEngine fails. Reinitialize the IRtcEngine.No user has joined the channel when the method is called. Please check your code logic.The user has not left the channel when the Rate or Complain method is called. Please check your code logic.The audio module is disabled. The program is not complete.
         /// </returns>
         ///
         public abstract int Complain(string callId, string description);
@@ -3315,7 +3315,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// An IAudioDeviceManager object.
+        /// One IAudioDeviceManager object.
         /// </returns>
         ///
         public abstract IAudioDeviceManager GetAudioDeviceManager();
@@ -3326,7 +3326,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// A IVideoDeviceManager object.
+        /// One IVideoDeviceManager object.
         /// </returns>
         ///
         public abstract IVideoDeviceManager GetVideoDeviceManager();
@@ -3340,12 +3340,12 @@ namespace Agora.Rtc
         #region SpatialAudio
         ///
         /// <summary>
-        /// Gets an ILocalSpatialAudioEngine object.
+        /// Gets one ILocalSpatialAudioEngine object.
         /// Make sure the IRtcEngine is initialized before you call this method.
         /// </summary>
         ///
         /// <returns>
-        /// An ILocalSpatialAudioEngine object.
+        /// One ILocalSpatialAudioEngine object.
         /// </returns>
         ///
         public abstract ILocalSpatialAudioEngine GetLocalSpatialAudioEngine();
@@ -3363,7 +3363,7 @@ namespace Agora.Rtc
         /// <param name="gain"> The volume of the remote user. The value ranges from 0.0 to 100.0. The default value is 100.0 (the original volume of the remote user). The smaller the value, the lower the volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetRemoteVoicePosition(uint uid, double pan, double gain);
@@ -3424,7 +3424,7 @@ namespace Agora.Rtc
         /// <param name="url"> The address of media push. The format is RTMP or RTMPS. The character length cannot exceed 1024 bytes. Special characters such as Chinese characters are not supported.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartRtmpStreamWithoutTranscoding(string url);
@@ -3440,7 +3440,7 @@ namespace Agora.Rtc
         /// <param name="transcoding"> The transcoding configuration for media push. See LiveTranscoding .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
@@ -3454,7 +3454,7 @@ namespace Agora.Rtc
         /// <param name="transcoding"> The transcoding configuration for media push. See LiveTranscoding .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
@@ -3468,7 +3468,7 @@ namespace Agora.Rtc
         /// <param name="url"> The address of media push. The format is RTMP or RTMPS. The character length cannot exceed 1024 bytes. Special characters such as Chinese characters are not supported.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int StopRtmpStream(string url);
@@ -3478,13 +3478,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the log file.
-        /// Deprecated:Use themLogConfig parameter in Initialize method instead.Specifies an SDK output log file. The log file records all log data for the SDK’s operation. Ensure that the directory for the log file exists and is writable.Ensure that you call this method immediately after calling theInitialize method to initialize the IRtcEngine , or the output log may not be complete.
+        /// Deprecated:Use the mLogConfig parameter in Initialize method instead.Specifies an SDK output log file. The log file records all log data for the SDK’s operation. Ensure that the directory for the log file exists and is writable.Ensure that you call this method immediately after calling the Initialize method to initialize the IRtcEngine , or the output log may not be complete.
         /// </summary>
         ///
         /// <param name="filePath"> The complete path of the log files. These log files are encoded in UTF-8.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLogFile(string filePath);
@@ -3492,13 +3492,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the log output level of the SDK.
-        /// Deprecated:UselogConfig in Initialize instead.
+        /// Deprecated:Use logConfig in Initialize instead.
         /// </summary>
         ///
-        /// <param name="filter"> The output log level of the SDK.</param>
+        /// <param name="filter"> The output log level of the SDK. </param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLogFilter(uint filter);
@@ -3512,7 +3512,7 @@ namespace Agora.Rtc
         /// <param name="level"> The log level: LOG_LEVEL .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLogLevel(LOG_LEVEL level);
@@ -3520,13 +3520,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the log file size.
-        /// Deprecated:Use thelogConfig parameter in Initialize instead.By default, the SDK generates five SDK log files and five API call log files with the following rules:The SDK log files are:agorasdk.log,agorasdk.1.log,agorasdk.2.log,agorasdk.3.log, andagorasdk.4.log.The API call log files are:agoraapi.log,agoraapi.1.log,agoraapi.2.log,agoraapi.3.log, andagoraapi.4.log.The default size for each SDK log file is 1,024 KB; the default size for each API call log file is 2,048 KB. These log files are encoded in UTF-8.The SDK writes the latest logs inagorasdk.log oragoraapi.log.Whenagorasdk.log is full, the SDK processes the log files in the following order:Delete theagorasdk.4.log file (if any).Renameagorasdk.3.log toagorasdk.4.log.Renameagorasdk.2.log toagorasdk.3.log.Renameagorasdk.1.log toagorasdk.2.log.Create a newagorasdk.log file.The overwrite rules for theagoraapi.log file are the same as foragorasdk.log.This method is used to set the size of theagorasdk.log file only and does not effect theagoraapi.log file.
+        /// Deprecated:Use the logConfig parameter in Initialize instead.By default, the SDK generates five SDK log files and five API call log files with the following rules:The SDK log files are: agorasdk.log, agorasdk.1.log, agorasdk.2.log, agorasdk.3.log, and agorasdk.4.log.The API call log files are: agoraapi.log, agoraapi.1.log, agoraapi.2.log, agoraapi.3.log, and agoraapi.4.log.The default size for each SDK log file is 1,024 KB; the default size for each API call log file is 2,048 KB. These log files are encoded in UTF-8.The SDK writes the latest logs in agorasdk.log or agoraapi.log.When agorasdk.log is full, the SDK processes the log files in the following order:Delete the agorasdk.4.log file (if any).Rename agorasdk.3.log to agorasdk.4.log.Rename agorasdk.2.log to agorasdk.3.log.Rename agorasdk.1.log to agorasdk.2.log.Create a new agorasdk.log file.The overwrite rules for the agoraapi.log file are the same as for agorasdk.log.This method is used to set the size of the agorasdk.log file only and does not effect the agoraapi.log file.
         /// </summary>
         ///
-        /// <param name="fileSizeInKBytes"> The size (KB) of anagorasdk.log file. The value range is [128,20480]. The default value is 1,024 KB. If you setfileSizeInKByte smaller than 128 KB, the SDK automatically adjusts it to 128 KB; if you setfileSizeInKByte greater than 20,480 KB, the SDK automatically adjusts it to 20,480 KB.</param>
+        /// <param name="fileSizeInKBytes"> The size (KB) of an agorasdk.log file. The value range is [128,20480]. The default value is 1,024 KB. If you set fileSizeInKByte smaller than 128 KB, the SDK automatically adjusts it to 128 KB; if you set fileSizeInKByte greater than 20,480 KB, the SDK automatically adjusts it to 20,480 KB.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLogFileSize(uint fileSizeInKBytes);
@@ -3541,15 +3541,15 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Set the blacklist of subscriptions for audio streams.
-        /// You can call this method to specify the audio streams of a user that you do not want to subscribe to.You can call this method either before or after joining a channel.The blacklist is not affected by the setting in MuteRemoteAudioStream , MuteAllRemoteAudioStreams andautoSubscribeAudio in ChannelMediaOptions .Once the blacklist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.
+        /// You can call this method to specify the audio streams of a user that you do not want to subscribe to.You can call this method either before or after joining a channel.The blacklist is not affected by the setting in MuteRemoteAudioStream , MuteAllRemoteAudioStreams and autoSubscribeAudio in ChannelMediaOptions .Once the blacklist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.
         /// </summary>
         ///
-        /// <param name="uidList"> The user ID list of users that you do not want to subscribe to.If you want to specify the audio streams of a user that you do not want to subscribe to, add the user ID in this list. If you want to remove a user from the blacklist, you need to call the SetSubscribeAudioBlacklist method to update the user ID list; this means you only add theuid of users that you do not want to subscribe to in the new user ID list.</param>
+        /// <param name="uidList"> The user ID list of users that you do not want to subscribe to.If you want to specify the audio streams of a user that you do not want to subscribe to, add the user ID in this list. If you want to remove a user from the blacklist, you need to call the SetSubscribeAudioBlacklist method to update the user ID list; this means you only add the uid of users that you do not want to subscribe to in the new user ID list.</param>
         ///
         /// <param name="uidNumber"> The number of users in the user ID list.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetSubscribeAudioBlacklist(uint[] uidList, int uidNumber);
@@ -3557,15 +3557,15 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the whitelist of subscriptions for audio streams.
-        /// You can call this method to specify the audio streams of a user that you want to subscribe to.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.You can call this method either before or after joining a channel.The whitelist is not affected by the setting in MuteRemoteAudioStream , MuteAllRemoteAudioStreams andautoSubscribeAudio in ChannelMediaOptions .Once the whitelist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.
+        /// You can call this method to specify the audio streams of a user that you want to subscribe to.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.You can call this method either before or after joining a channel.The whitelist is not affected by the setting in MuteRemoteAudioStream , MuteAllRemoteAudioStreams and autoSubscribeAudio in ChannelMediaOptions .Once the whitelist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.
         /// </summary>
         ///
-        /// <param name="uidList"> The user ID list of users that you want to subscribe to.If you want to specify the audio streams of a user for subscription, add the user ID in this list. If you want to remove a user from the whitelist, you need to call the SetSubscribeAudioWhitelist method to update the user ID list; this means you only add theuid of users that you want to subscribe to in the new user ID list.</param>
+        /// <param name="uidList"> The user ID list of users that you want to subscribe to.If you want to specify the audio streams of a user for subscription, add the user ID in this list. If you want to remove a user from the whitelist, you need to call the SetSubscribeAudioWhitelist method to update the user ID list; this means you only add the uid of users that you want to subscribe to in the new user ID list.</param>
         ///
         /// <param name="uidNumber"> The number of users in the user ID list.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetSubscribeAudioWhitelist(uint[] uidList, int uidNumber);
@@ -3573,15 +3573,15 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Set the blacklist of subscriptions for video streams.
-        /// You can call this method to specify the video streams of a user that you do not want to subscribe to.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.Once the blacklist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.You can call this method either before or after joining a channel.The blacklist is not affected by the setting in MuteRemoteVideoStream , MuteAllRemoteVideoStreams andautoSubscribeAudio in ChannelMediaOptions .
+        /// You can call this method to specify the video streams of a user that you do not want to subscribe to.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.Once the blacklist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.You can call this method either before or after joining a channel.The blacklist is not affected by the setting in MuteRemoteVideoStream , MuteAllRemoteVideoStreams and autoSubscribeAudio in ChannelMediaOptions .
         /// </summary>
         ///
         /// <param name="uidNumber"> The number of users in the user ID list.</param>
         ///
-        /// <param name="uidList"> The user ID list of users that you do not want to subscribe to.If you want to specify the video streams of a user that you do not want to subscribe to, add the user ID of that user in this list. If you want to remove a user from the blacklist, you need to call the SetSubscribeVideoBlacklist method to update the user ID list; this means you only add theuid of users that you do not want to subscribe to in the new user ID list.</param>
+        /// <param name="uidList"> The user ID list of users that you do not want to subscribe to.If you want to specify the video streams of a user that you do not want to subscribe to, add the user ID of that user in this list. If you want to remove a user from the blacklist, you need to call the SetSubscribeVideoBlacklist method to update the user ID list; this means you only add the uid of users that you do not want to subscribe to in the new user ID list.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetSubscribeVideoBlacklist(uint[] uidList, int uidNumber);
@@ -3590,15 +3590,15 @@ namespace Agora.Rtc
         /// <summary>
         /// Set the whitelist of subscriptions for video streams.
         /// You can call this method to specify the video streams of a user that you want to subscribe to.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.Once the whitelist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.
-        /// You can call this method either before or after joining a channel.The whitelist is not affected by the setting in MuteRemoteVideoStream , MuteAllRemoteVideoStreams andautoSubscribeAudio in ChannelMediaOptions .
+        /// You can call this method either before or after joining a channel.The whitelist is not affected by the setting in MuteRemoteVideoStream , MuteAllRemoteVideoStreams and autoSubscribeAudio in ChannelMediaOptions .
         /// </summary>
         ///
         /// <param name="uidNumber"> The number of users in the user ID list.</param>
         ///
-        /// <param name="uidList"> The user ID list of users that you want to subscribe to.If you want to specify the video streams of a user for subscription, add the user ID of that user in this list. If you want to remove a user from the whitelist, you need to call the SetSubscribeVideoWhitelist method to update the user ID list; this means you only add theuid of users that you want to subscribe to in the new user ID list.</param>
+        /// <param name="uidList"> The user ID list of users that you want to subscribe to.If you want to specify the video streams of a user for subscription, add the user ID of that user in this list. If you want to remove a user from the whitelist, you need to call the SetSubscribeVideoWhitelist method to update the user ID list; this means you only add the uid of users that you want to subscribe to in the new user ID list.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetSubscribeVideoWhitelist(uint[] uidList, int uidNumber);
@@ -3640,7 +3640,7 @@ namespace Agora.Rtc
         /// <param name="orientation"> The clockwise rotation angle. See VIDEO_ORIENTATION .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
@@ -3686,7 +3686,7 @@ namespace Agora.Rtc
         /// <param name="enabled"> Whether to enable interoperability with the Agora Web SDK.true: Enable interoperability.false: (Default) Disable interoperability.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableWebSdkInteroperability(bool enabled);
@@ -3712,15 +3712,15 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Registers a user account.
-        /// Once registered, the user account can be used to identify the local user when the user joins the channel. After the registration is successful, the user account can identify the identity of the local user, and the user can use it to join the channel.After the user successfully registers a user account, the SDK triggers the OnLocalUserRegistered callback on the local client, reporting the user ID and user account of the local user.This method is optional. To join a channel with a user account, you can choose either of the following ways:CallRegisterLocalUserAccount to create a user account, and then call JoinChannelWithUserAccount [2/2] to join the channel.Call theJoinChannelWithUserAccount [2/2] method to join the channel.The difference between the two ways is that the time elapsed between calling theRegisterLocalUserAccount method and joining the channel is shorter than directly callingJoinChannelWithUserAccount [2/2].Ensure that you set theuserAccount parameter; otherwise, this method does not take effect.Ensure that theuserAccount is unique in the channel.To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.
+        /// Once registered, the user account can be used to identify the local user when the user joins the channel. After the registration is successful, the user account can identify the identity of the local user, and the user can use it to join the channel.After the user successfully registers a user account, the SDK triggers the OnLocalUserRegistered callback on the local client, reporting the user ID and user account of the local user.This method is optional. To join a channel with a user account, you can choose either of the following ways:Call RegisterLocalUserAccount to create a user account, and then call JoinChannelWithUserAccount [2/2] to join the channel.Call the JoinChannelWithUserAccount [2/2] method to join the channel.The difference between the two ways is that the time elapsed between calling the RegisterLocalUserAccount method and joining the channel is shorter than directly calling JoinChannelWithUserAccount [2/2].Ensure that you set the userAccount parameter; otherwise, this method does not take effect.Ensure that the userAccount is unique in the channel.To ensure smooth communication, use the same parameter type to identify the user. For example, if a user joins the channel with a user ID, then ensure all the other users use the user ID too. The same applies to the user account. If a user joins the channel with the Agora Web SDK, ensure that the ID of the user is set to the same parameter type.
         /// </summary>
         ///
         /// <param name="appId"> The App ID of your project on Agora Console.</param>
         ///
-        /// <param name="userAccount"> The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it asNULL. Supported characters are (89 in total):The 26 lowercase English letters: a to z.The 26 uppercase English letters: A to Z.All numeric characters: 0 to 9.Space"!", "#", "$", "%", "&amp;", "(", ")", "+", "-", ":", ";", "&lt;", "= ", ".", "&gt;", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        /// <param name="userAccount"> The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are (89 in total):The 26 lowercase English letters: a to z.The 26 uppercase English letters: A to Z.All numeric characters: 0 to 9.Space"!", "#", "$", "%", "&amp;", "(", ")", "+", "-", ":", ";", "&lt;", "= ", ".", "&gt;", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int RegisterLocalUserAccount(string appId, string userAccount);
@@ -3734,7 +3734,7 @@ namespace Agora.Rtc
         /// <param name="restriction"> The operation permissions of the SDK on the audio session. See AUDIO_SESSION_OPERATION_RESTRICTION . This parameter is in bit mask format, and each bit corresponds to a permission.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioSessionOperationRestriction(AUDIO_SESSION_OPERATION_RESTRICTION restriction);
@@ -3747,7 +3747,7 @@ namespace Agora.Rtc
         /// <param name="parameters"> Pointer to the set parameters in a JSON string.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetParameters(string parameters);
@@ -3758,10 +3758,10 @@ namespace Agora.Rtc
         /// After calling this method, you can get whether the audio device supports ultra-low-latency capture and playback.This method is for Android only.You can call this method either before or after joining a channel.
         /// </summary>
         ///
-        /// <param name="deviceInfo"> Input and output parameter. A DeviceInfo object that identifies the audio device information.Input value: ADeviceInfo object.Output value: ADeviceInfo object containing audio device information.</param>
+        /// <param name="deviceInfo"> Input and output parameter. A DeviceInfo object that identifies the audio device information.Input value: A DeviceInfo object.Output value: A DeviceInfo object containing audio device information.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetAudioDeviceInfo(ref DeviceInfo deviceInfo);
@@ -3805,7 +3805,7 @@ namespace Agora.Rtc
         /// <param name="config"> The configurations of the Local Access Point. See LocalAccessPointConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
@@ -3821,7 +3821,7 @@ namespace Agora.Rtc
         /// <param name="uid"> User ID of the audio sender.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAVSyncSource(string channelId, uint uid);
@@ -3829,7 +3829,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables/Disables video content moderation.
-        /// When video content moderation is enabled, the SDK takes screenshots, reviews the content, and uploads videos sent by local users based on the type and frequency of the content moderation module you set in ContentInspectConfig . After content moderation, the Agora content moderation server sends the results to your app server in HTTPS requests and sends all screenshots to the third-party cloud storage service.If you set thetype inContentInspectModule toCONTENT_INSPECT_MODERATION, after the content moderation is completed, the SDK triggers the onContentInspectResult callback and reports the moderation result.Before calling this method, ensure that the Agora content moderation service has been enabled.
+        /// When video content moderation is enabled, the SDK takes screenshots, reviews the content, and uploads videos sent by local users based on the type and frequency of the content moderation module you set in ContentInspectConfig . After content moderation, the Agora content moderation server sends the results to your app server in HTTPS requests and sends all screenshots to the third-party cloud storage service.If you set the type in ContentInspectModule to CONTENT_INSPECT_MODERATION, after the content moderation is completed, the SDK triggers the onContentInspectResult callback and reports the moderation result.Before calling this method, ensure that the Agora content moderation service has been enabled.
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable video content moderation:true: Enable video content moderation.false: Disable video content moderation.</param>
@@ -3837,7 +3837,7 @@ namespace Agora.Rtc
         /// <param name="config"> Configuration of content moderation. See ContentInspectConfig .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
@@ -3860,11 +3860,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the index of audio tracks of the current music file.
-        /// You need to call this method after calling StartAudioMixing [2/2] and receiving theOnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
+        /// You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged(AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
         /// <returns>
-        /// The SDK returns the index of the audio tracks if the method call succeeds.< 0: Failure.
+        /// The SDK returns the index of the audio tracks if the method call succeeds.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetAudioTrackCount();
@@ -3872,25 +3872,25 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Selects the audio track used during playback.
-        /// After getting the track index of the audio file, you can call this method to specify any track to play. For example, if different tracks of a multi-track file store songs in different languages, you can call this method to set the playback language.For the supported formats of audio files, see.You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback.
+        /// After getting the track index of the audio file, you can call this method to specify any track to play. For example, if different tracks of a multi-track file store songs in different languages, you can call this method to set the playback language.For the supported formats of audio files, see .You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
         /// <param name="index"> The audio track you want to specify. The value range is [0, GetAudioTrackCount ()].</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SelectAudioTrack(int index);
 
         ///
         /// <summary>
-        /// Gets an IMediaRecorder object.
+        /// Gets one IMediaRecorder object. 
         /// Make sure the IRtcEngine is initialized before you call this method.
         /// </summary>
         ///
         /// <returns>
-        /// An IMediaRecorder object.
+        /// One IMediaRecorder object.
         /// </returns>
         ///
         public abstract IMediaRecorder GetMediaRecorder();
@@ -3914,7 +3914,7 @@ namespace Agora.Rtc
         ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure.
+        /// &lt; 0: Failure.
         /// -2: The parameter is invalid. For example, the token is invalid, the uid parameter is not set to an integer, or the value of a member in the ChannelMediaOptions structure is invalid. You need to pass in a valid parameter and join the channel again.
         /// -3: Failes to initialize the IRtcEngine object. You need to reinitialize the IRtcEngine object.
         /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
@@ -3934,7 +3934,7 @@ namespace Agora.Rtc
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int LeaveChannelEx(RtcConnection connection);
@@ -3951,7 +3951,7 @@ namespace Agora.Rtc
         ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure.
+        /// &lt; 0: Failure.
         /// -2: The value of a member in the ChannelMediaOptions structure is invalid. For example, the token or the user ID is invalid. You need to fill in a valid parameter.
         /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
         /// -8: The internal state of the IRtcEngine object is wrong. The possible reason is that the user is not in the channel. Agora recommends using the OnConnectionStateChanged callback to get whether the user is in the channel. If you receive the CONNECTION_STATE_DISCONNECTED (1) or CONNECTION_STATE_FAILED (5) state, the user is not in the channel. You need to call JoinChannel [2/2] to join a channel before calling this method.
@@ -3962,7 +3962,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the encoder configuration for the local video.
-        /// Each configuration profile corresponds to a set of video parameters, including the resolution, frame rate, and bitrate.Theconfig specified in this method is the maximum values under ideal network conditions. If the network condition is not good, the video engine cannot use theconfig renders local video, which automatically reduces to an appropriate video parameter setting.
+        /// Each configuration profile corresponds to a set of video parameters, including the resolution, frame rate, and bitrate.The config specified in this method is the maximum values under ideal network conditions. If the network condition is not good, the video engine cannot use the config renders local video, which automatically reduces to an appropriate video parameter setting.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -3970,7 +3970,7 @@ namespace Agora.Rtc
         /// <param name="config"> Video profile. See VideoEncoderConfiguration .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetVideoEncoderConfigurationEx(VideoEncoderConfiguration config, RtcConnection connection);
@@ -3978,7 +3978,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Initializes the video view of a remote user.
-        /// This method initializes the video view of a remote stream on the local device. It affects only the video view that the local user sees. Call this method to bind the remote video stream to a video view and to set the rendering and mirror modes of the video view.The application specifies the uid of the remote video in the VideoCanvas method before the remote user joins the channel.If the remote uid is unknown to the application, set it after the application receives the OnUserJoined callback. If the Video Recording function is enabled, the Video Recording Service joins the channel as a dummy client, causing other clients to also receive theonUserJoined callback. Do not bind the dummy client to the application view because the dummy client does not send any video streams.To unbind the remote user from the view, set theview parameter to NULL.Once the remote user leaves the channel, the SDK unbinds the remote user.
+        /// This method initializes the video view of a remote stream on the local device. It affects only the video view that the local user sees. Call this method to bind the remote video stream to a video view and to set the rendering and mirror modes of the video view.The application specifies the uid of the remote video in the VideoCanvas method before the remote user joins the channel.If the remote uid is unknown to the application, set it after the application receives the OnUserJoined callback. If the Video Recording function is enabled, the Video Recording Service joins the channel as a dummy client, causing other clients to also receive the onUserJoined callback. Do not bind the dummy client to the application view because the dummy client does not send any video streams.To unbind the remote user from the view, set the view parameter to NULL.Once the remote user leaves the channel, the SDK unbinds the remote user.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -3986,7 +3986,7 @@ namespace Agora.Rtc
         /// <param name="canvas"> The remote video view settings. See VideoCanvas .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection);
@@ -4004,7 +4004,7 @@ namespace Agora.Rtc
         /// <param name="mute"> Whether to stop receiving the audio stream of the specified user:true: Stop receiving the audio stream of the specified user.false: (Default) Resume receiving the audio stream of the specified user.</param>
         ///
         /// <returns>
-        /// 0: Success. < 0: Failure.
+        /// 0: Success. &lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection);
@@ -4022,7 +4022,7 @@ namespace Agora.Rtc
         /// <param name="mute"> Whether to stop receiving the video stream of the specified user:true: Stop receiving the video stream of the specified user.false: (Default) Resume receiving the video stream of the specified user.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteRemoteVideoStreamEx(uint uid, bool mute, RtcConnection connection);
@@ -4042,7 +4042,7 @@ namespace Agora.Rtc
         /// <param name="gain"> The volume of the remote user. The value ranges from 0.0 to 100.0. The default value is 100.0 (the original volume of the remote user). The smaller the value, the lower the volume.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection);
@@ -4067,7 +4067,7 @@ namespace Agora.Rtc
         /// <param name="mirrorMode"> The mirror mode of the remote user view. For details, see VIDEO_MIRROR_MODE_TYPE .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
@@ -4075,7 +4075,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables loopback audio capture.
-        /// If you enable loopback audio capture, the output of the sound card is mixed into the audio stream sent to the other end.Applies to the macOS and Windows platforms only.macOS does not support loopback audio capture of the default sound card. If you need to use this method, use a virtual sound card and pass its name to thedeviceName parameter. Agora recommends that you use Soundflower for loopback audio capture.You can call this method either before or after joining a channel.
+        /// If you enable loopback audio capture, the output of the sound card is mixed into the audio stream sent to the other end.Applies to the macOS and Windows platforms only.macOS does not support loopback audio capture of the default sound card. If you need to use this method, use a virtual sound card and pass its name to the deviceName parameter. Agora recommends that you use Soundflower for loopback audio capture.You can call this method either before or after joining a channel.
         /// </summary>
         ///
         /// <param name="deviceName"> macOS: The device name of the virtual sound card. The default is set to null, which means the SDK uses Soundflower for loopback audio capture.
@@ -4083,10 +4083,11 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="enabled"> Sets whether to enable loopback audio capture:true: Enable loopback audio capture.false: (Default) Disable loopback audio capture.</param>
+        /// <param name="enabled"> Sets whether to enable loopback audio capture:
+        ///  true: Enable loopback audio capture.false: (Default) Disable loopback audio capture.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int EnableLoopbackRecordingEx(bool enabled, RtcConnection connection);
@@ -4113,7 +4114,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Creates a data stream.
-        /// Deprecated:This method is deprecated. Use CreateDataStreamEx [2/2] instead.You can call this method to create a data stream and improve the reliability and ordering of data transmission.Ensure that you set the same value forreliable andordered.Each user can create up to five data streams during the lifecycle of IRtcEngine .The data channel allows a data delay of up to 5 seconds. If the receiver does not receive the data stream within 5 seconds, the data channel reports an error.
+        /// Deprecated:This method is deprecated. Use CreateDataStreamEx [2/2] instead.You can call this method to create a data stream and improve the reliability and ordering of data transmission.Ensure that you set the same value for reliable and ordered.Each user can create up to five data streams during the lifecycle of IRtcEngine .The data channel allows a data delay of up to 5 seconds. If the receiver does not receive the data stream within 5 seconds, the data channel reports an error.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -4125,7 +4126,7 @@ namespace Agora.Rtc
         /// <param name="ordered"> Sets whether the recipients receive the data stream in the sent order:true: The recipients receive the data stream in the sent order.false: There is no guarantee that the recipients receive the data stream in the sent order.</param>
         ///
         /// <returns>
-        /// 0: The data stream is successfully created.< 0: Fails to create the data stream.
+        /// 0: The data stream is successfully created.&lt; 0: Fails to create the data stream.
         /// </returns>
         ///
         public abstract int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection);
@@ -4143,7 +4144,7 @@ namespace Agora.Rtc
         /// <param name="config"> The configurations for the data stream. See DataStreamConfig .</param>
         ///
         /// <returns>
-        /// 0: The data stream is successfully created.< 0: Failure.
+        /// 0: The data stream is successfully created.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection);
@@ -4152,19 +4153,19 @@ namespace Agora.Rtc
         /// <summary>
         /// Sends data stream messages.
         /// After calling CreateDataStreamEx [2/2] , you can call this method to send data stream messages to all users in the channel.The SDK has the following restrictions on this method:Up to 30 packets can be sent per second in a channel with each packet having a maximum size of 1 kB.Each client can send up to 6 KB of data per second.Each user can have up to five data streams simultaneously.A successful method call triggers the OnStreamMessage callback on the remote client, from which the remote user gets the stream message. 
-        /// A failed method call triggers the OnStreamMessageError callback on the remote client.Ensure that you callCreateDataStreamEx [2/2] to create a data channel before calling this method.This method applies only to the COMMUNICATION profile or to the hosts in the LIVE_BROADCASTING profile. If an audience in the LIVE_BROADCASTING profile calls this method, the audience may be switched to a host.
+        /// A failed method call triggers the OnStreamMessageError callback on the remote client.Ensure that you call CreateDataStreamEx [2/2] to create a data channel before calling this method.This method applies only to the COMMUNICATION profile or to the hosts in the LIVE_BROADCASTING profile. If an audience in the LIVE_BROADCASTING profile calls this method, the audience may be switched to a host.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="streamId"> The data stream ID. You can get the data stream ID by callingCreateDataStreamEx [2/2].</param>
+        /// <param name="streamId"> The data stream ID. You can get the data stream ID by calling CreateDataStreamEx [2/2].</param>
         ///
         /// <param name="data"> The data to be sent.</param>
         ///
         /// <param name="length"> The length of the data.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection);
@@ -4172,7 +4173,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Adds a watermark image to the local video.
-        /// This method adds a PNG watermark image to the local video in the live streaming. Once the watermark image is added, all the audience in the channel (CDN audience included), and the capturing device can see and capture it. Agora supports adding only one watermark image onto the local video, and the newly watermark image replaces the previous one.The watermark coordinatesare dependent on the settings in the SetVideoEncoderConfigurationEx method:If the orientation mode of the encoding video ( ORIENTATION_MODE ) is fixed landscape mode or the adaptive landscape mode, the watermark uses the landscape orientation.If the orientation mode of the encoding video (ORIENTATION_MODE) is fixed portrait mode or the adaptive portrait mode, the watermark uses the portrait orientation.When setting the watermark position, the region must be less than theSetVideoEncoderConfigurationEx dimensions set in the method; otherwise, the watermark image will be cropped.Ensure that you have called EnableVideo before calling this method.This method supports adding a watermark image in the PNG file format only. Supported pixel formats of the PNG image are RGBA, RGB, Palette, Gray, and Alpha_gray.If the dimensions of the PNG image differ from your settings in this method, the image will be cropped or zoomed to conform to your settings.If you have enabled the local video preview by calling the StartPreview [1/2] visibleInPreview member to set whether or not the watermark is visible in the preview.If you have enabled the mirror mode for the local video, the watermark on the local video is also mirrored. To avoid mirroring the watermark, Agora recommends that you do not use the mirror and watermark functions for the local video at the same time. You can implement the watermark function in your application layer.
+        /// This method adds a PNG watermark image to the local video in the live streaming. Once the watermark image is added, all the audience in the channel (CDN audience included), and the capturing device can see and capture it. Agora supports adding only one watermark image onto the local video, and the newly watermark image replaces the previous one.The watermark coordinatesare dependent on the settings in the SetVideoEncoderConfigurationEx method:If the orientation mode of the encoding video ( ORIENTATION_MODE ) is fixed landscape mode or the adaptive landscape mode, the watermark uses the landscape orientation.If the orientation mode of the encoding video (ORIENTATION_MODE) is fixed portrait mode or the adaptive portrait mode, the watermark uses the portrait orientation.When setting the watermark position, the region must be less than the SetVideoEncoderConfigurationEx dimensions set in the method; otherwise, the watermark image will be cropped.Ensure that you have called EnableVideo before calling this method.This method supports adding a watermark image in the PNG file format only. Supported pixel formats of the PNG image are RGBA, RGB, Palette, Gray, and Alpha_gray.If the dimensions of the PNG image differ from your settings in this method, the image will be cropped or zoomed to conform to your settings.If you have enabled the local video preview by calling the StartPreview [1/2] visibleInPreview member to set whether or not the watermark is visible in the preview.If you have enabled the mirror mode for the local video, the watermark on the local video is also mirrored. To avoid mirroring the watermark, Agora recommends that you do not use the mirror and watermark functions for the local video at the same time. You can implement the watermark function in your application layer.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -4182,7 +4183,7 @@ namespace Agora.Rtc
         /// <param name="watermarkUrl"> The local file path of the watermark image to be added. This method supports adding a watermark image from the local absolute or relative file path.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection);
@@ -4195,7 +4196,7 @@ namespace Agora.Rtc
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int ClearVideoWatermarkEx(RtcConnection connection);
@@ -4239,37 +4240,24 @@ namespace Agora.Rtc
         public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
 
         ///
-        /// <summary>
-        /// Options for subscribing remote video streams.
-        /// When a remote user has enabled the dual-stream mode, you can call this method to choose the option for subscribing the video streams sent by the remote user.
-        /// </summary>
-        ///
-        /// <param name="connection"> The connection information. See RtcConnection .</param>
-        ///
-        /// <param name="options"> The video subscription options. See VideoSubscriptionOptions .</param>
-        ///
-        /// <param name="uid"> The user ID of the remote user.</param>
-        ///
-        /// <returns>
-        /// 0: Success.< 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection);
 
         ///
         /// <summary>
         /// Set the blacklist of subscriptions for audio streams.
-        /// You can call this method to specify the audio streams of a user that you do not want to subscribe to.You can call this method either before or after joining a channel.The blacklist is not affected by the setting in MuteRemoteAudioStream , MuteAllRemoteAudioStreams andautoSubscribeAudio in ChannelMediaOptions .Once the blacklist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.
+        /// You can call this method to specify the audio streams of a user that you do not want to subscribe to.You can call this method either before or after joining a channel.The blacklist is not affected by the setting in MuteRemoteAudioStream , MuteAllRemoteAudioStreams and autoSubscribeAudio in ChannelMediaOptions .Once the blacklist of subscriptions is set, it is effective even if you leave the current channel and rejoin the channel.If a user is added in the whitelist and blacklist at the same time, only the blacklist takes effect.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <param name="uidNumber"> The number of users in the user ID list.</param>
         ///
-        /// <param name="uidList"> The user ID list of users that you do not want to subscribe to.If you want to specify the audio streams of a user that you do not want to subscribe to, add the user ID in this list. If you want to remove a user from the blacklist, you need to call the SetSubscribeAudioBlacklist method to update the user ID list; this means you only add theuid of users that you do not want to subscribe to in the new user ID list.</param>
+        /// <param name="uidList"> The user ID list of users that you do not want to subscribe to.If you want to specify the audio streams of a user that you do not want to subscribe to, add the user ID in this list. If you want to remove a user from the blacklist, you need to call the SetSubscribeAudioBlacklist method to update the user ID list; this means you only add the uid of users that you do not want to subscribe to in the new user ID list.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetSubscribeAudioBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
@@ -4289,7 +4277,7 @@ namespace Agora.Rtc
         ///  If you want to specify the audio streams of a user for subscription, add the user ID in this list. If you want to remove a user from the whitelist, you need to call the SetSubscribeAudioWhitelist method to update the user ID list; this means you only add the uid of users that you want to subscribe to in the new user ID list.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetSubscribeAudioWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
@@ -4308,7 +4296,7 @@ namespace Agora.Rtc
         ///  If you want to specify the video streams of a user that you do not want to subscribe to, add the user ID of that user in this list. If you want to remove a user from the blacklist, you need to call the SetSubscribeVideoBlacklist method to update the user ID list; this means you only add the uid of users that you do not want to subscribe to in the new user ID list.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetSubscribeVideoBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
@@ -4328,7 +4316,7 @@ namespace Agora.Rtc
         ///  If you want to specify the video streams of a user for subscription, add the user ID of that user in this list. If you want to remove a user from the whitelist, you need to call the SetSubscribeVideoWhitelist method to update the user ID list; this means you only add the uid of users that you want to subscribe to in the new user ID list.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetSubscribeVideoWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
@@ -4358,7 +4346,7 @@ namespace Agora.Rtc
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);

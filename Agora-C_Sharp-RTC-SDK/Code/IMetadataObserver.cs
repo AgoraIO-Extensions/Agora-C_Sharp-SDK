@@ -14,7 +14,7 @@
         /// </summary>
         ///
         /// <returns>
-        /// The maximum size of thebuffer of the metadata that you want to use. The highest value is 1024 bytes. Ensure that you set the return value.
+        /// The maximum size of the buffer of the metadata that you want to use. The highest value is 1024 bytes. Ensure that you set the return value.
         /// </returns>
         ///
         public virtual int GetMaxMetadataSize()

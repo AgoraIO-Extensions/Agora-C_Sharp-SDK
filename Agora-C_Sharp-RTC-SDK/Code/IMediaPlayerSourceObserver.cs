@@ -23,11 +23,11 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the current playback progress.
+        /// Reports current playback progress.
         /// When playing media files, the SDK triggers this callback every one second to report current playback progress.
         /// </summary>
         ///
-        /// <param name="position"> The playback position (ms) of media files.</param>
+        /// <param name="position_ms"> The playback position (ms) of media files.</param>
         ///
         public virtual void OnPositionChanged(Int64 position_ms) { }
 
@@ -60,7 +60,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the playback duration that the buffered data can support.
-        /// When playing online media resources, the SDK triggers this callback every two seconds to report the playback duration that the currently buffered data can support.When the playback duration supported by the buffered data is less than the threshold (0 by default), the SDK returnsPLAYER_EVENT_BUFFER_LOW.When the playback duration supported by the buffered data is greater than the threshold (0 by default), the SDK returnsPLAYER_EVENT_BUFFER_RECOVER.
+        /// When playing online media resources, the SDK triggers this callback every two seconds to report the playback duration that the currently buffered data can support.When the playback duration supported by the buffered data is less than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_LOW.When the playback duration supported by the buffered data is greater than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_RECOVER.
         /// </summary>
         ///
         /// <param name="playCachedBuffer"> The playback duration (ms) that the buffered data can support.</param>
@@ -88,7 +88,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the token is about to expire.
-        /// If thets is about to expire when you call the SwitchAgoraCDNLineByIndex method to switch the CDN route for playing the media resource, the SDK triggers this callback to remind you to renew the authentication information. You need to call the RenewAgoraCDNSrcToken method to pass in the updated authentication information to update the authentication information of the media resource URL. After updating the authentication information, you need to call SwitchAgoraCDNLineByIndex to complete the route switching.
+        /// If the ts is about to expire when you call the SwitchAgoraCDNLineByIndex method to switch the CDN route for playing the media resource, the SDK triggers this callback to remind you to renew the authentication information. You need to call the RenewAgoraCDNSrcToken method to pass in the updated authentication information to update the authentication information of the media resource URL. After updating the authentication information, you need to call SwitchAgoraCDNLineByIndex to complete the route switching.
         /// </summary>
         ///
         public virtual void OnAgoraCDNTokenWillExpire() { }

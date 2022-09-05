@@ -15,7 +15,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int RemoveAllCaches();
@@ -28,7 +28,7 @@ namespace Agora.Rtc
         ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int RemoveOldCache();
@@ -43,7 +43,7 @@ namespace Agora.Rtc
         ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int RemoveCacheByUri(string uri) ;
@@ -57,7 +57,7 @@ namespace Agora.Rtc
         /// <param name="path"> The absolute path of the media files to be cached. Ensure that the directory for the media files exists and is writable.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int SetCacheDir(string path) ;
@@ -71,7 +71,7 @@ namespace Agora.Rtc
         ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int SetMaxCacheFileCount(int count);
@@ -85,7 +85,7 @@ namespace Agora.Rtc
         ///
         /// <returns>
         /// 0: Success.
-        /// < 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int SetMaxCacheFileSize(Int64 cacheSize);
@@ -99,7 +99,7 @@ namespace Agora.Rtc
         /// <param name="enable"> Whether to enable the SDK to delete cached media files automatically:true: Delete cached media files automatically.false: (Default) Do not delete cached media files automatically.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int EnableAutoRemoveCache(bool enable);
@@ -112,10 +112,10 @@ namespace Agora.Rtc
         ///
         /// <param name="path"> An output parameter; the storage path for the media file to be cached.</param>
         ///
-        /// <param name="length"> An input parameter; the maximum length of the cache file storage path string.Fill in according to the cache file storage path string you obtained frompath.</param>
+        /// <param name="length"> An input parameter; the maximum length of the cache file storage path string. Fill in according to the cache file storage path string you obtained from path.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int GetCacheDir(out string path, int length);
@@ -127,7 +127,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// > 0: The call succeeds and returns the maximum number of media files that can be cached.< 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// > 0: The call succeeds and returns the maximum number of media files that can be cached.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int GetMaxCacheFileCount();
@@ -139,7 +139,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// > 0: The call succeeds and returns the maximum size (in bytes) of the aggregate storage space for cached media files.< 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// > 0: The call succeeds and returns the maximum size (in bytes) of the aggregate storage space for cached media files.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract Int64 GetMaxCacheFileSize();
@@ -150,7 +150,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// ≥ 0: The call succeeds and returns the number of media files that are cached.< 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// ≥ 0: The call succeeds and returns the number of media files that are cached.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int GetCacheFileCount();

@@ -15,7 +15,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// Success: A DeviceInfo array including all video devices in the system.Failure:NULL.
+        /// Success: A DeviceInfo array including all video devices in the system.Failure: NULL.
         /// </returns>
         ///
         public abstract DeviceInfo[] EnumerateVideoDevices();
@@ -29,7 +29,7 @@ namespace Agora.Rtc
         /// <param name="deviceIdUTF8"> The device ID. You can get the device ID by calling EnumerateVideoDevices .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetDevice(string deviceIdUTF8);
@@ -39,10 +39,10 @@ namespace Agora.Rtc
         /// Retrieves the current video capture device.
         /// </summary>
         ///
-        /// <param name="deviceIdUTF8"> Output parameter. The device ID.</param>
+        /// <param name="deviceIdUTF8"> Output parameter. The device ID. </param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetDevice(ref string deviceIdUTF8);
@@ -65,12 +65,12 @@ namespace Agora.Rtc
         ///
         /// <param name="deviceIdUTF8"> The ID of the video capture device.</param>
         ///
-        /// <param name="deviceCapabilityNumber"> The index number of the video format. IfNumberOfCapabilities the return value of is i, the value range of this parameter is [0,i).</param>
+        /// <param name="deviceCapabilityNumber"> The index number of the video format. If NumberOfCapabilities the return value of is i, the value range of this parameter is [0,i).</param>
         ///
         /// <param name="capability"> Output parameter. Indicates the specific information of the specified video format, including width (px), height (px), and frame rate (fps). See VideoFormat .</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetCapability(string deviceIdUTF8, uint deviceCapabilityNumber, out VideoFormat capability);
@@ -84,7 +84,7 @@ namespace Agora.Rtc
         /// <param name="deviceIdUTF8"> The ID of the video capture device.</param>
         ///
         /// <returns>
-        /// 0: Success. Returns the number of video formats supported by this device. For example: If the specified camera supports 10 different video formats, the return value is 10.< 0: Failure.
+        /// 0: Success. Returns the number of video formats supported by this device. For example: If the specified camera supports 10 different video formats, the return value is 10.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int NumberOfCapabilities(string deviceIdUTF8);

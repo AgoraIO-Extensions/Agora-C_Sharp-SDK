@@ -2,7 +2,7 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// TheIMediaRecorderObserver class.
+    /// The IMediaRecorderObserver class.
     /// </summary>
     ///
     public abstract class IMediaRecorderObserver
@@ -22,7 +22,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the recording information is updated.
-        /// After you successfully enable the local audio and video recording, the SDK periodically triggers this callback based on the value ofrecorderInfoUpdateInterval set in MediaRecorderConfiguration . This callback reports the file name, duration, and size of the current recording file.
+        /// After you successfully enable the local audio and video recording, the SDK periodically triggers this callback based on the value of recorderInfoUpdateInterval set in MediaRecorderConfiguration . This callback reports the file name, duration, and size of the current recording file.
         /// </summary>
         ///
         /// <param name="info"> The information about the file that is recorded. See RecorderInfo .</param>

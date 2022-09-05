@@ -10,10 +10,10 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the captured audio frame.
-        /// If you want to set the format of the captured audio frame, Agora recommends that you call the RegisterAudioFrameObserver method to set the format of the audio frame after calling the GetRecordAudioParams method to register an audio frame observer. The SDK calculates the sampling interval according to theAudioParams set in theGetRecordAudioParams callback return value, and triggers theOnRecordAudioFrame callback according to the sampling interval.
+        /// If you want to set the format of the captured audio frame, Agora recommends that you call the RegisterAudioFrameObserver method to set the format of the audio frame after calling the GetRecordAudioParams method to register an audio frame observer. The SDK calculates the sampling interval according to the AudioParams set in the GetRecordAudioParams callback return value, and triggers the OnRecordAudioFrame callback according to the sampling interval.
         /// </summary>
         ///
-        /// <param name="audio_Frame"> The raw audio data. See AudioFrame .</param>
+        /// <param name="audioFrame"> The raw audio data. See AudioFrame .</param>
         ///
         /// <param name="channelId"> The channel ID.</param>
         ///
@@ -75,7 +75,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the audio format for the OnPlaybackAudioFrame callback.
-        /// You need to register the callback when calling the RegisterAudioFrameObserver method. After you successfully register the audio observer, the SDK triggers this callback, and you can set the audio format in the return value of this callback.The SDK calculates the sample interval according to the AudioParams you set in the return value of this callback.Sample interval =samplePerCall/(sampleRate ×channel).Ensure that the sample interval ≥ 0.01 (s).The SDK triggers theOnPlaybackAudioFrame callback according to the sampling interval.
+        /// You need to register the callback when calling the RegisterAudioFrameObserver method. After you successfully register the audio observer, the SDK triggers this callback, and you can set the audio format in the return value of this callback.The SDK calculates the sample interval according to the AudioParams you set in the return value of this callback.Sample interval = samplePerCall/(sampleRate × channel).Ensure that the sample interval ≥ 0.01 (s).The SDK triggers the OnPlaybackAudioFrame callback according to the sampling interval.
         /// </summary>
         ///
         /// <returns>
@@ -90,7 +90,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the audio format for the OnRecordAudioFrame callback.
-        /// You need to register the callback when calling the RegisterAudioFrameObserver method. After you successfully register the audio observer, the SDK triggers this callback, and you can set the audio format in the return value of this callback.The SDK calculates the sample interval according to the AudioParams you set in the return value of this callback.Sample interval =samplePerCall/(sampleRate ×channel).Ensure that the sample interval ≥ 0.01 (s).The SDK triggers theOnRecordAudioFrame callback according to the sampling interval.
+        /// You need to register the callback when calling the RegisterAudioFrameObserver method. After you successfully register the audio observer, the SDK triggers this callback, and you can set the audio format in the return value of this callback.The SDK calculates the sample interval according to the AudioParams you set in the return value of this callback.Sample interval = samplePerCall/(sampleRate × channel).Ensure that the sample interval ≥ 0.01 (s).The SDK triggers the OnRecordAudioFrame callback according to the sampling interval.
         /// </summary>
         ///
         /// <returns>
@@ -105,7 +105,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the audio format for the OnMixedAudioFrame callback.
-        /// You need to register the callback when calling the RegisterAudioFrameObserver method. After you successfully register the audio observer, the SDK triggers this callback, and you can set the audio format in the return value of this callback.The SDK calculates the sample interval according to the AudioParams you set in the return value of this callback.Sample interval =samplePerCall/(sampleRate ×channel).Ensure that the sample interval ≥ 0.01 (s).The SDK triggers theOnMixedAudioFrame callback according to the sampling interval.
+        /// You need to register the callback when calling the RegisterAudioFrameObserver method. After you successfully register the audio observer, the SDK triggers this callback, and you can set the audio format in the return value of this callback.The SDK calculates the sample interval according to the AudioParams you set in the return value of this callback.Sample interval = samplePerCall/(sampleRate × channel).Ensure that the sample interval ≥ 0.01 (s).The SDK triggers the OnMixedAudioFrame callback according to the sampling interval.
         /// </summary>
         ///
         /// <returns>
@@ -119,14 +119,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Retrieves the unmixed audio frame of a specified user.
+        /// Retrieves the audio frame of a specified user before mixing.
         /// </summary>
         ///
         /// <param name="channel_id"> The channel ID.</param>
         ///
         /// <param name="uid"> The user ID of the specified user.</param>
         ///
-        /// <param name="audio_Frame"> The audio frame. See AudioFrame .</param>
+        /// <param name="audio_Frame"> The raw audio data. See AudioFrame .</param>
         ///
         /// <returns>
         /// Reserved for future use.
@@ -138,6 +138,22 @@ namespace Agora.Rtc
         {
             return false;
         }
+
+        ///
+        /// <summary>
+        /// Retrieves the audio frame of a specified user before mixing.
+        /// </summary>
+        ///
+        /// <param name="channel_id"> The channel name that the audio frame came from.</param>
+        ///
+        /// <param name="uid"> The ID of the user sending the audio frame.</param>
+        ///
+        /// <param name="audio_Frame"> The raw audio data. See AudioFrame .</param>
+        ///
+        /// <returns>
+        /// Reserved for future use.
+        /// </returns>
+        ///
         public virtual bool OnPlaybackAudioFrameBeforeMixing(string channel_id,
                                                         string uid,
                                                         AudioFrame audio_frame)

@@ -17,7 +17,7 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="elapsed"> The time elapsed (ms) from the local user callingJoinChannel [2/2] until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback.</param>
         ///
         public virtual void OnJoinChannelSuccess(RtcConnection connection, int elapsed) { }
 
@@ -47,7 +47,7 @@ namespace Agora.Rtc
         ///
         /// <param name="localProxyIp"> Reserved for future use.</param>
         ///
-        /// <param name="elapsed"> The time elapsed (ms) from the user callingJoinChannel [1/2] until this callback is triggered.</param>
+        /// <param name="elapsed"> The time elapsed (ms) from the user calling JoinChannel [1/2] until this callback is triggered.</param>
         ///
         public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed) { }
 
@@ -73,7 +73,7 @@ namespace Agora.Rtc
         ///
         /// <param name="remoteUid"> The user ID of the remote user sending the audio stream.</param>
         ///
-        /// <param name="quality"> Audio quality of the user.
+        /// <param name="quality"> Audio quality of the user. 
         ///  QUALITY_UNKNOWN(0): The quality is unknown.
         ///  QUALITY_EXCELLENT(1): The quality is excellent.
         ///  QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.
@@ -102,16 +102,16 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the volume information of users.
-        /// By default, this callback is disabled. You can enable it by calling EnableAudioVolumeIndication . Once this callback is enabled and users send streams in the channel, the SDK triggers theOnAudioVolumeIndication callback according to the time interval set inEnableAudioVolumeIndication. The SDK triggers two independentOnAudioVolumeIndication callbacks simultaneously, which separately report the volume information of the local user who sends a stream and the remote users (up to three) whose instantaneous volume is the highest.Once this callback is enabled, if the local user calls the MuteLocalAudioStream method for mute, the SDK continues to report the volume indication of the local user.20 seconds after a remote user whose volume is one of the three highest in the channel stops publishing the audio stream, the callback excludes this user's information; 20 seconds after all remote users stop publishing audio streams, the SDK stops triggering the callback for remote users.
+        /// By default, this callback is disabled. You can enable it by calling EnableAudioVolumeIndication . Once this callback is enabled and users send streams in the channel, the SDK triggers the OnAudioVolumeIndication callback according to the time interval set in EnableAudioVolumeIndication. The SDK triggers two independent OnAudioVolumeIndication callbacks simultaneously, which separately report the volume information of the local user who sends a stream and the remote users (up to three) whose instantaneous volume is the highest.Once this callback is enabled, if the local user calls the MuteLocalAudioStream method for mute, the SDK continues to report the volume indication of the local user.20 seconds after a remote user whose volume is one of the three highest in the channel stops publishing the audio stream, the callback excludes this user's information; 20 seconds after all remote users stop publishing audio streams, the SDK stops triggering the callback for remote users.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="speakers"> The volume information of the users. See AudioVolumeInfo . An emptyspeakers array in the callback indicates that no remote user is in the channel or sending a stream at the moment.</param>
+        /// <param name="speakers"> The volume information of the users. See AudioVolumeInfo . An empty speakers array in the callback indicates that no remote user is in the channel or sending a stream at the moment.</param>
         ///
-        /// <param name="speakerNumber"> The total number of users.In the callback for the local user, if the local user is sending streams, the value ofspeakerNumber is 1.In the callback for remote users, the value range ofspeakerNumber is [0,3]. If the number of remote users who send streams is greater than or equal to three, the value ofspeakerNumber is 3.</param>
+        /// <param name="speakerNumber"> The total number of users.In the callback for the local user, if the local user is sending streams, the value of speakerNumber is 1.In the callback for remote users, the value range of speakerNumber is [0,3]. If the number of remote users who send streams is greater than or equal to three, the value of speakerNumber is 3.</param>
         ///
-        /// <param name="totalVolume"> The volume of the speaker. The value ranges between 0 (lowest volume) and 255 (highest volume).In the callback for the local user,totalVolume is the volume of the local user who sends a stream.In the callback for remote users,totalVolume is the sum of the volume of the remote users (up to three) whose instantaneous volume are the highest.</param>
+        /// <param name="totalVolume"> The volume of the speaker. The value ranges between 0 (lowest volume) and 255 (highest volume).In the callback for the local user, totalVolume is the volume of the local user who sends a stream.In the callback for remote users, totalVolume is the sum of the volume of the remote users (up to three) whose instantaneous volume are the highest. </param>
         ///
         public virtual void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume) { }
 
@@ -157,7 +157,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the playback of the local music file finishes.
-        /// Deprecated:Please use OnAudioMixingStateChanged instead.After you call StartAudioMixing [2/2] to play a local music file, this callback occurs when the playback finishes. If the callStartAudioMixing [2/2] fails, the error codeWARN_AUDIO_MIXING_OPEN_ERROR is returned.
+        /// Deprecated:Please use OnAudioMixingStateChanged instead.After you call StartAudioMixing [2/2] to play a local music file, this callback occurs when the playback finishes. If the call StartAudioMixing [2/2] fails, the error code WARN_AUDIO_MIXING_OPEN_ERROR is returned.
         /// </summary>
         ///
         public virtual void OnAudioMixingFinished() { }
@@ -185,14 +185,14 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the last mile network quality of each user in the channel.
-        /// This callback reports the last mile network conditions of each user in the channel. Last mile refers to the connection between the local device and Agora's edge server.The SDK triggers this callback once every two seconds. If a channel includes multiple users, the SDK triggers this callback as many times.txQuality isUNKNOWNrxQuality isUNKNOWN
+        /// This callback reports the last mile network conditions of each user in the channel. Last mile refers to the connection between the local device and Agora's edge server.The SDK triggers this callback once every two seconds. If a channel includes multiple users, the SDK triggers this callback as many times.txQuality is UNKNOWNrxQuality is UNKNOWN
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <param name="remoteUid"> The user ID. The network quality of the user with this user ID is reported.</param>
         ///
-        /// <param name="txQuality"> Uplink network quality rating of the user in terms of the transmission bit rate, packet loss rate, average RTT (Round-Trip Time) and jitter of the uplink network. This parameter is a quality rating helping you understand how well the current uplink network conditions can support the selected video encoder configuration. For example, a 1000 Kbps uplink network may be adequate for video frames with a resolution of 640 × 480 and a frame rate of 15 fps in the LIVE_BROADCASTING profile, but may be inadequate for resolutions higher than 1280 × 720.
+        /// <param name="txQuality"> Uplink network quality rating of the user in terms of the transmission bit rate, packet loss rate, average RTT (Round-Trip Time) and jitter of the uplink network. This parameter is a quality rating helping you understand how well the current uplink network conditions can support the selected video encoder configuration. For example, a 1000 Kbps uplink network may be adequate for video frames with a resolution of 640 × 480 and a frame rate of 15 fps in the LIVE_BROADCASTING profile, but may be inadequate for resolutions higher than 1280 × 720. 
         ///  QUALITY_UNKNOWN(0): The quality is unknown.
         ///  QUALITY_EXCELLENT(1): The quality is excellent.
         ///  QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.
@@ -202,7 +202,7 @@ namespace Agora.Rtc
         ///  QUALITY_DOWN(6): The network is down, and users cannot communicate at all.
         ///  See QUALITY_TYPE .</param>
         ///
-        /// <param name="rxQuality"> Downlink network quality rating of the user in terms of packet loss rate, average RTT, and jitter of the downlink network.
+        /// <param name="rxQuality"> Downlink network quality rating of the user in terms of packet loss rate, average RTT, and jitter of the downlink network. 
         ///  QUALITY_UNKNOWN(0): The quality is unknown.
         ///  QUALITY_EXCELLENT(1): The quality is excellent.
         ///  QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.
@@ -240,7 +240,7 @@ namespace Agora.Rtc
         /// This callback reports the last-mile network conditions of the local user before the user joins the channel. Last mile refers to the connection between the local device and Agora's edge server.Before the user joins the channel, this callback is triggered by the SDK once StartLastmileProbeTest is called and reports the last-mile network conditions of the local user.
         /// </summary>
         ///
-        /// <param name="quality"> The last-mile network quality.
+        /// <param name="quality"> The last-mile network quality. 
         ///  QUALITY_UNKNOWN(0): The quality is unknown.
         ///  QUALITY_EXCELLENT(1): The quality is excellent.
         ///  QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.
@@ -264,19 +264,19 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the first local video frame.</param>
         ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user callingJoinChannel [2/2] until the SDK triggers this callback. If you call StartPreview [1/2] JoinChannel [2/2], then this parameter is the time elapsed from calling theStartPreview [1/2]</param>
+        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback. If you call StartPreview [1/2] JoinChannel [2/2], then this parameter is the time elapsed from calling the StartPreview [1/2]</param>
         ///
         public virtual void OnFirstLocalVideoFrame(RtcConnection connection, int width, int height, int elapsed) { }
 
         ///
         /// <summary>
         /// Occurs when the first video frame is published.
-        /// The SDK triggers this callback under one of the following circumstances:The local client enables the video module and callsJoinChannel [2/2] successfully.The local client calls MuteLocalVideoStream (true) andMuteLocalVideoStream(false) in sequence.The local client calls DisableVideo and EnableVideo in sequence.
+        /// The SDK triggers this callback under one of the following circumstances:The local client enables the video module and calls JoinChannel [2/2] successfully.The local client calls MuteLocalVideoStream (true) and MuteLocalVideoStream(false) in sequence.The local client calls DisableVideo and EnableVideo in sequence.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user callingJoinChannel [2/2] until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback.</param>
         ///
         public virtual void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed) { }
 
@@ -299,7 +299,7 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the video stream.</param>
         ///
-        /// <param name="elapsed"> The time elapsed (ms) from the local user callingJoinChannel [2/2] until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback.</param>
         ///
         public virtual void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed) { }
 
@@ -310,7 +310,9 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="uid"> The ID of the user whose video size or rotation changes. (Theuid for the local user is 0. The video is the local user's video preview).</param>
+        /// <param name="sourceType"> The capture type of the custom video source. See VIDEO_SOURCE_TYPE .</param>
+        ///
+        /// <param name="uid"> The ID of the user whose video size or rotation changes. (The uid for the local user is 0. The video is the local user's video preview).</param>
         ///
         /// <param name="width"> The width (pixels) of the video stream.</param>
         ///
@@ -323,7 +325,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the result of video content moderation.
-        /// After calling enableContentInspect to enable the video content moderation, and setting thetype parameter in ContentInspectConfig toCONTENT_INSPECT_MODERATION, the SDK triggers the onContentInspectResult callback and reports the result of video content moderation.
+        /// After calling enableContentInspect to enable the video content moderation, and setting the type parameter in ContentInspectConfig toCONTENT_INSPECT_MODERATION, the SDK triggers the onContentInspectResult callback and reports the result of video content moderation.
         /// </summary>
         ///
         /// <param name="result"> The results of video content moderation. See CONTENT_INSPECT_RESULT .</param>
@@ -338,7 +340,7 @@ namespace Agora.Rtc
         ///
         /// <param name="channel"> The channel name.</param>
         ///
-        /// <param name="uid"> The user ID. Auid of 0 indicates the local user.</param>
+        /// <param name="uid"> The user ID. A uid of 0 indicates the local user.</param>
         ///
         /// <param name="filePath"> The local path of the snapshot.</param>
         ///
@@ -346,17 +348,15 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the snapshot.</param>
         ///
-        /// <param name="errCode"> The message that confirms success or gives the reason why the snapshot is not successfully taken:0: Success.< 0: Failure:-1: The SDK fails to write data to a file or encode a JPEG image.-2: The SDK does not find the video stream of the specified user within one second after thetakeSnapshot method call succeeds.-3: Calling thetakeSnapshot method too frequently.</param>
+        /// <param name="errCode"> The message that confirms success or gives the reason why the snapshot is not successfully taken:0: Success.&lt; 0: Failure:-1: The SDK fails to write data to a file or encode a JPEG image.-2: The SDK does not find the video stream of the specified user within one second after the takeSnapshot method call succeeds.-3: Calling the takeSnapshot method too frequently.</param>
         ///
         public virtual void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode) { }
 
         ///
         /// <summary>
         /// Occurs when the local video stream state changes.
-        /// When the state of the local video stream changes (including the state of the video capture and encoding), the SDK triggers this callback to report the current state. This callback indicates the state of the local video stream, including camera capturing and video encoding, and allows you to troubleshoot issues when exceptions occur.The SDK triggers theOnLocalVideoStateChanged callback with the state code ofLOCAL_VIDEO_STREAM_STATE_FAILED and error code ofLOCAL_VIDEO_STREAM_ERROR_CAPTURE_FAILURE in the following situations:The app switches to the background, and the system gets the camera resource.The camera starts normally, but does not output video frames for four consecutive seconds.When the camera outputs the captured video frames, if the video frames are the same for 15 consecutive frames, the SDK triggers theOnLocalVideoStateChanged callback with the state code ofLOCAL_VIDEO_STREAM_STATE_CAPTURING and error code ofLOCAL_VIDEO_STREAM_ERROR_CAPTURE_FAILURE. Note that the video frame duplication detection is only available for video frames with a resolution greater than 200 × 200, a frame rate greater than or equal to 10 fps, and a bitrate less than 20 Kbps.For some device models, the SDK does not trigger this callback when the state of the local video changes while the local video capturing device is in use, so you have to make your own timeout judgment.
+        /// When the state of the local video stream changes (including the state of the video capture and encoding), the SDK triggers this callback to report the current state. This callback indicates the state of the local video stream, including camera capturing and video encoding, and allows you to troubleshoot issues when exceptions occur.The SDK triggers the OnLocalVideoStateChanged callback with the state code of LOCAL_VIDEO_STREAM_STATE_FAILED and error code of LOCAL_VIDEO_STREAM_ERROR_CAPTURE_FAILURE in the following situations:The app switches to the background, and the system gets the camera resource.The camera starts normally, but does not output video frames for four consecutive seconds.When the camera outputs the captured video frames, if the video frames are the same for 15 consecutive frames, the SDK triggers the OnLocalVideoStateChanged callback with the state code of LOCAL_VIDEO_STREAM_STATE_CAPTURING and error code of LOCAL_VIDEO_STREAM_ERROR_CAPTURE_FAILURE. Note that the video frame duplication detection is only available for video frames with a resolution greater than 200 × 200, a frame rate greater than or equal to 10 fps, and a bitrate less than 20 Kbps.For some device models, the SDK does not trigger this callback when the state of the local video changes while the local video capturing device is in use, so you have to make your own timeout judgment.
         /// </summary>
-        ///
-        /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <param name="state"> The state of the local video, see LOCAL_VIDEO_STREAM_STATE .</param>
         ///
@@ -379,7 +379,7 @@ namespace Agora.Rtc
         ///
         /// <param name="reason"> The reason for the remote video state change, see REMOTE_VIDEO_STATE_REASON .</param>
         ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user calling theJoinChannel [2/2] method until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> Time elapsed (ms) from the local user calling the JoinChannel [2/2] method until the SDK triggers this callback.</param>
         ///
         public virtual void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed) { }
 
@@ -396,21 +396,21 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the video stream.</param>
         ///
-        /// <param name="elapsed"> The time elapsed (ms) from the local user callingJoinChannel [2/2] until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> The time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback.</param>
         ///
         public virtual void OnFirstRemoteVideoFrame(RtcConnection connection, uint remoteUid, int width, int height, int elapsed) { }
 
         ///
         /// <summary>
         /// Occurs when a remote user (COMMUNICATION)/ host (LIVE_BROADCASTING) joins the channel.
-        /// In a communication channel, this callback indicates that a remote user joins the channel. The SDK also triggers this callback to report the existing users in the channel when a user joins the channel.In a live-broadcast channel, this callback indicates that a host joins the channel. The SDK also triggers this callback to report the existing hosts in the channel when a host joins the channel. Agora recommends limiting the number of hosts to 17.The SDK triggers this callback under one of the following circumstances:A remote user/host joins the channel by calling theJoinChannel [2/2] method.A remote user switches the user role to the host after joining the channel.A remote user/host rejoins the channel after a network interruption.
+        /// In a communication channel, this callback indicates that a remote user joins the channel. The SDK also triggers this callback to report the existing users in the channel when a user joins the channel.In a live-broadcast channel, this callback indicates that a host joins the channel. The SDK also triggers this callback to report the existing hosts in the channel when a host joins the channel. Agora recommends limiting the number of hosts to 17.The SDK triggers this callback under one of the following circumstances:A remote user/host joins the channel by calling the JoinChannel [2/2] method.A remote user switches the user role to the host after joining the channel.A remote user/host rejoins the channel after a network interruption.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <param name="remoteUid"> The ID of the user or host who joins the channel.</param>
         ///
-        /// <param name="elapsed"> Time delay (ms) from the local user callingJoinChannel [2/2] until this callback is triggered.</param>
+        /// <param name="elapsed"> Time delay (ms) from the local user calling JoinChannel [2/2] until this callback is triggered.</param>
         ///
         public virtual void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed) { }
 
@@ -446,7 +446,7 @@ namespace Agora.Rtc
         [Obsolete("Use onRemoteVideoStateChanged instead of")]
         ///
         /// <summary>
-        /// Occurs when a remote user stops or resumes publishing the video stream.
+        /// Occurs when a remote user stops/resumes publishing the video stream.
         /// This method is about to be deprecated. Agora recommends you using OnRemoteVideoStateChanged instead.When a remote user calls MuteLocalVideoStream to stop or resume publishing the video stream, the SDK triggers this callback to report the state of the remote user's publishing stream to the local user.This callback can be inaccurate when the number of users (in the communication profile) or hosts (in the live streaming profile) in a channel exceeds 17.
         /// </summary>
         ///
@@ -462,10 +462,12 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when a remote user enables/disables the video module.
-        /// Once the video module is disabled, the user can only use a voice call. The user cannot send or receive any video.The SDK triggers this callback when a remote user enables or disables the video module by calling the EnableVideo or DisableVideo method.
+        /// This method is about to be deprecated. Agora recommends you using OnRemoteVideoStateChanged instead.Once the video module is disabled, the user can only use a voice call. The user cannot send or receive any video.The SDK triggers this callback when a remote user enables or disables the video module by calling the EnableVideo or DisableVideo method.
         /// </summary>
         ///
-        /// <param name="uid"> The user ID of the remote user.</param>
+        /// <param name="connection"> The connection information. See RtcConnection .</param>
+        ///
+        /// <param name="remoteUid"> The user ID of the remote user.</param>
         ///
         /// <param name="enabled"> true: Enable.false: Disable.</param>
         ///
@@ -478,14 +480,11 @@ namespace Agora.Rtc
         /// The SDK triggers this callback when the remote user resumes or stops capturing the video stream by calling the EnableLocalVideo method.
         /// </summary>
         ///
-        /// <param name="uid"> The user ID of the remote user.</param>
+        /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="enabled"> Whether the specified remote user enables/disables the local video
-        ///  capturing function:true: Enable. Other users in the
-        ///  channel can see the video of this remote user.false: Disable. Other users in the
-        ///  channel can no longer receive the video stream from this remote
-        ///  user, while this remote user can still receive the video streams
-        ///  from other users.</param>
+        /// <param name="remoteUid"> The user ID of the remote user.</param>
+        ///
+        /// <param name="enabled"> Whether the specified remote user enables/disables the local video capturing function:true: Enable. Other users in the channel can see the video of this remote user.false: Disable. Other users in the channel can no longer receive the video stream from this remote user, while this remote user can still receive the video streams from other users.</param>
         ///
         public virtual void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled) { }
 
@@ -558,7 +557,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the camera turns on and is ready to capture the video.
-        /// Deprecated:Please useLOCAL_VIDEO_STREAM_STATE_CAPTURING(1) in OnLocalVideoStateChanged instead.This callback indicates that the camera has been successfully turned on and you can start to capture video.
+        /// Deprecated:Please use LOCAL_VIDEO_STREAM_STATE_CAPTURING(1) in OnLocalVideoStateChanged instead.This callback indicates that the camera has been successfully turned on and you can start to capture video.
         /// </summary>
         ///
         public virtual void OnCameraReady() { }
@@ -615,7 +614,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the video stops playing.
-        /// Deprecated:UseLOCAL_VIDEO_STREAM_STATE_STOPPED(0) in the OnLocalVideoStateChanged callback instead.The application can use this callback to change the configuration of theview (for example, displaying other pictures in the view) after the video stops playing.
+        /// Deprecated:Use LOCAL_VIDEO_STREAM_STATE_STOPPED(0) in the OnLocalVideoStateChanged callback instead.The application can use this callback to change the configuration of the view (for example, displaying other pictures in the view) after the video stops playing.
         /// </summary>
         ///
         public virtual void OnVideoStopped() { }
@@ -626,9 +625,9 @@ namespace Agora.Rtc
         /// This callback occurs when the playback state of the music file changes, and reports the current state and error code.
         /// </summary>
         ///
-        /// <param name="state"> The playback state of the music file.For details, see AUDIO_MIXING_STATE_TYPE .</param>
+        /// <param name="state"> The playback state of the music file. See AUDIO_MIXING_STATE_TYPE .</param>
         ///
-        /// <param name="reason"> Error code.For details, see AUDIO_MIXING_REASON_TYPE .</param>
+        /// <param name="reason"> Error code. See AUDIO_MIXING_REASON_TYPE .</param>
         ///
         public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason) { }
 
@@ -640,7 +639,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the SDK cannot reconnect to Agora's edge server 10 seconds after its connection to the server is interrupted.
-        /// The SDK triggers this callback when it cannot connect to the server 10 seconds after calling theJoinChannel [2/2] method, regardless of whether it is in the channel. If the SDK fails to rejoin the channel within 20 minutes after disconnecting, the SDK will stop trying to reconnect.
+        /// The SDK triggers this callback when it cannot connect to the server 10 seconds after calling the JoinChannel [2/2] method, regardless of whether it is in the channel. If the SDK fails to rejoin the channel within 20 minutes after disconnecting, the SDK will stop trying to reconnect.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -650,7 +649,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the connection between the SDK and the server is interrupted.
-        /// Deprecated:Use OnConnectionStateChanged instead.The SDK triggers this callback when it loses connection with the server for more than four seconds after the connection is established. After triggering this callback, the SDK tries to reconnect to the server. You can use this callback to implement pop-up reminders. The difference between this callback and OnConnectionLost is:The SDK triggers theOnConnectionInterrupted callback when it loses connection with the server for more than four seconds after it successfully joins the channel.The SDK triggers theOnConnectionLost callback when it loses connection with the server for more than 10 seconds, whether or not it joins the channel.If the SDK fails to rejoin the channel 20 minutes after being disconnected from Agora's edge server, the SDK stops rejoining the channel.
+        /// Deprecated:Use OnConnectionStateChanged instead.The SDK triggers this callback when it loses connection with the server for more than four seconds after the connection is established. After triggering this callback, the SDK tries to reconnect to the server. You can use this callback to implement pop-up reminders. The difference between this callback and OnConnectionLost is:The SDK triggers the OnConnectionInterrupted callback when it loses connection with the server for more than four seconds after it successfully joins the channel.The SDK triggers the OnConnectionLost callback when it loses connection with the server for more than 10 seconds, whether or not it joins the channel.If the SDK fails to rejoin the channel 20 minutes after being disconnected from Agora's edge server, the SDK stops rejoining the channel.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -732,12 +731,12 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the first audio frame is published.
-        /// The SDK triggers this callback under one of the following circumstances:The local client enables the audio module and callsJoinChannel [2/2] successfully.The local client calls MuteLocalAudioStream (true) andMuteLocalAudioStream(false) in sequence.The local client calls DisableAudio and EnableAudio in sequence.The local client calls pushAudioFrame to successfully push the audio frame to the SDK.
+        /// The SDK triggers this callback under one of the following circumstances:The local client enables the audio module and calls JoinChannel [2/2] successfully.The local client calls MuteLocalAudioStream (true) and MuteLocalAudioStream(false) in sequence.The local client calls DisableAudio and EnableAudio in sequence.The local client calls pushAudioFrame to successfully push the audio frame to the SDK.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user callingJoinChannel [2/2] until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback.</param>
         ///
         public virtual void OnFirstLocalAudioFramePublished(RtcConnection connection, int elapsed) { }
 
@@ -751,7 +750,7 @@ namespace Agora.Rtc
         ///
         /// <param name="userId"> The ID of the remote user sending the audio frames.</param>
         ///
-        /// <param name="elapsed"> The time elapsed (ms) from the local user calling theJoinChannel [2/2] method until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> The time elapsed (ms) from the local user calling the JoinChannel [2/2] method until the SDK triggers this callback.</param>
         ///
         public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed) { }
 
@@ -765,14 +764,14 @@ namespace Agora.Rtc
         ///
         /// <param name="uid"> The user ID of the remote user.</param>
         ///
-        /// <param name="elapsed"> The time elapsed (ms) from the local user calling theJoinChannel [2/2] method until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> The time elapsed (ms) from the local user calling the JoinChannel [2/2] method until the SDK triggers this callback.</param>
         ///
         public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) { }
 
         ///
         /// <summary>
         /// Occurs when the local audio stream state changes.
-        /// When the state of the local audio stream changes (including the state of the audio capture and encoding), the SDK triggers this callback to report the current state. This callback indicates the state of the local audio stream, and allows you to troubleshoot issues when audio exceptions occur.When the state isLOCAL_AUDIO_STREAM_STATE_FAILED (3), you can view the error information in theerror parameter.
+        /// When the state of the local audio stream changes (including the state of the audio capture and encoding), the SDK triggers this callback to report the current state. This callback indicates the state of the local audio stream, and allows you to troubleshoot issues when audio exceptions occur.When the state is LOCAL_AUDIO_STREAM_STATE_FAILED (3), you can view the error information in the error parameter.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -797,14 +796,14 @@ namespace Agora.Rtc
         ///
         /// <param name="reason"> The reason of the remote audio state change. See REMOTE_AUDIO_STATE_REASON .</param>
         ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user calling theJoinChannel [2/2] method until the SDK triggers this callback.</param>
+        /// <param name="elapsed"> Time elapsed (ms) from the local user calling the JoinChannel [2/2] method until the SDK triggers this callback.</param>
         ///
         public virtual void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed) { }
 
         ///
         /// <summary>
         /// Occurs when the most active remote speaker is detected.
-        /// After a successful call of EnableAudioVolumeIndication , the SDK continuously detects which remote user has the loudest volume. During the current period, the remote user, who is detected as the loudest for the most times, is the most active user.When the number of users is no less than two and an active remote speaker exists, the SDK triggers this callback and reports theuid of the most active remote speaker.If the most active remote speaker is always the same user, the SDK triggers theOnActiveSpeaker callback only once.If the most active remote speaker changes to another user, the SDK triggers this callback again and reports theuid of the new active remote speaker.
+        /// After a successful call of EnableAudioVolumeIndication , the SDK continuously detects which remote user has the loudest volume. During the current period, the remote user, who is detected as the loudest for the most times, is the most active user.When the number of users is no less than two and an active remote speaker exists, the SDK triggers this callback and reports the uid of the most active remote speaker.If the most active remote speaker is always the same user, the SDK triggers the OnActiveSpeaker callback only once.If the most active remote speaker changes to another user, the SDK triggers this callback again and reports the uid of the new active remote speaker.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -821,9 +820,9 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="oldRole"> Role that the user switches from:CLIENT_ROLE_BROADCASTER(1): Host.CLIENT_ROLE_AUDIENCE(2): Audience. CLIENT_ROLE_TYPE .</param>
+        /// <param name="oldRole"> Role that the user switches from: CLIENT_ROLE_BROADCASTER(1): Host.CLIENT_ROLE_AUDIENCE(2): Audience. CLIENT_ROLE_TYPE .</param>
         ///
-        /// <param name="newRole"> Role that the user switches to:CLIENT_ROLE_BROADCASTER(1): Host.CLIENT_ROLE_AUDIENCE(2): Audience. CLIENT_ROLE_TYPE .</param>
+        /// <param name="newRole"> Role that the user switches to: CLIENT_ROLE_BROADCASTER(1): Host.CLIENT_ROLE_AUDIENCE(2): Audience. CLIENT_ROLE_TYPE .</param>
         ///
         public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole) { }
 
@@ -874,7 +873,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the publisher's transcoding is updated.
-        /// When the LiveTranscoding class in the setLiveTranscoding method updates, the SDK triggers theOnTranscodingUpdated callback to report the update information.If you call thesetLiveTranscoding method to set theLiveTranscoding class for the first time, the SDK does not trigger this callback.
+        /// When the LiveTranscoding class in the setLiveTranscoding method updates, the SDK triggers the OnTranscodingUpdated callback to report the update information.If you call the setLiveTranscoding method to set the LiveTranscoding class for the first time, the SDK does not trigger this callback.
         /// </summary>
         ///
         public virtual void OnTranscodingUpdated() { }
@@ -1025,7 +1024,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the local user registers a user account.
-        /// After the local user successfully calls RegisterLocalUserAccount to register the user account or callsJoinChannelWithUserAccount [2/2] to join a channel, the SDK triggers the callback and informs the local user's UID and User Account.
+        /// After the local user successfully calls RegisterLocalUserAccount to register the user account or calls JoinChannelWithUserAccount [2/2] to join a channel, the SDK triggers the callback and informs the local user's UID and User Account.
         /// </summary>
         ///
         /// <param name="uid"> The ID of the local user.</param>
@@ -1057,7 +1056,7 @@ namespace Agora.Rtc
         ///
         /// <param name="oldState"> The previous subscribing status, see STREAM_SUBSCRIBE_STATE for details.</param>
         ///
-        /// <param name="newState"> The current subscribing status, seeSTREAM_SUBSCRIBE_STATE for details.</param>
+        /// <param name="newState"> The current subscribing status, see STREAM_SUBSCRIBE_STATE for details.</param>
         ///
         /// <param name="elapseSinceLastState"> The time elapsed (ms) from the previous state to the current state.</param>
         ///
@@ -1074,7 +1073,7 @@ namespace Agora.Rtc
         ///
         /// <param name="oldState"> The previous subscribing status, see STREAM_SUBSCRIBE_STATE for details.</param>
         ///
-        /// <param name="newState"> The current subscribing status, seeSTREAM_SUBSCRIBE_STATE for details.</param>
+        /// <param name="newState"> The current subscribing status, see STREAM_SUBSCRIBE_STATE for details.</param>
         ///
         /// <param name="elapseSinceLastState"> The time elapsed (ms) from the previous state to the current state.</param>
         ///
@@ -1089,7 +1088,7 @@ namespace Agora.Rtc
         ///
         /// <param name="oldState"> The previous subscribing status. See STREAM_PUBLISH_STATE .</param>
         ///
-        /// <param name="newState"> The current subscribing status. SeeSTREAM_PUBLISH_STATE.</param>
+        /// <param name="newState"> The current subscribing status. See STREAM_PUBLISH_STATE.</param>
         ///
         /// <param name="elapseSinceLastState"> The time elapsed (ms) from the previous state to the current state.</param>
         ///
@@ -1106,7 +1105,7 @@ namespace Agora.Rtc
         ///
         /// <param name="oldState"> For the previous publishing state, see STREAM_PUBLISH_STATE .</param>
         ///
-        /// <param name="newState"> For the current publishing state, seeSTREAM_PUBLISH_STATE.</param>
+        /// <param name="newState"> For the current publishing state, see STREAM_PUBLISH_STATE.</param>
         ///
         /// <param name="elapseSinceLastState"> The time elapsed (ms) from the previous state to the current state.</param>
         ///
@@ -1124,19 +1123,19 @@ namespace Agora.Rtc
         ///
         /// <param name="provider"> The name of the extension provider.</param>
         ///
-        /// <param name="ext_name"> The name of the extension.</param>
+        /// <param name="extension"> The name of the extension.</param>
         ///
         public virtual void OnExtensionEvent(string provider, string extension, string key, string value) { }
 
         ///
         /// <summary>
         /// Occurs when the extension is enabled.
-        /// After a successful call of EnableExtension (true), this callback is triggered.
+        /// After a successful call of EnableExtension (true), the extension triggers this callback.
         /// </summary>
         ///
         /// <param name="provider"> The name of the extension provider.</param>
         ///
-        /// <param name="ext_name"> The name of the extension.</param>
+        /// <param name="extension"> The name of the extension.</param>
         ///
         public virtual void OnExtensionStarted(string provider, string extension) { }
 
@@ -1146,7 +1145,7 @@ namespace Agora.Rtc
         /// After a successful call of EnableExtension (false), this callback is triggered.
         /// </summary>
         ///
-        /// <param name="ext_name"> The name of the extension.</param>
+        /// <param name="extension"> The name of the extension.</param>
         ///
         /// <param name="provider"> The name of the extension provider.</param>
         ///

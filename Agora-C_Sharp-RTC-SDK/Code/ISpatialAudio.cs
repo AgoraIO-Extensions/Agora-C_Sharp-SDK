@@ -10,7 +10,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Destroys ILocalSpatialAudioEngine .
-        /// This method releases all resources underILocalSpatialAudioEngine. When the user does not need to use the spatial audio effect, you can call this method to release resources for other operations.After calling this method, you can no longer use any of the APIs underILocalSpatialAudioEngine. To use the spatial audio effect again, you need to wait until theDispose method execution to complete before calling Initialize to create a newILocalSpatialAudioEngine.Call this method before the Dispose method under IRtcEngine .
+        /// This method releases all resources under ILocalSpatialAudioEngine. When the user does not need to use the spatial audio effect, you can call this method to release resources for other operations.After calling this method, you can no longer use any of the APIs under ILocalSpatialAudioEngine. To use the spatial audio effect again, you need to wait until the Dispose method execution to complete before calling Initialize to create a new ILocalSpatialAudioEngine.Call this method before the Dispose method under IRtcEngine .
         /// </summary>
         ///
         public abstract void Dispose();
@@ -18,11 +18,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Initializes ILocalSpatialAudioEngine .
-        /// Before calling other methods of theILocalSpatialAudioEngine class, you need to call this method to initializeILocalSpatialAudioEngine.The SDK supports creating only oneILocalSpatialAudioEngine instance for an app.
+        /// Before calling other methods of the ILocalSpatialAudioEngine class, you need to call this method to initialize ILocalSpatialAudioEngine.The SDK supports creating only one ILocalSpatialAudioEngine instance for an app.
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int Initialize();
@@ -30,13 +30,13 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the maximum number of streams that a user can receive in a specified audio reception range.
-        /// If the number of receivable streams exceeds the set value, the local user receives themaxCount streams that are closest to the local user. If there are users who belong to the same team as the local user in the room, the local user receives the audio of the teammates first. For example, whenmaxCount is set to 3, if there are five remote users in the room, two of whom belong to the same team as the local user, and three of whom belong to different teams but are within the audio reception range of the local user, the local user can hear the two teammates and the one user from a different team closest to the local user.
+        /// If the number of receivable streams exceeds the set value, the local user receives the maxCount streams that are closest to the local user. If there are users who belong to the same team as the local user in the room, the local user receives the audio of the teammates first. For example, when maxCount is set to 3, if there are five remote users in the room, two of whom belong to the same team as the local user, and three of whom belong to different teams but are within the audio reception range of the local user, the local user can hear the two teammates and the one user from a different team closest to the local user.
         /// </summary>
         ///
         /// <param name="maxCount"> The maximum number of streams that a user can receive within a specified audio reception range.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetMaxAudioRecvCount(int maxCount);
@@ -50,7 +50,7 @@ namespace Agora.Rtc
         /// <param name="range"> The maximum audio reception range. The unit is meters. The value must be greater than 0.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetAudioRecvRange(float range);
@@ -64,7 +64,7 @@ namespace Agora.Rtc
         /// <param name="unit"> The number of meters that the game engine distance per unit is equal to. This parameter must be greater than 0.00. For example, setting unit as 2.00 means the game engine distance per unit equals 2 meters.The larger the value is, the faster the sound heard by the local user attenuates when the remote user moves far away from the local user.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int SetDistanceUnit(float unit);
@@ -72,7 +72,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Updates the spatial position of the local user.
-        /// Under the ILocalSpatialAudioEngine class, this method needs to be used with UpdateRemotePosition . The SDK calculates the relative position between the local and remote users according to this method and the parameter settings inUpdateRemotePosition, and then calculates the user's spatial audio effect parameters.
+        /// Under the ILocalSpatialAudioEngine class, this method needs to be used with UpdateRemotePosition . The SDK calculates the relative position between the local and remote users according to this method and the parameter settings in UpdateRemotePosition, and then calculates the user's spatial audio effect parameters.
         /// </summary>
         ///
         /// <param name="position"> The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
@@ -84,7 +84,7 @@ namespace Agora.Rtc
         /// <param name="axisUp"> The unit vector of the z axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int UpdateSelfPosition(float[] position, float[] axisForward, float[] axisRight, float[] axisUp);
@@ -100,14 +100,14 @@ namespace Agora.Rtc
         /// After a successful update, the local user can hear the change in the spatial position of the media player.
         /// </summary>
         ///
-        /// <param name="playerId"> The ID of the media player.</param>
+        /// <param name="playerId"> The ID of the media player. </param>
         ///
         /// <param name="position"> The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
         ///
         /// <param name="forward"> The unit vector of the x axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward);
@@ -126,7 +126,7 @@ namespace Agora.Rtc
         /// <param name="mute"> Whether to stop publishing the local audio stream.true: Stop publishing the local audio stream.false: Publish the local audio stream.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteLocalAudioStream(bool mute);
@@ -140,7 +140,7 @@ namespace Agora.Rtc
         /// <param name="mute"> Whether to stop subscribing to the audio streams of all remote users:true: Stop subscribing to the audio streams of all remote users.false: Subscribe to the audio streams of all remote users.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int MuteAllRemoteAudioStreams(bool mute);
@@ -158,7 +158,7 @@ namespace Agora.Rtc
         /// <param name="forward"> The unit vector of the x axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int UpdateRemotePosition(uint uid, float[] position, float[] forward);
@@ -177,7 +177,7 @@ namespace Agora.Rtc
         /// <param name="uid"> The user ID. This parameter must be the same as the user ID passed in when the user joined the channel.</param>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int RemoveRemotePosition(uint uid);
@@ -194,7 +194,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.< 0: Failure.
+        /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int ClearRemotePositions();

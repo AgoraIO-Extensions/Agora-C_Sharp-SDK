@@ -109,7 +109,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 702: The SDK opens the music file too frequently. If you need to callstartAudioMixing multiple times, ensure that the call interval is more than 500 ms.
+        /// 702: The SDK opens the music file too frequently. If you need to call startAudioMixing multiple times, ensure that the call interval is more than 500 ms.
         /// </summary>
         ///
         AUDIO_MIXING_REASON_TOO_FREQUENT_CALL = 702,
@@ -487,7 +487,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The quality adaption of the local video stream in the reported interval (based on the target frame rate and target bitrate).See QUALITY_ADAPT_INDICATION .
+        /// The quality adaption of the local video stream in the reported interval (based on the target frame rate and target bitrate). See QUALITY_ADAPT_INDICATION .
         /// </summary>
         ///
         public QUALITY_ADAPT_INDICATION qualityAdaptIndication { set; get; }
@@ -508,7 +508,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The codec type of the local video.See VIDEO_CODEC_TYPE .
+        /// The codec type of the local video. See VIDEO_CODEC_TYPE .
         /// </summary>
         ///
         public VIDEO_CODEC_TYPE codecType { set; get; }
@@ -545,7 +545,7 @@ namespace Agora.Rtc
         [Obsolete]
         ///
         /// <summary>
-        /// Deprecated:In scenarios where audio and video are synchronized, you can get the video delay data fromnetworkTransportDelay andjitterBufferDelay in RemoteAudioStats .The video delay (ms).
+        /// Deprecated:In scenarios where audio and video are synchronized, you can get the video delay data from networkTransportDelay and jitterBufferDelay in RemoteAudioStats .The video delay (ms).
         /// </summary>
         ///
         public int delay { set; get; }
@@ -601,7 +601,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The type of the video stream.For details, see VIDEO_STREAM_TYPE .
+        /// The type of the video stream. See VIDEO_STREAM_TYPE .
         /// </summary>
         ///
         public VIDEO_STREAM_TYPE rxStreamType { set; get; }
@@ -1026,7 +1026,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The device ID of the playback device.
+        /// The device ID of the playback device. 
         /// </summary>
         ///
         public string deviceId { set; get; }
@@ -1045,7 +1045,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// This parameter applies to Android and iOS only.The camera direction. CAMERA_DIRECTION 
+        /// This parameter applies to Android and iOS only.The camera direction.  CAMERA_DIRECTION 
         /// </summary>
         ///
         public CAMERA_DIRECTION cameraDirection { set; get; }
@@ -1101,7 +1101,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// (For Windows and macOS only) The relative position of the shared region to the whole screen. See Rectangle .If you do not set this parameter, the SDK shares the whole screen. If the region you set exceeds the boundary of the screen, only the region within in the screen is shared. If you setwidth or height inRectangle as 0, the whole screen is shared.
+        /// (For Windows and macOS only) The relative position of the shared region to the whole screen. See Rectangle .If you do not set this parameter, the SDK shares the whole screen. If the region you set exceeds the boundary of the screen, only the region within in the screen is shared. If you setwidth or height in Rectangle as 0, the whole screen is shared.
         /// </summary>
         ///
         public Rectangle regionRect { set; get; }
@@ -1217,7 +1217,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The information about the specified shareable window or screen.
+    /// The information about the specified shareable window or screen. 
     /// </summary>
     ///
     public class ScreenCaptureSourceInfo
@@ -1245,14 +1245,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The image content of the thumbnail.See
+        /// The image content of the thumbnail. See 
         /// </summary>
         ///
         public ThumbImageBuffer thumbImage { set; get; }
 
         ///
         /// <summary>
-        /// The image content of the icon.See
+        /// The image content of the icon. See 
         /// </summary>
         ///
         public ThumbImageBuffer iconImage { set; get; }
@@ -1357,76 +1357,229 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The channel media options.
-    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection . For example,publishAudioTrack,publishCustomAudioTrack andpublishMediaPlayerAudioTrack can betrue at the same time;
-    /// but only one ofpublishCameraTrack,publishCustomVideoTrack, andpublishEncodedVideoTrack can betrue at the same time.
+    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection . For example, publishAudioTrack, publishCustomAudioTrack and publishMediaPlayerAudioTrack can be true at the same time;
+    /// but only one of publishCameraTrack, publishCustomVideoTrack, and publishEncodedVideoTrack can be true at the same time.
     /// </summary>
     ///
     public class ChannelMediaOptions : OptionalJsonParse
     {
+        ///
+        /// <summary>
+        /// Whether to publish the video captured by the camera:true: (Default) Publish the video captured by the camera.false: Do not publish the video captured by the camera.
+        /// </summary>
+        ///
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the video captured by the second camera:true: Publish the video captured by the second camera.false: (Default) Publish the video captured by the second camera.
+        /// </summary>
+        ///
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the captured audio:true: (Default) Publish the captured audio.false: Do not publish the captured audio.Since v4.0.0, the parameter name has been changed from publishAudioTrack to publishMicrophoneTrack.
+        /// </summary>
+        ///
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the captured video from the screen:true: Publish the captured video from the screen.false: (Default) Do not publish the captured video from the screen.
+        /// </summary>
+        ///
         public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the captured video from the screen:true: Publish the captured video from the screen.false: (Default) Do not publish the captured video from the screen.
+        /// </summary>
+        ///
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the captured video from the screen:true: Publish the captured video from the screen.false: (Default) Do not publish the captured video from the screen.
+        /// </summary>
+        ///
         public Optional<bool> publishScreenTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the captured video from the secondary screen:true: Publish the captured video from the second screen.false: (Default) Do not publish the captured video from the second screen.
+        /// </summary>
+        ///
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the captured audio from a custom source:true: Publish the captured audio from a custom source.false: (Default) Do not publish the captured audio from the custom source.
+        /// </summary>
+        ///
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// The ID of the custom audio source to publish. The default value is 0.If you have set the value of sourceNumber greater than 1 in SetExternalAudioSource , the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track starting from 0.
+        /// </summary>
+        ///
         public Optional<int> publishCustomAudioSourceId = new Optional<int>();
 
+        ///
+        /// <summary>
+        /// Whether to enable AEC when publishing the captured audio from a custom source:true: Enable AEC when publishing the captured audio from a custom source.false: (Default) Do not enable AEC when publishing the captured audio from a custom source.
+        /// </summary>
+        ///
         public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
 
+        ///
+        /// @ignore
+        ///
         public Optional<bool> publishDirectCustomAudioTrack = new Optional<bool>();
 
+        ///
+        /// @ignore
+        ///
         public Optional<bool> publishCustomAudioTrackAec = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the captured video from a custom source:true: Publish the captured video from a custom source.false: (Default) Do not publish the captured video from the custom source.
+        /// </summary>
+        ///
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the encoded video:true: Publish the encoded video.false: (Default) Do not publish the encoded video.
+        /// </summary>
+        ///
         public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the audio from the media player:true: Publish the audio from the media player.false: (Default) Do not publish the audio from the media player.
+        /// </summary>
+        ///
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the video from the media player:true: Publish the video from the media player.false: (Default) Do not publish the video from the media player.
+        /// </summary>
+        ///
         public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the local transcoded video.true: Publish the local transcoded video.false: (Default) Do not publish the local transcoded video.
+        /// </summary>
+        ///
         public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to automatically subscribe to all remote audio streams when the user joins a channel:true: (Default) Subscribe to all remote audio streams.false: Do not subscribe to any remote audio stream.
+        /// </summary>
+        ///
         public Optional<bool> autoSubscribeAudio = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to subscribe to all remote video streams when the user joins the channel:true: (Default) Subscribe to all remote video streams.false: Do not subscribe to any remote video stream.
+        /// </summary>
+        ///
         public Optional<bool> autoSubscribeVideo = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to enable audio capturing or playback:true: (Default) Enable audio capturing and playback.false: Do not enable audio capturing or playback.
+        /// </summary>
+        ///
         public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// The ID of the media player to be published. The default value is 0.
+        /// </summary>
+        ///
         public Optional<int> publishMediaPlayerId = new Optional<int>();
 
+        ///
+        /// <summary>
+        /// The user role. See CLIENT_ROLE_TYPE .
+        /// </summary>
+        ///
         public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
 
+        ///
+        /// <summary>
+        /// The latency level of an audience member in interactive live streaming. See AUDIENCE_LATENCY_LEVEL_TYPE .
+        /// </summary>
+        ///
         public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
 
+        ///
+        /// <summary>
+        /// The default video-stream type. See VIDEO_STREAM_TYPE .
+        /// </summary>
+        ///
         public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
 
+        ///
+        /// <summary>
+        /// The channel profile. See CHANNEL_PROFILE_TYPE .
+        /// </summary>
+        ///
         public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
 
+        ///
+        /// @ignore
+        ///
         public Optional<int> audioDelayMs = new Optional<int>();
 
+        ///
+        /// @ignore
+        ///
         public Optional<int> mediaPlayerAudioDelayMs = new Optional<int>();
 
+        ///
+        /// <summary>
+        /// (Optional) The token generated on your server for authentication. SeeThis parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx .Ensure that the App ID, channel name, and user name used for creating the token are the same ones as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel.
+        /// </summary>
+        ///
         public Optional<string> token = new Optional<string>();
 
+        ///
+        /// @ignore
+        ///
         public Optional<bool> enableBuiltInMediaEncryption = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to publish the sound of the metronome to remote users:true: (Default) Publish the sound of the metronome. Both the local user and remote users can hear the metronome.false: Do not publish processed audio frames. Only the local user can hear the metronome.
+        /// </summary>
+        ///
         public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Whether to enable interactive mode:true: Enable interactive mode. Local users receive low-latency and smooth video from remote users.false: (Default) Do not enable interactive mode. Local users receive the video of the remote user with the default settings.This parameter is used to implement the cohost across channels scenario only. The cohosts need to call JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE.
+        /// </summary>
+        ///
         public Optional<bool> isInteractiveAudience = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// The video track ID returned by calling the createCustomVideoTrack method. The default value is 0.
+        /// </summary>
+        ///
         public Optional<video_track_id_t> customVideoTrackId = new Optional<video_track_id_t>();
 
+        ///
+        /// @ignore
+        ///
         public Optional<bool> isAudioFilterable = new Optional<bool>();
 
         public ChannelMediaOptions() { }
@@ -1663,27 +1816,37 @@ namespace Agora.Rtc
     public enum PROXY_TYPE
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// 0: Reserved for future use.
+        /// </summary>
         ///
         NONE_PROXY_TYPE = 0,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
+        /// </summary>
         ///
         UDP_PROXY_TYPE = 1,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TCP/TLS 443.
+        /// </summary>
         ///
         TCP_PROXY_TYPE = 2,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 3: Reserved for future use.
+        /// </summary>
         ///
         LOCAL_PROXY_TYPE = 3,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 4: Automatic mode. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TCP/TLS 443 if the attempt fails.
+        /// </summary>
         ///
         TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
     };
@@ -1725,7 +1888,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The domain name used for Intranet certificate verification. If you pass an empty value, the SDK uses the default domain namesecure-edge.local for certificate verification.
+        /// The domain name used for Intranet certificate verification. If you pass an empty value, the SDK uses the default domain name secure-edge.local for certificate verification.
         /// </summary>
         ///
         public string verifyDomainName { set; get; }
@@ -1764,21 +1927,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to stop playing and mixing the music file when a user leaves the channel.true: (Default) Stop playing and mixing the music file.false: Do not stop playing and mixing the music file.
+        /// Whether to stop playing and mixing the music file when a user leaves the channel. true: (Default) Stop playing and mixing the music file.false: Do not stop playing and mixing the music file.
         /// </summary>
         ///
         public bool stopAudioMixing { set; get; }
 
         ///
         /// <summary>
-        /// Whether to stop playing all audio effects when a user leaves the channel.true: (Default) Stop playing all audio effects.false: Do not stop playing any audio effect.
+        /// Whether to stop playing all audio effects when a user leaves the channel. true: (Default) Stop playing all audio effects.false: Do not stop playing any audio effect.
         /// </summary>
         ///
         public bool stopAllEffect { set; get; }
 
         ///
         /// <summary>
-        /// Whether to stop microphone recording when a user leaves the channel.true: (Default) Stop microphone recording.false: Do not stop microphone recording.
+        /// Whether to stop microphone recording when a user leaves the channel. true: (Default) Stop microphone recording.false: Do not stop microphone recording.
         /// </summary>
         ///
         public bool stopMicrophoneRecording { set; get; }
@@ -1786,7 +1949,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Configurations for theRtcEngineContext instance.
+    /// Configurations for the RtcEngineContext instance.
     /// </summary>
     ///
     public class RtcEngineContext : OptionalJsonParse
@@ -1821,7 +1984,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The App ID issued by Agora for your project. Only users in apps with the same App ID can join the same channel and communicate with each other. An App ID can only be used to create oneIRtcEngine instance. To change your App ID, call Dispose to destroy the currentIRtcEngine instance, and then create a new one.
+        /// The App ID issued by Agora for your project. Only users in apps with the same App ID can join the same channel and communicate with each other. An App ID can only be used to create one IRtcEngine instance. To change your App ID, call Dispose to destroy the current IRtcEngine instance, and then create a new one.
         /// </summary>
         ///
         public string appId { set; get; }
@@ -1842,7 +2005,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The audio scenario. For more details, see AUDIO_SCENARIO_TYPE . Under different audio scenarios, the device uses different volume types.
+        /// The audio scenarios. See AUDIO_SCENARIO_TYPE . Under different audio scenarios, the device uses different volume types.
         /// </summary>
         ///
         public AUDIO_SCENARIO_TYPE audioScenario { set; get; }
@@ -1958,10 +2121,25 @@ namespace Agora.Rtc
     ///
     public class Metadata
     {
+        ///
+        /// <summary>
+        /// The user ID.For the recipient:the ID of the remote user who sent the Metadata.Ignore it for sender.
+        /// </summary>
+        ///
         public uint uid;
 
+        ///
+        /// <summary>
+        /// Buffer size for received or sent Metadata.
+        /// </summary>
+        ///
         public uint size;
 
+        ///
+        /// <summary>
+        /// The buffer address of the received or sent Metadata.
+        /// </summary>
+        ///
         public IntPtr buffer
         {
             set
@@ -1976,6 +2154,11 @@ namespace Agora.Rtc
 
         private UInt64 _buffer;
 
+        ///
+        /// <summary>
+        /// The timestamp (ms) of Metadata.
+        /// </summary>
+        ///
         public long timeStampMs;
     };
 
@@ -2067,7 +2250,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 4: Tries to reconnect Agora server to the CDN. The SDK attempts to reconnect a maximum of 10 times; if the connection is not restored, the streaming state becomesDIRECT_CDN_STREAMING_STATE_FAILED.
+        /// 4: Tries to reconnect Agora server to the CDN. The SDK attempts to reconnect a maximum of 10 times; if the connection is not restored, the streaming state becomes DIRECT_CDN_STREAMING_STATE_FAILED.
         /// </summary>
         ///
         DIRECT_CDN_STREAMING_STATE_RECOVERING = 4,
@@ -2123,18 +2306,49 @@ namespace Agora.Rtc
     ///
     public class DirectCdnStreamingMediaOptions : OptionalJsonParse
     {
+        ///
+        /// <summary>
+        /// Sets whether to publish the video captured by the camera:true: Publish the video captured by the camera.false: (Default) Do not publish the video captured by the camera.
+        /// </summary>
+        ///
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Sets whether to publish the audio captured by the microphone:true: Publish the audio captured by the microphone.false: (Default) Do not publish the audio captured by the microphone.
+        /// </summary>
+        ///
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Sets whether to publish the captured audio from a custom source:true: Publish the captured audio from a custom source.false: (Default) Do not publish the captured audio from the custom source.
+        /// </summary>
+        ///
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
+        ///
+        /// <summary>
+        /// Sets whether to publish the captured video from a custom source:true: Publish the captured video from a custom source.false: (Default) Do not publish the captured video from the custom source.
+        /// </summary>
+        ///
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
 
+        ///
+        /// @ignore
+        ///
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
 
+        ///
+        /// @ignore
+        ///
         public Optional<int> publishMediaPlayerId = new Optional<int>();
 
+        ///
+        /// <summary>
+        /// The video track ID returned by calling the createCustomVideoTrack method. The default value is 0.
+        /// </summary>
+        ///
         public Optional<video_track_id_t> customVideoTrackId = new Optional<video_track_id_t>();
 
         public DirectCdnStreamingMediaOptions()

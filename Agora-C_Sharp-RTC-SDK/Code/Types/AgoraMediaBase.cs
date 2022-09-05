@@ -52,7 +52,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 4: The audio route is an external speaker.(iOS and macOS only)
+        /// 4: The audio route is an external speaker. (iOS and macOS only)
         /// </summary>
         ///
         ROUTE_LOUDSPEAKER = 4,
@@ -66,28 +66,28 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: The audio route is an HDMI peripheral device.(For macOS only)
+        /// 6: The audio route is an HDMI peripheral device. (For macOS only)
         /// </summary>
         ///
         ROUTE_HDMI = 6,
 
         ///
         /// <summary>
-        /// 7: The audio route is a USB peripheral device.(For macOS only)
+        /// 7: The audio route is a USB peripheral device. (For macOS only)
         /// </summary>
         ///
         ROUTE_USB = 7,
 
         ///
         /// <summary>
-        /// 8: The audio route is a DisplayPort peripheral device.(For macOS only)
+        /// 8: The audio route is a DisplayPort peripheral device. (For macOS only)
         /// </summary>
         ///
         ROUTE_DISPLAYPORT = 8,
 
         ///
         /// <summary>
-        /// 9: The audio route is Apple AirPlay.(For macOS only)
+        /// 9: The audio route is Apple AirPlay. (For macOS only)
         /// </summary>
         ///
         ROUTE_AIRPLAY = 9
@@ -147,14 +147,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: Read-only mode,
+        /// 0: Read-only mode, 
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
 
         ///
         /// <summary>
-        /// 2: Read and write mode,
+        /// 2: Read and write mode, 
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
@@ -496,7 +496,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 3: The video buffer in the format ofTexture.
+        /// 3: The video buffer in the format of Texture.
         /// </summary>
         ///
         VIDEO_BUFFER_TEXTURE = 3,
@@ -652,14 +652,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value isNULL.
+        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
         /// </summary>
         ///
         public byte[] metadata_buffer { set; get; }
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is0.
+        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
         /// </summary>
         ///
         public int metadata_size { set; get; }
@@ -773,21 +773,21 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 1: The post-capturer position, which corresponds to the video data in theOnCaptureVideoFrame callback.
+        /// 1: The post-capturer position, which corresponds to the video data in the OnCaptureVideoFrame callback.
         /// </summary>
         ///
         POSITION_POST_CAPTURER = 1 << 0,
 
         ///
         /// <summary>
-        /// 2: The pre-renderer position, which corresponds to the video data in theOnRenderVideoFrame callback.
+        /// 2: The pre-renderer position, which corresponds to the video data in the OnRenderVideoFrame callback.
         /// </summary>
         ///
         POSITION_PRE_RENDERER = 1 << 1,
 
         ///
         /// <summary>
-        /// 4: The pre-encoder position, which corresponds to the video data in theOnPreEncodeVideoFrame callback.
+        /// 4: The pre-encoder position, which corresponds to the video data in the OnPreEncodeVideoFrame callback.
         /// </summary>
         ///
         POSITION_PRE_ENCODER = 1 << 2,
@@ -903,7 +903,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.The size of the data buffer is as follows:buffer =samples ×channels ×bytesPerSample.
+        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.The size of the data buffer is as follows: buffer = samples ×channels × bytesPerSample.
         /// </summary>
         ///
         public byte[] RawBuffer { set; get; }
@@ -958,7 +958,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Audio data format.
-    /// You can pass theAudioParams object in the return value of the following callbacks to set the audio data format for the corresponding callback: GetRecordAudioParams : Sets the audio data format for the OnRecordAudioFrame callback. GetPlaybackAudioParams : Sets the audio data format for the OnPlaybackAudioFrame callback. GetMixedAudioParams : Sets the audio data format for the OnMixedAudioFrame callback.The SDK calculates the sampling interval through thesamplesPerCall,sampleRate, andchannel parameters inAudioParams, and triggers theOnRecordAudioFrame,OnPlaybackAudioFrame, andOnMixedAudioFrame callbacks according to the sampling interval.Sample interval =samplePerCall/(sampleRate ×channel).Ensure that the sample interval ≥ 0.01 (s).
+    /// You can pass the AudioParams object in the return value of the following callbacks to set the audio data format for the corresponding callback: GetRecordAudioParams : Sets the audio data format for the OnRecordAudioFrame callback. GetPlaybackAudioParams : Sets the audio data format for the OnPlaybackAudioFrame callback. GetMixedAudioParams : Sets the audio data format for the OnMixedAudioFrame callback.The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, and OnMixedAudioFrame callbacks according to the sampling interval.Sample interval = samplePerCall/(sampleRate × channel).Ensure that the sample interval ≥ 0.01 (s).
     /// </summary>
     ///
     public class AudioParams
@@ -1124,7 +1124,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: (Default) This module has no actual function. Do not settype to this value.
+        /// 0: (Default) This module has no actual function. Do not set type to this value.
         /// </summary>
         ///
         CONTENT_INSPECT_INVALID = 0,
@@ -1172,8 +1172,18 @@ namespace Agora.Rtc
     ///
     public class ContentInspectModule
     {
+        ///
+        /// <summary>
+        /// The type of video content moderation module. See CONTENT_INSPECT_TYPE .
+        /// </summary>
+        ///
         public CONTENT_INSPECT_TYPE type;
 
+        ///
+        /// <summary>
+        /// The frequency (in seconds) of video content moderation. The value should be set as larger than 0. If set as 0 (default), the video content is not inspected. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
+        /// </summary>
+        ///
         public uint interval;
 
         public ContentInspectModule()
@@ -1192,14 +1202,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Video content moderation module. See ContentInspectModule .A maximum of 32ContentInspectModule instances can be configured, and the value range ofMAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32].A video content moderation module can only be configured with one instance at most.
+        /// Video content moderation module. See ContentInspectModule .A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32].A video content moderation module can only be configured with one instance at most.
         /// </summary>
         ///
         public ContentInspectModule[] modules { set; get; }
 
         ///
         /// <summary>
-        /// The number of video content moderation modules, that is, the number of configuredContentInspectModule instances, must be the same as the number of instances configured inmodules. The maximum number is 32.
+        /// The number of video content moderation modules, that is, the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
         /// </summary>
         ///
         public int moduleCount { set; get; }
@@ -1358,7 +1368,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The absolute path (including the filename extensions) of the recording file. For example:Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4iOS: /AppSandbox/Library/Caches/example.mp4macOS:～/Library/Logs/example.mp4Android: /storage/emulated/0/Android/data/<package name>/files/agorasdk.mp4Ensure that the directory for the log files exists and is writable.
+        /// The absolute path (including the filename extensions) of the recording file. For example:Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4iOS: /AppSandbox/Library/Caches/example.mp4macOS: ～/Library/Logs/example.mp4Android: /storage/emulated/0/Android/data/<package name>/files/agorasdk.mp4Ensure that the directory for the log files exists and is writable.
         /// </summary>
         ///
         public string storagePath { set; get; }
