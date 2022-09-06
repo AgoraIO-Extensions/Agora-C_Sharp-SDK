@@ -201,13 +201,13 @@ namespace Agora.Rtc
             eventHandlerHandle.cEvent = new IrisCEventHandler
             {
                 OnEvent = onEvent,
-                OnEventEx = onEventEx,
+                //OnEventEx = onEventEx,
             };
 
             var cEventHandlerNativeLocal = new IrisCEventHandlerNative
             {
                 onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
-                onEventEx = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEventEx)
+                //onEventEx = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEventEx)
             };
 
             eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
