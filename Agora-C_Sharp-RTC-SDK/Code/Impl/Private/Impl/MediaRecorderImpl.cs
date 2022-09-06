@@ -7,7 +7,10 @@ using AOT;
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
-    using IrisEventHandlerHandleNative = IntPtr;
+    //get from alloc, need to free
+    using IrisEventHandlerMarshal = IntPtr;
+    //get from C++, no need to free
+    using IrisEventHandlerHandle = IntPtr;
 
     public class MediaRecorderImpl
     {
@@ -15,9 +18,9 @@ namespace Agora.Rtc
         private CharAssistant _result;
         private bool _disposed = false;
 
-        private IrisEventHandlerHandleNative _irisEngineEventHandlerHandleNative;
-        private IrisCEventHandler _irisCEventHandler;
-        private IrisEventHandlerHandleNative _irisCEngineEventHandlerNative;
+        private EventHandlerHandle _mediaRecorderEventHandlerHandle = new EventHandlerHandle();
+
+
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private AgoraCallbackObject _callbackObject;
@@ -59,41 +62,41 @@ namespace Agora.Rtc
 
         private void CreateEventHandler()
         {
-            if (_irisEngineEventHandlerHandleNative == IntPtr.Zero)
-            {
-                _irisCEventHandler = new IrisCEventHandler
-                {
-                    OnEvent = MediaRecorderObserverNative.OnEvent,
-                };
+            if (_mediaRecorderEventHandlerHandle.handle != IntPtr.Zero) return;
 
-                var cEventHandlerNativeLocal = new IrisCEventHandlerNative
-                {
-                    onEvent = Marshal.GetFunctionPointerForDelegate(_irisCEventHandler.OnEvent)
-                };
+            AgoraUtil.AllocEventHandlerHandle(ref _mediaRecorderEventHandlerHandle, MediaRecorderObserverNative.OnEvent, MediaRecorderObserverNative.OnEventEx);
 
-                _irisCEngineEventHandlerNative = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
-                Marshal.StructureToPtr(cEventHandlerNativeLocal, _irisCEngineEventHandlerNative, true);
-                _irisEngineEventHandlerHandleNative =
-                    AgoraRtcNative.SetIrisMediaRecorderEventHandler(_irisApiEngine, _irisCEngineEventHandlerNative);
+            IntPtr[] arrayPtr = new IntPtr[] { _mediaRecorderEventHandlerHandle.handle };
+            AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETEVENTHANDLER,
+                "{}", 2,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                out _result);
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-                _callbackObject = new AgoraCallbackObject(identifier);
-                MediaRecorderObserverNative.CallbackObject = _callbackObject;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            _callbackObject = new AgoraCallbackObject(identifier);
+            MediaRecorderObserverNative.CallbackObject = _callbackObject;
 #endif
-            }
+
         }
 
         private void ReleaseEventHandler()
         {
+            if (_mediaRecorderEventHandlerHandle.handle == IntPtr.Zero) return;
+
             MediaRecorderObserverNative.MediaRecorderObserverDic.Clear();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             MediaRecorderObserverNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
-            AgoraRtcNative.UnsetIrisMediaRecorderEventHandler(_irisApiEngine, _irisEngineEventHandlerHandleNative);
-            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
-            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
+            IntPtr[] arrayPtr = new IntPtr[] { IntPtr.Zero };
+            AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_SETEVENTHANDLER,
+                "{}", 2,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                out _result);
+         
+            AgoraUtil.FreeEventHandlerHandle(ref _mediaRecorderEventHandlerHandle);
+           
         }
 
         #region IMediaRecorder
@@ -117,7 +120,7 @@ namespace Agora.Rtc
 
                 return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
             }
-            
+
             if (callback == null && MediaRecorderObserverNative.MediaRecorderObserverDic.ContainsKey(key))
             {
                 MediaRecorderObserverNative.MediaRecorderObserverDic.Remove(key);
