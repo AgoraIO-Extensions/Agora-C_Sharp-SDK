@@ -10,6 +10,23 @@ namespace Agora.Rtc
     {
         internal static IAudioEncodedFrameObserver AudioEncodedFrameObserver = null;
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        [MonoPInvokeCallback(typeof(Func_Event_Native))]
+#endif
+        internal static void OnEvent(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count)
+        {
+        }
+
+
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        [MonoPInvokeCallback(typeof(Func_EventEx_Native))]
+#endif
+        internal static void OnEventEx(string @event, string data, IntPtr result, IntPtr buffer, IntPtr length, uint buffer_count)
+        {
+        }
+
+
         internal static EncodedAudioFrameInfo IrisEncodedAudioFrameInfo2EncodedAudioFrameInfo(ref IrisEncodedAudioFrameInfo from)
         {
             EncodedAudioFrameInfo to = new EncodedAudioFrameInfo();
@@ -24,9 +41,7 @@ namespace Agora.Rtc
             return to;
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_RecordAudioEncodedFrame_Native))]
-#endif
+
         internal static void OnRecordAudioEncodedFrame(IntPtr frame_buffer, int length, IntPtr encoded_audio_frame_info)
         {
             if (AudioEncodedFrameObserver == null) return;
@@ -44,9 +59,7 @@ namespace Agora.Rtc
             }
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_RecordAudioEncodedFrame_Native))]
-#endif
+
         internal static void OnPlaybackAudioEncodedFrame(IntPtr frame_buffer, int length, IntPtr encoded_audio_frame_info)
         {
             if (AudioEncodedFrameObserver == null) return;
@@ -64,9 +77,7 @@ namespace Agora.Rtc
             }
         }
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_RecordAudioEncodedFrame_Native))]
-#endif
+
         internal static void OnMixedAudioEncodedFrame(IntPtr frame_buffer, int length, IntPtr encoded_audio_frame_info)
         {
             if (AudioEncodedFrameObserver == null) return;
