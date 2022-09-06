@@ -266,7 +266,8 @@ namespace Agora.Rtc
         ///
         /// <param name="uid"> The user ID.</param>
         ///
-        /// <param name="userInfo"> </param>
+        /// <param name="userInfo"> Input and output parameter. The object that identifies the user information UserInfo .
+        ///  Input: A UserInfo object.Output: A UserInfo object that contains the user account and user ID of the user.</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -1079,7 +1080,7 @@ namespace Agora.Rtc
         ///
         /// <param name="loopback"> Whether to play music files only on the local client:true: Only play music files on the local client so that only the local user can hear the music.false: Publish music files to remote clients so that both the local user and remote users can hear the music.</param>
         ///
-        /// <param name="cycle"> The number of times the music file plays.≥ 0: The number of playback times. For example, 0 means that the SDK does not play the music file while 1 means that the SDK plays once.-1: Play the audio file in an infinite loop.</param>
+        /// <param name="cycle"> The number of times the music file plays.>= 0: The number of playback times. For example, 0 means that the SDK does not play the music file while 1 means that the SDK plays once.-1: Play the audio file in an infinite loop.</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -1097,7 +1098,7 @@ namespace Agora.Rtc
         ///
         /// <param name="loopback"> Whether to only play music files on the local client:true: Only play music files on the local client so that only the local user can hear the music.false: Publish music files to remote clients so that both the local user and remote users can hear the music.</param>
         ///
-        /// <param name="cycle"> The number of times the music file plays.≥ 0: The number of playback times. For example, 0 means that the SDK does not play the music file while 1 means that the SDK plays once.-1: Play the audio file in an infinite loop.</param>
+        /// <param name="cycle"> The number of times the music file plays.>= 0: The number of playback times. For example, 0 means that the SDK does not play the music file while 1 means that the SDK plays once.-1: Play the audio file in an infinite loop.</param>
         ///
         /// <param name="startPos"> The playback position (ms) of the music file.</param>
         ///
@@ -1230,7 +1231,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// ≥ 0: The audio mixing duration, if this method call succeeds.&lt; 0: Failure.
+        /// >= 0: The audio mixing duration, if this method call succeeds.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetAudioMixingDuration();
@@ -1242,7 +1243,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// ≥ 0: The current playback position (ms) of the audio mixing, if this method call succeeds. 0 represents that the current music file does not start playing.&lt; 0: Failure.
+        /// >= 0: The current playback position (ms) of the audio mixing, if this method call succeeds. 0 represents that the current music file does not start playing.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetAudioMixingCurrentPosition();
@@ -1331,7 +1332,7 @@ namespace Agora.Rtc
         ///
         /// <param name="filePath"> Windows: The absolute path or URL address (including the suffixes of the filename) of the audio effect file. For example: C:\music\audio.mp4. Supported audio formats include MP3, AAC, M4A, MP4, WAV, and 3GP. See supported audio formats.If you have loaded the audio effect into memory via PreloadEffect , make sure this parameter is the same as the filePath set in PreloadEffect.</param>
         ///
-        /// <param name="loopCount"> The number of times the audio effect loops.≥ 0: The number of playback times. For example, 1 means loop one time, which means playing the audio effect two times in total.-1: Play the music file in an infinite loop.</param>
+        /// <param name="loopCount"> The number of times the audio effect loops.>= 0: The number of playback times. For example, 1 means loop one time, which means playing the audio effect two times in total.-1: Play the music file in an infinite loop.</param>
         ///
         /// <param name="pitch"> The pitch of the audio effect. The value range is 0.5 to 2.0. The default value is 1.0, which means the original pitch. The lower the value, the lower the pitch.</param>
         ///
@@ -2487,7 +2488,7 @@ namespace Agora.Rtc
         /// Sets the audio data format reported by OnPlaybackAudioFrameBeforeMixing [1/2] .
         /// </summary>
         ///
-        /// <param name="null"> The sample rate (Hz) of the audio data, which can be set as 8000, 16000, 32000, 44100, or 48000.</param>
+        /// <param name="sampleRate"> The sample rate (Hz) of the audio data, which can be set as 8000, 16000, 32000, 44100, or 48000.</param>
         ///
         /// <param name="channel"> The number of channels of the external audio source, which can be set as 1(Mono) or 2(Stereo).</param>
         ///
@@ -3908,9 +3909,9 @@ namespace Agora.Rtc
         ///
         /// <param name="options"> The channel media options. See ChannelMediaOptions .</param>
         ///
-        /// <param name="token"> The token generated on your server for authentication. See </param>
+        /// <param name="token"> The token generated on your server for authentication.</param>
         ///
-        /// <param name="connection"> </param>
+        /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <returns>
         /// 0: Success.

@@ -980,22 +980,30 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
+    /// <summary>
+    /// The cloud proxy type.
+    /// </summary>
     ///
     public enum CLOUD_PROXY_TYPE
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// 0: The automatic mode. The SDK has this mode enabled by default. In this mode, the SDK attempts a direct connection to SD-RTN™ and automatically switches to TCP/TLS 443 if the attempt fails. 
+        /// </summary>
         ///
         NONE_PROXY = 0,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 1: The cloud proxy for the UDP protocol, that is, the Force UDP cloud proxy mode. In this mode, the SDK always transmits data over UDP.
+        /// </summary>
         ///
         UDP_PROXY = 1,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 2: The cloud proxy for the TCP (encryption) protocol, that is, the Force TCP cloud proxy mode. In this mode, the SDK always transmits data over TCP/TLS 443.
+        /// </summary>
         ///
         TCP_PROXY = 2,
     };

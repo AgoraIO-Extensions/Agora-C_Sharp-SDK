@@ -1104,7 +1104,9 @@ namespace Agora.Rtc
         public int samplesPerChannel { set; get; }
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The number of audio channels.
+        /// </summary>
         ///
         public int numberOfChannels { set; get; }
 

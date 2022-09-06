@@ -150,7 +150,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// ≥ 0: The call succeeds and returns the number of media files that are cached.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// >= 0: The call succeeds and returns the number of media files that are cached.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int GetCacheFileCount();

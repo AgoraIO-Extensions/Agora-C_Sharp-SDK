@@ -22,7 +22,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// ≥ 0: Success. The ID of the media player.&lt; 0: Failure.
+        /// >= 0: Success. The ID of the media player.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetId();
