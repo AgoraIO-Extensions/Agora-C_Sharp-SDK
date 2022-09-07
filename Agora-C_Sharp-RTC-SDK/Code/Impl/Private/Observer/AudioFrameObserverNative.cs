@@ -9,8 +9,18 @@ namespace Agora.Rtc
 {
     internal static class AudioFrameObserverNative
     {
-        internal static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
-        internal static IAudioFrameObserver AudioFrameObserver;
+        private static Object observerLock = new Object();
+        private static OBSERVER_MODE mode = OBSERVER_MODE.INTPTR;
+        private static IAudioFrameObserver audioFrameObserver;
+
+        internal static void SetAudioFrameObserverAndMode(IAudioFrameObserver observer, OBSERVER_MODE md)
+        {
+            lock (observerLock)
+            {
+                audioFrameObserver = observer;
+                mode = md;
+            }
+        }
 
         //private static class LocalAudioFrames
         //{
@@ -163,55 +173,138 @@ namespace Agora.Rtc
 #endif
         internal static void OnEvent(IntPtr param)
         {
-            if (AudioFrameObserver == null) return;
-
-            IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
-            var @event = eventParam.@event;
-            var data = eventParam.data;
-            var buffer = eventParam.buffer;
-            var length = eventParam.length;
-            var buffer_count = eventParam.buffer_count;
-
-            IntPtr[] bufferArray = null;
-            int[] lengthArray = null;
-
-            if (buffer_count > 0)
+            lock (observerLock)
             {
-                bufferArray = new IntPtr[buffer_count];
-                Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
-                lengthArray = new int[buffer_count];
-                Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
+                IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+
+                if (audioFrameObserver == null)
+                {
+                    CreateDefaultReturn(ref eventParam);
+                    return;
+                }
+
+                var @event = eventParam.@event;
+                var data = eventParam.data;
+                var buffer = eventParam.buffer;
+                var length = eventParam.length;
+                var buffer_count = eventParam.buffer_count;
+
+                IntPtr[] bufferArray = null;
+                int[] lengthArray = null;
+
+                if (buffer_count > 0)
+                {
+                    bufferArray = new IntPtr[buffer_count];
+                    Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
+                    lengthArray = new int[buffer_count];
+                    Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
+                }
+
+                LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+
+                switch (@event)
+                {
+                    case "AudioFrameObserver_onRecordAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            bool result = audioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onPlaybackAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            bool result = audioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onMixedAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            bool result = audioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_getObservedAudioFramePosition":
+                        {
+                            int result = audioFrameObserver.GetObservedAudioFramePosition();
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_getPlaybackAudioParams":
+                        {
+                            var result = audioFrameObserver.GetPlaybackAudioParams();
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_getRecordAudioParams":
+                        {
+                            var result = audioFrameObserver.GetRecordAudioParams();
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_getMixedAudioParams":
+                        {
+                            var result = audioFrameObserver.GetMixedAudioParams();
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
+                            var result = audioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            string uid = (string)AgoraJson.GetData<string>(jsonData, "uid");
+                            var result = audioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        }
+                        break;
+                    default:
+                        AgoraLog.LogError("unexpected event: " + @event);
+                        break;
+                }
             }
+        }
 
-            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
-
+        private static void CreateDefaultReturn(ref IrisCEventParam eventParam)
+        {
+            var @event = eventParam.@event;
             switch (@event)
             {
                 case "AudioFrameObserver_onRecordAudioFrame":
-                    {
-                        AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                        string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                        bool result = AudioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
-                        var p = new { result };
-                        string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
-                    }
-                    break;
                 case "AudioFrameObserver_onPlaybackAudioFrame":
-                    {
-                        AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                        string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                        bool result = AudioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
-                        var p = new { result };
-                        string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
-                    }
-                    break;
                 case "AudioFrameObserver_onMixedAudioFrame":
                     {
-                        AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                        string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                        bool result = AudioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
+                        bool result = true;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
@@ -219,53 +312,29 @@ namespace Agora.Rtc
                     break;
                 case "AudioFrameObserver_getObservedAudioFramePosition":
                     {
-                        int result = AudioFrameObserver.GetObservedAudioFramePosition();
+                        int result = (int)(AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_PLAYBACK
+                                          | AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_RECORD
+                                          | AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_MIXED
+                                          | AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_BEFORE_MIXING);
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
                     }
                     break;
                 case "AudioFrameObserver_getPlaybackAudioParams":
-                    {
-                        var result = AudioFrameObserver.GetPlaybackAudioParams();
-                        var p = new { result };
-                        string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
-                    }
-                    break;
                 case "AudioFrameObserver_getRecordAudioParams":
-                    {
-                        var result = AudioFrameObserver.GetRecordAudioParams();
-                        var p = new { result };
-                        string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
-                    }
-                    break;
                 case "AudioFrameObserver_getMixedAudioParams":
                     {
-                        var result = AudioFrameObserver.GetMixedAudioParams();
+                        var result = new AudioParams();
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
                     }
                     break;
                 case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing":
-                    {
-                        AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                        string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                        uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
-                        var result = AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
-                        var p = new { result };
-                        string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
-                    }
-                    break;
                 case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2":
                     {
-                        AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                        string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                        string uid = (string)AgoraJson.GetData<string>(jsonData, "uid");
-                        var result = AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+                        var result = true;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
@@ -278,188 +347,187 @@ namespace Agora.Rtc
         }
 
 
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
+        //#endif
+        //        internal static bool OnRecordAudioFrame(string channelId, IntPtr audioFramePtr)
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return true;
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
-//#endif
-//        internal static bool OnRecordAudioFrame(string channelId, IntPtr audioFramePtr)
-//        {
-//            if (AudioFrameObserver == null)
-//                return true;
+        //            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 0);
 
-//            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 0);
+        //            try
+        //            {
+        //                return AudioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnRecordAudioFrame: " + e);
+        //                return true;
+        //            }
+        //        }
 
-//            try
-//            {
-//                return AudioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnRecordAudioFrame: " + e);
-//                return true;
-//            }
-//        }
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
+        //#endif
+        //        internal static bool OnPlaybackAudioFrame(string channelId, IntPtr audioFramePtr)
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return true;
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
-//#endif
-//        internal static bool OnPlaybackAudioFrame(string channelId, IntPtr audioFramePtr)
-//        {
-//            if (AudioFrameObserver == null)
-//                return true;
+        //            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 1);
 
-//            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 1);
+        //            try
+        //            {
+        //                return AudioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrame: " + e);
+        //                return true;
+        //            }
+        //        }
 
-//            try
-//            {
-//                return AudioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrame: " + e);
-//                return true;
-//            }
-//        }
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
+        //#endif
+        //        internal static bool OnMixedAudioFrame(string channelId, IntPtr audioFramePtr)
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return true;
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioFrameLocal_Native))]
-//#endif
-//        internal static bool OnMixedAudioFrame(string channelId, IntPtr audioFramePtr)
-//        {
-//            if (AudioFrameObserver == null)
-//                return true;
+        //            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 2);
 
-//            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 2);
+        //            try
+        //            {
+        //                return AudioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnMixedAudioFrame: " + e);
+        //                return true;
+        //            }
+        //        }
 
-//            try
-//            {
-//                return AudioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnMixedAudioFrame: " + e);
-//                return true;
-//            }
-//        }
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioFramePosition_Native))]
+        //#endif
+        //        internal static int GetObservedAudioFramePosition()
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioFramePosition_Native))]
-//#endif
-//        internal static int GetObservedAudioFramePosition()
-//        {
-//            if (AudioFrameObserver == null)
-//                return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
+        //            try
+        //            {
+        //                return AudioFrameObserver.GetObservedAudioFramePosition();
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetObservedAudioFramePosition: " + e);
+        //                return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
+        //            }
+        //        }
 
-//            try
-//            {
-//                return AudioFrameObserver.GetObservedAudioFramePosition();
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetObservedAudioFramePosition: " + e);
-//                return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
-//            }
-//        }
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
+        //#endif
+        //        internal static IrisAudioParams GetPlaybackAudioParams()
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return LocalAudioFrames.irisAudioParams;
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
-//#endif
-//        internal static IrisAudioParams GetPlaybackAudioParams()
-//        {
-//            if (AudioFrameObserver == null)
-//                return LocalAudioFrames.irisAudioParams;
-
-//            try
-//            {
-//                return ProcessAudioParams(AudioFrameObserver.GetPlaybackAudioParams());
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetPlaybackAudioParams: " + e);
-//                return LocalAudioFrames.irisAudioParams;
-//            }
-//        }
-
-
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
-//#endif
-//        internal static IrisAudioParams GetRecordAudioParams()
-//        {
-//            if (AudioFrameObserver == null)
-//                return LocalAudioFrames.irisAudioParams;
-
-//            try
-//            {
-//                return ProcessAudioParams(AudioFrameObserver.GetRecordAudioParams());
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetRecordAudioParams: " + e);
-//                return LocalAudioFrames.irisAudioParams;
-//            }
-//        }
-
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
-//#endif
-//        internal static IrisAudioParams GetMixedAudioParams()
-//        {
-//            if (AudioFrameObserver == null)
-//                return LocalAudioFrames.irisAudioParams;
-
-//            try
-//            {
-//                return ProcessAudioParams(AudioFrameObserver.GetMixedAudioParams());
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetMixedAudioParams: " + e);
-//                return LocalAudioFrames.irisAudioParams;
-//            }
-//        }
+        //            try
+        //            {
+        //                return ProcessAudioParams(AudioFrameObserver.GetPlaybackAudioParams());
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetPlaybackAudioParams: " + e);
+        //                return LocalAudioFrames.irisAudioParams;
+        //            }
+        //        }
 
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioFrameRemote_Native))]
-//#endif
-//        internal static bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, IntPtr audioFramePtr)
-//        {
-//            if (AudioFrameObserver == null)
-//                return true;
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
+        //#endif
+        //        internal static IrisAudioParams GetRecordAudioParams()
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return LocalAudioFrames.irisAudioParams;
 
-//            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, channelId, uid);
+        //            try
+        //            {
+        //                return ProcessAudioParams(AudioFrameObserver.GetRecordAudioParams());
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetRecordAudioParams: " + e);
+        //                return LocalAudioFrames.irisAudioParams;
+        //            }
+        //        }
 
-//            try
-//            {
-//                return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing: " + e);
-//                return true;
-//            }
-//        }
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
+        //#endif
+        //        internal static IrisAudioParams GetMixedAudioParams()
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return LocalAudioFrames.irisAudioParams;
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_AudioFrameRemoteStringUid_Native))]
-//#endif
-//        internal static bool OnPlaybackAudioFrameBeforeMixing2(string channelId, string uid, IntPtr audioFramePtr)
-//        {
-//            if (AudioFrameObserver == null)
-//                return true;
+        //            try
+        //            {
+        //                return ProcessAudioParams(AudioFrameObserver.GetMixedAudioParams());
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetMixedAudioParams: " + e);
+        //                return LocalAudioFrames.irisAudioParams;
+        //            }
+        //        }
 
-//            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, channelId, uid);
 
-//            try
-//            {
-//                return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
-//            }
-//            catch (Exception e)
-//            {
-//                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing2: " + e);
-//                return true;
-//            }
-//        }
-//    }
-}
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioFrameRemote_Native))]
+        //#endif
+        //        internal static bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, IntPtr audioFramePtr)
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return true;
+
+        //            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, channelId, uid);
+
+        //            try
+        //            {
+        //                return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing: " + e);
+        //                return true;
+        //            }
+        //        }
+
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_AudioFrameRemoteStringUid_Native))]
+        //#endif
+        //        internal static bool OnPlaybackAudioFrameBeforeMixing2(string channelId, string uid, IntPtr audioFramePtr)
+        //        {
+        //            if (AudioFrameObserver == null)
+        //                return true;
+
+        //            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, channelId, uid);
+
+        //            try
+        //            {
+        //                return AudioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+        //            }
+        //            catch (Exception e)
+        //            {
+        //                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnPlaybackAudioFrameBeforeMixing2: " + e);
+        //                return true;
+        //            }
+        //        }
+        //    }
+    }

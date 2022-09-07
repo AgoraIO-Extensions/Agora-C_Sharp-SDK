@@ -5,7 +5,7 @@ using System.Text;
 namespace Agora.Rtc
 {
     using LitJson;
-  
+
     public class AgoraJson
     {
         private const string ErrorTag = "AgoraJsonError";
@@ -196,18 +196,16 @@ namespace Agora.Rtc
     internal class AgoraUtil
     {
 
-        internal static void AllocEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle, Func_Event_Native onEvent, Func_EventEx_Native onEventEx)
+        internal static void AllocEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle, Func_Event_Native onEvent)
         {
             eventHandlerHandle.cEvent = new IrisCEventHandler
             {
                 OnEvent = onEvent,
-                //OnEventEx = onEventEx,
             };
 
             var cEventHandlerNativeLocal = new IrisCEventHandlerNative
             {
                 onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
-                //onEventEx = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEventEx)
             };
 
             eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
