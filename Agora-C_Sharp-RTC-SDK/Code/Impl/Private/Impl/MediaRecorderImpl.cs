@@ -64,7 +64,7 @@ namespace Agora.Rtc
         {
             if (_mediaRecorderEventHandlerHandle.handle != IntPtr.Zero) return;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _mediaRecorderEventHandlerHandle, MediaRecorderObserverNative.OnEvent, MediaRecorderObserverNative.OnEventEx);
+            AgoraUtil.AllocEventHandlerHandle(ref _mediaRecorderEventHandlerHandle, MediaRecorderObserverNative.OnEvent);
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaRecorderEventHandlerHandle.handle };
             AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETEVENTHANDLER,
@@ -83,7 +83,7 @@ namespace Agora.Rtc
         {
             if (_mediaRecorderEventHandlerHandle.handle == IntPtr.Zero) return;
 
-            MediaRecorderObserverNative.MediaRecorderObserverDic.Clear();
+            MediaRecorderObserverNative.ClearMediaRecorderObserver();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             MediaRecorderObserverNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();
@@ -94,36 +94,39 @@ namespace Agora.Rtc
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
-         
+
             AgoraUtil.FreeEventHandlerHandle(ref _mediaRecorderEventHandlerHandle);
-           
+
         }
 
         #region IMediaRecorder
         public int SetMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver callback)
         {
             string key = connection.localUid.ToString() + connection.channelId;
-            if (!MediaRecorderObserverNative.MediaRecorderObserverDic.ContainsKey(key))
+            
+            if (callback == null)
             {
-                MediaRecorderObserverNative.MediaRecorderObserverDic.Add(key, callback);
-
-                var param = new
-                {
-                    connection
-                };
-
-                var json = AgoraJson.ToJson(param);
-                int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
-                    json, (UInt32)json.Length,
-                    IntPtr.Zero, 0,
-                    out _result);
-
-                return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                MediaRecorderObserverNative.RemoveMediaRecorderObserver(key);
             }
-
-            if (callback == null && MediaRecorderObserverNative.MediaRecorderObserverDic.ContainsKey(key))
+            else
             {
-                MediaRecorderObserverNative.MediaRecorderObserverDic.Remove(key);
+                if (!MediaRecorderObserverNative.ContainsMediaRecorderObserver(key))
+                {
+                    MediaRecorderObserverNative.AddMediaRecorderObserver(key, callback);
+
+                    var param = new
+                    {
+                        connection
+                    };
+
+                    var json = AgoraJson.ToJson(param);
+                    int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
+                        json, (UInt32)json.Length,
+                        IntPtr.Zero, 0,
+                        out _result);
+
+                    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                }
             }
 
             return 0;

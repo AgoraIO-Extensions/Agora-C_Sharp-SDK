@@ -8,51 +8,65 @@ namespace Agora.Rtc
 {
     internal static class AudioEncodedFrameObserverNative
     {
-        internal static IAudioEncodedFrameObserver AudioEncodedFrameObserver = null;
+        private static Object observerLock = new Object();
+        private static IAudioEncodedFrameObserver audioEncodedFrameObserver = null;
 
+        internal static void SetAudioEncodedFrameObserver(IAudioEncodedFrameObserver observer)
+        {
+            lock (observerLock)
+            {
+                audioEncodedFrameObserver = observer;
+            }
+        }
+
+     
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
         {
-            if (AudioEncodedFrameObserver == null) return;
-
-            IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
-            var @event = eventParam.@event;
-            var data = eventParam.data;
-            var buffer = eventParam.buffer;
-            var length = eventParam.length;
-            var buffer_count = eventParam.buffer_count;
-
-            IntPtr[] bufferArray = null;
-            int[] lengthArray = null;
-
-            if (buffer_count > 0)
+            lock (observerLock)
             {
-                bufferArray = new IntPtr[buffer_count];
-                Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
-                lengthArray = new int[buffer_count];
-                Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
+
+                if (audioEncodedFrameObserver == null) return;
+
+                IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+                var @event = eventParam.@event;
+                var data = eventParam.data;
+                var buffer = eventParam.buffer;
+                var length = eventParam.length;
+                var buffer_count = eventParam.buffer_count;
+
+                IntPtr[] bufferArray = null;
+                int[] lengthArray = null;
+
+                if (buffer_count > 0)
+                {
+                    bufferArray = new IntPtr[buffer_count];
+                    Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
+                    lengthArray = new int[buffer_count];
+                    Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
+                }
+
+                EncodedAudioFrameInfo audioEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedAudioFrameInfo>(data, "audioEncodedFrameInfo");
+
+                switch (@event)
+                {
+                    case "AuidoEncodedFrameObserver_OnRecordAudioEncodedFrame":
+                        audioEncodedFrameObserver.OnRecordAudioEncodedFrame(bufferArray[0], lengthArray[0], audioEncodedFrameInfo);
+                        break;
+                    case "AuidoEncodedFrameObserver_OnPlaybackAudioEncodedFrame":
+                        audioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(bufferArray[0], lengthArray[0], audioEncodedFrameInfo);
+                        break;
+                    case "AuidoEncodedFrameObserver_OnMixedAudioEncodedFrame":
+                        audioEncodedFrameObserver.OnMixedAudioEncodedFrame(bufferArray[0], lengthArray[0], audioEncodedFrameInfo);
+                        break;
+                    default:
+                        AgoraLog.LogError("unexpected event name :" + @event);
+                        break;
+                }
+
             }
-
-            EncodedAudioFrameInfo audioEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedAudioFrameInfo>(data, "audioEncodedFrameInfo");
-
-            switch (@event)
-            {
-                case "AuidoEncodedFrameObserver_OnRecordAudioEncodedFrame":
-                    AudioEncodedFrameObserver.OnRecordAudioEncodedFrame(bufferArray[0], lengthArray[0], audioEncodedFrameInfo);
-                    break;
-                case "AuidoEncodedFrameObserver_OnPlaybackAudioEncodedFrame":
-                    AudioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(bufferArray[0], lengthArray[0], audioEncodedFrameInfo);
-                    break;
-                case "AuidoEncodedFrameObserver_OnMixedAudioEncodedFrame":
-                    AudioEncodedFrameObserver.OnMixedAudioEncodedFrame(bufferArray[0], lengthArray[0], audioEncodedFrameInfo);
-                    break;
-                default:
-                    AgoraLog.LogError("unexpected event name :" + @event);
-                    break;
-            }
-
         }
 
 
