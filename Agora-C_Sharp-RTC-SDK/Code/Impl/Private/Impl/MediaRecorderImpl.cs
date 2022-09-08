@@ -15,7 +15,7 @@ namespace Agora.Rtc
     public class MediaRecorderImpl
     {
         private IrisApiEnginePtr _irisApiEngine;
-        private CharAssistant _result;
+        private IrisCApiParam _apiParam;
         private bool _disposed = false;
 
         private EventHandlerHandle _mediaRecorderEventHandlerHandle = new EventHandlerHandle();
@@ -29,7 +29,7 @@ namespace Agora.Rtc
 
         internal MediaRecorderImpl(IrisApiEnginePtr irisApiEngine)
         {
-            _result = new CharAssistant();
+            _apiParam = new IrisCApiParam();
             _irisApiEngine = irisApiEngine;
             CreateEventHandler();
         }
@@ -49,7 +49,7 @@ namespace Agora.Rtc
             }
 
             _irisApiEngine = IntPtr.Zero;
-            _result = new CharAssistant();
+            _apiParam = new IrisCApiParam();
 
             _disposed = true;
         }
@@ -67,10 +67,10 @@ namespace Agora.Rtc
             AgoraUtil.AllocEventHandlerHandle(ref _mediaRecorderEventHandlerHandle, MediaRecorderObserverNative.OnEvent);
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaRecorderEventHandlerHandle.handle };
-            AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETEVENTHANDLER,
+            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETEVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+                ref _apiParam);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             _callbackObject = new AgoraCallbackObject(identifier);
@@ -90,10 +90,10 @@ namespace Agora.Rtc
             _callbackObject = null;
 #endif
             IntPtr[] arrayPtr = new IntPtr[] { IntPtr.Zero };
-            AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_SETEVENTHANDLER,
+            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_SETEVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                out _result);
+                ref _apiParam);
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaRecorderEventHandlerHandle);
 
@@ -120,12 +120,12 @@ namespace Agora.Rtc
                     };
 
                     var json = AgoraJson.ToJson(param);
-                    int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
+                    int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
                         json, (UInt32)json.Length,
                         IntPtr.Zero, 0,
-                        out _result);
+                        ref _apiParam);
 
-                    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
                 }
             }
 
@@ -141,12 +141,12 @@ namespace Agora.Rtc
             };
 
             var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STARTRECORDING,
+            int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STARTRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
-                out _result);
+                ref _apiParam);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int StopRecording(RtcConnection connection)
@@ -157,12 +157,12 @@ namespace Agora.Rtc
             };
 
             var json = AgoraJson.ToJson(param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STOPRECORDING,
+            int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STOPRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
-                out _result);
+                ref _apiParam);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         #endregion

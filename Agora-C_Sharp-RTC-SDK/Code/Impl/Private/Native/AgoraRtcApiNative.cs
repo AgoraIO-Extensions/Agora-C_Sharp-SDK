@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Agora.Rtc
 {
@@ -61,10 +62,54 @@ namespace Agora.Rtc
         internal static extern void DestroyIrisEventHandler(IrisEventHandlerHandle handle);
 
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name,
-            string @params, UInt32 paramLength, IntPtr bufferPtr, UInt32 bufferLength, out CharAssistant result);
+        //public static IrisCApiParam ApiParam = new IrisCApiParam();
+        //private static IntPtr apiParamPtr = IntPtr.Zero;
 
+        //internal static void CreateApiParamsPtr()
+        //{
+        //    if (apiParamPtr == IntPtr.Zero)
+        //    {
+        //        apiParamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(ApiParam));
+        //    }
+        //}
+
+        //internal static void DestroyApiParamsPtr()
+        //{
+        //    if (apiParamPtr != IntPtr.Zero)
+        //    {
+        //        Marshal.FreeHGlobal(apiParamPtr);
+        //        apiParamPtr = IntPtr.Zero;
+        //    }
+        //}
+
+        internal static int CallIrisApiWithArgs(IrisRtcEnginePtr engine_ptr, string func_name,
+            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisCApiParam apiParam,
+            uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0)
+        {
+            apiParam.@event = func_name;
+            apiParam.data = @params;
+            apiParam.size = paramLength;
+            apiParam.buffer = buffer;
+
+            if (buffer_count > 0)
+            {
+                uint[] lengths = new uint[3];
+                lengths[0] = buffer0Length;
+                lengths[1] = buffer1Length;
+                lengths[2] = buffer2Length;
+                apiParam.length = Marshal.UnsafeAddrOfPinnedArrayElement(lengths, 0);
+            }
+            else
+            {
+                apiParam.length = IntPtr.Zero;
+            }
+
+            return CallIrisApi(engine_ptr, ref apiParam);
+        }
+
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisCApiParam apiParam);
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //internal static extern IrisRtcAudioSpectrumObserverHandle RegisterRtcAudioSpectrumObserver(IrisRtcEnginePtr engine_ptr,
         //                         IrisRtcCAudioSpectrumObserver observer, string @params);
@@ -264,7 +309,43 @@ namespace Agora.Rtc
     {
         internal string @event;
         internal string data;
+        internal uint size;
 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+        internal byte[] result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisCApiParam
+    {
+        internal IrisCApiParam(int param = 0)
+        {
+            @event = "";
+            data = "";
+            size = 0;
+            result = new byte[65536];
+            buffer = IntPtr.Zero;
+            length = IntPtr.Zero;
+            buffer_count = 0;
+        }
+
+        public string Result
+        {
+            get
+            {
+                var re = Encoding.UTF8.GetString(result);
+                var index = re.IndexOf('\0');
+                return re.Substring(0, index);
+            }
+        }
+
+        internal string @event;
+        internal string data;
+        internal uint size;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
         internal byte[] result;
 

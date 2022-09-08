@@ -9,11 +9,11 @@ namespace Agora.Rtc
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
-        private CharAssistant _result;
+        private IrisCApiParam _apiParam;
 
         internal VideoDeviceManagerImpl(IrisApiEnginePtr irisApiEngine)
         {
-            _result = new CharAssistant();
+            _apiParam = new IrisCApiParam();
             _irisApiEngine = irisApiEngine;
         }
 
@@ -37,17 +37,17 @@ namespace Agora.Rtc
             }
 
             _irisApiEngine = IntPtr.Zero;
-            _result = new CharAssistant();
+            _apiParam = new IrisCApiParam();
             _disposed = true;
         }
 
         public DeviceInfo[] EnumerateVideoDevices()
         {
-            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            return AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES,
-                "", 0, IntPtr.Zero, 0, out _result) != 0
+                "", 0, IntPtr.Zero, 0, ref _apiParam) != 0
                 ? new DeviceInfo[0]
-                : AgoraJson.JsonToStructArray<DeviceInfo>(_result.Result, "result");
+                : AgoraJson.JsonToStructArray<DeviceInfo>(_apiParam.Result, "result");
         }
 
         public int SetDevice(string deviceIdUTF8)
@@ -57,28 +57,28 @@ namespace Agora.Rtc
                 deviceIdUTF8
             };
             string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_SETDEVICE,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int GetDevice(ref string deviceIdUTF8)
         {
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETDEVICE,
-                "", 0, IntPtr.Zero, 0, out _result);
+                "", 0, IntPtr.Zero, 0, ref _apiParam);
 
             if (ret == 0)
             {
-                deviceIdUTF8 = (string)AgoraJson.GetData<string>(_result.Result, "deviceIdUTF8");
+                deviceIdUTF8 = (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceIdUTF8");
             }
             else
             {
                 deviceIdUTF8 = "";
             }
 
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int StartDeviceTest(view_t hwnd)
@@ -88,18 +88,18 @@ namespace Agora.Rtc
                 hwnd = (ulong)hwnd
             };
             string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int StopDeviceTest()
         {
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST,
-                "", 0, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+                "", 0, IntPtr.Zero, 0, ref _apiParam);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int GetCapability(string deviceIdUTF8, uint deviceCapabilityNumber, out VideoFormat capability)
@@ -110,21 +110,21 @@ namespace Agora.Rtc
                 deviceCapabilityNumber
             };
             string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETCAPABILITY,
-               jsonParam, 0, IntPtr.Zero, 0, out _result);
+               jsonParam, 0, IntPtr.Zero, 0, ref _apiParam);
 
 
             if (ret == 0)
             {
-                capability = AgoraJson.JsonToStruct<VideoFormat>(_result.Result, "capability");
+                capability = AgoraJson.JsonToStruct<VideoFormat>(_apiParam.Result, "capability");
             }
             else
             {
                 capability = new VideoFormat();
             }
 
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int NumberOfCapabilities(string deviceIdUTF8)
@@ -134,10 +134,10 @@ namespace Agora.Rtc
                 deviceIdUTF8,
             };
             string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                AgoraApiType.FUNC_VIDEODEVICEMANAGER_NUMBEROFCAPABILITIES,
-               jsonParam, 0, IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+               jsonParam, 0, IntPtr.Zero, 0, ref _apiParam);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
     }
 }
