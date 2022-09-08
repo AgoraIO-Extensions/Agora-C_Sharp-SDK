@@ -42,6 +42,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Reference Include="agorartc">
+        <HintPath>..\Agora-C_Sharp-RTC-SDK\agorartc\obj\x64\Debug\netcoreapp20\agorartc.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
       <Compile Update="Properties\Resources.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
