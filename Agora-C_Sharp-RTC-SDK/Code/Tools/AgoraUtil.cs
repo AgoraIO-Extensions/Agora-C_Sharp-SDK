@@ -227,25 +227,25 @@ namespace Agora.Rtc
 
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct CharAssistant
-    {
-        internal CharAssistant(int param = 0)
-        {
-            resultChar = new byte[65536];
-        }
+    //[StructLayout(LayoutKind.Sequential)]
+    //internal struct CharAssistant
+    //{
+    //    internal CharAssistant(int param = 0)
+    //    {
+    //        resultChar = new byte[65536];
+    //    }
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
-        private byte[] resultChar;
+    //    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+    //    private byte[] resultChar;
 
-        public string Result
-        {
-            get
-            {
-                var re = Encoding.UTF8.GetString(resultChar);
-                var index = re.IndexOf('\0');
-                return re.Substring(0, index);
-            }
-        }
-    }
+    //    public string Result
+    //    {
+    //        get
+    //        {
+    //            var re = Encoding.UTF8.GetString(resultChar);
+    //            var index = re.IndexOf('\0');
+    //            return re.Substring(0, index);
+    //        }
+    //    }
+    //}
 }
