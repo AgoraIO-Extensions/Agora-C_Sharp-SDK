@@ -5694,6 +5694,19 @@ namespace agora.rtc
         AudioTestPlaybackVolume = 1,
     }
 
+    public struct LogUploadServerInfo
+    {
+        string serverDomain;
+        string serverPath;
+        int serverPort;
+        bool serverHttps; 
+    }
+
+    public struct AdvancedConfigInfo
+    {
+        LogUploadServerInfo logUploadServer;
+    }
+
     public struct LocalAccessPointConfiguration
     {
         public string[] ipList;
@@ -5702,6 +5715,7 @@ namespace agora.rtc
         public int domainListSize;
         public string[] verifyDomainName;
         public LOCAL_PROXY_MODE mode;
+        AdvancedConfigInfo advancedConfig;
     }
 
     /**
