@@ -11,7 +11,10 @@ namespace Agora.Rtc
     {
 
 
-        public virtual void OnDeviceEnumerated() { }
+        public virtual void OnDevicesEnumerated() { }
+        public virtual void OnPlaybackDevicesEnumerated(DeviceInfo[] devices) { }
+        public virtual void OnRecordingDevicesEnumerated(DeviceInfo[] devices) { }
+        public virtual void OnVideoDevicesEnumerated(DeviceInfo[] devices) { }
         ///
         /// <summary>
         /// Occurs when a user joins a channel.

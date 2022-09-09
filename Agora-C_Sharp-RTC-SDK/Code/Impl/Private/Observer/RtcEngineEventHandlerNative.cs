@@ -1431,15 +1431,57 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "WebGL_onDeviceEnumerated":
+                case "WebGL_onDevicesEnumerated":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (EngineEventHandler == null) return;
-                        EngineEventHandler.OnDeviceEnumerated(
+                        EngineEventHandler.OnDevicesEnumerated(
                            
                          );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "WebGL_onPlaybackDevicesEnumerated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnPlaybackDevicesEnumerated(
+                         AgoraJson.JsonToStructArray<DeviceInfo>(data, "devices")
+                     );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "WebGL_onRecordingDevicesEnumerated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnRecordingDevicesEnumerated(
+                         AgoraJson.JsonToStructArray<DeviceInfo>(data, "devices")
+                     );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "WebGL_onVideoDevicesEnumerated":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnVideoDevicesEnumerated(
+                         AgoraJson.JsonToStructArray<DeviceInfo>(data, "devices")
+                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
