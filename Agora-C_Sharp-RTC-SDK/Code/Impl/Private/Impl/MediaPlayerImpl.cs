@@ -55,7 +55,6 @@ namespace Agora.Rtc
         {
             _apiParam = new IrisCApiParam();
             _irisApiEngine = irisApiEngine;
-            CreateEventHandler();
         }
 
         ~MediaPlayerImpl()
@@ -105,11 +104,15 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _mediaPlayerEventHandlerHandle, MediaPlayerSourceObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETEVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETEVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_SETEVENTHANDLER failed: " + nRet);
+            }
 
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -132,10 +135,15 @@ namespace Agora.Rtc
 #endif
 
             IntPtr[] arrayPtr = new IntPtr[] { IntPtr.Zero };
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETEVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETEVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_SETEVENTHANDLER failed: " + nRet);
+            }
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaPlayerEventHandlerHandle);
 
@@ -147,10 +155,15 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _mediaPlayerAudioFrameObserverHandle, MediaPlayerAudioFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerAudioFrameObserverHandle.handle };
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER failed: " + nRet);
+            }
         }
 
         private void SetIrisAudioFrameObserverWithMode(RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
@@ -162,10 +175,15 @@ namespace Agora.Rtc
             var param = new { mode };
             var json = AgoraJson.ToJson(param);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerAudioFrameObserverHandle.handle };
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER,
+            var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER,
                 json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER failed: " + nRet);
+            }
         }
 
         private void UnSetIrisAudioFrameObserver()
@@ -173,13 +191,17 @@ namespace Agora.Rtc
             if (_mediaPlayerAudioFrameObserverHandle.handle == IntPtr.Zero) return;
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerAudioFrameObserverHandle.handle };
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERAUDIOFRAMEOBSERVER,
+            var nRet =AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERAUDIOFRAMEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
-            AgoraUtil.FreeEventHandlerHandle(ref _mediaPlayerAudioFrameObserverHandle);
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER failed: " + nRet);
+            }
 
+            AgoraUtil.FreeEventHandlerHandle(ref _mediaPlayerAudioFrameObserverHandle);
         }
 
         private int SetMediaPlayerOpenWithCustomSource(int playerId, Int64 startPos)
@@ -191,11 +213,15 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(param);
             IntPtr[] arrayPtr = new IntPtr[] { eventHandlerHandle.handle };
 
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHCUSTOMSOURCE,
+            var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHCUSTOMSOURCE,
                 json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_OPENWITHCUSTOMSOURCE failed: " + nRet);
+            }
 
             this._mediaPlayerCustomProviderHandles.Add(playerId, eventHandlerHandle);
 
@@ -213,7 +239,7 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(param);
             IntPtr[] arrayPtr = new IntPtr[] { eventHandlerHandle.handle };
 
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE,
                 json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
@@ -221,9 +247,12 @@ namespace Agora.Rtc
             AgoraUtil.FreeEventHandlerHandle(ref eventHandlerHandle);
             this._mediaPlayerCustomProviderHandles.Remove(playerId);
 
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE failed: " + nRet);
+            }
 
-
-            return 0;
+            return nRet;
         }
 
         private int SetMediaPlayerOpenWithMediaSource(int playerId, MediaSource source, bool hadProvider)
@@ -239,12 +268,17 @@ namespace Agora.Rtc
             }
             var param = new { playerId, source };
             var json = AgoraJson.ToJson(param);
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHMEDIASOURCE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_OPENWITHMEDIASOURCE,
                 json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
-            return 0;
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_OPENWITHMEDIASOURCE failed: " + nRet);
+            }
+
+            return nRet;
         }
 
         private int UnsetMediaPlayerOpenWithMediaSource(int playerId)
@@ -257,7 +291,7 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(param);
             IntPtr[] arrayPtr = new IntPtr[] { eventHandlerHandle.handle };
 
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNOPENWITHMEDIASOURCE,
+            var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNOPENWITHMEDIASOURCE,
                 json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
@@ -265,7 +299,12 @@ namespace Agora.Rtc
             AgoraUtil.FreeEventHandlerHandle(ref eventHandlerHandle);
             this._mediaPlayerMediaProviderHandles.Remove(playerId);
 
-            return 0;
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_UNOPENWITHMEDIASOURCE failed: " + nRet);
+            }
+
+            return nRet;
         }
 
         private void SetIrisAudioSpectrumObserver(int intervalInMS)
@@ -276,10 +315,15 @@ namespace Agora.Rtc
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerAudioSpectrumObserverHandle.handle };
             var param = new { intervalInMS };
             var json = AgoraJson.ToJson(param);
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER,
+            var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER,
                 json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER failed: " + nRet);
+            }
         }
 
         private void UnSetIrisAudioSpectrumObserver()
@@ -287,16 +331,22 @@ namespace Agora.Rtc
             if (_mediaPlayerAudioSpectrumObserverHandle.handle == IntPtr.Zero) return;
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerAudioSpectrumObserverHandle.handle };
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER,
+            var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER failed: " + nRet);
+            }
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaPlayerAudioSpectrumObserverHandle);
         }
 
         public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
         {
+            CreateEventHandler();
             if (engineEventHandler == null)
             {
                 MediaPlayerSourceObserverNative.RemoveSourceObserver(playerId);
