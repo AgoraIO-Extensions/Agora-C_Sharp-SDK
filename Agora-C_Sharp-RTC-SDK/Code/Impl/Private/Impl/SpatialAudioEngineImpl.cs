@@ -32,7 +32,6 @@ namespace Agora.Rtc
         {
             if (!_disposed)
             {
-                //Release();
                 _disposed = true;
             }
 

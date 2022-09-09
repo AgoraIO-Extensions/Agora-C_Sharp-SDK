@@ -31,7 +31,6 @@ namespace Agora.Rtc
         {
             _apiParam = new IrisCApiParam();
             _irisApiEngine = irisApiEngine;
-            CreateEventHandler();
         }
 
         ~MediaRecorderImpl()
@@ -67,10 +66,15 @@ namespace Agora.Rtc
             AgoraUtil.AllocEventHandlerHandle(ref _mediaRecorderEventHandlerHandle, MediaRecorderObserverNative.OnEvent);
 
             IntPtr[] arrayPtr = new IntPtr[] { _mediaRecorderEventHandlerHandle.handle };
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETEVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETEVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_MEDIARECORDER_SETEVENTHANDLER failed: " + nRet);
+            }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             _callbackObject = new AgoraCallbackObject(identifier);
@@ -90,10 +94,15 @@ namespace Agora.Rtc
             _callbackObject = null;
 #endif
             IntPtr[] arrayPtr = new IntPtr[] { IntPtr.Zero };
-            AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_SETEVENTHANDLER,
+            var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_SETEVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+
+            if (nRet != 0)
+            {
+                AgoraLog.LogError("FUNC_RTCENGINE_SETEVENTHANDLER failed: " + nRet);
+            }
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaRecorderEventHandlerHandle);
 
@@ -102,8 +111,8 @@ namespace Agora.Rtc
         #region IMediaRecorder
         public int SetMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver callback)
         {
+            CreateEventHandler();
             string key = connection.localUid.ToString() + connection.channelId;
-            
             if (callback == null)
             {
                 MediaRecorderObserverNative.RemoveMediaRecorderObserver(key);

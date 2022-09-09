@@ -8,13 +8,21 @@ namespace Agora.Rtc
 {
     internal static class VideoEncodedFrameObserverNative
     {
-        internal static Object observerLock = new Object();
-        internal static IVideoEncodedFrameObserver videoEncodedFrameObserver;
+        private static Object observerLock = new Object();
+        private static IVideoEncodedFrameObserver videoEncodedFrameObserver;
 
-        private static class LocalVideoEncodedVideoFrameInfo
+        internal static void SetVideoEncodedFrameObserver(IVideoEncodedFrameObserver observer)
         {
-            internal static readonly EncodedVideoFrameInfo info = new EncodedVideoFrameInfo();
+            lock (observerLock)
+            {
+                videoEncodedFrameObserver = observer;
+            }
         }
+
+        //private static class LocalVideoEncodedVideoFrameInfo
+        //{
+        //    internal static readonly EncodedVideoFrameInfo info = new EncodedVideoFrameInfo();
+        //}
 
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -95,39 +103,39 @@ namespace Agora.Rtc
         }
 
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-        [MonoPInvokeCallback(typeof(Func_EncodedVideoFrameObserver_Native))]
-#endif
-        internal static bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
-        {
-            if (videoEncodedFrameObserver == null)
-                return true;
+//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+//        [MonoPInvokeCallback(typeof(Func_EncodedVideoFrameObserver_Native))]
+//#endif
+//        internal static bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfoPtr)
+//        {
+//            if (videoEncodedFrameObserver == null)
+//                return true;
 
-            var videoEncodedFrameInfo = (IrisEncodedVideoFrameInfo)(Marshal.PtrToStructure(videoEncodedFrameInfoPtr, typeof(IrisEncodedVideoFrameInfo)) ??
-                new IrisEncodedVideoFrameInfo());
+//            var videoEncodedFrameInfo = (IrisEncodedVideoFrameInfo)(Marshal.PtrToStructure(videoEncodedFrameInfoPtr, typeof(IrisEncodedVideoFrameInfo)) ??
+//                new IrisEncodedVideoFrameInfo());
 
-            var localVideoEncodedFrameInfo = LocalVideoEncodedVideoFrameInfo.info;
+//            var localVideoEncodedFrameInfo = LocalVideoEncodedVideoFrameInfo.info;
 
-            localVideoEncodedFrameInfo.codecType = (VIDEO_CODEC_TYPE)videoEncodedFrameInfo.codecType;
-            localVideoEncodedFrameInfo.width = videoEncodedFrameInfo.width;
-            localVideoEncodedFrameInfo.height = videoEncodedFrameInfo.height;
-            localVideoEncodedFrameInfo.framesPerSecond = videoEncodedFrameInfo.framesPerSecond;
-            localVideoEncodedFrameInfo.frameType = (VIDEO_FRAME_TYPE_NATIVE)videoEncodedFrameInfo.frameType;
-            localVideoEncodedFrameInfo.rotation = (VIDEO_ORIENTATION)videoEncodedFrameInfo.rotation;
-            localVideoEncodedFrameInfo.trackId = videoEncodedFrameInfo.trackId;
-            localVideoEncodedFrameInfo.captureTimeMs = videoEncodedFrameInfo.captureTimeMs;
-            localVideoEncodedFrameInfo.uid = videoEncodedFrameInfo.uid;
-            localVideoEncodedFrameInfo.streamType = (VIDEO_STREAM_TYPE)videoEncodedFrameInfo.streamType;
+//            localVideoEncodedFrameInfo.codecType = (VIDEO_CODEC_TYPE)videoEncodedFrameInfo.codecType;
+//            localVideoEncodedFrameInfo.width = videoEncodedFrameInfo.width;
+//            localVideoEncodedFrameInfo.height = videoEncodedFrameInfo.height;
+//            localVideoEncodedFrameInfo.framesPerSecond = videoEncodedFrameInfo.framesPerSecond;
+//            localVideoEncodedFrameInfo.frameType = (VIDEO_FRAME_TYPE_NATIVE)videoEncodedFrameInfo.frameType;
+//            localVideoEncodedFrameInfo.rotation = (VIDEO_ORIENTATION)videoEncodedFrameInfo.rotation;
+//            localVideoEncodedFrameInfo.trackId = videoEncodedFrameInfo.trackId;
+//            localVideoEncodedFrameInfo.captureTimeMs = videoEncodedFrameInfo.captureTimeMs;
+//            localVideoEncodedFrameInfo.uid = videoEncodedFrameInfo.uid;
+//            localVideoEncodedFrameInfo.streamType = (VIDEO_STREAM_TYPE)videoEncodedFrameInfo.streamType;
 
-            try
-            {
-                return videoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, length, localVideoEncodedFrameInfo);
-            }
-            catch (Exception e)
-            {
-                AgoraLog.LogError("[Exception] IVideoEncodedFrameObserver.OnEncodedVideoFrameReceived: " + e);
-                return false;
-            }
-        }
+//            try
+//            {
+//                return videoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, length, localVideoEncodedFrameInfo);
+//            }
+//            catch (Exception e)
+//            {
+//                AgoraLog.LogError("[Exception] IVideoEncodedFrameObserver.OnEncodedVideoFrameReceived: " + e);
+//                return false;
+//            }
+//        }
     }
 }
