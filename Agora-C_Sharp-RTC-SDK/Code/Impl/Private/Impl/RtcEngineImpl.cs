@@ -1314,7 +1314,7 @@ namespace Agora.Rtc
 
         private void UnSetIrisAudioEncodedFrameObserver()
         {
-            if (_rtcAudioEncodedFrameObserverHandle.handle == null) return;
+            if (_rtcAudioEncodedFrameObserverHandle.handle == IntPtr.Zero) return;
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioEncodedFrameObserverHandle.handle };
             AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_UNREGISTERAUDIOENCODEDFRAMEOBSERVER,
