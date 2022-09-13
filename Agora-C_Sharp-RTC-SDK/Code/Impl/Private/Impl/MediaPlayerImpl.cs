@@ -530,10 +530,11 @@ namespace Agora.Rtc
             return 0;
         }
 
-        public int SetSoundPositionParams(float pan, float gain)
+        public int SetSoundPositionParams(int playerId, float pan, float gain)
         {
             var param = new
             {
+                playerId, 
                 pan,
                 gain,
             };
@@ -543,7 +544,6 @@ namespace Agora.Rtc
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
 
         public int Play(int playerId)
         {

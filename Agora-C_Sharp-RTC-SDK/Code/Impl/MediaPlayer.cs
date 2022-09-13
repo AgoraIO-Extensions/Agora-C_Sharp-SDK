@@ -7,7 +7,6 @@ namespace Agora.Rtc
         private IRtcEngine _rtcEngineInstance = null;
         private MediaPlayerImpl _mediaPlayerImpl = null;
         private const int ErrorCode = -7;
-
         private int playerId;
 
         internal MediaPlayer(IRtcEngine rtcEngine, MediaPlayerImpl impl)
@@ -112,7 +111,6 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.OpenWithCustomSource(playerId, startPos, provider);
         }
 
-
         public override int OpenWithMediaSource(MediaSource source)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
@@ -128,7 +126,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.SetSoundPositionParams(pan, gain);
+            return _mediaPlayerImpl.SetSoundPositionParams(playerId, pan, gain);
         }
 
         public override int Play()
