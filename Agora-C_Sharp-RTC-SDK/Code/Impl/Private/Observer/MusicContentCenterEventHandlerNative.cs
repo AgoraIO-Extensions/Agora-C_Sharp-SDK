@@ -36,7 +36,7 @@ namespace Agora.Rtc
                     EventHandler.OnMusicChartsResult(
                         (string)AgoraJson.GetData<string>(data, "requestId"),
                         (MusicContentCenterStatusCode)AgoraJson.GetData<int>(data, "status"),
-                        (MusicChartCollection)AgoraJson.JsonToStruct<MusicChartCollection>(data, "result")
+                        AgoraJson.JsonToStructArray<MusicChartInfo>(data, "result")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
