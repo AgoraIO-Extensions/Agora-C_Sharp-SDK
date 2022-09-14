@@ -67,33 +67,38 @@ namespace Agora.Rtc
             apiParam.buffer = buffer;
             apiParam.buffer_count = buffer_count;
 
+            IntPtr lengthPtr = IntPtr.Zero;
             if (buffer_count > 0)
             {
-                uint[] lengths = new uint[3];
-                lengths[0] = buffer0Length;
-                lengths[1] = buffer1Length;
-                lengths[2] = buffer2Length;
-                apiParam.length = Marshal.UnsafeAddrOfPinnedArrayElement(lengths, 0);
+                int[] lengths = new int[3];
+                lengths[0] = (int)buffer0Length;
+                lengths[1] = (int)buffer1Length;
+                lengths[2] = (int)buffer2Length;
+                lengthPtr = Marshal.AllocHGlobal(lengths.Length * sizeof(int));
+                Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
             }
-            else
+            apiParam.length = lengthPtr;
+            int retval = CallIrisApi(engine_ptr, ref apiParam);
+
+            if (lengthPtr != IntPtr.Zero)
             {
-                apiParam.length = IntPtr.Zero;
+                Marshal.FreeHGlobal(lengthPtr);
             }
 
-            return CallIrisApi(engine_ptr, ref apiParam);
+            return retval;
         }
 
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisCApiParam apiParam);
-       
+
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void Attach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void Detach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
 
-     
+
         // IrisVideoFrameBufferManager
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisVideoFrameBufferManagerPtr CreateIrisVideoFrameBufferManager();
@@ -251,12 +256,12 @@ namespace Agora.Rtc
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCEventParam2
     {
-        internal IntPtr @eventPtr;
-        internal IntPtr dataPtr;
+        internal string @event;
+        internal string data;
         internal uint data_size;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
-        internal byte[] result;
+        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+        internal IntPtr result;
 
         internal IntPtr buffer;
         internal IntPtr length;
@@ -524,29 +529,29 @@ namespace Agora.Rtc
     }
 
     //meta data
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate int Func_MaxMetadataSize_Native();
+    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    //internal delegate int Func_MaxMetadataSize_Native();
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate bool Func_ReadyToSendMetadata_Native(ref IrisMetadata metaData, VIDEO_SOURCE_TYPE source_type);
+    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    //internal delegate bool Func_ReadyToSendMetadata_Native(ref IrisMetadata metaData, VIDEO_SOURCE_TYPE source_type);
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate void Func_MetadataReceived_Native(IntPtr metadata);
+    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    //internal delegate void Func_MetadataReceived_Native(IntPtr metadata);
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisCMediaMetadataObserverNative
-    {
-        internal IntPtr getMaxMetadataSize;
-        internal IntPtr onReadyToSendMetadata;
-        internal IntPtr onMetadataReceived;
-    }
+    //[StructLayout(LayoutKind.Sequential)]
+    //internal struct IrisCMediaMetadataObserverNative
+    //{
+    //    internal IntPtr getMaxMetadataSize;
+    //    internal IntPtr onReadyToSendMetadata;
+    //    internal IntPtr onMetadataReceived;
+    //}
 
-    internal struct IrisCMediaMetadataObserver
-    {
-        internal Func_MaxMetadataSize_Native GetMaxMetadataSize;
-        internal Func_ReadyToSendMetadata_Native OnReadyToSendMetadata;
-        internal Func_MetadataReceived_Native OnMetadataReceived;
-    }
+    //internal struct IrisCMediaMetadataObserver
+    //{
+    //    internal Func_MaxMetadataSize_Native GetMaxMetadataSize;
+    //    internal Func_ReadyToSendMetadata_Native OnReadyToSendMetadata;
+    //    internal Func_MetadataReceived_Native OnMetadataReceived;
+    //}
 
     #endregion
 }

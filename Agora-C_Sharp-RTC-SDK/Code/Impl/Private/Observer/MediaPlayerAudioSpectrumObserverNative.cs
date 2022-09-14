@@ -122,8 +122,8 @@ namespace Agora.Rtc
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
                     case "AudioSpectrumObserver_onRemoteAudioSpectrum":
@@ -142,8 +142,8 @@ namespace Agora.Rtc
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
                     default:
@@ -165,8 +165,8 @@ namespace Agora.Rtc
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                        IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
                 default:
