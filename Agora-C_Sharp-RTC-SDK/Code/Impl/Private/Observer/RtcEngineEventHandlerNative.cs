@@ -27,7 +27,7 @@ namespace Agora.Rtc
         {
             if (rtcEngineEventHandler == null) return;
 
-           
+
             IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
 
             string @event = eventParam.@event;
@@ -36,11 +36,16 @@ namespace Agora.Rtc
             IntPtr length = eventParam.length;
             uint buffer_count = eventParam.buffer_count;
 
-            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+            LitJson.JsonData jsonData = null;
+            if (data != null)
+            {
+                jsonData = AgoraJson.ToObject(data);
+            }
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
-         
+
             switch (@event)
             {
                 #region no buffer start

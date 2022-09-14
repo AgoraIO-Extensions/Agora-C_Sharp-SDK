@@ -53,7 +53,11 @@ namespace Agora.Rtc
             var length = eventParam.length;
             var buffer_count = eventParam.buffer_count;
 
-            var jsonData = AgoraJson.ToObject(data);
+            LitJson.JsonData jsonData = null;
+            if (data != null)
+            {
+                AgoraJson.ToObject(data);
+            }
             RtcConnection connection = AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
             string key = connection.localUid.ToString() + connection.channelId;
             switch (@event)

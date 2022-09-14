@@ -20,6 +20,32 @@ namespace Agora.Rtc
             }
         }
 
+
+        internal class IrisMetadata
+        {
+            public uint uid;
+            public uint size;
+            public UInt64 buffer;
+            public long timeStampMs;
+
+            public void GenerateMetadata(ref Metadata data)
+            {
+                data.uid = uid;
+                data.size = size;
+                data.buffer = (IntPtr)buffer;
+                data.timeStampMs = timeStampMs;
+            }
+
+            public void CopyFromMetadata(ref Metadata data)
+            {
+                uid = data.uid;
+                size = data.size;
+                buffer = (UInt64)data.buffer;
+                timeStampMs = data.timeStampMs;
+            }
+
+        }
+
         //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         //        [MonoPInvokeCallback(typeof(Func_MaxMetadataSize_Native))]
         //#endif
@@ -51,8 +77,6 @@ namespace Agora.Rtc
                 var length = eventParam.length;
                 var buffer_count = eventParam.buffer_count;
 
-                var jsonData = AgoraJson.ToObject(data);
-
                 switch (@event)
                 {
                     case "MetadataObserver_getMaxMetadataSize":
@@ -61,25 +85,33 @@ namespace Agora.Rtc
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
                     case "MetadataObserver_onReadyToSendMetadata":
                         {
-                            Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
+                            var jsonData = AgoraJson.ToObject(data);
+                            IrisMetadata irisMetadata = AgoraJson.JsonToStruct<IrisMetadata>(jsonData, "metadata");
+                            Metadata metadata = new Metadata();
+                            irisMetadata.GenerateMetadata(ref metadata);
                             VIDEO_SOURCE_TYPE source_type = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source_type");
                             bool result = metadataObserver.OnReadyToSendMetadata(ref metadata, source_type);
-                            var p = new { result, metadata };
+
+                            irisMetadata.CopyFromMetadata(ref metadata);
+                            var p = new { result, metadata = irisMetadata };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
                     case "MetadataObserver_onMetadataReceived":
                         {
-                            Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
+                            var jsonData = AgoraJson.ToObject(data);
+                            IrisMetadata irisMetadata = AgoraJson.JsonToStruct<IrisMetadata>(jsonData, "metadata");
+                            Metadata metadata = new Metadata();
+                            irisMetadata.GenerateMetadata(ref metadata);
                             metadataObserver.OnMetadataReceived(metadata);
                         }
                         break;
@@ -102,8 +134,8 @@ namespace Agora.Rtc
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                        IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
                 case "MetadataObserver_onReadyToSendMetadata":
@@ -113,8 +145,8 @@ namespace Agora.Rtc
                         var p = new { result, metadata };
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                        IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
                 case "MetadataObserver_onMetadataReceived":

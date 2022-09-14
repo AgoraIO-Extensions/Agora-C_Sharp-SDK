@@ -74,6 +74,7 @@ namespace Agora.Rtc
                             IntPtr buffer_ = bufferArray[0];
                             int bufferSize = lengthArray[0];
                             int result = customDataProvider.OnReadData(buffer, bufferSize);
+
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
@@ -86,6 +87,7 @@ namespace Agora.Rtc
                             Int64 offset = (Int64)AgoraJson.GetData<Int64>(jsonData, "offset");
                             int whence = (int)AgoraJson.GetData<int>(jsonData, "whence");
                             Int64 result = customDataProvider.OnSeek(offset, whence);
+
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);

@@ -136,7 +136,15 @@ namespace Agora.Rtc
 
         internal static T JsonToStruct<T>(string data) where T : new()
         {
-            return JsonMapper.ToObject<T>(data);
+            try
+            {
+                return JsonMapper.ToObject<T>(data);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError(e.ToString());
+            }
+            return new T();
         }
 
         internal static T JsonToStruct<T>(string data, string key) where T : new()
@@ -183,12 +191,28 @@ namespace Agora.Rtc
 
         internal static string ToJson<T>(T param)
         {
-            return LitJson.JsonMapper.ToJson(param);
+            try
+            {
+                return JsonMapper.ToJson(param);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError(e.ToString());
+            }
+            return "";
         }
 
         internal static JsonData ToObject(string data)
         {
-            return JsonMapper.ToObject(data);
+            try
+            {
+                return JsonMapper.ToObject(data);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError(e.ToString());
+            }
+            return new JsonData();
         }
 
     }

@@ -167,12 +167,13 @@ namespace Agora.Rtc
                     Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
                 }
 
-                LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+              
 
                 switch (@event)
                 {
                     case "VideoFrameObserver_onCaptureVideoFrame":
                         {
+                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             VideoFrameBufferConfig config = AgoraJson.JsonToStruct<VideoFrameBufferConfig>(jsonData, "config");
                             VideoFrame videoFrame1 = ProcessVideoFrameReceived(videoFrame, "", 0);
@@ -186,6 +187,7 @@ namespace Agora.Rtc
                         break;
                     case "VideoFrameObserver_OnPreEncodeVideoFrame":
                         {
+                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             VideoFrameBufferConfig config = AgoraJson.JsonToStruct<VideoFrameBufferConfig>(jsonData, "config");
                             VideoFrame videoFrame1 = ProcessVideoFrameReceived(videoFrame, "", 1);
@@ -199,6 +201,7 @@ namespace Agora.Rtc
                         break;
                     case "VideoFrameObserver_onRenderVideoFrame":
                         {
+                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             VideoFrame videoFrame1 = ProcessVideoFrameReceived(videoFrame, "", 2);
                             string channel_id = (string)AgoraJson.GetData<string>(jsonData, "channel_id");

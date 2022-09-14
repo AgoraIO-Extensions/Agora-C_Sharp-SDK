@@ -57,13 +57,13 @@ namespace Agora.Rtc
                     Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
                 }
 
-                var jsonData = AgoraJson.ToObject(data);
+              
 
                 switch (@event)
                 {
                     case "VideoEncodedFrameObserver_OnEncodedVideoFrameReceived":
                         {
-                            //uint uid, IntPtr imageBufferPtr, UInt64 length, EncodedVideoFrameInfo videoEncodedFrameInfo
+                            var jsonData = AgoraJson.ToObject(data);
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
                             IntPtr imageBufferPtr = bufferArray[0];
                             UInt64 length2 = (UInt64)lengthArray[0];
