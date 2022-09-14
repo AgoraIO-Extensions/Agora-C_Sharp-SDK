@@ -60,12 +60,6 @@ namespace Agora.Rtc
         public int id;
     };
 
-    public class MusicChartCollection
-    {
-        public int count;
-        public MusicChartInfo[] musicChartInfo;
-    };
-
     public class MvProperty
     {
         ///

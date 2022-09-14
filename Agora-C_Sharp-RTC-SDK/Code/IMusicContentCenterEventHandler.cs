@@ -4,7 +4,7 @@ namespace Agora.Rtc
 {
     public abstract class IMusicContentCenterEventHandler
     {
-        public abstract void OnMusicChartsResult(string requestId, MusicContentCenterStatusCode status, MusicChartCollection result);
+        public abstract void OnMusicChartsResult(string requestId, MusicContentCenterStatusCode status, MusicChartInfo[] result);
 
         public abstract void OnMusicCollectionResult(string requestId, MusicContentCenterStatusCode status, MusicCollection result);
 
