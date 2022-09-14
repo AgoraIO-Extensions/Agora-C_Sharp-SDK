@@ -46,7 +46,7 @@ namespace Agora.Rtc
                 int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
                 if (mediaPlayerCustomDataProviderDic.ContainsKey(playerId) == false)
                 {
-                    CreateDefaultReturn(ref eventParam);
+                    CreateDefaultReturn(ref eventParam, param);
                     return;
                 }
 
@@ -76,7 +76,9 @@ namespace Agora.Rtc
                             int result = customDataProvider.OnReadData(buffer, bufferSize);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "MediaPlayerCustomDataProvider_onSeek":
@@ -86,7 +88,9 @@ namespace Agora.Rtc
                             Int64 result = customDataProvider.OnSeek(offset, whence);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     default:
@@ -96,7 +100,7 @@ namespace Agora.Rtc
             }
         }
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam)
+        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)
@@ -106,7 +110,9 @@ namespace Agora.Rtc
                         int result = 0;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 case "MediaPlayerCustomDataProvider_onSeek":
@@ -114,7 +120,9 @@ namespace Agora.Rtc
                         Int64 result = 0;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 default:

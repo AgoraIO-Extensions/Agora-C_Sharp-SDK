@@ -46,7 +46,7 @@ namespace Agora.Rtc
                 int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
                 if (mediaPlayerAudioFrameObserverDic.ContainsKey(playerId) == false)
                 {
-                    CreateDefaultReturn(ref eventParam);
+                    CreateDefaultReturn(ref eventParam, param);
                     return;
                 }
 
@@ -79,7 +79,9 @@ namespace Agora.Rtc
                             var result = audioFrameObserver.OnFrame(frame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     default:
@@ -90,7 +92,7 @@ namespace Agora.Rtc
         }
 
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam)
+        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)
@@ -100,7 +102,9 @@ namespace Agora.Rtc
                         var result = true;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 default:

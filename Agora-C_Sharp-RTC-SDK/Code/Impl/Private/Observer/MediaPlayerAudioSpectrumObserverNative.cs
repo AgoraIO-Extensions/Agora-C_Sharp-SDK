@@ -3,13 +3,54 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
+using UnityEngine;
 #endif
 
 namespace Agora.Rtc
 {
+    internal class IrisAudioSpectrumData
+    {
+        public IrisAudioSpectrumData()
+        {
+        }
+
+        public ulong audioSpectrumData;
+        public int dataLength;
+
+        public void GenerateAudioSpectrumData(ref AudioSpectrumData audioSpectrum)
+        {
+            audioSpectrum.audioSpectrumData = new float[this.dataLength];
+            Marshal.Copy((IntPtr)this.audioSpectrumData, audioSpectrum.audioSpectrumData, 0, dataLength);
+            audioSpectrum.dataLength = this.dataLength;
+        }
+    }
+
+
+    internal class IrisUserAudioSpectrumInfo
+    {
+        public IrisUserAudioSpectrumInfo()
+        {
+        }
+
+
+        public uint uid;
+        public IrisAudioSpectrumData spectrumData;
+
+        public void GenerateUserAudioSpectrumInfo(ref UserAudioSpectrumInfo info)
+        {
+            info.uid = this.uid;
+            info.spectrumData = new AudioSpectrumData();
+            this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
+        }
+
+    }
+
+
+
+
     internal static class MediaPlayerAudioSpectrumObserverNative
     {
-        private static Object observerLock = new Object();
+        private static System.Object observerLock = new System.Object();
         private static Dictionary<int, IAudioSpectrumObserver> mediaPlayerAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserver>();
 
         internal static void AddAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer)
@@ -29,6 +70,8 @@ namespace Agora.Rtc
                     mediaPlayerAudioSpectrumObserverDic.Remove(playerId);
             }
         }
+
+
 
         //private static AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
         //{
@@ -57,7 +100,7 @@ namespace Agora.Rtc
                 int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
                 if (mediaPlayerAudioSpectrumObserverDic.ContainsKey(playerId) == false)
                 {
-                    CreateDefaultReturn(ref eventParam);
+                    CreateDefaultReturn(ref eventParam, param);
                     return;
                 }
 
@@ -72,21 +115,35 @@ namespace Agora.Rtc
                 {
                     case "AudioSpectrumObserver_onLocalAudioSpectrum":
                         {
-                            var data2 = AgoraJson.JsonToStruct<AudioSpectrumData>(jsonData, "data");
-                            var result = audioSpectrumObserver.OnLocalAudioSpectrum(data2);
+                            var irisAudioSpectrumData = AgoraJson.JsonToStruct<IrisAudioSpectrumData>(jsonData, "data");
+                            var spectrumData = new AudioSpectrumData();
+                            irisAudioSpectrumData.GenerateAudioSpectrumData(ref spectrumData);
+                            var result = audioSpectrumObserver.OnLocalAudioSpectrum(spectrumData);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioSpectrumObserver_onRemoteAudioSpectrum":
                         {
-                            var spectrums = AgoraJson.JsonToStructArray<UserAudioSpectrumInfo>(jsonData, "spectrums");
+                            var irisUserAudioSpectrumInfo = AgoraJson.JsonToStructArray<IrisUserAudioSpectrumInfo>(jsonData, "spectrums");
                             var spectrumNumber = (uint)AgoraJson.GetData<uint>(jsonData, "spectrumNumber");
-                            var result = audioSpectrumObserver.OnRemoteAudioSpectrum(spectrums, spectrumNumber);
+
+                            UserAudioSpectrumInfo[] list = new UserAudioSpectrumInfo[spectrumNumber];
+                            for (var i = 0; i < spectrumNumber; i++)
+                            {
+                                UserAudioSpectrumInfo e = new UserAudioSpectrumInfo();
+                                irisUserAudioSpectrumInfo[i].GenerateUserAudioSpectrumInfo(ref e);
+                                list[i] = e;
+                            }
+                            var result = audioSpectrumObserver.OnRemoteAudioSpectrum(list, spectrumNumber);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     default:
@@ -96,7 +153,7 @@ namespace Agora.Rtc
             }
         }
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam)
+        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)
@@ -107,7 +164,9 @@ namespace Agora.Rtc
                         var result = true;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 default:
