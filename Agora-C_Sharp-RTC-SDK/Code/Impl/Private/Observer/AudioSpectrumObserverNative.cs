@@ -41,7 +41,7 @@ namespace Agora.Rtc
 
                 if (audioSpectrumObserver == null)
                 {
-                    CreateDefaultReturn(ref eventParam);
+                    CreateDefaultReturn(ref eventParam, param);
                     return;
                 }
 
@@ -55,21 +55,36 @@ namespace Agora.Rtc
                 {
                     case "AudioSpectrumObserver_onLocalAudioSpectrum":
                         {
-                            var data2 = AgoraJson.JsonToStruct<AudioSpectrumData>(jsonData, "data");
-                            var result = audioSpectrumObserver.OnLocalAudioSpectrum(data2);
+                            var irisAudioSpectrumData = AgoraJson.JsonToStruct<IrisAudioSpectrumData>(jsonData, "data");
+                            var spectrumData = new AudioSpectrumData();
+                            irisAudioSpectrumData.GenerateAudioSpectrumData(ref spectrumData);
+                            var result = audioSpectrumObserver.OnLocalAudioSpectrum(spectrumData);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
                     case "AudioSpectrumObserver_onRemoteAudioSpectrum":
                         {
-                            var spectrums = AgoraJson.JsonToStructArray<UserAudioSpectrumInfo>(jsonData, "spectrums");
+                            var irisUserAudioSpectrumInfo = AgoraJson.JsonToStructArray<IrisUserAudioSpectrumInfo>(jsonData, "spectrums");
                             var spectrumNumber = (uint)AgoraJson.GetData<uint>(jsonData, "spectrumNumber");
-                            var result = audioSpectrumObserver.OnRemoteAudioSpectrum(spectrums, spectrumNumber);
+
+                            UserAudioSpectrumInfo[] list = new UserAudioSpectrumInfo[spectrumNumber];
+                            for (var i = 0; i < spectrumNumber; i++)
+                            {
+                                UserAudioSpectrumInfo e = new UserAudioSpectrumInfo();
+                                irisUserAudioSpectrumInfo[i].GenerateUserAudioSpectrumInfo(ref e);
+                                list[i] = e;
+                            }
+                            var result = audioSpectrumObserver.OnRemoteAudioSpectrum(list, spectrumNumber);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+
                         }
                         break;
                     default:
@@ -80,7 +95,7 @@ namespace Agora.Rtc
             }
         }
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam)
+        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)
@@ -91,7 +106,9 @@ namespace Agora.Rtc
                         var result = true;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                        IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
                 default:

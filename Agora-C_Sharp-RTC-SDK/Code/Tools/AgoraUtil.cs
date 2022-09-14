@@ -224,6 +224,12 @@ namespace Agora.Rtc
             eventHandlerHandle.cEvent = new IrisCEventHandler();
         }
 
+        internal static string ConvertByteToString(ref byte[] array)
+        {
+            var re = Encoding.UTF8.GetString(array);
+            var index = re.IndexOf('\0');
+            return re.Substring(0, index);
+        }
 
     }
 

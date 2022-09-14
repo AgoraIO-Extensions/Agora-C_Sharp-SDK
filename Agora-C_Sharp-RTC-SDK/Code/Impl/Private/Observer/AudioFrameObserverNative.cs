@@ -179,7 +179,7 @@ namespace Agora.Rtc
 
                 if (audioFrameObserver == null)
                 {
-                    CreateDefaultReturn(ref eventParam);
+                    CreateDefaultReturn(ref eventParam, param);
                     return;
                 }
 
@@ -211,7 +211,9 @@ namespace Agora.Rtc
                             bool result = audioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioFrameObserver_onPlaybackAudioFrame":
@@ -221,7 +223,9 @@ namespace Agora.Rtc
                             bool result = audioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioFrameObserver_onMixedAudioFrame":
@@ -231,7 +235,9 @@ namespace Agora.Rtc
                             bool result = audioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioFrameObserver_getObservedAudioFramePosition":
@@ -239,7 +245,9 @@ namespace Agora.Rtc
                             int result = audioFrameObserver.GetObservedAudioFramePosition();
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioFrameObserver_getPlaybackAudioParams":
@@ -247,7 +255,9 @@ namespace Agora.Rtc
                             var result = audioFrameObserver.GetPlaybackAudioParams();
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioFrameObserver_getRecordAudioParams":
@@ -255,7 +265,9 @@ namespace Agora.Rtc
                             var result = audioFrameObserver.GetRecordAudioParams();
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioFrameObserver_getMixedAudioParams":
@@ -263,7 +275,9 @@ namespace Agora.Rtc
                             var result = audioFrameObserver.GetMixedAudioParams();
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing":
@@ -274,7 +288,9 @@ namespace Agora.Rtc
                             var result = audioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2":
@@ -285,7 +301,9 @@ namespace Agora.Rtc
                             var result = audioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     default:
@@ -295,7 +313,7 @@ namespace Agora.Rtc
             }
         }
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam)
+        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)
@@ -307,7 +325,9 @@ namespace Agora.Rtc
                         bool result = true;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 case "AudioFrameObserver_getObservedAudioFramePosition":
@@ -318,7 +338,9 @@ namespace Agora.Rtc
                                           | AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_BEFORE_MIXING);
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 case "AudioFrameObserver_getPlaybackAudioParams":
@@ -328,7 +350,9 @@ namespace Agora.Rtc
                         var result = new AudioParams();
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing":
@@ -337,7 +361,9 @@ namespace Agora.Rtc
                         var result = true;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 default:

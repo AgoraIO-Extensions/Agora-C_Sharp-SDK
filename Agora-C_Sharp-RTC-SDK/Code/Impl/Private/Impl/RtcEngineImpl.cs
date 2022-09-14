@@ -399,6 +399,7 @@ namespace Agora.Rtc
         private void SetIrisMetaDataObserver(METADATA_TYPE type)
         {
             if (_rtcMetaDataObserverHandle.handle != IntPtr.Zero) return;
+
             AgoraUtil.AllocEventHandlerHandle(ref _rtcMetaDataObserverHandle, MetadataObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcMetaDataObserverHandle.handle };
             var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERMEDIAMETADATAOBSERVER,

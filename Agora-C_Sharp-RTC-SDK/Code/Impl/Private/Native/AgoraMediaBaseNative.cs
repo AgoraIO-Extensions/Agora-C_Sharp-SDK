@@ -145,19 +145,6 @@ namespace Agora.Rtc
         internal Int16[] data_;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisAudioSpectrumData
-    {
-        internal IntPtr audioSpectrumData;
-        internal int dataLength;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisUserAudioSpectrumInfo
-    {
-        internal uint uid;
-        internal IrisAudioSpectrumData spectrumData;
-    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisVideoFrameBufferConfig

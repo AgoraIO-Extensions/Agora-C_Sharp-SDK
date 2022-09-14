@@ -41,7 +41,7 @@ namespace Agora.Rtc
 
                 if (metadataObserver == null)
                 {
-                    CreateDefaultReturn(ref eventParam);
+                    CreateDefaultReturn(ref eventParam, param);
                     return;
                 }
 
@@ -60,7 +60,9 @@ namespace Agora.Rtc
                             int result = metadataObserver.GetMaxMetadataSize();
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "MetadataObserver_onReadyToSendMetadata":
@@ -70,7 +72,9 @@ namespace Agora.Rtc
                             bool result = metadataObserver.OnReadyToSendMetadata(ref metadata, source_type);
                             var p = new { result, metadata };
                             string json = AgoraJson.ToJson(p);
-                            Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                         }
                         break;
                     case "MetadataObserver_onMetadataReceived":
@@ -87,7 +91,7 @@ namespace Agora.Rtc
             }
         }
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam)
+        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)
@@ -97,7 +101,9 @@ namespace Agora.Rtc
                         int result = 0;
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 case "MetadataObserver_onReadyToSendMetadata":
@@ -106,7 +112,9 @@ namespace Agora.Rtc
                         bool result = false;
                         var p = new { result, metadata };
                         string json = AgoraJson.ToJson(p);
-                        Buffer.BlockCopy(json.ToCharArray(), 0, eventParam.result, 0, json.Length);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
                     }
                     break;
                 case "MetadataObserver_onMetadataReceived":
