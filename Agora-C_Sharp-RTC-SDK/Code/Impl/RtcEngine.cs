@@ -113,7 +113,7 @@ namespace Agora.Rtc
 
             AudioDeviceManager.ReleaseInstance();
             VideoDeviceManager.ReleaseInstance();
-            //CloudSpatialAudioEngine.ReleaseInstance();
+            MusicContentCenter.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
             MediaPlayerCacheManager.ReleaseInstance();
             MediaRecorder.ReleaseInstance();
