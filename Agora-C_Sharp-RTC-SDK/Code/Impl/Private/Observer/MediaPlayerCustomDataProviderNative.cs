@@ -78,8 +78,8 @@ namespace Agora.Rtc
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
                     case "MediaPlayerCustomDataProvider_onSeek":
@@ -91,8 +91,8 @@ namespace Agora.Rtc
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                             IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
                     default:
@@ -113,8 +113,8 @@ namespace Agora.Rtc
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                        IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
                 case "MediaPlayerCustomDataProvider_onSeek":
@@ -123,8 +123,8 @@ namespace Agora.Rtc
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                         IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                        IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
                 default:
@@ -136,46 +136,46 @@ namespace Agora.Rtc
 
 
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_OnSeek_Native))]
-//#endif
-//        internal static Int64 OnSeek(Int64 offset, int whence, int playerId)
-//        {
-//            if (CustomDataProviderDic.ContainsKey(playerId))
-//            {
-//                try
-//                {
-//                    return CustomDataProviderDic[playerId].OnSeek(offset, whence);
-//                }
-//                catch (Exception e)
-//                {
-//                    AgoraLog.LogError("[Exception] IMediaPlayerCustomDataProvider.OnSeek: " + e);
-//                    return 0;
-//                }
-//            }
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_OnSeek_Native))]
+        //#endif
+        //        internal static Int64 OnSeek(Int64 offset, int whence, int playerId)
+        //        {
+        //            if (CustomDataProviderDic.ContainsKey(playerId))
+        //            {
+        //                try
+        //                {
+        //                    return CustomDataProviderDic[playerId].OnSeek(offset, whence);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    AgoraLog.LogError("[Exception] IMediaPlayerCustomDataProvider.OnSeek: " + e);
+        //                    return 0;
+        //                }
+        //            }
 
-//            return 0;
-//        }
+        //            return 0;
+        //        }
 
-//#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-//        [MonoPInvokeCallback(typeof(Func_onReadData_Native))]
-//#endif
-//        internal static int OnReadData(IntPtr buffer, int bufferSize, int playerId)
-//        {
-//            if (CustomDataProviderDic.ContainsKey(playerId))
-//            {
-//                try
-//                {
-//                    return CustomDataProviderDic[playerId].OnReadData(buffer, bufferSize);
-//                }
-//                catch (Exception e)
-//                {
-//                    AgoraLog.LogError("[Exception] IMediaPlayerCustomDataProvider.OnReadData: " + e);
-//                    return 0;
-//                }
-//            }
+        //#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        //        [MonoPInvokeCallback(typeof(Func_onReadData_Native))]
+        //#endif
+        //        internal static int OnReadData(IntPtr buffer, int bufferSize, int playerId)
+        //        {
+        //            if (CustomDataProviderDic.ContainsKey(playerId))
+        //            {
+        //                try
+        //                {
+        //                    return CustomDataProviderDic[playerId].OnReadData(buffer, bufferSize);
+        //                }
+        //                catch (Exception e)
+        //                {
+        //                    AgoraLog.LogError("[Exception] IMediaPlayerCustomDataProvider.OnReadData: " + e);
+        //                    return 0;
+        //                }
+        //            }
 
-//            return 0;
-//        }
+        //            return 0;
+        //        }
     }
 }
