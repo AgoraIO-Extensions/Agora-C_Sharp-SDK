@@ -204,8 +204,8 @@ namespace Agora.Rtc
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "video_frame");
                             VideoFrame videoFrame1 = ProcessVideoFrameReceived(videoFrame, "", 2);
-                            string channel_id = (string)AgoraJson.GetData<string>(jsonData, "channel_id");
-                            uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
+                            string channel_id = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid");
 
                             bool result = videoFrameObserver.OnRenderVideoFrame(channel_id, uid, videoFrame1);
                             var p = new { result };
