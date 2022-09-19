@@ -94,6 +94,7 @@ namespace Agora.Rtc
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
+                UnSetIrisVideoEncodedFrameObserver();
                 UnSetIrisMetaDataObserver();
                 UnSetIrisAudioEncodedFrameObserver();
                 UnSetIrisAudioSpectrumObserver();

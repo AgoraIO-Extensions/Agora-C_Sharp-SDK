@@ -85,10 +85,10 @@ namespace Agora.Rtc
             _cachedVideoFrame = new IrisVideoFrame
             {
                 type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
-                y_stride = _videoPixelWidth * 4,
+                yStride = _videoPixelWidth * 4,
                 height = _videoPixelHeight,
                 width = _videoPixelWidth,
-                y_buffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4)
+                yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4)
             };
         }
 
@@ -140,10 +140,10 @@ namespace Agora.Rtc
                 FreeMemory();
 
                 _cachedVideoFrame.type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-                _cachedVideoFrame.y_stride = _videoPixelWidth * 4;
+                _cachedVideoFrame.yStride = _videoPixelWidth * 4;
                 _cachedVideoFrame.height = _videoPixelHeight;
                 _cachedVideoFrame.width = _videoPixelWidth;
-                _cachedVideoFrame.y_buffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
+                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
             }
             else
             {
@@ -162,7 +162,7 @@ namespace Agora.Rtc
                     }
                     else
                     {
-                        _texture.LoadRawTextureData(_cachedVideoFrame.y_buffer,
+                        _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
                             (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
                         _texture.Apply();
                     }
@@ -203,9 +203,9 @@ namespace Agora.Rtc
 
         private void FreeMemory()
         {
-            if (_cachedVideoFrame.y_buffer != IntPtr.Zero)
+            if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
             {
-                Marshal.FreeHGlobal(_cachedVideoFrame.y_buffer);
+                Marshal.FreeHGlobal(_cachedVideoFrame.yBuffer);
             }
         }
 
