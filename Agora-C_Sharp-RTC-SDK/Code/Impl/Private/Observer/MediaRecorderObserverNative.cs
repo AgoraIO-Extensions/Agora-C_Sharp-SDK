@@ -11,19 +11,28 @@ namespace Agora.Rtc
     {
         private static Dictionary<string, IMediaRecorderObserver> mediaRecorderObserverDic = new Dictionary<string, IMediaRecorderObserver>();
 
-        internal static void AddMediaRecorderObserver(string key, IMediaRecorderObserver observer)
+
+        private static string generateKey(RtcConnection connection)
         {
+            return connection.localUid.ToString() + "_" + connection.channelId;
+        }
+
+        internal static void AddMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver observer)
+        {
+            var key = generateKey(connection);
             if (mediaRecorderObserverDic.ContainsKey(key) == false)
                 mediaRecorderObserverDic.Add(key, observer);
         }
 
-        internal static bool ContainsMediaRecorderObserver(string key)
+        internal static bool ContainsMediaRecorderObserver(RtcConnection connection)
         {
+            var key = generateKey(connection);
             return mediaRecorderObserverDic.ContainsKey(key);
         }
 
-        internal static void RemoveMediaRecorderObserver(string key)
+        internal static void RemoveMediaRecorderObserver(RtcConnection connection)
         {
+            var key = generateKey(connection);
             if (mediaRecorderObserverDic.ContainsKey(key))
                 mediaRecorderObserverDic.Remove(key);
         }
@@ -59,7 +68,7 @@ namespace Agora.Rtc
                 AgoraJson.ToObject(data);
             }
             RtcConnection connection = AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
-            string key = connection.localUid.ToString() + connection.channelId;
+            string key = generateKey(connection);
             switch (@event)
             {
                 case "MediaRecorderObserver_onRecorderStateChanged":

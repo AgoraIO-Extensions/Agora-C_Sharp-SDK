@@ -94,14 +94,14 @@ namespace Agora.Rtc
             _callbackObject = null;
 #endif
             IntPtr[] arrayPtr = new IntPtr[] { IntPtr.Zero };
-            var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_SETEVENTHANDLER,
+            var nRet= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETEVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_RTCENGINE_SETEVENTHANDLER failed: " + nRet);
+                AgoraLog.LogError("FUNC_MEDIARECORDER_SETEVENTHANDLER failed: " + nRet);
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaRecorderEventHandlerHandle);
@@ -112,16 +112,16 @@ namespace Agora.Rtc
         public int SetMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver callback)
         {
             CreateEventHandler();
-            string key = connection.localUid.ToString() + connection.channelId;
+          
             if (callback == null)
             {
-                MediaRecorderObserverNative.RemoveMediaRecorderObserver(key);
+                MediaRecorderObserverNative.RemoveMediaRecorderObserver(connection);
             }
             else
             {
-                if (!MediaRecorderObserverNative.ContainsMediaRecorderObserver(key))
+                if (!MediaRecorderObserverNative.ContainsMediaRecorderObserver(connection))
                 {
-                    MediaRecorderObserverNative.AddMediaRecorderObserver(key, callback);
+                    MediaRecorderObserverNative.AddMediaRecorderObserver(connection, callback);
 
                     var param = new
                     {

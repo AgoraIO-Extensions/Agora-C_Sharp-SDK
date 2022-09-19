@@ -245,28 +245,27 @@ namespace Agora.Rtc
         internal string data;
         internal uint data_size;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
-        internal byte[] result;
-
-        internal IntPtr buffer;
-        internal IntPtr length;
-        internal uint buffer_count;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisCEventParam2
-    {
-        internal string @event;
-        internal string data;
-        internal uint data_size;
-
-        //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
         internal IntPtr result;
 
         internal IntPtr buffer;
         internal IntPtr length;
         internal uint buffer_count;
     }
+
+    //[StructLayout(LayoutKind.Sequential)]
+    //internal struct IrisCEventParam2
+    //{
+    //    internal string @event;
+    //    internal string data;
+    //    internal uint data_size;
+
+    //    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+    //    internal IntPtr result;
+
+    //    internal IntPtr buffer;
+    //    internal IntPtr length;
+    //    internal uint buffer_count;
+    //}
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCApiParam

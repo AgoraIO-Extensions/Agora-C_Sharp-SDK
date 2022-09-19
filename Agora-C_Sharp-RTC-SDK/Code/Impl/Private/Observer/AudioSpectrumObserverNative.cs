@@ -62,7 +62,7 @@ namespace Agora.Rtc
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            IntPtr resultPtr = eventParam.result;
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
@@ -82,7 +82,7 @@ namespace Agora.Rtc
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                            IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                            IntPtr resultPtr = eventParam.result;
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
 
                         }
@@ -107,7 +107,7 @@ namespace Agora.Rtc
                         var p = new { result };
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                        IntPtr resultPtr = (IntPtr)((UInt64)param + (UInt64)(IntPtr.Size * 2 + 4));
+                        IntPtr resultPtr = eventParam.result;
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
