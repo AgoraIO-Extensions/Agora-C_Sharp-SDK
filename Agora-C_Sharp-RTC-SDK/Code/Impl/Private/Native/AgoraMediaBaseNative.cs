@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Agora.Rtc
 {
     using view_t = UInt64;
-    
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisAudioFrame
     {
@@ -38,30 +38,31 @@ namespace Agora.Rtc
         internal bool sendEvenIfEmpty;
     }
 
+    //workaround, must be public, so can parse from a json string
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisVideoFrame
     {
-        internal VIDEO_OBSERVER_FRAME_TYPE type;
-        internal int width;
-        internal int height;
-        internal int y_stride;
-        internal int u_stride;
-        internal int v_stride;
-        internal IntPtr y_buffer;
-        internal IntPtr u_buffer;
-        internal IntPtr v_buffer;
-        internal uint y_buffer_length;
-        internal uint u_buffer_length;
-        internal uint v_buffer_length;
-        internal int rotation;
-        internal Int64 render_time_ms;
-        internal int av_sync_type;
-        internal IntPtr metadata_buffer;
-        internal int metadata_size;
-        internal IntPtr sharedContext;
-        internal int textureId;
+        public VIDEO_OBSERVER_FRAME_TYPE type;
+        public int width;
+        public int height;
+        public int yStride;
+        public int uStride;
+        public int vStride;
+        public IntPtr yBuffer;
+        public IntPtr uBuffer;
+        public IntPtr vBuffer;
+        public uint y_buffer_length;
+        public uint u_buffer_length;
+        public uint v_buffer_length;
+        public int rotation;
+        public Int64 renderTimeMs;
+        public int avsync_type;
+        public IntPtr metadata_buffer;
+        public int metadata_size;
+        public IntPtr sharedContext;
+        public int textureId;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        internal float[] matrix;
+        public float[] matrix;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -151,7 +152,7 @@ namespace Agora.Rtc
     {
         internal int type;
         internal uint id;
-        
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
         internal string key;
     }
