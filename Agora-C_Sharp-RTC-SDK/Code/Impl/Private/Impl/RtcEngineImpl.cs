@@ -2858,7 +2858,8 @@ namespace Agora.Rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return nRet != 0 ? nRet : (float)(double)AgoraJson.GetData<double>(_apiParam.Result, "result");
         }
 
         public int SetCameraFocusPositionInPreview(float positionX, float positionY)
