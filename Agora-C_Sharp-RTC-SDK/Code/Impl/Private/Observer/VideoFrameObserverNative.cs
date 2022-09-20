@@ -172,7 +172,6 @@ namespace Agora.Rtc
                 }
 
 
-
                 switch (@event)
                 {
                     case "VideoFrameObserver_onCaptureVideoFrame":
