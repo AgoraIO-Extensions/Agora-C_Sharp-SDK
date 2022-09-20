@@ -65,7 +65,7 @@ namespace Agora.Rtc
             LitJson.JsonData jsonData = null;
             if (data != null)
             {
-                AgoraJson.ToObject(data);
+                jsonData = AgoraJson.ToObject(data);
             }
             RtcConnection connection = AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
             string key = generateKey(connection);
