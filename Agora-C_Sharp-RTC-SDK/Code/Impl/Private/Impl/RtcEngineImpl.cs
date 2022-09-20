@@ -5993,8 +5993,8 @@ namespace Agora.Rtc
                 ref _apiParam);
 
             var f = _apiParam.Result.Length == 0
-               ? new AudioFrameWithoutBuffer()
-               : AgoraJson.JsonToStruct<AudioFrameWithoutBuffer>(_apiParam.Result, "frame");
+               ? new AudioFrame()
+               : AgoraJson.JsonToStruct<AudioFrame>(_apiParam.Result, "frame");
             frame.avsync_type = f.avsync_type;
             frame.channels = f.channels;
             frame.samplesPerChannel = f.samplesPerChannel;
