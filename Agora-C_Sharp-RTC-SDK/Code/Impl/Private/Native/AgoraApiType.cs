@@ -551,16 +551,11 @@ namespace Agora.Rtc
 
         #region IMediaRecorder start
         internal const string FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER = "MediaRecorder_setMediaRecorderObserver";
+        internal const string FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER = "MediaRecorder_unsetMediaRecorderObserver";
         internal const string FUNC_MEDIARECORDER_STARTRECORDING = "MediaRecorder_startRecording";
         internal const string FUNC_MEDIARECORDER_STOPRECORDING = "MediaRecorder_stopRecording";
         #endregion
 
 
-        #region setEventHandler
-        internal const string FUNC_RTCENGINE_SETEVENTHANDLER = "RtcEngine_setEventHandler";
-        internal const string FUNC_MEDIARECORDER_SETEVENTHANDLER = "MediaRecorder_setEventHandler";
-        internal const string FUNC_MEDIAPLAYER_SETEVENTHANDLER = "MediaPlayer_setEventHandler";
-        internal const string FUNC_CLOUDSPATIALAUDIOENGINE_SETEVENTHANDLER = "CloudSpatialAudioEngine_setEventHandler";
-        #endregion
     }
 }
