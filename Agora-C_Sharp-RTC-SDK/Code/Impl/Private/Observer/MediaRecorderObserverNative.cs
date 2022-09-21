@@ -20,8 +20,10 @@ namespace Agora.Rtc
         internal static void AddMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver observer)
         {
             var key = generateKey(connection);
-            if (mediaRecorderObserverDic.ContainsKey(key) == false)
-                mediaRecorderObserverDic.Add(key, observer);
+            if (mediaRecorderObserverDic.ContainsKey(key))
+                mediaRecorderObserverDic.Remove(key);
+
+            mediaRecorderObserverDic.Add(key, observer);
         }
 
         internal static bool ContainsMediaRecorderObserver(RtcConnection connection)

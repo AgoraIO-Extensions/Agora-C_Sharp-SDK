@@ -118,14 +118,14 @@ namespace Agora.Rtc
 
             AgoraUtil.AllocEventHandlerHandle(ref _mediaPlayerEventHandlerHandle, MediaPlayerSourceObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETEVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_MEDIAPLAYER_SETEVENTHANDLER failed: " + nRet);
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERPLAYERSOURCEOBSERVER failed: " + nRet);
             }
 
 
@@ -149,14 +149,14 @@ namespace Agora.Rtc
 #endif
 
             IntPtr[] arrayPtr = new IntPtr[] { IntPtr.Zero };
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_SETEVENTHANDLER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_MEDIAPLAYER_SETEVENTHANDLER failed: " + nRet);
+                AgoraLog.LogError("FUNC_MEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER failed: " + nRet);
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaPlayerEventHandlerHandle);
