@@ -148,7 +148,7 @@ namespace Agora.Rtc
             _callbackObject = null;
 #endif
 
-            IntPtr[] arrayPtr = new IntPtr[] { IntPtr.Zero };
+            IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,

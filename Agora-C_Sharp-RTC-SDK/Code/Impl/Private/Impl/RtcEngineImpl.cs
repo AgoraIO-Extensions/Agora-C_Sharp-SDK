@@ -186,7 +186,7 @@ namespace Agora.Rtc
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
-            IntPtr[] arrayPtr = new IntPtr[] { IntPtr.Zero };
+            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTEREVENTHANDLER,
                 "{}", 2,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
