@@ -63,7 +63,7 @@ namespace Agora.Rtc
             _apiParam = new IrisCApiParam();
 
             //AgoraRtcNative.CreateApiParamsPtr();
-            _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine();
+            _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(IntPtr.Zero);
 
             _videoDeviceManagerInstance = new VideoDeviceManagerImpl(_irisRtcEngine);
             _audioDeviceManagerInstance = new AudioDeviceManagerImpl(_irisRtcEngine);
