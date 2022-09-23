@@ -160,18 +160,7 @@ namespace Agora.Rtc
                 var length = eventParam.length;
                 var buffer_count = eventParam.buffer_count;
 
-                IntPtr[] bufferArray = null;
-                int[] lengthArray = null;
-
-                if (buffer_count > 0)
-                {
-                    bufferArray = new IntPtr[buffer_count];
-                    Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
-                    lengthArray = new int[buffer_count];
-                    Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
-                }
-
-
+             
                 switch (@event)
                 {
                     case "VideoFrameObserver_onCaptureVideoFrame":

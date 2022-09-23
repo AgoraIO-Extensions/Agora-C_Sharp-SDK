@@ -46,29 +46,17 @@ namespace Agora.Rtc
                 var length = eventParam.length;
                 var buffer_count = eventParam.buffer_count;
 
-                IntPtr[] bufferArray = null;
-                Int64[] lengthArray = null;
-
-                if (buffer_count > 0)
-                {
-                    bufferArray = new IntPtr[buffer_count];
-                    Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
-                    lengthArray = new Int64[buffer_count];
-                    Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
-                }
-
-
-
+              
                 switch (@event)
                 {
                     case "VideoEncodedFrameObserver_OnEncodedVideoFrameReceived":
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
-                            IntPtr imageBufferPtr = bufferArray[0];
-                            UInt64 length2 = (UInt64)lengthArray[0];
+                            IntPtr imageBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "imageBuffer");
+                            UInt64 imageBufferLength = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "length");
                             EncodedVideoFrameInfo videoEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedVideoFrameInfo>(jsonData, "videoEncodedFrameInfo");
-                            bool result = videoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBufferPtr, length2, videoEncodedFrameInfo);
+                            bool result = videoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, imageBufferLength, videoEncodedFrameInfo);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
