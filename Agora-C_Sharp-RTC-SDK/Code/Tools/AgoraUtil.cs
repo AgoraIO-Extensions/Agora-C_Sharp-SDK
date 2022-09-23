@@ -2,10 +2,13 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
+
+
 namespace Agora.Rtc
 {
     using LitJson;
-
+    using IrisEventHandlerMarshal = IntPtr;
+    using IrisEventHandlerHandle = IntPtr;
     public class AgoraJson
     {
         private const string ErrorTag = "AgoraJsonError";
@@ -257,25 +260,96 @@ namespace Agora.Rtc
 
     }
 
+    //event_handler
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Func_Event_Native(IntPtr param);
+
+    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    //internal delegate void Func_EventEx_Native(string @event, string data, IntPtr result, IntPtr buffer, IntPtr length, uint buffer_count);
+
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisCEventParam
+    {
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+
+        internal IntPtr result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
     //[StructLayout(LayoutKind.Sequential)]
-    //internal struct CharAssistant
+    //internal struct IrisCEventParam2
     //{
-    //    internal CharAssistant(int param = 0)
-    //    {
-    //        resultChar = new byte[65536];
-    //    }
+    //    internal string @event;
+    //    internal string data;
+    //    internal uint data_size;
 
-    //    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
-    //    private byte[] resultChar;
+    //    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+    //    internal IntPtr result;
 
-    //    public string Result
-    //    {
-    //        get
-    //        {
-    //            var re = Encoding.UTF8.GetString(resultChar);
-    //            var index = re.IndexOf('\0');
-    //            return re.Substring(0, index);
-    //        }
-    //    }
+    //    internal IntPtr buffer;
+    //    internal IntPtr length;
+    //    internal uint buffer_count;
     //}
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisCApiParam
+    {
+        internal IrisCApiParam(int param = 0)
+        {
+            @event = "";
+            data = "";
+            data_size = 0;
+            result = new byte[65536];
+            buffer = IntPtr.Zero;
+            length = IntPtr.Zero;
+            buffer_count = 0;
+        }
+
+        public string Result
+        {
+            get
+            {
+                var re = Encoding.UTF8.GetString(result);
+                var index = re.IndexOf('\0');
+                return re.Substring(0, index);
+            }
+        }
+
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+        internal byte[] result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisCEventHandlerNative
+    {
+        internal IntPtr onEvent;
+        //internal IntPtr onEventEx;
+    }
+
+    internal struct IrisCEventHandler
+    {
+        internal Func_Event_Native OnEvent;
+        //internal Func_EventEx_Native OnEventEx;
+    }
+
+
+    internal struct EventHandlerHandle
+    {
+        internal IrisCEventHandler cEvent;
+        internal IrisEventHandlerMarshal marshal;
+        internal IrisEventHandlerHandle handle;
+    }
 }
