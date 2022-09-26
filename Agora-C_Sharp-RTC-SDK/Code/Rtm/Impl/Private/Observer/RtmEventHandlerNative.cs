@@ -66,14 +66,116 @@ namespace Agora.Rtm
                     });
 #endif
                     break;
-                case "RtmEventHandler_onStatusEvent":
+                case "RtmEventHandler_onJoinResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (rtmEventHandler == null) return;
-                        rtmEventHandler.OnStatusEvent(
-                            (StatusEvent)AgoraJson.GetData<int>(jsonData, "event")
+                        rtmEventHandler.OnJoinResult(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelName"),
+                            (string)AgoraJson.GetData<string>(jsonData, "userId"),
+                            (STREAM_CHANNEL_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                case "RtmEventHandler_onleaveResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (rtmEventHandler == null) return;
+                        rtmEventHandler.OnLeaveResult(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelName"),
+                            (string)AgoraJson.GetData<string>(jsonData, "userId"),
+                            (STREAM_CHANNEL_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                case "RtmEventHandler_onTopicCreateResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (rtmEventHandler == null) return;
+                        rtmEventHandler.OnTopicCreateResult(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelName"),
+                            (string)AgoraJson.GetData<string>(jsonData, "userId"),
+                            (string)AgoraJson.GetData<string>(jsonData, "topic"),
+                            (string)AgoraJson.GetData<string>(jsonData, "meta"),
+                            (STREAM_CHANNEL_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                case "RtmEventHandler_onTopicDestroyResult":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (rtmEventHandler == null) return;
+                        rtmEventHandler.OnTopicDestroyResult(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelName"),
+                            (string)AgoraJson.GetData<string>(jsonData, "userId"),
+                            (string)AgoraJson.GetData<string>(jsonData, "topic"),
+                            (string)AgoraJson.GetData<string>(jsonData, "meta"),
+                            (STREAM_CHANNEL_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                case "RtmEventHandler_onTopicSubscribed":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (rtmEventHandler == null) return;
+                        rtmEventHandler.OnTopicSubscribed(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelName"),
+                            (string)AgoraJson.GetData<string>(jsonData, "userId"),
+                            (string)AgoraJson.GetData<string>(jsonData, "topic"),
+                            AgoraJson.JsonToStruct<UserList>(jsonData, "succeedUsers"),
+                            AgoraJson.JsonToStruct<UserList>(jsonData, "failedUsers"),
+                            (STREAM_CHANNEL_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                case "RtmEventHandler_onTopicUnsubscribed":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (rtmEventHandler == null) return;
+                        rtmEventHandler.OnTopicUnsubscribed(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelName"),
+                            (string)AgoraJson.GetData<string>(jsonData, "userId"),
+                            (string)AgoraJson.GetData<string>(jsonData, "topic"),
+                            AgoraJson.JsonToStruct<UserList>(jsonData, "succeedUsers"),
+                            AgoraJson.JsonToStruct<UserList>(jsonData, "failedUsers"),
+                            (STREAM_CHANNEL_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+                case "RtmEventHandler_onConnectionStateChange":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (rtmEventHandler == null) return;
+                        rtmEventHandler.OnConnectionStateChange(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelName"),
+                            (RTM_CONNECTION_STATE)AgoraJson.GetData<int>(jsonData, "state"),
+                            (RTM_CONNECTION_CHANGE_REASON)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
