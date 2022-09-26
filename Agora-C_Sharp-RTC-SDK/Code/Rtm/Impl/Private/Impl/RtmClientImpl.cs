@@ -87,7 +87,7 @@ namespace Agora.Rtm
         {
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero) return;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtcEngineEventHandlerNative.OnEvent);
+            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETEVENTHANDLER,
                 "{}", 2,
@@ -101,7 +101,7 @@ namespace Agora.Rtm
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
-            RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
+            RtmEventHandlerNative.CallbackObject = _callbackObject;
 #endif
         }
 
@@ -151,7 +151,48 @@ namespace Agora.Rtm
         {
             CreateEventHandler();
             RtmEventHandlerNative.SetEventHandler(config.eventHandler);
-            return 0;
+
+            var param = new
+            {
+                config
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_INITIALIZE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int CreateStreamChannel(string channelName)
+        {
+            var param = new
+            {
+                channelName
+            };
+
+            var json = AgoraJson.ToJson(param);
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_CREATESTREAMCHANNEL,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int ReleaseStreamChannel(string channelName)
+        {
+            var param = new
+            {
+                channelName
+            };
+            var json = AgoraJson.ToJson(param);
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_RELEASESTREAMCHANNEL,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         internal StreamChannelImpl GetStreamChannel()

@@ -19,7 +19,5 @@ namespace Agora.Rtm
         public abstract int UnsubscribeTopic(string topic, TopicOptions options);
 
         public abstract int GetSubscribedUserList(string topic, ref UserList[] users);
-
-        public abstract void Dispose();
     }
 }

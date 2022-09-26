@@ -10,33 +10,28 @@ namespace Agora.Rtm
 
         private string channelName = "";
 
-        internal StreamChannel(IRtmClient rtmClient, StreamChannelImpl impl)
+        internal StreamChannel(IRtmClient rtmClient, StreamChannelImpl impl, string channelName)
         {
             _rtmClientInstance = rtmClient;
             _streamChannelImpl = impl;
 
-            channelName = _streamChannelImpl.CreateStreamChannel();
+            this.channelName = channelName;
         }
 
         ~StreamChannel()
         {
             _streamChannelImpl = null;
             _rtmClientInstance = null;
-        }
-
-        public override void Dispose()
-        {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
-            {
-                return;
-            }
-            _streamChannelImpl.DestroyStreamChannel(channelName);
             channelName = "";
         }
 
         public override string ChannelName()
         {
-            return channelName;
+            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            {
+                return "";
+            }
+            return _streamChannelImpl.ChannelName();
         }
 
         public override int Join(JoinChannelOptions options)

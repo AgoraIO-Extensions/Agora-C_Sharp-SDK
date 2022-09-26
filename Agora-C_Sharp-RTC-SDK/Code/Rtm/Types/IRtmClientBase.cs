@@ -6,8 +6,6 @@ namespace Agora.Rtm
     {
         public string appId { set; get; }
 
-        public string token { set; get; }
-
         public string userId { set; get; }
 
         public IRtmEventHandler eventHandler { set; get; }
@@ -59,11 +57,6 @@ namespace Agora.Rtm
     };
 
     [Flags]
-    ///
-    /// <summary>
-    /// The output log level of the SDK.
-    /// </summary>
-    ///
     public enum LOG_LEVEL
     {
         ///
@@ -130,132 +123,119 @@ namespace Agora.Rtm
         RTM_ERR_NOT_JOIN_CHANNEL = 60009,
     };
 
-    public enum RTM_CHANNEL_CONNECTION_STATE
+    public enum RTM_CONNECTION_STATE
     {
         /**
         * 1: The SDK is disconnected from the server.
         */
-        RTM_CHANNEL_CONNECTION_STATE_DISCONNECTED = 1,
+        RTM_CONNECTION_STATE_DISCONNECTED = 1,
         /**
         * 2: The SDK is connecting to the server.
         */
-        RTM_CHANNEL_CONNECTION_STATE_CONNECTING = 2,
+        RTM_CONNECTION_STATE_CONNECTING = 2,
         /**
         * 3: The SDK is connected to the server and has joined a channel. You can now publish or subscribe to
         * a track in the channel.
         */
-        RTM_CHANNEL_CONNECTION_STATE_CONNECTED = 3,
+        RTM_CONNECTION_STATE_CONNECTED = 3,
         /**
         * 4: The SDK keeps rejoining the channel after being disconnected from the channel, probably because of
         * network issues.
         */
-        RTM_CHANNEL_CONNECTION_STATE_RECONNECTING = 4,
+        RTM_CONNECTION_STATE_RECONNECTING = 4,
         /**
         * 5: The SDK fails to connect to the server or join the channel.
         */
-        RTM_CHANNEL_CONNECTION_STATE_FAILED = 5,
+        RTM_CONNECTION_STATE_FAILED = 5,
     };
 
-    public enum RTM_CHANNEL_CONNECTION_CHANGE_REASON
+    public enum RTM_CONNECTION_CHANGE_REASON
     {
         /**
         * 0: The SDK is connecting to the server.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_CONNECTING = 0,
+        RTM_CONNECTION_CHANGE_CONNECTING = 0,
         /**
         * 1: The SDK has joined the channel successfully.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_JOIN_SUCCESS = 1,
+        RTM_CONNECTION_CHANGE_JOIN_SUCCESS = 1,
         /**
         * 2: The connection between the SDK and the server is interrupted.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_INTERRUPTED = 2,
+        RTM_CONNECTION_CHANGE_INTERRUPTED = 2,
         /**
         * 3: The connection between the SDK and the server is banned by the server.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_BANNED_BY_SERVER = 3,
+        RTM_CONNECTION_CHANGE_BANNED_BY_SERVER = 3,
         /**
         * 4: The SDK fails to join the channel for more than 20 minutes and stops reconnecting to the channel.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_JOIN_FAILED = 4,
+        RTM_CONNECTION_CHANGE_JOIN_FAILED = 4,
         /**
         * 5: The SDK has left the channel.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_LEAVE_CHANNEL = 5,
+        RTM_CONNECTION_CHANGE_LEAVE_CHANNEL = 5,
         /**
         * 6: The connection fails because the App ID is not valid.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_INVALID_APP_ID = 6,
+        RTM_CONNECTION_CHANGE_INVALID_APP_ID = 6,
         /**
         * 7: The connection fails because the channel name is not valid.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_INVALID_CHANNEL_NAME = 7,
+        RTM_CONNECTION_CHANGE_INVALID_CHANNEL_NAME = 7,
         /**
         * 8: The connection fails because the token is not valid.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_INVALID_TOKEN = 8,
+        RTM_CONNECTION_CHANGE_INVALID_TOKEN = 8,
         /**
         * 9: The connection fails because the token has expired.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_TOKEN_EXPIRED = 9,
+        RTM_CONNECTION_CHANGE_TOKEN_EXPIRED = 9,
         /**
         * 10: The connection is rejected by the server.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_REJECTED_BY_SERVER = 10,
+        RTM_CONNECTION_CHANGE_REJECTED_BY_SERVER = 10,
         /**
         * 11: The connection changes to reconnecting because the SDK has set a proxy server.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_SETTING_PROXY_SERVER = 11,
+        RTM_CONNECTION_CHANGE_SETTING_PROXY_SERVER = 11,
         /**
         * 12: When the connection state changes because the app has renewed the token.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_RENEW_TOKEN = 12,
+        RTM_CONNECTION_CHANGE_RENEW_TOKEN = 12,
         /**
         * 13: The IP Address of the app has changed. A change in the network type or IP/Port changes the IP
         * address of the app.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_CLIENT_IP_ADDRESS_CHANGED = 13,
+        RTM_CONNECTION_CHANGE_CLIENT_IP_ADDRESS_CHANGED = 13,
         /**
         * 14: A timeout occurs for the keep-alive of the connection between the SDK and the server.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_KEEP_ALIVE_TIMEOUT = 14,
+        RTM_CONNECTION_CHANGE_KEEP_ALIVE_TIMEOUT = 14,
         /**
         * 15: The SDK has rejoined the channel successfully.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_REJOIN_SUCCESS = 15,
+        RTM_CONNECTION_CHANGE_REJOIN_SUCCESS = 15,
         /**
         * 16: The connection between the SDK and the server is lost.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_LOST = 16,
+        RTM_CONNECTION_CHANGE_LOST = 16,
         /**
         * 17: The change of connection state is caused by echo test.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_ECHO_TEST = 17,
+        RTM_CONNECTION_CHANGE_ECHO_TEST = 17,
         /**
         * 18: The local IP Address is changed by user.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_CLIENT_IP_ADDRESS_CHANGED_BY_USER = 18,
+        RTM_CONNECTION_CHANGE_CLIENT_IP_ADDRESS_CHANGED_BY_USER = 18,
         /**
         * 19: The connection is failed due to join the same channel on another device with the same uid.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_SAME_UID_LOGIN = 19,
+        RTM_CONNECTION_CHANGE_SAME_UID_LOGIN = 19,
         /**
         * 20: The connection is failed due to too many broadcasters in the channel.
         */
-        RTM_CHANNEL_CONNECTION_CHANGED_TOO_MANY_BROADCASTERS = 20,
-    };
-
-    public enum RTM_PRESENCE_ACTION_RESULT
-    {
-        RTM_PRESENCE_GENERAL_OK_RESULT = 0,
-        RTM_PRESENCE_SELF_JOIN_SUCCEED = 1,
-        RTM_PRESENCE_SELF_REJOIN_SUCCEED = 2,
-        RTM_PRESENCE_SELF_LEAVE_SUCCEED = 3,
-        RTM_PRESENCE_REMOTE_JOINED = 4,
-        RTM_PRESENCE_REMOTE_QUIT = 5,
-        RTM_PRESENCE_REMOTE_DROPPED = 6,
-        RTM_PRESENCE_JOIN_TOPIC_SUCCEED = 7,
-        RTM_PRESENCE_LEAVE_TOPIC_SUCCEED = 8,
+        RTM_CONNECTION_CHANGE_TOO_MANY_BROADCASTERS = 20,
     };
 
     public enum RTM_CHANNEL_TYPE
@@ -265,18 +245,24 @@ namespace Agora.Rtm
         RTM_CHANNEL_TYPE_STREAM = 1,
     };
 
-    public enum RTM_PRESENCE_ACTION_TYPE
+    public enum RTM_PRESENCE_TYPE
     {
-        RTM_PRESENCE_ACTION_TYPE_GENERAL = 0,
-        RTM_PRESENCE_ACTION_TYPE_SELF_JOIN = 1,
-        RTM_PRESENCE_ACTION_TYPE_SELF_LEAVE = 2,
-        RTM_PRESENCE_ACTION_TYPE_REMOTE_JOIN = 3,
-        RTM_PRESENCE_ACTION_TYPE_REMOTE_LEAVE = 4,
-        RTM_PRESENCE_ACTION_TYPE_JOIN_TOPIC = 5,
-        RTM_PRESENCE_ACTION_TYPE_LEAVE_TOPIC = 6,
-        RTM_PRESENCE_ACTION_TYPE_UPDATE_TOPIC = 7,
-        RTM_PRESENCE_ACTION_TYPE_SUBSCRIBE_TOPIC = 8,
-        RTM_PRESENCE_ACTION_TYPE_UNSUBSCRIBE_TOPIC = 9,
+        RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL = 0,
+        RTM_PRESENCE_TYPE_REMOTE_LEAVE_CHANNEL = 1,
+        RTM_PRESENCE_TYPE_REMOTE_TIMEOUT = 2,
+        RTM_PRESENCE_TYPE_REMOTE_JOIN_TOPIC = 3,
+        RTM_PRESENCE_TYPE_REMOTE_LEAVE_TOPIC = 4,
+    };
+
+    public enum STREAM_CHANNEL_ERROR_CODE
+    {
+        STREAM_CHANNEL_ERROR_OK = 0,
+        STREAM_CHANNEL_ERROR_INVALID_ARGUMENT = 1,
+        STREAM_CHANNEL_ERROR_JOIN_FAILURE = 2,
+        STREAM_CHANNEL_ERROR_JOIN_REJECTED = 3,
+        STREAM_CHANNEL_ERROR_REJOIN_FAILURE = 4,
+        STREAM_CHANNEL_ERROR_LEAVE_FAILURE = 5,
+        STREAM_CHANNEL_ERROR_EXCEED_LIMITATION = 6,
     };
 
     public class TopicSubUsersUpdated
@@ -320,9 +306,7 @@ namespace Agora.Rtm
     {
         public PresenceEvent()
         {
-            this.channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
-            this.action = RTM_PRESENCE_ACTION_TYPE.RTM_PRESENCE_ACTION_TYPE_GENERAL;
-            this.result = RTM_PRESENCE_ACTION_RESULT.RTM_PRESENCE_GENERAL_OK_RESULT;
+            this.type = RTM_PRESENCE_TYPE.RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL;
         }
 
         /**
@@ -333,7 +317,7 @@ namespace Agora.Rtm
         * Can be join, leave, state-change, or timeout for msChannel's and stChannel's presence event
         * Can be join-topic,leave-topic for Topic Presence event
         */
-        public RTM_PRESENCE_ACTION_TYPE action { set; get; }
+        public RTM_PRESENCE_TYPE type { set; get; }
         /**
         * The channel to which the message was published
         */
@@ -345,7 +329,7 @@ namespace Agora.Rtm
         /**
         * topic information array.
         */
-        public TopicInfo topicInfos { set; get; }
+        public TopicInfo[] topicInfos { set; get; }
         /**
         * The number of topicInfo.
         */
@@ -354,57 +338,7 @@ namespace Agora.Rtm
         * The ID of the user.
         */
         public string userId { set; get; }
-        /**
-        * the result infomation of subscribe topic operation.
-        */
-        public TopicSubUsersUpdated userInfos { set; get; }
-        /**
-        * presence action result.
-        */
-        public RTM_PRESENCE_ACTION_RESULT result { set; get; }
     };
-
-    public class StatusEvent
-    {
-        public StatusEvent()
-        {
-            this.channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
-            this.state = RTM_CHANNEL_CONNECTION_STATE.RTM_CHANNEL_CONNECTION_STATE_DISCONNECTED;
-            this.reason = RTM_CHANNEL_CONNECTION_CHANGE_REASON.RTM_CHANNEL_CONNECTION_CHANGED_CONNECTING;
-        }
-        /**
-        * Which channel type, messageChannel or streamChannel
-        */
-        public RTM_CHANNEL_TYPE channelType { set; get; }
-        /**
-        * The name of the channel.
-        */
-        public string channelName { set; get; }
-        /**
-        * The topics(local created) affected in the status change.
-        */
-        public string[] affectedTopics { set; get; }
-        /**
-        * The number of topics(local created) affected in the status change.
-        */
-        public uint affectedTopicCount { set; get; }
-        /**
-        * The topics(subscribed remote topic) affected in the status change.
-        */
-        public string[] subscribedTopics { set; get; }
-        /**
-        * The number of topics(subscribed remote topic) affected in the status change.
-        */
-        public uint subscribedTopicCount { set; get; }
-        /**
-        * connection states between sdk and server.
-        */
-        public RTM_CHANNEL_CONNECTION_STATE state { set; get; }
-        /**
-        * the reason for connection state change.
-        */
-        public RTM_CHANNEL_CONNECTION_CHANGE_REASON reason { set; get; }
-    }
 }
 
 

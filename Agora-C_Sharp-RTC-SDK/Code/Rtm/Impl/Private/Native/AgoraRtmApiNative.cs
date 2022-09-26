@@ -1,12 +1,12 @@
 using System;
 using System.Runtime.InteropServices;
-using Agora.Rtc;
+using System.Text;
 
 namespace Agora.Rtm
 {
     using IrisApiRtmEnginePtr = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
-    using IrisCEventHandler = IntPtr;
+    using IrisEventHandlerMarshal = IntPtr;
 
     internal static class AgoraRtmNative
     {
@@ -63,11 +63,121 @@ namespace Agora.Rtm
         }
 
         [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisEventHandlerHandle CreateIrisEventHandler(IrisCEventHandler event_handler);
+        internal static extern IrisEventHandlerHandle CreateIrisEventHandler(IntPtr event_handler);
 
         [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisEventHandler(IrisEventHandlerHandle handler);
 
         #endregion
+    }
+
+    internal class AgoraUtil
+    {
+
+        internal static void AllocEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle, Func_Event_Native onEvent)
+        {
+            eventHandlerHandle.cEvent = new IrisCEventHandler
+            {
+                OnEvent = onEvent,
+            };
+
+            var cEventHandlerNativeLocal = new IrisCEventHandlerNative
+            {
+                onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
+            };
+
+            eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
+            Marshal.StructureToPtr(cEventHandlerNativeLocal, eventHandlerHandle.marshal, true);
+            eventHandlerHandle.handle = AgoraRtmNative.CreateIrisEventHandler(eventHandlerHandle.marshal);
+        }
+
+        internal static void FreeEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle)
+        {
+            AgoraRtmNative.DestroyIrisEventHandler(eventHandlerHandle.handle);
+            eventHandlerHandle.handle = IntPtr.Zero;
+
+            Marshal.FreeHGlobal(eventHandlerHandle.marshal);
+            eventHandlerHandle.marshal = IntPtr.Zero;
+
+            eventHandlerHandle.cEvent = new IrisCEventHandler();
+        }
+
+        internal static string ConvertByteToString(ref byte[] array)
+        {
+            var re = Encoding.UTF8.GetString(array);
+            var index = re.IndexOf('\0');
+            return re.Substring(0, index);
+        }
+
+    }
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Func_Event_Native(IntPtr param);
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisCEventParam
+    {
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+
+        internal IntPtr result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisCApiParam
+    {
+        internal IrisCApiParam(int param = 0)
+        {
+            @event = "";
+            data = "";
+            data_size = 0;
+            result = new byte[65536];
+            buffer = IntPtr.Zero;
+            length = IntPtr.Zero;
+            buffer_count = 0;
+        }
+
+        public string Result
+        {
+            get
+            {
+                var re = Encoding.UTF8.GetString(result);
+                var index = re.IndexOf('\0');
+                return re.Substring(0, index);
+            }
+        }
+
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+        internal byte[] result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisCEventHandlerNative
+    {
+        internal IntPtr onEvent;
+    }
+
+    internal struct IrisCEventHandler
+    {
+        internal Func_Event_Native OnEvent;
+    }
+
+    internal struct EventHandlerHandle
+    {
+        internal IrisCEventHandler cEvent;
+        internal IrisEventHandlerMarshal marshal;
+        internal IrisEventHandlerHandle handle;
     }
 }
