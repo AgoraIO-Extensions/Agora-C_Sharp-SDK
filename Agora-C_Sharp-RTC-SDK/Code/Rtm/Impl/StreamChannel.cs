@@ -31,7 +31,7 @@ namespace Agora.Rtm
             {
                 return "";
             }
-            return _streamChannelImpl.ChannelName();
+            return channelName;
         }
 
         public override int Join(JoinChannelOptions options)
