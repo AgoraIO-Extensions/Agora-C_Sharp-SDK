@@ -42,13 +42,13 @@ namespace Agora.Rtc
                 int frameLength = (int)AgoraJson.GetData<int>(data, "length");
                 switch (@event)
                 {
-                    case "AuidoEncodedFrameObserver_OnRecordAudioEncodedFrame":
+                    case "AudioEncodedFrameObserver_OnRecordAudioEncodedFrame":
                         audioEncodedFrameObserver.OnRecordAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
-                    case "AuidoEncodedFrameObserver_OnPlaybackAudioEncodedFrame":
+                    case "AudioEncodedFrameObserver_OnPlaybackAudioEncodedFrame":
                         audioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
-                    case "AuidoEncodedFrameObserver_OnMixedAudioEncodedFrame":
+                    case "AudioEncodedFrameObserver_OnMixedAudioEncodedFrame":
                         audioEncodedFrameObserver.OnMixedAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
                     default:
