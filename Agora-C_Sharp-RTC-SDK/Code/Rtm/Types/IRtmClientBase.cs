@@ -4,6 +4,14 @@ namespace Agora.Rtm
 {
     public class RtmConfig
     {
+        public RtmConfig()
+        {
+            appId = "";
+            userId = "";
+            eventHandler = null;
+            logConfig = new LogConfig();
+        }
+
         public string appId { set; get; }
 
         public string userId { set; get; }
@@ -97,6 +105,14 @@ namespace Agora.Rtm
 
     public class TopicInfo
     {
+        public TopicInfo()
+        {
+            topic = "";
+            numOfPublisher = 0;
+            publisherUserIds = new string[0];
+            publisherMetas = new string[0];
+        }
+
         public string topic { set; get; }
 
         public uint numOfPublisher { set; get; }
@@ -267,6 +283,15 @@ namespace Agora.Rtm
 
     public class TopicSubUsersUpdated
     {
+        public TopicSubUsersUpdated()
+        {
+            topic = "";
+            succeedUserCount = 0;
+            succeedUsers = new string[0];
+            failedUserCount = 0;
+            failedUsers = new string[0];
+        }
+
         public string topic { set; get; }
 
         public string[] succeedUsers { set; get; }
@@ -280,6 +305,15 @@ namespace Agora.Rtm
 
     public class MessageEvent
     {
+        public MessageEvent()
+        {
+            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
+            channelName = "";
+            channelTopic = "";
+            message ="";
+            publisher = "";
+        }
+
         /**
         * Which channel type, messageChannel or streamChannel
         */
@@ -307,6 +341,11 @@ namespace Agora.Rtm
         public PresenceEvent()
         {
             this.type = RTM_PRESENCE_TYPE.RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL;
+            channelName = "";
+            occupancy = 0;
+            topicInfos = new TopicInfo[0];
+            topicInfoNumber = 0;
+            userId = "";
         }
 
         /**
@@ -340,5 +379,3 @@ namespace Agora.Rtm
         public string userId { set; get; }
     };
 }
-
-

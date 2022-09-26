@@ -46,10 +46,11 @@ namespace Agora.Rtm
             GC.SuppressFinalize(this);
         }
 
-        public int Join(JoinChannelOptions options)
+        public int Join(string channelName, JoinChannelOptions options)
         {
             var param = new
             {
+                channelName,
                 options
             };
 
@@ -62,28 +63,41 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int Leave()
+        public int Leave(string channelName)
         {
+            var param = new
+            {
+                channelName
+            };
+
+            var json = AgoraJson.ToJson(param);
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_LEAVE,
-                "", 0,
+                json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public string ChannelName()
+        public string ChannelName(string channelName)
         {
+            var param = new
+            {
+                channelName
+            };
+
+            var json = AgoraJson.ToJson(param);
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_CHANNELNAME,
-                "", 0,
+                json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
             return nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
         }
 
-        public int CreateTopic(string topic, CreateTopicOptions options)
+        public int CreateTopic(string channelName, string topic, CreateTopicOptions options)
         {
             var param = new
             {
+                channelName,
                 topic,
                 options
             };
@@ -97,10 +111,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int PublishTopic(string topic, string message, uint length)
+        public int PublishTopic(string channelName, string topic, string message, uint length)
         {
             var param = new
             {
+                channelName,
                 topic,
                 message,
                 length
@@ -115,10 +130,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int DestroyTopic(string topic)
+        public int DestroyTopic(string channelName, string topic)
         {
             var param = new
             {
+                channelName,
                 topic
             };
 
@@ -131,10 +147,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SubscribeTopic(string topic, TopicOptions options)
+        public int SubscribeTopic(string channelName, string topic, TopicOptions options)
         {
             var param = new
             {
+                channelName,
                 topic,
                 options
             };
@@ -148,10 +165,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int UnsubscribeTopic(string topic, TopicOptions options)
+        public int UnsubscribeTopic(string channelName, string topic, TopicOptions options)
         {
             var param = new
             {
+                channelName,
                 topic,
                 options
             };
@@ -165,11 +183,12 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int GetSubscribedUserList(string topic, ref UserList[] users)
+        public int GetSubscribedUserList(string channelName, string topic, ref UserList[] users)
         {
             var param = new
             {
-                topic,
+                channelName,
+                topic
             };
 
             var json = AgoraJson.ToJson(param);
