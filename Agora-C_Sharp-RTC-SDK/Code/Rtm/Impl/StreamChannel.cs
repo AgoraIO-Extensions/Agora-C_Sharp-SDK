@@ -40,7 +40,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.Join(options);
+            return _streamChannelImpl.Join(channelName, options);
         }
 
         public override int Leave()
@@ -49,7 +49,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.Leave();
+            return _streamChannelImpl.Leave(channelName);
         }
 
         public override int CreateTopic(string topic, CreateTopicOptions options)
@@ -58,7 +58,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.CreateTopic(topic, options);
+            return _streamChannelImpl.CreateTopic(channelName, topic, options);
         }
 
         public override int PublishTopic(string topic, string message, uint length)
@@ -67,7 +67,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopic(topic, message, length);
+            return _streamChannelImpl.PublishTopic(channelName, topic, message, length);
         }
 
         public override int DestroyTopic(string topic)
@@ -76,7 +76,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.DestroyTopic(topic);
+            return _streamChannelImpl.DestroyTopic(channelName, topic);
         }
 
         public override int SubscribeTopic(string topic, TopicOptions options)
@@ -85,7 +85,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.SubscribeTopic(topic, options);
+            return _streamChannelImpl.SubscribeTopic(channelName, topic, options);
         }
 
         public override int UnsubscribeTopic(string topic, TopicOptions options)
@@ -94,7 +94,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.UnsubscribeTopic(topic, options);
+            return _streamChannelImpl.UnsubscribeTopic(channelName, topic, options);
         }
 
         public override int GetSubscribedUserList(string topic, ref UserList[] users)
@@ -103,7 +103,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.GetSubscribedUserList(topic, ref users);
+            return _streamChannelImpl.GetSubscribedUserList(channelName, topic, ref users);
         }
     }
 }

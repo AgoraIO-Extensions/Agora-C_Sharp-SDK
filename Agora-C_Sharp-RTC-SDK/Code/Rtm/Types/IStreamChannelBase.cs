@@ -11,6 +11,10 @@ namespace Agora.Rtm
 
     public class JoinChannelOptions
     {
+        public JoinChannelOptions()
+        {
+            this.token = "";
+        }
         public string token { set; get; }
     };
 
