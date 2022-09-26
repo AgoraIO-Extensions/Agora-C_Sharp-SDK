@@ -61,6 +61,7 @@ namespace Agora.Rtc
         private RtcEngineImpl()
         {
             _apiParam = new IrisCApiParam();
+            _apiParam.AllocResult();
 
             //AgoraRtcNative.CreateApiParamsPtr();
             _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(IntPtr.Zero);
@@ -145,7 +146,7 @@ namespace Agora.Rtc
             _irisRtcEngine = IntPtr.Zero;
             //AgoraRtcNative.DestroyApiParamsPtr();
 
-            _apiParam = new IrisCApiParam();
+            _apiParam.FreeResult();
 
             engineInstance = null;
         }
