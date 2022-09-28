@@ -5,7 +5,7 @@ namespace Agora.Rtm
         #region class IStreamChannel 
         internal const string FUNC_STREAMCHANNEL_JOIN = "StreamChannel_join";
         internal const string FUNC_STREAMCHANNEL_LEAVE = "StreamChannel_leave";
-        internal const string FUNC_STREAMCHANNEL_CHANNELNAME = "StreamChannel_channelName";
+        internal const string FUNC_STREAMCHANNEL_GETCHANNELNAME = "StreamChannel_getChannelName";
         internal const string FUNC_STREAMCHANNEL_CREATETOPIC = "StreamChannel_createTopic";
         internal const string FUNC_STREAMCHANNEL_PUBLISHTOPIC = "StreamChannel_publishTopic";
         internal const string FUNC_STREAMCHANNEL_DESTROYTOPIC = "StreamChannel_destroyTopic";

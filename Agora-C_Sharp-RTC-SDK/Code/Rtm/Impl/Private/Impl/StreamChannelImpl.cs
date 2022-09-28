@@ -86,7 +86,7 @@ namespace Agora.Rtm
             };
 
             var json = AgoraJson.ToJson(param);
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_CHANNELNAME,
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_GETCHANNELNAME,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
