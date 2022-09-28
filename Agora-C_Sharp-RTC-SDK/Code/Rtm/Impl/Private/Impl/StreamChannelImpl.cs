@@ -78,7 +78,7 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public string ChannelName(string channelName)
+        public string GetChannelName(string channelName)
         {
             var param = new
             {
