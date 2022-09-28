@@ -6,7 +6,7 @@ namespace Agora.Rtm
 
         public abstract int Leave();
 
-        public abstract string ChannelName();
+        public abstract string GetChannelName();
 
         public abstract int CreateTopic(string topic, CreateTopicOptions options);
 

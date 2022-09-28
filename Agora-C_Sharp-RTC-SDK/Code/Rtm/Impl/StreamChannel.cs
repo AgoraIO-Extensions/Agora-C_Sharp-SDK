@@ -25,7 +25,7 @@ namespace Agora.Rtm
             channelName = "";
         }
 
-        public override string ChannelName()
+        public override string GetChannelName()
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
