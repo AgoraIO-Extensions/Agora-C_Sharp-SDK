@@ -60,14 +60,5 @@ namespace Agora.Rtm
             _rtcClientImpl.CreateStreamChannel(channelName);
             return new StreamChannel(this, _rtcClientImpl.GetStreamChannel(), channelName);
         }
-
-        public override void ReleaseStreamChannel(IStreamChannel channel)
-        {
-            if(_rtcClientImpl == null)
-            {
-                return;
-            }
-            _rtcClientImpl.ReleaseStreamChannel(channel.ChannelName());
-        }
     }
 }

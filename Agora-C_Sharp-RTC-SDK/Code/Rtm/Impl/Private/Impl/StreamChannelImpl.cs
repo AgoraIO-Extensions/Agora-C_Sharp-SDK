@@ -93,7 +93,7 @@ namespace Agora.Rtm
             return nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
         }
 
-        public int CreateTopic(string channelName, string topic, CreateTopicOptions options)
+        public int JoinTopic(string channelName, string topic, JoinTopicOptions options)
         {
             var param = new
             {
@@ -104,14 +104,14 @@ namespace Agora.Rtm
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_CREATETOPIC,
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_JOINTOPIC,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int PublishTopic(string channelName, string topic, string message, uint length)
+        public int PublishTopicMessage(string channelName, string topic, string message, uint length)
         {
             var param = new
             {
@@ -123,14 +123,14 @@ namespace Agora.Rtm
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_PUBLISHTOPIC,
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_PUBLISHTOPICMESSAGE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int DestroyTopic(string channelName, string topic)
+        public int LeaveTopic(string channelName, string topic)
         {
             var param = new
             {
@@ -140,7 +140,7 @@ namespace Agora.Rtm
 
             var json = AgoraJson.ToJson(param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_DESTROYTOPIC,
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_LEAVETOPIC,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -207,6 +207,22 @@ namespace Agora.Rtm
                 users = new UserList[0];
             }
             return (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int Release(string channelName)
+        {
+            var param = new
+            {
+                channelName
+            };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_RELEASE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
     }
 }

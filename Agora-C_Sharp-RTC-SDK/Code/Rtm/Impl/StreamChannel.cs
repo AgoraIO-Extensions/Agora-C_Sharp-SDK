@@ -52,31 +52,31 @@ namespace Agora.Rtm
             return _streamChannelImpl.Leave(channelName);
         }
 
-        public override int CreateTopic(string topic, CreateTopicOptions options)
+        public override int JoinTopic(string topic, JoinTopicOptions options)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.CreateTopic(channelName, topic, options);
+            return _streamChannelImpl.JoinTopic(channelName, topic, options);
         }
 
-        public override int PublishTopic(string topic, string message, uint length)
+        public override int PublishTopicMessage(string topic, string message, uint length)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopic(channelName, topic, message, length);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, length);
         }
 
-        public override int DestroyTopic(string topic)
+        public override int LeaveTopic(string topic)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.DestroyTopic(channelName, topic);
+            return _streamChannelImpl.LeaveTopic(channelName, topic);
         }
 
         public override int SubscribeTopic(string topic, TopicOptions options)
@@ -104,6 +104,15 @@ namespace Agora.Rtm
                 return ErrorCode;
             }
             return _streamChannelImpl.GetSubscribedUserList(channelName, topic, ref users);
+        }
+
+        public override void Dispose()
+        {
+            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            {
+                return;
+            }
+            _streamChannelImpl.Release(channelName);
         }
     }
 }

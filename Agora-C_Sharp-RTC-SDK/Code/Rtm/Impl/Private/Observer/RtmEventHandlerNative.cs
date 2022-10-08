@@ -96,13 +96,13 @@ namespace Agora.Rtm
                     });
 #endif
                     break;
-                case "RtmEventHandler_onTopicCreateResult":
+                case "RtmEventHandler_onJoinTopicResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (rtmEventHandler == null) return;
-                        rtmEventHandler.OnTopicCreateResult(
+                        rtmEventHandler.OnJoinTopicResult(
                             (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                             (string)AgoraJson.GetData<string>(jsonData, "userId"),
                             (string)AgoraJson.GetData<string>(jsonData, "topic"),
@@ -113,13 +113,13 @@ namespace Agora.Rtm
                     });
 #endif
                     break;
-                case "RtmEventHandler_onTopicDestroyResult":
+                case "RtmEventHandler_onLeaveTopicResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (rtmEventHandler == null) return;
-                        rtmEventHandler.OnTopicDestroyResult(
+                        rtmEventHandler.OnLeaveTopicResult(
                             (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                             (string)AgoraJson.GetData<string>(jsonData, "userId"),
                             (string)AgoraJson.GetData<string>(jsonData, "topic"),
