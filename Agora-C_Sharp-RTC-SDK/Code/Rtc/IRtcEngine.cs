@@ -838,6 +838,9 @@ namespace Agora.Rtc
         #endregion
 
         #region Multi-device capture
+
+        //only ios
+        public abstract int EnableMultiCamera(bool enabled, CameraCapturerConfiguration config);
         ///
         /// <summary>
         /// Starts video capture with a primary camera.
@@ -962,7 +965,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetAdvancedAudioOptions(AdvancedAudioOptions options);
+        public abstract int SetAdvancedAudioOptions(AdvancedAudioOptions options, int sourceType = 0);
         #endregion
 
         #region Video pre-process and post-process
@@ -1720,6 +1723,10 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetLocalVoiceReverb(AUDIO_REVERB_TYPE reverbKey, int value);
+
+        public abstract int SetHeadphoneEQParameters(int lowGain, int highGain);
+
+        public abstract int SetHeadphoneEQPreset(HEADPHONE_EQUALIZER_PRESET preset);
         #endregion
 
         #region Pre-call network test
@@ -1799,6 +1806,9 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int StopLastmileProbeTest();
+
+
+        public abstract int GetNetworkType();
         #endregion
 
         #region Screen sharing
@@ -2003,21 +2013,7 @@ namespace Agora.Rtc
         ///
         public abstract int EnableDualStreamMode(bool enabled);
 
-        ///
-        /// <summary>
-        /// Enables/Disables dual-stream mode.
-        /// You can call this method to enable or disable the dual-stream mode on the publisher side. Dual streams are a hybrid of a high-quality video stream and a low-quality video stream:High-quality video stream: High bitrate, high resolution.Low-quality video stream: Low bitrate, low resolution.After you enable the dual-stream mode, you can call SetRemoteVideoStreamType to choose toreceive the high-quality video stream or low-quality video stream on the subscriber side.You can call this method either before or after joining a channel.
-        /// </summary>
-        ///
-        /// <param name="sourceType"> The capture type of the custom video source. See VIDEO_SOURCE_TYPE .</param>
-        ///
-        /// <param name="enabled"> Whether to enable dual-stream mode.true: Enable dual-stream mode.false: Disable dual-stream mode.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled);
+
 
         ///
         /// <summary>
@@ -2039,7 +2035,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig);
+        public abstract int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig);
 
         ///
         /// <summary>
@@ -2076,15 +2072,12 @@ namespace Agora.Rtc
         ///
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
 
-        ///
-        /// @ignore
-        ///
-        public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode);
+
 
         ///
         /// @ignore
         ///
-        public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
+        public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
         #endregion
 
         #region Watermark
@@ -2119,10 +2112,6 @@ namespace Agora.Rtc
         ///
         public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
 
-        ///
-        /// @ignore
-        ///
-        public abstract int ClearVideoWatermark();
 
         ///
         /// <summary>
@@ -2483,6 +2472,8 @@ namespace Agora.Rtc
         ///
         public abstract int SetMixedAudioFrameParameters(int sampleRate, int channel, int samplesPerCall);
 
+
+        public abstract int SetEarMonitoringAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
         ///
         /// <summary>
         /// Sets the audio data format reported by OnPlaybackAudioFrameBeforeMixing [1/2] .
@@ -2739,6 +2730,10 @@ namespace Agora.Rtc
         ///
         public abstract int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
+
+        public abstract int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true);
+
+
         ///
         /// <summary>
         /// Sets the properties of the extension.
@@ -2761,6 +2756,9 @@ namespace Agora.Rtc
         ///
         public abstract int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
+
+        public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value);
+
         ///
         /// <summary>
         /// Gets detailed information of the extension.
@@ -2779,6 +2777,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
+        public abstract int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len);
+
         #endregion
 
         #region Media metadata
@@ -3307,6 +3307,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract string GetErrorDescription(int code);
+
+
         #endregion
 
         #region DeviceManager
@@ -3553,7 +3555,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetSubscribeAudioBlacklist(uint[] uidList, int uidNumber);
+        public abstract int SetSubscribeAudioBlocklist(uint[] uidList, int uidNumber);
 
         ///
         /// <summary>
@@ -3569,7 +3571,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetSubscribeAudioWhitelist(uint[] uidList, int uidNumber);
+        public abstract int SetSubscribeAudioAllowlist(uint[] uidList, int uidNumber);
 
         ///
         /// <summary>
@@ -3585,7 +3587,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetSubscribeVideoBlacklist(uint[] uidList, int uidNumber);
+        public abstract int SetSubscribeVideoBlocklist(uint[] uidList, int uidNumber);
 
         ///
         /// <summary>
@@ -3602,7 +3604,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetSubscribeVideoWhitelist(uint[] uidList, int uidNumber);
+        public abstract int SetSubscribeVideoAllowlist(uint[] uidList, int uidNumber);
         #endregion
 
 
@@ -3895,6 +3897,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract IMediaRecorder GetMediaRecorder();
+
+        public abstract long GetCurrentMonotonicTimeInMs();
     };
 
     /* class_irtcengineex : irtcengine */
@@ -3939,6 +3943,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int LeaveChannelEx(RtcConnection connection);
+
+        public abstract int LeaveChannelEx(RtcConnection connection,LeaveChannelOptions options);
         #endregion
 
         ///
@@ -4228,7 +4234,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
+        public abstract int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         ///
         /// @ignore
@@ -4261,7 +4267,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetSubscribeAudioBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
+        public abstract int SetSubscribeAudioBlocklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
 
         ///
         /// <summary>
@@ -4281,7 +4287,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetSubscribeAudioWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
+        public abstract int SetSubscribeAudioAllowlistEx(uint[] uidList, int uidNumber, RtcConnection connection);
 
         ///
         /// <summary>
@@ -4300,7 +4306,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetSubscribeVideoBlacklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
+        public abstract int SetSubscribeVideoBlocklistEx(uint[] uidList, int uidNumber, RtcConnection connection);
 
         ///
         /// <summary>
@@ -4320,12 +4326,12 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetSubscribeVideoWhitelistEx(uint[] uidList, int uidNumber, RtcConnection connection);
+        public abstract int SetSubscribeVideoAllowlistEx(uint[] uidList, int uidNumber, RtcConnection connection);
 
         ///
         /// @ignore
         ///
-        public abstract int SetDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection);
+        public abstract int SetDualStreamModeEx(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         ///
         /// <summary>

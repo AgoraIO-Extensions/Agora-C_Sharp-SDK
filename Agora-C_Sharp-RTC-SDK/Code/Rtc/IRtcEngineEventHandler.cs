@@ -153,6 +153,9 @@ namespace Agora.Rtc
         ///
         public virtual void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
+
+        public virtual void OnAudioMixingPositionChanged(long position) { }
+
         [Obsolete("This method is deprecated, use onAudioMixingStateChanged instead")]
         ///
         /// <summary>
@@ -443,7 +446,7 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserMuteAudio(RtcConnection connection, uint remoteUid, bool muted) { }
 
-        [Obsolete("Use onRemoteVideoStateChanged instead of")]
+       
         ///
         /// <summary>
         /// Occurs when a remote user stops/resumes publishing the video stream.
@@ -728,6 +731,9 @@ namespace Agora.Rtc
         ///
         public virtual void OnTokenPrivilegeWillExpire(RtcConnection connection, string token) { }
 
+
+        public virtual void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE error) { }
+       
         ///
         /// <summary>
         /// Occurs when the first audio frame is published.
@@ -824,7 +830,7 @@ namespace Agora.Rtc
         ///
         /// <param name="newRole"> Role that the user switches to: CLIENT_ROLE_BROADCASTER(1): Host.CLIENT_ROLE_AUDIENCE(2): Audience. CLIENT_ROLE_TYPE .</param>
         ///
-        public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole) { }
+        public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions) { }
 
         ///
         /// <summary>

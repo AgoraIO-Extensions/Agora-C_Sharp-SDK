@@ -22,6 +22,8 @@ namespace Agora.Rtc
 
     public delegate void OnAudioDeviceStateChangedHandler(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState);
 
+    public delegate void OnAudioMixingPositionChangedHandler(long position);
+
     public delegate void OnAudioMixingFinishedHandler();
 
     public delegate void OnAudioEffectFinishedHandler(int soundId);
@@ -114,6 +116,8 @@ namespace Agora.Rtc
 
     public delegate void OnTokenPrivilegeWillExpireHandler(RtcConnection connection, string token);
 
+    public delegate void OnLicenseValidationFailureHandler(RtcConnection connection, LICENSE_ERROR_TYPE error);
+
     public delegate void OnFirstLocalAudioFramePublishedHandler(RtcConnection connection, int elapsed);
 
     public delegate void OnFirstRemoteAudioFrameHandler(RtcConnection connection, uint userId, int elapsed);
@@ -126,7 +130,7 @@ namespace Agora.Rtc
 
     public delegate void OnActiveSpeakerHandler(RtcConnection connection, uint uid);
 
-    public delegate void OnClientRoleChangedHandler(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole);
+    public delegate void OnClientRoleChangedHandler(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions);
 
     public delegate void OnClientRoleChangeFailedHandler(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole);
 
@@ -208,6 +212,7 @@ namespace Agora.Rtc
         public event OnAudioVolumeIndicationHandler EventOnAudioVolumeIndication;
         public event OnRtcStatsHandler EventOnRtcStats;
         public event OnAudioDeviceStateChangedHandler EventOnAudioDeviceStateChanged;
+        public event OnAudioMixingPositionChangedHandler EventOnAudioMixingPositionChanged;
         public event OnAudioMixingFinishedHandler EventOnAudioMixingFinished;
         public event OnAudioEffectFinishedHandler EventOnAudioEffectFinished;
         public event OnVideoDeviceStateChangedHandler EventOnVideoDeviceStateChanged;
@@ -254,6 +259,7 @@ namespace Agora.Rtc
         public event OnStreamMessageErrorHandler EventOnStreamMessageError;
         public event OnRequestTokenHandler EventOnRequestToken;
         public event OnTokenPrivilegeWillExpireHandler EventOnTokenPrivilegeWillExpire;
+        public event OnLicenseValidationFailureHandler EventOnLicenseValidationFailure;
         public event OnFirstLocalAudioFramePublishedHandler EventOnFirstLocalAudioFramePublished;
         public event OnFirstRemoteAudioFrameHandler EventOnFirstRemoteAudioFrame;
         public event OnFirstRemoteAudioDecodedHandler EventOnFirstRemoteAudioDecoded;
@@ -366,6 +372,12 @@ namespace Agora.Rtc
         {
             if (EventOnAudioDeviceStateChanged == null) return;
             EventOnAudioDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
+        }
+
+        public override void OnAudioMixingPositionChanged(long position)
+        {
+            if (EventOnAudioMixingPositionChanged == null) return;
+            EventOnAudioMixingPositionChanged.Invoke(position);
         }
 
         [Obsolete]
@@ -508,7 +520,6 @@ namespace Agora.Rtc
             EventOnUserMuteAudio.Invoke(connection, remoteUid, muted);
         }
 
-        [Obsolete]
         public override void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted)
         {
             if (EventOnUserMuteVideo == null) return;
@@ -649,6 +660,12 @@ namespace Agora.Rtc
             EventOnTokenPrivilegeWillExpire.Invoke(connection, token);
         }
 
+        public override void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE error)
+        {
+           if(EventOnLicenseValidationFailure == null) return;
+            EventOnLicenseValidationFailure.Invoke(connection, error);
+        }
+
         public override void OnFirstLocalAudioFramePublished(RtcConnection connection, int elapsed)
         {
             if (EventOnFirstLocalAudioFramePublished == null) return;
@@ -685,10 +702,10 @@ namespace Agora.Rtc
             EventOnActiveSpeaker.Invoke(connection, uid);
         }
 
-        public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole)
+        public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
         {
             if (EventOnClientRoleChanged == null) return;
-            EventOnClientRoleChanged.Invoke(connection, oldRole, newRole);
+            EventOnClientRoleChanged.Invoke(connection, oldRole, newRole, newRoleOptions);
         }
 
         public override void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
@@ -715,19 +732,7 @@ namespace Agora.Rtc
             EventOnRtmpStreamingEvent.Invoke(url, eventCode);
         }
 
-        //public override void OnStreamPublished(string url, int error)
-        //{
-        //    if (EventOnStreamPublished == null) return;
-        //    EventOnStreamPublished.Invoke(url, error);
-        //}
-
-        //[Obsolete]
-        //public override void OnStreamUnpublished(string url)
-        //{
-        //    if (EventOnStreamUnpublished == null) return;
-        //    EventOnStreamUnpublished.Invoke(url);
-        //}
-
+     
         public override void OnTranscodingUpdated()
         {
             if (EventOnTranscodingUpdated == null) return;
@@ -739,12 +744,6 @@ namespace Agora.Rtc
             if (EventOnAudioRoutingChanged == null) return;
             EventOnAudioRoutingChanged.Invoke(routing);
         }
-
-        //public override void OnAudioSessionRestrictionResume()
-        //{
-        //    if (EventOnAudioSessionRestrictionResume == null) return;
-        //    EventOnAudioSessionRestrictionResume.Invoke();
-        //}
 
         public override void OnChannelMediaRelayStateChanged(int state, int code)
         {

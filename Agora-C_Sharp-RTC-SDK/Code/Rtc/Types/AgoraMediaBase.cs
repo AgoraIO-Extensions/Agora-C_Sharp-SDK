@@ -288,7 +288,7 @@ namespace Agora.Rtc
 
     public struct AudioPcmFrame
     {
-        public UInt32 capture_timestamp;
+        public Int64 capture_timestamp;
 
         public UInt64 samples_per_channel_;
 
@@ -953,6 +953,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
+
+        AUDIO_FRAME_POSITION_EAR_MONITORING = 0x0010
     };
 
     ///

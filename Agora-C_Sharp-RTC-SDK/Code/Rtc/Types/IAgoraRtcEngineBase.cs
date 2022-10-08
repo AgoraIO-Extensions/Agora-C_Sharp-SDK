@@ -428,7 +428,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int regulatedCaptureFrameRate { set; get; }
-        
+
         ///
         /// <summary>
         /// The width (px) adjusted by the built-in video capture adapter (regulator) of the SDK for capturing the local video stream. The regulator adjusts the height and width of the video captured by the camera according to the video encoding configuration.
@@ -526,6 +526,10 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel { set; get; }
+
+        public bool dualStreamEnabled { set; get; }
+
+        public int hwEncoderAccelerating { set; get; }
     };
 
     ///
@@ -647,6 +651,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int superResolutionType { set; get; }
+
+        public int mosValue { set; get; }
     };
 
     ///
@@ -877,7 +883,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public int bitrate { set; get; }
-  
+
         ///
         /// @ignore
         ///
@@ -1078,21 +1084,21 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public bool isCaptureWindow { set; get; }
-        
+
         ///
         /// <summary>
         /// (macOS only) The display ID of the screen.This parameter takes effect only when you want to capture the screen on macOS.
         /// </summary>
         ///
         public uint displayId { set; get; }
-        
+
         ///
         /// <summary>
         /// (Windows only) The relative position of the shared screen to the virtual screen.This parameter takes effect only when you want to capture the screen on Windows.
         /// </summary>
         ///
         public Rectangle screenRect { set; get; }
-        
+
         ///
         /// <summary>
         /// (For Windows and macOS only) Window ID.This parameter takes effect only when you want to capture the window.
@@ -1291,6 +1297,9 @@ namespace Agora.Rtc
         ///
         public bool isOccluded { set; get; }
 
+        //only windows
+        public bool minimizeWindow { set; get; }
+
         public ScreenCaptureSourceInfo()
         {
             type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
@@ -1302,6 +1311,7 @@ namespace Agora.Rtc
             isOccluded = false;
             thumbImage = new ThumbImageBuffer();
             iconImage = new ThumbImageBuffer();
+            minimizeWindow = false;
         }
     };
 
@@ -1771,7 +1781,7 @@ namespace Agora.Rtc
                 writer.WritePropertyName("publishRhythmPlayerTrack");
                 writer.Write(this.publishRhythmPlayerTrack.GetValue());
             }
-            
+
             if (this.isInteractiveAudience.HasValue())
             {
                 writer.WritePropertyName("isInteractiveAudience");
@@ -1859,6 +1869,39 @@ namespace Agora.Rtc
         TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
     };
 
+    public class LogUploadServerInfo
+    {
+
+        public string serverDomain { set; get; }
+
+        public string serverPath { set; get; }
+
+        public int serverPort { set; get; }
+
+        public bool serverHttps;
+
+        public LogUploadServerInfo()
+        {
+            serverDomain = null;
+            serverPath = null;
+            serverPort = 0;
+            serverHttps = true;
+        }
+
+        public LogUploadServerInfo(string domain, string path, int port, bool https)
+        {
+            serverDomain = domain;
+            path = serverPath;
+            serverPort = port;
+            serverHttps = https;
+        }
+    };
+
+    public class AdvancedConfigInfo
+    {
+        public LogUploadServerInfo logUploadServer = new LogUploadServerInfo();
+    };
+
     ///
     /// <summary>
     /// The configurations of the Local Access Point.
@@ -1908,6 +1951,8 @@ namespace Agora.Rtc
         ///
         public LOCAL_PROXY_MODE mode { set; get; }
 
+        public AdvancedConfigInfo advancedConfig { set; get; }
+
         public LocalAccessPointConfiguration()
         {
             ipList = new string[0];
@@ -1916,6 +1961,7 @@ namespace Agora.Rtc
             domainListSize = 0;
             verifyDomainName = "";
             mode = LOCAL_PROXY_MODE.kConnectivityFirst;
+            advancedConfig = new AdvancedConfigInfo();
         }
     };
 
@@ -1969,6 +2015,7 @@ namespace Agora.Rtc
             context = 0;
 
             channelProfile = CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING;
+            license = "";
             audioScenario = AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT;
             areaCode = AREA_CODE.AREA_CODE_GLOB;
             logConfig = new LogConfig();
@@ -1976,13 +2023,14 @@ namespace Agora.Rtc
         }
 
         public RtcEngineContext(string appId, UInt64 context,
-            CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
+            CHANNEL_PROFILE_TYPE channelProfile, string license, AUDIO_SCENARIO_TYPE audioScenario,
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
             LogConfig logConfig = null)
         {
             this.appId = appId;
             this.context = context;
             this.channelProfile = channelProfile;
+            this.license = license;
             this.audioScenario = audioScenario;
             this.areaCode = areaCode;
             this.logConfig = logConfig ?? new LogConfig();
@@ -2011,6 +2059,8 @@ namespace Agora.Rtc
         ///
         public CHANNEL_PROFILE_TYPE channelProfile { set; get; }
 
+
+        public string license { set; get; }
         ///
         /// <summary>
         /// The audio scenarios. See AUDIO_SCENARIO_TYPE . Under different audio scenarios, the device uses different volume types.
@@ -2065,6 +2115,9 @@ namespace Agora.Rtc
 
             writer.WritePropertyName("channelProfile");
             this.WriteEnum(writer, this.channelProfile);
+
+            writer.WritePropertyName("license");
+            writer.Write(this.license);
 
             writer.WritePropertyName("audioScenario");
             this.WriteEnum(writer, this.audioScenario);
@@ -2425,6 +2478,26 @@ namespace Agora.Rtc
         }
     }
 
+    public class ExtensionInfo
+    {
+        public MEDIA_SOURCE_TYPE mediaSourceType { set; get; }
+
+        public uint remoteUid { set; get; }
+
+        public string channelId { set; get; }
+
+        public uint localUid { set; get; }
+
+        ExtensionInfo()
+        {
+            mediaSourceType = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE;
+            remoteUid = 0;
+            channelId = "";
+            localUid = 0;
+        }
+    };
+
+
     ///
     /// <summary>
     /// Formats of the quality report.
@@ -2664,7 +2737,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_PROFILE_LANDSCAPE_480P_10 = 49,  // 640x480   10
-        
+
         ///
         /// <summary>
         /// 50: 1280 × 720, frame rate 15 fps, bitrate 1130 Kbps.
