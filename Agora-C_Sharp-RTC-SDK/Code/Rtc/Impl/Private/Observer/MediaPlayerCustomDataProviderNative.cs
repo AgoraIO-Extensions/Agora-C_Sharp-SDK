@@ -56,23 +56,12 @@ namespace Agora.Rtc
                 var length = eventParam.length;
                 var buffer_count = eventParam.buffer_count;
 
-                IntPtr[] bufferArray = null;
-                int[] lengthArray = null;
-
-                if (buffer_count > 0)
-                {
-                    bufferArray = new IntPtr[buffer_count];
-                    Marshal.Copy(buffer, bufferArray, 0, (int)buffer_count);
-                    lengthArray = new int[buffer_count];
-                    Marshal.Copy(length, lengthArray, 0, (int)buffer_count);
-                }
-
                 switch (@event)
                 {
                     case "MediaPlayerCustomDataProvider_onReadData":
                         {
-                            IntPtr buffer0 = bufferArray[0];
-                            int bufferSize = lengthArray[0];
+                            IntPtr buffer0 = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "buffer");
+                            int bufferSize = (int)AgoraJson.GetData<int>(jsonData, "bufferSize");
                             int result = customDataProvider.OnReadData(buffer0, bufferSize);
 
                             var p = new { result };
