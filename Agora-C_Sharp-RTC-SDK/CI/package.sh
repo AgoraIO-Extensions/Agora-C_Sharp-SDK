@@ -125,16 +125,16 @@ cp $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SD
 fi
 
 cp -r $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
+cp $ANDROID_SRC_PATH/arm64-v8a/Release/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
 cp -r $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
+cp $ANDROID_SRC_PATH/armeabi-v7a/Release/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
 cp -r $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/x86
+cp $ANDROID_SRC_PATH/x86/Release/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/x86
 
 cp -r $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+cp $ANDROID_SRC_PATH/x86_64/Release/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
 
 # iOS
 echo "[Unity CI] copying iOS ..."
