@@ -479,18 +479,6 @@ namespace Agora.Rtc
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_INITIALIZE = "LocalSpatialAudioEngine_initialize";
         #endregion
 
-        #region RtcRawDataPluginManager start
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_REGISTERPLUGIN = "RtcRawDataPluginManager_registerPlugin";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_GETPLUGINPARAMETER = "RtcRawDataPluginManager_getPluginParameter";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_UNREGISTERPLUGIN = "RtcRawDataPluginManager_unRegisterPlugin";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_HASPLUGIN = "RtcRawDataPluginManager_hasPlugin";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_ENABLEPLUGIN = "RtcRawDataPluginManager_enablePlugin";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_DELETEPLUGIN = "RtcRawDataPluginManager_deletePlugin";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_GETPLUGINS = "RtcRawDataPluginManager_getPlugins";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_SETPLUGINPARAMETER = "RtcRawDataPluginManager_setPluginParameter";
-        internal const string FUNC_RTCRAWDATAPLUGINMANAGER_REMOVEALLPLUGINS = "RtcRawDataPluginManager_removeAllPlugins";
-        #endregion
-
         #region IMediaEngine start
         internal const string FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER = "MediaEngine_registerAudioFrameObserver";
         internal const string FUNC_MEDIAENGINE_UNREGISTERAUDIOFRAMEOBSERVER = "MediaEngine_unregisterAudioFrameObserver";
@@ -521,20 +509,7 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAENGINE_RELEASE = "MediaEngine_release";
         #endregion
 
-        #region RtcRawData start
-        internal const string FUNC_RTCRAWDATA_REGISTERAUDIOFRAMEOBSERVER = "RtcRawData_registerAudioFrameObserver";
-        internal const string FUNC_RTCRAWDATA_UNREGISTERAUDIOFRAMEOBSERVER = "RtcRawData_unRegisterAudioFrameObserver";
-        internal const string FUNC_RTCRAWDATA_REGISTERVIDEOFRAMEOBSERVER = "RtcRawData_registerVideoFrameObserver";
-        internal const string FUNC_RTCRAWDATA_UNREGISTERVIDEOFRAMEOBSERVER = "RtcRawData_unRegisterVideoFrameObserver";
-        internal const string FUNC_RTCRAWDATA_REGISTERVIDEOENCODEDIMAGERECEIVER = "RtcRawData_registerVideoEncodedImageReceiver";
-        internal const string FUNC_RTCRAWDATA_UNREGISTERVIDEOENCODEDIMAGERECEIVER = "RtcRawData_unRegisterVideoEncodedImageReceiver";
-        internal const string FUNC_RTCRAWDATA_REGISTERAUDIOENCODEDFRAMEOBSERVER = "RtcRawData_registerAudioEncodedFrameObserver";
-        internal const string FUNC_RTCRAWDATA_UNREGISTERAUDIOENCODEDFRAMEOBSERVER = "RtcRawData_unRegisterAudioEncodedFrameObserver";
-        internal const string FUNC_RTCRAWDATA_ATTACH = "RtcRawData_attach";
-        internal const string FUNC_RTCRAWDATA_DETACH = "RtcRawData_detach";
-        #endregion
-
-
+    
         #region IMediaPlayerCacheManager start
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_ENABLEAUTOREMOVECACHE = "MediaPlayerCacheManager_enableAutoRemoveCache";
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEDIR = "MediaPlayerCacheManager_getCacheDir";

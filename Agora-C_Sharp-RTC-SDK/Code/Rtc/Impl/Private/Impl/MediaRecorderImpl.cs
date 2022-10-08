@@ -30,6 +30,7 @@ namespace Agora.Rtc
         internal MediaRecorderImpl(IrisApiEnginePtr irisApiEngine)
         {
             _apiParam = new IrisCApiParam();
+            _apiParam.AllocResult();
             _irisApiEngine = irisApiEngine;
         }
 
@@ -48,7 +49,7 @@ namespace Agora.Rtc
             }
 
             _irisApiEngine = IntPtr.Zero;
-            _apiParam = new IrisCApiParam();
+            _apiParam.FreeResult();
 
             _disposed = true;
         }

@@ -20,6 +20,7 @@ namespace Agora.Rtc
         internal LocalSpatialAudioEngineImpl(IrisApiEnginePtr irisApiEngine)
         {
             _apiParam = new IrisCApiParam();
+            _apiParam.AllocResult();
             _irisApiEngine = irisApiEngine;
         }
 
@@ -36,7 +37,7 @@ namespace Agora.Rtc
             }
 
             _irisApiEngine = IntPtr.Zero;
-            _apiParam = new IrisCApiParam();
+            _apiParam.FreeResult();
             GC.SuppressFinalize(this);
         }
 

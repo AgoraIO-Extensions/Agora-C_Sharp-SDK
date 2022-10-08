@@ -300,32 +300,39 @@ namespace Agora.Rtc
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCApiParam
     {
-        internal IrisCApiParam(int param = 0)
-        {
-            @event = "";
-            data = "";
-            data_size = 0;
-            result = new byte[65536];
-            buffer = IntPtr.Zero;
-            length = IntPtr.Zero;
-            buffer_count = 0;
-        }
 
-        public string Result
+        internal string Result
         {
             get
             {
-                var re = Encoding.UTF8.GetString(result);
-                var index = re.IndexOf('\0');
-                return re.Substring(0, index);
+                var re = Marshal.PtrToStringAnsi(result);
+                return re;
             }
         }
+
+        internal void AllocResult()
+        {
+            if (result == IntPtr.Zero)
+            {
+                result = Marshal.AllocHGlobal(65536);
+            }
+        }
+
+        internal void FreeResult()
+        {
+            if (result != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(result);
+                result = IntPtr.Zero;
+            }
+        }
+
 
         internal string @event;
         internal string data;
         internal uint data_size;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
-        internal byte[] result;
+
+        internal IntPtr result;
 
         internal IntPtr buffer;
         internal IntPtr length;
