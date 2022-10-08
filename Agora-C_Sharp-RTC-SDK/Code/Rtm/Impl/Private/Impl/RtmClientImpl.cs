@@ -181,20 +181,6 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int ReleaseStreamChannel(string channelName)
-        {
-            var param = new
-            {
-                channelName
-            };
-            var json = AgoraJson.ToJson(param);
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_RELEASESTREAMCHANNEL,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
-
         internal StreamChannelImpl GetStreamChannel()
         {
             return _streamChannelInstance;

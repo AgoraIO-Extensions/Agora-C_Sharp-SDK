@@ -18,9 +18,9 @@ namespace Agora.Rtm
         public string token { set; get; }
     };
 
-    public class CreateTopicOptions
+    public class JoinTopicOptions
     {
-        public CreateTopicOptions()
+        public JoinTopicOptions()
         {
             this.qos = RTM_MESSAGE_QOS.RTM_MESSAGE_QOS_ORDERED;
             this.meta = "";

@@ -10,9 +10,9 @@ namespace Agora.Rtm
 
         public virtual void OnLeaveResult(string channelName, string userId, STREAM_CHANNEL_ERROR_CODE errorCode) {}
 
-        public virtual void OnTopicCreateResult(string channelName, string userId, string topic, string meta, STREAM_CHANNEL_ERROR_CODE errorCode) {}
+        public virtual void OnJoinTopicResult(string channelName, string userId, string topic, string meta, STREAM_CHANNEL_ERROR_CODE errorCode) {}
 
-        public virtual void OnTopicDestroyResult(string channelName, string userId, string topic, string meta, STREAM_CHANNEL_ERROR_CODE errorCode) {}
+        public virtual void OnLeaveTopicResult(string channelName, string userId, string topic, string meta, STREAM_CHANNEL_ERROR_CODE errorCode) {}
 
         public virtual void OnTopicSubscribed(string channelName, string userId, string topic, UserList succeedUsers, UserList failedUsers, STREAM_CHANNEL_ERROR_CODE errorCode) {}
 

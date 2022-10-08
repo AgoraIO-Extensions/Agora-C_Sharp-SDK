@@ -124,19 +124,15 @@ namespace Agora.Rtm
 
     public enum RTM_ERROR_CODE
     {
-        RTM_ERROR_OK = 0,
-        RTM_ERR_INVALID_ARGUMENT = 2,
-        RTM_ERR_NOT_READY = 3,
-        RTM_ERR_INVALID_APP_ID = 101,
-        RTM_ERR_TOPIC_ALREADY_EXIST = 60001,
-        RTM_ERR_RESOURCE_NOT_AVAILABLE = 60002,
-        RTM_ERR_INVALID_TOPIC_NAME = 60003,
-        RTM_ERR_PUBLISH_TOPIC_FAILED = 60004,
-        RTM_ERR_EXCEED_TOPIC_LIMITATION = 60005,
-        RTM_ERR_EXCEED_USER_LIMITATION = 60006,
-        RTM_ERR_EXCEED_CHANNEL_LIMITATION = 60007,
-        RTM_ERR_ALREADY_JOIN_CHANNEL = 60008,
-        RTM_ERR_NOT_JOIN_CHANNEL = 60009,
+        RTM_ERR_TOPIC_ALREADY_EXIST = 10001,
+        RTM_ERR_EXCEED_CREATE_TOPIC_LIMITATION = 10002,
+        RTM_ERR_INVALID_TOPIC_NAME = 10003,
+        RTM_ERR_PUBLISH_TOPIC_FAILED = 10004,
+        RTM_ERR_EXCEED_SUBSCRIBE_TOPIC_LIMITATION = 10005,
+        RTM_ERR_EXCEED_USER_LIMITATION = 10006,
+        RTM_ERR_EXCEED_CHANNEL_LIMITATION = 10007,
+        RTM_ERR_ALREADY_JOIN_CHANNEL = 10008,
+        RTM_ERR_NOT_JOIN_CHANNEL = 10009,
     };
 
     public enum RTM_CONNECTION_STATE
@@ -265,9 +261,10 @@ namespace Agora.Rtm
     {
         RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL = 0,
         RTM_PRESENCE_TYPE_REMOTE_LEAVE_CHANNEL = 1,
-        RTM_PRESENCE_TYPE_REMOTE_TIMEOUT = 2,
+        RTM_PRESENCE_TYPE_REMOTE_CONNECTION_TIMEOUT = 2,
         RTM_PRESENCE_TYPE_REMOTE_JOIN_TOPIC = 3,
         RTM_PRESENCE_TYPE_REMOTE_LEAVE_TOPIC = 4,
+        RTM_PRESENCE_TYPE_SELF_JOIN_CHANNEL = 5,
     };
 
     public enum STREAM_CHANNEL_ERROR_CODE
@@ -342,7 +339,6 @@ namespace Agora.Rtm
         {
             this.type = RTM_PRESENCE_TYPE.RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL;
             channelName = "";
-            occupancy = 0;
             topicInfos = new TopicInfo[0];
             topicInfoNumber = 0;
             userId = "";
@@ -361,10 +357,6 @@ namespace Agora.Rtm
         * The channel to which the message was published
         */
         public string channelName { set; get; }
-        /**
-        * The number of users in channel
-        */
-        public int occupancy { set; get; }
         /**
         * topic information array.
         */
