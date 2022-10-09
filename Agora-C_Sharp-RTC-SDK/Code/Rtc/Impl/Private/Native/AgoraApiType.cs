@@ -210,7 +210,6 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SENDSTREAMMESSAGE = "RtcEngine_sendStreamMessage";
         internal const string FUNC_RTCENGINE_ADDVIDEOWATERMARK = "RtcEngine_addVideoWatermark";
         internal const string FUNC_RTCENGINE_ADDVIDEOWATERMARK2 = "RtcEngine_addVideoWatermark2";
-        //internal const string FUNC_RTCENGINE_CLEARVIDEOWATERMARK = "RtcEngine_clearVideoWatermark";
         internal const string FUNC_RTCENGINE_CLEARVIDEOWATERMARKS = "RtcEngine_clearVideoWatermarks";
         internal const string FUNC_RTCENGINE_ADDINJECTSTREAMURL = "RtcEngine_addInjectStreamUrl";
         internal const string FUNC_RTCENGINE_REMOVEINJECTSTREAMURL = "RtcEngine_removeInjectStreamUrl";
@@ -496,10 +495,6 @@ namespace Agora.Rtc
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_SETPLAYERATTENUATION = "LocalSpatialAudioEngine_setPlayerAttenuation";
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_MUTEREMOTEAUDIOSTREAM = "LocalSpatialAudioEngine_muteRemoteAudioStream";
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_SETREMOTEAUDIOATTENUATION = "LocalSpatialAudioEngine_setRemoteAudioAttenuation";
-
-
-
-
         #endregion
 
         #region IMediaEngine start
