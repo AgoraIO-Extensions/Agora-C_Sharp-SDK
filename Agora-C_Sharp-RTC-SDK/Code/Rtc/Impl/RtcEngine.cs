@@ -11,7 +11,7 @@ namespace Agora.Rtc
         private RtcEngineImpl _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
         private IVideoDeviceManager _videoDeviceManager = null;
-        //private ICloudSpatialAudioEngine _cloudSpatialAudioEngine = null;
+        private IMusicContentCenter _musicContentCenter = null;
         private ILocalSpatialAudioEngine _localSpatialAudioEngine = null;
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
         private IMediaRecorder _mediaRecorder = null;
@@ -26,7 +26,7 @@ namespace Agora.Rtc
             _rtcEngineImpl = RtcEngineImpl.GetInstance();
             _audioDeviceManager = AudioDeviceManager.GetInstance(this, _rtcEngineImpl.GetAudioDeviceManager());
             _videoDeviceManager = VideoDeviceManager.GetInstance(this, _rtcEngineImpl.GetVideoDeviceManager());
-            //_cloudSpatialAudioEngine = CloudSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetCloudSpatialAudioEngine());
+            _musicContentCenter = MusicContentCenter.GetInstance(this, _rtcEngineImpl.GetMusicContentCenter());
             _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
 
@@ -40,7 +40,7 @@ namespace Agora.Rtc
         {
             _audioDeviceManager = null;
             _videoDeviceManager = null;
-            //_cloudSpatialAudioEngine = null;
+            _musicContentCenter = null;
             _localSpatialAudioEngine = null;
             _mediaPlayerCacheManager = null;
             _mediaRecorder = null;
@@ -113,7 +113,7 @@ namespace Agora.Rtc
 
             AudioDeviceManager.ReleaseInstance();
             VideoDeviceManager.ReleaseInstance();
-            //CloudSpatialAudioEngine.ReleaseInstance();
+            MusicContentCenter.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
             MediaPlayerCacheManager.ReleaseInstance();
             MediaRecorder.ReleaseInstance();
@@ -199,6 +199,15 @@ namespace Agora.Rtc
                 return null;
             }
             return _videoDeviceManager;
+        }
+
+        public override IMusicContentCenter GetMusicContentCenter()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return null;
+            }
+            return _musicContentCenter;
         }
 
         public override IMediaPlayerCacheManager GetMediaPlayerCacheManager()

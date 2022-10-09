@@ -48,7 +48,7 @@ namespace Agora.Rtc
         private VideoDeviceManagerImpl _videoDeviceManagerInstance;
         private AudioDeviceManagerImpl _audioDeviceManagerInstance;
         private MediaPlayerImpl _mediaPlayerInstance;
-        //private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineInstance;
+        private MusicContentCenterImpl _musicContentCenterImpl;
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
         private MediaRecorderImpl _mediaRecorderInstance;
@@ -69,7 +69,7 @@ namespace Agora.Rtc
             _videoDeviceManagerInstance = new VideoDeviceManagerImpl(_irisRtcEngine);
             _audioDeviceManagerInstance = new AudioDeviceManagerImpl(_irisRtcEngine);
             _mediaPlayerInstance = new MediaPlayerImpl(_irisRtcEngine);
-            //_cloudSpatialAudioEngineInstance = new CloudSpatialAudioEngineImpl(_irisRtcEngine);
+            _musicContentCenterImpl = new MusicContentCenterImpl(_irisRtcEngine, _mediaPlayerInstance);
             _spatialAudioEngineInstance = new LocalSpatialAudioEngineImpl(_irisRtcEngine);
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
@@ -109,8 +109,9 @@ namespace Agora.Rtc
                 _mediaPlayerInstance.Dispose();
                 _mediaPlayerInstance = null;
 
-                //_cloudSpatialAudioEngineInstance.Dispose();
-                //_cloudSpatialAudioEngineInstance = null;
+                _musicContentCenterImpl.Dispose();
+                _musicContentCenterImpl = null;
+                
                 _spatialAudioEngineInstance = null;
 
                 _mediaPlayerCacheManager.Dispose();
@@ -448,10 +449,10 @@ namespace Agora.Rtc
             return _mediaPlayerInstance;
         }
 
-        //public CloudSpatialAudioEngineImpl GetCloudSpatialAudioEngine()
-        //{
-        //    return _cloudSpatialAudioEngineInstance;
-        //}
+        public MusicContentCenterImpl GetMusicContentCenter()
+        {
+            return _musicContentCenterImpl; 
+        }
 
         public LocalSpatialAudioEngineImpl GetLocalSpatialAudioEngine()
         {

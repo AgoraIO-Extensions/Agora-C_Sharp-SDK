@@ -3340,6 +3340,8 @@ namespace Agora.Rtc
         ///
         public abstract IMediaPlayerCacheManager GetMediaPlayerCacheManager();
 
+        public abstract IMusicContentCenter GetMusicContentCenter();
+
         #region SpatialAudio
         ///
         /// <summary>
