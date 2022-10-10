@@ -3096,5 +3096,59 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SelectAudioTrack(index);
         }
+
+        public override int SetHeadphoneEQPreset(HEADPHONE_EQUALIZER_PRESET preset)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetHeadphoneEQPreset(preset);
+        }
+
+        public override int SetHeadphoneEQParameters(int lowGain, int highGain)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetHeadphoneEQParameters(lowGain, highGain);
+        }
+
+        public override int SetEarMonitoringAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetEarMonitoringAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
+        }
+
+        public override int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableExtension(provider, extension, extensionInfo, enable);
+        }
+
+        public override int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetExtensionProperty(provider, extension, extensionInfo, key, value);
+        }
+
+        public override int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetExtensionProperty(provider, extension, extensionInfo, key, ref value, buf_len);
+        }
     }
 }

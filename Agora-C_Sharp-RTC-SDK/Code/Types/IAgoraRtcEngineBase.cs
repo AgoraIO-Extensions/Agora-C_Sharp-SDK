@@ -2979,5 +2979,24 @@ namespace Agora.Rtc
         VIDEO_PROFILE_DEFAULT = VIDEO_PROFILE_LANDSCAPE_360P,
     };
 
+    public class ExtensionInfo
+    {
+        public ExtensionInfo()
+        {
+            mediaSourceType = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE;
+            remoteUid = 0;
+            channelId = "";
+            localUid = 0;
+        }
+
+        public MEDIA_SOURCE_TYPE mediaSourceType { set; get; }
+
+        public uint remoteUid { set; get; }
+
+        public string channelId { set; get; }
+
+        public uint localUid { set; get; }
+    };
+
     #endregion
 }

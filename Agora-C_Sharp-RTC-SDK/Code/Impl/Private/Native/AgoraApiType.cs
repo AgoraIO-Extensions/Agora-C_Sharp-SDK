@@ -289,8 +289,17 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_GETEFFECTDURATION = "RtcEngine_getEffectDuration";
         internal const string FUNC_RTCENGINE_SETEFFECTPOSITION = "RtcEngine_setEffectPosition";
 
-        internal const string FUNC_RTCENGINE_STARTMEDIARECORDERRECORDING ="RtcEngine_startMediaRecorderRecording";
-        internal const string FUNC_RTCENGINE_STOPMEDIARECORDERRECORDING ="RtcEngine_stopMediaRecorderRecording";
+        internal const string FUNC_RTCENGINE_STARTMEDIARECORDERRECORDING = "RtcEngine_startMediaRecorderRecording";
+        internal const string FUNC_RTCENGINE_STOPMEDIARECORDERRECORDING = "RtcEngine_stopMediaRecorderRecording";
+
+        internal const string FUNC_RTCENGINE_SETEARMONITORINGAUDIOFRAMEPARAMETERS = "RtcEngine_setEarMonitoringAudioFrameParameters";
+        internal const string FUNC_RTCENGINE_ENABLEEXTENSION2 = "RtcEngine_enableExtension2";
+        internal const string FUNC_RTCENGINE_GETCURRENTMONOTONICTIMEINMS = "RtcEngine_getCurrentMonotonicTimeInMs";
+        internal const string FUNC_RTCENGINE_GETNETWORKTYPE = "RtcEngine_getNetworkType";
+        internal const string FUNC_RTCENGINE_SETHEADPHONEEQPRESET = "RtcEngine_setHeadphoneEQPreset";
+        internal const string FUNC_RTCENGINE_SETHEADPHONEEQPARAMETERS = "RtcEngine_setHeadphoneEQParameters";
+        internal const string FUNC_RTCENGINE_SETEXTENSIONPROPERTY2 = "RtcEngine_setExtensionProperty2";
+        internal const string FUNC_RTCENGINE_GETEXTENSIONPROPERTY2 = "RtcEngine_getExtensionProperty2";
 
         #endregion
 
@@ -422,6 +431,8 @@ namespace Agora.Rtc
         internal const string FUNC_AUDIODEVICEMANAGER_RELEASE = "AudioDeviceManager_release";
         internal const string FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMRECORDINGDEVICE = "AudioDeviceManager_followSystemRecordingDevice";
         internal const string FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMPLAYBACKDEVICE = "AudioDeviceManager_followSystemPlaybackDevice";
+        internal const string FUNC_AUDIODEVICEMANAGER_SETLOOPBACKDEVICE = "AudioDeviceManager_setLoopbackDevice";
+        internal const string FUNC_AUDIODEVICEMANAGER_GETLOOPBACKDEVICE = "AudioDeviceManager_getLoopbackDevice";
         #endregion
 
         #region IVideoDeviceManager start
