@@ -1176,5 +1176,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats) { }
+
+        public virtual void OnAudioMixingPositionChanged(Int64 position) { }
     };
 }

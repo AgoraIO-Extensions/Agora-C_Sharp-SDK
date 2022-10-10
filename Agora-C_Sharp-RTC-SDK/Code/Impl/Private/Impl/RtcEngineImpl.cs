@@ -5791,6 +5791,127 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        public int SetHeadphoneEQPreset(HEADPHONE_EQUALIZER_PRESET preset)
+        {
+            var param = new
+            {
+                preset
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETHEADPHONEEQPRESET,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetHeadphoneEQParameters(int lowGain, int highGain)
+        {
+            var param = new
+            {
+                lowGain,
+                highGain
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETHEADPHONEEQPARAMETERS,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetEarMonitoringAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
+        {
+            var param = new
+            {
+                sampleRate,
+                channel,
+                mode,
+                samplesPerCall
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEARMONITORINGAUDIOFRAMEPARAMETERS,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true)
+        {
+            var param = new
+            {
+                provider,
+                extension,
+                extensionInfo,
+                enable
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value)
+        {
+            var param = new
+            {
+                provider,
+                extension,
+                extensionInfo,
+                key,
+                value
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len)
+        {
+            var param = new
+            {
+                provider,
+                extension,
+                extensionInfo,
+                key,
+                buf_len
+            };
+
+            var json = AgoraJson.ToJson(param);
+            int nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+
+            if (nRet == 0)
+            {
+
+                value = (string)AgoraJson.GetData<string>(_result.Result, "value");
+            }
+            else
+            {
+                value = "";
+            }
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
 
         #region CallIrisApiWithBuffer
 

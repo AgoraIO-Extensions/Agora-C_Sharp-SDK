@@ -259,6 +259,10 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int StopAudioDeviceLoopbackTest();
+
+        public abstract int SetLoopbackDevice(string deviceId);
+
+        public abstract int GetLoopbackDevice(ref string deviceId);
         #endregion
     }
 }
