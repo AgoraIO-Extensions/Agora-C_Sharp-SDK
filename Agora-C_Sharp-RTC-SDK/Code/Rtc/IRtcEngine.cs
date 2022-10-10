@@ -3388,16 +3388,6 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int AddInjectStreamUrl(string url, InjectStreamConfig config);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int RemoveInjectStreamUrl(string url);
-
-        ///
-        /// @ignore
-        ///
         public abstract int SetDirectCdnStreamingAudioConfiguration(AUDIO_PROFILE_TYPE profile);
 
         ///
@@ -4359,5 +4349,21 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
+
+        public abstract int MuteLocalAudioStreamEx(bool mute, RtcConnection connection);
+        public abstract int MuteLocalVideoStreamEx(bool mute, RtcConnection connection);
+        public abstract int MuteAllRemoteAudioStreamsEx(bool mute, RtcConnection connection);
+        public abstract int MuteAllRemoteVideoStreamsEx(bool mute, RtcConnection connection);
+        public abstract int AdjustUserPlaybackSignalVolumeEx(uint uid, int volume, RtcConnection connection);
+        public abstract int StartRtmpStreamWithoutTranscodingEx(string url, RtcConnection connection);
+        public abstract int StartRtmpStreamWithTranscodingEx(string url, LiveTranscoding transcoding, RtcConnection connection);
+        public abstract int UpdateRtmpTranscodingEx(LiveTranscoding transcoding, RtcConnection connection);
+        public abstract int StopRtmpStreamEx(string url, RtcConnection connection);
+        public abstract int StartChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
+        public abstract int UpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
+        public abstract int StopChannelMediaRelayEx(RtcConnection connection);
+        public abstract int PauseAllChannelMediaRelayEx(RtcConnection connection);
+        public abstract int ResumeAllChannelMediaRelayEx(RtcConnection connection);
+
     }
 }
