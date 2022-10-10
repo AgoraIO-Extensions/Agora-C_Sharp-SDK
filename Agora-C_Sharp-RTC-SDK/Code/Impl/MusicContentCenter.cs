@@ -75,6 +75,15 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.Initialize(configuration);
         }
 
+        public override int RenewRtmToken(string token)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.RenewRtmToken(token);
+        }
+
         public override int IsPreloaded(long songCode)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
