@@ -246,6 +246,24 @@ namespace Agora.Rtc
             }
             return _audioDeviecManagerImpl.StopAudioDeviceLoopbackTest();
         }
+
+        public override int SetLoopbackDevice(string deviceId)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.SetLoopbackDevice(deviceId);
+        }
+
+        public override int GetLoopbackDevice(ref string deviceId)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetLoopbackDevice(ref deviceId);
+        }
         #endregion
 
         internal static IAudioDeviceManager GetInstance(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)

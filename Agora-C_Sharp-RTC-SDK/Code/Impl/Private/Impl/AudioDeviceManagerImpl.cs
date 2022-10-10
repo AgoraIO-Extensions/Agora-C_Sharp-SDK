@@ -282,6 +282,28 @@ namespace Agora.Rtc
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
+
+        public int SetLoopbackDevice(string deviceId)
+        {
+            var param = new
+            {
+                deviceId
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETLOOPBACKDEVICE,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int GetLoopbackDevice(ref string deviceId)
+        {
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETLOOPBACKDEVICE,
+                "", 0, IntPtr.Zero, 0, out _result);
+            deviceId = (string) AgoraJson.GetData<string>(_result.Result, "deviceId");
+            return ret != 0 ? ret : (int) AgoraJson.GetData<int>(_result.Result, "result");
+        }
         #endregion
 
         #region AudioDevice

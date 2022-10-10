@@ -1469,6 +1469,17 @@ namespace Agora.Rtc
                     });
 #endif
                     break;
+                case "onAudioMixingPositionChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnAudioMixingPositionChanged((Int64)AgoraJson.GetData<Int64>(jsonData, "position"));
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
                 #endregion no buffer end
 
                 #region withBuffer start

@@ -3895,6 +3895,18 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract IMediaRecorder GetMediaRecorder();
+
+        public abstract int SetHeadphoneEQPreset(HEADPHONE_EQUALIZER_PRESET preset);
+
+        public abstract int SetHeadphoneEQParameters(int lowGain, int highGain);
+
+        public abstract int SetEarMonitoringAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
+
+        public abstract int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true);
+
+        public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value);
+
+        public abstract int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len);
     };
 
     /* class_irtcengineex : irtcengine */

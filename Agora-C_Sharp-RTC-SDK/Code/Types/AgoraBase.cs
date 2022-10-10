@@ -7253,5 +7253,14 @@ namespace Agora.Rtc
         }
     };
 
+    public enum HEADPHONE_EQUALIZER_PRESET : uint
+    {
+        HEADPHONE_EQUALIZER_OFF = 0x00000000,
+
+        HEADPHONE_EQUALIZER_OVEREAR = 0x04000001,
+
+        HEADPHONE_EQUALIZER_INEAR = 0x04000002
+    };
+
     #endregion
 }
