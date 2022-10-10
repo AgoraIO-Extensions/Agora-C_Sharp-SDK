@@ -266,19 +266,5 @@ namespace Agora.Rtc
 
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
-
-        public int RenewRtmToken(string token)
-        {
-            var param = new
-            {
-                token
-            };
-            string jsonParam = AgoraJson.ToJson(param);
-            var ret = AgoraRtcNative.CallIrisApi(
-                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_RENEWRTMTOKEN,
-                jsonParam, (UInt32)jsonParam.Length,
-                IntPtr.Zero, 0, out _result);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
     }
 }
