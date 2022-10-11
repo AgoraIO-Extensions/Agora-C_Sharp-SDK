@@ -47,7 +47,7 @@ namespace Agora.Rtm
 #endif
                         if (rtmEventHandler == null) return;
                         rtmEventHandler.OnMessageEvent(
-                            (MessageEvent)AgoraJson.GetData<int>(jsonData, "event")
+                            AgoraJson.JsonToStruct<MessageEvent>(jsonData, "event")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -60,7 +60,7 @@ namespace Agora.Rtm
 #endif
                         if (rtmEventHandler == null) return;
                         rtmEventHandler.OnPresenceEvent(
-                            (PresenceEvent)AgoraJson.GetData<int>(jsonData, "event")
+                            AgoraJson.JsonToStruct<PresenceEvent>(jsonData, "event")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
