@@ -8,11 +8,11 @@ namespace Agora.Rtc
     {
         void OnApplicationQuit()
         {
-            IRtcEngine rtcEngine = RtcEngine.Get();
-            if (rtcEngine != null)
-            {
-                rtcEngine.Dispose();
-            }
+            // IRtcEngine rtcEngine = RtcEngine.Get();
+            // if (rtcEngine != null)
+            // {
+            //     rtcEngine.Dispose();
+            // }
         }
     }
 }

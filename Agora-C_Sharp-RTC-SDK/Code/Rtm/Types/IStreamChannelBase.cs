@@ -26,6 +26,13 @@ namespace Agora.Rtm
             this.meta = "";
             this.metaLength = 0;
         }
+
+        public JoinTopicOptions(RTM_MESSAGE_QOS qos, string meta, uint metaLength)
+        {
+            this.qos = qos;
+            this.meta = meta;
+            this.metaLength = metaLength;
+        }
     
         public RTM_MESSAGE_QOS qos { set; get; }
 
@@ -36,6 +43,18 @@ namespace Agora.Rtm
 
     public class TopicOptions
     {
+        public TopicOptions()
+        {
+            users = new string[0];
+            userCount = 0;
+        }
+
+        public TopicOptions(string[] users, uint userCount)
+        {
+            this.users = users;
+            this.userCount = userCount;
+        }
+
         public string[] users { set; get; }
 
         public uint userCount { set; get; }
@@ -43,6 +62,18 @@ namespace Agora.Rtm
 
     public class UserList
     {
+        public UserList()
+        {
+            users = new string[0];
+            userCount = 0;
+        }
+
+        public UserList(string[] users, uint userCount)
+        {
+            this.users = users;
+            this.userCount = userCount;
+        }
+
         public string[] users { set; get; }
 
         public uint userCount { set; get; }
