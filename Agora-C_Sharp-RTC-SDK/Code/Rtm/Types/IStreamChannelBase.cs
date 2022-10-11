@@ -23,11 +23,11 @@ namespace Agora.Rtm
         public JoinTopicOptions()
         {
             this.qos = RTM_MESSAGE_QOS.RTM_MESSAGE_QOS_ORDERED;
-            this.meta = "";
+            this.meta = IntPtr.Zero;
             this.metaLength = 0;
         }
 
-        public JoinTopicOptions(RTM_MESSAGE_QOS qos, string meta, uint metaLength)
+        public JoinTopicOptions(RTM_MESSAGE_QOS qos, IntPtr meta, uint metaLength)
         {
             this.qos = qos;
             this.meta = meta;
@@ -36,7 +36,7 @@ namespace Agora.Rtm
     
         public RTM_MESSAGE_QOS qos { set; get; }
 
-        public string meta { set; get; }
+        public IntPtr meta { set; get; }
 
         public uint metaLength { set; get; }
     };
