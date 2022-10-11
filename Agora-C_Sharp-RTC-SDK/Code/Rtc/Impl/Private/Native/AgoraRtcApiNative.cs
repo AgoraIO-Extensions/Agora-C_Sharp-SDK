@@ -35,13 +35,13 @@ namespace Agora.Rtc
         #region DllImport
 
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-        private const string AgoraRtcLibName = "AgoraRtcWrapper";
+        private const string AgoraRtcLibName = "AgoraRtmWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-        private const string AgoraRtcLibName = "AgoraRtcWrapperUnity";
+        private const string AgoraRtcLibName = "AgoraRtmWrapperUnity";
 #elif UNITY_IPHONE
 		private const string AgoraRtcLibName = "__Internal";
 #else
-        private const string AgoraRtcLibName = "AgoraRtcWrapper";
+        private const string AgoraRtcLibName = "AgoraRtmWrapper";
 #endif
 
         // IrisRtcEngine
