@@ -27,6 +27,8 @@
 #
 #  $11 wayang_branch (The branch name of Wayang unitydemo)
 #
+#  $12 SDK Type: RTC RTM FPA
+#
 #============================================================================== 
 
 set -ex
@@ -151,13 +153,13 @@ cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
 echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
 cp $WIN_SRC_PATH/RTM/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/x64/Release/Release/*.dll "$WIN64_DST_PATH"
 
 # Windows x86
 echo "[Unity CI] copying Windows x86 ..."
 WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
 cp $WIN_SRC_PATH/RTM/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/Win32/Release/Release/*.dll "$WIN32_DST_PATH"
 
 echo "[Unity CI] finish copying files"
 
