@@ -6,8 +6,8 @@ WIN=
 <<<end
 
 >>>video
-IOS=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/master/iris_master_DCG_iOS_20211109_0628.zip
-ANDROID=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/master/iris_master_DCG_Android_20211109_0618.zip
-MAC=https://artifactory.agoralab.co/artifactory/CSDC_repo/IRIS/master/iris_master_DCG_Mac_20211109_0623.zip
+IOS=
+ANDROID=
+MAC=
 WIN=
 <<<end
