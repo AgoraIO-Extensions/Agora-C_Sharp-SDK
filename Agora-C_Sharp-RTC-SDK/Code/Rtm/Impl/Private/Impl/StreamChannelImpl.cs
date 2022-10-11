@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+using System.Runtime.InteropServices;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using AOT;
 using Agora.Rtc;
 #endif
@@ -99,34 +100,40 @@ namespace Agora.Rtm
             {
                 channelName,
                 topic,
-                options
+                options = new
+                {
+                    options.qos,
+                    options.metaLength
+                }
             };
 
             var json = AgoraJson.ToJson(param);
+            IntPtr[] arrayPtr = new IntPtr[] { options.meta };
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_JOINTOPIC,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int PublishTopicMessage(string channelName, string topic, string message, uint length)
+        public int PublishTopicMessage(string channelName, string topic, byte[] message, uint length)
         {
             var param = new
             {
                 channelName,
                 topic,
-                message,
                 length
             };
 
             var json = AgoraJson.ToJson(param);
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(message, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_PUBLISHTOPICMESSAGE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam, length);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 

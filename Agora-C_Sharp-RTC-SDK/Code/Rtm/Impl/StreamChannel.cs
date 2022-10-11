@@ -61,7 +61,7 @@ namespace Agora.Rtm
             return _streamChannelImpl.JoinTopic(channelName, topic, options);
         }
 
-        public override int PublishTopicMessage(string topic, string message, uint length)
+        public override int PublishTopicMessage(string topic, byte[] message, uint length)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
