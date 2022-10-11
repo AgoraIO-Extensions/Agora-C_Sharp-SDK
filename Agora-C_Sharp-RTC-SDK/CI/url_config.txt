@@ -6,8 +6,8 @@ WIN=
 <<<end
 
 >>>video
-IOS=https://download.agora.io/sdk/release/iris_4.0.0.7_DCG_iOS_Video_20221010_1231.zip
-ANDROID=https://download.agora.io/sdk/release/iris_4.0.0.7_DCG_Android_Video_20221010_1226.zip
-MAC=https://download.agora.io/sdk/release/iris_4.0.0_DCG_Mac_Video_20220910_0344.zip
-WIN=https://download.agora.io/sdk/release/iris_4.0.0_DCG_Windows_Video_20220910_0326.zip
+IOS=
+ANDROID=
+MAC=
+WIN=
 <<<end
