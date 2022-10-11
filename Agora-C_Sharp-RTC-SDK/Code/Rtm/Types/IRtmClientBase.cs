@@ -12,6 +12,14 @@ namespace Agora.Rtm
             logConfig = new LogConfig();
         }
 
+        public RtmConfig(string appId, string userId, IRtmEventHandler eventHandler, LogConfig logConfig)
+        {
+            this.appId = appId;
+            this.userId = userId;
+            this.eventHandler = eventHandler;
+            this.logConfig = logConfig;
+        }
+
         public string appId { set; get; }
 
         public string userId { set; get; }
@@ -38,7 +46,7 @@ namespace Agora.Rtm
         public LogConfig(string filePath, uint fileSize = 1024, LOG_LEVEL level = LOG_LEVEL.LOG_LEVEL_INFO)
         {
             this.filePath = filePath;
-            this.fileSizeInKB = 0;
+            this.fileSizeInKB = fileSize;
             this.level = level;
         }
 
@@ -111,6 +119,14 @@ namespace Agora.Rtm
             numOfPublisher = 0;
             publisherUserIds = new string[0];
             publisherMetas = new string[0];
+        }
+
+        public TopicInfo(string topic, uint numOfPublisher, string[] publisherUserIds, string[] publisherMetas)
+        {
+            this.topic = topic;
+            this.numOfPublisher = numOfPublisher;
+            this.publisherUserIds = publisherUserIds;
+            this.publisherMetas = publisherMetas;
         }
 
         public string topic { set; get; }
@@ -289,6 +305,15 @@ namespace Agora.Rtm
             failedUsers = new string[0];
         }
 
+        public TopicSubUsersUpdated(string topic, string[] succeedUsers, uint succeedUserCount, string[] failedUsers, uint failedUserCount)
+        {
+            this.topic = topic;
+            this.succeedUserCount = succeedUserCount;
+            this.succeedUsers = succeedUsers;
+            this.failedUserCount = failedUserCount;
+            this.failedUsers = failedUsers;
+        }
+
         public string topic { set; get; }
 
         public string[] succeedUsers { set; get; }
@@ -309,6 +334,15 @@ namespace Agora.Rtm
             channelTopic = "";
             message ="";
             publisher = "";
+        }
+
+        public MessageEvent(RTM_CHANNEL_TYPE channelType, string channelName, string channelTopic, string message, string publisher)
+        {
+            this.channelType = channelType;
+            this.channelName = channelName;
+            this.channelTopic = channelTopic;
+            this.message = message;
+            this.publisher = publisher;
         }
 
         /**
@@ -337,11 +371,22 @@ namespace Agora.Rtm
     {
         public PresenceEvent()
         {
-            this.type = RTM_PRESENCE_TYPE.RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL;
+            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
+            type = RTM_PRESENCE_TYPE.RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL;
             channelName = "";
             topicInfos = new TopicInfo[0];
             topicInfoNumber = 0;
             userId = "";
+        }
+
+        public PresenceEvent(RTM_CHANNEL_TYPE channelType, RTM_PRESENCE_TYPE type, string channelName, TopicInfo[] topicInfos, uint topicInfoNumber, string userId)
+        {
+            this.channelType = channelType;
+            this.type = type;
+            this.channelName = channelName;
+            this.topicInfos = topicInfos;
+            this.topicInfoNumber = topicInfoNumber;
+            this.userId = userId;
         }
 
         /**
