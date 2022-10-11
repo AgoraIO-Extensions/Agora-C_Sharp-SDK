@@ -120,7 +120,7 @@ fi
 mkdir "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-if [ "$SDK_TYPE" == "video" ]; then
+if [ "$SDK_TYPE" == "video" && -f $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar ]; then
 cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
 fi
 
