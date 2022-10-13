@@ -1535,6 +1535,39 @@ namespace Agora.Rtc.LitJson
             RegisterImporter(custom_importers_table,
               typeof(Optional<CacheStatistics>), typeof(string), importer);
 
+
+            //InPtr
+            importer = delegate (object input)
+            {
+                IntPtr ret = (IntPtr)(int)(input);
+                return ret;
+            };
+            RegisterImporter(custom_importers_table,
+              typeof(IntPtr), typeof(int), importer);
+
+            importer = delegate (object input)
+            {
+                IntPtr ret = (IntPtr)(uint)(input);
+                return ret;
+            };
+            RegisterImporter(custom_importers_table,
+              typeof(IntPtr), typeof(uint), importer);
+
+            importer = delegate (object input)
+            {
+                IntPtr ret = (IntPtr)(long)(input);
+                return ret;
+            };
+            RegisterImporter(custom_importers_table,
+              typeof(IntPtr), typeof(long), importer);
+
+            importer = delegate (object input)
+            {
+                IntPtr ret = (IntPtr)(ulong)(input);
+                return ret;
+            };
+            RegisterImporter(custom_importers_table,
+              typeof(IntPtr), typeof(ulong), importer);
             #endregion
 
         }
@@ -1615,6 +1648,11 @@ namespace Agora.Rtc.LitJson
             if (obj is Int64)
             {
                 writer.Write((long)obj);
+                return;
+            }
+
+            if (obj is IntPtr) {
+                writer.Write((UInt64)(IntPtr)obj);
                 return;
             }
 
