@@ -97,7 +97,7 @@ namespace Agora.Rtm
             return _streamChannelImpl.UnsubscribeTopic(channelName, topic, options);
         }
 
-        public override int GetSubscribedUserList(string topic, ref UserList[] users)
+        public override int GetSubscribedUserList(string topic, ref UserList users)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
