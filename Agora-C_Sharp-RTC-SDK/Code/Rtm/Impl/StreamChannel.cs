@@ -4,6 +4,7 @@ namespace Agora.Rtm
 {
     public sealed class StreamChannel : IStreamChannel
     {
+        private bool _disposed = false;
         private IRtmClient _rtmClientInstance = null;
         private StreamChannelImpl _streamChannelImpl = null;
         private const int ErrorCode = -7;
@@ -20,9 +21,37 @@ namespace Agora.Rtm
 
         ~StreamChannel()
         {
+            Dispose(false);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+            }
+
+            Release();
+            _disposed = true;
+        }
+
+        private void Release()
+        {
+            _streamChannelImpl.Release(channelName);
             _streamChannelImpl = null;
             _rtmClientInstance = null;
             channelName = "";
+        }
+
+        public override void Dispose()
+        {
+            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            {
+                return;
+            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         public override string GetChannelName()
@@ -104,15 +133,6 @@ namespace Agora.Rtm
                 return ErrorCode;
             }
             return _streamChannelImpl.GetSubscribedUserList(channelName, topic, ref users);
-        }
-
-        public override void Dispose()
-        {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
-            {
-                return;
-            }
-            _streamChannelImpl.Release(channelName);
         }
     }
 }
