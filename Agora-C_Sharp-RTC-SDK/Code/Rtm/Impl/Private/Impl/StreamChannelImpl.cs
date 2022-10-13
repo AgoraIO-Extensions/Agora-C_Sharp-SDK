@@ -190,7 +190,7 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int GetSubscribedUserList(string channelName, string topic, ref UserList[] users)
+        public int GetSubscribedUserList(string channelName, string topic, ref UserList users)
         {
             var param = new
             {
@@ -207,11 +207,12 @@ namespace Agora.Rtm
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
-                users = AgoraJson.JsonToStructArray<UserList>(_apiParam.Result, "users");
+                UnityEngine.Debug.Log(_apiParam.Result+"==============>>>>>");
+                users = AgoraJson.JsonToStruct<UserList>(_apiParam.Result, "users");
             }
             else
             {
-                users = new UserList[0];
+                users = new UserList();
             }
             return (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
