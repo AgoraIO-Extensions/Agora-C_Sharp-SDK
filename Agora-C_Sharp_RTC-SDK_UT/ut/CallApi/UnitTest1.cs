@@ -3,12 +3,13 @@ using Agora.Rtc;
 
 namespace ut
 {
+    [TestFixture]
     public class Tests
     {
         [SetUp]
         public void Setup()
         {
-           var hell = RtcEngine.CreateAgoraRtcEngine();
+
         }
 
         [Test]
@@ -16,5 +17,12 @@ namespace ut
         {
             Assert.Pass();
         }
+
+        [Test]
+        public void Test2()
+        {
+            var hell = RtcEngine.CreateAgoraRtcEngine();
+        }
+
     }
 }

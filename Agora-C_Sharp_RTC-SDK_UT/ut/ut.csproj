@@ -14,8 +14,16 @@
 
   <ItemGroup>
     <None Remove="agorartc" />
+    <None Remove="CallApi\" />
+    <None Remove="TriggerEvent\" />
+    <None Remove="Tool\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Agora-C_Sharp-RTC-SDK\Code\agorartc.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CallApi\" />
+    <Folder Include="TriggerEvent\" />
+    <Folder Include="Tool\" />
   </ItemGroup>
 </Project>
