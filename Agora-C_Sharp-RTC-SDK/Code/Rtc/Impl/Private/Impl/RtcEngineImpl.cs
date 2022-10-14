@@ -111,7 +111,7 @@ namespace Agora.Rtc
 
                 _musicContentCenterImpl.Dispose();
                 _musicContentCenterImpl = null;
-                
+
                 _spatialAudioEngineInstance = null;
 
                 _mediaPlayerCacheManager.Dispose();
@@ -451,7 +451,7 @@ namespace Agora.Rtc
 
         public MusicContentCenterImpl GetMusicContentCenter()
         {
-            return _musicContentCenterImpl; 
+            return _musicContentCenterImpl;
         }
 
         public LocalSpatialAudioEngineImpl GetLocalSpatialAudioEngine()
@@ -3223,7 +3223,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public string GetCallId()
+        public int GetCallId(ref string callId)
         {
             var param = new { };
 
@@ -3234,7 +3234,9 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
+            callId = nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "callId");
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int Rate(string callId, int rating,
@@ -5104,7 +5106,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-    
+
         public int UploadLogFile(ref string requestId)
         {
             var param = new { };

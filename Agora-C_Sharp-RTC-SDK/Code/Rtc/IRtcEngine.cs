@@ -3246,7 +3246,7 @@ namespace Agora.Rtc
         /// The current call ID, if the method succeeds.An empty string, if the method call fails.
         /// </returns>
         ///
-        public abstract string GetCallId();
+        public abstract int GetCallId(ref string callId);
 
         ///
         /// <summary>
