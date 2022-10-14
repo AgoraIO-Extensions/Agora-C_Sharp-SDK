@@ -2491,7 +2491,7 @@ namespace Agora.Rtc
 
         public uint localUid { set; get; }
 
-        ExtensionInfo()
+        public ExtensionInfo()
         {
             mediaSourceType = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE;
             remoteUid = 0;
