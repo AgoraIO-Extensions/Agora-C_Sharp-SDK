@@ -2020,6 +2020,7 @@ namespace Agora.Rtc
             areaCode = AREA_CODE.AREA_CODE_GLOB;
             logConfig = new LogConfig();
             useExternalEglContext = false;
+            domainLimit = false;
         }
 
         public RtcEngineContext(string appId, UInt64 context,
@@ -2102,6 +2103,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public bool useExternalEglContext { set; get; }
+
+        public bool domainLimit { set; get; }
 
         public override void ToJson(JsonWriter writer)
         {

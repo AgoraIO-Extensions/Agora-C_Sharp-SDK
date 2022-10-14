@@ -791,11 +791,6 @@ namespace Agora.Rtc
         /// </summary>
         ///
         POSITION_PRE_ENCODER = 1 << 2,
-
-        ///
-        /// @ignore
-        ///
-        POSITION_POST_FILTERS = 1 << 3,
     };
 
     ///
