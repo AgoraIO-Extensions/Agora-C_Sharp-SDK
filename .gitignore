@@ -11,3 +11,4 @@ agora_rtc_sdk.dll
 obj/
 .DS_Store
 *.meta
+CSharp-API_Example/binx86

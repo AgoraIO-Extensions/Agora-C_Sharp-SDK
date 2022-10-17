@@ -185,7 +185,7 @@ namespace Agora.Rtc
             VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
             Uid = uid;
-            ChannelId = channelId;
+            ChannelId = uid == 0? "": channelId;
             SourceType = source_type;
             _needUpdateInfo = false;
         }

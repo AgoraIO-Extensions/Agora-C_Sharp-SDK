@@ -49,7 +49,7 @@ namespace Agora.Rtc
               
                 switch (@event)
                 {
-                    case "VideoEncodedFrameObserver_OnEncodedVideoFrameReceived":
+                    case "VideoEncodedFrameObserver_onEncodedVideoFrameReceived":
                         {
                             var jsonData = AgoraJson.ToObject(data);
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");

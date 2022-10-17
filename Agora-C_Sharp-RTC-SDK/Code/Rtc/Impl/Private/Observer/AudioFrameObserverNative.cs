@@ -240,6 +240,17 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
+                    case "AudioFrameObserver_onEarMonitoringAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            bool result = audioFrameObserver.OnEarMonitoringAudioFrame(audioFrame);
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
                     case "AudioFrameObserver_getObservedAudioFramePosition":
                         {
                             int result = audioFrameObserver.GetObservedAudioFramePosition();
@@ -273,6 +284,16 @@ namespace Agora.Rtc
                     case "AudioFrameObserver_getMixedAudioParams":
                         {
                             var result = audioFrameObserver.GetMixedAudioParams();
+                            var p = new { result };
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_getEarMonitoringAudioParams":
+                        {
+                            var result = audioFrameObserver.GetEarMonitoringAudioParams();
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
@@ -321,6 +342,7 @@ namespace Agora.Rtc
                 case "AudioFrameObserver_onRecordAudioFrame":
                 case "AudioFrameObserver_onPlaybackAudioFrame":
                 case "AudioFrameObserver_onMixedAudioFrame":
+                case "AudioFrameObserver_onEarMonitoringAudioFrame":
                     {
                         bool result = true;
                         var p = new { result };
@@ -346,6 +368,7 @@ namespace Agora.Rtc
                 case "AudioFrameObserver_getPlaybackAudioParams":
                 case "AudioFrameObserver_getRecordAudioParams":
                 case "AudioFrameObserver_getMixedAudioParams":
+                case "AudioFrameObserver_getEarMonitoringAudioParams":
                     {
                         var result = new AudioParams();
                         var p = new { result };

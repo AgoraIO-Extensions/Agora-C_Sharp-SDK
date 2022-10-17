@@ -84,7 +84,6 @@ namespace Agora.Rtc
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-
                         }
                         break;
                     default:

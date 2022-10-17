@@ -176,6 +176,18 @@ namespace Agora.Rtc
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
     };
 
+
+    public enum LICENSE_ERROR_TYPE
+    {
+
+        LICENSE_ERR_INVALID = 1,
+        LICENSE_ERR_EXPIRE = 2,
+        LICENSE_ERR_MINUTES_EXCEED = 3,
+        LICENSE_ERR_LIMITED_PERIOD = 4,
+        LICENSE_ERR_DIFF_DEVICES = 5,
+        LICENSE_ERR_INTERNAL = 99,
+    };
+
     ///
     /// <summary>
     /// The operation permissions of the SDK on the audio session.
@@ -1235,7 +1247,7 @@ namespace Agora.Rtc
 
         public VideoSubscriptionOptions()
         {
-           
+
         }
 
         public override void ToJson(JsonWriter writer)
@@ -1274,6 +1286,7 @@ namespace Agora.Rtc
             rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
             trackId = 0;
             captureTimeMs = 0;
+            decodeTimeMs = 0;
             uid = 0;
             streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
         }
@@ -1288,6 +1301,7 @@ namespace Agora.Rtc
             rotation = rhs.rotation;
             trackId = rhs.trackId;
             captureTimeMs = rhs.captureTimeMs;
+            decodeTimeMs = rhs.decodeTimeMs;
             uid = rhs.uid;
             streamType = rhs.streamType;
         }
@@ -1348,6 +1362,8 @@ namespace Agora.Rtc
         ///
         public int64_t captureTimeMs { set; get; }
 
+
+        public int64_t decodeTimeMs { set; get; }
         ///
         /// <summary>
         /// The user ID to push the externally encoded video frame.
@@ -1363,6 +1379,37 @@ namespace Agora.Rtc
         public VIDEO_STREAM_TYPE streamType { set; get; }
     };
 
+
+    public enum COMPRESSION_PREFERENCE
+    {
+        PREFER_LOW_LATENCY = 0,
+
+        PREFER_QUALITY = 1
+    };
+
+    public enum ENCODING_PREFERENCE
+    {
+        PREFER_AUTO = -1,
+
+        PREFER_SOFTWARE = 0,
+
+        PREFER_HARDWARE = 1,
+    };
+
+    public class AdvanceOptions
+    {
+        public ENCODING_PREFERENCE encodingPreference { set; get; }
+
+        public AdvanceOptions()
+        {
+            encodingPreference = ENCODING_PREFERENCE.PREFER_AUTO;
+        }
+
+        public AdvanceOptions(ENCODING_PREFERENCE encoding_preference)
+        {
+            encodingPreference = encoding_preference;
+        }
+    }
     ///
     /// <summary>
     /// Video mirror mode.
@@ -1455,7 +1502,10 @@ namespace Agora.Rtc
         ///
         public VIDEO_MIRROR_MODE_TYPE mirrorMode { set; get; }
 
-        public VideoEncoderConfiguration(ref VideoDimensions d, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
+        public COMPRESSION_PREFERENCE compressionPreference { set; get; }
+        public AdvanceOptions advanceOptions { set; get; }
+
+        public VideoEncoderConfiguration(ref VideoDimensions d, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED, COMPRESSION_PREFERENCE cp = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY)
         {
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             dimensions = d;
@@ -1465,9 +1515,11 @@ namespace Agora.Rtc
             orientationMode = m;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             mirrorMode = mirror;
+            compressionPreference = cp;
+            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO);
         }
 
-        public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
+        public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED, COMPRESSION_PREFERENCE cp = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY)
         {
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             dimensions = new VideoDimensions(width, height);
@@ -1477,6 +1529,8 @@ namespace Agora.Rtc
             orientationMode = m;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             mirrorMode = mirror;
+            compressionPreference = cp;
+            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO);
         }
 
         public VideoEncoderConfiguration(ref VideoEncoderConfiguration config)
@@ -1489,6 +1543,8 @@ namespace Agora.Rtc
             orientationMode = config.orientationMode;
             degradationPreference = config.degradationPreference;
             mirrorMode = config.mirrorMode;
+            compressionPreference = config.compressionPreference;
+            advanceOptions = new AdvanceOptions(config.advanceOptions.encodingPreference);
         }
 
         public VideoEncoderConfiguration()
@@ -1501,6 +1557,8 @@ namespace Agora.Rtc
             orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED;
+            compressionPreference = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY;
+            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO);
         }
     };
 
@@ -1558,14 +1616,14 @@ namespace Agora.Rtc
         public SimulcastStreamConfig()
         {
             dimensions = new VideoDimensions(160, 120);
-            bitrate = 65;
+            kBitrate = 65;
             framerate = 5;
         }
 
-        public SimulcastStreamConfig(VideoDimensions dimensions, int bitrate, int framerate)
+        public SimulcastStreamConfig(VideoDimensions dimensions, int kBitrate, int framerate)
         {
             this.dimensions = dimensions;
-            this.bitrate = bitrate;
+            this.kBitrate = kBitrate;
             this.framerate = framerate;
         }
 
@@ -1581,7 +1639,7 @@ namespace Agora.Rtc
         /// Video receive bitrate (Kbps). The default value is 65.
         /// </summary>
         ///
-        public int bitrate { set; get; }
+        public int kBitrate { set; get; }
 
         ///
         /// <summary>
@@ -2464,7 +2522,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         AUDIO_SCENARIO_MEETING = 8,
-        
+
         ///
         /// <summary>
         /// The number of enumerations.
@@ -2485,31 +2543,31 @@ namespace Agora.Rtc
         ///
         public enum OPTIONAL_ENUM_SIZE_T
         {
-        /* enum_optionalenumsizet_    kMaxWidthInPixels */
+            /* enum_optionalenumsizet_    kMaxWidthInPixels */
             kMaxWidthInPixels = 3840,
-        /* enum_optionalenumsizet_    kMaxHeightInPixels */
+            /* enum_optionalenumsizet_    kMaxHeightInPixels */
             kMaxHeightInPixels = 2160,
-        /* enum_optionalenumsizet_    kMaxFps */
+            /* enum_optionalenumsizet_    kMaxFps */
             kMaxFps = 60,
         }
 
         public VideoFormat()
         {
-        /* enum_optionalenumsizet_    width */
+            /* enum_optionalenumsizet_    width */
             width = (int)FRAME_WIDTH.FRAME_WIDTH_640;
-        /* enum_optionalenumsizet_    height */
+            /* enum_optionalenumsizet_    height */
             height = (int)FRAME_HEIGHT.FRAME_HEIGHT_360;
-        /* enum_optionalenumsizet_    fps */
+            /* enum_optionalenumsizet_    fps */
             fps = (int)FRAME_RATE.FRAME_RATE_FPS_15;
         }
 
         public VideoFormat(int w, int h, int f)
         {
-        /* enum_optionalenumsizet_    this.width */
+            /* enum_optionalenumsizet_    this.width */
             this.width = w;
-        /* enum_optionalenumsizet_    this.height */
+            /* enum_optionalenumsizet_    this.height */
             this.height = h;
-        /* enum_optionalenumsizet_    this.fps */
+            /* enum_optionalenumsizet_    this.fps */
             this.fps = f;
         }
 
@@ -2686,7 +2744,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOCAL_AUDIO_STREAM_ERROR_OK = 0,
-        
+
         ///
         /// <summary>
         /// 1: No specified reason for the local audio failure. Remind your users to try to rejoin the channel.
@@ -2910,6 +2968,9 @@ namespace Agora.Rtc
         /// @ignore
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_FAILURE = 21,
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_NO_PERMISSION = 22,
     };
 
     ///
@@ -4688,6 +4749,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         CONNECTION_CHANGED_TOO_MANY_BROADCASTERS = 20,
+
+        CONNECTION_CHANGED_LICENSE_VERIFY_FAILED = 21
     };
 
     ///
@@ -5696,6 +5759,15 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VOICE_CHANGER_BASS = 0x03010400
+    };
+
+    public enum HEADPHONE_EQUALIZER_PRESET
+    {
+        HEADPHONE_EQUALIZER_OFF = 0x00000000,
+        
+        HEADPHONE_EQUALIZER_OVEREAR = 0x04000001,
+       
+        HEADPHONE_EQUALIZER_INEAR = 0x04000002
     };
 
     ///
@@ -7203,6 +7275,8 @@ namespace Agora.Rtc
         ///
         public Optional<double> speaker_attenuation = new Optional<double>();
 
+        public Optional<bool> enable_doppler = new Optional<bool>();
+
         public override void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -7248,6 +7322,13 @@ namespace Agora.Rtc
                 writer.WritePropertyName("speaker_attenuation");
                 writer.Write(this.speaker_attenuation.GetValue());
             }
+
+            if (this.enable_doppler.HasValue())
+            {
+                writer.WritePropertyName("enable_doppler");
+                writer.Write(this.enable_doppler.GetValue());
+            }
+
 
             writer.WriteObjectEnd();
         }
