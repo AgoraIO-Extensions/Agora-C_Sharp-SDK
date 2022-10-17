@@ -12,6 +12,8 @@ namespace Agora.Rtm
 
         public abstract int PublishTopicMessage(string topic, byte[] message, uint length);
 
+        public abstract int PublishTopicMessage(string topic, string message, uint length);
+
         public abstract int LeaveTopic(string topic);
 
         public abstract int SubscribeTopic(string topic, TopicOptions options);
