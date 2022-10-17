@@ -3272,5 +3272,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.ResumeAllChannelMediaRelayEx(connection);
         }
 
+        public override int GetNativeHandler(ref IntPtr nativeHandler)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.GetNativeHandler(ref nativeHandler);
+        }
     }
 }
