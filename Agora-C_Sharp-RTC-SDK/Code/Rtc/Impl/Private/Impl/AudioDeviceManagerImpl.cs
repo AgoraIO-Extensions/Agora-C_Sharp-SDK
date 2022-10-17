@@ -306,6 +306,50 @@ namespace Agora.Rtc
                 "", 0, IntPtr.Zero, 0, ref _apiParam);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
+
+
+        public int SetLoopbackDevice(string deviceId)
+        {
+            var param = new
+            {
+                deviceId
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETLOOPBACKDEVICE,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int GetLoopbackDevice(ref string deviceId)
+        {
+            var param = new
+            {
+
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETLOOPBACKDEVICE,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            deviceId = ret == 0 ? (string)AgoraJson.GetData<string>(_apiParam.Result, "deviceId") : "";
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int FollowSystemLoopbackDevice(bool enable)
+        {
+            var param = new
+            {
+                enable
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMLOOPBACKDEVICE,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+
+
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
         #endregion
     }
 }

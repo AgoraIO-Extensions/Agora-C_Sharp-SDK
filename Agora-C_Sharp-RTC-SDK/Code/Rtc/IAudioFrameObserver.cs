@@ -21,7 +21,7 @@ namespace Agora.Rtc
         /// Reserved for future use.
         /// </returns>
         ///
-        public virtual bool OnRecordAudioFrame(string channelId ,AudioFrame audioFrame)
+        public virtual bool OnRecordAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
@@ -64,12 +64,17 @@ namespace Agora.Rtc
             return true;
         }
 
+
+        public virtual bool OnEarMonitoringAudioFrame(AudioFrame audioFrame)
+        {
+            return true;
+        }
         ///
         /// @ignore
         ///
         public virtual int GetObservedAudioFramePosition()
         {
-            return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE; 
+            return (int)AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_NONE;
         }
 
         ///
@@ -117,6 +122,11 @@ namespace Agora.Rtc
             return new AudioParams();
         }
 
+
+        public virtual AudioParams GetEarMonitoringAudioParams()
+        {
+            return new AudioParams();
+        }
         ///
         /// <summary>
         /// Retrieves the audio frame of a specified user before mixing.

@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="agorartc" />
+    <None Remove="CallApi\" />
+    <None Remove="TriggerEvent\" />
+    <None Remove="Tool\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Agora-C_Sharp-RTC-SDK\Code\agorartc.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CallApi\" />
+    <Folder Include="TriggerEvent\" />
+    <Folder Include="Tool\" />
+  </ItemGroup>
+</Project>

@@ -18,10 +18,10 @@ namespace Agora.Rtc
             level = LOG_LEVEL.LOG_LEVEL_INFO;
         }
 
-        public LogConfig(string filePath, uint fileSize = 1024, LOG_LEVEL level = LOG_LEVEL.LOG_LEVEL_INFO)
+        public LogConfig(string filePath, uint fileSizeInKB = 1024, LOG_LEVEL level = LOG_LEVEL.LOG_LEVEL_INFO)
         {
             this.filePath = filePath;
-            this.fileSizeInKB = 0;
+            this.fileSizeInKB = fileSizeInKB;
             this.level = level;
         }
 

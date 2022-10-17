@@ -145,6 +145,12 @@ namespace Agora.Rtc
         ///
         public abstract int MuteAllRemoteAudioStreams(bool mute);
 
+
+        public abstract int SetZones(SpatialAudioZone[] zones, uint zoneCount);
+
+        public abstract int SetPlayerAttenuation(int playerId, double attenuation, bool forceSet);
+
+        public abstract int MuteRemoteAudioStream(uint uid, bool mute);
         ///
         /// <summary>
         /// Updates the spatial position of the specified remote user.
@@ -203,5 +209,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int ClearRemotePositionsEx(RtcConnection connection);
+
+        public abstract int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet);
     }
 }
