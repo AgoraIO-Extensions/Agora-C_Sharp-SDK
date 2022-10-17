@@ -8,6 +8,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETAPPTYPE = "RtcEngine_setAppType";
         internal const string FUNC_RTCENGINE_SETPARAMETERS = "RtcEngine_setParameters";
         internal const string FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES = "RtcEngine_releaseScreenCaptureSources";
+        internal const string FUNC_RTCENGINE_GETNATIVEHANDLE = "RtcEngine_getNativeHandle";
 
         internal const string FUNC_RTCENGINE_RELEASE = "RtcEngine_release";
         internal const string FUNC_RTCENGINE_INITIALIZE = "RtcEngine_initialize";
