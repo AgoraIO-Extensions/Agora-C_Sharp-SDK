@@ -3891,6 +3891,9 @@ namespace Agora.Rtc
         public abstract IMediaRecorder GetMediaRecorder();
 
         public abstract long GetCurrentMonotonicTimeInMs();
+
+
+        public abstract int GetNativeHandler(ref IntPtr nativeHandler);
     };
 
     /* class_irtcengineex : irtcengine */
@@ -4365,7 +4368,6 @@ namespace Agora.Rtc
         public abstract int PauseAllChannelMediaRelayEx(RtcConnection connection);
         public abstract int ResumeAllChannelMediaRelayEx(RtcConnection connection);
 
-        public abstract int GetNativeHandler(ref IntPtr nativeHandler);
 
     }
 }
