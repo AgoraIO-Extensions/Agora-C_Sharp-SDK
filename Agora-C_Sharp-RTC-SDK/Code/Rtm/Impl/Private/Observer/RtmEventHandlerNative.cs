@@ -93,7 +93,7 @@ namespace Agora.Rtm
                     });
 #endif
                     break;
-                case "RtmEventHandler_onleaveResult":
+                case "RtmEventHandler_onLeaveResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
