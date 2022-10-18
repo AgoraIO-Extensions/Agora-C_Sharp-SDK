@@ -4401,6 +4401,7 @@ namespace Agora.Rtc
             streamCount = 0;
             VideoInputStreams = null;
             videoOutputConfiguration = new VideoEncoderConfiguration();
+            syncWithPrimaryCamera = true;
         }
 
         public LocalTranscoderConfiguration(uint streamCount, TranscodingVideoStream[] VideoInputStreams,
@@ -4431,6 +4432,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public VideoEncoderConfiguration videoOutputConfiguration { set; get; }
+
+        public bool syncWithPrimaryCamera { set; get; }
     };
 
     ///
@@ -4940,15 +4943,15 @@ namespace Agora.Rtc
         public VideoCanvas()
         {
             view = 0;
-            renderMode = RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
             uid = 0;
+            renderMode = RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
+           
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO;
-            isScreenView = false;
-            priv = null;
-            priv_size = 0;
-            sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
-            cropArea = new Rectangle();
             setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
+            sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+            mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
+            cropArea = new Rectangle();
+         
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, uint u)
@@ -4957,12 +4960,10 @@ namespace Agora.Rtc
             this.renderMode = m;
             this.mirrorMode = mt;
             this.uid = u;
-            this.isScreenView = false;
-            this.priv = null;
-            this.priv_size = 0; ;
-            this.sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+            setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
+            sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+            mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
-            this.setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, string u)
@@ -4971,12 +4972,10 @@ namespace Agora.Rtc
             this.renderMode = m;
             this.mirrorMode = mt;
             this.uid = 0;
-            this.isScreenView = false;
-            this.priv = null;
-            this.priv_size = 0; ;
-            this.sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+            setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
+            sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+            mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
-            this.setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
         }
 
         ///
@@ -4985,6 +4984,15 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public view_t view { set; get; }
+
+
+
+        ///
+        /// <summary>
+        /// The user ID.
+        /// </summary>
+        ///
+        public uint uid { set; get; }
 
         ///
         /// <summary>
@@ -5000,44 +5008,26 @@ namespace Agora.Rtc
         ///
         public VIDEO_MIRROR_MODE_TYPE mirrorMode { set; get; }
 
-        ///
-        /// <summary>
-        /// The user ID.
-        /// </summary>
-        ///
-        public uint uid { set; get; }
 
-        ///
-        /// @ignore
-        ///
-        public bool isScreenView { set; get; }
 
-        ///
-        /// @ignore
-        ///
-        public byte[] priv { set; get; }
-
-        ///
-        /// @ignore
-        ///
-        public uint priv_size { set; get; }
-
-        ///
-        /// <summary>
-        /// The type of the video source, see VIDEO_SOURCE_TYPE .
-        /// </summary>
-        ///
-        public VIDEO_SOURCE_TYPE sourceType { set; get; }
-
-        ///
-        /// @ignore
-        ///
-        public Rectangle cropArea { set; get; }
-
-        ///
-        /// @ignore
-        ///
         public VIDEO_VIEW_SETUP_MODE setupMode { set; get; }
+        /**
+         * The video source type. See \ref VIDEO_SOURCE_TYPE "VIDEO_SOURCE_TYPE".
+         * The default value is VIDEO_SOURCE_CAMERA_PRIMARY.
+         */
+        public VIDEO_SOURCE_TYPE sourceType { set; get; }
+        /**
+         * The media player id of AgoraMediaPlayer. It should set this parameter when the 
+         * sourceType is VIDEO_SOURCE_MEDIA_PLAYER to show the video that AgoraMediaPlayer is playing.
+         * You can get this value by calling the method \ref getMediaPlayerId().
+         */
+        public int mediaPlayerId { set; get; }
+        /**
+         * If you want to display a certain part of a video frame, you can set 
+         * this value to crop the video frame to show. 
+         * The default value is empty(that is, if it has zero width or height), which means no cropping.
+         */
+        public Rectangle cropArea { set; get; }
     };
 
     ///
@@ -5764,9 +5754,9 @@ namespace Agora.Rtc
     public enum HEADPHONE_EQUALIZER_PRESET
     {
         HEADPHONE_EQUALIZER_OFF = 0x00000000,
-        
+
         HEADPHONE_EQUALIZER_OVEREAR = 0x04000001,
-       
+
         HEADPHONE_EQUALIZER_INEAR = 0x04000002
     };
 
