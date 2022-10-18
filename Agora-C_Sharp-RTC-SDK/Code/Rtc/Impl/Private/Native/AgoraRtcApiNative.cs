@@ -154,7 +154,7 @@ namespace Agora.Rtc
 
         // Iris Media Base
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern bool ConvertVideoFrame(ref IrisVideoFrame dst, ref IrisVideoFrame src);
+        internal static extern bool AlignAndConvertVideoFrame(ref IrisVideoFrame dst, ref IrisVideoFrame src);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void ClearVideoFrame(ref IrisVideoFrame video_frame);
