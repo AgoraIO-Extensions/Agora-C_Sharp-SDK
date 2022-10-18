@@ -41,25 +41,25 @@ namespace Agora.Rtm
             switch (@event)
             {
                 case "RtmEventHandler_onMessageEvent":
+                    MessageEventInternal messageEventInternal = AgoraJson.JsonToStruct<MessageEventInternal>(jsonData, "event");
+                    MessageEvent messageEvent = new MessageEvent();
+                    messageEvent.channelType = messageEventInternal.channelType;
+                    messageEvent.channelName = messageEventInternal.channelName;
+                    messageEvent.channelTopic = messageEventInternal.channelTopic;
+                    messageEvent.messageLength = messageEventInternal.messageLength;
+                    messageEvent.publisher = messageEventInternal.publisher;
+
+                    var byteData = new byte[messageEvent.messageLength];
+                    if (messageEvent.messageLength != 0)
+                    {
+                        Marshal.Copy((IntPtr)messageEventInternal.message, byteData, 0, (int)messageEvent.messageLength);
+                        messageEvent.message = System.Text.Encoding.Default.GetString(byteData);
+                    }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                         if (rtmEventHandler == null) return;
-                        MessageEventInternal messageEventInternal =  AgoraJson.JsonToStruct<MessageEventInternal>(jsonData, "event");
-                        MessageEvent messageEvent = new MessageEvent();
-                        messageEvent.channelType = messageEventInternal.channelType;
-                        messageEvent.channelName = messageEventInternal.channelName;
-                        messageEvent.channelTopic = messageEventInternal.channelTopic;
-                        messageEvent.messageLength = messageEventInternal.messageLength;
-                        messageEvent.publisher = messageEventInternal.publisher;
-
-                        var byteData = new byte[messageEvent.messageLength];
-                        if (messageEvent.messageLength != 0)
-                        {
-                            Marshal.Copy((IntPtr)messageEventInternal.message, byteData, 0, (int)messageEvent.messageLength);
-                            messageEvent.message = System.Text.Encoding.Default.GetString(byteData);
-                        }
                         rtmEventHandler.OnMessageEvent(messageEvent);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

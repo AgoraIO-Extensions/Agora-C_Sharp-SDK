@@ -90,23 +90,23 @@ namespace Agora.Rtm
             return _streamChannelImpl.JoinTopic(channelName, topic, options);
         }
 
-        public override int PublishTopicMessage(string topic, byte[] message, uint length)
+        public override int PublishTopicMessage(string topic, byte[] message)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, length);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, (uint)message.Length);
         }
 
-        public override int PublishTopicMessage(string topic, string message, uint length)
+        public override int PublishTopicMessage(string topic, string message)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
             byte[] messageByte = System.Text.Encoding.Default.GetBytes(message);
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, messageByte, length);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, messageByte, (uint)messageByte.Length);
         }
 
         public override int LeaveTopic(string topic)
