@@ -126,7 +126,7 @@ namespace Agora.Rtc
             {
                 IrisVideoFrame videoFrameConverted = new IrisVideoFrame();
                 videoFrameConverted.type = videoFrameObserver.GetVideoFormatPreference();
-                AgoraRtcNative.ConvertVideoFrame(ref videoFrameConverted, ref videoFrame);
+                AgoraRtcNative.AlignAndConvertVideoFrame(ref videoFrameConverted, ref videoFrame);
                 ConvertIrisVideoFrameToVideoFrame(ref videoFrameConverted, ref localVideoFrame);
                 videoFrame = videoFrameConverted;
                 return true;
