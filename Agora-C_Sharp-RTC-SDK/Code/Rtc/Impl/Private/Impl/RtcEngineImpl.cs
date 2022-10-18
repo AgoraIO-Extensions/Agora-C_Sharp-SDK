@@ -5975,27 +5975,18 @@ namespace Agora.Rtc
         {
             var param = new
             {
-                canvas = new
-                {
-                    view = (ulong)canvas.view,
-                    canvas.renderMode,
-                    canvas.uid,
-                    canvas.mirrorMode,
-                    canvas.isScreenView,
-                    canvas.priv_size,
-                    canvas.sourceType
-                }
+                canvas
             };
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+        
+            IntPtr[] arrayPtr = new IntPtr[] { (IntPtr)canvas.view };
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPREMOTEVIDEO,
                json, (UInt32)json.Length,
                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-               ref _apiParam, (uint)canvas.priv.Length);
+               ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6003,27 +5994,18 @@ namespace Agora.Rtc
         {
             var param = new
             {
-                canvas = new
-                {
-                    view = (ulong)canvas.view,
-                    canvas.renderMode,
-                    canvas.uid,
-                    canvas.mirrorMode,
-                    canvas.isScreenView,
-                    canvas.priv_size,
-                    canvas.sourceType
-                }
+                canvas
             };
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+           
+            IntPtr[] arrayPtr = new IntPtr[] {(IntPtr)canvas.view };
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETUPLOCALVIDEO,
                json, (UInt32)json.Length,
                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-               ref _apiParam, (uint)canvas.priv.Length);
+               ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -6095,28 +6077,19 @@ namespace Agora.Rtc
         {
             var param = new
             {
-                canvas = new
-                {
-                    view = (ulong)canvas.view,
-                    canvas.renderMode,
-                    canvas.uid,
-                    canvas.mirrorMode,
-                    canvas.isScreenView,
-                    canvas.priv_size,
-                    canvas.sourceType
-                },
+                canvas,
                 connection
             };
 
             var json = AgoraJson.ToJson(param);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(canvas.priv, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+      
+            IntPtr[] arrayPtr = new IntPtr[] { (IntPtr)canvas.view };
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETUPREMOTEVIDEOEX,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam, (uint)canvas.priv.Length);
+                ref _apiParam);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
