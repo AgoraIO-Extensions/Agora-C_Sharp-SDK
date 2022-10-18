@@ -110,7 +110,7 @@ namespace Agora.Rtc
             localVideoFrame.textureId = videoFrameConverted.textureId;
         }
 
-        private static VideoFrame ProcessVideoFrameReceived(ref IrisVideoFrame videoFrame, string channelId, uint uid)
+        private static bool ProcessVideoFrameReceived(ref IrisVideoFrame videoFrame, ref VideoFrame localVideoFrame)
         {
             //var videoFrame = (IrisVideoFrame)(Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ??
             //    new IrisVideoFrame());
@@ -120,7 +120,7 @@ namespace Agora.Rtc
             videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height / 2);
 
             var ifConverted = videoFrameObserver.GetVideoFormatPreference() != VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-            var localVideoFrame = GetVideoFrame(channelId, uid);
+
 
             if (ifConverted)
             {
@@ -128,14 +128,15 @@ namespace Agora.Rtc
                 videoFrameConverted.type = videoFrameObserver.GetVideoFormatPreference();
                 AgoraRtcNative.ConvertVideoFrame(ref videoFrameConverted, ref videoFrame);
                 ConvertIrisVideoFrameToVideoFrame(ref videoFrameConverted, ref localVideoFrame);
-                AgoraRtcNative.ClearVideoFrame(ref videoFrameConverted);
+                videoFrame = videoFrameConverted;
+                return true;
             }
             else
             {
                 ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref localVideoFrame);
             }
 
-            return localVideoFrame;
+            return false;
         }
 
 
@@ -160,7 +161,7 @@ namespace Agora.Rtc
                 var length = eventParam.length;
                 var buffer_count = eventParam.buffer_count;
 
-             
+
                 switch (@event)
                 {
                     case "VideoFrameObserver_onCaptureVideoFrame":
@@ -177,8 +178,10 @@ namespace Agora.Rtc
                             config.type = ConvertEventNameToVideoSourecType(@event);
                             config.id = 0;
                             config.key = "";
-                            VideoFrame videoFrame1 = ProcessVideoFrameReceived(ref videoFrame, "", 0);
+                            VideoFrame videoFrame1 = GetVideoFrame("", 0);
+                            bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnCaptureVideoFrame(videoFrame1, config);
+                            if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
@@ -197,8 +200,10 @@ namespace Agora.Rtc
                             config.type = ConvertEventNameToVideoSourecType(@event);
                             config.id = 0;
                             config.key = "";
-                            VideoFrame videoFrame1 = ProcessVideoFrameReceived(ref videoFrame, "", 1);
+                            VideoFrame videoFrame1 = GetVideoFrame("", 1);
+                            bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnPreEncodeVideoFrame(videoFrame1, config);
+                            if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
@@ -210,11 +215,12 @@ namespace Agora.Rtc
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
-                            VideoFrame videoFrame1 = ProcessVideoFrameReceived(ref videoFrame, "", 2);
+                            VideoFrame videoFrame1 = GetVideoFrame("", 2);
+                            bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
                             string channel_id = (string)AgoraJson.GetData<string>(jsonData, "channelId");
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid");
-
                             bool result = videoFrameObserver.OnRenderVideoFrame(channel_id, uid, videoFrame1);
+                            if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
                             var p = new { result };
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
