@@ -4,7 +4,7 @@ namespace Agora.Rtm
     {
         public abstract int Initialize(RtmConfig config);
 
-        public abstract void Dispose();
+        public abstract int Release();
 
         public abstract IStreamChannel CreateStreamChannel(string channelName);
     }

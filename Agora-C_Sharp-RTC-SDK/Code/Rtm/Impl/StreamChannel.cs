@@ -24,34 +24,33 @@ namespace Agora.Rtm
             Dispose(false);
         }
 
-        private void Dispose(bool disposing)
+        private int Dispose(bool disposing)
         {
-            if (_disposed) return;
+            if (_disposed) return 0;
 
             if (disposing)
             {
             }
 
-            Release();
-            _disposed = true;
-        }
+            int ret = _streamChannelImpl.Release(channelName);
 
-        private void Release()
-        {
-            _streamChannelImpl.Release(channelName);
             _streamChannelImpl = null;
             _rtmClientInstance = null;
             channelName = "";
+            _disposed = true;
+
+            return ret;
         }
 
-        public override void Dispose()
+        public override int Release()
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            Dispose(true);
+            int ret = Dispose(true);
             GC.SuppressFinalize(this);
+            return ret;
         }
 
         public override string GetChannelName()
