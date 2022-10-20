@@ -34,7 +34,7 @@ namespace Agora.Rtc
         ///
         /// <param name="engineEventHandler"> Callback events to be added. </param>
         ///
-        public abstract void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
+        public abstract int InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
         ///
         /// <summary>
@@ -44,7 +44,7 @@ namespace Agora.Rtc
         ///
         /// <param name="observer"> The audio frame observer, reporting the reception of each audio frame. See IMediaPlayerAudioFrameObserver .</param>
         ///
-        public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
+        public abstract int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
 
         ///
         /// <summary>
@@ -55,24 +55,24 @@ namespace Agora.Rtc
         ///
         /// <param name="mode"> The use mode of the audio frame. See RAW_AUDIO_FRAME_OP_MODE_TYPE .</param>
         ///
-        public abstract void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
+        public abstract int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
         ///
         /// <summary>
         /// Unregisters an audio frame observer.
         /// </summary>
         ///
-        public abstract void UnregisterAudioFrameObserver();
+        public abstract int UnregisterAudioFrameObserver();
 
         ///
         /// @ignore
         ///
-        public abstract void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS);
+        public abstract int RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS);
 
         ///
         /// @ignore
         ///
-        public abstract void UnregisterMediaPlayerAudioSpectrumObserver();
+        public abstract int UnregisterMediaPlayerAudioSpectrumObserver();
 
         ///
         /// <summary>

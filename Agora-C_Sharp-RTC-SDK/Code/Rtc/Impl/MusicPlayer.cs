@@ -15,6 +15,11 @@ namespace Agora.Rtc
             this.playerId = id;
         }
 
+        public override void Dispose()
+        {
+            AgoraLog.LogError("Please use IMusicContentCenter.DestroyMusicPlayer to instead of");
+        }
+
         ~MusicPlayer()
         {
             _musicPlayerImpl = null;
@@ -25,58 +30,58 @@ namespace Agora.Rtc
             return playerId;
         }
 
-        public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
+        public override int InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
             if (_musicPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _musicPlayerImpl.InitEventHandler(playerId, engineEventHandler);
+            return _musicPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-        public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
+        public override int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
         {
             if (_musicPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _musicPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
+            return _musicPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
         }
 
-        public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public override int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             if (_musicPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _musicPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
+            return _musicPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
         }
 
-        public override void UnregisterAudioFrameObserver()
+        public override int UnregisterAudioFrameObserver()
         {
             if (_musicPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _musicPlayerImpl.UnregisterAudioFrameObserver(playerId);
+            return _musicPlayerImpl.UnregisterAudioFrameObserver(playerId);
         }
 
-        public override void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
+        public override int RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
         {
             if (_musicPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _musicPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
+            return _musicPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
         }
 
-        public override void UnregisterMediaPlayerAudioSpectrumObserver()
+        public override int UnregisterMediaPlayerAudioSpectrumObserver()
         {
             if (_musicPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _musicPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
+            return _musicPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
         }
 
         public override int Open(string url, Int64 startPos)
@@ -466,7 +471,7 @@ namespace Agora.Rtc
             return _musicPlayerImpl.UnloadSrc(playerId, src);
         }
 
-        public override int Open(long songCode, uint startPos)
+        public override int Open(long songCode, long startPos)
         {
             if (_musicPlayerImpl == null)
             {
