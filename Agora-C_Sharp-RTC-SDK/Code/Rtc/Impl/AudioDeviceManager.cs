@@ -246,6 +246,25 @@ namespace Agora.Rtc
             }
             return _audioDeviecManagerImpl.StopAudioDeviceLoopbackTest();
         }
+
+        public override int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceName)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetPlaybackDefaultDevice(ref deviceId, ref deviceName);
+        }
+
+        public override int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetRecordingDefaultDevice(ref deviceId, ref deviceName);
+        }
+
         #endregion
 
         internal static IAudioDeviceManager GetInstance(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
@@ -257,5 +276,7 @@ namespace Agora.Rtc
         {
             instance = null;
         }
+
+   
     }
 }

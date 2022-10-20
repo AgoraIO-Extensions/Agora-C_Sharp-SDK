@@ -118,6 +118,9 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int FollowSystemPlaybackDevice(bool enable);
+
+
+        public abstract int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceName);
         #endregion
 
         #region RecordingDevices
@@ -233,6 +236,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int FollowSystemRecordingDevice(bool enable);
+
+        public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName);
         #endregion
 
         #region AudioDevice
