@@ -34,6 +34,17 @@ namespace Agora.Rtc
             playerId = 0;
         }
 
+        public int Destroy()
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            var ret = _mediaPlayerImpl.DestroyMediaPlayer(playerId);
+            playerId = 0;
+            return ret;
+        }
+
         public override int GetId()
         {
             return playerId;

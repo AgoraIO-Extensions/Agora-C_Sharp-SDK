@@ -448,9 +448,10 @@ namespace Agora.Rtc
                 playerId
             };
             string jsonParam = AgoraJson.ToJson(param);
-            return AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+            var ret= AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_RTCENGINE_DESTROYMEDIAPLAYER,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int Open(int playerId, string url, Int64 startPos)
