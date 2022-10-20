@@ -20,11 +20,6 @@ namespace Agora.Rtc
             _musicPlayerImpl = null;
         }
 
-        public override void Dispose()
-        {
-            AgoraLog.LogError("Please use IMusicContentCenter.DestroyMusicPlayer instead of");
-        }
-
         public override int GetId()
         {
             return playerId;

@@ -120,67 +120,67 @@ namespace Agora.Rtc
             instance = null;
         }
 
-        public override void InitEventHandler(IRtcEngineEventHandler engineEventHandler)
+        public override int InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.InitEventHandler(engineEventHandler);
+            return _rtcEngineImpl.InitEventHandler(engineEventHandler);
         }
 
-        public override void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
+            return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
         }
 
-        public override void UnRegisterAudioFrameObserver()
+        public override int UnRegisterAudioFrameObserver()
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.UnRegisterAudioFrameObserver();
+            return _rtcEngineImpl.UnRegisterAudioFrameObserver();
         }
 
-        public override void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode; 
             }
-            _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, mode);
+            return _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, mode);
         }
 
-        public override void UnRegisterVideoFrameObserver()
+        public override int UnRegisterVideoFrameObserver()
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.UnRegisterVideoFrameObserver();
+            return _rtcEngineImpl.UnRegisterVideoFrameObserver();
         }
 
-        public override void RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.RegisterVideoEncodedFrameObserver(videoEncodedImageReceiver, mode);
+            return _rtcEngineImpl.RegisterVideoEncodedFrameObserver(videoEncodedImageReceiver, mode);
         }
 
-        public override void UnRegisterVideoEncodedFrameObserver()
+        public override int UnRegisterVideoEncodedFrameObserver()
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
+            return _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
         }
 
         public override IAudioDeviceManager GetAudioDeviceManager()
@@ -237,12 +237,14 @@ namespace Agora.Rtc
             return new MediaPlayer(this, _rtcEngineImpl.GetMediaPlayer());
         }
 
-        public override void DestroyMediaPlayer(IMediaPlayer mediaPlayer)
+        public override int DestroyMediaPlayer(IMediaPlayer mediaPlayer)
         {
             if (_rtcEngineImpl == null || mediaPlayer == null)
             {
+                return ErrorCode;
             }
-            mediaPlayer.Dispose();
+            MediaPlayer player = (MediaPlayer)mediaPlayer;
+            return player.Destroy();
         }
 
         //public override ICloudSpatialAudioEngine GetCloudSpatialAudioEngine()
@@ -797,22 +799,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StartAudioRecording(config);
         }
 
-        public override void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
+        public override int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.RegisterAudioEncodedFrameObserver(config, observer);
+            return _rtcEngineImpl.RegisterAudioEncodedFrameObserver(config, observer);
         }
 
-        public override void UnRegisterAudioEncodedFrameObserver()
+        public override int UnRegisterAudioEncodedFrameObserver()
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.UnRegisterAudioEncodedFrameObserver();
+            return _rtcEngineImpl.UnRegisterAudioEncodedFrameObserver();
         }
 
         public override int StopAudioRecording()
@@ -1466,22 +1468,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.DisableAudioSpectrumMonitor();
         }
 
-        public override void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
+        public override int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.RegisterAudioSpectrumObserver(observer);
+            return _rtcEngineImpl.RegisterAudioSpectrumObserver(observer);
         }
 
-        public override void UnregisterAudioSpectrumObserver()
+        public override int UnregisterAudioSpectrumObserver()
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.UnregisterAudioSpectrumObserver();
+            return _rtcEngineImpl.UnregisterAudioSpectrumObserver();
         }
 
         public override int AdjustRecordingSignalVolume(int volume)
@@ -1637,7 +1639,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.GetExtensionProperty(provider, extension, extensionInfo,key, ref value, buf_len);
+            return _rtcEngineImpl.GetExtensionProperty(provider, extension, extensionInfo, key, ref value, buf_len);
         }
 
         public override int SetCameraCapturerConfiguration(CameraCapturerConfiguration config)
@@ -2231,22 +2233,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SendCustomReportMessage(id, category, @event, label, value);
         }
 
-        public override void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
+        public override int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.RegisterMediaMetadataObserver(observer, type);
+            return _rtcEngineImpl.RegisterMediaMetadataObserver(observer, type);
         }
 
-        public override void UnregisterMediaMetadataObserver()
+        public override int UnregisterMediaMetadataObserver()
         {
             if (_rtcEngineImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _rtcEngineImpl.UnregisterMediaMetadataObserver();
+            return _rtcEngineImpl.UnregisterMediaMetadataObserver();
         }
 
         public override int StartAudioFrameDump(string channel_id, uint user_id, string location, string uuid, string passwd, long duration_ms, bool auto_upload)
@@ -2484,13 +2486,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
         }
 
-        public override int EnableLoopbackRecordingEx(bool enabled, RtcConnection connection)
+        public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableLoopbackRecordingEx(enabled, connection);
+            return _rtcEngineImpl.EnableLoopbackRecordingEx(connection, enabled, deviceName);
         }
 
         public override CONNECTION_STATE_TYPE GetConnectionStateEx(RtcConnection connection)
