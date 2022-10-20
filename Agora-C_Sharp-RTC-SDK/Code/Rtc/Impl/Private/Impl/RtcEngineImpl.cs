@@ -6240,16 +6240,18 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            var f = _apiParam.Result.Length == 0
-               ? new AudioFrame()
-               : AgoraJson.JsonToStruct<AudioFrame>(_apiParam.Result, "frame");
-            frame.avsync_type = f.avsync_type;
-            frame.channels = f.channels;
-            frame.samplesPerChannel = f.samplesPerChannel;
-            frame.type = f.type;
-            frame.bytesPerSample = f.bytesPerSample;
-            frame.renderTimeMs = f.renderTimeMs;
-            frame.samplesPerSec = f.samplesPerSec;
+
+            if (nRet == 0)
+            {
+                var f = AgoraJson.JsonToStruct<AudioFrame>(_apiParam.Result, "frame");
+                frame.avsync_type = f.avsync_type;
+                frame.channels = f.channels;
+                frame.samplesPerChannel = f.samplesPerChannel;
+                frame.type = f.type;
+                frame.bytesPerSample = f.bytesPerSample;
+                frame.renderTimeMs = f.renderTimeMs;
+                frame.samplesPerSec = f.samplesPerSec;
+            }
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
