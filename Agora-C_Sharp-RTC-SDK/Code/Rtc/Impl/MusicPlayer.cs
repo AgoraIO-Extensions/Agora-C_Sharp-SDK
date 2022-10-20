@@ -471,7 +471,7 @@ namespace Agora.Rtc
             return _musicPlayerImpl.UnloadSrc(playerId, src);
         }
 
-        public override int Open(long songCode, uint startPos)
+        public override int Open(long songCode, long startPos)
         {
             if (_musicPlayerImpl == null)
             {
