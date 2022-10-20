@@ -50,58 +50,58 @@ namespace Agora.Rtc
             return playerId;
         }
 
-        public override void InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
+        public override int InitEventHandler(IMediaPlayerSourceObserver engineEventHandler)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
+            return _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-        public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
+        public override int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
         }
 
-        public override void RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public override int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return;
+                return ErrorCode; 
             }
-            _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
         }
 
-        public override void UnregisterAudioFrameObserver()
+        public override int UnregisterAudioFrameObserver()
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return;
+                return ErrorCode; 
             }
-            _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
+            return _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
         }
 
-        public override void RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
+        public override int RegisterMediaPlayerAudioSpectrumObserver(IAudioSpectrumObserver observer, int intervalInMS)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
+            return _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
         }
 
-        public override void UnregisterMediaPlayerAudioSpectrumObserver()
+        public override int UnregisterMediaPlayerAudioSpectrumObserver()
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
+            return _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
         }
 
         public override int Open(string url, Int64 startPos)

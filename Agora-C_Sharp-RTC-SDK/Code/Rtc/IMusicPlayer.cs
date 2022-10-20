@@ -4,6 +4,6 @@ namespace Agora.Rtc
 {
     public abstract class IMusicPlayer : IMediaPlayer
     {
-        public abstract int Open(Int64 songCode, uint startPos);
+        public abstract int Open(Int64 songCode, Int64 startPos);
     }
 }
