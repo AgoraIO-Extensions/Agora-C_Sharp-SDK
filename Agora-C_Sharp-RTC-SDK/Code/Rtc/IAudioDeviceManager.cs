@@ -267,9 +267,9 @@ namespace Agora.Rtc
         ///
         public abstract int StopAudioDeviceLoopbackTest();
 
-        //public abstract int SetLoopbackDevice(string deviceId);
-        //public abstract int GetLoopbackDevice(ref string deviceId);
-        //public abstract int FollowSystemLoopbackDevice(bool enable);
+        public abstract int SetLoopbackDevice(string deviceId);
+        public abstract int GetLoopbackDevice(ref string deviceId);
+        public abstract int FollowSystemLoopbackDevice(bool enable);
         #endregion
 
 
