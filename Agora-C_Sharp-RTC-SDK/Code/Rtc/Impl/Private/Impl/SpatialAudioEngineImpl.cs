@@ -118,10 +118,10 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
+        public int UpdatePlayerPositionInfo(int playerId, RemoteVoicePositionInfo positionInfo)
         {
             if (!_initialized) return UNINITIALIZED;
-            RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
+          
             var param = new
             {
                 playerId,
@@ -223,10 +223,10 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int UpdateRemotePosition(uint uid, float[] position, float[] forward)
+        public int UpdateRemotePosition(uint uid, RemoteVoicePositionInfo posInfo)
         {
             if (!_initialized) return UNINITIALIZED;
-            RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo(position, forward);
+           
             var param = new
             {
                 uid,
@@ -239,10 +239,10 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
+        public int UpdateRemotePositionEx(uint uid, RemoteVoicePositionInfo posInfo, RtcConnection connection)
         {
             if (!_initialized) return UNINITIALIZED;
-            RemoteVoicePositionInfo posInfo = new RemoteVoicePositionInfo(position, forward);
+           
             var param = new
             {
                 uid,
