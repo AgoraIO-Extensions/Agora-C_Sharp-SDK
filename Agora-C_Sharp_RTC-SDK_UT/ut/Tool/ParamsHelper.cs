@@ -169,7 +169,7 @@ namespace ut
         }
         public static void InitParam(out IAudioEncodedFrameObserver param)
         {
-            param = new UTAudioEncodedFrameObserver(); 
+            param = new UTAudioEncodedFrameObserver();
         }
         public static void InitParam(out AUDIO_MIXING_DUAL_MONO_MODE param)
         {
@@ -253,7 +253,7 @@ namespace ut
         }
         public static void InitParam(out Rectangle param)
         {
-            param = new Rectangle(0,0,640,360);
+            param = new Rectangle(0, 0, 640, 360);
         }
         public static void InitParam(out ScreenCaptureParameters param)
         {
@@ -391,70 +391,110 @@ namespace ut
         {
             param = new uint[10];
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out RtcConnection param)
+        {
+            param = new RtcConnection();
+            param.channelId = "unity";
+            param.localUid = 123;
+        }
+        public static void InitParam(out MediaSource param)
+        {
+            param = new MediaSource();
+
+        }
+        public static void InitParam(out PlayerStreamInfo param)
+        {
+            param = new PlayerStreamInfo();
+        }
+        public static void InitParam(out IMediaPlayerCustomDataProvider param)
+        {
+            param = new UTMediaPlayerCustomDataProvider();
+        }
+        public static void InitParam(out IMediaPlayerSourceObserver param)
+        {
+            param = new UTMediaPlayerSourceObserver();
+        }
+        public static void InitParam(out IMediaPlayerAudioFrameObserver param)
+        {
+            param = new UTMediaPlayerAudioFrameObserver();
+        }
+        public static void InitParam(out AUDIO_DUAL_MONO_MODE param)
+        {
+            param = AUDIO_DUAL_MONO_MODE.AUDIO_DUAL_MONO_MIX;
+        }
+        public static void InitParam(out MusicContentCenterConfiguration param)
+        {
+            param = new MusicContentCenterConfiguration();
+            param.appId = "223231231";
+            param.rtmToken = "dsadadasdasd";
+            param.mccUid = 123;
+        }
+        public static void InitParam(out IMusicContentCenterEventHandler param)
+        {
+            param = new UTMusicContentCenterEventHandler();
+        }
+        public static void InitParam(out VideoFormat param)
+        {
+            param = new VideoFormat();
+        }
+        public static void InitParam(out IntPtr param)
+        {
+            UInt64 number = 10086;
+            param = (IntPtr)(number);
+        }
+        public static void InitParam(out IMediaRecorderObserver param)
+        {
+            param = new UTMediaRecorderObserver();
+        }
+        public static void InitParam(out MediaRecorderConfiguration param)
+        {
+            param = new MediaRecorderConfiguration();
+            param.storagePath = "/xiayangqun";
+        }
+        public static void InitParam(out float[] param)
+        {
+            param = new float[3];
+            param[0] = 2.3f;
+            param[1] = 2.45f;
+            param[2] = 3.44f;
+        }
+        public static void InitParam(out RemoteVoicePositionInfo param)
+        {
+            float[] pos = new float[3];
+            pos[0] = 2.3f;
+            pos[1] = 3.23f;
+            pos[2] = 2.213f;
+
+            float[] forward = new float[3];
+            forward[0] = 2.34f;
+            forward[1] = 3.44f;
+            forward[2] = 22.3f;
+
+            param = new RemoteVoicePositionInfo(pos, forward);
+        }
+        public static void InitParam(out SpatialAudioZone[] param)
+        {
+            param = new SpatialAudioZone[10];
+            for (var i = 0; i < 10; i++)
+            {
+                var spatialAudioZone = new SpatialAudioZone();
+                spatialAudioZone.zoneSetId = i;
+                spatialAudioZone.position = new float[] { 1, 2, 3 };
+
+                spatialAudioZone.forward = new float[] { 1, 2, 3 };
+
+                spatialAudioZone.right = new float[] { 1, 2, 3 };
+
+                spatialAudioZone.up = new float[] { 1, 2, 3 };
+
+                spatialAudioZone.forwardLength = 3;
+
+                spatialAudioZone.rightLength = 3;
+
+                spatialAudioZone.upLength = 3;
+                spatialAudioZone.audioAttenuation = i;
+            }
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
