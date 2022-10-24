@@ -153,6 +153,7 @@ cp -PRf $IOS_RTC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
 echo "[Unity CI] copying macOS ..."
 MAC_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
 cp -PRf $MAC_SRC_PATH/MAC/Release/Release/*.bundle "$MAC_DST_PATH"
+cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
 
 # Windows x86-64
 echo "[Unity CI] copying Windows x86-64 ..."

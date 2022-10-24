@@ -40,16 +40,18 @@ namespace Agora.Rtm
             return _rtcClientImpl.Initialize(config);
         }
 
-        public override void Dispose()
+        public override int Release()
         {
             if(_rtcClientImpl == null)
             {
-                return;
+                return ErrorCode;
             }
            
             _rtcClientImpl.Dispose();
             _rtcClientImpl = null;
             instance = null;
+
+            return 0;
         }
 
         public override IStreamChannel CreateStreamChannel(string channelName)
