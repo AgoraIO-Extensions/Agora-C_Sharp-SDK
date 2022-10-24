@@ -60,7 +60,10 @@ namespace Agora.Rtm
             {
                 return null;
             }
-            _rtcClientImpl.CreateStreamChannel(channelName);
+            int ret = _rtcClientImpl.CreateStreamChannel(channelName);
+            if (ret != 0) {
+                return null;
+            }
             return new StreamChannel(this, _rtcClientImpl.GetStreamChannel(), channelName);
         }
     }
