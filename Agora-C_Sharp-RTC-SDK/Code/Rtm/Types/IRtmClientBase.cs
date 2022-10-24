@@ -332,16 +332,18 @@ namespace Agora.Rtm
             channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
             channelName = "";
             channelTopic = "";
-            message ="";
+            message = "";
+            messageLength = 0;
             publisher = "";
         }
 
-        public MessageEvent(RTM_CHANNEL_TYPE channelType, string channelName, string channelTopic, string message, string publisher)
+        public MessageEvent(RTM_CHANNEL_TYPE channelType, string channelName, string channelTopic, string message, uint messageLength, string publisher)
         {
             this.channelType = channelType;
             this.channelName = channelName;
             this.channelTopic = channelTopic;
             this.message = message;
+            this.messageLength = messageLength;
             this.publisher = publisher;
         }
 
@@ -362,8 +364,27 @@ namespace Agora.Rtm
         */
         public string message { set; get; }
         /**
+        * The payload length
+        */
+        public uint messageLength { set; get; }
+        /**
         * The publisher
         */
+        public string publisher { set; get; }
+    };
+
+    internal class MessageEventInternal
+    {
+        public RTM_CHANNEL_TYPE channelType { set; get; }
+
+        public string channelName { set; get; }
+
+        public string channelTopic { set; get; }
+
+        public UInt64 message { set; get; }
+
+        public uint messageLength { set; get; }
+
         public string publisher { set; get; }
     };
 

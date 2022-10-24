@@ -24,34 +24,33 @@ namespace Agora.Rtm
             Dispose(false);
         }
 
-        private void Dispose(bool disposing)
+        private int Dispose(bool disposing)
         {
-            if (_disposed) return;
+            if (_disposed) return 0;
 
             if (disposing)
             {
             }
 
-            Release();
-            _disposed = true;
-        }
+            int ret = _streamChannelImpl.Release(channelName);
 
-        private void Release()
-        {
-            _streamChannelImpl.Release(channelName);
             _streamChannelImpl = null;
             _rtmClientInstance = null;
             channelName = "";
+            _disposed = true;
+
+            return ret;
         }
 
-        public override void Dispose()
+        public override int Release()
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
-                return;
+                return ErrorCode;
             }
-            Dispose(true);
+            int ret = Dispose(true);
             GC.SuppressFinalize(this);
+            return ret;
         }
 
         public override string GetChannelName()
@@ -90,13 +89,23 @@ namespace Agora.Rtm
             return _streamChannelImpl.JoinTopic(channelName, topic, options);
         }
 
-        public override int PublishTopicMessage(string topic, byte[] message, uint length)
+        public override int PublishTopicMessage(string topic, byte[] message)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, length);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, (uint)message.Length);
+        }
+
+        public override int PublishTopicMessage(string topic, string message)
+        {
+            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            {
+                return ErrorCode;
+            }
+            byte[] messageByte = System.Text.Encoding.Default.GetBytes(message);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, messageByte, (uint)messageByte.Length);
         }
 
         public override int LeaveTopic(string topic)

@@ -10,7 +10,9 @@ namespace Agora.Rtm
 
         public abstract int JoinTopic(string topic, JoinTopicOptions options);
 
-        public abstract int PublishTopicMessage(string topic, byte[] message, uint length);
+        public abstract int PublishTopicMessage(string topic, byte[] message);
+
+        public abstract int PublishTopicMessage(string topic, string message);
 
         public abstract int LeaveTopic(string topic);
 
@@ -20,6 +22,6 @@ namespace Agora.Rtm
 
         public abstract int GetSubscribedUserList(string topic, ref UserList users);
 
-        public abstract void Dispose();
+        public abstract int Release();
     }
 }
