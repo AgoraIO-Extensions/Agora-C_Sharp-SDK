@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Agora.Rtc;
 
 namespace ut
@@ -13,7 +13,7 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            EngineEx = RtcEngine.CreateAgoraRtcEngineEx();
+            EngineEx = RtcEngine.CreateAgoraRtcEngineEx(DLLHelper.CreateDebugApiEngine());
         }
 
         [TearDown]
@@ -99,7 +99,6 @@ namespace ut
         #endregion
 
         #region terr
-
 
         [Test]
         public void Test_LeaveChannelEx()

@@ -12,7 +12,7 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
             VideoDeviceManager = Engine.GetVideoDeviceManager();
             Assert.AreEqual(VideoDeviceManager != null, true);
         }
@@ -41,7 +41,6 @@ namespace ut
         #endregion
 
         #region terr
-
         [Test]
         public void Test_EnumerateVideoDevices()
         {

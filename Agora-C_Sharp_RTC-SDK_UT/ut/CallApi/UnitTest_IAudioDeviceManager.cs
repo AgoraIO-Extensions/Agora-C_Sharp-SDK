@@ -11,7 +11,7 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
             AudioDeviceManager = Engine.GetAudioDeviceManager();
             Assert.AreEqual(AudioDeviceManager != null, true);
         }
@@ -21,7 +21,6 @@ namespace ut
         {
             Engine.Dispose();
         }
-
 
         #region custom
         [Test]
@@ -45,8 +44,8 @@ namespace ut
         }
         #endregion
 
-        #region terr
 
+        #region terr
         [Test]
         public void Test_EnumeratePlaybackDevices()
         {

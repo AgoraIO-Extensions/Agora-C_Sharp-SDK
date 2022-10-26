@@ -11,7 +11,7 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
             LocalSpatialAudioEngine = Engine.GetLocalSpatialAudioEngine();
             Assert.AreEqual(LocalSpatialAudioEngine != null, true);
         }
@@ -37,7 +37,6 @@ namespace ut
         #endregion
 
         #region terr
-
         [Test]
         public void Test_SetMaxAudioRecvCount()
         {

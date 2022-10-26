@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Agora.Rtc;
 namespace ut
 {
@@ -11,7 +11,7 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
             MusicContentCenter = Engine.GetMusicContentCenter();
         }
 
@@ -85,7 +85,6 @@ namespace ut
         #endregion
 
         #region terr
-
         [Test]
         public void Test_Initialize()
         {

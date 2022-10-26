@@ -12,7 +12,7 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
             MediaRecorder = Engine.GetMediaRecorder();
         }
 
@@ -23,7 +23,6 @@ namespace ut
         }
 
         #region terr
-
         [Test]
         public void Test_SetMediaRecorderObserver()
         {

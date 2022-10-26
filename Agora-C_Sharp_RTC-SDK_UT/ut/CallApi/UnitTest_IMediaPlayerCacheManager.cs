@@ -12,7 +12,7 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
             MediaPlayerCacheManager = Engine.GetMediaPlayerCacheManager();
             Assert.AreEqual(MediaPlayerCacheManager != null, true);
         }
@@ -38,7 +38,6 @@ namespace ut
         #endregion
 
         #region terr
-
         [Test]
         public void Test_RemoveAllCaches()
         {

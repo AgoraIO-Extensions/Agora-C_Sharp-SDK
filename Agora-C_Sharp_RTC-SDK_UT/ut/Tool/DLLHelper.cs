@@ -8,6 +8,6 @@ namespace ut
         private const string  DebugLibName = "libName";
 
         [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr CreateDebugApiEngine();
+        public  static extern IntPtr CreateDebugApiEngine();
     }
 }
