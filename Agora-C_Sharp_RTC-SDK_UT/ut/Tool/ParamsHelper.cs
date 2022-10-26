@@ -5,6 +5,7 @@ namespace ut
     public class ParamsHelper
     {
 
+        #region init
         public static void InitParam(out string param)
         {
             param = "xiayangqun";
@@ -575,6 +576,12 @@ namespace ut
         //{
         //    param =
         //}
+        #endregion
+
+
+        #region compare
+
+        #endregion
 
     }
 
