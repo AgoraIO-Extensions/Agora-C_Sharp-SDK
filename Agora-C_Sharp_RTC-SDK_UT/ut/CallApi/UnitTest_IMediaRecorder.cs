@@ -12,11 +12,11 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
             RtcEngineContext rtcEngineContext;
             ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = Engine.Initialize(rtcEngineContext);
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
             MediaRecorder = Engine.GetMediaRecorder();
         }
 
@@ -36,7 +36,7 @@ namespace ut
             ParamsHelper.InitParam(out callback);
             var nRet = MediaRecorder.SetMediaRecorderObserver(connection, callback);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = MediaRecorder.StartRecording(connection, config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -58,7 +58,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = MediaRecorder.StopRecording(connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
 

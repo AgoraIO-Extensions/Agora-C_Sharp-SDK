@@ -12,11 +12,11 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
             RtcEngineContext rtcEngineContext;
             ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = Engine.Initialize(rtcEngineContext);
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
             MediaPlayerCacheManager = Engine.GetMediaPlayerCacheManager();
             Assert.AreEqual(MediaPlayerCacheManager != null, true);
         }
@@ -37,7 +37,7 @@ namespace ut
             ParamsHelper.InitParam(out length);
             var nRet = MediaPlayerCacheManager.GetCacheDir(out path, length);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
         #endregion
 
@@ -48,7 +48,7 @@ namespace ut
 
             var nRet = MediaPlayerCacheManager.RemoveAllCaches();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace ut
 
             var nRet = MediaPlayerCacheManager.RemoveOldCache();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace ut
             ParamsHelper.InitParam(out uri);
             var nRet = MediaPlayerCacheManager.RemoveCacheByUri(uri);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace ut
             ParamsHelper.InitParam(out path);
             var nRet = MediaPlayerCacheManager.SetCacheDir(path);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace ut
             ParamsHelper.InitParam(out count);
             var nRet = MediaPlayerCacheManager.SetMaxCacheFileCount(count);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace ut
             ParamsHelper.InitParam(out cacheSize);
             var nRet = MediaPlayerCacheManager.SetMaxCacheFileSize(cacheSize);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace ut
             ParamsHelper.InitParam(out enable);
             var nRet = MediaPlayerCacheManager.EnableAutoRemoveCache(enable);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace ut
 
             var nRet = MediaPlayerCacheManager.GetMaxCacheFileCount();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -125,7 +125,7 @@ namespace ut
 
             var nRet = MediaPlayerCacheManager.GetMaxCacheFileSize();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace ut
 
             var nRet = MediaPlayerCacheManager.GetCacheFileCount();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         #endregion

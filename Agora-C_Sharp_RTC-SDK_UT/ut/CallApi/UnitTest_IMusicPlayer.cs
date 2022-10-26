@@ -12,11 +12,11 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
             RtcEngineContext rtcEngineContext;
             ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = Engine.Initialize(rtcEngineContext);
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
             MusicContentCenter = Engine.GetMusicContentCenter();
             MusicPlayer = MusicContentCenter.CreateMusicPlayer();
 
@@ -39,7 +39,7 @@ namespace ut
             ParamsHelper.InitParam(out duration);
             var nRet = MusicPlayer.GetDuration(ref duration);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
 
@@ -50,7 +50,7 @@ namespace ut
             ParamsHelper.InitParam(out pos);
             var nRet = MusicPlayer.GetPlayPosition(ref pos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -60,7 +60,7 @@ namespace ut
             ParamsHelper.InitParam(out count);
             var nRet = MusicPlayer.GetStreamCount(ref count);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -72,7 +72,7 @@ namespace ut
             ParamsHelper.InitParam(out info);
             var nRet = MusicPlayer.GetStreamInfo(index, ref info);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
 
@@ -83,7 +83,7 @@ namespace ut
             ParamsHelper.InitParam(out muted);
             var nRet = MusicPlayer.GetMute(ref muted);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = MusicPlayer.GetPlayoutVolume(ref volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = MusicPlayer.GetPublishSignalVolume(ref volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace ut
 
             var nRet = MusicPlayer.SetView();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -136,7 +136,7 @@ namespace ut
             ParamsHelper.InitParam(out observer);
             var nRet = MusicPlayer.UnregisterAudioFrameObserver();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -146,7 +146,7 @@ namespace ut
             ParamsHelper.InitParam(out observer);
             var nRet = MusicPlayer.UnregisterMediaPlayerAudioSpectrumObserver();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         #endregion
@@ -163,7 +163,7 @@ namespace ut
             ParamsHelper.InitParam(out startPos);
             var nRet = MusicPlayer.Open(url, startPos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -175,7 +175,7 @@ namespace ut
             ParamsHelper.InitParam(out provider);
             var nRet = MusicPlayer.OpenWithCustomSource(startPos, provider);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -185,7 +185,7 @@ namespace ut
             ParamsHelper.InitParam(out source);
             var nRet = MusicPlayer.OpenWithMediaSource(source);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -194,7 +194,7 @@ namespace ut
 
             var nRet = MusicPlayer.Play();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace ut
 
             var nRet = MusicPlayer.Pause();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -212,7 +212,7 @@ namespace ut
 
             var nRet = MusicPlayer.Stop();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -221,7 +221,7 @@ namespace ut
 
             var nRet = MusicPlayer.Resume();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -231,7 +231,7 @@ namespace ut
             ParamsHelper.InitParam(out newPos);
             var nRet = MusicPlayer.Seek(newPos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace ut
             ParamsHelper.InitParam(out pitch);
             var nRet = MusicPlayer.SetAudioPitch(pitch);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -251,7 +251,7 @@ namespace ut
             ParamsHelper.InitParam(out loopCount);
             var nRet = MusicPlayer.SetLoopCount(loopCount);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -261,7 +261,7 @@ namespace ut
             ParamsHelper.InitParam(out speed);
             var nRet = MusicPlayer.SetPlaybackSpeed(speed);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -271,7 +271,7 @@ namespace ut
             ParamsHelper.InitParam(out index);
             var nRet = MusicPlayer.SelectAudioTrack(index);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -283,7 +283,7 @@ namespace ut
             ParamsHelper.InitParam(out value);
             var nRet = MusicPlayer.SetPlayerOption(key, value);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -295,7 +295,7 @@ namespace ut
             ParamsHelper.InitParam(out value);
             var nRet = MusicPlayer.SetPlayerOption(key, value);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -305,7 +305,7 @@ namespace ut
             ParamsHelper.InitParam(out filename);
             var nRet = MusicPlayer.TakeScreenshot(filename);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -315,7 +315,7 @@ namespace ut
             ParamsHelper.InitParam(out index);
             var nRet = MusicPlayer.SelectInternalSubtitle(index);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -325,7 +325,7 @@ namespace ut
             ParamsHelper.InitParam(out url);
             var nRet = MusicPlayer.SetExternalSubtitle(url);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -334,7 +334,7 @@ namespace ut
 
             var nRet = MusicPlayer.GetState();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -344,7 +344,7 @@ namespace ut
             ParamsHelper.InitParam(out muted);
             var nRet = MusicPlayer.Mute(muted);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -354,7 +354,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = MusicPlayer.AdjustPlayoutVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -364,7 +364,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = MusicPlayer.AdjustPublishSignalVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -374,7 +374,7 @@ namespace ut
             ParamsHelper.InitParam(out renderMode);
             var nRet = MusicPlayer.SetRenderMode(renderMode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -384,7 +384,7 @@ namespace ut
             ParamsHelper.InitParam(out observer);
             var nRet = MusicPlayer.RegisterAudioFrameObserver(observer);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -396,7 +396,7 @@ namespace ut
             ParamsHelper.InitParam(out mode);
             var nRet = MusicPlayer.RegisterAudioFrameObserver(observer, mode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -408,7 +408,7 @@ namespace ut
             ParamsHelper.InitParam(out intervalInMS);
             var nRet = MusicPlayer.RegisterMediaPlayerAudioSpectrumObserver(observer, intervalInMS);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -418,7 +418,7 @@ namespace ut
             ParamsHelper.InitParam(out mode);
             var nRet = MusicPlayer.SetAudioDualMonoMode(mode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -427,7 +427,7 @@ namespace ut
 
             var nRet = MusicPlayer.GetPlayerSdkVersion();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -436,7 +436,7 @@ namespace ut
 
             var nRet = MusicPlayer.GetPlaySrc();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -448,7 +448,7 @@ namespace ut
             ParamsHelper.InitParam(out startPos);
             var nRet = MusicPlayer.OpenWithAgoraCDNSrc(src, startPos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -457,7 +457,7 @@ namespace ut
 
             var nRet = MusicPlayer.GetAgoraCDNLineCount();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -467,7 +467,7 @@ namespace ut
             ParamsHelper.InitParam(out index);
             var nRet = MusicPlayer.SwitchAgoraCDNLineByIndex(index);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -476,7 +476,7 @@ namespace ut
 
             var nRet = MusicPlayer.GetCurrentAgoraCDNIndex();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -486,7 +486,7 @@ namespace ut
             ParamsHelper.InitParam(out enable);
             var nRet = MusicPlayer.EnableAutoSwitchAgoraCDN(enable);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -498,7 +498,7 @@ namespace ut
             ParamsHelper.InitParam(out ts);
             var nRet = MusicPlayer.RenewAgoraCDNSrcToken(token, ts);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -510,7 +510,7 @@ namespace ut
             ParamsHelper.InitParam(out syncPts);
             var nRet = MusicPlayer.SwitchAgoraCDNSrc(src, syncPts);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -522,7 +522,7 @@ namespace ut
             ParamsHelper.InitParam(out syncPts);
             var nRet = MusicPlayer.SwitchSrc(src, syncPts);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -534,7 +534,7 @@ namespace ut
             ParamsHelper.InitParam(out startPos);
             var nRet = MusicPlayer.PreloadSrc(src, startPos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -544,7 +544,7 @@ namespace ut
             ParamsHelper.InitParam(out src);
             var nRet = MusicPlayer.PlayPreloadedSrc(src);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -554,7 +554,7 @@ namespace ut
             ParamsHelper.InitParam(out src);
             var nRet = MusicPlayer.UnloadSrc(src);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -564,7 +564,7 @@ namespace ut
             ParamsHelper.InitParam(out @params);
             var nRet = MusicPlayer.SetSpatialAudioParams(@params);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -576,7 +576,7 @@ namespace ut
             ParamsHelper.InitParam(out gain);
             var nRet = MusicPlayer.SetSoundPositionParams(pan, gain);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
         [Test]
         public void Test_Open2()
@@ -587,7 +587,7 @@ namespace ut
             ParamsHelper.InitParam(out startPos);
             var nRet = MusicPlayer.Open(songCode, startPos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         #endregion
