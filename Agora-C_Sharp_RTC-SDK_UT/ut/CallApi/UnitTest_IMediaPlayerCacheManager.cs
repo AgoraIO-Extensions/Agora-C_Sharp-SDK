@@ -13,6 +13,8 @@ namespace ut
         public void Setup()
         {
             Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
+            RtcEngineContext rtcEngineContext = new RtcEngineContext();
+            Engine.Initialize(rtcEngineContext);
             MediaPlayerCacheManager = Engine.GetMediaPlayerCacheManager();
             Assert.AreEqual(MediaPlayerCacheManager != null, true);
         }

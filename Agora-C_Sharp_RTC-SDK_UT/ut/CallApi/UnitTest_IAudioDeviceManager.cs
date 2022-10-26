@@ -12,6 +12,8 @@ namespace ut
         public void Setup()
         {
             Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
+            RtcEngineContext rtcEngineContext = new RtcEngineContext();
+            Engine.Initialize(rtcEngineContext);
             AudioDeviceManager = Engine.GetAudioDeviceManager();
             Assert.AreEqual(AudioDeviceManager != null, true);
         }

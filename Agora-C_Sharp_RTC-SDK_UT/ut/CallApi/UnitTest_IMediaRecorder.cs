@@ -13,6 +13,8 @@ namespace ut
         public void Setup()
         {
             Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
+            RtcEngineContext rtcEngineContext = new RtcEngineContext();
+            Engine.Initialize(rtcEngineContext);
             MediaRecorder = Engine.GetMediaRecorder();
         }
 
