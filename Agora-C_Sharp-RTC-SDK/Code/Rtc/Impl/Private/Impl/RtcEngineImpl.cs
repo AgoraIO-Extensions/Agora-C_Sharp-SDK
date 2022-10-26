@@ -58,13 +58,13 @@ namespace Agora.Rtc
 
         public event Action<RtcEngineImpl> OnRtcEngineImpleWillDispose;
 
-        private RtcEngineImpl()
+        private RtcEngineImpl(IntPtr nativePtr)
         {
             _apiParam = new IrisCApiParam();
             _apiParam.AllocResult();
 
             //AgoraRtcNative.CreateApiParamsPtr();
-            _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(IntPtr.Zero);
+            _irisRtcEngine = AgoraRtcNative.CreateIrisApiEngine(nativePtr);
 
             _videoDeviceManagerInstance = new VideoDeviceManagerImpl(_irisRtcEngine);
             _audioDeviceManagerInstance = new AudioDeviceManagerImpl(_irisRtcEngine);
@@ -213,9 +213,9 @@ namespace Agora.Rtc
             return _videoFrameBufferManagerPtr;
         }
 
-        public static RtcEngineImpl GetInstance()
+        public static RtcEngineImpl GetInstance(IntPtr nativePtr)
         {
-            return engineInstance ?? (engineInstance = new RtcEngineImpl());
+            return engineInstance ?? (engineInstance = new RtcEngineImpl(nativePtr));
         }
 
         public static RtcEngineImpl Get()
