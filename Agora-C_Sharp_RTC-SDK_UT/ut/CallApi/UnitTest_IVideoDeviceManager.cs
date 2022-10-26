@@ -13,8 +13,10 @@ namespace ut
         public void Setup()
         {
             Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateDebugApiEngine());
-            RtcEngineContext rtcEngineContext = new RtcEngineContext();
-            Engine.Initialize(rtcEngineContext);
+            RtcEngineContext rtcEngineContext;
+            ParamsHelper.InitParam(out rtcEngineContext);
+            int nRet = Engine.Initialize(rtcEngineContext);
+            Assert.AreEqual(nRet, 0);
             VideoDeviceManager = Engine.GetVideoDeviceManager();
             Assert.AreEqual(VideoDeviceManager != null, true);
         }

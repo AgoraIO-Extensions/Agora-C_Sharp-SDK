@@ -14,8 +14,10 @@ namespace ut
         public void Setup()
         {
             EngineEx = RtcEngine.CreateAgoraRtcEngineEx(DLLHelper.CreateDebugApiEngine());
-            RtcEngineContext rtcEngineContext = new RtcEngineContext();
-            EngineEx.Initialize(rtcEngineContext);
+            RtcEngineContext rtcEngineContext;
+            ParamsHelper.InitParam(out rtcEngineContext);
+            int nRet = EngineEx.Initialize(rtcEngineContext);
+            Assert.AreEqual(nRet, 0);
         }
 
         [TearDown]
