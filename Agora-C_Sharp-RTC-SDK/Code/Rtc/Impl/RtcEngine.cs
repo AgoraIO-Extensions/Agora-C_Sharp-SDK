@@ -2585,6 +2585,33 @@ namespace Agora.Rtc
             return _rtcEngineImpl.PullAudioFrame(frame);
         }
 
+        public override int PushCaptureAudioFrame(AudioFrame frame)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PushCaptureAudioFrame(frame);
+        }
+
+        public override int PushReverseAudioFrame(AudioFrame frame)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PushReverseAudioFrame(frame);
+        }
+
+        public override int PushDirectAudioFrame(AudioFrame frame)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PushDirectAudioFrame(frame);
+        }
+
         public override int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
             if (_rtcEngineImpl == null)
@@ -2830,14 +2857,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetDirectExternalAudioSource(enable, localPlayback);
         }
 
-        public override int PushDirectAudioFrame(AudioFrame frame)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.PushDirectAudioFrame(frame);
-        }
+      
 
         public override int SetCloudProxy(CLOUD_PROXY_TYPE proxyType)
         {
@@ -3282,5 +3302,7 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.GetNativeHandler(ref nativeHandler);
         }
+
+     
     }
 }

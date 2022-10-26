@@ -2315,6 +2315,9 @@ namespace Agora.Rtc
         ///
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
 
+        public abstract int PushCaptureAudioFrame(AudioFrame frame);
+        public abstract int PushReverseAudioFrame(AudioFrame frame);
+      
         ///
         /// <summary>
         /// Sets the external audio source parameters.
