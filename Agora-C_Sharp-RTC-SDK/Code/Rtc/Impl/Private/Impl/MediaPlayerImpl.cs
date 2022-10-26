@@ -113,9 +113,9 @@ namespace Agora.Rtc
             GC.SuppressFinalize(this);
         }
 
-        private void CreateEventHandler()
+        private int CreateEventHandler()
         {
-            if (_mediaPlayerEventHandlerHandle.handle != IntPtr.Zero) return;
+            if (_mediaPlayerEventHandlerHandle.handle != IntPtr.Zero) return 0;
 
             AgoraUtil.AllocEventHandlerHandle(ref _mediaPlayerEventHandlerHandle, MediaPlayerSourceObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
@@ -135,6 +135,7 @@ namespace Agora.Rtc
             MediaPlayerSourceObserverNative.CallbackObject = _callbackObject;
 #endif
 
+            return nRet;
         }
 
         private void ReleaseEventHandler()
@@ -164,9 +165,9 @@ namespace Agora.Rtc
 
         }
 
-        private void SetIrisAudioFrameObserver(int playerId)
+        private int SetIrisAudioFrameObserver(int playerId)
         {
-            if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == true) return;
+            if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == true) return 0;
 
             var mediaPlayerAudioFrameObserverHandle = new EventHandlerHandle();
             AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, MediaPlayerAudioFrameObserverNative.OnEvent);
@@ -184,11 +185,12 @@ namespace Agora.Rtc
             }
 
             _mediaPlayerAudioFrameObserverHandles.Add(playerId, mediaPlayerAudioFrameObserverHandle);
+            return nRet;
         }
 
-        private void SetIrisAudioFrameObserverWithMode(int playerId, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        private int SetIrisAudioFrameObserverWithMode(int playerId, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
-            if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == true) return;
+            if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == true) return 0;
 
             var mediaPlayerAudioFrameObserverHandle = new EventHandlerHandle();
             AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, MediaPlayerAudioFrameObserverNative.OnEvent);
@@ -206,11 +208,12 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERAUDIOFRAMEOBSERVER failed: " + nRet);
             }
             _mediaPlayerAudioFrameObserverHandles.Add(playerId, mediaPlayerAudioFrameObserverHandle);
+            return nRet;
         }
 
-        private void UnSetIrisAudioFrameObserver(int playerId)
+        private int UnSetIrisAudioFrameObserver(int playerId)
         {
-            if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == false) return;
+            if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == false) return 0;
 
             var mediaPlayerAudioFrameObserverHandle = _mediaPlayerAudioFrameObserverHandles[playerId];
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioFrameObserverHandle.handle };
@@ -228,6 +231,7 @@ namespace Agora.Rtc
 
             AgoraUtil.FreeEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle);
             _mediaPlayerAudioFrameObserverHandles.Remove(playerId);
+            return nRet;
         }
 
         private int SetMediaPlayerOpenWithCustomSource(int playerId, Int64 startPos)
@@ -338,14 +342,14 @@ namespace Agora.Rtc
             return nRet;
         }
 
-        private void SetIrisAudioSpectrumObserver(int playerId, int intervalInMS)
+        private int SetIrisAudioSpectrumObserver(int playerId, int intervalInMS)
         {
-            if (_mediaPlayerAudioSpectrumObserverHandles.ContainsKey(playerId) == true) return;
+            if (_mediaPlayerAudioSpectrumObserverHandles.ContainsKey(playerId) == true) return 0;
 
             var mediaPlayerAudioSpectrumObserverHandle = new EventHandlerHandle();
             AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioSpectrumObserverHandle, MediaPlayerAudioSpectrumObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioSpectrumObserverHandle.handle };
-            var param = new {playerId, intervalInMS };
+            var param = new { playerId, intervalInMS };
             var json = AgoraJson.ToJson(param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER,
                 json, (uint)json.Length,
@@ -357,11 +361,13 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAPLAYER_REGISTERMEDIAPLAYERAUDIOSPECTRUMOBSERVER failed: " + nRet);
             }
             _mediaPlayerAudioSpectrumObserverHandles.Add(playerId, mediaPlayerAudioSpectrumObserverHandle);
+
+            return nRet;
         }
 
-        private void UnSetIrisAudioSpectrumObserver(int playerId)
+        private int UnSetIrisAudioSpectrumObserver(int playerId)
         {
-            if (_mediaPlayerAudioSpectrumObserverHandles.ContainsKey(playerId) == false) return;
+            if (_mediaPlayerAudioSpectrumObserverHandles.ContainsKey(playerId) == false) return 0;
 
             var _mediaPlayerAudioSpectrumObserverHandle = _mediaPlayerAudioSpectrumObserverHandles[playerId];
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerAudioSpectrumObserverHandle.handle };
@@ -379,11 +385,12 @@ namespace Agora.Rtc
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaPlayerAudioSpectrumObserverHandle);
             _mediaPlayerAudioSpectrumObserverHandles.Remove(playerId);
+            return nRet;
         }
 
-        public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
+        public int InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
         {
-            CreateEventHandler();
+            int ret = CreateEventHandler();
             if (engineEventHandler == null)
             {
                 MediaPlayerSourceObserverNative.RemoveSourceObserver(playerId);
@@ -392,45 +399,52 @@ namespace Agora.Rtc
             {
                 MediaPlayerSourceObserverNative.AddSourceObserver(playerId, engineEventHandler);
             }
+            return ret;
         }
 
-        public void RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer)
+        public int RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer)
         {
-            UnSetIrisAudioFrameObserver(playerId);
+            int ret = UnSetIrisAudioFrameObserver(playerId);
             MediaPlayerAudioFrameObserverNative.RemoveAudioFrameObserver(playerId);
 
-            SetIrisAudioFrameObserver(playerId);
+            ret = SetIrisAudioFrameObserver(playerId);
             MediaPlayerAudioFrameObserverNative.AddAudioFrameObserver(playerId, observer);
+            return ret;
         }
 
-        public void RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public int RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
-            UnSetIrisAudioFrameObserver(playerId);
+            int ret = UnSetIrisAudioFrameObserver(playerId);
             MediaPlayerAudioFrameObserverNative.RemoveAudioFrameObserver(playerId);
 
-            SetIrisAudioFrameObserverWithMode(playerId, mode);
+            ret = SetIrisAudioFrameObserverWithMode(playerId, mode);
             MediaPlayerAudioFrameObserverNative.AddAudioFrameObserver(playerId, observer);
+
+            return ret;
         }
 
-        public void UnregisterAudioFrameObserver(int playerId)
+        public int UnregisterAudioFrameObserver(int playerId)
         {
-            UnSetIrisAudioFrameObserver(playerId);
+            int ret= UnSetIrisAudioFrameObserver(playerId);
             MediaPlayerAudioFrameObserverNative.RemoveAudioFrameObserver(playerId);
+            return ret;
         }
 
-        public void RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
+        public int RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
         {
-            UnSetIrisAudioSpectrumObserver(playerId);
+            int ret= UnSetIrisAudioSpectrumObserver(playerId);
             MediaPlayerAudioSpectrumObserverNative.RemoveAudioSpectrumObserver(playerId);
 
-            SetIrisAudioSpectrumObserver(playerId, intervalInMS);
+            ret = SetIrisAudioSpectrumObserver(playerId, intervalInMS);
             MediaPlayerAudioSpectrumObserverNative.AddAudioSpectrumObserver(playerId, observer);
+            return ret;
         }
 
-        public void UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
+        public int UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
         {
-            UnSetIrisAudioSpectrumObserver(playerId);
+            int ret= UnSetIrisAudioSpectrumObserver(playerId);
             MediaPlayerAudioSpectrumObserverNative.RemoveAudioSpectrumObserver(playerId);
+            return ret;
         }
 
         public int CreateMediaPlayer()
@@ -448,9 +462,10 @@ namespace Agora.Rtc
                 playerId
             };
             string jsonParam = AgoraJson.ToJson(param);
-            return AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_RTCENGINE_DESTROYMEDIAPLAYER,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int Open(int playerId, string url, Int64 startPos)
@@ -512,7 +527,7 @@ namespace Agora.Rtc
         {
             var param = new
             {
-                playerId, 
+                playerId,
                 pan,
                 gain,
             };

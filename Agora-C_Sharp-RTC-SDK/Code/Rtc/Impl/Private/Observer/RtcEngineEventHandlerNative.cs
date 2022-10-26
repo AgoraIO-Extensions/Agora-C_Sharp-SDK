@@ -212,6 +212,56 @@ namespace Agora.Rtc
 #endif
                     break;
 
+                case "RtcEngineEventHandler_onUserMuteVideoEx":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnUserMuteVideo(
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (bool)AgoraJson.GetData<bool>(jsonData, "muted")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+
+                case "RtcEngineEventHandler_onUserEnableVideoEx":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnUserEnableVideo(
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (bool)AgoraJson.GetData<bool>(jsonData, "enabled")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+
+                case "RtcEngineEventHandler_onUserEnableLocalVideoEx":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnUserEnableLocalVideo(
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (bool)AgoraJson.GetData<bool>(jsonData, "enabled")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 case "RtcEngineEventHandler_onLastmileQuality":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>

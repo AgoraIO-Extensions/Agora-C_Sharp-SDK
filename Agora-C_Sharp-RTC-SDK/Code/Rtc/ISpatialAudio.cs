@@ -110,7 +110,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward);
+        public abstract int UpdatePlayerPositionInfo(int playerId, RemoteVoicePositionInfo positionInfo);
 
         ///
         /// @ignore
@@ -167,12 +167,12 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int UpdateRemotePosition(uint uid, float[] position, float[] forward);
+        public abstract int UpdateRemotePosition(uint uid, RemoteVoicePositionInfo posInfo);
 
         ///
         /// @ignore
         ///
-        public abstract int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection);
+        public abstract int UpdateRemotePositionEx(uint uid, RemoteVoicePositionInfo posInfo, RtcConnection connection);
 
         ///
         /// <summary>

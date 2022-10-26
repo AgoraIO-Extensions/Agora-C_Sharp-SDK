@@ -36,7 +36,7 @@ namespace Agora.Rtc
     //        }
     //        return _cloudSpatialAudioEngineImpl.GetCloudSpatialAudioEventHandler();
     //    }
-        
+
     //    public override void InitEventHandler(ICloudSpatialAudioEventHandler engineEventHandler)
     //    {
     //        if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
@@ -176,7 +176,7 @@ namespace Agora.Rtc
     //        }
     //        return _cloudSpatialAudioEngineImpl.SetTeamId(teamId);
     //    }
-  
+
     //    public override int SetAudioRangeMode(AUDIO_RANGE_MODE_TYPE rangeMode)
     //    {
     //        if (_rtcEngineInstance == null || _cloudSpatialAudioEngineImpl == null)
@@ -327,13 +327,13 @@ namespace Agora.Rtc
             return _localSpatialAudioEngineImpl.UpdateSelfPositionEx(position, axisForward, axisRight, axisUp, connection);
         }
 
-        public override int UpdatePlayerPositionInfo(int playerId, float[] position, float[] forward)
+        public override int UpdatePlayerPositionInfo(int playerId, RemoteVoicePositionInfo positionInfo)
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _localSpatialAudioEngineImpl.UpdatePlayerPositionInfo(playerId, position, forward);
+            return _localSpatialAudioEngineImpl.UpdatePlayerPositionInfo(playerId, positionInfo);
         }
 
         public override int SetParameters(string @params)
@@ -363,22 +363,22 @@ namespace Agora.Rtc
             return _localSpatialAudioEngineImpl.MuteAllRemoteAudioStreams(mute);
         }
 
-        public override int UpdateRemotePosition(uint uid, float[] position, float[] forward)
+        public override int UpdateRemotePosition(uint uid, RemoteVoicePositionInfo posInfo)
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _localSpatialAudioEngineImpl.UpdateRemotePosition(uid, position, forward);
+            return _localSpatialAudioEngineImpl.UpdateRemotePosition(uid, posInfo);
         }
 
-        public override int UpdateRemotePositionEx(uint uid, float[] position, float[] forward, RtcConnection connection)
+        public override int UpdateRemotePositionEx(uint uid, RemoteVoicePositionInfo posInfo, RtcConnection connection)
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _localSpatialAudioEngineImpl.UpdateRemotePositionEx(uid, position, forward, connection);
+            return _localSpatialAudioEngineImpl.UpdateRemotePositionEx(uid, posInfo, connection);
         }
 
         public override int RemoveRemotePosition(uint uid)
@@ -463,6 +463,6 @@ namespace Agora.Rtc
             instance = null;
         }
 
-      
+
     }
 }

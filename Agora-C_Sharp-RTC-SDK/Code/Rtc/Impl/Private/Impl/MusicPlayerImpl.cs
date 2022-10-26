@@ -45,35 +45,35 @@ namespace Agora.Rtc
             Dispose(true);
         }
 
-        public void InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
+        public int InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
         {
-            _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
+            return _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-        public void RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer)
+        public int RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer)
         {
-            _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
         }
 
-        public void RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public int RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
-            _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
         }
 
-        public void UnregisterAudioFrameObserver(int playerId)
+        public int UnregisterAudioFrameObserver(int playerId)
         {
-            _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
+            return _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
         }
 
 
-        public void RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
+        public int RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
         {
-            _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
+            return _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
         }
 
-        public void UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
+        public int UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
         {
-            _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
+            return _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
         }
 
         //normal feature

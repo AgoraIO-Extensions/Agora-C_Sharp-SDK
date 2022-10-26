@@ -8,6 +8,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETAPPTYPE = "RtcEngine_setAppType";
         internal const string FUNC_RTCENGINE_SETPARAMETERS = "RtcEngine_setParameters";
         internal const string FUNC_RTCENGINE_RELEASESCREENCAPTURESOURCES = "RtcEngine_releaseScreenCaptureSources";
+        internal const string FUNC_RTCENGINE_GETNATIVEHANDLE = "RtcEngine_getNativeHandle";
 
         internal const string FUNC_RTCENGINE_RELEASE = "RtcEngine_release";
         internal const string FUNC_RTCENGINE_INITIALIZE = "RtcEngine_initialize";
@@ -400,6 +401,8 @@ namespace Agora.Rtc
         #endregion
 
         #region IAudioDeviceManager start
+        internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEFAULTDEVICE = "AudioDeviceManager_getPlaybackDefaultDevice";
+        internal const string FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEAFULTDEVICE = "AudioDeviceManager_getRecordingDefaultDevice";
 
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATEPLAYBACKDEVICES = "AudioDeviceManager_enumeratePlaybackDevices";
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATERECORDINGDEVICES = "AudioDeviceManager_enumerateRecordingDevices";

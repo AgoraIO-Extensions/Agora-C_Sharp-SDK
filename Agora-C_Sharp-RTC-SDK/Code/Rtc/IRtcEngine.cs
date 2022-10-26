@@ -286,7 +286,7 @@ namespace Agora.Rtc
         ///
         /// <param name="engineEventHandler"> Callback events to be added. </param>
         ///
-        public abstract void InitEventHandler(IRtcEngineEventHandler engineEventHandler);
+        public abstract int InitEventHandler(IRtcEngineEventHandler engineEventHandler);
         #endregion
 
         #region Audio management
@@ -949,7 +949,7 @@ namespace Agora.Rtc
         ///
         /// <param name="mediaPlayer">  IMediaPlayer object.</param>
         ///
-        public abstract void DestroyMediaPlayer(IMediaPlayer mediaPlayer);
+        public abstract int DestroyMediaPlayer(IMediaPlayer mediaPlayer);
         #endregion
 
         #region Audio pre-process and post-process
@@ -2315,6 +2315,9 @@ namespace Agora.Rtc
         ///
         public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
 
+        public abstract int PushCaptureAudioFrame(AudioFrame frame);
+        public abstract int PushReverseAudioFrame(AudioFrame frame);
+      
         ///
         /// <summary>
         /// Sets the external audio source parameters.
@@ -2406,14 +2409,14 @@ namespace Agora.Rtc
         ///
         /// <param name="mode"> The video data callback mode. See OBSERVER_MODE .</param>
         ///
-        public abstract void RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         ///
         /// <summary>
         /// Unregisters an audio frame observer.
         /// </summary>
         ///
-        public abstract void UnRegisterAudioFrameObserver();
+        public abstract int UnRegisterAudioFrameObserver();
 
         ///
         /// <summary>
@@ -2501,14 +2504,14 @@ namespace Agora.Rtc
         ///
         /// <param name="observer"> The encoded audio observer. See IAudioEncodedFrameObserver .</param>
         ///
-        public abstract void RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer);
+        public abstract int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer);
 
         ///
         /// <summary>
         /// Unregisters the encoded audio frame observer.
         /// </summary>
         ///
-        public abstract void UnRegisterAudioEncodedFrameObserver();
+        public abstract int UnRegisterAudioEncodedFrameObserver();
         #endregion
 
         #region Audio spectrum
@@ -2547,7 +2550,7 @@ namespace Agora.Rtc
         ///
         /// <param name="observer"> The Audio spectrum observer. See IAudioSpectrumObserver .</param>
         ///
-        public abstract void RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
+        public abstract int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
 
         ///
         /// <summary>
@@ -2555,7 +2558,7 @@ namespace Agora.Rtc
         /// After calling RegisterAudioSpectrumObserver , if you want to disable audio spectrum monitoring, you can call this method.You can call this method either before or after joining a channel.
         /// </summary>
         ///
-        public abstract void UnregisterAudioSpectrumObserver();
+        public abstract int UnregisterAudioSpectrumObserver();
         #endregion
 
         #region External video source
@@ -2646,14 +2649,14 @@ namespace Agora.Rtc
         ///
         /// <param name="mode"> The video data callback mode. See OBSERVER_MODE .</param>
         ///
-        public abstract void RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         ///
         /// <summary>
         /// Unregisters the video frame observer.
         /// </summary>
         ///
-        public abstract void UnRegisterVideoFrameObserver();
+        public abstract int UnRegisterVideoFrameObserver();
 
         ///
         /// <summary>
@@ -2665,14 +2668,14 @@ namespace Agora.Rtc
         ///
         /// <param name="mode"> The video data callback mode. See OBSERVER_MODE .</param>
         ///
-        public abstract void RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract int RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         ///
         /// <summary>
         /// Unregisters a receiver object for the encoded video image.
         /// </summary>
         ///
-        public abstract void UnRegisterVideoEncodedFrameObserver();
+        public abstract int UnRegisterVideoEncodedFrameObserver();
         #endregion
 
         #region Extension
@@ -2793,14 +2796,14 @@ namespace Agora.Rtc
         ///
         /// <param name="type"> The metadata type. The SDK currently only supports VIDEO_METADATA. See METADATA_TYPE .</param>
         ///
-        public abstract void RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
+        public abstract int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
 
         ///
         /// <summary>
         /// Unregisters the specified metadata observer.
         /// </summary>
         ///
-        public abstract void UnregisterMediaMetadataObserver();
+        public abstract int UnregisterMediaMetadataObserver();
         #endregion
 
         #region Audio recording
@@ -3891,6 +3894,9 @@ namespace Agora.Rtc
         public abstract IMediaRecorder GetMediaRecorder();
 
         public abstract long GetCurrentMonotonicTimeInMs();
+
+
+        public abstract int GetNativeHandler(ref IntPtr nativeHandler);
     };
 
     /* class_irtcengineex : irtcengine */
@@ -3936,7 +3942,7 @@ namespace Agora.Rtc
         ///
         public abstract int LeaveChannelEx(RtcConnection connection);
 
-        public abstract int LeaveChannelEx(RtcConnection connection,LeaveChannelOptions options);
+        public abstract int LeaveChannelEx(RtcConnection connection, LeaveChannelOptions options);
         #endregion
 
         ///
@@ -4089,7 +4095,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int EnableLoopbackRecordingEx(bool enabled, RtcConnection connection);
+        public abstract int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName);
 
         ///
         /// <summary>
@@ -4364,6 +4370,7 @@ namespace Agora.Rtc
         public abstract int StopChannelMediaRelayEx(RtcConnection connection);
         public abstract int PauseAllChannelMediaRelayEx(RtcConnection connection);
         public abstract int ResumeAllChannelMediaRelayEx(RtcConnection connection);
+
 
     }
 }
