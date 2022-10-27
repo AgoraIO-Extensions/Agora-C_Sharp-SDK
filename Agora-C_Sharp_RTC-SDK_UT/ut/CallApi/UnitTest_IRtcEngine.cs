@@ -1308,7 +1308,7 @@ namespace ut
             ParamsHelper.InitParam(out @params);
             var nRet = Engine.SetRemoteUserSpatialAudioParams(uid, @params);
 
-            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
