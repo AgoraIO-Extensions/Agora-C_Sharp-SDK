@@ -241,6 +241,25 @@ namespace ut
             Assert.AreEqual(0, nRet.Length);
         }
 
+        [Test]
+        public void Test_CreateCustomVideoTrack()
+        {
+
+            var nRet = Engine.CreateCustomVideoTrack();
+
+            Assert.AreEqual(1, nRet);
+        }
+
+        [Test]
+        public void Test_CreateCustomEncodedVideoTrack()
+        {
+            SenderOptions sender_option;
+            ParamsHelper.InitParam(out sender_option);
+            var nRet = Engine.CreateCustomEncodedVideoTrack(sender_option);
+
+            Assert.AreEqual(1, nRet);
+        }
+
 #endregion
 
 #region terr
@@ -1939,25 +1958,6 @@ namespace ut
             CameraCapturerConfiguration config;
             ParamsHelper.InitParam(out config);
             var nRet = Engine.SetCameraCapturerConfiguration(config);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_CreateCustomVideoTrack()
-        {
-
-            var nRet = Engine.CreateCustomVideoTrack();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_CreateCustomEncodedVideoTrack()
-        {
-            SenderOptions sender_option;
-            ParamsHelper.InitParam(out sender_option);
-            var nRet = Engine.CreateCustomEncodedVideoTrack(sender_option);
 
             Assert.AreEqual(0, nRet);
         }
