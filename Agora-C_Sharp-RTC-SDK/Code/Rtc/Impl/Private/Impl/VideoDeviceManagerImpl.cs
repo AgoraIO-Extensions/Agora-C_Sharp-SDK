@@ -113,7 +113,7 @@ namespace Agora.Rtc
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETCAPABILITY,
-               jsonParam, 0, IntPtr.Zero, 0, ref _apiParam);
+               jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
 
 
             if (ret == 0)
@@ -137,7 +137,7 @@ namespace Agora.Rtc
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                AgoraApiType.FUNC_VIDEODEVICEMANAGER_NUMBEROFCAPABILITIES,
-               jsonParam, 0, IntPtr.Zero, 0, ref _apiParam);
+               jsonParam,  (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
     }
