@@ -107,7 +107,7 @@ namespace ut
         [Test]
         public void Test_RegisterPlayerSourceObserver()
         {
-            IMusicPlayerSourceObserver observer;
+            IMediaPlayerSourceObserver observer;
             ParamsHelper.InitParam(out observer);
             MusicPlayer.InitEventHandler(observer);
         }
@@ -118,7 +118,7 @@ namespace ut
         [Test]
         public void Test_UnregisterAudioFrameObserver()
         {
-            IMusicPlayerAudioFrameObserver observer;
+            IMediaPlayerAudioFrameObserver observer;
             ParamsHelper.InitParam(out observer);
             var nRet = MusicPlayer.UnregisterAudioFrameObserver();
 
@@ -126,11 +126,11 @@ namespace ut
         }
 
         [Test]
-        public void Test_UnregisterMusicPlayerAudioSpectrumObserver()
+        public void Test_UnregisterMediaPlayerAudioSpectrumObserver()
         {
             IAudioSpectrumObserver observer;
             ParamsHelper.InitParam(out observer);
-            var nRet = MusicPlayer.UnregisterMusicPlayerAudioSpectrumObserver();
+            var nRet = MusicPlayer.UnregisterMediaPlayerAudioSpectrumObserver();
 
             Assert.AreEqual(0, nRet);
         }
@@ -165,15 +165,6 @@ namespace ut
 #endregion
 
 #region terr
-        [Test]
-        public void Test_GetMediaPlayerId()
-        {
-
-            var nRet = MusicPlayer.GetMediaPlayerId();
-
-            Assert.AreEqual(0, nRet);
-        }
-
         [Test]
         public void Test_Open()
         {
@@ -418,16 +409,6 @@ namespace ut
             int intervalInMS;
             ParamsHelper.InitParam(out intervalInMS);
             var nRet = MusicPlayer.RegisterMediaPlayerAudioSpectrumObserver(observer, intervalInMS);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_UnregisterMediaPlayerAudioSpectrumObserver()
-        {
-            IAudioSpectrumObserver observer;
-            ParamsHelper.InitParam(out observer);
-            var nRet = MusicPlayer.UnregisterMediaPlayerAudioSpectrumObserver(observer);
 
             Assert.AreEqual(0, nRet);
         }
