@@ -107,7 +107,7 @@ namespace Agora.Rtc
         WARN_ADM_WIN_CORE_IMPROPER_CAPTURE_RELEASE = 1324,
     };
 
-    enum ERROR_CODE_TYPE
+    public enum ERROR_CODE_TYPE
     {
         ERR_OK = 0,
         ERR_FAILED = 1,

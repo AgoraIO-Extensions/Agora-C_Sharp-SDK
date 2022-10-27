@@ -32,7 +32,7 @@ namespace ut
 
             string nRet = Engine.GetErrorDescription(code);
 
-            Assert.AreEqual(nRet, "error");
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace ut
 
             string nRet = Engine.GetVersion(ref build);
 
-            Assert.AreEqual(nRet, "4.1.0");
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
@@ -391,7 +391,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.EnableMultiCamera(enabled, config);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -1294,7 +1294,7 @@ namespace ut
             ParamsHelper.InitParam(out @params);
             var nRet = Engine.SetRemoteUserSpatialAudioParams(uid, @params);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -1974,7 +1974,7 @@ namespace ut
 
             var nRet = Engine.SwitchCamera();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -1983,7 +1983,7 @@ namespace ut
 
             var nRet = Engine.IsCameraZoomSupported();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -1992,7 +1992,7 @@ namespace ut
 
             var nRet = Engine.IsCameraFaceDetectSupported();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2001,7 +2001,7 @@ namespace ut
 
             var nRet = Engine.IsCameraTorchSupported();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2019,7 +2019,7 @@ namespace ut
 
             var nRet = Engine.IsCameraAutoFocusFaceModeSupported();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2029,7 +2029,7 @@ namespace ut
             ParamsHelper.InitParam(out factor);
             var nRet = Engine.SetCameraZoomFactor(factor);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2039,7 +2039,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableFaceDetection(enabled);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2048,7 +2048,7 @@ namespace ut
 
             var nRet = Engine.GetCameraMaxZoomFactor();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2060,7 +2060,7 @@ namespace ut
             ParamsHelper.InitParam(out positionY);
             var nRet = Engine.SetCameraFocusPositionInPreview(positionX, positionY);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2070,7 +2070,7 @@ namespace ut
             ParamsHelper.InitParam(out isOn);
             var nRet = Engine.SetCameraTorchOn(isOn);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2080,7 +2080,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.SetCameraAutoFocusFaceModeEnabled(enabled);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2089,7 +2089,7 @@ namespace ut
 
             var nRet = Engine.IsCameraExposurePositionSupported();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2101,7 +2101,7 @@ namespace ut
             ParamsHelper.InitParam(out positionYinView);
             var nRet = Engine.SetCameraExposurePosition(positionXinView, positionYinView);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2110,7 +2110,7 @@ namespace ut
 
             var nRet = Engine.IsCameraAutoExposureFaceModeSupported();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2130,7 +2130,7 @@ namespace ut
             ParamsHelper.InitParam(out defaultToSpeaker);
             var nRet = Engine.SetDefaultAudioRouteToSpeakerphone(defaultToSpeaker);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2140,7 +2140,7 @@ namespace ut
             ParamsHelper.InitParam(out speakerOn);
             var nRet = Engine.SetEnableSpeakerphone(speakerOn);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2149,7 +2149,7 @@ namespace ut
 
             var nRet = Engine.IsSpeakerphoneEnabled();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2173,7 +2173,7 @@ namespace ut
             ParamsHelper.InitParam(out restriction);
             var nRet = Engine.SetAudioSessionOperationRestriction(restriction);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2265,7 +2265,7 @@ namespace ut
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.StartScreenCapture(captureParams);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2275,7 +2275,7 @@ namespace ut
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.UpdateScreenCapture(captureParams);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
