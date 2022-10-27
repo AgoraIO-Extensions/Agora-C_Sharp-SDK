@@ -147,7 +147,7 @@ namespace ut
             ParamsHelper.InitParam(out deviceInfo);
             var nRet = Engine.GetAudioDeviceInfo(ref deviceInfo);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -225,6 +225,20 @@ namespace ut
             var nRet = Engine.GetExtensionProperty(provider, extension, extensionInfo, key, ref value, buf_len);
 
             Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetScreenCaptureSources()
+        {
+            SIZE thumbSize;
+            ParamsHelper.InitParam(out thumbSize);
+            SIZE iconSize;
+            ParamsHelper.InitParam(out iconSize);
+            bool includeScreen;
+            ParamsHelper.InitParam(out includeScreen);
+            var nRet = Engine.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
+
+            Assert.AreEqual(0, nRet.Length);
         }
 
 #endregion
@@ -2010,7 +2024,7 @@ namespace ut
 
             var nRet = Engine.IsCameraFocusSupported();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2120,7 +2134,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.SetCameraAutoExposureFaceModeEnabled(enabled);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2150,20 +2164,6 @@ namespace ut
             var nRet = Engine.IsSpeakerphoneEnabled();
 
             Assert.AreEqual(false, nRet);
-        }
-
-        [Test]
-        public void Test_GetScreenCaptureSources()
-        {
-            SIZE thumbSize;
-            ParamsHelper.InitParam(out thumbSize);
-            SIZE iconSize;
-            ParamsHelper.InitParam(out iconSize);
-            bool includeScreen;
-            ParamsHelper.InitParam(out includeScreen);
-            var nRet = Engine.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
-
-            Assert.AreEqual(0, nRet.Length);
         }
 
         [Test]
