@@ -4267,12 +4267,12 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams param, RtcConnection connection)
+        public int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams @params, RtcConnection connection)
         {
             var param1 = new
             {
                 uid,
-                param,
+                @params,
                 connection
             };
             var json = AgoraJson.ToJson(param1);
@@ -4791,15 +4791,15 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams param)
+        public int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams @params)
         {
             var param1 = new
             {
                 uid,
-                param
+                @params
             };
 
-            var json = AgoraJson.ToJson(param);
+            var json = AgoraJson.ToJson(param1);
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETREMOTEUSERSPATIALAUDIOPARAMS,
                 json, (UInt32)json.Length,

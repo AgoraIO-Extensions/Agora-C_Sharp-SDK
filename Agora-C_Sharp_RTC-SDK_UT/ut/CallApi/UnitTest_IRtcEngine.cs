@@ -2163,7 +2163,7 @@ namespace ut
             ParamsHelper.InitParam(out includeScreen);
             var nRet = Engine.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(0, nRet.Length);
         }
 
         [Test]

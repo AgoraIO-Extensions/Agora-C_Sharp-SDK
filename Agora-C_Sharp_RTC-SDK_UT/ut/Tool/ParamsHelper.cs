@@ -183,6 +183,7 @@ namespace ut
         public static void InitParam(out SpatialAudioParams param)
         {
             param = new SpatialAudioParams();
+            param.enable_air_absorb.SetValue(true);
         }
         public static void InitParam(out VOICE_BEAUTIFIER_PRESET param)
         {
