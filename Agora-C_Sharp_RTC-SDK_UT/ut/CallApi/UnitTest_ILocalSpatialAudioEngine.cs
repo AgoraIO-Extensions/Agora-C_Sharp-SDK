@@ -11,19 +11,21 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
+            RtcEngineContext rtcEngineContext;
+            ParamsHelper.InitParam(out rtcEngineContext);
+            int nRet = Engine.Initialize(rtcEngineContext);
+            Assert.AreEqual(0, nRet);
             LocalSpatialAudioEngine = Engine.GetLocalSpatialAudioEngine();
             Assert.AreEqual(LocalSpatialAudioEngine != null, true);
+            nRet = LocalSpatialAudioEngine.Initialize();
+            Assert.AreEqual(0, nRet);
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Engine.Dispose();
-        }
+        public void TearDown() { Engine.Dispose(); }
 
-        #region  custom
-
+#region custom
 
         [Test]
         public void Test_Initialize()
@@ -31,13 +33,12 @@ namespace ut
 
             var nRet = LocalSpatialAudioEngine.Initialize();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
-        #endregion
+#endregion
 
-        #region terr
-
+#region terr
         [Test]
         public void Test_SetMaxAudioRecvCount()
         {
@@ -45,7 +46,7 @@ namespace ut
             ParamsHelper.InitParam(out maxCount);
             var nRet = LocalSpatialAudioEngine.SetMaxAudioRecvCount(maxCount);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace ut
             ParamsHelper.InitParam(out range);
             var nRet = LocalSpatialAudioEngine.SetAudioRecvRange(range);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace ut
             ParamsHelper.InitParam(out unit);
             var nRet = LocalSpatialAudioEngine.SetDistanceUnit(unit);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -81,7 +82,7 @@ namespace ut
             ParamsHelper.InitParam(out axisUp);
             var nRet = LocalSpatialAudioEngine.UpdateSelfPosition(position, axisForward, axisRight, axisUp);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -99,7 +100,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = LocalSpatialAudioEngine.UpdateSelfPositionEx(position, axisForward, axisRight, axisUp, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -111,7 +112,7 @@ namespace ut
             ParamsHelper.InitParam(out positionInfo);
             var nRet = LocalSpatialAudioEngine.UpdatePlayerPositionInfo(playerId, positionInfo);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -121,7 +122,7 @@ namespace ut
             ParamsHelper.InitParam(out @params);
             var nRet = LocalSpatialAudioEngine.SetParameters(@params);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -131,7 +132,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = LocalSpatialAudioEngine.MuteLocalAudioStream(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -141,7 +142,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = LocalSpatialAudioEngine.MuteAllRemoteAudioStreams(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -153,7 +154,7 @@ namespace ut
             ParamsHelper.InitParam(out zoneCount);
             var nRet = LocalSpatialAudioEngine.SetZones(zones, zoneCount);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -167,7 +168,7 @@ namespace ut
             ParamsHelper.InitParam(out forceSet);
             var nRet = LocalSpatialAudioEngine.SetPlayerAttenuation(playerId, attenuation, forceSet);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -179,7 +180,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = LocalSpatialAudioEngine.MuteRemoteAudioStream(uid, mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
         [Test]
         public void Test_UpdateRemotePosition()
@@ -190,7 +191,7 @@ namespace ut
             ParamsHelper.InitParam(out posInfo);
             var nRet = LocalSpatialAudioEngine.UpdateRemotePosition(uid, posInfo);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -204,7 +205,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = LocalSpatialAudioEngine.UpdateRemotePositionEx(uid, posInfo, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -214,7 +215,7 @@ namespace ut
             ParamsHelper.InitParam(out uid);
             var nRet = LocalSpatialAudioEngine.RemoveRemotePosition(uid);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -226,7 +227,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = LocalSpatialAudioEngine.RemoveRemotePositionEx(uid, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -235,7 +236,7 @@ namespace ut
 
             var nRet = LocalSpatialAudioEngine.ClearRemotePositions();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -245,7 +246,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = LocalSpatialAudioEngine.ClearRemotePositionsEx(connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -259,10 +260,9 @@ namespace ut
             ParamsHelper.InitParam(out forceSet);
             var nRet = LocalSpatialAudioEngine.SetRemoteAudioAttenuation(uid, attenuation, forceSet);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
-        #endregion
-
+#endregion
     }
 }

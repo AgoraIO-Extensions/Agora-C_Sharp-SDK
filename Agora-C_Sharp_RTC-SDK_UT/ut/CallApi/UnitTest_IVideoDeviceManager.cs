@@ -8,22 +8,22 @@ namespace ut
         public IRtcEngine Engine;
         public IVideoDeviceManager VideoDeviceManager;
 
-
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
+            RtcEngineContext rtcEngineContext;
+            ParamsHelper.InitParam(out rtcEngineContext);
+            int nRet = Engine.Initialize(rtcEngineContext);
+            Assert.AreEqual(0, nRet);
             VideoDeviceManager = Engine.GetVideoDeviceManager();
             Assert.AreEqual(VideoDeviceManager != null, true);
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Engine.Dispose();
-        }
+        public void TearDown() { Engine.Dispose(); }
 
-        #region 
+#region
 
         [Test]
         public void Test_GetCapability()
@@ -36,11 +36,8 @@ namespace ut
             ParamsHelper.InitParam(out capability);
             var nRet = VideoDeviceManager.GetCapability(deviceIdUTF8, deviceCapabilityNumber, out capability);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
-        #endregion
-
-        #region terr
 
         [Test]
         public void Test_EnumerateVideoDevices()
@@ -48,9 +45,11 @@ namespace ut
 
             var nRet = VideoDeviceManager.EnumerateVideoDevices();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet.Length);
         }
+#endregion
 
+#region terr
         [Test]
         public void Test_SetDevice()
         {
@@ -58,7 +57,7 @@ namespace ut
             ParamsHelper.InitParam(out deviceIdUTF8);
             var nRet = VideoDeviceManager.SetDevice(deviceIdUTF8);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -68,7 +67,7 @@ namespace ut
             ParamsHelper.InitParam(out deviceIdUTF8);
             var nRet = VideoDeviceManager.GetDevice(ref deviceIdUTF8);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -78,7 +77,7 @@ namespace ut
             ParamsHelper.InitParam(out deviceIdUTF8);
             var nRet = VideoDeviceManager.NumberOfCapabilities(deviceIdUTF8);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -88,7 +87,7 @@ namespace ut
             ParamsHelper.InitParam(out hwnd);
             var nRet = VideoDeviceManager.StartDeviceTest(hwnd);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -97,14 +96,9 @@ namespace ut
 
             var nRet = VideoDeviceManager.StopDeviceTest();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
-
-
-        #endregion
-
-
-
+#endregion
     }
 }
