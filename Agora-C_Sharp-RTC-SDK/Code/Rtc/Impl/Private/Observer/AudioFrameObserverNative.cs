@@ -283,6 +283,14 @@ namespace Agora.Rtc
             }
         }
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
+#endif
+        internal static IrisAudioParams GetEarMonitoringAudioParams()
+        {
+            return LocalAudioFrames.irisAudioParams;
+        }
+
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_AudioFrameRemote_Native))]

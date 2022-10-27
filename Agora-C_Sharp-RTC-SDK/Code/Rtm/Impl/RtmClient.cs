@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 
 namespace Agora.Rtm
 {
@@ -6,6 +6,7 @@ namespace Agora.Rtm
     {
         private RtmClientImpl _rtcClientImpl = null;
         private const int ErrorCode = -7;
+        internal Dictionary<string, StreamChannel> _streamChannelDic = new Dictionary<string, StreamChannel>();
 
         public RtmClient()
         {
@@ -48,6 +49,7 @@ namespace Agora.Rtm
             }
            
             _rtcClientImpl.Dispose();
+            _streamChannelDic.Clear();
             _rtcClientImpl = null;
             instance = null;
 
@@ -60,11 +62,21 @@ namespace Agora.Rtm
             {
                 return null;
             }
+
+            if(_streamChannelDic.ContainsKey(channelName))
+            {
+                return _streamChannelDic[channelName];
+            }
+
             int ret = _rtcClientImpl.CreateStreamChannel(channelName);
-            if (ret != 0) {
+            if (ret != 0)
+            {
                 return null;
             }
-            return new StreamChannel(this, _rtcClientImpl.GetStreamChannel(), channelName);
+
+            StreamChannel streamChannel = new StreamChannel(this, _rtcClientImpl.GetStreamChannel(), channelName);
+            _streamChannelDic.Add(channelName, streamChannel);
+            return streamChannel;
         }
     }
 }
