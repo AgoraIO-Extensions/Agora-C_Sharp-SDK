@@ -22,7 +22,7 @@ namespace ut
 
         [TearDown]
         public void TearDown() { EngineEx.Dispose(); }
-
+   
 #region custom
         [Test]
         public void Test_JoinChannelEx()
@@ -399,7 +399,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.GetConnectionStateEx(connection);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED, nRet);
         }
 
         [Test]

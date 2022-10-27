@@ -47,7 +47,7 @@ namespace ut
 
             var nRet = VideoDeviceManager.EnumerateVideoDevices();
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(0, nRet.Length);
         }
 
         [Test]
