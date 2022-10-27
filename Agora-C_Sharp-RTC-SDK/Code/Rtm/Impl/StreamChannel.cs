@@ -5,13 +5,13 @@ namespace Agora.Rtm
     public sealed class StreamChannel : IStreamChannel
     {
         private bool _disposed = false;
-        private IRtmClient _rtmClientInstance = null;
+        private RtmClient _rtmClientInstance = null;
         private StreamChannelImpl _streamChannelImpl = null;
         private const int ErrorCode = -7;
 
         private string channelName = "";
 
-        internal StreamChannel(IRtmClient rtmClient, StreamChannelImpl impl, string channelName)
+        internal StreamChannel(RtmClient rtmClient, StreamChannelImpl impl, string channelName)
         {
             _rtmClientInstance = rtmClient;
             _streamChannelImpl = impl;
@@ -34,6 +34,11 @@ namespace Agora.Rtm
 
             int ret = _streamChannelImpl.Release(channelName);
 
+            if (_rtmClientInstance._streamChannelDic.ContainsKey(channelName))
+            {
+                _rtmClientInstance._streamChannelDic.Remove(channelName);
+            }
+            
             _streamChannelImpl = null;
             _rtmClientInstance = null;
             channelName = "";
