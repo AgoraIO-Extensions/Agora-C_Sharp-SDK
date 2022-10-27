@@ -7,7 +7,6 @@ namespace ut
         public IRtcEngine Engine;
         public IMusicContentCenter MusicContentCenter;
 
-
         [SetUp]
         public void Setup()
         {
@@ -20,12 +19,9 @@ namespace ut
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Engine.Dispose();
-        }
+        public void TearDown() { Engine.Dispose(); }
 
-        #region custom
+#region custom
         [Test]
         public void Test_GetMusicCharts()
         {
@@ -72,7 +68,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-
         [Test]
         public void Test_GetLyric()
         {
@@ -86,9 +81,9 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-        #endregion
+#endregion
 
-        #region terr
+#region terr
         [Test]
         public void Test_Initialize()
         {
@@ -140,8 +135,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-
-
-        #endregion
+#endregion
     }
 }

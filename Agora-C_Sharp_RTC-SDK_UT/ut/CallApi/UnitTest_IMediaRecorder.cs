@@ -8,7 +8,6 @@ namespace ut
         public IRtcEngine Engine;
         public IMediaRecorder MediaRecorder;
 
-
         [SetUp]
         public void Setup()
         {
@@ -21,12 +20,9 @@ namespace ut
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Engine.Dispose();
-        }
+        public void TearDown() { Engine.Dispose(); }
 
-        #region terr
+#region terr
         [Test]
         public void Test_SetMediaRecorderObserver()
         {
@@ -61,8 +57,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-
-
-        #endregion
+#endregion
     }
 }

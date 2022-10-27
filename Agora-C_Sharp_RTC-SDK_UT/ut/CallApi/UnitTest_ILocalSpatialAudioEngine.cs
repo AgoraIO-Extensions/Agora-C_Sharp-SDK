@@ -23,13 +23,9 @@ namespace ut
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Engine.Dispose();
-        }
+        public void TearDown() { Engine.Dispose(); }
 
-        #region  custom
-
+#region custom
 
         [Test]
         public void Test_Initialize()
@@ -40,9 +36,9 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-        #endregion
+#endregion
 
-        #region terr
+#region terr
         [Test]
         public void Test_SetMaxAudioRecvCount()
         {
@@ -267,7 +263,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-        #endregion
-
+#endregion
     }
 }

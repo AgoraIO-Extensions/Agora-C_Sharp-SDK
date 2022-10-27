@@ -21,12 +21,9 @@ namespace ut
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            EngineEx.Dispose();
-        }
+        public void TearDown() { EngineEx.Dispose(); }
 
-        #region  custom
+#region custom
         [Test]
         public void Test_JoinChannelEx()
         {
@@ -86,7 +83,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-
         [Test]
         public void Test_GetUserInfoByUidEx()
         {
@@ -100,9 +96,9 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-        #endregion
+#endregion
 
-        #region terr
+#region terr
 
         [Test]
         public void Test_LeaveChannelEx()
@@ -668,12 +664,7 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-        #endregion
-
-
-
-
-
+#endregion
     }
 
 }

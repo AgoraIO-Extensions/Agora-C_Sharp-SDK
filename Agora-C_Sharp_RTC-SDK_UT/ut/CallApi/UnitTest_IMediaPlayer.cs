@@ -7,7 +7,6 @@ namespace ut
         public IRtcEngine Engine;
         public IMediaPlayer MediaPlayer;
 
-
         [SetUp]
         public void Setup()
         {
@@ -27,7 +26,7 @@ namespace ut
             Engine.Dispose();
         }
 
-        #region custom
+#region custom
 
         [Test]
         public void Test_GetDuration()
@@ -38,7 +37,6 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-
 
         [Test]
         public void Test_GetPlayPosition()
@@ -71,7 +69,6 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-
 
         [Test]
         public void Test_GetMute()
@@ -121,10 +118,7 @@ namespace ut
         }
 
         [Test]
-        public void Test_UnregisterPlayerSourceObserver()
-        {
-            MediaPlayer.InitEventHandler(null);
-        }
+        public void Test_UnregisterPlayerSourceObserver() { MediaPlayer.InitEventHandler(null); }
 
         [Test]
         public void Test_UnregisterAudioFrameObserver()
@@ -145,9 +139,36 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-        #endregion
 
-        #region terr
+        [Test]
+        public void Test_GetPlaySrc()
+        {
+
+            var nRet = MediaPlayer.GetPlaySrc();
+
+            Assert.AreEqual(0, "");
+        }
+
+        [Test]
+        public void Test_GetPlayerSdkVersion()
+        {
+
+            var nRet = MediaPlayer.GetPlayerSdkVersion();
+
+            Assert.AreEqual(0, "");
+        }
+
+        [Test]
+        public void Test_GetState()
+        {
+
+            var nRet = MediaPlayer.GetState();
+
+            Assert.AreEqual(MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE, nRet);
+        }
+#endregion
+
+#region terr
         [Test]
         public void Test_Open()
         {
@@ -323,15 +344,6 @@ namespace ut
         }
 
         [Test]
-        public void Test_GetState()
-        {
-
-            var nRet = MediaPlayer.GetState();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_Mute()
         {
             bool muted;
@@ -411,24 +423,6 @@ namespace ut
             AUDIO_DUAL_MONO_MODE mode;
             ParamsHelper.InitParam(out mode);
             var nRet = MediaPlayer.SetAudioDualMonoMode(mode);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetPlayerSdkVersion()
-        {
-
-            var nRet = MediaPlayer.GetPlayerSdkVersion();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetPlaySrc()
-        {
-
-            var nRet = MediaPlayer.GetPlaySrc();
 
             Assert.AreEqual(0, nRet);
         }
@@ -573,8 +567,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-        #endregion
-
-
+#endregion
     }
 }

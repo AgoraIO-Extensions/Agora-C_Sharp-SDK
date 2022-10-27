@@ -30,7 +30,7 @@ namespace ut
             Engine.Dispose();
         }
 
-        #region custom
+#region custom
 
         [Test]
         public void Test_GetDuration()
@@ -41,7 +41,6 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-
 
         [Test]
         public void Test_GetPlayPosition()
@@ -74,7 +73,6 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-
 
         [Test]
         public void Test_GetMute()
@@ -124,10 +122,7 @@ namespace ut
         }
 
         [Test]
-        public void Test_UnregisterPlayerSourceObserver()
-        {
-            MusicPlayer.InitEventHandler(null);
-        }
+        public void Test_UnregisterPlayerSourceObserver() { MusicPlayer.InitEventHandler(null); }
 
         [Test]
         public void Test_UnregisterAudioFrameObserver()
@@ -149,11 +144,9 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-        #endregion
+#endregion
 
-
-
-        #region terr
+#region terr
         [Test]
         public void Test_Open()
         {
@@ -590,11 +583,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-        #endregion
-
-
-
-
-
+#endregion
     }
 }

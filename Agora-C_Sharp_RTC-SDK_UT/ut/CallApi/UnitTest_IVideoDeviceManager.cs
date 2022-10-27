@@ -8,7 +8,6 @@ namespace ut
         public IRtcEngine Engine;
         public IVideoDeviceManager VideoDeviceManager;
 
-
         [SetUp]
         public void Setup()
         {
@@ -22,12 +21,9 @@ namespace ut
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Engine.Dispose();
-        }
+        public void TearDown() { Engine.Dispose(); }
 
-        #region 
+#region
 
         [Test]
         public void Test_GetCapability()
@@ -42,9 +38,9 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-        #endregion
+#endregion
 
-        #region terr
+#region terr
         [Test]
         public void Test_EnumerateVideoDevices()
         {
@@ -103,11 +99,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-
-
-        #endregion
-
-
-
+#endregion
     }
 }
