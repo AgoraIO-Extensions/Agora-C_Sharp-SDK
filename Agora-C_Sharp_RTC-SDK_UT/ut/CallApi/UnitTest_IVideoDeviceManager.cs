@@ -38,9 +38,7 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-#endregion
 
-#region terr
         [Test]
         public void Test_EnumerateVideoDevices()
         {
@@ -49,7 +47,9 @@ namespace ut
 
             Assert.AreEqual(0, nRet.Length);
         }
+#endregion
 
+#region terr
         [Test]
         public void Test_SetDevice()
         {

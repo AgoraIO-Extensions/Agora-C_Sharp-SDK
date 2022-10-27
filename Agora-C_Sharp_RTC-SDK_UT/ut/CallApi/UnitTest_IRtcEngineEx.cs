@@ -22,7 +22,7 @@ namespace ut
 
         [TearDown]
         public void TearDown() { EngineEx.Dispose(); }
-   
+
 #region custom
         [Test]
         public void Test_JoinChannelEx()
@@ -95,6 +95,16 @@ namespace ut
             var nRet = EngineEx.GetUserInfoByUidEx(uid, ref userInfo, connection);
 
             Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetConnectionStateEx()
+        {
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.GetConnectionStateEx(connection);
+
+            Assert.AreEqual(CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED, nRet);
         }
 #endregion
 
@@ -390,16 +400,6 @@ namespace ut
             var nRet = EngineEx.AdjustUserPlaybackSignalVolumeEx(uid, volume, connection);
 
             Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetConnectionStateEx()
-        {
-            RtcConnection connection;
-            ParamsHelper.InitParam(out connection);
-            var nRet = EngineEx.GetConnectionStateEx(connection);
-
-            Assert.AreEqual(CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED, nRet);
         }
 
         [Test]

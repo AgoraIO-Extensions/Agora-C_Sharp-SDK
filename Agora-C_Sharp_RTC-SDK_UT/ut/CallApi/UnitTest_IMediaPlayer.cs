@@ -101,15 +101,6 @@ namespace ut
         }
 
         [Test]
-        public void Test_SetView()
-        {
-
-            var nRet = MediaPlayer.SetView();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_RegisterPlayerSourceObserver()
         {
             IMediaPlayerSourceObserver observer;

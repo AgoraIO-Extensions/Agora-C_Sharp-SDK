@@ -105,18 +105,9 @@ namespace ut
         }
 
         [Test]
-        public void Test_SetView()
-        {
-
-            var nRet = MusicPlayer.SetView();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_RegisterPlayerSourceObserver()
         {
-            IMediaPlayerSourceObserver observer;
+            IMusicPlayerSourceObserver observer;
             ParamsHelper.InitParam(out observer);
             MusicPlayer.InitEventHandler(observer);
         }
@@ -127,7 +118,7 @@ namespace ut
         [Test]
         public void Test_UnregisterAudioFrameObserver()
         {
-            IMediaPlayerAudioFrameObserver observer;
+            IMusicPlayerAudioFrameObserver observer;
             ParamsHelper.InitParam(out observer);
             var nRet = MusicPlayer.UnregisterAudioFrameObserver();
 
@@ -135,18 +126,54 @@ namespace ut
         }
 
         [Test]
-        public void Test_UnregisterMediaPlayerAudioSpectrumObserver()
+        public void Test_UnregisterMusicPlayerAudioSpectrumObserver()
         {
             IAudioSpectrumObserver observer;
             ParamsHelper.InitParam(out observer);
-            var nRet = MusicPlayer.UnregisterMediaPlayerAudioSpectrumObserver();
+            var nRet = MusicPlayer.UnregisterMusicPlayerAudioSpectrumObserver();
 
             Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetPlaySrc()
+        {
+
+            var nRet = MusicPlayer.GetPlaySrc();
+
+            Assert.AreEqual("", nRet);
+        }
+
+        [Test]
+        public void Test_GetPlayerSdkVersion()
+        {
+
+            var nRet = MusicPlayer.GetPlayerSdkVersion();
+
+            Assert.AreEqual("", nRet);
+        }
+
+        [Test]
+        public void Test_GetState()
+        {
+
+            var nRet = MusicPlayer.GetState();
+
+            Assert.AreEqual(MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE, nRet);
         }
 
 #endregion
 
 #region terr
+        [Test]
+        public void Test_GetMediaPlayerId()
+        {
+
+            var nRet = MusicPlayer.GetMediaPlayerId();
+
+            Assert.AreEqual(0, nRet);
+        }
+
         [Test]
         public void Test_Open()
         {
@@ -322,15 +349,6 @@ namespace ut
         }
 
         [Test]
-        public void Test_GetState()
-        {
-
-            var nRet = MusicPlayer.GetState();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_Mute()
         {
             bool muted;
@@ -405,29 +423,21 @@ namespace ut
         }
 
         [Test]
+        public void Test_UnregisterMediaPlayerAudioSpectrumObserver()
+        {
+            IAudioSpectrumObserver observer;
+            ParamsHelper.InitParam(out observer);
+            var nRet = MusicPlayer.UnregisterMediaPlayerAudioSpectrumObserver(observer);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_SetAudioDualMonoMode()
         {
             AUDIO_DUAL_MONO_MODE mode;
             ParamsHelper.InitParam(out mode);
             var nRet = MusicPlayer.SetAudioDualMonoMode(mode);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetPlayerSdkVersion()
-        {
-
-            var nRet = MusicPlayer.GetPlayerSdkVersion();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetPlaySrc()
-        {
-
-            var nRet = MusicPlayer.GetPlaySrc();
 
             Assert.AreEqual(0, nRet);
         }
