@@ -21,9 +21,9 @@ namespace Agora.Rtc
         private GameObject _agoraEngineObject;
 #endif
 
-        private RtcEngine()
+        private RtcEngine(IntPtr nativePtr)
         {
-            _rtcEngineImpl = RtcEngineImpl.GetInstance();
+            _rtcEngineImpl = RtcEngineImpl.GetInstance(nativePtr);
             _audioDeviceManager = AudioDeviceManager.GetInstance(this, _rtcEngineImpl.GetAudioDeviceManager());
             _videoDeviceManager = VideoDeviceManager.GetInstance(this, _rtcEngineImpl.GetVideoDeviceManager());
             _musicContentCenter = MusicContentCenter.GetInstance(this, _rtcEngineImpl.GetMusicContentCenter());
@@ -51,7 +51,7 @@ namespace Agora.Rtc
         {
             get
             {
-                return instance ?? (instance = new RtcEngine());
+                return instance ?? (instance = new RtcEngine(IntPtr.Zero));
             }
         }
 
@@ -59,18 +59,26 @@ namespace Agora.Rtc
         {
             get
             {
-                return (IRtcEngineEx)(instance ?? (instance = new RtcEngine()));
+                return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
             }
         }
 
         public static IRtcEngine CreateAgoraRtcEngine()
         {
-            return instance ?? (instance = new RtcEngine());
+            return instance ?? (instance = new RtcEngine(IntPtr.Zero));
+        }
+        public static IRtcEngine CreateAgoraRtcEngine(IntPtr nativePtr)
+        {
+            return instance ?? (instance = new RtcEngine(nativePtr));
         }
 
         public static IRtcEngineEx CreateAgoraRtcEngineEx()
         {
-            return (IRtcEngineEx)(instance ?? (instance = new RtcEngine()));
+            return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
+        }
+        public static IRtcEngineEx CreateAgoraRtcEngineEx(IntPtr nativePtr)
+        {
+            return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(nativePtr)));
         }
 
         public static IRtcEngine Get()

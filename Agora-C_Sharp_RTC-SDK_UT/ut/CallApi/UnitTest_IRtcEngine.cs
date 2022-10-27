@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Agora.Rtc;
 
 namespace ut
@@ -13,16 +13,17 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
+            RtcEngineContext rtcEngineContext;
+            ParamsHelper.InitParam(out rtcEngineContext);
+            int nRet = Engine.Initialize(rtcEngineContext);
+            Assert.AreEqual(0, nRet);
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Engine.Dispose();
-        }
+        public void TearDown() { Engine.Dispose(); }
 
-        #region  custom
+#region custom
         [Test]
         public void Test_GetErrorDescription()
         {
@@ -31,7 +32,7 @@ namespace ut
 
             string nRet = Engine.GetErrorDescription(code);
 
-            Assert.AreEqual(nRet, "error");
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace ut
 
             string nRet = Engine.GetVersion(ref build);
 
-            Assert.AreEqual(nRet, "4.1.0");
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
@@ -61,14 +62,13 @@ namespace ut
             Engine.DestroyMediaPlayer(mediaPlayer);
         }
 
-
         [Test]
         public void Test_UploadLogFile()
         {
             string requestId;
             ParamsHelper.InitParam(out requestId);
             int nRet = Engine.UploadLogFile(ref requestId);
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace ut
 
             int nRet = Engine.GetCallId(ref callId);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace ut
 
             int nRet = Engine.CreateDataStream(ref streamId, reliable, ordered);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace ut
 
             int nRet = Engine.CreateDataStream(ref streamId, config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -147,7 +147,7 @@ namespace ut
             ParamsHelper.InitParam(out deviceInfo);
             var nRet = Engine.GetAudioDeviceInfo(ref deviceInfo);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace ut
             ParamsHelper.InitParam(out userInfo);
             var nRet = Engine.GetUserInfoByUserAccount(userAccount, ref userInfo);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace ut
             ParamsHelper.InitParam(out userInfo);
             var nRet = Engine.GetUserInfoByUid(uid, ref userInfo);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -184,7 +184,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.StartDirectCdnStreaming(publishUrl, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -204,7 +204,7 @@ namespace ut
             ParamsHelper.InitParam(out type);
             var nRet = Engine.GetExtensionProperty(provider, extension, key, ref value, buf_len, type);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -224,13 +224,45 @@ namespace ut
             ParamsHelper.InitParam(out buf_len);
             var nRet = Engine.GetExtensionProperty(provider, extension, extensionInfo, key, ref value, buf_len);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
-        #endregion
+        [Test]
+        public void Test_GetScreenCaptureSources()
+        {
+            SIZE thumbSize;
+            ParamsHelper.InitParam(out thumbSize);
+            SIZE iconSize;
+            ParamsHelper.InitParam(out iconSize);
+            bool includeScreen;
+            ParamsHelper.InitParam(out includeScreen);
+            var nRet = Engine.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
 
-        #region terr
+            Assert.AreEqual(0, nRet.Length);
+        }
 
+        [Test]
+        public void Test_CreateCustomVideoTrack()
+        {
+
+            var nRet = Engine.CreateCustomVideoTrack();
+
+            Assert.AreEqual(1, nRet);
+        }
+
+        [Test]
+        public void Test_CreateCustomEncodedVideoTrack()
+        {
+            SenderOptions sender_option;
+            ParamsHelper.InitParam(out sender_option);
+            var nRet = Engine.CreateCustomEncodedVideoTrack(sender_option);
+
+            Assert.AreEqual(1, nRet);
+        }
+
+#endregion
+
+#region terr
 
         [Test]
         public void Test_Initialize()
@@ -239,7 +271,7 @@ namespace ut
             ParamsHelper.InitParam(out context);
             var nRet = Engine.Initialize(context);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -255,7 +287,7 @@ namespace ut
             ParamsHelper.InitParam(out uid);
             var nRet = Engine.JoinChannel(token, channelId, info, uid);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -271,7 +303,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.JoinChannel(token, channelId, uid, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -281,7 +313,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.UpdateChannelMediaOptions(options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -290,7 +322,7 @@ namespace ut
 
             var nRet = Engine.LeaveChannel();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -300,7 +332,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.LeaveChannel(options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -310,7 +342,7 @@ namespace ut
             ParamsHelper.InitParam(out token);
             var nRet = Engine.RenewToken(token);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -320,7 +352,7 @@ namespace ut
             ParamsHelper.InitParam(out profile);
             var nRet = Engine.SetChannelProfile(profile);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -330,7 +362,7 @@ namespace ut
             ParamsHelper.InitParam(out role);
             var nRet = Engine.SetClientRole(role);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -342,7 +374,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.SetClientRole(role, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -351,7 +383,7 @@ namespace ut
 
             var nRet = Engine.StartEchoTest();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -361,7 +393,7 @@ namespace ut
             ParamsHelper.InitParam(out intervalInSeconds);
             var nRet = Engine.StartEchoTest(intervalInSeconds);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -371,7 +403,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartEchoTest(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -380,7 +412,7 @@ namespace ut
 
             var nRet = Engine.StopEchoTest();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -392,7 +424,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.EnableMultiCamera(enabled, config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -401,7 +433,7 @@ namespace ut
 
             var nRet = Engine.EnableVideo();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -410,7 +442,7 @@ namespace ut
 
             var nRet = Engine.DisableVideo();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -419,7 +451,7 @@ namespace ut
 
             var nRet = Engine.StartPreview();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -429,7 +461,7 @@ namespace ut
             ParamsHelper.InitParam(out sourceType);
             var nRet = Engine.StartPreview(sourceType);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -438,7 +470,7 @@ namespace ut
 
             var nRet = Engine.StopPreview();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -448,7 +480,7 @@ namespace ut
             ParamsHelper.InitParam(out sourceType);
             var nRet = Engine.StopPreview(sourceType);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -458,7 +490,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartLastmileProbeTest(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -467,7 +499,7 @@ namespace ut
 
             var nRet = Engine.StopLastmileProbeTest();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -477,7 +509,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.SetVideoEncoderConfiguration(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -491,7 +523,7 @@ namespace ut
             ParamsHelper.InitParam(out type);
             var nRet = Engine.SetBeautyEffectOptions(enabled, options, type);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -505,7 +537,7 @@ namespace ut
             ParamsHelper.InitParam(out type);
             var nRet = Engine.SetLowlightEnhanceOptions(enabled, options, type);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -519,7 +551,7 @@ namespace ut
             ParamsHelper.InitParam(out type);
             var nRet = Engine.SetVideoDenoiserOptions(enabled, options, type);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -533,7 +565,7 @@ namespace ut
             ParamsHelper.InitParam(out type);
             var nRet = Engine.SetColorEnhanceOptions(enabled, options, type);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -549,7 +581,7 @@ namespace ut
             ParamsHelper.InitParam(out type);
             var nRet = Engine.EnableVirtualBackground(enabled, backgroundSource, segproperty, type);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -561,7 +593,7 @@ namespace ut
             ParamsHelper.InitParam(out enable);
             var nRet = Engine.EnableRemoteSuperResolution(userId, enable);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -571,7 +603,7 @@ namespace ut
             ParamsHelper.InitParam(out canvas);
             var nRet = Engine.SetupRemoteVideo(canvas);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -581,7 +613,7 @@ namespace ut
             ParamsHelper.InitParam(out canvas);
             var nRet = Engine.SetupLocalVideo(canvas);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -590,7 +622,7 @@ namespace ut
 
             var nRet = Engine.EnableAudio();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -599,7 +631,7 @@ namespace ut
 
             var nRet = Engine.DisableAudio();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -611,7 +643,7 @@ namespace ut
             ParamsHelper.InitParam(out scenario);
             var nRet = Engine.SetAudioProfile(profile, scenario);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -621,7 +653,7 @@ namespace ut
             ParamsHelper.InitParam(out profile);
             var nRet = Engine.SetAudioProfile(profile);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -631,7 +663,7 @@ namespace ut
             ParamsHelper.InitParam(out scenario);
             var nRet = Engine.SetAudioScenario(scenario);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -641,7 +673,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableLocalAudio(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -651,7 +683,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.MuteLocalAudioStream(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -661,7 +693,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.MuteAllRemoteAudioStreams(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -671,7 +703,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.SetDefaultMuteAllRemoteAudioStreams(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -683,7 +715,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.MuteRemoteAudioStream(uid, mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -693,7 +725,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.MuteLocalVideoStream(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -703,7 +735,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableLocalVideo(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -713,7 +745,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.MuteAllRemoteVideoStreams(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -723,7 +755,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.SetDefaultMuteAllRemoteVideoStreams(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -735,7 +767,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.MuteRemoteVideoStream(uid, mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -747,7 +779,7 @@ namespace ut
             ParamsHelper.InitParam(out streamType);
             var nRet = Engine.SetRemoteVideoStreamType(uid, streamType);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -759,7 +791,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.SetRemoteVideoSubscriptionOptions(uid, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -769,7 +801,7 @@ namespace ut
             ParamsHelper.InitParam(out streamType);
             var nRet = Engine.SetRemoteDefaultVideoStreamType(streamType);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -780,7 +812,7 @@ namespace ut
             int uidNumber = uidList.Length;
             var nRet = Engine.SetSubscribeAudioBlocklist(uidList, uidNumber);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -791,7 +823,7 @@ namespace ut
             int uidNumber = uidList.Length;
             var nRet = Engine.SetSubscribeAudioAllowlist(uidList, uidNumber);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -802,7 +834,7 @@ namespace ut
             int uidNumber = uidList.Length;
             var nRet = Engine.SetSubscribeVideoBlocklist(uidList, uidNumber);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -813,7 +845,7 @@ namespace ut
             int uidNumber = uidList.Length;
             var nRet = Engine.SetSubscribeVideoAllowlist(uidList, uidNumber);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -827,7 +859,7 @@ namespace ut
             ParamsHelper.InitParam(out reportVad);
             var nRet = Engine.EnableAudioVolumeIndication(interval, smooth, reportVad);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -839,7 +871,7 @@ namespace ut
             ParamsHelper.InitParam(out quality);
             var nRet = Engine.StartAudioRecording(filePath, quality);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -853,7 +885,7 @@ namespace ut
             ParamsHelper.InitParam(out quality);
             var nRet = Engine.StartAudioRecording(filePath, sampleRate, quality);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -863,7 +895,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartAudioRecording(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -872,7 +904,7 @@ namespace ut
 
             var nRet = Engine.StopAudioRecording();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -886,7 +918,7 @@ namespace ut
             ParamsHelper.InitParam(out cycle);
             var nRet = Engine.StartAudioMixing(filePath, loopback, cycle);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -902,7 +934,7 @@ namespace ut
             ParamsHelper.InitParam(out startPos);
             var nRet = Engine.StartAudioMixing(filePath, loopback, cycle, startPos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -911,7 +943,7 @@ namespace ut
 
             var nRet = Engine.StopAudioMixing();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -920,7 +952,7 @@ namespace ut
 
             var nRet = Engine.PauseAudioMixing();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -929,7 +961,7 @@ namespace ut
 
             var nRet = Engine.ResumeAudioMixing();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -939,7 +971,7 @@ namespace ut
             ParamsHelper.InitParam(out index);
             var nRet = Engine.SelectAudioTrack(index);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -948,7 +980,7 @@ namespace ut
 
             var nRet = Engine.GetAudioTrackCount();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -958,7 +990,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustAudioMixingVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -968,7 +1000,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustAudioMixingPublishVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -977,7 +1009,7 @@ namespace ut
 
             var nRet = Engine.GetAudioMixingPublishVolume();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -987,7 +1019,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustAudioMixingPlayoutVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -996,7 +1028,7 @@ namespace ut
 
             var nRet = Engine.GetAudioMixingPlayoutVolume();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1005,7 +1037,7 @@ namespace ut
 
             var nRet = Engine.GetAudioMixingDuration();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1014,7 +1046,7 @@ namespace ut
 
             var nRet = Engine.GetAudioMixingCurrentPosition();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1024,7 +1056,7 @@ namespace ut
             ParamsHelper.InitParam(out pos);
             var nRet = Engine.SetAudioMixingPosition(pos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1034,7 +1066,7 @@ namespace ut
             ParamsHelper.InitParam(out mode);
             var nRet = Engine.SetAudioMixingDualMonoMode(mode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1044,7 +1076,7 @@ namespace ut
             ParamsHelper.InitParam(out pitch);
             var nRet = Engine.SetAudioMixingPitch(pitch);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1053,7 +1085,7 @@ namespace ut
 
             var nRet = Engine.GetEffectsVolume();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1063,7 +1095,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.SetEffectsVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1077,7 +1109,7 @@ namespace ut
             ParamsHelper.InitParam(out startPos);
             var nRet = Engine.PreloadEffect(soundId, filePath, startPos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1101,7 +1133,7 @@ namespace ut
             ParamsHelper.InitParam(out startPos);
             var nRet = Engine.PlayEffect(soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1119,7 +1151,7 @@ namespace ut
             ParamsHelper.InitParam(out publish);
             var nRet = Engine.PlayAllEffects(loopCount, pitch, pan, gain, publish);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1129,7 +1161,7 @@ namespace ut
             ParamsHelper.InitParam(out soundId);
             var nRet = Engine.GetVolumeOfEffect(soundId);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1141,7 +1173,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.SetVolumeOfEffect(soundId, volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1151,7 +1183,7 @@ namespace ut
             ParamsHelper.InitParam(out soundId);
             var nRet = Engine.PauseEffect(soundId);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1160,7 +1192,7 @@ namespace ut
 
             var nRet = Engine.PauseAllEffects();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1170,7 +1202,7 @@ namespace ut
             ParamsHelper.InitParam(out soundId);
             var nRet = Engine.ResumeEffect(soundId);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1179,7 +1211,7 @@ namespace ut
 
             var nRet = Engine.ResumeAllEffects();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1189,7 +1221,7 @@ namespace ut
             ParamsHelper.InitParam(out soundId);
             var nRet = Engine.StopEffect(soundId);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1198,7 +1230,7 @@ namespace ut
 
             var nRet = Engine.StopAllEffects();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1208,7 +1240,7 @@ namespace ut
             ParamsHelper.InitParam(out soundId);
             var nRet = Engine.UnloadEffect(soundId);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1217,7 +1249,7 @@ namespace ut
 
             var nRet = Engine.UnloadAllEffects();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1227,7 +1259,7 @@ namespace ut
             ParamsHelper.InitParam(out filePath);
             var nRet = Engine.GetEffectDuration(filePath);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1239,7 +1271,7 @@ namespace ut
             ParamsHelper.InitParam(out pos);
             var nRet = Engine.SetEffectPosition(soundId, pos);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1249,7 +1281,7 @@ namespace ut
             ParamsHelper.InitParam(out soundId);
             var nRet = Engine.GetEffectCurrentPosition(soundId);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1259,7 +1291,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableSoundPositionIndication(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1273,7 +1305,7 @@ namespace ut
             ParamsHelper.InitParam(out gain);
             var nRet = Engine.SetRemoteVoicePosition(uid, pan, gain);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1283,7 +1315,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableSpatialAudio(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1295,7 +1327,7 @@ namespace ut
             ParamsHelper.InitParam(out @params);
             var nRet = Engine.SetRemoteUserSpatialAudioParams(uid, @params);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1305,7 +1337,7 @@ namespace ut
             ParamsHelper.InitParam(out preset);
             var nRet = Engine.SetVoiceBeautifierPreset(preset);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1315,7 +1347,7 @@ namespace ut
             ParamsHelper.InitParam(out preset);
             var nRet = Engine.SetAudioEffectPreset(preset);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1325,7 +1357,7 @@ namespace ut
             ParamsHelper.InitParam(out preset);
             var nRet = Engine.SetVoiceConversionPreset(preset);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1339,7 +1371,7 @@ namespace ut
             ParamsHelper.InitParam(out param2);
             var nRet = Engine.SetAudioEffectParameters(preset, param1, param2);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1353,7 +1385,7 @@ namespace ut
             ParamsHelper.InitParam(out param2);
             var nRet = Engine.SetVoiceBeautifierParameters(preset, param1, param2);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1367,7 +1399,7 @@ namespace ut
             ParamsHelper.InitParam(out param2);
             var nRet = Engine.SetVoiceConversionParameters(preset, param1, param2);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1377,7 +1409,7 @@ namespace ut
             ParamsHelper.InitParam(out pitch);
             var nRet = Engine.SetLocalVoicePitch(pitch);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1389,7 +1421,7 @@ namespace ut
             ParamsHelper.InitParam(out bandGain);
             var nRet = Engine.SetLocalVoiceEqualization(bandFrequency, bandGain);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1401,7 +1433,7 @@ namespace ut
             ParamsHelper.InitParam(out value);
             var nRet = Engine.SetLocalVoiceReverb(reverbKey, value);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1411,7 +1443,7 @@ namespace ut
             ParamsHelper.InitParam(out preset);
             var nRet = Engine.SetHeadphoneEQPreset(preset);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1423,7 +1455,7 @@ namespace ut
             ParamsHelper.InitParam(out highGain);
             var nRet = Engine.SetHeadphoneEQParameters(lowGain, highGain);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1433,7 +1465,7 @@ namespace ut
             ParamsHelper.InitParam(out filePath);
             var nRet = Engine.SetLogFile(filePath);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1443,7 +1475,7 @@ namespace ut
             ParamsHelper.InitParam(out filter);
             var nRet = Engine.SetLogFilter(filter);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1453,7 +1485,7 @@ namespace ut
             ParamsHelper.InitParam(out level);
             var nRet = Engine.SetLogLevel(level);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1463,7 +1495,7 @@ namespace ut
             ParamsHelper.InitParam(out fileSizeInKBytes);
             var nRet = Engine.SetLogFileSize(fileSizeInKBytes);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1475,7 +1507,7 @@ namespace ut
             ParamsHelper.InitParam(out mirrorMode);
             var nRet = Engine.SetLocalRenderMode(renderMode, mirrorMode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1489,7 +1521,7 @@ namespace ut
             ParamsHelper.InitParam(out mirrorMode);
             var nRet = Engine.SetRemoteRenderMode(uid, renderMode, mirrorMode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1499,7 +1531,7 @@ namespace ut
             ParamsHelper.InitParam(out renderMode);
             var nRet = Engine.SetLocalRenderMode(renderMode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1509,7 +1541,7 @@ namespace ut
             ParamsHelper.InitParam(out mirrorMode);
             var nRet = Engine.SetLocalVideoMirrorMode(mirrorMode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1519,7 +1551,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableDualStreamMode(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1531,7 +1563,7 @@ namespace ut
             ParamsHelper.InitParam(out streamConfig);
             var nRet = Engine.EnableDualStreamMode(enabled, streamConfig);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1541,7 +1573,7 @@ namespace ut
             ParamsHelper.InitParam(out mode);
             var nRet = Engine.SetDualStreamMode(mode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1553,7 +1585,7 @@ namespace ut
             ParamsHelper.InitParam(out streamConfig);
             var nRet = Engine.SetDualStreamMode(mode, streamConfig);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1565,7 +1597,7 @@ namespace ut
             ParamsHelper.InitParam(out audioSourceDelay);
             var nRet = Engine.EnableEchoCancellationExternal(enabled, audioSourceDelay);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1577,7 +1609,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableCustomAudioLocalPlayback(sourceId, enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1587,7 +1619,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartPrimaryCustomAudioTrack(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1596,7 +1628,7 @@ namespace ut
 
             var nRet = Engine.StopPrimaryCustomAudioTrack();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1606,7 +1638,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartSecondaryCustomAudioTrack(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1615,7 +1647,7 @@ namespace ut
 
             var nRet = Engine.StopSecondaryCustomAudioTrack();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1631,7 +1663,7 @@ namespace ut
             ParamsHelper.InitParam(out samplesPerCall);
             var nRet = Engine.SetRecordingAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1647,7 +1679,7 @@ namespace ut
             ParamsHelper.InitParam(out samplesPerCall);
             var nRet = Engine.SetPlaybackAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1661,7 +1693,7 @@ namespace ut
             ParamsHelper.InitParam(out samplesPerCall);
             var nRet = Engine.SetMixedAudioFrameParameters(sampleRate, channel, samplesPerCall);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1677,7 +1709,7 @@ namespace ut
             ParamsHelper.InitParam(out samplesPerCall);
             var nRet = Engine.SetEarMonitoringAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1689,7 +1721,7 @@ namespace ut
             ParamsHelper.InitParam(out channel);
             var nRet = Engine.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1699,7 +1731,7 @@ namespace ut
             ParamsHelper.InitParam(out intervalInMS);
             var nRet = Engine.EnableAudioSpectrumMonitor(intervalInMS);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1708,7 +1740,7 @@ namespace ut
 
             var nRet = Engine.DisableAudioSpectrumMonitor();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1718,7 +1750,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustRecordingSignalVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1728,7 +1760,7 @@ namespace ut
             ParamsHelper.InitParam(out mute);
             var nRet = Engine.MuteRecordingSignal(mute);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1738,7 +1770,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustPlaybackSignalVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1750,7 +1782,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustUserPlaybackSignalVolume(uid, volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1760,7 +1792,7 @@ namespace ut
             ParamsHelper.InitParam(out option);
             var nRet = Engine.SetLocalPublishFallbackOption(option);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1770,7 +1802,7 @@ namespace ut
             ParamsHelper.InitParam(out option);
             var nRet = Engine.SetRemoteSubscribeFallbackOption(option);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1782,7 +1814,7 @@ namespace ut
             ParamsHelper.InitParam(out deviceName);
             var nRet = Engine.EnableLoopbackRecording(enabled, deviceName);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1792,7 +1824,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustLoopbackSignalVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1801,7 +1833,7 @@ namespace ut
 
             var nRet = Engine.GetLoopbackRecordingVolume();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1813,7 +1845,7 @@ namespace ut
             ParamsHelper.InitParam(out includeAudioFilters);
             var nRet = Engine.EnableInEarMonitoring(enabled, includeAudioFilters);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1823,7 +1855,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.SetInEarMonitoringVolume(volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1835,7 +1867,7 @@ namespace ut
             ParamsHelper.InitParam(out unload_after_use);
             var nRet = Engine.LoadExtensionProvider(path, unload_after_use);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1849,7 +1881,7 @@ namespace ut
             ParamsHelper.InitParam(out value);
             var nRet = Engine.SetExtensionProviderProperty(provider, key, value);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1865,7 +1897,7 @@ namespace ut
             ParamsHelper.InitParam(out type);
             var nRet = Engine.EnableExtension(provider, extension, enable, type);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1883,7 +1915,7 @@ namespace ut
             ParamsHelper.InitParam(out type);
             var nRet = Engine.SetExtensionProperty(provider, extension, key, value, type);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1899,7 +1931,7 @@ namespace ut
             ParamsHelper.InitParam(out enable);
             var nRet = Engine.EnableExtension(provider, extension, extensionInfo, enable);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1917,7 +1949,7 @@ namespace ut
             ParamsHelper.InitParam(out value);
             var nRet = Engine.SetExtensionProperty(provider, extension, extensionInfo, key, value);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1927,26 +1959,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.SetCameraCapturerConfiguration(config);
 
-            Assert.AreEqual(nRet, 0);
-        }
-
-        [Test]
-        public void Test_CreateCustomVideoTrack()
-        {
-
-            var nRet = Engine.CreateCustomVideoTrack();
-
-            Assert.AreEqual(nRet, 0);
-        }
-
-        [Test]
-        public void Test_CreateCustomEncodedVideoTrack()
-        {
-            SenderOptions sender_option;
-            ParamsHelper.InitParam(out sender_option);
-            var nRet = Engine.CreateCustomEncodedVideoTrack(sender_option);
-
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1956,7 +1969,7 @@ namespace ut
             ParamsHelper.InitParam(out video_track_id);
             var nRet = Engine.DestroyCustomVideoTrack(video_track_id);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1966,7 +1979,7 @@ namespace ut
             ParamsHelper.InitParam(out video_track_id);
             var nRet = Engine.DestroyCustomEncodedVideoTrack(video_track_id);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -1975,7 +1988,7 @@ namespace ut
 
             var nRet = Engine.SwitchCamera();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -1984,7 +1997,7 @@ namespace ut
 
             var nRet = Engine.IsCameraZoomSupported();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -1993,7 +2006,7 @@ namespace ut
 
             var nRet = Engine.IsCameraFaceDetectSupported();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2002,7 +2015,7 @@ namespace ut
 
             var nRet = Engine.IsCameraTorchSupported();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2011,7 +2024,7 @@ namespace ut
 
             var nRet = Engine.IsCameraFocusSupported();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2020,7 +2033,7 @@ namespace ut
 
             var nRet = Engine.IsCameraAutoFocusFaceModeSupported();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2030,7 +2043,7 @@ namespace ut
             ParamsHelper.InitParam(out factor);
             var nRet = Engine.SetCameraZoomFactor(factor);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2040,7 +2053,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableFaceDetection(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2049,7 +2062,7 @@ namespace ut
 
             var nRet = Engine.GetCameraMaxZoomFactor();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2061,7 +2074,7 @@ namespace ut
             ParamsHelper.InitParam(out positionY);
             var nRet = Engine.SetCameraFocusPositionInPreview(positionX, positionY);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2071,7 +2084,7 @@ namespace ut
             ParamsHelper.InitParam(out isOn);
             var nRet = Engine.SetCameraTorchOn(isOn);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2081,7 +2094,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.SetCameraAutoFocusFaceModeEnabled(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2090,7 +2103,7 @@ namespace ut
 
             var nRet = Engine.IsCameraExposurePositionSupported();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2102,7 +2115,7 @@ namespace ut
             ParamsHelper.InitParam(out positionYinView);
             var nRet = Engine.SetCameraExposurePosition(positionXinView, positionYinView);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2111,7 +2124,7 @@ namespace ut
 
             var nRet = Engine.IsCameraAutoExposureFaceModeSupported();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2121,7 +2134,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.SetCameraAutoExposureFaceModeEnabled(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2131,7 +2144,7 @@ namespace ut
             ParamsHelper.InitParam(out defaultToSpeaker);
             var nRet = Engine.SetDefaultAudioRouteToSpeakerphone(defaultToSpeaker);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2141,7 +2154,7 @@ namespace ut
             ParamsHelper.InitParam(out speakerOn);
             var nRet = Engine.SetEnableSpeakerphone(speakerOn);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2150,21 +2163,7 @@ namespace ut
 
             var nRet = Engine.IsSpeakerphoneEnabled();
 
-            Assert.AreEqual(nRet, 0);
-        }
-
-        [Test]
-        public void Test_GetScreenCaptureSources()
-        {
-            SIZE thumbSize;
-            ParamsHelper.InitParam(out thumbSize);
-            SIZE iconSize;
-            ParamsHelper.InitParam(out iconSize);
-            bool includeScreen;
-            ParamsHelper.InitParam(out includeScreen);
-            var nRet = Engine.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
-
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
@@ -2174,7 +2173,7 @@ namespace ut
             ParamsHelper.InitParam(out restriction);
             var nRet = Engine.SetAudioSessionOperationRestriction(restriction);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2188,7 +2187,7 @@ namespace ut
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.StartScreenCaptureByDisplayId(displayId, regionRect, captureParams);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2202,7 +2201,7 @@ namespace ut
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2216,7 +2215,7 @@ namespace ut
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.StartScreenCaptureByWindowId(windowId, regionRect, captureParams);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2226,7 +2225,7 @@ namespace ut
             ParamsHelper.InitParam(out contentHint);
             var nRet = Engine.SetScreenCaptureContentHint(contentHint);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2236,7 +2235,7 @@ namespace ut
             ParamsHelper.InitParam(out screenScenario);
             var nRet = Engine.SetScreenCaptureScenario(screenScenario);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2246,7 +2245,7 @@ namespace ut
             ParamsHelper.InitParam(out regionRect);
             var nRet = Engine.UpdateScreenCaptureRegion(regionRect);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2256,7 +2255,7 @@ namespace ut
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.UpdateScreenCaptureParameters(captureParams);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2266,7 +2265,7 @@ namespace ut
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.StartScreenCapture(captureParams);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2276,7 +2275,7 @@ namespace ut
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.UpdateScreenCapture(captureParams);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(-(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED, nRet);
         }
 
         [Test]
@@ -2285,7 +2284,7 @@ namespace ut
 
             var nRet = Engine.StopScreenCapture();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2299,7 +2298,7 @@ namespace ut
             ParamsHelper.InitParam(out description);
             var nRet = Engine.Rate(callId, rating, description);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2311,7 +2310,7 @@ namespace ut
             ParamsHelper.InitParam(out description);
             var nRet = Engine.Complain(callId, description);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2321,7 +2320,7 @@ namespace ut
             ParamsHelper.InitParam(out url);
             var nRet = Engine.StartRtmpStreamWithoutTranscoding(url);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2333,7 +2332,7 @@ namespace ut
             ParamsHelper.InitParam(out transcoding);
             var nRet = Engine.StartRtmpStreamWithTranscoding(url, transcoding);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2343,7 +2342,7 @@ namespace ut
             ParamsHelper.InitParam(out transcoding);
             var nRet = Engine.UpdateRtmpTranscoding(transcoding);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2353,7 +2352,7 @@ namespace ut
             ParamsHelper.InitParam(out url);
             var nRet = Engine.StopRtmpStream(url);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2363,7 +2362,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartLocalVideoTranscoder(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2373,7 +2372,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.UpdateLocalTranscoderConfiguration(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2382,7 +2381,7 @@ namespace ut
 
             var nRet = Engine.StopLocalVideoTranscoder();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2392,7 +2391,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartPrimaryCameraCapture(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2402,7 +2401,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartSecondaryCameraCapture(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2411,7 +2410,7 @@ namespace ut
 
             var nRet = Engine.StopPrimaryCameraCapture();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2420,7 +2419,7 @@ namespace ut
 
             var nRet = Engine.StopSecondaryCameraCapture();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2432,7 +2431,7 @@ namespace ut
             ParamsHelper.InitParam(out orientation);
             var nRet = Engine.SetCameraDeviceOrientation(type, orientation);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2444,7 +2443,7 @@ namespace ut
             ParamsHelper.InitParam(out orientation);
             var nRet = Engine.SetScreenCaptureOrientation(type, orientation);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2454,7 +2453,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartPrimaryScreenCapture(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2464,7 +2463,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartSecondaryScreenCapture(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2473,7 +2472,7 @@ namespace ut
 
             var nRet = Engine.StopPrimaryScreenCapture();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2482,7 +2481,7 @@ namespace ut
 
             var nRet = Engine.StopSecondaryScreenCapture();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2494,7 +2493,7 @@ namespace ut
             ParamsHelper.InitParam(out userPriority);
             var nRet = Engine.SetRemoteUserPriority(uid, userPriority);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2504,7 +2503,7 @@ namespace ut
             ParamsHelper.InitParam(out encryptionMode);
             var nRet = Engine.SetEncryptionMode(encryptionMode);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2514,7 +2513,7 @@ namespace ut
             ParamsHelper.InitParam(out secret);
             var nRet = Engine.SetEncryptionSecret(secret);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2526,7 +2525,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.EnableEncryption(enabled, config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2540,7 +2539,7 @@ namespace ut
             ParamsHelper.InitParam(out length);
             var nRet = Engine.SendStreamMessage(streamId, data, length);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2550,7 +2549,7 @@ namespace ut
             ParamsHelper.InitParam(out watermark);
             var nRet = Engine.AddVideoWatermark(watermark);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2562,7 +2561,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.AddVideoWatermark(watermarkUrl, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2571,7 +2570,7 @@ namespace ut
 
             var nRet = Engine.ClearVideoWatermarks();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2580,7 +2579,7 @@ namespace ut
 
             var nRet = Engine.PauseAudio();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2589,7 +2588,7 @@ namespace ut
 
             var nRet = Engine.ResumeAudio();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2599,7 +2598,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableWebSdkInteroperability(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2617,7 +2616,7 @@ namespace ut
             ParamsHelper.InitParam(out value);
             var nRet = Engine.SendCustomReportMessage(id, category, @event, label, value);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2639,7 +2638,7 @@ namespace ut
             ParamsHelper.InitParam(out auto_upload);
             var nRet = Engine.StartAudioFrameDump(channel_id, user_id, location, uuid, passwd, duration_ms, auto_upload);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2653,7 +2652,7 @@ namespace ut
             ParamsHelper.InitParam(out location);
             var nRet = Engine.StopAudioFrameDump(channel_id, user_id, location);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2665,7 +2664,7 @@ namespace ut
             ParamsHelper.InitParam(out userAccount);
             var nRet = Engine.RegisterLocalUserAccount(appId, userAccount);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2679,7 +2678,7 @@ namespace ut
             ParamsHelper.InitParam(out userAccount);
             var nRet = Engine.JoinChannelWithUserAccount(token, channelId, userAccount);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2695,7 +2694,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.JoinChannelWithUserAccount(token, channelId, userAccount, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2705,7 +2704,7 @@ namespace ut
             ParamsHelper.InitParam(out configuration);
             var nRet = Engine.StartChannelMediaRelay(configuration);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2715,7 +2714,7 @@ namespace ut
             ParamsHelper.InitParam(out configuration);
             var nRet = Engine.UpdateChannelMediaRelay(configuration);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2724,7 +2723,7 @@ namespace ut
 
             var nRet = Engine.StopChannelMediaRelay();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2733,7 +2732,7 @@ namespace ut
 
             var nRet = Engine.PauseAllChannelMediaRelay();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2742,7 +2741,7 @@ namespace ut
 
             var nRet = Engine.ResumeAllChannelMediaRelay();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2752,7 +2751,7 @@ namespace ut
             ParamsHelper.InitParam(out profile);
             var nRet = Engine.SetDirectCdnStreamingAudioConfiguration(profile);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2762,7 +2761,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.SetDirectCdnStreamingVideoConfiguration(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2771,7 +2770,7 @@ namespace ut
 
             var nRet = Engine.StopDirectCdnStreaming();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2781,7 +2780,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.UpdateDirectCdnStreamingMediaOptions(options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2795,7 +2794,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.StartRhythmPlayer(sound1, sound2, config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2804,7 +2803,7 @@ namespace ut
 
             var nRet = Engine.StopRhythmPlayer();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2814,7 +2813,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.ConfigRhythmPlayer(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2826,7 +2825,7 @@ namespace ut
             ParamsHelper.InitParam(out filePath);
             var nRet = Engine.TakeSnapshot(uid, filePath);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2838,7 +2837,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.EnableContentInspect(enabled, config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2850,7 +2849,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustCustomAudioPublishVolume(sourceId, volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2862,7 +2861,7 @@ namespace ut
             ParamsHelper.InitParam(out volume);
             var nRet = Engine.AdjustCustomAudioPlayoutVolume(sourceId, volume);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2872,7 +2871,7 @@ namespace ut
             ParamsHelper.InitParam(out proxyType);
             var nRet = Engine.SetCloudProxy(proxyType);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2882,7 +2881,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = Engine.SetLocalAccessPoint(config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2894,7 +2893,7 @@ namespace ut
             ParamsHelper.InitParam(out sourceType);
             var nRet = Engine.SetAdvancedAudioOptions(options, sourceType);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2906,7 +2905,7 @@ namespace ut
             ParamsHelper.InitParam(out uid);
             var nRet = Engine.SetAVSyncSource(channelId, uid);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2918,7 +2917,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = Engine.EnableVideoImageSource(enable, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2927,7 +2926,7 @@ namespace ut
 
             var nRet = Engine.GetCurrentMonotonicTimeInMs();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2937,7 +2936,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = Engine.EnableWirelessAccelerate(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -2946,15 +2945,10 @@ namespace ut
 
             var nRet = Engine.GetNetworkType();
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
-        #endregion
-
-
-
-
-
+#endregion
     }
 
 }

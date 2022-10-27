@@ -8,22 +8,21 @@ namespace ut
         public IRtcEngine Engine;
         public IMediaRecorder MediaRecorder;
 
-
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine();
+            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
+            RtcEngineContext rtcEngineContext;
+            ParamsHelper.InitParam(out rtcEngineContext);
+            int nRet = Engine.Initialize(rtcEngineContext);
+            Assert.AreEqual(0, nRet);
             MediaRecorder = Engine.GetMediaRecorder();
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            Engine.Dispose();
-        }
+        public void TearDown() { Engine.Dispose(); }
 
-        #region terr
-
+#region terr
         [Test]
         public void Test_SetMediaRecorderObserver()
         {
@@ -33,7 +32,7 @@ namespace ut
             ParamsHelper.InitParam(out callback);
             var nRet = MediaRecorder.SetMediaRecorderObserver(connection, callback);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -45,7 +44,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = MediaRecorder.StartRecording(connection, config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -55,11 +54,9 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = MediaRecorder.StopRecording(connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
-
-
-        #endregion
+#endregion
     }
 }

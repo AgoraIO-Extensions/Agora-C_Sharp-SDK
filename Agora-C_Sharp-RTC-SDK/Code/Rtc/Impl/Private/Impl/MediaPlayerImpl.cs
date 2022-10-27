@@ -959,9 +959,10 @@ namespace Agora.Rtc
         public int GetCurrentAgoraCDNIndex(int playerId)
         {
             var param = new { playerId };
+            string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETCURRENTAGORACDNINDEX,
-                "", 0, IntPtr.Zero, 0, ref _apiParam);
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 

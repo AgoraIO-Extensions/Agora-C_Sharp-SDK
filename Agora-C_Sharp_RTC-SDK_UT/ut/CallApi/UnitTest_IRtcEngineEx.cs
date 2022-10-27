@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using Agora.Rtc;
 
 namespace ut
@@ -13,16 +13,17 @@ namespace ut
         [SetUp]
         public void Setup()
         {
-            EngineEx = RtcEngine.CreateAgoraRtcEngineEx();
+            EngineEx = RtcEngine.CreateAgoraRtcEngineEx(DLLHelper.CreateFakeRtcEngine());
+            RtcEngineContext rtcEngineContext;
+            ParamsHelper.InitParam(out rtcEngineContext);
+            int nRet = EngineEx.Initialize(rtcEngineContext);
+            Assert.AreEqual(0, nRet);
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            EngineEx.Dispose();
-        }
+        public void TearDown() { EngineEx.Dispose(); }
 
-        #region  custom
+#region custom
         [Test]
         public void Test_JoinChannelEx()
         {
@@ -35,7 +36,7 @@ namespace ut
 
             var nRet = EngineEx.JoinChannelEx(token, connection, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -51,7 +52,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.CreateDataStreamEx(ref streamId, reliable, ordered, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -65,7 +66,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.CreateDataStreamEx(ref streamId, config, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -79,9 +80,8 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.GetUserInfoByUserAccountEx(userAccount, ref userInfo, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
-
 
         [Test]
         public void Test_GetUserInfoByUidEx()
@@ -94,12 +94,21 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.GetUserInfoByUidEx(uid, ref userInfo, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
-        #endregion
 
-        #region terr
+        [Test]
+        public void Test_GetConnectionStateEx()
+        {
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.GetConnectionStateEx(connection);
 
+            Assert.AreEqual(CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED, nRet);
+        }
+#endregion
+
+#region terr
 
         [Test]
         public void Test_LeaveChannelEx()
@@ -108,7 +117,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.LeaveChannelEx(connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -120,7 +129,7 @@ namespace ut
             ParamsHelper.InitParam(out options);
             var nRet = EngineEx.LeaveChannelEx(connection, options);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -132,7 +141,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.UpdateChannelMediaOptionsEx(options, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -144,7 +153,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SetVideoEncoderConfigurationEx(config, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -156,7 +165,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SetupRemoteVideoEx(canvas, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -170,7 +179,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.MuteRemoteAudioStreamEx(uid, mute, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -184,7 +193,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.MuteRemoteVideoStreamEx(uid, mute, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -198,7 +207,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SetRemoteVideoStreamTypeEx(uid, streamType, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -210,7 +219,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.MuteLocalAudioStreamEx(mute, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -222,7 +231,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.MuteLocalVideoStreamEx(mute, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -234,7 +243,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.MuteAllRemoteAudioStreamsEx(mute, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -246,7 +255,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.MuteAllRemoteVideoStreamsEx(mute, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -260,7 +269,7 @@ namespace ut
             int uidNumber = uidList.Length;
             var nRet = EngineEx.SetSubscribeAudioBlocklistEx(uidList, uidNumber, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -274,7 +283,7 @@ namespace ut
             int uidNumber = uidList.Length;
             var nRet = EngineEx.SetSubscribeAudioAllowlistEx(uidList, uidNumber, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -288,7 +297,7 @@ namespace ut
             int uidNumber = uidList.Length;
             var nRet = EngineEx.SetSubscribeVideoBlocklistEx(uidList, uidNumber, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -302,7 +311,7 @@ namespace ut
             int uidNumber = uidList.Length;
             var nRet = EngineEx.SetSubscribeVideoAllowlistEx(uidList, uidNumber, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -316,7 +325,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SetRemoteVideoSubscriptionOptionsEx(uid, options, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -332,7 +341,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SetRemoteVoicePositionEx(uid, pan, gain, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -346,7 +355,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SetRemoteUserSpatialAudioParamsEx(uid, @params, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -362,7 +371,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -376,7 +385,7 @@ namespace ut
             ParamsHelper.InitParam(out deviceName);
             var nRet = EngineEx.EnableLoopbackRecordingEx(connection, enabled, deviceName);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -390,17 +399,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.AdjustUserPlaybackSignalVolumeEx(uid, volume, connection);
 
-            Assert.AreEqual(nRet, 0);
-        }
-
-        [Test]
-        public void Test_GetConnectionStateEx()
-        {
-            RtcConnection connection;
-            ParamsHelper.InitParam(out connection);
-            var nRet = EngineEx.GetConnectionStateEx(connection);
-
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -414,7 +413,7 @@ namespace ut
             ParamsHelper.InitParam(out config);
             var nRet = EngineEx.EnableEncryptionEx(connection, enabled, config);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -430,7 +429,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SendStreamMessageEx(streamId, data, length, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -444,7 +443,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.AddVideoWatermarkEx(watermarkUrl, options, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -454,7 +453,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.ClearVideoWatermarkEx(connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -474,7 +473,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SendCustomReportMessageEx(id, category, @event, label, value, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -490,7 +489,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -502,7 +501,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.StartRtmpStreamWithoutTranscodingEx(url, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -516,7 +515,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.StartRtmpStreamWithTranscodingEx(url, transcoding, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -528,7 +527,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.UpdateRtmpTranscodingEx(transcoding, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -540,7 +539,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.StopRtmpStreamEx(url, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -552,7 +551,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.StartChannelMediaRelayEx(configuration, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -564,7 +563,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.UpdateChannelMediaRelayEx(configuration, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -574,7 +573,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.StopChannelMediaRelayEx(connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -584,7 +583,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.PauseAllChannelMediaRelayEx(connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -594,7 +593,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.ResumeAllChannelMediaRelayEx(connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -610,7 +609,7 @@ namespace ut
             ParamsHelper.InitParam(out bitrate);
             var nRet = EngineEx.SetVideoProfileEx(width, height, frameRate, bitrate);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -624,7 +623,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.EnableDualStreamModeEx(enabled, streamConfig, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -638,7 +637,7 @@ namespace ut
             ParamsHelper.InitParam(out connection);
             var nRet = EngineEx.SetDualStreamModeEx(mode, streamConfig, connection);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -648,7 +647,7 @@ namespace ut
             ParamsHelper.InitParam(out enabled);
             var nRet = EngineEx.EnableWirelessAccelerate(enabled);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -662,15 +661,10 @@ namespace ut
             ParamsHelper.InitParam(out filePath);
             var nRet = EngineEx.TakeSnapshotEx(connection, uid, filePath);
 
-            Assert.AreEqual(nRet, 0);
+            Assert.AreEqual(0, nRet);
         }
 
-        #endregion
-
-
-
-
-
+#endregion
     }
 
 }

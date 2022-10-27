@@ -51,12 +51,4 @@ The Agora RTC SDK is applicable to scenarios that encourage active engagement, s
     <PackageReference Include="LitJson" Version="0.17.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Impl\Private\Impl\" />
-    <None Remove="Impl\Private\Observer\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Impl\Private\Impl\" />
-    <Folder Include="Impl\Private\Observer\" />
-  </ItemGroup>
 </Project>
