@@ -146,7 +146,7 @@ namespace ut
 
             var nRet = MediaPlayer.GetPlaySrc();
 
-            Assert.AreEqual(0, "");
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace ut
 
             var nRet = MediaPlayer.GetPlayerSdkVersion();
 
-            Assert.AreEqual(0, "");
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
