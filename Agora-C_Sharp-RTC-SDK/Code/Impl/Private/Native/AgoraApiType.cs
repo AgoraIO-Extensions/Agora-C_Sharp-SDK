@@ -555,7 +555,7 @@ namespace Agora.Rtc
         internal const string FUNC_MUSICCONTENTCENTER_PRELOAD = "MusicContentCenter_preload";
         internal const string FUNC_MUSICCONTENTCENTER_ISPRELOADED = "MusicContentCenter_isPreloaded";
         internal const string FUNC_MUSICCONTENTCENTER_GETLYRIC = "MusicContentCenter_getLyric";
-        internal const string FUNC_MUSICCONTENTCENTER_RENEWRTMTOKEN = "MusicContentCenter_renewRtmToken";
+        internal const string FUNC_MUSICCONTENTCENTER_RENEWTOKEN = "MusicContentCenter_renewToken";
         #endregion
 
         #region MusicPlayer
