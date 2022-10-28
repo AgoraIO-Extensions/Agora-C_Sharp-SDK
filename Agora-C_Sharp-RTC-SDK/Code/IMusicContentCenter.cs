@@ -6,7 +6,7 @@ namespace Agora.Rtc
     {
         public abstract int Initialize(MusicContentCenterConfiguration configuration);
 
-        public abstract int RenewRtmToken(string token);
+        public abstract int RenewToken(string token);
 
         public abstract int RegisterEventHandler(IMusicContentCenterEventHandler eventHandler);
 
