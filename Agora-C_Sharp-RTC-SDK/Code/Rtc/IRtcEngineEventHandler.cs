@@ -180,11 +180,7 @@ namespace Agora.Rtc
         ///
         public virtual void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
-        ///
-        /// @ignore
-        ///
-        public virtual void OnMediaDeviceChanged(MEDIA_DEVICE_TYPE deviceType) { }
-
+      
         ///
         /// <summary>
         /// Reports the last mile network quality of each user in the channel.
@@ -507,6 +503,7 @@ namespace Agora.Rtc
         ///
         /// <param name="result"> The result of the method call.</param>
         ///
+        [Obsolete("This callback is deprecated. Use other specific event callbacks instead")]
         public virtual void OnApiCallExecuted(int err, string api, string result) { }
 
         ///

@@ -25,5 +25,7 @@ namespace Agora.Rtc
         public abstract int IsPreloaded(Int64 songCode);
 
         public abstract int GetLyric(ref string requestId, Int64 songCode, int LyricType = 0);
+
+        public abstract int RenewToken(string token);
     }
 }

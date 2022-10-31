@@ -23,7 +23,7 @@ namespace ut
         [TearDown]
         public void TearDown() { Engine.Dispose(); }
 
-#region custom
+        #region custom
         [Test]
         public void Test_GetErrorDescription()
         {
@@ -260,9 +260,9 @@ namespace ut
             Assert.AreEqual(1, nRet);
         }
 
-#endregion
+        #endregion
 
-#region terr
+        #region terr
 
         [Test]
         public void Test_Initialize()
@@ -1885,6 +1885,20 @@ namespace ut
         }
 
         [Test]
+        public void Test_RegisterExtension()
+        {
+            string provider;
+            ParamsHelper.InitParam(out provider);
+            string extension;
+            ParamsHelper.InitParam(out extension);
+            MEDIA_SOURCE_TYPE type;
+            ParamsHelper.InitParam(out type);
+            var nRet = Engine.RegisterExtension(provider, extension, type);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_EnableExtension()
         {
             string provider;
@@ -2948,7 +2962,7 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-#endregion
+        #endregion
     }
 
 }
