@@ -2712,7 +2712,7 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetExtensionProviderProperty(string provider, string key, string value);
-
+        public abstract int RegisterExtension(string provider, string extension, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
         ///
         /// <summary>
         /// Enables/Disables extensions.

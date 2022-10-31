@@ -5996,6 +5996,16 @@ namespace Agora.Rtc
             return nRet;
         }
 
+        public int RegisterExtension(string provider, string extension, MEDIA_SOURCE_TYPE type)
+        {
+            var param = new { provider, extension, type };
+
+            var json = AgoraJson.ToJson(param);
+
+            var nRet =
+                AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_REGISTEREXTENSION, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
 
         #region CallIrisApiWithBuffer
 

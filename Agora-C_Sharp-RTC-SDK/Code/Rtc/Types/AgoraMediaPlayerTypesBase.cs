@@ -449,7 +449,7 @@ namespace Agora.Rtc
         /// The type of the media stream. See MEDIA_STREAM_TYPE .
         /// </summary>
         ///
-        public MEDIA_STREAM_TYPE streamType;
+        public MEDIA_STREAM_TYPE streamType { set; get; }
 
         ///
         /// <summary>
