@@ -6003,7 +6003,7 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(param);
 
             var nRet =
-                AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_REGISTEREXTENSION, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+                AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTEREXTENSION, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 

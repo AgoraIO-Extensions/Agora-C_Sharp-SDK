@@ -1331,20 +1331,6 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onMediaDeviceChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                    if (rtcEngineEventHandler == null) return;
-                    rtcEngineEventHandler.OnMediaDeviceChanged(
-                        (MEDIA_DEVICE_TYPE)AgoraJson.GetData<int>(jsonData, "deviceType")
-                    );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
-#endif
-                    break;
-
                 case "RtcEngineEventHandler_onIntraRequestReceivedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
