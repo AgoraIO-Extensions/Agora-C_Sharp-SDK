@@ -30,8 +30,6 @@ namespace Agora.Rtc
 
     public delegate void OnVideoDeviceStateChangedHandler(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState);
 
-    public delegate void OnMediaDeviceChangedHandler(MEDIA_DEVICE_TYPE deviceType);
-
     public delegate void OnNetworkQualityHandler(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality);
 
     public delegate void OnIntraRequestReceivedHandler(RtcConnection connection);
@@ -216,7 +214,6 @@ namespace Agora.Rtc
         public event OnAudioMixingFinishedHandler EventOnAudioMixingFinished;
         public event OnAudioEffectFinishedHandler EventOnAudioEffectFinished;
         public event OnVideoDeviceStateChangedHandler EventOnVideoDeviceStateChanged;
-        public event OnMediaDeviceChangedHandler EventOnMediaDeviceChanged;
         public event OnNetworkQualityHandler EventOnNetworkQuality;
         public event OnIntraRequestReceivedHandler EventOnIntraRequestReceived;
         public event OnUplinkNetworkInfoUpdatedHandler EventOnUplinkNetworkInfoUpdated;
@@ -397,12 +394,6 @@ namespace Agora.Rtc
         {
             if (EventOnVideoDeviceStateChanged == null) return;
             EventOnVideoDeviceStateChanged.Invoke(deviceId, deviceType, deviceState);
-        }
-
-        public override void OnMediaDeviceChanged(MEDIA_DEVICE_TYPE deviceType)
-        {
-            if (EventOnMediaDeviceChanged == null) return;
-            EventOnMediaDeviceChanged.Invoke(deviceType);
         }
 
         public override void OnNetworkQuality(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality)

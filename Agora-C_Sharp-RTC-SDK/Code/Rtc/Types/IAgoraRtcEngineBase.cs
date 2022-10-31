@@ -2168,17 +2168,6 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
-    ///
-    public enum MAX_METADATA_SIZE_TYPE
-    {
-        ///
-        /// @ignore
-        ///
-        MAX_METADATA_SIZE_IN_BYTE = 1024
-    };
-
-    ///
     /// <summary>
     /// Media metadata.
     /// </summary>

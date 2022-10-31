@@ -3311,6 +3311,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.GetNativeHandler(ref nativeHandler);
         }
 
-     
+        public override int RegisterExtension(string provider, string extension, MEDIA_SOURCE_TYPE type)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.RegisterExtension(provider, extension, type);
+        }
     }
 }

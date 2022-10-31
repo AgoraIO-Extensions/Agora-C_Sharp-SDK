@@ -21,7 +21,7 @@ namespace ut
         [TearDown]
         public void TearDown() { Engine.Dispose(); }
 
-#region custom
+        #region custom
         [Test]
         public void Test_GetMusicCharts()
         {
@@ -81,15 +81,25 @@ namespace ut
 
             Assert.AreEqual(0, nRet);
         }
-#endregion
+        #endregion
 
-#region terr
+        #region terr
         [Test]
         public void Test_Initialize()
         {
             MusicContentCenterConfiguration configuration;
             ParamsHelper.InitParam(out configuration);
             var nRet = MusicContentCenter.Initialize(configuration);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_RenewToken()
+        {
+            string token;
+            ParamsHelper.InitParam(out token);
+            var nRet = MusicContentCenter.RenewToken(token);
 
             Assert.AreEqual(0, nRet);
         }
@@ -135,6 +145,6 @@ namespace ut
             Assert.AreEqual(0, nRet);
         }
 
-#endregion
+        #endregion
     }
 }
