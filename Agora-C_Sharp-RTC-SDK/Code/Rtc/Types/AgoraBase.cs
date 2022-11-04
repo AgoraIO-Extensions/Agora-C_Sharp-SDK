@@ -1557,8 +1557,7 @@ namespace Agora.Rtc
             orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED;
-            compressionPreference = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY;
-            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO);
+            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
         }
     };
 
