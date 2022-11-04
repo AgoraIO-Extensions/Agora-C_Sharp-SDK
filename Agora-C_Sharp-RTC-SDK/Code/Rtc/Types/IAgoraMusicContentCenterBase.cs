@@ -222,7 +222,7 @@ namespace Agora.Rtc
         /// music content center need rtmToken to connect with server
         /// <summary>
         ///
-        public string rtmToken;
+        public string token;
 
         ///
         /// <summary>
@@ -234,14 +234,14 @@ namespace Agora.Rtc
         public MusicContentCenterConfiguration()
         {
             appId = "";
-            rtmToken = "";
+            token = "";
             mccUid = 0;
         }
 
-        public MusicContentCenterConfiguration(string appId, string rtmToken, UInt64 uid)
+        public MusicContentCenterConfiguration(string appId, string token, UInt64 uid)
         {
             this.appId = appId;
-            this.rtmToken = rtmToken;
+            this.token = token;
             this.mccUid = uid;
         }
     }
