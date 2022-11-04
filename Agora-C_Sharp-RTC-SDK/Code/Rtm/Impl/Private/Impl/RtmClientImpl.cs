@@ -87,18 +87,6 @@ namespace Agora.Rtm
         {
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero) return;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent);
-            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETEVENTHANDLER,
-                "{}", 2,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam);
-
-            if (nRet != 0)
-            {
-                AgoraLog.LogError("FUNC_RTMCLIENT_REGISTEREVENTHANDLER failed: " + nRet);
-            }
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
             RtmEventHandlerNative.CallbackObject = _callbackObject;
@@ -117,16 +105,6 @@ namespace Agora.Rtm
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
-            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETEVENTHANDLER,
-                "{}", 2,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam);
-
-            if (nRet != 0)
-            {
-                AgoraLog.LogError("FUNC_RTMCLIENT_UNREGISTEREVENTHANDLER failed: " + nRet);
-            }
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
 
@@ -159,10 +137,14 @@ namespace Agora.Rtm
 
             var json = AgoraJson.ToJson(param);
 
+            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent);
+            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
+
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_INITIALIZE,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
