@@ -371,6 +371,9 @@ namespace ut
         public static void InitParam(out LocalAccessPointConfiguration param)
         {
             param = new LocalAccessPointConfiguration();
+            param.advancedConfig.logUploadServer.serverPath = "serverPath";
+            param.advancedConfig.logUploadServer.serverDomain = "serverDomain";
+
         }
         public static void InitParam(out AdvancedAudioOptions param)
         {

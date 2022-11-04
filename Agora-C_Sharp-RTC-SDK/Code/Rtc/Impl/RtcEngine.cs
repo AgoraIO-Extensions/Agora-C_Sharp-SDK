@@ -1,5 +1,6 @@
 using System;
 using video_track_id_t = System.UInt32;
+using System.Collections.Generic;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using UnityEngine;
 #endif
@@ -2739,6 +2740,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetParameters(parameters);
         }
 
+
+        public override int SetParameters(string key, object value)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add(key, value);
+            string parameters = AgoraJson.ToJson<Dictionary<string, object>>(dic);
+            return SetParameters(parameters);
+        }
+       
         public override int GetAudioDeviceInfo(ref DeviceInfo deviceInfo)
         {
             if (_rtcEngineImpl == null)

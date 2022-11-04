@@ -24,6 +24,47 @@ namespace ut
         public void TearDown() { Engine.Dispose(); }
 
         #region custom
+
+        [Test]
+        public void Test_SetParameters1()
+        {
+            string parameters;
+            ParamsHelper.InitParam(out parameters);
+
+            var nRet = Engine.SetParameters(parameters);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetParameters2()
+        {
+            string key;
+            ParamsHelper.InitParam(out key);
+
+            string value;
+            ParamsHelper.InitParam(out value);
+            var nRet = Engine.SetParameters(key, value);
+            Assert.AreEqual(0, nRet);
+
+            float value2;
+            ParamsHelper.InitParam(out value2);
+            nRet = Engine.SetParameters(key, value2);
+            Assert.AreEqual(0, nRet);
+
+            bool value3;
+            ParamsHelper.InitParam(out value3);
+            nRet = Engine.SetParameters(key, value3);
+            Assert.AreEqual(0, nRet);
+
+            int value4;
+            ParamsHelper.InitParam(out value4);
+            nRet = Engine.SetParameters(key, value4);
+            Assert.AreEqual(0, nRet);
+        }
+
+
+
         [Test]
         public void Test_GetErrorDescription()
         {
