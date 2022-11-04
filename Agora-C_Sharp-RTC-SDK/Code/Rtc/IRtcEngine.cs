@@ -3750,6 +3750,8 @@ namespace Agora.Rtc
         ///
         public abstract int SetParameters(string parameters);
 
+
+        public abstract int SetParameters(string key, object value);
         ///
         /// <summary>
         /// Gets the audio device information.
