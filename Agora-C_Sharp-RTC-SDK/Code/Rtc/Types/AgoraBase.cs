@@ -1399,15 +1399,18 @@ namespace Agora.Rtc
     public class AdvanceOptions
     {
         public ENCODING_PREFERENCE encodingPreference { set; get; }
+        public COMPRESSION_PREFERENCE compressionPreference { set; get; }
 
         public AdvanceOptions()
         {
             encodingPreference = ENCODING_PREFERENCE.PREFER_AUTO;
+            compressionPreference = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY;
         }
 
-        public AdvanceOptions(ENCODING_PREFERENCE encoding_preference)
+        public AdvanceOptions(ENCODING_PREFERENCE encoding_preference, COMPRESSION_PREFERENCE compression_preference)
         {
             encodingPreference = encoding_preference;
+            compressionPreference = compression_preference;
         }
     }
     ///
@@ -1502,10 +1505,10 @@ namespace Agora.Rtc
         ///
         public VIDEO_MIRROR_MODE_TYPE mirrorMode { set; get; }
 
-        public COMPRESSION_PREFERENCE compressionPreference { set; get; }
+   
         public AdvanceOptions advanceOptions { set; get; }
 
-        public VideoEncoderConfiguration(ref VideoDimensions d, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED, COMPRESSION_PREFERENCE cp = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY)
+        public VideoEncoderConfiguration(ref VideoDimensions d, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
         {
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             dimensions = d;
@@ -1515,11 +1518,10 @@ namespace Agora.Rtc
             orientationMode = m;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             mirrorMode = mirror;
-            compressionPreference = cp;
-            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO);
+            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
         }
 
-        public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED, COMPRESSION_PREFERENCE cp = COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY)
+        public VideoEncoderConfiguration(int width, int height, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
         {
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             dimensions = new VideoDimensions(width, height);
@@ -1529,8 +1531,7 @@ namespace Agora.Rtc
             orientationMode = m;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
             mirrorMode = mirror;
-            compressionPreference = cp;
-            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO);
+            advanceOptions = new AdvanceOptions(ENCODING_PREFERENCE.PREFER_AUTO, COMPRESSION_PREFERENCE.PREFER_LOW_LATENCY);
         }
 
         public VideoEncoderConfiguration(ref VideoEncoderConfiguration config)
@@ -1543,8 +1544,7 @@ namespace Agora.Rtc
             orientationMode = config.orientationMode;
             degradationPreference = config.degradationPreference;
             mirrorMode = config.mirrorMode;
-            compressionPreference = config.compressionPreference;
-            advanceOptions = new AdvanceOptions(config.advanceOptions.encodingPreference);
+            advanceOptions = new AdvanceOptions(config.advanceOptions.encodingPreference, config.advanceOptions.compressionPreference);
         }
 
         public VideoEncoderConfiguration()
