@@ -33,7 +33,7 @@ namespace ut
 
             var nRet = Engine.SetParameters(parameters);
 
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -45,22 +45,22 @@ namespace ut
             string value;
             ParamsHelper.InitParam(out value);
             var nRet = Engine.SetParameters(key, value);
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual(0, nRet);
 
             float value2;
             ParamsHelper.InitParam(out value2);
             nRet = Engine.SetParameters(key, value2);
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual(0, nRet);
 
             bool value3;
             ParamsHelper.InitParam(out value3);
             nRet = Engine.SetParameters(key, value3);
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual(0, nRet);
 
             int value4;
             ParamsHelper.InitParam(out value4);
             nRet = Engine.SetParameters(key, value4);
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual(0, nRet);
         }
 
 
