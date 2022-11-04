@@ -19,7 +19,6 @@ namespace Agora.Rtm
         internal const string FUNC_RTMCLIENT_INITIALIZE = "RtmClient_initialize";
         internal const string FUNC_RTMCLIENT_RELEASE = "RtmClient_release";
         internal const string FUNC_RTMCLIENT_CREATESTREAMCHANNEL = "RtmClient_createStreamChannel";
-        internal const string FUNC_RTMCLIENT_SETEVENTHANDLER = "RtmClient_setEventHandler";
         #endregion
     }
 }
