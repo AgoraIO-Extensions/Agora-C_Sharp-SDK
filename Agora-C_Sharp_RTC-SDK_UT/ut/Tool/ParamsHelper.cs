@@ -428,7 +428,7 @@ namespace ut
         {
             param = new MusicContentCenterConfiguration();
             param.appId = "223231231";
-            param.rtmToken = "dsadadasdasd";
+            param.token = "dsadadasdasd";
             param.mccUid = 123;
         }
         public static void InitParam(out IMusicContentCenterEventHandler param)
