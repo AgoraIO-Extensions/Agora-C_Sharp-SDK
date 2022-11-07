@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 33cbf19b23e164870af906b5551958ea
+guid: 5452f4454b3a044789ec9a8b38b3ff68
 PluginImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -24,18 +24,6 @@ PluginImporter:
         Exclude Win64: 1
         Exclude iOS: 1
   - first:
-      '': OSXIntel
-    second:
-      enabled: 1
-      settings:
-        CPU: AnyCPU
-  - first:
-      '': OSXIntel64
-    second:
-      enabled: 0
-      settings:
-        CPU: None
-  - first:
       Android: Android
     second:
       enabled: 0
@@ -57,7 +45,7 @@ PluginImporter:
   - first:
       Facebook: Win
     second:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: AnyCPU
   - first:
