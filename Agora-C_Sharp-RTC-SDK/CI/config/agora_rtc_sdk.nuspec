@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>agora_rtc_sdk</id>
-    <version>3.6.2.2</version>
+    <version>3.6.2.70</version>
     <title>agora rtc sdk wrapper</title>
     <authors>berky</authors>
 	<requireLicenseAcceptance>false</requireLicenseAcceptance>
