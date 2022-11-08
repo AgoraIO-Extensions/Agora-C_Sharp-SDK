@@ -54,7 +54,7 @@ namespace Agora.Rtc
             {
                 _videoFrameBuffer = new IrisCVideoFrameBufferNative
                 {
-                    type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
+                    type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420,
                     OnVideoFrameReceived = IntPtr.Zero,
                     bytes_per_row_alignment = 2
                 };

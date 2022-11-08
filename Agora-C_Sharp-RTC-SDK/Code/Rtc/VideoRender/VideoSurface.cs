@@ -64,7 +64,7 @@ namespace Agora.Rtc
                 }
                 else if(_textureManager && !_hasAttach && _textureManager.CanTextureAttach())
                 {
-                    ApplyTexture(_textureManager.Texture);
+                    ApplyTexture(_textureManager.Texture, _textureManager._uTexture, _textureManager._vTexture);
                     _hasAttach = true;
                 }
 
@@ -83,7 +83,7 @@ namespace Agora.Rtc
                 if (_hasAttach && !IsBlankTexture())
                 {
                     DestroyTextureManager();
-                    ApplyTexture(null);
+                    ApplyTexture(null, null, null);
                 }
             }
         }
@@ -158,12 +158,14 @@ namespace Agora.Rtc
             }
         }
 
-        private void ApplyTexture(Texture2D texture)
+        private void ApplyTexture(Texture2D texture, Texture2D uTexture, Texture2D vTexture)
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
                 rd.material.mainTexture = texture;
+                rd.material.SetTexture("_UTex", uTexture);
+                rd.material.SetTexture("_VTex", vTexture);
             }
             else if (VideoSurfaceType == VideoSurfaceType.RawImage)
             {
@@ -177,7 +179,7 @@ namespace Agora.Rtc
             var mesh = GetComponent<MeshRenderer>();
             if (mesh != null)
             {
-                mesh.material = new Material(Shader.Find("Unlit/Texture"));
+                mesh.material = new Material(Shader.Find("Unlit/RendererShader601"));
             }
         }
 
