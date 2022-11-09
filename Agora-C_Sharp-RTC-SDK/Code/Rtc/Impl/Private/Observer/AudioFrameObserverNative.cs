@@ -156,11 +156,11 @@ namespace Agora.Rtc
         private static AudioFrame GetAudioFrameFromJsonData(ref LitJson.JsonData jsonData, string key, int bufferLength)
         {
             AudioFrame audioFrame = AgoraJson.JsonToStruct<AudioFrame>(jsonData, key);
-            audioFrame.bufferPtr = (IntPtr)audioFrame.buffer;
-            if (mode == OBSERVER_MODE.RAW_DATA && audioFrame.bufferPtr != IntPtr.Zero)
+            audioFrame.buffer = (IntPtr)audioFrame.buffer;
+            if (mode == OBSERVER_MODE.RAW_DATA && audioFrame.buffer != IntPtr.Zero)
             {
                 audioFrame.RawBuffer = new byte[bufferLength];
-                Marshal.Copy(audioFrame.bufferPtr, audioFrame.RawBuffer, 0, bufferLength);
+                Marshal.Copy(audioFrame.buffer, audioFrame.RawBuffer, 0, bufferLength);
             }
 
             return audioFrame;

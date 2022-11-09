@@ -886,15 +886,11 @@ namespace Agora.Rtc
         ///
         public int samplesPerSec { set; get; }
 
+      
         ///
         /// @ignore
         ///
-        public UInt64 buffer { set; get; }
-
-        ///
-        /// @ignore
-        ///
-        public IntPtr bufferPtr { set; get; }
+        public IntPtr buffer { set; get; }
 
         ///
         /// <summary>
