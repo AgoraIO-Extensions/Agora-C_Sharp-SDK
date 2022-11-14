@@ -5,54 +5,66 @@ using UnityEngine;
 
 namespace Agora.Rtc
 {
-    internal class TextureManager : MonoBehaviour
+    public class TextureManager : MonoBehaviour
     {
         // texture identity
-        private int _videoPixelWidth = 0;
-        private int _videoPixelHeight = 0;
-        private uint _uid = 0;
-        private string _channelId = "";
-        private VIDEO_SOURCE_TYPE _sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+        protected int _videoPixelWidth = 0;
+        protected int _videoPixelHeight = 0;
+        //texture width and height
+        public int Width
+        {
+            get
+            {
+                return _videoPixelWidth;
+            }
+        }
+        public int Height
+        {
+            get
+            {
+                return _videoPixelHeight;
+            }
+        }
 
-        private bool _needResize = false;
-        private bool _needUpdateInfo = true;
-        private bool isFresh = false;
+        protected uint _uid = 0;
+        protected string _channelId = "";
+        protected VIDEO_SOURCE_TYPE _sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+        protected VIDEO_OBSERVER_FRAME_TYPE _frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
 
-        private IVideoStreamManager _videoStreamManager;
-        private IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
+        protected bool _needResize = false;
+        protected bool _needUpdateInfo = true;
+        protected bool isFresh = false;
+
+        protected IVideoStreamManager _videoStreamManager;
+        protected IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
 
         // reference count
-        private int _refCount = 0;
-        private bool _canAttach = false;
+        protected int _refCount = 0;
+        protected bool _canAttach = false;
 
-        //texture width and height
-        public int Width = 0;
-        public int Height = 0;
 
-        private Texture2D _texture;
+        protected Texture2D _texture;
         public Texture2D Texture
         {
             get
             {
-                _refCount++;
-                AgoraLog.Log("TextureManager refCount Add, Now is: " + _refCount);
                 return _texture;
             }
         }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             InitTexture();
             InitIrisVideoFrame();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (_needUpdateInfo) return;
             ReFreshTexture();
         }
 
-        private void OnDestroy()
+        protected virtual void OnDestroy()
         {
             AgoraLog.Log(string.Format("VideoSurface channel: ${0}, user:{1} destroy", _channelId, _uid));
 
@@ -67,7 +79,7 @@ namespace Agora.Rtc
             DestroyTexture();
         }
 
-        private void InitTexture()
+        internal virtual void InitTexture()
         {
             try
             {
@@ -80,7 +92,7 @@ namespace Agora.Rtc
             }
         }
 
-        private void InitIrisVideoFrame()
+        internal virtual void InitIrisVideoFrame()
         {
             _cachedVideoFrame = new IrisVideoFrame
             {
@@ -114,17 +126,17 @@ namespace Agora.Rtc
 
                 if (_videoStreamManager != null)
                 {
-                    _videoStreamManager.EnableVideoFrameBuffer(_sourceType, _uid, _channelId);
+                    _videoStreamManager.EnableVideoFrameBuffer(_sourceType, _uid, _channelId, _frameType);
                     _needUpdateInfo = false;
                 }
             }
         }
 
-        internal void ReFreshTexture()
+        internal virtual void ReFreshTexture()
         {
             var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
-            this.Width = _cachedVideoFrame.width;
-            this.Height = _cachedVideoFrame.height;
+            //this.Width = _cachedVideoFrame.width;
+            //this.Height = _cachedVideoFrame.height;
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY || ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
             {
@@ -160,12 +172,11 @@ namespace Agora.Rtc
                         _texture.Apply();
                         _needResize = false;
                     }
-                    else
-                    {
-                        _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
-                            (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
-                        _texture.Apply();
-                    }
+
+                    _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
+                        (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
+                    _texture.Apply();
+
                 }
                 catch (Exception e)
                 {
@@ -175,11 +186,20 @@ namespace Agora.Rtc
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",
-            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
+            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY,
+            VIDEO_OBSERVER_FRAME_TYPE frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA)
         {
             _uid = uid;
             _channelId = channelId;
             _sourceType = source_type;
+            _frameType = frameType;
+        }
+
+
+        internal void Attach()
+        {
+            _refCount++;
+            AgoraLog.Log("TextureManager RGBA refCount Add, Now is: " + _refCount);
         }
 
         internal void Detach()
@@ -192,7 +212,7 @@ namespace Agora.Rtc
             return;
         }
 
-        private void DestroyTexture()
+        protected virtual void DestroyTexture()
         {
             if (_texture != null)
             {
@@ -206,6 +226,7 @@ namespace Agora.Rtc
             if (_cachedVideoFrame.yBuffer != IntPtr.Zero)
             {
                 Marshal.FreeHGlobal(_cachedVideoFrame.yBuffer);
+                _cachedVideoFrame.yBuffer = IntPtr.Zero;
             }
         }
 
