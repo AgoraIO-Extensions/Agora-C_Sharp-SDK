@@ -30,7 +30,7 @@ namespace Agora.Rtc
                     if (_TextureManagerGameObject == null)
                     {
                         _TextureManagerGameObject = new GameObject(textureManagerName);
-                        //_TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
+                        _TextureManagerGameObject.hideFlags = HideFlags.HideInHierarchy;
 
                         _textureManagerYUV = _TextureManagerGameObject.AddComponent<TextureManagerYUV>();
                         _textureManagerYUV.SetVideoStreamIdentity(Uid, ChannelId, SourceType, FrameType);
