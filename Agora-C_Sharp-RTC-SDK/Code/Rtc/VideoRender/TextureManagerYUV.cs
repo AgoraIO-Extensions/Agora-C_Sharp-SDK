@@ -91,6 +91,12 @@ namespace Agora.Rtc
                 _canAttach = false;
                 return;
             }
+            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_FRAM_TYPE_NOT_MATCHING)
+            {
+                _canAttach = false;
+                AgoraLog.LogWarning("YUV ERR_FRAM_TYPE_NOT_MATCHING may be you use both VideoSurface.cs and VideoSurfaceYUV.cs in same");
+                return;
+            }
             else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_SIZE_NOT_MATCHING)
             {
                 _needResize = true;
@@ -107,6 +113,7 @@ namespace Agora.Rtc
                 _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _videoPixelHeight / 2);
                 _cachedVideoFrame.vStride = _cachedVideoFrame.yStride / 2;
                 _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _videoPixelHeight / 2);
+                return;
             }
             else
             {
