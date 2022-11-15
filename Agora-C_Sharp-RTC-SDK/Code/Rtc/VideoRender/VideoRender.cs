@@ -6,9 +6,10 @@ namespace Agora.Rtc
 {
     using IrisVideoFrameBufferHandle = IntPtr;
 
-    internal abstract class IVideoStreamManager : IDisposable
+    public abstract class IVideoStreamManager : IDisposable
     {
-        internal abstract int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "");
+        internal abstract int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string key = "",
+            VIDEO_OBSERVER_FRAME_TYPE frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_BGRA);
 
         internal abstract void DisableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid = 0, string key = "");
 
@@ -39,7 +40,8 @@ namespace Agora.Rtc
             Dispose();
         }
 
-        internal override int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "")
+        internal override int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string channel_id = "",
+            VIDEO_OBSERVER_FRAME_TYPE frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_BGRA)
         {
             if (_agoraRtcEngine == null)
             {
@@ -54,7 +56,7 @@ namespace Agora.Rtc
             {
                 _videoFrameBuffer = new IrisCVideoFrameBufferNative
                 {
-                    type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
+                    type = (int)frameType,
                     OnVideoFrameReceived = IntPtr.Zero,
                     bytes_per_row_alignment = 2
                 };
