@@ -93,6 +93,7 @@ fi
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
+cp -r "$ROOT_DIR"/Resources "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 rm -rf "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Code/agorartc.csproj
 
 # Copy Plugins
