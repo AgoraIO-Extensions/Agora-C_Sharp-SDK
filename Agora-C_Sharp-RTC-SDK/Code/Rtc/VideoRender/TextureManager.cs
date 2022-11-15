@@ -144,6 +144,11 @@ namespace Agora.Rtc
                 //AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", _channelId, _uid));
                 return;
             }
+            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_FRAM_TYPE_NOT_MATCHING) {
+                _canAttach = false;
+                AgoraLog.LogWarning("RGBA ERR_FRAM_TYPE_NOT_MATCHING: may be you use both VideoSurface.cs and VideoSurfaceYUV.cs in same");
+                return;
+            }
             else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_SIZE_NOT_MATCHING)
             {
                 _needResize = true;
@@ -156,6 +161,7 @@ namespace Agora.Rtc
                 _cachedVideoFrame.height = _videoPixelHeight;
                 _cachedVideoFrame.width = _videoPixelWidth;
                 _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
+                return;
             }
             else
             {
