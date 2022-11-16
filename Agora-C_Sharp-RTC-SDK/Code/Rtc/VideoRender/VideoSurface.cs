@@ -191,6 +191,7 @@ namespace Agora.Rtc
             var mesh = GetComponent<MeshRenderer>();
             if (mesh != null)
             {
+                Debug.LogWarning("VideoSureface update shader");
                 mesh.material = new Material(Shader.Find("Unlit/Texture"));
             }
         }

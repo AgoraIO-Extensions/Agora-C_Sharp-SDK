@@ -160,7 +160,7 @@ namespace Agora.Rtc
             else if (VideoSurfaceType == VideoSurfaceType.RawImage)
             {
                 var rd = _renderer as RawImage;
-                rd.material = new Material(Shader.Find("Unlit/RendererShader601"));
+                rd.material = new Material(Shader.Find("UI/RendererShader601"));
             }
         }
 

@@ -202,18 +202,18 @@ namespace Agora.Rtc
         }
 
 
-        internal void Attach()
+        virtual internal void Attach()
         {
             _refCount++;
             AgoraLog.Log("TextureManager RGBA refCount Add, Now is: " + _refCount);
         }
 
-        internal void Detach()
+        virtual internal void Detach()
         {
             if (_refCount > 0)
             {
                 _refCount--;
-                AgoraLog.Log("TextureManager refCount Minus, Now is: " + _refCount);
+                AgoraLog.Log("TextureManager RGBA refCount Minus, Now is: " + _refCount);
             }
             return;
         }

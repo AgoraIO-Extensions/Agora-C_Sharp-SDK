@@ -194,6 +194,22 @@ namespace Agora.Rtc
             }
         }
 
+        override internal void Attach()
+        {
+            _refCount++;
+            AgoraLog.Log("TextureManager YUV refCount Add, Now is: " + _refCount);
+        }
+
+        override internal void Detach()
+        {
+            if (_refCount > 0)
+            {
+                _refCount--;
+                AgoraLog.Log("TextureManager YUV refCount Minus, Now is: " + _refCount);
+            }
+            return;
+        }
+
     }
 }
 
