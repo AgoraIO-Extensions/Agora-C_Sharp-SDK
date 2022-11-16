@@ -40,7 +40,7 @@ namespace Agora.Rtc
 
     //workaround, must be public, so can parse from a json string
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisVideoFrame
+    public struct IrisVideoFrame
     {
         public VIDEO_OBSERVER_FRAME_TYPE type;
         public int width;

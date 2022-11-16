@@ -27,6 +27,7 @@ namespace Agora.Rtc
         ERR_NULL_POINTER = 1,
         ERR_SIZE_NOT_MATCHING = 2,
         ERR_BUFFER_EMPTY = 5,
+        ERR_FRAM_TYPE_NOT_MATCHING = 6
     };
 
 
