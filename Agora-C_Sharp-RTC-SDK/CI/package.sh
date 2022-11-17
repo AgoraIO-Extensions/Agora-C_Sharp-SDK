@@ -170,7 +170,7 @@ echo "[Unity CI] finish copying files"
 # Export Package
 #--------------------------------------
 if [ "$SDK_TYPE" == "audio" ]; then
-    python3 ./remove_video_case.py $CI_DIR/project/Assets/API-Example
+    python3 ./remove_video_case.py "$PLUGIN_PATH"/API-Example
 fi
 
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects  "$CI_DIR/project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage"
