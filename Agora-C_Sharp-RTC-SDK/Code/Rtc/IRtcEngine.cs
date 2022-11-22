@@ -3960,15 +3960,14 @@ namespace Agora.Rtc
         ///
         public abstract int GetAudioTrackCount();
 
-"> The audio track you want to specify. The value range is [0, GetAudioTrackCount ()].</param>
+
         ///
         /// <summary>
         /// Selects the audio track used during playback.
         /// After getting the track index of the audio file, you can call this method to specify any track to play. For example, if different tracks of a multi-track file store songs in different languages, you can call this method to set the playback language.For the supported formats of audio files, see .You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback.
         /// </summary>
         ///
-        /// <param name="index
-"> The audio track you want to specify. The value range is [0, GetAudioTrackCount ()].</param>
+        /// <param name="index"> The audio track you want to specify. The value range is [0, GetAudioTrackCount ()].</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
