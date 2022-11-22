@@ -275,8 +275,14 @@ namespace Agora.Rtc
     ///
     public class AudioEncodedFrameInfo
     {
+        ///
+        /// @ignore
+        ///
         public uint64_t sendTs;
 
+        ///
+        /// @ignore
+        ///
         public Byte codec;
 
         public AudioEncodedFrameInfo()
@@ -286,18 +292,53 @@ namespace Agora.Rtc
         }
     };
 
-    public struct AudioPcmFrame
+    ///
+    /// <summary>
+    /// The parameters of the audio frame in PCM format.
+    /// </summary>
+    ///
+    public class AudioPcmFrame
     {
+        ///
+        /// <summary>
+        /// The timestamp (ms) of the audio frame.
+        /// </summary>
+        ///
         public Int64 capture_timestamp;
 
+        ///
+        /// <summary>
+        /// The number of samples per channel in the audio frame.
+        /// </summary>
+        ///
         public UInt64 samples_per_channel_;
 
+        ///
+        /// <summary>
+        /// Audio sample rate (Hz).
+        /// </summary>
+        ///
         public int sample_rate_hz_;
 
+        ///
+        /// <summary>
+        /// The number of audio channels.
+        /// </summary>
+        ///
         public UInt64 num_channels_;
 
+        ///
+        /// <summary>
+        /// The number of bytes per sample.
+        /// </summary>
+        ///
         public BYTES_PER_SAMPLE bytes_per_sample;
 
+        ///
+        /// <summary>
+        /// The video frame.
+        /// </summary>
+        ///
         public Int16[] data_;
     };
 
@@ -668,7 +709,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Configurations of the video frame.
-    /// The video data format is YUV420. Note that the buffer provides a pointer to a pointer. This interface cannot modify the pointer of the buffer but can modify the content of the buffer.
+    /// The video data format is YUV420. Note that the buffer provides a pointer to a pointer. This interface cannot modify the pointer of the buffer, but it can modify the content of the buffer.
     /// </summary>
     ///
     public class VideoFrame
@@ -697,48 +738,148 @@ namespace Agora.Rtc
             matrix = new float[16];
         }
 
+        ///
+        /// <summary>
+        /// The pixel format. See VIDEO_PIXEL_FORMAT .
+        /// </summary>
+        ///
         public VIDEO_PIXEL_FORMAT type;
 
+        ///
+        /// <summary>
+        /// The width of the video, in pixels.
+        /// </summary>
+        ///
         public int width;
 
+        ///
+        /// <summary>
+        /// The height of the video, in pixels.
+        /// </summary>
+        ///
         public int height;
 
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the Y buffer; for RGBA data, the total data length.
+        /// </summary>
+        ///
         public int yStride;
 
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the U buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
         public int uStride;
 
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the V buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
         public int vStride;
 
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the Y buffer; for RGBA data, the data buffer.
+        /// </summary>
+        ///
         public byte[] yBuffer;
 
+        ///
+        /// @ignore
+        ///
         public IntPtr yBufferPtr;
 
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the U buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
         public byte[] uBuffer;
 
+        ///
+        /// @ignore
+        ///
         public IntPtr uBufferPtr;
 
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the V buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
         public byte[] vBuffer;
 
+        ///
+        /// @ignore
+        ///
         public IntPtr vBufferPtr;
 
+        ///
+        /// <summary>
+        /// The clockwise rotation of the video frame before rendering. Supported values include 0, 90, 180, and 270 degrees.
+        /// </summary>
+        ///
         public int rotation;
 
+        ///
+        /// <summary>
+        /// The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. It is required.
+        /// </summary>
+        ///
         public long renderTimeMs;
 
+        ///
+        /// <summary>
+        /// Reserved for future use.
+        /// </summary>
+        ///
         public int avsync_type;
 
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
+        /// </summary>
+        ///
         public IntPtr metadata_buffer;
 
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
+        /// </summary>
+        ///
         public int metadata_size;
 
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. EGL Context.
+        /// </summary>
+        ///
         public IntPtr sharedContext;
 
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. Texture ID.
+        /// </summary>
+        ///
         public int textureId;
 
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. Incoming 4 × 4 transformational matrix. The typical value is a unit matrix.
+        /// </summary>
+        ///
         public float[] matrix;
 
+        ///
+        /// @ignore
+        ///
         public byte[] alphaBuffer;
 
+        ///
+        /// @ignore
+        ///
         public IntPtr alphaBufferPtr;
     };
 
@@ -945,13 +1086,16 @@ namespace Agora.Rtc
         ///
         AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
 
+        ///
+        /// @ignore
+        ///
         AUDIO_FRAME_POSITION_EAR_MONITORING = 0x0010
     };
 
     ///
     /// <summary>
     /// Audio data format.
-    /// You can pass the AudioParams object in the return value of the following callbacks to set the audio data format for the corresponding callback: GetRecordAudioParams : Sets the audio data format for the OnRecordAudioFrame callback. GetPlaybackAudioParams : Sets the audio data format for the OnPlaybackAudioFrame callback. GetMixedAudioParams : Sets the audio data format for the OnMixedAudioFrame callback.The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, and OnMixedAudioFrame callbacks according to the sampling interval.Sample interval = samplePerCall/(sampleRate × channel).Ensure that the sample interval ≥ 0.01 (s).
+    /// You can pass the AudioParams object in the return value of the following callbacksto set the audio data format for the corresponding callback: GetRecordAudioParams : Sets the audio data format for the OnRecordAudioFrame callback. GetPlaybackAudioParams : Sets the audio data format for the OnPlaybackAudioFrame callback. GetMixedAudioParams : Sets the audio data format for the OnMixedAudioFrame callback. GetEarMonitoringAudioParams : Sets the audio data format for the OnEarMonitoringAudioFrame callback.The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, OnMixedAudioFrame, and OnEarMonitoringAudioFrame callbacks according to the sampling interval.Sample interval (sec) = samplePerCall/(sampleRate × channel).Ensure that the sample interval ≥ 0.01 (s).
     /// </summary>
     ///
     public class AudioParams
@@ -1001,17 +1145,47 @@ namespace Agora.Rtc
         }
     };
 
-    public struct AudioSpectrumData
+    ///
+    /// <summary>
+    /// The audio spectrum data.
+    /// </summary>
+    ///
+    public class AudioSpectrumData
     {
+        ///
+        /// <summary>
+        /// The audio spectrum data. Agora divides the audio frequency into 256 frequency domains, and reports the energy value of each frequency domain through this parameter. The value range of each energy type is [-300, 1] and the unit is dBFS.
+        /// </summary>
+        ///
         public float[] audioSpectrumData;
 
+        ///
+        /// <summary>
+        /// The audio spectrum data length is 256.
+        /// </summary>
+        ///
         public int dataLength;
     };
 
-    public struct UserAudioSpectrumInfo
+    ///
+    /// <summary>
+    /// Audio spectrum information of the remote user.
+    /// </summary>
+    ///
+    public class UserAudioSpectrumInfo
     {
+        ///
+        /// <summary>
+        /// The user ID of the remote user.
+        /// </summary>
+        ///
         public uint uid;
 
+        ///
+        /// <summary>
+        /// Audio spectrum information of the remote user.See AudioSpectrumData .
+        /// </summary>
+        ///
         public AudioSpectrumData spectrumData;
     };
 
@@ -1038,30 +1212,22 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// Content moderation results.
-    /// </summary>
+    /// @ignore
     ///
     public enum CONTENT_INSPECT_RESULT
     {
         ///
-        /// <summary>
-        /// 1: The image does not contain inappropriate elements.
-        /// </summary>
+        /// @ignore
         ///
         CONTENT_INSPECT_NEUTRAL = 1,
 
         ///
-        /// <summary>
-        /// 2: The image is sexually suggestive.
-        /// </summary>
+        /// @ignore
         ///
         CONTENT_INSPECT_SEXY = 2,
 
         ///
-        /// <summary>
-        /// 3: The image is pornographic.
-        /// </summary>
+        /// @ignore
         ///
         CONTENT_INSPECT_PORN = 3,
 
@@ -1160,21 +1326,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// ContentInspectModuleStructure to configure the type and frequency of the video content moderation module.
+    /// A structure used to configure the frequency of video screenshot and upload.ContentInspectModule
     /// </summary>
     ///
     public class ContentInspectModule
     {
         ///
         /// <summary>
-        /// The type of video content moderation module. See CONTENT_INSPECT_TYPE .
+        /// Types of functional modules:CONTENT_INSPECT_INVALID(0): (Default) This module has no actual function. Do not set to this value.CONTENT_INSPECT_SUPERVISION(2): Video screenshot and upload. SDK takes screenshots of the video stream in the channel and uploads them.
         /// </summary>
         ///
         public CONTENT_INSPECT_TYPE type;
 
         ///
         /// <summary>
-        /// The frequency (in seconds) of video content moderation. The value should be set as larger than 0. If set as 0 (default), the video content is not inspected. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
+        /// The frequency (s) of video screenshot and upload. The value should be set as larger than 0. The default value is 0, the SDK does not take screenshots. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
         /// </summary>
         ///
         public uint interval;
@@ -1188,21 +1354,21 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Configuration of video content moderation.
+    /// Configuration of video screenshot and upload.
     /// </summary>
     ///
     public class ContentInspectConfig
     {
         ///
         /// <summary>
-        /// Video content moderation module. See ContentInspectModule .A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32].A video content moderation module can only be configured with one instance at most.
+        /// Functional module. See ContentInspectModule .A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32].A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
         /// </summary>
         ///
         public ContentInspectModule[] modules { set; get; }
 
         ///
         /// <summary>
-        /// The number of video content moderation modules, that is, the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
+        /// The number of functional modules, that is,the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
         /// </summary>
         ///
         public int moduleCount { set; get; }
@@ -1361,7 +1527,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The absolute path (including the filename extensions) of the recording file. For example:Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4iOS: /AppSandbox/Library/Caches/example.mp4macOS: ～/Library/Logs/example.mp4Android: /storage/emulated/0/Android/data/<package name>/files/agorasdk.mp4Ensure that the directory for the log files exists and is writable.
+        /// The absolute path (including the filename extensions) of the recording file. For example:Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4iOS: /App Sandbox/Library/Caches/example.mp4macOS: /Library/Logs/example.mp4Android: /storage/emulated/0/Android/data/<package name>/files/example.mp4Ensure that the directory for the log files exists and is writable.
         /// </summary>
         ///
         public string storagePath { set; get; }

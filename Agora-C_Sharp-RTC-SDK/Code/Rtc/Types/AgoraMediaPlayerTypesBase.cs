@@ -22,49 +22,49 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Opening the media resource.
+        /// 1: Opening the media resource.
         /// </summary>
         ///
         PLAYER_STATE_OPENING = 1,
 
         ///
         /// <summary>
-        /// Opens the media resource successfully.
+        /// 2: Opens the media resource successfully.
         /// </summary>
         ///
         PLAYER_STATE_OPEN_COMPLETED = 2,
 
         ///
         /// <summary>
-        /// The media resource is playing.
+        /// 3: The media resource is playing.
         /// </summary>
         ///
         PLAYER_STATE_PLAYING = 3,
 
         ///
         /// <summary>
-        /// Pauses the playback.
+        /// 4: Pauses the playback.
         /// </summary>
         ///
         PLAYER_STATE_PAUSED = 4,
 
         ///
         /// <summary>
-        /// The playback finishes.
+        /// 5: The playback is complete.
         /// </summary>
         ///
         PLAYER_STATE_PLAYBACK_COMPLETED = 5,
 
         ///
         /// <summary>
-        /// The loop finishes.
+        /// 6: The loop is complete.
         /// </summary>
         ///
         PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED = 6,
 
         ///
         /// <summary>
-        /// The playback stops.
+        /// 7: The playback stops.
         /// </summary>
         ///
         PLAYER_STATE_STOPPED = 7,
@@ -683,7 +683,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The URL of the media file to be played.If you need to open a custom media resource, you do not have to pass in a value to the url.
+        /// The URL of the media file to be played.If you open a common media resource, pass in the value to url. If you open a custom media resource, pass in the value to provider. Agora recommends that you do not pass in values to both parameters in one call; otherwise, this call may fail.
         /// </summary>
         ///
         public string url { set; get; }
@@ -697,42 +697,42 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The starting position (ms) for playback. The default value is 0.
+        /// The starting position (ms) for playback. Default value is 0.
         /// </summary>
         ///
         public int64_t startPos { set; get; }
 
         ///
         /// <summary>
-        /// Whether to enable autoplay once the media file is opened:true: (Default) Enable autoplay.false: Disable autoplay.If autoplay is disabled, you need to call the Play method to play a media file after it is opened.
+        /// Whether to enable autoplay once the media file is opened:true: (Default) Enables autoplay.false: Disables autoplay.If autoplay is disabled, you need to call the Play method to play a media file after it is opened.
         /// </summary>
         ///
         public bool autoPlay { set; get; }
 
         ///
         /// <summary>
-        /// Whether to cache the media file when it is being played:true:Enable caching.false: (Default) Disable caching.If you need to enable caching, pass in a value to uri; otherwise, caching is based on the url of the media file.If you enable this function, the Media Player caches part of the media file being played on your local device, and you can play the cached media file without internet connection. The statistics about the media file being cached are updated every second after the media file is played. See CacheStatistics .
+        /// Whether to cache the media file when it is being played:true:Enables caching.false: (Default) Disables caching.If you need to enable caching, pass in a value to uri; otherwise, caching is based on the url of the media file.If you enable this function, the Media Player caches part of the media file being played on your local device, and you can play the cached media file without internet connection. The statistics about the media file being cached are updated every second after the media file is played. See CacheStatistics .
         /// </summary>
         ///
         public bool enableCache { set; get; }
 
         ///
         /// <summary>
-        /// Whether the media resource to be opened is a live stream or on-demand video distributed through Media Broadcast service:true: The media resource is a live stream or on-demand video distributed through Media Broadcast service.false: (Default) The media resource is not a live stream or on-demand video distributed through Media Broadcast service.If you need to open a live stream or on-demand video distributed through Broadcast Streaming service, pass in the URL of the media resource to url, and set isAgoraSource as true; otherwise, you don't need to set the isAgoraSource parameter.
+        /// Whether the media resource to be opened is a live stream or on-demand video distributed through Media Broadcast service:true: The media resource is a live stream or on-demand video distributed through Media Broadcast service.false: (Default) The media resource is not a live stream or on-demand video distributed through Media Broadcast service.If you need to open a live stream or on-demand video distributed through Broadcast Streaming service, pass in the URL of the media resource to url, and set isAgoraSource as ; otherwise, you don't need to set the isAgoraSource parameter.true
         /// </summary>
         ///
         public Optional<bool> isAgoraSource = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether the media resource to be opened is a live stream:true: The media resource is a live stream.false: (Default) The media resource is not a live stream.If the media resource you want to open is a live stream, Agora recommends that you set this parameter as true so that the live stream can be loaded more quickly.If the media resource you open is not a live stream, but you set isLiveSource as true, the media resource is not to be loaded more quickly.
+        /// Whether the media resource to be opened is a live stream:true: The media resource is a live stream.false: (Default) The media resource is not a live stream.trueIf the media resource you want to open is a live stream, Agora recommends that you set this parameter as so that the live stream can be loaded more quickly.trueIf the media resource you open is not a live stream, but you set isLiveSource as , the media resource is not to be loaded more quickly.
         /// </summary>
         ///
         public Optional<bool> isLiveSource = new Optional<bool>();
 
         ///
         /// <summary>
-        /// The callback for custom media resource files. See IMediaPlayerCustomDataProvider .If you need to open a custom media resource, such as an encrypted media file, pass in a value to provider rather than to url.
+        /// The callback for custom media resource files. See IMediaPlayerCustomDataProvider .If you open a custom media resource, pass in the value to provider. If you open a common media resource, pass in the value to url. Agora recommends that you do not pass in values to both url and provider in one call; otherwise, this call may fail.
         /// </summary>
         ///
         public IMediaPlayerCustomDataProvider provider { set; get; }

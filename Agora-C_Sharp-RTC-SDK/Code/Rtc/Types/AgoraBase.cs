@@ -72,119 +72,523 @@ namespace Agora.Rtc
         CHANNEL_PROFILE_COMMUNICATION_1v1 = 4,
     };
 
+    ///
+    /// @ignore
+    ///
     public enum WARN_CODE_TYPE
     {
+        ///
+        /// @ignore
+        ///
         WARN_INVALID_VIEW = 8,
+        ///
+        /// @ignore
+        ///
         WARN_INIT_VIDEO = 16,
+        ///
+        /// @ignore
+        ///
         WARN_PENDING = 20,
+        ///
+        /// @ignore
+        ///
         WARN_NO_AVAILABLE_CHANNEL = 103,
+        ///
+        /// @ignore
+        ///
         WARN_LOOKUP_CHANNEL_TIMEOUT = 104,
+        ///
+        /// @ignore
+        ///
         WARN_LOOKUP_CHANNEL_REJECTED = 105,
+        ///
+        /// @ignore
+        ///
         WARN_OPEN_CHANNEL_TIMEOUT = 106,
+        ///
+        /// @ignore
+        ///
         WARN_OPEN_CHANNEL_REJECTED = 107,
+        ///
+        /// @ignore
+        ///
         WARN_SWITCH_LIVE_VIDEO_TIMEOUT = 111,
+        ///
+        /// @ignore
+        ///
         WARN_SET_CLIENT_ROLE_TIMEOUT = 118,
+        ///
+        /// @ignore
+        ///
         WARN_OPEN_CHANNEL_INVALID_TICKET = 121,
+        ///
+        /// @ignore
+        ///
         WARN_OPEN_CHANNEL_TRY_NEXT_VOS = 122,
+        ///
+        /// @ignore
+        ///
         WARN_CHANNEL_CONNECTION_UNRECOVERABLE = 131,
+        ///
+        /// @ignore
+        ///
         WARN_CHANNEL_CONNECTION_IP_CHANGED = 132,
+        ///
+        /// @ignore
+        ///
         WARN_CHANNEL_CONNECTION_PORT_CHANGED = 133,
+        ///
+        /// @ignore
+        ///
         WARN_CHANNEL_SOCKET_ERROR = 134,
+        ///
+        /// @ignore
+        ///
         WARN_AUDIO_MIXING_OPEN_ERROR = 701,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_RUNTIME_PLAYOUT_WARNING = 1014,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_RUNTIME_RECORDING_WARNING = 1016,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_RECORD_AUDIO_SILENCE = 1019,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_PLAYOUT_MALFUNCTION = 1020,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_RECORD_MALFUNCTION = 1021,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_RECORD_AUDIO_LOWLEVEL = 1031,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_PLAYOUT_AUDIO_LOWLEVEL = 1032,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_WINDOWS_NO_DATA_READY_EVENT = 1040,
+        ///
+        /// @ignore
+        ///
         WARN_APM_HOWLING = 1051,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_GLITCH_STATE = 1052,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_IMPROPER_SETTINGS = 1053,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_WIN_CORE_NO_RECORDING_DEVICE = 1322,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_WIN_CORE_NO_PLAYOUT_DEVICE = 1323,
+        ///
+        /// @ignore
+        ///
         WARN_ADM_WIN_CORE_IMPROPER_CAPTURE_RELEASE = 1324,
     };
 
+    ///
+    /// <summary>
+    /// Error codes.
+    /// An error code indicates that the SDK encountered an unrecoverable error that requires application intervention. For example, an error is returned when the camera fails to open, and the app needs to inform the user that the camera cannot be used.
+    /// </summary>
+    ///
     public enum ERROR_CODE_TYPE
     {
+        ///
+        /// <summary>
+        /// 0: No error.
+        /// </summary>
+        ///
         ERR_OK = 0,
+        ///
+        /// <summary>
+        /// 1: General error with no classified reason. Try calling the method again.
+        /// </summary>
+        ///
         ERR_FAILED = 1,
+        ///
+        /// <summary>
+        /// 2: An invalid parameter is used. For example, the specified channel name includes illegal characters. Reset the parameter.
+        /// </summary>
+        ///
         ERR_INVALID_ARGUMENT = 2,
+        ///
+        /// <summary>
+        /// 3: The SDK is not ready. Possible reasons include the following:The initialization of IRtcEngine fails. Reinitialize the IRtcEngine.No user has joined the channel when the method is called. Check the code logic.The user has not left the channel when the Rate or Complain method is called. Check the code logic.The audio module is disabled.The program is not complete.
+        /// </summary>
+        ///
         ERR_NOT_READY = 3,
+        ///
+        /// <summary>
+        /// 4: IRtcEngine does not support the request. Possible reasons include the following:The built-in encryption mode is incorrect, or the SDK fails to load the external encryption library. Check the encryption mode setting, or reload the external encryption library.
+        /// </summary>
+        ///
         ERR_NOT_SUPPORTED = 4,
+        ///
+        /// <summary>
+        /// 5: The request is rejected. Possible reasons include the following:The IRtcEngine initialization fails. Reinitialize the IRtcEngine.The channel name is set as the empty string "" when joining the channel. Reset the channel name.When the JoinChannelEx method is called to join multiple channels, the specified channel name is already in use. Reset the channel name.
+        /// </summary>
+        ///
         ERR_REFUSED = 5,
+        ///
+        /// <summary>
+        /// 6: The buffer size is insufficient to store the returned data.
+        /// </summary>
+        ///
         ERR_BUFFER_TOO_SMALL = 6,
+        ///
+        /// <summary>
+        /// 7: A method is called before the initialization of IRtcEngine. Ensure that the IRtcEngine object is initialized before using this method.
+        /// </summary>
+        ///
         ERR_NOT_INITIALIZED = 7,
+        ///
+        /// @ignore
+        ///
         ERR_INVALID_STATE = 8,
+        ///
+        /// <summary>
+        /// 9: Permission to access is not granted. Check whether your app has access to the audio and video device.
+        /// </summary>
+        ///
         ERR_NO_PERMISSION = 9,
+        ///
+        /// <summary>
+        /// 10: A timeout occurs. Some API calls require the SDK to return the execution result. This error occurs if the SDK takes too long (more than 10 seconds) to return the result.
+        /// </summary>
+        ///
         ERR_TIMEDOUT = 10,
+        ///
+        /// @ignore
+        ///
         ERR_CANCELED = 11,
+        ///
+        /// @ignore
+        ///
         ERR_TOO_OFTEN = 12,
+        ///
+        /// @ignore
+        ///
         ERR_BIND_SOCKET = 13,
+        ///
+        /// @ignore
+        ///
         ERR_NET_DOWN = 14,
+        ///
+        /// <summary>
+        /// 17: The request to join the channel is rejected. Possible reasons include the following:The user is already in the channel. Agora recommends using the OnConnectionStateChanged callback to get whether the user is in the channel. Do not call this method to join the channel unless you receive the CONNECTION_STATE_DISCONNECTED(1) state.After calling StartEchoTest [2/2] for the call test, the user tries to join the channel without calling StopEchoTest to end the current test. To join a channel, the call test must be ended by calling StopEchoTest.
+        /// </summary>
+        ///
         ERR_JOIN_CHANNEL_REJECTED = 17,
+        ///
+        /// <summary>
+        /// 18: Fails to leave the channel. Possible reasons include the following:The user has left the channel before calling the LeaveChannel [1/2] method. Stop calling this method to clear this error.The user calls the LeaveChannel [1/2] method to leave the channel before joining the channel. In this case, no extra operation is needed.
+        /// </summary>
+        ///
         ERR_LEAVE_CHANNEL_REJECTED = 18,
+        ///
+        /// <summary>
+        /// 19: Resources are already in use.
+        /// </summary>
+        ///
         ERR_ALREADY_IN_USE = 19,
+        ///
+        /// <summary>
+        /// 20: The request is abandoned by the SDK, possibly because the request has been sent too frequently.
+        /// </summary>
+        ///
         ERR_ABORTED = 20,
+        ///
+        /// <summary>
+        /// 21: The IRtcEngine fails to initialize and has crashed because of specific Windows firewall settings.
+        /// </summary>
+        ///
         ERR_INIT_NET_ENGINE = 21,
+        ///
+        /// <summary>
+        /// 22: The SDK fails to allocate resources because your app uses too many system resources or system resources are insufficient.
+        /// </summary>
+        ///
         ERR_RESOURCE_LIMITED = 22,
+        ///
+        /// <summary>
+        /// 101: The specified App ID is invalid. Rejoin the channel with a valid App ID.
+        /// </summary>
+        ///
         ERR_INVALID_APP_ID = 101,
+        ///
+        /// <summary>
+        /// 102: The specified channel name is invalid. A possible reason is that the parameter's data type is incorrect. Rejoin the channel with a valid channel name.
+        /// </summary>
+        ///
         ERR_INVALID_CHANNEL_NAME = 102,
+        ///
+        /// <summary>
+        /// 103: Fails to get server resources in the specified region. Try another region when initializing IRtcEngine.
+        /// </summary>
+        ///
         ERR_NO_SERVER_RESOURCES = 103,
+        ///
+        /// <summary>
+        /// 109: The current token has expired. Apply for a new token on the server and call RenewToken .Deprecated:This enumerator is deprecated. Use CONNECTION_CHANGED_TOKEN_EXPIRED(9) in the OnConnectionStateChanged callback instead.
+        /// </summary>
+        ///
         ERR_TOKEN_EXPIRED = 109,
+        ///
+        /// <summary>
+        /// 110: Invalid token Typical reasons include the following:App Certificate is enabled in Agora Console, but the code still uses App ID for authentication. Once App Certificate is enabled for a project, you must use token-based authentication.The uid used to generate the token is not the same as the uid used to join the channel.Deprecated:This enumerator is deprecated. Use CONNECTION_CHANGED_INVALID_TOKEN(8) in the OnConnectionStateChanged callback instead.
+        /// </summary>
+        ///
         ERR_INVALID_TOKEN = 110,
+        ///
+        /// <summary>
+        /// 111: The network connection is interrupted. The SDK triggers this callback when it loses connection with the server for more than four seconds after the connection is established.
+        /// </summary>
+        ///
         ERR_CONNECTION_INTERRUPTED = 111,
+        ///
+        /// <summary>
+        /// 112: The network connection is lost. Occurs when the SDK cannot reconnect to Agora's edge server 10 seconds after its connection to the server is interrupted.
+        /// </summary>
+        ///
         ERR_CONNECTION_LOST = 112,
+        ///
+        /// <summary>
+        /// 113: The user is not in the channel when calling the SendStreamMessage method.
+        /// </summary>
+        ///
         ERR_NOT_IN_CHANNEL = 113,
+        ///
+        /// <summary>
+        /// 114: The data size exceeds 1 KB when calling the SendStreamMessage method.
+        /// </summary>
+        ///
         ERR_SIZE_TOO_LARGE = 114,
+        ///
+        /// <summary>
+        /// 115: The data bitrate exceeds 6 KB/s when calling the SendStreamMessage method.
+        /// </summary>
+        ///
         ERR_BITRATE_LIMIT = 115,
+        ///
+        /// <summary>
+        /// 116: More than five data streams are created when calling the CreateDataStream [2/2] method.
+        /// </summary>
+        ///
         ERR_TOO_MANY_DATA_STREAMS = 116,
+        ///
+        /// <summary>
+        /// 117: The data stream transmission times out.
+        /// </summary>
+        ///
         ERR_STREAM_MESSAGE_TIMEOUT = 117,
+        ///
+        /// <summary>
+        /// 119: Switching roles fails, try rejoining the channel.
+        /// </summary>
+        ///
         ERR_SET_CLIENT_ROLE_NOT_AUTHORIZED = 119,
+        ///
+        /// <summary>
+        /// 120: Decryption fails. The user might have entered an incorrect password to join the channel. Check the entered password, or tell the user to try rejoining the channel.
+        /// </summary>
+        ///
         ERR_DECRYPTION_FAILED = 120,
+        ///
+        /// <summary>
+        /// 121: The user ID is invalid.
+        /// </summary>
+        ///
         ERR_INVALID_USER_ID = 121,
+        ///
+        /// <summary>
+        /// 123: The user is banned from the server.
+        /// </summary>
+        ///
         ERR_CLIENT_IS_BANNED_BY_SERVER = 123,
+        ///
+        /// <summary>
+        /// 130: The SDK does not support pushing encrypted streams to CDN.
+        /// </summary>
+        ///
         ERR_ENCRYPTED_STREAM_NOT_ALLOWED_PUBLISH = 130,
+        ///
+        /// @ignore
+        ///
         ERR_LICENSE_CREDENTIAL_INVALID = 131,
+        ///
+        /// <summary>
+        /// 134: The user account is invalid, possibly because it contains invalid parameters.
+        /// </summary>
+        ///
         ERR_INVALID_USER_ACCOUNT = 134,
+        ///
+        /// @ignore
+        ///
         ERR_MODULE_NOT_FOUND = 157,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_RAW = 157,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_JSON_PART = 158,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_JSON_INVAL = 159,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_JSON_NOMEM = 160,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_CUSTOM = 161,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_CREDENTIAL = 162,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_SIGN = 163,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_FAIL = 164,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_BUF = 165,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_NULL = 166,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_DUEDATE = 167,
+        ///
+        /// @ignore
+        ///
         ERR_CERT_REQUEST = 168,
+        ///
+        /// @ignore
+        ///
         ERR_PCMSEND_FORMAT = 200,
+        ///
+        /// @ignore
+        ///
         ERR_PCMSEND_BUFFEROVERFLOW = 201,
+        ///
+        /// @ignore
+        ///
         ERR_LOGIN_ALREADY_LOGIN = 428,
+        ///
+        /// <summary>
+        /// 1001: The SDK fails to load the media engine.
+        /// </summary>
+        ///
         ERR_LOAD_MEDIA_ENGINE = 1001,
+        ///
+        /// <summary>
+        /// 1005: A general error occurs (no specified reason). Check whether the audio device is already in use by another app, or try rejoining the channel.
+        /// </summary>
+        ///
         ERR_ADM_GENERAL_ERROR = 1005,
+        ///
+        /// <summary>
+        /// 1008: An error occurs when initializing the playback device. Check whether the playback device is already in use by another app, or try rejoining the channel.
+        /// </summary>
+        ///
         ERR_ADM_INIT_PLAYOUT = 1008,
+        ///
+        /// <summary>
+        /// 1009: An error occurs when starting the playback device. Check the playback device.
+        /// </summary>
+        ///
         ERR_ADM_START_PLAYOUT = 1009,
+        ///
+        /// <summary>
+        /// 1010: An error occurs when stopping the playback device.
+        /// </summary>
+        ///
         ERR_ADM_STOP_PLAYOUT = 1010,
+        ///
+        /// <summary>
+        /// 1011: An error occurs when initializing the recording device. Check the recording device, or try rejoining the channel.
+        /// </summary>
+        ///
         ERR_ADM_INIT_RECORDING = 1011,
+        ///
+        /// <summary>
+        /// 1012: An error occurs when starting the recording device. Check the recording device.
+        /// </summary>
+        ///
         ERR_ADM_START_RECORDING = 1012,
+        ///
+        /// <summary>
+        /// 1013: An error occurs when stopping the recording device.
+        /// </summary>
+        ///
         ERR_ADM_STOP_RECORDING = 1013,
+        ///
+        /// <summary>
+        /// 1501: Permission to access the camera is not granted. Check whether permission to access the camera permission is granted.
+        /// </summary>
+        ///
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
     };
 
 
+    ///
+    /// @ignore
+    ///
     public enum LICENSE_ERROR_TYPE
     {
 
+        ///
+        /// @ignore
+        ///
         LICENSE_ERR_INVALID = 1,
+        ///
+        /// @ignore
+        ///
         LICENSE_ERR_EXPIRE = 2,
+        ///
+        /// @ignore
+        ///
         LICENSE_ERR_MINUTES_EXCEED = 3,
+        ///
+        /// @ignore
+        ///
         LICENSE_ERR_LIMITED_PERIOD = 4,
+        ///
+        /// @ignore
+        ///
         LICENSE_ERR_DIFF_DEVICES = 5,
+        ///
+        /// @ignore
+        ///
         LICENSE_ERR_INTERNAL = 99,
     };
 
@@ -664,28 +1068,28 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: (Default) Prefers to reduce the video frame rate while maintaining video quality during video encoding under limited bandwidth. This degradation preference is suitable for scenarios where video quality is prioritized.In the COMMUNICATION channel profile, the resolution of the video sent may change, so remote users need to handle this issue. See OnVideoSizeChanged .
+        /// 0: (Default) Prefers to reduce the video frame rate while maintaining video resolution during video encoding under limited bandwidth. This degradation preference is suitable for scenarios where video quality is prioritized.
         /// </summary>
         ///
         MAINTAIN_QUALITY = 0,
 
         ///
         /// <summary>
-        /// 1: Prefers to reduce the video quality while maintaining the video frame rate during video encoding under limited bandwidth. This degradation preference is suitable for scenarios where smoothness is prioritized and video quality is allowed to be reduced.
+        /// 1: Reduces the video resolution while maintaining the video frame rate during video encoding under limited bandwidth. This degradation preference is suitable for scenarios where smoothness is prioritized and video quality is allowed to be reduced.
         /// </summary>
         ///
         MAINTAIN_FRAMERATE = 1,
 
         ///
         /// <summary>
-        /// 2: Reduces the video frame rate and video quality simultaneously during video encoding under limited bandwidth. The MAINTAIN_BALANCED has a lower reduction than MAINTAIN_QUALITY and MAINTAIN_FRAMERATE, and this preference is suitable for scenarios where both smoothness and video quality are a priority.The resolution of the video sent may change, so remote users need to handle this issue. See OnVideoSizeChanged .
+        /// 2: Reduces the video frame rate and video resolution simultaneously during video encoding under limited bandwidth. The MAINTAIN_BALANCED has a lower reduction than MAINTAIN_QUALITY and MAINTAIN_FRAMERATE, and this preference is suitable for scenarios where both smoothness and video quality are a priority.The resolution of the video sent may change, so remote users need to handle this issue. See OnVideoSizeChanged .
         /// </summary>
         ///
         MAINTAIN_BALANCED = 2,
 
         ///
         /// <summary>
-        /// 3: When the bandwidth is limited, the video frame rate is preferentially reduced during video encoding.
+        /// 3: Reduces the video frame rate while maintaining the video resolution during video encoding under limited bandwidth. This degradation preference is suitable for scenarios where video quality is prioritized.
         /// </summary>
         ///
         MAINTAIN_RESOLUTION = 3,
@@ -1232,15 +1636,13 @@ namespace Agora.Rtc
     public class VideoSubscriptionOptions : OptionalJsonParse
     {
         ///
-        /// <summary>
-        /// The video stream type that you want to subscribe to. The default value is VIDEO_STREAM_HIGH, meaning the high-quality video streams. See VIDEO_STREAM_TYPE .
-        /// </summary>
+        /// @ignore
         ///
         public Optional<VIDEO_STREAM_TYPE> type = new Optional<VIDEO_STREAM_TYPE>();
 
         ///
         /// <summary>
-        /// Whether to subscribe to encoded video frames only:true: Subscribe to encoded video frames only (structured data).false: (Default) Subscribe to raw video frames.
+        /// Whether to subscribe to encoded video frames only:true: Subscribe to the encoded video data (structured data) only; the SDK does not decode or render raw video data.false: (Default) Subscribe to both raw video data and encoded video data.
         /// </summary>
         ///
         public Optional<bool> encodedFrameOnly = new Optional<bool>();
@@ -1308,7 +1710,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The codec type of the local video stream. See VIDEO_CODEC_TYPE . The default value is VIDEO_CODEC_H264(2).
+        /// The codec type of the local video stream. See VIDEO_CODEC_TYPE . The default value is VIDEO_CODEC_H264 (2).
         /// </summary>
         ///
         public VIDEO_CODEC_TYPE codecType { set; get; }
@@ -1363,6 +1765,9 @@ namespace Agora.Rtc
         public int64_t captureTimeMs { set; get; }
 
 
+        ///
+        /// @ignore
+        ///
         public int64_t decodeTimeMs { set; get; }
         ///
         /// <summary>
@@ -1380,25 +1785,75 @@ namespace Agora.Rtc
     };
 
 
+    ///
+    /// <summary>
+    /// Compression preference for video encoding.
+    /// </summary>
+    ///
     public enum COMPRESSION_PREFERENCE
     {
+        ///
+        /// <summary>
+        /// 0: Low latency preference. The SDK compresses video frames to reduce latency. This preference is suitable for scenarios where smoothness is prioritized and reduced video quality is acceptable.
+        /// </summary>
+        ///
         PREFER_LOW_LATENCY = 0,
 
+        ///
+        /// <summary>
+        /// 1: (Default) High quality preference. The SDK compresses video frames while maintaining video quality. This preference is suitable for scenarios where video quality is prioritized.
+        /// </summary>
+        ///
         PREFER_QUALITY = 1
     };
 
+    ///
+    /// <summary>
+    /// Video encoder preference.
+    /// </summary>
+    ///
     public enum ENCODING_PREFERENCE
     {
+        ///
+        /// <summary>
+        /// -1: Default preference. The SDK automatically selects the optimal encoding type for encoding based on factors such as platform and device type.
+        /// </summary>
+        ///
         PREFER_AUTO = -1,
 
+        ///
+        /// <summary>
+        /// 0: Software coding preference. The SDK prefers software encoders for video encoding.
+        /// </summary>
+        ///
         PREFER_SOFTWARE = 0,
 
+        ///
+        /// <summary>
+        /// 1: Hardware encoding preference. The SDK prefers a hardware encoder for video encoding. When the device does not support hardware encoding, the SDK automatically uses software encoding and reports the currently used video encoder type through hwEncoderAccelerating in the OnLocalVideoStats callback.
+        /// </summary>
+        ///
         PREFER_HARDWARE = 1,
     };
 
+    ///
+    /// <summary>
+    /// Advanced options for video encoding.
+    /// </summary>
+    ///
     public class AdvanceOptions
     {
+        ///
+        /// <summary>
+        /// Video encoder preference. See ENCODING_PREFERENCE .
+        /// </summary>
+        ///
         public ENCODING_PREFERENCE encodingPreference { set; get; }
+        ///
+        /// <summary>
+        /// Compression preference for video encoding. See COMPRESSION_PREFERENCE .
+        /// </summary>
+        ///
         public COMPRESSION_PREFERENCE compressionPreference { set; get; }
 
         public AdvanceOptions()
@@ -1458,7 +1913,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The dimensions of the encoded video (px). This parameter measures the video encoding quality in the format of length × width. VideoDimensions 
+        /// The dimensions of the encoded video (px). See VideoDimensions . This parameter measures the video encoding quality in the format of length × width. The default value is 640 × 360. You can set a custom value.
         /// </summary>
         ///
         public VideoDimensions dimensions { set; get; }
@@ -1472,7 +1927,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The encoding bitrate (Kbps) of the video.  BITRATE 
+        /// The encoding bitrate (Kbps) of the video. See BITRATE .
         /// </summary>
         ///
         public int bitrate { set; get; }
@@ -1505,7 +1960,12 @@ namespace Agora.Rtc
         ///
         public VIDEO_MIRROR_MODE_TYPE mirrorMode { set; get; }
 
-   
+
+        ///
+        /// <summary>
+        /// Advanced options for video encoding. See AdvanceOptions .
+        /// </summary>
+        ///
         public AdvanceOptions advanceOptions { set; get; }
 
         public VideoEncoderConfiguration(ref VideoDimensions d, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
@@ -1585,12 +2045,16 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
+    /// <summary>
+    /// The mode in which the video stream is sent.
+    /// </summary>
     ///
     public enum SIMULCAST_STREAM_MODE
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// -1: By default, the low-quality video steam is not sent; the SDK automatically switches to low-quality video stream mode after it receives a request to subscribe to a low-quality video stream.
+        /// </summary>
         ///
         AUTO_SIMULCAST_STREAM = -1,
 
@@ -1600,7 +2064,9 @@ namespace Agora.Rtc
         DISABLE_SIMULCAST_STREM = 0,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 1: Always send low-quality video stream.
+        /// </summary>
         ///
         ENABLE_SIMULCAST_STREAM = 1,
     };
@@ -1634,9 +2100,7 @@ namespace Agora.Rtc
         public VideoDimensions dimensions { set; get; }
 
         ///
-        /// <summary>
-        /// Video receive bitrate (Kbps). The default value is 65.
-        /// </summary>
+        /// @ignore
         ///
         public int kBitrate { set; get; }
 
@@ -2195,6 +2659,11 @@ namespace Agora.Rtc
             audienceLatencyLevel = AUDIENCE_LATENCY_LEVEL_TYPE.AUDIENCE_LATENCY_LEVEL_ULTRA_LOW_LATENCY;
         }
 
+        ///
+        /// <summary>
+        /// The latency level of an audience member in interactive live streaming. See AUDIENCE_LATENCY_LEVEL_TYPE .
+        /// </summary>
+        ///
         public AUDIENCE_LATENCY_LEVEL_TYPE audienceLatencyLevel;
     };
 
@@ -2530,6 +2999,26 @@ namespace Agora.Rtc
         AUDIO_SCENARIO_NUM = 9,
     };
 
+
+    ///
+    /// @ignore
+    ///
+    public enum OPTIONAL_ENUM_SIZE_T
+    {
+        ///
+        /// @ignore
+        ///
+        kMaxWidthInPixels = 3840,
+        ///
+        /// @ignore
+        ///
+        kMaxHeightInPixels = 2160,
+        ///
+        /// @ignore
+        ///
+        kMaxFps = 60,
+    };
+
     ///
     /// <summary>
     /// The format of the video frame.
@@ -2537,36 +3026,18 @@ namespace Agora.Rtc
     ///
     public class VideoFormat
     {
-        ///
-        /// @ignore
-        ///
-        public enum OPTIONAL_ENUM_SIZE_T
-        {
-            /* enum_optionalenumsizet_    kMaxWidthInPixels */
-            kMaxWidthInPixels = 3840,
-            /* enum_optionalenumsizet_    kMaxHeightInPixels */
-            kMaxHeightInPixels = 2160,
-            /* enum_optionalenumsizet_    kMaxFps */
-            kMaxFps = 60,
-        }
 
         public VideoFormat()
         {
-            /* enum_optionalenumsizet_    width */
             width = (int)FRAME_WIDTH.FRAME_WIDTH_640;
-            /* enum_optionalenumsizet_    height */
             height = (int)FRAME_HEIGHT.FRAME_HEIGHT_360;
-            /* enum_optionalenumsizet_    fps */
             fps = (int)FRAME_RATE.FRAME_RATE_FPS_15;
         }
 
         public VideoFormat(int w, int h, int f)
         {
-            /* enum_optionalenumsizet_    this.width */
             this.width = w;
-            /* enum_optionalenumsizet_    this.height */
             this.height = h;
-            /* enum_optionalenumsizet_    this.fps */
             this.fps = f;
         }
 
@@ -2902,14 +3373,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6:(For iOS only)The app is in the background. Remind the user that video capture cannot be performed normally when the app is in the background.
+        /// 6: (For iOS only) The app is in the background. Remind the user that video capture cannot be performed normally when the app is in the background.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_CAPTURE_INBACKGROUND = 6,
 
         ///
         /// <summary>
-        /// 7:(For iOS only)The current application window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Remind the user that the application cannot capture video properly when the app is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera.
+        /// 7: (For iOS only) The current application window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Remind the user that the application cannot capture video properly when the app is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_CAPTURE_MULTIPLE_FOREGROUND_APPS = 7,
@@ -2923,14 +3394,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 9: (macOS only) The video capture device currently in use is disconnected (such as being unplugged).
+        /// 9: (For macOS only) The video capture device currently in use is disconnected (such as being unplugged).
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_DISCONNECTED = 9,
 
         ///
         /// <summary>
-        /// 10:(macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID of the video device is valid.
+        /// 10: (For macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID of the video device is valid.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_INVALID_ID = 10,
@@ -2944,21 +3415,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 11:(macOS only) The shared window is minimized when you call StartScreenCaptureByWindowId to share a window. The SDK cannot share a minimized window. You can cancel the minimization of this window at the application layer, for example by maximizing this window.
+        /// 11: (For macOS only) The shared window is minimized when you call StartScreenCaptureByWindowId to share a window. The SDK cannot share a minimized window. You can cancel the minimization of this window at the application layer, for example by maximizing this window.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
 
         ///
         /// <summary>
-        /// 12:(macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing.Common scenarios for reporting this error code:When the local user closes the shared window, the SDK reports this error code.The local user shows some slides in full-screen mode first, and then shares the windows of the slides. After the user exits full-screen mode, the SDK reports this error code.The local user watches a web video or reads a web document in full-screen mode first, and then shares the window of the web video or document. After the user exits full-screen mode, the SDK reports this error code.
+        /// 12: (For macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing.Common scenarios for reporting this error code:When the local user closes the shared window, the SDK reports this error code.The local user shows some slides in full-screen mode first, and then shares the windows of the slides. After the user exits full-screen mode, the SDK reports this error code.The local user watches a web video or reads a web document in full-screen mode first, and then shares the window of the web video or document. After the user exits full-screen mode, the SDK reports this error code.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_CLOSED = 12,
 
         ///
         /// <summary>
-        /// 13: (Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by the SDK during window sharing.
+        /// 13: (For Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by the SDK during window sharing.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_OCCLUDED = 13,
@@ -2968,7 +3439,13 @@ namespace Agora.Rtc
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
 
+        ///
+        /// @ignore
+        ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_FAILURE = 21,
+        ///
+        /// @ignore
+        ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_NO_PERMISSION = 22,
     };
 
@@ -4001,7 +4478,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The x coordinate (pixel) of the host's video on the output video frame (taking the upper left corner of the video frame as the origin). The value range is [0, width], where width is thewidth set in LiveTranscoding .
+        /// The x coordinate (pixel) of the host's video on the output video frame (taking the upper left corner of the video frame as the origin). The value range is [0, width], where width is the width set in LiveTranscoding .
         /// </summary>
         ///
         public int x { set; get; }
@@ -4029,16 +4506,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The layer index number of the host's video. The value range is [0,100].
-        /// 0: (Default) The host's video is the bottom layer.100: The host's video is the top layer.If the value is less than 0 or greater than 100, the error ERR_INVALID_ARGUMENT is returned.Starting from v2.3, setting zOrder to 0 is supported.
+        /// The layer index number of the host's video. The value range is [0, 100].0: (Default) The host's video is the bottom layer.100: The host's video is the top layer.If the value is less than 0 or greater than 100, ERR_INVALID_ARGUMENT error is returned.Setting zOrder to 0 is supported.
         /// </summary>
         ///
         public int zOrder { set; get; }
 
         ///
         /// <summary>
-        /// The transparency of the host's video. The value range is [0.0,1.0].
-        /// 0.0: Completely transparent.1.0: (Default) Opaque.
+        /// The transparency of the host's video. The value range is [0.0,1.0].0.0: Completely transparent.1.0: (Default) Opaque.
         /// </summary>
         ///
         public double alpha { set; get; }
@@ -4141,7 +4616,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Frame rate (in fps) of the output video stream set for Media Push. The default value is 15 , and the value range is (0,30].The Agora server adjusts any value over 30 to 30.
+        /// Frame rate (fps) of the output video stream set for Media Push. The default value is 15. The value range is (0,30].The Agora server adjusts any value over 30 to 30.
         /// </summary>
         ///
         public int videoFramerate { set; get; }
@@ -4183,7 +4658,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of users in the video mixing. The value range is [0,17].
+        /// The number of users in the Media Push. The value range is [0,17].
         /// </summary>
         ///
         public uint userCount { set; get; }
@@ -4197,7 +4672,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reserved property. Extra user-defined information to send SEI for the H.264/H.265 video stream to the CDN client. Maximum length: 4096 bytes. For more information on SEI, see SEI-related questions.
+        /// Reserved property. Extra user-defined information to send SEI for the H.264/H.265 video stream to the CDN live client. Maximum length: 4096 bytes. For more information on SEI, see SEI-related questions.
         /// </summary>
         ///
         public string transcodingExtraInfo { set; get; }
@@ -4253,7 +4728,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of audio channels for Media Push. Agora recommends choosing 1 (mono), or 2 (stereo) audio channels. Special players are required if you choose 3, 4, or 5.1: (Default) Mono.2: Stereo.3: Three audio channels.4: Four audio channels.5: Five audio channels.
+        /// The number of audio channels for Media Push. Agora recommends choosing 1 (mono), or 2 (stereo) audio channels. Special players are required if you choose 3, 4, or 5.1: (Default) Mono2: Stereo.3: Three audio channels.4: Four audio channels.5: Five audio channels.
         /// </summary>
         ///
         public int audioChannels { set; get; }
@@ -4432,6 +4907,9 @@ namespace Agora.Rtc
         ///
         public VideoEncoderConfiguration videoOutputConfiguration { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public bool syncWithPrimaryCamera { set; get; }
     };
 
@@ -4457,21 +4935,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Sets whether to test the uplink network. Some users, for example, the audience members in a LIVE_BROADCASTING channel, do not need such a test.true: Test.false: Not test.
+        /// Sets whether to test the uplink network. Some users, for example, the audience members in a LIVE_BROADCASTING channel, do not need such a test.true: Test the uplink network.false: Do not test the uplink network.
         /// </summary>
         ///
         public bool probeUplink { set; get; }
 
         ///
         /// <summary>
-        /// Sets whether to test the downlink network:true: Test.false: Not test.
+        /// Sets whether to test the downlink network:true: Test the downlink network.false: Do not test the downlink network.
         /// </summary>
         ///
         public bool probeDownlink { set; get; }
 
         ///
         /// <summary>
-        /// The expected maximum uplink bitrate (bps) of the local user. The value range is [100000, 5000000]. Agora recommends SetVideoEncoderConfiguration referring to to set the value.
+        /// The expected maximum uplink bitrate (bps) of the local user. The value range is [100000, 5000000]. Agora recommends referring to SetVideoEncoderConfiguration to set the value.
         /// </summary>
         ///
         public uint expectedUplinkBitrate { set; get; }
@@ -4752,6 +5230,9 @@ namespace Agora.Rtc
         ///
         CONNECTION_CHANGED_TOO_MANY_BROADCASTERS = 20,
 
+        ///
+        /// @ignore
+        ///
         CONNECTION_CHANGED_LICENSE_VERIFY_FAILED = 21
     };
 
@@ -4912,22 +5393,30 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
+    /// <summary>
+    /// Setting mode of the view.
+    /// </summary>
     ///
     public enum VIDEO_VIEW_SETUP_MODE
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// 0: (Default) Replaces a view.
+        /// </summary>
         ///
         VIDEO_VIEW_SETUP_REPLACE = 0,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 1: Adds a view.
+        /// </summary>
         ///
         VIDEO_VIEW_SETUP_ADD = 1,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 2: Deletes a view.
+        /// </summary>
         ///
         VIDEO_VIEW_SETUP_REMOVE = 2,
     };
@@ -4944,13 +5433,13 @@ namespace Agora.Rtc
             view = 0;
             uid = 0;
             renderMode = RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
-           
+
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO;
             setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
-         
+
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, uint u)
@@ -5009,23 +5498,28 @@ namespace Agora.Rtc
 
 
 
+        ///
+        /// @ignore
+        ///
         public VIDEO_VIEW_SETUP_MODE setupMode { set; get; }
-        /**
-         * The video source type. See \ref VIDEO_SOURCE_TYPE "VIDEO_SOURCE_TYPE".
-         * The default value is VIDEO_SOURCE_CAMERA_PRIMARY.
-         */
+      
+        ///
+        /// <summary>
+        /// The type of the video frame, see VIDEO_SOURCE_TYPE .
+        /// </summary>
+        ///
         public VIDEO_SOURCE_TYPE sourceType { set; get; }
-        /**
-         * The media player id of AgoraMediaPlayer. It should set this parameter when the 
-         * sourceType is VIDEO_SOURCE_MEDIA_PLAYER to show the video that AgoraMediaPlayer is playing.
-         * You can get this value by calling the method \ref getMediaPlayerId().
-         */
+        
+        ///
+        /// <summary>
+        /// The ID of the media player. You can get the media player ID by calling GetId .
+        /// </summary>
+        ///
         public int mediaPlayerId { set; get; }
-        /**
-         * If you want to display a certain part of a video frame, you can set 
-         * this value to crop the video frame to show. 
-         * The default value is empty(that is, if it has zero width or height), which means no cropping.
-         */
+         
+        ///
+        /// @ignore
+        ///
         public Rectangle cropArea { set; get; }
     };
 
@@ -5237,14 +5731,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: Promotes reducing performance consumption during video noise reduction. It prioritizes reducing performance consumption over video noise reduction quality. The performance consumption is lower, and the video noise reduction speed is faster. To avoid a noticeable shadowing effect (shadows trailing behind moving objects) in the processed video, Agora recommends that you use FAST when the camera is fixed.
+        /// 1: Promotes reducing performance consumption during video noise reduction. prioritizes reducing performance consumption over video noise reduction quality. The performance consumption is lower, and the video noise reduction speed is faster. To avoid a noticeable shadowing effect (shadows trailing behind moving objects) in the processed video, Agora recommends that you use this settinging when the camera is fixed.
         /// </summary>
         ///
         VIDEO_DENOISER_LEVEL_FAST = 1,
 
         ///
         /// <summary>
-        /// 2: Enhanced video noise reduction. It prioritizes video noise reduction quality over reducing performance consumption. The performance consumption is higher, the video noise reduction speed is slower, and the video noise reduction quality is better. If is not enough for your video noise reduction needs, you can use this enumerator.VIDEO_DENOISER_LEVEL_HIGH_QUALITY
+        /// 2: Enhanced video noise reduction. prioritizes video noise reduction quality over reducing performance consumption. The performance consumption is higher, the video noise reduction speed is slower, and the video noise reduction quality is better. If VIDEO_DENOISER_LEVEL_HIGH_QUALITY is not enough for your video noise reduction needs, you can use this enumerator.
         /// </summary>
         ///
         VIDEO_DENOISER_LEVEL_STRENGTH = 2
@@ -5391,12 +5885,32 @@ namespace Agora.Rtc
             blur_degree = BACKGROUND_BLUR_DEGREE.BLUR_DEGREE_HIGH;
         }
 
+        ///
+        /// <summary>
+        /// The type of the custom background image. See BACKGROUND_SOURCE_TYPE .
+        /// </summary>
+        ///
         public BACKGROUND_SOURCE_TYPE background_source_type;
 
+        ///
+        /// <summary>
+        /// The type of the custom background image. The color of the custom background image. The format is a hexadecimal integer defined by RGB, without the # sign, such as 0xFFB6C1 for light pink. The default value is 0xFFFFFF, which signifies white. The value range is [0x000000, 0xffffff]. If the value is invalid, the SDK replaces the original background image with a white background image.This parameter takes effect only when the type of the custom background image is BACKGROUND_COLOR.
+        /// </summary>
+        ///
         public uint color;
 
+        ///
+        /// <summary>
+        /// The local absolute path of the custom background image. PNG and JPG formats are supported. If the path is invalid, the SDK replaces the original background image with a white background image.This parameter takes effect only when the type of the custom background image is BACKGROUND_IMG.
+        /// </summary>
+        ///
         public string source;
 
+        ///
+        /// <summary>
+        /// The degree of blurring applied to the custom background image. See BACKGROUND_BLUR_DEGREE .This parameter takes effect only when the type of the custom background image is BACKGROUND_BLUR.
+        /// </summary>
+        ///
         public BACKGROUND_BLUR_DEGREE blur_degree;
     };
 
@@ -5750,12 +6264,32 @@ namespace Agora.Rtc
         VOICE_CHANGER_BASS = 0x03010400
     };
 
+    ///
+    /// <summary>
+    /// Preset headphone equalizer types.
+    /// </summary>
+    ///
     public enum HEADPHONE_EQUALIZER_PRESET
     {
+        ///
+        /// <summary>
+        /// The headphone equalizer is disabled, and the original audio is heard.
+        /// </summary>
+        ///
         HEADPHONE_EQUALIZER_OFF = 0x00000000,
 
+        ///
+        /// <summary>
+        /// An equalizer is used for headphones.
+        /// </summary>
+        ///
         HEADPHONE_EQUALIZER_OVEREAR = 0x04000001,
 
+        ///
+        /// <summary>
+        /// An equalizer is used for in-ear headphones.
+        /// </summary>
+        ///
         HEADPHONE_EQUALIZER_INEAR = 0x04000002
     };
 
@@ -5852,21 +6386,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// On Windows and macOS, it represents the video encoding resolution of the shared screen stream. If the screen dimensions are different from the value of this parameter, Agora applies the following strategies for encoding. Suppose dimensions is set to 1920 x 1080:If the value of the screen dimensions is lower than that of dimensions, for example, 1000 x 1000 pixels, the SDK uses 1000 x 1000 pixels for encoding.If the value of the screen dimensions is higher than that of dimensions, for example, 2000 x 1500, the SDK uses the maximum value under dimensions with the aspect ratio of the screen dimension (4:3) for encoding, that is, 1440 x 1080.
+        /// On Windows and macOS, this represents the video encoding resolution of the shared screen stream. See VideoDimensions . The default value is 1920 × 1080, that is, 2,073,600 pixels. Agora uses the value of this parameter to calculate the charges.If the screen dimensions are different from the value of this parameter, Agora applies the following strategies for encoding. Suppose dimensions is set to 1920 × 1080:If the value of the screen dimensions is lower than that of dimensions, for example, 1000 × 1000 pixels, the SDK uses the screen dimensions, that is, 1000 × 1000 pixels, for encoding.If the value of the screen dimensions is higher than that of dimensions, for example, 2000 × 1500, the SDK uses the maximum value under dimensions with the aspect ratio of the screen dimension (4:3) for encoding, that is, 1440 × 1080.
         /// </summary>
         ///
         public VideoDimensions dimensions { set; get; }
 
         ///
         /// <summary>
-        /// On Windows and macOS, it represents the video encoding frame rate (fps) of the shared screen stream. The frame rate (fps) of the shared region. The default value is 5. We do not recommend setting this to a value greater than 15.
+        /// On Windows and macOS, this represents the video encoding frame rate (fps) of the shared screen stream. The frame rate (fps) of the shared region. The default value is 5. Agora does not recommend setting this to a value greater than 15.
         /// </summary>
         ///
         public int frameRate { set; get; }
 
         ///
         /// <summary>
-        /// The bitrate of the shared region. On Windows and macOS, it represents the video encoding bitrate of the shared screen stream. The bitrate (Kbps) of the shared region. The default value is 0 (the SDK works out a bitrate according to the dimensions of the current screen).
+        /// The bitrate of the shared region. On Windows and macOS, this represents the video encoding bitrate of the shared screen stream. The bitrate (Kbps) of the shared region. The default value is 0 (the SDK works out a bitrate according to the dimensions of the current screen).
         /// </summary>
         ///
         public int bitrate { set; get; }
@@ -5880,7 +6414,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to bring the window to the front when calling the StartScreenCaptureByWindowId method to share it:true:Bring the window to the front.false: (Default) Do not bring the window to the front.
+        /// Whether to bring the window to the front when calling the StartScreenCaptureByWindowId method to share it:true: Bring the window to the front.false: (Default) Do not bring the window to the front.
         /// </summary>
         ///
         public bool windowFocus { set; get; }
@@ -5894,28 +6428,28 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of windows to be blocked.
+        /// The number of windows to be excluded.On the Windows platform, the maximum value of this parameter is 24; if this value is exceeded, excluding the window fails.
         /// </summary>
         ///
         public int excludeWindowCount { set; get; }
 
         ///
         /// <summary>
-        /// (For macOS only) The width (px) of the border. The default value is 5, and the value range is (0, 50].This parameter only takes effect when highLighted is set to true.
+        /// The width (px) of the border. The default value is 5, and the value range is (0, 50].This parameter only takes effect when highLighted is set to true.
         /// </summary>
         ///
         public int highLightWidth { set; get; }
 
         ///
         /// <summary>
-        /// (For macOS only) The color of the border in RGBA format. The default value is 0xFF8CBF26.On macOS, COLOR_CLASS refers to NSColor.
+        /// On macOS, COLOR_CLASS refers to NSColor.
         /// </summary>
         ///
         public uint highLightColor { set; get; }
 
         ///
         /// <summary>
-        /// (For macOS only)Whether to place a border around the shared window or screen:true: Place a border.false: (Default) Do not place a border.When you share a part of a window or screen, the SDK places a border around the entire window or screen if you set this parameter to true.
+        /// Whether to place a border around the shared window or screen:true: Place a border.false: (Default) Do not place a border.When you share a part of a window or screen, the SDK places a border around the entire window or screen if you set this parameter to true.
         /// </summary>
         ///
         public bool enableHighLight { set; get; }
@@ -6071,8 +6605,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Recording sample rate (Hz).
-        /// 16000(Default) 320004410048000If you set this parameter to 44100 or 48000, Agora recommends recording WAV files, or AAC files with quality to be AgoraAudioRecordingQualityMedium or AgoraAudioRecordingQualityHigh for better recording quality.
+        /// Recording sample rate (Hz).16000(Default) 320004410048000If you set this parameter to 44100 or 48000, Agora recommends recording WAV files, or AAC files with quality set as AUDIO_RECORDING_QUALITY_MEDIUM or AUDIO_RECORDING_QUALITY_HIGH for better recording quality.
         /// </summary>
         ///
         public int sampleRate { set; get; }
@@ -6134,53 +6667,101 @@ namespace Agora.Rtc
         public AUDIO_ENCODING_TYPE encodingType { set; get; }
     };
 
-    /* enum_areacode : uint */
+    ///
+    /// <summary>
+    /// The region for connection, which is the region where the server the SDK connects to is located.
+    /// </summary>
+    ///
     public enum AREA_CODE : uint
     {
-        /* enum_areacode : uint_AREA_CODE_CN */
+        ///
+        /// <summary>
+        /// Mainland China.
+        /// </summary>
+        ///
         AREA_CODE_CN = 0x00000001,
 
-        /* enum_areacode : uint_AREA_CODE_NA */
+        ///
+        /// <summary>
+        /// North America.
+        /// </summary>
+        ///
         AREA_CODE_NA = 0x00000002,
 
-        /* enum_areacode : uint_AREA_CODE_EU */
+        ///
+        /// <summary>
+        /// Europe.
+        /// </summary>
+        ///
         AREA_CODE_EU = 0x00000004,
 
-        /* enum_areacode : uint_AREA_CODE_AS */
+        ///
+        /// <summary>
+        /// Asia, excluding Mainland China.
+        /// </summary>
+        ///
         AREA_CODE_AS = 0x00000008,
 
-        /* enum_areacode : uint_AREA_CODE_JP */
+        ///
+        /// <summary>
+        /// Japan.
+        /// </summary>
+        ///
         AREA_CODE_JP = 0x00000010,
 
-        /* enum_areacode : uint_AREA_CODE_IN */
+        ///
+        /// <summary>
+        /// India.
+        /// </summary>
+        ///
         AREA_CODE_IN = 0x00000020,
 
-        /* enum_areacode : uint_AREA_CODE_GLOB */
+        ///
+        /// <summary>
+        /// Global.
+        /// </summary>
+        ///
         AREA_CODE_GLOB = 0xFFFFFFFF
     };
 
-    /* enum_areacodeex : uint */
+    ///
+    /// @ignore
+    ///
     public enum AREA_CODE_EX : uint
     {
-        /* enum_areacodeex : uint_AREA_CODE_OC */
+        ///
+        /// @ignore
+        ///
         AREA_CODE_OC = 0x00000040,
 
-        /* enum_areacodeex : uint_AREA_CODE_SA */
+        ///
+        /// @ignore
+        ///
         AREA_CODE_SA = 0x00000080,
 
-        /* enum_areacodeex : uint_AREA_CODE_AF */
+        ///
+        /// @ignore
+        ///
         AREA_CODE_AF = 0x00000100,
 
-        /* enum_areacodeex : uint_AREA_CODE_KR */
+        ///
+        /// @ignore
+        ///
         AREA_CODE_KR = 0x00000200,
 
-        /* enum_areacodeex : uint_AREA_CODE_HKMC */
+        ///
+        /// @ignore
+        ///
         AREA_CODE_HKMC = 0x00000400,
 
-        /* enum_areacodeex : uint_AREA_CODE_US */
+        ///
+        /// @ignore
+        ///
         AREA_CODE_US = 0x00000800,
 
-        /* enum_areacodeex : uint_AREA_CODE_OVS */
+        ///
+        /// @ignore
+        ///
         AREA_CODE_OVS = 0xFFFFFFFE
     };
 
@@ -6340,9 +6921,7 @@ namespace Agora.Rtc
         RELAY_EVENT_PACKET_UPDATE_DEST_CHANNEL = 7,
 
         ///
-        /// <summary>
-        /// 8: The destination channel update fails due to internal reasons.
-        /// </summary>
+        /// @ignore
         ///
         RELAY_EVENT_PACKET_UPDATE_DEST_CHANNEL_REFUSED = 8,
 
@@ -6434,7 +7013,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The definition of ChannelMediaInfo.
+    /// Channel media information.
     /// </summary>
     ///
     public class ChannelMediaInfo
@@ -6474,7 +7053,7 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The definition of ChannelMediaRelayConfiguration.
+    /// Configuration information of relaying media streams across channels.
     /// </summary>
     ///
     public class ChannelMediaRelayConfiguration
@@ -6494,23 +7073,17 @@ namespace Agora.Rtc
         }
 
         ///
-        /// <summary>
-        /// The information of the source channel ChannelMediaInfo . It contains the following members:channelName: The name of the source channel. The default value is NULL, which means the SDK applies the name of the current channel.uid: The unique ID to identify the relay stream in the source channel. The default value is 0, which means the SDK generates a random uid. You must set it as 0.token: The token for joining the source channel. It is generated with the channelName and uid you set in srcInfo.If you have not enabled the App Certificate, set this parameter as the default value NULL, which means the SDK applies the App ID.If you have enabled the App Certificate, you must use the token generated with the channelName and uid, and the uid must be set as 0.
-        /// </summary>
+        /// @ignore
         ///
         public ChannelMediaInfo srcInfo { set; get; }
 
         ///
-        /// <summary>
-        /// The information of the destination channel ChannelMediaInfo. It contains the following members:channelName: The name of the destination channel.uid: The unique ID to identify the relay stream in the destination channel. The value ranges from 0 to (232-1). To avoid UID conflicts, this UID must be different from any other UID in the destination channel. The default value is 0, which means the SDK generates a random UID. Do not set this parameter as the UID of the host in the destination channel, and ensure that this UID is different from any other UID in the channel.token: The token for joining the destination channel. It is generated with the channelName and uid you set in destInfos.If you have not enabled the App Certificate, set this parameter as the default value NULL, which means the SDK applies the App ID.If you have enabled the App Certificate, you must use the token generated with the channelName and uid.
-        /// </summary>
+        /// @ignore
         ///
         public ChannelMediaInfo[] destInfos { set; get; }
 
         ///
-        /// <summary>
-        /// The number of destination channels. The default value is 0, and the value range is from 0 to 4. Ensure that the value of this parameter corresponds to the number of ChannelMediaInfo structs you define in destInfo.
-        /// </summary>
+        /// @ignore
         ///
         public int destCount { set; get; }
     };
@@ -6532,6 +7105,11 @@ namespace Agora.Rtc
             this.video_encoder_target_bitrate_bps = video_encoder_target_bitrate_bps;
         }
 
+        ///
+        /// <summary>
+        /// The target video encoder bitrate (bps).
+        /// </summary>
+        ///
         public int video_encoder_target_bitrate_bps;
     };
 
@@ -6980,9 +7558,7 @@ namespace Agora.Rtc
         public bool enableVideo { set; get; }
 
         ///
-        /// <summary>
-        /// The token used to secure the audio and video call loop test. If you do not enable App Certificate in Agora Console, you do not need to pass a value in this parameter; if you have enabled App Certificate in Agora Console, you must pass a token in this parameter; the uid used when you generate the token must be 0xFFFFFFFF, and the channel name used must be the channel name that identifies each audio and video call loop tested. For server-side token generation, see Authenticate Your Users with Tokens.
-        /// </summary>
+        /// @ignore
         ///
         public string token { set; get; }
 
@@ -7050,21 +7626,21 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 1: Do not add an audio filter to the in-ear monitor.
+        /// 1<<0: Do not add an audio filter to the in-ear monitor.
         /// </summary>
         ///
         EAR_MONITORING_FILTER_NONE = (1 << 0),
 
         ///
         /// <summary>
-        /// 2: Add an audio filter to the in-ear monitor. If you implement functions such as voice beautifier and audio effect, users can hear the voice after adding these effects.
+        /// 1<<1: Add an audio filter to the in-ear monitor. If you implement functions such as voice beautifier and audio effect, users can hear the voice after adding these effects.
         /// </summary>
         ///
         EAR_MONITORING_FILTER_BUILT_IN_AUDIO_FILTERS = (1 << 1),
 
         ///
         /// <summary>
-        /// 4: Enable noise suppression to the in-ear monitor.
+        /// 1<<2: Enable noise suppression to the in-ear monitor.
         /// </summary>
         ///
         EAR_MONITORING_FILTER_NOISE_SUPPRESSION = (1 << 2)
@@ -7225,45 +7801,66 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
+    /// <summary>
+    /// The spatial audio parameters.
+    /// </summary>
     ///
     public class SpatialAudioParams : OptionalJsonParse
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// The azimuth angle of the remote user or media player relative to the local user. The value range is [0,360], and the unit is degrees, The values are as follows:0: (Default) 0 degrees, which means directly in front on the horizontal plane.90: 90 degrees, which means directly to the left on the horizontal plane.180: 180 degrees, which means directly behind on the horizontal plane.270: 270 degrees, which means directly to the right on the horizontal plane.360: 360 degrees, which means directly in front on the horizontal plane.
+        /// </summary>
         ///
         public Optional<double> speaker_azimuth = new Optional<double>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The elevation angle of the remote user or media player relative to the local user. The value range is [-90,90], and the unit is degrees, The values are as follows:0: (Default) 0 degrees, which means that the horizontal plane is not rotated.-90: -90 degrees, which means that the horizontal plane is rotated 90 degrees downwards.90: 90 degrees, which means that the horizontal plane is rotated 90 degrees upwards.
+        /// </summary>
         ///
         public Optional<double> speaker_elevation = new Optional<double>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The distance of the remote user or media player relative to the local user. The value range is [1,50], and the unit is meters. The default value is 1 meter.
+        /// </summary>
         ///
         public Optional<double> speaker_distance = new Optional<double>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The orientation of the remote user or media player relative to the local user. The value range is [0,180], and the unit is degrees, The values are as follows:0: (Default) 0 degrees, which means that the sound source and listener face the same direction.180: 180 degrees, which means that the sound source and listener face each other.
+        /// </summary>
         ///
         public Optional<int> speaker_orientation = new Optional<int>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to enable audio blurring:true: Enable audio blurring.false: (Default) Disable audio blurring.
+        /// </summary>
         ///
         public Optional<bool> enable_blur = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to enable air absorption, that is, to simulate the sound attenuation effect of sound transmitting in the air; under a certain transmission distance, the attenuation speed of high-frequency sound is fast, and the attenuation speed of low-frequency sound is slow.true: (Default) Enable air absorption. Make sure that the value of speaker_attenuation is not 0; otherwise, this setting does not take effect.false: Disable air absorption.
+        /// </summary>
         ///
         public Optional<bool> enable_air_absorb = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The sound attenuation coefficient of the remote user or media player. The value range is [0,1]. The values are as follows:0: Broadcast mode, where the volume and timbre are not attenuated with distance, and the volume and timbre heard by local users do not change regardless of distance.(0,0.5): Weak attenuation mode, where the volume and timbre only have a weak attenuation during the propagation, and the sound can travel farther than that in a real environment. enable_air_absorb needs to be enabled at the same time. 0.5: (Default) Simulates the attenuation of the volume in the real environment; the effect is equivalent to not setting the speaker_attenuation parameter.(0.5,1]: Strong attenuation mode, where volume and timbre attenuate rapidly during the propagation. enable_air_absorb needs to be enabled at the same time. 
+        /// </summary>
         ///
         public Optional<double> speaker_attenuation = new Optional<double>();
 
+        ///
+        /// <summary>
+        /// Whether to enable the Doppler effect: When there is a relative displacement between the sound source and the receiver of the sound source, the tone heard by the receiver changes.true: Enable the Doppler effect.false: (Default) Disable the Doppler effect.This parameter is suitable for scenarios where the sound source is moving at high speed (for example, racing games). It is not recommended for common audio and video interactive scenarios (for example, voice chat, cohosting, or online KTV).When this parameter is enabled, Agora recommends that you set a regular period (such as 30 ms), and then call the UpdatePlayerPositionInfo , UpdateSelfPosition , and UpdateRemotePosition methods to continuously update the relative distance between the sound source and the receiver. The following factors can cause the Doppler effect to be unpredictable or the sound to be jittery: the period of updating the distance is too long, the updating period is irregular, or the distance information is lost due to network packet loss or delay.
+        /// </summary>
+        ///
         public Optional<bool> enable_doppler = new Optional<bool>();
 
         public override void ToJson(JsonWriter writer)

@@ -37,21 +37,21 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 2: Video renderer.
+        /// 2: Video rendering device.
         /// </summary>
         ///
         VIDEO_RENDER_DEVICE = 2,
 
         ///
         /// <summary>
-        /// 3: Video capturer.
+        /// 3: Video capturing device.
         /// </summary>
         ///
         VIDEO_CAPTURE_DEVICE = 3,
 
         ///
         /// <summary>
-        /// 4: Application audio playback device.
+        /// 4: Audio playback device for an app.
         /// </summary>
         ///
         AUDIO_APPLICATION_PLAYOUT_DEVICE = 4,
@@ -333,22 +333,30 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
+    /// <summary>
+    /// Stream fallback options.
+    /// </summary>
     ///
     public enum STREAM_FALLBACK_OPTIONS
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// 0: No fallback behavior for the local/remote video stream when the uplink/downlink network conditions are poor. The quality of the stream is not guaranteed.
+        /// </summary>
         ///
         STREAM_FALLBACK_OPTION_DISABLED = 0,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 1: Under poor downlink network conditions, the remote video stream, to which you subscribe, falls back to the low-quality (low resolution and low bitrate) video stream. This option is only valid for SetRemoteSubscribeFallbackOption . 
+        /// </summary>
         ///
         STREAM_FALLBACK_OPTION_VIDEO_STREAM_LOW = 1,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 2: Under poor uplink network conditions, the published video stream falls back to audio-only. Under poor downlink network conditions, the remote video stream, to which you subscribe, first falls back to the low-quality (low resolution and low bitrate) video stream; and then to an audio-only stream if the network conditions worsen.
+        /// </summary>
         ///
         STREAM_FALLBACK_OPTION_AUDIO_ONLY = 2,
     };
@@ -487,7 +495,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The quality adaption of the local video stream in the reported interval (based on the target frame rate and target bitrate). See QUALITY_ADAPT_INDICATION .
+        /// The quality adaptation of the local video stream in the reported interval (based on the target frame rate and target bitrate). See QUALITY_ADAPT_INDICATION .
         /// </summary>
         ///
         public QUALITY_ADAPT_INDICATION qualityAdaptIndication { set; get; }
@@ -501,7 +509,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of sent video frames, represented by an aggregate value.
+        /// The number of the sent video frames, represented by an aggregate value.
         /// </summary>
         ///
         public int encodedFrameCount { set; get; }
@@ -521,14 +529,20 @@ namespace Agora.Rtc
         public ushort txPacketLossRate { set; get; }
 
         ///
-        /// <summary>
-        /// The brightness level of the video image captured by the local camera. See CAPTURE_BRIGHTNESS_LEVEL_TYPE .
-        /// </summary>
+        /// @ignore
         ///
         public CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public bool dualStreamEnabled { set; get; }
 
+        ///
+        /// <summary>
+        /// The local video encoding acceleration type. 
+        /// </summary>
+        ///
         public int hwEncoderAccelerating { set; get; }
     };
 
@@ -652,6 +666,9 @@ namespace Agora.Rtc
         ///
         public int superResolutionType { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public int mosValue { set; get; }
     };
 
@@ -1040,26 +1057,28 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The device ID of the playback device. 
+        /// This method applies to Windows only.The ID of the camera. 
         /// </summary>
         ///
         public string deviceId { set; get; }
 
         ///
         /// <summary>
-        /// See VideoFormat .
+        /// The format of the video frame. See VideoFormat .
         /// </summary>
         ///
         public VideoFormat format { set; get; }
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration :true: (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame .false: Do not follow the set video aspect ratio. The SDK does not change the aspect ratio of the captured video frame.
+        /// </summary>
         ///
         public bool followEncodeDimensionRatio { set; get; }
 
         ///
         /// <summary>
-        /// This parameter applies to Android and iOS only.The camera direction.  CAMERA_DIRECTION 
+        /// This parameter applies to Android and iOS only.The camera direction. See CAMERA_DIRECTION .
         /// </summary>
         ///
         public CAMERA_DIRECTION cameraDirection { set; get; }
@@ -1152,13 +1171,14 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The image content of the thumbnail or icon. Set in ScreenCaptureSourceInfo .
+    /// The default image is in the ARGB format. If you need to use another format, you need to convert the image on your own.
     /// </summary>
     ///
     public class ThumbImageBuffer
     {
         ///
         /// <summary>
-        /// The buffer of the thumbnail ot icon.
+        /// The buffer of the thumbnail or icon.
         /// </summary>
         ///
         public byte[] buffer { set; get; }
@@ -1297,7 +1317,9 @@ namespace Agora.Rtc
         ///
         public bool isOccluded { set; get; }
 
-        //only windows
+        ///
+        /// @ignore
+        ///
         public bool minimizeWindow { set; get; }
 
         public ScreenCaptureSourceInfo()
@@ -1375,8 +1397,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The channel media options.
-    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection . For example, publishAudioTrack, publishCustomAudioTrack and publishMediaPlayerAudioTrack can be true at the same time;
-    /// but only one of publishCameraTrack, publishCustomVideoTrack, and publishEncodedVideoTrack can be true at the same time.
+    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection . For example, publishMicrophoneTrackpublishAudioTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true.
     /// </summary>
     ///
     public class ChannelMediaOptions : OptionalJsonParse
@@ -1389,65 +1410,53 @@ namespace Agora.Rtc
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Whether to publish the video captured by the second camera:true: Publish the video captured by the second camera.false: (Default) Publish the video captured by the second camera.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the captured audio:true: (Default) Publish the captured audio.false: Do not publish the captured audio.Since v4.0.0, the parameter name has been changed from publishAudioTrack to publishMicrophoneTrack.
+        /// Whether to publish the audio captured by the microphone:true: (Default) Publish the audio captured by the microphone.false: Do not publish the audio captured by the microphone.
         /// </summary>
         ///
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Whether to publish the captured video from the screen:true: Publish the captured video from the screen.false: (Default) Do not publish the captured video from the screen.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Whether to publish the captured video from the screen:true: Publish the captured video from the screen.false: (Default) Do not publish the captured video from the screen.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Whether to publish the captured video from the screen:true: Publish the captured video from the screen.false: (Default) Do not publish the captured video from the screen.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishScreenTrack = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Whether to publish the captured video from the secondary screen:true: Publish the captured video from the second screen.false: (Default) Do not publish the captured video from the second screen.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the captured audio from a custom source:true: Publish the captured audio from a custom source.false: (Default) Do not publish the captured audio from the custom source.
+        /// Whether to publish the audio captured from a custom source:true: Publish the audio captured from the custom source.false: (Default) Do not publish the audio captured from the custom source.
         /// </summary>
         ///
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// The ID of the custom audio source to publish. The default value is 0.If you have set the value of sourceNumber greater than 1 in SetExternalAudioSource , the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track starting from 0.
+        /// The ID of the custom audio source to publish. The default value is 0.If you have set sourceNumber in SetExternalAudioSource to a value greater than 1, the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track, starting from 0.
         /// </summary>
         ///
         public Optional<int> publishCustomAudioSourceId = new Optional<int>();
 
         ///
-        /// <summary>
-        /// Whether to enable AEC when publishing the captured audio from a custom source:true: Enable AEC when publishing the captured audio from a custom source.false: (Default) Do not enable AEC when publishing the captured audio from a custom source.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
 
@@ -1463,7 +1472,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the captured video from a custom source:true: Publish the captured video from a custom source.false: (Default) Do not publish the captured video from the custom source.
+        /// Whether to publish the video captured from a custom source:true: Publish the video captured from the custom source.false: (Default) Do not publish the video captured from the custom source.
         /// </summary>
         ///
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
@@ -1490,29 +1499,27 @@ namespace Agora.Rtc
         public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Whether to publish the local transcoded video.true: Publish the local transcoded video.false: (Default) Do not publish the local transcoded video.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to automatically subscribe to all remote audio streams when the user joins a channel:true: (Default) Subscribe to all remote audio streams.false: Do not subscribe to any remote audio stream.
+        /// Whether to automatically subscribe to all remote audio streams when the user joins a channel:true: (Default) Automatically subscribe to all remote audio streams.false: Do not automatically subscribe to any remote audio streams.
         /// </summary>
         ///
         public Optional<bool> autoSubscribeAudio = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to subscribe to all remote video streams when the user joins the channel:true: (Default) Subscribe to all remote video streams.false: Do not subscribe to any remote video stream.
+        /// Whether to automatically subscribe to all remote video streams when the user joins the channel:true: (Default) Automatically subscribe to all remote video streams.false: Do not automatically subscribe to any remote video streams.
         /// </summary>
         ///
         public Optional<bool> autoSubscribeVideo = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to enable audio capturing or playback:true: (Default) Enable audio capturing and playback.false: Do not enable audio capturing or playback.
+        /// Whether to enable audio capturing or playback:true: (Default) Enable audio capturing or playback.false: Do not enable audio capturing or playback.
         /// </summary>
         ///
         public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
@@ -1525,9 +1532,7 @@ namespace Agora.Rtc
         public Optional<int> publishMediaPlayerId = new Optional<int>();
 
         ///
-        /// <summary>
-        /// The user role. See CLIENT_ROLE_TYPE .
-        /// </summary>
+        /// @ignore
         ///
         public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
 
@@ -1564,7 +1569,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// (Optional) The token generated on your server for authentication. SeeThis parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx .Ensure that the App ID, channel name, and user name used for creating the token are the same ones as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel.
+        /// (Optional) The token generated on your server for authentication. See This parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx .Ensure that the App ID, channel name, and user name used for creating the token are the same as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel.
         /// </summary>
         ///
         public Optional<string> token = new Optional<string>();
@@ -1576,14 +1581,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the sound of the metronome to remote users:true: (Default) Publish the sound of the metronome. Both the local user and remote users can hear the metronome.false: Do not publish processed audio frames. Only the local user can hear the metronome.
+        /// Whether to publish the sound of a metronome to remote users:true: (Default) Publish the sound of the metronome. Both the local user and remote users can hear the metronome.false: Do not publish the sound of the metronome. Only the local user can hear the metronome.
         /// </summary>
         ///
         public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to enable interactive mode:true: Enable interactive mode. Local users receive low-latency and smooth video from remote users.false: (Default) Do not enable interactive mode. Local users receive the video of the remote user with the default settings.This parameter is used to implement the cohost across channels scenario only. The cohosts need to call JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE.
+        /// Whether to enable interactive mode:true: Enable interactive mode. Once this mode is enabled and the user role is set as audience, the user can receive remote video streams with low latency.false: (Default) Do not enable interactive mode. If this mode is disabled, the user receives the remote video streams in default settings.This parameter only applies to scenarios involving cohosting across channels. The cohosts need to call the JoinChannelEx method to join the other host's channel as an audience member, and set isInteractiveAudience to true.This parameter takes effect only when the user role is CLIENT_ROLE_AUDIENCE.
         /// </summary>
         ///
         public Optional<bool> isInteractiveAudience = new Optional<bool>();
@@ -1596,7 +1601,9 @@ namespace Agora.Rtc
         public Optional<video_track_id_t> customVideoTrackId = new Optional<video_track_id_t>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether the audio stream being published is filtered according to the volume algorithm:true: (Default) The audio stream is filtered. If the audio stream filter is not enabled, this setting does not takes effect.false: The audio stream is not filtered.If you need to enable this function, contact .
+        /// </summary>
         ///
         public Optional<bool> isAudioFilterable = new Optional<bool>();
 
@@ -1805,23 +1812,17 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// The connection mode with the Agora private media server.
-    /// </summary>
+    /// @ignore
     ///
     public enum LOCAL_PROXY_MODE
     {
         ///
-        /// <summary>
-        /// 0: The SDK will first try to connect to the specified Agora private media server; if it cannot connect to the specified Agora private media server, it will connect to the Agora SD-RTN™.
-        /// </summary>
+        /// @ignore
         ///
         kConnectivityFirst = 0,
 
         ///
-        /// <summary>
-        /// 1: The SDK only tries to connect to the specified Agora private media server.
-        /// </summary>
+        /// @ignore
         ///
         kLocalOnly = 1,
     };
@@ -1869,15 +1870,30 @@ namespace Agora.Rtc
         TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
     };
 
+    ///
+    /// @ignore
+    ///
     public class LogUploadServerInfo
     {
 
+        ///
+        /// @ignore
+        ///
         public string serverDomain { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public string serverPath { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public int serverPort { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public bool serverHttps;
 
         public LogUploadServerInfo()
@@ -1897,60 +1913,52 @@ namespace Agora.Rtc
         }
     };
 
+    ///
+    /// @ignore
+    ///
     public class AdvancedConfigInfo
     {
         public LogUploadServerInfo logUploadServer = new LogUploadServerInfo();
     };
 
     ///
-    /// <summary>
-    /// The configurations of the Local Access Point.
-    /// </summary>
+    /// @ignore
     ///
     public class LocalAccessPointConfiguration
     {
         ///
-        /// <summary>
-        /// The list of IP addresses for the Local Access Point. ipList and domainList must be filled in at least one.
-        /// </summary>
+        /// @ignore
         ///
         public string[] ipList { set; get; }
 
         ///
-        /// <summary>
-        /// The number of IP addresses of the Local Access Point. This value must be the same as the number of IP addresses that you specify for the ipList parameter.
-        /// </summary>
+        /// @ignore
         ///
         public int ipListSize { set; get; }
 
         ///
-        /// <summary>
-        /// The list of domain names for the Local Access Point. The SDK will parse the IP addresses according to the provided domain names. The parse times out after 10 seconds. ipList and domainList must be filled in at least one. If you specify an IP address and a domain name at the same time, the SDK will combine the IP address parsed from the domain name and the IP address you specify, remove duplicates, and then connect to a random IP to achieve load balancing.
-        /// </summary>
+        /// @ignore
         ///
         public string[] domainList { set; get; }
 
         ///
-        /// <summary>
-        /// The number of domain names for Local Access Point. This value must be the same as the number of domain names that you specifyfor the domainList parameter.
-        /// </summary>
+        /// @ignore
         ///
         public int domainListSize { set; get; }
 
         ///
-        /// <summary>
-        /// The domain name used for Intranet certificate verification. If you pass an empty value, the SDK uses the default domain name secure-edge.local for certificate verification.
-        /// </summary>
+        /// @ignore
         ///
         public string verifyDomainName { set; get; }
 
         ///
-        /// <summary>
-        /// The connection mode. See LOCAL_PROXY_MODE .
-        /// </summary>
+        /// @ignore
         ///
         public LOCAL_PROXY_MODE mode { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public AdvancedConfigInfo advancedConfig { set; get; }
 
         public LocalAccessPointConfiguration()
@@ -2061,6 +2069,9 @@ namespace Agora.Rtc
         public CHANNEL_PROFILE_TYPE channelProfile { set; get; }
 
 
+        ///
+        /// @ignore
+        ///
         public string license { set; get; }
         ///
         /// <summary>
@@ -2076,20 +2087,10 @@ namespace Agora.Rtc
         ///
         public AREA_CODE areaCode { set; get; }
 
-        //private uint _areaCode;
 
         ///
         /// <summary>
-        /// The SDK log files are: agorasdk.log, agorasdk.1.log, agorasdk.2.log, agorasdk.3.log, and agorasdk.4.log.
-        /// The API call log files are: agoraapi.log, agoraapi.1.log, agoraapi.2.log, agoraapi.3.log, and agoraapi.4.log.
-        /// The default size for each SDK log file is 1,024 KB; the default size for each API call log file is 2,048 KB. These log files are encoded in UTF-8.
-        /// The SDK writes the latest logs in agorasdk.log or agoraapi.log.
-        /// When agorasdk.log is full, the SDK processes the log files in the following order:
-        /// Delete the agorasdk.4.log file (if any).
-        /// Rename agorasdk.3.log to agorasdk.4.log.
-        /// Rename agorasdk.2.log to agorasdk.3.log.
-        /// Rename agorasdk.1.log to agorasdk.2.log.
-        /// Create a new agorasdk.log file. The overwrite rules for the agoraapi.log file are the same as for agorasdk.log. The log files that the SDK outputs. See LogConfig .By default, the SDK generates five SDK log files and five API call log files with the following rules:
+        /// The SDK log files are: agorasdk.log, agorasdk.1.log, agorasdk.2.log, agorasdk.3.log, and agorasdk.4.log.The API call log files are: agoraapi.log, agoraapi.1.log, agoraapi.2.log, agoraapi.3.log, and agoraapi.4.log.The default size for each SDK log file is 1,024 KB; the default size for each API call log file is 2,048 KB. These log files are encoded in UTF-8.The SDK writes the latest logs in agorasdk.log or agoraapi.log.When agorasdk.log is full, the SDK processes the log files in the following order:Delete the agorasdk.4.log file (if any).Rename agorasdk.3.log to agorasdk.4.log.Rename agorasdk.2.log to agorasdk.3.log.Rename agorasdk.1.log to agorasdk.2.log.Create a new agorasdk.log file.The overwrite rules for the agoraapi.log file are the same as for agorasdk.log.The log files that the SDK outputs. See LogConfig .By default, the SDK generates five SDK log files and five API call log files with the following rules:
         /// </summary>
         ///
         public LogConfig logConfig { set; get; }
@@ -2104,6 +2105,11 @@ namespace Agora.Rtc
         ///
         public bool useExternalEglContext { set; get; }
 
+        ///
+        /// <summary>
+        /// Whether to enable domain name restriction:true: Enables the domain name restriction. This value is suitable for scenarios where IoT devices use IoT cards for network access. The SDK will only connect to servers in the domain name or IP whitelist that has been reported to the operator.false: (Default) Disables the domain name restriction. This value is suitable for most common scenarios.
+        /// </summary>
+        ///
         public bool domainLimit { set; get; }
 
         public override void ToJson(JsonWriter writer)
@@ -2188,11 +2194,6 @@ namespace Agora.Rtc
         ///
         public uint size;
 
-        ///
-        /// <summary>
-        /// The buffer address of the received or sent Metadata.
-        /// </summary>
-        ///
         public IntPtr buffer
         {
             set
@@ -2216,174 +2217,126 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// The reason for the CDN streaming error.
-    /// </summary>
+    /// @ignore
     ///
     public enum DIRECT_CDN_STREAMING_ERROR
     {
         ///
-        /// <summary>
-        /// 0: No error.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_ERROR_OK = 0,
 
         ///
-        /// <summary>
-        /// 1: General error, no clear reason. You can try to push the stream again.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_ERROR_FAILED = 1,
 
         ///
-        /// <summary>
-        /// 2: An error occurs when pushing audio streams. For example, the local audio capture device is not working properly, is occupied by another process, or does not get the permission.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_ERROR_AUDIO_PUBLICATION = 2,
 
         ///
-        /// <summary>
-        /// 3: An error occurs when pushing video streams. For example, the local video capture device is not working properly, is occupied by another process, or does not get the permission.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_ERROR_VIDEO_PUBLICATION = 3,
 
         ///
-        /// <summary>
-        /// 4: Fails to connect to the CDN.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_ERROR_NET_CONNECT = 4,
 
         ///
-        /// <summary>
-        /// 5: The URL is already being used. Use a new media push URL.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_ERROR_BAD_NAME = 5,
     };
 
     ///
-    /// <summary>
-    /// The current CDN streaming state.
-    /// </summary>
+    /// @ignore
     ///
     public enum DIRECT_CDN_STREAMING_STATE
     {
 
         ///
-        /// <summary>
-        /// 0: The initial state before the CDN streaming starts.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_STATE_IDLE = 0,
 
         ///
-        /// <summary>
-        /// 1: Streams are being pushed to the CDN. The SDK returns this value when you call the StartDirectCdnStreaming method to push streams to the CDN.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_STATE_RUNNING = 1,
 
         ///
-        /// <summary>
-        /// 2: Stops pushing streams to the CDN. The SDK returns this value when you call the StopDirectCdnStreaming method to stop pushing streams to the CDN.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_STATE_STOPPED = 2,
 
         ///
-        /// <summary>
-        /// 3: Fails to push streams to the CDN. You can troubleshoot the issue with the information reported by the OnDirectCdnStreamingStateChanged callback, and then push streams to the CDN again.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_STATE_FAILED = 3,
 
         ///
-        /// <summary>
-        /// 4: Tries to reconnect Agora server to the CDN. The SDK attempts to reconnect a maximum of 10 times; if the connection is not restored, the streaming state becomes DIRECT_CDN_STREAMING_STATE_FAILED.
-        /// </summary>
+        /// @ignore
         ///
         DIRECT_CDN_STREAMING_STATE_RECOVERING = 4,
     };
 
     ///
-    /// <summary>
-    /// The statistics of the current CDN streaming.
-    /// </summary>
+    /// @ignore
     ///
     public class DirectCdnStreamingStats
     {
         ///
-        /// <summary>
-        /// The width (px) of the video frame.
-        /// </summary>
+        /// @ignore
         ///
         public int videoWidth { set; get; }
 
         ///
-        /// <summary>
-        /// The height (px) of the video frame.
-        /// </summary>
+        /// @ignore
         ///
         public int videoHeight { set; get; }
 
         ///
-        /// <summary>
-        /// The frame rate (fps) of the current video frame.
-        /// </summary>
+        /// @ignore
         ///
         public int fps { set; get; }
 
         ///
-        /// <summary>
-        /// The bitrate (bps) of the current video frame.
-        /// </summary>
+        /// @ignore
         ///
         public int videoBitrate { set; get; }
 
         ///
-        /// <summary>
-        /// The bitrate (bps) of the current audio frame.
-        /// </summary>
+        /// @ignore
         ///
         public int audioBitrate { set; get; }
     };
 
     ///
-    /// <summary>
-    /// The media setting options for the host.
-    /// </summary>
+    /// @ignore
     ///
     public class DirectCdnStreamingMediaOptions : OptionalJsonParse
     {
         ///
-        /// <summary>
-        /// Sets whether to publish the video captured by the camera:true: Publish the video captured by the camera.false: (Default) Do not publish the video captured by the camera.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Sets whether to publish the audio captured by the microphone:true: Publish the audio captured by the microphone.false: (Default) Do not publish the audio captured by the microphone.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Sets whether to publish the captured audio from a custom source:true: Publish the captured audio from a custom source.false: (Default) Do not publish the captured audio from the custom source.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
         ///
-        /// <summary>
-        /// Sets whether to publish the captured video from a custom source:true: Publish the captured video from a custom source.false: (Default) Do not publish the captured video from the custom source.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
 
@@ -2398,9 +2351,7 @@ namespace Agora.Rtc
         public Optional<int> publishMediaPlayerId = new Optional<int>();
 
         ///
-        /// <summary>
-        /// The video track ID returned by calling the createCustomVideoTrack method. The default value is 0.
-        /// </summary>
+        /// @ignore
         ///
         public Optional<video_track_id_t> customVideoTrackId = new Optional<video_track_id_t>();
 
@@ -2470,14 +2421,29 @@ namespace Agora.Rtc
         }
     }
 
+    ///
+    /// @ignore
+    ///
     public class ExtensionInfo
     {
+        ///
+        /// @ignore
+        ///
         public MEDIA_SOURCE_TYPE mediaSourceType { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public uint remoteUid { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public string channelId { set; get; }
 
+        ///
+        /// @ignore
+        ///
         public uint localUid { set; get; }
 
         public ExtensionInfo()
@@ -2491,23 +2457,17 @@ namespace Agora.Rtc
 
 
     ///
-    /// <summary>
-    /// Formats of the quality report.
-    /// </summary>
+    /// @ignore
     ///
     public enum QUALITY_REPORT_FORMAT_TYPE
     {
         ///
-        /// <summary>
-        /// 0: The quality report in JSON format.
-        /// </summary>
+        /// @ignore
         ///
         QUALITY_REPORT_JSON = 0,
 
         ///
-        /// <summary>
-        /// 1: The quality report in HTML format.
-        /// </summary>
+        /// @ignore
         ///
         QUALITY_REPORT_HTML = 1,
     };

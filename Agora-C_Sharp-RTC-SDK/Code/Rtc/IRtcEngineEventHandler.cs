@@ -145,15 +145,18 @@ namespace Agora.Rtc
         /// This callback notifies the application that the system's audio device state is changed. For example, a headset is unplugged from the device.This method is for Windows and macOS only.
         /// </summary>
         ///
+        /// <param name="deviceState"> Media device states.</param>
+        ///
         /// <param name="deviceId"> The device ID.</param>
         ///
-        /// <param name="deviceType"> The evice type. See MEDIA_DEVICE_TYPE .</param>
-        ///
-        /// <param name="deviceState"> The device state.On macOS:0: The device is ready for use.8: The device is not connected.On Windows: see MEDIA_DEVICE_STATE_TYPE .</param>
+        /// <param name="deviceType"> The device type. See MEDIA_DEVICE_TYPE .</param>
         ///
         public virtual void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
 
+        ///
+        /// @ignore
+        ///
         public virtual void OnAudioMixingPositionChanged(long position) { }
 
         [Obsolete("This method is deprecated, use onAudioMixingStateChanged instead")]
@@ -176,7 +179,16 @@ namespace Agora.Rtc
         public virtual void OnAudioEffectFinished(int soundId) { }
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Occurs when the video device state changes.
+        /// This callback reports the change of system video devices, such as being unplugged or removed. On a Windows device with an external camera for video capturing, the video disables once the external camera is unplugged.This callback is for Windows and macOS only.
+        /// </summary>
+        ///
+        /// <param name="deviceId"> The device ID.</param>
+        ///
+        /// <param name="deviceType"> Media device types. See MEDIA_DEVICE_TYPE .</param>
+        ///
+        /// <param name="deviceState"> Media device states.</param>
         ///
         public virtual void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
@@ -334,12 +346,12 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the result of taking a video snapshot.
-        /// After a successful takeSnapshot method call, the SDK triggers this callback to report whether the snapshot is successfully taken, as well as the details for that snapshot.
+        /// After a successful takeSnapshot method call, the SDK triggers this callback to report whether the snapshot is successfully taken as well as the details for the snapshot taken.
         /// </summary>
         ///
-        /// <param name="channel"> The channel name.</param>
+        /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="uid"> The user ID. A uid of 0 indicates the local user.</param>
+        /// <param name="uid"> The user ID. One uid of 0 indicates the local user.</param>
         ///
         /// <param name="filePath"> The local path of the snapshot.</param>
         ///
@@ -347,7 +359,7 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the snapshot.</param>
         ///
-        /// <param name="errCode"> The message that confirms success or gives the reason why the snapshot is not successfully taken:0: Success.&lt; 0: Failure:-1: The SDK fails to write data to a file or encode a JPEG image.-2: The SDK does not find the video stream of the specified user within one second after the takeSnapshot method call succeeds.-3: Calling the takeSnapshot method too frequently.</param>
+        /// <param name="errCode"> The message that confirms success or gives the reason why the snapshot is not successfully taken:0: Success.< 0: Failure:-1: The SDK fails to write data to a file or encode a JPEG image.-2: The SDK does not find the video stream of the specified user within one second after the takeSnapshot method call succeeds. The possible reasons are: local capture stops, remote end stops publishing, or video data processing is blocked.-3: Calling the takeSnapshot method too frequently.</param>
         ///
         public virtual void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode) { }
 
@@ -492,9 +504,11 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserStateChanged(RtcConnection connection, uint remoteUid, uint state) { }
 
+        [Obsolete("This callback is deprecated. Use other specific event callbacks instead")]
         ///
         /// <summary>
         /// Occurs when a method is executed by the SDK.
+        /// Deprecated:Deprecated as of v4.1.0. This method can neither accurately characterize the specific API method nor represent the execution result of the API.Agora recommends getting the results of the API implementation through relevant channels and media callbacks. For example, after calling the EnableLocalAudio method to enable the microphone, the status of the microphone is returned in the OnLocalAudioStateChanged callback.
         /// </summary>
         ///
         /// <param name="err"> The error code returned by the SDK when the method call fails. If the SDK returns 0, then the method call is successful.</param>
@@ -503,7 +517,6 @@ namespace Agora.Rtc
         ///
         /// <param name="result"> The result of the method call.</param>
         ///
-        [Obsolete("This callback is deprecated. Use other specific event callbacks instead")]
         public virtual void OnApiCallExecuted(int err, string api, string result) { }
 
         ///
@@ -632,7 +645,14 @@ namespace Agora.Rtc
         public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason) { }
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Occurs when the state of virtual metronome changes.
+        /// When the state of the virtual metronome changes, the SDK triggers this callback to report the current state of the virtual metronome. This callback indicates the state of the local audio stream and enables you to troubleshoot issues when audio exceptions occur.This callback is for Android and iOS only.
+        /// </summary>
+        ///
+        /// <param name="state"> </param>
+        ///
+        /// <param name="errorCode"> </param>
         ///
         public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) { }
 
@@ -728,7 +748,9 @@ namespace Agora.Rtc
         ///
         public virtual void OnTokenPrivilegeWillExpire(RtcConnection connection, string token) { }
 
-
+        ///
+        /// @ignore
+        ///
         public virtual void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE error) { }
        
         ///
@@ -817,15 +839,17 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when the user role switches in the interactive live streaming.
-        /// The SDK triggers this callback when the local user switches the user role by calling SetClientRole [1/2]
+        /// Occurs when the user role switches during the interactive live streaming.
+        /// The SDK triggers this callback when the local user switches their user role by calling SetClientRole [2/2] after joining the channel.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="oldRole"> Role that the user switches from: CLIENT_ROLE_BROADCASTER(1): Host.CLIENT_ROLE_AUDIENCE(2): Audience. CLIENT_ROLE_TYPE .</param>
+        /// <param name="oldRole"> Role that the user switches from: CLIENT_ROLE_TYPE .</param>
         ///
-        /// <param name="newRole"> Role that the user switches to: CLIENT_ROLE_BROADCASTER(1): Host.CLIENT_ROLE_AUDIENCE(2): Audience. CLIENT_ROLE_TYPE .</param>
+        /// <param name="newRole"> Role that the user switches to: CLIENT_ROLE_TYPE .</param>
+        ///
+        /// <param name="newRoleOptions"> Properties of the role that the user switches to. See ClientRoleOptions .</param>
         ///
         public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions) { }
 
@@ -844,7 +868,16 @@ namespace Agora.Rtc
         public virtual void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole) { }
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Reports the volume change of the audio device or app.
+        /// Occurs when the volume on the playback device, audio capture device, or the volume in the application changes.This callback is for Windows and macOS only.
+        /// </summary>
+        ///
+        /// <param name="deviceType"> The device type. See MEDIA_DEVICE_TYPE .</param>
+        ///
+        /// <param name="volume"> The volume value. The range is [0, 255].</param>
+        ///
+        /// <param name="muted"> Whether the audio device is muted:true: The audio device is muted.false: The audio device is not muted.</param>
         ///
         public virtual void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted) { }
 
@@ -988,7 +1021,7 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
-        /// <param name="type"> Network types: See NETWORK_TYPE .</param>
+        /// <param name="type"> The type of the local network connection. See NETWORK_TYPE .</param>
         ///
         public virtual void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type) { }
 
@@ -998,7 +1031,7 @@ namespace Agora.Rtc
         /// When encryption is enabled by calling EnableEncryption , the SDK triggers this callback if an error occurs in encryption or decryption on the sender or the receiver side.
         /// </summary>
         ///
-        /// <param name="connection"> The connection information. See RtcConnection .</param>
+        /// <param name="connection"> The connection information. See RtcConnection for details.</param>
         ///
         /// <param name="errorType"> For details about the error type, see ENCRYPTION_ERROR_TYPE .</param>
         ///

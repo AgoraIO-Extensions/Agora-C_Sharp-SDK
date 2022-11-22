@@ -1,18 +1,32 @@
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Agora.Rtc
 {
+    ///
+    /// @ignore
+    ///
     public enum VideoSurfaceType
     {
+        ///
+        /// @ignore
+        ///
         Renderer = 0,
+        ///
+        /// @ignore
+        ///
         RawImage = 1,
     };
 
     public delegate void OnTextureSizeModifyHandler(int width, int height);
 
+    ///
+    /// <summary>
+    /// This class contains Unity native methods related to video rendering.
+    /// </summary>
+    ///
     public class VideoSurface : MonoBehaviour
     {
         [SerializeField] protected VideoSurfaceType VideoSurfaceType = VideoSurfaceType.Renderer;
@@ -92,7 +106,7 @@ namespace Agora.Rtc
             }
         }
 
-        virtual protected void InvokeOnTextureSizeModify()
+        protected virtual void InvokeOnTextureSizeModify()
         {
             if (this.OnTextureSizeModify != null)
             {
@@ -131,13 +145,12 @@ namespace Agora.Rtc
             else
             {
 #if UNITY_EDITOR
-                // this only applies to Editor, in case of material is too dark
                 UpdateShader();
 #endif
             }
         }
 
-        virtual protected void DestroyTextureManager()
+        protected virtual void DestroyTextureManager()
         {
             if (_textureManager == null) return;
 
@@ -154,7 +167,7 @@ namespace Agora.Rtc
             _textureManager = null;
         }
 
-        protected virtual bool IsBlankTexture()
+        virtual protected bool IsBlankTexture()
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
@@ -172,7 +185,7 @@ namespace Agora.Rtc
             }
         }
 
-        virtual protected void ApplyTexture(Texture2D texture)
+        protected virtual void ApplyTexture(Texture2D texture)
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
@@ -186,7 +199,7 @@ namespace Agora.Rtc
             }
         }
 
-        virtual protected void UpdateShader()
+        protected virtual void UpdateShader()
         {
             var mesh = GetComponent<MeshRenderer>();
             if (mesh != null)
@@ -196,8 +209,10 @@ namespace Agora.Rtc
             }
         }
 
-        virtual public void SetForUser(uint uid = 0, string channelId = "",
-            VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
+        ///
+        /// @ignore
+        ///
+        public virtual void SetForUser(uint uid = 0, string channelId = "", VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
             Uid = uid;
             ChannelId = uid == 0 ? "" : channelId;
@@ -205,7 +220,10 @@ namespace Agora.Rtc
             _needUpdateInfo = false;
         }
 
-        virtual public void SetEnable(bool enable)
+        ///
+        /// @ignore
+        ///
+        public virtual void SetEnable(bool enable)
         {
             Enable = enable;
         }

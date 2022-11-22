@@ -79,17 +79,12 @@ namespace Agora.Rtc
         public virtual void OnPreloadEvent(string src, PLAYER_PRELOAD_EVENT @event) { }
 
         ///
-        /// <summary>
-        /// Occurs when the media file is played once.
-        /// </summary>
+        /// @ignore
         ///
         public virtual void OnCompleted() { }
 
         ///
-        /// <summary>
-        /// Occurs when the token is about to expire.
-        /// If the ts is about to expire when you call the SwitchAgoraCDNLineByIndex method to switch the CDN route for playing the media resource, the SDK triggers this callback to remind you to renew the authentication information. You need to call the RenewAgoraCDNSrcToken method to pass in the updated authentication information to update the authentication information of the media resource URL. After updating the authentication information, you need to call SwitchAgoraCDNLineByIndex to complete the route switching.
-        /// </summary>
+        /// @ignore
         ///
         public virtual void OnAgoraCDNTokenWillExpire() { }
 
