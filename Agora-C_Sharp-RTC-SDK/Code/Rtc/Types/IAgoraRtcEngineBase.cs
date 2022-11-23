@@ -2033,7 +2033,7 @@ namespace Agora.Rtc
 
         public RtcEngineContext(string appId, UInt64 context,
             CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
-            AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN,
+            AREA_CODE areaCode = AREA_CODE.AREA_CODE_GLOB,
             LogConfig logConfig = null, string license = "")
         {
             this.appId = appId;
