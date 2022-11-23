@@ -1,4 +1,4 @@
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +6,9 @@ using UnityEngine.UI;
 namespace Agora.Rtc
 {
 
+    ///
+    /// @ignore
+    ///
     public class VideoSurfaceYUV : VideoSurface
     {
         protected TextureManagerYUV _textureManagerYUV;
@@ -133,7 +136,7 @@ namespace Agora.Rtc
             }
         }
 
-        override protected void DestroyTextureManager()
+        protected override void DestroyTextureManager()
         {
             if (_textureManagerYUV == null) return;
 
@@ -150,7 +153,7 @@ namespace Agora.Rtc
             _textureManagerYUV = null;
         }
 
-        override protected void UpdateShader()
+        protected override void UpdateShader()
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {

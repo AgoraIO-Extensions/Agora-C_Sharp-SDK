@@ -10,7 +10,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs each time the SDK receives a video frame captured by the local camera.
-        /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data captured by the local camera. You can then pre-process the data according to your scenarios.After pre-processing, you can send the processed video data back to the SDK through this callback.The video data that this callback gets has not been pre-processed, and is not watermarked, cropped, rotated or beautified.
+        /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data captured by the local camera. You can then pre-process the data according to your scenarios.After pre-processing, you can send the processed video data back to the SDK through this callback.The video data that this callback gets has not been pre-processed, and is not watermarked, cropped, rotated or beautified.If the video data type you get is RGBA, Agora does not support processing the data of the alpha channel.
         /// </summary>
         ///
         /// <param name="videoFrame"> The video frame. See VideoFrame .</param>
@@ -29,7 +29,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs each time the SDK receives a video frame before encoding.
-        /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data before encoding and then process the data according to your particular scenarios.After processing, you can send the processed video data back to the SDK in this callback.To get the video data captured from the second screen before encoding, you need to set POSITION_PRE_ENCODER(1 << 2) as a frame position through GetObservedFramePosition .The video data that this callback gets has been preprocessed, with its content cropped and rotated, and the image enhanced.
+        /// After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. In this callback, you can get the video data before encoding and then process the data according to your particular scenarios.After processing, you can send the processed video data back to the SDK in this callback.To get the video data captured from the second screen before encoding, you need to set POSITION_PRE_ENCODER (1 << 2) as a frame position through GetObservedFramePosition .The video data that this callback gets has been preprocessed, with its content cropped and rotated, and the image enhanced.
         /// </summary>
         ///
         /// <param name="config"> The configuration of the video frame. See VideoFrameBufferConfig .</param>
@@ -37,7 +37,8 @@ namespace Agora.Rtc
         /// <param name="videoFrame"> The video frame. See VideoFrame .</param>
         ///
         /// <returns>
-        /// true: Sets the SDK to receive the video frame.false: Sets the SDK to discard the video frame.
+        /// true: Sets the SDK to receive the video frame.
+        /// false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
         public virtual bool OnPreEncodeVideoFrame(VideoFrame videoFrame, VideoFrameBufferConfig config)
@@ -53,12 +54,13 @@ namespace Agora.Rtc
         ///
         /// <param name="videoFrame"> The video frame. See VideoFrame .</param>
         ///
-        /// <param name="uid"> The ID of the remote user who sends the current video frame.</param>
+        /// <param name="uid"> The user ID of the remote user who sends the current video frame.</param>
         ///
         /// <param name="channelId"> The channel ID.</param>
         ///
         /// <returns>
-        /// true:The SDK ignores this return value.false:The SDK ignores this return value.
+        /// true: Sets the SDK to receive the video frame.
+        /// false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
         public virtual bool OnRenderVideoFrame(string channelId, uint uid, VideoFrame videoFrame)

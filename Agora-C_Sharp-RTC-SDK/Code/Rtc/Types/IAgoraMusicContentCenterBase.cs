@@ -2,232 +2,224 @@ using System;
 
 namespace Agora.Rtc
 {
+    ///
+    /// <summary>
+    /// The loading statuses of music assets.
+    /// </summary>
+    ///
     public enum PreloadStatusCode
     {
         ///
         /// <summary>
-        /// 0: No error occurs and preload successed.
+        /// 0: The preload of music assets is complete.
         /// </summary>
         ///
         kPreloadStatusCompleted = 0,
 
         ///
         /// <summary>
-        /// 1: A general error occurs.
+        /// 1: The preload of music assets fails.
         /// </summary>
         ///
         kPreloadStatusFailed = 1,
 
         ///
         /// <summary>
-        /// 2: The media is preloading.
+        /// 2: The music assets are preloading.
         /// </summary>
         ///
         kPreloadStatusPreloading = 2,
     };
 
+    ///
+    /// @ignore
+    ///
     public enum MusicContentCenterStatusCode
     {
         ///
-        /// <summary>
-        /// 0: No error occurs and request succeeds.
-        /// </summary>
+        /// @ignore
         ///
         kMusicContentCenterStatusOk = 0,
 
         ///
-        /// <summary>
-        /// 1: A general error occurs.
-        /// </summary>
+        /// @ignore
         ///
         kMusicContentCenterStatusErr = 1,
     };
 
+    ///
+    /// @ignore
+    ///
     public class MusicChartInfo
     {
         ///
-        /// <summary>
-        /// Name of the music chart
-        /// </summary>
+        /// @ignore
         ///
         public string chartName;
 
         ///
-        /// <summary>
-        /// Id of the music chart, which is used to get music list
-        /// </summary>
+        /// @ignore
         ///
         public int id;
     };
 
+    ///
+    /// @ignore
+    ///
     public class MvProperty
     {
         ///
-        /// <summary>
-        /// The resolution of the mv
-        /// </summary>
+        /// @ignore
         ///
         public string resolution;
 
         ///
-        /// <summary>
-        /// The bandwidth of the mv
-        /// </summary>
+        /// @ignore
         ///
         public string bandWidth;
     };
 
+    ///
+    /// <summary>
+    /// The climax parts of the music.
+    /// </summary>
+    ///
     public class ClimaxSegment
     {
         ///
         /// <summary>
-        /// The start time of climax segment
+        /// The time (ms) when the climax part begins.
         /// </summary>
         ///
         public int startTimeMs;
 
         ///
         /// <summary>
-        /// The end time of climax segment
+        /// The time (ms) when the climax part ends.
         /// </summary>
         ///
         public int endTimeMs;
     };
 
+    ///
+    /// @ignore
+    ///
     public class Music
     {
         ///
-        /// <summary>
-        /// The songCode of music
-        /// </summary>
+        /// @ignore
         ///
         public Int64 songCode;
 
         ///
-        /// <summary>
-        /// The name of music
-        /// </summary>
+        /// @ignore
         ///
         public string name;
 
         ///
-        /// <summary>
-        /// The singer of music
-        /// </summary>
+        /// @ignore
         ///
         public string singer;
 
         ///
-        /// <summary>
-        /// The poster url of music
-        /// </summary>
+        /// @ignore
         ///
         public string poster;
 
         ///
-        /// <summary>
-        /// The release time of music
-        /// </summary>
+        /// @ignore
         ///
         public string releaseTime;
 
         ///
-        /// <summary>
-        /// The duration (in seconds) of music
-        /// </summary>
+        /// @ignore
         ///
         public int durationS;
 
         ///
-        /// <summary>
-        /// The type of music
-        /// 1, mp3 with accompany and original
-        /// 2, mp3 only with accompany
-        /// 3, mp3 only with original
-        /// 4, mp4 with accompany and original
-        /// 5, mv only
-        /// 6, new type mp4 with accompany and original
-        /// detail at document of music media center
-        /// <summary>
+        /// @ignore
         ///
         public int type;
 
+        ///
+        /// @ignore
+        ///
         public int pitchType;
         ///
-        /// <summary>
-        /// The lyric count of music
-        /// <summary>
+        /// @ignore
         ///
         public int lyricCount;
 
         ///
-        /// <summary>
-        /// The lyric list of music
-        /// 0, xml
-        /// 1, lrc
-        /// <summary>
+        /// @ignore
         ///
         public int[] lyricList;
 
         ///
-        /// <summary>
-        /// The climax segment count of music
-        /// <summary>
+        /// @ignore
         ///
         public int climaxSegmentCount;
 
         ///
-        /// <summary>
-        /// The climax segment list of music
-        /// <summary>
+        /// @ignore
         ///
         public ClimaxSegment[] climaxSegmentList;
 
         ///
-        /// <summary>
-        /// The mv property count of music
-        /// this music has mv resource if this count great than zero.
-        /// <summary>
+        /// @ignore
         ///
         public int mvPropertyCount;
 
         ///
-        /// <summary>
-        /// The mv property list of music
-        /// <summary>
+        /// @ignore
         ///
         public MvProperty[] mvPropertyList;
     }
 
+    ///
+    /// @ignore
+    ///
     public class MusicCollection
     {
+        ///
+        /// @ignore
+        ///
         public int count;
+        ///
+        /// @ignore
+        ///
         public int total;
+        ///
+        /// @ignore
+        ///
         public int page;
+        ///
+        /// @ignore
+        ///
         public int pageSize;
+        ///
+        /// @ignore
+        ///
         public Music[] music;
     };
 
+    ///
+    /// @ignore
+    ///
     public class MusicContentCenterConfiguration
     {
         ///
-        /// <summary>
-        /// The app ID of the project that has enabled the music content center
-        /// <summary>
+        /// @ignore
         ///
         public string appId;
 
         ///
-        /// <summary>
-        /// music content center need rtmToken to connect with server
-        /// <summary>
+        /// @ignore
         ///
         public string token;
 
         ///
-        /// <summary>
-        /// The user ID when using music content center. It can be different from that of the rtc product.
-        /// <summary>
+        /// @ignore
         ///
         public UInt64 mccUid;
 

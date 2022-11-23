@@ -11,7 +11,8 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Occurs each time the SDK receives an encoded video image.
+        /// Reports that the receiver has received the to-be-decoded video frame sent by the remote end.
+        /// If you call the SetRemoteVideoSubscriptionOptions method and set encodedFrameOnly to true, the SDK triggers this callback locally to report the received encoded video frame information.
         /// </summary>
         ///
         /// <param name="uid"> The user ID of the remote user.</param>

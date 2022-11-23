@@ -24,7 +24,7 @@ namespace Agora.Rtc
         /// Sets the audio playback device.
         /// </summary>
         ///
-        /// <param name="deviceId"> The ID of the specified audio playback device. You can get the device ID by calling EnumeratePlaybackDevices . Plugging or unplugging the audio device does not change the value of deviceId.</param>
+        /// <param name="deviceId"> The ID of the specified audio playback device. You can get the device ID by calling EnumeratePlaybackDevices . Connecting or disconnecting the audio device does not change the value of deviceId.</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -50,9 +50,9 @@ namespace Agora.Rtc
         /// Retrieves the audio playback device associated with the device ID.
         /// </summary>
         ///
-        /// <param name="deviceId"> The device ID of the recording device. </param>
+        /// <param name="deviceId"> The device ID of the playback device. </param>
         ///
-        /// <param name="deviceName"> The device name of the recording device. </param>
+        /// <param name="deviceName"> The device name of the playback device. </param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -120,6 +120,20 @@ namespace Agora.Rtc
         public abstract int FollowSystemPlaybackDevice(bool enable);
 
 
+        ///
+        /// <summary>
+        /// Gets the default audio playback device.
+        /// This method is for Windows and macOS only.
+        /// </summary>
+        ///
+        /// <param name="deviceId"> Output parameter, the device ID of the default audio playback device.</param>
+        ///
+        /// <param name="deviceName"> Output parameter, the device name of the default audio playback device.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int GetPlaybackDefaultDevice(ref string deviceId, ref string deviceName);
         #endregion
 
@@ -177,7 +191,15 @@ namespace Agora.Rtc
         public abstract int GetRecordingDeviceInfo(ref string deviceId, ref string deviceName);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the volume of the audio recording device.
+        /// </summary>
+        ///
+        /// <param name="volume">  The volume of the audio recording device. The value range is [0,255].</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetRecordingDeviceVolume(int volume);
 
@@ -237,6 +259,20 @@ namespace Agora.Rtc
         ///
         public abstract int FollowSystemRecordingDevice(bool enable);
 
+        ///
+        /// <summary>
+        /// Gets the default audio capture device.
+        /// This method is for Windows and macOS only.
+        /// </summary>
+        ///
+        /// <param name="deviceId"> Output parameter, the device ID of the default audio capture device.</param>
+        ///
+        /// <param name="deviceName"> Output parameter, the device name of the default audio capture device.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName);
         #endregion
 
@@ -267,8 +303,44 @@ namespace Agora.Rtc
         ///
         public abstract int StopAudioDeviceLoopbackTest();
 
+        ///
+        /// <summary>
+        /// Sets the loopback device.
+        /// The SDK uses the current playback device as the loopback device by default. If you want to specify another audio device as the loopback device, call this method, and set deviceId to the loopback device you want to specify.This method applies to Windows only.The scenarios where this method is applicable are as follows:Use app A to play music through a Bluetooth headset; when using app B for a video conference, play through the speakers.If the loopback device is set as the Bluetooth headset, the SDK publishes the music in app A to the remote end.If the loopback device is set as the speaker, the SDK does not publish the music in app A to the remote end.If you set the loopback device as the Bluetooth headset, and then use a wired headset to play the music in app A, you need to call this method again, set the loopback device as the wired headset, and the SDK continues to publish the music in app A to remote end.
+        /// </summary>
+        ///
+        /// <param name="deviceId"> Specifies the loopback device of the SDK. You can get the device ID by calling EnumeratePlaybackDevices . Connecting or disconnecting the audio device does not change the value of deviceId.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int SetLoopbackDevice(string deviceId);
+        ///
+        /// <summary>
+        /// Gets the current loopback device.
+        /// This method applies to Windows only.
+        /// </summary>
+        ///
+        /// <param name="deviceId"> Output parameter, the ID of the current loopback device.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int GetLoopbackDevice(ref string deviceId);
+        ///
+        /// <summary>
+        /// Sets whether the loopback device follows the system default playback device.
+        /// This method applies to Windows only.
+        /// </summary>
+        ///
+        /// <param name="enable"> Whether to follow the system default audio playback device:true: Follow. When the default playback device of the system is changed, the SDK immediately switches to the loopback device.false: Do not follow. The SDK switches the audio loopback device to the system default audio playback device only when the current audio playback device is disconnected.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int FollowSystemLoopbackDevice(bool enable);
         #endregion
 

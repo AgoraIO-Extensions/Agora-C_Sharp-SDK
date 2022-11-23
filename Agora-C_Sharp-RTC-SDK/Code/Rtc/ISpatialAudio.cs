@@ -134,10 +134,10 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Stops or resumes subscribing to the audio streams of all remote users.
-        /// After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all remote users, including all subsequent users.Call this method after JoinChannel [2/2] .When using the spatial audio effect, if you need to set whether to stop subscribing to the audio streams of all remote users, Agora recommends calling this method instead of the MuteAllRemoteAudioStreams method under IRtcEngine .
+        /// After successfully calling this method, the local user stops or resumes subscribing to the audio streams of all remote users, including all subsequent users.Call this method after JoinChannel [2/2] .When using the spatial audio effect, if you need to set whether to stop subscribing to the audio streams of all remote users, Agora recommends calling this method instead of the MuteAllRemoteAudioStreams method under IRtcEngine .After calling this method, you need to call UpdateSelfPosition and UpdateRemotePosition to update the spatial location of the local user and the remote user; otherwise, the settings in this method do not take effect.
         /// </summary>
         ///
-        /// <param name="mute"> Whether to stop subscribing to the audio streams of all remote users:true: Stop subscribing to the audio streams of all remote users.false: Subscribe to the audio streams of all remote users.</param>
+        /// <param name="mute"> Whether to stop subscribing to the audio streams of all remote users:true: Stops subscribing to the audio streams of all remote users.false: Subscribe to the audio streams of all remote users.</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -145,11 +145,51 @@ namespace Agora.Rtc
         ///
         public abstract int MuteAllRemoteAudioStreams(bool mute);
 
-
+        ///
+        /// <summary>
+        /// Sets the sound insulation area.
+        /// In virtual interactive scenarios, you can use this method to set the sound insulation area and sound attenuation coefficient. When the sound source (which can be the user or the media player) and the listener belong to the inside and outside of the sound insulation area, they can experience the attenuation effect of sound similar to the real environment when it encounters a building partition.When the sound source and the listener belong to the inside and outside of the sound insulation area, the sound attenuation effect is determined by the sound attenuation coefficient in SpatialAudioZone .If the user or media player is in the same sound insulation area, it is not affected by SpatialAudioZone, and the sound attenuation effect is determined by the attenuation parameter in SetPlayerAttenuation or SetRemoteAudioAttenuation. If you do not call SetPlayerAttenuation or SetRemoteAudioAttenuation, the default sound attenuation coefficient of the SDK is 0.5, which simulates the attenuation of the sound in the real environment.If the sound source and the receiver belong to two sound insulation areas, the receiver cannot hear the sound source.If this method is called multiple times, the last sound insulation area set takes effect.
+        /// </summary>
+        ///
+        /// <param name="zones"> Sound insulation area settings. See SpatialAudioZone.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int SetZones(SpatialAudioZone[] zones, uint zoneCount);
 
+        ///
+        /// <summary>
+        /// Sets the sound attenuation properties of the media player.
+        /// </summary>
+        ///
+        /// <param name="playerId"> The ID of the media player. </param>
+        ///
+        /// <param name="attenuation"> The sound attenuation coefficient of the remote user or media player. The value range is [0,1]. The values are as follows:0: Broadcast mode, where the volume and timbre are not attenuated with distance, and the volume and timbre heard by local users do not change regardless of distance.(0,0.5): Weak attenuation mode, that is, the volume and timbre are only weakly attenuated during the propagation process, and the sound can travel farther than the real environment.0.5: (Default) simulates the attenuation of the volume in the real environment; the effect is equivalent to not setting the speaker_attenuation parameter.(0.5,1]: Strong attenuation mode, that is, the volume and timbre attenuate rapidly during the propagation process.</param>
+        ///
+        /// <param name="forceSet"> Whether to force the sound attenuation effect of the media player:true: Force attenuation to set the attenuation of the user. At this time, the attenuation coefficient of the sound insulation area set in the audioAttenuation in the SpatialAudioZone does not take effect for the user.false: Do not force attenuation e to set the user's sound attenuationffect, as shown in the following two cases.If the sound source and listener are inside and outside the sound isolation area, the sound attenuation effect is determined by the audioAttenuation in SpatialAudioZone.If the sound source and the listener are in the same sound insulation area or outside the same sound insulation area, the sound attenuation effect is determined by attenuation in this method.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int SetPlayerAttenuation(int playerId, double attenuation, bool forceSet);
 
+        ///
+        /// <summary>
+        /// Stops or resumes subscribing to the audio stream of a specified user.
+        /// Call this method after JoinChannel [2/2] .When using the spatial audio effect, if you need to set whether to stop subscribing to the audio stream of a specified user, Agora recommends calling this method instead of the MuteRemoteAudioStream method under IRtcEngine .
+        /// </summary>
+        ///
+        /// <param name="uid"> The user ID. This parameter must be the same as the user ID passed in when the user joined the channel.</param>
+        ///
+        /// <param name="mute"> Whether to subscribe to the specified remote user's audio stream.true: Stop subscribing to the audio stream of the specified user.false: (Default) Subscribe to the audio stream of the specified user. The SDK decides whether to subscribe according to the distance between the local user and the remote user.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int MuteRemoteAudioStream(uint uid, bool mute);
         ///
         /// <summary>
@@ -210,6 +250,21 @@ namespace Agora.Rtc
         ///
         public abstract int ClearRemotePositionsEx(RtcConnection connection);
 
+        ///
+        /// <summary>
+        /// Sets the sound attenuation effect for the specified user.
+        /// </summary>
+        ///
+        /// <param name="uid"> The user ID. This parameter must be the same as the user ID passed in when the user joined the channel.</param>
+        ///
+        /// <param name="attenuation"> For the user's sound attenuation coefficient, the value range is [0,1]. The values are as follows:0: Broadcast mode, where the volume and timbre are not attenuated with distance, and the volume and timbre heard by local users do not change regardless of distance.(0,0.5): Weak attenuation mode, that is, the volume and timbre are only weakly attenuated during the propagation process, and the sound can travel farther than the real environment.0.5: (Default) simulates the attenuation of the volume in the real environment; the effect is equivalent to not setting the speaker_attenuation parameter.(0.5,1]: Strong attenuation mode, that is, the volume and timbre attenuate rapidly during the propagation process.</param>
+        ///
+        /// <param name="forceSet"> Whether to force the user's sound attenuation effect:true: Force attenuation to set the sound attenuation of the user. At this time, the attenuation coefficient of the sound insulation area set in the audioAttenuation in the SpatialAudioZone does not take effect for the user.If the sound source and listener are inside and outside the sound isolation area, the sound attenuation effect is determined by the audioAttenuation in SpatialAudioZone.If the sound source and the listener are in the same sound insulation area or outside the same sound insulation area, the sound attenuation effect is determined by attenuation in this method.false: Do not force attenuation to set the user's sound attenuation effect, as shown in the following two cases.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet);
     }
 }
