@@ -117,8 +117,6 @@ namespace Agora.Rtc
             //return JsonMapper.ToObject<T>(jValue ?? string.Empty);
         }
 
-
-
         internal static T[] JsonToStructArray<T>(char[] data, string key = null, uint length = 0) where T : new()
         {
             var str = new string(data, 0, Array.IndexOf(data, '\0'));
