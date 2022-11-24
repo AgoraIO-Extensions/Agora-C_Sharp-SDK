@@ -474,12 +474,6 @@ namespace Agora.Rtc
             EventOnLocalVideoStateChanged.Invoke(source, state, errorCode);
         }
 
-        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
-        {
-            if (EventOnLocalVideoStateChangedEx == null) return;
-            EventOnLocalVideoStateChangedEx.Invoke(connection, state, errorCode);
-        }
-
         public override void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
             if (EventOnRemoteVideoStateChanged == null) return;

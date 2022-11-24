@@ -902,22 +902,6 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onLocalVideoStateChangedEx":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                    if (rtcEngineEventHandler == null) return;
-                    rtcEngineEventHandler.OnLocalVideoStateChanged(
-                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (LOCAL_VIDEO_STREAM_STATE)AgoraJson.GetData<int>(jsonData, "state"),
-                        (LOCAL_VIDEO_STREAM_ERROR)AgoraJson.GetData<int>(jsonData, "errorCode")
-                    );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
-#endif
-                    break;
-
                 case "RtcEngineEventHandler_onVideoSizeChangedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>

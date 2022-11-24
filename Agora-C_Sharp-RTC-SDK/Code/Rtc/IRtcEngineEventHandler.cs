@@ -374,8 +374,7 @@ namespace Agora.Rtc
         /// <param name="errorCode"> The detailed error information, see LOCAL_VIDEO_STREAM_ERROR .</param>
         ///
         public virtual void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
-        public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
-
+    
         ///
         /// <summary>
         /// Occurs when the remote video stream state changes.
