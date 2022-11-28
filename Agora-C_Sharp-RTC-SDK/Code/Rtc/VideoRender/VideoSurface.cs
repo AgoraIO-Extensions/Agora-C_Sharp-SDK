@@ -5,55 +5,97 @@ using UnityEngine.UI;
 
 namespace Agora.Rtc
 {
-    ///
-    /// @ignore
-    ///
+  ///
+  /// @ignore
+  ///
     public enum VideoSurfaceType
     {
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         Renderer = 0,
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         RawImage = 1,
     };
 
     public delegate void OnTextureSizeModifyHandler(int width, int height);
 
-    ///
-    /// <summary>
-    /// This class contains Unity native methods related to video rendering.
-    /// </summary>
-    ///
+///
+/// <summary>
+/// This class contains Unity native methods related to video rendering.
+/// </summary>
+///
     public class VideoSurface : MonoBehaviour
     {
         [SerializeField] protected VideoSurfaceType VideoSurfaceType = VideoSurfaceType.Renderer;
         [SerializeField] protected bool Enable = true;
 
+  ///
+  /// @ignore
+  ///
         [SerializeField] protected uint Uid = 0;
         [SerializeField] protected string ChannelId = "";
         [SerializeField] protected VIDEO_SOURCE_TYPE SourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
         protected VIDEO_OBSERVER_FRAME_TYPE FrameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
 
+  ///
+  /// @ignore
+  ///
         protected Component _renderer;
+  ///
+  /// @ignore
+  ///
         protected bool _needUpdateInfo = true;
+  ///
+  /// @ignore
+  ///
         protected bool _hasAttach = false;
 
+  ///
+  /// @ignore
+  ///
         protected GameObject _TextureManagerGameObject;
+  ///
+  /// @ignore
+  ///
         protected TextureManager _textureManager;
+  ///
+  /// @ignore
+  ///
         protected int _textureWidth = 0;
+  ///
+  /// @ignore
+  ///
         protected int _textureHeight = 0;
 
         public event OnTextureSizeModifyHandler OnTextureSizeModify;
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         void Start()
         {
             FrameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
             CheckVideoSurfaceType();
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         void Update()
         {
             if (_renderer == null || _needUpdateInfo) return;
@@ -106,6 +148,15 @@ namespace Agora.Rtc
             }
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         protected virtual void InvokeOnTextureSizeModify()
         {
             if (this.OnTextureSizeModify != null)
@@ -116,12 +167,30 @@ namespace Agora.Rtc
 
 
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         void OnDestroy()
         {
             AgoraLog.Log(string.Format("VideoSurface RGBA channel: ${0}, user:{1} destroy", ChannelId, Uid));
             DestroyTextureManager();
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         protected virtual void CheckVideoSurfaceType()
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
@@ -150,6 +219,15 @@ namespace Agora.Rtc
             }
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         protected virtual void DestroyTextureManager()
         {
             if (_textureManager == null) return;
@@ -167,6 +245,15 @@ namespace Agora.Rtc
             _textureManager = null;
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         virtual protected bool IsBlankTexture()
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
@@ -185,6 +272,9 @@ namespace Agora.Rtc
             }
         }
 
+  ///
+  /// @ignore
+  ///
         protected virtual void ApplyTexture(Texture2D texture)
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
@@ -199,6 +289,15 @@ namespace Agora.Rtc
             }
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         protected virtual void UpdateShader()
         {
             var mesh = GetComponent<MeshRenderer>();
@@ -209,9 +308,16 @@ namespace Agora.Rtc
             }
         }
 
-        ///
-        /// @ignore
-        ///
+///
+/// <summary>
+/// Sets the local or remote video display.
+/// Ensure that you call this method in the main thread.Ensure that you call this method before binding VideoSurface.cs.
+/// </summary>
+///
+/// <param name ="uid">The ID of remote users, obtained through OnUserJoined . The default value is 0, which means you can see the local video.</param>
+/// <param name ="channelId">The ID of the channel.</param>
+/// <param name ="source_type">The type of the video source. See VIDEO_SOURCE_TYPE .</param>
+///
         public virtual void SetForUser(uint uid = 0, string channelId = "", VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
             Uid = uid;
@@ -220,14 +326,27 @@ namespace Agora.Rtc
             _needUpdateInfo = false;
         }
 
-        ///
-        /// @ignore
-        ///
+///
+/// <summary>
+/// Sets whether to enable the video rendering.
+/// </summary>
+///
+/// <param name ="enable">Whether to enable the video rendering:true: (Default) Enable the video rendering.false: Disable the video rendering.</param>
+///
         public virtual void SetEnable(bool enable)
         {
             Enable = enable;
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         virtual protected string GenerateTextureManagerUniqueName()
         {
             return "TextureManager" + "_" + Uid.ToString() + "_" + ChannelId + "_" + SourceType.ToString() + "_" + FrameType.ToString();

@@ -6,19 +6,42 @@ using UnityEngine.UI;
 namespace Agora.Rtc
 {
 
-    ///
-    /// @ignore
-    ///
+///
+/// <summary>
+/// Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. The SDK supports using different VideoSurface to render different video sources; for example, using VideoSurface to render the video images of user A and VideoSurfaceYUV for user B. Note that video images from the same video source can only be rendered either through VideoSurface or VideoSurfaceYUV.
+/// </summary>
+///
     public class VideoSurfaceYUV : VideoSurface
     {
+  ///
+  /// @ignore
+  ///
         protected TextureManagerYUV _textureManagerYUV;
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         void Start()
         {
             FrameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
             CheckVideoSurfaceType();
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         void Update()
         {
             if (_renderer == null || _needUpdateInfo) return;
@@ -72,12 +95,30 @@ namespace Agora.Rtc
             }
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         void OnDestroy()
         {
             AgoraLog.Log(string.Format("VideoSurface YUV channel: ${0}, user:{1} destroy", ChannelId, Uid));
             DestroyTextureManager();
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         protected override void CheckVideoSurfaceType()
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
@@ -100,6 +141,15 @@ namespace Agora.Rtc
             }
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         protected override bool IsBlankTexture()
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
@@ -118,6 +168,9 @@ namespace Agora.Rtc
             }
         }
 
+  ///
+  /// @ignore
+  ///
         protected void ApplyTexture(Texture2D texture, Texture2D uTexture, Texture2D vTexture)
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
@@ -136,6 +189,15 @@ namespace Agora.Rtc
             }
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         protected override void DestroyTextureManager()
         {
             if (_textureManagerYUV == null) return;
@@ -153,6 +215,15 @@ namespace Agora.Rtc
             _textureManagerYUV = null;
         }
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         protected override void UpdateShader()
         {
             if (VideoSurfaceType == VideoSurfaceType.Renderer)

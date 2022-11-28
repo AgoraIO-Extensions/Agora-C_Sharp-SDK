@@ -2,227 +2,224 @@ using System;
 
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// The loading statuses of music assets.
-    /// </summary>
-    ///
+///
+/// <summary>
+/// The loading statuses of music assets.
+/// </summary>
+///
     public enum PreloadStatusCode
     {
-        ///
-        /// <summary>
-        /// 0: The preload of music assets is complete.
-        /// </summary>
-        ///
+///
+/// <summary>
+/// 0: The preload of music assets is complete.
+/// </summary>
+///
         kPreloadStatusCompleted = 0,
 
-        ///
-        /// <summary>
-        /// 1: The preload of music assets fails.
-        /// </summary>
-        ///
+///
+/// <summary>
+/// 1: The preload of music assets fails.
+/// </summary>
+///
         kPreloadStatusFailed = 1,
 
-        ///
-        /// <summary>
-        /// 2: The music assets are preloading.
-        /// </summary>
-        ///
+///
+/// <summary>
+/// 2: The music assets are preloading.
+/// </summary>
+///
         kPreloadStatusPreloading = 2,
     };
 
-    ///
-    /// @ignore
-    ///
+  ///
+  /// @ignore
+  ///
     public enum MusicContentCenterStatusCode
     {
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         kMusicContentCenterStatusOk = 0,
 
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         kMusicContentCenterStatusErr = 1,
     };
 
-    ///
-    /// @ignore
-    ///
+  ///
+  /// @ignore
+  ///
     public class MusicChartInfo
     {
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         public string chartName;
 
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         public int id;
     };
 
-    ///
-    /// @ignore
-    ///
+///
+/// @ignore
+///
     public class MvProperty
     {
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public string resolution;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public string bandWidth;
     };
 
-    ///
-    /// <summary>
-    /// The climax parts of the music.
-    /// </summary>
-    ///
+///
+/// <summary>
+/// The climax parts of the music.
+/// </summary>
+///
     public class ClimaxSegment
     {
-        ///
-        /// <summary>
-        /// The time (ms) when the climax part begins.
-        /// </summary>
-        ///
+///
+/// <summary>
+/// The time (ms) when the climax part begins.
+/// </summary>
+///
         public int startTimeMs;
 
-        ///
-        /// <summary>
-        /// The time (ms) when the climax part ends.
-        /// </summary>
-        ///
+///
+/// <summary>
+/// The time (ms) when the climax part ends.
+/// </summary>
+///
         public int endTimeMs;
     };
 
-    ///
-    /// @ignore
-    ///
+///
+/// @ignore
+///
     public class Music
     {
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public Int64 songCode;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public string name;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public string singer;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public string poster;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public string releaseTime;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public int durationS;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public int type;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public int pitchType;
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         public int lyricCount;
 
-        ///
-        /// @ignore
-        ///
         public int[] lyricList;
 
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         public int climaxSegmentCount;
 
-        ///
-        /// @ignore
-        ///
         public ClimaxSegment[] climaxSegmentList;
 
-        ///
-        /// @ignore
-        ///
+  ///
+  /// @ignore
+  ///
         public int mvPropertyCount;
 
-        ///
-        /// @ignore
-        ///
         public MvProperty[] mvPropertyList;
     }
 
-    ///
-    /// @ignore
-    ///
+///
+/// @ignore
+///
     public class MusicCollection
     {
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public int count;
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public int total;
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public int page;
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public int pageSize;
-        ///
-        /// @ignore
-        ///
         public Music[] music;
     };
 
-    ///
-    /// @ignore
-    ///
+///
+/// @ignore
+///
     public class MusicContentCenterConfiguration
     {
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public string appId;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public string token;
 
-        ///
-        /// @ignore
-        ///
+///
+/// @ignore
+///
         public UInt64 mccUid;
 
+///
+/// <summary>
+/// Destroys the specified video track.
+/// </summary>
+///
+/// <returns>
+/// 0: Success.< 0: Failure.
+/// </returns>
+///
         public MusicContentCenterConfiguration()
         {
             appId = "";
@@ -230,6 +227,9 @@ namespace Agora.Rtc
             mccUid = 0;
         }
 
+  ///
+  /// @ignore
+  ///
         public MusicContentCenterConfiguration(string appId, string token, UInt64 uid)
         {
             this.appId = appId;
