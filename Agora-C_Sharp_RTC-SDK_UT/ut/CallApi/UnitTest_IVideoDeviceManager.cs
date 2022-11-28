@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Agora.Rtc;
 using System;
-namespace ut
+namespace Agora.Rtc
 {
     public class UnitTest_IVideoDeviceManager
     {

@@ -1,14 +1,58 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Agora.Rtc;
-namespace ut
+namespace Agora.Rtc
 {
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisCApiParam2
+    {
+
+        public string Result
+        {
+            get
+            {
+                var re = Marshal.PtrToStringAnsi(result);
+                return re;
+            }
+        }
+
+        public void AllocResult()
+        {
+            if (result == IntPtr.Zero)
+            {
+                result = Marshal.AllocHGlobal(65536);
+            }
+        }
+
+        public void FreeResult()
+        {
+            if (result != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(result);
+                result = IntPtr.Zero;
+            }
+        }
+
+
+        public string @event;
+        public string data;
+        public uint data_size;
+
+        public IntPtr result;
+
+        public IntPtr buffer;
+        public IntPtr length;
+        public uint buffer_count;
+    }
+
+
     public class ParamsHelper
     {
 
         #region init
         public static void InitParam(out string param)
         {
-            param = "xiayangqun";
+            param = "10";
         }
 
 
@@ -43,7 +87,7 @@ namespace ut
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_CN;
             LogConfig logConfig = null;
 
-            param = new RtcEngineContext(appId, context, channelProfile, license, audioScenario, areaCode, logConfig);
+            param = new RtcEngineContext(appId, context, channelProfile, audioScenario, areaCode, logConfig);
         }
 
         public static void InitParam(out ChannelMediaOptions param)
@@ -583,7 +627,36 @@ namespace ut
         #endregion
 
 
+
+
+
         #region compare
+        public static bool compareRtcConnection(RtcConnection selfParam, RtcConnection outParam)
+        {
+            if (compareUint(selfParam.localUid, outParam.localUid) == false)
+                return false;
+
+            if (compareString(selfParam.channelId, outParam.channelId) == false)
+                return false;
+
+            return true;
+        }
+
+        public static bool compareUint(uint selfParam, uint outParam)
+        {
+            return selfParam == 10;
+        }
+
+        public static bool compareInt(int selfParam, int outParam)
+        {
+            return selfParam == 10;
+        }
+
+        public static bool compareString(string selfParam, string outParam)
+        {
+            return selfParam == "10";
+        }
+
 
         #endregion
 
