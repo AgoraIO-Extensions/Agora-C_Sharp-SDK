@@ -117,6 +117,11 @@ namespace Agora.Rtc
             return new AudioParams();
         }
 
+        public virtual AudioParams GetEarMonitoringAudioParams()
+        {
+            return new AudioParams();
+        }
+
         ///
         /// <summary>
         /// Retrieves the audio frame of a specified user before mixing.
@@ -138,6 +143,7 @@ namespace Agora.Rtc
         {
             return false;
         }
+
 
         ///
         /// <summary>
