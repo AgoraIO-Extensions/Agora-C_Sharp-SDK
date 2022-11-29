@@ -55,8 +55,8 @@ namespace Agora.Rtc
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-
-            DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret =  DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnJoinChannelSuccessPassed(connection, elapsed));
         }
 
