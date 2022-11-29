@@ -322,6 +322,7 @@ namespace Agora.Rtc
         internal IntPtr GetPlaybackAudioParams;
         internal IntPtr GetRecordAudioParams;
         internal IntPtr GetMixedAudioParams;
+        internal IntPtr GetEarMonitoringAudioParams;
         internal IntPtr GetObservedAudioFramePosition;
     }
 
@@ -335,6 +336,7 @@ namespace Agora.Rtc
         internal Func_AudioParams_Native GetPlaybackAudioParams;
         internal Func_AudioParams_Native GetRecordAudioParams;
         internal Func_AudioParams_Native GetMixedAudioParams;
+        internal Func_AudioParams_Native GetEarMonitoringAudioParams;
         internal Func_AudioFramePosition_Native GetObservedAudioFramePosition;
     }
 

@@ -296,6 +296,7 @@ namespace Agora.Rtc
                 GetPlaybackAudioParams = AudioFrameObserverNative.GetPlaybackAudioParams,
                 GetRecordAudioParams = AudioFrameObserverNative.GetRecordAudioParams,
                 GetMixedAudioParams = AudioFrameObserverNative.GetMixedAudioParams,
+                GetEarMonitoringAudioParams = AudioFrameObserverNative.GetEarMonitoringAudioParams,
                 GetObservedAudioFramePosition = AudioFrameObserverNative.GetObservedAudioFramePosition
             };
 
@@ -317,6 +318,8 @@ namespace Agora.Rtc
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetRecordAudioParams),
                 GetMixedAudioParams =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetMixedAudioParams),
+                GetEarMonitoringAudioParams =
+                    Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetEarMonitoringAudioParams),
                 GetObservedAudioFramePosition =
                     Marshal.GetFunctionPointerForDelegate(_irisRtcCAudioFrameObserver.GetObservedAudioFramePosition),
             };
