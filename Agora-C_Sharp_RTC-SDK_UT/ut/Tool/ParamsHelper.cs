@@ -544,6 +544,316 @@ namespace Agora.Rtc
                 spatialAudioZone.audioAttenuation = i;
             }
         }
+        public static void InitParam(out STREAM_PUBLISH_STATE param)
+        {
+            param = STREAM_PUBLISH_STATE.PUB_STATE_IDLE;
+        }
+        public static void InitParam(out STREAM_SUBSCRIBE_STATE param)
+        {
+            param = STREAM_SUBSCRIBE_STATE.SUB_STATE_IDLE;
+        }
+        public static void InitParam(out UPLOAD_ERROR_REASON param)
+        {
+            param = UPLOAD_ERROR_REASON.UPLOAD_SUCCESS;
+        }
+        public static void InitParam(out PERMISSION_TYPE param)
+        {
+            param = PERMISSION_TYPE.RECORD_AUDIO;
+        }
+        public static void InitParam(out RTMP_STREAMING_EVENT param)
+        {
+            param = RTMP_STREAMING_EVENT.RTMP_STREAMING_EVENT_FAILED_LOAD_IMAGE;
+        }
+        public static void InitParam(out RTMP_STREAM_PUBLISH_STATE param)
+        {
+            param = RTMP_STREAM_PUBLISH_STATE.RTMP_STREAM_PUBLISH_STATE_IDLE;
+        }
+        public static void InitParam(out RTMP_STREAM_PUBLISH_ERROR_TYPE param)
+        {
+            param = RTMP_STREAM_PUBLISH_ERROR_TYPE.RTMP_STREAM_PUBLISH_ERROR_OK;
+        }
+        public static void InitParam(out MEDIA_DEVICE_TYPE param)
+        {
+            param = MEDIA_DEVICE_TYPE.UNKNOWN_AUDIO_DEVICE;
+        }
+        public static void InitParam(out CONTENT_INSPECT_RESULT param)
+        {
+            param = CONTENT_INSPECT_RESULT.CONTENT_INSPECT_NEUTRAL;
+        }
+        public static void InitParam(out RHYTHM_PLAYER_STATE_TYPE param)
+        {
+            param = RHYTHM_PLAYER_STATE_TYPE.RHYTHM_PLAYER_STATE_IDLE;
+        }
+        public static void InitParam(out RHYTHM_PLAYER_ERROR_TYPE param)
+        {
+            param = RHYTHM_PLAYER_ERROR_TYPE.RHYTHM_PLAYER_ERROR_OK;
+        }
+        public static void InitParam(out AUDIO_MIXING_STATE_TYPE param)
+        {
+            param = AUDIO_MIXING_STATE_TYPE.AUDIO_MIXING_STATE_PLAYING;
+        }
+        public static void InitParam(out AUDIO_MIXING_REASON_TYPE param)
+        {
+            param = AUDIO_MIXING_REASON_TYPE.AUDIO_MIXING_REASON_CAN_NOT_OPEN;
+        }
+        public static void InitParam(out int[] param)
+        {
+            param = new int[10];
+            for (var i = 0; i < param.Length; i++)
+            {
+                param[i] = 10;
+            }
+        }
+        public static void InitParam(out DownlinkNetworkInfo param)
+        {
+            var info = new PeerDownlinkInfo[10];
+            for (int i = 0; i < info.Length; i++) {
+                InitParam(out info[i]);
+            }
+
+            param = new DownlinkNetworkInfo(10, 10, 10, info, 10);
+        }
+
+        public static void InitParam(out PeerDownlinkInfo param)
+        {
+            param = new PeerDownlinkInfo();
+            param.current_downscale_level = REMOTE_VIDEO_DOWNSCALE_LEVEL.REMOTE_VIDEO_DOWNSCALE_LEVEL_NONE;
+            param.uid = "10";
+            param.stream_type = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
+            param.expected_bitrate_bps = 10;
+        }
+
+            
+
+        public static void InitParam(out UplinkNetworkInfo param)
+        {
+            param = new UplinkNetworkInfo(10);
+        }
+        public static void InitParam(out MEDIA_DEVICE_STATE_TYPE param)
+        {
+            param = MEDIA_DEVICE_STATE_TYPE.MEDIA_DEVICE_STATE_IDLE;
+        }
+        public static void InitParam(out LastmileProbeResult param)
+        {
+            param = new LastmileProbeResult();
+
+        }
+        public static void InitParam(out PROXY_TYPE param)
+        {
+            param = PROXY_TYPE.NONE_PROXY_TYPE;
+        }
+        public static void InitParam(out ENCRYPTION_ERROR_TYPE param)
+        {
+            param = ENCRYPTION_ERROR_TYPE.ENCRYPTION_ERROR_INTERNAL_FAILURE;
+        }
+        public static void InitParam(out NETWORK_TYPE param)
+        {
+            param = NETWORK_TYPE.NETWORK_TYPE_UNKNOWN;
+        }
+        public static void InitParam(out WlAccStats param)
+        {
+            param = new WlAccStats();
+        }
+        public static void InitParam(out WLACC_MESSAGE_REASON param)
+        {
+            param = WLACC_MESSAGE_REASON.WLACC_MESSAGE_REASON_WEAK_SIGNAL;
+        }
+        public static void InitParam(out WLACC_SUGGEST_ACTION param)
+        {
+            param = WLACC_SUGGEST_ACTION.WLACC_SUGGEST_ACTION_CLOSE_TO_WIFI;
+        }
+        public static void InitParam(out CONNECTION_STATE_TYPE param)
+        {
+            param = CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED;
+        }
+        public static void InitParam(out CONNECTION_CHANGED_REASON_TYPE param)
+        {
+            param = CONNECTION_CHANGED_REASON_TYPE.CONNECTION_CHANGED_CONNECTING;
+        }
+        public static void InitParam(out UInt16 param)
+        {
+            param = 10;
+        }
+        public static void InitParam(out CLIENT_ROLE_CHANGE_FAILED_REASON param)
+        {
+            param = CLIENT_ROLE_CHANGE_FAILED_REASON.CLIENT_ROLE_CHANGE_FAILED_TOO_MANY_BROADCASTERS;
+        }
+        public static void InitParam(out REMOTE_AUDIO_STATE param)
+        {
+            param = REMOTE_AUDIO_STATE.REMOTE_AUDIO_STATE_STOPPED;
+        }
+        public static void InitParam(out REMOTE_AUDIO_STATE_REASON param)
+        {
+            param = REMOTE_AUDIO_STATE_REASON.REMOTE_AUDIO_REASON_INTERNAL;
+        }
+        public static void InitParam(out LOCAL_AUDIO_STREAM_STATE param)
+        {
+            param = LOCAL_AUDIO_STREAM_STATE.LOCAL_AUDIO_STREAM_STATE_STOPPED;
+        }
+        public static void InitParam(out LOCAL_AUDIO_STREAM_ERROR param)
+        {
+            param = LOCAL_AUDIO_STREAM_ERROR.LOCAL_AUDIO_STREAM_ERROR_OK;
+        }
+        public static void InitParam(out LICENSE_ERROR_TYPE param)
+        {
+            param = LICENSE_ERROR_TYPE.LICENSE_ERR_INVALID;
+        }
+        public static void InitParam(out RemoteVideoStats param)
+        {
+            param = new RemoteVideoStats();
+        }
+        public static void InitParam(out LocalVideoStats param)
+        {
+            param = new LocalVideoStats();
+        }
+        public static void InitParam(out RemoteAudioStats param)
+        {
+            param = new RemoteAudioStats();
+        }
+        public static void InitParam(out LocalAudioStats param)
+        {
+            param = new LocalAudioStats();
+        }
+        public static void InitParam(out USER_OFFLINE_REASON_TYPE param)
+        {
+            param = USER_OFFLINE_REASON_TYPE.USER_OFFLINE_QUIT;
+        }
+        public static void InitParam(out REMOTE_VIDEO_STATE param)
+        {
+            param = REMOTE_VIDEO_STATE.REMOTE_VIDEO_STATE_STOPPED;
+        }
+        public static void InitParam(out REMOTE_VIDEO_STATE_REASON param)
+        {
+            param = REMOTE_VIDEO_STATE_REASON.REMOTE_VIDEO_STATE_REASON_INTERNAL;
+        }
+        public static void InitParam(out LOCAL_VIDEO_STREAM_STATE param)
+        {
+            param = LOCAL_VIDEO_STREAM_STATE.LOCAL_VIDEO_STREAM_STATE_STOPPED;
+        }
+        public static void InitParam(out LOCAL_VIDEO_STREAM_ERROR param)
+        {
+            param = LOCAL_VIDEO_STREAM_ERROR.LOCAL_VIDEO_STREAM_ERROR_OK;
+        }
+        public static void InitParam(out RtcStats param)
+        {
+            param = new RtcStats();
+        }
+        public static void InitParam(out AudioVolumeInfo[] param)
+        {
+            param = new AudioVolumeInfo[10];
+            for (int i = 0; i < param.Length; i++)
+            {
+                param[i] = new AudioVolumeInfo();
+            }
+        }
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
+        //public static void InitParam(out VirtualBackgroundSource param)
+        //{
+        //    param =
+        //}
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
@@ -644,9 +954,38 @@ namespace Agora.Rtc
             return selfParam == 10;
         }
 
+        public static bool compareUlong(ulong selfParam, ulong outParam)
+        {
+            return selfParam == 10;
+        }
+
         public static bool compareInt(int selfParam, int outParam)
         {
             return selfParam == 10;
+        }
+
+        public static bool compareRHYTHM_PLAYER_STATE_TYPE(RHYTHM_PLAYER_STATE_TYPE selfParam, RHYTHM_PLAYER_STATE_TYPE outParam)
+        {
+            return selfParam == RHYTHM_PLAYER_STATE_TYPE.RHYTHM_PLAYER_STATE_IDLE;
+        }
+
+        public static bool compareRHYTHM_PLAYER_ERROR_TYPE(RHYTHM_PLAYER_ERROR_TYPE selfParam, RHYTHM_PLAYER_ERROR_TYPE outParam)
+        {
+            return selfParam == RHYTHM_PLAYER_ERROR_TYPE.RHYTHM_PLAYER_ERROR_OK;
+        }
+
+        public static bool compareIntArray(int[] selfParam, int[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            foreach (var e in selfParam)
+            {
+                if (e != 10)
+                    return false;
+            }
+
+            return true;
         }
 
         public static bool compareString(string selfParam, string outParam)
@@ -1282,6 +1621,20 @@ namespace Agora.Rtc
             return selfParam == REMOTE_VIDEO_DOWNSCALE_LEVEL.REMOTE_VIDEO_DOWNSCALE_LEVEL_NONE;
         }
 
+        public static bool compareAudioVolumeInfoArray(AudioVolumeInfo[] selfParam, AudioVolumeInfo[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (int i = 0; i < selfParam.Length; i++)
+            {
+                if (compareAudioVolumeInfo(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
         public static bool compareAudioVolumeInfo(AudioVolumeInfo selfParam, AudioVolumeInfo outParam)
         {
             if (compareUid_t(selfParam.uid, outParam.uid) == false)
@@ -1294,6 +1647,7 @@ namespace Agora.Rtc
                 return false;
             return true;
         }
+
 
         public static bool compareDeviceInfo(DeviceInfo selfParam, DeviceInfo outParam)
         {
@@ -2022,7 +2376,7 @@ namespace Agora.Rtc
             return selfParam == AUDIO_DUAL_MONO_MODE.AUDIO_DUAL_MONO_STEREO;
         }
 
-   
+
         public static bool compareVIDEO_PIXEL_FORMAT(VIDEO_PIXEL_FORMAT selfParam, VIDEO_PIXEL_FORMAT outParam)
         {
             return selfParam == VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
@@ -2060,7 +2414,7 @@ namespace Agora.Rtc
                 return false;
             if (compareLong(selfParam.timestamp, outParam.timestamp) == false)
                 return false;
-       
+
             if (compareEGL_CONTEXT_TYPE(selfParam.eglType, outParam.eglType) == false)
                 return false;
             if (compareInt(selfParam.textureId, outParam.textureId) == false)
@@ -2115,10 +2469,12 @@ namespace Agora.Rtc
             return selfParam == VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
         }
 
-        public static bool compareAUDIO_FRAME_TYPE(AUDIO_FRAME_TYPE selfParam, AUDIO_FRAME_TYPE outParam) {
-            return selfParam == AUDIO_FRAME_TYPE.FRAME_TYPE_PCM16; }
+        public static bool compareAUDIO_FRAME_TYPE(AUDIO_FRAME_TYPE selfParam, AUDIO_FRAME_TYPE outParam)
+        {
+            return selfParam == AUDIO_FRAME_TYPE.FRAME_TYPE_PCM16;
+        }
 
-     
+
         public static bool compareAudioFrame(AudioFrame selfParam, AudioFrame outParam)
         {
             if (compareAUDIO_FRAME_TYPE(selfParam.type, outParam.type) == false)
@@ -2225,7 +2581,7 @@ namespace Agora.Rtc
             return true;
         }
 
-      
+
         public static bool compareMEDIA_PLAYER_STATE(MEDIA_PLAYER_STATE selfParam, MEDIA_PLAYER_STATE outParam)
         {
             return selfParam == MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE;
@@ -2312,7 +2668,7 @@ namespace Agora.Rtc
             return selfParam == AUDIO_MIXING_DUAL_MONO_MODE.AUDIO_MIXING_DUAL_MONO_AUTO;
         }
 
-      
+
         public static bool compareMvProperty(MvProperty selfParam, MvProperty outParam)
         {
             if (compareString(selfParam.resolution, outParam.resolution) == false)
@@ -2356,11 +2712,12 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.mvPropertyCount, outParam.mvPropertyCount) == false)
                 return false;
-      
+
             return true;
         }
 
-        public static bool compareMusicCollection(MusicCollection selfParam, MusicCollection outParam) {
+        public static bool compareMusicCollection(MusicCollection selfParam, MusicCollection outParam)
+        {
             if (compareInt(selfParam.count, outParam.count) == false)
                 return false;
             if (compareInt(selfParam.total, outParam.total) == false)
@@ -2750,7 +3107,7 @@ namespace Agora.Rtc
             return true;
         }
 
-    
+
 
         public static bool compareMETADATA_TYPE(METADATA_TYPE selfParam, METADATA_TYPE outParam)
         {

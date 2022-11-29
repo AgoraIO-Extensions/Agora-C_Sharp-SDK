@@ -4966,6 +4966,8 @@ namespace Agora.Rtc
         {
             state = LASTMILE_PROBE_RESULT_STATE.LASTMILE_PROBE_RESULT_UNAVAILABLE;
             rtt = 0;
+            uplinkReport = new LastmileProbeOneWayResult();
+            downlinkReport = new LastmileProbeOneWayResult();
         }
 
         public LastmileProbeResult(LASTMILE_PROBE_RESULT_STATE state, LastmileProbeOneWayResult uplinkReport,

@@ -1908,7 +1908,7 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out unload_after_use);
             var nRet = Engine.LoadExtensionProvider(path, unload_after_use);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet == 0 || nRet == -(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED);
         }
 
         [Test]
@@ -2256,7 +2256,7 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out captureParams);
             var nRet = Engine.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet == 0 || nRet == -(int)ERROR_CODE_TYPE.ERR_NOT_SUPPORTED);
         }
 
         [Test]
