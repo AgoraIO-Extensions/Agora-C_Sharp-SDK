@@ -264,6 +264,25 @@ namespace Agora.Rtc
             }
         }
 
+        #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
+#endif
+        internal static IrisAudioParams GetEarMonitoringAudioParams()
+        {
+            if (AudioFrameObserver == null)
+                return LocalAudioFrames.irisAudioParams;
+
+            try
+            {
+                return ProcessAudioParams(AudioFrameObserver.GetEarMonitoringAudioParams());
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetRecordAudioParams: " + e);
+                return LocalAudioFrames.irisAudioParams;
+            }
+        }
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
 #endif
