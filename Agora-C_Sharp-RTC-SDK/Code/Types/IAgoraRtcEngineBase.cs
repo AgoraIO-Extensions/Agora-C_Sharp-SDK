@@ -550,6 +550,8 @@ namespace Agora.Rtc
         ///
         public int delay { set; get; }
 
+
+        public int e2eDelay { set; get; }
         ///
         /// <summary>
         /// The width (pixels) of the video.

@@ -527,6 +527,7 @@ namespace Agora.Rtc
             this.textureId = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
+            this.alphaBuffer = null;
         }
 
         public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride,
@@ -663,6 +664,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int metadata_size { set; get; }
+
+        public byte[] alphaBuffer { set; get; }
     };
 
     ///
@@ -953,6 +956,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
+
+        AUDIO_FRAME_POSITION_EAR_MONITORING = 0x0010,
     };
 
     ///
