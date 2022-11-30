@@ -1,6 +1,6 @@
 ﻿using System;
 using Agora.Rtc;
-namespace ut
+namespace Agora.Rtc
 {
     public class UTMetadataObserver:IMetadataObserver
     {

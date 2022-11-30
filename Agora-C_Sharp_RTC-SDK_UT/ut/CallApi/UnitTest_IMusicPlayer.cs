@@ -1,7 +1,7 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Agora.Rtc;
 
-namespace ut
+namespace Agora.Rtc
 {
     public class UnitTest_IMusicPlayer
     {

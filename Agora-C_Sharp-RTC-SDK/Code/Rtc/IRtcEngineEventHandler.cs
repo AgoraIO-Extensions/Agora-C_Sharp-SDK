@@ -750,7 +750,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public virtual void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE error) { }
+        public virtual void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE reason) { }
        
         ///
         /// <summary>
