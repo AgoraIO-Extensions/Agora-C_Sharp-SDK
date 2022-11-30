@@ -123,7 +123,7 @@ namespace Agora.Rtc
                     rtcEngineEventHandler.OnAudioQuality(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
-                        (int)AgoraJson.GetData<int>(jsonData, "elapsed"),
+                        (int)AgoraJson.GetData<int>(jsonData, "quality"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "delay"),
                         (UInt16)AgoraJson.GetData<UInt16>(jsonData, "lost")
                     );
@@ -211,6 +211,23 @@ namespace Agora.Rtc
                     });
 #endif
                     break;
+
+                case "RtcEngineEventHandler_onUserMuteAudioEx":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnUserMuteAudio(
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
+                        (bool)AgoraJson.GetData<bool>(jsonData, "muted")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
 
                 case "RtcEngineEventHandler_onUserMuteVideoEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -385,7 +402,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnLicenseValidationFailure(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (LICENSE_ERROR_TYPE)AgoraJson.GetData<int>(jsonData, "error")
+                        (LICENSE_ERROR_TYPE)AgoraJson.GetData<int>(jsonData, "reason")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

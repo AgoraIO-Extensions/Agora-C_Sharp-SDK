@@ -1,7 +1,7 @@
 ﻿using System;
 using Agora.Rtc;
 using NUnit.Framework;
-namespace ut
+namespace Agora.Rtc
 {
     public class UnitTest_IMediaRecorder
     {
