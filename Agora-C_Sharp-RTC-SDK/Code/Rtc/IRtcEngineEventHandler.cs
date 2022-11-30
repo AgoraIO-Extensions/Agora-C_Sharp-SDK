@@ -438,7 +438,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason) { }
 
-        [Obsolete("Use onRemoteAudioStateChanged instead of")]
         ///
         /// <summary>
         /// Occurs when a remote user (in the communication profile) or a host (in the live streaming profile) stops/resumes sending the audio stream.
@@ -468,7 +467,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted) { }
 
-        [Obsolete("Use onRemoteVideoStateChanged instead of")]
         ///
         /// <summary>
         /// Occurs when a remote user enables/disables the video module.
@@ -483,7 +481,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserEnableVideo(RtcConnection connection, uint remoteUid, bool enabled) { }
 
-        [Obsolete("Use onRemoteVideoStateChanged instead of")]
         ///
         /// <summary>
         /// Occurs when a specific remote user enables/disables the local video capturing function.
