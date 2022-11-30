@@ -6,9 +6,6 @@ using UnityEngine.UI;
 namespace Agora.Rtc
 {
 
-    ///
-    /// @ignore
-    ///
     public class VideoSurfaceYUV : VideoSurface
     {
         protected TextureManagerYUV _textureManagerYUV;
