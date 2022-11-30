@@ -1621,14 +1621,14 @@ namespace Agora.Rtc
         public SimulcastStreamConfig()
         {
             dimensions = new VideoDimensions(160, 120);
-            bitrate = 65;
+            kBitrate = 65;
             framerate = 5;
         }
 
         public SimulcastStreamConfig(VideoDimensions dimensions, int bitrate, int framerate)
         {
             this.dimensions = dimensions;
-            this.bitrate = bitrate;
+            this.kBitrate = bitrate;
             this.framerate = framerate;
         }
 
@@ -1644,7 +1644,7 @@ namespace Agora.Rtc
         /// Video receive bitrate (Kbps). The default value is 65.
         /// </summary>
         ///
-        public int bitrate { set; get; }
+        public int kBitrate { set; get; }
 
         ///
         /// <summary>
