@@ -5,14 +5,28 @@ using UnityEngine.UI;
 
 namespace Agora.Rtc
 {
+    ///
+    /// @ignore
+    ///
     public enum VideoSurfaceType
     {
+        ///
+        /// @ignore
+        ///
         Renderer = 0,
+        ///
+        /// @ignore
+        ///
         RawImage = 1,
     };
 
     public delegate void OnTextureSizeModifyHandler(int width, int height);
 
+    ///
+    /// <summary>
+    /// This class contains Unity native methods related to video rendering.
+    /// </summary>
+    ///
     public class VideoSurface : MonoBehaviour
     {
         [SerializeField] protected VideoSurfaceType VideoSurfaceType = VideoSurfaceType.Renderer;
@@ -195,6 +209,9 @@ namespace Agora.Rtc
             }
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void SetForUser(uint uid = 0, string channelId = "", VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
             Uid = uid;
@@ -203,6 +220,9 @@ namespace Agora.Rtc
             _needUpdateInfo = false;
         }
 
+        ///
+        /// @ignore
+        ///
         public virtual void SetEnable(bool enable)
         {
             Enable = enable;
