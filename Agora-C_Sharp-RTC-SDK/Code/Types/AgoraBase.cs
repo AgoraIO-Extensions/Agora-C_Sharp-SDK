@@ -176,6 +176,34 @@ namespace Agora.Rtc
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
     };
 
+
+    public enum LICENSE_ERROR_TYPE
+    {
+        /**
+         * 1: Invalid license
+        */
+        LICENSE_ERR_INVALID = 1,
+        /**
+         * 2: License expired
+        */
+        LICENSE_ERR_EXPIRE = 2,
+        /**
+         * 3: Exceed license minutes limit
+        */
+        LICENSE_ERR_MINUTES_EXCEED = 3,
+        /**
+         * 4: License use in limited period
+        */
+        LICENSE_ERR_LIMITED_PERIOD = 4,
+        /**
+         * 5: Same license used in different devices at the same time
+        */
+        LICENSE_ERR_DIFF_DEVICES = 5,
+        /**
+         * 99: SDK internal error
+        */
+        LICENSE_ERR_INTERNAL = 99,
+    };
     ///
     /// <summary>
     /// The operation permissions of the SDK on the audio session.
@@ -323,6 +351,10 @@ namespace Agora.Rtc
         /// </summary>
         ///
         AGORA_IID_MEDIA_RECORDER = 12,
+
+        AGORA_IID_STATE_SYNC = 13,
+        AGORA_IID_METACHAT_SERVICE = 14,
+        AGORA_IID_MUSIC_CONTENT_CENTER = 15,
     };
 
     ///
@@ -1274,6 +1306,7 @@ namespace Agora.Rtc
             rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
             trackId = 0;
             captureTimeMs = 0;
+            decodeTimeMs = 0;
             uid = 0;
             streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
         }
@@ -1288,6 +1321,7 @@ namespace Agora.Rtc
             rotation = rhs.rotation;
             trackId = rhs.trackId;
             captureTimeMs = rhs.captureTimeMs;
+            decodeTimeMs = rhs.decodeTimeMs;
             uid = rhs.uid;
             streamType = rhs.streamType;
         }
@@ -1348,6 +1382,7 @@ namespace Agora.Rtc
         ///
         public int64_t captureTimeMs { set; get; }
 
+        public int64_t decodeTimeMs { set; get; }
         ///
         /// <summary>
         /// The user ID to push the externally encoded video frame.
@@ -1392,6 +1427,34 @@ namespace Agora.Rtc
         VIDEO_MIRROR_MODE_DISABLED = 2,
     };
 
+    /** Supported codec type bit mask. */
+    public enum CODEC_CAP_MASK
+    {
+        /** 0: No codec support. */
+        CODEC_CAP_MASK_NONE = 0,
+
+        /** bit 1: Hardware decoder support flag. */
+        CODEC_CAP_MASK_HW_DEC = 1 << 0,
+
+        /** bit 2: Hardware encoder support flag. */
+        CODEC_CAP_MASK_HW_ENC = 1 << 1,
+
+        /** bit 3: Software decoder support flag. */
+        CODEC_CAP_MASK_SW_DEC = 1 << 2,
+
+        /** bit 4: Software encoder support flag. */
+        CODEC_CAP_MASK_SW_ENC = 1 << 3,
+    };
+
+    /** The codec support information. */
+    public class CodecCapInfo
+    {
+        /** The codec type: #VIDEO_CODEC_TYPE. */
+        public VIDEO_CODEC_TYPE codec_type { set; get; }
+        /** The codec support flag. */
+        public int codec_cap_mask { set; get; }
+    };
+
     ///
     /// <summary>
     /// Video encoder configurations.
@@ -1425,7 +1488,7 @@ namespace Agora.Rtc
         /// The encoding bitrate (Kbps) of the video.  BITRATE 
         /// </summary>
         ///
-        public int bitrate { set; get; }
+        public int kBitrate { set; get; }
 
         ///
         /// <summary>
@@ -1460,7 +1523,7 @@ namespace Agora.Rtc
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             dimensions = d;
             frameRate = f;
-            bitrate = b;
+            kBitrate = b;
             minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
             orientationMode = m;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
@@ -1472,7 +1535,7 @@ namespace Agora.Rtc
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             dimensions = new VideoDimensions(width, height);
             frameRate = f;
-            bitrate = b;
+            kBitrate = b;
             minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
             orientationMode = m;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
@@ -1484,7 +1547,7 @@ namespace Agora.Rtc
             codecType = config.codecType;
             dimensions = config.dimensions;
             frameRate = config.frameRate;
-            bitrate = config.bitrate;
+            kBitrate = config.kBitrate;
             minBitrate = config.minBitrate;
             orientationMode = config.orientationMode;
             degradationPreference = config.degradationPreference;
@@ -1496,7 +1559,7 @@ namespace Agora.Rtc
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             dimensions = new VideoDimensions((int)FRAME_WIDTH.FRAME_WIDTH_640, (int)FRAME_HEIGHT.FRAME_HEIGHT_360);
             frameRate = (int)FRAME_RATE.FRAME_RATE_FPS_15;
-            bitrate = (int)BITRATE.STANDARD_BITRATE;
+            kBitrate = (int)BITRATE.STANDARD_BITRATE;
             minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
             orientationMode = ORIENTATION_MODE.ORIENTATION_MODE_ADAPTIVE;
             degradationPreference = DEGRADATION_PREFERENCE.MAINTAIN_QUALITY;
@@ -2841,7 +2904,7 @@ namespace Agora.Rtc
         /// 5: The local video encoding fails.
         /// </summary>
         ///
-        LOCAL_VIDEO_STREAM_ERROR_ENCODE_FAILURE = 5,
+        LOCAL_VIDEO_STREAM_ERROR_CODEC_NOT_SUPPORT = 5,
 
         ///
         /// <summary>
@@ -2910,6 +2973,10 @@ namespace Agora.Rtc
         /// @ignore
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_NOT_SUPPORTED = 20,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_FAILURE = 21,
+       
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_NO_PERMISSION = 22,
     };
 
     ///
@@ -3144,6 +3211,12 @@ namespace Agora.Rtc
         /// @ignore
         ///
         REMOTE_VIDEO_STATE_REASON_VIDEO_STREAM_TYPE_CHANGE_TO_HIGH = 11,
+
+        REMOTE_VIDEO_STATE_REASON_SDK_IN_BACKGROUND = 12,
+
+        /** 13: The remote video stream is not supported by the decoder
+         */
+        REMOTE_VIDEO_STATE_REASON_CODEC_NOT_SUPPORT = 13,
     };
 
     [Flags]
@@ -4232,6 +4305,7 @@ namespace Agora.Rtc
             this.sourceType = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE;
             remoteUserUid = 0;
             imageUrl = null;
+            mediaPlayerId = 0;
             x = 0;
             y = 0;
             width = 0;
@@ -4242,12 +4316,13 @@ namespace Agora.Rtc
         }
 
         public TranscodingVideoStream(MEDIA_SOURCE_TYPE sourceType, uint remoteUserUid,
-            string imageUrl, int x, int y, int width, int height, int zOrder, double alpha,
+            string imageUrl, int mediaPlayerId, int x, int y, int width, int height, int zOrder, double alpha,
             bool mirror)
         {
             this.sourceType = sourceType;
             this.remoteUserUid = remoteUserUid;
             this.imageUrl = imageUrl;
+            this.mediaPlayerId = mediaPlayerId;
             this.x = x;
             this.y = y;
             this.width = width;
@@ -4278,6 +4353,8 @@ namespace Agora.Rtc
         ///
         public string imageUrl { set; get; }
 
+
+        public int mediaPlayerId { set; get; }
         ///
         /// <summary>
         /// The horizontal displacement of the top-left corner of the video for the video mixing on the client relative to the top-left corner (origin) of the canvas for this video mixing.
@@ -4338,16 +4415,18 @@ namespace Agora.Rtc
         public LocalTranscoderConfiguration()
         {
             streamCount = 0;
-            VideoInputStreams = null;
+            videoInputStreams = null;
             videoOutputConfiguration = new VideoEncoderConfiguration();
+            sync_with_primary_camera = true;
         }
 
         public LocalTranscoderConfiguration(uint streamCount, TranscodingVideoStream[] VideoInputStreams,
-                                            VideoEncoderConfiguration videoOutputConfiguration)
+                                            VideoEncoderConfiguration videoOutputConfiguration, bool sync_with_primary_camera)
         {
             this.streamCount = streamCount;
-            this.VideoInputStreams = VideoInputStreams;
+            this.videoInputStreams = VideoInputStreams;
             this.videoOutputConfiguration = videoOutputConfiguration;
+            this.sync_with_primary_camera = sync_with_primary_camera;
         }
 
         ///
@@ -4362,7 +4441,7 @@ namespace Agora.Rtc
         /// The video streams for the video mixing on the local client. See TranscodingVideoStream .
         /// </summary>
         ///
-        public TranscodingVideoStream[] VideoInputStreams { set; get; }
+        public TranscodingVideoStream[] videoInputStreams { set; get; }
 
         ///
         /// <summary>
@@ -4370,6 +4449,41 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public VideoEncoderConfiguration videoOutputConfiguration { set; get; }
+
+        public bool sync_with_primary_camera { set; get; }
+    };
+
+
+    public enum VIDEO_TRANSCODER_ERROR
+    {
+        /**
+         * No error
+         */
+        VT_ERR_OK = 0,
+        /**
+         * Occurs when video track not started of video source.
+         */
+        VT_ERR_VIDEO_SOURCE_NOT_READY = 1,
+        /**
+         * Occurs when source type not on support list.
+         */
+        VT_ERR_INVALID_MEDIA_SOURCE_TYPE = 2,
+        /**
+         * Occurs when image url is not correctly of image source.
+         */
+        VT_ERR_INVALID_IMAGE_PATH = 3,
+        /**
+         * Occurs when image format not the type png/jpeg/gif of image source.
+         */
+        VT_ERR_UNSUPPORT_IMAGE_FORMAT = 4,
+        /**
+         * Occurs when layout is invalid such as width is zero.
+         */
+        VT_ERR_INVALID_LAYOUT = 5,
+        /**
+         * Internal error.
+         */
+        VT_ERR_INTERNAL = 20
     };
 
     ///
@@ -4688,6 +4802,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         CONNECTION_CHANGED_TOO_MANY_BROADCASTERS = 20,
+        CONNECTION_CHANGED_LICENSE_VERIFY_FAILED = 21,
     };
 
     ///
@@ -5696,6 +5811,19 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VOICE_CHANGER_BASS = 0x03010400
+    };
+
+    public enum HEADPHONE_EQUALIZER_PRESET
+    {
+        /** Turn off headphone EQ and use the original voice.
+         */
+        HEADPHONE_EQUALIZER_OFF = 0x00000000,
+        /** For over-ear headphones.
+         */
+        HEADPHONE_EQUALIZER_OVEREAR = 0x04000001,
+        /** For in-ear headphones.
+         */
+        HEADPHONE_EQUALIZER_INEAR = 0x04000002
     };
 
     ///
@@ -7203,6 +7331,9 @@ namespace Agora.Rtc
         ///
         public Optional<double> speaker_attenuation = new Optional<double>();
 
+
+        public Optional<bool> enable_doppler = new Optional<bool>();
+
         public override void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -7249,17 +7380,14 @@ namespace Agora.Rtc
                 writer.Write(this.speaker_attenuation.GetValue());
             }
 
+            if (this.enable_doppler.HasValue())
+            {
+                writer.WritePropertyName("enable_doppler");
+                writer.Write(this.enable_doppler.GetValue());
+            }
+
             writer.WriteObjectEnd();
         }
-    };
-
-    public enum HEADPHONE_EQUALIZER_PRESET : uint
-    {
-        HEADPHONE_EQUALIZER_OFF = 0x00000000,
-
-        HEADPHONE_EQUALIZER_OVEREAR = 0x04000001,
-
-        HEADPHONE_EQUALIZER_INEAR = 0x04000002
     };
 
     #endregion
