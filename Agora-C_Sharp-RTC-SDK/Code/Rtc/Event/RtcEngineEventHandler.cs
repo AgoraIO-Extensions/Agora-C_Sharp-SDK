@@ -498,7 +498,6 @@ namespace Agora.Rtc
             EventOnUserOffline.Invoke(connection, remoteUid, reason);
         }
 
-        [Obsolete]
         public override void OnUserMuteAudio(RtcConnection connection, uint remoteUid, bool muted)
         {
             if (EventOnUserMuteAudio == null) return;
@@ -511,14 +510,12 @@ namespace Agora.Rtc
             EventOnUserMuteVideo.Invoke(connection, remoteUid, muted);
         }
 
-        [Obsolete]
         public override void OnUserEnableVideo(RtcConnection connection, uint remoteUid, bool enabled)
         {
             if (EventOnUserEnableVideo == null) return;
             EventOnUserEnableVideo.Invoke(connection, remoteUid, enabled);
         }
 
-        [Obsolete]
         public override void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled)
         {
             if (EventOnUserEnableLocalVideo == null) return;
