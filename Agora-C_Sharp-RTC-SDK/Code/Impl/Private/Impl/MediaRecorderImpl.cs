@@ -107,10 +107,9 @@ namespace Agora.Rtc
             {
                 MediaRecorderObserverNative.MediaRecorderObserverDic.Add(key, callback);
 
-                var param = new
-                {
-                    connection
-                };
+                param.Clear();
+                param.Add("connection", connection);
+
 
                 var json = AgoraJson.ToJson(param);
                 int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
@@ -120,7 +119,7 @@ namespace Agora.Rtc
 
                 return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
             }
-            
+
             if (callback == null && MediaRecorderObserverNative.MediaRecorderObserverDic.ContainsKey(key))
             {
                 MediaRecorderObserverNative.MediaRecorderObserverDic.Remove(key);
@@ -131,11 +130,10 @@ namespace Agora.Rtc
 
         public int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
         {
-            var param = new
-            {
-                connection,
-                config
-            };
+            param.Clear();
+            param.Add("connection", connection);
+            param.Add("config", config);
+
 
             var json = AgoraJson.ToJson(param);
             int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STARTRECORDING,
@@ -148,10 +146,9 @@ namespace Agora.Rtc
 
         public int StopRecording(RtcConnection connection)
         {
-            var param = new
-            {
-                connection,
-            };
+            param.Clear();
+            param.Add("connection", connection);
+
 
             var json = AgoraJson.ToJson(param);
             int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STOPRECORDING,

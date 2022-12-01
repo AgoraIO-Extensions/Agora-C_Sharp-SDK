@@ -46,10 +46,8 @@ namespace Agora.Rtc
 
         public int RemoveAllCaches()
         {
-            var param = new
-            {
+            param.Clear();
 
-            };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -61,10 +59,8 @@ namespace Agora.Rtc
 
         public int RemoveOldCache()
         {
-            var param = new
-            {
+            param.Clear();
 
-            };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEOLDCACHE,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -76,10 +72,9 @@ namespace Agora.Rtc
 
         public int RemoveCacheByUri(string uri)
         {
-            var param = new
-            {
-                uri
-            };
+            param.Clear();
+            param.Add("uri", uri);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_REMOVECACHEBYURI,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -91,10 +86,9 @@ namespace Agora.Rtc
 
         public int SetCacheDir(string path)
         {
-            var param = new
-            {
-                path
-            };
+            param.Clear();
+            param.Add("path", path);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_SETCACHEDIR,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -106,10 +100,9 @@ namespace Agora.Rtc
 
         public int SetMaxCacheFileCount(int count)
         {
-            var param = new
-            {
-                count
-            };
+            param.Clear();
+            param.Add("count", count);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILECOUNT,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -121,10 +114,9 @@ namespace Agora.Rtc
 
         public int SetMaxCacheFileSize(long cacheSize)
         {
-            var param = new
-            {
-                cacheSize
-            };
+            param.Clear();
+            param.Add("cacheSize", cacheSize);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILESIZE,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -136,10 +128,9 @@ namespace Agora.Rtc
 
         public int EnableAutoRemoveCache(bool enable)
         {
-            var param = new
-            {
-                enable
-            };
+            param.Clear();
+            param.Add("enable", enable);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_ENABLEAUTOREMOVECACHE,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -151,10 +142,9 @@ namespace Agora.Rtc
 
         public int GetCacheDir(out string path, int length)
         {
-            var param = new
-            {
-                length
-            };
+            param.Clear();
+            param.Add("length", length);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEDIR,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -175,10 +165,8 @@ namespace Agora.Rtc
 
         public int GetMaxCacheFileCount()
         {
-            var param = new
-            {
-                
-            };
+            param.Clear();
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILECOUNT,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -189,10 +177,8 @@ namespace Agora.Rtc
 
         public long GetMaxCacheFileSize()
         {
-            var param = new
-            {
+            param.Clear();
 
-            };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILESIZE,
                 jsonParam, (UInt32)jsonParam.Length,
@@ -203,10 +189,8 @@ namespace Agora.Rtc
 
         public int GetCacheFileCount()
         {
-            var param = new
-            {
+            param.Clear();
 
-            };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEFILECOUNT,
                 jsonParam, (UInt32)jsonParam.Length,

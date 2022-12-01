@@ -1296,7 +1296,7 @@ namespace Agora.Rtc
         ///
         public bool isOccluded;
 
-        public bool minimizeWindow { set; get; }
+        public bool minimizeWindow;
 
         public ScreenCaptureSourceInfo()
         {
@@ -2023,7 +2023,7 @@ namespace Agora.Rtc
         public CHANNEL_PROFILE_TYPE channelProfile;
 
 
-        public string license { set; get; }
+        public string license;
         ///
         /// <summary>
         /// The audio scenarios. See AUDIO_SCENARIO_TYPE . Under different audio scenarios, the device uses different volume types.
