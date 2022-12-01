@@ -344,6 +344,7 @@ namespace Agora.Rtc
         private bool _disposed = false;
         private bool _initialized = false;
         private const int UNINITIALIZED = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
+        Dictionary<string, System.Object> param = new Dictionary<string, System.Object>();
 
         internal LocalSpatialAudioEngineImpl(IrisApiEnginePtr irisApiEngine)
         {
