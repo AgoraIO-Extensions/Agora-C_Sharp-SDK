@@ -71,6 +71,8 @@ namespace Agora.Rtc
         /// In order to ensure that the obtained in-ear audio data meets the expectations, Agora recommends that you choose one of the following two methods to set the in-ear monitoring-ear audio data format:Method 1: After calling SetEarMonitoringAudioFrameParameters to set the audio data format and RegisterAudioFrameObserver to register the audio frame observer object, the SDK calculates the sampling interval according to the parameters set in the methods, and triggers the OnEarMonitoringAudioFrame callback according to the sampling interval.Method 2: After calling RegisterAudioFrameObserver to register the audio frame observer object, set the audio data format in the return value of the GetObservedAudioFramePosition callback. The SDK then calculates the sampling interval according to the return value of the GetEarMonitoringAudioParams callback, and triggers the OnEarMonitoringAudioFrame callback according to the sampling interval.The priority of method 1 is higher than that of method 2. If method 1 is used to set the audio data format, the setting of method 2 is invalid.
         /// </summary>
         ///
+        /// <param name="audioFrame"> The raw audio data. See AudioFrame .</param>
+        ///
         /// <returns>
         /// Reserved for future use.
         /// </returns>
@@ -141,7 +143,14 @@ namespace Agora.Rtc
 
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the audio format for the OnEarMonitoringAudioFrame callback.
+        /// You need to register the callback when calling the RegisterAudioFrameObserver method. After you successfully register the audio observer, the SDK triggers this callback, and you can set the audio format in the return value of this callback.The SDK triggers the OnEarMonitoringAudioFrame callback with the AudioParams calculated sampling interval you set in the return value. The calculation formula is Sample interval (sec) = samplePerCall/(sampleRate × channel).Ensure that the sample interval ≥ 0.01 (s).
+        /// </summary>
+        ///
+        /// <returns>
+        /// The audio data of in-ear monitoring, see AudioParams .
+        /// </returns>
         ///
         public virtual AudioParams GetEarMonitoringAudioParams()
         {

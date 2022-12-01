@@ -73,15 +73,7 @@ namespace Agora.Rtc
         ///
         /// <param name="remoteUid"> The user ID of the remote user sending the audio stream.</param>
         ///
-        /// <param name="quality"> Audio quality of the user. 
-        ///  QUALITY_UNKNOWN(0): The quality is unknown.
-        ///  QUALITY_EXCELLENT(1): The quality is excellent.
-        ///  QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.
-        ///  QUALITY_POOR(3): Users can feel the communication is slightly impaired.
-        ///  QUALITY_BAD(4): Users cannot communicate smoothly.
-        ///  QUALITY_VBAD(5): The quality is so bad that users can barely communicate.
-        ///  QUALITY_DOWN(6): The network is down, and users cannot communicate at all.
-        ///  See QUALITY_TYPE .</param>
+        /// <param name="quality"> Audio quality of the user. QUALITY_UNKNOWN(0): The quality is unknown.QUALITY_EXCELLENT(1): The quality is excellent.QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.QUALITY_POOR(3): Users can feel the communication is slightly impaired.QUALITY_BAD(4): Users cannot communicate smoothly.QUALITY_VBAD(5): The quality is so bad that users can barely communicate.QUALITY_DOWN(6): The network is down, and users cannot communicate at all.See QUALITY_TYPE .</param>
         ///
         /// <param name="delay"> The network delay (ms) from the sender to the receiver, including the delay caused by audio sampling pre-processing, network transmission, and network jitter buffering.</param>
         ///
@@ -203,25 +195,9 @@ namespace Agora.Rtc
         ///
         /// <param name="remoteUid"> The user ID. The network quality of the user with this user ID is reported.</param>
         ///
-        /// <param name="txQuality"> Uplink network quality rating of the user in terms of the transmission bit rate, packet loss rate, average RTT (Round-Trip Time) and jitter of the uplink network. This parameter is a quality rating helping you understand how well the current uplink network conditions can support the selected video encoder configuration. For example, a 1000 Kbps uplink network may be adequate for video frames with a resolution of 640 × 480 and a frame rate of 15 fps in the LIVE_BROADCASTING profile, but may be inadequate for resolutions higher than 1280 × 720. 
-        ///  QUALITY_UNKNOWN(0): The quality is unknown.
-        ///  QUALITY_EXCELLENT(1): The quality is excellent.
-        ///  QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.
-        ///  QUALITY_POOR(3): Users can feel the communication is slightly impaired.
-        ///  QUALITY_BAD(4): Users cannot communicate smoothly.
-        ///  QUALITY_VBAD(5): The quality is so bad that users can barely communicate.
-        ///  QUALITY_DOWN(6): The network is down, and users cannot communicate at all.
-        ///  See QUALITY_TYPE .</param>
+        /// <param name="txQuality"> Uplink network quality rating of the user in terms of the transmission bit rate, packet loss rate, average RTT (Round-Trip Time) and jitter of the uplink network. This parameter is a quality rating helping you understand how well the current uplink network conditions can support the selected video encoder configuration. For example, a 1000 Kbps uplink network may be adequate for video frames with a resolution of 640 × 480 and a frame rate of 15 fps in the LIVE_BROADCASTING profile, but may be inadequate for resolutions higher than 1280 × 720. QUALITY_UNKNOWN(0): The quality is unknown.QUALITY_EXCELLENT(1): The quality is excellent.QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.QUALITY_POOR(3): Users can feel the communication is slightly impaired.QUALITY_BAD(4): Users cannot communicate smoothly.QUALITY_VBAD(5): The quality is so bad that users can barely communicate.QUALITY_DOWN(6): The network is down, and users cannot communicate at all.See QUALITY_TYPE .</param>
         ///
-        /// <param name="rxQuality"> Downlink network quality rating of the user in terms of packet loss rate, average RTT, and jitter of the downlink network. 
-        ///  QUALITY_UNKNOWN(0): The quality is unknown.
-        ///  QUALITY_EXCELLENT(1): The quality is excellent.
-        ///  QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.
-        ///  QUALITY_POOR(3): Users can feel the communication is slightly impaired.
-        ///  QUALITY_BAD(4): Users cannot communicate smoothly.
-        ///  QUALITY_VBAD(5): The quality is so bad that users can barely communicate.
-        ///  QUALITY_DOWN(6): The network is down, and users cannot communicate at all.
-        ///  See QUALITY_TYPE .</param>
+        /// <param name="rxQuality"> Downlink network quality rating of the user in terms of packet loss rate, average RTT, and jitter of the downlink network. QUALITY_UNKNOWN(0): The quality is unknown.QUALITY_EXCELLENT(1): The quality is excellent.QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.QUALITY_POOR(3): Users can feel the communication is slightly impaired.QUALITY_BAD(4): Users cannot communicate smoothly.QUALITY_VBAD(5): The quality is so bad that users can barely communicate.QUALITY_DOWN(6): The network is down, and users cannot communicate at all.See QUALITY_TYPE .</param>
         ///
         public virtual void OnNetworkQuality(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality) { }
 
@@ -251,15 +227,7 @@ namespace Agora.Rtc
         /// This callback reports the last-mile network conditions of the local user before the user joins the channel. Last mile refers to the connection between the local device and Agora's edge server.Before the user joins the channel, this callback is triggered by the SDK once StartLastmileProbeTest is called and reports the last-mile network conditions of the local user.
         /// </summary>
         ///
-        /// <param name="quality"> The last-mile network quality. 
-        ///  QUALITY_UNKNOWN(0): The quality is unknown.
-        ///  QUALITY_EXCELLENT(1): The quality is excellent.
-        ///  QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.
-        ///  QUALITY_POOR(3): Users can feel the communication is slightly impaired.
-        ///  QUALITY_BAD(4): Users cannot communicate smoothly.
-        ///  QUALITY_VBAD(5): The quality is so bad that users can barely communicate.
-        ///  QUALITY_DOWN(6): The network is down, and users cannot communicate at all.
-        ///  See QUALITY_TYPE .</param>
+        /// <param name="quality"> The last-mile network quality. QUALITY_UNKNOWN(0): The quality is unknown.QUALITY_EXCELLENT(1): The quality is excellent.QUALITY_GOOD(2): The network quality seems excellent, but the bitrate can be slightly lower than excellent.QUALITY_POOR(3): Users can feel the communication is slightly impaired.QUALITY_BAD(4): Users cannot communicate smoothly.QUALITY_VBAD(5): The quality is so bad that users can barely communicate.QUALITY_DOWN(6): The network is down, and users cannot communicate at all.See QUALITY_TYPE .</param>
         ///
         public virtual void OnLastmileQuality(int quality) { }
 
@@ -334,12 +302,7 @@ namespace Agora.Rtc
         public virtual void OnVideoSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation) { }
 
         ///
-        /// <summary>
-        /// Reports the result of video content moderation.
-        /// After calling enableContentInspect to enable the video content moderation, and setting the type parameter in ContentInspectConfig toCONTENT_INSPECT_MODERATION, the SDK triggers the onContentInspectResult callback and reports the result of video content moderation.
-        /// </summary>
-        ///
-        /// <param name="result"> The results of video content moderation. See CONTENT_INSPECT_RESULT .</param>
+        /// @ignore
         ///
         public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result) { }
 
@@ -574,16 +537,16 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the camera focus area changes.
-        /// This method is for Android and iOS only.
+        /// The SDK triggers this callback when the local user changes the camera focus position by calling SetCameraFocusPositionInPreview .This callback is for Android and iOS only.
         /// </summary>
         ///
-        /// <param name="x"> The x-coordinate of the changed focus area.</param>
+        /// <param name="x"> The x-coordinate of the changed camera focus area.</param>
         ///
-        /// <param name="y"> The y-coordinate of the changed focus area.</param>
+        /// <param name="y"> The y-coordinate of the changed camera focus area.</param>
         ///
-        /// <param name="width"> The width of the focus area that changes.</param>
+        /// <param name="width"> The width of the changed camera focus area.</param>
         ///
-        /// <param name="height"> The height of the focus area that changes.</param>
+        /// <param name="height"> The height of the changed camera focus area.</param>
         ///
         public virtual void OnCameraFocusAreaChanged(int x, int y, int width, int height) { }
 
@@ -646,9 +609,9 @@ namespace Agora.Rtc
         /// When the state of the virtual metronome changes, the SDK triggers this callback to report the current state of the virtual metronome. This callback indicates the state of the local audio stream and enables you to troubleshoot issues when audio exceptions occur.This callback is for Android and iOS only.
         /// </summary>
         ///
-        /// <param name="state"> </param>
+        /// <param name="state"> For the current virtual metronome status, see RHYTHM_PLAYER_STATE_TYPE .</param>
         ///
-        /// <param name="errorCode"> </param>
+        /// <param name="errorCode"> For the error codes and error messages related to virtual metronome errors, see RHYTHM_PLAYER_ERROR_TYPE .</param>
         ///
         public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode) { }
 
@@ -1027,7 +990,7 @@ namespace Agora.Rtc
         /// When encryption is enabled by calling EnableEncryption , the SDK triggers this callback if an error occurs in encryption or decryption on the sender or the receiver side.
         /// </summary>
         ///
-        /// <param name="connection"> The connection information. See RtcConnection for details.</param>
+        /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
         /// <param name="errorType"> For details about the error type, see ENCRYPTION_ERROR_TYPE .</param>
         ///
@@ -1046,7 +1009,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the SDK cannot get the device permission.
-        /// When the SDK fails to get the device permission, the SDK triggers this callback to report which device permission cannot be got.This method is for Android and iOS only.
+        /// When the SDK fails to get the device permission, the SDK triggers this callback to report which device permission cannot be got.This callback is for Android and iOS only.
         /// </summary>
         ///
         /// <param name="permissionType"> The type of the device permission. See PERMISSION_TYPE .</param>

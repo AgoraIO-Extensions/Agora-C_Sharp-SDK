@@ -7,47 +7,17 @@
     ///
     public enum OBSERVER_MODE
     {
-        ///
-        /// <summary>
-        /// Raw data mode, which means the SDK sends you raw data.
-        /// </summary>
-        ///
         RAW_DATA,
 
-        ///
-        /// <summary>
-        /// Pointer mode, which means the SDK sends you the pointer to the raw data.
-        /// </summary>
-        ///
         INTPTR
     }
 
-    ///
-    /// <summary>
-    /// Video frame settings.
-    /// </summary>
-    ///
     public struct VideoFrameBufferConfig
     {
-        ///
-        /// <summary>
-        /// The video source type. See VIDEO_SOURCE_TYPE .
-        /// </summary>
-        ///
         public VIDEO_SOURCE_TYPE type;
 
-        ///
-        /// <summary>
-        /// The user ID.
-        /// </summary>
-        ///
         public uint id;
 
-        ///
-        /// <summary>
-        /// The channel name.
-        /// </summary>
-        ///
         public string key;
     }
 

@@ -3,9 +3,7 @@ using System;
 namespace Agora.Rtc
 {
     ///
-    /// <summary>
-    /// IMusicContentCenterEventHandler 接口类，用于 SDK 向客户端发送音乐内容中心事件通知。
-    /// </summary>
+    /// @ignore
     ///
     public abstract class IMusicContentCenterEventHandler
     {

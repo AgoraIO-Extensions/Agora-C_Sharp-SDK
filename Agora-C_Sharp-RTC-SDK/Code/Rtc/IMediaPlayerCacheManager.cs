@@ -27,7 +27,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int RemoveOldCache();
@@ -41,7 +42,8 @@ namespace Agora.Rtc
         /// <param name="uri"> The URI (Uniform Resource Identifier) of the media file to be deleted.</param>
         ///
         /// <returns>
-        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int RemoveCacheByUri(string uri) ;
@@ -68,7 +70,8 @@ namespace Agora.Rtc
         /// <param name="count"> The maximum number of media files that can be cached. The default value is 1,000.</param>
         ///
         /// <returns>
-        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int SetMaxCacheFileCount(int count);
@@ -81,7 +84,8 @@ namespace Agora.Rtc
         /// <param name="cacheSize"> The maximum size (bytes) of the aggregate storage space for cached media files. The default value is 1 GB.</param>
         ///
         /// <returns>
-        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int SetMaxCacheFileSize(Int64 cacheSize);
@@ -95,7 +99,8 @@ namespace Agora.Rtc
         /// <param name="enable"> Whether to enable the SDK to delete cached media files automatically:true: Delete cached media files automatically.false: (Default) Do not delete cached media files automatically.</param>
         ///
         /// <returns>
-        /// 0: Success.&lt; 0: Failure. See MEDIA_PLAYER_ERROR .
+        /// 0: Success.
+        /// &lt; 0: Failure. See MEDIA_PLAYER_ERROR .
         /// </returns>
         ///
         public abstract int EnableAutoRemoveCache(bool enable);

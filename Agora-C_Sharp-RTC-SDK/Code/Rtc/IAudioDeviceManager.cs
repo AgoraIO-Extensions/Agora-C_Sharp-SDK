@@ -223,7 +223,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts the audio capture device test.
-        /// This method tests whether the audio capture device works properly. After calling this method, the SDK triggers the OnAudioVolumeIndication callback at the time interval set in this method, which reports uid = 0 and the volume information of the capturing device.Ensure that you call this method before joining a channel.
+        /// This method tests whether the audio capture device works properly. After calling this method, the SDK triggers the OnAudioVolumeIndication callback at the time interval set in this method, which reports uid = 0 and the volume information of the capturing device.This method is for Windows and macOS only.Ensure that you call this method before joining a channel.
         /// </summary>
         ///
         /// <param name="indicationInterval"> The time interval (ms) at which the SDK triggers the OnAudioVolumeIndication callback. Agora recommends a setting greater than 200 ms. This value must not be less than 10 ms; otherwise, you can not receive the OnAudioVolumeIndication callback.</param>

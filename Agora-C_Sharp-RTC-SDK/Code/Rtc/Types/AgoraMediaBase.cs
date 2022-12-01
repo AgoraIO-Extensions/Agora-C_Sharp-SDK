@@ -1333,7 +1333,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Types of functional modules:CONTENT_INSPECT_INVALID(0): (Default) This module has no actual function. Do not set to this value.CONTENT_INSPECT_SUPERVISION(2): Video screenshot and upload. SDK takes screenshots of the video stream in the channel and uploads them.
+        /// Types of functional module. See CONTENT_INSPECT_TYPE .
         /// </summary>
         ///
         public CONTENT_INSPECT_TYPE type;

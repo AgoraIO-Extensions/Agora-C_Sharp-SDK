@@ -333,30 +333,22 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// Stream fallback options.
-    /// </summary>
+    /// @ignore
     ///
     public enum STREAM_FALLBACK_OPTIONS
     {
         ///
-        /// <summary>
-        /// 0: No fallback behavior for the local/remote video stream when the uplink/downlink network conditions are poor. The quality of the stream is not guaranteed.
-        /// </summary>
+        /// @ignore
         ///
         STREAM_FALLBACK_OPTION_DISABLED = 0,
 
         ///
-        /// <summary>
-        /// 1: Under poor downlink network conditions, the remote video stream, to which you subscribe, falls back to the low-quality (low resolution and low bitrate) video stream. This option is only valid for SetRemoteSubscribeFallbackOption . 
-        /// </summary>
+        /// @ignore
         ///
         STREAM_FALLBACK_OPTION_VIDEO_STREAM_LOW = 1,
 
         ///
-        /// <summary>
-        /// 2: Under poor uplink network conditions, the published video stream falls back to audio-only. Under poor downlink network conditions, the remote video stream, to which you subscribe, first falls back to the low-quality (low resolution and low bitrate) video stream; and then to an audio-only stream if the network conditions worsen.
-        /// </summary>
+        /// @ignore
         ///
         STREAM_FALLBACK_OPTION_AUDIO_ONLY = 2,
     };
@@ -529,7 +521,9 @@ namespace Agora.Rtc
         public ushort txPacketLossRate { set; get; }
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The brightness level of the video image captured by the local camera. See CAPTURE_BRIGHTNESS_LEVEL_TYPE .
+        /// </summary>
         ///
         public CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel { set; get; }
 
@@ -540,7 +534,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The local video encoding acceleration type. 
+        /// The local video encoding acceleration type. 0: Software encoding is applied without acceleration.1: Hardware encoding is applied for acceleration.
         /// </summary>
         ///
         public int hwEncoderAccelerating { set; get; }
@@ -1279,14 +1273,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The image content of the thumbnail. See 
+        /// The image content of the thumbnail. See ThumbImageBuffer 
         /// </summary>
         ///
         public ThumbImageBuffer thumbImage { set; get; }
 
         ///
         /// <summary>
-        /// The image content of the icon. See 
+        /// The image content of the icon. See ThumbImageBuffer 
         /// </summary>
         ///
         public ThumbImageBuffer iconImage { set; get; }
@@ -1397,7 +1391,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The channel media options.
-    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection . For example, publishMicrophoneTrackpublishAudioTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true.
+    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection . For example, publishMicrophoneTrack, publishAudioTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishScreenTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true.
     /// </summary>
     ///
     public class ChannelMediaOptions : OptionalJsonParse
@@ -1410,7 +1404,9 @@ namespace Agora.Rtc
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to publish the video captured by the second camera:true: Publish the video captured by the second camera.false: (Default) Do not publish the video captured by the second camera.
+        /// </summary>
         ///
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
 
@@ -1422,41 +1418,51 @@ namespace Agora.Rtc
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to publish the video captured from the screen:true: Publish the video captured from the screen.false: (Default) Do not publish the captured video from the screen.This parameter applies to Android and iOS only.
+        /// </summary>
         ///
         public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to publish the audio captured from the screen:true: Publish the audio captured from the screen.false: (Default) Do not publish the audio captured from the screen.This parameter applies to Android and iOS only.
+        /// </summary>
         ///
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to publish the video captured from the screen:true: Publish the video captured from the screen.false: (Default) Do not publish the captured video from the screen.
+        /// </summary>
         ///
         public Optional<bool> publishScreenTrack = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to publish the video captured from the second screen:true: Publish the captured video from the second screen.false: (Default) Do not publish the video captured from the second screen.
+        /// </summary>
         ///
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// Whether to publish the audio captured from a custom source:true: Publish the audio captured from the custom source.false: (Default) Do not publish the audio captured from the custom source.
+        /// Whether to publish the audio captured from a custom source:true: Publish the captured audio from a custom source.false: (Default) Do not publish the audio captured from the custom source.
         /// </summary>
         ///
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
         ///
         /// <summary>
-        /// The ID of the custom audio source to publish. The default value is 0.If you have set sourceNumber in SetExternalAudioSource to a value greater than 1, the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track, starting from 0.
+        /// The ID of the custom audio source to publish. The default value is 0.If you have set the value of sourceNumber greater than 1 in SetExternalAudioSource , the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track starting from 0.
         /// </summary>
         ///
         public Optional<int> publishCustomAudioSourceId = new Optional<int>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to enable AEC when publishing the audio captured from a custom source:true: Enable AEC when publishing the captured audio from a custom source.false: (Default) Do not enable AEC when publishing the audio captured from the custom source.
+        /// </summary>
         ///
         public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
 
@@ -1472,7 +1478,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to publish the video captured from a custom source:true: Publish the video captured from the custom source.false: (Default) Do not publish the video captured from the custom source.
+        /// Whether to publish the video captured from a custom source:true: Publish the captured video from a custom source.false: (Default) Do not publish the video captured from the custom source.
         /// </summary>
         ///
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
@@ -1499,7 +1505,9 @@ namespace Agora.Rtc
         public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether to publish the local transcoded video:true: Publish the local transcoded video.false: (Default) Do not publish the local transcoded video.
+        /// </summary>
         ///
         public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
 
@@ -1532,7 +1540,9 @@ namespace Agora.Rtc
         public Optional<int> publishMediaPlayerId = new Optional<int>();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The user role. See CLIENT_ROLE_TYPE .
+        /// </summary>
         ///
         public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
 
@@ -2090,7 +2100,16 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The SDK log files are: agorasdk.log, agorasdk.1.log, agorasdk.2.log, agorasdk.3.log, and agorasdk.4.log.The API call log files are: agoraapi.log, agoraapi.1.log, agoraapi.2.log, agoraapi.3.log, and agoraapi.4.log.The default size for each SDK log file is 1,024 KB; the default size for each API call log file is 2,048 KB. These log files are encoded in UTF-8.The SDK writes the latest logs in agorasdk.log or agoraapi.log.When agorasdk.log is full, the SDK processes the log files in the following order:Delete the agorasdk.4.log file (if any).Rename agorasdk.3.log to agorasdk.4.log.Rename agorasdk.2.log to agorasdk.3.log.Rename agorasdk.1.log to agorasdk.2.log.Create a new agorasdk.log file.The overwrite rules for the agoraapi.log file are the same as for agorasdk.log.The log files that the SDK outputs. See LogConfig .By default, the SDK generates five SDK log files and five API call log files with the following rules:
+        /// The SDK log files are: agorasdk.log, agorasdk.1.log, agorasdk.2.log, agorasdk.3.log, and agorasdk.4.log.
+        /// The API call log files are: agoraapi.log, agoraapi.1.log, agoraapi.2.log, agoraapi.3.log, and agoraapi.4.log.
+        /// The default size for each SDK log file is 1,024 KB; the default size for each API call log file is 2,048 KB. These log files are encoded in UTF-8.
+        /// The SDK writes the latest logs in agorasdk.log or agoraapi.log.
+        /// When agorasdk.log is full, the SDK processes the log files in the following order:
+        /// Delete the agorasdk.4.log file (if any).
+        /// Rename agorasdk.3.log to agorasdk.4.log.
+        /// Rename agorasdk.2.log to agorasdk.3.log.
+        /// Rename agorasdk.1.log to agorasdk.2.log.
+        /// Create a new agorasdk.log file. The overwrite rules for the agoraapi.log file are the same as for agorasdk.log. The log files that the SDK outputs. See LogConfig .By default, the SDK generates five SDK log files and five API call log files with the following rules:
         /// </summary>
         ///
         public LogConfig logConfig { set; get; }
@@ -2509,7 +2528,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 8: The device is not connected.
+        /// 8: The device is unplugged.
         /// </summary>
         ///
         MEDIA_DEVICE_STATE_UNPLUGGED = 8
