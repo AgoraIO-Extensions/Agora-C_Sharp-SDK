@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
 namespace Agora.Rtc
 {
     using view_t = UInt64;
-    
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisAudioFrame
     {
@@ -164,13 +164,14 @@ namespace Agora.Rtc
     {
         internal int type;
         internal uint id;
-        
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
         internal string key;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisMetadata {
+    internal struct IrisMetadata
+    {
         internal uint uid;
 
         internal uint size;
@@ -200,46 +201,46 @@ namespace Agora.Rtc
 
         /** The type of the audio frame. See #AUDIO_FRAME_TYPE
 		 */
-        public AUDIO_FRAME_TYPE type { set; get; }
+        public AUDIO_FRAME_TYPE type;
 
         /** The number of samples per channel in the audio frame.
 		 */
-        public int samplesPerChannel { set; get; } //number of samples for each channel in this frame
+        public int samplesPerChannel; //number of samples for each channel in this frame
 
         /**The number of bytes per audio sample, which is usually 16-bit (2-byte).
 		 */
-        public BYTES_PER_SAMPLE bytesPerSample { set; get; } //number of bytes per sample: 2 for PCM16
+        public BYTES_PER_SAMPLE bytesPerSample; //number of bytes per sample: 2 for PCM16
 
-        public UInt64 bufferPtr { set; get; }
+        public UInt64 bufferPtr;
 
         /** The number of audio channels.
 		 - 1: Mono
 		 - 2: Stereo (the data is interleaved)
 		 */
-        public int channels { set; get; } //number of channels (data are interleaved if stereo)
+        public int channels; //number of channels (data are interleaved if stereo)
 
         /** The sample rate.
 		 */
-        public int samplesPerSec { set; get; } //sampling rate
+        public int samplesPerSec; //sampling rate
 
         /** The timestamp of the external audio frame. You can use this parameter for the following purposes:
 		 - Restore the order of the captured audio frame.
 		 - Synchronize audio and video frames in video-related scenarios, including where external video sources are used.
 		 */
-        public long renderTimeMs { set; get; }
+        public long renderTimeMs;
 
         /** Reserved parameter.
 		 */
-        public int avsync_type { set; get; }
+        public int avsync_type;
     }
 
     internal class ThumbImageBufferInternal
     {
-        public uint length { set; get; }
-        public uint width { set; get; }
-        public uint height { set; get; }
+        public uint length;
+        public uint width;
+        public uint height;
 
-        public Int64 buffer { set; get; }
+        public Int64 buffer;
 
         public ThumbImageBufferInternal()
         {
@@ -252,17 +253,17 @@ namespace Agora.Rtc
 
     internal class ScreenCaptureSourceInfoInternal
     {
-        public ScreenCaptureSourceType type { set; get; }
+        public ScreenCaptureSourceType type;
         /** in Mac: pointer to NSNumber */
-        public view_t sourceId { set; get; }
-        public string sourceName { set; get; }
-        public ThumbImageBufferInternal thumbImage { set; get; }
-        public ThumbImageBufferInternal iconImage { set; get; }
+        public view_t sourceId;
+        public string sourceName;
+        public ThumbImageBufferInternal thumbImage;
+        public ThumbImageBufferInternal iconImage;
 
-        public string processPath { set; get; }
-        public string sourceTitle { set; get; }
-        public bool primaryMonitor { set; get; }
-        public bool isOccluded { set; get; }
+        public string processPath;
+        public string sourceTitle;
+        public bool primaryMonitor;
+        public bool isOccluded;
 
         public ScreenCaptureSourceInfoInternal()
         {

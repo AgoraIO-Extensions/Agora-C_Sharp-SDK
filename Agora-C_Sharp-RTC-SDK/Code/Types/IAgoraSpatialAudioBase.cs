@@ -97,20 +97,20 @@
             this.position = position;
             this.forward = forward;
         }
-        
+
         ///
         /// <summary>
         /// The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
         /// </summary>
         ///
-        public float[] position { set; get; }
+        public float[] position;
 
         ///
         /// <summary>
         /// The unit vector of the x axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
         /// </summary>
         ///
-        public float[] forward { set; get; }
+        public float[] forward;
     };
 
     ///
@@ -151,7 +151,7 @@
         ///  IRtcEngine .
         /// </summary>
         ///
-        public IRtcEngine rtcEngine { set; get; }
+        public IRtcEngine rtcEngine;
 
         public LocalSpatialAudioConfig()
         {
