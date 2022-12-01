@@ -1,5 +1,5 @@
 using System;
-
+using System.Collections.Generic;
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
@@ -9,6 +9,8 @@ namespace Agora.Rtc
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
+        Dictionary<string, System.Object> param = new Dictionary<string, System.Object>();
+
 
         internal AudioDeviceManagerImpl(IrisApiEnginePtr irisApiEngine)
         {
