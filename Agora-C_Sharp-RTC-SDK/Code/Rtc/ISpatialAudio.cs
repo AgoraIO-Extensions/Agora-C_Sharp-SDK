@@ -102,9 +102,7 @@ namespace Agora.Rtc
         ///
         /// <param name="playerId"> The ID of the media player. </param>
         ///
-        /// <param name="position"> The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
-        ///
-        /// <param name="forward"> The unit vector of the x axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
+        /// <param name="positionInfo"> The spatial position of the media player. See RemoteVoicePositionInfo .</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -153,6 +151,8 @@ namespace Agora.Rtc
         ///
         /// <param name="zones"> Sound insulation area settings. See SpatialAudioZone.</param>
         ///
+        /// <param name="zoneCount"> The number of sound insulation areas.</param>
+        ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
@@ -194,14 +194,12 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Updates the spatial position of the specified remote user.
-        /// After successfully calling this method, the SDK calculates the spatial audio parameters based on the relative position of the local and remote user.Call this method after the JoinChannel [2/2] method.
+        /// After successfully calling this method, the SDK calculates the spatial audio parameters based on the relative position of the local and remote user.Call this method after JoinChannel [2/2] .
         /// </summary>
         ///
         /// <param name="uid"> The user ID. This parameter must be the same as the user ID passed in when the user joined the channel.</param>
         ///
-        /// <param name="position"> The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
-        ///
-        /// <param name="forward"> The unit vector of the x axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.</param>
+        /// <param name="posInfo"> The spatial position of the remote user. See RemoteVoicePositionInfo .</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.

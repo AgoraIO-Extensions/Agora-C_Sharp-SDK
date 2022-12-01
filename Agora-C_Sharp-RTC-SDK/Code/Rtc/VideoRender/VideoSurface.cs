@@ -46,6 +46,12 @@ namespace Agora.Rtc
         protected int _textureWidth = 0;
         protected int _textureHeight = 0;
 
+        ///
+        /// <summary>
+        /// This callback is triggered when the width and height of Texture are changed.
+        /// When the width and height of Texture are changed, the SDK triggers this callback.
+        /// </summary>
+        ///
         public event OnTextureSizeModifyHandler OnTextureSizeModify;
 
         void Start()
@@ -210,7 +216,16 @@ namespace Agora.Rtc
         }
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the local or remote video display.
+        /// Ensure that you call this method in the main thread.Ensure that you call this method before binding VideoSurface.cs.
+        /// </summary>
+        ///
+        /// <param name="uid"> The ID of remote users, obtained through OnUserJoined . The default value is 0, which means you can see the local video. </param>
+        ///
+        /// <param name="channelId"> The ID of the channel. </param>
+        ///
+        /// <param name="source_type"> The type of the video source. See VIDEO_SOURCE_TYPE. </param>
         ///
         public virtual void SetForUser(uint uid = 0, string channelId = "", VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY)
         {
@@ -221,7 +236,11 @@ namespace Agora.Rtc
         }
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets whether to enable the video rendering.
+        /// </summary>
+        ///
+        /// <param name="enable"> Whether to enable the video rendering:true: (Default) Enable the video rendering.false: Disable the video rendering. </param>
         ///
         public virtual void SetEnable(bool enable)
         {

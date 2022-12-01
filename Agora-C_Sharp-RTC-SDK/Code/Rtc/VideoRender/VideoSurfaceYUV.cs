@@ -7,7 +7,9 @@ namespace Agora.Rtc
 {
 
     ///
-    /// @ignore
+    /// <summary>
+    /// Porivdes APIs for rendering videos. This class inherits all APIs from the VideoSurface class, but enables you to render video images with high resolutions (such as 4K) faster and at higher frame rates. The SDK supports using different VideoSurface to render different video sources; for example, using VideoSurface to render the video images of user A and VideoSurfaceYUV for user B. Note that video images from the same video source can only be rendered either through VideoSurface or VideoSurfaceYUV.
+    /// </summary>
     ///
     public class VideoSurfaceYUV : VideoSurface
     {

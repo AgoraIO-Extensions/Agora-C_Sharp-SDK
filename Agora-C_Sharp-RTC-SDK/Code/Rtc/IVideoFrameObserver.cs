@@ -37,8 +37,7 @@ namespace Agora.Rtc
         /// <param name="videoFrame"> The video frame. See VideoFrame .</param>
         ///
         /// <returns>
-        /// true: Sets the SDK to receive the video frame.
-        /// false: Sets the SDK to discard the video frame.
+        /// true: Sets the SDK to receive the video frame.false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
         public virtual bool OnPreEncodeVideoFrame(VideoFrame videoFrame, VideoFrameBufferConfig config)
@@ -59,8 +58,7 @@ namespace Agora.Rtc
         /// <param name="channelId"> The channel ID.</param>
         ///
         /// <returns>
-        /// true: Sets the SDK to receive the video frame.
-        /// false: Sets the SDK to discard the video frame.
+        /// true: Sets the SDK to receive the video frame.false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
         public virtual bool OnRenderVideoFrame(string channelId, uint uid, VideoFrame videoFrame)

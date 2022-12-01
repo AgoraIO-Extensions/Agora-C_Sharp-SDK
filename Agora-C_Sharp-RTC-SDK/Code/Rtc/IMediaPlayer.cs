@@ -22,7 +22,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <returns>
-        /// >= 0: Success. The ID of the media player.&lt; 0: Failure.
+        /// ≥ 0: Success. The ID of the media player.&lt; 0: Failure.
         /// </returns>
         ///
         public abstract int GetId();
@@ -32,7 +32,7 @@ namespace Agora.Rtc
         /// Adds callback event for media player.
         /// </summary>
         ///
-        /// <param name="engineEventHandler"> Callback events to be added. </param>
+        /// <param name="engineEventHandler"> Callback events to be added. See IMediaPlayerSourceObserver .</param>
         ///
         public abstract int InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
@@ -43,6 +43,10 @@ namespace Agora.Rtc
         /// </summary>
         ///
         /// <param name="observer"> The audio frame observer, reporting the reception of each audio frame. See IMediaPlayerAudioFrameObserver .</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
 
@@ -55,12 +59,20 @@ namespace Agora.Rtc
         ///
         /// <param name="mode"> The use mode of the audio frame. See RAW_AUDIO_FRAME_OP_MODE_TYPE .</param>
         ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
+        ///
         public abstract int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
         ///
         /// <summary>
-        /// Unregisters an audio frame observer.
+        /// Unregisters an audio observer.
         /// </summary>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int UnregisterAudioFrameObserver();
 
@@ -77,7 +89,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Opens the media resource.
-        /// This method is called asynchronously. If you need to play a media file, make sure you receive the OnPlayerSourceStateChanged callback reporting PLAYER_STATE_OPEN_COMPLETED before calling the Play method to play the file.
+        /// This method is called asynchronously.If you need to play a media file, make sure you receive the OnPlayerSourceStateChanged callback reporting PLAYER_STATE_OPEN_COMPLETED before calling the Play method to play the file.
         /// </summary>
         ///
         /// <param name="url"> The path of the media file. Both local path and online path are supported.On the Android platform, if you need to open a file in URI format, use Open .</param>
@@ -95,8 +107,6 @@ namespace Agora.Rtc
         /// Opens the custom media resource file.
         /// Deprecated:This method is deprecated. This method allows you to open custom media resource files. For example, you can call this method to open encrypted media resources.
         /// </summary>
-        ///
-        /// <param name="playerId"> The ID of the media player.</param>
         ///
         /// <param name="startPos"> The starting position (ms) for playback. The default value is 0.</param>
         ///
@@ -303,8 +313,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the private options for the media player.
-        /// The media player supports setting private options by key and value. Under normal circumstances, you do not need to know the private option settings, and just use the default option settings. Ensure that you call this method before Open .
-        /// If you need to push streams with SEI into the CDN, callSetPlayerOption [1/2] ("sei_data_with_uuid", 1); otherwise, the loss of SEI might occurs.
+        /// The media player supports setting private options by key and value. Under normal circumstances, you do not need to know the private option settings, and just use the default option settings.Ensure that you call this method before Open .If you need to push streams with SEI into the CDN, callSetPlayerOption [1/2] ("sei_data_with_uuid", 1); otherwise, the loss of SEI might occurs.
         /// </summary>
         ///
         /// <param name="key"> The key of the option.</param>
@@ -485,106 +494,51 @@ namespace Agora.Rtc
         public abstract int SetAudioPitch(int pitch);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Enables or disables the spatial audio effect for the media player.
+        /// After successfully setting the spatial audio effect parameters of the media player, the SDK enables the spatial audio effect for the media player, and the local user can hear the media resources with a sense of space.If you need to disable the spatial audio effect for the media player, set the params parameter to null.
+        /// </summary>
+        ///
+        /// <param name="spatial_audio_params"> The spatial audio effect parameters of the media player. See SpatialAudioParams for details.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetSpatialAudioParams(SpatialAudioParams spatial_audio_params);
 
         ///
-        /// <summary>
-        /// Opens a media resource and requests all the CDN routes of the media resources through the self-developed scheduling center.
-        /// This method is called asynchronously. If you need to play a media file, make sure you receive the OnPlayerSourceStateChanged callback reporting PLAYER_STATE_OPEN_COMPLETED before calling the Play method to play the file.After you call this method, Agora opens the media resources and tries to obtain all the CDN routes for playing the media resource. By default, Agora uses the first CDN route for playing, and you can call the SwitchAgoraCDNLineByIndex method to switch routes.If you want to ensure the security of the connection and media files, to determine the sign and the ts fields for authentication. Once the fields are determined, use them as the query parameter of the URL to update the URL of the media resource. For example:The URL of the media file to be opened: rtmp://$domain/$appName/$streamNameThe URL updated by the authentication of the media file to be opened: rtmp://$domain/$appName/$streamName?ts=$ts&sign=$signAuthentication information:sign: An encrypted string calculated according to the MD5 algorithm based on authKey, appName, streamName, and ts. You need to for your authKey.ts: The timestamp when the authentication information expires. You can set the validity period of the authentication information according to your scenarios. For example, 24h or 1h30m20s.
-        /// </summary>
-        ///
-        /// <param name="src"> The URL of the media resource.</param>
-        ///
-        /// <param name="startPos"> The starting position (ms) for playback. The default value is 0. This value can be empty if the media resource to be played is live streams.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int OpenWithAgoraCDNSrc(string src, Int64 startPos);
 
         ///
-        /// <summary>
-        /// Gets the number of CDN routes for the media resource.
-        /// </summary>
-        ///
-        /// <returns>
-        /// Returns the number of CDN routes for the media resource, if the method call succeeds.≤ 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int GetAgoraCDNLineCount();
 
         ///
-        /// <summary>
-        /// Changes the CDN route for playing the media resource.
-        /// After calling OpenWithAgoraCDNSrc to open the media resource, you can call this method if you want to change the CDN routes for playing the media resource.Call this method after calling OpenWithAgoraCDNSrc .You can call this method either before or after Play . If you call this method before Play, the switch does not take effect immediately. The SDK waits for the playback to complete before switching the CDN line of the media resource.
-        /// </summary>
-        ///
-        /// <param name="index"> The index of the CDN routes.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int SwitchAgoraCDNLineByIndex(int index);
 
         ///
-        /// <summary>
-        /// Gets the CDN routes index of the current media resource.
-        /// </summary>
-        ///
-        /// <returns>
-        /// The number of CDN routes for the media resource, if the method call succeeds. The value range is [0, GetAgoraCDNLineCount()).&lt; 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int GetCurrentAgoraCDNIndex();
 
         ///
-        /// <summary>
-        /// Enables/Disables the automatic switch of the CDN routes for playing the media resource.
-        /// You can call this method if you want the SDK to automatically switch the CDN routes according to your network conditions.Call this method before OpenWithAgoraCDNSrc .
-        /// </summary>
-        ///
-        /// <param name="enable"> Whether to enable the automatic switch of the CDN routes for playing the media resource:true: Enables the automatic switch of the CDN routes.false: (Default) Disables the automatic switch of the CDN routes.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int EnableAutoSwitchAgoraCDN(bool enable);
 
         ///
-        /// <summary>
-        /// Renew the authentication information for the URL of the media resource to be played.
-        /// When the authentication information expires (exceeds the ts field), you can call the OpenWithAgoraCDNSrc method to reopen the media resource or the SwitchAgoraCDNSrc method to switch the media resource, and then pass in the authenticated URL (with the ts field updated) of the media resource.If your authentication information expires when you call the SwitchAgoraCDNLineByIndex to switch the CDN route for playing the media resource, you need to call this method to pass in the updated authentication information to update the authentication information of the media resource URL. After updating the authentication information, you need to call SwitchAgoraCDNLineByIndex to complete the route switching.To avoid frequent expiration of authentication information, ensure that you set the ts field appropriately or according to the scenario requirements.
-        /// </summary>
-        ///
-        /// <param name="token"> The authentication field. See the sign field of the authentication information.</param>
-        ///
-        /// <param name="ts"> The timestamp when the authentication information expires. See the ts field of the authentication information.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int RenewAgoraCDNSrcToken(string token, Int64 ts);
 
         ///
-        /// <summary>
-        /// Switches the media resource being played.
-        /// If you want to ensure the security of the connection and media files, to determine the sign and the ts fields for authentication. Once the fields are determined, use them as the query parameter of the URL to update the URL of the media resource. For example:The URL of the media file to be opened: rtmp://$domain/$appName/$streamNameThe URL updated by the authentication of the media file to be opened: rtmp://$domain/$appName/$streamName?ts=$ts&sign=$signAuthentication information:sign: An encrypted string calculated according to the MD5 algorithm based on authKey, appName, streamName, and ts. You need to for your authKey.ts: The timestamp when the authentication information expires. You can set the validity period of the authentication information according to your scenarios. For example, 24h or 1h30m20s.If you want to customize the CDN routes for playing the media resource, call this method to switch media resources. Agora changes the CDN route through the self-developed scheduling center to improve the viewing experience. If you do not need to customize CDN routes for playing the media resource, call the SwitchSrc method to switch media resources.
-        /// Call this method after calling OpenWithAgoraCDNSrc .You can call this method either before or after Play . If you call this method before Play, the SDK waits for you to call Play before completing the route switch.
-        /// </summary>
-        ///
-        /// <param name="src"> The URL of the media resource.</param>
-        ///
-        /// <param name="syncPts"> Whether to synchronize the playback position (ms) before and after the switch:true: Synchronize the playback position before and after the switch.false: (Default) Do not synchronize the playback position before and after the switch.falseMake sure to set this parameter as if you need to play live streams, or the switch fails. If you need to play on-demand streams, you can set the value of this parameter according to your scenarios.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int SwitchAgoraCDNSrc(string src, bool syncPts = false);
 
