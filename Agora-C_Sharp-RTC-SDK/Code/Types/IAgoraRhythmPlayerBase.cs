@@ -84,14 +84,14 @@ namespace Agora.Rtc
         /// The number of beats per measure, which ranges from 1 to 9. The default value is 4, which means that each measure contains one downbeat and three upbeats.
         /// </summary>
         ///
-        public int beatsPerMeasure { set; get; }
+        public int beatsPerMeasure ;
 
         ///
         /// <summary>
         /// The beat speed (beats/minute), which ranges from 60 to 360. The default value is 60, which means that the metronome plays 60 beats in one minute.
         /// </summary>
         ///
-        public int beatsPerMinute { set; get; }
+        public int beatsPerMinute ;
     };
 
     #endregion

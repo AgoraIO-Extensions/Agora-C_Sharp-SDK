@@ -125,17 +125,17 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int sample_rate { set; get; }
+        public int sample_rate;
 
         ///
         /// @ignore
         ///
-        public uint channels { set; get; }
+        public uint channels;
 
         ///
         /// @ignore
         ///
-        public uint frames_per_buffer { set; get; }
+        public uint frames_per_buffer;
     };
 
     ///
@@ -256,12 +256,12 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public uint timestamp { set; get; }
+        public uint timestamp;
 
         ///
         /// @ignore
         ///
-        public byte audioLevelIndication { set; get; }
+        public byte audioLevelIndication;
 
         public PacketOptions()
         {
@@ -558,114 +558,114 @@ namespace Agora.Rtc
         /// The video type. See VIDEO_BUFFER_TYPE .
         /// </summary>
         ///
-        public VIDEO_BUFFER_TYPE type { set; get; }
+        public VIDEO_BUFFER_TYPE type;
 
         ///
         /// <summary>
         /// The pixel format. See VIDEO_PIXEL_FORMAT .
         /// </summary>
         ///
-        public VIDEO_PIXEL_FORMAT format { set; get; }
+        public VIDEO_PIXEL_FORMAT format;
 
         ///
         /// <summary>
         /// Video frame buffer.
         /// </summary>
         ///
-        public byte[] buffer { set; get; }
+        public byte[] buffer;
 
         ///
         /// <summary>
         /// Line spacing of the incoming video frame, which must be in pixels instead of bytes. For textures, it is the width of the texture.
         /// </summary>
         ///
-        public int stride { set; get; }
+        public int stride;
 
         ///
         /// <summary>
         /// Height of the incoming video frame.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// <summary>
         /// Raw data related parameter. The number of pixels trimmed from the left. The default value is 0.
         /// </summary>
         ///
-        public int cropLeft { set; get; }
+        public int cropLeft;
 
         ///
         /// <summary>
         /// Raw data related parameter. The number of pixels trimmed from the top. The default value is 0.
         /// </summary>
         ///
-        public int cropTop { set; get; }
+        public int cropTop;
 
         ///
         /// <summary>
         /// Raw data related parameter. The number of pixels trimmed from the right. The default value is 0.
         /// </summary>
         ///
-        public int cropRight { set; get; }
+        public int cropRight;
 
         ///
         /// <summary>
         /// Raw data related parameter. The number of pixels trimmed from the bottom. The default value is 0.
         /// </summary>
         ///
-        public int cropBottom { set; get; }
+        public int cropBottom;
 
         ///
         /// <summary>
         /// Raw data related parameter. The clockwise rotation of the video frame. You can set the rotation angle as 0, 90, 180, or 270. The default value is 0.
         /// </summary>
         ///
-        public int rotation { set; get; }
+        public int rotation;
 
         ///
         /// <summary>
         /// Timestamp (ms) of the incoming video frame. An incorrect timestamp results in frame loss or unsynchronized audio and video.
         /// </summary>
         ///
-        public long timestamp { set; get; }
+        public long timestamp;
 
         ///
         /// <summary>
         /// This parameter only applies to video data in Texture format.When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos, set eglContext to this field.When using the OpenGL interface (android.opengl.*) defined by Android, set eglContext to this field.
         /// </summary>
         ///
-        public byte[] eglContext { set; get; }
+        public byte[] eglContext;
 
         ///
         /// <summary>
         /// This parameter only applies to video data in Texture format. Texture ID of the frame.
         /// </summary>
         ///
-        public EGL_CONTEXT_TYPE eglType { set; get; }
+        public EGL_CONTEXT_TYPE eglType;
 
         ///
         /// <summary>
         /// This parameter only applies to video data in Texture format. Incoming 4 x 4 transformational matrix. The typical value is a unit matrix.
         /// </summary>
         ///
-        public int textureId { set; get; }
+        public int textureId;
 
         ///
         /// <summary>
         /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
         /// </summary>
         ///
-        public byte[] metadata_buffer { set; get; }
+        public byte[] metadata_buffer;
 
         ///
         /// <summary>
         /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
         /// </summary>
         ///
-        public int metadata_size { set; get; }
+        public int metadata_size;
 
-        public byte[] alphaBuffer { set; get; }
+        public byte[] alphaBuffer;
     };
 
     ///
@@ -864,66 +864,66 @@ namespace Agora.Rtc
         /// The type of the audio frame. See AUDIO_FRAME_TYPE .
         /// </summary>
         ///
-        public AUDIO_FRAME_TYPE type { set; get; }
+        public AUDIO_FRAME_TYPE type;
 
         ///
         /// <summary>
         /// The number of samples per channel in the audio frame.
         /// </summary>
         ///
-        public int samplesPerChannel { set; get; }
+        public int samplesPerChannel;
 
         ///
         /// <summary>
         /// The number of bytes per audio sample, which is usually 16-bit (2 bytes).
         /// </summary>
         ///
-        public BYTES_PER_SAMPLE bytesPerSample { set; get; }
+        public BYTES_PER_SAMPLE bytesPerSample;
 
         ///
         /// <summary>
         /// The number of audio channels (the data are interleaved if it is stereo).1: Mono.2: Stereo.
         /// </summary>
         ///
-        public int channels { set; get; }
+        public int channels;
 
         ///
         /// <summary>
         /// The number of samples per channel in the audio frame.
         /// </summary>
         ///
-        public int samplesPerSec { set; get; }
+        public int samplesPerSec;
 
         ///
         /// @ignore
         ///
-        public UInt64 buffer { set; get; }
+        public UInt64 buffer;
 
         ///
         /// @ignore
         ///
-        public IntPtr bufferPtr { set; get; }
+        public IntPtr bufferPtr;
 
         ///
         /// <summary>
         /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.The size of the data buffer is as follows: buffer = samples ×channels × bytesPerSample.
         /// </summary>
         ///
-        public byte[] RawBuffer { set; get; }
+        public byte[] RawBuffer;
 
         ///
         /// <summary>
         /// The timestamp (ms) of the external audio frame.You can use this timestamp to restore the order of the captured audio frame, and synchronize audio and video frames in video scenarios, including scenarios where external video sources are used.
         /// </summary>
         ///
-        public long renderTimeMs { set; get; }
+        public long renderTimeMs;
 
         ///
         /// <summary>
         /// Reserved for future use.
         /// </summary>
         ///
-        public int avsync_type { set; get; }
+        public int avsync_type;
     };
 
     [Flags]
@@ -973,28 +973,28 @@ namespace Agora.Rtc
         /// The audio sample rate (Hz), which can be set as one of the following values:8000.(Default) 16000.32000.4410048000
         /// </summary>
         ///
-        public int sample_rate { set; get; }
+        public int sample_rate;
 
         ///
         /// <summary>
         /// The number of audio channels, which can be set as either of the following values:1: (Default) Mono.2: Stereo.
         /// </summary>
         ///
-        public int channels { set; get; }
+        public int channels;
 
         ///
         /// <summary>
         /// The use mode of the audio data. See RAW_AUDIO_FRAME_OP_MODE_TYPE .
         /// </summary>
         ///
-        public RAW_AUDIO_FRAME_OP_MODE_TYPE mode { set; get; }
+        public RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
 
         ///
         /// <summary>
         /// The number of samples, such as 1024 for the media push.
         /// </summary>
         ///
-        public int samples_per_call { set; get; }
+        public int samples_per_call;
 
         public AudioParams()
         {
@@ -1210,14 +1210,14 @@ namespace Agora.Rtc
         /// Video content moderation module. See ContentInspectModule .A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32].A video content moderation module can only be configured with one instance at most.
         /// </summary>
         ///
-        public ContentInspectModule[] modules { set; get; }
+        public ContentInspectModule[] modules;
 
         ///
         /// <summary>
         /// The number of video content moderation modules, that is, the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
         /// </summary>
         ///
-        public int moduleCount { set; get; }
+        public int moduleCount;
 
         public ContentInspectConfig()
         {
@@ -1376,35 +1376,35 @@ namespace Agora.Rtc
         /// The absolute path (including the filename extensions) of the recording file. For example:Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4iOS: /AppSandbox/Library/Caches/example.mp4macOS: ～/Library/Logs/example.mp4Android: /storage/emulated/0/Android/data/<package name>/files/agorasdk.mp4Ensure that the directory for the log files exists and is writable.
         /// </summary>
         ///
-        public string storagePath { set; get; }
+        public string storagePath;
 
         ///
         /// <summary>
         /// The format of the recording file. See MediaRecorderContainerFormat .
         /// </summary>
         ///
-        public MediaRecorderContainerFormat containerFormat { set; get; }
+        public MediaRecorderContainerFormat containerFormat;
 
         ///
         /// <summary>
         /// The recording content. See MediaRecorderStreamType .
         /// </summary>
         ///
-        public MediaRecorderStreamType streamType { set; get; }
+        public MediaRecorderStreamType streamType;
 
         ///
         /// <summary>
         /// The maximum recording duration, in milliseconds. The default value is 120000.
         /// </summary>
         ///
-        public int maxDurationMs { set; get; }
+        public int maxDurationMs;
 
         ///
         /// <summary>
         /// The interval (ms) of updating the recording information. The value range is [1000,10000]. Based on the value you set in this parameter, the SDK triggers the OnRecorderInfoUpdated callback to report the updated recording information.
         /// </summary>
         ///
-        public int recorderInfoUpdateInterval { set; get; }
+        public int recorderInfoUpdateInterval;
 
         public MediaRecorderConfiguration()
         {
@@ -1437,21 +1437,21 @@ namespace Agora.Rtc
         /// The absolute path of the recording file.
         /// </summary>
         ///
-        public string fileName { set; get; }
+        public string fileName;
 
         ///
         /// <summary>
         /// The recording duration (ms).
         /// </summary>
         ///
-        public uint durationMs { set; get; }
+        public uint durationMs;
 
         ///
         /// <summary>
         /// The size (bytes) of the recording file.
         /// </summary>
         ///
-        public uint fileSize { set; get; }
+        public uint fileSize;
 
         public RecorderInfo()
         {

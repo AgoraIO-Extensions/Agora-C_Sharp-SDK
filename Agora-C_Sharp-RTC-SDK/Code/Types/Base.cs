@@ -62,19 +62,19 @@
         /// @ignore
         ///
         FRAME_TYPE_YUV420 = 0,
-        
+
         ///
         /// @ignore
         ///
-        FRAME_TYPE_YUV422 = 1, 
-        
+        FRAME_TYPE_YUV422 = 1,
+
         ///
         /// <summary>
         /// 2: The format of the video frame is RGBA.
         /// </summary>
         ///
         FRAME_TYPE_RGBA = 2,
-        
+
         ///
         /// @ignore
         ///

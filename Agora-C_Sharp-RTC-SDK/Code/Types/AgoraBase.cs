@@ -714,14 +714,14 @@ namespace Agora.Rtc
         /// The width (pixels) of the video.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// The height (pixels) of the video.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
     };
 
     ///
@@ -822,17 +822,17 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public TCcMode ccMode { set; get; }
+        public TCcMode ccMode;
 
         ///
         /// @ignore
         ///
-        public VIDEO_CODEC_TYPE codecType { set; get; }
+        public VIDEO_CODEC_TYPE codecType;
 
         ///
         /// @ignore
         ///
-        public int targetBitrate { set; get; }
+        public int targetBitrate;
 
         public SenderOptions()
         {
@@ -1033,12 +1033,12 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public bool speech { set; get; }
+        public bool speech;
 
         ///
         /// @ignore
         ///
-        public bool sendEvenIfEmpty { set; get; }
+        public bool sendEvenIfEmpty;
     };
 
     ///
@@ -1072,42 +1072,42 @@ namespace Agora.Rtc
         /// Audio Codec type: AUDIO_CODEC_TYPE 
         /// </summary>
         ///
-        public AUDIO_CODEC_TYPE codec { set; get; }
+        public AUDIO_CODEC_TYPE codec;
 
         ///
         /// <summary>
         /// Audio sample rate (Hz).
         /// </summary>
         ///
-        public int sampleRateHz { set; get; }
+        public int sampleRateHz;
 
         ///
         /// <summary>
         /// The number of audio samples per channel.
         /// </summary>
         ///
-        public int samplesPerChannel { set; get; }
+        public int samplesPerChannel;
 
         ///
         /// <summary>
         /// The number of audio channels.
         /// </summary>
         ///
-        public int numberOfChannels { set; get; }
+        public int numberOfChannels;
 
         ///
         /// <summary>
         /// This function is currently not supported.
         /// </summary>
         ///
-        public EncodedAudioFrameAdvancedSettings advancedSettings { set; get; }
+        public EncodedAudioFrameAdvancedSettings advancedSettings;
 
         ///
         /// <summary>
         /// The Unix timestamp (ms) for capturing the external encoded video frames.
         /// </summary>
         ///
-        public int64_t captureTimeMs { set; get; }
+        public int64_t captureTimeMs;
     };
 
     ///
@@ -1136,27 +1136,27 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public uint samplesPerChannel { set; get; }
+        public uint samplesPerChannel;
 
         ///
         /// @ignore
         ///
-        public short channelNum { set; get; }
+        public short channelNum;
 
         ///
         /// @ignore
         ///
-        public uint samplesOut { set; get; }
+        public uint samplesOut;
 
         ///
         /// @ignore
         ///
-        public int64_t elapsedTimeMs { set; get; }
+        public int64_t elapsedTimeMs;
 
         ///
         /// @ignore
         ///
-        public int64_t ntpTimeMs { set; get; }
+        public int64_t ntpTimeMs;
     };
 
     ///
@@ -1284,72 +1284,73 @@ namespace Agora.Rtc
         /// The codec type of the local video stream. See VIDEO_CODEC_TYPE . The default value is VIDEO_CODEC_H264(2).
         /// </summary>
         ///
-        public VIDEO_CODEC_TYPE codecType { set; get; }
+        public VIDEO_CODEC_TYPE codecType;
 
         ///
         /// <summary>
         /// Width (pixel) of the video frame.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// Height (pixel) of the video frame.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// <summary>
         /// The number of video frames per second.When this parameter is not 0, you can use it to calculate the Unix timestamp of externally encoded video frames.
         /// </summary>
         ///
-        public int framesPerSecond { set; get; }
+        public int framesPerSecond;
 
         ///
         /// <summary>
         /// The video frame type. See VIDEO_FRAME_TYPE .
         /// </summary>
         ///
-        public VIDEO_FRAME_TYPE_NATIVE frameType { set; get; }
+        public VIDEO_FRAME_TYPE_NATIVE frameType;
 
         ///
         /// <summary>
         /// The rotation information of the video frame. See VIDEO_ORIENTATION .
         /// </summary>
         ///
-        public VIDEO_ORIENTATION rotation { set; get; }
+        public VIDEO_ORIENTATION rotation;
 
         ///
         /// <summary>
         /// Reserved for future use.
         /// </summary>
         ///
-        public int trackId { set; get; }
+        public int trackId;
 
         ///
         /// <summary>
         /// The Unix timestamp (ms) for capturing the external encoded video frames.
         /// </summary>
         ///
-        public int64_t captureTimeMs { set; get; }
+        public int64_t captureTimeMs;
 
 
-        public int64_t decodeTimeMs { set; get; }
+        public int64_t decodeTimeMs;
+
         ///
         /// <summary>
         /// The user ID to push the externally encoded video frame.
         /// </summary>
         ///
-        public uint uid { set; get; }
+        public uint uid;
 
         ///
         /// <summary>
         /// The type of video streams. See VIDEO_STREAM_TYPE .
         /// </summary>
         ///
-        public VIDEO_STREAM_TYPE streamType { set; get; }
+        public VIDEO_STREAM_TYPE streamType;
     };
 
     ///
@@ -1399,9 +1400,10 @@ namespace Agora.Rtc
     public class CodecCapInfo
     {
 
-        public VIDEO_CODEC_TYPE codec_type { set; get; }
+        public VIDEO_CODEC_TYPE codec_type;
 
-        public int codec_cap_mask { set; get; }
+        public int codec_cap_mask;
+
     };
 
     ///
@@ -1416,56 +1418,56 @@ namespace Agora.Rtc
         /// The codec type of the local video stream. See VIDEO_CODEC_TYPE .
         /// </summary>
         ///
-        public VIDEO_CODEC_TYPE codecType { set; get; }
+        public VIDEO_CODEC_TYPE codecType;
 
         ///
         /// <summary>
         /// The dimensions of the encoded video (px). This parameter measures the video encoding quality in the format of length × width. VideoDimensions 
         /// </summary>
         ///
-        public VideoDimensions dimensions { set; get; }
+        public VideoDimensions dimensions;
 
         ///
         /// <summary>
         /// The frame rate (fps) of the encoding video frame. The default value is 15. See FRAME_RATE .
         /// </summary>
         ///
-        public int frameRate { set; get; }
+        public int frameRate;
 
         ///
         /// <summary>
         /// The encoding bitrate (Kbps) of the video.  BITRATE 
         /// </summary>
         ///
-        public int kBitrate { set; get; }
+        public int kBitrate;
 
         ///
         /// <summary>
         /// The minimum encoding bitrate (Kbps) of the video.The SDK automatically adjusts the encoding bitrate to adapt to the network conditions. Using a value greater than the default value forces the video encoder to output high-quality images but may cause more packet loss and sacrifice the smoothness of the video transmission. Unless you have special requirements for image quality, Agora does not recommend changing this value.This parameter only applies to the interactive streaming profile.
         /// </summary>
         ///
-        public int minBitrate { set; get; }
+        public int minBitrate;
 
         ///
         /// <summary>
         /// The orientation mode of the encoded video. See ORIENTATION_MODE .
         /// </summary>
         ///
-        public ORIENTATION_MODE orientationMode { set; get; }
+        public ORIENTATION_MODE orientationMode;
 
         ///
         /// <summary>
         /// Video degradation preference under limited bandwidth. See DEGRADATION_PREFERENCE .
         /// </summary>
         ///
-        public DEGRADATION_PREFERENCE degradationPreference { set; get; }
+        public DEGRADATION_PREFERENCE degradationPreference;
 
         ///
         /// <summary>
         /// Sets the mirror mode of the published local video stream. It only affects the video that the remote user sees. See VIDEO_MIRROR_MODE_TYPE .By default, the video is not mirrored.
         /// </summary>
         ///
-        public VIDEO_MIRROR_MODE_TYPE mirrorMode { set; get; }
+        public VIDEO_MIRROR_MODE_TYPE mirrorMode;
 
         public VideoEncoderConfiguration(ref VideoDimensions d, int f, int b, ORIENTATION_MODE m, VIDEO_MIRROR_MODE_TYPE mirror = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED)
         {
@@ -1570,14 +1572,14 @@ namespace Agora.Rtc
         public SimulcastStreamConfig()
         {
             dimensions = new VideoDimensions(160, 120);
-            bitrate = 65;
+            kBitrate = 65;
             framerate = 5;
         }
 
         public SimulcastStreamConfig(VideoDimensions dimensions, int bitrate, int framerate)
         {
             this.dimensions = dimensions;
-            this.bitrate = bitrate;
+            this.kBitrate = bitrate;
             this.framerate = framerate;
         }
 
@@ -1586,21 +1588,22 @@ namespace Agora.Rtc
         /// The video dimension. See VideoDimensions . The default value is 160 × 120.
         /// </summary>
         ///
-        public VideoDimensions dimensions { set; get; }
+        public VideoDimensions dimensions;
 
         ///
         /// <summary>
         /// Video receive bitrate (Kbps). The default value is 65.
         /// </summary>
         ///
-        public int bitrate { set; get; }
+
+        public int kBitrate;
 
         ///
         /// <summary>
         /// The capture frame rate (fps) of the local video. The default value is 5.
         /// </summary>
         ///
-        public int framerate { set; get; }
+        public int framerate;
     };
 
     ///
@@ -1627,28 +1630,28 @@ namespace Agora.Rtc
         /// The horizontal offset from the top-left corner.
         /// </summary>
         ///
-        public int x { set; get; }
+        public int x;
 
         ///
         /// <summary>
         /// The vertical offset from the top-left corner.
         /// </summary>
         ///
-        public int y { set; get; }
+        public int y;
 
         ///
         /// <summary>
         /// The width of the target area.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// The height of the target area.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
     };
 
     ///
@@ -1678,21 +1681,21 @@ namespace Agora.Rtc
         /// The x-coordinate of the upper left corner of the watermark. The horizontal position relative to the origin, where the upper left corner of the screen is the origin, and the x-coordinate is the upper left corner of the watermark. The value range is [0.0,1.0], and the default value is 0.
         /// </summary>
         ///
-        public float xRatio { set; get; }
+        public float xRatio;
 
         ///
         /// <summary>
         /// The y-coordinate of the upper left corner of the watermark. The vertical position relative to the origin, where the upper left corner of the screen is the origin, and the y-coordinate is the upper left corner of the screen. The value range is [0.0,1.0], and the default value is 0.
         /// </summary>
         ///
-        public float yRatio { set; get; }
+        public float yRatio;
 
         ///
         /// <summary>
         /// The width of the watermark. The SDK calculates the height of the watermark proportionally according to this parameter value to ensure that the enlarged or reduced watermark image is not distorted. The value range is [0,1], and the default value is 0, which means no watermark is displayed.
         /// </summary>
         ///
-        public float widthRatio { set; get; }
+        public float widthRatio;
     };
 
     ///
@@ -1726,35 +1729,35 @@ namespace Agora.Rtc
         /// Reserved for future use.
         /// </summary>
         ///
-        public bool visibleInPreview { set; get; }
+        public bool visibleInPreview;
 
         ///
         /// <summary>
         /// When the adaptation mode of the watermark is FIT_MODE_COVER_POSITION, it is used to set the area of the watermark image in landscape mode. See FIT_MODE_COVER_POSITION for details.
         /// </summary>
         ///
-        public Rectangle positionInLandscapeMode { set; get; }
+        public Rectangle positionInLandscapeMode;
 
         ///
         /// <summary>
         /// When the adaptation mode of the watermark is FIT_MODE_COVER_POSITION, it is used to set the area of the watermark image in portrait mode. See FIT_MODE_COVER_POSITION for details.
         /// </summary>
         ///
-        public Rectangle positionInPortraitMode { set; get; }
+        public Rectangle positionInPortraitMode;
 
         ///
         /// <summary>
         /// When the watermark adaptation mode is FIT_MODE_USE_IMAGE_RATIO, this parameter is used to set the watermark coordinates. See WatermarkRatio .
         /// </summary>
         ///
-        public WatermarkRatio watermarkRatio { set; get; }
+        public WatermarkRatio watermarkRatio;
 
         ///
         /// <summary>
         /// The adaptation mode of the watermark. See WATERMARK_FIT_MODE .
         /// </summary>
         ///
-        public WATERMARK_FIT_MODE mode { set; get; }
+        public WATERMARK_FIT_MODE mode;
     };
 
     ///
@@ -1818,213 +1821,213 @@ namespace Agora.Rtc
         /// Call duration of the local user in seconds, represented by an aggregate value.
         /// </summary>
         ///
-        public uint duration { set; get; }
+        public uint duration;
 
         ///
         /// <summary>
         /// Total number of bytes transmitted, represented by an aggregate value.
         /// </summary>
         ///
-        public uint txBytes { set; get; }
+        public uint txBytes;
 
         ///
         /// <summary>
         /// Total number of bytes received, represented by an aggregate value.
         /// </summary>
         ///
-        public uint rxBytes { set; get; }
+        public uint rxBytes;
 
         ///
         /// <summary>
         /// Total number of audio bytes sent, represented by an aggregate value.
         /// </summary>
         ///
-        public uint txAudioBytes { set; get; }
+        public uint txAudioBytes;
 
         ///
         /// <summary>
         /// The total number of video bytes sent, represented by an aggregate value.
         /// </summary>
         ///
-        public uint txVideoBytes { set; get; }
+        public uint txVideoBytes;
 
         ///
         /// <summary>
         /// The total number of audio bytes received, represented by an aggregate value.
         /// </summary>
         ///
-        public uint rxAudioBytes { set; get; }
+        public uint rxAudioBytes;
 
         ///
         /// <summary>
         /// The total number of video bytes received, represented by an aggregate value.
         /// </summary>
         ///
-        public uint rxVideoBytes { set; get; }
+        public uint rxVideoBytes;
 
         ///
         /// <summary>
         /// Video transmission bitrate (Kbps), represented by an instantaneous value.
         /// </summary>
         ///
-        public ushort txKBitRate { set; get; }
+        public ushort txKBitRate;
 
         ///
         /// <summary>
         /// The receiving bitrate (Kbps), represented by an instantaneous value.
         /// </summary>
         ///
-        public ushort rxKBitRate { set; get; }
+        public ushort rxKBitRate;
 
         ///
         /// <summary>
         /// Audio receive bitrate (Kbps), represented by an instantaneous value.
         /// </summary>
         ///
-        public ushort rxAudioKBitRate { set; get; }
+        public ushort rxAudioKBitRate;
 
         ///
         /// <summary>
         /// The bitrate (Kbps) of sending the audio packet.
         /// </summary>
         ///
-        public ushort txAudioKBitRate { set; get; }
+        public ushort txAudioKBitRate;
 
         ///
         /// <summary>
         /// Video receive bitrate (Kbps), represented by an instantaneous value.
         /// </summary>
         ///
-        public ushort rxVideoKBitRate { set; get; }
+        public ushort rxVideoKBitRate;
 
         ///
         /// <summary>
         /// The bitrate (Kbps) of sending the video.
         /// </summary>
         ///
-        public ushort txVideoKBitRate { set; get; }
+        public ushort txVideoKBitRate;
 
         ///
         /// <summary>
         /// The client-to-server delay (ms).
         /// </summary>
         ///
-        public ushort lastmileDelay { set; get; }
+        public ushort lastmileDelay;
 
         ///
         /// <summary>
         /// The number of users in the channel.
         /// </summary>
         ///
-        public uint userCount { set; get; }
+        public uint userCount;
 
         ///
         /// <summary>
         /// Application CPU usage (%).The value of cpuTotalUsage is always reported as 0 in the OnLeaveChannel callback.As of Android 8.1, you cannot get the CPU usage from this attribute due to system limitations.
         /// </summary>
         ///
-        public double cpuAppUsage { set; get; }
+        public double cpuAppUsage;
 
         ///
         /// <summary>
         /// The system CPU usage (%).For Windows, in the multi-kernel environment, this member represents the average CPU usage. The value = (100 - System Idle Progress in Task Manager)/100.The value of cpuTotalUsage is always reported as 0 in the OnLeaveChannel callback.As of Android 8.1, you cannot get the CPU usage from this attribute due to system limitations.
         /// </summary>
         ///
-        public double cpuTotalUsage { set; get; }
+        public double cpuTotalUsage;
 
         ///
         /// <summary>
         /// The round-trip time delay (ms) from the client to the local router.On Android, to get gatewayRtt, ensure that you add the android.permission.ACCESS_WIFI_STATE permission after </application> in the AndroidManifest.xml file in your project.
         /// </summary>
         ///
-        public int gatewayRtt { set; get; }
+        public int gatewayRtt;
 
         ///
         /// <summary>
         /// The memory ratio occupied by the app (%).This value is for reference only. Due to system limitations, you may not get this value.
         /// </summary>
         ///
-        public double memoryAppUsageRatio { set; get; }
+        public double memoryAppUsageRatio;
 
         ///
         /// <summary>
         /// The memory occupied by the system (%).This value is for reference only. Due to system limitations, you may not get this value.
         /// </summary>
         ///
-        public double memoryTotalUsageRatio { set; get; }
+        public double memoryTotalUsageRatio;
 
         ///
         /// <summary>
         /// The memory size occupied by the app (KB).This value is for reference only. Due to system limitations, you may not get this value.
         /// </summary>
         ///
-        public int memoryAppUsageInKbytes { set; get; }
+        public int memoryAppUsageInKbytes;
 
         ///
         /// <summary>
         /// The duration (ms) between the SDK starts connecting and the connection is established. If the value reported is 0, it means invalid.
         /// </summary>
         ///
-        public int connectTimeMs { set; get; }
+        public int connectTimeMs;
 
         ///
         /// @ignore
         ///
-        public int firstAudioPacketDuration { set; get; }
+        public int firstAudioPacketDuration;
 
         ///
         /// @ignore
         ///
-        public int firstVideoPacketDuration { set; get; }
+        public int firstVideoPacketDuration;
 
         ///
         /// @ignore
         ///
-        public int firstVideoKeyFramePacketDuration { set; get; }
+        public int firstVideoKeyFramePacketDuration;
 
         ///
         /// @ignore
         ///
-        public int packetsBeforeFirstKeyFramePacket { set; get; }
+        public int packetsBeforeFirstKeyFramePacket;
 
         ///
         /// @ignore
         ///
-        public int firstAudioPacketDurationAfterUnmute { set; get; }
+        public int firstAudioPacketDurationAfterUnmute;
 
         ///
         /// @ignore
         ///
-        public int firstVideoPacketDurationAfterUnmute { set; get; }
+        public int firstVideoPacketDurationAfterUnmute;
 
         ///
         /// @ignore
         ///
-        public int firstVideoKeyFramePacketDurationAfterUnmute { set; get; }
+        public int firstVideoKeyFramePacketDurationAfterUnmute;
 
         ///
         /// @ignore
         ///
-        public int firstVideoKeyFrameDecodedDurationAfterUnmute { set; get; }
+        public int firstVideoKeyFrameDecodedDurationAfterUnmute;
 
         ///
         /// @ignore
         ///
-        public int firstVideoKeyFrameRenderedDurationAfterUnmute { set; get; }
+        public int firstVideoKeyFrameRenderedDurationAfterUnmute;
 
         ///
         /// <summary>
         /// The packet loss rate (%) from the client to the Agora server before applying the anti-packet-loss algorithm.
         /// </summary>
         ///
-        public int txPacketLossRate { set; get; }
+        public int txPacketLossRate;
 
         ///
         /// <summary>
         /// The packet loss rate (%) from the Agora server to the client before using the anti-packet-loss method.
         /// </summary>
         ///
-        public int rxPacketLossRate { set; get; }
+        public int rxPacketLossRate;
     };
 
     ///
@@ -2243,7 +2246,7 @@ namespace Agora.Rtc
             publishDuration = 0;
             qoeQuality = 0;
             qualityChangedReason = 0;
-         
+
         }
 
         public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay,
@@ -2272,105 +2275,105 @@ namespace Agora.Rtc
         /// The user ID of the remote user.
         /// </summary>
         ///
-        public uint uid { set; get; }
+        public uint uid;
 
         ///
         /// <summary>
         /// The quality of the audio stream sent by the user. See QUALITY_TYPE .
         /// </summary>
         ///
-        public int quality { set; get; }
+        public int quality;
 
         ///
         /// <summary>
         /// The network delay (ms) from the sender to the receiver.
         /// </summary>
         ///
-        public int networkTransportDelay { set; get; }
+        public int networkTransportDelay;
 
         ///
         /// <summary>
         /// The network delay (ms) from the audio receiver to the jitter buffer.When the receiving end is an audience member and audienceLatencyLevel of ClientRoleOptions is 1, this parameter does not take effect.
         /// </summary>
         ///
-        public int jitterBufferDelay { set; get; }
+        public int jitterBufferDelay;
 
         ///
         /// <summary>
         /// The frame loss rate (%) of the remote audio stream in the reported interval.
         /// </summary>
         ///
-        public int audioLossRate { set; get; }
+        public int audioLossRate;
 
         ///
         /// <summary>
         /// The number of audio channels.
         /// </summary>
         ///
-        public int numChannels { set; get; }
+        public int numChannels;
 
         ///
         /// <summary>
         /// The sampling rate of the received audio stream in the reported interval.
         /// </summary>
         ///
-        public int receivedSampleRate { set; get; }
+        public int receivedSampleRate;
 
         ///
         /// <summary>
         /// The average bitrate (Kbps) of the received audio stream in the reported interval.
         /// </summary>
         ///
-        public int receivedBitrate { set; get; }
+        public int receivedBitrate;
 
         ///
         /// <summary>
         /// The total freeze time (ms) of the remote audio stream after the remote user joins the channel. In a session, audio freeze occurs when the audio frame loss rate reaches 4%.
         /// </summary>
         ///
-        public int totalFrozenTime { set; get; }
+        public int totalFrozenTime;
 
         ///
         /// <summary>
         /// The total audio freeze time as a percentage (%) of the total time when the audio is available. The audio is considered available when the remote user neither stops sending the audio stream nor disables the audio module after joining the channel.
         /// </summary>
         ///
-        public int frozenRate { set; get; }
+        public int frozenRate;
 
         ///
         /// <summary>
         /// The quality of the remote audio stream in the reported interval. The quality is determined by the Agora real-time audio MOS (Mean Opinion Score) measurement method. The return value range is [0, 500]. Dividing the return value by 100 gets the MOS score, which ranges from 0 to 5. The higher the score, the better the audio quality.The subjective perception of audio quality corresponding to the Agora real-time audio MOS scores is as follows:MOS scorePerception of audio qualityGreater than 4Excellent. The audio sounds clear and smooth.From 3.5 to 4Good. The audio has some perceptible impairment but still sounds clear.From 3 to 3.5Fair. The audio freezes occasionally and requires attentive listening.From 2.5 to 3Poor. The audio sounds choppy and requires considerable effort to understand.From 2 to 2.5Bad. The audio has occasional noise. Consecutive audio dropouts occur, resulting in some information loss. The users can communicate only with difficulty.Less than 2Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible.
         /// </summary>
         ///
-        public int mosValue { set; get; }
+        public int mosValue;
 
         ///
         /// <summary>
         /// The total active time (ms) between the start of the audio call and the callback of the remote user.The active time refers to the total duration of the remote user without the mute state.
         /// </summary>
         ///
-        public int totalActiveTime { set; get; }
+        public int totalActiveTime;
 
         ///
         /// <summary>
         /// The total duration (ms) of the remote audio stream.
         /// </summary>
         ///
-        public int publishDuration { set; get; }
+        public int publishDuration;
 
         ///
         /// <summary>
         /// The Quality of Experience (QoE) of the local user when receiving a remote audio stream. See EXPERIENCE_QUALITY_TYPE .
         /// </summary>
         ///
-        public int qoeQuality { set; get; }
+        public int qoeQuality;
 
         ///
         /// <summary>
         /// Reasons why the QoE of the local user when receiving a remote audio stream is poor. See EXPERIENCE_POOR_REASON .
         /// </summary>
         ///
-        public int qualityChangedReason { set; get; }
+        public int qualityChangedReason;
     };
 
     ///
@@ -2532,21 +2535,21 @@ namespace Agora.Rtc
         /// The width (px) of the video frame.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// The height (px) of the video frame.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// <summary>
         /// The video frame rate (fps).
         /// </summary>
         ///
-        public int fps { set; get; }
+        public int fps;
     };
 
     ///
@@ -3234,47 +3237,47 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public bool isLocal { set; get; }
+        public bool isLocal;
 
         ///
         /// @ignore
         ///
-        public uint ownerUid { set; get; }
+        public uint ownerUid;
 
         ///
         /// @ignore
         ///
-        public uint trackId { set; get; }
+        public uint trackId;
 
         ///
         /// @ignore
         ///
-        public string channelId { set; get; }
+        public string channelId;
 
         ///
         /// @ignore
         ///
-        public VIDEO_STREAM_TYPE streamType { set; get; }
+        public VIDEO_STREAM_TYPE streamType;
 
         ///
         /// @ignore
         ///
-        public VIDEO_CODEC_TYPE codecType { set; get; }
+        public VIDEO_CODEC_TYPE codecType;
 
         ///
         /// @ignore
         ///
-        public bool encodedFrameOnly { set; get; }
+        public bool encodedFrameOnly;
 
         ///
         /// @ignore
         ///
-        public VIDEO_SOURCE_TYPE sourceType { set; get; }
+        public VIDEO_SOURCE_TYPE sourceType;
 
         ///
         /// @ignore
         ///
-        public uint observationPosition { set; get; }
+        public uint observationPosition;
     };
 
     ///
@@ -3336,28 +3339,28 @@ namespace Agora.Rtc
         /// The user ID.In the local user's callback, uid = 0.In the remote users' callback, uid is the user ID of a remote user whose instantaneous volume is one of the three highest.
         /// </summary>
         ///
-        public uint uid { set; get; }
+        public uint uid;
 
         ///
         /// <summary>
         /// The volume of the user. The value ranges between 0 (lowest volume) and 255 (highest volume). 
         /// </summary>
         ///
-        public uint volume { set; get; }
+        public uint volume;
 
         ///
         /// <summary>
         /// Voice activity status of the local user.0: The local user is not speaking.1: The local user is speaking.The vad parameter does not report the voice activity status of remote users. In a remote user's callback, the value of vad is always 1.To use this parameter, you must set reportVad to true when calling EnableAudioVolumeIndication .
         /// </summary>
         ///
-        public uint vad { set; get; }
+        public uint vad;
 
         ///
         /// <summary>
         /// The voice pitch of the local user. The value ranges between 0.0 and 4000.0.The voicePitch parameter does not report the voice pitch of remote users. In the remote users' callback, the value of voicePitch is always 0.0.
         /// </summary>
         ///
-        public double voicePitch { set; get; }
+        public double voicePitch;
     };
 
     ///
@@ -3516,42 +3519,42 @@ namespace Agora.Rtc
         /// The number of audio channels.
         /// </summary>
         ///
-        public int numChannels { set; get; }
+        public int numChannels;
 
         ///
         /// <summary>
         /// The sampling rate (Hz) of sending the local user's audio stream.
         /// </summary>
         ///
-        public int sentSampleRate { set; get; }
+        public int sentSampleRate;
 
         ///
         /// <summary>
         /// The average bitrate (Kbps) of sending the local user's audio stream.
         /// </summary>
         ///
-        public int sentBitrate { set; get; }
+        public int sentBitrate;
 
         ///
         /// <summary>
         /// The internal payload codec.
         /// </summary>
         ///
-        public int internalCodec { set; get; }
+        public int internalCodec;
 
         ///
         /// <summary>
         /// The packet loss rate (%) from the local client to the Agora server before applying the anti-packet loss strategies.
         /// </summary>
         ///
-        public ushort txPacketLossRate { set; get; }
+        public ushort txPacketLossRate;
 
         ///
         /// <summary>
         /// The delay of the audio device module when playing or recording audio.
         /// </summary>
         ///
-        public int audioDeviceDelay { set; get; }
+        public int audioDeviceDelay;
     }
 
     ///
@@ -3801,49 +3804,49 @@ namespace Agora.Rtc
         /// The HTTP/HTTPS URL address of the image in the live video. The maximum length of this parameter is 1024 bytes.
         /// </summary>
         ///
-        public string url { set; get; }
+        public string url;
 
         ///
         /// <summary>
         /// The x coordinate (pixel) of the image on the video frame (taking the upper left corner of the video frame as the origin).
         /// </summary>
         ///
-        public int x { set; get; }
+        public int x;
 
         ///
         /// <summary>
         /// The y coordinate (pixel) of the image on the video frame (taking the upper left corner of the video frame as the origin).
         /// </summary>
         ///
-        public int y { set; get; }
+        public int y;
 
         ///
         /// <summary>
         /// The width (pixel) of the image on the video frame.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// The height (pixel) of the image on the video frame.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// <summary>
         /// The layer index of the watermark or background image. When you use the watermark array to add a watermark or multiple watermarks, you must pass a value to zOrder in the range [1,255]; otherwise, the SDK reports an error. In other cases, zOrder can optionally be passed in the range [0,255], with 0 being the default value. 0 means the bottom layer and 255 means the top layer.
         /// </summary>
         ///
-        public int zOrder { set; get; }
+        public int zOrder;
 
         ///
         /// <summary>
         /// The transparency of the watermark or background image. The value ranges between 0.0 and 1.0:0.0: Completely transparent.1.0: (Default) Opaque.
         /// </summary>
         ///
-        public double alpha { set; get; }
+        public double alpha;
     };
 
     ///
@@ -3871,14 +3874,14 @@ namespace Agora.Rtc
         /// The feature names, including LBHQ (high-quality video with a lower bitrate) and VEO (optimized video encoder).
         /// </summary>
         ///
-        public string featureName { set; get; }
+        public string featureName;
 
         ///
         /// <summary>
         /// Whether to enable the advanced features of streaming with transcoding:true: Enable the advanced features.false: (Default) Do not enable the advanced features.
         /// </summary>
         ///
-        public bool opened { set; get; }
+        public bool opened;
     };
 
     ///
@@ -3961,35 +3964,35 @@ namespace Agora.Rtc
         /// The user ID of the host.
         /// </summary>
         ///
-        public uint uid { set; get; }
+        public uint uid;
 
         ///
         /// <summary>
         /// The x coordinate (pixel) of the host's video on the output video frame (taking the upper left corner of the video frame as the origin). The value range is [0, width], where width is thewidth set in LiveTranscoding .
         /// </summary>
         ///
-        public int x { set; get; }
+        public int x;
 
         ///
         /// <summary>
         /// The y coordinate (pixel) of the host's video on the output video frame (taking the upper left corner of the video frame as the origin). The value range is [0, height], where height is the height set in LiveTranscoding .
         /// </summary>
         ///
-        public int y { set; get; }
+        public int y;
 
         ///
         /// <summary>
         /// The width (pixel) of the host's video.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// The height (pixel) of the host's video.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// <summary>
@@ -3997,7 +4000,7 @@ namespace Agora.Rtc
         /// 0: (Default) The host's video is the bottom layer.100: The host's video is the top layer.If the value is less than 0 or greater than 100, the error ERR_INVALID_ARGUMENT is returned.Starting from v2.3, setting zOrder to 0 is supported.
         /// </summary>
         ///
-        public int zOrder { set; get; }
+        public int zOrder;
 
         ///
         /// <summary>
@@ -4005,14 +4008,14 @@ namespace Agora.Rtc
         /// 0.0: Completely transparent.1.0: (Default) Opaque.
         /// </summary>
         ///
-        public double alpha { set; get; }
+        public double alpha;
 
         ///
         /// <summary>
         /// The audio channel used by the host's audio in the output audio. The default value is 0, and the value range is [0, 5].0: (Recommended) The defaut setting, which supports dual channels at most and depends on the upstream of the host.1: The host's audio uses the FL audio channel. If the host's upstream uses multiple audio channels, the Agora server mixes them into mono first.2: The host's audio uses the FC audio channel. If the host's upstream uses multiple audio channels, the Agora server mixes them into mono first.3: The host's audio uses the FR audio channel. If the host's upstream uses multiple audio channels, the Agora server mixes them into mono first.4: The host's audio uses the BL audio channel. If the host's upstream uses multiple audio channels, the Agora server mixes them into mono first.5: The host's audio uses the BR audio channel. If the host's upstream uses multiple audio channels, the Agora server mixes them into mono first.0xFF or a value greater than 5: The host's audio is muted, and the Agora server removes the host's audio.If the value is not 0, a special player is required.
         /// </summary>
         ///
-        public int audioChannel { set; get; }
+        public int audioChannel;
     };
 
     ///
@@ -4087,161 +4090,161 @@ namespace Agora.Rtc
         /// The width of the video in pixels. The default value is 360.When pushing video streams to the CDN, the value range of width is [64,1920]. If the value is less than 64, Agora server automatically adjusts it to 64; if the value is greater than 1920, Agora server automatically adjusts it to 1920.When pushing audio streams to the CDN, set width and height as 0.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// The height of the video in pixels. The default value is 640.When pushing video streams to the CDN, the value range of height is [64,1080]. If the value is less than 64, Agora server automatically adjusts it to 64; if the value is greater than 1080, Agora server automatically adjusts it to 1080.When pushing audio streams to the CDN, set width and height as 0.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// <summary>
         /// Bitrate of the output video stream for Media Push in Kbps. The default value is 400 Kbps.
         /// </summary>
         ///
-        public int videoBitrate { set; get; }
+        public int videoBitrate;
 
         ///
         /// <summary>
         /// Frame rate (in fps) of the output video stream set for Media Push. The default value is 15 , and the value range is (0,30].The Agora server adjusts any value over 30 to 30.
         /// </summary>
         ///
-        public int videoFramerate { set; get; }
+        public int videoFramerate;
 
         ///
         /// <summary>
         /// DeprecatedThis parameter is deprecated.Latency mode:true: Low latency with unassured quality.false: (Default) High latency with assured quality.
         /// </summary>
         ///
-        public bool lowLatency { set; get; }
+        public bool lowLatency;
 
         ///
         /// <summary>
         /// GOP (Group of Pictures) in fps of the video frames for Media Push. The default value is 30.
         /// </summary>
         ///
-        public int videoGop { set; get; }
+        public int videoGop;
 
         ///
         /// <summary>
         /// Video codec profile type for Media Push. Set it as 66, 77, or 100 (default). See VIDEO_CODEC_PROFILE_TYPE for details.If you set this parameter to any other value, Agora adjusts it to the default value.
         /// </summary>
         ///
-        public VIDEO_CODEC_PROFILE_TYPE videoCodecProfile { set; get; }
+        public VIDEO_CODEC_PROFILE_TYPE videoCodecProfile;
 
         ///
         /// <summary>
         /// The background color in RGB hex value. Value only. Do not include a preceeding #. For example, 0xFFB6C1 (light pink). The default value is 0x000000 (black).
         /// </summary>
         ///
-        public uint backgroundColor { set; get; }
+        public uint backgroundColor;
 
         ///
         /// <summary>
         /// Video codec profile types for Media Push. See VIDEO_CODEC_TYPE_FOR_STREAM .
         /// </summary>
         ///
-        public VIDEO_CODEC_TYPE_FOR_STREAM videoCodecType { set; get; }
+        public VIDEO_CODEC_TYPE_FOR_STREAM videoCodecType;
 
         ///
         /// <summary>
         /// The number of users in the video mixing. The value range is [0,17].
         /// </summary>
         ///
-        public uint userCount { set; get; }
+        public uint userCount;
 
         ///
         /// <summary>
         /// Manages the user layout configuration in the Media Push. Agora supports a maximum of 17 transcoding users in a Media Push channel. See TranscodingUser .
         /// </summary>
         ///
-        public TranscodingUser[] transcodingUsers { set; get; }
+        public TranscodingUser[] transcodingUsers;
 
         ///
         /// <summary>
         /// Reserved property. Extra user-defined information to send SEI for the H.264/H.265 video stream to the CDN client. Maximum length: 4096 bytes. For more information on SEI, see SEI-related questions.
         /// </summary>
         ///
-        public string transcodingExtraInfo { set; get; }
+        public string transcodingExtraInfo;
 
         ///
         /// <summary>
         /// DeprecatedThis parameter is deprecated.The metadata sent to the CDN client.
         /// </summary>
         ///
-        public string metadata { set; get; }
+        public string metadata;
 
         ///
         /// <summary>
         /// The watermark on the live video. The image format needs to be PNG. See RtcImage .You can add one watermark, or add multiple watermarks using an array. This parameter is used with watermarkCount.
         /// </summary>
         ///
-        public RtcImage[] watermark { set; get; }
+        public RtcImage[] watermark;
 
         ///
         /// <summary>
         /// The number of watermarks on the live video. The total number of watermarks and background images can range from 0 to 10. This parameter is used with watermark.
         /// </summary>
         ///
-        public uint watermarkCount { set; get; }
+        public uint watermarkCount;
 
         ///
         /// <summary>
         /// The number of background images on the live video. The image format needs to be PNG. See RtcImage .You can add a background image or use an array to add multiple background images. This parameter is used with backgroundImageCount.
         /// </summary>
         ///
-        public RtcImage[] backgroundImage { set; get; }
+        public RtcImage[] backgroundImage;
 
         ///
         /// <summary>
         /// The number of background images on the live video. The total number of watermarks and background images can range from 0 to 10. This parameter is used with backgroundImage.
         /// </summary>
         ///
-        public uint backgroundImageCount { set; get; }
+        public uint backgroundImageCount;
 
         ///
         /// <summary>
         /// The audio sampling rate (Hz) of the output media stream. See AUDIO_SAMPLE_RATE_TYPE .
         /// </summary>
         ///
-        public AUDIO_SAMPLE_RATE_TYPE audioSampleRate { set; get; }
+        public AUDIO_SAMPLE_RATE_TYPE audioSampleRate;
 
         ///
         /// <summary>
         /// Bitrate (Kbps) of the audio output stream for Media Push. The default value is 48, and the highest value is 128.
         /// </summary>
         ///
-        public int audioBitrate { set; get; }
+        public int audioBitrate;
 
         ///
         /// <summary>
         /// The number of audio channels for Media Push. Agora recommends choosing 1 (mono), or 2 (stereo) audio channels. Special players are required if you choose 3, 4, or 5.1: (Default) Mono.2: Stereo.3: Three audio channels.4: Four audio channels.5: Five audio channels.
         /// </summary>
         ///
-        public int audioChannels { set; get; }
+        public int audioChannels;
 
         ///
         /// <summary>
         /// Audio codec profile type for Media Push. See AUDIO_CODEC_PROFILE_TYPE .
         /// </summary>
         ///
-        public AUDIO_CODEC_PROFILE_TYPE audioCodecProfile { set; get; }
+        public AUDIO_CODEC_PROFILE_TYPE audioCodecProfile;
 
         ///
         /// <summary>
         /// Advanced features of the Media Push with transcoding. See LiveStreamAdvancedFeature .
         /// </summary>
         ///
-        public LiveStreamAdvancedFeature[] advancedFeatures { set; get; }
+        public LiveStreamAdvancedFeature[] advancedFeatures;
 
         ///
         /// <summary>
         /// The number of enabled advanced features. The default value is 0.
         /// </summary>
         ///
-        public uint advancedFeatureCount { set; get; }
+        public uint advancedFeatureCount;
     };
 
     ///
@@ -4288,72 +4291,72 @@ namespace Agora.Rtc
         /// The source type of video for the video mixing on the local client. See VIDEO_SOURCE_TYPE .
         /// </summary>
         ///
-        public MEDIA_SOURCE_TYPE sourceType { set; get; }
+        public MEDIA_SOURCE_TYPE sourceType;
 
         ///
         /// <summary>
         /// The ID of the remote user.Use this parameter only when the source type of the video for the video mixing on the local client is VIDEO_SOURCE_REMOTE.
         /// </summary>
         ///
-        public uint remoteUserUid { set; get; }
+        public uint remoteUserUid;
 
         ///
         /// <summary>
         /// The URL of the image.
         /// </summary>
         ///
-        public string imageUrl { set; get; }
+        public string imageUrl;
 
 
-        public int mediaPlayerId { set; get; }
+        public int mediaPlayerId;
         ///
         /// <summary>
         /// The horizontal displacement of the top-left corner of the video for the video mixing on the client relative to the top-left corner (origin) of the canvas for this video mixing.
         /// </summary>
         ///
-        public int x { set; get; }
+        public int x;
 
         ///
         /// <summary>
         /// The vertical displacement of the top-left corner of the video for the video mixing on the client relative to the top-left corner (origin) of the canvas for this video mixing.
         /// </summary>
         ///
-        public int y { set; get; }
+        public int y;
 
         ///
         /// <summary>
         /// The width (px) of the video for the video mixing on the local client.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// The height (px) of the video for the video mixing on the local client.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// <summary>
         /// The number of the layer to which the video for the video mixing on the local client belongs. The value range is [0,100].0: (Default) The layer is at the bottom.100: The layer is at the top.
         /// </summary>
         ///
-        public int zOrder { set; get; }
+        public int zOrder;
 
         ///
         /// <summary>
         /// The transparency of the video for the video mixing on the local client. The value range is [0.0,1.0]. 0.0 means the transparency is completely transparent. 1.0 means the transparency is opaque.
         /// </summary>
         ///
-        public double alpha { set; get; }
+        public double alpha;
 
         ///
         /// <summary>
         /// Whether to mirror the video for the video mixing on the local client.true: Mirror the captured video.false: (Default) Do not mirror the captured video.The paramter only works for videos with the source type CAMERA
         /// </summary>
         ///
-        public bool mirror { set; get; }
+        public bool mirror;
     };
 
     ///
@@ -4384,40 +4387,40 @@ namespace Agora.Rtc
         /// The number of the video streams for the video mixing on the local client.
         /// </summary>
         ///
-        public uint streamCount { set; get; }
+        public uint streamCount;
 
         ///
         /// <summary>
         /// The video streams for the video mixing on the local client. See TranscodingVideoStream .
         /// </summary>
         ///
-        public TranscodingVideoStream[] videoInputStreams { set; get; }
+        public TranscodingVideoStream[] videoInputStreams;
 
         ///
         /// <summary>
         /// The encoding configuration of the mixed video stream after the video mixing on the local client. See VideoEncoderConfiguration .
         /// </summary>
         ///
-        public VideoEncoderConfiguration videoOutputConfiguration { set; get; }
+        public VideoEncoderConfiguration videoOutputConfiguration;
 
-        public bool sync_with_primary_camera { set; get; }
+        public bool sync_with_primary_camera;
     };
 
     public enum VIDEO_TRANSCODER_ERROR
     {
-       
+
         VT_ERR_OK = 0,
-      
+
         VT_ERR_VIDEO_SOURCE_NOT_READY = 1,
-        
+
         VT_ERR_INVALID_MEDIA_SOURCE_TYPE = 2,
-        
+
         VT_ERR_INVALID_IMAGE_PATH = 3,
-       
+
         VT_ERR_UNSUPPORT_IMAGE_FORMAT = 4,
-        
+
         VT_ERR_INVALID_LAYOUT = 5,
-        
+
         VT_ERR_INTERNAL = 20,
     };
 
@@ -4446,28 +4449,28 @@ namespace Agora.Rtc
         /// Sets whether to test the uplink network. Some users, for example, the audience members in a LIVE_BROADCASTING channel, do not need such a test.true: Test.false: Not test.
         /// </summary>
         ///
-        public bool probeUplink { set; get; }
+        public bool probeUplink;
 
         ///
         /// <summary>
         /// Sets whether to test the downlink network:true: Test.false: Not test.
         /// </summary>
         ///
-        public bool probeDownlink { set; get; }
+        public bool probeDownlink;
 
         ///
         /// <summary>
         /// The expected maximum uplink bitrate (bps) of the local user. The value range is [100000, 5000000]. Agora recommends SetVideoEncoderConfiguration referring to to set the value.
         /// </summary>
         ///
-        public uint expectedUplinkBitrate { set; get; }
+        public uint expectedUplinkBitrate;
 
         ///
         /// <summary>
         /// The expected maximum downlink bitrate (bps) of the local user. The value range is [100000,5000000].
         /// </summary>
         ///
-        public uint expectedDownlinkBitrate { set; get; }
+        public uint expectedDownlinkBitrate;
     };
 
     ///
@@ -4522,21 +4525,21 @@ namespace Agora.Rtc
         /// The packet loss rate (%).
         /// </summary>
         ///
-        public uint packetLossRate { set; get; }
+        public uint packetLossRate;
 
         ///
         /// <summary>
         /// The network jitter (ms).
         /// </summary>
         ///
-        public uint jitter { set; get; }
+        public uint jitter;
 
         ///
         /// <summary>
         /// The estimated available bandwidth (bps).
         /// </summary>
         ///
-        public uint availableBandwidth { set; get; }
+        public uint availableBandwidth;
     };
 
     ///
@@ -4566,28 +4569,28 @@ namespace Agora.Rtc
         /// The status of the last-mile probe test. See LASTMILE_PROBE_RESULT_STATE .
         /// </summary>
         ///
-        public LASTMILE_PROBE_RESULT_STATE state { set; get; }
+        public LASTMILE_PROBE_RESULT_STATE state;
 
         ///
         /// <summary>
         /// Results of the uplink last-mile network test. See LastmileProbeOneWayResult .
         /// </summary>
         ///
-        public LastmileProbeOneWayResult uplinkReport { set; get; }
+        public LastmileProbeOneWayResult uplinkReport;
 
         ///
         /// <summary>
         /// Results of the downlink last-mile network test. See LastmileProbeOneWayResult .
         /// </summary>
         ///
-        public LastmileProbeOneWayResult downlinkReport { set; get; }
+        public LastmileProbeOneWayResult downlinkReport;
 
         ///
         /// <summary>
         /// The round-trip time (ms).
         /// </summary>
         ///
-        public uint rtt { set; get; }
+        public uint rtt;
     };
 
     ///
@@ -4825,17 +4828,17 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public ushort e2eDelayPercent { set; get; }
+        public ushort e2eDelayPercent;
 
         ///
         /// @ignore
         ///
-        public ushort frozenRatioPercent { set; get; }
+        public ushort frozenRatioPercent;
 
         ///
         /// @ignore
         ///
-        public ushort lossRatePercent { set; get; }
+        public ushort lossRatePercent;
     };
 
     ///
@@ -4970,60 +4973,60 @@ namespace Agora.Rtc
         /// Video display window.
         /// </summary>
         ///
-        public view_t view { set; get; }
+        public view_t view;
 
         ///
         /// <summary>
         /// The rendering mode of the video. See RENDER_MODE_TYPE .
         /// </summary>
         ///
-        public RENDER_MODE_TYPE renderMode { set; get; }
+        public RENDER_MODE_TYPE renderMode;
 
         ///
         /// <summary>
         /// The mirror mode of the view. See VIDEO_MIRROR_MODE_TYPE .For the mirror mode of the local video view: If you use a front camera, the SDK enables the mirror mode by default; if you use a rear camera, the SDK disables the mirror mode by default.For the remote user: The mirror mode is disabled by default.
         /// </summary>
         ///
-        public VIDEO_MIRROR_MODE_TYPE mirrorMode { set; get; }
+        public VIDEO_MIRROR_MODE_TYPE mirrorMode;
 
         ///
         /// <summary>
         /// The user ID.
         /// </summary>
         ///
-        public uint uid { set; get; }
+        public uint uid;
 
         ///
         /// @ignore
         ///
-        public bool isScreenView { set; get; }
+        public bool isScreenView;
 
         ///
         /// @ignore
         ///
-        public byte[] priv { set; get; }
+        public byte[] priv;
 
         ///
         /// @ignore
         ///
-        public uint priv_size { set; get; }
+        public uint priv_size;
 
         ///
         /// <summary>
         /// The type of the video source, see VIDEO_SOURCE_TYPE .
         /// </summary>
         ///
-        public VIDEO_SOURCE_TYPE sourceType { set; get; }
+        public VIDEO_SOURCE_TYPE sourceType;
 
         ///
         /// @ignore
         ///
-        public Rectangle cropArea { set; get; }
+        public Rectangle cropArea;
 
         ///
         /// @ignore
         ///
-        public VIDEO_VIEW_SETUP_MODE setupMode { set; get; }
+        public VIDEO_VIEW_SETUP_MODE setupMode;
     };
 
     ///
@@ -5087,35 +5090,35 @@ namespace Agora.Rtc
         /// The contrast level, used with the lighteningLevel parameter. The larger the value, the greater the contrast between light and dark. See LIGHTENING_CONTRAST_LEVEL .
         /// </summary>
         ///
-        public LIGHTENING_CONTRAST_LEVEL lighteningContrastLevel { set; get; }
+        public LIGHTENING_CONTRAST_LEVEL lighteningContrastLevel;
 
         ///
         /// <summary>
         /// The brightening level, in the range [0.0,1.0], where 0.0 means the original brightening. The default value is 0.0. The higher the value, the greater the degree of brightening.
         /// </summary>
         ///
-        public float lighteningLevel { set; get; }
+        public float lighteningLevel;
 
         ///
         /// <summary>
         /// The smoothness level, in the range [0.0,1.0], where 0.0 means the original smoothness. The default value is 0.0. The higher the value, the greater the smoothness level.
         /// </summary>
         ///
-        public float smoothnessLevel { set; get; }
+        public float smoothnessLevel;
 
         ///
         /// <summary>
         /// The redness level, in the range [0.0,1.0], where 0.0 means the original redness. The default value is 0.0. The higher the value, the greater the redness level.
         /// </summary>
         ///
-        public float rednessLevel { set; get; }
+        public float rednessLevel;
 
         ///
         /// <summary>
         /// The sharpness level, in the range [0.0,1.0], where 0.0 means the original sharpness. The default value is 0.0. The larger the value, the greater the sharpness level.
         /// </summary>
         ///
-        public float sharpnessLevel { set; get; }
+        public float sharpnessLevel;
     };
 
     ///
@@ -5174,14 +5177,14 @@ namespace Agora.Rtc
         /// The low-light enhancement mode. See LOW_LIGHT_ENHANCE_MODE .
         /// </summary>
         ///
-        public LOW_LIGHT_ENHANCE_MODE mode { set; get; }
+        public LOW_LIGHT_ENHANCE_MODE mode;
 
         ///
         /// <summary>
         /// The low-light enhancement level. See LOW_LIGHT_ENHANCE_LEVEL .
         /// </summary>
         ///
-        public LOW_LIGHT_ENHANCE_LEVEL level { set; get; }
+        public LOW_LIGHT_ENHANCE_LEVEL level;
 
         public LowlightEnhanceOptions(LOW_LIGHT_ENHANCE_MODE lowlightMode, LOW_LIGHT_ENHANCE_LEVEL lowlightLevel)
         {
@@ -5259,14 +5262,14 @@ namespace Agora.Rtc
         /// Video noise reduction mode. 
         /// </summary>
         ///
-        public VIDEO_DENOISER_MODE mode { set; get; }
+        public VIDEO_DENOISER_MODE mode;
 
         ///
         /// <summary>
         /// Video noise reduction level. 
         /// </summary>
         ///
-        public VIDEO_DENOISER_LEVEL level { set; get; }
+        public VIDEO_DENOISER_LEVEL level;
 
         public VideoDenoiserOptions(VIDEO_DENOISER_MODE denoiserMode, VIDEO_DENOISER_LEVEL denoiserLevel)
         {
@@ -5293,14 +5296,14 @@ namespace Agora.Rtc
         /// The level of color enhancement. The value range is [0.0, 1.0]. 0.0 is the default value, which means no color enhancement is applied to the video. The higher the value, the higher the level of color enhancement. The default value is 0.5.
         /// </summary>
         ///
-        public float strengthLevel { set; get; }
+        public float strengthLevel;
 
         ///
         /// <summary>
         /// The level of skin tone protection. The value range is [0.0, 1.0]. 0.0 means no skin tone protection. The higher the value, the higher the level of skin tone protection. The default value is 1.0.When the level of color enhancement is higher, the portrait skin tone can be significantly distorted, so you need to set the level of skin tone protection.When the level of skin tone protection is higher, the color enhancement effect can be slightly reduced.Therefore, to get the best color enhancement effect, Agora recommends that you adjust strengthLevel and skinProtectLevel to get the most appropriate values.
         /// </summary>
         ///
-        public float skinProtectLevel { set; get; }
+        public float skinProtectLevel;
 
         public ColorEnhanceOptions(float stength, float skinProtect)
         {
@@ -5431,13 +5434,13 @@ namespace Agora.Rtc
         /// The type of algorithms to user for background processing. See SEG_MODEL_TYPE .
         /// </summary>
         ///
-        public SEG_MODEL_TYPE modelType { set; get; }
+        public SEG_MODEL_TYPE modelType;
         ///
         /// <summary>
         /// The range of accuracy for identifying green colors (different shades of green) in the view. The value range is [0,1], and the default value is 0.5. The larger the value, the wider the range of identifiable shades of green. When the value of this parameter is too large, the edge of the portrait and the green color in the portrait range are also detected. Agora recommends that you dynamically adjust the value of this parameter according to the actual effect.This parameter only takes effect when modelType is set to SEG_MODEL_GREEN.
         /// </summary>
         ///
-        public float greenCapacity { set; get; }
+        public float greenCapacity;
 
         public SegmentationProperty()
         {
@@ -5750,9 +5753,9 @@ namespace Agora.Rtc
     public enum HEADPHONE_EQUALIZER_PRESET
     {
         HEADPHONE_EQUALIZER_OFF = 0x00000000,
-       
+
         HEADPHONE_EQUALIZER_OVEREAR = 0x04000001,
-       
+
         HEADPHONE_EQUALIZER_INEAR = 0x04000002
     };
 
@@ -5852,70 +5855,70 @@ namespace Agora.Rtc
         /// On Windows and macOS, it represents the video encoding resolution of the shared screen stream. If the screen dimensions are different from the value of this parameter, Agora applies the following strategies for encoding. Suppose dimensions is set to 1920 x 1080:If the value of the screen dimensions is lower than that of dimensions, for example, 1000 x 1000 pixels, the SDK uses 1000 x 1000 pixels for encoding.If the value of the screen dimensions is higher than that of dimensions, for example, 2000 x 1500, the SDK uses the maximum value under dimensions with the aspect ratio of the screen dimension (4:3) for encoding, that is, 1440 x 1080.
         /// </summary>
         ///
-        public VideoDimensions dimensions { set; get; }
+        public VideoDimensions dimensions;
 
         ///
         /// <summary>
         /// On Windows and macOS, it represents the video encoding frame rate (fps) of the shared screen stream. The frame rate (fps) of the shared region. The default value is 5. We do not recommend setting this to a value greater than 15.
         /// </summary>
         ///
-        public int frameRate { set; get; }
+        public int frameRate;
 
         ///
         /// <summary>
         /// The bitrate of the shared region. On Windows and macOS, it represents the video encoding bitrate of the shared screen stream. The bitrate (Kbps) of the shared region. The default value is 0 (the SDK works out a bitrate according to the dimensions of the current screen).
         /// </summary>
         ///
-        public int bitrate { set; get; }
+        public int bitrate;
 
         ///
         /// <summary>
         /// Whether to capture the mouse in screen sharing:true: (Default) Capture the mouse.false: Do not capture the mouse.
         /// </summary>
         ///
-        public bool captureMouseCursor { set; get; }
+        public bool captureMouseCursor;
 
         ///
         /// <summary>
         /// Whether to bring the window to the front when calling the StartScreenCaptureByWindowId method to share it:true:Bring the window to the front.false: (Default) Do not bring the window to the front.
         /// </summary>
         ///
-        public bool windowFocus { set; get; }
+        public bool windowFocus;
 
         ///
         /// <summary>
         /// The ID list of the windows to be blocked. When calling StartScreenCaptureByDisplayId to start screen sharing, you can use this parameter to block a specified window. When calling UpdateScreenCaptureParameters to update screen sharing configurations, you can use this parameter to dynamically block a specified window.
         /// </summary>
         ///
-        public view_t[] excludeWindowList { set; get; }
+        public view_t[] excludeWindowList;
 
         ///
         /// <summary>
         /// The number of windows to be blocked.
         /// </summary>
         ///
-        public int excludeWindowCount { set; get; }
+        public int excludeWindowCount;
 
         ///
         /// <summary>
         /// (For macOS only) The width (px) of the border. The default value is 5, and the value range is (0, 50].This parameter only takes effect when highLighted is set to true.
         /// </summary>
         ///
-        public int highLightWidth { set; get; }
+        public int highLightWidth;
 
         ///
         /// <summary>
         /// (For macOS only) The color of the border in RGBA format. The default value is 0xFF8CBF26.On macOS, COLOR_CLASS refers to NSColor.
         /// </summary>
         ///
-        public uint highLightColor { set; get; }
+        public uint highLightColor;
 
         ///
         /// <summary>
         /// (For macOS only)Whether to place a border around the shared window or screen:true: Place a border.false: (Default) Do not place a border.When you share a part of a window or screen, the SDK places a border around the entire window or screen if you set this parameter to true.
         /// </summary>
         ///
-        public bool enableHighLight { set; get; }
+        public bool enableHighLight;
     };
 
     ///
@@ -6056,7 +6059,7 @@ namespace Agora.Rtc
         /// Ensure that the path for the recording file exists and is writable.
         /// </summary>
         ///
-        public string filePath { set; get; }
+        public string filePath;
 
         ///
         /// <summary>
@@ -6064,7 +6067,7 @@ namespace Agora.Rtc
         /// true: Encode audio data in AAC.false: (Default) Do not encode audio data, but save the recorded audio data directly.
         /// </summary>
         ///
-        public bool encode { set; get; }
+        public bool encode;
 
         ///
         /// <summary>
@@ -6072,28 +6075,28 @@ namespace Agora.Rtc
         /// 16000(Default) 320004410048000If you set this parameter to 44100 or 48000, Agora recommends recording WAV files, or AAC files with quality to be AgoraAudioRecordingQualityMedium or AgoraAudioRecordingQualityHigh for better recording quality.
         /// </summary>
         ///
-        public int sampleRate { set; get; }
+        public int sampleRate;
 
         ///
         /// <summary>
         /// Recording content. See AUDIO_FILE_RECORDING_TYPE .
         /// </summary>
         ///
-        public AUDIO_FILE_RECORDING_TYPE fileRecordingType { set; get; }
+        public AUDIO_FILE_RECORDING_TYPE fileRecordingType;
 
         ///
         /// <summary>
         /// Recording quality. See AUDIO_RECORDING_QUALITY_TYPE .Note: This parameter applies to AAC files only.
         /// </summary>
         ///
-        public AUDIO_RECORDING_QUALITY_TYPE quality { set; get; }
+        public AUDIO_RECORDING_QUALITY_TYPE quality;
 
         ///
         /// <summary>
         /// The audio channel of recording: The parameter supports the following values:1: (Default) Mono.2: Stereo.The actual recorded audio channel is related to the audio channel that you capture.If the captured audio is mono and recordingChannel is 2, the recorded audio is the dual-channel data that is copied from mono data, not stereo.If the captured audio is dual channel and recordingChannel is 1, the recorded audio is the mono data that is mixed by dual-channel data.The integration scheme also affects the final recorded audio channel. Therefore, to record in stereo, technical support for assistance.
         /// </summary>
         ///
-        public int recordingChannel { set; get; }
+        public int recordingChannel;
     };
 
     ///
@@ -6121,14 +6124,14 @@ namespace Agora.Rtc
         /// Audio profile. See AUDIO_ENCODED_FRAME_OBSERVER_POSITION .
         /// </summary>
         ///
-        public AUDIO_ENCODED_FRAME_OBSERVER_POSITION postionType { set; get; }
+        public AUDIO_ENCODED_FRAME_OBSERVER_POSITION postionType;
 
         ///
         /// <summary>
         /// Audio encoding type. See AUDIO_ENCODING_TYPE .
         /// </summary>
         ///
-        public AUDIO_ENCODING_TYPE encodingType { set; get; }
+        public AUDIO_ENCODING_TYPE encodingType;
     };
 
     /* enum_areacode : uint */
@@ -6452,21 +6455,21 @@ namespace Agora.Rtc
         /// The channel name.
         /// </summary>
         ///
-        public string channelName { set; get; }
+        public string channelName;
 
         ///
         /// <summary>
         /// The token that enables the user to join the channel.
         /// </summary>
         ///
-        public string token { set; get; }
+        public string token;
 
         ///
         /// <summary>
         /// The user ID.
         /// </summary>
         ///
-        public uint uid { set; get; }
+        public uint uid;
     };
 
     ///
@@ -6495,21 +6498,21 @@ namespace Agora.Rtc
         /// The information of the source channel ChannelMediaInfo . It contains the following members:channelName: The name of the source channel. The default value is NULL, which means the SDK applies the name of the current channel.uid: The unique ID to identify the relay stream in the source channel. The default value is 0, which means the SDK generates a random uid. You must set it as 0.token: The token for joining the source channel. It is generated with the channelName and uid you set in srcInfo.If you have not enabled the App Certificate, set this parameter as the default value NULL, which means the SDK applies the App ID.If you have enabled the App Certificate, you must use the token generated with the channelName and uid, and the uid must be set as 0.
         /// </summary>
         ///
-        public ChannelMediaInfo srcInfo { set; get; }
+        public ChannelMediaInfo srcInfo;
 
         ///
         /// <summary>
         /// The information of the destination channel ChannelMediaInfo. It contains the following members:channelName: The name of the destination channel.uid: The unique ID to identify the relay stream in the destination channel. The value ranges from 0 to (232-1). To avoid UID conflicts, this UID must be different from any other UID in the destination channel. The default value is 0, which means the SDK generates a random UID. Do not set this parameter as the UID of the host in the destination channel, and ensure that this UID is different from any other UID in the channel.token: The token for joining the destination channel. It is generated with the channelName and uid you set in destInfos.If you have not enabled the App Certificate, set this parameter as the default value NULL, which means the SDK applies the App ID.If you have enabled the App Certificate, you must use the token generated with the channelName and uid.
         /// </summary>
         ///
-        public ChannelMediaInfo[] destInfos { set; get; }
+        public ChannelMediaInfo[] destInfos;
 
         ///
         /// <summary>
         /// The number of destination channels. The default value is 0, and the value range is from 0 to 4. Ensure that the value of this parameter corresponds to the number of ChannelMediaInfo structs you define in destInfo.
         /// </summary>
         ///
-        public int destCount { set; get; }
+        public int destCount;
     };
 
     ///
@@ -6556,22 +6559,22 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public string uid { set; get; }
+        public string uid;
 
         ///
         /// @ignore
         ///
-        public VIDEO_STREAM_TYPE stream_type { set; get; }
+        public VIDEO_STREAM_TYPE stream_type;
 
         ///
         /// @ignore
         ///
-        public REMOTE_VIDEO_DOWNSCALE_LEVEL current_downscale_level { set; get; }
+        public REMOTE_VIDEO_DOWNSCALE_LEVEL current_downscale_level;
 
         ///
         /// @ignore
         ///
-        public int expected_bitrate_bps { set; get; }
+        public int expected_bitrate_bps;
     };
 
     ///
@@ -6618,27 +6621,27 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int lastmile_buffer_delay_time_ms { set; get; }
+        public int lastmile_buffer_delay_time_ms;
 
         ///
         /// @ignore
         ///
-        public int bandwidth_estimation_bps { set; get; }
+        public int bandwidth_estimation_bps;
 
         ///
         /// @ignore
         ///
-        public int total_downscale_level_count { set; get; }
+        public int total_downscale_level_count;
 
         ///
         /// @ignore
         ///
-        public PeerDownlinkInfo[] peer_downlink_info { set; get; }
+        public PeerDownlinkInfo[] peer_downlink_info;
 
         ///
         /// @ignore
         ///
-        public int total_received_video_count { set; get; }
+        public int total_received_video_count;
     };
 
     ///
@@ -6765,14 +6768,14 @@ namespace Agora.Rtc
         /// The built-in encryption mode. See ENCRYPTION_MODE . Agora recommends using AES_128_GCM2 or AES_256_GCM2 encrypted mode. These two modes support the use of salt for higher security.
         /// </summary>
         ///
-        public ENCRYPTION_MODE encryptionMode { set; get; }
+        public ENCRYPTION_MODE encryptionMode;
 
         ///
         /// <summary>
         /// Encryption key in string type with unlimited length. Agora recommends using a 32-byte key.If you do not set an encryption key or set it as NULL, you cannot use the built-in encryption, and the SDK returns -2.
         /// </summary>
         ///
-        public string encryptionKey { set; get; }
+        public string encryptionKey;
 
         private byte[] encryptionKdfSalt32 = new byte[32];
 
@@ -6960,35 +6963,35 @@ namespace Agora.Rtc
         /// The view used to render the local user's video. This parameter is only applicable to scenarios testing video devices, that is, when enableVideo is true.
         /// </summary>
         ///
-        public view_t view { set; get; }
+        public view_t view;
 
         ///
         /// <summary>
         /// Whether to enable the audio device for the loop test:true: (Default) Enable the audio device. To test the audio device, set this parameter as true.false: Disable the audio device.
         /// </summary>
         ///
-        public bool enableAudio { set; get; }
+        public bool enableAudio;
 
         ///
         /// <summary>
         /// Whether to enable the video device for the loop test:true: (Default) Enable the video device. To test the video device, set this parameter as true.false: Disable the video device.
         /// </summary>
         ///
-        public bool enableVideo { set; get; }
+        public bool enableVideo;
 
         ///
         /// <summary>
         /// The token used to secure the audio and video call loop test. If you do not enable App Certificate in Agora Console, you do not need to pass a value in this parameter; if you have enabled App Certificate in Agora Console, you must pass a token in this parameter; the uid used when you generate the token must be 0xFFFFFFFF, and the channel name used must be the channel name that identifies each audio and video call loop tested. For server-side token generation, see Authenticate Your Users with Tokens.
         /// </summary>
         ///
-        public string token { set; get; }
+        public string token;
 
         ///
         /// <summary>
         /// The channel name that identifies each audio and video call loop. To ensure proper loop test functionality, the channel name passed in to identify each loop test cannot be the same when users of the same project (App ID) perform audio and video call loop tests on different devices.
         /// </summary>
         ///
-        public string channelId { set; get; }
+        public string channelId;
 
         public EchoTestConfiguration(view_t v, bool ea, bool ev, string t, string c)
         {
@@ -7115,21 +7118,21 @@ namespace Agora.Rtc
         /// The video encoding dimension. The default value is 1280 × 720.
         /// </summary>
         ///
-        public VideoDimensions dimensions { set; get; }
+        public VideoDimensions dimensions;
 
         ///
         /// <summary>
         /// The video encoding frame rate (fps). The default value is 15.
         /// </summary>
         ///
-        public int frameRate { set; get; }
+        public int frameRate;
 
         ///
         /// <summary>
         /// The video encoding bitrate (Kbps).
         /// </summary>
         ///
-        public int bitrate { set; get; }
+        public int bitrate;
 
         public VIDEO_CONTENT_HINT contentHint = VIDEO_CONTENT_HINT.CONTENT_HINT_MOTION;
 
@@ -7153,21 +7156,21 @@ namespace Agora.Rtc
         /// Audio sample rate (Hz). The default value is 16000.
         /// </summary>
         ///
-        public int sampleRate { set; get; }
+        public int sampleRate;
 
         ///
         /// <summary>
         /// The number of audio channels. The default value is 2, which means stereo.
         /// </summary>
         ///
-        public int channels { set; get; }
+        public int channels;
 
         ///
         /// <summary>
         /// The volume of the captured system audio. The value range is [0, 100]. The default value is 100.
         /// </summary>
         ///
-        public int captureSignalVolume { set; get; }
+        public int captureSignalVolume;
 
         public ScreenAudioParameters()
         {
@@ -7189,28 +7192,28 @@ namespace Agora.Rtc
         /// Determines whether to capture system audio during screen sharing:true: Capture system audio.false: (Default) Do not capture system audio.Due to system limitations, capturing system audio is only applicable to Android API level 29 and later (that is, Android 10 and later).
         /// </summary>
         ///
-        public bool captureAudio { set; get; }
+        public bool captureAudio;
 
         ///
         /// <summary>
         /// The audio configuration for the shared screen stream. See ScreenAudioParameters .This parameter only takes effect when captureAudio is true.
         /// </summary>
         ///
-        public ScreenAudioParameters audioParams { set; get; }
+        public ScreenAudioParameters audioParams;
 
         ///
         /// <summary>
         /// Whether to capture the screen when screen sharing:true: (Default) Capture the screen.false: Do not capture the screen.Due to system limitations, the capture screen is only applicable to Android API level 21 and above, that is, Android 5 and above.
         /// </summary>
         ///
-        public bool captureVideo { set; get; }
+        public bool captureVideo;
 
         ///
         /// <summary>
         /// The video configuration for the shared screen stream. See ScreenVideoParameters .This parameter only takes effect when captureVideo is true.
         /// </summary>
         ///
-        public ScreenVideoParameters videoParams { set; get; }
+        public ScreenVideoParameters videoParams;
 
         public ScreenCaptureParameters2()
         {
