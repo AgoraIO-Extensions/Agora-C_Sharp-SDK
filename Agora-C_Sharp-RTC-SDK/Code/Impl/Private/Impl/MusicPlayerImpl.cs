@@ -1,17 +1,17 @@
 using System;
 using System.Runtime.InteropServices;
-
+using System.Collections.Generic;
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
-   
+
     public class MusicPlayerImpl
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
         private CharAssistant _result;
         private MediaPlayerImpl _mediaPlayerImpl;
-
+        Dictionary<string, System.Object> param = new Dictionary<string, System.Object>();
         internal MusicPlayerImpl(IrisApiEnginePtr irisApiEngine, MediaPlayerImpl impl)
         {
             _result = new CharAssistant();
@@ -232,9 +232,9 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
         }
 
-        public int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params)
+        public int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audioparams)
         {
-            return _mediaPlayerImpl.SetSpatialAudioParams(playerId, spatial_audio_params);
+            return _mediaPlayerImpl.SetSpatialAudioParams(playerId, spatial_audioparams);
         }
 
         public int OpenWithAgoraCDNSrc(int playerId, string src, Int64 startPos)
@@ -309,11 +309,11 @@ namespace Agora.Rtc
 
         public int Open(int playerId, Int64 songCode, Int64 startPos = 0)
         {
-            var param = new {
-                playerId,
-                songCode,
-                startPos
-            };
+            param.Clear();
+            param.Add("playerId", playerId);
+            param.Add("songCode", songCode);
+            param.Add("startPos", startPos);
+
             string jsonParam = AgoraJson.ToJson(param);
 
             var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,

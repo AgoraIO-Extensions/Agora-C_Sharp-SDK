@@ -183,6 +183,110 @@ namespace Agora.Rtc
         internal Int64 timeStampMs;
     }
 
+
+    public class ExternalVideoFrameInternal
+    {
+        public ExternalVideoFrameInternal(ExternalVideoFrame externalVideoFrame)
+        {
+            this.type = externalVideoFrame.type;
+            this.format = externalVideoFrame.format;
+            this.stride = externalVideoFrame.stride;
+            this.height = externalVideoFrame.height;
+            this.cropLeft = externalVideoFrame.cropLeft;
+            this.cropTop = externalVideoFrame.cropTop;
+            this.cropRight = externalVideoFrame.cropRight;
+            this.cropBottom = externalVideoFrame.cropBottom;
+            this.rotation = externalVideoFrame.rotation;
+            this.timestamp = externalVideoFrame.timestamp;
+            this.eglType = externalVideoFrame.eglType;
+            this.textureId = externalVideoFrame.textureId;
+            this.metadata_size = externalVideoFrame.metadata_size;
+        }
+
+        public VIDEO_BUFFER_TYPE type;
+
+      
+        public VIDEO_PIXEL_FORMAT format;
+
+      
+        public int stride;
+
+    
+        public int height;
+
+       
+        public int cropLeft;
+
+        public int cropTop;
+
+        public int cropRight;
+
+        public int cropBottom;
+
+        public int rotation;
+        public long timestamp;
+        public EGL_CONTEXT_TYPE eglType;
+        public int textureId;
+        public int metadata_size;
+
+    
+    };
+
+    ///
+
+    internal class VideoCanvasInternal
+    {
+        public VideoCanvasInternal(VideoCanvas videoCanvas)
+        {
+            view = videoCanvas.view;
+            renderMode = videoCanvas.renderMode;
+            mirrorMode = videoCanvas.mirrorMode;
+            uid = videoCanvas.uid;
+            isScreenView = videoCanvas.isScreenView;
+            priv_size = videoCanvas.priv_size;
+            sourceType = videoCanvas.sourceType;
+            cropArea = videoCanvas.cropArea;
+            setupMode = videoCanvas.setupMode;
+        }
+
+   
+        public ulong view;
+        public RENDER_MODE_TYPE renderMode;
+        public VIDEO_MIRROR_MODE_TYPE mirrorMode;
+        public uint uid;
+        public bool isScreenView;
+        public uint priv_size;
+        public VIDEO_SOURCE_TYPE sourceType;
+        public Rectangle cropArea;
+        public VIDEO_VIEW_SETUP_MODE setupMode;
+    };
+
+    internal  class AudioFrameInternal
+    {
+        public AudioFrameInternal(AudioFrame audioFrame)
+        {
+            type = audioFrame.type;
+            samplesPerChannel = audioFrame.samplesPerChannel;
+            bytesPerSample = audioFrame.bytesPerSample;
+            channels = audioFrame.channels;
+            samplesPerSec = audioFrame.samplesPerSec;
+            buffer = audioFrame.buffer;
+            renderTimeMs = audioFrame.renderTimeMs;
+            avsync_type = audioFrame.avsync_type;
+        }
+
+       
+        public AUDIO_FRAME_TYPE type;
+        public int samplesPerChannel;
+        public BYTES_PER_SAMPLE bytesPerSample;
+        public int channels;
+        public int samplesPerSec;
+        public UInt64 buffer;
+        public long renderTimeMs;
+
+        public int avsync_type;
+    };
+
     internal class AudioFrameWithoutBuffer
     {
         public AudioFrameWithoutBuffer()

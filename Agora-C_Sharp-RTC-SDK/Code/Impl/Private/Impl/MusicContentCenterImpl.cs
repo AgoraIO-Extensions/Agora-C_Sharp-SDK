@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
-
+using System.Collections.Generic;
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
@@ -18,7 +18,7 @@ namespace Agora.Rtc
         private IrisMusicCenterEventHandlerHandle _irisEventHandlerHandleNative;
         private IrisCEventHandler _irisCEventHandler;
         private IrisMusicCenterEventHandlerMarsh _irisCEventHandlerNative;
-
+        Dictionary<string, System.Object> param = new Dictionary<string, System.Object>();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private AgoraCallbackObject _callbackObject;
@@ -120,11 +120,9 @@ namespace Agora.Rtc
 
         public int DestroyMusicPlayer(IMusicPlayer player)
         {
-            var param = new
-            {
-                playerId = player.GetId()
+            param.Clear();
+            param.Add("playerId",player.GetId());
 
-            };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_DESTROYMUSICPLAYER,
@@ -136,12 +134,11 @@ namespace Agora.Rtc
 
         public int GetLyric(ref string requestId, long songCode, int LyricType = 0)
         {
-            var param = new
-            {
-                requestId,
-                songCode,
-                LyricType
-            };
+            param.Clear();
+            param.Add("requestId", requestId);
+            param.Add("songCode", songCode);
+            param.Add("LyricType", LyricType);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETLYRIC,
@@ -155,13 +152,12 @@ namespace Agora.Rtc
 
         public int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartId, int page, int pageSize, string jsonOption = "")
         {
-            var param = new
-            {
-                musicChartId,
-                page,
-                pageSize,
-                jsonOption
-            };
+            param.Clear();
+            param.Add("musicChartId", musicChartId);
+            param.Add("page", page);
+            param.Add("pageSize", pageSize);
+            param.Add("jsonOption", jsonOption);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETMUSICCOLLECTIONBYMUSICCHARTID,
@@ -175,10 +171,9 @@ namespace Agora.Rtc
 
         public int GetMusicCharts(ref string requestId)
         {
-            var param = new
-            {
-                requestId,
-            };
+            param.Clear();
+            param.Add("requestId", requestId);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETMUSICCHARTS,
@@ -192,10 +187,9 @@ namespace Agora.Rtc
 
         public int Initialize(MusicContentCenterConfiguration configuration)
         {
-            var param = new
-            {
-                configuration,
-            };
+            param.Clear();
+            param.Add("configuration", configuration);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_INITIALIZE,
@@ -206,10 +200,9 @@ namespace Agora.Rtc
 
         public int IsPreloaded(long songCode)
         {
-            var param = new
-            {
-                songCode
-            };
+            param.Clear();
+            param.Add("songCode", songCode);
+           
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_ISPRELOADED,
@@ -220,11 +213,10 @@ namespace Agora.Rtc
 
         public int Preload(long songCode, string jsonOption)
         {
-            var param = new
-            {
-                songCode,
-                jsonOption
-            };
+            param.Clear();
+            param.Add("songCode", songCode);
+            param.Add("jsonOption", jsonOption);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_PRELOAD,
@@ -249,13 +241,12 @@ namespace Agora.Rtc
 
         public int SearchMusic(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "")
         {
-            var param = new
-            {
-                keyWord,
-                page,
-                pageSize,
-                jsonOption
-            };
+            param.Clear();
+            param.Add("keyWord", keyWord);
+            param.Add("page", page);
+            param.Add("pageSize", pageSize);
+            param.Add("jsonOption", jsonOption);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_SEARCHMUSIC,
@@ -270,10 +261,9 @@ namespace Agora.Rtc
 
         public int RemoveCache(Int64 songCode)
         {
-            var param = new
-            {
-                songCode
-            };
+            param.Clear();
+            param.Add("songCode", songCode);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REMOVECACHE,
@@ -286,10 +276,9 @@ namespace Agora.Rtc
 
         public int GetCaches(ref MusicCacheInfo[] cacheInfo, uint cacheInfoSize)
         {
-            var param = new
-            {
-                cacheInfoSize
-            };
+            param.Clear();
+            param.Add("cacheInfoSize", cacheInfoSize);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETCACHES,
@@ -312,10 +301,9 @@ namespace Agora.Rtc
 
         public int RenewToken(string token)
         {
-            var param = new
-            {
-                token
-            };
+            param.Clear();
+            param.Add("token", token);
+
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
                 _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_RENEWTOKEN,
