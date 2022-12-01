@@ -1953,6 +1953,11 @@ namespace Agora.Rtc
         public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
         ///
+        /// @ignore
+        ///
+        public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
+
+        ///
         /// <summary>
         /// Starts screen sharing.
         /// There are two ways to start screen sharing, you can choose one according to your needs:Call this method before joining a channel, then call JoinChannel [2/2] to join channel and set publishScreenCaptureVideo to true to start screen sharing.Call this method after joining a channel, then call UpdateChannelMediaOptions and set publishScreenCaptureVideo to true to start screen sharing.This method applies to Android and iOS only.On the iOS platform, screen sharing is only available on iOS 12.0 and later.The billing for the screen sharing stream is based on the dimensions in ScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value. If you are using the custom audio source instead of the SDK to capture audio, Agora recommends you add the keep-alive processing logic to your application to avoid screen sharing stopping when the application goes to the background.This feature requires high-performance device, and Agora recommends that you use it on iPhone X and later models.This method relies on the iOS screen sharing dynamic library AgoraReplayKitExtension.xcframework. If the dynamic library is deleted, screen sharing cannot be enabled normally.On the Android platform, make sure the user has granted the app screen capture permission.On Android 9 and later, to avoid the application being killed by the system after going to the background, Agora recommends you add the foreground service permission android.permission.FOREGROUND_SERVICE to the /app/Manifests/AndroidManifest.xml file.Due to performance limitations, screen sharing is not supported on Android TV.Due to system limitations, if you are using Huawei phones, do not adjust the video encoding resolution of the screen sharing stream during the screen sharing, or you could experience crashes.Due to system limitations, some Xiaomi devices do not support capturing system audio during screen sharing.To avoid system audio capture failure when screen sharing, Agora recommends that you set the audio application scenario to AUDIO_SCENARIO_GAME_STREAMING by using the SetAudioScenario method before joining the channel.
@@ -1963,11 +1968,6 @@ namespace Agora.Rtc
         /// <returns>
         /// 0: Success.&lt; 0: Failure.-2: The parameter is null.
         /// </returns>
-        ///
-        public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
-
-        ///
-        /// @ignore
         ///
         public abstract int StartScreenCapture(ScreenCaptureParameters2 captureParams);
 
@@ -2088,13 +2088,13 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Enables or disables dual-stream mode.
+        /// Enables or disables the dual-stream mode on the sender and sets the low-quality video stream.
         /// You can call this method to enable or disable the dual-stream mode on the publisher side. Dual streams are a pairing of a high-quality video stream and a low-quality video stream:High-quality video stream: High bitrate, high resolution.Low-quality video stream: Low bitrate, low resolution.After you enable dual-stream mode, you can call SetRemoteVideoStreamType to choose to receive either the high-quality video stream or the low-quality video stream on the subscriber side.This method is applicable to all types of streams from the sender, including but not limited to video streams collected from cameras, screen sharing streams, and custom-collected video streams.If you need to enable dual video streams in a multi-channel scenario, you can call the EnableDualStreamModeEx method.You can call this method either before or after joining a channel.
         /// </summary>
         ///
-        /// <param name="sourceType"> The capture type of the custom video source. See VIDEO_SOURCE_TYPE .</param>
+        /// <param name="enabled"> Whether to enable dual-stream mode:true: Enable dual-stream mode.false: (Default) Disable dual-stream mode.</param>
         ///
-        /// <param name="enabled"> Whether to enable dual-stream mode:true: Enable dual-stream mode.false: Disable dual-stream mode.</param>
+        /// <param name="streamConfig"> The configuration of the low-quality video stream. See SimulcastStreamConfig .</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -2747,6 +2747,8 @@ namespace Agora.Rtc
         /// <summary>
         /// Destroys the specified video track.
         /// </summary>
+        ///
+        /// <param name="video_track_id"> The video track ID returned by calling the createCustomVideoTrack method.</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -3521,7 +3523,14 @@ namespace Agora.Rtc
         #endregion
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets an IMediaPlayerCacheManager instance.
+        /// Make sure the IRtcEngine is initialized before you call this method.
+        /// </summary>
+        ///
+        /// <returns>
+        /// The IMediaPlayerCacheManager instance.
+        /// </returns>
         ///
         public abstract IMediaPlayerCacheManager GetMediaPlayerCacheManager();
 
@@ -3945,14 +3954,11 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Provides technical preview functionalities or special customizations by configuring the SDK with JSON options.
+        /// Provides the technical preview functionalities or special customizations by configuring the SDK with JSON options.
+        /// Contact to get the JSON configuration method.
         /// </summary>
         ///
         /// <param name="parameters"> Pointer to the set parameters in a JSON string.</param>
-        ///
-        /// <param name="key"> The key.</param>
-        ///
-        /// <param name="value"> The value.</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -4096,7 +4102,16 @@ namespace Agora.Rtc
 
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets the C++ handle of the native SDK.
+        /// This method retrieves the C++ handle of the SDK, for example for registering the audio and video frame observer.
+        /// </summary>
+        ///
+        /// <param name="nativeHandler"> Output parameter, the native handle of the SDK.</param>
+        ///
+        /// <returns>
+        /// 0: Success.&lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int GetNativeHandler(ref IntPtr nativeHandler);
     };

@@ -108,8 +108,6 @@ namespace Agora.Rtc
         /// Deprecated:This method is deprecated. This method allows you to open custom media resource files. For example, you can call this method to open encrypted media resources.
         /// </summary>
         ///
-        /// <param name="playerId"> The ID of the media player.</param>
-        ///
         /// <param name="startPos"> The starting position (ms) for playback. The default value is 0.</param>
         ///
         /// <param name="provider"> The callback for custom media resource files. See IMediaPlayerCustomDataProvider .</param>
@@ -501,7 +499,7 @@ namespace Agora.Rtc
         /// After successfully setting the spatial audio effect parameters of the media player, the SDK enables the spatial audio effect for the media player, and the local user can hear the media resources with a sense of space.If you need to disable the spatial audio effect for the media player, set the params parameter to null.
         /// </summary>
         ///
-        /// <param name="params"> The spatial audio effect parameters of the media player. See SpatialAudioParams for details.</param>
+        /// <param name="spatial_audio_params"> The spatial audio effect parameters of the media player. See SpatialAudioParams for details.</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
