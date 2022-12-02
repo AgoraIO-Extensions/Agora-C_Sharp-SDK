@@ -283,7 +283,7 @@ namespace Agora.Rtc
         }
         public static void InitParam(out IAudioSpectrumObserver param)
         {
-            param = new UTIAudioSpectrumObserver();
+            param = new UTAudioSpectrumObserver();
         }
         public static void InitParam(out ExtensionInfo param)
         {
@@ -747,98 +747,107 @@ namespace Agora.Rtc
                 param[i] = new AudioVolumeInfo();
             }
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out EncodedAudioFrameInfo param)
+        {
+            param = new EncodedAudioFrameInfo();
+
+        }
+        public static void InitParam(out AudioFrame param)
+        {
+            param = new AudioFrame();
+        }
+        public static void InitParam(out DIRECT_CDN_STREAMING_STATE param)
+        {
+            param = DIRECT_CDN_STREAMING_STATE.DIRECT_CDN_STREAMING_STATE_IDLE;
+        }
+        public static void InitParam(out DIRECT_CDN_STREAMING_ERROR param)
+        {
+            param = DIRECT_CDN_STREAMING_ERROR.DIRECT_CDN_STREAMING_ERROR_OK;
+        }
+        public static void InitParam(out DirectCdnStreamingStats param)
+        {
+            param = new DirectCdnStreamingStats();
+        }
+        public static void InitParam(out AudioPcmFrame param)
+        {
+            param = new AudioPcmFrame();
+        }
+        public static void InitParam(out MEDIA_PLAYER_STATE param)
+        {
+            param = MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE;
+        }
+        public static void InitParam(out MEDIA_PLAYER_ERROR param)
+        {
+            param = MEDIA_PLAYER_ERROR.PLAYER_ERROR_NONE;
+        }
+        public static void InitParam(out MEDIA_PLAYER_EVENT param)
+        {
+            param = MEDIA_PLAYER_EVENT.PLAYER_EVENT_SEEK_BEGIN;
+        }
+        public static void InitParam(out PLAYER_PRELOAD_EVENT param)
+        {
+            param = PLAYER_PRELOAD_EVENT.PLAYER_PRELOAD_EVENT_BEGIN;
+        }
+        public static void InitParam(out SrcInfo param)
+        {
+            param = new SrcInfo();
+        }
+        public static void InitParam(out PlayerUpdatedInfo param)
+        {
+            param = new PlayerUpdatedInfo();
+        }
+        public static void InitParam(out RecorderState param)
+        {
+            param = RecorderState.RECORDER_STATE_ERROR;
+        }
+        public static void InitParam(out RecorderErrorCode param)
+        {
+            param = RecorderErrorCode.RECORDER_ERROR_NONE;
+        }
+        public static void InitParam(out RecorderInfo param)
+        {
+            param = new RecorderInfo();
+        }
+        public static void InitParam(out Metadata param)
+        {
+            param = new Metadata();
+        }
+        public static void InitParam(out MusicContentCenterStatusCode param)
+        {
+            param = MusicContentCenterStatusCode.kMusicContentCenterStatusOk;
+        }
+        public static void InitParam(out MusicChartInfo[] param)
+        {
+            param = new MusicChartInfo[10];
+            for (int i = 0; i < param.Length; i++)
+            {
+                param[i] = new MusicChartInfo();
+            }
+        }
+        public static void InitParam(out MusicCollection param)
+        {
+            param = new MusicCollection();
+        }
+        public static void InitParam(out PreloadStatusCode param)
+        {
+            param = PreloadStatusCode.kPreloadStatusCompleted;
+        }
+        public static void InitParam(out EncodedVideoFrameInfo param)
+        {
+            param = new EncodedVideoFrameInfo();
+        }
+        public static void InitParam(out VideoFrame param)
+        {
+            param = new VideoFrame();
+        }
+        public static void InitParam(out UserAudioSpectrumInfo[] param)
+        {
+            param = new UserAudioSpectrumInfo[10];
+            for (var i = 0; i < param.Length; i++)
+            {
+                param[i] = new UserAudioSpectrumInfo();
+            }
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =

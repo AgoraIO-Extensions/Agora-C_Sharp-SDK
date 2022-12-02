@@ -2,9 +2,10 @@
 using Agora.Rtc;
 namespace Agora.Rtc
 {
-    public class UTIAudioSpectrumObserver : IAudioSpectrumObserver
+    public class UTAudioSpectrumObserver : IAudioSpectrumObserver
     {
 
+        public string TAG;
 
         public bool OnLocalAudioSpectrum_be_trigger = false;
         public AudioSpectrumData OnLocalAudioSpectrum_data = null;
