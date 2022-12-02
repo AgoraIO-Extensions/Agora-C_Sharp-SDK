@@ -607,7 +607,8 @@ namespace Agora.Rtc
         public static void InitParam(out DownlinkNetworkInfo param)
         {
             var info = new PeerDownlinkInfo[10];
-            for (int i = 0; i < info.Length; i++) {
+            for (int i = 0; i < info.Length; i++)
+            {
                 InitParam(out info[i]);
             }
 
@@ -623,7 +624,7 @@ namespace Agora.Rtc
             param.expected_bitrate_bps = 10;
         }
 
-            
+
 
         public static void InitParam(out UplinkNetworkInfo param)
         {
@@ -2434,6 +2435,20 @@ namespace Agora.Rtc
             return selfParam == VIDEO_BUFFER_TYPE.VIDEO_BUFFER_RAW_DATA;
         }
 
+        public static bool compareVideoFrameBufferConfig(VideoFrameBufferConfig selfParam, VideoFrameBufferConfig outParam)
+        {
+            if (selfParam.type != outParam.type)
+                return false;
+
+            if (selfParam.id != outParam.id)
+                return false;
+
+            if (selfParam.key != outParam.key)
+                return false;
+
+            return true;
+        }
+
         public static bool compareVideoFrame(VideoFrame selfParam, VideoFrame outParam)
         {
             if (compareVIDEO_PIXEL_FORMAT(selfParam.type, outParam.type) == false)
@@ -2687,6 +2702,25 @@ namespace Agora.Rtc
             return true;
         }
 
+        public static bool comparePreloadStatusCode(PreloadStatusCode selfParam, PreloadStatusCode outParam)
+        {
+            return selfParam == PreloadStatusCode.kPreloadStatusCompleted;
+        }
+
+        public static bool compareMusicArray(Music[] selfParam, Music[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareMusic(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
         public static bool compareMusic(Music selfParam, Music outParam)
         {
             if (compareInt64_t(selfParam.songCode, outParam.songCode) == false)
@@ -2725,6 +2759,9 @@ namespace Agora.Rtc
             if (compareInt(selfParam.page, outParam.page) == false)
                 return false;
             if (compareInt(selfParam.pageSize, outParam.pageSize) == false)
+                return false;
+
+            if (compareMusicArray(selfParam.music, outParam.music) == false)
                 return false;
 
             return true;
@@ -3206,6 +3243,101 @@ namespace Agora.Rtc
                 return false;
             return true;
         }
+
+        public static bool compareIntPtr(IntPtr selfParam, IntPtr outParam)
+        {
+            if (selfParam != (IntPtr)10)
+                return false;
+
+            return true;
+        }
+
+        public static bool compareUserAudioSpectrumInfoArray(UserAudioSpectrumInfo[] selfParam, UserAudioSpectrumInfo[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareUserAudioSpectrumInfo(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool compareByteArray(byte[] selfParam, byte[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareByte(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool compareByte(byte selfParam, byte outParam)
+        {
+            if (selfParam != 10)
+                return false;
+
+            return true;
+        }
+
+        public static bool comparePlayerUpdatedInfo(PlayerUpdatedInfo selfParam, PlayerUpdatedInfo outParam)
+        {
+            if (selfParam.playerId.HasValue() == false || selfParam.playerId.GetValue() != "10")
+                return false;
+
+
+            if (selfParam.deviceId.HasValue() == false || selfParam.deviceId.GetValue() != "10")
+                return false;
+
+            if (selfParam.cacheStatistics.HasValue() == false ||
+                compareCacheStatistics(selfParam.cacheStatistics.GetValue(), outParam.cacheStatistics.GetValue()) == false)
+                return false;
+
+
+            return true;
+        }
+
+        public static bool compareMusicContentCenterStatusCode(MusicContentCenterStatusCode selfParam, MusicContentCenterStatusCode outParam)
+        {
+            return selfParam == MusicContentCenterStatusCode.kMusicContentCenterStatusOk;
+        }
+
+
+        public static bool compareMusicChartInfoArray(MusicChartInfo[] selfParam, MusicChartInfo[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareMusicChartInfo(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool compareMusicChartInfo(MusicChartInfo selfParam, MusicChartInfo outParam)
+        {
+            if (compareString(selfParam.chartName, outParam.chartName) == false)
+                return false;
+
+            if (compareInt(selfParam.id, outParam.id) == false)
+                return false;
+
+            return true;
+        }
+
 
         public static bool compareSpatialAudioZone(SpatialAudioZone selfParam, SpatialAudioZone outParam)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using uid_t = System.UInt32;
+using System.Collections.Generic;
 namespace Agora.Rtc.Event
 {
     [TestFixture]
@@ -11,6 +12,7 @@ namespace Agora.Rtc.Event
         public UTRtcEngineEventHandler EventHandler;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
+        public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
 
         [SetUp]
         public void Setup()
@@ -48,7 +50,11 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("elapsed", elapsed);
+
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
