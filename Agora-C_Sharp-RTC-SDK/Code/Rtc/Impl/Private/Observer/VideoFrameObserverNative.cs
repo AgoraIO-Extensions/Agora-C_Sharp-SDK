@@ -178,7 +178,7 @@ namespace Agora.Rtc
                             config.type = ConvertEventNameToVideoSourecType(@event);
                             config.id = 0;
                             if (@event == "VideoFrameObserver_onMediaPlayerVideoFrame")
-                                config.id = (uint)AgoraJson.GetData<int>(jsonData, "mediaPlayerId");
+                                config.id = (uint)AgoraJson.GetData<uint>(jsonData, "mediaPlayerId");
 
                             config.key = "";
                             VideoFrame videoFrame1 = GetVideoFrame("", 0);

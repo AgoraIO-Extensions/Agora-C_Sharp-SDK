@@ -186,7 +186,7 @@ namespace Agora.Rtc
         #endregion
 
         #region IMediaPlayerAudioFrameObserver Start
-        internal const string EVENT_MEDIAPLAYERAUDIOFRAMEOBSERVER_ONFRAME = "AudioFrameObserver_onFrame";
+        internal const string EVENT_MEDIAPLAYERAUDIOFRAMEOBSERVER_ONFRAME = "MediaPlayerAudioFrameObserver_onFrame";
         #endregion
 
         #region IMediaPlayerCustomDataProvider Start

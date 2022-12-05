@@ -71,7 +71,7 @@ namespace Agora.Rtc
         {
             OnRenderVideoFrame_be_trigger = true;
             OnRenderVideoFrame_channelId = channelId;
-            OnRenderVideoFrame_uid = 0;
+            OnRenderVideoFrame_uid = uid;
             OnRenderVideoFrame_videoFrame = videoFrame;
             return true;
         }

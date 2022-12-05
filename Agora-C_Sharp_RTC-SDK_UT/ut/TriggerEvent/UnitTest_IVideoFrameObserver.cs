@@ -56,7 +56,7 @@ namespace Agora.Rtc.Event
             config.key = "";
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+            // 
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -77,7 +77,7 @@ namespace Agora.Rtc.Event
             ParamsHelper.InitParam(out videoFrame);
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+           
 
             VideoFrameBufferConfig config;
             config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
@@ -104,10 +104,10 @@ namespace Agora.Rtc.Event
 
           
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+             
 
             VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_SECONDARY;
             config.id = 0;
             config.key = "";
 
@@ -130,7 +130,7 @@ namespace Agora.Rtc.Event
             ParamsHelper.InitParam(out videoFrame);
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+             
 
             VideoFrameBufferConfig config;
             config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_SECONDARY;
@@ -156,7 +156,7 @@ namespace Agora.Rtc.Event
             ParamsHelper.InitParam(out videoFrame);
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+             
 
             VideoFrameBufferConfig config;
             config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN_PRIMARY;
@@ -182,7 +182,7 @@ namespace Agora.Rtc.Event
             ParamsHelper.InitParam(out videoFrame);
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+             
 
             VideoFrameBufferConfig config;
             config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN;
@@ -216,7 +216,7 @@ namespace Agora.Rtc.Event
             config.key = "";
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+             
             jsonObj.Add("mediaPlayerId", mediaPlayerId);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
@@ -243,7 +243,7 @@ namespace Agora.Rtc.Event
             config.key = "";
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+             
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -264,10 +264,10 @@ namespace Agora.Rtc.Event
             ParamsHelper.InitParam(out videoFrame);
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+             
 
             VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_SECONDARY;
+            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN_SECONDARY;
             config.id = 0;
             config.key = "";
 
@@ -298,7 +298,7 @@ namespace Agora.Rtc.Event
             jsonObj.Clear();
             jsonObj.Add("channelId", channelId);
             jsonObj.Add("remoteUid", remoteUid);
-            jsonObj.Add("videoFrame", videoFrame);
+             
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -319,7 +319,7 @@ namespace Agora.Rtc.Event
             ParamsHelper.InitParam(out videoFrame);
 
             jsonObj.Clear();
-            jsonObj.Add("videoFrame", videoFrame);
+             
 
             VideoFrameBufferConfig config;
             config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_TRANSCODED;
@@ -350,7 +350,8 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetVideoFormatPreferencePassed());
+            //iris will not trigger this call back
+            //Assert.AreEqual(true, EventHandler.GetVideoFormatPreferencePassed());
         }
 
         #endregion

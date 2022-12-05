@@ -25,9 +25,11 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-            AudioEncodedFrameObserverConfig config = new AudioEncodedFrameObserverConfig();
+            
             EventHandler = new UTRtcEngineEventHandler();
             Engine.InitEventHandler(EventHandler);
+
+            Engine.StartDirectCdnStreaming("url", new DirectCdnStreamingMediaOptions());
         }
 
         [TearDown]

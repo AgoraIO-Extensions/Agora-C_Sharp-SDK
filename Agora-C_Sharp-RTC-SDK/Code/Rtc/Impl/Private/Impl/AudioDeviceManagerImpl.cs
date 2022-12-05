@@ -101,7 +101,7 @@ namespace Agora.Rtc
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICEVOLUME,
                 "", 0, IntPtr.Zero, 0, ref _apiParam);
-            volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "volume");
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
@@ -224,7 +224,7 @@ namespace Agora.Rtc
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEVICEVOLUME,
                 "", 0, IntPtr.Zero, 0, ref _apiParam);
-            volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            volume = (int)AgoraJson.GetData<int>(_apiParam.Result, "volume");
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 

@@ -163,9 +163,22 @@ namespace Agora.Rtc
         {
             int volume;
             ParamsHelper.InitParam(out volume);
-            var nRet = AudioDeviceManager.GetRecordingDeviceVolume(ref volume);
 
+            int nRet = -1;
+
+            nRet = AudioDeviceManager.SetRecordingDeviceVolume(3);
             Assert.AreEqual(0, nRet);
+
+            nRet = AudioDeviceManager.GetRecordingDeviceVolume(ref volume);
+            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(3, volume);
+
+            nRet = AudioDeviceManager.SetRecordingDeviceVolume(39);
+            Assert.AreEqual(0, nRet);
+
+            nRet = AudioDeviceManager.GetRecordingDeviceVolume(ref volume);
+            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(39, volume);
         }
 
         [Test]

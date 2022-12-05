@@ -194,7 +194,7 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public virtual bool OnPlaybackAudioFrameBeforeMixing(string channel_id,
-                                                        string uid,
+                                                        string userId,
                                                         AudioFrame audio_frame)
         {
             return false;

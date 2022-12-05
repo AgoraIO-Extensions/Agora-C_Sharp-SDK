@@ -1409,6 +1409,7 @@ namespace Agora.Rtc
             samplesPerChannel = 0;
             numberOfChannels = 0;
             captureTimeMs = 0;
+            advancedSettings = new EncodedAudioFrameAdvancedSettings();
         }
 
         public EncodedAudioFrameInfo(ref EncodedAudioFrameInfo rhs)

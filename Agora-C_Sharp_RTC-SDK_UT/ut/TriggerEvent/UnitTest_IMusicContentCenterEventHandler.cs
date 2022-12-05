@@ -29,7 +29,7 @@ namespace Agora.Rtc.Event
 
             EventHandler = new UTMusicContentCenterEventHandler();
             MusicContentCenter = Engine.GetMusicContentCenter();
-            int ret = MusicContentCenter.Initialize(new MusicContentCenterConfiguration());
+            int ret = MusicContentCenter.Initialize(new MusicContentCenterConfiguration("appid","token", 120));
             Assert.AreEqual(0, ret);
             MusicContentCenter.RegisterEventHandler(EventHandler);
             Assert.AreEqual(0, ret);

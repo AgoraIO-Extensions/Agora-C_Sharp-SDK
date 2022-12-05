@@ -31,6 +31,7 @@ namespace Agora.Rtc.Event
             MediaRecorder = Engine.GetMediaRecorder();
             int ret = MediaRecorder.SetMediaRecorderObserver(new RtcConnection("10", 10), EventHandler);
             Assert.AreEqual(0, ret);
+
         }
 
         [TearDown]
