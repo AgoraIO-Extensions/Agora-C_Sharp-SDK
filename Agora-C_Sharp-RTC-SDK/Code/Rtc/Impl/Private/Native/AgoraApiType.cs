@@ -508,7 +508,7 @@ namespace Agora.Rtc
 
         #region IMediaRecorder start
 
-        internal const string FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER = "MediaRecoMediaRecorder_unsetMediaRecorderObserverrder_un";
+        internal const string FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER = "MediaRecorder_unsetMediaRecorderObserver";
 
         internal const string FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER = "MediaRecorder_setMediaRecorderObserver";
         internal const string FUNC_MEDIARECORDER_STARTRECORDING = "MediaRecorder_startRecording";

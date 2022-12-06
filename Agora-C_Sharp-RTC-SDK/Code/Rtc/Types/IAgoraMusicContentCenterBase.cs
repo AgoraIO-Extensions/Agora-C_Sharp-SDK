@@ -76,7 +76,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public string bandWidth;
+        public string bandwidth;
     };
 
     ///

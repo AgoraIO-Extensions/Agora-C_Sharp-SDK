@@ -177,6 +177,9 @@ namespace Agora.Rtc
                             VideoFrameBufferConfig config = new VideoFrameBufferConfig();
                             config.type = ConvertEventNameToVideoSourecType(@event);
                             config.id = 0;
+                            if (@event == "VideoFrameObserver_onMediaPlayerVideoFrame")
+                                config.id = (uint)AgoraJson.GetData<uint>(jsonData, "mediaPlayerId");
+
                             config.key = "";
                             VideoFrame videoFrame1 = GetVideoFrame("", 0);
                             bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
