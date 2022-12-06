@@ -385,159 +385,159 @@ namespace Agora.Rtc
         /// The user ID of the local user.
         /// </summary>
         ///
-        public uint uid { set; get; }
+        public uint uid;
 
         ///
         /// <summary>
         /// The actual bitrate (Kbps) while sending the local video stream.This value does not include the bitrate for resending the video after packet loss.
         /// </summary>
         ///
-        public int sentBitrate { set; get; }
+        public int sentBitrate;
 
         ///
         /// <summary>
         /// The actual frame rate (fps) while sending the local video stream.This value does not include the frame rate for resending the video after packet loss.
         /// </summary>
         ///
-        public int sentFrameRate { set; get; }
+        public int sentFrameRate;
 
         ///
         /// <summary>
         /// The frame rate (fps) for capturing the local video stream.
         /// </summary>
         ///
-        public int captureFrameRate { set; get; }
+        public int captureFrameRate;
 
         ///
         /// <summary>
         /// The width (px) for capturing the local video stream.
         /// </summary>
         ///
-        public int captureFrameWidth { set; get; }
+        public int captureFrameWidth;
 
         ///
         /// <summary>
         /// The height (px) for capturing the local video stream.
         /// </summary>
         ///
-        public int captureFrameHeight { set; get; }
+        public int captureFrameHeight;
 
         ///
         /// <summary>
         /// The frame rate (fps) adjusted by the built-in video capture adapter (regulator) of the SDK for capturing the local video stream. The regulator adjusts the frame rate of the video captured by the camera according to the video encoding configuration.
         /// </summary>
         ///
-        public int regulatedCaptureFrameRate { set; get; }
+        public int regulatedCaptureFrameRate;
 
         ///
         /// <summary>
         /// The width (px) adjusted by the built-in video capture adapter (regulator) of the SDK for capturing the local video stream. The regulator adjusts the height and width of the video captured by the camera according to the video encoding configuration.
         /// </summary>
         ///
-        public int regulatedCaptureFrameWidth { set; get; }
+        public int regulatedCaptureFrameWidth;
 
         ///
         /// <summary>
         /// The height (px) adjusted by the built-in video capture adapter (regulator) of the SDK for capturing the local video stream. The regulator adjusts the height and width of the video captured by the camera according to the video encoding configuration.
         /// </summary>
         ///
-        public int regulatedCaptureFrameHeight { set; get; }
+        public int regulatedCaptureFrameHeight;
 
         ///
         /// <summary>
         /// The output frame rate (fps) of the local video encoder.
         /// </summary>
         ///
-        public int encoderOutputFrameRate { set; get; }
+        public int encoderOutputFrameRate;
 
         ///
         /// <summary>
         /// The width of the encoded video (px).
         /// </summary>
         ///
-        public int encodedFrameWidth { set; get; }
+        public int encodedFrameWidth;
 
         ///
         /// <summary>
         /// The height of the encoded video (px).
         /// </summary>
         ///
-        public int encodedFrameHeight { set; get; }
+        public int encodedFrameHeight;
 
         ///
         /// <summary>
         /// The output frame rate (fps) of the local video renderer.
         /// </summary>
         ///
-        public int rendererOutputFrameRate { set; get; }
+        public int rendererOutputFrameRate;
 
         ///
         /// <summary>
         /// The target bitrate (Kbps) of the current encoder. This is an estimate made by the SDK based on the current network conditions.
         /// </summary>
         ///
-        public int targetBitrate { set; get; }
+        public int targetBitrate;
 
         ///
         /// <summary>
         /// The target frame rate (fps) of the current encoder.
         /// </summary>
         ///
-        public int targetFrameRate { set; get; }
+        public int targetFrameRate;
 
         ///
         /// <summary>
         /// The quality adaptation of the local video stream in the reported interval (based on the target frame rate and target bitrate). See QUALITY_ADAPT_INDICATION .
         /// </summary>
         ///
-        public QUALITY_ADAPT_INDICATION qualityAdaptIndication { set; get; }
+        public QUALITY_ADAPT_INDICATION qualityAdaptIndication;
 
         ///
         /// <summary>
         /// The bitrate (Kbps) while encoding the local video stream.This value does not include the bitrate for resending the video after packet loss.
         /// </summary>
         ///
-        public int encodedBitrate { set; get; }
+        public int encodedBitrate;
 
         ///
         /// <summary>
         /// The number of the sent video frames, represented by an aggregate value.
         /// </summary>
         ///
-        public int encodedFrameCount { set; get; }
+        public int encodedFrameCount;
 
         ///
         /// <summary>
         /// The codec type of the local video. See VIDEO_CODEC_TYPE .
         /// </summary>
         ///
-        public VIDEO_CODEC_TYPE codecType { set; get; }
+        public VIDEO_CODEC_TYPE codecType;
 
         ///
         /// <summary>
         /// The video packet loss rate (%) from the local client to the Agora server before applying the anti-packet loss strategies.
         /// </summary>
         ///
-        public ushort txPacketLossRate { set; get; }
+        public ushort txPacketLossRate;
 
         ///
         /// <summary>
         /// The brightness level of the video image captured by the local camera. See CAPTURE_BRIGHTNESS_LEVEL_TYPE .
         /// </summary>
         ///
-        public CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel { set; get; }
+        public CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel;
 
         ///
         /// @ignore
         ///
-        public bool dualStreamEnabled { set; get; }
+        public bool dualStreamEnabled;
 
         ///
         /// <summary>
         /// The local video encoding acceleration type. 0: Software encoding is applied without acceleration.1: Hardware encoding is applied for acceleration.
         /// </summary>
         ///
-        public int hwEncoderAccelerating { set; get; }
+        public int hwEncoderAccelerating;
     };
 
     ///
@@ -552,7 +552,7 @@ namespace Agora.Rtc
         /// The user ID of the remote user sending the video stream.
         /// </summary>
         ///
-        public uint uid { set; get; }
+        public uint uid;
 
         [Obsolete]
         ///
@@ -560,110 +560,110 @@ namespace Agora.Rtc
         /// Deprecated:In scenarios where audio and video are synchronized, you can get the video delay data from networkTransportDelay and jitterBufferDelay in RemoteAudioStats .The video delay (ms).
         /// </summary>
         ///
-        public int delay { set; get; }
+        public int delay;
 
         ///
         /// <summary>
         /// The width (pixels) of the video.
         /// </summary>
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// <summary>
         /// The height (pixels) of the video.
         /// </summary>
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// <summary>
         /// The bitrate (Kbps) of the remote video received since the last count.
         /// </summary>
         ///
-        public int receivedBitrate { set; get; }
+        public int receivedBitrate;
 
         ///
         /// <summary>
         /// The frame rate (fps) of decoding the remote video.
         /// </summary>
         ///
-        public int decoderOutputFrameRate { set; get; }
+        public int decoderOutputFrameRate;
 
         ///
         /// <summary>
         /// The frame rate (fps) of rendering the remote video.
         /// </summary>
         ///
-        public int rendererOutputFrameRate { set; get; }
+        public int rendererOutputFrameRate;
 
         ///
         /// <summary>
         /// The packet loss rate (%) of the remote video.
         /// </summary>
         ///
-        public int frameLossRate { set; get; }
+        public int frameLossRate;
 
         ///
         /// <summary>
         /// The packet loss rate (%) of the remote video after using the anti-packet-loss technology.
         /// </summary>
         ///
-        public int packetLossRate { set; get; }
+        public int packetLossRate;
 
         ///
         /// <summary>
         /// The type of the video stream. See VIDEO_STREAM_TYPE .
         /// </summary>
         ///
-        public VIDEO_STREAM_TYPE rxStreamType { set; get; }
+        public VIDEO_STREAM_TYPE rxStreamType;
 
         ///
         /// <summary>
         /// The total freeze time (ms) of the remote video stream after the remote user joins the channel. In a video session where the frame rate is set to no less than 5 fps, video freeze occurs when the time interval between two adjacent renderable video frames is more than 500 ms.
         /// </summary>
         ///
-        public int totalFrozenTime { set; get; }
+        public int totalFrozenTime;
 
         ///
         /// <summary>
         /// The total video freeze time as a percentage (%) of the total time the video is available. The video is considered available as long as that the remote user neither stops sending the video stream nor disables the video module after joining the channel.
         /// </summary>
         ///
-        public int frozenRate { set; get; }
+        public int frozenRate;
 
         ///
         /// <summary>
         /// The amount of time (ms) that the audio is ahead of the video.If this value is negative, the audio is lagging behind the video.
         /// </summary>
         ///
-        public int avSyncTimeMs { set; get; }
+        public int avSyncTimeMs;
 
         ///
         /// <summary>
         /// The total active time (ms) of the video.As long as the remote user or host neither stops sending the video stream nor disables the video module after joining the channel, the video is available.
         /// </summary>
         ///
-        public int totalActiveTime { set; get; }
+        public int totalActiveTime;
 
         ///
         /// <summary>
         /// The total duration (ms) of the remote video stream.
         /// </summary>
         ///
-        public int publishDuration { set; get; }
+        public int publishDuration;
 
         ///
         /// <summary>
         /// The state of super resolution:>0: Super resolution is enabled.=0: Super resolution is not enabled.
         /// </summary>
         ///
-        public int superResolutionType { set; get; }
+        public int superResolutionType;
 
         ///
         /// @ignore
         ///
-        public int mosValue { set; get; }
+        public int mosValue;
     };
 
     ///
@@ -674,42 +674,42 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public uint uid { set; get; }
+        public uint uid;
 
         ///
         /// @ignore
         ///
-        public double x { set; get; }
+        public double x;
 
         ///
         /// @ignore
         ///
-        public double y { set; get; }
+        public double y;
 
         ///
         /// @ignore
         ///
-        public double width { set; get; }
+        public double width;
 
         ///
         /// @ignore
         ///
-        public double height { set; get; }
+        public double height;
 
         ///
         /// @ignore
         ///
-        public int zOrder { set; get; }
+        public int zOrder;
 
         ///
         /// @ignore
         ///
-        public double alpha { set; get; }
+        public double alpha;
 
         ///
         /// @ignore
         ///
-        public RENDER_MODE_TYPE renderMode { set; get; }
+        public RENDER_MODE_TYPE renderMode;
 
         public Region()
         {
@@ -732,37 +732,37 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int canvasWidth { set; get; }
+        public int canvasWidth;
 
         ///
         /// @ignore
         ///
-        public int canvasHeight { set; get; }
+        public int canvasHeight;
 
         ///
         /// @ignore
         ///
-        public string backgroundColor { set; get; }
+        public string backgroundColor;
 
         ///
         /// @ignore
         ///
-        public Region[] regions { set; get; }
+        public Region[] regions;
 
         ///
         /// @ignore
         ///
-        public int regionCount { set; get; }
+        public int regionCount;
 
         ///
         /// @ignore
         ///
-        public string appData { set; get; }
+        public string appData;
 
         ///
         /// @ignore
         ///
-        public int appDataLength { set; get; }
+        public int appDataLength;
 
         public VideoCompositingLayout()
         {
@@ -809,42 +809,42 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// @ignore
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// @ignore
         ///
-        public int videoGop { set; get; }
+        public int videoGop;
 
         ///
         /// @ignore
         ///
-        public int videoFramerate { set; get; }
+        public int videoFramerate;
 
         ///
         /// @ignore
         ///
-        public int videoBitrate { set; get; }
+        public int videoBitrate;
 
         ///
         /// @ignore
         ///
-        public AUDIO_SAMPLE_RATE_TYPE audioSampleRate { set; get; }
+        public AUDIO_SAMPLE_RATE_TYPE audioSampleRate;
 
         ///
         /// @ignore
         ///
-        public int audioBitrate { set; get; }
+        public int audioBitrate;
 
         ///
         /// @ignore
         ///
-        public int audioChannels { set; get; }
+        public int audioChannels;
     };
 
     ///
@@ -878,67 +878,67 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// @ignore
         ///
-        public int height { set; get; }
+        public int height;
 
         ///
         /// @ignore
         ///
-        public int framerate { set; get; }
+        public int framerate;
 
         ///
         /// @ignore
         ///
-        public int bitrate { set; get; }
+        public int bitrate;
 
         ///
         /// @ignore
         ///
-        public int defaultLayout { set; get; }
+        public int defaultLayout;
 
         ///
         /// @ignore
         ///
-        public int lifecycle { set; get; }
+        public int lifecycle;
 
         ///
         /// @ignore
         ///
-        public bool owner { set; get; }
+        public bool owner;
 
         ///
         /// @ignore
         ///
-        public int injectStreamWidth { set; get; }
+        public int injectStreamWidth;
 
         ///
         /// @ignore
         ///
-        public int injectStreamHeight { set; get; }
+        public int injectStreamHeight;
 
         ///
         /// @ignore
         ///
-        public string injectStreamUrl { set; get; }
+        public string injectStreamUrl;
 
         ///
         /// @ignore
         ///
-        public string publishUrl { set; get; }
+        public string publishUrl;
 
         ///
         /// @ignore
         ///
-        public string rawStreamUrl { set; get; }
+        public string rawStreamUrl;
 
         ///
         /// @ignore
         ///
-        public string extraInfo { set; get; }
+        public string extraInfo;
 
         public PublisherConfiguration()
         {
@@ -971,7 +971,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public bool enableLocalPlayback { set; get; }
+        public bool enableLocalPlayback;
     };
 
     ///
@@ -1054,28 +1054,28 @@ namespace Agora.Rtc
         /// This method applies to Windows only.The ID of the camera. 
         /// </summary>
         ///
-        public string deviceId { set; get; }
+        public string deviceId;
 
         ///
         /// <summary>
         /// The format of the video frame. See VideoFormat .
         /// </summary>
         ///
-        public VideoFormat format { set; get; }
+        public VideoFormat format;
 
         ///
         /// <summary>
         /// Whether to follow the video aspect ratio set in SetVideoEncoderConfiguration :true: (Default) Follow the set video aspect ratio. The SDK crops the captured video according to the set video aspect ratio and synchronously changes the local preview screen and the video frame in OnCaptureVideoFrame and OnPreEncodeVideoFrame .false: Do not follow the set video aspect ratio. The SDK does not change the aspect ratio of the captured video frame.
         /// </summary>
         ///
-        public bool followEncodeDimensionRatio { set; get; }
+        public bool followEncodeDimensionRatio;
 
         ///
         /// <summary>
         /// This parameter applies to Android and iOS only.The camera direction. See CAMERA_DIRECTION .
         /// </summary>
         ///
-        public CAMERA_DIRECTION cameraDirection { set; get; }
+        public CAMERA_DIRECTION cameraDirection;
     }
 
     ///
@@ -1096,42 +1096,42 @@ namespace Agora.Rtc
         /// Whether to capture the window on the screen:true: Capture the window.false: (Default) Capture the screen, not the window.
         /// </summary>
         ///
-        public bool isCaptureWindow { set; get; }
+        public bool isCaptureWindow;
 
         ///
         /// <summary>
         /// (macOS only) The display ID of the screen.This parameter takes effect only when you want to capture the screen on macOS.
         /// </summary>
         ///
-        public uint displayId { set; get; }
+        public uint displayId;
 
         ///
         /// <summary>
         /// (Windows only) The relative position of the shared screen to the virtual screen.This parameter takes effect only when you want to capture the screen on Windows.
         /// </summary>
         ///
-        public Rectangle screenRect { set; get; }
+        public Rectangle screenRect;
 
         ///
         /// <summary>
         /// (For Windows and macOS only) Window ID.This parameter takes effect only when you want to capture the window.
         /// </summary>
         ///
-        public uint windowId { set; get; }
+        public uint windowId;
 
         ///
         /// <summary>
         /// (For Windows and macOS only) The screen capture configuration. See ScreenCaptureParameters .
         /// </summary>
         ///
-        public ScreenCaptureParameters parameters { set; get; }
+        public ScreenCaptureParameters parameters;
 
         ///
         /// <summary>
         /// (For Windows and macOS only) The relative position of the shared region to the whole screen. See Rectangle .If you do not set this parameter, the SDK shares the whole screen. If the region you set exceeds the boundary of the screen, only the region within in the screen is shared. If you setwidth or height in Rectangle as 0, the whole screen is shared.
         /// </summary>
         ///
-        public Rectangle regionRect { set; get; }
+        public Rectangle regionRect;
     }
 
     ///
@@ -1142,12 +1142,12 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int width { set; get; }
+        public int width;
 
         ///
         /// @ignore
         ///
-        public int height { set; get; }
+        public int height;
 
         public SIZE()
         {
@@ -1175,28 +1175,28 @@ namespace Agora.Rtc
         /// The buffer of the thumbnail or icon.
         /// </summary>
         ///
-        public byte[] buffer { set; get; }
+        public byte[] buffer;
 
         ///
         /// <summary>
         /// The buffer length of the thumbnail or icon, in bytes.
         /// </summary>
         ///
-        public uint length { set; get; }
+        public uint length;
 
         ///
         /// <summary>
         /// The actual width (px) of the thumbnail or icon.
         /// </summary>
         ///
-        public uint width { set; get; }
+        public uint width;
 
         ///
         /// <summary>
         /// The actual height (px) of the thumbnail or icon.
         /// </summary>
         ///
-        public uint height { set; get; }
+        public uint height;
 
         public ThumbImageBuffer()
         {
@@ -1255,66 +1255,66 @@ namespace Agora.Rtc
         /// The type of the shared target. See ScreenCaptureSourceType .
         /// </summary>
         ///
-        public ScreenCaptureSourceType type { set; get; }
+        public ScreenCaptureSourceType type;
 
         ///
         /// <summary>
         /// The window ID for a window or the display ID for a screen.
         /// </summary>
         ///
-        public view_t sourceId { set; get; }
+        public view_t sourceId;
 
         ///
         /// <summary>
         /// The name of the window or screen. UTF-8 encoding.
         /// </summary>
         ///
-        public string sourceName { set; get; }
+        public string sourceName;
 
         ///
         /// <summary>
         /// The image content of the thumbnail. See ThumbImageBuffer 
         /// </summary>
         ///
-        public ThumbImageBuffer thumbImage { set; get; }
+        public ThumbImageBuffer thumbImage;
 
         ///
         /// <summary>
         /// The image content of the icon. See ThumbImageBuffer 
         /// </summary>
         ///
-        public ThumbImageBuffer iconImage { set; get; }
+        public ThumbImageBuffer iconImage;
 
         ///
         /// <summary>
         /// The process to which the window belongs. UTF-8 encoding.
         /// </summary>
         ///
-        public string processPath { set; get; }
+        public string processPath;
 
         ///
         /// <summary>
         /// The title of the window. UTF-8 encoding.
         /// </summary>
         ///
-        public string sourceTitle { set; get; }
+        public string sourceTitle;
 
         ///
         /// <summary>
         /// Determines whether the screen is the primary display:true: The screen is the primary display.false: The screen is not the primary display.
         /// </summary>
         ///
-        public bool primaryMonitor { set; get; }
+        public bool primaryMonitor;
 
         ///
         /// @ignore
         ///
-        public bool isOccluded { set; get; }
+        public bool isOccluded;
 
         ///
         /// @ignore
         ///
-        public bool minimizeWindow { set; get; }
+        public bool minimizeWindow;
 
         public ScreenCaptureSourceInfo()
         {
@@ -1371,14 +1371,14 @@ namespace Agora.Rtc
         /// The URL of the image that you want to use to replace the video feeds. The image must be in PNG format. This method supports adding an image from the local absolute or relative file path.
         /// </summary>
         ///
-        public string imageUrl { set; get; }
+        public string imageUrl;
 
         ///
         /// <summary>
         /// The frame rate of the video streams being published. The value range is [1,30]. The default value is 1.
         /// </summary>
         ///
-        public int fps { set; get; }
+        public int fps;
 
         public ImageTrackOptions()
         {
@@ -1889,17 +1889,17 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public string serverDomain { set; get; }
+        public string serverDomain;
 
         ///
         /// @ignore
         ///
-        public string serverPath { set; get; }
+        public string serverPath;
 
         ///
         /// @ignore
         ///
-        public int serverPort { set; get; }
+        public int serverPort;
 
         ///
         /// @ignore
@@ -1939,37 +1939,37 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public string[] ipList { set; get; }
+        public string[] ipList;
 
         ///
         /// @ignore
         ///
-        public int ipListSize { set; get; }
+        public int ipListSize;
 
         ///
         /// @ignore
         ///
-        public string[] domainList { set; get; }
+        public string[] domainList;
 
         ///
         /// @ignore
         ///
-        public int domainListSize { set; get; }
+        public int domainListSize;
 
         ///
         /// @ignore
         ///
-        public string verifyDomainName { set; get; }
+        public string verifyDomainName;
 
         ///
         /// @ignore
         ///
-        public LOCAL_PROXY_MODE mode { set; get; }
+        public LOCAL_PROXY_MODE mode;
 
         ///
         /// @ignore
         ///
-        public AdvancedConfigInfo advancedConfig { set; get; }
+        public AdvancedConfigInfo advancedConfig;
 
         public LocalAccessPointConfiguration()
         {
@@ -2002,21 +2002,21 @@ namespace Agora.Rtc
         /// Whether to stop playing and mixing the music file when a user leaves the channel. true: (Default) Stop playing and mixing the music file.false: Do not stop playing and mixing the music file.
         /// </summary>
         ///
-        public bool stopAudioMixing { set; get; }
+        public bool stopAudioMixing;
 
         ///
         /// <summary>
         /// Whether to stop playing all audio effects when a user leaves the channel. true: (Default) Stop playing all audio effects.false: Do not stop playing any audio effect.
         /// </summary>
         ///
-        public bool stopAllEffect { set; get; }
+        public bool stopAllEffect;
 
         ///
         /// <summary>
         /// Whether to stop microphone recording when a user leaves the channel. true: (Default) Stop microphone recording.false: Do not stop microphone recording.
         /// </summary>
         ///
-        public bool stopMicrophoneRecording { set; get; }
+        public bool stopMicrophoneRecording;
     };
 
     ///
@@ -2062,40 +2062,40 @@ namespace Agora.Rtc
         /// The App ID issued by Agora for your project. Only users in apps with the same App ID can join the same channel and communicate with each other. An App ID can only be used to create one IRtcEngine instance. To change your App ID, call Dispose to destroy the current IRtcEngine instance, and then create a new one.
         /// </summary>
         ///
-        public string appId { set; get; }
+        public string appId;
 
         ///
         /// <summary>
         /// For Windows, it is the window handle of the app. Once set, this parameter enables you to connect or disconnect the video devices while they are powered.For Android, it is the context of Android Activity.
         /// </summary>
         ///
-        public UInt64 context { set; get; }
+        public UInt64 context;
 
         ///
         /// <summary>
         /// The channel profile. See CHANNEL_PROFILE_TYPE .
         /// </summary>
         ///
-        public CHANNEL_PROFILE_TYPE channelProfile { set; get; }
+        public CHANNEL_PROFILE_TYPE channelProfile;
 
 
         ///
         /// @ignore
         ///
-        public string license { set; get; }
+        public string license;
         ///
         /// <summary>
         /// The audio scenarios. See AUDIO_SCENARIO_TYPE . Under different audio scenarios, the device uses different volume types.
         /// </summary>
         ///
-        public AUDIO_SCENARIO_TYPE audioScenario { set; get; }
+        public AUDIO_SCENARIO_TYPE audioScenario;
 
         ///
         /// <summary>
         /// The region for connection. This is an advanced feature and applies to scenarios that have regional restrictions. For details on supported regions, see AREA_CODE . The area codes support bitwise operation.
         /// </summary>
         ///
-        public AREA_CODE areaCode { set; get; }
+        public AREA_CODE areaCode;
 
 
         ///
@@ -2112,7 +2112,7 @@ namespace Agora.Rtc
         /// Create a new agorasdk.log file. The overwrite rules for the agoraapi.log file are the same as for agorasdk.log. The log files that the SDK outputs. See LogConfig .By default, the SDK generates five SDK log files and five API call log files with the following rules:
         /// </summary>
         ///
-        public LogConfig logConfig { set; get; }
+        public LogConfig logConfig;
 
         ///
         /// @ignore
@@ -2122,14 +2122,14 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public bool useExternalEglContext { set; get; }
+        public bool useExternalEglContext;
 
         ///
         /// <summary>
         /// Whether to enable domain name restriction:true: Enables the domain name restriction. This value is suitable for scenarios where IoT devices use IoT cards for network access. The SDK will only connect to servers in the domain name or IP whitelist that has been reported to the operator.false: (Default) Disables the domain name restriction. This value is suitable for most common scenarios.
         /// </summary>
         ///
-        public bool domainLimit { set; get; }
+        public bool domainLimit;
 
         public override void ToJson(JsonWriter writer)
         {
@@ -2311,27 +2311,27 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public int videoWidth { set; get; }
+        public int videoWidth;
 
         ///
         /// @ignore
         ///
-        public int videoHeight { set; get; }
+        public int videoHeight;
 
         ///
         /// @ignore
         ///
-        public int fps { set; get; }
+        public int fps;
 
         ///
         /// @ignore
         ///
-        public int videoBitrate { set; get; }
+        public int videoBitrate;
 
         ///
         /// @ignore
         ///
-        public int audioBitrate { set; get; }
+        public int audioBitrate;
     };
 
     ///
@@ -2448,22 +2448,22 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public MEDIA_SOURCE_TYPE mediaSourceType { set; get; }
+        public MEDIA_SOURCE_TYPE mediaSourceType;
 
         ///
         /// @ignore
         ///
-        public uint remoteUid { set; get; }
+        public uint remoteUid;
 
         ///
         /// @ignore
         ///
-        public string channelId { set; get; }
+        public string channelId;
 
         ///
         /// @ignore
         ///
-        public uint localUid { set; get; }
+        public uint localUid;
 
         public ExtensionInfo()
         {
