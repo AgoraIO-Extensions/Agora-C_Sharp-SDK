@@ -155,6 +155,11 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONSNAPSHOTTAKEN = "RtcEngineEventHandlerEx_onSnapshotTaken";
         #endregion
 
+        #region
+        internal const string EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED = "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged";
+        internal const string EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS = "DirectCdnStreamingEventHandler_onDirectCdnStreamingStats";
+        #endregion
+
         #region IAudioEncodedFrameObserver Start
         internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnRecordAudioEncodedFrame";
         internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnPlaybackAudioEncodedFrame";
@@ -181,7 +186,7 @@ namespace Agora.Rtc
         #endregion
 
         #region IMediaPlayerAudioFrameObserver Start
-        internal const string EVENT_MEDIAPLAYERAUDIOFRAMEOBSERVER_ONFRAME = "AudioFrameObserver_onFrame";
+        internal const string EVENT_MEDIAPLAYERAUDIOFRAMEOBSERVER_ONFRAME = "MediaPlayerAudioFrameObserver_onFrame";
         #endregion
 
         #region IMediaPlayerCustomDataProvider Start

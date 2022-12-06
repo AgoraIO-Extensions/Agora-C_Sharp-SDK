@@ -283,7 +283,7 @@ namespace Agora.Rtc
         }
         public static void InitParam(out IAudioSpectrumObserver param)
         {
-            param = new UTIAudioSpectrumObserver();
+            param = new UTAudioSpectrumObserver();
         }
         public static void InitParam(out ExtensionInfo param)
         {
@@ -607,7 +607,8 @@ namespace Agora.Rtc
         public static void InitParam(out DownlinkNetworkInfo param)
         {
             var info = new PeerDownlinkInfo[10];
-            for (int i = 0; i < info.Length; i++) {
+            for (int i = 0; i < info.Length; i++)
+            {
                 InitParam(out info[i]);
             }
 
@@ -623,7 +624,7 @@ namespace Agora.Rtc
             param.expected_bitrate_bps = 10;
         }
 
-            
+
 
         public static void InitParam(out UplinkNetworkInfo param)
         {
@@ -746,102 +747,146 @@ namespace Agora.Rtc
                 param[i] = new AudioVolumeInfo();
             }
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out EncodedAudioFrameInfo param)
+        {
+            param = new EncodedAudioFrameInfo();
+
+        }
+        public static void InitParam(out AudioFrame param)
+        {
+            param = new AudioFrame();
+        }
+        public static void InitParam(out DIRECT_CDN_STREAMING_STATE param)
+        {
+            param = DIRECT_CDN_STREAMING_STATE.DIRECT_CDN_STREAMING_STATE_IDLE;
+        }
+        public static void InitParam(out DIRECT_CDN_STREAMING_ERROR param)
+        {
+            param = DIRECT_CDN_STREAMING_ERROR.DIRECT_CDN_STREAMING_ERROR_OK;
+        }
+        public static void InitParam(out DirectCdnStreamingStats param)
+        {
+            param = new DirectCdnStreamingStats();
+        }
+        public static void InitParam(out AudioPcmFrame param)
+        {
+            param = new AudioPcmFrame();
+        }
+        public static void InitParam(out MEDIA_PLAYER_STATE param)
+        {
+            param = MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE;
+        }
+        public static void InitParam(out MEDIA_PLAYER_ERROR param)
+        {
+            param = MEDIA_PLAYER_ERROR.PLAYER_ERROR_NONE;
+        }
+        public static void InitParam(out MEDIA_PLAYER_EVENT param)
+        {
+            param = MEDIA_PLAYER_EVENT.PLAYER_EVENT_SEEK_BEGIN;
+        }
+        public static void InitParam(out PLAYER_PRELOAD_EVENT param)
+        {
+            param = PLAYER_PRELOAD_EVENT.PLAYER_PRELOAD_EVENT_BEGIN;
+        }
+        public static void InitParam(out SrcInfo param)
+        {
+            param = new SrcInfo();
+        }
+        public static void InitParam(out PlayerUpdatedInfo param)
+        {
+            param = new PlayerUpdatedInfo();
+            param.deviceId.SetValue("10");
+            param.playerId.SetValue("10");
+            param.cacheStatistics.SetValue(new CacheStatistics());
+        }
+        public static void InitParam(out RecorderState param)
+        {
+            param = RecorderState.RECORDER_STATE_ERROR;
+        }
+        public static void InitParam(out RecorderErrorCode param)
+        {
+            param = RecorderErrorCode.RECORDER_ERROR_NONE;
+        }
+        public static void InitParam(out RecorderInfo param)
+        {
+            param = new RecorderInfo();
+        }
+        public static void InitParam(out Metadata param)
+        {
+            param = new Metadata();
+        }
+        public static void InitParam(out MusicContentCenterStatusCode param)
+        {
+            param = MusicContentCenterStatusCode.kMusicContentCenterStatusOk;
+        }
+        public static void InitParam(out MusicChartInfo[] param)
+        {
+            param = new MusicChartInfo[10];
+            for (int i = 0; i < param.Length; i++)
+            {
+                param[i] = new MusicChartInfo();
+            }
+        }
+        public static void InitParam(out MusicCollection param)
+        {
+            param = new MusicCollection();
+            param.music = new Music[10];
+            for (int i = 0; i < param.music.Length; i++)
+            {
+                InitParam(out param.music[i]);
+            }
+        }
+
+        public static void InitParam(out Music param)
+        {
+            param = new Music();
+            param.lyricList = new int[10];
+            param.climaxSegmentList = new ClimaxSegment[10];
+            for (int i = 0; i < param.climaxSegmentList.Length; i++)
+            {
+                param.climaxSegmentList[i] = new ClimaxSegment();
+            }
+            param.mvPropertyList = new MvProperty[10];
+            for (int i = 0; i < param.mvPropertyList.Length; i++)
+            {
+                param.mvPropertyList[i] = new MvProperty();
+            }
+
+
+        }
+
+        public static void InitParam(out PreloadStatusCode param)
+        {
+            param = PreloadStatusCode.kPreloadStatusCompleted;
+        }
+        public static void InitParam(out EncodedVideoFrameInfo param)
+        {
+            param = new EncodedVideoFrameInfo();
+        }
+        public static void InitParam(out VideoFrame param)
+        {
+            param = new VideoFrame();
+        }
+        public static void InitParam(out UserAudioSpectrumInfo[] param)
+        {
+            param = new UserAudioSpectrumInfo[10];
+            for (var i = 0; i < param.Length; i++)
+            {
+                param[i] = new UserAudioSpectrumInfo();
+                InitParam(out param[i].spectrumData);
+            }
+        }
+        public static void InitParam(out AudioSpectrumData param)
+        {
+            param = new AudioSpectrumData();
+            param.dataLength = 10;
+
+            param.audioSpectrumData = new float[param.dataLength];
+            for (var i = 0; i < param.dataLength; i++)
+            {
+                param.audioSpectrumData[i] = 10;
+            }
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
@@ -2434,28 +2479,28 @@ namespace Agora.Rtc
             return selfParam == VIDEO_BUFFER_TYPE.VIDEO_BUFFER_RAW_DATA;
         }
 
+        public static bool compareVideoFrameBufferConfig(VideoFrameBufferConfig selfParam, VideoFrameBufferConfig outParam)
+        {
+            if (selfParam.type != outParam.type)
+                return false;
+
+            if (selfParam.id != outParam.id)
+                return false;
+
+            if (selfParam.key != outParam.key)
+                return false;
+
+            return true;
+        }
+
         public static bool compareVideoFrame(VideoFrame selfParam, VideoFrame outParam)
         {
-            if (compareVIDEO_PIXEL_FORMAT(selfParam.type, outParam.type) == false)
+            if (selfParam.width != 32)
                 return false;
-            if (compareInt(selfParam.width, outParam.width) == false)
+            if (selfParam.height != 16)
                 return false;
-            if (compareInt(selfParam.height, outParam.height) == false)
-                return false;
-            if (compareInt(selfParam.yStride, outParam.yStride) == false)
-                return false;
-            if (compareInt(selfParam.uStride, outParam.uStride) == false)
-                return false;
-            if (compareInt(selfParam.vStride, outParam.vStride) == false)
-                return false;
-            if (compareInt(selfParam.rotation, outParam.rotation) == false)
-                return false;
-            if (compareLong(selfParam.renderTimeMs, outParam.renderTimeMs) == false)
-                return false;
-            if (compareInt(selfParam.avsync_type, outParam.avsync_type) == false)
-                return false;
-            if (compareInt(selfParam.textureId, outParam.textureId) == false)
-                return false;
+     
+
             return true;
         }
 
@@ -2669,12 +2714,40 @@ namespace Agora.Rtc
         }
 
 
+        public static bool compareMvPropertyArray(MvProperty[] selfParam, MvProperty[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+            for (int i = 0; i < selfParam.Length; i++)
+            {
+                if (compareMvProperty(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
         public static bool compareMvProperty(MvProperty selfParam, MvProperty outParam)
         {
             if (compareString(selfParam.resolution, outParam.resolution) == false)
                 return false;
-            if (compareString(selfParam.bandWidth, outParam.bandWidth) == false)
+            if (compareString(selfParam.bandwidth, outParam.bandwidth) == false)
                 return false;
+            return true;
+        }
+
+        public static bool compareClimaxSegmentArray(ClimaxSegment[] selfParam, ClimaxSegment[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+
+                if (compareClimaxSegment(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
             return true;
         }
 
@@ -2684,6 +2757,25 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.endTimeMs, outParam.endTimeMs) == false)
                 return false;
+            return true;
+        }
+
+        public static bool comparePreloadStatusCode(PreloadStatusCode selfParam, PreloadStatusCode outParam)
+        {
+            return selfParam == PreloadStatusCode.kPreloadStatusCompleted;
+        }
+
+        public static bool compareMusicArray(Music[] selfParam, Music[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareMusic(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
             return true;
         }
 
@@ -2705,13 +2797,22 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.pitchType, outParam.pitchType) == false)
                 return false;
+
             if (compareInt(selfParam.lyricCount, outParam.lyricCount) == false)
+                return false;
+            if (compareIntArray(selfParam.lyricList, outParam.lyricList) == false)
                 return false;
 
             if (compareInt(selfParam.climaxSegmentCount, outParam.climaxSegmentCount) == false)
                 return false;
+            if (compareClimaxSegmentArray(selfParam.climaxSegmentList, outParam.climaxSegmentList) == false)
+                return false;
+
             if (compareInt(selfParam.mvPropertyCount, outParam.mvPropertyCount) == false)
                 return false;
+            if (compareMvPropertyArray(selfParam.mvPropertyList, outParam.mvPropertyList) == false)
+                return false;
+
 
             return true;
         }
@@ -2725,6 +2826,9 @@ namespace Agora.Rtc
             if (compareInt(selfParam.page, outParam.page) == false)
                 return false;
             if (compareInt(selfParam.pageSize, outParam.pageSize) == false)
+                return false;
+
+            if (compareMusicArray(selfParam.music, outParam.music) == false)
                 return false;
 
             return true;
@@ -3186,6 +3290,7 @@ namespace Agora.Rtc
             if (selfLength != 10 /*outLength*/)
                 return false;
 
+
             for (int i = 0; i < selfLength; i++)
             {
                 if (selfParam[i] != 10/*outParam[i]*/)
@@ -3206,6 +3311,101 @@ namespace Agora.Rtc
                 return false;
             return true;
         }
+
+        public static bool compareIntPtr(IntPtr selfParam, IntPtr outParam)
+        {
+            if (selfParam != (IntPtr)10)
+                return false;
+
+            return true;
+        }
+
+        public static bool compareUserAudioSpectrumInfoArray(UserAudioSpectrumInfo[] selfParam, UserAudioSpectrumInfo[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareUserAudioSpectrumInfo(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool compareByteArray(byte[] selfParam, byte[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareByte(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool compareByte(byte selfParam, byte outParam)
+        {
+            if (selfParam != 10)
+                return false;
+
+            return true;
+        }
+
+        public static bool comparePlayerUpdatedInfo(PlayerUpdatedInfo selfParam, PlayerUpdatedInfo outParam)
+        {
+            if (selfParam.playerId.HasValue() == false || selfParam.playerId.GetValue() != "10")
+                return false;
+
+
+            if (selfParam.deviceId.HasValue() == false || selfParam.deviceId.GetValue() != "10")
+                return false;
+
+            if (selfParam.cacheStatistics.HasValue() == false ||
+                compareCacheStatistics(selfParam.cacheStatistics.GetValue(), outParam.cacheStatistics.GetValue()) == false)
+                return false;
+
+
+            return true;
+        }
+
+        public static bool compareMusicContentCenterStatusCode(MusicContentCenterStatusCode selfParam, MusicContentCenterStatusCode outParam)
+        {
+            return selfParam == MusicContentCenterStatusCode.kMusicContentCenterStatusOk;
+        }
+
+
+        public static bool compareMusicChartInfoArray(MusicChartInfo[] selfParam, MusicChartInfo[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareMusicChartInfo(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
+
+        public static bool compareMusicChartInfo(MusicChartInfo selfParam, MusicChartInfo outParam)
+        {
+            if (compareString(selfParam.chartName, outParam.chartName) == false)
+                return false;
+
+            if (compareInt(selfParam.id, outParam.id) == false)
+                return false;
+
+            return true;
+        }
+
 
         public static bool compareSpatialAudioZone(SpatialAudioZone selfParam, SpatialAudioZone outParam)
         {
