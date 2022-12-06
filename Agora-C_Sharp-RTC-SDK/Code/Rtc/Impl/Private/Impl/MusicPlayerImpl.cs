@@ -1,16 +1,18 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
-   
+
     public class MusicPlayerImpl
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
         private IrisCApiParam _apiParam;
         private MediaPlayerImpl _mediaPlayerImpl;
+        private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
         internal MusicPlayerImpl(IrisApiEnginePtr irisApiEngine, MediaPlayerImpl impl)
         {
@@ -310,12 +312,12 @@ namespace Agora.Rtc
 
         public int Open(int playerId, Int64 songCode, Int64 startPos = 0)
         {
-            var param = new {
-                playerId,
-                songCode,
-                startPos
-            };
-            string jsonParam = AgoraJson.ToJson(param);
+            _param.Clear();
+            _param.Add("playerId", playerId);
+            _param.Add("songCode", songCode);
+            _param.Add("startPos", startPos);
+
+            string jsonParam = AgoraJson.ToJson(_param);
 
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_MUSICPLAYER_OPEN,
