@@ -78,29 +78,43 @@ namespace Agora.Rtc
                 ReleaseEventHandler();
 
 
+                /// Dont need unset.Because rtc engine will destroy soon when this call finish.
+                /// so all mediaplay observer wiil destroy because they are smart pointer
                 var keys = GetDicKeys<int, EventHandlerHandle>(_mediaPlayerAudioFrameObserverHandles);
                 foreach (var playerId in keys)
                 {
-                    this.UnSetIrisAudioFrameObserver(playerId);
+                    //this.UnSetIrisAudioFrameObserver(playerId);
+                    EventHandlerHandle eventHandler = _mediaPlayerAudioFrameObserverHandles[playerId];
+                    AgoraUtil.FreeEventHandlerHandle(ref eventHandler);
                 }
+                _mediaPlayerAudioFrameObserverHandles.Clear();
 
                 keys = GetDicKeys<int, EventHandlerHandle>(_mediaPlayerCustomProviderHandles);
                 foreach (var playerId in keys)
                 {
-                    this.UnSetMediaPlayerOpenWithCustomSource(playerId);
+                    //this.UnSetMediaPlayerOpenWithCustomSource(playerId);
+                    EventHandlerHandle eventHandler = _mediaPlayerCustomProviderHandles[playerId];
+                    AgoraUtil.FreeEventHandlerHandle(ref eventHandler);
                 }
+                _mediaPlayerCustomProviderHandles.Clear();
 
                 keys = GetDicKeys<int, EventHandlerHandle>(this._mediaPlayerMediaProviderHandles);
                 foreach (var playerId in keys)
                 {
-                    this.UnsetMediaPlayerOpenWithMediaSource(playerId);
+                    //this.UnsetMediaPlayerOpenWithMediaSource(playerId);
+                    EventHandlerHandle eventHandler = _mediaPlayerMediaProviderHandles[playerId];
+                    AgoraUtil.FreeEventHandlerHandle(ref eventHandler);
                 }
+                _mediaPlayerMediaProviderHandles.Clear();
 
                 keys = GetDicKeys<int, EventHandlerHandle>(this._mediaPlayerAudioSpectrumObserverHandles);
                 foreach (var playerId in keys)
                 {
-                    this.UnSetIrisAudioSpectrumObserver(playerId);
+                    //this.UnSetIrisAudioSpectrumObserver(playerId);
+                    EventHandlerHandle eventHandler = _mediaPlayerAudioSpectrumObserverHandles[playerId];
+                    AgoraUtil.FreeEventHandlerHandle(ref eventHandler);
                 }
+                _mediaPlayerAudioSpectrumObserverHandles.Clear();
 
             }
 
@@ -481,7 +495,7 @@ namespace Agora.Rtc
         }
 
         public int DestroyMediaPlayer(int playerId)
-        {
+        { 
             _param.Clear();
             _param.Add("playerId", playerId);
 
