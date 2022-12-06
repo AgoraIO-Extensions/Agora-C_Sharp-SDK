@@ -76,7 +76,10 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -107,7 +110,13 @@ namespace Agora.Rtc.Event
             UInt16 lost;
             ParamsHelper.InitParam(out lost);
 
-            var jsonObj = new { connection, remoteUid, quality, delay, lost };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("quality", quality);
+            jsonObj.Add("delay", delay);
+            jsonObj.Add("lost", lost);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -135,7 +144,12 @@ namespace Agora.Rtc.Event
             int totalVolume;
             ParamsHelper.InitParam(out totalVolume);
 
-            var jsonObj = new { connection, speakers, speakerNumber, totalVolume };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("speakers", speakers);
+            jsonObj.Add("speakerNumber", speakerNumber);
+            jsonObj.Add("totalVolume", totalVolume);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -157,7 +171,10 @@ namespace Agora.Rtc.Event
             RtcStats stats;
             ParamsHelper.InitParam(out stats);
 
-            var jsonObj = new { connection, stats };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("stats", stats);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -179,7 +196,10 @@ namespace Agora.Rtc.Event
             RtcStats stats;
             ParamsHelper.InitParam(out stats);
 
-            var jsonObj = new { connection, stats };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("stats", stats);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -207,7 +227,12 @@ namespace Agora.Rtc.Event
             int rxQuality;
             ParamsHelper.InitParam(out rxQuality);
 
-            var jsonObj = new { connection, remoteUid, txQuality, rxQuality };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("txQuality", txQuality);
+            jsonObj.Add("rxQuality", rxQuality);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -226,7 +251,9 @@ namespace Agora.Rtc.Event
             RtcConnection connection;
             ParamsHelper.InitParam(out connection);
 
-            var jsonObj = new { connection };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -254,7 +281,12 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, width, height, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("width", width);
+            jsonObj.Add("height", height);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -276,7 +308,10 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -307,7 +342,13 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, remoteUid, width, height, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("width", width);
+            jsonObj.Add("height", height);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -341,7 +382,14 @@ namespace Agora.Rtc.Event
             int rotation;
             ParamsHelper.InitParam(out rotation);
 
-            var jsonObj = new { connection, sourceType, uid, width, height, rotation };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("sourceType", sourceType);
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("width", width);
+            jsonObj.Add("height", height);
+            jsonObj.Add("rotation", rotation);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -366,7 +414,11 @@ namespace Agora.Rtc.Event
             LOCAL_VIDEO_STREAM_ERROR errorCode;
             ParamsHelper.InitParam(out errorCode);
 
-            var jsonObj = new { source, state, errorCode };
+            jsonObj.Clear();
+            jsonObj.Add("source", source);
+            jsonObj.Add("state", state);
+            jsonObj.Add("errorCode", errorCode);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -397,7 +449,13 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, remoteUid, state, reason, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("state", state);
+            jsonObj.Add("reason", reason);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -428,7 +486,13 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, remoteUid, width, height, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("width", width);
+            jsonObj.Add("height", height);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -453,7 +517,11 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, remoteUid, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -478,7 +546,11 @@ namespace Agora.Rtc.Event
             USER_OFFLINE_REASON_TYPE reason;
             ParamsHelper.InitParam(out reason);
 
-            var jsonObj = new { connection, remoteUid, reason };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("reason", reason);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -503,7 +575,11 @@ namespace Agora.Rtc.Event
             bool muted;
             ParamsHelper.InitParam(out muted);
 
-            var jsonObj = new { connection, remoteUid, muted };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("muted", muted);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -528,7 +604,11 @@ namespace Agora.Rtc.Event
             bool muted;
             ParamsHelper.InitParam(out muted);
 
-            var jsonObj = new { connection, remoteUid, muted };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("muted", muted);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -553,7 +633,11 @@ namespace Agora.Rtc.Event
             bool enabled;
             ParamsHelper.InitParam(out enabled);
 
-            var jsonObj = new { connection, remoteUid, enabled };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("enabled", enabled);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -578,7 +662,11 @@ namespace Agora.Rtc.Event
             bool enabled;
             ParamsHelper.InitParam(out enabled);
 
-            var jsonObj = new { connection, remoteUid, enabled };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("enabled", enabled);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -603,7 +691,11 @@ namespace Agora.Rtc.Event
             uint state;
             ParamsHelper.InitParam(out state);
 
-            var jsonObj = new { connection, remoteUid, state };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("state", state);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -625,7 +717,10 @@ namespace Agora.Rtc.Event
             LocalAudioStats stats;
             ParamsHelper.InitParam(out stats);
 
-            var jsonObj = new { connection, stats };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("stats", stats);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -647,7 +742,10 @@ namespace Agora.Rtc.Event
             RemoteAudioStats stats;
             ParamsHelper.InitParam(out stats);
 
-            var jsonObj = new { connection, stats };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("stats", stats);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -669,7 +767,10 @@ namespace Agora.Rtc.Event
             LocalVideoStats stats;
             ParamsHelper.InitParam(out stats);
 
-            var jsonObj = new { connection, stats };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("stats", stats);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -691,7 +792,10 @@ namespace Agora.Rtc.Event
             RemoteVideoStats stats;
             ParamsHelper.InitParam(out stats);
 
-            var jsonObj = new { connection, stats };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("stats", stats);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -710,7 +814,9 @@ namespace Agora.Rtc.Event
             RtcConnection connection;
             ParamsHelper.InitParam(out connection);
 
-            var jsonObj = new { connection };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -729,7 +835,9 @@ namespace Agora.Rtc.Event
             RtcConnection connection;
             ParamsHelper.InitParam(out connection);
 
-            var jsonObj = new { connection };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -748,7 +856,9 @@ namespace Agora.Rtc.Event
             RtcConnection connection;
             ParamsHelper.InitParam(out connection);
 
-            var jsonObj = new { connection };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -782,7 +892,14 @@ namespace Agora.Rtc.Event
             ulong sentTs;
             ParamsHelper.InitParam(out sentTs);
 
-            var jsonObj = new { connection, remoteUid, streamId, data, length, sentTs };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("streamId", streamId);
+            jsonObj.Add("data", data);
+            jsonObj.Add("length", length);
+            jsonObj.Add("sentTs", sentTs);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -816,7 +933,14 @@ namespace Agora.Rtc.Event
             int cached;
             ParamsHelper.InitParam(out cached);
 
-            var jsonObj = new { connection, remoteUid, streamId, code, missed, cached };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("streamId", streamId);
+            jsonObj.Add("code", code);
+            jsonObj.Add("missed", missed);
+            jsonObj.Add("cached", cached);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -835,7 +959,9 @@ namespace Agora.Rtc.Event
             RtcConnection connection;
             ParamsHelper.InitParam(out connection);
 
-            var jsonObj = new { connection };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -857,7 +983,10 @@ namespace Agora.Rtc.Event
             LICENSE_ERROR_TYPE reason;
             ParamsHelper.InitParam(out reason);
 
-            var jsonObj = new { connection, reason };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("reason", reason);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -879,7 +1008,10 @@ namespace Agora.Rtc.Event
             string token;
             ParamsHelper.InitParam(out token);
 
-            var jsonObj = new { connection, token };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("token", token);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -901,7 +1033,10 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -926,7 +1061,11 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, userId, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("userId", userId);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -951,7 +1090,11 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, uid, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -976,7 +1119,11 @@ namespace Agora.Rtc.Event
             LOCAL_AUDIO_STREAM_ERROR error;
             ParamsHelper.InitParam(out error);
 
-            var jsonObj = new { connection, state, error };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("state", state);
+            jsonObj.Add("error", error);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1007,7 +1154,13 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { connection, remoteUid, state, reason, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("state", state);
+            jsonObj.Add("reason", reason);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1029,7 +1182,10 @@ namespace Agora.Rtc.Event
             uid_t uid;
             ParamsHelper.InitParam(out uid);
 
-            var jsonObj = new { connection, uid };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("uid", uid);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1057,7 +1213,12 @@ namespace Agora.Rtc.Event
             ClientRoleOptions newRoleOptions;
             ParamsHelper.InitParam(out newRoleOptions);
 
-            var jsonObj = new { connection, oldRole, newRole, newRoleOptions };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("oldRole", oldRole);
+            jsonObj.Add("newRole", newRole);
+            jsonObj.Add("newRoleOptions", newRoleOptions);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1082,7 +1243,11 @@ namespace Agora.Rtc.Event
             CLIENT_ROLE_TYPE currentRole;
             ParamsHelper.InitParam(out currentRole);
 
-            var jsonObj = new { connection, reason, currentRole };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("reason", reason);
+            jsonObj.Add("currentRole", currentRole);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1113,7 +1278,13 @@ namespace Agora.Rtc.Event
             UInt16 rxKBitRate;
             ParamsHelper.InitParam(out rxKBitRate);
 
-            var jsonObj = new { connection, remoteUid, delay, lost, rxKBitRate };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("delay", delay);
+            jsonObj.Add("lost", lost);
+            jsonObj.Add("rxKBitRate", rxKBitRate);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1144,7 +1315,13 @@ namespace Agora.Rtc.Event
             UInt16 rxKBitRate;
             ParamsHelper.InitParam(out rxKBitRate);
 
-            var jsonObj = new { connection, remoteUid, delay, lost, rxKBitRate };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("delay", delay);
+            jsonObj.Add("lost", lost);
+            jsonObj.Add("rxKBitRate", rxKBitRate);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1169,7 +1346,11 @@ namespace Agora.Rtc.Event
             CONNECTION_CHANGED_REASON_TYPE reason;
             ParamsHelper.InitParam(out reason);
 
-            var jsonObj = new { connection, state, reason };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("state", state);
+            jsonObj.Add("reason", reason);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1197,7 +1378,12 @@ namespace Agora.Rtc.Event
             string wlAccMsg;
             ParamsHelper.InitParam(out wlAccMsg);
 
-            var jsonObj = new { connection, reason, action, wlAccMsg };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("reason", reason);
+            jsonObj.Add("action", action);
+            jsonObj.Add("wlAccMsg", wlAccMsg);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1222,7 +1408,11 @@ namespace Agora.Rtc.Event
             WlAccStats averageStats;
             ParamsHelper.InitParam(out averageStats);
 
-            var jsonObj = new { connection, currentStats, averageStats };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("currentStats", currentStats);
+            jsonObj.Add("averageStats", averageStats);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1244,7 +1434,10 @@ namespace Agora.Rtc.Event
             NETWORK_TYPE type;
             ParamsHelper.InitParam(out type);
 
-            var jsonObj = new { connection, type };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("type", type);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1266,7 +1459,10 @@ namespace Agora.Rtc.Event
             ENCRYPTION_ERROR_TYPE errorType;
             ParamsHelper.InitParam(out errorType);
 
-            var jsonObj = new { connection, errorType };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("errorType", errorType);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1294,7 +1490,12 @@ namespace Agora.Rtc.Event
             UPLOAD_ERROR_REASON reason;
             ParamsHelper.InitParam(out reason);
 
-            var jsonObj = new { connection, requestId, success, reason };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("requestId", requestId);
+            jsonObj.Add("success", success);
+            jsonObj.Add("reason", reason);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1319,7 +1520,11 @@ namespace Agora.Rtc.Event
             string userAccount;
             ParamsHelper.InitParam(out userAccount);
 
-            var jsonObj = new { connection, remoteUid, userAccount };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("remoteUid", remoteUid);
+            jsonObj.Add("userAccount", userAccount);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1353,7 +1558,14 @@ namespace Agora.Rtc.Event
             int errCode;
             ParamsHelper.InitParam(out errCode);
 
-            var jsonObj = new { connection, uid, filePath, width, height, errCode };
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("filePath", filePath);
+            jsonObj.Add("width", width);
+            jsonObj.Add("height", height);
+            jsonObj.Add("errCode", errCode);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1388,7 +1600,13 @@ namespace Agora.Rtc.Event
             int elapsed;
             ParamsHelper.InitParam(out elapsed);
 
-            var jsonObj = new { channel, uid, proxyType, localProxyIp, elapsed };
+            jsonObj.Clear();
+            jsonObj.Add("channel", channel);
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("proxyType", proxyType);
+            jsonObj.Add("localProxyIp", localProxyIp);
+            jsonObj.Add("elapsed", elapsed);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1410,7 +1628,10 @@ namespace Agora.Rtc.Event
             string msg;
             ParamsHelper.InitParam(out msg);
 
-            var jsonObj = new { err, msg };
+            jsonObj.Clear();
+            jsonObj.Add("err", err);
+            jsonObj.Add("msg", msg);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1429,7 +1650,9 @@ namespace Agora.Rtc.Event
             LastmileProbeResult result;
             ParamsHelper.InitParam(out result);
 
-            var jsonObj = new { result };
+            jsonObj.Clear();
+            jsonObj.Add("result", result);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1454,7 +1677,11 @@ namespace Agora.Rtc.Event
             MEDIA_DEVICE_STATE_TYPE deviceState;
             ParamsHelper.InitParam(out deviceState);
 
-            var jsonObj = new { deviceId, deviceType, deviceState };
+            jsonObj.Clear();
+            jsonObj.Add("deviceId", deviceId);
+            jsonObj.Add("deviceType", deviceType);
+            jsonObj.Add("deviceState", deviceState);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1473,7 +1700,9 @@ namespace Agora.Rtc.Event
             long position;
             ParamsHelper.InitParam(out position);
 
-            var jsonObj = new { position };
+            jsonObj.Clear();
+            jsonObj.Add("position", position);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1489,10 +1718,8 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGFINISHED;
 
-            var jsonObj = new
-            {
+            jsonObj.Clear();
 
-            };
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1511,7 +1738,9 @@ namespace Agora.Rtc.Event
             int soundId;
             ParamsHelper.InitParam(out soundId);
 
-            var jsonObj = new { soundId };
+            jsonObj.Clear();
+            jsonObj.Add("soundId", soundId);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1536,7 +1765,11 @@ namespace Agora.Rtc.Event
             MEDIA_DEVICE_STATE_TYPE deviceState;
             ParamsHelper.InitParam(out deviceState);
 
-            var jsonObj = new { deviceId, deviceType, deviceState };
+            jsonObj.Clear();
+            jsonObj.Add("deviceId", deviceId);
+            jsonObj.Add("deviceType", deviceType);
+            jsonObj.Add("deviceState", deviceState);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1555,7 +1788,9 @@ namespace Agora.Rtc.Event
             UplinkNetworkInfo info;
             ParamsHelper.InitParam(out info);
 
-            var jsonObj = new { info };
+            jsonObj.Clear();
+            jsonObj.Add("info", info);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1574,7 +1809,9 @@ namespace Agora.Rtc.Event
             DownlinkNetworkInfo info;
             ParamsHelper.InitParam(out info);
 
-            var jsonObj = new { info };
+            jsonObj.Clear();
+            jsonObj.Add("info", info);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1593,7 +1830,9 @@ namespace Agora.Rtc.Event
             int quality;
             ParamsHelper.InitParam(out quality);
 
-            var jsonObj = new { quality };
+            jsonObj.Clear();
+            jsonObj.Add("quality", quality);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1618,7 +1857,11 @@ namespace Agora.Rtc.Event
             string result;
             ParamsHelper.InitParam(out result);
 
-            var jsonObj = new { err, api, result };
+            jsonObj.Clear();
+            jsonObj.Add("err", err);
+            jsonObj.Add("api", api);
+            jsonObj.Add("result", result);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1635,10 +1878,8 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCAMERAREADY;
 
-            var jsonObj = new
-            {
+            jsonObj.Clear();
 
-            };
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1666,7 +1907,12 @@ namespace Agora.Rtc.Event
             int height;
             ParamsHelper.InitParam(out height);
 
-            var jsonObj = new { x, y, width, height };
+            jsonObj.Clear();
+            jsonObj.Add("x", x);
+            jsonObj.Add("y", y);
+            jsonObj.Add("width", width);
+            jsonObj.Add("height", height);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1694,7 +1940,12 @@ namespace Agora.Rtc.Event
             int height;
             ParamsHelper.InitParam(out height);
 
-            var jsonObj = new { x, y, width, height };
+            jsonObj.Clear();
+            jsonObj.Add("x", x);
+            jsonObj.Add("y", y);
+            jsonObj.Add("width", width);
+            jsonObj.Add("height", height);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1725,7 +1976,13 @@ namespace Agora.Rtc.Event
             int numFaces;
             ParamsHelper.InitParam(out numFaces);
 
-            var jsonObj = new { imageWidth, imageHeight, vecRectangle, vecDistance, numFaces };
+            jsonObj.Clear();
+            jsonObj.Add("imageWidth", imageWidth);
+            jsonObj.Add("imageHeight", imageHeight);
+            jsonObj.Add("vecRectangle", vecRectangle);
+            jsonObj.Add("vecDistance", vecDistance);
+            jsonObj.Add("numFaces", numFaces);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1743,10 +2000,8 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSTOPPED;
 
-            var jsonObj = new
-            {
+            jsonObj.Clear();
 
-            };
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1768,7 +2023,10 @@ namespace Agora.Rtc.Event
             AUDIO_MIXING_REASON_TYPE reason;
             ParamsHelper.InitParam(out reason);
 
-            var jsonObj = new { state, reason };
+            jsonObj.Clear();
+            jsonObj.Add("state", state);
+            jsonObj.Add("reason", reason);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1790,7 +2048,10 @@ namespace Agora.Rtc.Event
             RHYTHM_PLAYER_ERROR_TYPE errorCode;
             ParamsHelper.InitParam(out errorCode);
 
-            var jsonObj = new { state, errorCode };
+            jsonObj.Clear();
+            jsonObj.Add("state", state);
+            jsonObj.Add("errorCode", errorCode);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1809,7 +2070,9 @@ namespace Agora.Rtc.Event
             CONTENT_INSPECT_RESULT result;
             ParamsHelper.InitParam(out result);
 
-            var jsonObj = new { result };
+            jsonObj.Clear();
+            jsonObj.Add("result", result);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1834,7 +2097,11 @@ namespace Agora.Rtc.Event
             bool muted;
             ParamsHelper.InitParam(out muted);
 
-            var jsonObj = new { deviceType, volume, muted };
+            jsonObj.Clear();
+            jsonObj.Add("deviceType", deviceType);
+            jsonObj.Add("volume", volume);
+            jsonObj.Add("muted", muted);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1859,7 +2126,11 @@ namespace Agora.Rtc.Event
             RTMP_STREAM_PUBLISH_ERROR_TYPE errCode;
             ParamsHelper.InitParam(out errCode);
 
-            var jsonObj = new { url, state, errCode };
+            jsonObj.Clear();
+            jsonObj.Add("url", url);
+            jsonObj.Add("state", state);
+            jsonObj.Add("errCode", errCode);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1881,7 +2152,10 @@ namespace Agora.Rtc.Event
             RTMP_STREAMING_EVENT eventCode;
             ParamsHelper.InitParam(out eventCode);
 
-            var jsonObj = new { url, eventCode };
+            jsonObj.Clear();
+            jsonObj.Add("url", url);
+            jsonObj.Add("eventCode", eventCode);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1897,10 +2171,8 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONTRANSCODINGUPDATED;
 
-            var jsonObj = new
-            {
+            jsonObj.Clear();
 
-            };
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1919,7 +2191,9 @@ namespace Agora.Rtc.Event
             int routing;
             ParamsHelper.InitParam(out routing);
 
-            var jsonObj = new { routing };
+            jsonObj.Clear();
+            jsonObj.Add("routing", routing);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1941,7 +2215,10 @@ namespace Agora.Rtc.Event
             int code;
             ParamsHelper.InitParam(out code);
 
-            var jsonObj = new { state, code };
+            jsonObj.Clear();
+            jsonObj.Add("state", state);
+            jsonObj.Add("code", code);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1960,7 +2237,9 @@ namespace Agora.Rtc.Event
             int code;
             ParamsHelper.InitParam(out code);
 
-            var jsonObj = new { code };
+            jsonObj.Clear();
+            jsonObj.Add("code", code);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -1979,7 +2258,9 @@ namespace Agora.Rtc.Event
             bool isFallbackOrRecover;
             ParamsHelper.InitParam(out isFallbackOrRecover);
 
-            var jsonObj = new { isFallbackOrRecover };
+            jsonObj.Clear();
+            jsonObj.Add("isFallbackOrRecover", isFallbackOrRecover);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2001,7 +2282,10 @@ namespace Agora.Rtc.Event
             bool isFallbackOrRecover;
             ParamsHelper.InitParam(out isFallbackOrRecover);
 
-            var jsonObj = new { uid, isFallbackOrRecover };
+            jsonObj.Clear();
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("isFallbackOrRecover", isFallbackOrRecover);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2020,7 +2304,9 @@ namespace Agora.Rtc.Event
             PERMISSION_TYPE permissionType;
             ParamsHelper.InitParam(out permissionType);
 
-            var jsonObj = new { permissionType };
+            jsonObj.Clear();
+            jsonObj.Add("permissionType", permissionType);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2042,7 +2328,10 @@ namespace Agora.Rtc.Event
             string userAccount;
             ParamsHelper.InitParam(out userAccount);
 
-            var jsonObj = new { uid, userAccount };
+            jsonObj.Clear();
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("userAccount", userAccount);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2064,7 +2353,10 @@ namespace Agora.Rtc.Event
             UserInfo info;
             ParamsHelper.InitParam(out info);
 
-            var jsonObj = new { uid, info };
+            jsonObj.Clear();
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("info", info);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2075,7 +2367,7 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnUserInfoUpdatedPassed(uid, info));
         }
 
-      
+
         [Test]
         public void Test_OnAudioSubscribeStateChanged()
         {
@@ -2096,7 +2388,13 @@ namespace Agora.Rtc.Event
             int elapseSinceLastState;
             ParamsHelper.InitParam(out elapseSinceLastState);
 
-            var jsonObj = new { channel, uid, oldState, newState, elapseSinceLastState };
+            jsonObj.Clear();
+            jsonObj.Add("channel", channel);
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("oldState", oldState);
+            jsonObj.Add("newState", newState);
+            jsonObj.Add("elapseSinceLastState", elapseSinceLastState);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2127,7 +2425,13 @@ namespace Agora.Rtc.Event
             int elapseSinceLastState;
             ParamsHelper.InitParam(out elapseSinceLastState);
 
-            var jsonObj = new { channel, uid, oldState, newState, elapseSinceLastState };
+            jsonObj.Clear();
+            jsonObj.Add("channel", channel);
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("oldState", oldState);
+            jsonObj.Add("newState", newState);
+            jsonObj.Add("elapseSinceLastState", elapseSinceLastState);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2155,7 +2459,12 @@ namespace Agora.Rtc.Event
             int elapseSinceLastState;
             ParamsHelper.InitParam(out elapseSinceLastState);
 
-            var jsonObj = new { channel, oldState, newState, elapseSinceLastState };
+            jsonObj.Clear();
+            jsonObj.Add("channel", channel);
+            jsonObj.Add("oldState", oldState);
+            jsonObj.Add("newState", newState);
+            jsonObj.Add("elapseSinceLastState", elapseSinceLastState);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2186,7 +2495,13 @@ namespace Agora.Rtc.Event
             int elapseSinceLastState;
             ParamsHelper.InitParam(out elapseSinceLastState);
 
-            var jsonObj = new { source, channel, oldState, newState, elapseSinceLastState };
+            jsonObj.Clear();
+            jsonObj.Add("source", source);
+            jsonObj.Add("channel", channel);
+            jsonObj.Add("oldState", oldState);
+            jsonObj.Add("newState", newState);
+            jsonObj.Add("elapseSinceLastState", elapseSinceLastState);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2214,7 +2529,12 @@ namespace Agora.Rtc.Event
             string value;
             ParamsHelper.InitParam(out value);
 
-            var jsonObj = new { provider, extension, key, value };
+            jsonObj.Clear();
+            jsonObj.Add("provider", provider);
+            jsonObj.Add("extension", extension);
+            jsonObj.Add("key", key);
+            jsonObj.Add("value", value);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2236,7 +2556,10 @@ namespace Agora.Rtc.Event
             string extension;
             ParamsHelper.InitParam(out extension);
 
-            var jsonObj = new { provider, extension };
+            jsonObj.Clear();
+            jsonObj.Add("provider", provider);
+            jsonObj.Add("extension", extension);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2258,7 +2581,10 @@ namespace Agora.Rtc.Event
             string extension;
             ParamsHelper.InitParam(out extension);
 
-            var jsonObj = new { provider, extension };
+            jsonObj.Clear();
+            jsonObj.Add("provider", provider);
+            jsonObj.Add("extension", extension);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2286,7 +2612,12 @@ namespace Agora.Rtc.Event
             string message;
             ParamsHelper.InitParam(out message);
 
-            var jsonObj = new { provider, extension, error, message };
+            jsonObj.Clear();
+            jsonObj.Add("provider", provider);
+            jsonObj.Add("extension", extension);
+            jsonObj.Add("error", error);
+            jsonObj.Add("message", message);
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -2297,7 +2628,7 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnExtensionErrorPassed(provider, extension, error, message));
         }
 
-     
+
 
         #endregion
 

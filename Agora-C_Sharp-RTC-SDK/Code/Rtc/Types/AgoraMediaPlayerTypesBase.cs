@@ -5,7 +5,7 @@ namespace Agora.Rtc
     using int64_t = Int64;
 
     #region AgoraMediaPlayerTypes.h
-    
+
     ///
     /// <summary>
     /// The playback state.
@@ -209,7 +209,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         PLAYER_ERROR_SRC_BUFFER_UNDERFLOW = -12,
-        
+
         ///
         /// <summary>
         /// -13: The playback is interrupted.
@@ -377,7 +377,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         PLAYER_EVENT_REACH_CACHE_FILE_MAX_COUNT = 14,
-        
+
         ///
         /// <summary>
         /// 15: The cached media files reach the limit in aggregate storage space.
@@ -442,91 +442,91 @@ namespace Agora.Rtc
         /// The index of the media stream.
         /// </summary>
         ///
-        public int streamIndex { set; get; }
+        public int streamIndex;
 
         ///
         /// <summary>
         /// The type of the media stream. See MEDIA_STREAM_TYPE .
         /// </summary>
         ///
-        public MEDIA_STREAM_TYPE streamType { set; get; }
+        public MEDIA_STREAM_TYPE streamType;
 
         ///
         /// <summary>
         /// The codec of the media stream.
         /// </summary>
         ///
-        public string codecName { set; get; }
+        public string codecName;
 
         ///
         /// <summary>
         /// The language of the media stream.
         /// </summary>
         ///
-        public string language { set; get; }
+        public string language;
 
         ///
         /// <summary>
         /// This parameter only takes effect for video streams, and indicates the video frame rate (fps).
         /// </summary>
         ///
-        public int videoFrameRate { set; get; }
+        public int videoFrameRate;
 
         ///
         /// <summary>
         /// This parameter only takes effect for video streams, and indicates the video bitrate (bps).
         /// </summary>
         ///
-        public int videoBitRate { set; get; }
+        public int videoBitRate;
 
         ///
         /// <summary>
         /// This parameter only takes effect for video streams, and indicates the video width (pixel).
         /// </summary>
         ///
-        public int videoWidth { set; get; }
+        public int videoWidth;
 
         ///
         /// <summary>
         /// This parameter only takes effect for video streams, and indicates the video height (pixel).
         /// </summary>
         ///
-        public int videoHeight { set; get; }
+        public int videoHeight;
 
         ///
         /// <summary>
         /// This parameter only takes effect for video streams, and indicates the video rotation angle.
         /// </summary>
         ///
-        public int videoRotation { set; get; }
+        public int videoRotation;
 
         ///
         /// <summary>
         /// This parameter only takes effect for audio streams, and indicates the audio sample rate (Hz).
         /// </summary>
         ///
-        public int audioSampleRate { set; get; }
+        public int audioSampleRate;
 
         ///
         /// <summary>
         /// This parameter only takes effect for audio streams, and indicates the audio channel number.
         /// </summary>
         ///
-        public int audioChannels { set; get; }
+        public int audioChannels;
 
         ///
         /// <summary>
         /// This parameter only takes effect for audio streams, and indicates the bit number of each audio sample.
         /// </summary>
         ///
-        public int audioBitsPerSample { set; get; }
+        public int audioBitsPerSample;
 
         ///
         /// <summary>
         /// The total duration (s) of the media stream.
         /// </summary>
         ///
-        public int64_t duration { set; get; }
+        public int64_t duration;
 
         public PlayerStreamInfo()
         {
@@ -558,14 +558,14 @@ namespace Agora.Rtc
         /// The video bitrate (Kbps) of the media resource being played.
         /// </summary>
         ///
-        public int bitrateInKbps { set; get; }
+        public int bitrateInKbps;
 
         ///
         /// <summary>
         /// The name of the media resource.
         /// </summary>
         ///
-        public string name { set; get; }
+        public string name;
     };
 
     ///
@@ -602,21 +602,21 @@ namespace Agora.Rtc
         /// The size (bytes) of the media file being played.
         /// </summary>
         ///
-        public Int64 fileSize { set; get; }
+        public Int64 fileSize;
 
         ///
         /// <summary>
         /// The size (bytes) of the media file that you want to cache.
         /// </summary>
         ///
-        public Int64 cacheSize { set; get; }
+        public Int64 cacheSize;
 
         ///
         /// <summary>
         /// The size (bytes) of the media file that has been downloaded.
         /// </summary>
         ///
-        public Int64 downloadSize { set; get; }
+        public Int64 downloadSize;
     };
 
     ///
@@ -686,35 +686,35 @@ namespace Agora.Rtc
         /// The URL of the media file to be played.If you open a common media resource, pass in the value to url. If you open a custom media resource, pass in the value to provider. Agora recommends that you do not pass in values to both parameters in one call; otherwise, this call may fail.
         /// </summary>
         ///
-        public string url { set; get; }
+        public string url;
 
         ///
         /// <summary>
         /// The URI (Uniform Resource Identifier) of the media file.
         /// </summary>
         ///
-        public string uri { set; get; }
+        public string uri;
 
         ///
         /// <summary>
         /// The starting position (ms) for playback. Default value is 0.
         /// </summary>
         ///
-        public int64_t startPos { set; get; }
+        public int64_t startPos;
 
         ///
         /// <summary>
         /// Whether to enable autoplay once the media file is opened:true: (Default) Enables autoplay.false: Disables autoplay.If autoplay is disabled, you need to call the Play method to play a media file after it is opened.
         /// </summary>
         ///
-        public bool autoPlay { set; get; }
+        public bool autoPlay;
 
         ///
         /// <summary>
         /// Whether to cache the media file when it is being played:true:Enables caching.false: (Default) Disables caching.If you need to enable caching, pass in a value to uri; otherwise, caching is based on the url of the media file.If you enable this function, the Media Player caches part of the media file being played on your local device, and you can play the cached media file without internet connection. The statistics about the media file being cached are updated every second after the media file is played. See CacheStatistics .
         /// </summary>
         ///
-        public bool enableCache { set; get; }
+        public bool enableCache;
 
         ///
         /// <summary>
@@ -735,7 +735,7 @@ namespace Agora.Rtc
         /// The callback for custom media resource files. See IMediaPlayerCustomDataProvider .If you open a custom media resource, pass in the value to provider. If you open a common media resource, pass in the value to url. Agora recommends that you do not pass in values to both url and provider in one call; otherwise, this call may fail.
         /// </summary>
         ///
-        public IMediaPlayerCustomDataProvider provider { set; get; }
+        public IMediaPlayerCustomDataProvider provider;
 
         public MediaSource()
         {
