@@ -78,11 +78,11 @@ namespace Agora.Rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                        if (!mediaRecorderObserverDic.ContainsKey(key)) return;
-                        mediaRecorderObserverDic[key].OnRecorderStateChanged(
-                            (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
-                            (RecorderErrorCode)AgoraJson.GetData<int>(jsonData, "error")
-                        );
+                    if (!mediaRecorderObserverDic.ContainsKey(key)) return;
+                    mediaRecorderObserverDic[key].OnRecorderStateChanged(
+                        (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
+                        (RecorderErrorCode)AgoraJson.GetData<int>(jsonData, "error")
+                    );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
@@ -93,10 +93,10 @@ namespace Agora.Rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                        if (!mediaRecorderObserverDic.ContainsKey(key)) return;
-                        mediaRecorderObserverDic[key].OnRecorderInfoUpdated(
-                            AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
-                        );
+                    if (!mediaRecorderObserverDic.ContainsKey(key)) return;
+                    mediaRecorderObserverDic[key].OnRecorderInfoUpdated(
+                        AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
+                    );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif

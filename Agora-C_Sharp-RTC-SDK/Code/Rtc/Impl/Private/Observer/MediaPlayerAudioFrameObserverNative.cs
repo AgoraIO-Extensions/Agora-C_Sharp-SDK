@@ -77,11 +77,12 @@ namespace Agora.Rtc
                             frame.data_ = new Int16[dataLength];
                             Marshal.Copy(data_, frame.data_, 0, dataLength);
                             var result = audioFrameObserver.OnFrame(frame);
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                             IntPtr resultPtr = eventParam.result;
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
                     default:
@@ -100,11 +101,12 @@ namespace Agora.Rtc
                 case "MediaPlayerAudioFrameObserver_onFrame":
                     {
                         var result = true;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                         IntPtr resultPtr = eventParam.result;
-                            Marshal.Copy(jsonByte, 0, resultPtr,(int)jsonByte.Length);
+                        IntPtr resultPtr = eventParam.result;
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
                 default:

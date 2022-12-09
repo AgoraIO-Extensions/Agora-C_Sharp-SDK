@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -46,7 +47,7 @@ namespace Agora.Rtc
                 var length = eventParam.length;
                 var buffer_count = eventParam.buffer_count;
 
-              
+
                 switch (@event)
                 {
                     case "VideoEncodedFrameObserver_onEncodedVideoFrameReceived":
@@ -57,7 +58,8 @@ namespace Agora.Rtc
                             UInt64 imageBufferLength = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "length");
                             EncodedVideoFrameInfo videoEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedVideoFrameInfo>(jsonData, "videoEncodedFrameInfo");
                             bool result = videoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, imageBufferLength, videoEncodedFrameInfo);
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -81,7 +83,8 @@ namespace Agora.Rtc
                 case "VideoEncodedFrameObserver_OnEncodedVideoFrameReceived":
                     {
                         bool result = true;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;

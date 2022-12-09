@@ -185,7 +185,8 @@ namespace Agora.Rtc
                             bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnCaptureVideoFrame(videoFrame1, config);
                             if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -207,7 +208,8 @@ namespace Agora.Rtc
                             bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnPreEncodeVideoFrame(videoFrame1, config);
                             if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -224,7 +226,8 @@ namespace Agora.Rtc
                             uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid");
                             bool result = videoFrameObserver.OnRenderVideoFrame(channel_id, uid, videoFrame1);
                             if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -234,7 +237,8 @@ namespace Agora.Rtc
                     case "VideoFrameObserver_getVideoFormatPreference":
                         {
                             VIDEO_OBSERVER_FRAME_TYPE result = videoFrameObserver.GetVideoFormatPreference();
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -244,7 +248,8 @@ namespace Agora.Rtc
                     case "VideoFrameObserver_getObservedFramePosition":
                         {
                             VIDEO_OBSERVER_POSITION result = videoFrameObserver.GetObservedFramePosition();
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -277,7 +282,8 @@ namespace Agora.Rtc
                 case "VideoFrameObserver_onSecondaryPreEncodeScreenVideoFrame":
                     {
                         bool result = true;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;
@@ -287,7 +293,8 @@ namespace Agora.Rtc
                 case "VideoFrameObserver_getVideoFormatPreference":
                     {
                         VIDEO_OBSERVER_FRAME_TYPE result = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;
@@ -298,7 +305,8 @@ namespace Agora.Rtc
                     {
                         VIDEO_OBSERVER_POSITION result = VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER
                                                          | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;
