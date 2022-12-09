@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using AOT;
-using Agora.Rtc;
 #endif
+using Agora.Rtc;
 
 namespace Agora.Rtm
 {
@@ -207,7 +207,7 @@ namespace Agora.Rtm
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
-                UnityEngine.Debug.Log(_apiParam.Result+"==============>>>>>");
+                AgoraLog.Log(_apiParam.Result + "==============>>>>>");
                 users = AgoraJson.JsonToStruct<UserList>(_apiParam.Result, "users");
             }
             else

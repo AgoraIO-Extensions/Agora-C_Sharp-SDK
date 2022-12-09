@@ -2,8 +2,8 @@ using System;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
-using Agora.Rtc;
 #endif
+using Agora.Rtc;
 
 namespace Agora.Rtm
 {
@@ -87,6 +87,8 @@ namespace Agora.Rtm
         {
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero) return;
 
+            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent);
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
             RtmEventHandlerNative.CallbackObject = _callbackObject;
@@ -137,7 +139,7 @@ namespace Agora.Rtm
 
             var json = AgoraJson.ToJson(param);
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent);
+
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_INITIALIZE,
