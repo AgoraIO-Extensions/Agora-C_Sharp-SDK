@@ -59,7 +59,8 @@ namespace Agora.Rtc
                             var spectrumData = new AudioSpectrumData();
                             irisAudioSpectrumData.GenerateAudioSpectrumData(ref spectrumData);
                             var result = audioSpectrumObserver.OnLocalAudioSpectrum(spectrumData);
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -79,7 +80,8 @@ namespace Agora.Rtc
                                 list[i] = e;
                             }
                             var result = audioSpectrumObserver.OnRemoteAudioSpectrum(list, spectrumNumber);
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -103,7 +105,8 @@ namespace Agora.Rtc
                 case "AudioSpectrumObserver_onRemoteAudioSpectrum":
                     {
                         var result = true;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;

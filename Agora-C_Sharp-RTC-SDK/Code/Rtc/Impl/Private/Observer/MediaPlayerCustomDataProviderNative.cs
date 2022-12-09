@@ -64,7 +64,8 @@ namespace Agora.Rtc
                             int bufferSize = (int)AgoraJson.GetData<int>(jsonData, "bufferSize");
                             int result = customDataProvider.OnReadData(buffer0, bufferSize);
 
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -77,7 +78,8 @@ namespace Agora.Rtc
                             int whence = (int)AgoraJson.GetData<int>(jsonData, "whence");
                             Int64 result = customDataProvider.OnSeek(offset, whence);
 
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -99,7 +101,8 @@ namespace Agora.Rtc
                 case "MediaPlayerCustomDataProvider_onReadData":
                     {
                         int result = 0;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;
@@ -109,7 +112,8 @@ namespace Agora.Rtc
                 case "MediaPlayerCustomDataProvider_onSeek":
                     {
                         Int64 result = 0;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;

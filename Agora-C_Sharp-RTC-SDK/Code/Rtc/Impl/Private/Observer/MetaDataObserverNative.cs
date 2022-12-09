@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -82,7 +83,8 @@ namespace Agora.Rtc
                     case "MetadataObserver_getMaxMetadataSize":
                         {
                             int result = metadataObserver.GetMaxMetadataSize();
-                            var p = new { result };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -95,8 +97,9 @@ namespace Agora.Rtc
                             Metadata metadata = AgoraJson.JsonToStruct<Metadata>(jsonData, "metadata");
                             VIDEO_SOURCE_TYPE source_type = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source_type");
                             bool result = metadataObserver.OnReadyToSendMetadata(ref metadata, source_type);
-
-                            var p = new { result, metadata  };
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            p.Add("metadata", metadata);
                             string json = AgoraJson.ToJson(p);
                             var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                             IntPtr resultPtr = eventParam.result;
@@ -126,7 +129,8 @@ namespace Agora.Rtc
                 case "MetadataObserver_getMaxMetadataSize":
                     {
                         int result = 0;
-                        var p = new { result };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;
@@ -137,7 +141,9 @@ namespace Agora.Rtc
                     {
                         Metadata metadata = new Metadata();
                         bool result = false;
-                        var p = new { result, metadata };
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
+                        p.Add("metadata", metadata);
                         string json = AgoraJson.ToJson(p);
                         var jsonByte = System.Text.Encoding.Default.GetBytes(json);
                         IntPtr resultPtr = eventParam.result;
