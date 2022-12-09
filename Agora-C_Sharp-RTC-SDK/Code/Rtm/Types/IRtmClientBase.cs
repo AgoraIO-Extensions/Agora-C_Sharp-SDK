@@ -8,14 +8,16 @@ namespace Agora.Rtm
         {
             appId = "";
             userId = "";
+            useStringUserId = true;
             eventHandler = null;
             logConfig = new LogConfig();
         }
 
-        public RtmConfig(string appId, string userId, IRtmEventHandler eventHandler, LogConfig logConfig)
+        public RtmConfig(string appId, string userId, IRtmEventHandler eventHandler, LogConfig logConfig, bool useStringUserId = true)
         {
             this.appId = appId;
             this.userId = userId;
+            this.useStringUserId = useStringUserId;
             this.eventHandler = eventHandler;
             this.logConfig = logConfig;
         }
@@ -23,6 +25,8 @@ namespace Agora.Rtm
         public string appId { set; get; }
 
         public string userId { set; get; }
+
+        public bool useStringUserId { set; get; }
 
         public IRtmEventHandler eventHandler { set; get; }
 
