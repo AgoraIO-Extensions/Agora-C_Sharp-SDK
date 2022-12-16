@@ -93,6 +93,24 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.IsPreloaded(songCode);
         }
 
+        public override int RemoveCache(Int64 songCode)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.RemoveCache(songCode);
+        }
+
+        public override int GetCaches(ref MusicCacheInfo[] cacheInfo, ref uint cacheInfoSize)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.GetCaches(ref cacheInfo, ref cacheInfoSize);
+        }
+
         public override int Preload(long songCode, string jsonOption = "")
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)

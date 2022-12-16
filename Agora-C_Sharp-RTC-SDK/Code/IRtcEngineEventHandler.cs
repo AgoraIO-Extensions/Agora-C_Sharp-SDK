@@ -153,6 +153,9 @@ namespace Agora.Rtc
         ///
         public virtual void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
+
+        public virtual void OnAudioMixingPositionChanged(Int64 position) { }
+
         [Obsolete("This method is deprecated, use onAudioMixingStateChanged instead")]
         ///
         /// <summary>
@@ -1010,6 +1013,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) { }
+
+        public virtual void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error) { }
 
         ///
         /// <summary>

@@ -17,6 +17,7 @@ namespace Agora.Rtc
             internal static AudioFrame RecordAudioFrame = new AudioFrame();
             internal static AudioFrame PlaybackAudioFrame = new AudioFrame();
             internal static AudioFrame MixedAudioFrame = new AudioFrame();
+            internal static AudioFrame EarMonitoringAudioFrame = new AudioFrame();
             internal static Dictionary<string, Dictionary<uint, AudioFrame>> AudioFrameBeforeMixingEx =
                 new Dictionary<string, Dictionary<uint, AudioFrame>>();
 
@@ -45,6 +46,9 @@ namespace Agora.Rtc
                         break;
                     case 2:
                         localAudioFrame = LocalAudioFrames.MixedAudioFrame;
+                        break;
+                    case 3:
+                        localAudioFrame = LocalAudioFrames.EarMonitoringAudioFrame;
                         break;
                 }
             }
@@ -207,6 +211,27 @@ namespace Agora.Rtc
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        [MonoPInvokeCallback(typeof(Func_AudioFrameEarMonitoring_Native))]
+#endif
+        internal static bool OnEarMonitoringAudioFrame(IntPtr audioFramePtr)
+        {
+            if (AudioFrameObserver == null)
+                return true;
+
+            var audioFrame = ProcessAudioFrameReceived(audioFramePtr, "", 3);
+
+            try
+            {
+                return AudioFrameObserver.OnEarMonitoringAudioFrame(audioFrame);
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.OnEarMonitoringAudioFrame: " + e);
+                return true;
+            }
+        }
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_AudioFramePosition_Native))]
 #endif
         internal static int GetObservedAudioFramePosition()
@@ -279,6 +304,25 @@ namespace Agora.Rtc
             catch (Exception e)
             {
                 AgoraLog.LogError("[Exception] IAudioFrameObserver.GetMixedAudioParams: " + e);
+                return LocalAudioFrames.irisAudioParams;
+            }
+        }
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        [MonoPInvokeCallback(typeof(Func_AudioParams_Native))]
+#endif
+        internal static IrisAudioParams GetEarMonitoringAudioParams()
+        {
+            if (AudioFrameObserver == null)
+                return LocalAudioFrames.irisAudioParams;
+
+            try
+            {
+                return ProcessAudioParams(AudioFrameObserver.GetEarMonitoringAudioParams());
+            }
+            catch (Exception e)
+            {
+                AgoraLog.LogError("[Exception] IAudioFrameObserver.GetEarMonitoringAudioParams: " + e);
                 return LocalAudioFrames.irisAudioParams;
             }
         }

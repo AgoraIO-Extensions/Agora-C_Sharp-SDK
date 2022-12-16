@@ -24,6 +24,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         kPreloadStatusPreloading = 2,
+
+        kPreloadStatusRemoved = 3,
     };
 
     public enum MusicContentCenterStatusCode
@@ -41,6 +43,16 @@ namespace Agora.Rtc
         /// </summary>
         ///
         kMusicContentCenterStatusErr = 1,
+
+        kMusicContentCenterStatusErrGateway = 2,
+      
+        kMusicContentCenterStatusErrPermissionAndResource = 3,
+       
+        kMusicContentCenterStatusErrInternalDataParse = 4,
+        
+        kMusicContentCenterStatusErrMusicLoading = 5,
+        
+        kMusicContentCenterStatusErrMusicDecryption = 6,
     };
 
     public class MusicChartInfo
@@ -58,6 +70,20 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int id;
+    };
+
+    public enum MUSIC_CACHE_STATUS_TYPE
+    {
+        MUSIC_CACHE_STATUS_TYPE_CACHED = 0,
+     
+        MUSIC_CACHE_STATUS_TYPE_CACHING = 1
+    };
+
+    public class MusicCacheInfo
+    {  
+        public Int64 songCode;
+    
+        public MUSIC_CACHE_STATUS_TYPE status;   
     };
 
     public class MvProperty
@@ -221,7 +247,7 @@ namespace Agora.Rtc
         /// music content center need rtmToken to connect with server
         /// <summary>
         ///
-        public string rtmToken;
+        public string token;
 
         ///
         /// <summary>
@@ -233,14 +259,14 @@ namespace Agora.Rtc
         public MusicContentCenterConfiguration()
         {
             appId = "";
-            rtmToken = "";
+            token = "";
             mccUid = 0;
         }
 
-        public MusicContentCenterConfiguration(string appId, string rtmToken, UInt64 uid)
+        public MusicContentCenterConfiguration(string appId, string token, UInt64 uid)
         {
             this.appId = appId;
-            this.rtmToken = rtmToken;
+            this.token = token;
             this.mccUid = uid;
         }
     }
