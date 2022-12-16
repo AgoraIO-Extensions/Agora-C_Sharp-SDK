@@ -184,7 +184,7 @@ namespace Agora.Rtc
         ///
         public virtual void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState) { }
 
-      
+
         ///
         /// <summary>
         /// Reports the last mile network quality of each user in the channel.
@@ -232,18 +232,7 @@ namespace Agora.Rtc
         public virtual void OnLastmileQuality(int quality) { }
 
         ///
-        /// <summary>
-        /// Occurs when the first local video frame is displayed on the local video view.
-        /// The SDK triggers this callback when the first local video frame is displayed on the local video view.
-        /// </summary>
-        ///
-        /// <param name="connection"> The connection information. See RtcConnection .</param>
-        ///
-        /// <param name="width"> The width (px) of the first local video frame.</param>
-        ///
-        /// <param name="height"> The height (px) of the first local video frame.</param>
-        ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback. If you call StartPreview [1/2] JoinChannel [2/2], then this parameter is the time elapsed from calling the StartPreview [1/2]</param>
+        /// @ignore
         ///
         public virtual void OnFirstLocalVideoFrame(RtcConnection connection, int width, int height, int elapsed) { }
 
@@ -337,7 +326,7 @@ namespace Agora.Rtc
         /// <param name="errorCode"> The detailed error information, see LOCAL_VIDEO_STREAM_ERROR .</param>
         ///
         public virtual void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode) { }
-    
+
         ///
         /// <summary>
         /// Occurs when the remote video stream state changes.
@@ -404,7 +393,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when a remote user (in the communication profile) or a host (in the live streaming profile) stops/resumes sending the audio stream.
-        /// This method is about to be deprecated. Agora recommends you using OnRemoteAudioStateChanged instead.The SDK triggers this callback when the remote user stops or resumes sending the audio stream by calling the MuteLocalAudioStream method.This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 17.
+        /// The SDK triggers this callback when the remote user stops or resumes sending the audio stream by calling the MuteLocalAudioStream method.This callback does not work properly when the number of users (in the communication profile) or hosts (in the live streaming channel) in a channel exceeds 17.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -415,11 +404,11 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserMuteAudio(RtcConnection connection, uint remoteUid, bool muted) { }
 
-       
+
         ///
         /// <summary>
         /// Occurs when a remote user stops/resumes publishing the video stream.
-        /// This method is about to be deprecated. Agora recommends you using OnRemoteVideoStateChanged instead.When a remote user calls MuteLocalVideoStream to stop or resume publishing the video stream, the SDK triggers this callback to report the state of the remote user's publishing stream to the local user.This callback can be inaccurate when the number of users (in the communication profile) or hosts (in the live streaming profile) in a channel exceeds 17.
+        /// When a remote user calls MuteLocalVideoStream to stop or resume publishing the video stream, the SDK triggers this callback to report the state of the remote user's publishing stream to the local user.This callback can be inaccurate when the number of users (in the communication profile) or hosts (in the live streaming profile) in a channel exceeds 17.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -433,7 +422,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when a remote user enables/disables the video module.
-        /// This method is about to be deprecated. Agora recommends you using OnRemoteVideoStateChanged instead.Once the video module is disabled, the user can only use a voice call. The user cannot send or receive any video.The SDK triggers this callback when a remote user enables or disables the video module by calling the EnableVideo or DisableVideo method.
+        /// Once the video module is disabled, the user can only use a voice call. The user cannot send or receive any video.The SDK triggers this callback when a remote user enables or disables the video module by calling the EnableVideo or DisableVideo method.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -711,7 +700,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public virtual void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE reason) { }
-       
+
         ///
         /// <summary>
         /// Occurs when the first audio frame is published.
