@@ -17,7 +17,7 @@ namespace Agora.Rtc
             internal static readonly VideoFrame CaptureVideoFrame = new VideoFrame();
             internal static readonly VideoFrame PreEncodeVideoFrame = new VideoFrame();
             internal static readonly VideoFrame RenderVideoFrame = new VideoFrame();
-            internal static readonly Dictionary<string, Dictionary<uint, VideoFrame>> RenderVideoFrameEx = 
+            internal static readonly Dictionary<string, Dictionary<uint, VideoFrame>> RenderVideoFrameEx =
                 new Dictionary<string, Dictionary<uint, VideoFrame>>();
         }
 
@@ -39,7 +39,7 @@ namespace Agora.Rtc
 
             if (channelId == "")
             {
-                switch(uid)
+                switch (uid)
                 {
                     case 0:
                         localVideoFrame = LocalVideoFrames.CaptureVideoFrame;
@@ -72,7 +72,8 @@ namespace Agora.Rtc
                 if (localVideoFrame.height != videoFrameConverted.height ||
                 localVideoFrame.yStride != videoFrameConverted.y_stride ||
                 localVideoFrame.uStride != videoFrameConverted.u_stride ||
-                localVideoFrame.vStride != videoFrameConverted.v_stride)
+                localVideoFrame.vStride != videoFrameConverted.v_stride
+                )
                 {
                     localVideoFrame.yBuffer = new byte[videoFrameConverted.y_buffer_length];
                     localVideoFrame.uBuffer = new byte[videoFrameConverted.u_buffer_length];
@@ -106,6 +107,7 @@ namespace Agora.Rtc
             localVideoFrame.sharedContext = videoFrameConverted.sharedContext;
             localVideoFrame.matrix = videoFrameConverted.matrix;
             localVideoFrame.textureId = videoFrameConverted.textureId;
+            localVideoFrame.alphaBufferPtr = videoFrameConverted.alphaBuffer;
 
             if (ifConverted) AgoraRtcNative.ClearVideoFrame(ref videoFrameConverted);
 
@@ -117,19 +119,19 @@ namespace Agora.Rtc
 #endif
         internal static bool OnCaptureVideoFrame(IntPtr videoFramePtr, IntPtr videoFrameConfig)
         {
-            var videoFrameBufferConfig = (IrisVideoFrameBufferConfig) (Marshal.PtrToStructure(videoFrameConfig, typeof(IrisVideoFrameBufferConfig)) ?? 
+            var videoFrameBufferConfig = (IrisVideoFrameBufferConfig)(Marshal.PtrToStructure(videoFrameConfig, typeof(IrisVideoFrameBufferConfig)) ??
                                                                    new IrisVideoFrameBufferConfig());
             var config = new VideoFrameBufferConfig();
-            config.type = (VIDEO_SOURCE_TYPE) videoFrameBufferConfig.type;
+            config.type = (VIDEO_SOURCE_TYPE)videoFrameBufferConfig.type;
             config.id = videoFrameBufferConfig.id;
             config.key = videoFrameBufferConfig.key;
-            
+
             try
             {
-                return VideoFrameObserver == null || 
+                return VideoFrameObserver == null ||
                     VideoFrameObserver.OnCaptureVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 0), config);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 AgoraLog.LogError("[Exception] IVideoFrameObserver.OnCaptureVideoFrame: " + e);
                 return true;
@@ -141,10 +143,10 @@ namespace Agora.Rtc
 #endif
         internal static bool OnPreEncodeVideoFrame(IntPtr videoFramePtr, IntPtr videoFrameConfig)
         {
-            var videoFrameBufferConfig = (IrisVideoFrameBufferConfig) (Marshal.PtrToStructure(videoFrameConfig, typeof(IrisVideoFrameBufferConfig)) ?? 
+            var videoFrameBufferConfig = (IrisVideoFrameBufferConfig)(Marshal.PtrToStructure(videoFrameConfig, typeof(IrisVideoFrameBufferConfig)) ??
                                                                    new IrisVideoFrameBufferConfig());
             var config = new VideoFrameBufferConfig();
-            config.type = (VIDEO_SOURCE_TYPE) videoFrameBufferConfig.type;
+            config.type = (VIDEO_SOURCE_TYPE)videoFrameBufferConfig.type;
             config.id = videoFrameBufferConfig.id;
             config.key = videoFrameBufferConfig.key;
 
@@ -153,7 +155,7 @@ namespace Agora.Rtc
                 return VideoFrameObserver == null ||
                     VideoFrameObserver.OnPreEncodeVideoFrame(ProcessVideoFrameReceived(videoFramePtr, "", 1), config);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 AgoraLog.LogError("[Exception] IVideoFrameObserver.OnPreEncodeVideoFrame: " + e);
                 return true;
@@ -170,7 +172,7 @@ namespace Agora.Rtc
                 return VideoFrameObserver == null ||
                     VideoFrameObserver.OnRenderVideoFrame(channel_id, uid, ProcessVideoFrameReceived(videoFramePtr, "", 2));
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 AgoraLog.LogError("[Exception] IVideoFrameObserver.OnRenderVideoFrame: " + e);
                 return true;
@@ -183,14 +185,14 @@ namespace Agora.Rtc
         internal static uint GetObservedFramePosition()
         {
             if (VideoFrameObserver == null)
-                return (uint) (VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER |
+                return (uint)(VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER |
                                VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER);
 
             try
             {
-                return (uint) VideoFrameObserver.GetObservedFramePosition();
+                return (uint)VideoFrameObserver.GetObservedFramePosition();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 AgoraLog.LogError("[Exception] IVideoFrameObserver.GetObservedFramePosition: " + e);
                 return 0;

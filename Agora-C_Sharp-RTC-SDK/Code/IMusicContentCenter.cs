@@ -26,7 +26,7 @@ namespace Agora.Rtc
 
         public abstract int RemoveCache(Int64 songCode);
 
-        public abstract int GetCaches(ref MusicCacheInfo[] cacheInfo, ref uint cacheInfoSize);
+        public abstract int GetCaches(ref MusicCacheInfo[] cacheInfo, uint cacheInfoSize);
 
         public abstract int IsPreloaded(Int64 songCode);
 

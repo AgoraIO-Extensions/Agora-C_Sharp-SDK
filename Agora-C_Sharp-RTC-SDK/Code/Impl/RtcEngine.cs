@@ -2194,24 +2194,6 @@ namespace Agora.Rtc
             return _rtcEngineImpl.ClearVideoWatermarks();
         }
 
-        public override int AddInjectStreamUrl(string url, InjectStreamConfig config)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.AddInjectStreamUrl(url, config);
-        }
-
-        public override int RemoveInjectStreamUrl(string url)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.RemoveInjectStreamUrl(url);
-        }
-
         public override int PauseAudio()
         {
             if (_rtcEngineImpl == null)

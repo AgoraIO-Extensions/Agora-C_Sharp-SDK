@@ -284,11 +284,11 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int GetCaches(ref MusicCacheInfo[] cacheInfo, ref uint cacheInfoSize)
+        public int GetCaches(ref MusicCacheInfo[] cacheInfo, uint cacheInfoSize)
         {
             var param = new
             {
-
+                cacheInfoSize
             };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
@@ -299,12 +299,10 @@ namespace Agora.Rtc
             if (ret == 0)
             {
                 cacheInfo = AgoraJson.JsonToStructArray<MusicCacheInfo>(_result.Result, "cacheInfo");
-                cacheInfoSize = (uint)AgoraJson.GetData<uint>(_result.Result, "cacheInfoSize");
             }
             else
             {
                 cacheInfo = new MusicCacheInfo[0];
-                cacheInfoSize = 0;
             }
 
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");

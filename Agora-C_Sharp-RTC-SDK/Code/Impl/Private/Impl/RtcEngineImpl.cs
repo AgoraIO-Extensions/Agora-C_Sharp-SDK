@@ -3885,40 +3885,6 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int AddInjectStreamUrl(string url, InjectStreamConfig config)
-        {
-            var param = new
-            {
-                url,
-                config
-            };
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADDINJECTSTREAMURL,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int RemoveInjectStreamUrl(string url)
-        {
-            var param = new
-            {
-                url
-            };
-
-            var json = AgoraJson.ToJson(param);
-
-            var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REMOVEINJECTSTREAMURL,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
         public int PauseAudio()
         {
             var param = new { };
@@ -6149,7 +6115,8 @@ namespace Agora.Rtc
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
             IntPtr eglContextPtr = IntPtr.Zero;
             IntPtr metadataPtr = IntPtr.Zero;
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr };
+            IntPtr alphaBuffer = IntPtr.Zero;
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr, alphaBuffer };
 
             var json = AgoraJson.ToJson(param);
 

@@ -3380,15 +3380,6 @@ namespace Agora.Rtc
         #endregion
 
         #region RtmpStreaming
-        ///
-        /// @ignore
-        ///
-        public abstract int AddInjectStreamUrl(string url, InjectStreamConfig config);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int RemoveInjectStreamUrl(string url);
 
         ///
         /// @ignore

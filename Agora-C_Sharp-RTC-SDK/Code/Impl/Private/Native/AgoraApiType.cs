@@ -223,8 +223,6 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_ADDVIDEOWATERMARK2 = "RtcEngine_addVideoWatermark2";
         internal const string FUNC_RTCENGINE_CLEARVIDEOWATERMARK = "RtcEngine_clearVideoWatermark";
         internal const string FUNC_RTCENGINE_CLEARVIDEOWATERMARKS = "RtcEngine_clearVideoWatermarks";
-        internal const string FUNC_RTCENGINE_ADDINJECTSTREAMURL = "RtcEngine_addInjectStreamUrl";
-        internal const string FUNC_RTCENGINE_REMOVEINJECTSTREAMURL = "RtcEngine_removeInjectStreamUrl";
         internal const string FUNC_RTCENGINE_PAUSEAUDIO = "RtcEngine_pauseAudio";
         internal const string FUNC_RTCENGINE_RESUMEAUDIO = "RtcEngine_resumeAudio";
         internal const string FUNC_RTCENGINE_ENABLEWEBSDKINTEROPERABILITY = "RtcEngine_enableWebSdkInteroperability";
