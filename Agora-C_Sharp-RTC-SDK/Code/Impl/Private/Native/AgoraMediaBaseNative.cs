@@ -62,6 +62,7 @@ namespace Agora.Rtc
         internal int textureId;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         internal float[] matrix;
+        internal IntPtr alphaBuffer;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -123,6 +124,7 @@ namespace Agora.Rtc
         internal int rotation;
         internal int trackId;
         internal Int64 captureTimeMs;
+        internal Int64 decodeTimeMs;
         internal uint uid;
         internal int streamType;
     }

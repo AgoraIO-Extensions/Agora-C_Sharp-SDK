@@ -632,6 +632,20 @@ namespace Agora.Rtc
 #endif
                     break;
 
+                case "onAudioMixingPositionChanged":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnAudioMixingPositionChanged(
+                        (Int64)AgoraJson.GetData<Int64>(jsonData, "position")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 case "onAudioDeviceVolumeChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
@@ -1350,6 +1364,21 @@ namespace Agora.Rtc
 #endif
                     break;
 
+                case "onLocalVideoTranscoderError":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (EngineEventHandler == null) return;
+                    EngineEventHandler.OnLocalVideoTranscoderError(
+                       (TranscodingVideoStream)AgoraJson.JsonToStruct<TranscodingVideoStream>(jsonData, "stream"),
+                       (VIDEO_TRANSCODER_ERROR)AgoraJson.GetData<int>(jsonData, "error")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 case "onAudioRoutingChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
@@ -1497,7 +1526,7 @@ namespace Agora.Rtc
                     });
 #endif
                     break;
-                #endregion withBuffer end
+                    #endregion withBuffer end
             }
         }
     }

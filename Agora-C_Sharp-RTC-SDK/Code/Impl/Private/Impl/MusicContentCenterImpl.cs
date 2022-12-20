@@ -267,6 +267,49 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+
+        public int RemoveCache(Int64 songCode)
+        {
+            var param = new
+            {
+                songCode
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(
+                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REMOVECACHE,
+                jsonParam, (UInt32)jsonParam.Length,
+                IntPtr.Zero, 0, out _result);
+
+
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int GetCaches(ref MusicCacheInfo[] cacheInfo, uint cacheInfoSize)
+        {
+            var param = new
+            {
+                cacheInfoSize
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(
+                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REMOVECACHE,
+                jsonParam, (UInt32)jsonParam.Length,
+                IntPtr.Zero, 0, out _result);
+
+            if (ret == 0)
+            {
+                cacheInfo = AgoraJson.JsonToStructArray<MusicCacheInfo>(_result.Result, "cacheInfo");
+            }
+            else
+            {
+                cacheInfo = new MusicCacheInfo[0];
+            }
+
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+
+
         public int RenewToken(string token)
         {
             var param = new

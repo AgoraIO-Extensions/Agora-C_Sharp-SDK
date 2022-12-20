@@ -97,7 +97,7 @@
             this.position = position;
             this.forward = forward;
         }
-        
+
         ///
         /// <summary>
         /// The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
@@ -113,6 +113,28 @@
         public float[] forward { set; get; }
     };
 
+
+    public class SpatialAudioZone
+    {
+
+        public int zoneSetId;
+
+        public float[] position;
+
+        public float[] forward;
+
+        public float[] right;
+
+        public float[] up;
+
+        public float forwardLength;
+
+        public float rightLength;
+
+        public float upLength;
+
+        public float audioAttenuation;
+    };
     ///
     /// @ignore
     ///

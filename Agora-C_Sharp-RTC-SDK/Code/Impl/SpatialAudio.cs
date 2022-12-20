@@ -363,6 +363,44 @@ namespace Agora.Rtc
             return _localSpatialAudioEngineImpl.MuteAllRemoteAudioStreams(mute);
         }
 
+
+        public override int SetZones(SpatialAudioZone[] zones, uint zoneCount)
+        {
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _localSpatialAudioEngineImpl.SetZones(zones, zoneCount);
+        }
+
+        public override int SetPlayerAttenuation(int playerId, double attenuation, bool forceSet)
+        {
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _localSpatialAudioEngineImpl.SetPlayerAttenuation(playerId, attenuation, forceSet);
+        }
+
+        public override int MuteRemoteAudioStream(uint uid, bool mute)
+        {
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _localSpatialAudioEngineImpl.MuteRemoteAudioStream(uid, mute);
+        }
+
+        public override int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet)
+        {
+            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _localSpatialAudioEngineImpl.SetRemoteAudioAttenuation(uid, attenuation, forceSet);
+        }
+
+
         public override int UpdateRemotePosition(uint uid, float[] position, float[] forward)
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)

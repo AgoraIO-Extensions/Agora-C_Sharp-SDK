@@ -36,6 +36,7 @@ namespace Agora.Rtc
             localVideoEncodedFrameInfo.rotation = (VIDEO_ORIENTATION)videoEncodedFrameInfo.rotation;
             localVideoEncodedFrameInfo.trackId = videoEncodedFrameInfo.trackId;
             localVideoEncodedFrameInfo.captureTimeMs = videoEncodedFrameInfo.captureTimeMs;
+            localVideoEncodedFrameInfo.decodeTimeMs = videoEncodedFrameInfo.decodeTimeMs;
             localVideoEncodedFrameInfo.uid = videoEncodedFrameInfo.uid;
             localVideoEncodedFrameInfo.streamType = (VIDEO_STREAM_TYPE)videoEncodedFrameInfo.streamType;
 

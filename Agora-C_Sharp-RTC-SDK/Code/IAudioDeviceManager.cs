@@ -183,6 +183,11 @@ namespace Agora.Rtc
         ///
         public abstract int GetRecordingDeviceVolume(ref int volume);
 
+
+
+        public abstract int SetLoopbackDevice(string deviceId);
+        public abstract int GetLoopbackDevice(ref string deviceId);
+        public abstract int FollowSystemLoopbackDevice(bool enable);
         ///
         /// @ignore
         ///
