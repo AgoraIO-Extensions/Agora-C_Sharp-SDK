@@ -182,6 +182,34 @@ namespace Agora.Rtc
             return _audioDeviecManagerImpl.GetRecordingDeviceVolume(ref volume);
         }
 
+
+        public override int SetLoopbackDevice(string deviceId)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.SetLoopbackDevice(deviceId);
+        }
+
+        public override int GetLoopbackDevice(ref string deviceId)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.GetLoopbackDevice(ref deviceId);
+        }
+
+        public override int FollowSystemLoopbackDevice(bool enable)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _audioDeviecManagerImpl.FollowSystemLoopbackDevice(enable);
+        }
+
         public override int SetRecordingDeviceMute(bool mute)
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)

@@ -504,6 +504,68 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        public int SetZones(SpatialAudioZone[] zones, uint zoneCount)
+        {
+            if (!_initialized) return UNINITIALIZED;
+            var param = new
+            {
+                zones,
+                zoneCount
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETZONES,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetPlayerAttenuation(int playerId, double attenuation, bool forceSet)
+        {
+            if (!_initialized) return UNINITIALIZED;
+            var param = new
+            {
+                playerId,
+                attenuation,
+                forceSet
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETPLAYERATTENUATION,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int MuteRemoteAudioStream(uint uid, bool mute)
+        {
+            if (!_initialized) return UNINITIALIZED;
+            var param = new
+            {
+                uid,
+                mute,
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_MUTEREMOTEAUDIOSTREAM,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet)
+        {
+            if (!_initialized) return UNINITIALIZED;
+            var param = new
+            {
+                uid,
+                attenuation,
+                forceSet
+            };
+            string jsonParam = AgoraJson.ToJson(param);
+            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETREMOTEAUDIOATTENUATION,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
         public int UpdateRemotePosition(uint uid, float[] position, float[] forward)
         {
             if (!_initialized) return UNINITIALIZED;
