@@ -9,5 +9,7 @@ CSharp-API_Example/binx64/
 agora_cpp.dll
 agora_rtc_sdk.dll
 obj/
+Agora-C_Sharp-RTC-SDK/Code/**/*.meta
+Agora-C_Sharp-RTC-SDK/Resources/**/*.meta
 .DS_Store
-*.meta
+CSharp-API_Example/binx86
