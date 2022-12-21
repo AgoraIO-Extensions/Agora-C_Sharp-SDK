@@ -93,6 +93,7 @@ fi
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
+cp -r "$ROOT_DIR"/Resources "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 rm -rf "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Code/agorartc.csproj
 
 # Copy Plugins
@@ -151,19 +152,27 @@ cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
 echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
 cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
 cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
 
 # Windows x86
 echo "[Unity CI] copying Windows x86 ..."
 WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
 cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
 
 echo "[Unity CI] finish copying files"
 
 #--------------------------------------
 # Export Package
 #--------------------------------------
+if [ "$SDK_TYPE" == "audio" ]; then
+    python3 ./remove_video_case.py "$PLUGIN_PATH"/API-Example
+fi
+
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects  "$CI_DIR/project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage"
 
 #--------------------------------------
