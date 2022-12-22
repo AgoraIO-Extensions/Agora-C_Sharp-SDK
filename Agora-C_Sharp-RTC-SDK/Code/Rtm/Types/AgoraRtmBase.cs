@@ -338,7 +338,7 @@ namespace Agora.Rtm
 
         public string value;
 
-        StateItem()
+        public StateItem()
         {
             key = "";
             value = "";
@@ -354,7 +354,7 @@ namespace Agora.Rtm
 
         public uint ttl;
 
-        LockDetail()
+        public LockDetail()
         {
             lockName = "";
             owner = "";
@@ -372,7 +372,7 @@ namespace Agora.Rtm
 
         public int statesCount;
 
-        UserState()
+        public UserState()
         {
             states = null;
             statesCount = 0;
@@ -391,7 +391,7 @@ namespace Agora.Rtm
 
         public bool withLock;
 
-        SubscribeOptions()
+        public SubscribeOptions()
         {
             withMessage = true;
             withMetadata = false;
@@ -415,7 +415,7 @@ namespace Agora.Rtm
 
         public bool withState;
 
-        PresenceOptions()
+        public PresenceOptions()
         {
             withUserId = true;
             withState = false;
@@ -429,7 +429,7 @@ namespace Agora.Rtm
 
         public UInt64 sendTs;
 
-        PublishOptions()
+        public PublishOptions()
         {
             type = RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY;
             sendTs = 0;
@@ -450,7 +450,7 @@ namespace Agora.Rtm
 
         public string password;
 
-        RtmProxyConfig()
+        public RtmProxyConfig()
         {
             proxyType = RTM_PROXY_TYPE.RTM_PROXY_TYPE_NONE;
             server = "";
@@ -468,7 +468,7 @@ namespace Agora.Rtm
 
         public string encryptionKey;
 
-        EncryptionConfig()
+        public EncryptionConfig()
         {
             encryptionMode = ENCRYPTION_MODE.ENCRYPTION_MODE_NONE;
             encryptionKey = "";

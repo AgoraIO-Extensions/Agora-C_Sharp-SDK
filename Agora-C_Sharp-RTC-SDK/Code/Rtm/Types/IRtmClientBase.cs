@@ -8,29 +8,37 @@ namespace Agora.Rtm
         {
             appId = "";
             userId = "";
-            useStringUserId = true;
+            areaCode = AREA_CODE.AREA_CODE_GLOB;
             eventHandler = null;
             logConfig = new LogConfig();
+            proxyConfig = new RtmProxyConfig();
+            encryptionConfig = new EncryptionConfig();
         }
 
-        public RtmConfig(string appId, string userId, IRtmEventHandler eventHandler, LogConfig logConfig, bool useStringUserId = true)
+        public RtmConfig(string appId, string userId, AREA_CODE areaCode, IRtmEventHandler eventHandler, LogConfig logConfig, RtmProxyConfig proxyConfig, EncryptionConfig encryptionConfig)
         {
             this.appId = appId;
             this.userId = userId;
-            this.useStringUserId = useStringUserId;
+            this.areaCode = areaCode;
             this.eventHandler = eventHandler;
             this.logConfig = logConfig;
+            this.proxyConfig = proxyConfig;
+            this.encryptionConfig = encryptionConfig;
         }
 
-        public string appId { set; get; }
+        public string appId;
 
-        public string userId { set; get; }
+        public string userId;
 
-        public bool useStringUserId { set; get; }
+        public AREA_CODE areaCode;
 
-        public IRtmEventHandler eventHandler { set; get; }
+        public IRtmEventHandler eventHandler;
 
-        public LogConfig logConfig { set; get; }
+        public LogConfig logConfig;
+
+        public RtmProxyConfig proxyConfig;
+
+        public EncryptionConfig encryptionConfig;
     };
 
     ///
@@ -59,21 +67,21 @@ namespace Agora.Rtm
         /// The complete path of the log files. Ensure that the path for the log file exists and is writable. You can use this parameter to rename the log files.The default file path is:Android：/storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.iOS：App Sandbox/Library/caches/agorasdk.log.macOSIf Sandbox is enabled: App~/Library/Logs/agorasdk.log. For example, /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log.If Sandbox is disabled: ~/Library/Logs/agorasdk.log.Windows：C:\Users\<user_name>\AppData\Local\Agora\<process_name>\agorasdk.log。
         /// </summary>
         ///
-        public string filePath { set; get; }
+        public string filePath;
 
         ///
         /// <summary>
         /// The size (KB) of an agorasdk.log file. The value range is [128,1024]. The default value is 1,024 KB. If you set fileSizeInKByte to a value lower than 128 KB, the SDK adjusts it to 128 KB. If you set fileSizeInKBytes to a value higher than 1,024 KB, the SDK adjusts it to 1,024 KB.
         /// </summary>
         ///
-        public uint fileSizeInKB { set; get; }
+        public uint fileSizeInKB;
 
         ///
         /// <summary>
         /// The output level of the SDK log file. See LOG_LEVEL .For example, if you set the log level to WARN, the SDK outputs the logs within levels FATAL, ERROR, and WARN.
         /// </summary>
         ///
-        public LOG_LEVEL level { set; get; }
+        public LOG_LEVEL level;
     };
 
     [Flags]
@@ -115,7 +123,7 @@ namespace Agora.Rtm
         LOG_LEVEL_FATAL = 0x0008,
     };
 
-   
+
     public enum STREAM_CHANNEL_ERROR_CODE
     {
         STREAM_CHANNEL_ERROR_OK = 0,
@@ -147,15 +155,15 @@ namespace Agora.Rtm
             this.failedUsers = failedUsers;
         }
 
-        public string topic { set; get; }
+        public string topic;
 
-        public string[] succeedUsers { set; get; }
+        public string[] succeedUsers;
 
-        public uint succeedUserCount { set; get; }
+        public uint succeedUserCount;
 
-        public string[] failedUsers { set; get; }
+        public string[] failedUsers;
 
-        public uint failedUserCount { set; get; }
+        public uint failedUserCount;
     };
 
     public class MessageEvent
@@ -163,6 +171,7 @@ namespace Agora.Rtm
         public MessageEvent()
         {
             channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
+            messageType = RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY;
             channelName = "";
             channelTopic = "";
             message = "";
@@ -170,55 +179,34 @@ namespace Agora.Rtm
             publisher = "";
         }
 
-        public MessageEvent(RTM_CHANNEL_TYPE channelType, string channelName, string channelTopic, string message, uint messageLength, string publisher)
-        {
-            this.channelType = channelType;
-            this.channelName = channelName;
-            this.channelTopic = channelTopic;
-            this.message = message;
-            this.messageLength = messageLength;
-            this.publisher = publisher;
-        }
+        public RTM_CHANNEL_TYPE channelType;
 
-        /**
-        * Which channel type, messageChannel or streamChannel
-        */
-        public RTM_CHANNEL_TYPE channelType { set; get; }
-        /**
-        * The channel to which the message was published
-        */
-        public string channelName { set; get; }
-        /**
-        * If the channelType is stChannel, which topic the message come from. only for stChannel type
-        */
-        public string channelTopic { set; get; }
-        /**
-        * The payload
-        */
-        public string message { set; get; }
-        /**
-        * The payload length
-        */
-        public uint messageLength { set; get; }
-        /**
-        * The publisher
-        */
-        public string publisher { set; get; }
+        public RTM_MESSAGE_TYPE messageType;
+
+        public string channelName;
+
+        public string channelTopic;
+
+        public string message;
+
+        public uint messageLength;
+
+        public string publisher;
     };
 
     internal class MessageEventInternal
     {
-        public RTM_CHANNEL_TYPE channelType { set; get; }
+        public RTM_CHANNEL_TYPE channelType;
 
-        public string channelName { set; get; }
+        public string channelName;
 
-        public string channelTopic { set; get; }
+        public string channelTopic;
 
-        public UInt64 message { set; get; }
+        public UInt64 message;
 
-        public uint messageLength { set; get; }
+        public uint messageLength;
 
-        public string publisher { set; get; }
+        public string publisher;
     };
 
     public class PresenceEvent
@@ -229,44 +217,77 @@ namespace Agora.Rtm
             type = RTM_PRESENCE_TYPE.RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL;
             channelName = "";
             topicInfos = new TopicInfo[0];
-            topicInfoNumber = 0;
+            topicInfoCount = 0;
             userId = "";
+            stateItems = new StateItem[0];
+            stateItemCount = 0;
         }
 
-        public PresenceEvent(RTM_CHANNEL_TYPE channelType, RTM_PRESENCE_TYPE type, string channelName, TopicInfo[] topicInfos, uint topicInfoNumber, string userId)
+        public RTM_CHANNEL_TYPE channelType;
+
+        public RTM_PRESENCE_TYPE type;
+
+        public string channelName;
+
+        public TopicInfo[] topicInfos;
+
+        public uint topicInfoCount;
+
+        public string userId;
+
+        public StateItem[] stateItems;
+
+        public UInt64 stateItemCount;
+    };
+
+
+    public class LockEvent
+    {
+        public RTM_CHANNEL_TYPE channelType;
+
+        public RTM_LOCK_EVENT_TYPE eventType;
+
+        public string channelName;
+
+        public LockDetail[] lockDetailList;
+
+        UInt64 count;
+
+        LockEvent()
         {
-            this.channelType = channelType;
-            this.type = type;
-            this.channelName = channelName;
-            this.topicInfos = topicInfos;
-            this.topicInfoNumber = topicInfoNumber;
-            this.userId = userId;
+            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
+            eventType = RTM_LOCK_EVENT_TYPE.RTM_LOCK_EVENT_TYPE_SNAPSHOT;
+            channelName = "";
+            lockDetailList = new LockDetail[0];
+            count = 0;
         }
+    };
 
+    public class StorageEvent
+    {
         /**
-        * Which channel type, messageChannel or streamChannel
-        */
-        public RTM_CHANNEL_TYPE channelType { set; get; }
+         * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
+         */
+        public RTM_CHANNEL_TYPE channelType;
         /**
-        * Can be join, leave, state-change, or timeout for msChannel's and stChannel's presence event
-        * Can be join-topic,leave-topic for Topic Presence event
-        */
-        public RTM_PRESENCE_TYPE type { set; get; }
+         * Storage event type, RTM_STORAGE_TYPE_USER or RTM_STORAGE_TYPE_CHANNEL
+         */
+        public RTM_STORAGE_TYPE eventType;
         /**
-        * The channel to which the message was published
-        */
-        public string channelName { set; get; }
+         * The target name of user or channel, depends on the RTM_STORAGE_TYPE
+         */
+        public string target;
         /**
-        * topic information array.
-        */
-        public TopicInfo[] topicInfos { set; get; }
-        /**
-        * The number of topicInfo.
-        */
-        public uint topicInfoNumber { set; get; }
-        /**
-        * The ID of the user.
-        */
-        public string userId { set; get; }
+         * The metadata infomation
+         */
+        public IMetadata data;
+
+        StorageEvent()
+        {
+            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
+            eventType = RTM_STORAGE_TYPE.RTM_STORAGE_TYPE_USER;
+            target = "";
+            data = nullptr;
+        }
     };
 }

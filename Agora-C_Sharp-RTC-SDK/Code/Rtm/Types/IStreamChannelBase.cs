@@ -13,9 +13,18 @@ namespace Agora.Rtm
     {
         public JoinChannelOptions()
         {
-            this.token = "";
+            token = "";
+            withMetadata = false;
+            withPresence = true;
+            withLock = false;
         }
-        public string token { set; get; }
+        public string token;
+
+        public bool withMetadata;
+
+        public bool withPresence;
+
+        public bool withLock;
     };
 
     public class JoinTopicOptions
@@ -27,18 +36,13 @@ namespace Agora.Rtm
             this.metaLength = 0;
         }
 
-        public JoinTopicOptions(RTM_MESSAGE_QOS qos, IntPtr meta, uint metaLength)
-        {
-            this.qos = qos;
-            this.meta = meta;
-            this.metaLength = metaLength;
-        }
-    
-        public RTM_MESSAGE_QOS qos { set; get; }
+        public RTM_MESSAGE_QOS qos;
 
-        public IntPtr meta { set; get; }
+        public IntPtr meta;
 
-        public uint metaLength { set; get; }
+        public UInt64 metaLength;
+
+        public bool syncWithMedia;
     };
 
     public class TopicOptions
@@ -55,9 +59,9 @@ namespace Agora.Rtm
             this.userCount = userCount;
         }
 
-        public string[] users { set; get; }
+        public string[] users;
 
-        public uint userCount { set; get; }
+        public uint userCount;
     };
 
     public class UserList
@@ -74,8 +78,8 @@ namespace Agora.Rtm
             this.userCount = userCount;
         }
 
-        public string[] users { set; get; }
+        public string[] users;
 
-        public uint userCount { set; get; }
+        public uint userCount;
     };
 }
