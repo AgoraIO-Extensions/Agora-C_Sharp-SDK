@@ -292,7 +292,7 @@ namespace Agora.Rtc
             };
             string jsonParam = AgoraJson.ToJson(param);
             var ret = AgoraRtcNative.CallIrisApi(
-                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REMOVECACHE,
+                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETCACHES,
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0, out _result);
 
