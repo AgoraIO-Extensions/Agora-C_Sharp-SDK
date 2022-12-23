@@ -11,7 +11,7 @@ namespace Agora.Rtm
 
         public abstract int JoinTopic(string topic,  JoinTopicOptions options, ref UInt64 requestId);
 
-        public abstract int PublishTopicMessage(string topic, string message, ulong length,  PublishOptions option);
+        public abstract int PublishTopicMessage(string topic, byte[] message, ulong length,  PublishOptions option);
 
         public abstract int LeaveTopic(string topic, ref UInt64 requestId);
 
@@ -19,8 +19,8 @@ namespace Agora.Rtm
 
         public abstract int UnsubscribeTopic(string topic,  TopicOptions options);
 
-        public abstract int GetSubscribedUserList(string topic,  ref UserList[] users);
+        public abstract int GetSubscribedUserList(string topic,  ref UserList users);
 
-        public abstract int Release();
+        public abstract int Dispose();
     }
 }

@@ -10,7 +10,7 @@ namespace Agora.Rtm
 {
     using IrisApiRtmEnginePtr = IntPtr;
 
-    public class MetadataImpl
+    internal class MetadataImpl
     {
         private bool _disposed = false;
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
@@ -55,11 +55,15 @@ namespace Agora.Rtm
             _param.Add("revision", revision);
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            IntPtr[] arrayPtr = new IntPtr[] { metadata };
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_METADATA_SETMAJORREVISION, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_METADATA_SETMAJORREVISION,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
             if (nRet != 0)
             {
-                Agora.Rtc.AgoraLog.LogError("SetMajorRevision failed: " + nRet);
+                Agora.Rtc.AgoraLog.LogError("MetadataImpl SetMajorRevision failed: " + nRet);
             }
         }
 
@@ -70,11 +74,15 @@ namespace Agora.Rtm
             _param.Add("item", item);
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            IntPtr[] arrayPtr = new IntPtr[] { metadata };
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_METADATA_SETMETADATAITEM, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_METADATA_SETMETADATAITEM,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
             if (nRet != 0)
             {
-                Agora.Rtc.AgoraLog.LogError("SetMetadataItem failed: " + nRet);
+                Agora.Rtc.AgoraLog.LogError("MetadataImpl SetMetadataItem failed: " + nRet);
             }
         }
 
@@ -86,12 +94,23 @@ namespace Agora.Rtm
             _param.Add("size", size);
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            IntPtr[] arrayPtr = new IntPtr[] { metadata };
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_METADATA_GETMETADATAITEMS,
-                json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
+
             if (nRet != 0)
             {
-                Agora.Rtc.AgoraLog.LogError("GetMetadataItems failed: " + nRet);
+                Agora.Rtc.AgoraLog.LogError("MetadataImpl GetMetadataItems failed: " + nRet);
+                items = new MetadataItem[0];
+                size = 0;
+            }
+            else
+            {
+                items = Agora.Rtc.AgoraJson.JsonToStructArray<MetadataItem>(_apiParam.Result, "items");
+                size = (UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(_apiParam.Result, "size");
             }
         }
 
@@ -101,12 +120,15 @@ namespace Agora.Rtm
             _param.Add("metadata", (UInt64)metadata);
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            IntPtr[] arrayPtr = new IntPtr[] { metadata };
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_METADATA_CLEARMETADATA,
-                json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
             if (nRet != 0)
             {
-                Agora.Rtc.AgoraLog.LogError("ClearMetadata failed: " + nRet);
+                Agora.Rtc.AgoraLog.LogError("MetadataImpl ClearMetadata failed: " + nRet);
             }
         }
 
@@ -116,12 +138,15 @@ namespace Agora.Rtm
             _param.Add("metadata", (UInt64)metadata);
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            IntPtr[] arrayPtr = new IntPtr[] { metadata };
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_METADATA_RELEASE,
-                json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
             if (nRet != 0)
             {
-                Agora.Rtc.AgoraLog.LogError("Release failed: " + nRet);
+                Agora.Rtc.AgoraLog.LogError("MetadataImpl Release failed: " + nRet);
             }
         }
     }

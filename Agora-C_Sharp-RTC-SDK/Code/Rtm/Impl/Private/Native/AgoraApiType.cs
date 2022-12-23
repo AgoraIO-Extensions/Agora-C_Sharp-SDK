@@ -62,5 +62,12 @@ namespace Agora.Rtm
         internal const string FUNC_RTMCLIENT_SETPARAMETERS = "RtmClient_setParameters";
         #endregion
 
+        #region IRtmPresence start
+        internal const string FUNC_RTMPRESENCE_WHONOW = "RtmPresence_whoNow";
+        internal const string FUNC_RTMPRESENCE_WHERENOW = "RtmPresence_whereNow";
+        internal const string FUNC_RTMPRESENCE_SETSTATE = "RtmPresence_setState";
+        internal const string FUNC_RTMPRESENCE_REMOVESTATE = "RtmPresence_removeState";
+        internal const string FUNC_RTMPRESENCE_GETSTATE = "RtmPresence_getState";
+        #endregion
     }
 }

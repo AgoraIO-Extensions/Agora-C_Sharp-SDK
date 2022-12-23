@@ -12,6 +12,6 @@ namespace Agora.Rtm
 
         public abstract void ClearMetadata();
 
-        public abstract void Release();
+        public abstract void Dispose();
     }
 }

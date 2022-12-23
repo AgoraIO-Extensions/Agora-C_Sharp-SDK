@@ -9,7 +9,7 @@ namespace Agora.Rtm
 {
     using IrisApiRtmEnginePtr = IntPtr;
 
-    public sealed class RtmClientImpl
+    internal class RtmClientImpl
     {
         private bool _disposed = false;
         private static RtmClientImpl clientInstance = null;
