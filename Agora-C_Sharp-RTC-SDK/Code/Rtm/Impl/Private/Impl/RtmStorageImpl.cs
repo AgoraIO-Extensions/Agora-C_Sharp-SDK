@@ -11,7 +11,7 @@ namespace Agora.Rtm
 
     internal class RtmStorageImpl
     {
-     
+        private bool _disposed = false;
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
         private MetadataImpl _metadataImpl;
         private IrisCApiParam _apiParam;
@@ -25,6 +25,31 @@ namespace Agora.Rtm
             this._metadataImpl = new MetadataImpl(irisApiRtmEngine);
         }
 
+
+        ~RtmStorageImpl()
+        {
+            Dispose(false);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+            }
+
+            _irisApiRtmEngine = IntPtr.Zero;
+            _apiParam = new IrisCApiParam();
+
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
         public IMetadata CreateMetadata()
         {
@@ -53,7 +78,7 @@ namespace Agora.Rtm
             _param.Add("channelType", channelType);
             _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
             _param.Add("options", options);
-              
+
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
@@ -79,7 +104,7 @@ namespace Agora.Rtm
             _param.Add("channelType", channelType);
             _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
             _param.Add("options", options);
-              
+
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
@@ -104,7 +129,7 @@ namespace Agora.Rtm
             _param.Add("channelType", channelType);
             _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
             _param.Add("options", options);
-              
+
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
@@ -127,7 +152,7 @@ namespace Agora.Rtm
             _param.Clear();
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
-              
+
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
 
@@ -151,7 +176,7 @@ namespace Agora.Rtm
             _param.Add("userId", userId);
             _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
             _param.Add("options", options);
-              
+
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
@@ -175,7 +200,7 @@ namespace Agora.Rtm
             _param.Add("userId", userId);
             _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
             _param.Add("options", options);
-              
+
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
@@ -199,7 +224,7 @@ namespace Agora.Rtm
             _param.Add("userId", userId);
             _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
             _param.Add("options", options);
-              
+
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
@@ -221,7 +246,7 @@ namespace Agora.Rtm
         {
             _param.Clear();
             _param.Add("userId", userId);
-              
+
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
 

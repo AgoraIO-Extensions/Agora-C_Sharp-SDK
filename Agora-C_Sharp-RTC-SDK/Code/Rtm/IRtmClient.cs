@@ -5,7 +5,7 @@ namespace Agora.Rtm
     {
         public abstract int Initialize(RtmConfig config);
 
-        public abstract int Release();
+        public abstract int Dispose();
 
         public abstract int Login(string token);
 

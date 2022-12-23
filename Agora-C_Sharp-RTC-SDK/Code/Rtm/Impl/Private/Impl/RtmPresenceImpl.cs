@@ -21,6 +21,32 @@ namespace Agora.Rtm
             this._irisApiRtmEngine = irisApiRtmEngine;
         }
 
+        ~RtmPresenceImpl()
+        {
+            Dispose(false);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+            }
+
+            _irisApiRtmEngine = IntPtr.Zero;
+            _apiParam = new IrisCApiParam();
+
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+
         public int WhoNow(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options, ref UInt64 requestId)
         {
             _param.Clear();

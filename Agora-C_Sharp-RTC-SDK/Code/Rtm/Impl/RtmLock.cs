@@ -13,6 +13,19 @@ namespace Agora.Rtm
             this._rtmLockImpl = impl;
         }
 
+        private static RtmLock instance = null;
+
+        internal static RtmLock GetInstance(RtmLockImpl impl)
+        {
+            return instance ?? (instance = new RtmLock(impl));
+        }
+
+        internal static void ReleaseInstance()
+        {
+            instance = null;
+        }
+
+
         public override int SetLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl, ref UInt64 requestId)
         {
             if (_rtmLockImpl == null)

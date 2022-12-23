@@ -4,13 +4,24 @@ namespace Agora.Rtm
 {
     public sealed class RtmStorage : IRtmStorage
     {
-        private RtmStorage _rtmStorageImpl = null;
+        private RtmStorageImpl _rtmStorageImpl = null;
         private const int ErrorCode = -7;
 
-
-        internal RtmStorage(RtmStorage impl)
+        internal RtmStorage(RtmStorageImpl impl)
         {
             this._rtmStorageImpl = impl;
+        }
+
+        private static RtmStorage instance = null;
+
+        internal static RtmStorage GetInstance(RtmStorageImpl impl)
+        {
+            return instance ?? (instance = new RtmStorage(impl));
+        }
+
+        internal static void ReleaseInstance()
+        {
+            instance = null;
         }
 
         public override IMetadata CreateMetadata()

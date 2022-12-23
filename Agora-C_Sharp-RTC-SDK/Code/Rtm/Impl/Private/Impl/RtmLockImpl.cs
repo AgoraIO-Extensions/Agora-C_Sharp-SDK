@@ -12,6 +12,7 @@ namespace Agora.Rtm
 
     internal class RtmLockImpl
     {
+        private bool _disposed = false;
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
         private IrisCApiParam _apiParam;
         private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
@@ -21,6 +22,31 @@ namespace Agora.Rtm
         {
             _apiParam = new IrisCApiParam();
             this._irisApiRtmEngine = irisApiRtmEngine;
+        }
+
+        ~RtmLockImpl()
+        {
+            Dispose(false);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+
+            if (disposing)
+            {
+            }
+
+            _irisApiRtmEngine = IntPtr.Zero;
+            _apiParam = new IrisCApiParam();
+
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
 

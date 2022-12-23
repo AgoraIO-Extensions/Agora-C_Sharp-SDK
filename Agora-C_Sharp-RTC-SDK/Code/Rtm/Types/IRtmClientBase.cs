@@ -174,7 +174,7 @@ namespace Agora.Rtm
             messageType = RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY;
             channelName = "";
             channelTopic = "";
-            message = "";
+            message = null;
             messageLength = 0;
             publisher = "";
         }
@@ -251,9 +251,9 @@ namespace Agora.Rtm
 
         public LockDetail[] lockDetailList;
 
-        UInt64 count;
+        public UInt64 count;
 
-        LockEvent()
+        public LockEvent()
         {
             channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
             eventType = RTM_LOCK_EVENT_TYPE.RTM_LOCK_EVENT_TYPE_SNAPSHOT;
@@ -282,12 +282,12 @@ namespace Agora.Rtm
          */
         public IMetadata data;
 
-        StorageEvent()
+        public StorageEvent()
         {
             channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
             eventType = RTM_STORAGE_TYPE.RTM_STORAGE_TYPE_USER;
             target = "";
-            data = nullptr;
+            data = null;
         }
     };
 }
