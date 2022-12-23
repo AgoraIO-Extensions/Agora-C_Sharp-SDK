@@ -283,7 +283,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.GetErrorDescription(code);
         }
 
-        public override int QueryCodecCapability(ref CodecCapInfo codec_info, ref int size)
+        public override int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size)
         {
             if (_rtcEngineImpl == null)
             {
