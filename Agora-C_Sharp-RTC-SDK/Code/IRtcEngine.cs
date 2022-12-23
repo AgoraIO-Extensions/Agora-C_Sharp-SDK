@@ -3303,7 +3303,7 @@ namespace Agora.Rtc
 
 
 
-        public abstract int QueryCodecCapability(ref CodecCapInfo codec_info, ref int size);
+        public abstract int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size);
         #endregion
 
         #region DeviceManager
