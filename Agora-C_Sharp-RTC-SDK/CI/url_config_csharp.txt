@@ -1,1 +1,1 @@
-https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/IRIS/3.5.2/iris_3.5.2_RTC_Windows_20211117_1126.zip
+https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/IRIS/3.7.2.245/iris_3.7.2.245_RTC_Windows_Video_20221226_0640.zip

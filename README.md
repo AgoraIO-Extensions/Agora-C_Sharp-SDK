@@ -66,7 +66,7 @@ First, create a developer account at [Agora.io](https://dashboard.agora.io/signi
 	```
 
 	```bash
-	git checkout release/3.6.2
+	git checkout release/3.7.2.245
 	```
 	
 2. Open `Agora-C_Sharp-SDK/APIExample/APIExample.sln` via Visual Studio. select x86 or x64 platform. Note that you will see compiler errors because you download the SDK package yet.
