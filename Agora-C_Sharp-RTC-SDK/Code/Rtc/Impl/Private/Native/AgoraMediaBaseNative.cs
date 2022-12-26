@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace Agora.Rtc
 {
     using view_t = UInt64;
-    
+
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisAudioFrame
     {
@@ -164,13 +164,14 @@ namespace Agora.Rtc
     {
         internal int type;
         internal uint id;
-        
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
         internal string key;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisMetadata {
+    internal struct IrisMetadata
+    {
         internal uint uid;
 
         internal uint size;
@@ -184,6 +185,17 @@ namespace Agora.Rtc
     {
         public AudioFrameWithoutBuffer()
         {
+        }
+
+        public AudioFrameWithoutBuffer(AudioFrame audioFrame)
+        {
+            this.type = audioFrame.type;
+            this.samplesPerChannel = audioFrame.samplesPerChannel;
+            this.bytesPerSample = audioFrame.bytesPerSample;
+            this.channels = audioFrame.channels;
+            this.samplesPerSec = audioFrame.samplesPerSec;
+            this.renderTimeMs = audioFrame.renderTimeMs;
+            this.avsync_type = audioFrame.avsync_type;
         }
 
         public AudioFrameWithoutBuffer(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels,
@@ -231,6 +243,71 @@ namespace Agora.Rtc
         /** Reserved parameter.
 		 */
         public int avsync_type { set; get; }
+    }
+
+    internal class ExternalVideoFrameWithoutBuffer
+    {
+        public ExternalVideoFrameWithoutBuffer()
+        {
+        }
+
+        public ExternalVideoFrameWithoutBuffer(ExternalVideoFrame videoFrame)
+        {
+            this.type = videoFrame.type;
+            this.format = videoFrame.format;
+            this.stride = videoFrame.stride;
+            this.height = videoFrame.height;
+            this.cropLeft = videoFrame.cropLeft;
+            this.cropTop = videoFrame.cropTop;
+            this.cropRight = videoFrame.cropRight;
+            this.cropBottom = videoFrame.cropBottom;
+            this.rotation = videoFrame.rotation;
+            this.timestamp = videoFrame.timestamp;
+            this.eglType = videoFrame.eglType;
+            this.textureId = videoFrame.textureId;
+            this.metadata_size = videoFrame.metadata_size;
+        }
+        public VIDEO_BUFFER_TYPE type { set; get; }
+        public VIDEO_PIXEL_FORMAT format { set; get; }
+        public int stride { set; get; }
+        public int height { set; get; }
+        public int cropLeft { set; get; }
+        public int cropTop { set; get; }
+        public int cropRight { set; get; }
+        public int cropBottom { set; get; }
+        public int rotation { set; get; }
+        public long timestamp { set; get; }
+        public EGL_CONTEXT_TYPE eglType { set; get; }
+        public int textureId { set; get; }
+        public int metadata_size { set; get; }
+    }
+
+    internal class VideoCanvasWithoutBuffer
+    {
+
+        public VideoCanvasWithoutBuffer(VideoCanvas videoCanvas)
+        {
+            this.view = videoCanvas.view;
+            this.renderMode = videoCanvas.renderMode;
+            this.mirrorMode = videoCanvas.mirrorMode;
+            this.uid = videoCanvas.uid;
+            this.isScreenView = videoCanvas.isScreenView;
+            this.priv_size = videoCanvas.priv_size;
+            this.sourceType = videoCanvas.sourceType;
+            this.cropArea = videoCanvas.cropArea;
+            this.setupMode = videoCanvas.setupMode;
+        }
+
+        public view_t view { set; get; }
+        public RENDER_MODE_TYPE renderMode { set; get; }
+        public VIDEO_MIRROR_MODE_TYPE mirrorMode { set; get; }
+        public uint uid { set; get; }
+        public bool isScreenView { set; get; }
+
+        public uint priv_size { set; get; }
+        public VIDEO_SOURCE_TYPE sourceType { set; get; }
+        public Rectangle cropArea { set; get; }
+        public VIDEO_VIEW_SETUP_MODE setupMode { set; get; }
     }
 
     internal class ThumbImageBufferInternal

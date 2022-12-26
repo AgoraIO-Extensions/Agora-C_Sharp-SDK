@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -171,12 +171,11 @@ namespace Agora.Rtm
             CreateEventHandler();
             RtmEventHandlerNative.SetEventHandler(config.eventHandler);
 
-            var param = new
-            {
-                config
-            };
+            _param.Clear();
+            _param.Add("config", config);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
 
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
@@ -191,12 +190,11 @@ namespace Agora.Rtm
 
         public int CreateStreamChannel(string channelName)
         {
-            var param = new
-            {
-                channelName
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_CREATESTREAMCHANNEL,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
