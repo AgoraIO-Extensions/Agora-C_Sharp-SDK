@@ -64,7 +64,7 @@
    ```
 
    ```bash
-   git checkout release/3.6.2
+   git checkout release/3.7.2.245
    ```
 
 2. 使用 Visual Studio 打开`Agora-C_Sharp-SDK/APIExample/APIExample.sln`解决方案，选择x86 或 x64平台。
