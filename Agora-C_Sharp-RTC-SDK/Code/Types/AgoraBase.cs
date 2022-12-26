@@ -763,59 +763,38 @@ namespace Agora.Rtc
     ///
     public enum VIDEO_CODEC_TYPE
     {
-        ///
-        /// @ignore
-        ///
         VIDEO_CODEC_NONE = 0,
-
-        ///
-        /// <summary>
-        /// 1: Standard VP8.
-        /// </summary>
-        ///
+        /**
+         * 1: VP8.
+         */
         VIDEO_CODEC_VP8 = 1,
-
-        ///
-        /// <summary>
-        /// 2: Standard H.264.
-        /// </summary>
-        ///
+        /**
+         * 2: H.264.
+         */
         VIDEO_CODEC_H264 = 2,
-
-        ///
-        /// <summary>
-        /// 3: Standard H.265.
-        /// </summary>
-        ///
+        /**
+         * 3: H.265.
+         */
         VIDEO_CODEC_H265 = 3,
-
-        ///
-        /// @ignore
-        ///
-        VIDEO_CODEC_VP9 = 5,
-
-        ///
-        /// <summary>
-        /// 6: Generic.This type is used for transmitting raw video data, such as encrypted video frames. The SDK returns this type of video frames in callbacks, and you need to decode and render the frames yourself.
-        /// </summary>
-        ///
+        /**
+         * 6: Generic.
+         */
         VIDEO_CODEC_GENERIC = 6,
-
-        ///
-        /// @ignore
-        ///
+        /**
+         * 7: Generic H264.
+         */
         VIDEO_CODEC_GENERIC_H264 = 7,
-
-        ///
-        /// @ignore
-        ///
+        /**
+          * 12: AV1.
+          */
         VIDEO_CODEC_AV1 = 12,
-
-        ///
-        /// <summary>
-        /// 20: Generic JPEG.This type consumes minimum computing resources and applies to IoT devices.
-        /// </summary>
-        ///
+        /**
+         * 5: VP9.
+         */
+        VIDEO_CODEC_VP9 = 13,
+        /**
+         * 20: JPEG.
+         */
         VIDEO_CODEC_GENERIC_JPEG = 20,
     };
 

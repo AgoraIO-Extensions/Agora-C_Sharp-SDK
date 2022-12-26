@@ -583,7 +583,10 @@ namespace Agora.Rtc
 
         public int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size)
         {
-            var param = new { };
+            var param = new
+            {
+                size
+            };
             var json = AgoraJson.ToJson(param);
 
             var nRet = AgoraRtcNative.CallIrisApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_QUERYCODECCAPABILITY,
