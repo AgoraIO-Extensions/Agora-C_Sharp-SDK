@@ -212,37 +212,37 @@ namespace Agora.Rtc
 
         /** The type of the audio frame. See #AUDIO_FRAME_TYPE
 		 */
-        public AUDIO_FRAME_TYPE type { set; get; }
+        public AUDIO_FRAME_TYPE type;
 
         /** The number of samples per channel in the audio frame.
 		 */
-        public int samplesPerChannel { set; get; } //number of samples for each channel in this frame
+        public int samplesPerChannel; //number of samples for each channel in this frame
 
         /**The number of bytes per audio sample, which is usually 16-bit (2-byte).
 		 */
-        public BYTES_PER_SAMPLE bytesPerSample { set; get; } //number of bytes per sample: 2 for PCM16
+        public BYTES_PER_SAMPLE bytesPerSample; //number of bytes per sample: 2 for PCM16
 
-        public UInt64 bufferPtr { set; get; }
+        public UInt64 bufferPtr;
 
         /** The number of audio channels.
 		 - 1: Mono
 		 - 2: Stereo (the data is interleaved)
 		 */
-        public int channels { set; get; } //number of channels (data are interleaved if stereo)
+        public int channels; //number of channels (data are interleaved if stereo)
 
         /** The sample rate.
 		 */
-        public int samplesPerSec { set; get; } //sampling rate
+        public int samplesPerSec; //sampling rate
 
         /** The timestamp of the external audio frame. You can use this parameter for the following purposes:
 		 - Restore the order of the captured audio frame.
 		 - Synchronize audio and video frames in video-related scenarios, including where external video sources are used.
 		 */
-        public long renderTimeMs { set; get; }
+        public long renderTimeMs;
 
         /** Reserved parameter.
 		 */
-        public int avsync_type { set; get; }
+        public int avsync_type;
     }
 
     internal class ExternalVideoFrameWithoutBuffer
@@ -267,19 +267,19 @@ namespace Agora.Rtc
             this.textureId = videoFrame.textureId;
             this.metadata_size = videoFrame.metadata_size;
         }
-        public VIDEO_BUFFER_TYPE type { set; get; }
-        public VIDEO_PIXEL_FORMAT format { set; get; }
-        public int stride { set; get; }
-        public int height { set; get; }
-        public int cropLeft { set; get; }
-        public int cropTop { set; get; }
-        public int cropRight { set; get; }
-        public int cropBottom { set; get; }
-        public int rotation { set; get; }
-        public long timestamp { set; get; }
-        public EGL_CONTEXT_TYPE eglType { set; get; }
-        public int textureId { set; get; }
-        public int metadata_size { set; get; }
+        public VIDEO_BUFFER_TYPE type;
+        public VIDEO_PIXEL_FORMAT format;
+        public int stride;
+        public int height;
+        public int cropLeft;
+        public int cropTop;
+        public int cropRight;
+        public int cropBottom;
+        public int rotation;
+        public long timestamp;
+        public EGL_CONTEXT_TYPE eglType;
+        public int textureId;
+        public int metadata_size;
     }
 
     internal class VideoCanvasWithoutBuffer
@@ -298,25 +298,25 @@ namespace Agora.Rtc
             this.setupMode = videoCanvas.setupMode;
         }
 
-        public view_t view { set; get; }
-        public RENDER_MODE_TYPE renderMode { set; get; }
-        public VIDEO_MIRROR_MODE_TYPE mirrorMode { set; get; }
-        public uint uid { set; get; }
-        public bool isScreenView { set; get; }
+        public view_t view;
+        public RENDER_MODE_TYPE renderMode;
+        public VIDEO_MIRROR_MODE_TYPE mirrorMode;
+        public uint uid;
+        public bool isScreenView;
 
-        public uint priv_size { set; get; }
-        public VIDEO_SOURCE_TYPE sourceType { set; get; }
-        public Rectangle cropArea { set; get; }
-        public VIDEO_VIEW_SETUP_MODE setupMode { set; get; }
+        public uint priv_size;
+        public VIDEO_SOURCE_TYPE sourceType;
+        public Rectangle cropArea;
+        public VIDEO_VIEW_SETUP_MODE setupMode;
     }
 
     internal class ThumbImageBufferInternal
     {
-        public uint length { set; get; }
-        public uint width { set; get; }
-        public uint height { set; get; }
+        public uint length;
+        public uint width;
+        public uint height;
 
-        public Int64 buffer { set; get; }
+        public Int64 buffer;
 
         public ThumbImageBufferInternal()
         {
@@ -329,17 +329,17 @@ namespace Agora.Rtc
 
     internal class ScreenCaptureSourceInfoInternal
     {
-        public ScreenCaptureSourceType type { set; get; }
+        public ScreenCaptureSourceType type;
         /** in Mac: pointer to NSNumber */
-        public view_t sourceId { set; get; }
-        public string sourceName { set; get; }
-        public ThumbImageBufferInternal thumbImage { set; get; }
-        public ThumbImageBufferInternal iconImage { set; get; }
+        public view_t sourceId;
+        public string sourceName;
+        public ThumbImageBufferInternal thumbImage;
+        public ThumbImageBufferInternal iconImage;
 
-        public string processPath { set; get; }
-        public string sourceTitle { set; get; }
-        public bool primaryMonitor { set; get; }
-        public bool isOccluded { set; get; }
+        public string processPath;
+        public string sourceTitle;
+        public bool primaryMonitor;
+        public bool isOccluded;
 
         public ScreenCaptureSourceInfoInternal()
         {

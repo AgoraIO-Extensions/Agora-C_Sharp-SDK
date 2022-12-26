@@ -25,14 +25,14 @@
         /// The channel name.
         /// </summary>
         ///
-        public string channelId { set; get; }
-        
+        public string channelId;
+
         ///
         /// <summary>
         /// The ID of the local user.
         /// </summary>
         ///
-        public uint localUid { set; get; }
+        public uint localUid;
     };
 
     #endregion
