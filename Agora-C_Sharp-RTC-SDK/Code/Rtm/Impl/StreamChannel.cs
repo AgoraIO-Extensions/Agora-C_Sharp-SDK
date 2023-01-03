@@ -24,15 +24,13 @@ namespace Agora.Rtm
             Dispose(false);
         }
 
-        private int Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
-            if (_disposed) return 0;
+            if (_disposed) return;
 
             if (disposing)
             {
             }
-
-            int ret = _streamChannelImpl.Release(channelName);
 
             if (_rtmClientInstance._streamChannelDic.ContainsKey(channelName))
             {
@@ -43,17 +41,16 @@ namespace Agora.Rtm
             _rtmClientInstance = null;
             channelName = "";
             _disposed = true;
-
-            return ret;
         }
 
-        public override int Release()
+        public override int Dispose()
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            int ret = Dispose(true);
+            int ret = _streamChannelImpl.Release(channelName);
+            Dispose(true);
             GC.SuppressFinalize(this);
             return ret;
         }
@@ -67,68 +64,58 @@ namespace Agora.Rtm
             return channelName;
         }
 
-        public override int Join(JoinChannelOptions options)
+        public override int Join(JoinChannelOptions options,  ref UInt64 requestId)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.Join(channelName, options);
+            return _streamChannelImpl.Join(channelName, options, ref requestId);
         }
 
-        public override int Leave()
+        public override int Leave( ref UInt64 requestId)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.Leave(channelName);
+            return _streamChannelImpl.Leave(channelName, ref requestId);
         }
 
-        public override int JoinTopic(string topic, JoinTopicOptions options)
+        public override int JoinTopic(string topic, JoinTopicOptions options,  ref UInt64 requestId)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.JoinTopic(channelName, topic, options);
+            return _streamChannelImpl.JoinTopic(channelName, topic, options, ref requestId);
         }
 
-        public override int PublishTopicMessage(string topic, byte[] message)
+        public override int PublishTopicMessage(string topic, byte[] message, ulong length, PublishOptions option)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, (uint)message.Length);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, (uint)message.Length, option);
         }
 
-        public override int PublishTopicMessage(string topic, string message)
+        public override int LeaveTopic(string topic, ref UInt64 requestId)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            byte[] messageByte = System.Text.Encoding.Default.GetBytes(message);
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, messageByte, (uint)messageByte.Length);
+            return _streamChannelImpl.LeaveTopic(channelName, topic, ref requestId);
         }
 
-        public override int LeaveTopic(string topic)
+        public override int SubscribeTopic(string topic, TopicOptions options, ref UInt64 requestId)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.LeaveTopic(channelName, topic);
-        }
-
-        public override int SubscribeTopic(string topic, TopicOptions options)
-        {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _streamChannelImpl.SubscribeTopic(channelName, topic, options);
+            return _streamChannelImpl.SubscribeTopic(channelName, topic, options, ref requestId);
         }
 
         public override int UnsubscribeTopic(string topic, TopicOptions options)
