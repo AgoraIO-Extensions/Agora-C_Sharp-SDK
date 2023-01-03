@@ -39,14 +39,13 @@ namespace Agora.Rtm
     };
 
 
-    public enum ENCRYPTION_MODE
+    public enum RTM_ENCRYPTION_MODE
     {
+        RTM_ENCRYPTION_MODE_NONE = 0,
 
-        ENCRYPTION_MODE_NONE = 0,
+        RTM_ENCRYPTION_MODE_AES_128_GCM = 1,
 
-        ENCRYPTION_MODE_AES_128_GCM = 1,
-
-        ENCRYPTION_MODE_AES_256_GCM = 2,
+        RTM_ENCRYPTION_MODE_AES_256_GCM = 2,
     };
 
 
@@ -81,6 +80,8 @@ namespace Agora.Rtm
 
         RTM_ERR_ALREADY_SUBSCRIBED = 10014,
 
+        RTM_ERR_ENCRYPTION_FAILED = 10015,
+
         RTM_ERR_METADATA_SIZE_OVERFLOW = 10101,
 
         RTM_ERR_METADATA_ITEM_SIZE_OVERFLOW = 10102,
@@ -104,6 +105,10 @@ namespace Agora.Rtm
         RTM_ERR_LOCK_OPERATION_PERFORMING = 10201,
 
         RTM_ERR_RELEASE_LOCK_NOT_ACQUIRED = 10202,
+
+        RTM_ERR_PRESENCE_SERVICE_NOT_READY = 10301,
+
+        RTM_ERR_PRESENCE_OPERATION_WITHOUT_JOIN_CHANNEL = 10302,
     };
 
 
@@ -180,10 +185,8 @@ namespace Agora.Rtm
         RTM_CHANNEL_TYPE_STREAM = 1,
     };
 
-
     public enum RTM_PRESENCE_TYPE
     {
-
         RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL = 0,
 
         RTM_PRESENCE_TYPE_REMOTE_LEAVE_CHANNEL = 1,
@@ -198,7 +201,6 @@ namespace Agora.Rtm
 
         RTM_PRESENCE_TYPE_USER_STATE_CHANGED = 6,
     };
-
 
     public enum RTM_CHANNEL_ERROR_CODE
     {
@@ -310,23 +312,76 @@ namespace Agora.Rtm
         RTM_PROXY_TYPE_HTTP = 1,
     };
 
+    public enum RTM_TOPIC_EVENT_TYPE
+    {
+        RTM_TOPIC_EVENT_TYPE_SNAPSHOT = 0,
+
+        RTM_TOPIC_EVENT_TYPE_REMOTE_JOIN_TOPIC = 1,
+
+        RTM_TOPIC_EVENT_TYPE_REMOTE_LEAVE_TOPIC = 2,
+    };
+
+    public enum RTM_PRESENCE_EVENT_TYPE
+    {
+        RTM_PRESENCE_EVENT_TYPE_SNAPSHOT = 0,
+
+        RTM_PRESENCE_EVENT_TYPE_INTERVAL = 1,
+
+        RTM_PRESENCE_EVENT_TYPE_REMOTE_JOIN_CHANNEL = 2,
+
+        RTM_PRESENCE_EVENT_TYPE_REMOTE_LEAVE_CHANNEL = 3,
+
+        RTM_PRESENCE_EVENT_TYPE_REMOTE_CONNECTION_TIMEOUT = 4,
+
+        RTM_PRESENCE_EVENT_TYPE_REMOTE_STATE_CHANGED = 5,
+    };
+
+
+    public class UserList
+    {
+        public UserList()
+        {
+            users = new string[0];
+            userCount = 0;
+        }
+
+        public UserList(string[] users, uint userCount)
+        {
+            this.users = users;
+            this.userCount = userCount;
+        }
+
+        public string[] users;
+
+        public uint userCount;
+    };
+
+    public class PublisherInfo
+    {
+        public string publisherUserId;
+
+        public string publisherMeta;
+
+        PublisherInfo()
+        {
+            publisherUserId = "";
+            publisherMeta = "";
+        }
+    };
+
 
     public class TopicInfo
     {
         public string topic;
 
-        public UInt64 numOfPublisher;
-
-        public string[] publisherUserIds;
-
-        public string[] publisherMetas;
+        public PublisherInfo[] publishers;
+        public ulong publisherCount;
 
         public TopicInfo()
         {
             topic = "";
-            numOfPublisher = 0;
-            publisherUserIds = null;
-            publisherMetas = null;
+            publishers = new PublisherInfo[0];
+            publisherCount = 0;
         }
     };
 
@@ -461,17 +516,39 @@ namespace Agora.Rtm
     };
 
 
-    public class EncryptionConfig
+    public class RtmEncryptionConfig
     {
 
-        public ENCRYPTION_MODE encryptionMode;
+        public RTM_ENCRYPTION_MODE encryptionMode;
 
         public string encryptionKey;
 
-        public EncryptionConfig()
+        private byte[] encryptionKdfSalt32 = new byte[32];
+
+        public byte[] encryptionKdfSalt
         {
-            encryptionMode = ENCRYPTION_MODE.ENCRYPTION_MODE_NONE;
+            set { Buffer.BlockCopy(value, 0, encryptionKdfSalt32, 0, 32); }
+
+            get { return encryptionKdfSalt32; }
+        }
+
+        public RtmEncryptionConfig()
+        {
+            encryptionMode = RTM_ENCRYPTION_MODE.RTM_ENCRYPTION_MODE_NONE;
             encryptionKey = "";
+            encryptionKdfSalt = new byte[32];
         }
     };
+
+    public class RtmMetadata
+    {
+        public Int64 majorRevision;
+        public MetadataItem[] metadataItems;
+        public UInt64 metadataSize;
+
+        public RtmMetadata()
+        {
+
+        }
+    }
 }

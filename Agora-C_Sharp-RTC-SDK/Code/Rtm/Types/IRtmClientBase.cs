@@ -9,13 +9,15 @@ namespace Agora.Rtm
             appId = "";
             userId = "";
             areaCode = AREA_CODE.AREA_CODE_GLOB;
+            presenceTimeout = 300;
+            useStringUserId = true;
             eventHandler = null;
             logConfig = new LogConfig();
             proxyConfig = new RtmProxyConfig();
-            encryptionConfig = new EncryptionConfig();
+            encryptionConfig = new RtmEncryptionConfig();
         }
 
-        public RtmConfig(string appId, string userId, AREA_CODE areaCode, IRtmEventHandler eventHandler, LogConfig logConfig, RtmProxyConfig proxyConfig, EncryptionConfig encryptionConfig)
+        public RtmConfig(string appId, string userId, AREA_CODE areaCode, IRtmEventHandler eventHandler, LogConfig logConfig, RtmProxyConfig proxyConfig, RtmEncryptionConfig encryptionConfig)
         {
             this.appId = appId;
             this.userId = userId;
@@ -32,13 +34,17 @@ namespace Agora.Rtm
 
         public AREA_CODE areaCode;
 
+        public UInt32 presenceTimeout;
+
+        public bool useStringUserId;
+
         public IRtmEventHandler eventHandler;
 
         public LogConfig logConfig;
 
         public RtmProxyConfig proxyConfig;
 
-        public EncryptionConfig encryptionConfig;
+        public RtmEncryptionConfig encryptionConfig;
     };
 
     ///
@@ -209,37 +215,87 @@ namespace Agora.Rtm
         public string publisher;
     };
 
+    public class IntervalInfo
+    {
+        public UserList joinUserList;
+
+        public UserList leaveUserList;
+
+        public UserList timeoutUserList;
+
+        public UserState[] userStateList;
+
+        public UInt64 userStateCount;
+
+        public IntervalInfo()
+        {
+            userStateList = new UserState[0];
+            userStateCount = 0;
+        }
+    };
+
+    public class SnapshotInfo
+    {
+
+        public UserState[] userStateList;
+
+        public UInt64 userCount;
+
+        public SnapshotInfo()
+        {
+            userStateList = new UserState[0];
+            userCount = 0;
+        }
+    };
+
     public class PresenceEvent
     {
         public PresenceEvent()
         {
+            type = RTM_PRESENCE_EVENT_TYPE.RTM_PRESENCE_EVENT_TYPE_SNAPSHOT;
             channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
-            type = RTM_PRESENCE_TYPE.RTM_PRESENCE_TYPE_REMOTE_JOIN_CHANNEL;
             channelName = "";
-            topicInfos = new TopicInfo[0];
-            topicInfoCount = 0;
-            userId = "";
+            publisher = "";
             stateItems = new StateItem[0];
             stateItemCount = 0;
+            interval = new IntervalInfo();
+            snapshot = new SnapshotInfo();
         }
+        public RTM_PRESENCE_EVENT_TYPE type;
 
         public RTM_CHANNEL_TYPE channelType;
 
-        public RTM_PRESENCE_TYPE type;
-
         public string channelName;
 
-        public TopicInfo[] topicInfos;
-
-        public uint topicInfoCount;
-
-        public string userId;
+        public string publisher;
 
         public StateItem[] stateItems;
 
         public UInt64 stateItemCount;
+
+        public IntervalInfo interval;
+
+        public SnapshotInfo snapshot;
     };
 
+    public class TopicEvent
+    {
+        public RTM_TOPIC_EVENT_TYPE type;
+      
+        public string channelName;
+      
+        public TopicInfo[] topicInfos;
+    
+        public UInt64 topicInfoCount;
+
+        public TopicEvent()
+        {
+            type = RTM_TOPIC_EVENT_TYPE.RTM_TOPIC_EVENT_TYPE_SNAPSHOT;
+            channelName = "";
+            topicInfos = new TopicInfo[0];
+            topicInfoCount = 0;
+        }
+    };
 
     public class LockEvent
     {
@@ -280,7 +336,7 @@ namespace Agora.Rtm
         /**
          * The metadata infomation
          */
-        public IMetadata data;
+        public RtmMetadata data;
 
         public StorageEvent()
         {

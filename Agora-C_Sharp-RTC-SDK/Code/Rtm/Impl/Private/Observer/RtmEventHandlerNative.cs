@@ -73,7 +73,21 @@ namespace Agora.Rtm
 #endif
                     if (rtmEventHandler == null) return;
                     rtmEventHandler.OnPresenceEvent(
-                      AgoraJson.JsonToStruct<PresenceEvent>(jsonData, "@event")
+                      AgoraJson.JsonToStruct<PresenceEvent>(jsonData, "event")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "RtmEventHandler_onTopicEvent":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtmEventHandler == null) return;
+                    rtmEventHandler.OnTopicEvent(
+                      AgoraJson.JsonToStruct<TopicEvent>(jsonData, "event")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -87,7 +101,7 @@ namespace Agora.Rtm
 #endif
                     if (rtmEventHandler == null) return;
                     rtmEventHandler.OnLockEvent(
-                        AgoraJson.JsonToStruct<LockEvent>(jsonData, "@event")
+                        AgoraJson.JsonToStruct<LockEvent>(jsonData, "event")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -101,7 +115,7 @@ namespace Agora.Rtm
 #endif
                     if (rtmEventHandler == null) return;
                     rtmEventHandler.OnStorageEvent(
-                        AgoraJson.JsonToStruct<StorageEvent>(jsonData, "@event")
+                        AgoraJson.JsonToStruct<StorageEvent>(jsonData, "event")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -338,8 +352,7 @@ namespace Agora.Rtm
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
-                        //todo 这个metadata的生命周期是多少？
-                        AgoraJson.JsonToStruct<IMetadata>(jsonData, "data"),
+                        AgoraJson.JsonToStruct<RtmMetadata>(jsonData, "data"),
                         (OPERATION_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -404,7 +417,7 @@ namespace Agora.Rtm
                     rtmEventHandler.OnGetUserMetadataResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
-                        AgoraJson.JsonToStruct<IMetadata>(jsonData, "data"),
+                        AgoraJson.JsonToStruct<RtmMetadata>(jsonData, "data"),
                         (OPERATION_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

@@ -8,13 +8,11 @@ namespace Agora.Rtm
 
         public bool recordUserId;
 
-        public string @lock;
-
         MetadataOptions()
         {
             recordTs = false;
             recordUserId = false;
-            @lock = "";
+           
         }
     };
 
@@ -22,21 +20,13 @@ namespace Agora.Rtm
     {
 
         public string key;
-        /**
-        * The value of the metadata item.
-        */
+    
         public string value;
-        /**
-        * The User ID of the user who makes the latest update to the metadata item.
-        */
+     
         public string authorUserId;
-        /**
-        * The revision of the metadata item.
-        */
+      
         public Int64 revision;
-        /**
-        * The Timestamp when the metadata item was last updated.
-        */
+      
         public Int64 updateTs;
 
         public MetadataItem()

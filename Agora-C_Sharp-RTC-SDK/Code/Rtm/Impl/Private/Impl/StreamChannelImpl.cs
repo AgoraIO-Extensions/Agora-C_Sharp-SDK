@@ -112,11 +112,10 @@ namespace Agora.Rtm
             _param.Add("options", options);
 
             var json = AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { options.meta };
-
+          
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_JOINTOPIC,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,
                 ref _apiParam);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)

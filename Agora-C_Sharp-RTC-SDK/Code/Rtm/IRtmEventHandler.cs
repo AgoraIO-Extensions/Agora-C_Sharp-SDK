@@ -8,6 +8,8 @@ namespace Agora.Rtm
 
         public virtual void OnPresenceEvent(PresenceEvent @event) { }
 
+        public virtual void OnTopicEvent(TopicEvent @event) { }
+
         public virtual void OnLockEvent(LockEvent @event) { }
 
         public virtual void OnStorageEvent(StorageEvent @event) { }
@@ -41,7 +43,7 @@ namespace Agora.Rtm
 
         public virtual void OnRemoveChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, OPERATION_ERROR_CODE errorCode) { }
 
-        public virtual void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, IMetadata data,
+        public virtual void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data,
                                                           OPERATION_ERROR_CODE errorCode)
         { }
 
@@ -51,7 +53,7 @@ namespace Agora.Rtm
 
         public virtual void OnRemoveUserMetadataResult(UInt64 requestId, string userId, OPERATION_ERROR_CODE errorCode) { }
 
-        public virtual void OnGetUserMetadataResult(UInt64 requestId, string userId, IMetadata data, OPERATION_ERROR_CODE errorCode) { }
+        public virtual void OnGetUserMetadataResult(UInt64 requestId, string userId, RtmMetadata data, OPERATION_ERROR_CODE errorCode) { }
 
         public virtual void OnSubscribeUserMetadataResult(string userId, OPERATION_ERROR_CODE errorCode) { }
 

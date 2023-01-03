@@ -1,4 +1,4 @@
-namespace Agora.Rtm
+﻿namespace Agora.Rtm
 {
     internal static class AgoraApiType
     {
@@ -15,7 +15,7 @@ namespace Agora.Rtm
         internal const string FUNC_STREAMCHANNEL_RELEASE = "StreamChannel_release";
         #endregion
 
-        #region IMetadata start
+        #region RtmMetadata start
         internal const string FUNC_METADATA_SETMAJORREVISION = "Metadata_setMajorRevision";
         internal const string FUNC_METADATA_SETMETADATAITEM = "Metadata_setMetadataItem";
         internal const string FUNC_METADATA_GETMETADATAITEMS = "Metadata_getMetadataItems";

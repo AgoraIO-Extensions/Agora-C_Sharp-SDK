@@ -13,7 +13,7 @@ namespace Agora.Rtm
     {
         private bool _disposed = false;
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
-        private MetadataImpl _metadataImpl;
+        //private MetadataImpl _metadataImpl;
         private IrisCApiParam _apiParam;
         private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
@@ -22,7 +22,7 @@ namespace Agora.Rtm
         {
             _apiParam = new IrisCApiParam();
             this._irisApiRtmEngine = irisApiRtmEngine;
-            this._metadataImpl = new MetadataImpl(irisApiRtmEngine);
+            //this._metadataImpl = new MetadataImpl(irisApiRtmEngine);
         }
 
 
@@ -51,42 +51,43 @@ namespace Agora.Rtm
             GC.SuppressFinalize(this);
         }
 
-        public IMetadata CreateMetadata()
-        {
-            _param.Clear();
+        //public RtmMetadata CreateMetadata()
+        //{
+        //    _param.Clear();
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+        //    var json = Agora.Rtc.AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_CREATEMETADATA, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            if (nRet == 0)
-            {
-                IntPtr metadataPtr = (IntPtr)(UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(_apiParam.Result, "result");
-                if (metadataPtr != IntPtr.Zero)
-                {
-                    Metadata metadata = new Metadata(this._metadataImpl, metadataPtr);
-                    return metadata;
-                }
-            }
+        //    var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_CREATEMETADATA, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+        //    if (nRet == 0)
+        //    {
+        //        IntPtr metadataPtr = (IntPtr)(UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(_apiParam.Result, "result");
+        //        if (metadataPtr != IntPtr.Zero)
+        //        {
+        //            Metadata metadata = new Metadata(this._metadataImpl, metadataPtr);
+        //            return metadata;
+        //        }
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
-        public int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, IMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
-            _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
+            _param.Add("data", data);
             _param.Add("options", options);
+            _param.Add("lockName", lockName);
 
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
+            //IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
 
             var nRet =
                 AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_SETCHANNELMETADATA,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,//Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
@@ -97,21 +98,22 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, IMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
-            _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
+            _param.Add("data", data);
             _param.Add("options", options);
+            _param.Add("lockName", lockName);
 
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
+            //IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
             var nRet =
                 AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_UPDATECHANNELMETADATA,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,//Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
@@ -122,21 +124,21 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, IMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
-            _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
+            _param.Add("data", data);
             _param.Add("options", options);
-
+            _param.Add("lockName", lockName);
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
+            //IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
             var nRet =
                 AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_REMOVECHANNELMETADATA,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,//Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
@@ -170,20 +172,20 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SetUserMetadata(string userId, IMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int SetUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
-            _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
+            _param.Add("data", data);
             _param.Add("options", options);
 
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
+            //IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
             var nRet =
                 AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_SETUSERMETADATA,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,//Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
@@ -194,20 +196,20 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int UpdateUserMetadata(string userId, IMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int UpdateUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
-            _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
+            _param.Add("data", data);
             _param.Add("options", options);
 
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
+            //IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
             var nRet =
                 AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_UPDATEUSERMETADATA,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,//Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
@@ -218,20 +220,20 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int RemoveUserMetadata(string userId, IMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public int RemoveUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("userId", userId);
-            _param.Add("data", (UInt64)(((Metadata)data).GetMedataPtr()));
+            _param.Add("data", data);
             _param.Add("options", options);
 
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
+            //IntPtr[] arrayPtr = new IntPtr[] { ((Metadata)data).GetMedataPtr() };
             var nRet =
                 AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMSTORAGE_REMOVEUSERMETADATA,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,//Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
             if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
