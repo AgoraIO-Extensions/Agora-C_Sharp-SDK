@@ -9,13 +9,33 @@ namespace Agora.Rtm
         RTM_MESSAGE_QOS_ORDERED = 1,
     };
 
+    public enum RTM_MESSAGE_PRIORITY
+    {
+        RTM_MESSAGE_PRIORITY_HIGHEST = 0,
+      
+        RTM_MESSAGE_PRIORITY_HIGH = 1,
+       
+        RTM_MESSAGE_PRIORITY_NORMAL = 4,
+       
+        RTM_MESSAGE_PRIORITY_LOW = 8,
+    };
+
     public class JoinChannelOptions
     {
         public JoinChannelOptions()
         {
-            this.token = "";
+            token = "";
+            withMetadata = false;
+            withPresence = true;
+            withLock = false;
         }
-        public string token { set; get; }
+        public string token;
+
+        public bool withMetadata;
+
+        public bool withPresence;
+
+        public bool withLock;
     };
 
     public class JoinTopicOptions
@@ -23,22 +43,20 @@ namespace Agora.Rtm
         public JoinTopicOptions()
         {
             this.qos = RTM_MESSAGE_QOS.RTM_MESSAGE_QOS_ORDERED;
-            this.meta = IntPtr.Zero;
+            this.priority = RTM_MESSAGE_PRIORITY.RTM_MESSAGE_PRIORITY_NORMAL;
+            this.meta = "";
             this.metaLength = 0;
         }
 
-        public JoinTopicOptions(RTM_MESSAGE_QOS qos, IntPtr meta, uint metaLength)
-        {
-            this.qos = qos;
-            this.meta = meta;
-            this.metaLength = metaLength;
-        }
-    
-        public RTM_MESSAGE_QOS qos { set; get; }
+        public RTM_MESSAGE_QOS qos;
 
-        public IntPtr meta { set; get; }
+        public RTM_MESSAGE_PRIORITY priority;
 
-        public uint metaLength { set; get; }
+        public string meta;
+
+        public UInt64 metaLength;
+
+        public bool syncWithMedia;
     };
 
     public class TopicOptions
@@ -55,27 +73,10 @@ namespace Agora.Rtm
             this.userCount = userCount;
         }
 
-        public string[] users { set; get; }
+        public string[] users;
 
-        public uint userCount { set; get; }
+        public uint userCount;
     };
 
-    public class UserList
-    {
-        public UserList()
-        {
-            users = new string[0];
-            userCount = 0;
-        }
-
-        public UserList(string[] users, uint userCount)
-        {
-            this.users = users;
-            this.userCount = userCount;
-        }
-
-        public string[] users { set; get; }
-
-        public uint userCount { set; get; }
-    };
+  
 }

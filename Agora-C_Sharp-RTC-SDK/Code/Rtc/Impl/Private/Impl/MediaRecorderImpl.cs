@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -18,6 +19,8 @@ namespace Agora.Rtc
         private IrisEventHandlerHandleNative _irisEngineEventHandlerHandleNative;
         private IrisCEventHandler _irisCEventHandler;
         private IrisEventHandlerHandleNative _irisCEngineEventHandlerNative;
+
+        private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private AgoraCallbackObject _callbackObject;
@@ -104,12 +107,11 @@ namespace Agora.Rtc
             {
                 MediaRecorderObserverNative.MediaRecorderObserverDic.Add(key, callback);
 
-                var param = new
-                {
-                    connection
-                };
+                _param.Clear();
+                _param.Add("connection", connection);
 
-                var json = AgoraJson.ToJson(param);
+
+                var json = AgoraJson.ToJson(_param);
                 int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
                     json, (UInt32)json.Length,
                     IntPtr.Zero, 0,
@@ -117,7 +119,7 @@ namespace Agora.Rtc
 
                 return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
             }
-            
+
             if (callback == null && MediaRecorderObserverNative.MediaRecorderObserverDic.ContainsKey(key))
             {
                 MediaRecorderObserverNative.MediaRecorderObserverDic.Remove(key);
@@ -128,13 +130,12 @@ namespace Agora.Rtc
 
         public int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
         {
-            var param = new
-            {
-                connection,
-                config
-            };
+            _param.Clear();
+            _param.Add("connection", connection);
+            _param.Add("config", config);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
             int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STARTRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
@@ -145,12 +146,11 @@ namespace Agora.Rtc
 
         public int StopRecording(RtcConnection connection)
         {
-            var param = new
-            {
-                connection,
-            };
+            _param.Clear();
+            _param.Add("connection", connection);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
             int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STOPRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,

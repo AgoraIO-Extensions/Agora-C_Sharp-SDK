@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -15,6 +15,7 @@ namespace Agora.Rtm
         private bool _disposed = false;
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
         private IrisCApiParam _apiParam;
+        private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
         internal StreamChannelImpl(IrisApiRtmEnginePtr irisApiRtmEngine)
         {
@@ -47,46 +48,55 @@ namespace Agora.Rtm
             GC.SuppressFinalize(this);
         }
 
-        public int Join(string channelName, JoinChannelOptions options)
+        public int Join(string channelName, JoinChannelOptions options, ref UInt64 requestId)
         {
-            var param = new
-            {
-                channelName,
-                options
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("options", options);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_JOIN,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
+
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int Leave(string channelName)
+        public int Leave(string channelName, ref UInt64 requestId)
         {
-            var param = new
-            {
-                channelName
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_LEAVE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
+
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public string GetChannelName(string channelName)
         {
-            var param = new
-            {
-                channelName
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_GETCHANNELNAME,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
@@ -94,39 +104,38 @@ namespace Agora.Rtm
             return nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
         }
 
-        public int JoinTopic(string channelName, string topic, JoinTopicOptions options)
+        public int JoinTopic(string channelName, string topic, JoinTopicOptions options, ref UInt64 requestId)
         {
-            var param = new
-            {
-                channelName,
-                topic,
-                options = new
-                {
-                    options.qos,
-                    options.metaLength
-                }
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("topic", topic);
+            _param.Add("options", options);
 
-            var json = AgoraJson.ToJson(param);
-            IntPtr[] arrayPtr = new IntPtr[] { options.meta };
-
+            var json = AgoraJson.ToJson(_param);
+          
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_JOINTOPIC,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,
                 ref _apiParam);
+
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int PublishTopicMessage(string channelName, string topic, byte[] message, uint length)
+        public int PublishTopicMessage(string channelName, string topic, byte[] message, uint length, PublishOptions option)
         {
-            var param = new
-            {
-                channelName,
-                topic,
-                length
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("topic", topic);
+            _param.Add("length", length);
+            _param.Add("option", option);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(message, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
@@ -137,51 +146,62 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int LeaveTopic(string channelName, string topic)
+        public int LeaveTopic(string channelName, string topic, ref UInt64 requestId)
         {
-            var param = new
-            {
-                channelName,
-                topic
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("topic", topic);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_LEAVETOPIC,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
+
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SubscribeTopic(string channelName, string topic, TopicOptions options)
+        public int SubscribeTopic(string channelName, string topic, TopicOptions options, ref UInt64 requestId)
         {
-            var param = new
-            {
-                channelName,
-                topic,
-                options
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("topic", topic);
+            _param.Add("options", options);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_SUBSCRIBETOPIC,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
+
+
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                int result = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int UnsubscribeTopic(string channelName, string topic, TopicOptions options)
         {
-            var param = new
-            {
-                channelName,
-                topic,
-                options
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("topic", topic);
+            _param.Add("options", options);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_UNSUBSCRIBETOPIC,
                 json, (UInt32)json.Length,
@@ -192,13 +212,12 @@ namespace Agora.Rtm
 
         public int GetSubscribedUserList(string channelName, string topic, ref UserList users)
         {
-            var param = new
-            {
-                channelName,
-                topic
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("topic", topic);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_GETSUBSCRIBEDUSERLIST,
                 json, (UInt32)json.Length,
@@ -207,7 +226,7 @@ namespace Agora.Rtm
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
-                AgoraLog.Log(_apiParam.Result + "==============>>>>>");
+
                 users = AgoraJson.JsonToStruct<UserList>(_apiParam.Result, "users");
             }
             else
@@ -219,12 +238,11 @@ namespace Agora.Rtm
 
         public int Release(string channelName)
         {
-            var param = new
-            {
-                channelName
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_RELEASE,
                 json, (UInt32)json.Length,

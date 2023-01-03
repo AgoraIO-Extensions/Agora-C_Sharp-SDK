@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
@@ -9,11 +10,12 @@ namespace Agora.Rtm
 {
     using IrisApiRtmEnginePtr = IntPtr;
 
-    public sealed class RtmClientImpl
+    internal class RtmClientImpl
     {
         private bool _disposed = false;
         private static RtmClientImpl clientInstance = null;
         private static readonly string identifier = "AgoraRtmClient";
+        private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
         private IrisCApiParam _apiParam;
@@ -23,8 +25,10 @@ namespace Agora.Rtm
         private AgoraCallbackObject _callbackObject;
 #endif
 
-        private StreamChannelImpl _streamChannelInstance;
-
+        private StreamChannelImpl _streamChannelImpl;
+        private RtmLockImpl _rtmLockImpl;
+        private RtmPresenceImpl _rtmPresenceImpl;
+        private RtmStorageImpl _rtmStorageImpl;
 
         public event Action<RtmClientImpl> OnRtmClientImpleWillDispose;
 
@@ -34,7 +38,10 @@ namespace Agora.Rtm
 
             _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(IntPtr.Zero);
 
-            _streamChannelInstance = new StreamChannelImpl(_irisApiRtmEngine);
+            _streamChannelImpl = new StreamChannelImpl(_irisApiRtmEngine);
+            _rtmLockImpl = new RtmLockImpl(_irisApiRtmEngine);
+            _rtmPresenceImpl = new RtmPresenceImpl(_irisApiRtmEngine);
+            _rtmStorageImpl = new RtmStorageImpl(_irisApiRtmEngine);
         }
 
         ~RtmClientImpl()
@@ -54,8 +61,18 @@ namespace Agora.Rtm
                 }
 
                 ReleaseEventHandler();
-                _streamChannelInstance.Dispose();
-                _streamChannelInstance = null;
+
+                _streamChannelImpl.Dispose();
+                _streamChannelImpl = null;
+
+                _rtmLockImpl.Dispose();
+                _rtmLockImpl = null;
+
+                _rtmPresenceImpl.Dispose();
+                _rtmPresenceImpl = null;
+
+                _rtmStorageImpl.Dispose();
+                _rtmStorageImpl = null;
             }
 
             Release();
@@ -82,6 +99,28 @@ namespace Agora.Rtm
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+
+        internal StreamChannelImpl GetStreamChannelImpl()
+        {
+            return _streamChannelImpl;
+        }
+
+        internal RtmLockImpl GetRtmLockImpl()
+        {
+            return _rtmLockImpl;
+        }
+
+        internal RtmPresenceImpl GetRtmPresenceImpl()
+        {
+            return _rtmPresenceImpl;
+        }
+
+        internal RtmStorageImpl GetRtmStorageImpl()
+        {
+            return _rtmStorageImpl;
+        }
+
 
         private void CreateEventHandler()
         {
@@ -132,12 +171,11 @@ namespace Agora.Rtm
             CreateEventHandler();
             RtmEventHandlerNative.SetEventHandler(config.eventHandler);
 
-            var param = new
-            {
-                config
-            };
+            _param.Clear();
+            _param.Add("config", config);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
 
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
@@ -152,12 +190,11 @@ namespace Agora.Rtm
 
         public int CreateStreamChannel(string channelName)
         {
-            var param = new
-            {
-                channelName
-            };
+            _param.Clear();
+            _param.Add("channelName", channelName);
 
-            var json = AgoraJson.ToJson(param);
+
+            var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_CREATESTREAMCHANNEL,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
@@ -165,9 +202,127 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        internal StreamChannelImpl GetStreamChannel()
+
+        public int Login(string token)
         {
-            return _streamChannelInstance;
+            _param.Clear();
+            _param.Add("token", token);
+
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_LOGIN, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int Logout()
+        {
+            _param.Clear();
+
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_LOGOUT, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        //public  IRtmStorage* GetStorage()
+        //{
+        //    _param.Clear();
+
+        //    var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+        //    var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_GETSTORAGE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+        //    return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        //}
+
+        //public  IRtmLock* GetLock()
+        //{
+        //    _param.Clear();
+
+        //    var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+        //    var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_GETLOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+        //    return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        //}
+
+        //public  IRtmPresence* GetPresence()
+        //{
+        //    _param.Clear();
+
+        //    var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+        //    var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_GETPRESENCE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+        //    return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        //}
+
+        public int RenewToken(string token)
+        {
+            _param.Clear();
+            _param.Add("token", token);
+
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_RENEWTOKEN, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int Publish(string channelName, string message, UInt64 length, PublishOptions option, ref UInt64 requestId)
+        {
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("message", message);
+            _param.Add("length", length);
+            _param.Add("option", option);
+
+
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_PUBLISH, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                requestId = (UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
+            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId)
+        {
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("options", options);
+
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SUBSCRIBE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            {
+                requestId = (UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+            }
+
+            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int Unsubscribe(string channelName)
+        {
+            _param.Clear();
+            _param.Add("channelName", channelName);
+
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_UNSUBSCRIBE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int SetParameters(string parameters)
+        {
+            _param.Clear();
+            _param.Add("parameters", parameters);
+
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETPARAMETERS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
     }
 }
