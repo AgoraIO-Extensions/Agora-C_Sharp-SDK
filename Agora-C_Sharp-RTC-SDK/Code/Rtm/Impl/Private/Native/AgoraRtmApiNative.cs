@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Agora.Rtm
 {
@@ -22,17 +23,27 @@ namespace Agora.Rtm
         private const string AgoraRtmLibName = "AgoraRtmWrapper";
 #endif
 
-        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisApiRtmEnginePtr CreateIrisRtmEngine(IntPtr engine);
 
-        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void DestroyIrisRtmEngine(IrisApiRtmEnginePtr engine);
+        internal static IrisApiRtmEnginePtr CreateIrisRtmEngine(IntPtr engine)
+        {
+            IrisEngineParam irisEngineParam;
+            irisEngineParam.log_name = "";
+            irisEngineParam.log_path = "";
+            irisEngineParam.log_level = IrisLogLevel.levelTrace;
+            AgoraApiNative.InitializeIrisEngine(ref irisEngineParam);
 
-        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisRtmApi(IrisApiRtmEnginePtr engine_ptr, ref IrisCApiParam @param);
+            return Agora.AgoraApiNative.CreateIrisApiEngine(Agora.AgoraApiType.IRIS_API_ENGINE_RTM);
+        }
+
+
+        internal static void DestroyIrisRtmEngine(IrisApiRtmEnginePtr engine)
+        {
+            Agora.AgoraApiNative.DestroyIrisApiEngine(engine);
+        }
+
 
         internal static int CallIrisApiWithArgs(IrisApiRtmEnginePtr engine_ptr, string func_name,
-            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisCApiParam apiParam,
+            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisApiParam apiParam,
             uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0)
         {
             apiParam.@event = func_name;
@@ -52,7 +63,7 @@ namespace Agora.Rtm
                 Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
             }
             apiParam.length = lengthPtr;
-            int retval = CallIrisRtmApi(engine_ptr, ref apiParam);
+            int retval = Agora.AgoraApiNative.CallIrisApi(engine_ptr, ref apiParam);
 
             if (lengthPtr != IntPtr.Zero)
             {
@@ -62,11 +73,59 @@ namespace Agora.Rtm
             return retval;
         }
 
-        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisEventHandlerHandle CreateIrisEventHandler(IntPtr event_handler);
 
-        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void DestroyIrisEventHandler(IrisEventHandlerHandle handler);
+        internal static IrisEventHandlerHandle CreateIrisRtmEventHandler(IrisApiRtmEnginePtr engine_ptr, IntPtr event_handler)
+        {
+
+            IrisApiParam apiParam = new IrisApiParam();
+            apiParam.AllocResult();
+            Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
+
+
+            _param.Add("cEventHandler", (UInt64)event_handler);
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+
+            IntPtr[] arrayPtr = new IntPtr[] { event_handler };
+
+
+            int nRet = CallIrisApiWithArgs(engine_ptr, Agora.AgoraApiType.FUNC_APIENGINE_CREATEEVENTHANDLER,
+                     json, (uint)json.Length,
+                     Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                     ref apiParam);
+
+            if (nRet == 0)
+            {
+                IrisEventHandlerHandle eventHandler = (IntPtr)(UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(apiParam.Result, "eventHandler");
+                apiParam.FreeResult();
+                return eventHandler;
+            }
+            else
+            {
+                apiParam.FreeResult();
+                return IntPtr.Zero;
+            }
+        }
+
+
+        internal static void DestroyIrisRtmEventHandler(IrisApiRtmEnginePtr engine_ptr, IrisEventHandlerHandle handler)
+        {
+            IrisApiParam apiParam = new IrisApiParam();
+            apiParam.AllocResult();
+            Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
+
+
+            _param.Add("eventHandler", (UInt64)handler);
+            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            IntPtr[] arrayPtr = new IntPtr[] { handler };
+
+
+            int nRet = CallIrisApiWithArgs(engine_ptr, Agora.AgoraApiType.FUNC_APIENGINE_DESTROYEVENTHANDLER,
+                     json, (uint)json.Length,
+                     Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                     ref apiParam);
+
+            apiParam.FreeResult();
+        }
 
         #endregion
     }
@@ -74,7 +133,7 @@ namespace Agora.Rtm
     internal class AgoraUtil
     {
 
-        internal static void AllocEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle, Func_Event_Native onEvent)
+        internal static void AllocEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle, Func_Event_Native onEvent, IntPtr enginePtr)
         {
             eventHandlerHandle.cEvent = new IrisCEventHandler
             {
@@ -88,12 +147,12 @@ namespace Agora.Rtm
 
             eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
             Marshal.StructureToPtr(cEventHandlerNativeLocal, eventHandlerHandle.marshal, true);
-            eventHandlerHandle.handle = AgoraRtmNative.CreateIrisEventHandler(eventHandlerHandle.marshal);
+            eventHandlerHandle.handle = AgoraRtmNative.CreateIrisRtmEventHandler(enginePtr, eventHandlerHandle.marshal);
         }
 
-        internal static void FreeEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle)
+        internal static void FreeEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle, IntPtr enginePtr)
         {
-            AgoraRtmNative.DestroyIrisEventHandler(eventHandlerHandle.handle);
+            AgoraRtmNative.DestroyIrisRtmEventHandler(enginePtr, eventHandlerHandle.handle);
             eventHandlerHandle.handle = IntPtr.Zero;
 
             Marshal.FreeHGlobal(eventHandlerHandle.marshal);

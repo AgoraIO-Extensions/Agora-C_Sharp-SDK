@@ -15,19 +15,83 @@ namespace Agora
         private const string AgoraRtcLibName = "AgoraRtcWrapper";
 #endif
 
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int InitializeIrisEngine(ref IrisEngineParam param);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int InitializeIrisEngine(ref );
+        internal static extern IntPtr CreateIrisApiEngine(string name);
 
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void DestroyIrisApiEngine(IntPtr handle);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int CallIrisApi(IntPtr handle, ref IrisApiParam param);
     }
 
-
-    typedef struct IrisEngineParam
+    internal enum IrisLogLevel
     {
-        const char* log_path;
-        const char* log_name;
-        IrisLogLevel log_level;
+        levelTrace = 0,
+        levelDebug = 1,
+        levelInfo = 2,
+        levelWarn = 3,
+        levelErr = 4,
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisEngineParam
+    {
+        internal string log_path;
+        internal string log_name;
+        internal IrisLogLevel log_level;
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisApiEngineParam
+    {
+        internal string log_path;
+        internal IrisLogLevel log_level;
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisApiParam
+    {
+
+        internal string Result
+        {
+            get
+            {
+                var re = Marshal.PtrToStringAnsi(result);
+                return re;
+            }
+        }
+
+        internal void AllocResult()
+        {
+            if (result == IntPtr.Zero)
+            {
+                result = Marshal.AllocHGlobal(65536);
+            }
+        }
+
+        internal void FreeResult()
+        {
+            if (result != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(result);
+                result = IntPtr.Zero;
+            }
+        }
+
+
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+
+        internal IntPtr result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
     }
-    IrisEngineParam;
 
 }

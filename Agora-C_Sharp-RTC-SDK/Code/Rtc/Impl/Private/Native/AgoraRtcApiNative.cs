@@ -44,13 +44,13 @@ namespace Agora.Rtc
 
         // IrisRtcEngine
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcEnginePtr CreateIrisApiEngine();
+        internal static extern IrisRtcEnginePtr CreateIrisRtcApiEngine();
 
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //internal static extern void InitLogger(IrisRtcEnginePtr engine_ptr, string dir, int maxSize);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void DestroyIrisApiEngine(IrisRtcEnginePtr engine_ptr);
+        internal static extern void DestroyIrisRtcApiEngine(IrisRtcEnginePtr engine_ptr);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisEventHandlerHandle SetIrisRtcEngineEventHandler(IrisRtcEnginePtr engine_ptr,
@@ -61,7 +61,7 @@ namespace Agora.Rtc
             IrisEventHandlerHandle handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, string func_name, 
+        internal static extern int CallIrisRtcApi(IrisRtcEnginePtr engine_ptr, string func_name, 
             string @params, UInt32 paramLength, IntPtr bufferPtr, UInt32 bufferLength, out CharAssistant result);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]

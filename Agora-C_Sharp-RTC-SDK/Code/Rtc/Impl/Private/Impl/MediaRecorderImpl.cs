@@ -112,7 +112,7 @@ namespace Agora.Rtc
 
 
                 var json = AgoraJson.ToJson(_param);
-                int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
+                int nRet = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
                     json, (UInt32)json.Length,
                     IntPtr.Zero, 0,
                     out _result);
@@ -136,7 +136,7 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STARTRECORDING,
+            int nRet = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STARTRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -151,7 +151,7 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-            int nRet = AgoraRtcNative.CallIrisApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STOPRECORDING,
+            int nRet = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STOPRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
