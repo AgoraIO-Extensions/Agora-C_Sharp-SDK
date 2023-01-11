@@ -283,7 +283,9 @@ namespace Agora.Rtm
         public RTM_TOPIC_EVENT_TYPE type;
       
         public string channelName;
-      
+
+        public string userId;
+
         public TopicInfo[] topicInfos;
     
         public UInt64 topicInfoCount;
@@ -292,6 +294,7 @@ namespace Agora.Rtm
         {
             type = RTM_TOPIC_EVENT_TYPE.RTM_TOPIC_EVENT_TYPE_SNAPSHOT;
             channelName = "";
+            userId = "";
             topicInfos = new TopicInfo[0];
             topicInfoCount = 0;
         }

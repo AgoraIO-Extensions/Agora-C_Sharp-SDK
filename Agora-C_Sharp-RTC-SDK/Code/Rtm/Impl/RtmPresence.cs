@@ -43,7 +43,7 @@ namespace Agora.Rtm
             return _rtmPresenceImpl.WhereNow(userId, ref requestId);
         }
 
-        public override int SetState(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items, int count, ref UInt64 requestId)
+        public override int SetState(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items, UInt64 count, ref UInt64 requestId)
         {
             if (_rtmPresenceImpl == null)
             {
@@ -52,7 +52,7 @@ namespace Agora.Rtm
             return _rtmPresenceImpl.SetState(channelName, channelType, items, count, ref requestId);
         }
 
-        public override int RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, int count,  ref UInt64 requestId)
+        public override int RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, UInt64 count,  ref UInt64 requestId)
         {
             if (_rtmPresenceImpl == null)
             {

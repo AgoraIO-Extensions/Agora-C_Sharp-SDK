@@ -109,6 +109,16 @@ namespace Agora.Rtm
         RTM_ERR_PRESENCE_SERVICE_NOT_READY = 10301,
 
         RTM_ERR_PRESENCE_OPERATION_WITHOUT_JOIN_CHANNEL = 10302,
+
+        RTM_ERR_PRESENCE_STATE_SIZE_OVERFLOW = 10303,
+      
+        RTM_ERR_PRESENCE_STATE_KEY_SIZE_OVERFLOW = 10304,
+      
+        RTM_ERR_PRESENCE_STATE_INVALID_KEY = 10305,
+       
+        RTM_ERR_PRESENCE_STATE_DUPLICATE_KEY = 10306,
+      
+        RTM_ERR_PRESENCE_STATE_VALUE_SIZE_OVERFLOW = 10307,
     };
 
 
@@ -425,7 +435,7 @@ namespace Agora.Rtm
 
         public StateItem[] states;
 
-        public int statesCount;
+        public UInt64 statesCount;
 
         public UserState()
         {
@@ -458,7 +468,7 @@ namespace Agora.Rtm
 
     public class ChannelInfo
     {
-        public string channeName;
+        public string channelName;
 
         public RTM_CHANNEL_TYPE channelType;
     };
@@ -544,7 +554,7 @@ namespace Agora.Rtm
     {
         public Int64 majorRevision;
         public MetadataItem[] metadataItems;
-        public UInt64 metadataSize;
+        public UInt64 metadataItemsSize;
 
         public RtmMetadata()
         {

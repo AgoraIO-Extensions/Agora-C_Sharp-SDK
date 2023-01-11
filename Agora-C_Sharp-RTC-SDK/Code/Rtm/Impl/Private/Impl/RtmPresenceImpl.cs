@@ -85,7 +85,7 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SetState(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items, int count, ref UInt64 requestId)
+        public int SetState(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items, UInt64 count, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -106,7 +106,7 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, int count, ref UInt64 requestId)
+        public int RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, UInt64 count, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
