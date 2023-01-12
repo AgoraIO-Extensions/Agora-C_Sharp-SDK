@@ -1,12 +1,13 @@
-﻿/*
- * 须知：
- * 1. 准备好AppId、ChannelId，并通过界面设置（点更新ID按钮），避免应用程序重启重复输入
- * 2. 根据实际需要，准备好一定数量的“窗口”，用于显示，构造时传给各场景。
- * 3. 各场景APIs调用流程略有不同，具体请参考各场景的示例
- * 
- * 注意：多个频道Id请以“;”分隔，但都必须有效，此时，如果是单频道场景，则仅使用第一个频道Id。
- * 如输入了“123;456;789”，对于单频道场景，仅使用123；对于多频道场景，则频道1 Id为123，频道2 Id为456，频道3 Id为789。
- */
+﻿/// <summary>
+/// Knowlege：
+/// 1. Input AppId and ChannelId, click update button. 
+///    Avoid restart appliction because you need to input appid again.
+/// 2. You need to pass window parameter to every scene to show Video.
+/// 3. API call sequence is different in difference cases.
+/// 
+/// Note：Multiple channel id is seperated by ';', every channel id must be valid. If only use one channel, the case will use first channel id.
+/// For example, you input '123;456;789' in channel id edit. For one channel case, only use 123 as channel id. For multiple channels, 123 is channel id 1, 456 is channel id 2 and 789 is channel id 3.
+/// <summary>
 
 using System;
 using System.Drawing;
@@ -79,6 +80,54 @@ namespace CSharp_API_Example
             reg_linkLabel.Links.Add(0, reg_url.Length, reg_url);
             eg_linkLabel.Links.Add(0, eg_url.Length, eg_url);
             faq_linkLabel.Links.Add(0, faq_url.Length, faq_url);
+            this.updateBtn.Text = config_helper_.GetUIValue("General", "UpdateAppid.Info");
+            this.clear_msg_btn.Text = config_helper_.GetUIValue("General", "Clear.Info");
+            this.api_ref.Text = config_helper_.GetUIValue("General", "APIManual.Info");
+            this.reg_linkLabel.Text = config_helper_.GetUIValue("General", "RegisterUrl");
+            this.eg_linkLabel.Text = config_helper_.GetUIValue("General", "Example.Info");
+            this.faq_linkLabel.Text= config_helper_.GetUIValue("General", "Question");
+
+            this.joinChannelVideoTab.Text = config_helper_.GetUIValue("General", "Video1V1");
+            this.joinChannelAudioTab.Text = config_helper_.GetUIValue("General", "Audio1V1");
+            this.screenShareTab.Text = config_helper_.GetUIValue("General", "ScreenShare");
+            this.joinMultipleChannelTab.Text = config_helper_.GetUIValue("General", "MultipleChannel");
+            this.videoGroupTab.Text = config_helper_.GetUIValue("General", "VideoGroup");
+            this.processRawDataTab.Text = config_helper_.GetUIValue("General", "RawData");
+            this.virtualBackgroundTab.Text = config_helper_.GetUIValue("General", "VirtualBackground");
+            this.customCaptureVideoTab.Text = config_helper_.GetUIValue("General", "CustomVideoDevice");
+            this.AudioMixingTag.Text = config_helper_.GetUIValue("General", "AudioMixing");
+            this.PlayEffectTag.Text = config_helper_.GetUIValue("General", "AudioEffect");
+            this.DeviceManagerTag.Text = config_helper_.GetUIValue("General", "DeviceManager");
+            this.RtmpStreamingTag.Text = config_helper_.GetUIValue("General", "RtmpStreaming");
+            this.SetLiveTranscodingTag.Text = config_helper_.GetUIValue("General", "RtmpLiveTranscoding");
+            this.SetEncryptionTag.Text = config_helper_.GetUIValue("General", "Encrypt");
+            this.SetVideoEncoderConfigurationTag.Text = config_helper_.GetUIValue("General", "VideoEncoder");
+            this.VoiceChangerTag.Text = config_helper_.GetUIValue("General", "VoiceChanger");
+            this.ChannelMediaRelayTag.Text = config_helper_.GetUIValue("General", "MediaRelay");
+            this.SendStreamMessageTag.Text = config_helper_.GetUIValue("General", "SendStreamMessage.SendMessage");
+            this.StringUidTag.Text = config_helper_.GetUIValue("General", "StringUid");
+
+            joinChannelVideoView.SetUIText(config_helper_);
+            joinChannelAudioView.SetUIText(config_helper_);
+            screenShareView.SetUIText(config_helper_);
+            setEncryptionView.SetUIText(config_helper_);
+            joinMultipleChannelView.SetUIText(config_helper_);
+            videoGroupView.SetUIText(config_helper_);
+            processRawDataView.SetUIText(config_helper_);
+            virtualBackgroundView.SetUIText(config_helper_);
+            customCaptureVideoView.SetUIText(config_helper_);
+            audioMixingView.SetUIText(config_helper_);
+            playEffectView.SetUIText(config_helper_);
+            deviceManagerView.SetUIText(config_helper_);
+
+            rtmpStreamingView.SetUIText(config_helper_);
+            setLiveTranscodingView.SetUIText(config_helper_);
+            channelMediaRelayView.SetUIText(config_helper_);
+            sendStreamMessageView.SetUIText(config_helper_);
+            setVideoEncoderConfigurationView.SetUIText(config_helper_);
+            stringUidView.SetUIText(config_helper_);
+            voiceChangerView.SetUIText(config_helper_);
+            // 
         }
 
         private void InitSceneControl()
@@ -159,21 +208,21 @@ namespace CSharp_API_Example
                 usr_engine_ = new JoinMultipleChannel(joinMultipleChannelView.localVideoView.Handle, 
                     joinMultipleChannelView.firstChannelVideoView.Handle, joinMultipleChannelView.secondChannelVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == videoGroupTab) // 多人视频
+            else if (tabCtrl.SelectedTab == videoGroupTab) // Multiple people
             {
                 usr_engine_ = new VideoGroup(videoGroupView.localVideoView.Handle,
                     videoGroupView.fistUserVideoView.Handle, videoGroupView.secondUserVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == processRawDataTab) // 祼数据
+            else if (tabCtrl.SelectedTab == processRawDataTab) // Raw Data
             {
                 usr_engine_ = new ProcessRawData(processRawDataView.localVideoView.Handle, processRawDataView.remoteVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == virtualBackgroundTab) // 虚拟背景
+            else if (tabCtrl.SelectedTab == virtualBackgroundTab) // Virtual Background
             {
                 usr_engine_ = new VirtualBackground(virtualBackgroundView.localVideoView.Handle, virtualBackgroundView.remoteVideoView.Handle);
             }
 
-            else if (tabCtrl.SelectedTab == customCaptureVideoTab) // 自采集自渲染
+            else if (tabCtrl.SelectedTab == customCaptureVideoTab) // Custom Render and Capture
             {
                 usr_engine_ = new CustomCaptureVideo(customCaptureVideoView.localVideoView.Handle, customCaptureVideoView.remoteVideoView.Handle, customCaptureVideoView.localVideoView);
             }

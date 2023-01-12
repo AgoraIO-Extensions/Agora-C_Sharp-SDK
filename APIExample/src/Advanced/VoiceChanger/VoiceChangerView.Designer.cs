@@ -4,14 +4,14 @@ namespace CSharp_API_Example
     partial class VoiceChangerView
     {
         /// <summary> 
-        /// 必需的设计器变量。
+        /// 
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
         /// <summary> 
-        /// 清理所有正在使用的资源。
+        /// 
         /// </summary>
-        /// <param name="disposing">如果应释放托管资源，为 true；否则为 false。</param>
+        /// <param name="disposing">If release delegate resource, true; or fals</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -21,14 +21,15 @@ namespace CSharp_API_Example
             base.Dispose(disposing);
         }
 
-        #region 组件设计器生成的代码
+        #region Componet Designer Generated Code
 
         /// <summary> 
-        /// 设计器支持所需的方法 - 不要修改
-        /// 使用代码编辑器修改此方法的内容。
+        /// The method designer supported - don't modify
+        /// Modify the code by designer
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ComboBox cmbAudioEffectParam2;
             this.voiceChangerLabel = new System.Windows.Forms.Label();
             this.cmbVoiceType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -47,37 +48,46 @@ namespace CSharp_API_Example
             this.cmbAudioEffectParam2 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
+            // cmbAudioEffectParam2
+            // 
+            this.cmbAudioEffectParam2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbAudioEffectParam2.FormattingEnabled = true;
+            this.cmbAudioEffectParam2.Items.AddRange(new object[] {
+            "A",
+            "A#",
+            "B",
+            "(Default) C",
+            "C#",
+            "D",
+            "D#",
+            "E",
+            "F",
+            "F#",
+            "G",
+            "G#"});
+            this.cmbAudioEffectParam2.Location = new System.Drawing.Point(853, 588);
+            this.cmbAudioEffectParam2.Name = "cmbAudioEffectParam2";
+            this.cmbAudioEffectParam2.Size = new System.Drawing.Size(144, 28);
+            this.cmbAudioEffectParam2.TabIndex = 14;
+            this.cmbAudioEffectParam2.SelectedIndexChanged += new System.EventHandler(this.cmbAudioEffectParam2_SelectedIndexChanged);
+            // 
             // voiceChangerLabel
             // 
             this.voiceChangerLabel.AutoSize = true;
             this.voiceChangerLabel.Location = new System.Drawing.Point(282, 0);
             this.voiceChangerLabel.Name = "voiceChangerLabel";
-            this.voiceChangerLabel.Size = new System.Drawing.Size(39, 20);
+            this.voiceChangerLabel.Size = new System.Drawing.Size(109, 20);
             this.voiceChangerLabel.TabIndex = 0;
-            this.voiceChangerLabel.Text = "变声";
+            this.voiceChangerLabel.Text = "Voice Change";
             this.voiceChangerLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // cmbVoiceType
             // 
             this.cmbVoiceType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVoiceType.FormattingEnabled = true;
-            this.cmbVoiceType.Items.AddRange(new object[] {
-            "关闭美声",
-            "磁性（男）",
-            "清新（女）",
-            "活力（女）",
-            "歌唱美声",
-            "浑厚 ",
-            "低沉",
-            "圆润",
-            "假音 \t",
-            "饱满。",
-            "清澈",
-            "高亢",
-            "嘹亮"});
-            this.cmbVoiceType.Location = new System.Drawing.Point(113, 539);
+            this.cmbVoiceType.Location = new System.Drawing.Point(122, 544);
             this.cmbVoiceType.Name = "cmbVoiceType";
-            this.cmbVoiceType.Size = new System.Drawing.Size(371, 28);
+            this.cmbVoiceType.Size = new System.Drawing.Size(362, 28);
             this.cmbVoiceType.TabIndex = 1;
             this.cmbVoiceType.SelectedIndexChanged += new System.EventHandler(this.cmbVoiceType_SelectedIndexChanged);
             // 
@@ -86,18 +96,15 @@ namespace CSharp_API_Example
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 547);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(69, 20);
+            this.label1.Size = new System.Drawing.Size(107, 20);
             this.label1.TabIndex = 2;
-            this.label1.Text = "美声效果";
+            this.label1.Text = "Beauty Reuslt";
             // 
             // cmbType
             // 
             this.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbType.FormattingEnabled = true;
-            this.cmbType.Items.AddRange(new object[] {
-            "美声效果",
-            "美声音效"});
-            this.cmbType.Location = new System.Drawing.Point(113, 500);
+            this.cmbType.Location = new System.Drawing.Point(122, 500);
             this.cmbType.Name = "cmbType";
             this.cmbType.Size = new System.Drawing.Size(255, 28);
             this.cmbType.TabIndex = 3;
@@ -114,20 +121,17 @@ namespace CSharp_API_Example
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(505, 542);
+            this.label3.Location = new System.Drawing.Point(534, 544);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 20);
+            this.label3.Size = new System.Drawing.Size(93, 20);
             this.label3.TabIndex = 6;
-            this.label3.Text = "参数1";
+            this.label3.Text = "Parameter1";
             // 
             // cmbVoiceBeautyParam1
             // 
             this.cmbVoiceBeautyParam1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVoiceBeautyParam1.FormattingEnabled = true;
-            this.cmbVoiceBeautyParam1.Items.AddRange(new object[] {
-            "男声",
-            "女声"});
-            this.cmbVoiceBeautyParam1.Location = new System.Drawing.Point(570, 539);
+            this.cmbVoiceBeautyParam1.Location = new System.Drawing.Point(633, 539);
             this.cmbVoiceBeautyParam1.Name = "cmbVoiceBeautyParam1";
             this.cmbVoiceBeautyParam1.Size = new System.Drawing.Size(115, 28);
             this.cmbVoiceBeautyParam1.TabIndex = 5;
@@ -136,21 +140,17 @@ namespace CSharp_API_Example
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(707, 547);
+            this.label4.Location = new System.Drawing.Point(754, 547);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(48, 20);
+            this.label4.Size = new System.Drawing.Size(93, 20);
             this.label4.TabIndex = 8;
-            this.label4.Text = "参数2";
+            this.label4.Text = "Parameter2";
             // 
             // cmbVoiceBeautyParam2
             // 
             this.cmbVoiceBeautyParam2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbVoiceBeautyParam2.FormattingEnabled = true;
-            this.cmbVoiceBeautyParam2.Items.AddRange(new object[] {
-            "歌声在小房间的混响效果",
-            " 歌声在大房间的混响效果",
-            " 歌声在大厅的混响效果"});
-            this.cmbVoiceBeautyParam2.Location = new System.Drawing.Point(772, 539);
+            this.cmbVoiceBeautyParam2.Location = new System.Drawing.Point(853, 544);
             this.cmbVoiceBeautyParam2.Name = "cmbVoiceBeautyParam2";
             this.cmbVoiceBeautyParam2.Size = new System.Drawing.Size(144, 28);
             this.cmbVoiceBeautyParam2.TabIndex = 7;
@@ -161,37 +161,33 @@ namespace CSharp_API_Example
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(15, 503);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 20);
+            this.label5.Size = new System.Drawing.Size(98, 20);
             this.label5.TabIndex = 9;
-            this.label5.Text = "美声类型";
+            this.label5.Text = "Beauty Type";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(707, 583);
+            this.label6.Location = new System.Drawing.Point(754, 596);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 20);
+            this.label6.Size = new System.Drawing.Size(93, 20);
             this.label6.TabIndex = 15;
-            this.label6.Text = "参数2";
+            this.label6.Text = "Parameter2";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(505, 591);
+            this.label7.Location = new System.Drawing.Point(534, 591);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(48, 20);
+            this.label7.Size = new System.Drawing.Size(93, 20);
             this.label7.TabIndex = 13;
-            this.label7.Text = "参数1";
+            this.label7.Text = "Parameter1";
             // 
             // cmbAudioEffectParam1
             // 
             this.cmbAudioEffectParam1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAudioEffectParam1.FormattingEnabled = true;
-            this.cmbAudioEffectParam1.Items.AddRange(new object[] {
-            "自然大调。",
-            " 自然小调。",
-            "和风小调。"});
-            this.cmbAudioEffectParam1.Location = new System.Drawing.Point(570, 583);
+            this.cmbAudioEffectParam1.Location = new System.Drawing.Point(633, 588);
             this.cmbAudioEffectParam1.Name = "cmbAudioEffectParam1";
             this.cmbAudioEffectParam1.Size = new System.Drawing.Size(115, 28);
             this.cmbAudioEffectParam1.TabIndex = 12;
@@ -202,69 +198,26 @@ namespace CSharp_API_Example
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(9, 591);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(69, 20);
+            this.label8.Size = new System.Drawing.Size(103, 20);
             this.label8.TabIndex = 11;
-            this.label8.Text = "美声音效";
+            this.label8.Text = "Beauty Effect";
             // 
             // cmbAudioEffect
             // 
             this.cmbAudioEffect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAudioEffect.FormattingEnabled = true;
-            this.cmbAudioEffect.Items.AddRange(new object[] {
-            "原声，即关闭人声音效",
-            "KTV",
-            "演唱会",
-            "录音棚",
-            "留声机",
-            "虚拟立体声",
-            "空旷",
-            "空灵",
-            "3D 人声",
-            "大叔",
-            "老年男性",
-            "男孩",
-            "少女",
-            "女孩",
-            "猪八戒",
-            "绿巨人",
-            "R&B",
-            "流行",
-            "电音"});
-            this.cmbAudioEffect.Location = new System.Drawing.Point(113, 583);
+            this.cmbAudioEffect.Location = new System.Drawing.Point(122, 578);
             this.cmbAudioEffect.Name = "cmbAudioEffect";
-            this.cmbAudioEffect.Size = new System.Drawing.Size(371, 28);
+            this.cmbAudioEffect.Size = new System.Drawing.Size(362, 28);
             this.cmbAudioEffect.TabIndex = 10;
             this.cmbAudioEffect.SelectedIndexChanged += new System.EventHandler(this.cmbAudioEffect_SelectedIndexChanged);
-            // 
-            // cmbAudioEffectParam2
-            // 
-            cmbAudioEffectParam2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cmbAudioEffectParam2.FormattingEnabled = true;
-            cmbAudioEffectParam2.Items.AddRange(new object[] {
-            "A",
-            "A#",
-            "B",
-            "(Default) C",
-            "C#",
-            "D",
-            "D#",
-            "E",
-            "F",
-            "F#",
-            "G",
-            "G#"});
-            cmbAudioEffectParam2.Location = new System.Drawing.Point(772, 583);
-            cmbAudioEffectParam2.Name = "cmbAudioEffectParam2";
-            cmbAudioEffectParam2.Size = new System.Drawing.Size(144, 28);
-            cmbAudioEffectParam2.TabIndex = 14;
-            cmbAudioEffectParam2.SelectedIndexChanged += new System.EventHandler(this.cmbAudioEffectParam2_SelectedIndexChanged);
             // 
             // VoiceChangerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label6);
-            this.Controls.Add(cmbAudioEffectParam2);
+            this.Controls.Add(this.cmbAudioEffectParam2);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cmbAudioEffectParam1);
             this.Controls.Add(this.label8);
@@ -281,7 +234,7 @@ namespace CSharp_API_Example
             this.Controls.Add(this.voiceChangerLabel);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "VoiceChangerView";
-            this.Size = new System.Drawing.Size(946, 637);
+            this.Size = new System.Drawing.Size(1016, 668);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -69,10 +69,12 @@ namespace agora.rtc
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
 
         private CharAssistant _result;
+        private CharAssistant1 _result1;
 
         private AgoraRtcEngine(EngineType type = EngineType.kEngineTypeNormal)
         {
             _result = new CharAssistant();
+            _result1 = new CharAssistant1();
             _channelInstance = new Dictionary<string, AgoraRtcChannel>();
             _irisRtcEngine = type == EngineType.kEngineTypeNormal
                 ? AgoraRtcNative.CreateIrisRtcEngine()
@@ -104,7 +106,6 @@ namespace agora.rtc
 
             if (disposing)
             {
-                ReleaseRecorder();
                 ReleaseEventHandler();
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
@@ -164,6 +165,7 @@ namespace agora.rtc
                 JsonMapper.ToJson(param), out _result);
             AgoraRtcNative.DestroyIrisRtcEngine(_irisRtcEngine);
             _irisRtcEngine = IntPtr.Zero;
+            _result1 = new CharAssistant1();
             _result = new CharAssistant();
             for (var i = 0; i < engineInstance.Length; i++)
             {
@@ -2866,14 +2868,237 @@ namespace agora.rtc
                 out _result);
         }
 
-        private void ReleaseRecorder()
+        public override int EnableLocalVoicePitchCallback(int interval)
         {
-            var param = new { };
-            AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
-                ApiTypeEngine.kEngineMediaRecorderStop, JsonMapper.ToJson(param),
+            var param = new
+            {
+                interval
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineEnableLocalVoicePitchCallback, JsonMapper.ToJson(param),
                 out _result);
         }
 
+        public override int EnableSpatialAudio(bool enabled)
+        {
+            var param = new
+            {
+                enabled
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineEnableSpatialAudio, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams spatial_audio_params)
+        {
+            var param = new
+            {
+                uid,
+                spatial_audio_params
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetRemoteUserSpatialAudioParams, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario)
+        {
+            var param = new
+            {
+                screenScenario
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetScreenCaptureScenario, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetCameraZoomFactor(float factor)
+        {
+            var param = new
+            {
+                factor
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraZoomFactor, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override float GetCameraMaxZoomFactor()
+        {
+            var param = new
+            {
+                
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineGetCameraMaxZoomFactor, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override bool IsCameraZoomSupported()
+        {
+            var param = new
+            {
+                
+            };
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineIsCameraZoomSupported, JsonMapper.ToJson(param),
+                out _result);
+            if (ret < 0) return false;
+            return ret == 1;
+        }
+
+        public override bool IsCameraFocusSupported()
+        {
+            var param = new
+            {
+                
+            };
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineIsCameraFocusSupported, JsonMapper.ToJson(param),
+                out _result);
+            if (ret < 0) return false;
+            return ret == 1;
+        }
+
+        public override bool IsCameraExposurePositionSupported()
+        {
+            var param = new
+            {
+                
+            };
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineIsCameraExposurePositionSupported, JsonMapper.ToJson(param),
+                out _result);
+            if (ret < 0) return false;
+            return ret == 1;
+        }
+
+        public override bool IsCameraAutoFocusFaceModeSupported()
+        {
+            var param = new
+            {
+                
+            };
+            var ret = AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineIsCameraAutoFocusFaceModeSupported, JsonMapper.ToJson(param),
+                out _result);
+            if (ret < 0) return false;
+            return ret == 1;
+        }
+
+        public override int SetCameraFocusPositionInPreview(float positionX, float positionY)
+        {
+            var param = new
+            {
+                positionX,
+                positionY
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraFocusPositionInPreview, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetCameraExposurePosition(float positionXinView, float positionYinView)
+        {
+            var param = new
+            {
+                positionXinView,
+                positionYinView
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraExposurePosition, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int SetCameraAutoFocusFaceModeEnabled(bool enabled)
+        {
+            var param = new
+            {
+                enabled
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraAutoFocusFaceModeEnabled, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen)
+        {
+            var param = new
+            {
+                thumbSize,
+                iconSize,
+                includeScreen
+            };
+
+            var infoInternal = AgoraRtcNative.CallIrisRtcEngineApiMaxResult(_irisRtcEngine, ApiTypeEngine.kEngineGetScreenCaptureSources,
+                JsonMapper.ToJson(param),
+                out _result1) != 0 ?
+                new ScreenCaptureSourceInfoInternal[0]
+                : AgoraJson.JsonToStructArray<ScreenCaptureSourceInfoInternal>(_result1.Result);
+
+            var info = new ScreenCaptureSourceInfo[infoInternal.Length];
+            for (int i = 0; i < infoInternal.Length; i++)
+            {
+                var screenCaptureSourceInfo = new ScreenCaptureSourceInfo();
+                screenCaptureSourceInfo.type = infoInternal[i].type;
+                screenCaptureSourceInfo.isOccluded = infoInternal[i].isOccluded;
+                screenCaptureSourceInfo.primaryMonitor = infoInternal[i].primaryMonitor;
+                screenCaptureSourceInfo.processPath = infoInternal[i].processPath;
+                screenCaptureSourceInfo.sourceId = infoInternal[i].sourceId;
+                screenCaptureSourceInfo.sourceName = infoInternal[i].sourceName;
+                screenCaptureSourceInfo.sourceTitle = infoInternal[i].sourceTitle;
+                ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
+                imageBuffer.height = infoInternal[i].thumbImage.height;
+                imageBuffer.width = infoInternal[i].thumbImage.width;
+                imageBuffer.length = infoInternal[i].thumbImage.length;
+                byte[] thumbBuffer = new byte[imageBuffer.length];
+                if (imageBuffer.length > 0)
+                {
+                    Marshal.Copy((IntPtr)(infoInternal[i].thumbImage.buffer), thumbBuffer, 0, (int)imageBuffer.length);
+                }
+                imageBuffer.buffer = thumbBuffer;
+                screenCaptureSourceInfo.thumbImage = imageBuffer;
+
+                ThumbImageBuffer imageBuffer2 = new ThumbImageBuffer();
+                imageBuffer2.height = infoInternal[i].iconImage.height;
+                imageBuffer2.width = infoInternal[i].iconImage.width;
+                imageBuffer2.length = infoInternal[i].iconImage.length;
+                byte[] iconbBuffer = new byte[imageBuffer2.length];
+                if (imageBuffer2.length > 0)
+                {
+                    Marshal.Copy((IntPtr)(infoInternal[i].iconImage.buffer), iconbBuffer, 0, (int)imageBuffer2.length);
+                }
+                imageBuffer2.buffer = iconbBuffer;
+                screenCaptureSourceInfo.iconImage = imageBuffer2;
+                info[i] = screenCaptureSourceInfo;
+            }
+            return info;
+        }
+
+        public override int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId)
+        {
+            var param = new
+            {
+                enabled,
+                mode,
+                userId
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineEnableRemoteSuperResolution2, JsonMapper.ToJson(param),
+                out _result);
+        }
+
+        public override int setCameraCaptureRotation(int rotation)
+        {
+            var param = new
+            {
+                rotation
+            };
+            return AgoraRtcNative.CallIrisRtcEngineApi(_irisRtcEngine,
+                ApiTypeEngine.kEngineSetCameraCaptureRotation, JsonMapper.ToJson(param),
+                out _result);
+        }
         ~AgoraRtcEngine()
         {
             Dispose(false, false);
@@ -4299,6 +4524,20 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[0].OnRecorderInfoUpdated(
                                 AgoraJson.JsonToStruct<RecorderInfo>(data, "info"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onLocalVoicePitchInHz":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[0] != null)
+                        {
+                            EngineEventHandlerArr[0].OnLocalVoicePitchInHz(
+                                (int) AgoraJson.GetData<int>(data, "pitchInHz"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });
@@ -5776,6 +6015,20 @@ namespace agora.rtc
                         {
                             EngineEventHandlerArr[1].OnRecorderInfoUpdated(
                                 AgoraJson.JsonToStruct<RecorderInfo>(data, "info"));
+                        }
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    });
+#endif
+                    break;
+                case "onLocalVoicePitchInHz":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+                    CallbackObjectArr[1]._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                        if (EngineEventHandlerArr[1] != null)
+                        {
+                            EngineEventHandlerArr[1].OnLocalVoicePitchInHz(
+                                (int) AgoraJson.GetData<int>(data, "pitchInHz"));
                         }
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
                     });

@@ -168,4 +168,25 @@ namespace agora.rtc
             }
         }
     }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct CharAssistant1
+    {
+        internal CharAssistant1(int param = 0) {
+            resultChar = new byte[32768];
+        }
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32768)]
+        private byte[] resultChar;
+
+        public string Result
+        {
+            get
+            {
+                var re = Encoding.UTF8.GetString(resultChar);
+                var index = re.IndexOf('\0');
+                return re.Substring(0, index);
+            }
+        }
+    }
 }

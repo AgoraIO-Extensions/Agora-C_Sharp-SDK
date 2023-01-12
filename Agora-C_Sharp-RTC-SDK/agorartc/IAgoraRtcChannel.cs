@@ -717,6 +717,24 @@ namespace agora.rtc
          *  url: The address of Media Push. The format is RTMP or RTMPS. The character length cannot exceed 1024 bytes. Special characters such as Chinese characters are not supported.
          */
         public abstract int StopRtmpStream(string url);
+        /** Sets the spatial audio effect parameters of the remote user.
+        *
+        * @since v3.7.0
+        *
+        * After calling \ref IRtcEngine::enableSpatialAudio "enableSpatialAudio" and setting the spatial audio effect parameters of a remote user successfully, the local user can hear the remote user with a real sense of space.
+        *
+        * @note Call this method after calling `enableSpatialAudio`.
+        *
+        * @param uid The user ID of the remote user.
+        * @param spatial_audio_params Spatial audio effect parameters. See \ref agora::media::SpatialAudioParams "SpatialAudioParams".
+        *
+        * @return
+        * - 0: Success.
+        * - < 0: Failure.
+        */
+        public abstract int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams spatial_audio_params);
+
+        public abstract int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId);
     }
 
     /**
@@ -1256,6 +1274,10 @@ namespace agora.rtc
          *  uid: The user ID.
          */
         public virtual void OnProxyConnected(string channelId, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        {
+        }
+
+        public virtual void OnFirstRemoteVideoFrame(string channelId, uint uid, int width, int height, int elapsed)
         {
         }
     }

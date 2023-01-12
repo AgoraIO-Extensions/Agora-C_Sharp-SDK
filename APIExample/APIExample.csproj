@@ -8,7 +8,7 @@
         <UseWindowsForms>true</UseWindowsForms>
         <ApplicationIcon />
         <StartupObject />
-        <Version>3.6.2</Version>
+        <Version>3.7.2.245</Version>
         <Authors>Agora.io</Authors>
         <Company>Agora.io</Company>
         <Description>winform version</Description>
@@ -39,10 +39,11 @@
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <OutputPath>binx64\Release</OutputPath>
+        <PlatformTarget>x64</PlatformTarget>
     </PropertyGroup>
 
-     <ItemGroup>
-      <PackageReference Include="agora_rtc_sdk" Version="3.6.2" />
+    <ItemGroup>
+      <PackageReference Include="agora_rtc_sdk" Version="3.7.2.245" />
     </ItemGroup>
 
     <ItemGroup>

@@ -14,5 +14,12 @@ namespace CSharp_API_Example
         {
             InitializeComponent();
         }
+
+        public void SetUIText(ConfigHelper config)
+        {
+            this.usrOneLabel.Text = config.GetUIValue("General", "VideoGroup.User1");
+            this.userTwoLabel.Text = config.GetUIValue("General", "VideoGroup.User2");
+            this.tipsLabel.Text = config.GetUIValue("General", "VideoGroup");
+        }
     }
 }

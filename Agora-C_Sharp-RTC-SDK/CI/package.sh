@@ -24,7 +24,7 @@
 SDK_TYPE=$1
 API_KEY=$3
 DEMO_BRANCH=$2
-PLUGIN_NAME="Agora-Plugin"
+PLUGIN_NAME="Agora-RTC-Plugin"
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 CI_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK/CI
 UNITY_DIR=/Applications/Unity/Hub/Editor/$4/Unity.app/Contents/MacOS
@@ -104,13 +104,13 @@ mkdir "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/RTC/Agora_*/libs/*.jar "$ANDROID_DST_PATH"/libs
 
 cp -r $ANDROID_SRC_PATH/RTC/Agora_*/libs/arm64-v8a "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/arm64-v8a/Release/*.so "$ANDROID_DST_PATH"/libs/arm64-v8a
+cp $ANDROID_SRC_PATH/arm64-v8a/Release/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
 cp -r $ANDROID_SRC_PATH/RTC/Agora_*/libs/armeabi-v7a "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/armeabi-v7a/Release/*.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
+cp $ANDROID_SRC_PATH/armeabi-v7a/Release/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
 cp -r $ANDROID_SRC_PATH/RTC/Agora_*/libs/x86 "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/x86/Release/*.so "$ANDROID_DST_PATH"/libs/x86
+cp $ANDROID_SRC_PATH/x86/Release/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86
 
 # iOS
 echo "[Unity CI] copying iOS ..."

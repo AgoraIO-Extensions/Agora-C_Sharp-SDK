@@ -71,7 +71,7 @@ First, create a developer account at [Agora.io](https://dashboard.agora.io/signi
 Note that you will see compiler errors because you download the SDK package yet.
 
 	```bash
-	git checkout release/3.6.2
+	git checkout release/3.7.2.245
 	```
 
 3. Visual studio will download SDK nuget package when you build APIExample at first time. 

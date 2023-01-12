@@ -39,5 +39,11 @@ namespace CSharp_API_Example
             if (null != CSharpForm.usr_engine_)
                 CSharpForm.usr_engine_.setVideoEncoderConfiguration(dimension[comboBox1.SelectedIndex], fps[comboBox2.SelectedIndex]);
         }
+        public void SetUIText(ConfigHelper config)
+        {
+            label1.Text = config.GetUIValue("General", "VideoEncoder.Param");
+            label2.Text = config.GetUIValue("General", "VideoEncoder.Res");
+            label3.Text = config.GetUIValue("General", "VideoEncoder.FPS");
+        }
     }
 }

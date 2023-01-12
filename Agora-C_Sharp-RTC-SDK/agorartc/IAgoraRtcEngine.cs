@@ -2867,6 +2867,176 @@ namespace agora.rtc
          *  < 0: Failure: -7(ERR_NOT_INITIALIZED): This method is called before the initialization of IAgoraRtcEngine .
          */
         public abstract int StopRecording();
+        /** Enables reporting the voice pitch of the local user.
+        *
+        * @since v3.7.0
+        *
+        * This method enables the SDK to regularly report the voice pitch of the local user. After the local audio capture is enabled, and you call this method, the SDK triggers the \ref IRtcEngineEventHandler::onLocalVoicePitchInHz "onLocalVoicePitchInHz" callback at the time interval set in this method.
+        *
+        * @note You can call this method either before or after joining a channel.
+        *
+        * @param interval Sets the time interval at which the SDK triggers the `onLocalVoicePitchInHz` callback:
+        * - ≤ 0: Disables the `onLocalVoicePitchInHz` callback.
+        * - &gt; 0: The time interval (ms) at which the SDK triggers the `onLocalVoicePitchInHz` callback. The value must be greater than or equal to 10. If the value is less than 10, the SDK automatically changes it to 10.
+        *
+        * @return
+        * - 0: Success.
+        * - < 0: Failure.
+        */
+        public abstract int EnableLocalVoicePitchCallback(int interval);
+       /**
+        * Enables or disables the spatial audio effect.
+        *
+        * @since v3.7.0
+        *
+        * After enabling the spatial audio effect, you can call `setRemoteUserSpatialAudioParams` to set the spatial audio effect parameters of a remote user. After a successful setting, the local user can hear the remote user with a real sense of space.
+        *
+        * @note You can call this method either before or after joining a channel.
+        *
+        * @param enabled Whether to enable the spatial audio effect:
+        * - true: Enable the spatial audio effect.
+        * - false: Disable the spatial audio effect.
+        *
+        * @return
+        * - 0: Success.
+        * - < 0: Failure.
+        */
+        public abstract int EnableSpatialAudio(bool enabled);
+
+        /** Sets the spatial audio effect parameters of the remote user.
+        *
+        * @since v3.7.0
+        *
+        * After calling \ref IRtcEngine::enableSpatialAudio "enableSpatialAudio" and setting the spatial audio effect parameters of a remote user successfully, the local user can hear the remote user with a real sense of space.
+        *
+        * @note Call this method after calling `enableSpatialAudio`.
+        *
+        * @param uid The user ID of the remote user.
+        * @param spatial_audio_params Spatial audio effect parameters. See \ref agora::media::SpatialAudioParams "SpatialAudioParams".
+        *
+        * @return
+        * - 0: Success.
+        * - < 0: Failure.
+        */
+        public abstract int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams spatial_audio_params);
+        /**
+        * Sets the screen sharing scenario.
+        *
+        * @since v3.7.0
+        *
+        * When you start screen sharing or window sharing, you can call this method to set the screen sharing scenario. The SDK adjusts the video quality and experience of the sharing according to the scenario.
+        *
+        * @note This method is only available for the macOS and Windows platforms.
+        *
+        * @param screenScenario The screen sharing scenario. See #SCREEN_SCENARIO_TYPE.
+        *
+        * @return
+        * - 0: Success.
+        * - < 0: Failure.
+        */
+        public abstract int SetScreenCaptureScenario(SCREEN_SCENARIO_TYPE screenScenario);
+        /** Sets the camera zoom ratio.
+        *
+        * Ensure that you call this method after the camera starts, for example, by calling `startPreview` or `joinChannel`.
+        *
+        * @param factor Sets the camera zoom factor. The value ranges between 1.0 and the maximum zoom supported by the device.
+        *
+        * @return
+        * - The set camera zoom factor, if this method call is successful.
+        * - 0: Failure.
+        */
+        public abstract int SetCameraZoomFactor(float factor);
+        /** Gets the maximum zoom ratio supported by the camera.
+        *
+        * Ensure that you call this method after the camera starts, for example, by calling `startPreview` or `joinChannel`.
+        *
+        * @return The maximum camera zoom factor.
+        */
+        public abstract float GetCameraMaxZoomFactor();
+        /** Checks whether the camera zoom function is supported.
+        *
+        * Ensure that you call this method after the camera starts, for example, by calling `startPreview` or `joinChannel`.
+        *
+        * @return
+        * - true: The device supports the camera zoom function.
+        * - false: The device does not support the camera zoom function.
+        */
+        public abstract bool IsCameraZoomSupported();
+        /** Checks whether the camera manual focus function is supported.
+        *
+        * Ensure that you call this method after the camera starts, for example, by calling `startPreview` or `joinChannel`.
+        *
+        * @return
+        * - true: The device supports the camera manual focus function.
+        * - false: The device does not support the camera manual focus function.
+        */
+        public abstract bool IsCameraFocusSupported();
+        /** Checks whether the camera exposure function is supported.
+        *
+        * Ensure that you call this method after the camera starts, for example, by calling `startPreview` or `joinChannel`.
+        *
+        * @return
+        * - true: The device supports the camera exposure function.
+        * - false: The device does not support the camera exposure function.
+        */
+        public abstract bool IsCameraExposurePositionSupported();
+        /** Checks whether the camera auto-face focus function is supported.
+        *
+        * Ensure that you call this method after the camera starts, for example, by calling `startPreview` or `joinChannel`.
+        *
+        * @return
+        * - true: The device supports the camera auto-face focus function.
+        * - false: The device does not support the camera auto-face focus function.
+        */
+        public abstract bool IsCameraAutoFocusFaceModeSupported();
+        /** Sets the camera manual focus position.
+        *
+        * Ensure that you call this method after the camera starts, for example, by calling `startPreview` or `joinChannel`.
+        *
+        * A successful setCameraFocusPositionInPreview method call triggers the {@link IRtcEngineEventHandler#onCameraFocusAreaChanged onCameraFocusAreaChanged} callback on the local client.
+        * @param positionX The horizontal coordinate of the touch point in the view.
+        * @param positionY The vertical coordinate of the touch point in the view.
+        *
+        * @return
+        * - 0: Success.
+        * - < 0: Failure.
+        */
+        public abstract int SetCameraFocusPositionInPreview(float positionX, float positionY);
+        /** Sets the camera exposure position.
+        *
+        * Ensure that you call this method after the camera starts, for example, by calling `startPreview` or `joinChannel`.
+        *
+        * A successful setCameraExposurePosition method call triggers the {@link IRtcEngineEventHandler#onCameraExposureAreaChanged onCameraExposureAreaChanged} callback on the local client.
+        * @param positionXinView The horizontal coordinate of the touch point in the view.
+        * @param positionYinView The vertical coordinate of the touch point in the view.
+        *
+        * @return
+        * - 0: Success.
+        * - < 0: Failure.
+        */
+        public abstract int SetCameraExposurePosition(float positionXinView, float positionYinView);
+        /** Sets whether to enable face autofocus.
+        *
+        * The SDK disables face autofocus by default. To set face autofocus, call this method.
+        *
+        * @note
+        * Call this method after the camera is started.
+        *
+        * @param enabled Determines whether to enable face autofocus:
+        * - `true`: Enable face autofocus.
+        * - `false`: Disable face autofocus.
+        *
+        * @return
+        * - 0: Success.
+        * - < 0: Failure.
+        */
+        public abstract int SetCameraAutoFocusFaceModeEnabled(bool enabled);
+
+        public abstract ScreenCaptureSourceInfo[] GetScreenCaptureSources(SIZE thumbSize, SIZE iconSize, bool includeScreen);
+
+        public abstract int enableRemoteSuperResolution(bool enabled, SR_MODE mode, uint userId);
+
+        public abstract int setCameraCaptureRotation(int rotation);
     }
 
     /**
@@ -4180,6 +4350,10 @@ namespace agora.rtc
          *  info: Information of the recording file. See RecorderInfo .
          */
         public virtual void OnRecorderInfoUpdated(RecorderInfo info)
+        {
+        }
+
+        public virtual void OnLocalVoicePitchInHz(int pitchInHz)
         {
         }
     }

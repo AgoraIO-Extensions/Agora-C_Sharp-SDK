@@ -12,8 +12,8 @@
 ::         %5 (WIN-URL) : The url for iris_win
 ::         %6 (NUGET_API_KEY) : nuget api key for publish
 ::  eg:
-::     .\build.bat build 3.2.1.7 Debug ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL
-::     .\build.bat publish 3.2.1.7 Release ABjRbSFow***jku4mjkBqJ6F6Ne8***WzGM1vXYZZ7EqDLtFcaPgL***u8ehmGjxX7syPabcL
+::     .\build.bat build 3.2.1.7 Debug JFROG_API_KEY
+::     .\build.bat publish 3.2.1.7 Release JFROG_API_KEY IRIS_URL NUGET_API_KEY
 :: Created by Yiqing Huang on Apr 23, 2021.
 :: Modified by Yiqing Huang on May 12, 2021.
 :: Modified by Hugo Chaan on September 2, 2021.
