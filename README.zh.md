@@ -1,5 +1,6 @@
 # APIExample
 
+
 *Read this in other languages: [English](README.md)*
 
 ## 简介
@@ -11,6 +12,7 @@
 *项目运行效果图*
 
 ![snapshot.png](./APIExample/res/snapshot.png)
+
 
 ## 项目结构
 
@@ -31,6 +33,7 @@
 | [ScreenShare][ScreenShareLink]                 | 屏幕共享          | CreateAgoraRtcEngine, Initialize, StartScreenCaptureByDisplayId, EnableVideo,JoinChannel, StopScreenCapture, LeaveChannel |
 | [VideoGroup][VideoGroupLink]                   | 多人视频          | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel, LeaveChannel                          |
 | [VirtualBackground][VirtualBackgroundLink]     | 虚拟背景          | CreateAgoraRtcEngine, Initialize, EnableVideo, EnableVirtualBackground, JoinChannel, LeaveChannel |
+
 | [CustomCaptureVideo][CustomCaptureVideoLink]   | 自采集            | CreateAgoraRtcEngine, Initialize, EnableVideo, SetExternalVideoSource, JoinChannel, PushVideoFrame, LeaveChannel |
 | [AudioMixing][AudioMixingLink]                 | 混音              | CreateAgoraRtcEngine, Initialize, EnableAudio, StartAudioMixing, JoinChannel, StopAudioMixing, LeaveChannel |
 | [ChannelMediaRelay][ChannelMediaRelayLink]     | 跨频道连麦        | CreateAgoraRtcEngine, Initialize, EnableVideo, JoinChannel,startChannelMediaRelay, stopChannelMediaRelay, LeaveChannel |

@@ -5155,7 +5155,8 @@ namespace agora.rtc
 
         /**The output level of the SDK log file. See LOG_LEVEL .*/
         public LOG_LEVEL level { set; get; }
-    }
+    };
+
 
     /**
      * Configurations of initializing the SDK.
