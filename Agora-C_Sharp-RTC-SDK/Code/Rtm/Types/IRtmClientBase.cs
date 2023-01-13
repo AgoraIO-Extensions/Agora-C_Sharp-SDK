@@ -28,6 +28,17 @@ namespace Agora.Rtm
             this.encryptionConfig = encryptionConfig;
         }
 
+
+        public void setEventHandler(IRtmEventHandler eventHandler)
+        {
+            this.eventHandler = eventHandler;
+        }
+
+        public IRtmEventHandler getEventHandler()
+        {
+            return eventHandler;
+        }
+
         public string appId;
 
         public string userId;
@@ -38,7 +49,7 @@ namespace Agora.Rtm
 
         public bool useStringUserId;
 
-        public IRtmEventHandler eventHandler;
+        private IRtmEventHandler eventHandler;
 
         public LogConfig logConfig;
 
@@ -281,13 +292,13 @@ namespace Agora.Rtm
     public class TopicEvent
     {
         public RTM_TOPIC_EVENT_TYPE type;
-      
+
         public string channelName;
 
         public string userId;
 
         public TopicInfo[] topicInfos;
-    
+
         public UInt64 topicInfoCount;
 
         public TopicEvent()

@@ -171,8 +171,8 @@ namespace Agora.Rtm
         public int Initialize(RtmConfig config)
         {
             CreateEventHandler();
-            RtmEventHandlerNative.SetEventHandler(config.eventHandler);
-
+            RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
+          
             _param.Clear();
             _param.Add("config", config);
 
