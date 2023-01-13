@@ -514,6 +514,12 @@ namespace Agora.Rtm
 
         public RTM_CHANNEL_TYPE channelType;
 
+        public ChannelInfo()
+        {
+            channelName = "";
+            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
+        }
+
         public ChannelInfo(string channelName, RTM_CHANNEL_TYPE channelType)
         {
             this.channelName = channelName;
