@@ -239,4 +239,28 @@ namespace Agora.Rtm
         internal IrisEventHandlerMarshal marshal;
         internal IrisEventHandlerHandle handle;
     }
+
+
+    internal class JoinTopicOptionsInternal
+    {
+        public JoinTopicOptionsInternal(JoinTopicOptions joinTopicOptions)
+        {
+            this.qos = joinTopicOptions.qos;
+            this.priority = joinTopicOptions.priority;
+            this.metaLength = joinTopicOptions.metaLength;
+            this.syncWithMedia = joinTopicOptions.syncWithMedia;
+        }
+
+
+        public RTM_MESSAGE_QOS qos;
+
+        public RTM_MESSAGE_PRIORITY priority;
+
+        //public byte[] meta;
+
+        public UInt64 metaLength;
+
+        public bool syncWithMedia;
+    }
+
 }

@@ -109,14 +109,17 @@ namespace Agora.Rtm
             _param.Clear();
             _param.Add("channelName", channelName);
             _param.Add("topic", topic);
-            _param.Add("options", options);
+            _param.Add("options", new JoinTopicOptionsInternal(options));
+
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(options.meta, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
             var json = AgoraJson.ToJson(_param);
-          
+
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_JOINTOPIC,
                 json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam, (uint)options.meta.Length);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
@@ -126,7 +129,7 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int PublishTopicMessage(string channelName, string topic, byte[] message, uint length, PublishOptions option)
+        public int PublishTopicMessage(string channelName, string topic, byte[] message, int length, PublishOptions option)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -142,7 +145,7 @@ namespace Agora.Rtm
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_PUBLISHTOPICMESSAGE,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam, length);
+                ref _apiParam, (uint)length);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 

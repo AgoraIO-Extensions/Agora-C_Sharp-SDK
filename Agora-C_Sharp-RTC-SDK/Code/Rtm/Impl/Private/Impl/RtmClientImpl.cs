@@ -267,17 +267,21 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int Publish(string channelName, string message, UInt64 length, PublishOptions option, ref UInt64 requestId)
+        public int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
-            _param.Add("message", message);
             _param.Add("length", length);
             _param.Add("option", option);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(message, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_PUBLISH, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_PUBLISH,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam, (uint)length);
 
             if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {

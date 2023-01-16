@@ -36,7 +36,7 @@ namespace Agora.Rtm
             {
                 _rtmClientInstance._streamChannelDic.Remove(channelName);
             }
-            
+
             _streamChannelImpl = null;
             _rtmClientInstance = null;
             channelName = "";
@@ -64,7 +64,7 @@ namespace Agora.Rtm
             return channelName;
         }
 
-        public override int Join(JoinChannelOptions options,  ref UInt64 requestId)
+        public override int Join(JoinChannelOptions options, ref UInt64 requestId)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
@@ -73,7 +73,7 @@ namespace Agora.Rtm
             return _streamChannelImpl.Join(channelName, options, ref requestId);
         }
 
-        public override int Leave( ref UInt64 requestId)
+        public override int Leave(ref UInt64 requestId)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
@@ -82,7 +82,7 @@ namespace Agora.Rtm
             return _streamChannelImpl.Leave(channelName, ref requestId);
         }
 
-        public override int JoinTopic(string topic, JoinTopicOptions options,  ref UInt64 requestId)
+        public override int JoinTopic(string topic, JoinTopicOptions options, ref UInt64 requestId)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
@@ -91,13 +91,23 @@ namespace Agora.Rtm
             return _streamChannelImpl.JoinTopic(channelName, topic, options, ref requestId);
         }
 
-        public override int PublishTopicMessage(string topic, byte[] message, ulong length, PublishOptions option)
+        public override int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option)
         {
             if (_rtmClientInstance == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, (uint)message.Length, option);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, message.Length, option);
+        }
+
+        public override int PublishTopicMessage(string topic, string message, int length, PublishOptions option)
+        {
+            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            {
+                return ErrorCode;
+            }
+            byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, bytes, bytes.Length, option);
         }
 
         public override int LeaveTopic(string topic, ref UInt64 requestId)
