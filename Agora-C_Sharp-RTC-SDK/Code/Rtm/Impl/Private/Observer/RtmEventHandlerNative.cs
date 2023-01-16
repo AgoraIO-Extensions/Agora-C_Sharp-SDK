@@ -42,13 +42,8 @@ namespace Agora.Rtm
             {
                 case "RtmEventHandler_onMessageEvent":
                     MessageEventInternal messageEventInternal = AgoraJson.JsonToStruct<MessageEventInternal>(jsonData, "event");
-                    MessageEvent messageEvent = new MessageEvent();
-                    messageEvent.channelType = messageEventInternal.channelType;
-                    messageEvent.channelName = messageEventInternal.channelName;
-                    messageEvent.channelTopic = messageEventInternal.channelTopic;
-                    messageEvent.messageLength = messageEventInternal.messageLength;
-                    messageEvent.publisher = messageEventInternal.publisher;
-
+                    MessageEvent messageEvent = messageEventInternal.GenerateMessageEvent();
+                   
                     var byteData = new byte[messageEvent.messageLength];
                     if (messageEvent.messageLength != 0)
                     {

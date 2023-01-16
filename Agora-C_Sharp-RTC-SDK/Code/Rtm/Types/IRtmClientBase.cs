@@ -211,20 +211,6 @@ namespace Agora.Rtm
         public string publisher;
     };
 
-    internal class MessageEventInternal
-    {
-        public RTM_CHANNEL_TYPE channelType;
-
-        public string channelName;
-
-        public string channelTopic;
-
-        public UInt64 message;
-
-        public uint messageLength;
-
-        public string publisher;
-    };
 
     public class IntervalInfo
     {
