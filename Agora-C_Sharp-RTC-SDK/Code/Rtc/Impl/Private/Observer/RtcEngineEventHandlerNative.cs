@@ -17,13 +17,24 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
-        internal static void OnEvent(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count)
+        internal static void OnEvent(IntPtr param)
         {
             if (EngineEventHandler == null) return;
-            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
+
+            IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+            var @event = eventParam.@event;
+            var data = eventParam.data;
+            var buffer = eventParam.buffer;
+            var length = eventParam.length;
+            var buffer_count = eventParam.buffer_count;
+
+
+            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+
             switch (@event)
             {
                 #region no buffer start

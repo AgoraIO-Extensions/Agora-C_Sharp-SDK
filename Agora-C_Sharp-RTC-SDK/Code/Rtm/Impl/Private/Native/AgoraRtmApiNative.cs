@@ -7,7 +7,6 @@ namespace Agora.Rtm
 {
     using IrisApiRtmEnginePtr = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
-    using IrisEventHandlerMarshal = IntPtr;
 
     internal static class AgoraRtmNative
     {
@@ -155,22 +154,8 @@ namespace Agora.Rtm
 
     }
 
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    internal delegate void Func_Event_Native(IntPtr param);
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisCEventParam
-    {
-        internal string @event;
-        internal string data;
-        internal uint data_size;
 
-        internal IntPtr result;
-
-        internal IntPtr buffer;
-        internal IntPtr length;
-        internal uint buffer_count;
-    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCApiParam
@@ -207,23 +192,6 @@ namespace Agora.Rtm
         internal uint buffer_count;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisCEventHandlerNative
-    {
-        internal IntPtr onEvent;
-    }
-
-    internal struct IrisCEventHandler
-    {
-        internal Func_Event_Native OnEvent;
-    }
-
-    internal struct EventHandlerHandle
-    {
-        internal IrisCEventHandler cEvent;
-        internal IrisEventHandlerMarshal marshal;
-        internal IrisEventHandlerHandle handle;
-    }
 
 
     internal class JoinTopicOptionsInternal
