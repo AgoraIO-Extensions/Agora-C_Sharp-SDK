@@ -109,16 +109,13 @@ namespace Agora.Rtm
             _param.Clear();
             _param.Add("channelName", channelName);
             _param.Add("topic", topic);
-            _param.Add("options", new JoinTopicOptionsInternal(options));
-
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(options.meta, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
+            _param.Add("options", options);
 
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_JOINTOPIC,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                IntPtr.Zero, 0,
                 ref _apiParam, (uint)options.meta.Length);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
