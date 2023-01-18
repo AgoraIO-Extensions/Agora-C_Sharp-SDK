@@ -278,7 +278,7 @@ namespace Agora.Rtm
 #endif
                     if (rtmEventHandler == null) return;
                     rtmEventHandler.OnLoginResult(
-                      AgoraJson.JsonToStruct<RTM_LOGIN_ERROR_CODE>(jsonData, "errorCode")
+                      (RTM_LOGIN_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -539,7 +539,7 @@ namespace Agora.Rtm
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (RTM_CHANNEL_TYPE)AgoraJson.GetData<int>(jsonData, "channelType"),
                         AgoraJson.JsonToStructArray<LockDetail>(jsonData, "lockDetailList"),
-                        AgoraJson.JsonToStruct<UInt64>(jsonData, "count"),
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
                         (OPERATION_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
                      );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -625,6 +625,10 @@ namespace Agora.Rtm
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif
+                    break;
+
+                default:
+                    AgoraLog.LogError("unexcpect event: " + @event);
                     break;
             }
         }
