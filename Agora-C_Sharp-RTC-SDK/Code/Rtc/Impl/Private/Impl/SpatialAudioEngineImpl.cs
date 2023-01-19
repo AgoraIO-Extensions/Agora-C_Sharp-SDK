@@ -378,7 +378,7 @@ namespace Agora.Rtc
             _param.Add("maxCount", maxCount);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETMAXAUDIORECVCOUNT,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -391,7 +391,7 @@ namespace Agora.Rtc
             _param.Add("range", range);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETAUDIORECVRANGE,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -404,7 +404,7 @@ namespace Agora.Rtc
             _param.Add("unit", unit);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETDISTANCEUNIT,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -420,7 +420,7 @@ namespace Agora.Rtc
             _param.Add("axisUp", axisUp);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATESELFPOSITION,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -437,7 +437,7 @@ namespace Agora.Rtc
             _param.Add("connection", connection);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATESELFPOSITIONEX,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -452,7 +452,7 @@ namespace Agora.Rtc
             _param.Add("positionInfo", positionInfo);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATEPLAYERPOSITIONINFO,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -465,7 +465,7 @@ namespace Agora.Rtc
             _param.Add("@params", @params);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETPARAMETERS,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -478,7 +478,7 @@ namespace Agora.Rtc
             _param.Add("mute", mute);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_MUTELOCALAUDIOSTREAM,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -491,7 +491,7 @@ namespace Agora.Rtc
             _param.Add("mute", mute);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_MUTEALLREMOTEAUDIOSTREAMS,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -506,7 +506,7 @@ namespace Agora.Rtc
             _param.Add("posInfo", posInfo);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATEREMOTEPOSITION,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -522,7 +522,7 @@ namespace Agora.Rtc
             _param.Add("connection", connection);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_UPDATEREMOTEPOSITIONEX,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -535,7 +535,7 @@ namespace Agora.Rtc
             _param.Add("uid", uid);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_REMOVEREMOTEPOSITION,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -549,7 +549,7 @@ namespace Agora.Rtc
             _param.Add("connection", connection);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_REMOVEREMOTEPOSITIONEX,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -561,7 +561,7 @@ namespace Agora.Rtc
             _param.Clear();
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_CLEARREMOTEPOSITIONS,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -574,7 +574,7 @@ namespace Agora.Rtc
             _param.Add("connection", connection);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_CLEARREMOTEPOSITIONSEX,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -582,7 +582,7 @@ namespace Agora.Rtc
 
         public int Initialize()
         {
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_INITIALIZE,
                 "", 0, IntPtr.Zero, 0, out _result);
             var init = (int)AgoraJson.GetData<int>(_result.Result, "result");

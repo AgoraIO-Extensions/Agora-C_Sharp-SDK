@@ -45,7 +45,7 @@ namespace Agora.Rtc
 
         public DeviceInfo[] EnumerateVideoDevices()
         {
-            return AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            return AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES,
                 "", 0, IntPtr.Zero, 0, out _result) != 0
                 ? new DeviceInfo[0]
@@ -58,7 +58,7 @@ namespace Agora.Rtc
             _param.Add("deviceIdUTF8", deviceIdUTF8);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_SETDEVICE,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -66,7 +66,7 @@ namespace Agora.Rtc
 
         public int GetDevice(ref string deviceIdUTF8)
         {
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETDEVICE,
                 "", 0, IntPtr.Zero, 0, out _result);
 
@@ -88,7 +88,7 @@ namespace Agora.Rtc
             _param.Add("hwnd", (ulong)hwnd);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STARTDEVICETEST,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -96,7 +96,7 @@ namespace Agora.Rtc
 
         public int StopDeviceTest()
         {
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                 AgoraApiType.FUNC_VIDEODEVICEMANAGER_STOPDEVICETEST,
                 "", 0, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
@@ -109,7 +109,7 @@ namespace Agora.Rtc
             _param.Add("deviceCapabilityNumber", deviceCapabilityNumber);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                AgoraApiType.FUNC_VIDEODEVICEMANAGER_GETCAPABILITY,
                jsonParam, 0, IntPtr.Zero, 0, out _result);
 
@@ -132,7 +132,7 @@ namespace Agora.Rtc
             _param.Add("deviceIdUTF8", deviceIdUTF8);
 
             string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApi(_irisApiEngine,
+            var ret = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine,
                AgoraApiType.FUNC_VIDEODEVICEMANAGER_NUMBEROFCAPABILITIES,
                jsonParam, 0, IntPtr.Zero, 0, out _result);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_result.Result, "result");
