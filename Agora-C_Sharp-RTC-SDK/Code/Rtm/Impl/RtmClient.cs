@@ -148,13 +148,23 @@ namespace Agora.Rtm
             return _rtcClientImpl.RenewToken(token);
         }
 
-        public override int Publish(string channelName, string message, UInt64 length, PublishOptions option, ref UInt64 requestId)
+        public override int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId)
         {
             if (_rtcClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.Publish(channelName, message, length, option, ref requestId);
+            return _rtcClientImpl.Publish(channelName, message, message.Length, option, ref requestId);
+        }
+
+        public override int Publish(string channelName, string message, int length, PublishOptions option, ref UInt64 requestId)
+        {
+            if (_rtcClientImpl == null)
+            {
+                return ErrorCode;
+            }
+            byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
+            return _rtcClientImpl.Publish(channelName, bytes, bytes.Length, option, ref requestId);
         }
 
         public override int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId)

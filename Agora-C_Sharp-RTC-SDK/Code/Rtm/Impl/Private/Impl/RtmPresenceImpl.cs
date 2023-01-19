@@ -12,12 +12,13 @@ namespace Agora.Rtm
     {
         private bool _disposed = false;
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
-        private IrisCApiParam _apiParam;
+        private IrisApiParam _apiParam;
         private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
         internal RtmPresenceImpl(IrisApiRtmEnginePtr irisApiRtmEngine)
         {
-            _apiParam = new IrisCApiParam();
+            _apiParam = new IrisApiParam();
+            _apiParam.AllocResult();
             this._irisApiRtmEngine = irisApiRtmEngine;
         }
 
@@ -35,8 +36,7 @@ namespace Agora.Rtm
             }
 
             _irisApiRtmEngine = IntPtr.Zero;
-            _apiParam = new IrisCApiParam();
-
+            _apiParam.FreeResult();
             _disposed = true;
         }
 

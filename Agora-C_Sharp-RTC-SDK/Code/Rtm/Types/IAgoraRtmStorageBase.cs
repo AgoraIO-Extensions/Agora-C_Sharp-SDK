@@ -8,7 +8,7 @@ namespace Agora.Rtm
 
         public bool recordUserId;
 
-        MetadataOptions()
+        public MetadataOptions()
         {
             recordTs = false;
             recordUserId = false;

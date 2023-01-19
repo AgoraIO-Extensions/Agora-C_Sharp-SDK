@@ -18,7 +18,7 @@ namespace Agora.Rtm
         private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
-        private IrisCApiParam _apiParam;
+        private IrisApiParam _apiParam;
         private EventHandlerHandle _rtcEventHandlerHandle = new EventHandlerHandle();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -34,7 +34,8 @@ namespace Agora.Rtm
 
         private RtmClientImpl()
         {
-            _apiParam = new IrisCApiParam();
+            _apiParam = new IrisApiParam();
+            _apiParam.AllocResult();
 
             _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(IntPtr.Zero);
 
@@ -76,6 +77,8 @@ namespace Agora.Rtm
             }
 
             Release();
+
+            _apiParam.FreeResult();
             _disposed = true;
         }
 
@@ -90,7 +93,6 @@ namespace Agora.Rtm
             AgoraRtmNative.DestroyIrisRtmEngine(_irisApiRtmEngine);
 
             _irisApiRtmEngine = IntPtr.Zero;
-            _apiParam = new IrisCApiParam();
             clientInstance = null;
         }
 
@@ -126,7 +128,7 @@ namespace Agora.Rtm
         {
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero) return;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent);
+            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent, this._irisApiRtmEngine);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
@@ -147,7 +149,7 @@ namespace Agora.Rtm
             _callbackObject = null;
 #endif
 
-            AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
+            AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle, this._irisApiRtmEngine);
 
         }
 
@@ -169,8 +171,8 @@ namespace Agora.Rtm
         public int Initialize(RtmConfig config)
         {
             CreateEventHandler();
-            RtmEventHandlerNative.SetEventHandler(config.eventHandler);
-
+            RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
+          
             _param.Clear();
             _param.Add("config", config);
 
@@ -265,17 +267,21 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int Publish(string channelName, string message, UInt64 length, PublishOptions option, ref UInt64 requestId)
+        public int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
-            _param.Add("message", message);
             _param.Add("length", length);
             _param.Add("option", option);
 
+            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(message, 0);
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
             var json = Agora.Rtc.AgoraJson.ToJson(_param);
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_PUBLISH, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_PUBLISH,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam, (uint)length);
 
             if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {

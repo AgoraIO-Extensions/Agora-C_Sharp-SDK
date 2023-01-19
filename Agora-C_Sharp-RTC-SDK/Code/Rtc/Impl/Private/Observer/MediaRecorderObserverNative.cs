@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+using System.Runtime.InteropServices;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using AOT;
 #endif
 
@@ -16,11 +17,19 @@ namespace Agora.Rtc
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Func_Event_Native))]
 #endif
-        internal static void OnEvent(string @event, string data, IntPtr buffer, IntPtr length, uint buffer_count)
+        internal static void OnEvent(IntPtr param)
         {
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
+            IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+            var @event = eventParam.@event;
+            var data = eventParam.data;
+            var buffer = eventParam.buffer;
+            var length = eventParam.length;
+            var buffer_count = eventParam.buffer_count;
+
             var jsonData = AgoraJson.ToObject(data);
             RtcConnection connection = AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
             string key = connection.localUid.ToString() + connection.channelId;

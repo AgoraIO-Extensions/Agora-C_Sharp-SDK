@@ -109,6 +109,18 @@ namespace Agora.Rtm
         RTM_ERR_PRESENCE_SERVICE_NOT_READY = 10301,
 
         RTM_ERR_PRESENCE_OPERATION_WITHOUT_JOIN_CHANNEL = 10302,
+
+        RTM_ERR_PRESENCE_STATE_SIZE_OVERFLOW = 10303,
+
+        RTM_ERR_PRESENCE_STATE_KEY_SIZE_OVERFLOW = 10304,
+
+        RTM_ERR_PRESENCE_STATE_INVALID_KEY = 10305,
+
+        RTM_ERR_PRESENCE_STATE_DUPLICATE_KEY = 10306,
+
+        RTM_ERR_PRESENCE_STATE_VALUE_SIZE_OVERFLOW = 10307,
+
+        RTM_ERR_PRESENCE_SYNC_CLIENT_ERROR = 10308,
     };
 
 
@@ -362,10 +374,16 @@ namespace Agora.Rtm
 
         public string publisherMeta;
 
-        PublisherInfo()
+        public PublisherInfo()
         {
             publisherUserId = "";
             publisherMeta = "";
+        }
+
+        public PublisherInfo(string publisherUserId, string publisherMeta)
+        {
+            this.publisherUserId = publisherUserId;
+            this.publisherMeta = publisherMeta;
         }
     };
 
@@ -383,6 +401,13 @@ namespace Agora.Rtm
             publishers = new PublisherInfo[0];
             publisherCount = 0;
         }
+
+        public TopicInfo(string topic, PublisherInfo[] publishers, ulong publisherCount)
+        {
+            this.topic = topic;
+            this.publishers = publishers;
+            this.publisherCount = publisherCount;
+        }
     };
 
 
@@ -397,6 +422,12 @@ namespace Agora.Rtm
         {
             key = "";
             value = "";
+        }
+
+        public StateItem(string key, string value)
+        {
+            this.key = key;
+            this.value = value;
         }
     };
 
@@ -415,6 +446,13 @@ namespace Agora.Rtm
             owner = "";
             ttl = 0;
         }
+
+        public LockDetail(string lockName, string owner, uint ttl)
+        {
+            this.lockName = lockName;
+            this.owner = owner;
+            this.ttl = ttl;
+        }
     }
 
 
@@ -425,12 +463,20 @@ namespace Agora.Rtm
 
         public StateItem[] states;
 
-        public int statesCount;
+        public UInt64 statesCount;
 
         public UserState()
         {
+            userId = "";
             states = null;
             statesCount = 0;
+        }
+
+        public UserState(string userId, StateItem[] states, UInt64 statesCount)
+        {
+            this.userId = userId;
+            this.states = states;
+            this.statesCount = statesCount;
         }
     };
 
@@ -453,14 +499,34 @@ namespace Agora.Rtm
             withPresence = true;
             withLock = false;
         }
+
+        public SubscribeOptions(bool withMessage, bool withMetadata, bool withPresence, bool withLock)
+        {
+            this.withMessage = withMessage;
+            this.withMetadata = withMetadata;
+            this.withPresence = withPresence;
+            this.withLock = withLock;
+        }
     };
 
 
     public class ChannelInfo
     {
-        public string channeName;
+        public string channelName;
 
         public RTM_CHANNEL_TYPE channelType;
+
+        public ChannelInfo()
+        {
+            channelName = "";
+            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
+        }
+
+        public ChannelInfo(string channelName, RTM_CHANNEL_TYPE channelType)
+        {
+            this.channelName = channelName;
+            this.channelType = channelType;
+        }
     };
 
     public class PresenceOptions
@@ -475,6 +541,12 @@ namespace Agora.Rtm
             withUserId = true;
             withState = false;
         }
+
+        public PresenceOptions(bool withUserId, bool withState)
+        {
+            this.withUserId = withUserId;
+            this.withState = withState;
+        }
     };
 
 
@@ -488,6 +560,12 @@ namespace Agora.Rtm
         {
             type = RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY;
             sendTs = 0;
+        }
+
+        public PublishOptions(RTM_MESSAGE_TYPE type, UInt64 sendTs)
+        {
+            this.type = type;
+            this.sendTs = sendTs;
         }
     };
 
@@ -513,6 +591,16 @@ namespace Agora.Rtm
             account = "";
             password = "";
         }
+
+        public RtmProxyConfig(RTM_PROXY_TYPE proxyType, string server, UInt16 port, string account, string password)
+        {
+            this.proxyType = proxyType;
+            this.server = server;
+            this.port = port;
+            this.account = account;
+            this.password = password;
+        }
+
     };
 
 
@@ -544,7 +632,7 @@ namespace Agora.Rtm
     {
         public Int64 majorRevision;
         public MetadataItem[] metadataItems;
-        public UInt64 metadataSize;
+        public UInt64 metadataItemsSize;
 
         public RtmMetadata()
         {

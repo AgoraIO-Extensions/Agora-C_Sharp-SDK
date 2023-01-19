@@ -45,7 +45,7 @@ namespace Agora.Rtm
             this.qos = RTM_MESSAGE_QOS.RTM_MESSAGE_QOS_ORDERED;
             this.priority = RTM_MESSAGE_PRIORITY.RTM_MESSAGE_PRIORITY_NORMAL;
             this.meta = "";
-            this.metaLength = 0;
+            this.syncWithMedia = true;
         }
 
         public RTM_MESSAGE_QOS qos;
@@ -53,8 +53,6 @@ namespace Agora.Rtm
         public RTM_MESSAGE_PRIORITY priority;
 
         public string meta;
-
-        public UInt64 metaLength;
 
         public bool syncWithMedia;
     };

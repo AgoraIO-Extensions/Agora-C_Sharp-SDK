@@ -49,12 +49,10 @@ echo "[Unity CI] start preparing resources"
 cd "$CI_DIR" || exit 1
 mkdir temp
 ./download_plugin.sh "$SDK_TYPE" "$API_KEY" "$5" "$6" "$7" "$8"
-ANDROID_SRC_PATH="$CI_DIR"/temp/android/iris_4.0.1_RTM_Android
-ANDROID_RTC_PATH="$CI_DIR"/temp/android/iris_4.0.1_DCG_Android
-IOS_SRC_PATH=$CI_DIR/temp/ios/iris_4.0.1_RTM_iOS
-IOS_RTC_PATH=$CI_DIR/temp/ios/iris_4.0.1_DCG_iOS
-MAC_SRC_PATH="$CI_DIR"/temp/mac/iris_*
+IOS_SRC_PATH=$CI_DIR/temp/ios
+MAC_SRC_PATH="$CI_DIR"/temp/mac
 WIN_SRC_PATH="$CI_DIR"/temp/win
+ANDROID_SRC_PATH="$CI_DIR"/temp/android
 cd temp || exit 1
 git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
 cd "$CI_DIR" || exit 1
@@ -120,54 +118,46 @@ elif [ "$SDK_TYPE" == "video" ]; then
 fi
 
 mkdir "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
+cp $ANDROID_SRC_PATH/iris_*_DCG_Android/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
 if [ "$SDK_TYPE" == "video" ]; then
-cp $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
+cp $ANDROID_SRC_PATH/iris_*_DCG_Android/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
 fi
 
-cp -r $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
-cp $ANDROID_RTC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
-cp $ANDROID_SRC_PATH/arm64-v8a/Release/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
-
-cp -r $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
-cp $ANDROID_RTC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
-cp $ANDROID_SRC_PATH/armeabi-v7a/Release/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
-
-cp -r $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
-cp $ANDROID_RTC_PATH/ALL_ARCHITECTURE/Release/x86/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86
-cp $ANDROID_SRC_PATH/x86/Release/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/x86
-
-cp -r $ANDROID_SRC_PATH/RTM/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
-cp $ANDROID_RTC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
-cp $ANDROID_SRC_PATH/x86_64/Release/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+for so_path in "arm64-v8a" "armeabi-v7a" "x86" "x86_64"
+do
+    cp -r $ANDROID_SRC_PATH/iris_*_DCG_Android/DCG/Agora_*/rtc/sdk/${so_path} "$ANDROID_DST_PATH"/libs
+    cp $ANDROID_SRC_PATH/iris_*_DCG_Android/ALL_ARCHITECTURE/Release/${so_path}/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/${so_path}
+    cp $ANDROID_SRC_PATH/iris_*_ENGINE_Android/ALL_ARCHITECTURE/Release/${so_path}/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/${so_path}
+    cp $ANDROID_SRC_PATH/iris_*_ENGINE_Android/ALL_ARCHITECTURE/Release/${so_path}/libAgoraIrisEngine.so "$ANDROID_DST_PATH"/libs/${so_path}    
+done
 
 # iOS
 echo "[Unity CI] copying iOS ..."
 IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-RTC-SDK/Plugins/iOS"
-cp -PRf $IOS_SRC_PATH/RTM/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
-cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
-cp -PRf $IOS_RTC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/iris_*_DCG_iOS/DCG/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/iris_*_DCG_iOS/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/iris_*_ENGINE_iOS/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
 
 # macOS
 echo "[Unity CI] copying macOS ..."
 MAC_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
-cp -PRf $MAC_SRC_PATH/MAC/Release/Release/*.bundle "$MAC_DST_PATH"
-cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
+cp -PRf $MAC_SRC_PATH/iris_*_DCG_Mac/MAC/Release/*.bundle "$MAC_DST_PATH"
+cp -PRf $MAC_SRC_PATH/iris_*_ENGINE_Mac/MAC/Release/*.bundle "$MAC_DST_PATH"
 
 # Windows x86-64
 echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
-cp $WIN_SRC_PATH/iris_4.0.1_RTM_Windows/RTM/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-cp $WIN_SRC_PATH/iris_4.0.1_RTM_Windows/x64/Release/Release/*.dll "$WIN64_DST_PATH"
-cp $WIN_SRC_PATH/iris_4.0.1_DCG_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_ENGINE_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_DCG_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_DCG_Windows/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
 
 # Windows x86
 echo "[Unity CI] copying Windows x86 ..."
 WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
-cp $WIN_SRC_PATH/iris_4.0.1_RTM_Windows/RTM/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-cp $WIN_SRC_PATH/iris_4.0.1_RTM_Windows/Win32/Release/Release/*.dll "$WIN32_DST_PATH"
-cp $WIN_SRC_PATH/iris_4.0.1_DCG_Windows/Win32/Release/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_ENGINE_Windows/Win32/Release/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_DCG_Windows/Win32/Release/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_DCG_Windows/DCG/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
 
 echo "[Unity CI] finish copying files"
 

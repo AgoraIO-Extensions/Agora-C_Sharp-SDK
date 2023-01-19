@@ -19,7 +19,9 @@ namespace Agora.Rtm
 
         public abstract int RenewToken(string token);
 
-        public abstract int Publish(string channelName, string message, UInt64 length, PublishOptions option, ref UInt64 requestId);
+        public abstract int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId);
+
+        public abstract int Publish(string channelName, string message, int length, PublishOptions option, ref UInt64 requestId);
 
         public abstract int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId);
 
