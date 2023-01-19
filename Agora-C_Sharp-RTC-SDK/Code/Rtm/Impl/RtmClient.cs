@@ -154,7 +154,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.Publish(channelName, message, length, option, ref requestId);
+            return _rtcClientImpl.Publish(channelName, message, message.Length, option, ref requestId);
         }
 
         public override int Publish(string channelName, string message, int length, PublishOptions option, ref UInt64 requestId)
@@ -164,7 +164,7 @@ namespace Agora.Rtm
                 return ErrorCode;
             }
             byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
-            return _rtcClientImpl.Publish(channelName, bytes, length, option, ref requestId);
+            return _rtcClientImpl.Publish(channelName, bytes, bytes.Length, option, ref requestId);
         }
 
         public override int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId)
