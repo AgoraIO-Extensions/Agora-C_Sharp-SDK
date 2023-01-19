@@ -150,12 +150,14 @@ echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
 cp $WIN_SRC_PATH/iris_*_ENGINE_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
 cp $WIN_SRC_PATH/iris_*_DCG_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_DCG_Windows/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
 
 # Windows x86
 echo "[Unity CI] copying Windows x86 ..."
 WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
 cp $WIN_SRC_PATH/iris_*_ENGINE_Windows/Win32/Release/*.dll "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/iris_*_DCG_Windows/Win32/Release/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_DCG_Windows/DCG/Agora_*/sdk/x86/*.dll "$WIN64_DST_PATH"
 
 echo "[Unity CI] finish copying files"
 
