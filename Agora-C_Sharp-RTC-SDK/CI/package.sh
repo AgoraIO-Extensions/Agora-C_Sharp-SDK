@@ -148,7 +148,7 @@ cp -PRf $MAC_SRC_PATH/iris_*_ENGINE_Mac/MAC/Release/*.bundle "$MAC_DST_PATH"
 # Windows x86-64
 echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
-cp $WIN_SRC_PATH/iris_*_ENGINE_Windows/x64/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/iris_*_ENGINE_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
 cp $WIN_SRC_PATH/iris_*_DCG_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
 
 # Windows x86
