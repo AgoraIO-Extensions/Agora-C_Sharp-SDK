@@ -664,6 +664,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public int mosValue;
+
+        /**
+        * The total number of video bytes received (bytes), represented by an aggregate value.
+        */
+        public uint rxVideoBytes;
     };
 
     ///

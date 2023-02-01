@@ -2678,10 +2678,13 @@ namespace Agora.Rtc
             totalFrozenTime = 0;
             frozenRate = 0;
             mosValue = 0;
+            frozenRateByCustomPlcCount = 0;
+            plcCount = 0;
             totalActiveTime = 0;
             publishDuration = 0;
             qoeQuality = 0;
             qualityChangedReason = 0;
+            rxAudioBytes = 0;
         }
 
         public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay,
@@ -2782,6 +2785,10 @@ namespace Agora.Rtc
         ///
         public int mosValue;
 
+
+        public uint frozenRateByCustomPlcCount;
+        public uint plcCount;
+
         ///
         /// <summary>
         /// The total active time (ms) between the start of the audio call and the callback of the remote user.The active time refers to the total duration of the remote user without the mute state.
@@ -2809,6 +2816,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int qualityChangedReason;
+
+        public uint rxAudioBytes;
     };
 
     ///
@@ -6193,7 +6202,42 @@ namespace Agora.Rtc
         /// A deep voice. To avoid audio distortion, ensure that you use this enumerator to process a male-sounding voice.
         /// </summary>
         ///
-        VOICE_CHANGER_BASS = 0x03010400
+        VOICE_CHANGER_BASS = 0x03010400,
+
+
+        /** A voice like a cartoon character.
+        */
+        VOICE_CHANGER_CARTOON = 0x03010500,
+        /** A voice like a child.
+         */
+        VOICE_CHANGER_CHILDLIKE = 0x03010600,
+        /** A voice like a phone operator.
+         */
+        VOICE_CHANGER_PHONE_OPERATOR = 0x03010700,
+        /** A monster voice.
+         */
+        VOICE_CHANGER_MONSTER = 0x03010800,
+        /** A voice like Transformers.
+         */
+        VOICE_CHANGER_TRANSFORMERS = 0x03010900,
+        /** A voice like Groot.
+         */
+        VOICE_CHANGER_GROOT = 0x03010A00,
+        /** A voice like Darth Vader.
+         */
+        VOICE_CHANGER_DARTH_VADER = 0x03010B00,
+        /** A rough female voice.
+         */
+        VOICE_CHANGER_IRON_LADY = 0x03010C00,
+        /** A voice like Crayon Shin-chan.
+         */
+        VOICE_CHANGER_SHIN_CHAN = 0x03010D00,
+        /** A voice like a castrato.
+         */
+        VOICE_CHANGER_GIRLISH_MAN = 0x03010E00,
+        /** A voice like chipmunk.
+         */
+        VOICE_CHANGER_CHIPMUNK = 0x03010F00,
     };
 
     ///

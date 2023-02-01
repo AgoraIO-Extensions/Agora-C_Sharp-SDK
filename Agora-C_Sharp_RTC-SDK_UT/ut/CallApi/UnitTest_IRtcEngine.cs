@@ -1454,6 +1454,16 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_SetLocalVoiceFormant()
+        {
+            double formantRatio;
+            ParamsHelper.InitParam(out formantRatio);
+            var nRet = Engine.SetLocalVoiceFormant(formantRatio);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_SetLocalVoiceEqualization()
         {
             AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency;

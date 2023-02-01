@@ -1540,6 +1540,10 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.mosValue, outParam.mosValue) == false)
                 return false;
+            if (compareUint(selfParam.frozenRateByCustomPlcCount, outParam.frozenRateByCustomPlcCount) == false)
+                return false;
+            if (compareUint(selfParam.plcCount, outParam.plcCount) == false)
+                return false;
             if (compareInt(selfParam.totalActiveTime, outParam.totalActiveTime) == false)
                 return false;
             if (compareInt(selfParam.publishDuration, outParam.publishDuration) == false)
@@ -1547,6 +1551,8 @@ namespace Agora.Rtc
             if (compareInt(selfParam.qoeQuality, outParam.qoeQuality) == false)
                 return false;
             if (compareInt(selfParam.qualityChangedReason, outParam.qualityChangedReason) == false)
+                return false;
+            if (compareUint(selfParam.rxAudioBytes, outParam.rxAudioBytes) == false)
                 return false;
             return true;
         }
@@ -2961,6 +2967,8 @@ namespace Agora.Rtc
             if (compareInt(selfParam.superResolutionType, outParam.superResolutionType) == false)
                 return false;
             if (compareInt(selfParam.mosValue, outParam.mosValue) == false)
+                return false;
+            if (compareUint(selfParam.rxVideoBytes, outParam.rxVideoBytes) == false)
                 return false;
             return true;
         }
