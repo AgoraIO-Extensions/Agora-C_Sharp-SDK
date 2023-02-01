@@ -1076,7 +1076,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnFirstRemoteAudioFrame(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
