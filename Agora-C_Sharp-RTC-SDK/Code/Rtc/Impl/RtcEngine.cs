@@ -1232,6 +1232,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetLocalVoicePitch(pitch);
         }
 
+        public override int SetLocalVoiceFormant(double formantRatio)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetLocalVoiceFormant(formantRatio);
+        }
+
         public override int SetLocalVoiceEqualization(AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency, int bandGain)
         {
             if (_rtcEngineImpl == null)

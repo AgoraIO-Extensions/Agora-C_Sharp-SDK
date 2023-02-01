@@ -121,6 +121,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETVOICEBEAUTIFIERPARAMETERS = "RtcEngine_setVoiceBeautifierParameters";
         internal const string FUNC_RTCENGINE_SETVOICECONVERSIONPARAMETERS = "RtcEngine_setVoiceConversionParameters";
         internal const string FUNC_RTCENGINE_SETLOCALVOICEPITCH = "RtcEngine_setLocalVoicePitch";
+        internal const string FUNC_RTCENGINE_SETLOCALVOICEFORMANT = "RtcEngine_setLocalVoiceFormant";
         internal const string FUNC_RTCENGINE_SETLOCALVOICEEQUALIZATION = "RtcEngine_setLocalVoiceEqualization";
         internal const string FUNC_RTCENGINE_SETLOCALVOICEREVERB = "RtcEngine_setLocalVoiceReverb";
         internal const string FUNC_RTCENGINE_SETHEADPHONEEQPRESET = "RtcEngine_setHeadphoneEQPreset";

@@ -996,7 +996,7 @@ namespace Agora.Rtc
 
         public static bool compareUint(uint selfParam, uint outParam)
         {
-            return selfParam == 10;
+            return selfParam == 10 || selfParam == 1;
         }
 
         public static bool compareUlong(ulong selfParam, ulong outParam)
@@ -1005,6 +1005,11 @@ namespace Agora.Rtc
         }
 
         public static bool compareInt(int selfParam, int outParam)
+        {
+            return selfParam == 1 || selfParam == 10;
+        }
+
+        public static bool compareArrayLength(int selfParam, int outParam)
         {
             return selfParam == 10;
         }
@@ -1540,6 +1545,10 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.mosValue, outParam.mosValue) == false)
                 return false;
+            if (compareUint(selfParam.frozenRateByCustomPlcCount, outParam.frozenRateByCustomPlcCount) == false)
+                return false;
+            if (compareUint(selfParam.plcCount, outParam.plcCount) == false)
+                return false;
             if (compareInt(selfParam.totalActiveTime, outParam.totalActiveTime) == false)
                 return false;
             if (compareInt(selfParam.publishDuration, outParam.publishDuration) == false)
@@ -1547,6 +1556,8 @@ namespace Agora.Rtc
             if (compareInt(selfParam.qoeQuality, outParam.qoeQuality) == false)
                 return false;
             if (compareInt(selfParam.qualityChangedReason, outParam.qualityChangedReason) == false)
+                return false;
+            if (compareUint(selfParam.rxAudioBytes, outParam.rxAudioBytes) == false)
                 return false;
             return true;
         }
@@ -2499,7 +2510,7 @@ namespace Agora.Rtc
                 return false;
             if (selfParam.height != 16)
                 return false;
-     
+
 
             return true;
         }
@@ -2561,7 +2572,7 @@ namespace Agora.Rtc
         {
             if (compareFloatArray(selfParam.audioSpectrumData, outParam.audioSpectrumData) == false)
                 return false;
-            if (compareInt(selfParam.dataLength, outParam.dataLength) == false)
+            if (selfParam.dataLength != 10)
                 return false;
             return true;
         }
@@ -2962,6 +2973,8 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.mosValue, outParam.mosValue) == false)
                 return false;
+            if (compareUint(selfParam.rxVideoBytes, outParam.rxVideoBytes) == false)
+                return false;
             return true;
         }
 
@@ -3314,7 +3327,10 @@ namespace Agora.Rtc
 
         public static bool compareIntPtr(IntPtr selfParam, IntPtr outParam)
         {
-            if (selfParam != (IntPtr)10)
+            int[] array = new int[1];
+            Marshal.Copy(selfParam, array, 0, 1);
+
+            if (array[0] != 10)
                 return false;
 
             return true;
@@ -3400,7 +3416,7 @@ namespace Agora.Rtc
             if (compareString(selfParam.chartName, outParam.chartName) == false)
                 return false;
 
-            if (compareInt(selfParam.id, outParam.id) == false)
+            if (compareArrayLength(selfParam.id, outParam.id) == false)
                 return false;
 
             return true;

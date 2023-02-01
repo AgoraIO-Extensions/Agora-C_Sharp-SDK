@@ -1724,6 +1724,9 @@ namespace Agora.Rtc
         ///
         public abstract int SetLocalVoicePitch(double pitch);
 
+
+        public abstract int SetLocalVoiceFormant(double formantRatio);
+
         ///
         /// <summary>
         /// Sets the local voice equalization effect.
