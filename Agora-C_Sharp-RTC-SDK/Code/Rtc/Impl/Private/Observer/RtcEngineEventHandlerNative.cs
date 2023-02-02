@@ -806,9 +806,9 @@ namespace Agora.Rtc
                     rtcEngineEventHandler.OnFacePositionChanged(
                         (int)AgoraJson.GetData<int>(jsonData, "imageWidth"),
                         (int)AgoraJson.GetData<int>(jsonData, "imageHeight"),
-                        AgoraJson.JsonToStruct<Rectangle>(
-                            (string)AgoraJson.GetData<string>(jsonData, "vecRectangle")),
-                        AgoraJson.JsonToStructArray<int>(jsonData, "vecDistance", (uint)numFaces), numFaces);
+                        AgoraJson.JsonToStructArray<Rectangle>(jsonData, "vecRectangle", (uint)numFaces),
+                        AgoraJson.JsonToStructArray<int>(jsonData, "vecDistance", (uint)numFaces),
+                        numFaces);
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
 #endif

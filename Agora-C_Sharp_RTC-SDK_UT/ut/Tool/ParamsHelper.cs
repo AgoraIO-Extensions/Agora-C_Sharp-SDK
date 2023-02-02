@@ -301,6 +301,17 @@ namespace Agora.Rtc
         {
             param = new Rectangle(0, 0, 640, 360);
         }
+
+        public static void InitParam(out Rectangle[] param)
+        {
+            param = new Rectangle[10];
+            for (int i = 0; i < param.Length; i++)
+            {
+                param[i] = new Rectangle(0, 0, 640, 360);
+            }
+        }
+
+
         public static void InitParam(out ScreenCaptureParameters param)
         {
             param = new ScreenCaptureParameters();
@@ -1359,6 +1370,21 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.height, outParam.height) == false)
                 return false;
+            return true;
+        }
+
+
+        public static bool compareRectangleArray(Rectangle[] selfParam, Rectangle[] outParam)
+        {
+            if (selfParam.Length != outParam.Length)
+                return false;
+
+            var length = selfParam.Length;
+            for (var i = 0; i < length; i++)
+            {
+                if (compareRectangle(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
             return true;
         }
 
@@ -2499,7 +2525,7 @@ namespace Agora.Rtc
                 return false;
             if (selfParam.height != 16)
                 return false;
-     
+
 
             return true;
         }

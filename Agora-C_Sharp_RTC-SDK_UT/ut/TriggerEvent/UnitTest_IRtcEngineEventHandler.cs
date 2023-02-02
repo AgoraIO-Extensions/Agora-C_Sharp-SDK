@@ -1967,7 +1967,7 @@ namespace Agora.Rtc.Event
             int imageHeight;
             ParamsHelper.InitParam(out imageHeight);
 
-            Rectangle vecRectangle;
+            Rectangle[] vecRectangle;
             ParamsHelper.InitParam(out vecRectangle);
 
             int[] vecDistance;
