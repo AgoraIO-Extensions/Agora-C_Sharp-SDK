@@ -1998,11 +1998,11 @@ namespace Agora.Rtc
         public bool OnFacePositionChanged_be_trigger = false;
         public int OnFacePositionChanged_imageWidth = 0;
         public int OnFacePositionChanged_imageHeight = 0;
-        public Rectangle OnFacePositionChanged_vecRectangle = null;
+        public Rectangle[] OnFacePositionChanged_vecRectangle = null;
         public int[] OnFacePositionChanged_vecDistance = null;
         public int OnFacePositionChanged_numFaces = 0;
 
-        public override void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces)
+        public override void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle[] vecRectangle, int[] vecDistance, int numFaces)
         {
             OnFacePositionChanged_be_trigger = true;
             OnFacePositionChanged_imageWidth = imageWidth;
@@ -2012,7 +2012,7 @@ namespace Agora.Rtc
             OnFacePositionChanged_numFaces = numFaces;
         }
 
-        public bool OnFacePositionChangedPassed(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces)
+        public bool OnFacePositionChangedPassed(int imageWidth, int imageHeight, Rectangle[] vecRectangle, int[] vecDistance, int numFaces)
         {
             if (OnFacePositionChanged_be_trigger == false)
                 return false;
@@ -2021,7 +2021,7 @@ namespace Agora.Rtc
                 return false;
             if (ParamsHelper.compareInt(OnFacePositionChanged_imageHeight, imageHeight) == false)
                 return false;
-            if (ParamsHelper.compareRectangle(OnFacePositionChanged_vecRectangle, vecRectangle) == false)
+            if (ParamsHelper.compareRectangleArray(OnFacePositionChanged_vecRectangle, vecRectangle) == false)
                 return false;
             if (ParamsHelper.compareIntArray(OnFacePositionChanged_vecDistance, vecDistance) == false)
                 return false;

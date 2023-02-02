@@ -570,7 +570,7 @@ namespace Agora.Rtc
         ///
         /// <param name="numFaces"> The number of faces detected. If the value is 0, it means that no human face is detected.</param>
         ///
-        public virtual void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces) { }
+        public virtual void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle[] vecRectangle, int[] vecDistance, int numFaces) { }
 
         ///
         /// <summary>
