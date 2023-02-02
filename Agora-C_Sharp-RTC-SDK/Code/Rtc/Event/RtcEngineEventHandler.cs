@@ -92,7 +92,7 @@ namespace Agora.Rtc
 
     public delegate void OnCameraExposureAreaChangedHandler(int x, int y, int width, int height);
 
-    public delegate void OnFacePositionChangedHandler(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces);
+    public delegate void OnFacePositionChangedHandler(int imageWidth, int imageHeight, Rectangle[] vecRectangle, int[] vecDistance, int numFaces);
 
     public delegate void OnVideoStoppedHandler();
 
@@ -576,7 +576,7 @@ namespace Agora.Rtc
             EventOnCameraExposureAreaChanged.Invoke(x, y, width, height);
         }
 
-        public override void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle vecRectangle, int[] vecDistance, int numFaces)
+        public override void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle[] vecRectangle, int[] vecDistance, int numFaces)
         {
             if (EventOnFacePositionChanged == null) return;
             EventOnFacePositionChanged.Invoke(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
