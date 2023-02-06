@@ -84,6 +84,7 @@ namespace Agora.Rtc
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
         private MediaRecorderImpl _mediaRecorderInstance;
+        private Rtc.StreamChannelImpl _streamChannelInstance;
 
         private IntPtr _irisRtcCAudioSpectrumObserverNative;
         private IrisMediaPlayerCAudioSpectrumObserver _irisRtcCAudioSpectrumObserver;
@@ -106,6 +107,7 @@ namespace Agora.Rtc
             _spatialAudioEngineInstance = new LocalSpatialAudioEngineImpl(_irisRtcEngine);
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
+            _streamChannelInstance = new Rtc.StreamChannelImpl(_irisRtcEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
             AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
@@ -150,6 +152,9 @@ namespace Agora.Rtc
 
                 _mediaRecorderInstance.Dispose();
                 _mediaRecorderInstance = null;
+
+                _streamChannelInstance.Dispose();
+                _streamChannelInstance = null;
 
                 AgoraRtcNative.Detach(_irisRtcEngine, _videoFrameBufferManagerPtr);
             }
@@ -535,6 +540,11 @@ namespace Agora.Rtc
         public MediaRecorderImpl GetMediaRecorder()
         {
             return _mediaRecorderInstance;
+        }
+
+        public Rtc.StreamChannelImpl GetStreamChannel()
+        {
+            return _streamChannelInstance;
         }
 
 

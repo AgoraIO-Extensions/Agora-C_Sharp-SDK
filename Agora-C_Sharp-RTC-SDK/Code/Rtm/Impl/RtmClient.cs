@@ -92,7 +92,7 @@ namespace Agora.Rtm
                 return null;
             }
 
-            StreamChannel streamChannel = new StreamChannel(this, _rtmClientImpl.GetStreamChannelImpl(), channelName, "Rtm");
+            StreamChannel streamChannel = new StreamChannel(this, _rtmClientImpl.GetStreamChannelImpl(), channelName);
             _streamChannelDic.Add(channelName, streamChannel);
             return streamChannel;
         }

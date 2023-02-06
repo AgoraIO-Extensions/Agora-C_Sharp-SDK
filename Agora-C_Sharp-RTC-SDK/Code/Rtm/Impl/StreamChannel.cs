@@ -2,24 +2,21 @@ using System;
 using StreamChannelType = System.String;
 namespace Agora.Rtm
 {
-
     public sealed class StreamChannel : IStreamChannel
     {
         private bool _disposed = false;
         private IStreamChannelCreator _selfCreator = null;
-        private StreamChannelImpl _streamChannelImpl = null;
+        private IStreamChannelImpl _streamChannelImpl = null;
         private const int ErrorCode = -7;
 
         private string channelName = "";
-        private StreamChannelType type = "";
-
-        internal StreamChannel(IStreamChannelCreator selfCreator, StreamChannelImpl impl, string channelName, StreamChannelType type)
+   
+        internal StreamChannel(IStreamChannelCreator selfCreator, IStreamChannelImpl impl, string channelName)
         {
             _selfCreator = selfCreator;
             _streamChannelImpl = impl;
 
             this.channelName = channelName;
-            this.type = type;
         }
 
         ~StreamChannel()
@@ -49,7 +46,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            int ret = _streamChannelImpl.Release(channelName, type);
+            int ret = _streamChannelImpl.Release(channelName);
             Dispose(true);
             GC.SuppressFinalize(this);
             return ret;
@@ -70,7 +67,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.Join(channelName, type, options, ref requestId);
+            return _streamChannelImpl.Join(channelName, options, ref requestId);
         }
 
         public override int Leave(ref UInt64 requestId)
@@ -79,7 +76,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.Leave(channelName, type, ref requestId);
+            return _streamChannelImpl.Leave(channelName, ref requestId);
         }
 
         public override int JoinTopic(string topic, JoinTopicOptions options, ref UInt64 requestId)
@@ -88,7 +85,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.JoinTopic(channelName, type, topic, options, ref requestId);
+            return _streamChannelImpl.JoinTopic(channelName, topic, options, ref requestId);
         }
 
         public override int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option)
@@ -97,7 +94,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.PublishTopicMessage(channelName, type, topic, message, message.Length, option);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, message.Length, option);
         }
 
         public override int PublishTopicMessage(string topic, string message, int length, PublishOptions option)
@@ -107,7 +104,7 @@ namespace Agora.Rtm
                 return ErrorCode;
             }
             byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
-            return _streamChannelImpl.PublishTopicMessage(channelName, type, topic, bytes, bytes.Length, option);
+            return _streamChannelImpl.PublishTopicMessage(channelName, topic, bytes, bytes.Length, option);
         }
 
         public override int LeaveTopic(string topic, ref UInt64 requestId)
@@ -116,7 +113,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.LeaveTopic(channelName, type, topic, ref requestId);
+            return _streamChannelImpl.LeaveTopic(channelName, topic, ref requestId);
         }
 
         public override int SubscribeTopic(string topic, TopicOptions options, ref UInt64 requestId)
@@ -125,7 +122,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.SubscribeTopic(channelName, type, topic, options, ref requestId);
+            return _streamChannelImpl.SubscribeTopic(channelName, topic, options, ref requestId);
         }
 
         public override int UnsubscribeTopic(string topic, TopicOptions options)
@@ -134,7 +131,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.UnsubscribeTopic(channelName, type, topic, options);
+            return _streamChannelImpl.UnsubscribeTopic(channelName, topic, options);
         }
 
         public override int GetSubscribedUserList(string topic, ref UserList users)
@@ -143,7 +140,7 @@ namespace Agora.Rtm
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.GetSubscribedUserList(channelName, type, topic, ref users);
+            return _streamChannelImpl.GetSubscribedUserList(channelName, topic, ref users);
         }
     }
 }
