@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Agora.Rtm
 {
-    public sealed class RtmClient : IRtmClient
+    public sealed class RtmClient : IRtmClient, IStreamChannelCreator
     {
         private bool _disposed = false;
-        private RtmClientImpl _rtcClientImpl = null;
+        private RtmClientImpl _rtmClientImpl = null;
         private const int ErrorCode = -7;
         internal Dictionary<string, StreamChannel> _streamChannelDic = new Dictionary<string, StreamChannel>();
 
@@ -16,10 +16,10 @@ namespace Agora.Rtm
 
         private RtmClient()
         {
-            _rtcClientImpl = RtmClientImpl.GetInstance();
-            _rtmLock = RtmLock.GetInstance(_rtcClientImpl.GetRtmLockImpl());
-            _rtmPresence = RtmPresence.GetInstance(_rtcClientImpl.GetRtmPresenceImpl());
-            _rtmStorage = RtmStorage.GetInstance(_rtcClientImpl.GetRtmStorageImpl());
+            _rtmClientImpl = RtmClientImpl.GetInstance();
+            _rtmLock = RtmLock.GetInstance(_rtmClientImpl.GetRtmLockImpl());
+            _rtmPresence = RtmPresence.GetInstance(_rtmClientImpl.GetRtmPresenceImpl());
+            _rtmStorage = RtmStorage.GetInstance(_rtmClientImpl.GetRtmStorageImpl());
         }
 
         ~RtmClient()
@@ -34,13 +34,18 @@ namespace Agora.Rtm
             return instance ?? (instance = new RtmClient());
         }
 
+        public static IRtmClient Get()
+        {
+            return instance;
+        }
+
         public override int Dispose()
         {
             if (_disposed) return 0;
 
             GC.SuppressFinalize(this);
 
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
@@ -51,8 +56,8 @@ namespace Agora.Rtm
             RtmPresence.ReleaseInstance();
             RtmStorage.ReleaseInstance();
 
-            _rtcClientImpl.Dispose();
-            _rtcClientImpl = null;
+            _rtmClientImpl.Dispose();
+            _rtmClientImpl = null;
 
             instance = null;
             _disposed = true;
@@ -62,16 +67,16 @@ namespace Agora.Rtm
 
         public override int Initialize(RtmConfig config)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.Initialize(config);
+            return _rtmClientImpl.Initialize(config);
         }
 
         public override IStreamChannel CreateStreamChannel(string channelName)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return null;
             }
@@ -81,13 +86,13 @@ namespace Agora.Rtm
                 return _streamChannelDic[channelName];
             }
 
-            int ret = _rtcClientImpl.CreateStreamChannel(channelName);
+            int ret = _rtmClientImpl.CreateStreamChannel(channelName);
             if (ret != 0)
             {
                 return null;
             }
 
-            StreamChannel streamChannel = new StreamChannel(this, _rtcClientImpl.GetStreamChannelImpl(), channelName);
+            StreamChannel streamChannel = new StreamChannel(this, _rtmClientImpl.GetStreamChannelImpl(), channelName, "Rtm");
             _streamChannelDic.Add(channelName, streamChannel);
             return streamChannel;
         }
@@ -95,25 +100,25 @@ namespace Agora.Rtm
 
         public override int Login(string token)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.Login(token);
+            return _rtmClientImpl.Login(token);
         }
 
         public override int Logout()
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.Logout();
+            return _rtmClientImpl.Logout();
         }
 
         public override IRtmStorage GetStorage()
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return null;
             }
@@ -123,7 +128,7 @@ namespace Agora.Rtm
 
         public override IRtmLock GetLock()
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return null;
             }
@@ -132,7 +137,7 @@ namespace Agora.Rtm
 
         public override IRtmPresence GetPresence()
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return null;
             }
@@ -141,57 +146,65 @@ namespace Agora.Rtm
 
         public override int RenewToken(string token)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.RenewToken(token);
+            return _rtmClientImpl.RenewToken(token);
         }
 
         public override int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.Publish(channelName, message, message.Length, option, ref requestId);
+            return _rtmClientImpl.Publish(channelName, message, message.Length, option, ref requestId);
         }
 
         public override int Publish(string channelName, string message, int length, PublishOptions option, ref UInt64 requestId)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
             byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
-            return _rtcClientImpl.Publish(channelName, bytes, bytes.Length, option, ref requestId);
+            return _rtmClientImpl.Publish(channelName, bytes, bytes.Length, option, ref requestId);
         }
 
         public override int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.Subscribe(channelName, options, ref requestId);
+            return _rtmClientImpl.Subscribe(channelName, options, ref requestId);
         }
 
         public override int Unsubscribe(string channelName)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.Unsubscribe(channelName);
+            return _rtmClientImpl.Unsubscribe(channelName);
         }
 
         public override int SetParameters(string parameters)
         {
-            if (_rtcClientImpl == null)
+            if (_rtmClientImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcClientImpl.SetParameters(parameters);
+            return _rtmClientImpl.SetParameters(parameters);
+        }
+
+        public void RemoveStreamChannelIfExist(string channelName)
+        {
+            if (this._streamChannelDic.ContainsKey(channelName))
+            {
+                this._streamChannelDic.Remove(channelName);
+            }
         }
     }
 }

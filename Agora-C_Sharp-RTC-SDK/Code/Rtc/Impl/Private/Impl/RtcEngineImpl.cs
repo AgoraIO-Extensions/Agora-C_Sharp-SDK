@@ -602,6 +602,19 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
+        public int GetStreamChannel(string channelId)
+        {
+            _param.Clear();
+            _param.Add("channelId", channelId);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisRtcApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSTREAMCHANNEL,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
         public int JoinChannel(string token, string channelId, uint uid,
                                 ChannelMediaOptions options)
         {

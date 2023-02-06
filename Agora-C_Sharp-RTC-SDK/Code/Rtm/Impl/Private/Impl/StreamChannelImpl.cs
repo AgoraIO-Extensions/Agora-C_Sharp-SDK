@@ -48,10 +48,11 @@ namespace Agora.Rtm
             GC.SuppressFinalize(this);
         }
 
-        public int Join(string channelName, JoinChannelOptions options, ref UInt64 requestId)
+        public int Join(string channelName, string type, JoinChannelOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
+            _param.Add("type", type);
             _param.Add("options", options);
 
 
@@ -70,10 +71,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int Leave(string channelName, ref UInt64 requestId)
+        public int Leave(string channelName, string type, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
+            _param.Add("type", type);
 
 
             var json = AgoraJson.ToJson(_param);
@@ -90,24 +92,12 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public string GetChannelName(string channelName)
+
+        public int JoinTopic(string channelName, string type, string topic, JoinTopicOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
-
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_GETCHANNELNAME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            return nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-        }
-
-        public int JoinTopic(string channelName, string topic, JoinTopicOptions options, ref UInt64 requestId)
-        {
-            _param.Clear();
-            _param.Add("channelName", channelName);
+            _param.Add("type", type);
             _param.Add("topic", topic);
             _param.Add("options", options);
 
@@ -126,10 +116,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int PublishTopicMessage(string channelName, string topic, byte[] message, int length, PublishOptions option)
+        public int PublishTopicMessage(string channelName, string type, string topic, byte[] message, int length, PublishOptions option)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
+            _param.Add("type", type);
             _param.Add("topic", topic);
             _param.Add("length", length);
             _param.Add("option", option);
@@ -146,10 +137,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int LeaveTopic(string channelName, string topic, ref UInt64 requestId)
+        public int LeaveTopic(string channelName, string type, string topic, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
+            _param.Add("type", type);
             _param.Add("topic", topic);
 
 
@@ -168,10 +160,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SubscribeTopic(string channelName, string topic, TopicOptions options, ref UInt64 requestId)
+        public int SubscribeTopic(string channelName, string type, string topic, TopicOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
+            _param.Add("type", type);
             _param.Add("topic", topic);
             _param.Add("options", options);
 
@@ -193,10 +186,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int UnsubscribeTopic(string channelName, string topic, TopicOptions options)
+        public int UnsubscribeTopic(string channelName, string type, string topic, TopicOptions options)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
+            _param.Add("type", type);
             _param.Add("topic", topic);
             _param.Add("options", options);
 
@@ -210,10 +204,11 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int GetSubscribedUserList(string channelName, string topic, ref UserList users)
+        public int GetSubscribedUserList(string channelName, string type, string topic, ref UserList users)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
+            _param.Add("type", type);
             _param.Add("topic", topic);
 
 
@@ -236,10 +231,11 @@ namespace Agora.Rtm
             return (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int Release(string channelName)
+        public int Release(string channelName, string type)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
+            _param.Add("type", type);
 
 
             var json = AgoraJson.ToJson(_param);
