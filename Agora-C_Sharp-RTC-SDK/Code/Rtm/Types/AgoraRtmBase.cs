@@ -121,6 +121,8 @@ namespace Agora.Rtm
         RTM_ERR_PRESENCE_STATE_VALUE_SIZE_OVERFLOW = 10307,
 
         RTM_ERR_PRESENCE_SYNC_CLIENT_ERROR = 10308,
+
+        RTM_ERR_PRESENCE_USER_NOT_EXIST = 10309,
     };
 
 
@@ -536,16 +538,20 @@ namespace Agora.Rtm
 
         public bool withState;
 
+        public string page;
+
         public PresenceOptions()
         {
             withUserId = true;
             withState = false;
+            page = "";
         }
 
-        public PresenceOptions(bool withUserId, bool withState)
+        public PresenceOptions(bool withUserId, bool withState, string page)
         {
             this.withUserId = withUserId;
             this.withState = withState;
+            this.page = page;
         }
     };
 

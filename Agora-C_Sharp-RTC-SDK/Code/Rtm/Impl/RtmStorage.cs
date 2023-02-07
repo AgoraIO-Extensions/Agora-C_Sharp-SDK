@@ -105,13 +105,13 @@ namespace Agora.Rtm
             return _rtmStorageImpl.GetUserMetadata(userId, ref requestId);
         }
 
-        public override int SubscribeUserMetadata(string userId)
+        public override int SubscribeUserMetadata(string userId, ref UInt64 requestId)
         {
             if (_rtmStorageImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtmStorageImpl.SubscribeUserMetadata(userId);
+            return _rtmStorageImpl.SubscribeUserMetadata(userId, ref requestId);
         }
 
         public override int UnsubscribeUserMetadata(string userId)

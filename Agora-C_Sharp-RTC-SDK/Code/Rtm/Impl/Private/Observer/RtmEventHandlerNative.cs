@@ -43,7 +43,7 @@ namespace Agora.Rtm
                 case "RtmEventHandler_onMessageEvent":
                     MessageEventInternal messageEventInternal = AgoraJson.JsonToStruct<MessageEventInternal>(jsonData, "event");
                     MessageEvent messageEvent = messageEventInternal.GenerateMessageEvent();
-                   
+
                     var byteData = new byte[messageEvent.messageLength];
                     if (messageEvent.messageLength != 0)
                     {
@@ -427,6 +427,7 @@ namespace Agora.Rtm
 #endif
                     if (rtmEventHandler == null) return;
                     rtmEventHandler.OnSubscribeUserMetadataResult(
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
                         (OPERATION_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
                     );
@@ -557,6 +558,7 @@ namespace Agora.Rtm
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         AgoraJson.JsonToStructArray<UserState>(jsonData, "userStateList"),
                         AgoraJson.JsonToStruct<UInt64>(jsonData, "count"),
+                        (string)AgoraJson.GetData<string>(jsonData, "nextPage"),
                         (OPERATION_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
