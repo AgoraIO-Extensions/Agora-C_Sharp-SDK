@@ -55,7 +55,7 @@ namespace Agora.Rtm
 
         public virtual void OnGetUserMetadataResult(UInt64 requestId, string userId, RtmMetadata data, OPERATION_ERROR_CODE errorCode) { }
 
-        public virtual void OnSubscribeUserMetadataResult(string userId, OPERATION_ERROR_CODE errorCode) { }
+        public virtual void OnSubscribeUserMetadataResult(UInt64 requestId, string userId, OPERATION_ERROR_CODE errorCode) { }
 
         public virtual void OnSetLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType,
                                                 string lockName, OPERATION_ERROR_CODE errorCode)
@@ -81,7 +81,7 @@ namespace Agora.Rtm
                                                 LockDetail[] lockDetailList, UInt64 count, OPERATION_ERROR_CODE errorCode)
         { }
 
-        public virtual void WhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, OPERATION_ERROR_CODE errorCode) { }
+        public virtual void WhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode) { }
 
         public virtual void WhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, OPERATION_ERROR_CODE errorCode) { }
 

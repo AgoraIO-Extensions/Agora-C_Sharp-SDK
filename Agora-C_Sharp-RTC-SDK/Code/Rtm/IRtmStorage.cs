@@ -21,7 +21,7 @@ namespace Agora.Rtm
 
         public abstract int GetUserMetadata(string userId, ref UInt64 requestId);
 
-        public abstract int SubscribeUserMetadata(string userId);
+        public abstract int SubscribeUserMetadata(string userId, ref UInt64 requestId);
 
         public abstract int UnsubscribeUserMetadata(string userId);
     }

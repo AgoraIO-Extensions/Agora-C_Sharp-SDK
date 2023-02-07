@@ -46,7 +46,7 @@ namespace Agora.Rtm
 
     public delegate void OnGetUserMetadataResultHandler(UInt64 requestId, string userId, RtmMetadata data, OPERATION_ERROR_CODE errorCode);
 
-    public delegate void OnSubscribeUserMetadataResultHandler(string userId, OPERATION_ERROR_CODE errorCode);
+    public delegate void OnSubscribeUserMetadataResultHandler(UInt64 requestId, string userId, OPERATION_ERROR_CODE errorCode);
 
     public delegate void OnSetLockResultHandler(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, OPERATION_ERROR_CODE errorCode);
 
@@ -60,7 +60,7 @@ namespace Agora.Rtm
 
     public delegate void OnGetLocksResultHandler(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, LockDetail[] lockDetailList, UInt64 count, OPERATION_ERROR_CODE errorCode);
 
-    public delegate void WhoNowResultHandler(UInt64 requestId, UserState[] userStateList, UInt64 count, OPERATION_ERROR_CODE errorCode);
+    public delegate void WhoNowResultHandler(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode);
 
     public delegate void WhereNowResultHandler(UInt64 requestId, ChannelInfo[] channels, UInt64 count, OPERATION_ERROR_CODE errorCode);
 
@@ -282,10 +282,10 @@ namespace Agora.Rtm
             EventOnGetUserMetadataResult.Invoke(requestId, userId, data, errorCode);
         }
 
-        public override void OnSubscribeUserMetadataResult(string userId, OPERATION_ERROR_CODE errorCode)
+        public override void OnSubscribeUserMetadataResult(UInt64 requestId, string userId, OPERATION_ERROR_CODE errorCode)
         {
             if (EventOnSubscribeUserMetadataResult == null) return;
-            EventOnSubscribeUserMetadataResult.Invoke(userId, errorCode);
+            EventOnSubscribeUserMetadataResult.Invoke(requestId, userId, errorCode);
         }
 
         public override void OnSetLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, OPERATION_ERROR_CODE errorCode)
@@ -324,10 +324,10 @@ namespace Agora.Rtm
             EventOnGetLocksResult.Invoke(requestId, channelName, channelType, lockDetailList, count, errorCode);
         }
 
-        public override void WhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, OPERATION_ERROR_CODE errorCode)
+        public override void WhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode)
         {
             if (EventWhoNowResult == null) return;
-            EventWhoNowResult.Invoke(requestId, userStateList, count, errorCode);
+            EventWhoNowResult.Invoke(requestId, userStateList, count, nextPage, errorCode);
         }
 
         public override void WhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, OPERATION_ERROR_CODE errorCode)
