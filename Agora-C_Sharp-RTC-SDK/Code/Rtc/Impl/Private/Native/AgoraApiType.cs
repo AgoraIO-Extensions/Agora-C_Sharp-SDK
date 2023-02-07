@@ -13,6 +13,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_GETERRORDESCRIPTION = "RtcEngine_getErrorDescription";
         internal const string FUNC_RTCENGINE_JOINCHANNEL = "RtcEngine_joinChannel";
         internal const string FUNC_RTCENGINE_JOINCHANNEL2 = "RtcEngine_joinChannel2";
+        internal const string FUNC_RTCENGINE_GETSTREAMCHANNEL = "RtcEngine_getStreamChannel";
         internal const string FUNC_RTCENGINE_UPDATECHANNELMEDIAOPTIONS = "RtcEngine_updateChannelMediaOptions";
         internal const string FUNC_RTCENGINE_LEAVECHANNEL = "RtcEngine_leaveChannel";
         internal const string FUNC_RTCENGINE_LEAVECHANNEL2 = "RtcEngine_leaveChannel2";

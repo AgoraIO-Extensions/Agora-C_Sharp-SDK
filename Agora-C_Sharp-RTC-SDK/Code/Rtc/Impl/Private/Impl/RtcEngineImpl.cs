@@ -84,6 +84,7 @@ namespace Agora.Rtc
         private LocalSpatialAudioEngineImpl _spatialAudioEngineInstance;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
         private MediaRecorderImpl _mediaRecorderInstance;
+        private Rtc.StreamChannelImpl _streamChannelInstance;
 
         private IntPtr _irisRtcCAudioSpectrumObserverNative;
         private IrisMediaPlayerCAudioSpectrumObserver _irisRtcCAudioSpectrumObserver;
@@ -106,6 +107,7 @@ namespace Agora.Rtc
             _spatialAudioEngineInstance = new LocalSpatialAudioEngineImpl(_irisRtcEngine);
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
+            _streamChannelInstance = new Rtc.StreamChannelImpl(_irisRtcEngine);
 
             _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
             AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
@@ -150,6 +152,9 @@ namespace Agora.Rtc
 
                 _mediaRecorderInstance.Dispose();
                 _mediaRecorderInstance = null;
+
+                _streamChannelInstance.Dispose();
+                _streamChannelInstance = null;
 
                 AgoraRtcNative.Detach(_irisRtcEngine, _videoFrameBufferManagerPtr);
             }
@@ -537,6 +542,11 @@ namespace Agora.Rtc
             return _mediaRecorderInstance;
         }
 
+        public Rtc.StreamChannelImpl GetStreamChannel()
+        {
+            return _streamChannelInstance;
+        }
+
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
         internal IVideoStreamManager GetVideoStreamManager()
@@ -599,6 +609,19 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 out _result);
 
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
+        }
+
+        public int GetStreamChannel(string channelId)
+        {
+            _param.Clear();
+            _param.Add("channelId", channelId);
+
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisRtcApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETSTREAMCHANNEL,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                out _result);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
