@@ -1,6 +1,6 @@
 using System;
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
     public delegate void OnMessageEventHandler(MessageEvent @event);
 
@@ -71,7 +71,7 @@ namespace Agora.Rtm
     public delegate void OnPresenceGetStateResultHandler(UInt64 requestId, UserState state, OPERATION_ERROR_CODE errorCode);
 
 
-    public class RtmEventHandler : IRtmEventHandler
+    internal class RtmEventHandler : IRtmEventHandler
     {
 
         public event OnMessageEventHandler EventOnMessageEvent;

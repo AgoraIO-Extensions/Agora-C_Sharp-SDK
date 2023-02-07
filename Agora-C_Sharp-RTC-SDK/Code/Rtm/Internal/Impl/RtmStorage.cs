@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
-    public sealed class RtmStorage : IRtmStorage
+    internal sealed class RtmStorage : IRtmStorage
     {
         private RtmStorageImpl _rtmStorageImpl = null;
         private const int ErrorCode = -7;

@@ -1,8 +1,8 @@
 using System;
 using StreamChannelType = System.String;
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
-    public sealed class StreamChannel : IStreamChannel
+    internal sealed class StreamChannel : IStreamChannel
     {
         private bool _disposed = false;
         private IStreamChannelCreator _selfCreator = null;

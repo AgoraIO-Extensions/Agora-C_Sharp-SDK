@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
     using IrisApiRtmEnginePtr = IntPtr;
     using IrisEventHandlerHandle = IntPtr;

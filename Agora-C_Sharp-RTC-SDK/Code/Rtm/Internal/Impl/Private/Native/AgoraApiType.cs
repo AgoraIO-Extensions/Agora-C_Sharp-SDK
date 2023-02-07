@@ -1,4 +1,4 @@
-﻿namespace Agora.Rtm
+﻿namespace Agora.Rtm.Internal
 {
     internal static class AgoraApiType
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
-    public sealed class RtmLock : IRtmLock
+    internal sealed class RtmLock : IRtmLock
     {
         private RtmLockImpl _rtmLockImpl = null;
         private const int ErrorCode = -7;

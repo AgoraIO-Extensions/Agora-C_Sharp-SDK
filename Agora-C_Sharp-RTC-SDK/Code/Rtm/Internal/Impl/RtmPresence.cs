@@ -1,9 +1,9 @@
 ﻿using System;
 
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
-    public sealed class RtmPresence : IRtmPresence
+    internal sealed class RtmPresence : IRtmPresence
     {
         private RtmPresenceImpl _rtmPresenceImpl = null;
         private const int ErrorCode = -7;

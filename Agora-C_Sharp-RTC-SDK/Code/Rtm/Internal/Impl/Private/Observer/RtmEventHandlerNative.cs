@@ -6,7 +6,7 @@ using AOT;
 #endif
 using Agora.Rtc;
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
     internal static class RtmEventHandlerNative
     {

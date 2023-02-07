@@ -1,6 +1,6 @@
 using System;
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
     public abstract class IRtmEventHandler
     {

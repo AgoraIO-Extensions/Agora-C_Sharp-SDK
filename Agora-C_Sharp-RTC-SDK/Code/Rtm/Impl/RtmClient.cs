@@ -1,31 +1,19 @@
-using System;
-using System.Collections.Generic;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Agora.Rtm
 {
-    public sealed class RtmClient : IRtmClient, IStreamChannelCreator
+    public class RtmClient : IRtmClient
     {
-        private bool _disposed = false;
-        private RtmClientImpl _rtmClientImpl = null;
-        private const int ErrorCode = -7;
-        internal Dictionary<string, StreamChannel> _streamChannelDic = new Dictionary<string, StreamChannel>();
+        public event OnMessageEventHandler OnMessageEvent;
+        public event OnPresenceEventHandler OnPresenceEvent;
+        public event OnLockEventHandler OnLockEvent;
+        public event OnStorageEventHandler OnStorageEvent;
+        public event OnConnectionStateChangeHandler OnConnectionStateChange;
+        public event OnTokenPrivilegeWillExpireHandler OnTokenPrivilegeWillExpire;
 
-        private RtmLock _rtmLock = null;
-        private RtmPresence _rtmPresence = null;
-        private RtmStorage _rtmStorage = null;
-
-        private RtmClient()
-        {
-            _rtmClientImpl = RtmClientImpl.GetInstance();
-            _rtmLock = RtmLock.GetInstance(_rtmClientImpl.GetRtmLockImpl());
-            _rtmPresence = RtmPresence.GetInstance(_rtmClientImpl.GetRtmPresenceImpl());
-            _rtmStorage = RtmStorage.GetInstance(_rtmClientImpl.GetRtmStorageImpl());
-        }
-
-        ~RtmClient()
-        {
-            Dispose();
-        }
+        private Internal.IRtmClient internalRtmClient;
+        private RtmEventHandler rtmEventHandler;
 
         private static IRtmClient instance = null;
 
@@ -39,172 +27,141 @@ namespace Agora.Rtm
             return instance;
         }
 
-        public override int Dispose()
+        public RtmClient()
         {
-            if (_disposed) return 0;
-
-            GC.SuppressFinalize(this);
-
-            if (_rtmClientImpl == null)
-            {
-                return ErrorCode;
-            }
-
-            _streamChannelDic.Clear();
-
-            RtmLock.ReleaseInstance();
-            RtmPresence.ReleaseInstance();
-            RtmStorage.ReleaseInstance();
-
-            _rtmClientImpl.Dispose();
-            _rtmClientImpl = null;
-
-            instance = null;
-            _disposed = true;
-            return 0;
+            internalRtmClient = Internal.RtmClient.CreateAgoraRtmClient();
+            rtmEventHandler = new RtmEventHandler(this);
         }
 
-
-        public override int Initialize(RtmConfig config)
+        public void InvokeOnMessageEvent(MessageEvent @event)
         {
-            if (_rtmClientImpl == null)
+            if (this.OnMessageEvent != null)
             {
-                return ErrorCode;
+                this.OnMessageEvent.Invoke(@event);
             }
-            return _rtmClientImpl.Initialize(config);
         }
 
-        public override IStreamChannel CreateStreamChannel(string channelName)
+        public void InvokeOnPresenceEvent(PresenceEvent @event)
         {
-            if (_rtmClientImpl == null)
+            if (this.OnPresenceEvent != null)
             {
-                return null;
+                this.OnPresenceEvent.Invoke(@event);
             }
-
-            if (_streamChannelDic.ContainsKey(channelName))
-            {
-                return _streamChannelDic[channelName];
-            }
-
-            int ret = _rtmClientImpl.CreateStreamChannel(channelName);
-            if (ret != 0)
-            {
-                return null;
-            }
-
-            StreamChannel streamChannel = new StreamChannel(this, _rtmClientImpl.GetStreamChannelImpl(), channelName);
-            _streamChannelDic.Add(channelName, streamChannel);
-            return streamChannel;
         }
 
-
-        public override int Login(string token)
+        public void InvokeOnLockEvent(LockEvent @event)
         {
-            if (_rtmClientImpl == null)
+            if (this.OnLockEvent != null)
             {
-                return ErrorCode;
+                this.OnLockEvent.Invoke(@event);
             }
-            return _rtmClientImpl.Login(token);
         }
 
-        public override int Logout()
+        public void InvokeOnStorageEvent(StorageEvent @event)
         {
-            if (_rtmClientImpl == null)
+            if (this.OnStorageEvent != null)
             {
-                return ErrorCode;
+                this.OnStorageEvent.Invoke(@event);
             }
-            return _rtmClientImpl.Logout();
         }
 
-        public override IRtmStorage GetStorage()
+        public void InvokeOnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
         {
-            if (_rtmClientImpl == null)
+            if (this.OnConnectionStateChange != null)
             {
-                return null;
+                this.OnConnectionStateChange.Invoke(channelName, state, reason);
             }
-
-            return _rtmStorage;
+        }
+        public void InvokeOnTokenPrivilegeWillExpire(string channelName)
+        {
+            if (this.OnTokenPrivilegeWillExpire != null)
+            {
+                this.OnTokenPrivilegeWillExpire.Invoke(channelName);
+            }
         }
 
-        public override IRtmLock GetLock()
+        public IStreamChannel CreateStreamChannel(string channelName)
         {
-            if (_rtmClientImpl == null)
-            {
-                return null;
-            }
-            return _rtmLock;
+            throw new NotImplementedException();
         }
 
-        public override IRtmPresence GetPresence()
+        public int Dispose()
         {
-            if (_rtmClientImpl == null)
-            {
-                return null;
-            }
-            return _rtmPresence;
+            return internalRtmClient.Dispose();
         }
 
-        public override int RenewToken(string token)
+        public IRtmLock GetLock()
         {
-            if (_rtmClientImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtmClientImpl.RenewToken(token);
+            throw new NotImplementedException();//todo
         }
 
-        public override int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId)
+        public IRtmPresence GetPresence()
         {
-            if (_rtmClientImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtmClientImpl.Publish(channelName, message, message.Length, option, ref requestId);
+            throw new NotImplementedException();//todo
         }
 
-        public override int Publish(string channelName, string message, int length, PublishOptions option, ref UInt64 requestId)
+        public IRtmStorage GetStorage()
         {
-            if (_rtmClientImpl == null)
+            throw new NotImplementedException();//todo
+        }
+
+        public int Initialize(RtmConfig config)
+        {
+            Internal.RtmConfig internalConfig = new Internal.RtmConfig(config, rtmEventHandler);
+            return internalRtmClient.Initialize(internalConfig);
+        }
+
+        public Task<RtmResult<LoginResult>> Login(string token)
+        {
+            TaskCompletionSource<RtmResult<LoginResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LoginResult>>();
+            int errorCode = internalRtmClient.Login(token);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<LoginResult> result = new RtmResult<LoginResult>();
+                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMLoginOperation);
+                taskCompletionSource.SetResult(result);
             }
+            else
+            {
+                rtmEventHandler.PutLoginResultTask(taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
+        }
+
+        public int Logout()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RtmResult<PublishResult>> Publish(string channelName, byte[] message, int length, PublishOptions option)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<RtmResult<PublishResult>> Publish(string channelName, string message, int length, PublishOptions option)
+        {
             byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
-            return _rtmClientImpl.Publish(channelName, bytes, bytes.Length, option, ref requestId);
+            return this.Publish(channelName, bytes, bytes.Length, option);
         }
 
-        public override int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId)
+        public int RenewToken(string token)
         {
-            if (_rtmClientImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtmClientImpl.Subscribe(channelName, options, ref requestId);
+            throw new NotImplementedException();
         }
 
-        public override int Unsubscribe(string channelName)
+        public int SetParameters(string parameters)
         {
-            if (_rtmClientImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtmClientImpl.Unsubscribe(channelName);
+            throw new NotImplementedException();
         }
 
-        public override int SetParameters(string parameters)
+        public Task<RtmResult<SubscribeResult>> Subscribe(string channelName, SubscribeOptions options, ref ulong requestId)
         {
-            if (_rtmClientImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtmClientImpl.SetParameters(parameters);
+            throw new NotImplementedException();
         }
 
-        public void RemoveStreamChannelIfExist(string channelName)
+        public int Unsubscribe(string channelName)
         {
-            if (this._streamChannelDic.ContainsKey(channelName))
-            {
-                this._streamChannelDic.Remove(channelName);
-            }
+            throw new NotImplementedException();
         }
     }
 }
