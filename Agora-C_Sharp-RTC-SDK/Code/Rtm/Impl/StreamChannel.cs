@@ -1,19 +1,19 @@
 using System;
-
+using StreamChannelType = System.String;
 namespace Agora.Rtm
 {
     public sealed class StreamChannel : IStreamChannel
     {
         private bool _disposed = false;
-        private RtmClient _rtmClientInstance = null;
-        private StreamChannelImpl _streamChannelImpl = null;
+        private IStreamChannelCreator _selfCreator = null;
+        private IStreamChannelImpl _streamChannelImpl = null;
         private const int ErrorCode = -7;
 
         private string channelName = "";
-
-        internal StreamChannel(RtmClient rtmClient, StreamChannelImpl impl, string channelName)
+   
+        internal StreamChannel(IStreamChannelCreator selfCreator, IStreamChannelImpl impl, string channelName)
         {
-            _rtmClientInstance = rtmClient;
+            _selfCreator = selfCreator;
             _streamChannelImpl = impl;
 
             this.channelName = channelName;
@@ -32,20 +32,17 @@ namespace Agora.Rtm
             {
             }
 
-            if (_rtmClientInstance._streamChannelDic.ContainsKey(channelName))
-            {
-                _rtmClientInstance._streamChannelDic.Remove(channelName);
-            }
+            this._selfCreator.RemoveStreamChannelIfExist(this.channelName);
 
             _streamChannelImpl = null;
-            _rtmClientInstance = null;
+            _selfCreator = null;
             channelName = "";
             _disposed = true;
         }
 
         public override int Dispose()
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -57,7 +54,7 @@ namespace Agora.Rtm
 
         public override string GetChannelName()
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return "";
             }
@@ -66,7 +63,7 @@ namespace Agora.Rtm
 
         public override int Join(JoinChannelOptions options, ref UInt64 requestId)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -75,7 +72,7 @@ namespace Agora.Rtm
 
         public override int Leave(ref UInt64 requestId)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -84,7 +81,7 @@ namespace Agora.Rtm
 
         public override int JoinTopic(string topic, JoinTopicOptions options, ref UInt64 requestId)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -93,7 +90,7 @@ namespace Agora.Rtm
 
         public override int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -102,7 +99,7 @@ namespace Agora.Rtm
 
         public override int PublishTopicMessage(string topic, string message, int length, PublishOptions option)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -112,7 +109,7 @@ namespace Agora.Rtm
 
         public override int LeaveTopic(string topic, ref UInt64 requestId)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -121,7 +118,7 @@ namespace Agora.Rtm
 
         public override int SubscribeTopic(string topic, TopicOptions options, ref UInt64 requestId)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -130,7 +127,7 @@ namespace Agora.Rtm
 
         public override int UnsubscribeTopic(string topic, TopicOptions options)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }
@@ -139,7 +136,7 @@ namespace Agora.Rtm
 
         public override int GetSubscribedUserList(string topic, ref UserList users)
         {
-            if (_rtmClientInstance == null || _streamChannelImpl == null)
+            if (_selfCreator == null || _streamChannelImpl == null)
             {
                 return ErrorCode;
             }

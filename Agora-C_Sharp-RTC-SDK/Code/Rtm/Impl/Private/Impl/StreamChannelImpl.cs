@@ -10,7 +10,7 @@ namespace Agora.Rtm
 {
     using IrisApiRtmEnginePtr = IntPtr;
 
-    internal class StreamChannelImpl
+    internal class StreamChannelImpl : IStreamChannelImpl
     {
         private bool _disposed = false;
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
@@ -75,7 +75,6 @@ namespace Agora.Rtm
             _param.Clear();
             _param.Add("channelName", channelName);
 
-
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_LEAVE,
                 json, (UInt32)json.Length,
@@ -90,19 +89,6 @@ namespace Agora.Rtm
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public string GetChannelName(string channelName)
-        {
-            _param.Clear();
-            _param.Add("channelName", channelName);
-
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_STREAMCHANNEL_GETCHANNELNAME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            return nRet != 0 ? "" : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-        }
 
         public int JoinTopic(string channelName, string topic, JoinTopicOptions options, ref UInt64 requestId)
         {
@@ -151,7 +137,6 @@ namespace Agora.Rtm
             _param.Clear();
             _param.Add("channelName", channelName);
             _param.Add("topic", topic);
-
 
             var json = AgoraJson.ToJson(_param);
 
@@ -240,7 +225,6 @@ namespace Agora.Rtm
         {
             _param.Clear();
             _param.Add("channelName", channelName);
-
 
             var json = AgoraJson.ToJson(_param);
 

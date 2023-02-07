@@ -137,6 +137,9 @@ namespace Agora.Rtc
         ///
         public abstract int JoinChannel(string token, string channelId, uint uid, ChannelMediaOptions options);
 
+
+        public abstract Rtm.IStreamChannel GetStreamChannel(string channelId);
+
         ///
         /// <summary>
         /// Updates the channel media options after joining the channel.
