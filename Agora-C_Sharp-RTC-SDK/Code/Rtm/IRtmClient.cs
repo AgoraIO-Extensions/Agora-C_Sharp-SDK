@@ -6,6 +6,8 @@ namespace Agora.Rtm
 
     public delegate void OnPresenceEventHandler(PresenceEvent @event);
 
+    public delegate void OnTopicEventHandler(TopicEvent @event);
+
     public delegate void OnLockEventHandler(LockEvent @event);
 
     public delegate void OnStorageEventHandler(StorageEvent @event);
@@ -19,6 +21,8 @@ namespace Agora.Rtm
         event OnMessageEventHandler OnMessageEvent;
 
         event OnPresenceEventHandler OnPresenceEvent;
+
+        event OnTopicEventHandler OnTopicEvent;
 
         event OnLockEventHandler OnLockEvent;
 

@@ -198,6 +198,11 @@ namespace Agora.Rtm
             rtmClient.InvokeOnPresenceEvent(@event);
         }
 
+        public override void OnTopicEvent(TopicEvent @event)
+        {
+            rtmClient.InvokeOnTopicEvent(@event);
+        }
+
         public override void OnLockEvent(LockEvent @event)
         {
             rtmClient.InvokeOnLockEvent(@event);

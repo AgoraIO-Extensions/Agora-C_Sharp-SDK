@@ -7,6 +7,7 @@ namespace Agora.Rtm
     {
         public event OnMessageEventHandler OnMessageEvent;
         public event OnPresenceEventHandler OnPresenceEvent;
+        public event OnTopicEventHandler OnTopicEvent;
         public event OnLockEventHandler OnLockEvent;
         public event OnStorageEventHandler OnStorageEvent;
         public event OnConnectionStateChangeHandler OnConnectionStateChange;
@@ -53,6 +54,14 @@ namespace Agora.Rtm
             if (this.OnPresenceEvent != null)
             {
                 this.OnPresenceEvent.Invoke(@event);
+            }
+        }
+
+        public void InvokeOnTopicEvent(TopicEvent @event)
+        {
+            if (this.OnTopicEvent != null)
+            {
+                this.OnTopicEvent.Invoke(@event);
             }
         }
 
