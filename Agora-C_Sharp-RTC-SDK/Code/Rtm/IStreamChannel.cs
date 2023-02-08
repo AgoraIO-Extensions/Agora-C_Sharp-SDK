@@ -6,7 +6,7 @@ namespace Agora.Rtm
     {
         Task<RtmResult<JoinResult>> Join(JoinChannelOptions options);
 
-        Task<RtmResult<LeaveResult>> Leave(ref UInt64 requestId);
+        Task<RtmResult<LeaveResult>> Leave();
 
         string GetChannelName();
 
@@ -16,9 +16,9 @@ namespace Agora.Rtm
 
         int PublishTopicMessage(string topic, string message, int length, PublishOptions option);
 
-        Task<RtmResult<SetChannelMetadataResult>> LeaveTopic(string topic);
+        Task<RtmResult<LeaveTopicResult>> LeaveTopic(string topic);
 
-        Task<RtmResult<SetChannelMetadataResult>> SubscribeTopic(string topic, TopicOptions options);
+        Task<RtmResult<SubscribeTopicResult>> SubscribeTopic(string topic, TopicOptions options);
 
         int UnsubscribeTopic(string topic, TopicOptions options);
 

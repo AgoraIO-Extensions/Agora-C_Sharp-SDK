@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Agora.Rtm.Internal
 {
-    public abstract class IRtmStorage
+    internal abstract class IRtmStorage
     {
         //public abstract RtmMetadata CreateMetadata();
 

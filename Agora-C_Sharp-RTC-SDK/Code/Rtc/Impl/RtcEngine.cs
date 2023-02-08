@@ -310,7 +310,9 @@ namespace Agora.Rtc
                 return null;
             }
 
-            Rtm.StreamChannel streamChannel = new Rtm.StreamChannel(this, _rtcEngineImpl.GetStreamChannel(), channelId);
+            Rtm.RtmClient rtmClient = (Rtm.RtmClient)irtmClient;
+            Rtm.Internal.StreamChannel internalStreamChannel = new Rtm.Internal.StreamChannel(this, _rtcEngineImpl.GetStreamChannel(), channelId);
+            Rtm.StreamChannel streamChannel = new Rtm.StreamChannel(internalStreamChannel, rtmClient.GetRtmEventHandler());
             _streamChannelDic.Add(channelId, streamChannel);
             return streamChannel;
         }

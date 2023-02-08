@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Agora.Rtm.Internal
 {
-    public abstract class IRtmPresence
+    internal abstract class IRtmPresence
     {
         public abstract int WhoNow(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options, ref UInt64 requestId);
 

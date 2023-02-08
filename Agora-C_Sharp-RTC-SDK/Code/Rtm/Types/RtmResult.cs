@@ -210,17 +210,17 @@ namespace Agora.Rtm
         public OPERATION_ERROR_CODE ErrorCode;
     };
 
-    public class PresenceSetStateResult
+    public class SetStateResult
     {
         public OPERATION_ERROR_CODE ErrorCode;
     };
 
-    public class PresenceRemoveStateResult
+    public class RemoveStateResult
     {
         public OPERATION_ERROR_CODE ErrorCode;
     };
 
-    public class PresenceGetStateResult
+    public class GetStateResult
     {
         public UserState State;
         public OPERATION_ERROR_CODE ErrorCode;

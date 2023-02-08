@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 namespace Agora.Rtm
 {
-    public class RtmEventHandler : Internal.IRtmEventHandler
+    internal class RtmEventHandler : Internal.IRtmEventHandler
     {
 
         private RtmClient rtmClient;
 
-        private TaskCompletionSource<RtmResult<LoginResult>> loginResultTask = null;
+        private List<TaskCompletionSource<RtmResult<LoginResult>>> loginResultTaskArray = new List<TaskCompletionSource<RtmResult<LoginResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<JoinResult>>> joinResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<JoinResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<LeaveResult>>> leaveResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<LeaveResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<JoinTopicResult>>> joinTopicResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<JoinTopicResult>>>();
@@ -33,9 +33,9 @@ namespace Agora.Rtm
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetLocksResult>>> getLocksResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetLocksResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<WhoNowResult>>> whoNowResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<WhoNowResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<WhereNowResult>>> whereNowResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<WhereNowResult>>>();
-        private Dictionary<UInt64, TaskCompletionSource<RtmResult<PresenceSetStateResult>>> presenceSetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<PresenceSetStateResult>>>();
-        private Dictionary<UInt64, TaskCompletionSource<RtmResult<PresenceRemoveStateResult>>> presenceRemoveStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<PresenceRemoveStateResult>>>();
-        private Dictionary<UInt64, TaskCompletionSource<RtmResult<PresenceGetStateResult>>> presenceGetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<PresenceGetStateResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<SetStateResult>>> presenceSetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<SetStateResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveStateResult>>> presenceRemoveStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveStateResult>>>();
+        private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetStateResult>>> presenceGetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetStateResult>>>();
 
 
 
@@ -82,7 +82,7 @@ namespace Agora.Rtm
 
         public void PutLoginResultTask(TaskCompletionSource<RtmResult<LoginResult>> task)
         {
-            loginResultTask = task;
+            loginResultTaskArray.Add(task);
         }
 
         public void PutSetChannelMetadataResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<SetChannelMetadataResult>> task)
@@ -160,27 +160,27 @@ namespace Agora.Rtm
             getLocksResultTaskMap.Add(requestId, task);
         }
 
-        public void PutoNowResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<WhoNowResult>> task)
+        public void PutWhoNowResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<WhoNowResult>> task)
         {
             whoNowResultTaskMap.Add(requestId, task);
         }
 
-        public void PutereNowResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<WhereNowResult>> task)
+        public void PutWhereNowResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<WhereNowResult>> task)
         {
             whereNowResultTaskMap.Add(requestId, task);
         }
 
-        public void PutPresenceSetStateResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<PresenceSetStateResult>> task)
+        public void PutPresenceSetStateResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<SetStateResult>> task)
         {
             presenceSetStateResultTaskMap.Add(requestId, task);
         }
 
-        public void PutPresenceRemoveStateResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<PresenceRemoveStateResult>> task)
+        public void PutPresenceRemoveStateResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<RemoveStateResult>> task)
         {
             presenceRemoveStateResultTaskMap.Add(requestId, task);
         }
 
-        public void PutPresenceGetStateResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<PresenceGetStateResult>> task)
+        public void PutPresenceGetStateResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<GetStateResult>> task)
         {
             presenceGetStateResultTaskMap.Add(requestId, task);
         }
@@ -407,7 +407,7 @@ namespace Agora.Rtm
 
         public override void OnLoginResult(RTM_LOGIN_ERROR_CODE errorCode)
         {
-            if (loginResultTask != null)
+            if (loginResultTaskArray.Count > 0)
             {
                 LoginResult loginResult = new LoginResult();
                 loginResult.ErrorCode = errorCode;
@@ -418,9 +418,9 @@ namespace Agora.Rtm
                 rtmResult.Status = status;
                 rtmResult.Response = loginResult;
 
+                var loginResultTask = loginResultTaskArray[0];
                 loginResultTask.SetResult(rtmResult);
-
-                loginResult = null;
+                loginResultTaskArray.RemoveAt(0);
             }
             else
             {
@@ -880,12 +880,12 @@ namespace Agora.Rtm
         {
             if (presenceSetStateResultTaskMap.ContainsKey(requestId))
             {
-                PresenceSetStateResult presenceSetStateResult = new PresenceSetStateResult();
+                SetStateResult presenceSetStateResult = new SetStateResult();
                 presenceSetStateResult.ErrorCode = errorCode;
 
                 RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMSetStateOperation);
 
-                RtmResult<PresenceSetStateResult> rtmResult = new RtmResult<PresenceSetStateResult>();
+                RtmResult<SetStateResult> rtmResult = new RtmResult<SetStateResult>();
                 rtmResult.Status = status;
                 rtmResult.Response = presenceSetStateResult;
 
@@ -904,12 +904,12 @@ namespace Agora.Rtm
         {
             if (presenceRemoveStateResultTaskMap.ContainsKey(requestId))
             {
-                PresenceRemoveStateResult presenceRemoveStateResult = new PresenceRemoveStateResult();
+                RemoveStateResult presenceRemoveStateResult = new RemoveStateResult();
                 presenceRemoveStateResult.ErrorCode = errorCode;
 
                 RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMRemoveStateOperation);
 
-                RtmResult<PresenceRemoveStateResult> rtmResult = new RtmResult<PresenceRemoveStateResult>();
+                RtmResult<RemoveStateResult> rtmResult = new RtmResult<RemoveStateResult>();
                 rtmResult.Status = status;
                 rtmResult.Response = presenceRemoveStateResult;
 
@@ -928,13 +928,13 @@ namespace Agora.Rtm
         {
             if (presenceGetStateResultTaskMap.ContainsKey(requestId))
             {
-                PresenceGetStateResult presenceGetStateResult = new PresenceGetStateResult();
+                GetStateResult presenceGetStateResult = new GetStateResult();
                 presenceGetStateResult.State = state;
                 presenceGetStateResult.ErrorCode = errorCode;
 
                 RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMGetStateOperation);
 
-                RtmResult<PresenceGetStateResult> rtmResult = new RtmResult<PresenceGetStateResult>();
+                RtmResult<GetStateResult> rtmResult = new RtmResult<GetStateResult>();
                 rtmResult.Status = status;
                 rtmResult.Response = presenceGetStateResult;
 

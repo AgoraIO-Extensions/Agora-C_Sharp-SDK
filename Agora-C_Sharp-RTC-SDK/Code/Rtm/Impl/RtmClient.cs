@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Agora.Rtm
 {
-    public class RtmClient : IRtmClient
+    internal class RtmClient : IRtmClient
     {
         public event OnMessageEventHandler OnMessageEvent;
         public event OnPresenceEventHandler OnPresenceEvent;
@@ -27,10 +27,17 @@ namespace Agora.Rtm
             return instance;
         }
 
+
+
         public RtmClient()
         {
             internalRtmClient = Internal.RtmClient.CreateAgoraRtmClient();
             rtmEventHandler = new RtmEventHandler(this);
+        }
+
+        internal RtmEventHandler GetRtmEventHandler()
+        {
+            return this.rtmEventHandler;
         }
 
         public void InvokeOnMessageEvent(MessageEvent @event)
@@ -82,7 +89,15 @@ namespace Agora.Rtm
 
         public IStreamChannel CreateStreamChannel(string channelName)
         {
-            throw new NotImplementedException();
+            Internal.IStreamChannel internalStreamChannel = this.internalRtmClient.CreateStreamChannel(channelName);
+            if (internalStreamChannel == null)
+            {
+                return null;
+            }
+            else
+            {
+                return new StreamChannel(internalStreamChannel, rtmEventHandler);
+            }
         }
 
         public int Dispose()
@@ -92,17 +107,20 @@ namespace Agora.Rtm
 
         public IRtmLock GetLock()
         {
-            throw new NotImplementedException();//todo
+            Internal.IRtmLock internalRtmLock = this.internalRtmClient.GetLock();
+            return new RtmLock(internalRtmLock, rtmEventHandler);
         }
 
         public IRtmPresence GetPresence()
         {
-            throw new NotImplementedException();//todo
+            Internal.IRtmPresence internalRtmPresence = this.internalRtmClient.GetPresence();
+            return new RtmPresence(internalRtmPresence, rtmEventHandler);
         }
 
         public IRtmStorage GetStorage()
         {
-            throw new NotImplementedException();//todo
+            Internal.IRtmStorage internalRtmStorage = this.internalRtmClient.GetStorage();
+            return new RtmStorage(internalRtmStorage, rtmEventHandler);
         }
 
         public int Initialize(RtmConfig config)
@@ -130,12 +148,25 @@ namespace Agora.Rtm
 
         public int Logout()
         {
-            throw new NotImplementedException();
+            return internalRtmClient.Logout();
         }
 
         public Task<RtmResult<PublishResult>> Publish(string channelName, byte[] message, int length, PublishOptions option)
         {
-            throw new NotImplementedException();
+            TaskCompletionSource<RtmResult<PublishResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmClient.Publish(channelName, message, length, option, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<PublishResult> result = new RtmResult<PublishResult>();
+                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMPublishOperation);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutPublishResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
         public Task<RtmResult<PublishResult>> Publish(string channelName, string message, int length, PublishOptions option)
@@ -146,22 +177,35 @@ namespace Agora.Rtm
 
         public int RenewToken(string token)
         {
-            throw new NotImplementedException();
+            return internalRtmClient.RenewToken(token);
         }
 
         public int SetParameters(string parameters)
         {
-            throw new NotImplementedException();
+            return internalRtmClient.SetParameters(parameters);
         }
 
-        public Task<RtmResult<SubscribeResult>> Subscribe(string channelName, SubscribeOptions options, ref ulong requestId)
+        public Task<RtmResult<SubscribeResult>> Subscribe(string channelName, SubscribeOptions options)
         {
-            throw new NotImplementedException();
+            TaskCompletionSource<RtmResult<SubscribeResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SubscribeResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmClient.Subscribe(channelName, options, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<SubscribeResult> result = new RtmResult<SubscribeResult>();
+                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMSubscribeOperation);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutSubscribeResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
         public int Unsubscribe(string channelName)
         {
-            throw new NotImplementedException();
+            return internalRtmClient.Unsubscribe(channelName);
         }
     }
 }

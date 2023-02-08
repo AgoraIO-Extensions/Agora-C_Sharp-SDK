@@ -55,7 +55,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_JOIN,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_JOIN,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -76,7 +76,7 @@ namespace Agora.Rtc
 
 
             var json = AgoraJson.ToJson(_param);
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_LEAVE,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_LEAVE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -99,7 +99,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_JOINTOPIC,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_JOINTOPIC,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -125,7 +125,7 @@ namespace Agora.Rtc
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(message, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_PUBLISHTOPICMESSAGE,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_PUBLISHTOPICMESSAGE,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 out _result);
@@ -140,7 +140,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_LEAVETOPIC,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_LEAVETOPIC,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -163,7 +163,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_SUBSCRIBETOPIC,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_SUBSCRIBETOPIC,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -189,7 +189,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_UNSUBSCRIBETOPIC,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_UNSUBSCRIBETOPIC,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -206,7 +206,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_GETSUBSCRIBEDUSERLIST,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_GETSUBSCRIBEDUSERLIST,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -230,7 +230,7 @@ namespace Agora.Rtc
            
             var json = AgoraJson.ToJson(_param);
 
-            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.AgoraApiType.FUNC_STREAMCHANNEL_RELEASE,
+            var nRet =  AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_RELEASE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);

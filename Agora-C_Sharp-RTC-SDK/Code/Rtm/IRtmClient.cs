@@ -48,7 +48,7 @@ namespace Agora.Rtm
 
         Task<RtmResult<PublishResult>> Publish(string channelName, string message, int length, PublishOptions option);
 
-        Task<RtmResult<SubscribeResult>> Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId);
+        Task<RtmResult<SubscribeResult>> Subscribe(string channelName, SubscribeOptions options);
 
         int Unsubscribe(string channelName);
 

@@ -2,7 +2,7 @@ using System;
 
 namespace Agora.Rtm.Internal
 {
-    public abstract class IRtmEventHandler
+    internal abstract class IRtmEventHandler
     {
         public virtual void OnMessageEvent(MessageEvent @event) { }
 
