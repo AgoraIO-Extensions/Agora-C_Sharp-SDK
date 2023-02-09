@@ -232,7 +232,7 @@ namespace Agora.Rtm
                 joinResult.UserId = userId;
                 joinResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMJoinOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMJoinOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<JoinResult> rtmResult = new RtmResult<JoinResult>();
                 rtmResult.Status = status;
@@ -258,7 +258,7 @@ namespace Agora.Rtm
                 leaveResult.UserId = userId;
                 leaveResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMLeaveOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMLeaveOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<LeaveResult> rtmResult = new RtmResult<LeaveResult>();
                 rtmResult.Status = status;
@@ -286,7 +286,7 @@ namespace Agora.Rtm
                 joinTopicResult.Meta = meta;
                 joinTopicResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMJoinTopicOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMJoinTopicOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<JoinTopicResult> rtmResult = new RtmResult<JoinTopicResult>();
                 rtmResult.Status = status;
@@ -314,7 +314,7 @@ namespace Agora.Rtm
                 leaveTopicResult.Meta = meta;
                 leaveTopicResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMLeaveTopicOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMLeaveTopicOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<LeaveTopicResult> rtmResult = new RtmResult<LeaveTopicResult>();
                 rtmResult.Status = status;
@@ -343,7 +343,7 @@ namespace Agora.Rtm
                 topicSubscribed.FailedUsers = failedUsers;
                 topicSubscribed.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMSubscribeTopicOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMSubscribeTopicOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<SubscribeTopicResult> rtmResult = new RtmResult<SubscribeTopicResult>();
                 rtmResult.Status = status;
@@ -369,7 +369,7 @@ namespace Agora.Rtm
                 subscribeResult.ChannelName = channelName;
                 subscribeResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMSubscribeOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMSubscribeOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<SubscribeResult> rtmResult = new RtmResult<SubscribeResult>();
                 rtmResult.Status = status;
@@ -393,7 +393,7 @@ namespace Agora.Rtm
                 PublishResult publishResult = new PublishResult();
                 publishResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMPublishOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMPublishOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<PublishResult> rtmResult = new RtmResult<PublishResult>();
                 rtmResult.Status = status;
@@ -417,7 +417,7 @@ namespace Agora.Rtm
                 LoginResult loginResult = new LoginResult();
                 loginResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMLoginOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMLoginOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<LoginResult> rtmResult = new RtmResult<LoginResult>();
                 rtmResult.Status = status;
@@ -442,7 +442,7 @@ namespace Agora.Rtm
                 setChannelMetadataResult.ChannelType = channelType;
                 setChannelMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMSetChannelMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMSetChannelMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<SetChannelMetadataResult> rtmResult = new RtmResult<SetChannelMetadataResult>();
                 rtmResult.Status = status;
@@ -468,7 +468,7 @@ namespace Agora.Rtm
                 updateChannelMetadataResult.ChannelType = channelType;
                 updateChannelMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMUpdateChannelMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMUpdateChannelMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<UpdateChannelMetadataResult> rtmResult = new RtmResult<UpdateChannelMetadataResult>();
                 rtmResult.Status = status;
@@ -494,7 +494,7 @@ namespace Agora.Rtm
                 removeChannelMetadataResult.ChannelType = channelType;
                 removeChannelMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMRemoveChannelMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMRemoveChannelMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<RemoveChannelMetadataResult> rtmResult = new RtmResult<RemoveChannelMetadataResult>();
                 rtmResult.Status = status;
@@ -521,7 +521,7 @@ namespace Agora.Rtm
                 getChannelMetadataResult.Data = data;
                 getChannelMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMGetChannelMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMGetChannelMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<GetChannelMetadataResult> rtmResult = new RtmResult<GetChannelMetadataResult>();
                 rtmResult.Status = status;
@@ -546,7 +546,7 @@ namespace Agora.Rtm
                 setUserMetadataResult.UserId = userId;
                 setUserMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMSetUserMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMSetUserMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<SetUserMetadataResult> rtmResult = new RtmResult<SetUserMetadataResult>();
                 rtmResult.Status = status;
@@ -571,7 +571,7 @@ namespace Agora.Rtm
                 updateUserMetadataResult.UserId = userId;
                 updateUserMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMUpdateUserMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMUpdateUserMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<UpdateUserMetadataResult> rtmResult = new RtmResult<UpdateUserMetadataResult>();
                 rtmResult.Status = status;
@@ -596,7 +596,7 @@ namespace Agora.Rtm
                 removeUserMetadataResult.UserId = userId;
                 removeUserMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMRemoveUserMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMRemoveUserMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<RemoveUserMetadataResult> rtmResult = new RtmResult<RemoveUserMetadataResult>();
                 rtmResult.Status = status;
@@ -622,7 +622,7 @@ namespace Agora.Rtm
                 getUserMetadataResult.Data = data;
                 getUserMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMGetUserMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMGetUserMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<GetUserMetadataResult> rtmResult = new RtmResult<GetUserMetadataResult>();
                 rtmResult.Status = status;
@@ -647,7 +647,7 @@ namespace Agora.Rtm
                 subscribeUserMetadataResult.UserId = userId;
                 subscribeUserMetadataResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMSubscribeUserMetadataOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMSubscribeUserMetadataOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<SubscribeUserMetadataResult> rtmResult = new RtmResult<SubscribeUserMetadataResult>();
                 rtmResult.Status = status;
@@ -674,7 +674,7 @@ namespace Agora.Rtm
                 setLockResult.LockName = lockName;
                 setLockResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMSetLockOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMSetLockOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<SetLockResult> rtmResult = new RtmResult<SetLockResult>();
                 rtmResult.Status = status;
@@ -701,7 +701,7 @@ namespace Agora.Rtm
                 removeLockResult.LockName = lockName;
                 removeLockResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMRemoveLockOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMRemoveLockOperation, rtmClient.GetInternalRtmClient());
 
                 RtmResult<RemoveLockResult> rtmResult = new RtmResult<RemoveLockResult>();
                 rtmResult.Status = status;
@@ -728,7 +728,7 @@ namespace Agora.Rtm
                 releaseLockResult.LockName = lockName;
                 releaseLockResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMReleaseLockOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMReleaseLockOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<ReleaseLockResult> rtmResult = new RtmResult<ReleaseLockResult>();
                 rtmResult.Status = status;
@@ -756,7 +756,7 @@ namespace Agora.Rtm
                 acquireLockResult.ErrorCode = errorCode;
                 acquireLockResult.ErrorDetails = errorDetails;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMAcquireLockOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMAcquireLockOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<AcquireLockResult> rtmResult = new RtmResult<AcquireLockResult>();
                 rtmResult.Status = status;
@@ -783,7 +783,7 @@ namespace Agora.Rtm
                 revokeLockResult.LockName = lockName;
                 revokeLockResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMRevokeLockOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMRevokeLockOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<RevokeLockResult> rtmResult = new RtmResult<RevokeLockResult>();
                 rtmResult.Status = status;
@@ -811,7 +811,7 @@ namespace Agora.Rtm
                 getLocksResult.Count = count;
                 getLocksResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMGetLocksOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMGetLocksOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<GetLocksResult> rtmResult = new RtmResult<GetLocksResult>();
                 rtmResult.Status = status;
@@ -838,7 +838,7 @@ namespace Agora.Rtm
                 whoNowResult.NextPage = nextPage;
                 whoNowResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMWhoNowOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMWhoNowOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<WhoNowResult> rtmResult = new RtmResult<WhoNowResult>();
                 rtmResult.Status = status;
@@ -864,7 +864,7 @@ namespace Agora.Rtm
                 whereNowResult.Count = count;
                 whereNowResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMWhereNowOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMWhereNowOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<WhereNowResult> rtmResult = new RtmResult<WhereNowResult>();
                 rtmResult.Status = status;
@@ -888,7 +888,7 @@ namespace Agora.Rtm
                 SetStateResult presenceSetStateResult = new SetStateResult();
                 presenceSetStateResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMSetStateOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMSetStateOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<SetStateResult> rtmResult = new RtmResult<SetStateResult>();
                 rtmResult.Status = status;
@@ -912,7 +912,7 @@ namespace Agora.Rtm
                 RemoveStateResult presenceRemoveStateResult = new RemoveStateResult();
                 presenceRemoveStateResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMRemoveStateOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMRemoveStateOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<RemoveStateResult> rtmResult = new RtmResult<RemoveStateResult>();
                 rtmResult.Status = status;
@@ -937,7 +937,7 @@ namespace Agora.Rtm
                 presenceGetStateResult.State = state;
                 presenceGetStateResult.ErrorCode = errorCode;
 
-                RtmStatus status = Tools.GenerateSucceedStatus(RtmOperation.RTMGetStateOperation);
+                RtmStatus status = Tools.GenerateStatus(0, RtmOperation.RTMGetStateOperation, this.rtmClient.GetInternalRtmClient());
 
                 RtmResult<GetStateResult> rtmResult = new RtmResult<GetStateResult>();
                 rtmResult.Status = status;

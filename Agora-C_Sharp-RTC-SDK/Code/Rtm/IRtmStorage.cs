@@ -23,7 +23,7 @@ namespace Agora.Rtm
 
         Task<RtmResult<SubscribeUserMetadataResult>> SubscribeUserMetadata(string userId);
 
-        int UnsubscribeUserMetadata(string userId);
+        RtmStatus UnsubscribeUserMetadata(string userId);
     }
 
 }

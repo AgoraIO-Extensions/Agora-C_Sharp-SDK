@@ -12,18 +12,18 @@ namespace Agora.Rtm
 
         Task<RtmResult<JoinTopicResult>> JoinTopic(string topic, JoinTopicOptions options);
 
-        int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option);
+        RtmStatus PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option);
 
-        int PublishTopicMessage(string topic, string message, int length, PublishOptions option);
+        RtmStatus PublishTopicMessage(string topic, string message, int length, PublishOptions option);
 
         Task<RtmResult<LeaveTopicResult>> LeaveTopic(string topic);
 
         Task<RtmResult<SubscribeTopicResult>> SubscribeTopic(string topic, TopicOptions options);
 
-        int UnsubscribeTopic(string topic, TopicOptions options);
+        RtmStatus UnsubscribeTopic(string topic, TopicOptions options);
 
-        int GetSubscribedUserList(string topic, ref UserList users);
+        RtmStatus GetSubscribedUserList(string topic, ref UserList users);
 
-        int Dispose();
+        RtmStatus Dispose();
     }
 }

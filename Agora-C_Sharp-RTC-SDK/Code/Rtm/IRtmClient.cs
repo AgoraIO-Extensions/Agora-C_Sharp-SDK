@@ -32,13 +32,13 @@ namespace Agora.Rtm
 
         event OnTokenPrivilegeWillExpireHandler OnTokenPrivilegeWillExpire;
 
-        int Initialize(RtmConfig config);
+        RtmStatus Initialize(RtmConfig config);
 
-        int Dispose();
+        RtmStatus Dispose();
 
         Task<RtmResult<LoginResult>> Login(string token);
 
-        int Logout();
+        RtmStatus Logout();
 
         IRtmStorage GetStorage();
 
@@ -46,7 +46,7 @@ namespace Agora.Rtm
 
         IRtmPresence GetPresence();
 
-        int RenewToken(string token);
+        RtmStatus RenewToken(string token);
 
         Task<RtmResult<PublishResult>> Publish(string channelName, byte[] message, int length, PublishOptions option);
 
@@ -54,10 +54,16 @@ namespace Agora.Rtm
 
         Task<RtmResult<SubscribeResult>> Subscribe(string channelName, SubscribeOptions options);
 
-        int Unsubscribe(string channelName);
+        RtmStatus Unsubscribe(string channelName);
 
         IStreamChannel CreateStreamChannel(string channelName);
 
-        int SetParameters(string parameters);
+        RtmStatus SetParameters(string parameters);
+
+        RtmStatus SetLogFile(string filePath);
+
+        RtmStatus SetLogLevel(LOG_LEVEL level);
+
+        RtmStatus SetLogFileSize(uint fileSizeInKBytes);
     }
 }

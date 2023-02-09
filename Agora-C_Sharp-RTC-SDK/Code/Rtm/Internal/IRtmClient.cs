@@ -31,5 +31,11 @@ namespace Agora.Rtm.Internal
         public abstract IStreamChannel CreateStreamChannel(string channelName);
 
         public abstract int SetParameters(string parameters);
+
+        public abstract int SetLogFile(string filePath);
+
+        public abstract int SetLogLevel(LOG_LEVEL level);
+
+        public abstract int SetLogFileSize(uint fileSizeInKBytes);
     }
 }

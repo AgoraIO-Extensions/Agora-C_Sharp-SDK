@@ -7,11 +7,13 @@ namespace Agora.Rtm
     {
         private Internal.IRtmPresence internalRtmPresence;
         private RtmEventHandler rtmEventHandler;
+        private Internal.IRtmClient internalRtmClient;
 
-        internal RtmPresence(Internal.IRtmPresence rtmPresence, RtmEventHandler rtmEventHandler)
+        internal RtmPresence(Internal.IRtmPresence rtmPresence, RtmEventHandler rtmEventHandler, Internal.IRtmClient rtmClient)
         {
             this.internalRtmPresence = rtmPresence;
             this.rtmEventHandler = rtmEventHandler;
+            this.internalRtmClient = rtmClient;
         }
 
         public Task<RtmResult<GetStateResult>> GetState(string channelName, RTM_CHANNEL_TYPE channelType, string userId)
@@ -22,7 +24,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<GetStateResult> result = new RtmResult<GetStateResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMGetStateOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetStateOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -40,7 +42,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<RemoveStateResult> result = new RtmResult<RemoveStateResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMRemoveStateOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRemoveStateOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -58,7 +60,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<SetStateResult> result = new RtmResult<SetStateResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMSetStateOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSetStateOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -76,7 +78,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<WhereNowResult> result = new RtmResult<WhereNowResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMWhereNowOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMWhereNowOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -94,7 +96,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<WhoNowResult> result = new RtmResult<WhoNowResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMWhoNowOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMWhoNowOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else

@@ -7,11 +7,13 @@ namespace Agora.Rtm
     {
         private Internal.IRtmStorage internalRtmStorage;
         private RtmEventHandler rtmEventHandler;
+        private Internal.IRtmClient internalRtmClient;
 
-        internal RtmStorage(Internal.IRtmStorage rtmStorage, RtmEventHandler rtmEventHandler)
+        internal RtmStorage(Internal.IRtmStorage rtmStorage, RtmEventHandler rtmEventHandler, Internal.IRtmClient rtmClient )
         {
             this.internalRtmStorage = rtmStorage;
             this.rtmEventHandler = rtmEventHandler;
+            this.internalRtmClient = rtmClient;
         }
 
         public Task<RtmResult<SetChannelMetadataResult>> SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName)
@@ -22,7 +24,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<SetChannelMetadataResult> result = new RtmResult<SetChannelMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMSetChannelMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSetChannelMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -40,7 +42,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<UpdateChannelMetadataResult> result = new RtmResult<UpdateChannelMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMUpdateChannelMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUpdateChannelMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -58,7 +60,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<RemoveChannelMetadataResult> result = new RtmResult<RemoveChannelMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMRemoveChannelMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRemoveChannelMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -76,7 +78,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<GetChannelMetadataResult> result = new RtmResult<GetChannelMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMGetChannelMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetChannelMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -94,7 +96,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<SetUserMetadataResult> result = new RtmResult<SetUserMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMSetUserMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSetUserMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -112,7 +114,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<UpdateUserMetadataResult> result = new RtmResult<UpdateUserMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMUpdateUserMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUpdateUserMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -130,7 +132,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<RemoveUserMetadataResult> result = new RtmResult<RemoveUserMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMRemoveUserMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRemoveUserMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -148,7 +150,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<GetUserMetadataResult> result = new RtmResult<GetUserMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMGetUserMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetUserMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -166,7 +168,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<SubscribeUserMetadataResult> result = new RtmResult<SubscribeUserMetadataResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMSubscribeUserMetadataOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSubscribeUserMetadataOperation, internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -176,9 +178,10 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public int UnsubscribeUserMetadata(string userId)
+        public RtmStatus UnsubscribeUserMetadata(string userId)
         {
-            return this.internalRtmStorage.UnsubscribeUserMetadata(userId);
+            int errorCode = this.internalRtmStorage.UnsubscribeUserMetadata(userId);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeUserMetadataOperation, this.internalRtmClient);
         }
 
     }

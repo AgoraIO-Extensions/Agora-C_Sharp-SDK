@@ -16,6 +16,10 @@ namespace Agora.Rtm
         public static string RTMUnsubscribeOperation = "RTMUnsubscribeOperation";
         public static string RTMCreateStreamChannelOperation = "RTMCreateStreamChannelOperation";
         public static string RTMSetParametersOperation = "RTMSetParametersOperation";
+        public static string RTMDisposeOperation = "RTMDisposeOperation";
+        public static string RTMSetLogFileOperation = "RTMSetLogFileOperation";
+        public static string RTMSetLogLevelOperation = "RTMSetLogLevelOperation";
+        public static string RTMSetLogFileSizeOperation = "RTMSetLogFileSizeOperation";
 
         public static string RTMSetLockOperation = "RTMSetLockOperation";
         public static string RTMGetLocksOperation = "RTMGetLocksOperation";

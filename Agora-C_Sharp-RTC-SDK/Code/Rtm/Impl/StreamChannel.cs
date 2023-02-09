@@ -7,11 +7,13 @@ namespace Agora.Rtm
     {
         private Internal.IStreamChannel internalStreamChannel;
         private RtmEventHandler rtmEventHandler;
+        private Internal.IRtmClient internalRtmClient;
 
-        internal StreamChannel(Internal.IStreamChannel streamChannel, RtmEventHandler rtmEventHandler)
+        internal StreamChannel(Internal.IStreamChannel streamChannel, RtmEventHandler rtmEventHandler, Internal.IRtmClient rtmClient)
         {
             this.internalStreamChannel = streamChannel;
             this.rtmEventHandler = rtmEventHandler;
+            this.internalRtmClient = rtmClient;
         }
 
         public Task<RtmResult<JoinResult>> Join(JoinChannelOptions options)
@@ -22,7 +24,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<JoinResult> result = new RtmResult<JoinResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMJoinOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMJoinOperation, this.internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -40,7 +42,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<LeaveResult> result = new RtmResult<LeaveResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMLeaveOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLeaveOperation, this.internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -63,7 +65,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<JoinTopicResult> result = new RtmResult<JoinTopicResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMJoinTopicOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMJoinTopicOperation, this.internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -73,14 +75,16 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option)
+        public RtmStatus PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option)
         {
-            return internalStreamChannel.PublishTopicMessage(topic, message, length, option);
+            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, length, option);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
         }
 
-        public int PublishTopicMessage(string topic, string message, int length, PublishOptions option)
+        public RtmStatus PublishTopicMessage(string topic, string message, int length, PublishOptions option)
         {
-            return internalStreamChannel.PublishTopicMessage(topic, message, length, option);
+            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, length, option);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
         }
 
         public Task<RtmResult<LeaveTopicResult>> LeaveTopic(string topic)
@@ -91,7 +95,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<LeaveTopicResult> result = new RtmResult<LeaveTopicResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMLeaveTopicOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLeaveTopicOperation, this.internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -109,7 +113,7 @@ namespace Agora.Rtm
             if (errorCode != 0)
             {
                 RtmResult<SubscribeTopicResult> result = new RtmResult<SubscribeTopicResult>();
-                result.Status = Tools.GenerateFailedStatus(errorCode, RtmOperation.RTMSubscribeTopicOperation);
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSubscribeTopicOperation, this.internalRtmClient);
                 taskCompletionSource.SetResult(result);
             }
             else
@@ -119,19 +123,22 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public int UnsubscribeTopic(string topic, TopicOptions options)
+        public RtmStatus UnsubscribeTopic(string topic, TopicOptions options)
         {
-            return this.internalStreamChannel.UnsubscribeTopic(topic, options);
+            int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, options);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeTopicOperation, this.internalRtmClient);
         }
 
-        public int GetSubscribedUserList(string topic, ref UserList users)
+        public RtmStatus GetSubscribedUserList(string topic, ref UserList users)
         {
-            return this.internalStreamChannel.GetSubscribedUserList(topic, ref users);
+            int errorCode = internalStreamChannel.GetSubscribedUserList(topic, ref users);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMGetSubscribedUserListOperation, this.internalRtmClient);
         }
 
-        public int Dispose()
+        public RtmStatus Dispose()
         {
-            return this.internalStreamChannel.Dispose();
+            int errorCode = this.internalStreamChannel.Dispose();
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMDisposeOperation, this.internalRtmClient);
         }
 
     }

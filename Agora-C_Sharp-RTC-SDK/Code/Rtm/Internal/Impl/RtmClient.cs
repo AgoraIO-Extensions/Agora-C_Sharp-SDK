@@ -206,5 +206,32 @@ namespace Agora.Rtm.Internal
                 this._streamChannelDic.Remove(channelName);
             }
         }
+
+        public override int SetLogFile(string filePath)
+        {
+            if (_rtmClientImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtmClientImpl.SetLogFile(filePath);
+        }
+
+        public override int SetLogLevel(LOG_LEVEL level)
+        {
+            if (_rtmClientImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtmClientImpl.SetLogLevel(level);
+        }
+
+        public override int SetLogFileSize(uint fileSizeInKBytes)
+        {
+            if (_rtmClientImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtmClientImpl.SetLogFileSize(fileSizeInKBytes);
+        }
     }
 }
