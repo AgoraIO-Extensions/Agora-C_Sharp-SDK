@@ -36,7 +36,7 @@ namespace Agora.Rtm
 
         RtmStatus Dispose();
 
-        Task<RtmResult<LoginResult>> Login(string token);
+        Task<RtmResult<LoginResult>> LoginAsync(string token);
 
         RtmStatus Logout();
 
@@ -48,13 +48,13 @@ namespace Agora.Rtm
 
         RtmStatus RenewToken(string token);
 
-        Task<RtmResult<PublishResult>> Publish(string channelName, byte[] message, int length, PublishOptions option);
+        Task<RtmResult<PublishResult>> PublishAsync(string channelName, byte[] message, PublishOptions option);
 
-        Task<RtmResult<PublishResult>> Publish(string channelName, string message, int length, PublishOptions option);
+        Task<RtmResult<PublishResult>> PublishAsync(string channelName, string message, PublishOptions option);
 
-        Task<RtmResult<SubscribeResult>> Subscribe(string channelName, SubscribeOptions options);
+        Task<RtmResult<SubscribeResult>> SubscribeAsync(string channelName, SubscribeOptions options);
 
-        RtmStatus Unsubscribe(string channelName);
+        Task<RtmResult<UnsubscribeResult>> UnsubscribeAsync(string channelName);
 
         IStreamChannel CreateStreamChannel(string channelName);
 

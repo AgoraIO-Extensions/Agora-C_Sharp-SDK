@@ -38,6 +38,11 @@ namespace Agora.Rtm
         public RTM_CHANNEL_ERROR_CODE ErrorCode;
     };
 
+    public class PublishTopicMessageResult
+    {
+
+    }
+
     public class LeaveTopicResult
     {
         public string ChannelName;
@@ -57,6 +62,16 @@ namespace Agora.Rtm
         public RTM_CHANNEL_ERROR_CODE ErrorCode;
     };
 
+    public class UnsubscribeTopicResult
+    {
+        
+    };
+
+    public class GetSubscribedUserListResult
+    {
+        public UserList Users;
+    }
+
     public class ConnectionStateChange
     {
         public string ChannelName;
@@ -73,6 +88,11 @@ namespace Agora.Rtm
     {
         public string ChannelName;
         public RTM_CHANNEL_ERROR_CODE ErrorCode;
+    };
+
+    public class UnsubscribeResult
+    {
+      
     };
 
     public class PublishResult
@@ -143,6 +163,11 @@ namespace Agora.Rtm
     {
         public string UserId;
         public OPERATION_ERROR_CODE ErrorCode;
+    };
+
+    public class UnsubscribeUserMetadataResult
+    {
+       
     };
 
     public class SetLockResult

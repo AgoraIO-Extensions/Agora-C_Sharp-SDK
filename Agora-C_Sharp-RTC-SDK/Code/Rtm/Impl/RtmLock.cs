@@ -16,7 +16,7 @@ namespace Agora.Rtm
             this.internalRtmClient = rtmClient;
         }
 
-        public Task<RtmResult<AcquireLockResult>> AcquireLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, bool retry)
+        public Task<RtmResult<AcquireLockResult>> AcquireLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, bool retry)
         {
             TaskCompletionSource<RtmResult<AcquireLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<AcquireLockResult>>();
             UInt64 requestId = 0;
@@ -34,7 +34,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<GetLocksResult>> GetLocks(string channelName, RTM_CHANNEL_TYPE channelType)
+        public Task<RtmResult<GetLocksResult>> GetLocksAsync(string channelName, RTM_CHANNEL_TYPE channelType)
         {
             TaskCompletionSource<RtmResult<GetLocksResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetLocksResult>>();
             UInt64 requestId = 0;
@@ -52,7 +52,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<ReleaseLockResult>> ReleaseLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName)
+        public Task<RtmResult<ReleaseLockResult>> ReleaseLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName)
         {
             TaskCompletionSource<RtmResult<ReleaseLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<ReleaseLockResult>>();
             UInt64 requestId = 0;
@@ -70,7 +70,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<RemoveLockResult>> RemoveLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName)
+        public Task<RtmResult<RemoveLockResult>> RemoveLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName)
         {
             TaskCompletionSource<RtmResult<RemoveLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RemoveLockResult>>();
             UInt64 requestId = 0;
@@ -88,7 +88,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<RevokeLockResult>> RevokeLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, string owner)
+        public Task<RtmResult<RevokeLockResult>> RevokeLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, string owner)
         {
             TaskCompletionSource<RtmResult<RevokeLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RevokeLockResult>>();
             UInt64 requestId = 0;
@@ -106,7 +106,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<SetLockResult>> SetLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl)
+        public Task<RtmResult<SetLockResult>> SetLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl)
         {
             TaskCompletionSource<RtmResult<SetLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SetLockResult>>();
             UInt64 requestId = 0;

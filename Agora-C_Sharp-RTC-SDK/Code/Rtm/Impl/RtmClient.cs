@@ -44,7 +44,7 @@ namespace Agora.Rtm
             return this.internalRtmClient;
         }
 
-        public void InvokeOnMessageEvent(MessageEvent @event)
+        internal void InvokeOnMessageEvent(MessageEvent @event)
         {
             if (this.OnMessageEvent != null)
             {
@@ -52,7 +52,7 @@ namespace Agora.Rtm
             }
         }
 
-        public void InvokeOnPresenceEvent(PresenceEvent @event)
+        internal void InvokeOnPresenceEvent(PresenceEvent @event)
         {
             if (this.OnPresenceEvent != null)
             {
@@ -60,7 +60,7 @@ namespace Agora.Rtm
             }
         }
 
-        public void InvokeOnTopicEvent(TopicEvent @event)
+        internal void InvokeOnTopicEvent(TopicEvent @event)
         {
             if (this.OnTopicEvent != null)
             {
@@ -68,7 +68,7 @@ namespace Agora.Rtm
             }
         }
 
-        public void InvokeOnLockEvent(LockEvent @event)
+        internal void InvokeOnLockEvent(LockEvent @event)
         {
             if (this.OnLockEvent != null)
             {
@@ -76,7 +76,7 @@ namespace Agora.Rtm
             }
         }
 
-        public void InvokeOnStorageEvent(StorageEvent @event)
+        internal void InvokeOnStorageEvent(StorageEvent @event)
         {
             if (this.OnStorageEvent != null)
             {
@@ -84,14 +84,14 @@ namespace Agora.Rtm
             }
         }
 
-        public void InvokeOnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
+        internal void InvokeOnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
         {
             if (this.OnConnectionStateChange != null)
             {
                 this.OnConnectionStateChange.Invoke(channelName, state, reason);
             }
         }
-        public void InvokeOnTokenPrivilegeWillExpire(string channelName)
+        internal void InvokeOnTokenPrivilegeWillExpire(string channelName)
         {
             if (this.OnTokenPrivilegeWillExpire != null)
             {
@@ -143,7 +143,7 @@ namespace Agora.Rtm
             return Tools.GenerateStatus(errorCode, RtmOperation.RTMInitializeOperation, this.internalRtmClient);
         }
 
-        public Task<RtmResult<LoginResult>> Login(string token)
+        public Task<RtmResult<LoginResult>> LoginAsync(string token)
         {
             TaskCompletionSource<RtmResult<LoginResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LoginResult>>();
             int errorCode = internalRtmClient.Login(token);
@@ -166,11 +166,11 @@ namespace Agora.Rtm
             return Tools.GenerateStatus(errorCode, RtmOperation.RTMLogoutOperation, this.internalRtmClient);
         }
 
-        public Task<RtmResult<PublishResult>> Publish(string channelName, byte[] message, int length, PublishOptions option)
+        public Task<RtmResult<PublishResult>> PublishAsync(string channelName, byte[] message, PublishOptions option)
         {
             TaskCompletionSource<RtmResult<PublishResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishResult>>();
             UInt64 requestId = 0;
-            int errorCode = internalRtmClient.Publish(channelName, message, length, option, ref requestId);
+            int errorCode = internalRtmClient.Publish(channelName, message, message.Length, option, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<PublishResult> result = new RtmResult<PublishResult>();
@@ -184,10 +184,10 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<PublishResult>> Publish(string channelName, string message, int length, PublishOptions option)
+        public Task<RtmResult<PublishResult>> PublishAsync(string channelName, string message, PublishOptions option)
         {
             byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
-            return this.Publish(channelName, bytes, bytes.Length, option);
+            return this.PublishAsync(channelName, bytes, option);
         }
 
         public RtmStatus RenewToken(string token)
@@ -202,7 +202,7 @@ namespace Agora.Rtm
             return Tools.GenerateStatus(errorCode, RtmOperation.RTMSetParametersOperation, this.internalRtmClient);
         }
 
-        public Task<RtmResult<SubscribeResult>> Subscribe(string channelName, SubscribeOptions options)
+        public Task<RtmResult<SubscribeResult>> SubscribeAsync(string channelName, SubscribeOptions options)
         {
             TaskCompletionSource<RtmResult<SubscribeResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SubscribeResult>>();
             UInt64 requestId = 0;
@@ -220,10 +220,21 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public RtmStatus Unsubscribe(string channelName)
+        public Task<RtmResult<UnsubscribeResult>> UnsubscribeAsync(string channelName)
         {
+            //fake async
             int errorCode = internalRtmClient.Unsubscribe(channelName);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeOperation, this.internalRtmClient);
+
+            RtmResult<UnsubscribeResult> rtmResult = new RtmResult<UnsubscribeResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeOperation, this.internalRtmClient);
+            if (errorCode == 0)
+            {
+                rtmResult.Response = new UnsubscribeResult();
+            }
+
+            TaskCompletionSource<RtmResult<UnsubscribeResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UnsubscribeResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
         public RtmStatus SetLogFile(string filePath)

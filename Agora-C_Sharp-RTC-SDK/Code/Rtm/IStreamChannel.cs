@@ -4,25 +4,25 @@ namespace Agora.Rtm
 {
     public interface IStreamChannel
     {
-        Task<RtmResult<JoinResult>> Join(JoinChannelOptions options);
+        Task<RtmResult<JoinResult>> JoinAsync(JoinChannelOptions options);
 
-        Task<RtmResult<LeaveResult>> Leave();
+        Task<RtmResult<LeaveResult>> LeaveAsync();
 
         string GetChannelName();
 
-        Task<RtmResult<JoinTopicResult>> JoinTopic(string topic, JoinTopicOptions options);
+        Task<RtmResult<JoinTopicResult>> JoinTopicAsync(string topic, JoinTopicOptions options);
 
-        RtmStatus PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option);
+        Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option);
 
-        RtmStatus PublishTopicMessage(string topic, string message, int length, PublishOptions option);
+        Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option);
 
-        Task<RtmResult<LeaveTopicResult>> LeaveTopic(string topic);
+        Task<RtmResult<LeaveTopicResult>> LeaveTopicAsync(string topic);
 
-        Task<RtmResult<SubscribeTopicResult>> SubscribeTopic(string topic, TopicOptions options);
+        Task<RtmResult<SubscribeTopicResult>> SubscribeTopicAsync(string topic, TopicOptions options);
 
-        RtmStatus UnsubscribeTopic(string topic, TopicOptions options);
+        Task<RtmResult<UnsubscribeTopicResult>> UnsubscribeTopicAsync(string topic, TopicOptions options);
 
-        RtmStatus GetSubscribedUserList(string topic, ref UserList users);
+        Task<RtmResult<GetSubscribedUserListResult>> GetSubscribedUserListAsync(string topic);
 
         RtmStatus Dispose();
     }

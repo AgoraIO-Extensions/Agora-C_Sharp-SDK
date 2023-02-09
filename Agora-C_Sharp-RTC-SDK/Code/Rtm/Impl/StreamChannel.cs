@@ -16,7 +16,7 @@ namespace Agora.Rtm
             this.internalRtmClient = rtmClient;
         }
 
-        public Task<RtmResult<JoinResult>> Join(JoinChannelOptions options)
+        public Task<RtmResult<JoinResult>> JoinAsync(JoinChannelOptions options)
         {
             TaskCompletionSource<RtmResult<JoinResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<JoinResult>>();
             UInt64 requestId = 0;
@@ -34,7 +34,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<LeaveResult>> Leave()
+        public Task<RtmResult<LeaveResult>> LeaveAsync()
         {
             TaskCompletionSource<RtmResult<LeaveResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LeaveResult>>();
             UInt64 requestId = 0;
@@ -57,7 +57,7 @@ namespace Agora.Rtm
             return internalStreamChannel.GetChannelName();
         }
 
-        public Task<RtmResult<JoinTopicResult>> JoinTopic(string topic, JoinTopicOptions options)
+        public Task<RtmResult<JoinTopicResult>> JoinTopicAsync(string topic, JoinTopicOptions options)
         {
             TaskCompletionSource<RtmResult<JoinTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<JoinTopicResult>>();
             UInt64 requestId = 0;
@@ -75,19 +75,41 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public RtmStatus PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option)
+        public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option)
         {
-            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, length, option);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
+            //fake async
+            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, option);
+
+            RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
+            if (errorCode == 0)
+            {
+                rtmResult.Response = new PublishTopicMessageResult();
+            }
+
+            TaskCompletionSource<RtmResult<PublishTopicMessageResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishTopicMessageResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
-        public RtmStatus PublishTopicMessage(string topic, string message, int length, PublishOptions option)
+        public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option)
         {
-            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, length, option);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
+            //fake async
+            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, option);
+
+            RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
+            if (errorCode == 0)
+            {
+                rtmResult.Response = new PublishTopicMessageResult();
+            }
+
+            TaskCompletionSource<RtmResult<PublishTopicMessageResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishTopicMessageResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<LeaveTopicResult>> LeaveTopic(string topic)
+        public Task<RtmResult<LeaveTopicResult>> LeaveTopicAsync(string topic)
         {
             TaskCompletionSource<RtmResult<LeaveTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LeaveTopicResult>>();
             UInt64 requestId = 0;
@@ -105,7 +127,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<SubscribeTopicResult>> SubscribeTopic(string topic, TopicOptions options)
+        public Task<RtmResult<SubscribeTopicResult>> SubscribeTopicAsync(string topic, TopicOptions options)
         {
             TaskCompletionSource<RtmResult<SubscribeTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SubscribeTopicResult>>();
             UInt64 requestId = 0;
@@ -123,16 +145,39 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public RtmStatus UnsubscribeTopic(string topic, TopicOptions options)
+        public Task<RtmResult<UnsubscribeTopicResult>> UnsubscribeTopicAsync(string topic, TopicOptions options)
         {
+            //fake async
             int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, options);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeTopicOperation, this.internalRtmClient);
+
+            RtmResult<UnsubscribeTopicResult> rtmResult = new RtmResult<UnsubscribeTopicResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeTopicOperation, this.internalRtmClient);
+            if (errorCode == 0)
+            {
+                rtmResult.Response = new UnsubscribeTopicResult();
+            }
+
+            TaskCompletionSource<RtmResult<UnsubscribeTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UnsubscribeTopicResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
-        public RtmStatus GetSubscribedUserList(string topic, ref UserList users)
+        public Task<RtmResult<GetSubscribedUserListResult>> GetSubscribedUserListAsync(string topic)
         {
+            UserList users = null;
             int errorCode = internalStreamChannel.GetSubscribedUserList(topic, ref users);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMGetSubscribedUserListOperation, this.internalRtmClient);
+
+            RtmResult<GetSubscribedUserListResult> rtmResult = new RtmResult<GetSubscribedUserListResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetSubscribedUserListOperation, this.internalRtmClient);
+            if (errorCode == 0)
+            {
+                rtmResult.Response = new GetSubscribedUserListResult();
+                rtmResult.Response.Users = users;
+            }
+
+            TaskCompletionSource<RtmResult<GetSubscribedUserListResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetSubscribedUserListResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
         public RtmStatus Dispose()

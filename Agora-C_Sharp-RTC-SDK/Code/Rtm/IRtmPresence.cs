@@ -4,14 +4,14 @@ namespace Agora.Rtm
 {
     public interface IRtmPresence
     {
-        Task<RtmResult<WhoNowResult>> WhoNow(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options);
+        Task<RtmResult<WhoNowResult>> WhoNowAsync(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options);
 
-        Task<RtmResult<WhereNowResult>> WhereNow(string userId);
+        Task<RtmResult<WhereNowResult>> WhereNowAsync(string userId);
 
-        Task<RtmResult<SetStateResult>> SetState(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items, int count);
+        Task<RtmResult<SetStateResult>> SetStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items);
 
-        Task<RtmResult<RemoveStateResult>> RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, int count);
+        Task<RtmResult<RemoveStateResult>> RemoveStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys);
 
-        Task<RtmResult<GetStateResult>> GetState(string channelName, RTM_CHANNEL_TYPE channelType, string userId);
+        Task<RtmResult<GetStateResult>> GetStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, string userId);
     }
 }

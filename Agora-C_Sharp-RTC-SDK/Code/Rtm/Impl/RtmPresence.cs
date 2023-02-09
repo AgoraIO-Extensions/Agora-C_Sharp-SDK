@@ -16,7 +16,7 @@ namespace Agora.Rtm
             this.internalRtmClient = rtmClient;
         }
 
-        public Task<RtmResult<GetStateResult>> GetState(string channelName, RTM_CHANNEL_TYPE channelType, string userId)
+        public Task<RtmResult<GetStateResult>> GetStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, string userId)
         {
             TaskCompletionSource<RtmResult<GetStateResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetStateResult>>();
             UInt64 requestId = 0;
@@ -34,11 +34,11 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<RemoveStateResult>> RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, int count)
+        public Task<RtmResult<RemoveStateResult>> RemoveStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys)
         {
             TaskCompletionSource<RtmResult<RemoveStateResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RemoveStateResult>>();
             UInt64 requestId = 0;
-            int errorCode = internalRtmPresence.RemoveState(channelName, channelType, keys, count, ref requestId);
+            int errorCode = internalRtmPresence.RemoveState(channelName, channelType, keys, keys.Length, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<RemoveStateResult> result = new RtmResult<RemoveStateResult>();
@@ -52,11 +52,11 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<SetStateResult>> SetState(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items, int count)
+        public Task<RtmResult<SetStateResult>> SetStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items)
         {
             TaskCompletionSource<RtmResult<SetStateResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SetStateResult>>();
             UInt64 requestId = 0;
-            int errorCode = internalRtmPresence.SetState(channelName, channelType, items, count,ref requestId);
+            int errorCode = internalRtmPresence.SetState(channelName, channelType, items, items.Length, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<SetStateResult> result = new RtmResult<SetStateResult>();
@@ -70,11 +70,11 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<WhereNowResult>> WhereNow(string userId)
+        public Task<RtmResult<WhereNowResult>> WhereNowAsync(string userId)
         {
             TaskCompletionSource<RtmResult<WhereNowResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<WhereNowResult>>();
             UInt64 requestId = 0;
-            int errorCode = internalRtmPresence.WhereNow(userId,ref requestId);
+            int errorCode = internalRtmPresence.WhereNow(userId, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<WhereNowResult> result = new RtmResult<WhereNowResult>();
@@ -88,7 +88,7 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public Task<RtmResult<WhoNowResult>> WhoNow(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options)
+        public Task<RtmResult<WhoNowResult>> WhoNowAsync(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options)
         {
             TaskCompletionSource<RtmResult<WhoNowResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<WhoNowResult>>();
             UInt64 requestId = 0;
