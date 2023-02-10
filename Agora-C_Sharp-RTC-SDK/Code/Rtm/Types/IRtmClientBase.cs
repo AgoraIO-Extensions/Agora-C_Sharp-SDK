@@ -11,32 +11,19 @@ namespace Agora.Rtm
             areaCode = AREA_CODE.AREA_CODE_GLOB;
             presenceTimeout = 300;
             useStringUserId = true;
-            eventHandler = null;
             logConfig = new LogConfig();
             proxyConfig = new RtmProxyConfig();
             encryptionConfig = new RtmEncryptionConfig();
         }
 
-        public RtmConfig(string appId, string userId, AREA_CODE areaCode, IRtmEventHandler eventHandler, LogConfig logConfig, RtmProxyConfig proxyConfig, RtmEncryptionConfig encryptionConfig)
+        public RtmConfig(string appId, string userId, AREA_CODE areaCode, LogConfig logConfig, RtmProxyConfig proxyConfig, RtmEncryptionConfig encryptionConfig)
         {
             this.appId = appId;
             this.userId = userId;
             this.areaCode = areaCode;
-            this.eventHandler = eventHandler;
             this.logConfig = logConfig;
             this.proxyConfig = proxyConfig;
             this.encryptionConfig = encryptionConfig;
-        }
-
-
-        public void setEventHandler(IRtmEventHandler eventHandler)
-        {
-            this.eventHandler = eventHandler;
-        }
-
-        public IRtmEventHandler getEventHandler()
-        {
-            return eventHandler;
         }
 
         public string appId;
@@ -48,8 +35,6 @@ namespace Agora.Rtm
         public UInt32 presenceTimeout;
 
         public bool useStringUserId;
-
-        private IRtmEventHandler eventHandler;
 
         public LogConfig logConfig;
 
@@ -138,6 +123,8 @@ namespace Agora.Rtm
         /// </summary>
         ///
         LOG_LEVEL_FATAL = 0x0008,
+
+        LOG_LEVEL_API_CALL = 0x0010,
     };
 
 

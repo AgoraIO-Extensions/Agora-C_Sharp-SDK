@@ -1,126 +1,199 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Agora.Rtm
 {
-    public sealed class RtmStorage : IRtmStorage
+    internal class RtmStorage : IRtmStorage
     {
-        private RtmStorageImpl _rtmStorageImpl = null;
-        private const int ErrorCode = -7;
+        private Internal.IRtmStorage internalRtmStorage;
+        private RtmEventHandler rtmEventHandler;
+        private Internal.IRtmClient internalRtmClient;
 
-        internal RtmStorage(RtmStorageImpl impl)
+        internal RtmStorage(Internal.IRtmStorage rtmStorage, RtmEventHandler rtmEventHandler, Internal.IRtmClient rtmClient)
         {
-            this._rtmStorageImpl = impl;
+            this.internalRtmStorage = rtmStorage;
+            this.rtmEventHandler = rtmEventHandler;
+            this.internalRtmClient = rtmClient;
         }
 
-        private static RtmStorage instance = null;
-
-        internal static RtmStorage GetInstance(RtmStorageImpl impl)
+        public Task<RtmResult<SetChannelMetadataResult>> SetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName)
         {
-            return instance ?? (instance = new RtmStorage(impl));
-        }
-
-        internal static void ReleaseInstance()
-        {
-            instance = null;
-        }
-
-        //public override RtmMetadata CreateMetadata()
-        //{
-        //    if (_rtmStorageImpl == null)
-        //    {
-        //        return null;
-        //    }
-        //    return _rtmStorageImpl.CreateMetadata();
-        //}
-
-        public override int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
-        {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<SetChannelMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SetChannelMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.SetChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<SetChannelMetadataResult> result = new RtmResult<SetChannelMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSetChannelMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.SetChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
+            else
+            {
+                rtmEventHandler.PutSetChannelMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public Task<RtmResult<UpdateChannelMetadataResult>> UpdateChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName)
         {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<UpdateChannelMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UpdateChannelMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.UpdateChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<UpdateChannelMetadataResult> result = new RtmResult<UpdateChannelMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUpdateChannelMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.UpdateChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
+            else
+            {
+                rtmEventHandler.PutUpdateChannelMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
+        public Task<RtmResult<RemoveChannelMetadataResult>> RemoveChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName)
         {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<RemoveChannelMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RemoveChannelMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.RemoveChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<RemoveChannelMetadataResult> result = new RtmResult<RemoveChannelMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRemoveChannelMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.RemoveChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
+            else
+            {
+                rtmEventHandler.PutRemoveChannelMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int GetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, ref UInt64 requestId)
+        public Task<RtmResult<GetChannelMetadataResult>> GetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType)
         {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<GetChannelMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetChannelMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.GetChannelMetadata(channelName, channelType, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<GetChannelMetadataResult> result = new RtmResult<GetChannelMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetChannelMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.GetChannelMetadata(channelName, channelType, ref requestId);
+            else
+            {
+                rtmEventHandler.PutGetChannelMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int SetUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public Task<RtmResult<SetUserMetadataResult>> SetUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options)
         {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<SetUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SetUserMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.SetUserMetadata(userId, data, options, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<SetUserMetadataResult> result = new RtmResult<SetUserMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSetUserMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.SetUserMetadata(userId, data, options, ref requestId);
+            else
+            {
+                rtmEventHandler.PutSetUserMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int UpdateUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public Task<RtmResult<UpdateUserMetadataResult>> UpdateUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options)
         {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<UpdateUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UpdateUserMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.UpdateUserMetadata(userId, data, options, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<UpdateUserMetadataResult> result = new RtmResult<UpdateUserMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUpdateUserMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.UpdateUserMetadata(userId, data, options, ref requestId);
+            else
+            {
+                rtmEventHandler.PutUpdateUserMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int RemoveUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId)
+        public Task<RtmResult<RemoveUserMetadataResult>> RemoveUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options)
         {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<RemoveUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RemoveUserMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.RemoveUserMetadata(userId, data, options, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<RemoveUserMetadataResult> result = new RtmResult<RemoveUserMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRemoveUserMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.RemoveUserMetadata(userId, data, options, ref requestId);
+            else
+            {
+                rtmEventHandler.PutRemoveUserMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int GetUserMetadata(string userId, ref UInt64 requestId)
+        public Task<RtmResult<GetUserMetadataResult>> GetUserMetadataAsync(string userId)
         {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<GetUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetUserMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.GetUserMetadata(userId, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<GetUserMetadataResult> result = new RtmResult<GetUserMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetUserMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.GetUserMetadata(userId, ref requestId);
+            else
+            {
+                rtmEventHandler.PutGetUserMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int SubscribeUserMetadata(string userId, ref UInt64 requestId)
+        public Task<RtmResult<SubscribeUserMetadataResult>> SubscribeUserMetadataAsync(string userId)
         {
-            if (_rtmStorageImpl == null)
+            TaskCompletionSource<RtmResult<SubscribeUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SubscribeUserMetadataResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmStorage.SubscribeUserMetadata(userId, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<SubscribeUserMetadataResult> result = new RtmResult<SubscribeUserMetadataResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSubscribeUserMetadataOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmStorageImpl.SubscribeUserMetadata(userId, ref requestId);
+            else
+            {
+                rtmEventHandler.PutSubscribeUserMetadataResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int UnsubscribeUserMetadata(string userId)
+        public Task<RtmResult<UnsubscribeUserMetadataResult>> UnsubscribeUserMetadataAsync(string userId)
         {
-            if (_rtmStorageImpl == null)
+            //fake async
+            int errorCode = this.internalRtmStorage.UnsubscribeUserMetadata(userId);
+
+            RtmResult<UnsubscribeUserMetadataResult> rtmResult = new RtmResult<UnsubscribeUserMetadataResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeUserMetadataOperation, this.internalRtmClient);
+            if (errorCode == 0)
             {
-                return ErrorCode;
+                rtmResult.Response = new UnsubscribeUserMetadataResult();
             }
-            return _rtmStorageImpl.UnsubscribeUserMetadata(userId);
+
+            TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UnsubscribeUserMetadataResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
+
     }
 }

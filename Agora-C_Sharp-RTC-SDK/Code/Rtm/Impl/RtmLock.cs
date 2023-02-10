@@ -1,84 +1,127 @@
 ﻿using System;
-
+using System.Threading.Tasks;
 
 namespace Agora.Rtm
 {
-    public sealed class RtmLock : IRtmLock
+    internal class RtmLock : IRtmLock
     {
-        private RtmLockImpl _rtmLockImpl = null;
-        private const int ErrorCode = -7;
+        private Internal.IRtmLock internalRtmLock;
+        private RtmEventHandler rtmEventHandler;
+        private Internal.IRtmClient internalRtmClient;
 
-        internal RtmLock(RtmLockImpl impl)
+        internal RtmLock(Internal.IRtmLock rtmLock, RtmEventHandler rtmEventHandler, Internal.IRtmClient rtmClient)
         {
-            this._rtmLockImpl = impl;
+            this.internalRtmLock = rtmLock;
+            this.rtmEventHandler = rtmEventHandler;
+            this.internalRtmClient = rtmClient;
         }
 
-        private static RtmLock instance = null;
-
-        internal static RtmLock GetInstance(RtmLockImpl impl)
+        public Task<RtmResult<AcquireLockResult>> AcquireLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, bool retry)
         {
-            return instance ?? (instance = new RtmLock(impl));
-        }
-
-        internal static void ReleaseInstance()
-        {
-            instance = null;
-        }
-
-
-        public override int SetLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl, ref UInt64 requestId)
-        {
-            if (_rtmLockImpl == null)
+            TaskCompletionSource<RtmResult<AcquireLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<AcquireLockResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmLock.AcquireLock(channelName, channelType, lockName, retry, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<AcquireLockResult> result = new RtmResult<AcquireLockResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMAcquireLockOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmLockImpl.SetLock(channelName, channelType, lockName, ttl, ref requestId);
-        }
-
-        public override int GetLocks(string channelName, RTM_CHANNEL_TYPE channelType, ref UInt64 requestId)
-        {
-            if (_rtmLockImpl == null)
+            else
             {
-                return ErrorCode;
+                rtmEventHandler.PutAcquireLockResultTask(requestId, taskCompletionSource);
             }
-            return _rtmLockImpl.GetLocks(channelName, channelType, ref requestId);
+            return taskCompletionSource.Task;
         }
 
-        public override int RemoveLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, ref UInt64 requestId)
+        public Task<RtmResult<GetLocksResult>> GetLocksAsync(string channelName, RTM_CHANNEL_TYPE channelType)
         {
-            if (_rtmLockImpl == null)
+            TaskCompletionSource<RtmResult<GetLocksResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetLocksResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmLock.GetLocks(channelName, channelType, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<GetLocksResult> result = new RtmResult<GetLocksResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetLocksOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmLockImpl.RemoveLock(channelName, channelType, lockName, ref requestId);
+            else
+            {
+                rtmEventHandler.PutGetLocksResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int AcquireLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, bool retry, ref UInt64 requestId)
+        public Task<RtmResult<ReleaseLockResult>> ReleaseLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName)
         {
-            if (_rtmLockImpl == null)
+            TaskCompletionSource<RtmResult<ReleaseLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<ReleaseLockResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmLock.ReleaseLock(channelName, channelType, lockName, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<ReleaseLockResult> result = new RtmResult<ReleaseLockResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMReleaseLockOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmLockImpl.AcquireLock(channelName, channelType, lockName, retry, ref requestId);
+            else
+            {
+                rtmEventHandler.PutReleaseLockResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int ReleaseLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, ref UInt64 requestId)
+        public Task<RtmResult<RemoveLockResult>> RemoveLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName)
         {
-            if (_rtmLockImpl == null)
+            TaskCompletionSource<RtmResult<RemoveLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RemoveLockResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmLock.RemoveLock(channelName, channelType, lockName, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<RemoveLockResult> result = new RtmResult<RemoveLockResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRemoveLockOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmLockImpl.ReleaseLock(channelName, channelType, lockName, ref requestId);
+            else
+            {
+                rtmEventHandler.PutRemoveLockResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int RevokeLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, string owner, ref UInt64 requestId)
+        public Task<RtmResult<RevokeLockResult>> RevokeLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, string owner)
         {
-            if (_rtmLockImpl == null)
+            TaskCompletionSource<RtmResult<RevokeLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RevokeLockResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmLock.RevokeLock(channelName, channelType, lockName, owner, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<RevokeLockResult> result = new RtmResult<RevokeLockResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRevokeLockOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _rtmLockImpl.RevokeLock(channelName, channelType, lockName, owner, ref requestId);
+            else
+            {
+                rtmEventHandler.PutRevokeLockResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
+        public Task<RtmResult<SetLockResult>> SetLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl)
+        {
+            TaskCompletionSource<RtmResult<SetLockResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SetLockResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalRtmLock.SetLock(channelName, channelType, lockName, ttl, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<SetLockResult> result = new RtmResult<SetLockResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSetLockOperation, internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutSetLockResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
+        }
     }
 }

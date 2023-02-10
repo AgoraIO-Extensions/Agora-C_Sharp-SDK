@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using AOT;
 #endif
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
     using IrisApiRtmEnginePtr = IntPtr;
 
