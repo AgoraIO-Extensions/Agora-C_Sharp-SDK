@@ -64,7 +64,7 @@ namespace Agora.Rtm
 
     public class UnsubscribeTopicResult
     {
-        
+
     };
 
     public class GetSubscribedUserListResult
@@ -92,7 +92,7 @@ namespace Agora.Rtm
 
     public class UnsubscribeResult
     {
-      
+
     };
 
     public class PublishResult
@@ -167,7 +167,7 @@ namespace Agora.Rtm
 
     public class UnsubscribeUserMetadataResult
     {
-       
+
     };
 
     public class SetLockResult
@@ -250,4 +250,19 @@ namespace Agora.Rtm
         public UserState State;
         public OPERATION_ERROR_CODE ErrorCode;
     };
+
+    public class RTMException : Exception
+    {
+        public RtmStatus Status;
+
+        internal RTMException(RtmStatus rtmStatus)
+        {
+            this.Status = rtmStatus;
+        }
+
+        public override string ToString()
+        {
+            return Status.Reason;
+        }
+    }
 }

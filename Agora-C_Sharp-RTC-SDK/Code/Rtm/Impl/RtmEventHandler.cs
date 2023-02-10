@@ -331,7 +331,7 @@ namespace Agora.Rtm
             }
         }
 
-        public override void OnTopicSubscribed(UInt64 requestId, string channelName, string userId, string topic, UserList succeedUsers, UserList failedUsers, RTM_CHANNEL_ERROR_CODE errorCode)
+        public override void OnSubscribeTopicResult(UInt64 requestId, string channelName, string userId, string topic, UserList succeedUsers, UserList failedUsers, RTM_CHANNEL_ERROR_CODE errorCode)
         {
             if (topicSubscribedTaskMap.ContainsKey(requestId))
             {
@@ -828,7 +828,7 @@ namespace Agora.Rtm
             }
         }
 
-        public override void WhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode)
+        public override void OnWhoNowResultO(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode)
         {
             if (whoNowResultTaskMap.ContainsKey(requestId))
             {
@@ -855,7 +855,7 @@ namespace Agora.Rtm
             }
         }
 
-        public override void WhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, OPERATION_ERROR_CODE errorCode)
+        public override void OnWhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, OPERATION_ERROR_CODE errorCode)
         {
             if (whereNowResultTaskMap.ContainsKey(requestId))
             {

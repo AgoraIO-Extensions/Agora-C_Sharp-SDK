@@ -18,9 +18,20 @@ namespace Agora.Rtm
 
         private static IRtmClient instance = null;
 
-        public static IRtmClient CreateAgoraRtmClient()
+        public static IRtmClient CreateAgoraRtmClient(RtmConfig config)
         {
-            return instance ?? (instance = new RtmClient());
+            RtmClient rtmClient = (RtmClient)(instance ?? (instance = new RtmClient()));
+
+            RtmStatus status = rtmClient.Initialize(config);
+            if (status.Error)
+            {
+                throw new RTMException(status);
+                return null;
+            }
+            else
+            {
+                return rtmClient;
+            }
         }
 
         public static IRtmClient Get()
@@ -136,7 +147,7 @@ namespace Agora.Rtm
             return new RtmStorage(internalRtmStorage, rtmEventHandler, internalRtmClient);
         }
 
-        public RtmStatus Initialize(RtmConfig config)
+        private RtmStatus Initialize(RtmConfig config)
         {
             Internal.RtmConfig internalConfig = new Internal.RtmConfig(config, rtmEventHandler);
             int errorCode = internalRtmClient.Initialize(internalConfig);

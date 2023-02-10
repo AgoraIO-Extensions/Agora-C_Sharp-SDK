@@ -190,13 +190,13 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_onTopicSubscribed":
+                case "RtmEventHandler_onSubscribeTopicResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                     if (rtmEventHandler == null) return;
-                    rtmEventHandler.OnTopicSubscribed(
+                    rtmEventHandler.OnSubscribeTopicResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         (string)AgoraJson.GetData<string>(jsonData, "channelName"),
                         (string)AgoraJson.GetData<string>(jsonData, "userId"),
@@ -548,13 +548,13 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_whoNowResult":
+                case "RtmEventHandler_onWhoNowResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                     if (rtmEventHandler == null) return;
-                    rtmEventHandler.WhoNowResult(
+                    rtmEventHandler.OnWhoNowResultO(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         AgoraJson.JsonToStructArray<UserState>(jsonData, "userStateList"),
                         AgoraJson.JsonToStruct<UInt64>(jsonData, "count"),
@@ -566,13 +566,13 @@ namespace Agora.Rtm.Internal
 #endif
                     break;
 
-                case "RtmEventHandler_whereNowResult":
+                case "RtmEventHandler_onWhereNowResult":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                     if (rtmEventHandler == null) return;
-                    rtmEventHandler.WhereNowResult(
+                    rtmEventHandler.OnWhereNowResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         AgoraJson.JsonToStructArray<ChannelInfo>(jsonData, "channels"),
                         AgoraJson.JsonToStruct<UInt64>(jsonData, "count"),
