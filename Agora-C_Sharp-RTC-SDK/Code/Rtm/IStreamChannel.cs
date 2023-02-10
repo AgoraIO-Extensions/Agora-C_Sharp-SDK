@@ -1,28 +1,29 @@
 using System;
+using System.Threading.Tasks;
 namespace Agora.Rtm
 {
-    public abstract class IStreamChannel
+    public interface IStreamChannel
     {
-        public abstract int Join(JoinChannelOptions options, ref UInt64 requestId);
+        Task<RtmResult<JoinResult>> JoinAsync(JoinChannelOptions options);
 
-        public abstract int Leave(ref UInt64 requestId);
+        Task<RtmResult<LeaveResult>> LeaveAsync();
 
-        public abstract string GetChannelName();
+        string GetChannelName();
 
-        public abstract int JoinTopic(string topic, JoinTopicOptions options, ref UInt64 requestId);
+        Task<RtmResult<JoinTopicResult>> JoinTopicAsync(string topic, JoinTopicOptions options);
 
-        public abstract int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option);
+        Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option);
 
-        public abstract int PublishTopicMessage(string topic, string message, int length, PublishOptions option);
+        Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option);
 
-        public abstract int LeaveTopic(string topic, ref UInt64 requestId);
+        Task<RtmResult<LeaveTopicResult>> LeaveTopicAsync(string topic);
 
-        public abstract int SubscribeTopic(string topic, TopicOptions options, ref UInt64 requestId);
+        Task<RtmResult<SubscribeTopicResult>> SubscribeTopicAsync(string topic, TopicOptions options);
 
-        public abstract int UnsubscribeTopic(string topic, TopicOptions options);
+        Task<RtmResult<UnsubscribeTopicResult>> UnsubscribeTopicAsync(string topic, TopicOptions options);
 
-        public abstract int GetSubscribedUserList(string topic, ref UserList users);
+        Task<RtmResult<GetSubscribedUserListResult>> GetSubscribedUserListAsync(string topic);
 
-        public abstract int Dispose();
+        RtmStatus Dispose();
     }
 }

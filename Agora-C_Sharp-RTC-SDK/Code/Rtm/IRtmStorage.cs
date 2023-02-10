@@ -1,29 +1,28 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 namespace Agora.Rtm
 {
-    public abstract class IRtmStorage
+
+    public interface IRtmStorage
     {
-        //public abstract RtmMetadata CreateMetadata();
+        Task<RtmResult<SetChannelMetadataResult>> SetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
 
-        public abstract int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId);
+        Task<RtmResult<UpdateChannelMetadataResult>> UpdateChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
 
-        public abstract int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId);
+        Task<RtmResult<RemoveChannelMetadataResult>> RemoveChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
 
-        public abstract int RemoveChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId);
+        Task<RtmResult<GetChannelMetadataResult>> GetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType);
 
-        public abstract int GetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, ref UInt64 requestId);
+        Task<RtmResult<SetUserMetadataResult>> SetUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
 
-        public abstract int SetUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId);
+        Task<RtmResult<UpdateUserMetadataResult>> UpdateUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
 
-        public abstract int UpdateUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId);
+        Task<RtmResult<RemoveUserMetadataResult>> RemoveUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
 
-        public abstract int RemoveUserMetadata(string userId, RtmMetadata data, MetadataOptions options, ref UInt64 requestId);
+        Task<RtmResult<GetUserMetadataResult>> GetUserMetadataAsync(string userId);
 
-        public abstract int GetUserMetadata(string userId, ref UInt64 requestId);
+        Task<RtmResult<SubscribeUserMetadataResult>> SubscribeUserMetadataAsync(string userId);
 
-        public abstract int SubscribeUserMetadata(string userId, ref UInt64 requestId);
-
-        public abstract int UnsubscribeUserMetadata(string userId);
+        Task<RtmResult<UnsubscribeUserMetadataResult>> UnsubscribeUserMetadataAsync(string userId);
     }
 
 }

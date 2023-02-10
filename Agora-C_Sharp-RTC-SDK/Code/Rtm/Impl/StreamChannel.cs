@@ -1,146 +1,190 @@
-using System;
-using StreamChannelType = System.String;
+﻿using System;
+using System.Threading.Tasks;
+
 namespace Agora.Rtm
 {
-    public sealed class StreamChannel : IStreamChannel
+    internal class StreamChannel : IStreamChannel
     {
-        private bool _disposed = false;
-        private IStreamChannelCreator _selfCreator = null;
-        private IStreamChannelImpl _streamChannelImpl = null;
-        private const int ErrorCode = -7;
+        private Internal.IStreamChannel internalStreamChannel;
+        private RtmEventHandler rtmEventHandler;
+        private Internal.IRtmClient internalRtmClient;
 
-        private string channelName = "";
-   
-        internal StreamChannel(IStreamChannelCreator selfCreator, IStreamChannelImpl impl, string channelName)
+        internal StreamChannel(Internal.IStreamChannel streamChannel, RtmEventHandler rtmEventHandler, Internal.IRtmClient rtmClient)
         {
-            _selfCreator = selfCreator;
-            _streamChannelImpl = impl;
-
-            this.channelName = channelName;
+            this.internalStreamChannel = streamChannel;
+            this.rtmEventHandler = rtmEventHandler;
+            this.internalRtmClient = rtmClient;
         }
 
-        ~StreamChannel()
+        public Task<RtmResult<JoinResult>> JoinAsync(JoinChannelOptions options)
         {
-            Dispose(false);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (_disposed) return;
-
-            if (disposing)
+            TaskCompletionSource<RtmResult<JoinResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<JoinResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalStreamChannel.Join(options, ref requestId);
+            if (errorCode != 0)
             {
+                RtmResult<JoinResult> result = new RtmResult<JoinResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMJoinOperation, this.internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutJoinResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
+        }
+
+        public Task<RtmResult<LeaveResult>> LeaveAsync()
+        {
+            TaskCompletionSource<RtmResult<LeaveResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LeaveResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalStreamChannel.Leave(ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<LeaveResult> result = new RtmResult<LeaveResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLeaveOperation, this.internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutLeaveResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
+        }
+
+        public string GetChannelName()
+        {
+            return internalStreamChannel.GetChannelName();
+        }
+
+        public Task<RtmResult<JoinTopicResult>> JoinTopicAsync(string topic, JoinTopicOptions options)
+        {
+            TaskCompletionSource<RtmResult<JoinTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<JoinTopicResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalStreamChannel.JoinTopic(topic, options, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<JoinTopicResult> result = new RtmResult<JoinTopicResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMJoinTopicOperation, this.internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutJoinTopicResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
+        }
+
+        public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option)
+        {
+            //fake async
+            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, option);
+
+            RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
+            if (errorCode == 0)
+            {
+                rtmResult.Response = new PublishTopicMessageResult();
             }
 
-            this._selfCreator.RemoveStreamChannelIfExist(this.channelName);
-
-            _streamChannelImpl = null;
-            _selfCreator = null;
-            channelName = "";
-            _disposed = true;
+            TaskCompletionSource<RtmResult<PublishTopicMessageResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishTopicMessageResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
-        public override int Dispose()
+        public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option)
         {
-            if (_selfCreator == null || _streamChannelImpl == null)
+            //fake async
+            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, option);
+
+            RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
+            if (errorCode == 0)
             {
-                return ErrorCode;
+                rtmResult.Response = new PublishTopicMessageResult();
             }
-            int ret = _streamChannelImpl.Release(channelName);
-            Dispose(true);
-            GC.SuppressFinalize(this);
-            return ret;
+
+            TaskCompletionSource<RtmResult<PublishTopicMessageResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishTopicMessageResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
-        public override string GetChannelName()
+        public Task<RtmResult<LeaveTopicResult>> LeaveTopicAsync(string topic)
         {
-            if (_selfCreator == null || _streamChannelImpl == null)
+            TaskCompletionSource<RtmResult<LeaveTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LeaveTopicResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalStreamChannel.LeaveTopic(topic, ref requestId);
+            if (errorCode != 0)
             {
-                return "";
+                RtmResult<LeaveTopicResult> result = new RtmResult<LeaveTopicResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLeaveTopicOperation, this.internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return channelName;
+            else
+            {
+                rtmEventHandler.PutLeaveTopicResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int Join(JoinChannelOptions options, ref UInt64 requestId)
+        public Task<RtmResult<SubscribeTopicResult>> SubscribeTopicAsync(string topic, TopicOptions options)
         {
-            if (_selfCreator == null || _streamChannelImpl == null)
+            TaskCompletionSource<RtmResult<SubscribeTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SubscribeTopicResult>>();
+            UInt64 requestId = 0;
+            int errorCode = internalStreamChannel.SubscribeTopic(topic, options, ref requestId);
+            if (errorCode != 0)
             {
-                return ErrorCode;
+                RtmResult<SubscribeTopicResult> result = new RtmResult<SubscribeTopicResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMSubscribeTopicOperation, this.internalRtmClient);
+                taskCompletionSource.SetResult(result);
             }
-            return _streamChannelImpl.Join(channelName, options, ref requestId);
+            else
+            {
+                rtmEventHandler.PutSubscribeTopicResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
-        public override int Leave(ref UInt64 requestId)
+        public Task<RtmResult<UnsubscribeTopicResult>> UnsubscribeTopicAsync(string topic, TopicOptions options)
         {
-            if (_selfCreator == null || _streamChannelImpl == null)
+            //fake async
+            int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, options);
+
+            RtmResult<UnsubscribeTopicResult> rtmResult = new RtmResult<UnsubscribeTopicResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeTopicOperation, this.internalRtmClient);
+            if (errorCode == 0)
             {
-                return ErrorCode;
+                rtmResult.Response = new UnsubscribeTopicResult();
             }
-            return _streamChannelImpl.Leave(channelName, ref requestId);
+
+            TaskCompletionSource<RtmResult<UnsubscribeTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<UnsubscribeTopicResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
-        public override int JoinTopic(string topic, JoinTopicOptions options, ref UInt64 requestId)
+        public Task<RtmResult<GetSubscribedUserListResult>> GetSubscribedUserListAsync(string topic)
         {
-            if (_selfCreator == null || _streamChannelImpl == null)
+            UserList users = null;
+            int errorCode = internalStreamChannel.GetSubscribedUserList(topic, ref users);
+
+            RtmResult<GetSubscribedUserListResult> rtmResult = new RtmResult<GetSubscribedUserListResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMGetSubscribedUserListOperation, this.internalRtmClient);
+            if (errorCode == 0)
             {
-                return ErrorCode;
+                rtmResult.Response = new GetSubscribedUserListResult();
+                rtmResult.Response.Users = users;
             }
-            return _streamChannelImpl.JoinTopic(channelName, topic, options, ref requestId);
+
+            TaskCompletionSource<RtmResult<GetSubscribedUserListResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetSubscribedUserListResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
-        public override int PublishTopicMessage(string topic, byte[] message, int length, PublishOptions option)
+        public RtmStatus Dispose()
         {
-            if (_selfCreator == null || _streamChannelImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, message, message.Length, option);
+            int errorCode = this.internalStreamChannel.Dispose();
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMDisposeOperation, this.internalRtmClient);
         }
 
-        public override int PublishTopicMessage(string topic, string message, int length, PublishOptions option)
-        {
-            if (_selfCreator == null || _streamChannelImpl == null)
-            {
-                return ErrorCode;
-            }
-            byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
-            return _streamChannelImpl.PublishTopicMessage(channelName, topic, bytes, bytes.Length, option);
-        }
-
-        public override int LeaveTopic(string topic, ref UInt64 requestId)
-        {
-            if (_selfCreator == null || _streamChannelImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _streamChannelImpl.LeaveTopic(channelName, topic, ref requestId);
-        }
-
-        public override int SubscribeTopic(string topic, TopicOptions options, ref UInt64 requestId)
-        {
-            if (_selfCreator == null || _streamChannelImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _streamChannelImpl.SubscribeTopic(channelName, topic, options, ref requestId);
-        }
-
-        public override int UnsubscribeTopic(string topic, TopicOptions options)
-        {
-            if (_selfCreator == null || _streamChannelImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _streamChannelImpl.UnsubscribeTopic(channelName, topic, options);
-        }
-
-        public override int GetSubscribedUserList(string topic, ref UserList users)
-        {
-            if (_selfCreator == null || _streamChannelImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _streamChannelImpl.GetSubscribedUserList(channelName, topic, ref users);
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Agora.Rtm
+﻿namespace Agora.Rtm.Internal
 {
     internal static class AgoraApiType
     {
@@ -60,6 +60,9 @@
         internal const string FUNC_RTMCLIENT_UNSUBSCRIBE = "RtmClient_unsubscribe";
         internal const string FUNC_RTMCLIENT_CREATESTREAMCHANNEL = "RtmClient_createStreamChannel";
         internal const string FUNC_RTMCLIENT_SETPARAMETERS = "RtmClient_setParameters";
+        internal const string FUNC_RTMCLIENT_SETLOGFILE = "RtmClient_setLogFile";
+        internal const string FUNC_RTMCLIENT_SETLOGLEVEL = "RtmClient_setLogLevel";
+        internal const string FUNC_RTMCLIENT_SETLOGFILESIZE = "RtmClient_setLogFileSize";
         #endregion
 
         #region IRtmPresence start

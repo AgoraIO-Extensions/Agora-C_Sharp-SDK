@@ -1,8 +1,8 @@
 using System;
 
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
-    public abstract class IRtmEventHandler
+    internal abstract class IRtmEventHandler
     {
         public virtual void OnMessageEvent(MessageEvent @event) { }
 
@@ -22,7 +22,7 @@ namespace Agora.Rtm
 
         public virtual void OnLeaveTopicResult(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_CHANNEL_ERROR_CODE errorCode) { }
 
-        public virtual void OnTopicSubscribed(UInt64 requestId, string channelName, string userId, string topic,
+        public virtual void OnSubscribeTopicResult(UInt64 requestId, string channelName, string userId, string topic,
                                               UserList succeedUsers, UserList failedUsers, RTM_CHANNEL_ERROR_CODE errorCode)
         { }
 
@@ -81,9 +81,9 @@ namespace Agora.Rtm
                                                 LockDetail[] lockDetailList, UInt64 count, OPERATION_ERROR_CODE errorCode)
         { }
 
-        public virtual void WhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode) { }
+        public virtual void OnWhoNowResultO(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode) { }
 
-        public virtual void WhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, OPERATION_ERROR_CODE errorCode) { }
+        public virtual void OnWhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, OPERATION_ERROR_CODE errorCode) { }
 
         public virtual void OnPresenceSetStateResult(UInt64 requestId, OPERATION_ERROR_CODE errorCode) { }
 

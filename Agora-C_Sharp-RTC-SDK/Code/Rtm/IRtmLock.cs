@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Threading.Tasks;
 namespace Agora.Rtm
 {
-    public abstract class IRtmLock
+    public interface IRtmLock
     {
-        public abstract int SetLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl, ref UInt64 requestId);
+        Task<RtmResult<SetLockResult>> SetLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl);
 
-        public abstract int GetLocks(string channelName, RTM_CHANNEL_TYPE channelType, ref UInt64 requestId);
+        Task<RtmResult<GetLocksResult>> GetLocksAsync(string channelName, RTM_CHANNEL_TYPE channelType);
 
-        public abstract int RemoveLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, ref UInt64 requestId);
+        Task<RtmResult<RemoveLockResult>> RemoveLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName);
 
-        public abstract int AcquireLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, bool retry, ref UInt64 requestId);
+        Task<RtmResult<AcquireLockResult>> AcquireLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, bool retry);
 
-        public abstract int ReleaseLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, ref UInt64 requestId);
+        Task<RtmResult<ReleaseLockResult>> ReleaseLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName);
 
-        public abstract int RevokeLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, string owner, ref UInt64 requestId);
+        Task<RtmResult<RevokeLockResult>> RevokeLockAsync(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, string owner);
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
+using System.Threading.Tasks;
 namespace Agora.Rtm
 {
-    public abstract class IRtmPresence
+    public interface IRtmPresence
     {
-        public abstract int WhoNow(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options, ref UInt64 requestId);
+        Task<RtmResult<WhoNowResult>> WhoNowAsync(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options);
 
-        public abstract int WhereNow(string userId, ref UInt64 requestId);
+        Task<RtmResult<WhereNowResult>> WhereNowAsync(string userId);
 
-        public abstract int SetState(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items, int count, ref UInt64 requestId);
+        Task<RtmResult<SetStateResult>> SetStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items);
 
-        public abstract int RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, int count, ref UInt64 requestId);
+        Task<RtmResult<RemoveStateResult>> RemoveStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys);
 
-        public abstract int GetState(string channelName, RTM_CHANNEL_TYPE channelType, string userId, ref UInt64 requestId);
+        Task<RtmResult<GetStateResult>> GetStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, string userId);
     }
 }

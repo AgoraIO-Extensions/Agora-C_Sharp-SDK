@@ -1,34 +1,67 @@
 using System;
+using System.Threading.Tasks;
 namespace Agora.Rtm
 {
-    public abstract class IRtmClient
+    public delegate void OnMessageEventHandler(MessageEvent @event);
+
+    public delegate void OnPresenceEventHandler(PresenceEvent @event);
+
+    public delegate void OnTopicEventHandler(TopicEvent @event);
+
+    public delegate void OnLockEventHandler(LockEvent @event);
+
+    public delegate void OnStorageEventHandler(StorageEvent @event);
+
+    public delegate void OnConnectionStateChangeHandler(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason);
+
+    public delegate void OnTokenPrivilegeWillExpireHandler(string channelName);
+
+    public interface IRtmClient
     {
-        public abstract int Initialize(RtmConfig config);
+        event OnMessageEventHandler OnMessageEvent;
 
-        public abstract int Dispose();
+        event OnPresenceEventHandler OnPresenceEvent;
 
-        public abstract int Login(string token);
+        event OnTopicEventHandler OnTopicEvent;
 
-        public abstract int Logout();
+        event OnLockEventHandler OnLockEvent;
 
-        public abstract IRtmStorage GetStorage();
+        event OnStorageEventHandler OnStorageEvent;
 
-        public abstract IRtmLock GetLock();
+        event OnConnectionStateChangeHandler OnConnectionStateChange;
 
-        public abstract IRtmPresence GetPresence();
+        event OnTokenPrivilegeWillExpireHandler OnTokenPrivilegeWillExpire;
 
-        public abstract int RenewToken(string token);
+        RtmStatus Dispose();
 
-        public abstract int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId);
+        Task<RtmResult<LoginResult>> LoginAsync(string token);
 
-        public abstract int Publish(string channelName, string message, int length, PublishOptions option, ref UInt64 requestId);
+        RtmStatus Logout();
 
-        public abstract int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId);
+        IRtmStorage GetStorage();
 
-        public abstract int Unsubscribe(string channelName);
+        IRtmLock GetLock();
 
-        public abstract IStreamChannel CreateStreamChannel(string channelName);
+        IRtmPresence GetPresence();
 
-        public abstract int SetParameters(string parameters);
+        RtmStatus RenewToken(string token);
+
+        Task<RtmResult<PublishResult>> PublishAsync(string channelName, byte[] message, PublishOptions option);
+
+        Task<RtmResult<PublishResult>> PublishAsync(string channelName, string message, PublishOptions option);
+
+        Task<RtmResult<SubscribeResult>> SubscribeAsync(string channelName, SubscribeOptions options);
+
+        Task<RtmResult<UnsubscribeResult>> UnsubscribeAsync(string channelName);
+
+        IStreamChannel CreateStreamChannel(string channelName);
+
+        RtmStatus SetParameters(string parameters);
+
+        RtmStatus SetLogFile(string filePath);
+
+        RtmStatus SetLogLevel(LOG_LEVEL level);
+
+        RtmStatus SetLogFileSize(uint fileSizeInKBytes);
     }
 }
