@@ -2628,7 +2628,39 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnExtensionErrorPassed(provider, extension, error, message));
         }
 
+        [Test]
+        public void Test_OnVideoRenderingTracingResult()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEORENDERINGTRACINGRESULT;
 
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+
+            uid_t uid;
+            ParamsHelper.InitParam(out uid);
+
+            MEDIA_TRACE_EVENT currentEvent;
+            ParamsHelper.InitParam(out currentEvent);
+
+            VideoRenderingTracingInfo tracingInfo;
+            ParamsHelper.InitParam(out tracingInfo);
+
+
+            jsonObj.Clear();
+            jsonObj.Add("connection", connection);
+            jsonObj.Add("uid", uid);
+            jsonObj.Add("currentEvent", currentEvent);
+            jsonObj.Add("tracingInfo", tracingInfo);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnVideoRenderingTracingResultPassed(connection, uid, currentEvent, tracingInfo));
+        }
 
         #endregion
 

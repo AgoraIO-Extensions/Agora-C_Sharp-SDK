@@ -198,6 +198,8 @@ namespace Agora.Rtc
 
     public delegate void OnDirectCdnStreamingStatsHandler(DirectCdnStreamingStats stats);
 
+    public delegate void OnVideoRenderingTracingResultHandler(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo);
+
     public class RtcEngineEventHandler : IRtcEngineEventHandler
     {
         public event OnJoinChannelSuccessHandler EventOnJoinChannelSuccess;
@@ -298,6 +300,8 @@ namespace Agora.Rtc
         public event OnExtensionErrorHandler EventOnExtensionErrored;
         public event OnDirectCdnStreamingStateChangedHandler EventOnDirectCdnStreamingStateChanged;
         public event OnDirectCdnStreamingStatsHandler EventOnDirectCdnStreamingStats;
+        public event OnVideoRenderingTracingResultHandler EventOnVideoRenderingTracingResult;
+
 
         private static RtcEngineEventHandler eventInstance = null;
 
@@ -644,7 +648,7 @@ namespace Agora.Rtc
 
         public override void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE error)
         {
-           if(EventOnLicenseValidationFailure == null) return;
+            if (EventOnLicenseValidationFailure == null) return;
             EventOnLicenseValidationFailure.Invoke(connection, error);
         }
 
@@ -714,7 +718,7 @@ namespace Agora.Rtc
             EventOnRtmpStreamingEvent.Invoke(url, eventCode);
         }
 
-     
+
         public override void OnTranscodingUpdated()
         {
             if (EventOnTranscodingUpdated == null) return;
@@ -881,6 +885,12 @@ namespace Agora.Rtc
         {
             if (EventOnExtensionErrored == null) return;
             EventOnDirectCdnStreamingStats.Invoke(stats);
+        }
+
+        public override void OnVideoRenderingTracingResult(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
+        {
+            if (EventOnVideoRenderingTracingResult == null) return;
+            EventOnVideoRenderingTracingResult.Invoke(connection, uid, currentEvent, tracingInfo);
         }
     }
 }

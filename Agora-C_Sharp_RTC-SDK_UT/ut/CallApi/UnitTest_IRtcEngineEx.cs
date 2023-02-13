@@ -23,7 +23,7 @@ namespace Agora.Rtc
         [TearDown]
         public void TearDown() { EngineEx.Dispose(); }
 
-#region custom
+        #region custom
         [Test]
         public void Test_JoinChannelEx()
         {
@@ -106,9 +106,9 @@ namespace Agora.Rtc
 
             Assert.AreEqual(CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED, nRet);
         }
-#endregion
+        #endregion
 
-#region terr
+        #region terr
 
         [Test]
         public void Test_LeaveChannelEx()
@@ -664,7 +664,17 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#endregion
+        [Test]
+        public void Test_StartMediaRenderingTracingEx()
+        {
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.StartMediaRenderingTracingEx(connection);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        #endregion
     }
 
 }

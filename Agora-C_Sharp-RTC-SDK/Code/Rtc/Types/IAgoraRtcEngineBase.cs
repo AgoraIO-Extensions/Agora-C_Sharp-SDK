@@ -654,13 +654,6 @@ namespace Agora.Rtc
         public int publishDuration;
 
         ///
-        /// <summary>
-        /// The state of super resolution:>0: Super resolution is enabled.=0: Super resolution is not enabled.
-        /// </summary>
-        ///
-        public int superResolutionType;
-
-        ///
         /// @ignore
         ///
         public int mosValue;
