@@ -1007,17 +1007,17 @@ namespace Agora.Rtc
 
         public static bool compareUint(uint selfParam, uint outParam)
         {
-            return selfParam == 10;
+            return selfParam == 10 || selfParam == 1;
         }
 
         public static bool compareUlong(ulong selfParam, ulong outParam)
         {
-            return selfParam == 10;
+            return selfParam == 10 || selfParam == 1;
         }
 
         public static bool compareInt(int selfParam, int outParam)
         {
-            return selfParam == 10;
+            return selfParam == 10 || selfParam == 1;
         }
 
         public static bool compareRHYTHM_PLAYER_STATE_TYPE(RHYTHM_PLAYER_STATE_TYPE selfParam, RHYTHM_PLAYER_STATE_TYPE outParam)
@@ -1032,7 +1032,7 @@ namespace Agora.Rtc
 
         public static bool compareIntArray(int[] selfParam, int[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             foreach (var e in selfParam)
@@ -1718,7 +1718,7 @@ namespace Agora.Rtc
 
         public static bool compareAudioVolumeInfoArray(AudioVolumeInfo[] selfParam, AudioVolumeInfo[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (int i = 0; i < selfParam.Length; i++)
@@ -2122,7 +2122,7 @@ namespace Agora.Rtc
 
         public static bool compareView_tArray(ulong[] selfParam, ulong[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (int i = 0; i < selfParam.Length; i++)
@@ -2247,7 +2247,7 @@ namespace Agora.Rtc
 
         public static bool comparePeerDownlinkInfoArray(PeerDownlinkInfo[] selfParam, PeerDownlinkInfo[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (int i = 0; i < selfParam.Length; i++)
@@ -2766,7 +2766,7 @@ namespace Agora.Rtc
 
         public static bool compareMvPropertyArray(MvProperty[] selfParam, MvProperty[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
             for (int i = 0; i < selfParam.Length; i++)
             {
@@ -2788,7 +2788,7 @@ namespace Agora.Rtc
 
         public static bool compareClimaxSegmentArray(ClimaxSegment[] selfParam, ClimaxSegment[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -2817,7 +2817,7 @@ namespace Agora.Rtc
 
         public static bool compareMusicArray(Music[] selfParam, Music[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -3362,15 +3362,15 @@ namespace Agora.Rtc
 
         public static bool compareIntPtr(IntPtr selfParam, IntPtr outParam)
         {
-            if (selfParam != (IntPtr)10)
-                return false;
+            int[] a = new int[1];
+            Marshal.Copy(selfParam, a, 0, 1);
 
-            return true;
+            return a[0] == 10;
         }
 
         public static bool compareUserAudioSpectrumInfoArray(UserAudioSpectrumInfo[] selfParam, UserAudioSpectrumInfo[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -3385,7 +3385,7 @@ namespace Agora.Rtc
 
         public static bool compareByteArray(byte[] selfParam, byte[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -3430,7 +3430,7 @@ namespace Agora.Rtc
 
         public static bool compareMusicChartInfoArray(MusicChartInfo[] selfParam, MusicChartInfo[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
