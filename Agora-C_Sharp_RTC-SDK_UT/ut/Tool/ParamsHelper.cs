@@ -898,14 +898,14 @@ namespace Agora.Rtc
                 param.audioSpectrumData[i] = 10;
             }
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out MEDIA_TRACE_EVENT param)
+        {
+            param = MEDIA_TRACE_EVENT.MEDIA_TRACE_EVENT_VIDEO_RENDERED;
+        }
+        public static void InitParam(out VideoRenderingTracingInfo param)
+        {
+            param = new VideoRenderingTracingInfo();
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
@@ -1286,6 +1286,30 @@ namespace Agora.Rtc
         public static bool compareUid_t(uint selfParam, uint outParam)
         {
             return selfParam == 10;
+        }
+
+        public static bool compareMEDIA_TRACE_EVENT(MEDIA_TRACE_EVENT selfParam, MEDIA_TRACE_EVENT outParam)
+        {
+            return selfParam == MEDIA_TRACE_EVENT.MEDIA_TRACE_EVENT_VIDEO_RENDERED;
+        }
+
+        public static bool compareVideoRenderingTracingInfo(VideoRenderingTracingInfo selfParam, VideoRenderingTracingInfo outParam)
+        {
+            if (compareInt(selfParam.elapsedTime, outParam.elapsedTime) == false)
+                return false;
+            if (compareInt(selfParam.start2JoinChannel, outParam.start2JoinChannel) == false)
+                return false;
+            if (compareInt(selfParam.join2JoinSuccess, outParam.join2JoinSuccess) == false)
+                return false;
+            if (compareInt(selfParam.joinSuccess2RemoteJoined, outParam.joinSuccess2RemoteJoined) == false)
+                return false;
+            if (compareInt(selfParam.remoteJoined2SetView, outParam.remoteJoined2SetView) == false)
+                return false;
+            if (compareInt(selfParam.remoteJoined2UnmuteVideo, outParam.remoteJoined2UnmuteVideo) == false)
+                return false;
+            if (compareInt(selfParam.remoteJoined2PacketReceived, outParam.remoteJoined2PacketReceived) == false)
+                return false;
+            return true;
         }
 
         public static bool compareCOMPRESSION_PREFERENCE(COMPRESSION_PREFERENCE selfParam, COMPRESSION_PREFERENCE outParam)

@@ -3003,6 +3003,24 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
+        [Test]
+        public void Test_StartMediaRenderingTracing()
+        {
+
+            var nRet = Engine.StartMediaRenderingTracing();
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_EnableInstantMediaRendering()
+        {
+
+            var nRet = Engine.EnableInstantMediaRendering();
+
+            Assert.AreEqual(0, nRet);
+        }
+
         #endregion
     }
 
