@@ -3008,8 +3008,6 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.publishDuration, outParam.publishDuration) == false)
                 return false;
-            if (compareInt(selfParam.superResolutionType, outParam.superResolutionType) == false)
-                return false;
             if (compareInt(selfParam.mosValue, outParam.mosValue) == false)
                 return false;
             return true;

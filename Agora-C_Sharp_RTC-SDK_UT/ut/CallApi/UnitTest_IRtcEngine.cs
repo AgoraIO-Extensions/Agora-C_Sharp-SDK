@@ -625,18 +625,7 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-        [Test]
-        public void Test_EnableRemoteSuperResolution()
-        {
-            uid_t userId;
-            ParamsHelper.InitParam(out userId);
-            bool enable;
-            ParamsHelper.InitParam(out enable);
-            var nRet = Engine.EnableRemoteSuperResolution(userId, enable);
-
-            Assert.AreEqual(0, nRet);
-        }
-
+  
         [Test]
         public void Test_SetupRemoteVideo()
         {
