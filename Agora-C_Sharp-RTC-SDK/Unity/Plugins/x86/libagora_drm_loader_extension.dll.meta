@@ -21,7 +21,7 @@ PluginImporter:
         Exclude OSXUniversal: 0
         Exclude WebGL: 1
         Exclude Win: 0
-        Exclude Win64: 0
+        Exclude Win64: 1
         Exclude iOS: 1
   - first:
       '': OSXIntel
@@ -83,7 +83,7 @@ PluginImporter:
     second:
       enabled: 1
       settings:
-        CPU: x86
+        CPU: AnyCPU
   - first:
       Standalone: OSXUniversal
     second:
@@ -99,7 +99,7 @@ PluginImporter:
   - first:
       Standalone: Win64
     second:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: None
   - first:
