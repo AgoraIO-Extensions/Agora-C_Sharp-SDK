@@ -126,6 +126,10 @@ namespace Agora.Rtm
         public RtmStatus Dispose()
         {
             int errorCode = internalRtmClient.Dispose();
+            if (errorCode == 0)
+            {
+                instance = null;
+            }
             return Tools.GenerateStatus(errorCode, RtmOperation.RTMDisposeOperation, this.internalRtmClient);
         }
 

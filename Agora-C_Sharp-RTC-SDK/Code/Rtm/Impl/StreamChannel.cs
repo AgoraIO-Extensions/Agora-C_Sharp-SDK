@@ -183,6 +183,10 @@ namespace Agora.Rtm
         public RtmStatus Dispose()
         {
             int errorCode = this.internalStreamChannel.Dispose();
+            if (errorCode == 0)
+            {
+                this.internalStreamChannel = null;
+            }
             return Tools.GenerateStatus(errorCode, RtmOperation.RTMDisposeOperation, this.internalRtmClient);
         }
 
