@@ -575,7 +575,7 @@ namespace Agora.Rtm.Internal
                     rtmEventHandler.OnWhereNowResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         AgoraJson.JsonToStructArray<ChannelInfo>(jsonData, "channels"),
-                        AgoraJson.JsonToStruct<UInt64>(jsonData, "count"),
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
                         (OPERATION_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
