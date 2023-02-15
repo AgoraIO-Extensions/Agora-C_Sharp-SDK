@@ -828,7 +828,7 @@ namespace Agora.Rtm
             }
         }
 
-        public override void OnWhoNowResultO(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode)
+        public override void OnWhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode)
         {
             if (whoNowResultTaskMap.ContainsKey(requestId))
             {
