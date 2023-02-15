@@ -4740,6 +4740,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         CONNECTION_CHANGED_TOO_MANY_BROADCASTERS = 20,
+
+        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21,
     };
 
     ///
