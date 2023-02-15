@@ -1997,6 +1997,7 @@ namespace Agora.Rtc
             this.audioScenario = audioScenario;
             this.areaCode = areaCode;
             this.logConfig = logConfig ?? new LogConfig();
+            this.autoRegisterAgoraExtensions = true;
         }
 
         private IRtcEngineEventHandler eventHandler = null;
