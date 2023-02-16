@@ -324,7 +324,7 @@ namespace Agora.Rtm.Internal
             EventOnGetLocksResult.Invoke(requestId, channelName, channelType, lockDetailList, count, errorCode);
         }
 
-        public override void OnWhoNowResultO(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode)
+        public override void OnWhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode)
         {
             if (EventWhoNowResult == null) return;
             EventWhoNowResult.Invoke(requestId, userStateList, count, nextPage, errorCode);

@@ -81,7 +81,7 @@ namespace Agora.Rtm.Internal
                                                 LockDetail[] lockDetailList, UInt64 count, OPERATION_ERROR_CODE errorCode)
         { }
 
-        public virtual void OnWhoNowResultO(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode) { }
+        public virtual void OnWhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, OPERATION_ERROR_CODE errorCode) { }
 
         public virtual void OnWhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, OPERATION_ERROR_CODE errorCode) { }
 
