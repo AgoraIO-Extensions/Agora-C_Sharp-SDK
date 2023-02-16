@@ -898,14 +898,14 @@ namespace Agora.Rtc
                 param.audioSpectrumData[i] = 10;
             }
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out MEDIA_TRACE_EVENT param)
+        {
+            param = MEDIA_TRACE_EVENT.MEDIA_TRACE_EVENT_VIDEO_RENDERED;
+        }
+        public static void InitParam(out VideoRenderingTracingInfo param)
+        {
+            param = new VideoRenderingTracingInfo();
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
@@ -1007,17 +1007,17 @@ namespace Agora.Rtc
 
         public static bool compareUint(uint selfParam, uint outParam)
         {
-            return selfParam == 10;
+            return selfParam == 10 || selfParam == 1;
         }
 
         public static bool compareUlong(ulong selfParam, ulong outParam)
         {
-            return selfParam == 10;
+            return selfParam == 10 || selfParam == 1;
         }
 
         public static bool compareInt(int selfParam, int outParam)
         {
-            return selfParam == 10;
+            return selfParam == 10 || selfParam == 1;
         }
 
         public static bool compareRHYTHM_PLAYER_STATE_TYPE(RHYTHM_PLAYER_STATE_TYPE selfParam, RHYTHM_PLAYER_STATE_TYPE outParam)
@@ -1032,7 +1032,7 @@ namespace Agora.Rtc
 
         public static bool compareIntArray(int[] selfParam, int[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             foreach (var e in selfParam)
@@ -1286,6 +1286,30 @@ namespace Agora.Rtc
         public static bool compareUid_t(uint selfParam, uint outParam)
         {
             return selfParam == 10;
+        }
+
+        public static bool compareMEDIA_TRACE_EVENT(MEDIA_TRACE_EVENT selfParam, MEDIA_TRACE_EVENT outParam)
+        {
+            return selfParam == MEDIA_TRACE_EVENT.MEDIA_TRACE_EVENT_VIDEO_RENDERED;
+        }
+
+        public static bool compareVideoRenderingTracingInfo(VideoRenderingTracingInfo selfParam, VideoRenderingTracingInfo outParam)
+        {
+            if (compareInt(selfParam.elapsedTime, outParam.elapsedTime) == false)
+                return false;
+            if (compareInt(selfParam.start2JoinChannel, outParam.start2JoinChannel) == false)
+                return false;
+            if (compareInt(selfParam.join2JoinSuccess, outParam.join2JoinSuccess) == false)
+                return false;
+            if (compareInt(selfParam.joinSuccess2RemoteJoined, outParam.joinSuccess2RemoteJoined) == false)
+                return false;
+            if (compareInt(selfParam.remoteJoined2SetView, outParam.remoteJoined2SetView) == false)
+                return false;
+            if (compareInt(selfParam.remoteJoined2UnmuteVideo, outParam.remoteJoined2UnmuteVideo) == false)
+                return false;
+            if (compareInt(selfParam.remoteJoined2PacketReceived, outParam.remoteJoined2PacketReceived) == false)
+                return false;
+            return true;
         }
 
         public static bool compareCOMPRESSION_PREFERENCE(COMPRESSION_PREFERENCE selfParam, COMPRESSION_PREFERENCE outParam)
@@ -1694,7 +1718,7 @@ namespace Agora.Rtc
 
         public static bool compareAudioVolumeInfoArray(AudioVolumeInfo[] selfParam, AudioVolumeInfo[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (int i = 0; i < selfParam.Length; i++)
@@ -2098,7 +2122,7 @@ namespace Agora.Rtc
 
         public static bool compareView_tArray(ulong[] selfParam, ulong[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (int i = 0; i < selfParam.Length; i++)
@@ -2223,7 +2247,7 @@ namespace Agora.Rtc
 
         public static bool comparePeerDownlinkInfoArray(PeerDownlinkInfo[] selfParam, PeerDownlinkInfo[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (int i = 0; i < selfParam.Length; i++)
@@ -2742,7 +2766,7 @@ namespace Agora.Rtc
 
         public static bool compareMvPropertyArray(MvProperty[] selfParam, MvProperty[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
             for (int i = 0; i < selfParam.Length; i++)
             {
@@ -2764,7 +2788,7 @@ namespace Agora.Rtc
 
         public static bool compareClimaxSegmentArray(ClimaxSegment[] selfParam, ClimaxSegment[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -2793,7 +2817,7 @@ namespace Agora.Rtc
 
         public static bool compareMusicArray(Music[] selfParam, Music[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -2983,8 +3007,6 @@ namespace Agora.Rtc
             if (compareInt(selfParam.totalActiveTime, outParam.totalActiveTime) == false)
                 return false;
             if (compareInt(selfParam.publishDuration, outParam.publishDuration) == false)
-                return false;
-            if (compareInt(selfParam.superResolutionType, outParam.superResolutionType) == false)
                 return false;
             if (compareInt(selfParam.mosValue, outParam.mosValue) == false)
                 return false;
@@ -3340,15 +3362,15 @@ namespace Agora.Rtc
 
         public static bool compareIntPtr(IntPtr selfParam, IntPtr outParam)
         {
-            if (selfParam != (IntPtr)10)
-                return false;
+            int[] a = new int[1];
+            Marshal.Copy(selfParam, a, 0, 1);
 
-            return true;
+            return a[0] == 10;
         }
 
         public static bool compareUserAudioSpectrumInfoArray(UserAudioSpectrumInfo[] selfParam, UserAudioSpectrumInfo[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -3363,7 +3385,7 @@ namespace Agora.Rtc
 
         public static bool compareByteArray(byte[] selfParam, byte[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -3408,7 +3430,7 @@ namespace Agora.Rtc
 
         public static bool compareMusicChartInfoArray(MusicChartInfo[] selfParam, MusicChartInfo[] outParam)
         {
-            if (selfParam.Length != 10)
+            if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)

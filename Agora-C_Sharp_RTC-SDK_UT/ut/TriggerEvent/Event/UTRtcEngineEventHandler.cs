@@ -185,11 +185,11 @@ namespace Agora.Rtc
         }
 
         ///////////////////////////////////
-       
+
 
         public bool OnAudioDeviceStateChanged_be_trigger = false;
         public string OnAudioDeviceStateChanged_deviceId = null;
-        public MEDIA_DEVICE_TYPE OnAudioDeviceStateChanged_deviceType ;
+        public MEDIA_DEVICE_TYPE OnAudioDeviceStateChanged_deviceType;
         public MEDIA_DEVICE_STATE_TYPE OnAudioDeviceStateChanged_deviceState;
 
         public override void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
@@ -1757,7 +1757,7 @@ namespace Agora.Rtc
 
         public bool OnVideoDeviceStateChanged_be_trigger = false;
         public string OnVideoDeviceStateChanged_deviceId = null;
-        public MEDIA_DEVICE_TYPE OnVideoDeviceStateChanged_deviceType ;
+        public MEDIA_DEVICE_TYPE OnVideoDeviceStateChanged_deviceType;
         public MEDIA_DEVICE_STATE_TYPE OnVideoDeviceStateChanged_deviceState;
 
         public override void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
@@ -2733,6 +2733,40 @@ namespace Agora.Rtc
                 return false;
 
             if (ParamsHelper.compareDirectCdnStreamingStats(OnDirectCdnStreamingStats_stats, stats) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+        public bool OnVideoRenderingTracingResult_be_trigger = false;
+        public RtcConnection OnVideoRenderingTracingResult_connection = null;
+        public uid_t OnVideoRenderingTracingResult_uid = 0;
+        public MEDIA_TRACE_EVENT OnVideoRenderingTracingResult_currentEvent = MEDIA_TRACE_EVENT.MEDIA_TRACE_EVENT_VIDEO_DECODED;
+        public VideoRenderingTracingInfo OnVideoRenderingTracingResult_tracingInfo = null;
+
+        public override void OnVideoRenderingTracingResult(RtcConnection connection, uid_t uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
+        {
+            OnVideoRenderingTracingResult_be_trigger = true;
+            OnVideoRenderingTracingResult_connection = connection;
+            OnVideoRenderingTracingResult_uid = uid;
+            OnVideoRenderingTracingResult_currentEvent = currentEvent;
+            OnVideoRenderingTracingResult_tracingInfo = tracingInfo;
+        }
+
+        public bool OnVideoRenderingTracingResultPassed(RtcConnection connection, uid_t uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
+        {
+            if (OnVideoRenderingTracingResult_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareRtcConnection(OnVideoRenderingTracingResult_connection, connection) == false)
+                return false;
+            if (ParamsHelper.compareUid_t(OnVideoRenderingTracingResult_uid, uid) == false)
+                return false;
+            if (ParamsHelper.compareMEDIA_TRACE_EVENT(OnVideoRenderingTracingResult_currentEvent, currentEvent) == false)
+                return false;
+            if (ParamsHelper.compareVideoRenderingTracingInfo(OnVideoRenderingTracingResult_tracingInfo, tracingInfo) == false)
                 return false;
 
             return true;

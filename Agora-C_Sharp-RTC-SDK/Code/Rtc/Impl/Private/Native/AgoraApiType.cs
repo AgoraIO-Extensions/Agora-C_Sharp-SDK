@@ -42,7 +42,6 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETVIDEODENOISEROPTIONS = "RtcEngine_setVideoDenoiserOptions";
         internal const string FUNC_RTCENGINE_SETCOLORENHANCEOPTIONS = "RtcEngine_setColorEnhanceOptions";
         internal const string FUNC_RTCENGINE_ENABLEVIRTUALBACKGROUND = "RtcEngine_enableVirtualBackground";
-        internal const string FUNC_RTCENGINE_ENABLEREMOTESUPERRESOLUTION = "RtcEngine_enableRemoteSuperResolution";
         internal const string FUNC_RTCENGINE_SETUPREMOTEVIDEO = "RtcEngine_setupRemoteVideo";
         internal const string FUNC_RTCENGINE_SETUPLOCALVIDEO = "RtcEngine_setupLocalVideo";
         internal const string FUNC_RTCENGINE_ENABLEAUDIO = "RtcEngine_enableAudio";
@@ -283,6 +282,9 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_GETCURRENTMONOTONICTIMEINMS = "RtcEngine_getCurrentMonotonicTimeInMs";
         internal const string FUNC_RTCENGINE_ENABLEWIRELESSACCELERATE = "RtcEngine_enableWirelessAccelerate";
         internal const string FUNC_RTCENGINE_GETNETWORKTYPE = "RtcEngine_getNetworkType";
+        internal const string FUNC_RTCENGINE_STARTMEDIARENDERINGTRACING = "RtcEngine_startMediaRenderingTracing";
+        internal const string FUNC_RTCENGINE_ENABLEINSTANTMEDIARENDERING = "RtcEngine_enableInstantMediaRendering";
+
         #endregion
 
         #region IRtcEngineEx start
@@ -334,6 +336,8 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_SETDUALSTREAMMODEEX = "RtcEngineEx_setDualStreamModeEx";
         internal const string FUNC_RTCENGINEEX_ENABLEWIRELESSACCELERATE = "RtcEngineEx_enableWirelessAccelerate";
         internal const string FUNC_RTCENGINEEX_TAKESNAPSHOTEX = "RtcEngineEx_takeSnapshotEx";
+        internal const string FUNC_RTCENGINEEX_STARTMEDIARENDERINGTRACINGEX = "RtcEngineEx_startMediaRenderingTracingEx";
+
         #endregion
 
         #region IMediaPlayer start

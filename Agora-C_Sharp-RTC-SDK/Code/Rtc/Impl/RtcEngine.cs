@@ -3022,15 +3022,6 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetSubscribeVideoAllowlistEx(uidList, uidNumber, connection);
         }
 
-        public override int EnableRemoteSuperResolution(uint userId, bool enable)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.EnableRemoteSuperResolution(userId, enable);
-        }
-
         public override int EnableContentInspect(bool enabled, ContentInspectConfig config)
         {
             if (_rtcEngineImpl == null)
@@ -3328,6 +3319,32 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.RegisterExtension(provider, extension, type);
+        }
+
+        public override int StartMediaRenderingTracing()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.StartMediaRenderingTracing();
+        }
+
+        public override int EnableInstantMediaRendering()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableInstantMediaRendering();
+        }
+        public override int StartMediaRenderingTracingEx(RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.StartMediaRenderingTracingEx(connection);
         }
     }
 }

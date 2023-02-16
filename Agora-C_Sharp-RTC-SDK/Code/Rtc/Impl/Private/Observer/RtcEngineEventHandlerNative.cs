@@ -1076,7 +1076,7 @@ namespace Agora.Rtc
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnFirstRemoteAudioFrame(
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "userId"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1530,6 +1530,24 @@ namespace Agora.Rtc
                     });
 #endif
                     break;
+
+                case "RtcEngineEventHandler_onVideoRenderingTracingResultEx":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnVideoRenderingTracingResult(
+                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (MEDIA_TRACE_EVENT)AgoraJson.GetData<int>(jsonData, "currentEvent"),
+                        (VideoRenderingTracingInfo)AgoraJson.JsonToStruct<VideoRenderingTracingInfo>(jsonData, "tracingInfo")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 case "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>

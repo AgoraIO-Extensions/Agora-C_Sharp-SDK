@@ -5161,7 +5161,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        CONNECTION_CHANGED_LICENSE_VERIFY_FAILED = 21
+        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21
     };
 
     ///
@@ -7738,6 +7738,77 @@ namespace Agora.Rtc
             captureAudio = true;
             videoParams = new ScreenVideoParameters();
         }
+    };
+
+    /**
+ * The tracing event of media rendering.
+ */
+    public enum MEDIA_TRACE_EVENT
+    {
+        /**
+         * 0: The media frame has been rendered.
+         */
+        MEDIA_TRACE_EVENT_VIDEO_RENDERED = 0,
+        /**
+         * 1: The media frame has been decoded.
+         */
+        MEDIA_TRACE_EVENT_VIDEO_DECODED = 1,
+    };
+
+    /**
+     * The video rendering tracing result
+     */
+    public class VideoRenderingTracingInfo
+    {
+        /**
+         * Elapsed time from the start tracing time to the time when the tracing event occurred.
+         */
+        public int elapsedTime;
+        /**
+         * Elapsed time from the start tracing time to the time when join channel.
+         * 
+         * **Note**
+         * If the start tracing time is behind the time when join channel, this value will be negative.
+         */
+        public int start2JoinChannel;
+        /**
+         * Elapsed time from joining channel to finishing joining channel.
+         */
+        public int join2JoinSuccess;
+        /**
+         * Elapsed time from finishing joining channel to remote user joined.
+         * 
+         * **Note**
+         * If the start tracing time is after the time finishing join channel, this value will be
+         * the elapsed time from the start tracing time to remote user joined. The minimum value is 0.
+         */
+        public int joinSuccess2RemoteJoined;
+        /**
+         * Elapsed time from remote user joined to set the view.
+         * 
+         * **Note**
+         * If the start tracing time is after the time when remote user joined, this value will be
+         * the elapsed time from the start tracing time to set the view. The minimum value is 0.
+         */
+        public int remoteJoined2SetView;
+        /**
+         * Elapsed time from remote user joined to the time subscribing remote video stream.
+         * 
+         * **Note**
+         * If the start tracing time is after the time when remote user joined, this value will be
+         * the elapsed time from the start tracing time to the time subscribing remote video stream.
+         * The minimum value is 0.
+         */
+        public int remoteJoined2UnmuteVideo;
+        /**
+         * Elapsed time from remote user joined to the remote video packet received.
+         * 
+         * **Note**
+         * If the start tracing time is after the time when remote user joined, this value will be
+         * the elapsed time from the start tracing time to the time subscribing remote video stream.
+         * The minimum value is 0.
+         */
+        public int remoteJoined2PacketReceived;
     };
 
     ///
