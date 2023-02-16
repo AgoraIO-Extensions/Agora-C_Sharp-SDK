@@ -554,10 +554,10 @@ namespace Agora.Rtm.Internal
                     {
 #endif
                     if (rtmEventHandler == null) return;
-                    rtmEventHandler.OnWhoNowResultO(
+                    rtmEventHandler.OnWhoNowResult(
                         (UInt64)AgoraJson.GetData<UInt64>(jsonData, "requestId"),
                         AgoraJson.JsonToStructArray<UserState>(jsonData, "userStateList"),
-                        AgoraJson.JsonToStruct<UInt64>(jsonData, "count"),
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "count"),
                         (string)AgoraJson.GetData<string>(jsonData, "nextPage"),
                         (OPERATION_ERROR_CODE)AgoraJson.GetData<int>(jsonData, "errorCode")
                         );
