@@ -212,7 +212,7 @@ namespace Agora.Rtc.Event
 
             VideoFrameBufferConfig config;
             config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_MEDIA_PLAYER;
-            config.id = 10;
+            config.id = 1;
             config.key = "";
 
             jsonObj.Clear();

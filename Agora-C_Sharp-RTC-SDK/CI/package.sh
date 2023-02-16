@@ -90,6 +90,8 @@ if [ "$SDK_TYPE" == "audio" ]; then
     sed -i '' 's/rootDic.SetString(cameraPermission, "Video need to use camera");//' "$POST_PROCESS_SCRIPT_PATH"
     perl -0777 -pi -e 's|Start Tag for video SDK only[\s\S]*End Tag||g' "$POST_PROCESS_SCRIPT_PATH"
 fi
+
+mkdir "$ROOT_DIR"/Unity/Plugins/iOS
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
 cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/Agora-Unity-RTC-SDK

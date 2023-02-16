@@ -995,6 +995,9 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) { }
 
+
+        public virtual void OnVideoRenderingTracingResult(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo) { }
+
         ///
         /// <summary>
         /// Occurs when the SDK cannot get the device permission.

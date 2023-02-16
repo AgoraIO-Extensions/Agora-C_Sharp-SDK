@@ -635,7 +635,7 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
-        
+
         ///
         /// <summary>
         /// Updates the display mode of the local video view.
@@ -1039,21 +1039,7 @@ namespace Agora.Rtc
         ///
         public abstract int EnableVirtualBackground(bool enabled, VirtualBackgroundSource backgroundSource, SegmentationProperty segproperty, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE);
 
-        ///
-        /// <summary>
-        /// Enables/Disables the super resolution algorithm for a remote user's video stream.
-        /// This function can effectively improve the resolution of the remote video picture seen by the local user, that is, the width and height (pixels) of the video received by the specified remote user are enlarged to 2 times original size.After calling this method, you can confirm whether super resolution is successfully enabled through the remote video stream statistics ( RemoteVideoStats ) in the OnRemoteVideoStats callback:If the parameter superResolutionType >0: Super resolution is enabled.If the parameter superResolutionType =0: Super resolution is not enabled.The super resolution feature requires extra system resources. To balance the visual experience and system consumption, this feature can only be enabled for a single remote user. If the local user uses super resolution on Android, the original resolution of the remote user's video cannot exceed 640 × 360 pixels; if the local user uses super resolution on iOS, the original resolution of the remote user's video cannot exceed 640 × 480 pixels.This method applies to Android and iOS only.This method relies on the super resolution dynamic library libagora_super_resolution_extension.so (Android); AgoraSuperResolutionExtension.xcframework (iOS). If the dynamic library is deleted, the function cannot be enabled normally.Because this method has certain system performance requirements, Agora recommends that you use the following devices or better:Android:VIVO: V1821A, NEX S, 1914A, 1916A, 1962A, 1824BA, X60, X60 ProOPPO: PCCM00, Find X3OnePlus: A6000Xiaomi: Mi 8, Mi 9, Mi 10, Mi 11, MIX3, Redmi K20 ProSAMSUNG: SM-G9600, SM-G9650, SM-N9600, SM-G9708, SM-G960U, SM-G9750, S20, S21HUAWEI: SEA-AL00, ELE-AL00, VOG-AL00, YAL-AL10, HMA-AL00, EVR-AN00, nova 4, nova 5 Pro, nova 6 5G, nova 7 5G, Mate 30, Mate 30 Pro, Mate 40, Mate 40 Pro, P40, P40 Pro, Huawei M6, MatePad 10.8iOS:iPhone XRiPhone XSiPhone XS MaxiPhone 11iPhone 11 ProiPhone 11 Pro MaxiPhone 12iPhone 12 miniiPhone 12 ProiPhone 12 Pro MaxiPhone 12 SE (2nd generation)iPad Pro 11-inch (3rd generation)iPad Pro 12.9-inch (3rd generation)iPad Air 3 (3rd generation)iPad Air 3 (4th generation)
-        /// </summary>
-        ///
-        /// <param name="userId"> The user ID of the remote user.</param>
-        ///
-        /// <param name="enable"> Whether to enable super resolution for the remote user’s video:true:Enable super resolution.false: Disable super resolution.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int EnableRemoteSuperResolution(uint userId, bool enable);
+
         #endregion
 
         #region Face detection
@@ -2401,7 +2387,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int PushReverseAudioFrame(AudioFrame frame);
-      
+
         ///
         /// <summary>
         /// Sets the external captured audio parameters and chooses whether to publish the audio to the remote user.
@@ -2924,7 +2910,7 @@ namespace Agora.Rtc
         ///
         public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value);
 
-   
+
         ///
         /// <summary>
         /// Gets detailed information on the extensions.
@@ -3971,6 +3957,14 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SetParameters(string key, object value);
+
+
+        public abstract int StartMediaRenderingTracing();
+
+
+
+        public abstract int EnableInstantMediaRendering();
+
         ///
         /// <summary>
         /// Gets the audio device information.
@@ -4862,5 +4856,6 @@ namespace Agora.Rtc
         public abstract int ResumeAllChannelMediaRelayEx(RtcConnection connection);
 
 
+        public abstract int StartMediaRenderingTracingEx(RtcConnection connection);
     }
 }
