@@ -11,32 +11,24 @@ namespace Agora.Rtc
     {
         private static Dictionary<string, IMediaRecorderObserver> mediaRecorderObserverDic = new Dictionary<string, IMediaRecorderObserver>();
 
-
-        private static string generateKey(RtcConnection connection)
+        internal static void AddMediaRecorderObserver(string nativeHandler, IMediaRecorderObserver observer)
         {
-            return connection.localUid.ToString() + "_" + connection.channelId;
+
+            if (mediaRecorderObserverDic.ContainsKey(nativeHandler))
+                mediaRecorderObserverDic.Remove(nativeHandler);
+
+            mediaRecorderObserverDic.Add(nativeHandler, observer);
         }
 
-        internal static void AddMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver observer)
+        internal static bool ContainsMediaRecorderObserver(string nativeHandler)
         {
-            var key = generateKey(connection);
-            if (mediaRecorderObserverDic.ContainsKey(key))
-                mediaRecorderObserverDic.Remove(key);
-
-            mediaRecorderObserverDic.Add(key, observer);
+            return mediaRecorderObserverDic.ContainsKey(nativeHandler);
         }
 
-        internal static bool ContainsMediaRecorderObserver(RtcConnection connection)
+        internal static void RemoveMediaRecorderObserver(string nativeHandler)
         {
-            var key = generateKey(connection);
-            return mediaRecorderObserverDic.ContainsKey(key);
-        }
-
-        internal static void RemoveMediaRecorderObserver(RtcConnection connection)
-        {
-            var key = generateKey(connection);
-            if (mediaRecorderObserverDic.ContainsKey(key))
-                mediaRecorderObserverDic.Remove(key);
+            if (mediaRecorderObserverDic.ContainsKey(nativeHandler))
+                mediaRecorderObserverDic.Remove(nativeHandler);
         }
 
         internal static void ClearMediaRecorderObserver()
@@ -69,8 +61,8 @@ namespace Agora.Rtc
             {
                 jsonData = AgoraJson.ToObject(data);
             }
-            RtcConnection connection = AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
-            string key = generateKey(connection);
+
+            string nativeHandler = (string)AgoraJson.GetData<string>(jsonData, "nativeHandler");
             switch (@event)
             {
                 case "MediaRecorderObserver_onRecorderStateChanged":
@@ -78,8 +70,10 @@ namespace Agora.Rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                    if (!mediaRecorderObserverDic.ContainsKey(key)) return;
-                    mediaRecorderObserverDic[key].OnRecorderStateChanged(
+                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandler)) return;
+                    mediaRecorderObserverDic[nativeHandler].OnRecorderStateChanged(
+                        (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
                         (RecorderErrorCode)AgoraJson.GetData<int>(jsonData, "error")
                     );
@@ -93,8 +87,10 @@ namespace Agora.Rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                    if (!mediaRecorderObserverDic.ContainsKey(key)) return;
-                    mediaRecorderObserverDic[key].OnRecorderInfoUpdated(
+                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandler)) return;
+                    mediaRecorderObserverDic[nativeHandler].OnRecorderInfoUpdated(
+                        (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

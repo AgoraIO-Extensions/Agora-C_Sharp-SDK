@@ -45,16 +45,7 @@ namespace Agora.Rtc
         private static readonly string identifier = "AgoraMediaPlayer";
 #endif
 
-        private List<T> GetDicKeys<T, D>(Dictionary<T, D> dic)
-        {
-            List<T> list = new List<T>();
-            foreach (var e in dic)
-            {
-                list.Add(e.Key);
-            }
-
-            return list;
-        }
+       
 
 
         internal MediaPlayerImpl(IrisApiEnginePtr irisApiEngine)
@@ -80,7 +71,7 @@ namespace Agora.Rtc
 
                 /// Dont need unset.Because rtc engine will destroy soon when this call finish.
                 /// so all mediaplay observer wiil destroy because they are smart pointer
-                var keys = GetDicKeys<int, EventHandlerHandle>(_mediaPlayerAudioFrameObserverHandles);
+                var keys = AgoraUtil.GetDicKeys<int, EventHandlerHandle>(_mediaPlayerAudioFrameObserverHandles);
                 foreach (var playerId in keys)
                 {
                     //this.UnSetIrisAudioFrameObserver(playerId);
@@ -89,7 +80,7 @@ namespace Agora.Rtc
                 }
                 _mediaPlayerAudioFrameObserverHandles.Clear();
 
-                keys = GetDicKeys<int, EventHandlerHandle>(_mediaPlayerCustomProviderHandles);
+                keys = AgoraUtil.GetDicKeys<int, EventHandlerHandle>(_mediaPlayerCustomProviderHandles);
                 foreach (var playerId in keys)
                 {
                     //this.UnSetMediaPlayerOpenWithCustomSource(playerId);
@@ -98,7 +89,7 @@ namespace Agora.Rtc
                 }
                 _mediaPlayerCustomProviderHandles.Clear();
 
-                keys = GetDicKeys<int, EventHandlerHandle>(this._mediaPlayerMediaProviderHandles);
+                keys = AgoraUtil.GetDicKeys<int, EventHandlerHandle>(this._mediaPlayerMediaProviderHandles);
                 foreach (var playerId in keys)
                 {
                     //this.UnsetMediaPlayerOpenWithMediaSource(playerId);
@@ -107,7 +98,7 @@ namespace Agora.Rtc
                 }
                 _mediaPlayerMediaProviderHandles.Clear();
 
-                keys = GetDicKeys<int, EventHandlerHandle>(this._mediaPlayerAudioSpectrumObserverHandles);
+                keys = AgoraUtil.GetDicKeys<int, EventHandlerHandle>(this._mediaPlayerAudioSpectrumObserverHandles);
                 foreach (var playerId in keys)
                 {
                     //this.UnSetIrisAudioSpectrumObserver(playerId);
@@ -441,7 +432,7 @@ namespace Agora.Rtc
             return ret;
         }
 
-        public int RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer)
+        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer)
         {
             int ret = UnSetIrisAudioFrameObserver(playerId);
             MediaPlayerAudioFrameObserverNative.RemoveAudioFrameObserver(playerId);
@@ -451,7 +442,7 @@ namespace Agora.Rtc
             return ret;
         }
 
-        public int RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             int ret = UnSetIrisAudioFrameObserver(playerId);
             MediaPlayerAudioFrameObserverNative.RemoveAudioFrameObserver(playerId);

@@ -452,21 +452,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserStateChanged(RtcConnection connection, uint remoteUid, uint state) { }
 
-        [Obsolete("This callback is deprecated. Use other specific event callbacks instead")]
-        ///
-        /// <summary>
-        /// Occurs when a method is executed by the SDK.
-        /// Deprecated:Deprecated as of v4.1.0. This method can neither accurately characterize the specific API method nor represent the execution result of the API.Agora recommends getting the results of the API implementation through relevant channels and media callbacks. For example, after calling the EnableLocalAudio method to enable the microphone, the status of the microphone is returned in the OnLocalAudioStateChanged callback.
-        /// </summary>
-        ///
-        /// <param name="err"> The error code returned by the SDK when the method call fails. If the SDK returns 0, then the method call is successful.</param>
-        ///
-        /// <param name="api"> The method executed by the SDK.</param>
-        ///
-        /// <param name="result"> The result of the method call.</param>
-        ///
-        public virtual void OnApiCallExecuted(int err, string api, string result) { }
-
         ///
         /// <summary>
         /// Reports the statistics of the local audio stream.
@@ -994,6 +979,9 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) { }
+
+
+        public virtual void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error){}
 
 
         public virtual void OnVideoRenderingTracingResult(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo) { }

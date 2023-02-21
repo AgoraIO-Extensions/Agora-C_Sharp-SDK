@@ -8,6 +8,43 @@ namespace Agora.Rtc
 
     #region AgoraMediaBase.h
 
+
+    public enum VIDEO_SOURCE_TYPE
+    {
+        VIDEO_SOURCE_CAMERA_PRIMARY = 0,
+        VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
+
+
+        VIDEO_SOURCE_SCREEN_PRIMARY = 2,
+        VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
+
+        VIDEO_SOURCE_SCREEN_SECONDARY = 3,
+
+        VIDEO_SOURCE_CUSTOM = 4,
+
+        VIDEO_SOURCE_MEDIA_PLAYER = 5,
+
+        VIDEO_SOURCE_RTC_IMAGE_PNG = 6,
+
+        VIDEO_SOURCE_RTC_IMAGE_JPEG = 7,
+
+        VIDEO_SOURCE_RTC_IMAGE_GIF = 8,
+
+        VIDEO_SOURCE_REMOTE = 9,
+
+        VIDEO_SOURCE_TRANSCODED = 10,
+
+        VIDEO_SOURCE_CAMERA_THIRD = 11,
+
+        VIDEO_SOURCE_CAMERA_FOURTH = 12,
+
+        VIDEO_SOURCE_SCREEN_THIRD = 13,
+
+        VIDEO_SOURCE_SCREEN_FOURTH = 14,
+
+        VIDEO_SOURCE_UNKNOWN = 100
+    };
+
     ///
     /// <summary>
     /// The type of the audio route.
@@ -486,17 +523,16 @@ namespace Agora.Rtc
         RENDER_MODE_ADAPTIVE = 3,
     };
 
-    namespace Media.Base
+
+    enum CAMERA_VIDEO_SOURCE_TYPE
     {
-        enum VIDEO_SOURCE_TYPE
-        {
-            CAMERA_SOURCE_FRONT = 0,
+        CAMERA_SOURCE_FRONT = 0,
 
-            CAMERA_SOURCE_BACK = 1,
+        CAMERA_SOURCE_BACK = 1,
 
-            VIDEO_SOURCE_UNSPECIFIED = 2,
-        };
+        VIDEO_SOURCE_UNSPECIFIED = 2,
     };
+
 
     ///
     /// @ignore
@@ -568,6 +604,7 @@ namespace Agora.Rtc
             this.textureId = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
+            this.alphaBuffer = null;
         }
 
         public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride,
@@ -704,6 +741,9 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int metadata_size;
+
+
+        public byte[] alphaBuffer;
     };
 
     ///

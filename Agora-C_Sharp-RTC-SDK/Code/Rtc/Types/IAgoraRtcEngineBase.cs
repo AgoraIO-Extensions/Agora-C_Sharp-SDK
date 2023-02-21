@@ -55,6 +55,10 @@ namespace Agora.Rtc
         /// </summary>
         ///
         AUDIO_APPLICATION_PLAYOUT_DEVICE = 4,
+
+        AUDIO_VIRTUAL_PLAYOUT_DEVICE = 5,
+
+        AUDIO_VIRTUAL_RECORDING_DEVICE = 6,
     };
 
     ///
@@ -952,22 +956,6 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
-    ///
-    public class AudioTrackConfig
-    {
-        public AudioTrackConfig()
-        {
-            enableLocalPlayback = true;
-        }
-
-        ///
-        /// @ignore
-        ///
-        public bool enableLocalPlayback;
-    };
-
-    ///
     /// <summary>
     /// The camera direction.
     /// </summary>
@@ -1450,24 +1438,7 @@ namespace Agora.Rtc
         /// The ID of the custom audio source to publish. The default value is 0.If you have set the value of sourceNumber greater than 1 in SetExternalAudioSource , the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track starting from 0.
         /// </summary>
         ///
-        public Optional<int> publishCustomAudioSourceId = new Optional<int>();
-
-        ///
-        /// <summary>
-        /// Whether to enable AEC when publishing the audio captured from a custom source:true: Enable AEC when publishing the captured audio from a custom source.false: (Default) Do not enable AEC when publishing the audio captured from the custom source.
-        /// </summary>
-        ///
-        public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<bool> publishDirectCustomAudioTrack = new Optional<bool>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<bool> publishCustomAudioTrackAec = new Optional<bool>();
+        public Optional<int> publishCustomAudioTrackId = new Optional<int>();
 
         ///
         /// <summary>
@@ -1664,28 +1635,12 @@ namespace Agora.Rtc
                 writer.Write(this.publishCustomAudioTrack.GetValue());
             }
 
-            if (this.publishCustomAudioSourceId.HasValue())
+            if (this.publishCustomAudioTrackId.HasValue())
             {
-                writer.WritePropertyName("publishCustomAudioSourceId");
-                writer.Write(this.publishCustomAudioSourceId.GetValue());
-            }
-            if (this.publishCustomAudioTrackEnableAec.HasValue())
-            {
-                writer.WritePropertyName("publishCustomAudioTrackEnableAec");
-                writer.Write(this.publishCustomAudioTrackEnableAec.GetValue());
+                writer.WritePropertyName("publishCustomAudioTrackId");
+                writer.Write(this.publishCustomAudioTrackId.GetValue());
             }
 
-            if (this.publishDirectCustomAudioTrack.HasValue())
-            {
-                writer.WritePropertyName("publishDirectCustomAudioTrack");
-                writer.Write(this.publishDirectCustomAudioTrack.GetValue());
-            }
-
-            if (this.publishCustomAudioTrackAec.HasValue())
-            {
-                writer.WritePropertyName("publishCustomAudioTrackAec");
-                writer.Write(this.publishCustomAudioTrackAec.GetValue());
-            }
 
             if (this.publishCustomVideoTrack.HasValue())
             {
@@ -1871,6 +1826,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
+
+        HTTP_PROXY_TYPE = 5,
+        /** 6: The https proxy.
+         */
+        HTTPS_PROXY_TYPE = 6,
     };
 
     ///
@@ -2032,12 +1992,13 @@ namespace Agora.Rtc
             logConfig = new LogConfig();
             useExternalEglContext = false;
             domainLimit = false;
+            autoRegisterAgoraExtensions = true;
         }
 
         public RtcEngineContext(string appId, UInt64 context,
             CHANNEL_PROFILE_TYPE channelProfile, AUDIO_SCENARIO_TYPE audioScenario,
             AREA_CODE areaCode = AREA_CODE.AREA_CODE_GLOB,
-            LogConfig logConfig = null, string license = "")
+            LogConfig logConfig = null, string license = "", bool autoRegisterAgoraExtensions = true)
         {
             this.appId = appId;
             this.context = context;
@@ -2046,6 +2007,7 @@ namespace Agora.Rtc
             this.audioScenario = audioScenario;
             this.areaCode = areaCode;
             this.logConfig = logConfig ?? new LogConfig();
+            this.autoRegisterAgoraExtensions = autoRegisterAgoraExtensions;
         }
 
         private IRtcEngineEventHandler eventHandler = null;
@@ -2124,6 +2086,8 @@ namespace Agora.Rtc
         ///
         public bool domainLimit;
 
+        public bool autoRegisterAgoraExtensions;
+
         public override void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -2158,6 +2122,9 @@ namespace Agora.Rtc
 
             writer.WritePropertyName("useExternalEglContext");
             writer.Write(this.useExternalEglContext);
+
+            writer.WritePropertyName("autoRegisterAgoraExtensions");
+            writer.Write(this.autoRegisterAgoraExtensions);
 
             writer.WriteObjectEnd();
         }

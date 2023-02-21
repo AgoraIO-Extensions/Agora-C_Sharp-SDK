@@ -349,22 +349,6 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onApiCallExecuted":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
-                    {
-#endif
-                    if (rtcEngineEventHandler == null) return;
-                    rtcEngineEventHandler.OnApiCallExecuted(
-                        (int)AgoraJson.GetData<int>(jsonData, "err"),
-                        (string)AgoraJson.GetData<string>(jsonData, "api"),
-                        (string)AgoraJson.GetData<string>(jsonData, "result")
-                    );
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
-#endif
-                    break;
-
                 case "RtcEngineEventHandler_onRequestTokenEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
@@ -1433,6 +1417,21 @@ namespace Agora.Rtc
                         AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
                         (string)AgoraJson.GetData<string>(jsonData, "userAccount")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+                case "RtcEngineEventHandler_onLocalVideoTranscoderError":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnLocalVideoTranscoderError(
+                        AgoraJson.JsonToStruct<TranscodingVideoStream>(jsonData, "stream"),
+                        (VIDEO_TRANSCODER_ERROR)AgoraJson.GetData<int>(jsonData, "error")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

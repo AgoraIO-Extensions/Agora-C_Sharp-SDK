@@ -23,7 +23,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver callback);
+        public abstract int SetMediaRecorderObserver(IMediaRecorderObserver callback);
 
         ///
         /// <summary>
@@ -39,7 +39,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.2: The parameter is invalid. Ensure the following:The specified path of the recording file exists and is writable.The specified format of the recording file is supported.The maximum recording duration is correctly set.4: IRtcEngine does not support the request. The recording is ongoing or the recording stops because an error occurs.7: A method is called before IRtcEngine is initialized.
         /// </returns>
         ///
-        public abstract int StartRecording(RtcConnection connection, MediaRecorderConfiguration config);
+        public abstract int StartRecording(MediaRecorderConfiguration config);
 
         ///
         /// <summary>
@@ -53,6 +53,6 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.-7: A method is called before IRtcEngine is initialized.
         /// </returns>
         ///
-        public abstract int StopRecording(RtcConnection connection);
+        public abstract int StopRecording();
     };
 }

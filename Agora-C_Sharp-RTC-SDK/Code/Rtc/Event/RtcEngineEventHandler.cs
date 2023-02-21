@@ -76,8 +76,6 @@ namespace Agora.Rtc
 
     public delegate void OnUserStateChangedHandler(RtcConnection connection, uint remoteUid, uint state);
 
-    public delegate void OnApiCallExecutedHandler(int err, string api, string result);
-
     public delegate void OnLocalAudioStatsHandler(RtcConnection connection, LocalAudioStats stats);
 
     public delegate void OnRemoteAudioStatsHandler(RtcConnection connection, RemoteAudioStats stats);
@@ -239,7 +237,6 @@ namespace Agora.Rtc
         public event OnUserEnableVideoHandler EventOnUserEnableVideo;
         public event OnUserEnableLocalVideoHandler EventOnUserEnableLocalVideo;
         public event OnUserStateChangedHandler EventOnUserStateChanged;
-        public event OnApiCallExecutedHandler EventOnApiCallExecuted;
         public event OnLocalAudioStatsHandler EventOnLocalAudioStats;
         public event OnRemoteAudioStatsHandler EventOnRemoteAudioStats;
         public event OnLocalVideoStatsHandler EventOnLocalVideoStats;
@@ -270,8 +267,6 @@ namespace Agora.Rtc
         public event OnAudioDeviceVolumeChangedHandler EventOnAudioDeviceVolumeChanged;
         public event OnRtmpStreamingStateChangedHandler EventOnRtmpStreamingStateChanged;
         public event OnRtmpStreamingEventHandler EventOnRtmpStreamingEvent;
-        //public event OnStreamPublishedHandler EventOnStreamPublished;
-        //public event OnStreamUnpublishedHandler EventOnStreamUnpublished;
         public event OnTranscodingUpdatedHandler EventOnTranscodingUpdated;
         public event OnAudioRoutingChangedHandler EventOnAudioRoutingChanged;
         public event OnChannelMediaRelayStateChangedHandler EventOnChannelMediaRelayStateChanged;
@@ -530,12 +525,6 @@ namespace Agora.Rtc
         {
             if (EventOnUserStateChanged == null) return;
             EventOnUserStateChanged.Invoke(connection, remoteUid, state);
-        }
-
-        public override void OnApiCallExecuted(int err, string api, string result)
-        {
-            if (EventOnApiCallExecuted == null) return;
-            EventOnApiCallExecuted.Invoke(err, api, result);
         }
 
         public override void OnLocalAudioStats(RtcConnection connection, LocalAudioStats stats)

@@ -1,11 +1,11 @@
-using System;
+﻿using System;
 
 namespace Agora.Rtc
 {
     public sealed class MusicPlayer : IMusicPlayer
     {
         private MusicPlayerImpl _musicPlayerImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
         private int playerId;
 
         internal MusicPlayer(MusicPlayerImpl impl, int id)
@@ -39,7 +39,7 @@ namespace Agora.Rtc
             return _musicPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-        public override int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
+        public override int RegisterAudioFrameObserver(IAudioPcmFrameSink observer)
         {
             if (_musicPlayerImpl == null)
             {
@@ -48,7 +48,7 @@ namespace Agora.Rtc
             return _musicPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
         }
 
-        public override int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public override int RegisterAudioFrameObserver(IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             if (_musicPlayerImpl == null)
             {

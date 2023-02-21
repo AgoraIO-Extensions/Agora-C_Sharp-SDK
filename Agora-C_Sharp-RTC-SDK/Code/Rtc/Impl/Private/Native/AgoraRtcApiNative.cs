@@ -60,7 +60,7 @@ namespace Agora.Rtc
 
         internal static int CallIrisApiWithArgs(IrisRtcEnginePtr engine_ptr, string func_name,
             string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisCApiParam apiParam,
-            uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0)
+            uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0, uint buffer3Length = 0)
         {
             apiParam.@event = func_name;
             apiParam.data = @params;
@@ -71,10 +71,11 @@ namespace Agora.Rtc
             IntPtr lengthPtr = IntPtr.Zero;
             if (buffer_count > 0)
             {
-                int[] lengths = new int[3];
+                int[] lengths = new int[4];
                 lengths[0] = (int)buffer0Length;
                 lengths[1] = (int)buffer1Length;
                 lengths[2] = (int)buffer2Length;
+                lengths[3] = (int)buffer3Length;
                 lengthPtr = Marshal.AllocHGlobal(lengths.Length * sizeof(int));
                 Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
             }
