@@ -1178,5 +1178,7 @@ namespace Agora.Rtc
         public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats) { }
 
         public virtual void OnAudioMixingPositionChanged(Int64 position) { }
+
+        public virtual void OnSetRtmFlagResult(RtcConnection connection, int code) { }
     };
 }

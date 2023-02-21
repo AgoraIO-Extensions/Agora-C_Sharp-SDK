@@ -192,6 +192,8 @@ namespace Agora.Rtc
 
     public delegate void OnExtensionErrorHandler(string provider, string extension, int error, string message);
 
+    public delegate void OnSetRtmFlagResultHandler(RtcConnection connection, int code);
+
     public delegate void OnDirectCdnStreamingStateChangedHandler(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message);
 
     public delegate void OnDirectCdnStreamingStatsHandler(DirectCdnStreamingStats stats);
@@ -293,6 +295,7 @@ namespace Agora.Rtc
         public event OnExtensionStartedHandler EventOnExtensionStarted;
         public event OnExtensionStoppedHandler EventOnExtensionStopped;
         public event OnExtensionErrorHandler EventOnExtensionErrored;
+        public event OnSetRtmFlagResultHandler EventOnSetRtmFlagResult;
         public event OnDirectCdnStreamingStateChangedHandler EventOnDirectCdnStreamingStateChanged;
         public event OnDirectCdnStreamingStatsHandler EventOnDirectCdnStreamingStats;
 
@@ -888,6 +891,12 @@ namespace Agora.Rtc
         {
             if (EventOnExtensionErrored == null) return;
             EventOnExtensionErrored.Invoke(provider, extension, error, message);
+        }
+
+        public override void OnSetRtmFlagResult(RtcConnection connection, int code)
+        {
+            if (EventOnSetRtmFlagResult == null) return;
+            EventOnSetRtmFlagResult.Invoke(connection, code);
         }
 
         public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
