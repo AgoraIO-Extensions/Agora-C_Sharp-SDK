@@ -10,7 +10,7 @@ namespace Agora.Rtc.Event
 
         public IRtcEngineEx Engine;
         public IMediaPlayer MediaPlayer;
-        public UTMediaPlayerAudioFrameObserver EventHandler;
+        public UTIAudioPcmFrameSink  EventHandler;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -27,7 +27,7 @@ namespace Agora.Rtc.Event
             ApiParam.AllocResult();
 
             MediaPlayer = Engine.CreateMediaPlayer();
-            EventHandler = new UTMediaPlayerAudioFrameObserver();
+            EventHandler = new UTIAudioPcmFrameSink ();
             MediaPlayer.RegisterAudioFrameObserver(EventHandler);
         }
 

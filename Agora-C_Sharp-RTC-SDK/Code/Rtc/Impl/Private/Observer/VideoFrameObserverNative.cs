@@ -82,11 +82,13 @@ namespace Agora.Rtc
                 if (localVideoFrame.height != videoFrameConverted.height ||
                 localVideoFrame.yStride != videoFrameConverted.yStride ||
                 localVideoFrame.uStride != videoFrameConverted.uStride ||
-                localVideoFrame.vStride != videoFrameConverted.vStride)
+                localVideoFrame.vStride != videoFrameConverted.vStride
+                )
                 {
                     localVideoFrame.yBuffer = new byte[videoFrameConverted.y_buffer_length];
                     localVideoFrame.uBuffer = new byte[videoFrameConverted.u_buffer_length];
                     localVideoFrame.vBuffer = new byte[videoFrameConverted.v_buffer_length];
+                    localVideoFrame.alphaBuffer = new byte[videoFrameConverted.alpha_buffer_length];
                 }
 
                 if (videoFrameConverted.yBuffer != IntPtr.Zero)
@@ -98,6 +100,9 @@ namespace Agora.Rtc
                 if (videoFrameConverted.vBuffer != IntPtr.Zero)
                     Marshal.Copy(videoFrameConverted.vBuffer, localVideoFrame.vBuffer, 0,
                         (int)videoFrameConverted.v_buffer_length);
+                if(videoFrameConverted.alphaBuffer!= IntPtr.Zero)
+                    Marshal.Copy(videoFrameConverted.alphaBuffer, localVideoFrame.alphaBuffer, 0,
+                       (int)videoFrameConverted.alpha_buffer_length);
             }
 
             localVideoFrame.width = videoFrameConverted.width;
@@ -116,6 +121,7 @@ namespace Agora.Rtc
             localVideoFrame.sharedContext = videoFrameConverted.sharedContext;
             localVideoFrame.matrix = videoFrameConverted.matrix;
             localVideoFrame.textureId = videoFrameConverted.textureId;
+            localVideoFrame.alphaBufferPtr = videoFrameConverted.alphaBuffer;
         }
 
         private static bool ProcessVideoFrameReceived(ref IrisVideoFrame videoFrame, ref VideoFrame localVideoFrame)

@@ -5503,6 +5503,18 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (long)AgoraJson.GetData<long>(_apiParam.Result, "result");
         }
 
+        public int EnableWirelessAccelerate(bool enabled)
+        {
+            _param.Clear();
+            _param.Add("enabled", enabled);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEWIRELESSACCELERATE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
 
         public int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection)
         {

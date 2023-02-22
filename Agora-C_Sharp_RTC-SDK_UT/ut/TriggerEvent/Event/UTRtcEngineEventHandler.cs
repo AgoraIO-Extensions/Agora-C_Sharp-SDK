@@ -1880,31 +1880,29 @@ namespace Agora.Rtc
 
             return true;
         }
+
         ///////////////////////////////////
 
-        public bool OnApiCallExecuted_be_trigger = false;
-        public int OnApiCallExecuted_err = 0;
-        public string OnApiCallExecuted_api = null;
-        public string OnApiCallExecuted_result = null;
 
-        public override void OnApiCallExecuted(int err, string api, string result)
+        public bool OnLocalVideoTranscoderError_be_trigger = false;
+        public TranscodingVideoStream OnLocalVideoTranscoderError_stream = null;
+        public VIDEO_TRANSCODER_ERROR OnLocalVideoTranscoderError_error;
+
+        public override void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
         {
-            OnApiCallExecuted_be_trigger = true;
-            OnApiCallExecuted_err = err;
-            OnApiCallExecuted_api = api;
-            OnApiCallExecuted_result = result;
+            OnLocalVideoTranscoderError_be_trigger = true;
+            OnLocalVideoTranscoderError_stream = stream;
+            OnLocalVideoTranscoderError_error = error;
         }
 
-        public bool OnApiCallExecutedPassed(int err, string api, string result)
+        public bool OnLocalVideoTranscoderErrorPassed(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
         {
-            if (OnApiCallExecuted_be_trigger == false)
+            if (OnLocalVideoTranscoderError_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareInt(OnApiCallExecuted_err, err) == false)
+            if (ParamsHelper.compareTranscodingVideoStream(OnLocalVideoTranscoderError_stream, stream) == false)
                 return false;
-            if (ParamsHelper.compareString(OnApiCallExecuted_api, api) == false)
-                return false;
-            if (ParamsHelper.compareString(OnApiCallExecuted_result, result) == false)
+            if (ParamsHelper.compareVIDEO_TRANSCODER_ERROR(OnLocalVideoTranscoderError_error, error) == false)
                 return false;
 
             return true;

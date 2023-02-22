@@ -1862,7 +1862,7 @@ namespace Agora.Rtc
         ///
         public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
-     
+
         public abstract int StartScreenCapture(VIDEO_SOURCE_TYPE type, ScreenCaptureConfiguration config);
 
         public abstract int StopScreenCapture(VIDEO_SOURCE_TYPE type);
@@ -3943,7 +3943,7 @@ namespace Agora.Rtc
         ///
         public abstract int SetHighPriorityUserListEx(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option, RtcConnection connection);
 
-     
+
 
 
         ///
@@ -3984,6 +3984,8 @@ namespace Agora.Rtc
         ///
         public abstract long GetCurrentMonotonicTimeInMs();
 
+
+        public abstract int EnableWirelessAccelerate(bool enabled);
 
         ///
         /// <summary>

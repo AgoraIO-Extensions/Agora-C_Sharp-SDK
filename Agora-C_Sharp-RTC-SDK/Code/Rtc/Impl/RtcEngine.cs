@@ -123,7 +123,7 @@ namespace Agora.Rtc
             MusicContentCenter.ReleaseInstance();
             LocalSpatialAudioEngine.ReleaseInstance();
             MediaPlayerCacheManager.ReleaseInstance();
-   
+
             instance = null;
         }
 
@@ -3120,6 +3120,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.GetCurrentMonotonicTimeInMs();
+        }
+
+        public override int EnableWirelessAccelerate(bool enabled)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableWirelessAccelerate(enabled);
         }
 
         public override int MuteLocalAudioStreamEx(bool mute, RtcConnection connection)

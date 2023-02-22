@@ -30,7 +30,7 @@ namespace Agora.Rtc
             Engine.Dispose();
         }
 
-#region custom
+        #region custom
 
         [Test]
         public void Test_GetDuration()
@@ -118,7 +118,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_UnregisterAudioFrameObserver()
         {
-            IMediaPlayerAudioFrameObserver observer;
+            IAudioPcmFrameSink observer;
             ParamsHelper.InitParam(out observer);
             var nRet = MusicPlayer.UnregisterAudioFrameObserver();
 
@@ -162,9 +162,9 @@ namespace Agora.Rtc
             Assert.AreEqual(MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE, nRet);
         }
 
-#endregion
+        #endregion
 
-#region terr
+        #region terr
         [Test]
         public void Test_Open()
         {
@@ -382,7 +382,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_RegisterAudioFrameObserver()
         {
-            IMediaPlayerAudioFrameObserver observer;
+            IAudioPcmFrameSink observer;
             ParamsHelper.InitParam(out observer);
             var nRet = MusicPlayer.RegisterAudioFrameObserver(observer);
 
@@ -392,7 +392,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_RegisterAudioFrameObserver2()
         {
-            IMediaPlayerAudioFrameObserver observer;
+            IAudioPcmFrameSink observer;
             ParamsHelper.InitParam(out observer);
             RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
             ParamsHelper.InitParam(out mode);
@@ -574,6 +574,6 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#endregion
+        #endregion
     }
 }
