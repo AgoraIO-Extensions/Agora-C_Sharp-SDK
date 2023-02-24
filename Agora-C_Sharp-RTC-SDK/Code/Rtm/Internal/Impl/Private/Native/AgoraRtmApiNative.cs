@@ -196,6 +196,8 @@ namespace Agora.Rtm.Internal
     {
         public RTM_CHANNEL_TYPE channelType;
 
+        public RTM_MESSAGE_TYPE messageType;
+
         public string channelName;
 
         public string channelTopic;
@@ -210,6 +212,7 @@ namespace Agora.Rtm.Internal
         {
             MessageEvent messageEvent = new MessageEvent();
             messageEvent.channelType = this.channelType;
+            messageEvent.messageType = this.messageType;
             messageEvent.channelName = this.channelName;
             messageEvent.channelTopic = this.channelTopic;
             messageEvent.messageLength = this.messageLength;
