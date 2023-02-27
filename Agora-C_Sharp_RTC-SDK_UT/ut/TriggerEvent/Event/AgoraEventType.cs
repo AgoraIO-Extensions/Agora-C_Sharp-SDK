@@ -163,9 +163,9 @@ namespace Agora.Rtc
         #endregion
 
         #region IAudioEncodedFrameObserver Start
-        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnRecordAudioEncodedFrame";
-        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnPlaybackAudioEncodedFrame";
-        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnMixedAudioEncodedFrame";
+        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onRecordAudioEncodedFrame";
+        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onPlaybackAudioEncodedFrame";
+        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onMixedAudioEncodedFrame";
         #endregion
 
         #region IAudioFrameObserver Start
@@ -187,8 +187,8 @@ namespace Agora.Rtc
         internal const string EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM = "AudioSpectrumObserver_onRemoteAudioSpectrum";
         #endregion
 
-        #region IMediaPlayerAudioFrameObserver Start
-        internal const string EVENT_MEDIAPLAYERAUDIOFRAMEOBSERVER_ONFRAME = "MediaPlayerAudioFrameObserver_onFrame";
+        #region IAudioPcmFrameSink Start
+        internal const string EVENT_AUDIOPCMFRAMESINK_ONFRAME = "AudioPcmFrameSink_onFrame";
         #endregion
 
         #region IMediaPlayerCustomDataProvider Start

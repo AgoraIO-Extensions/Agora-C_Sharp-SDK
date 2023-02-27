@@ -6060,8 +6060,8 @@ namespace Agora.Rtc
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 3,
-                ref _apiParam, (uint)frame.buffer.Length, 0, 0, (uint)alphaBuffer);
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 4,
+                ref _apiParam, (uint)frame.buffer.Length, 0, 0, (uint)alphaLength);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }

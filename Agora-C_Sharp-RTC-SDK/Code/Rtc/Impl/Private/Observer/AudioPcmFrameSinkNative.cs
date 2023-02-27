@@ -7,7 +7,7 @@ using AOT;
 
 namespace Agora.Rtc
 {
-    internal static class MediaPlayerAudioFrameObserverNative
+    internal static class AudioPcmFrameSinkNative
     {
         private static Object observerLock = new Object();
         private static Dictionary<int, IAudioPcmFrameSink> mediaPlayerAudioFrameObserverDic = new Dictionary<int, IAudioPcmFrameSink>();
@@ -69,7 +69,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "MediaPlayerAudioFrameObserver_onFrame":
+                    case "MediaPlayerAudioPcmFrameSink_onFrame":
                         {
                             AudioPcmFrame frame = AgoraJson.JsonToStruct<AudioPcmFrame>(jsonData, "frame");
                             IntPtr data_ = bufferArray[0];

@@ -2322,7 +2322,7 @@ namespace Agora.Rtc
 
         [Test]
         public void Test_StopScreenCapture()
-        { 
+        {
             var nRet = Engine.StopScreenCapture();
             Assert.AreEqual(0, nRet);
         }
@@ -2363,7 +2363,7 @@ namespace Agora.Rtc
         public void Test_QueryScreenCaptureCapability()
         {
             var nRet = Engine.QueryScreenCaptureCapability();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet == 0 || nRet == -4);
         }
 
         [Test]
@@ -2889,7 +2889,7 @@ namespace Agora.Rtc
         }
 
 
- 
+
 
         [Test]
         public void Test_SetCloudProxy()

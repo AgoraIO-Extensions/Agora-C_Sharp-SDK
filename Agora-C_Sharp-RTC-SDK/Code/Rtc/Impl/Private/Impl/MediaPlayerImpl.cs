@@ -178,7 +178,7 @@ namespace Agora.Rtc
             if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == true) return 0;
 
             var mediaPlayerAudioFrameObserverHandle = new EventHandlerHandle();
-            AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, MediaPlayerAudioFrameObserverNative.OnEvent);
+            AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, AudioPcmFrameSinkNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioFrameObserverHandle.handle };
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -203,7 +203,7 @@ namespace Agora.Rtc
             if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == true) return 0;
 
             var mediaPlayerAudioFrameObserverHandle = new EventHandlerHandle();
-            AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, MediaPlayerAudioFrameObserverNative.OnEvent);
+            AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, AudioPcmFrameSinkNative.OnEvent);
 
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -435,20 +435,20 @@ namespace Agora.Rtc
         public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer)
         {
             int ret = UnSetIrisAudioFrameObserver(playerId);
-            MediaPlayerAudioFrameObserverNative.RemoveAudioFrameObserver(playerId);
+            AudioPcmFrameSinkNative.RemoveAudioFrameObserver(playerId);
 
             ret = SetIrisAudioFrameObserver(playerId);
-            MediaPlayerAudioFrameObserverNative.AddAudioFrameObserver(playerId, observer);
+            AudioPcmFrameSinkNative.AddAudioFrameObserver(playerId, observer);
             return ret;
         }
 
         public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             int ret = UnSetIrisAudioFrameObserver(playerId);
-            MediaPlayerAudioFrameObserverNative.RemoveAudioFrameObserver(playerId);
+            AudioPcmFrameSinkNative.RemoveAudioFrameObserver(playerId);
 
             ret = SetIrisAudioFrameObserverWithMode(playerId, mode);
-            MediaPlayerAudioFrameObserverNative.AddAudioFrameObserver(playerId, observer);
+            AudioPcmFrameSinkNative.AddAudioFrameObserver(playerId, observer);
 
             return ret;
         }
@@ -456,7 +456,7 @@ namespace Agora.Rtc
         public int UnregisterAudioFrameObserver(int playerId)
         {
             int ret = UnSetIrisAudioFrameObserver(playerId);
-            MediaPlayerAudioFrameObserverNative.RemoveAudioFrameObserver(playerId);
+            AudioPcmFrameSinkNative.RemoveAudioFrameObserver(playerId);
             return ret;
         }
 

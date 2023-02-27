@@ -917,6 +917,9 @@ namespace Agora.Rtc
         public static void InitParam(out ExternalVideoFrame param)
         {
             param = new ExternalVideoFrame();
+            param.buffer = new byte[10];
+            param.eglContext = new byte[10];
+            param.alphaBuffer = new byte[10];
         }
         public static void InitParam(out MusicCacheInfo[] param)
         {
