@@ -234,13 +234,19 @@ namespace Agora.Rtc
 
         public int RegisterEventHandler(IMusicContentCenterEventHandler eventHandler)
         {
-            SetEventHandler();
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
+
             MusicContentCenterEventHandlerNative.SetMusicContentCenterEventHandler(eventHandler);
+            SetEventHandler();
             return 0;
         }
 
         public int UnregisterEventHandler()
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
             UnSetEventHandler();
             MusicContentCenterEventHandlerNative.SetMusicContentCenterEventHandler(null);
             return 0;

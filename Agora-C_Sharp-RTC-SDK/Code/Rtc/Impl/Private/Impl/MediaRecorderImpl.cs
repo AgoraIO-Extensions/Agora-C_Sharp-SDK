@@ -122,6 +122,10 @@ namespace Agora.Rtc
         {
             if (callback != null)
             {
+                //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+                //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+                //and this time you dont have observer be trigger
+
                 MediaRecorderObserverNative.AddMediaRecorderObserver(nativeHandler, callback);
 
                 _param.Clear();
@@ -140,9 +144,8 @@ namespace Agora.Rtc
             }
             else
             {
-
-                MediaRecorderObserverNative.RemoveMediaRecorderObserver(nativeHandler);
-
+                //you must Set(null) lately. because maybe some callback will trigger when unregister,
+                //you set null first, some callback will never triggered 
                 if (_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandler))
                 {
                     _param.Clear();
@@ -166,6 +169,9 @@ namespace Agora.Rtc
 
                     return ret;
                 }
+
+                MediaRecorderObserverNative.RemoveMediaRecorderObserver(nativeHandler);
+
                 return 0;
             }
 

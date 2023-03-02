@@ -182,7 +182,7 @@ namespace Agora.Rtc
             if (_rtcEventHandlerHandle.handle == IntPtr.Zero) return;
 
 
-            RtcEngineEventHandlerNative.SetEventHandler(null);
+          
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             RtcEngineEventHandlerNative.CallbackObject = null;
@@ -201,6 +201,10 @@ namespace Agora.Rtc
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
+
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            RtcEngineEventHandlerNative.SetEventHandler(null);
 
         }
 
@@ -254,22 +258,32 @@ namespace Agora.Rtc
 
         public int InitEventHandler(IRtcEngineEventHandler engineEventHandler)
         {
-            int ret = CreateEventHandler();
+            //you must Set Observer first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             RtcEngineEventHandlerNative.SetEventHandler(engineEventHandler);
+            int ret = CreateEventHandler();
             return ret;
         }
 
         public int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            int ret = SetIrisAudioFrameObserver();
+            //you must Set Observer first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             AudioFrameObserverNative.SetAudioFrameObserverAndMode(audioFrameObserver, mode);
+            int ret = SetIrisAudioFrameObserver();
+           
             return ret;
         }
 
         public int UnRegisterAudioFrameObserver()
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            int nRet = UnSetIrisAudioFrameObserver();
             AudioFrameObserverNative.SetAudioFrameObserverAndMode(null, OBSERVER_MODE.INTPTR);
-            return UnSetIrisAudioFrameObserver();
+            return nRet;
         }
 
         private int SetIrisAudioFrameObserver()
@@ -312,15 +326,21 @@ namespace Agora.Rtc
 
         public int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            int ret = SetIrisVideoFrameObserver();
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             VideoFrameObserverNative.SetVideoFrameObserverAndMode(videoFrameObserver, mode);
+            int ret = SetIrisVideoFrameObserver();
             return ret;
         }
 
         public int UnRegisterVideoFrameObserver()
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            int nRet = UnSetIrisVideoFrameObserver();
             VideoFrameObserverNative.SetVideoFrameObserverAndMode(null, OBSERVER_MODE.INTPTR);
-            return UnSetIrisVideoFrameObserver();
+            return nRet;
         }
 
         private int SetIrisVideoFrameObserver()
@@ -365,15 +385,22 @@ namespace Agora.Rtc
 
         public int RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver VideoEncodedFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
-            int ret = SetIrisVideoEncodedFrameObserver();
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             VideoEncodedFrameObserverNative.SetVideoEncodedFrameObserver(VideoEncodedFrameObserver);
+            int ret = SetIrisVideoEncodedFrameObserver();
+          
             return ret;
         }
 
         public int UnRegisterVideoEncodedFrameObserver()
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            int nRet = UnSetIrisVideoEncodedFrameObserver();
             VideoEncodedFrameObserverNative.SetVideoEncodedFrameObserver(null);
-            return UnSetIrisVideoEncodedFrameObserver();
+            return nRet;
         }
 
         private int SetIrisVideoEncodedFrameObserver()
@@ -1301,15 +1328,21 @@ namespace Agora.Rtc
 
         public int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
         {
-            int ret = SetIrisAudioEncodedFrameObserver(config);
+            //you must SetAudioEncodedFrameObserver first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             AudioEncodedFrameObserverNative.SetAudioEncodedFrameObserver(observer);
+            int ret = SetIrisAudioEncodedFrameObserver(config);
             return ret;
         }
 
         public int UnRegisterAudioEncodedFrameObserver()
         {
+            //you must SetAudioEncodedFrameObserver(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            int nRet = UnSetIrisAudioEncodedFrameObserver();
             AudioEncodedFrameObserverNative.SetAudioEncodedFrameObserver(null);
-            return UnSetIrisAudioEncodedFrameObserver();
+            return nRet;
         }
 
         private int SetIrisAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config)
@@ -2412,15 +2445,22 @@ namespace Agora.Rtc
 
         public int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
         {
-            int ret = SetIrisAudioSpectrumObserver();
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             AudioSpectrumObserverNative.SetAudioSpectrumObserver(observer);
+            int ret = SetIrisAudioSpectrumObserver();
+          
             return ret;
         }
 
         public int UnregisterAudioSpectrumObserver()
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            int nRet = UnSetIrisAudioSpectrumObserver();
             AudioSpectrumObserverNative.SetAudioSpectrumObserver(null);
-            return UnSetIrisAudioSpectrumObserver();
+            return nRet;
         }
 
         public int AdjustRecordingSignalVolume(int volume)
@@ -3634,15 +3674,22 @@ namespace Agora.Rtc
 
         public int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
         {
-            var ret = SetIrisMetaDataObserver(type);
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
+
             MetadataObserverNative.SetMetadataObserver(observer);
+            var ret = SetIrisMetaDataObserver(type);
             return ret;
         }
 
         public int UnregisterMediaMetadataObserver()
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            int nRet = UnSetIrisMetaDataObserver();
             MetadataObserverNative.SetMetadataObserver(null);
-            return UnSetIrisMetaDataObserver();
+            return nRet;
         }
 
         public int StartAudioFrameDump(string channel_id, uint user_id, string location,

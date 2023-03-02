@@ -420,7 +420,9 @@ namespace Agora.Rtc
 
         public int InitEventHandler(int playerId, IMediaPlayerSourceObserver engineEventHandler)
         {
-            int ret = CreateEventHandler();
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             if (engineEventHandler == null)
             {
                 MediaPlayerSourceObserverNative.RemoveSourceObserver(playerId);
@@ -429,27 +431,41 @@ namespace Agora.Rtc
             {
                 MediaPlayerSourceObserverNative.AddSourceObserver(playerId, engineEventHandler);
             }
+
+            int ret = CreateEventHandler();
             return ret;
         }
 
         public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer)
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
             int ret = UnSetIrisAudioFrameObserver(playerId);
             AudioPcmFrameSinkNative.RemoveAudioFrameObserver(playerId);
 
-            ret = SetIrisAudioFrameObserver(playerId);
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             AudioPcmFrameSinkNative.AddAudioFrameObserver(playerId, observer);
+            ret = SetIrisAudioFrameObserver(playerId);
+           
             return ret;
         }
 
         public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
             int ret = UnSetIrisAudioFrameObserver(playerId);
             AudioPcmFrameSinkNative.RemoveAudioFrameObserver(playerId);
 
-            ret = SetIrisAudioFrameObserverWithMode(playerId, mode);
-            AudioPcmFrameSinkNative.AddAudioFrameObserver(playerId, observer);
 
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
+            AudioPcmFrameSinkNative.AddAudioFrameObserver(playerId, observer);
+            ret = SetIrisAudioFrameObserverWithMode(playerId, mode);
+          
             return ret;
         }
 
@@ -462,16 +478,24 @@ namespace Agora.Rtc
 
         public int RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
             int ret = UnSetIrisAudioSpectrumObserver(playerId);
             MediaPlayerAudioSpectrumObserverNative.RemoveAudioSpectrumObserver(playerId);
 
-            ret = SetIrisAudioSpectrumObserver(playerId, intervalInMS);
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             MediaPlayerAudioSpectrumObserverNative.AddAudioSpectrumObserver(playerId, observer);
+            ret = SetIrisAudioSpectrumObserver(playerId, intervalInMS);
+           
             return ret;
         }
 
         public int UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
         {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
             int ret = UnSetIrisAudioSpectrumObserver(playerId);
             MediaPlayerAudioSpectrumObserverNative.RemoveAudioSpectrumObserver(playerId);
             return ret;
@@ -522,11 +546,14 @@ namespace Agora.Rtc
             UnsetMediaPlayerOpenWithMediaSource(playerId);
             UnSetMediaPlayerOpenWithCustomSource(playerId);
 
-            SetMediaPlayerOpenWithCustomSource(playerId, startPos);
-
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
             MediaPlayerCustomDataProviderNative.RemoveCustomDataProvider(playerId);
             MediaPlayerCustomDataProviderNative.AddCustomDataProvider(playerId, provider);
+            SetMediaPlayerOpenWithCustomSource(playerId, startPos);
 
+       
             return 0;
         }
 
@@ -534,8 +561,6 @@ namespace Agora.Rtc
         {
             UnsetMediaPlayerOpenWithMediaSource(playerId);
             UnSetMediaPlayerOpenWithCustomSource(playerId);
-
-            SetMediaPlayerOpenWithMediaSource(playerId, source, source.provider != null);
 
             var provider = source.provider;
             if (provider != null)
@@ -547,6 +572,8 @@ namespace Agora.Rtc
             {
                 MediaPlayerCustomDataProviderNative.RemoveCustomDataProvider(playerId);
             }
+
+            SetMediaPlayerOpenWithMediaSource(playerId, source, source.provider != null);
 
             return 0;
         }
