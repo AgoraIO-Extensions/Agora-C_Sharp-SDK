@@ -187,8 +187,6 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_GETVIDEOFORMATPREFERENCE;
 
-
-
             jsonObj.Clear();
 
 
