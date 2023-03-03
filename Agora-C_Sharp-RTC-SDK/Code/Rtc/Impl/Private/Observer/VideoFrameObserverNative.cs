@@ -100,7 +100,7 @@ namespace Agora.Rtc
                 if (videoFrameConverted.vBuffer != IntPtr.Zero)
                     Marshal.Copy(videoFrameConverted.vBuffer, localVideoFrame.vBuffer, 0,
                         (int)videoFrameConverted.v_buffer_length);
-                if(videoFrameConverted.alphaBuffer!= IntPtr.Zero)
+                if (videoFrameConverted.alphaBuffer != IntPtr.Zero)
                     Marshal.Copy(videoFrameConverted.alphaBuffer, localVideoFrame.alphaBuffer, 0,
                        (int)videoFrameConverted.alpha_buffer_length);
             }
@@ -128,13 +128,21 @@ namespace Agora.Rtc
         {
             //var videoFrame = (IrisVideoFrame)(Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ??
             //    new IrisVideoFrame());
-            videoFrame.type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-            videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
-            videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height / 2);
-            videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height / 2);
 
-            var ifConverted = videoFrameObserver.GetVideoFormatPreference() != VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
+            if (videoFrame.type == VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420 || videoFrame.type == VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV422)
+            {
+                videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
+                videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height / 2);
+                videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height / 2);
+            }
+            else
+            {
+                videoFrame.y_buffer_length = (uint)(videoFrame.width * videoFrame.height * 4);
+                videoFrame.u_buffer_length = 0;
+                videoFrame.v_buffer_length = 0;
+            }
 
+            var ifConverted = false;// videoFrameObserver.GetVideoFormatPreference() != videoFrame.type;
 
             if (ifConverted)
             {

@@ -94,23 +94,23 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        FRAME_TYPE_YUV420 = 0,
+        FRAME_TYPE_YUV420 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I420,
 
         ///
         /// @ignore
         ///
-        FRAME_TYPE_YUV422 = 1,
+        FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
 
         ///
         /// <summary>
         /// 2: The format of the video frame is RGBA.
         /// </summary>
         ///
-        FRAME_TYPE_RGBA = 2,
+        FRAME_TYPE_RGBA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_RGBA,
 
         ///
         /// @ignore
         ///
-        FRAME_TYPE_BGRA = 3,
+        FRAME_TYPE_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_BGRA,
     };
 }
