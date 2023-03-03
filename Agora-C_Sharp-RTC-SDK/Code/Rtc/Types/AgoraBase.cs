@@ -4751,6 +4751,7 @@ namespace Agora.Rtc
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             remoteUserUid = 0;
             imageUrl = null;
+            mediaPlayerId = 0;
             x = 0;
             y = 0;
             width = 0;
@@ -4761,12 +4762,13 @@ namespace Agora.Rtc
         }
 
         public TranscodingVideoStream(VIDEO_SOURCE_TYPE sourceType, uint remoteUserUid,
-            string imageUrl, int x, int y, int width, int height, int zOrder, double alpha,
+            string imageUrl, int mediaPlayerId,int x, int y, int width, int height, int zOrder, double alpha,
             bool mirror)
         {
             this.sourceType = sourceType;
             this.remoteUserUid = remoteUserUid;
             this.imageUrl = imageUrl;
+            this.mediaPlayerId = mediaPlayerId;
             this.x = x;
             this.y = y;
             this.width = width;
