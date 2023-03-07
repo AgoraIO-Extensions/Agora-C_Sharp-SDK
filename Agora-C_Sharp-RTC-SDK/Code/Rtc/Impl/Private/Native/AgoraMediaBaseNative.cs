@@ -63,6 +63,7 @@ namespace Agora.Rtc
         public int textureId;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
         public float[] matrix;
+        public IntPtr metaInfo;
     }
 
     //[StructLayout(LayoutKind.Sequential)]

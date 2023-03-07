@@ -108,6 +108,14 @@ namespace Agora.Rtc
             localVideoFrame.sharedContext = videoFrameConverted.sharedContext;
             localVideoFrame.matrix = videoFrameConverted.matrix;
             localVideoFrame.textureId = videoFrameConverted.textureId;
+            if (videoFrameConverted.metaInfo != IntPtr.Zero)
+            {
+                localVideoFrame.metaInfo = new VideoFrameMetaInfo(videoFrameConverted.metaInfo);
+            }
+            else
+            {
+                localVideoFrame.metaInfo = null;
+            }
         }
 
         private static bool ProcessVideoFrameReceived(ref IrisVideoFrame videoFrame, ref VideoFrame localVideoFrame)

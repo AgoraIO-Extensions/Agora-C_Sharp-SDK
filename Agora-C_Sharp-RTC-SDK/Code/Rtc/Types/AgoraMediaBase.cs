@@ -706,6 +706,12 @@ namespace Agora.Rtc
         public int metadata_size;
     };
 
+
+    public enum META_INFO_KEY
+    {
+        KEY_FACE_CAPTURE = 0,
+    };
+
     ///
     /// <summary>
     /// Configurations of the video frame.
@@ -736,6 +742,7 @@ namespace Agora.Rtc
             sharedContext = IntPtr.Zero;
             textureId = 0;
             matrix = new float[16];
+            metaInfo = null;
         }
 
         ///
@@ -881,6 +888,9 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public IntPtr alphaBufferPtr;
+
+
+        public IVideoFrameMetaInfo metaInfo;
     };
 
     ///
