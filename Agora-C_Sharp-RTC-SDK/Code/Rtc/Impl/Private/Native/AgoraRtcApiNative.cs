@@ -162,7 +162,7 @@ namespace Agora.Rtc
 
         //IVideoFrameMetaInfo
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern string GetMetaInfoStr(IntPtr ptr, int key);
+        internal static extern IntPtr GetMetaInfoStr(IntPtr ptr, int key);
 
         // IrisMediaPlayerPtr
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
