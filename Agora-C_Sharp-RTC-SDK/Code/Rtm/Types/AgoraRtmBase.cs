@@ -625,20 +625,20 @@ namespace Agora.Rtm
 
         public string encryptionKey;
 
-        private byte[] encryptionKdfSalt32 = new byte[32];
+        private byte[] encryptionSalt32 = new byte[32];
 
-        public byte[] encryptionKdfSalt
+        public byte[] encryptionSalt
         {
-            set { Buffer.BlockCopy(value, 0, encryptionKdfSalt32, 0, 32); }
+            set { Buffer.BlockCopy(value, 0, encryptionSalt32, 0, 32); }
 
-            get { return encryptionKdfSalt32; }
+            get { return encryptionSalt; }
         }
 
         public RtmEncryptionConfig()
         {
             encryptionMode = RTM_ENCRYPTION_MODE.RTM_ENCRYPTION_MODE_NONE;
             encryptionKey = "";
-            encryptionKdfSalt = new byte[32];
+            encryptionSalt = new byte[32];
         }
     };
 
