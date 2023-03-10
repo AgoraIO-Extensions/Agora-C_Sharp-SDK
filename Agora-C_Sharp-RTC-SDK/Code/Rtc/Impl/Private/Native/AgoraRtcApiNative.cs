@@ -268,6 +268,9 @@ namespace Agora.Rtc
     internal delegate bool Func_AudioFrameLocal_Native(string channelId, IntPtr audio_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate bool Func_AudioFrame_Native(IntPtr audio_frame);
+
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate bool Func_AudioFrameRemote_Native(string channel_id, uint uid, IntPtr audio_frame);
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -309,6 +312,7 @@ namespace Agora.Rtc
         internal IntPtr OnRecordAudioFrame;
         internal IntPtr OnPlaybackAudioFrame;
         internal IntPtr OnMixedAudioFrame;
+        internal IntPtr OnEarMonitoringAudioFrame;
         internal IntPtr OnPlaybackAudioFrameBeforeMixing;
         internal IntPtr OnPlaybackAudioFrameBeforeMixing2;
         internal IntPtr GetPlaybackAudioParams;
@@ -323,6 +327,7 @@ namespace Agora.Rtc
         internal Func_AudioFrameLocal_Native OnRecordAudioFrame;
         internal Func_AudioFrameLocal_Native OnPlaybackAudioFrame;
         internal Func_AudioFrameLocal_Native OnMixedAudioFrame;
+        internal Func_AudioFrame_Native OnEarMonitoringAudioFrame;
         internal Func_AudioFrameRemote_Native OnPlaybackAudioFrameBeforeMixing;
         internal Func_AudioFrameRemoteStringUid_Native OnPlaybackAudioFrameBeforeMixing2;
         internal Func_AudioParams_Native GetPlaybackAudioParams;

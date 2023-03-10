@@ -550,6 +550,8 @@ namespace Agora.Rtc
         ///
         public int delay;
 
+
+        public int e2eDelay;
         ///
         /// <summary>
         /// The width (pixels) of the video.
@@ -1291,6 +1293,8 @@ namespace Agora.Rtc
         ///
         public bool isOccluded;
 
+        public bool minimizeWindow;
+
         public ScreenCaptureSourceInfo()
         {
             type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
@@ -1302,6 +1306,7 @@ namespace Agora.Rtc
             isOccluded = false;
             thumbImage = new ThumbImageBuffer();
             iconImage = new ThumbImageBuffer();
+            minimizeWindow = false;
         }
     };
 

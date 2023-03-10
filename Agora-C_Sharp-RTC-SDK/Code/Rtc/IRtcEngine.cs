@@ -2006,43 +2006,9 @@ namespace Agora.Rtc
         ///
         public abstract int EnableDualStreamMode(bool enabled);
 
-        ///
-        /// <summary>
-        /// Enables/Disables dual-stream mode.
-        /// You can call this method to enable or disable the dual-stream mode on the publisher side. Dual streams are a hybrid of a high-quality video stream and a low-quality video stream:High-quality video stream: High bitrate, high resolution.Low-quality video stream: Low bitrate, low resolution.After you enable the dual-stream mode, you can call SetRemoteVideoStreamType to choose toreceive the high-quality video stream or low-quality video stream on the subscriber side.You can call this method either before or after joining a channel.
-        /// </summary>
-        ///
-        /// <param name="sourceType"> The capture type of the custom video source. See VIDEO_SOURCE_TYPE .</param>
-        ///
-        /// <param name="enabled"> Whether to enable dual-stream mode.true: Enable dual-stream mode.false: Disable dual-stream mode.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled);
 
-        ///
-        /// <summary>
-        /// Enables/Disables dual-stream mode.
-        /// You can call this method to enable or disable the dual-stream mode on the publisher side. Dual streams are a hybrid of a high-quality video stream and a low-quality video stream:
-        /// High-quality video stream: High bitrate, high resolution.
-        /// Low-quality video stream: Low bitrate, low resolution. After you enable the dual-stream mode, you can call SetRemoteVideoStreamType to choose toreceive the high-quality video stream or low-quality video stream on the subscriber side. You can call this method either before or after joining a channel.
-        /// </summary>
-        ///
-        /// <param name="enabled"> Whether to enable dual-stream mode.
-        ///  true: Enable dual-stream mode.
-        ///  false: Disable dual-stream mode. </param>
-        ///
-        /// <param name="sourceType"> The capture type of the custom video source. See VIDEO_SOURCE_TYPE .</param>
-        ///
-        /// <param name="streamConfig"> The configuration of the low-quality video stream. See SimulcastStreamConfig .</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig);
+
+        public abstract int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig);
 
         ///
         /// <summary>
@@ -2079,15 +2045,11 @@ namespace Agora.Rtc
         ///
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
 
+   
         ///
         /// @ignore
         ///
-        public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
+        public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
         #endregion
 
         #region Watermark
@@ -4243,7 +4205,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
+        public abstract int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         ///
         /// @ignore
@@ -4340,7 +4302,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int SetDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection);
+        public abstract int SetDualStreamModeEx(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         ///
         /// <summary>
