@@ -1218,11 +1218,13 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode)
+
+        public int SetDualStreamMode( SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
         {
             _param.Clear();
-            _param.Add("sourceType", sourceType);
+          
             _param.Add("mode", mode);
+            _param.Add("streamConfig", streamConfig);
 
 
             var json = AgoraJson.ToJson(_param);
@@ -1234,31 +1236,12 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
+        public int SetDualStreamModeEx( SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             _param.Clear();
-            _param.Add("sourceType", sourceType);
-            _param.Add("mode", mode);
-            _param.Add("streamConfig", streamConfig);
-
-
-            var json = AgoraJson.ToJson(_param);
-
-            var nRet = AgoraRtcNative.CallIrisRtcApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDUALSTREAMMODE3,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int SetDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection)
-        {
-            _param.Clear();
-            _param.Add("sourceType", sourceType);
             _param.Add("mode", mode);
             _param.Add("streamConfig", streamConfig);
             _param.Add("connection", connection);
-
 
             var json = AgoraJson.ToJson(_param);
 
@@ -2289,33 +2272,19 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled)
+
+
+        public int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig)
         {
             _param.Clear();
-            _param.Add("sourceType", sourceType);
-            _param.Add("enabled", enabled);
 
-
-            var json = AgoraJson.ToJson(_param);
-
-            var nRet = AgoraRtcNative.CallIrisRtcApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE2,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                out _result);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
-        }
-
-        public int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig)
-        {
-            _param.Clear();
-            _param.Add("sourceType", sourceType);
             _param.Add("enabled", enabled);
             _param.Add("streamConfig", streamConfig);
 
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtcNative.CallIrisRtcApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE3,
+            var nRet = AgoraRtcNative.CallIrisRtcApi(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEDUALSTREAMMODE2,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
@@ -5046,10 +5015,9 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_result.Result, "result");
         }
 
-        public int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
+        public int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             _param.Clear();
-            _param.Add("sourceType", sourceType);
             _param.Add("enabled", enabled);
             _param.Add("streamConfig", streamConfig);
             _param.Add("connection", connection);
