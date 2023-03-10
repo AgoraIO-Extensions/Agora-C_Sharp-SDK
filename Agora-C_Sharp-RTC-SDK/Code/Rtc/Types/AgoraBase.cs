@@ -1274,6 +1274,7 @@ namespace Agora.Rtc
             rotation = VIDEO_ORIENTATION.VIDEO_ORIENTATION_0;
             trackId = 0;
             captureTimeMs = 0;
+            decodeTimeMs = 0;
             uid = 0;
             streamType = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
         }
@@ -1288,6 +1289,7 @@ namespace Agora.Rtc
             rotation = rhs.rotation;
             trackId = rhs.trackId;
             captureTimeMs = rhs.captureTimeMs;
+            decodeTimeMs = rhs.decodeTimeMs;
             uid = rhs.uid;
             streamType = rhs.streamType;
         }
@@ -1347,6 +1349,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int64_t captureTimeMs;
+
+        public int64_t decodeTimeMs;
 
         ///
         /// <summary>
@@ -1558,14 +1562,14 @@ namespace Agora.Rtc
         public SimulcastStreamConfig()
         {
             dimensions = new VideoDimensions(160, 120);
-            bitrate = 65;
+            kBitrate = 65;
             framerate = 5;
         }
 
         public SimulcastStreamConfig(VideoDimensions dimensions, int bitrate, int framerate)
         {
             this.dimensions = dimensions;
-            this.bitrate = bitrate;
+            this.kBitrate = bitrate;
             this.framerate = framerate;
         }
 
@@ -1581,7 +1585,7 @@ namespace Agora.Rtc
         /// Video receive bitrate (Kbps). The default value is 65.
         /// </summary>
         ///
-        public int bitrate;
+        public int kBitrate;
 
         ///
         /// <summary>
@@ -4340,6 +4344,7 @@ namespace Agora.Rtc
             streamCount = 0;
             VideoInputStreams = null;
             videoOutputConfiguration = new VideoEncoderConfiguration();
+            sync_with_primary_camera = true;
         }
 
         public LocalTranscoderConfiguration(uint streamCount, TranscodingVideoStream[] VideoInputStreams,
@@ -4348,6 +4353,7 @@ namespace Agora.Rtc
             this.streamCount = streamCount;
             this.VideoInputStreams = VideoInputStreams;
             this.videoOutputConfiguration = videoOutputConfiguration;
+            this.sync_with_primary_camera = true;
         }
 
         ///
@@ -4370,6 +4376,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public VideoEncoderConfiguration videoOutputConfiguration;
+
+        public bool sync_with_primary_camera;
     };
 
     ///
@@ -4688,6 +4696,10 @@ namespace Agora.Rtc
         /// @ignore
         ///
         CONNECTION_CHANGED_TOO_MANY_BROADCASTERS = 20,
+
+        CONNECTION_CHANGED_LICENSE_VERIFY_FAILED = 21,
+
+        CONNECTION_CHANGED_STREAM_CHANNEL_NOT_AVAILABLE = 22,
     };
 
     ///
@@ -7203,6 +7215,8 @@ namespace Agora.Rtc
         ///
         public Optional<double> speaker_attenuation = new Optional<double>();
 
+        public Optional<bool> enable_doppler = new Optional<bool>();
+
         public override void ToJson(JsonWriter writer)
         {
             writer.WriteObjectStart();
@@ -7247,6 +7261,12 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("speaker_attenuation");
                 writer.Write(this.speaker_attenuation.GetValue());
+            }
+
+            if (this.enable_doppler.HasValue())
+            {
+                writer.WritePropertyName("enable_doppler");
+                writer.Write(this.enable_doppler.GetValue());
             }
 
             writer.WriteObjectEnd();

@@ -750,31 +750,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetDualStreamMode(mode);
         }
 
-        public override int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode)
+        public override int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetDualStreamMode(sourceType, mode);
+            return _rtcEngineImpl.SetDualStreamMode(mode, streamConfig);
         }
 
-        public override int SetDualStreamMode(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig)
+        public override int SetDualStreamModeEx(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetDualStreamMode(sourceType, mode, streamConfig);
-        }
-
-        public override int SetDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetDualStreamModeEx(sourceType, mode, streamConfig, connection);
+            return _rtcEngineImpl.SetDualStreamModeEx(mode, streamConfig, connection);
         }
 
         public override int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath)
@@ -1345,22 +1336,14 @@ namespace Agora.Rtc
             return _rtcEngineImpl.EnableDualStreamMode(enabled);
         }
 
-        public override int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.EnableDualStreamMode(sourceType, enabled);
-        }
 
-        public override int EnableDualStreamMode(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig)
+        public override int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableDualStreamMode(sourceType, enabled, streamConfig);
+            return _rtcEngineImpl.EnableDualStreamMode(enabled, streamConfig);
         }
 
         public override int SetExternalAudioSink(bool enabled, int sampleRate, int channels)
@@ -3011,13 +2994,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetVideoProfileEx(width, height, frameRate, bitrate);
         }
 
-        public override int EnableDualStreamModeEx(VIDEO_SOURCE_TYPE sourceType, bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
+        public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableDualStreamModeEx(sourceType, enabled, streamConfig, connection);
+            return _rtcEngineImpl.EnableDualStreamModeEx(enabled, streamConfig, connection);
         }
 
         //public override int AddPublishStreamUrlEx(string url, bool transcodingEnabled, RtcConnection connection)
