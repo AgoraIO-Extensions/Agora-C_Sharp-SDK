@@ -631,7 +631,7 @@ namespace Agora.Rtm
         {
             set { Buffer.BlockCopy(value, 0, encryptionSalt32, 0, 32); }
 
-            get { return encryptionSalt; }
+            get { return encryptionSalt32; }
         }
 
         public RtmEncryptionConfig()
