@@ -61,7 +61,6 @@ namespace Agora.Rtm.Internal
                     this.OnRtmClientImpleWillDispose.Invoke(this);
                 }
 
-                ReleaseEventHandler();
 
                 _streamChannelImpl.Dispose();
                 _streamChannelImpl = null;
@@ -77,6 +76,8 @@ namespace Agora.Rtm.Internal
             }
 
             Release();
+            //must call free event handler after rtm release
+            ReleaseEventHandler();
 
             _apiParam.FreeResult();
             _disposed = true;
@@ -86,7 +87,7 @@ namespace Agora.Rtm.Internal
         {
             AgoraRtmNative.CallIrisApiWithArgs(
                 _irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_RELEASE,
-                "", 0,
+                "{}", 2,
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
@@ -172,7 +173,7 @@ namespace Agora.Rtm.Internal
         {
             CreateEventHandler();
             RtmEventHandlerNative.SetEventHandler(config.getEventHandler());
-          
+
             _param.Clear();
             _param.Add("config", config);
 
@@ -332,7 +333,7 @@ namespace Agora.Rtm.Internal
         }
 
 
-        public  int SetLogFile(string filePath)
+        public int SetLogFile(string filePath)
         {
             _param.Clear();
             _param.Add("filePath", filePath);
@@ -343,7 +344,7 @@ namespace Agora.Rtm.Internal
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public  int SetLogLevel(LOG_LEVEL level)
+        public int SetLogLevel(LOG_LEVEL level)
         {
             _param.Clear();
             _param.Add("level", level);
@@ -354,7 +355,7 @@ namespace Agora.Rtm.Internal
             return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public  int SetLogFileSize(uint fileSizeInKBytes)
+        public int SetLogFileSize(uint fileSizeInKBytes)
         {
             _param.Clear();
             _param.Add("fileSizeInKBytes", fileSizeInKBytes);
