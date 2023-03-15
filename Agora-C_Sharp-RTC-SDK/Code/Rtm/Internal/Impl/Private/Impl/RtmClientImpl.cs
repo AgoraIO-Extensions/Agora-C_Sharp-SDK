@@ -61,12 +61,6 @@ namespace Agora.Rtm.Internal
                     this.OnRtmClientImpleWillDispose.Invoke(this);
                 }
 
-                int ret = UnregisterEventHandler();
-                if (ret != 0)
-                {
-                    AgoraLog.LogError("rtmClient UnregisterEventHandler failed: " + ret);
-                }
-                ReleaseEventHandler();
 
                 _streamChannelImpl.Dispose();
                 _streamChannelImpl = null;
@@ -82,24 +76,11 @@ namespace Agora.Rtm.Internal
             }
 
             Release();
+            //must call free event handler after rtm release
+            ReleaseEventHandler();
 
             _apiParam.FreeResult();
             _disposed = true;
-        }
-
-        private int UnregisterEventHandler()
-        {
-            if (_rtcEventHandlerHandle.handle == IntPtr.Zero)
-                return 0;
-
-            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_UNREGISTEREVENTHANDLER,
-                "{}", 2,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         private void Release()
