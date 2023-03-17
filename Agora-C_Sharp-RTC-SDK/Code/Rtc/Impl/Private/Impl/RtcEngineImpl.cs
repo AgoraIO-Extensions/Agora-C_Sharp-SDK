@@ -9,7 +9,7 @@ namespace Agora.Rtc
 {
     using video_track_id_t = System.UInt32;
     using IrisRtcEnginePtr = IntPtr;
-    using IrisVideoFrameBufferManagerPtr = IntPtr;
+    using IrisRtcRenderingHandle = IntPtr;
 
     internal class RtcEngineImpl
     {
@@ -43,7 +43,7 @@ namespace Agora.Rtc
         private EventHandlerHandle _rtcAudioSpectrumObserverHandle = new EventHandlerHandle();
 
 
-        private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
+        private IrisRtcRenderingHandle _rtcRenderingHandle;
 
         private VideoDeviceManagerImpl _videoDeviceManagerInstance;
         private AudioDeviceManagerImpl _audioDeviceManagerInstance;
@@ -74,10 +74,8 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
 
-            _videoFrameBufferManagerPtr = AgoraRtcNative.CreateIrisVideoFrameBufferManager();
-            AgoraRtcNative.Attach(_irisRtcEngine, _videoFrameBufferManagerPtr);
-
-
+            _rtcRenderingHandle = AgoraRtcNative.CreateIrisRtcRendering(_irisRtcEngine);
+          
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -119,12 +117,10 @@ namespace Agora.Rtc
 
                 _mediaRecorderInstance.Dispose();
                 _mediaRecorderInstance = null;
-
-                AgoraRtcNative.Detach(_irisRtcEngine, _videoFrameBufferManagerPtr);
             }
 
+            AgoraRtcNative.FreeIrisRtcRendering(_rtcRenderingHandle);
             Release(sync);
-            AgoraRtcNative.FreeIrisVideoFrameBufferManager(_videoFrameBufferManagerPtr);
             _disposed = true;
         }
 
@@ -213,9 +209,9 @@ namespace Agora.Rtc
             return _irisRtcEngine;
         }
 
-        internal IrisVideoFrameBufferManagerPtr GetVideoFrameBufferManager()
+        internal IrisRtcRenderingHandle GetRtcRenderingHandle()
         {
-            return _videoFrameBufferManagerPtr;
+            return _rtcRenderingHandle;
         }
 
         public static RtcEngineImpl GetInstance(IntPtr nativePtr)
@@ -6168,12 +6164,14 @@ namespace Agora.Rtc
 
         public bool StartDumpVideo(VIDEO_SOURCE_TYPE type, string dir)
         {
-            return AgoraRtcNative.StartDumpVideo(_videoFrameBufferManagerPtr, type, dir);
+            //return AgoraRtcNative.StartDumpVideo(_rtcRenderingHandle, type, dir);
+            return false;
         }
 
         public bool StopDumpVideo()
         {
-            return AgoraRtcNative.StopDumpVideo(_videoFrameBufferManagerPtr);
+            return false;
+            //return AgoraRtcNative.StopDumpVideo(_rtcRenderingHandle);
         }
 
 

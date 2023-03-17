@@ -77,6 +77,8 @@ namespace Agora.Rtc
 
         private static void ConvertIrisVideoFrameToVideoFrame(ref IrisVideoFrame videoFrameConverted, ref VideoFrame localVideoFrame)
         {
+            CalculationYUVLength(ref videoFrameConverted);
+
             if (mode == OBSERVER_MODE.RAW_DATA)
             {
                 if (localVideoFrame.height != videoFrameConverted.height ||
@@ -124,42 +126,57 @@ namespace Agora.Rtc
             localVideoFrame.alphaBufferPtr = videoFrameConverted.alphaBuffer;
         }
 
-        private static bool ProcessVideoFrameReceived(ref IrisVideoFrame videoFrame, ref VideoFrame localVideoFrame)
-        {
-            //var videoFrame = (IrisVideoFrame)(Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ??
-            //    new IrisVideoFrame());
 
-            if (videoFrame.type == VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420 || videoFrame.type == VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV422)
+        private static void CalculationYUVLength(ref IrisVideoFrame videoFrame)
+        {
+            if (videoFrame.type == VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420)
             {
                 videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
                 videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height / 2);
                 videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height / 2);
+                videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
+            }
+            else if (videoFrame.type == VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV422)
+            {
+                videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
+                videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height);
+                videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height);
+                videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
             }
             else
             {
                 videoFrame.y_buffer_length = (uint)(videoFrame.width * videoFrame.height * 4);
                 videoFrame.u_buffer_length = 0;
                 videoFrame.v_buffer_length = 0;
+                videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
             }
-
-            var ifConverted = false;// videoFrameObserver.GetVideoFormatPreference() != videoFrame.type;
-
-            if (ifConverted)
-            {
-                IrisVideoFrame videoFrameConverted = new IrisVideoFrame();
-                videoFrameConverted.type = videoFrameObserver.GetVideoFormatPreference();
-                AgoraRtcNative.AlignAndConvertVideoFrame(ref videoFrameConverted, ref videoFrame);
-                ConvertIrisVideoFrameToVideoFrame(ref videoFrameConverted, ref localVideoFrame);
-                videoFrame = videoFrameConverted;
-                return true;
-            }
-            else
-            {
-                ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref localVideoFrame);
-            }
-
-            return false;
         }
+
+
+        //private static bool ProcessVideoFrameReceived(ref IrisVideoFrame videoFrame, ref VideoFrame localVideoFrame)
+        //{
+        //    //var videoFrame = (IrisVideoFrame)(Marshal.PtrToStructure(videoFramePtr, typeof(IrisVideoFrame)) ??
+        //    //    new IrisVideoFrame());
+        //    CalculationYUVLength(ref videoFrame);
+
+        //    var ifConverted = false;// videoFrameObserver.GetVideoFormatPreference() != videoFrame.type;
+
+        //    if (ifConverted)
+        //    {
+        //        IrisVideoFrame videoFrameConverted = new IrisVideoFrame();
+        //        videoFrameConverted.type = videoFrameObserver.GetVideoFormatPreference();
+        //        AgoraRtcNative.AlignAndConvertVideoFrame(ref videoFrameConverted, ref videoFrame);
+        //        ConvertIrisVideoFrameToVideoFrame(ref videoFrameConverted, ref localVideoFrame);
+        //        videoFrame = videoFrameConverted;
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref localVideoFrame);
+        //    }
+
+        //    return false;
+        //}
 
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -191,10 +208,8 @@ namespace Agora.Rtc
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             VIDEO_SOURCE_TYPE type = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "type");
                             VideoFrame videoFrame1 = GetVideoFrame("", 0);
-                            //todo 现在是否需要这个 ProcessVideoFrameReceived 函数了捏
-                            bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame,ref videoFrame1);
                             bool result = videoFrameObserver.OnCaptureVideoFrame(type, videoFrame1);
-                            if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -209,12 +224,9 @@ namespace Agora.Rtc
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             VIDEO_SOURCE_TYPE type = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "type");
-
                             VideoFrame videoFrame1 = GetVideoFrame("", 1);
-                            //todo 现在是否需要这个转换函数了捏
-                            bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnPreEncodeVideoFrame(type, videoFrame1);
-                            if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -229,13 +241,9 @@ namespace Agora.Rtc
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             int mediaPlayerId = (int)AgoraJson.GetData<int>(jsonData, "mediaPlayerId");
-
                             VideoFrame videoFrame1 = GetVideoFrame("", 2);
-                            //todo 现在是否需要这个转换函数了捏
-                            bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
-
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnMediaPlayerVideoFrame(videoFrame1, mediaPlayerId);
-                            if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -250,13 +258,9 @@ namespace Agora.Rtc
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
                             uint remoteUid = (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid");
-
                             VideoFrame videoFrame1 = GetVideoFrame("", 3);
-                            //todo 现在是否需要这个转换函数了
-                            bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
-
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnRenderVideoFrame(channelId, remoteUid, videoFrame1);
-                            if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -273,10 +277,8 @@ namespace Agora.Rtc
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
 
                             VideoFrame videoFrame1 = GetVideoFrame("", 4);
-                            //todo 现在是否需要这个转换函数了
-                            bool needClear = ProcessVideoFrameReceived(ref videoFrame, ref videoFrame1);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnTranscodedVideoFrame(videoFrame1);
-                            if (needClear) AgoraRtcNative.ClearVideoFrame(ref videoFrame);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
