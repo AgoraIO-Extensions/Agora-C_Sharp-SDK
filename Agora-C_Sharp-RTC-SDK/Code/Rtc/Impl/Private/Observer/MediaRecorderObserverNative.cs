@@ -52,9 +52,6 @@ namespace Agora.Rtc
             IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
             var @event = eventParam.@event;
             var data = eventParam.data;
-            var buffer = eventParam.buffer;
-            var length = eventParam.length;
-            var buffer_count = eventParam.buffer_count;
 
             LitJson.JsonData jsonData = null;
             if (data != null)

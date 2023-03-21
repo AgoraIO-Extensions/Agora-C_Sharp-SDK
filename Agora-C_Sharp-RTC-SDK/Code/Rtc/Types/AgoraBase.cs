@@ -7249,7 +7249,6 @@ namespace Agora.Rtc
                 default:
                     return "aes-128-gcm-2";
             }
-            return "aes-128-gcm-2";
         }
 
         ///
