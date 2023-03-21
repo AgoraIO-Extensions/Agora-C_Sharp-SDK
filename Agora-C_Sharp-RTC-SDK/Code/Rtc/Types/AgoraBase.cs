@@ -2687,167 +2687,6 @@ namespace Agora.Rtc
         WIFI_BLUETOOTH_COEXIST = 8,
     };
 
-    ///
-    /// <summary>
-    /// Audio statistics of the remote user.
-    /// </summary>
-    ///
-    public class RemoteAudioStats
-    {
-        public RemoteAudioStats()
-        {
-            uid = 0;
-            quality = 0;
-            networkTransportDelay = 0;
-            jitterBufferDelay = 0;
-            audioLossRate = 0;
-            numChannels = 0;
-            receivedSampleRate = 0;
-            receivedBitrate = 0;
-            totalFrozenTime = 0;
-            frozenRate = 0;
-            mosValue = 0;
-            frozenRateByCustomPlcCount = 0;
-            plcCount = 0;
-            totalActiveTime = 0;
-            publishDuration = 0;
-            qoeQuality = 0;
-            qualityChangedReason = 0;
-        }
-
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay,
-            int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime,
-            int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason)
-        {
-            this.uid = uid;
-            this.quality = quality;
-            this.networkTransportDelay = networkTransportDelay;
-            this.jitterBufferDelay = jitterBufferDelay;
-            this.audioLossRate = audioLossRate;
-            this.numChannels = numChannels;
-            this.receivedSampleRate = receivedSampleRate;
-            this.receivedBitrate = receivedBitrate;
-            this.totalFrozenTime = totalFrozenTime;
-            this.frozenRate = frozenRate;
-            this.mosValue = mosValue;
-            this.frozenRateByCustomPlcCount = frozenRateByCustomPlcCount;
-            this.plcCount = plcCount;
-            this.totalActiveTime = totalActiveTime;
-            this.publishDuration = publishDuration;
-            this.qoeQuality = qoeQuality;
-            this.qualityChangedReason = qualityChangedReason;
-        }
-
-        ///
-        /// <summary>
-        /// The user ID of the remote user.
-        /// </summary>
-        ///
-        public uint uid;
-
-        ///
-        /// <summary>
-        /// The quality of the audio stream sent by the user. See QUALITY_TYPE .
-        /// </summary>
-        ///
-        public int quality;
-
-        ///
-        /// <summary>
-        /// The network delay (ms) from the sender to the receiver.
-        /// </summary>
-        ///
-        public int networkTransportDelay;
-
-        ///
-        /// <summary>
-        /// The network delay (ms) from the audio receiver to the jitter buffer.When the receiving end is an audience member and audienceLatencyLevel of ClientRoleOptions is 1, this parameter does not take effect.
-        /// </summary>
-        ///
-        public int jitterBufferDelay;
-
-        ///
-        /// <summary>
-        /// The frame loss rate (%) of the remote audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int audioLossRate;
-
-        ///
-        /// <summary>
-        /// The number of audio channels.
-        /// </summary>
-        ///
-        public int numChannels;
-
-        ///
-        /// <summary>
-        /// The sampling rate of the received audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int receivedSampleRate;
-
-        ///
-        /// <summary>
-        /// The average bitrate (Kbps) of the received audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int receivedBitrate;
-
-        ///
-        /// <summary>
-        /// The total freeze time (ms) of the remote audio stream after the remote user joins the channel. In a session, audio freeze occurs when the audio frame loss rate reaches 4%.
-        /// </summary>
-        ///
-        public int totalFrozenTime;
-
-        ///
-        /// <summary>
-        /// The total audio freeze time as a percentage (%) of the total time when the audio is available. The audio is considered available when the remote user neither stops sending the audio stream nor disables the audio module after joining the channel.
-        /// </summary>
-        ///
-        public int frozenRate;
-
-        ///
-        /// <summary>
-        /// The quality of the remote audio stream in the reported interval. The quality is determined by the Agora real-time audio MOS (Mean Opinion Score) measurement method. The return value range is [0, 500]. Dividing the return value by 100 gets the MOS score, which ranges from 0 to 5. The higher the score, the better the audio quality.The subjective perception of audio quality corresponding to the Agora real-time audio MOS scores is as follows:MOS scorePerception of audio qualityGreater than 4Excellent. The audio sounds clear and smooth.From 3.5 to 4Good. The audio has some perceptible impairment but still sounds clear.From 3 to 3.5Fair. The audio freezes occasionally and requires attentive listening.From 2.5 to 3Poor. The audio sounds choppy and requires considerable effort to understand.From 2 to 2.5Bad. The audio has occasional noise. Consecutive audio dropouts occur, resulting in some information loss. The users can communicate only with difficulty.Less than 2Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible.
-        /// </summary>
-        ///
-        public int mosValue;
-
-        public UInt32 frozenRateByCustomPlcCount;
-
-        public UInt32 plcCount;
-
-        ///
-        /// <summary>
-        /// The total active time (ms) between the start of the audio call and the callback of the remote user.The active time refers to the total duration of the remote user without the mute state.
-        /// </summary>
-        ///
-        public int totalActiveTime;
-
-        ///
-        /// <summary>
-        /// The total duration (ms) of the remote audio stream.
-        /// </summary>
-        ///
-        public int publishDuration;
-
-        ///
-        /// <summary>
-        /// The Quality of Experience (QoE) of the local user when receiving a remote audio stream. See EXPERIENCE_QUALITY_TYPE .
-        /// </summary>
-        ///
-        public int qoeQuality;
-
-        ///
-        /// <summary>
-        /// Reasons why the QoE of the local user when receiving a remote audio stream is poor. See EXPERIENCE_POOR_REASON .
-        /// </summary>
-        ///
-        public int qualityChangedReason;
-    };
-
     public enum AUDIO_AINS_MODE
     {
         AINS_MODE_BALANCED = 0,
@@ -7643,13 +7482,16 @@ namespace Agora.Rtc
         ///
         public string channelId;
 
-        public EchoTestConfiguration(view_t v, bool ea, bool ev, string t, string c)
+        public int intervalInSeconds;
+
+        public EchoTestConfiguration(view_t v, bool ea, bool ev, string t, string c, int @is)
         {
             view = v;
             enableAudio = ea;
             enableVideo = ev;
             token = t;
             channelId = c;
+            intervalInSeconds = @is;
         }
 
         public EchoTestConfiguration()
@@ -7659,6 +7501,7 @@ namespace Agora.Rtc
             enableVideo = true;
             token = "";
             channelId = "";
+            intervalInSeconds = 0;
         }
     };
 

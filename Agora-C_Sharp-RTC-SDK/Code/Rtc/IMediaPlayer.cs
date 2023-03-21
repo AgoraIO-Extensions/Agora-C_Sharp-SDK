@@ -116,6 +116,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
+        [Obsolete]
         public abstract int OpenWithCustomSource(Int64 startPos, IMediaPlayerCustomDataProvider provider);
 
         ///

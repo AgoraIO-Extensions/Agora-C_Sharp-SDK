@@ -5953,6 +5953,20 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public UInt64 GetNtpTimeInMs()
+        {
+            _param.Clear();
+         
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETNTPTIMEINMS,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? 0 : (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "result");
+        }
+
+
 
         #region CallIrisApiWithBuffer
 

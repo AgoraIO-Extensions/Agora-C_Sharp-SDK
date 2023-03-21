@@ -285,6 +285,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_GETNETWORKTYPE = "RtcEngine_getNetworkType";
         internal const string FUNC_RTCENGINE_STARTMEDIARENDERINGTRACING = "RtcEngine_startMediaRenderingTracing";
         internal const string FUNC_RTCENGINE_ENABLEINSTANTMEDIARENDERING = "RtcEngine_enableInstantMediaRendering";
+        internal const string FUNC_RTCENGINE_GETNTPTIMEINMS= "RtcEngine_getNtpTimeInMs";
         #endregion
 
         #region IRtcEngineEx start

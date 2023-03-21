@@ -3131,6 +3131,16 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
+
+        [Test]
+        public void Test_GetNtpTimeInMs()
+        {
+           
+            var nRet = Engine.GetNtpTimeInMs();
+
+            Assert.AreEqual(0, nRet);
+        }
+
         #endregion
 
         #endregion

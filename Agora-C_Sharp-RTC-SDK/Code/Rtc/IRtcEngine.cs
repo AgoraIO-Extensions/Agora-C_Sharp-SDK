@@ -1860,6 +1860,7 @@ namespace Agora.Rtc
         /// ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
         ///
+        [Obsolete("his method is deprecated, `startScreenCaptureByDisplayId` or `startScreenCaptureByDisplayId` instead.")]
         public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
 
@@ -2241,6 +2242,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.-1: A general error occurs (no specified reason).-2: The parameter is invalid.-7: The method call was rejected. It may be because the SDK has not been initialized successfully, or the user role is not an host.-8: Internal state error. Probably because the user is not an audience member.
         /// </returns>
         ///
+        [Obsolete("Use `startOrUpdateChannelMediaRelay` instead.")]
         public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
         ///
@@ -2255,6 +2257,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
+        [Obsolete("Use `startOrUpdateChannelMediaRelay` instead.")]
         public abstract int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
 
@@ -2332,6 +2335,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
+        [Obsolete]
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true);
 
         public abstract uint CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config);
@@ -3987,6 +3991,8 @@ namespace Agora.Rtc
 
         public abstract int EnableWirelessAccelerate(bool enabled);
 
+
+        public abstract UInt64 GetNtpTimeInMs();
         ///
         /// <summary>
         /// Gets the C++ handle of the native SDK.
@@ -4695,6 +4701,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.-1: A general error occurs (no specified reason).-2: The parameter is invalid.-7: The method call was rejected. It may be because the SDK has not been initialized successfully, or the user role is not an host.-8: Internal state error. Probably because the user is not an audience member.
         /// </returns>
         ///
+        [Obsolete("Use `startOrUpdateChannelMediaRelayEx` instead.")]
         public abstract int StartChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
 
         ///
@@ -4711,6 +4718,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
+        [Obsolete("Use `startOrUpdateChannelMediaRelayEx` instead.")]
         public abstract int UpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
 
         ///
