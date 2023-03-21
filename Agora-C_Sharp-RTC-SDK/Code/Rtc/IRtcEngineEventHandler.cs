@@ -79,6 +79,7 @@ namespace Agora.Rtc
         ///
         /// <param name="lost"> The packet loss rate (%) of the audio packet sent from the remote user.</param>
         ///
+        [Obsolete("This callback is deprecated. Use onRemoteAudioStats instead.")]
         public virtual void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost) { }
 
         ///
@@ -452,21 +453,6 @@ namespace Agora.Rtc
         ///
         public virtual void OnUserStateChanged(RtcConnection connection, uint remoteUid, uint state) { }
 
-        [Obsolete("This callback is deprecated. Use other specific event callbacks instead")]
-        ///
-        /// <summary>
-        /// Occurs when a method is executed by the SDK.
-        /// Deprecated:Deprecated as of v4.1.0. This method can neither accurately characterize the specific API method nor represent the execution result of the API.Agora recommends getting the results of the API implementation through relevant channels and media callbacks. For example, after calling the EnableLocalAudio method to enable the microphone, the status of the microphone is returned in the OnLocalAudioStateChanged callback.
-        /// </summary>
-        ///
-        /// <param name="err"> The error code returned by the SDK when the method call fails. If the SDK returns 0, then the method call is successful.</param>
-        ///
-        /// <param name="api"> The method executed by the SDK.</param>
-        ///
-        /// <param name="result"> The result of the method call.</param>
-        ///
-        public virtual void OnApiCallExecuted(int err, string api, string result) { }
-
         ///
         /// <summary>
         /// Reports the statistics of the local audio stream.
@@ -521,6 +507,7 @@ namespace Agora.Rtc
         /// Deprecated:Please use LOCAL_VIDEO_STREAM_STATE_CAPTURING(1) in OnLocalVideoStateChanged instead.This callback indicates that the camera has been successfully turned on and you can start to capture video.
         /// </summary>
         ///
+        [Obsolete]
         public virtual void OnCameraReady() { }
 
         ///
@@ -578,6 +565,7 @@ namespace Agora.Rtc
         /// Deprecated:Use LOCAL_VIDEO_STREAM_STATE_STOPPED(0) in the OnLocalVideoStateChanged callback instead.The application can use this callback to change the configuration of the view (for example, displaying other pictures in the view) after the video stops playing.
         /// </summary>
         ///
+        [Obsolete("Use `LOCAL_VIDEO_STREAM_STATE_STOPPED(0)` in the onLocalVideoStateChanged callback instead.")]
         public virtual void OnVideoStopped() { }
 
         ///
@@ -622,6 +610,7 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
+        [Obsolete("Use `onConnectionStateChanged` instead.")]
         public virtual void OnConnectionInterrupted(RtcConnection connection) { }
 
         ///
@@ -632,6 +621,7 @@ namespace Agora.Rtc
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
         ///
+        [Obsolete("Use `onConnectionStateChanged` instead.")]
         public virtual void OnConnectionBanned(RtcConnection connection) { }
 
         ///
@@ -725,12 +715,15 @@ namespace Agora.Rtc
         ///
         /// <param name="elapsed"> The time elapsed (ms) from the local user calling the JoinChannel [2/2] method until the SDK triggers this callback.</param>
         ///
+        ///
+        [Obsolete("Use `onRemoteAudioStateChanged` instead.")]
         public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed) { }
 
         ///
         /// <summary>
         /// Occurs when the SDK decodes the first remote audio frame for playback.
-        /// Deprecated:Use OnRemoteAudioStateChanged instead.The SDK triggers this callback under one of the following circumstances:The remote user joins the channel and sends the audio stream.The remote user stops sending the audio stream and re-sends it after 15 seconds, and the possible reasons include:The remote user leaves the channel.The remote user is offline.The remote user calls MuteLocalAudioStream to stop sending the video stream.The remote user calls DisableAudio to disable video.
+        /// Deprecated:Use OnRemoteAudioStateChanged instead.
+        /// The SDK triggers this callback under one of the following circumstances:The remote user joins the channel and sends the audio stream.The remote user stops sending the audio stream and re-sends it after 15 seconds, and the possible reasons include:The remote user leaves the channel.The remote user is offline.The remote user calls MuteLocalAudioStream to stop sending the video stream.The remote user calls DisableAudio to disable video.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection .</param>
@@ -739,6 +732,7 @@ namespace Agora.Rtc
         ///
         /// <param name="elapsed"> The time elapsed (ms) from the local user calling the JoinChannel [2/2] method until the SDK triggers this callback.</param>
         ///
+        [Obsolete("Use `OnRemoteAudioStateChanged` instead.")]
         public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed) { }
 
         ///
@@ -891,6 +885,7 @@ namespace Agora.Rtc
         ///
         /// <param name="code"> The event code of channel media relay. See CHANNEL_MEDIA_RELAY_EVENT .</param>
         ///
+        [Obsolete("This callback is not recommended and will be removed in future releases.")]
         public virtual void OnChannelMediaRelayEvent(int code) { }
 
         ///
@@ -919,6 +914,7 @@ namespace Agora.Rtc
         ///
         /// <param name="rxKBitRate"> The bitrate of the received audio (Kbps).</param>
         ///
+        [Obsolete("Use `onRemoteAudioStats` instead.")]
         public virtual void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) { }
 
         ///
@@ -937,6 +933,7 @@ namespace Agora.Rtc
         ///
         /// <param name="rxKBitRate"> The bitrate of the received video (Kbps).</param>
         ///
+        [Obsolete("Use `onRemoteVideoStats` instead.")]
         public virtual void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate) { }
 
         ///
@@ -994,6 +991,9 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public virtual void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string userAccount) { }
+
+
+        public virtual void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error){}
 
 
         public virtual void OnVideoRenderingTracingResult(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo) { }

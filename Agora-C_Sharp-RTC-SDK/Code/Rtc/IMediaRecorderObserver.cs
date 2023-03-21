@@ -17,7 +17,7 @@ namespace Agora.Rtc
         ///
         /// <param name="error"> The reason for the state change. See RecorderErrorCode .</param>
         ///
-        public virtual void OnRecorderStateChanged(RecorderState state, RecorderErrorCode error) {}
+        public virtual void OnRecorderStateChanged(string channelId, uint uid, RecorderState state, RecorderErrorCode error) {}
 
         ///
         /// <summary>
@@ -27,6 +27,6 @@ namespace Agora.Rtc
         ///
         /// <param name="info"> The information about the file that is recorded. See RecorderInfo .</param>
         ///
-        public virtual void OnRecorderInfoUpdated(RecorderInfo info) {}
+        public virtual void OnRecorderInfoUpdated(string channelId, uint uid, RecorderInfo info) {}
     };
 }

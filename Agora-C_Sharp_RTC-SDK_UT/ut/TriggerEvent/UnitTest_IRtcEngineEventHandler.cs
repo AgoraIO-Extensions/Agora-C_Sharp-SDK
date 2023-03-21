@@ -1536,6 +1536,32 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
+        public void Test_OnLocalVideoTranscoderError()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOTRANSCODERERROR;
+
+            TranscodingVideoStream stream;
+            ParamsHelper.InitParam(out stream);
+
+            VIDEO_TRANSCODER_ERROR error;
+            ParamsHelper.InitParam(out error);
+
+
+            jsonObj.Clear();
+            jsonObj.Add("stream", stream);
+            jsonObj.Add("error", error);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnLocalVideoTranscoderErrorPassed(stream, error));
+        }
+
+        [Test]
         public void Test_OnSnapshotTaken()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSNAPSHOTTAKEN;
@@ -1842,36 +1868,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnLastmileQualityPassed(quality));
         }
-
-        [Test]
-        public void Test_OnApiCallExecuted()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAPICALLEXECUTED;
-
-            int err;
-            ParamsHelper.InitParam(out err);
-
-            string api;
-            ParamsHelper.InitParam(out api);
-
-            string result;
-            ParamsHelper.InitParam(out result);
-
-            jsonObj.Clear();
-            jsonObj.Add("err", err);
-            jsonObj.Add("api", api);
-            jsonObj.Add("result", result);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnApiCallExecutedPassed(err, api, result));
-        }
-
 
         [Test]
         public void Test_OnCameraReady()

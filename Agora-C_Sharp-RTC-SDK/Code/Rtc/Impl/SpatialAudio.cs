@@ -1,11 +1,11 @@
-namespace Agora.Rtc
+﻿namespace Agora.Rtc
 {
     //public sealed class CloudSpatialAudioEngine : ICloudSpatialAudioEngine
     //{
     //    private IRtcEngine _rtcEngineInstance = null;
     //    private CloudSpatialAudioEngineImpl _cloudSpatialAudioEngineImpl = null;
     //    private const string ErrorMsgLog = "[CloudSpatialAudioEngine]:Api not supported!";
-    //    private const int ErrorCode = -7;
+    //    private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
     //    private CloudSpatialAudioEngine(IRtcEngine rtcEngine, CloudSpatialAudioEngineImpl impl)
     //    {
@@ -242,7 +242,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private LocalSpatialAudioEngineImpl _localSpatialAudioEngineImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
         private LocalSpatialAudioEngine(IRtcEngine rtcEngine, LocalSpatialAudioEngineImpl impl)
         {

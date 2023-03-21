@@ -5,7 +5,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManagerImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
 
         private MediaPlayerCacheManager(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)

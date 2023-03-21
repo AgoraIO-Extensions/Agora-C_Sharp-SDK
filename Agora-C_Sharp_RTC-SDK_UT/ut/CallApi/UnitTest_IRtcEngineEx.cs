@@ -389,6 +389,30 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_AdjustRecordingSignalVolumeEx()
+        {
+            int volume;
+            ParamsHelper.InitParam(out volume);
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.AdjustRecordingSignalVolumeEx(volume, connection);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_MuteRecordingSignalEx()
+        {
+            bool mute;
+            ParamsHelper.InitParam(out mute);
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.MuteRecordingSignalEx(mute, connection);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_AdjustUserPlaybackSignalVolumeEx()
         {
             uint uid;
@@ -543,6 +567,18 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_StartOrUpdateChannelMediaRelayEx()
+        {
+            ChannelMediaRelayConfiguration configuration;
+            ParamsHelper.InitParam(out configuration);
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.StartOrUpdateChannelMediaRelayEx(configuration, connection);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_StartChannelMediaRelayEx()
         {
             ChannelMediaRelayConfiguration configuration;
@@ -641,11 +677,17 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_EnableWirelessAccelerate()
+        public void Test_SetHighPriorityUserListEx()
         {
-            bool enabled;
-            ParamsHelper.InitParam(out enabled);
-            var nRet = EngineEx.EnableWirelessAccelerate(enabled);
+            uint[] uidList;
+            ParamsHelper.InitParam(out uidList);
+            int uidNum;
+            ParamsHelper.InitParam(out uidNum);
+            STREAM_FALLBACK_OPTIONS option;
+            ParamsHelper.InitParam(out option);
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.SetHighPriorityUserListEx(uidList, uidNum, option, connection);
 
             Assert.AreEqual(0, nRet);
         }

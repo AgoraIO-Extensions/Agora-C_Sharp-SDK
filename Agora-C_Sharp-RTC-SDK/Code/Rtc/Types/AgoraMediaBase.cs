@@ -8,6 +8,61 @@ namespace Agora.Rtc
 
     #region AgoraMediaBase.h
 
+
+    public enum VIDEO_SOURCE_TYPE
+    {
+        /** Video captured by the camera.
+      */
+        VIDEO_SOURCE_CAMERA_PRIMARY = 0,
+        VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
+        /** Video captured by the secondary camera.
+         */
+        VIDEO_SOURCE_CAMERA_SECONDARY = 1,
+        /** Video for screen sharing.
+         */
+        VIDEO_SOURCE_SCREEN_PRIMARY = 2,
+        VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
+        /** Video for secondary screen sharing.
+         */
+        VIDEO_SOURCE_SCREEN_SECONDARY = 3,
+        /** Not define.
+         */
+        VIDEO_SOURCE_CUSTOM = 4,
+        /** Video for media player sharing.
+         */
+        VIDEO_SOURCE_MEDIA_PLAYER = 5,
+        /** Video for png image.
+         */
+        VIDEO_SOURCE_RTC_IMAGE_PNG = 6,
+        /** Video for png image.
+         */
+        VIDEO_SOURCE_RTC_IMAGE_JPEG = 7,
+        /** Video for png image.
+         */
+        VIDEO_SOURCE_RTC_IMAGE_GIF = 8,
+        /** Remote video received from network.
+         */
+        VIDEO_SOURCE_REMOTE = 9,
+        /** Video for transcoded.
+         */
+        VIDEO_SOURCE_TRANSCODED = 10,
+
+        /** Video captured by the third camera.
+         */
+        VIDEO_SOURCE_CAMERA_THIRD = 11,
+        /** Video captured by the fourth camera.
+         */
+        VIDEO_SOURCE_CAMERA_FOURTH = 12,
+        /** Video for third screen sharing.
+         */
+        VIDEO_SOURCE_SCREEN_THIRD = 13,
+        /** Video for fourth screen sharing.
+         */
+        VIDEO_SOURCE_SCREEN_FOURTH = 14,
+
+        VIDEO_SOURCE_UNKNOWN = 100
+    };
+
     ///
     /// <summary>
     /// The type of the audio route.
@@ -486,17 +541,16 @@ namespace Agora.Rtc
         RENDER_MODE_ADAPTIVE = 3,
     };
 
-    namespace Media.Base
+
+    enum CAMERA_VIDEO_SOURCE_TYPE
     {
-        enum VIDEO_SOURCE_TYPE
-        {
-            CAMERA_SOURCE_FRONT = 0,
+        CAMERA_SOURCE_FRONT = 0,
 
-            CAMERA_SOURCE_BACK = 1,
+        CAMERA_SOURCE_BACK = 1,
 
-            VIDEO_SOURCE_UNSPECIFIED = 2,
-        };
+        VIDEO_SOURCE_UNSPECIFIED = 2,
     };
+
 
     ///
     /// @ignore
@@ -568,6 +622,7 @@ namespace Agora.Rtc
             this.textureId = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
+            this.alphaBuffer = null;
         }
 
         public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride,
@@ -704,6 +759,9 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int metadata_size;
+
+
+        public byte[] alphaBuffer;
     };
 
     ///

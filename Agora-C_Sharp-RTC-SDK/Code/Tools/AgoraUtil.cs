@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-
+using System.Collections.Generic;
 
 
 namespace Agora.Rtc
@@ -254,6 +254,17 @@ namespace Agora.Rtc
             var re = Encoding.UTF8.GetString(array);
             var index = re.IndexOf('\0');
             return re.Substring(0, index);
+        }
+
+        internal static List<T> GetDicKeys<T, D>(Dictionary<T, D> dic)
+        {
+            List<T> list = new List<T>();
+            foreach (var e in dic)
+            {
+                list.Add(e.Key);
+            }
+
+            return list;
         }
 
     }

@@ -94,7 +94,7 @@ namespace Agora.Rtc
         {
             param = new ChannelMediaOptions();
             param.publishCameraTrack.SetValue(true);
-            param.publishCustomAudioSourceId.SetValue(1);
+            param.publishCustomAudioTrackId.SetValue(1);
         }
 
         public static void InitParam(out LeaveChannelOptions param)
@@ -474,9 +474,9 @@ namespace Agora.Rtc
         {
             param = new UTMediaPlayerSourceObserver();
         }
-        public static void InitParam(out IMediaPlayerAudioFrameObserver param)
+        public static void InitParam(out IAudioPcmFrameSink param)
         {
-            param = new UTMediaPlayerAudioFrameObserver();
+            param = new UTIAudioPcmFrameSink();
         }
         public static void InitParam(out AUDIO_DUAL_MONO_MODE param)
         {
@@ -906,42 +906,45 @@ namespace Agora.Rtc
         {
             param = new VideoRenderingTracingInfo();
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out EXTERNAL_VIDEO_SOURCE_TYPE param)
+        {
+            param = EXTERNAL_VIDEO_SOURCE_TYPE.ENCODED_VIDEO_FRAME;
+        }
+        public static void InitParam(out AUDIO_TRACK_TYPE param)
+        {
+            param = AUDIO_TRACK_TYPE.AUDIO_TRACK_DIRECT;
+        }
+        public static void InitParam(out ExternalVideoFrame param)
+        {
+            param = new ExternalVideoFrame();
+            param.buffer = new byte[10];
+            param.eglContext = new byte[10];
+            param.alphaBuffer = new byte[10];
+        }
+        public static void InitParam(out MusicCacheInfo[] param)
+        {
+            param = new MusicCacheInfo[1];
+        }
+        public static void InitParam(out CodecCapInfo[] param)
+        {
+            param = new CodecCapInfo[1];
+        }
+        public static void InitParam(out VIDEO_APPLICATION_SCENARIO_TYPE param)
+        {
+            param = VIDEO_APPLICATION_SCENARIO_TYPE.APPLICATION_SCENARIO_GENERAL;
+        }
+        public static void InitParam(out AUDIO_AINS_MODE param)
+        {
+            param = AUDIO_AINS_MODE.AINS_MODE_AGGRESSIVE;
+        }
+        public static void InitParam(out TranscodingVideoStream param)
+        {
+            param = new TranscodingVideoStream();
+        }
+        public static void InitParam(out VIDEO_TRANSCODER_ERROR param)
+        {
+            param = VIDEO_TRANSCODER_ERROR.VT_ERR_OK;
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
@@ -1598,6 +1601,8 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.qualityChangedReason, outParam.qualityChangedReason) == false)
                 return false;
+            if (compareUint(selfParam.rxAudioBytes, outParam.rxAudioBytes) == false)
+                return false;
             return true;
         }
 
@@ -1863,7 +1868,7 @@ namespace Agora.Rtc
 
         public static bool compareTranscodingVideoStream(TranscodingVideoStream selfParam, TranscodingVideoStream outParam)
         {
-            if (compareMEDIA_SOURCE_TYPE(selfParam.sourceType, outParam.sourceType) == false)
+            if (compareVIDEO_SOURCE_TYPE(selfParam.sourceType, outParam.sourceType) == false)
                 return false;
             if (compareUid_t(selfParam.remoteUserUid, outParam.remoteUserUid) == false)
                 return false;
@@ -2334,6 +2339,8 @@ namespace Agora.Rtc
             if (compareString(selfParam.token, outParam.token) == false)
                 return false;
             if (compareString(selfParam.channelId, outParam.channelId) == false)
+                return false;
+            if (compareInt(selfParam.intervalInSeconds, outParam.intervalInSeconds) == false)
                 return false;
             return true;
         }
@@ -3010,6 +3017,8 @@ namespace Agora.Rtc
                 return false;
             if (compareInt(selfParam.mosValue, outParam.mosValue) == false)
                 return false;
+            if (compareUint(selfParam.rxVideoBytes, outParam.rxVideoBytes) == false)
+                return false;
             return true;
         }
 
@@ -3190,6 +3199,8 @@ namespace Agora.Rtc
             if (compareBool(selfParam.isOccluded, outParam.isOccluded) == false)
                 return false;
             if (compareBool(selfParam.minimizeWindow, outParam.minimizeWindow) == false)
+                return false;
+            if (compareRectangle(selfParam.position, outParam.position) == false)
                 return false;
             return true;
         }
@@ -3477,6 +3488,12 @@ namespace Agora.Rtc
                 return false;
             return true;
         }
+
+        public static bool compareVIDEO_TRANSCODER_ERROR(VIDEO_TRANSCODER_ERROR selfParam, VIDEO_TRANSCODER_ERROR outParam)
+        {
+            return selfParam == VIDEO_TRANSCODER_ERROR.VT_ERR_OK;
+        }
+
         #endregion
 
     }

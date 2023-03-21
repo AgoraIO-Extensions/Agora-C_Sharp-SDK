@@ -6,7 +6,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private MediaPlayerImpl _mediaPlayerImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
         private int playerId;
 
         internal MediaPlayer(IRtcEngine rtcEngine, MediaPlayerImpl impl)
@@ -59,7 +59,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-        public override int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer)
+        public override int RegisterAudioFrameObserver(IAudioPcmFrameSink observer)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -68,7 +68,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
         }
 
-        public override int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public override int RegisterAudioFrameObserver(IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {

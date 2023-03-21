@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -7,12 +7,12 @@ using AOT;
 
 namespace Agora.Rtc
 {
-    internal static class MediaPlayerAudioFrameObserverNative
+    internal static class AudioPcmFrameSinkNative
     {
         private static Object observerLock = new Object();
-        private static Dictionary<int, IMediaPlayerAudioFrameObserver> mediaPlayerAudioFrameObserverDic = new Dictionary<int, IMediaPlayerAudioFrameObserver>();
+        private static Dictionary<int, IAudioPcmFrameSink> mediaPlayerAudioFrameObserverDic = new Dictionary<int, IAudioPcmFrameSink>();
 
-        internal static void AddAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer)
+        internal static void AddAudioFrameObserver(int playerId, IAudioPcmFrameSink observer)
         {
             lock (observerLock)
             {
@@ -69,7 +69,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "MediaPlayerAudioFrameObserver_onFrame":
+                    case "MediaPlayerAudioPcmFrameSink_onFrame":
                         {
                             AudioPcmFrame frame = AgoraJson.JsonToStruct<AudioPcmFrame>(jsonData, "frame");
                             IntPtr data_ = bufferArray[0];
@@ -140,7 +140,7 @@ namespace Agora.Rtc
         //            }
         //            catch (Exception e)
         //            {
-        //                AgoraLog.LogError("[Exception] IMediaPlayerAudioFrameObserver.OnFrame: " + e);
+        //                AgoraLog.LogError("[Exception] IAudioPcmFrameSink.OnFrame: " + e);
         //                return true;
         //            }
         //        }

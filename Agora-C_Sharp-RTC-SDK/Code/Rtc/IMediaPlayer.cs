@@ -39,16 +39,16 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Registers an audio frame observer object.
-        /// You need to implement the IMediaPlayerAudioFrameObserver class in this method and register callbacks according to your scenarios. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.
+        /// You need to implement the IAudioPcmFrameSink class in this method and register callbacks according to your scenarios. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.
         /// </summary>
         ///
-        /// <param name="observer"> The audio frame observer, reporting the reception of each audio frame. See IMediaPlayerAudioFrameObserver .</param>
+        /// <param name="observer"> The audio frame observer, reporting the reception of each audio frame. See IAudioPcmFrameSink .</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer);
+        public abstract int RegisterAudioFrameObserver(IAudioPcmFrameSink observer);
 
         ///
         /// <summary>
@@ -63,7 +63,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int RegisterAudioFrameObserver(IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
+        public abstract int RegisterAudioFrameObserver(IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
         ///
         /// <summary>
@@ -116,6 +116,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
+        [Obsolete]
         public abstract int OpenWithCustomSource(Int64 startPos, IMediaPlayerCustomDataProvider provider);
 
         ///

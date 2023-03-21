@@ -2,9 +2,8 @@
 using Agora.Rtc;
 namespace Agora.Rtc
 {
-    public class UTMediaPlayerAudioFrameObserver: IMediaPlayerAudioFrameObserver
+    public class UTIAudioPcmFrameSink : IAudioPcmFrameSink
     {
-
 
         public bool OnFrame_be_trigger = false;
         public AudioPcmFrame OnFrame_frame = null;

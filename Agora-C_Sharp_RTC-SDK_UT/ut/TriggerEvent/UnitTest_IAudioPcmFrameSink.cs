@@ -5,12 +5,12 @@ using System.Collections.Generic;
 namespace Agora.Rtc.Event
 {
     [TestFixture]
-    public class UnitTest_IMediaPlayerAudioFrameObserver
+    public class UnitTest_IAudioPcmFrameSink
     {
 
         public IRtcEngineEx Engine;
         public IMediaPlayer MediaPlayer;
-        public UTMediaPlayerAudioFrameObserver EventHandler;
+        public UTIAudioPcmFrameSink EventHandler;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -27,8 +27,9 @@ namespace Agora.Rtc.Event
             ApiParam.AllocResult();
 
             MediaPlayer = Engine.CreateMediaPlayer();
-            EventHandler = new UTMediaPlayerAudioFrameObserver();
-            MediaPlayer.RegisterAudioFrameObserver(EventHandler);
+            EventHandler = new UTIAudioPcmFrameSink();
+            nRet = MediaPlayer.RegisterAudioFrameObserver(EventHandler);
+            Assert.AreEqual(0, nRet);
         }
 
         [TearDown]
@@ -46,7 +47,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERAUDIOFRAMEOBSERVER_ONFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOPCMFRAMESINK_ONFRAME;
 
             AudioPcmFrame frame;
             ParamsHelper.InitParam(out frame);

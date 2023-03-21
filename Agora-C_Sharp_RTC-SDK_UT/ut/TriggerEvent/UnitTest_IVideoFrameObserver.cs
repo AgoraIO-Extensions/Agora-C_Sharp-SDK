@@ -42,21 +42,22 @@ namespace Agora.Rtc.Event
         #region
 
 
+
         [Test]
         public void Test_OnCaptureVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME;
 
+            VIDEO_SOURCE_TYPE type;
+            ParamsHelper.InitParam(out type);
+
             VideoFrame videoFrame;
             ParamsHelper.InitParam(out videoFrame);
 
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA;
-            config.id = 0;
-            config.key = "";
 
             jsonObj.Clear();
-            // 
+            jsonObj.Add("type", type);
+            jsonObj.Add("videoFrame", videoFrame);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -65,24 +66,26 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(videoFrame, config));
+            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(type, videoFrame));
         }
+
+
 
         [Test]
         public void Test_OnPreEncodeVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME;
 
+            VIDEO_SOURCE_TYPE type;
+            ParamsHelper.InitParam(out type);
+
             VideoFrame videoFrame;
             ParamsHelper.InitParam(out videoFrame);
 
-            jsonObj.Clear();
-           
 
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
-            config.id = 0;
-            config.key = "";
+            jsonObj.Clear();
+            jsonObj.Add("type", type);
+            jsonObj.Add("videoFrame", videoFrame);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -91,113 +94,10 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPreEncodeVideoFramePassed(videoFrame, config));
+            Assert.AreEqual(true, EventHandler.OnPreEncodeVideoFramePassed(type, videoFrame));
         }
 
-        [Test]
-        public void Test_OnSecondaryCameraCaptureVideoFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONSECONDARYCAMERACAPTUREVIDEOFRAME;
 
-            VideoFrame videoFrame;
-            ParamsHelper.InitParam(out videoFrame);
-
-          
-            jsonObj.Clear();
-             
-
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_SECONDARY;
-            config.id = 0;
-            config.key = "";
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(videoFrame, config));
-        }
-
-        [Test]
-        public void Test_OnSecondaryPreEncodeCameraVideoFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONSECONDARYPREENCODECAMERAVIDEOFRAME;
-
-            VideoFrame videoFrame;
-            ParamsHelper.InitParam(out videoFrame);
-
-            jsonObj.Clear();
-             
-
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_SECONDARY;
-            config.id = 0;
-            config.key = "";
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPreEncodeVideoFramePassed(videoFrame, config));
-        }
-
-        [Test]
-        public void Test_OnScreenCaptureVideoFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONSCREENCAPTUREVIDEOFRAME;
-
-            VideoFrame videoFrame;
-            ParamsHelper.InitParam(out videoFrame);
-
-            jsonObj.Clear();
-             
-
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN_PRIMARY;
-            config.id = 0;
-            config.key = "";
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(videoFrame, config));
-        }
-
-        [Test]
-        public void Test_OnPreEncodeScreenVideoFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODESCREENVIDEOFRAME;
-
-            VideoFrame videoFrame;
-            ParamsHelper.InitParam(out videoFrame);
-
-            jsonObj.Clear();
-             
-
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN;
-            config.id = 0;
-            config.key = "";
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPreEncodeVideoFramePassed(videoFrame,config));
-        }
 
         [Test]
         public void Test_OnMediaPlayerVideoFrame()
@@ -210,13 +110,9 @@ namespace Agora.Rtc.Event
             int mediaPlayerId;
             ParamsHelper.InitParam(out mediaPlayerId);
 
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_MEDIA_PLAYER;
-            config.id = 1;
-            config.key = "";
 
             jsonObj.Clear();
-             
+            jsonObj.Add("videoFrame", videoFrame);
             jsonObj.Add("mediaPlayerId", mediaPlayerId);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
@@ -226,60 +122,10 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(videoFrame, config));
+            Assert.AreEqual(true, EventHandler.OnMediaPlayerVideoFramePassed(videoFrame, mediaPlayerId));
         }
 
-        [Test]
-        public void Test_OnSecondaryScreenCaptureVideoFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONSECONDARYSCREENCAPTUREVIDEOFRAME;
 
-            VideoFrame videoFrame;
-            ParamsHelper.InitParam(out videoFrame);
-
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN_SECONDARY;
-            config.id = 0;
-            config.key = "";
-
-            jsonObj.Clear();
-             
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(videoFrame,config));
-        }
-
-        [Test]
-        public void Test_OnSecondaryPreEncodeScreenVideoFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONSECONDARYPREENCODESCREENVIDEOFRAME;
-
-            VideoFrame videoFrame;
-            ParamsHelper.InitParam(out videoFrame);
-
-            jsonObj.Clear();
-             
-
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_SCREEN_SECONDARY;
-            config.id = 0;
-            config.key = "";
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPreEncodeVideoFramePassed(videoFrame,config));
-        }
 
         [Test]
         public void Test_OnRenderVideoFrame()
@@ -295,10 +141,11 @@ namespace Agora.Rtc.Event
             VideoFrame videoFrame;
             ParamsHelper.InitParam(out videoFrame);
 
+
             jsonObj.Clear();
             jsonObj.Add("channelId", channelId);
             jsonObj.Add("remoteUid", remoteUid);
-             
+            jsonObj.Add("videoFrame", videoFrame);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -310,6 +157,8 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnRenderVideoFramePassed(channelId, remoteUid, videoFrame));
         }
 
+
+
         [Test]
         public void Test_OnTranscodedVideoFrame()
         {
@@ -318,13 +167,9 @@ namespace Agora.Rtc.Event
             VideoFrame videoFrame;
             ParamsHelper.InitParam(out videoFrame);
 
-            jsonObj.Clear();
-             
 
-            VideoFrameBufferConfig config;
-            config.type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_TRANSCODED;
-            config.id = 0;
-            config.key = "";
+            jsonObj.Clear();
+            jsonObj.Add("videoFrame", videoFrame);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -333,9 +178,10 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(videoFrame,config));
+            Assert.AreEqual(true, EventHandler.OnTranscodedVideoFramePassed(videoFrame));
         }
 
+        //todo we will resolve this late
         [Test]
         public void Test_GetVideoFormatPreference()
         {
@@ -343,6 +189,7 @@ namespace Agora.Rtc.Event
 
             jsonObj.Clear();
 
+
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
             ApiParam.data = jsonString;
@@ -350,8 +197,25 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            //iris will not trigger this call back
-            //Assert.AreEqual(true, EventHandler.GetVideoFormatPreferencePassed());
+            Assert.AreEqual(true, EventHandler.GetVideoFormatPreferencePassed());
+        }
+
+        //todo we will resolve this late
+        [Test]
+        public void Test_GetObservedFramePosition()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_GETOBSERVEDFRAMEPOSITION;
+
+            jsonObj.Clear();
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.GetObservedFramePositionPassed());
         }
 
         #endregion

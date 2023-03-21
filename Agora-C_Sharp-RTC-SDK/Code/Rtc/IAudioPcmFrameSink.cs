@@ -5,7 +5,7 @@ namespace Agora.Rtc
     /// The audio frame observer for the media player.
     /// </summary>
     ///
-    public abstract class IMediaPlayerAudioFrameObserver
+    public abstract class IAudioPcmFrameSink
     {
         ///
         /// <summary>

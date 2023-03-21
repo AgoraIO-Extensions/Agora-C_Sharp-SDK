@@ -1057,6 +1057,14 @@ namespace Agora.Rtc
         public int height;
     };
 
+
+    public enum SCREEN_CAPTURE_CAPABILITY_LEVEL
+    {
+        SCREEN_CAPTURE_CAPABILITY_LEVEL_15_FPS = 0,
+        SCREEN_CAPTURE_CAPABILITY_LEVEL_30_FPS = 1,
+        SCREEN_CAPTURE_CAPABILITY_LEVEL_60_FPS = 2,
+    };
+
     ///
     /// <summary>
     /// The encoding bitrate of the video.
@@ -1823,6 +1831,27 @@ namespace Agora.Rtc
         VIDEO_MIRROR_MODE_DISABLED = 2,
     };
 
+    public enum CODEC_CAP_MASK
+    {
+
+        CODEC_CAP_MASK_NONE = 0,
+
+        CODEC_CAP_MASK_HW_DEC = 1 << 0,
+
+        CODEC_CAP_MASK_HW_ENC = 1 << 1,
+
+        CODEC_CAP_MASK_SW_DEC = 1 << 2,
+
+        CODEC_CAP_MASK_SW_ENC = 1 << 3,
+    };
+
+    public class CodecCapInfo
+    {
+        public VIDEO_CODEC_TYPE codec_type;
+
+        public int codec_cap_mask;
+    };
+
     ///
     /// <summary>
     /// Video encoder configurations.
@@ -2462,43 +2491,43 @@ namespace Agora.Rtc
         public int rxPacketLossRate;
     };
 
-    ///
-    /// <summary>
-    /// The capture type of the custom video source.
-    /// </summary>
-    ///
-    public enum VIDEO_SOURCE_TYPE
-    {
-        VIDEO_SOURCE_CAMERA_PRIMARY,
-        ///
-        /// <summary>
-        /// The camera.
-        /// </summary>
-        ///
-        VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
-        VIDEO_SOURCE_CAMERA_SECONDARY,
-        VIDEO_SOURCE_SCREEN_PRIMARY,
-        ///
-        /// <summary>
-        /// The screen.
-        /// </summary>
-        ///
-        VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
-        VIDEO_SOURCE_SCREEN_SECONDARY,
-        VIDEO_SOURCE_CUSTOM,
-        VIDEO_SOURCE_MEDIA_PLAYER,
-        VIDEO_SOURCE_RTC_IMAGE_PNG,
-        VIDEO_SOURCE_RTC_IMAGE_JPEG,
-        VIDEO_SOURCE_RTC_IMAGE_GIF,
-        VIDEO_SOURCE_REMOTE,
-        VIDEO_SOURCE_TRANSCODED,
-        ///
-        /// <summary>
-        /// An unknown video source.
-        /// </summary>
-        ///
-        VIDEO_SOURCE_UNKNOWN = 100
-    };
+    /////
+    ///// <summary>
+    ///// The capture type of the custom video source.
+    ///// </summary>
+    /////
+    //public enum VIDEO_SOURCE_TYPE
+    //{
+    //    VIDEO_SOURCE_CAMERA_PRIMARY,
+    //    ///
+    //    /// <summary>
+    //    /// The camera.
+    //    /// </summary>
+    //    ///
+    //    VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
+    //    VIDEO_SOURCE_CAMERA_SECONDARY,
+    //    VIDEO_SOURCE_SCREEN_PRIMARY,
+    //    ///
+    //    /// <summary>
+    //    /// The screen.
+    //    /// </summary>
+    //    ///
+    //    VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
+    //    VIDEO_SOURCE_SCREEN_SECONDARY,
+    //    VIDEO_SOURCE_CUSTOM,
+    //    VIDEO_SOURCE_MEDIA_PLAYER,
+    //    VIDEO_SOURCE_RTC_IMAGE_PNG,
+    //    VIDEO_SOURCE_RTC_IMAGE_JPEG,
+    //    VIDEO_SOURCE_RTC_IMAGE_GIF,
+    //    VIDEO_SOURCE_REMOTE,
+    //    VIDEO_SOURCE_TRANSCODED,
+    //    ///
+    //    /// <summary>
+    //    /// An unknown video source.
+    //    /// </summary>
+    //    ///
+    //    VIDEO_SOURCE_UNKNOWN = 100
+    //};
 
     ///
     /// <summary>
@@ -2658,157 +2687,13 @@ namespace Agora.Rtc
         WIFI_BLUETOOTH_COEXIST = 8,
     };
 
-    ///
-    /// <summary>
-    /// Audio statistics of the remote user.
-    /// </summary>
-    ///
-    public class RemoteAudioStats
+    public enum AUDIO_AINS_MODE
     {
-        public RemoteAudioStats()
-        {
-            uid = 0;
-            quality = 0;
-            networkTransportDelay = 0;
-            jitterBufferDelay = 0;
-            audioLossRate = 0;
-            numChannels = 0;
-            receivedSampleRate = 0;
-            receivedBitrate = 0;
-            totalFrozenTime = 0;
-            frozenRate = 0;
-            mosValue = 0;
-            totalActiveTime = 0;
-            publishDuration = 0;
-            qoeQuality = 0;
-            qualityChangedReason = 0;
-        }
+        AINS_MODE_BALANCED = 0,
 
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay,
-            int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime,
-            int frozenRate, int mosValue, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason)
-        {
-            this.uid = uid;
-            this.quality = quality;
-            this.networkTransportDelay = networkTransportDelay;
-            this.jitterBufferDelay = jitterBufferDelay;
-            this.audioLossRate = audioLossRate;
-            this.numChannels = numChannels;
-            this.receivedSampleRate = receivedSampleRate;
-            this.receivedBitrate = receivedBitrate;
-            this.totalFrozenTime = totalFrozenTime;
-            this.frozenRate = frozenRate;
-            this.mosValue = mosValue;
-            this.totalActiveTime = totalActiveTime;
-            this.publishDuration = publishDuration;
-            this.qoeQuality = qoeQuality;
-            this.qualityChangedReason = qualityChangedReason;
-        }
+        AINS_MODE_AGGRESSIVE = 1,
 
-        ///
-        /// <summary>
-        /// The user ID of the remote user.
-        /// </summary>
-        ///
-        public uint uid;
-
-        ///
-        /// <summary>
-        /// The quality of the audio stream sent by the user. See QUALITY_TYPE .
-        /// </summary>
-        ///
-        public int quality;
-
-        ///
-        /// <summary>
-        /// The network delay (ms) from the sender to the receiver.
-        /// </summary>
-        ///
-        public int networkTransportDelay;
-
-        ///
-        /// <summary>
-        /// The network delay (ms) from the audio receiver to the jitter buffer.When the receiving end is an audience member and audienceLatencyLevel of ClientRoleOptions is 1, this parameter does not take effect.
-        /// </summary>
-        ///
-        public int jitterBufferDelay;
-
-        ///
-        /// <summary>
-        /// The frame loss rate (%) of the remote audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int audioLossRate;
-
-        ///
-        /// <summary>
-        /// The number of audio channels.
-        /// </summary>
-        ///
-        public int numChannels;
-
-        ///
-        /// <summary>
-        /// The sampling rate of the received audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int receivedSampleRate;
-
-        ///
-        /// <summary>
-        /// The average bitrate (Kbps) of the received audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int receivedBitrate;
-
-        ///
-        /// <summary>
-        /// The total freeze time (ms) of the remote audio stream after the remote user joins the channel. In a session, audio freeze occurs when the audio frame loss rate reaches 4%.
-        /// </summary>
-        ///
-        public int totalFrozenTime;
-
-        ///
-        /// <summary>
-        /// The total audio freeze time as a percentage (%) of the total time when the audio is available. The audio is considered available when the remote user neither stops sending the audio stream nor disables the audio module after joining the channel.
-        /// </summary>
-        ///
-        public int frozenRate;
-
-        ///
-        /// <summary>
-        /// The quality of the remote audio stream in the reported interval. The quality is determined by the Agora real-time audio MOS (Mean Opinion Score) measurement method. The return value range is [0, 500]. Dividing the return value by 100 gets the MOS score, which ranges from 0 to 5. The higher the score, the better the audio quality.The subjective perception of audio quality corresponding to the Agora real-time audio MOS scores is as follows:MOS scorePerception of audio qualityGreater than 4Excellent. The audio sounds clear and smooth.From 3.5 to 4Good. The audio has some perceptible impairment but still sounds clear.From 3 to 3.5Fair. The audio freezes occasionally and requires attentive listening.From 2.5 to 3Poor. The audio sounds choppy and requires considerable effort to understand.From 2 to 2.5Bad. The audio has occasional noise. Consecutive audio dropouts occur, resulting in some information loss. The users can communicate only with difficulty.Less than 2Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible.
-        /// </summary>
-        ///
-        public int mosValue;
-
-        ///
-        /// <summary>
-        /// The total active time (ms) between the start of the audio call and the callback of the remote user.The active time refers to the total duration of the remote user without the mute state.
-        /// </summary>
-        ///
-        public int totalActiveTime;
-
-        ///
-        /// <summary>
-        /// The total duration (ms) of the remote audio stream.
-        /// </summary>
-        ///
-        public int publishDuration;
-
-        ///
-        /// <summary>
-        /// The Quality of Experience (QoE) of the local user when receiving a remote audio stream. See EXPERIENCE_QUALITY_TYPE .
-        /// </summary>
-        ///
-        public int qoeQuality;
-
-        ///
-        /// <summary>
-        /// Reasons why the QoE of the local user when receiving a remote audio stream is poor. See EXPERIENCE_POOR_REASON .
-        /// </summary>
-        ///
-        public int qualityChangedReason;
+        AINS_MODE_ULTRALOWLATENCY = 2
     };
 
     ///
@@ -3054,6 +2939,14 @@ namespace Agora.Rtc
         SCREEN_SCENARIO_RDC = 4,
     };
 
+
+    public enum VIDEO_APPLICATION_SCENARIO_TYPE
+    {
+        APPLICATION_SCENARIO_GENERAL = 0,
+
+        APPLICATION_SCENARIO_MEETING = 1,
+    };
+
     ///
     /// <summary>
     /// The brightness level of the video image captured by the local camera.
@@ -3295,7 +3188,7 @@ namespace Agora.Rtc
         /// 5: The local video encoding fails.
         /// </summary>
         ///
-        LOCAL_VIDEO_STREAM_ERROR_ENCODE_FAILURE = 5,
+        LOCAL_VIDEO_STREAM_ERROR_CODEC_NOT_SUPPORT = 5,
 
         ///
         /// <summary>
@@ -3607,6 +3500,10 @@ namespace Agora.Rtc
         /// @ignore
         ///
         REMOTE_VIDEO_STATE_REASON_VIDEO_STREAM_TYPE_CHANGE_TO_HIGH = 11,
+
+        REMOTE_VIDEO_STATE_REASON_SDK_IN_BACKGROUND = 12,
+
+        REMOTE_VIDEO_STATE_REASON_CODEC_NOT_SUPPORT = 13,
     };
 
     [Flags]
@@ -4690,9 +4587,10 @@ namespace Agora.Rtc
     {
         public TranscodingVideoStream()
         {
-            this.sourceType = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE;
+            sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             remoteUserUid = 0;
             imageUrl = null;
+            mediaPlayerId = 0;
             x = 0;
             y = 0;
             width = 0;
@@ -4702,13 +4600,14 @@ namespace Agora.Rtc
             mirror = false;
         }
 
-        public TranscodingVideoStream(MEDIA_SOURCE_TYPE sourceType, uint remoteUserUid,
-            string imageUrl, int x, int y, int width, int height, int zOrder, double alpha,
+        public TranscodingVideoStream(VIDEO_SOURCE_TYPE sourceType, uint remoteUserUid,
+            string imageUrl, int mediaPlayerId,int x, int y, int width, int height, int zOrder, double alpha,
             bool mirror)
         {
             this.sourceType = sourceType;
             this.remoteUserUid = remoteUserUid;
             this.imageUrl = imageUrl;
+            this.mediaPlayerId = mediaPlayerId;
             this.x = x;
             this.y = y;
             this.width = width;
@@ -4723,7 +4622,7 @@ namespace Agora.Rtc
         /// The source type of video for the video mixing on the local client. See VIDEO_SOURCE_TYPE .
         /// </summary>
         ///
-        public MEDIA_SOURCE_TYPE sourceType;
+        public VIDEO_SOURCE_TYPE sourceType;
 
         ///
         /// <summary>
@@ -4739,6 +4638,7 @@ namespace Agora.Rtc
         ///
         public string imageUrl;
 
+        public int mediaPlayerId;
         ///
         /// <summary>
         /// The horizontal displacement of the top-left corner of the video for the video mixing on the client relative to the top-left corner (origin) of the canvas for this video mixing.
@@ -4799,7 +4699,7 @@ namespace Agora.Rtc
         public LocalTranscoderConfiguration()
         {
             streamCount = 0;
-            VideoInputStreams = null;
+            videoInputStreams = null;
             videoOutputConfiguration = new VideoEncoderConfiguration();
             syncWithPrimaryCamera = true;
         }
@@ -4808,7 +4708,7 @@ namespace Agora.Rtc
                                             VideoEncoderConfiguration videoOutputConfiguration)
         {
             this.streamCount = streamCount;
-            this.VideoInputStreams = VideoInputStreams;
+            this.videoInputStreams = VideoInputStreams;
             this.videoOutputConfiguration = videoOutputConfiguration;
         }
 
@@ -4824,7 +4724,7 @@ namespace Agora.Rtc
         /// The video streams for the video mixing on the local client. See TranscodingVideoStream .
         /// </summary>
         ///
-        public TranscodingVideoStream[] VideoInputStreams;
+        public TranscodingVideoStream[] videoInputStreams;
 
         ///
         /// <summary>
@@ -4837,6 +4737,24 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public bool syncWithPrimaryCamera;
+    };
+
+
+    public enum VIDEO_TRANSCODER_ERROR
+    {
+        VT_ERR_OK = 0,
+
+        VT_ERR_VIDEO_SOURCE_NOT_READY = 1,
+
+        VT_ERR_INVALID_VIDEO_SOURCE_TYPE = 2,
+
+        VT_ERR_INVALID_IMAGE_PATH = 3,
+
+        VT_ERR_UNSUPPORT_IMAGE_FORMAT = 4,
+
+        VT_ERR_INVALID_LAYOUT = 5,
+
+        VT_ERR_INTERNAL = 20
     };
 
     ///
@@ -5367,6 +5285,7 @@ namespace Agora.Rtc
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
+            enableAlphaMask = false;
 
         }
 
@@ -5380,6 +5299,7 @@ namespace Agora.Rtc
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
+            enableAlphaMask = false;
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, string u)
@@ -5392,6 +5312,7 @@ namespace Agora.Rtc
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
+            enableAlphaMask = false;
         }
 
         ///
@@ -5453,6 +5374,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public Rectangle cropArea;
+
+        public bool enableAlphaMask;
     };
 
     ///
@@ -5751,6 +5674,7 @@ namespace Agora.Rtc
     ///
     public enum BACKGROUND_SOURCE_TYPE
     {
+        BACKGROUND_NONE = 0,
         ///
         /// <summary>
         /// 1: (Default) The background image is a solid color.
@@ -5771,6 +5695,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         BACKGROUND_BLUR = 3,
+
+        BACKGROUND_VIDEO = 4,
     };
 
     ///
@@ -5893,6 +5819,31 @@ namespace Agora.Rtc
             modelType = SEG_MODEL_TYPE.SEG_MODEL_AI;
             greenCapacity = 0.5f;
         }
+    };
+
+    public enum AUDIO_TRACK_TYPE
+    {
+        AUDIO_TRACK_INVALID = -1,
+
+        AUDIO_TRACK_MIXABLE = 0,
+
+        AUDIO_TRACK_DIRECT = 1,
+    };
+
+    public class AudioTrackConfig
+    {
+        public bool enableLocalPlayback;
+
+        public AudioTrackConfig(bool enableLocalPlayback)
+        {
+            this.enableLocalPlayback = enableLocalPlayback;
+        }
+
+        public AudioTrackConfig()
+        {
+            enableLocalPlayback = true;
+        }
+
     };
 
     [Flags]
@@ -6193,7 +6144,29 @@ namespace Agora.Rtc
         /// A deep voice. To avoid audio distortion, ensure that you use this enumerator to process a male-sounding voice.
         /// </summary>
         ///
-        VOICE_CHANGER_BASS = 0x03010400
+        VOICE_CHANGER_BASS = 0x03010400,
+
+        VOICE_CHANGER_CARTOON = 0x03010500,
+       
+        VOICE_CHANGER_CHILDLIKE = 0x03010600,
+       
+        VOICE_CHANGER_PHONE_OPERATOR = 0x03010700,
+       
+        VOICE_CHANGER_MONSTER = 0x03010800,
+        
+        VOICE_CHANGER_TRANSFORMERS = 0x03010900,
+       
+        VOICE_CHANGER_GROOT = 0x03010A00,
+        
+        VOICE_CHANGER_DARTH_VADER = 0x03010B00,
+       
+        VOICE_CHANGER_IRON_LADY = 0x03010C00,
+        
+        VOICE_CHANGER_SHIN_CHAN = 0x03010D00,
+       
+        VOICE_CHANGER_GIRLISH_MAN = 0x03010E00,
+        
+        VOICE_CHANGER_CHIPMUNK = 0x03010F00,
     };
 
     ///
@@ -7509,13 +7482,16 @@ namespace Agora.Rtc
         ///
         public string channelId;
 
-        public EchoTestConfiguration(view_t v, bool ea, bool ev, string t, string c)
+        public int intervalInSeconds;
+
+        public EchoTestConfiguration(view_t v, bool ea, bool ev, string t, string c, int @is)
         {
             view = v;
             enableAudio = ea;
             enableVideo = ev;
             token = t;
             channelId = c;
+            intervalInSeconds = @is;
         }
 
         public EchoTestConfiguration()
@@ -7525,6 +7501,7 @@ namespace Agora.Rtc
             enableVideo = true;
             token = "";
             channelId = "";
+            intervalInSeconds = 0;
         }
     };
 
