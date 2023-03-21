@@ -15,9 +15,7 @@ namespace Agora.Rtc
     {
         private bool _disposed = false;
         private static RtcEngineImpl engineInstance = null;
-        private static readonly string identifier = "AgoraRtcEngine";
-
-
+      
         private IrisRtcEnginePtr _irisRtcEngine;
         private IrisCApiParam _apiParam;
 

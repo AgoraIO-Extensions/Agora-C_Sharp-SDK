@@ -12,6 +12,8 @@ namespace Agora.Rtc
     {
         public IrisAudioSpectrumData()
         {
+            audioSpectrumData = 0;
+            dataLength = 0;
         }
 
         public ulong audioSpectrumData;
@@ -30,6 +32,8 @@ namespace Agora.Rtc
     {
         public IrisUserAudioSpectrumInfo()
         {
+            uid = 0;
+            spectrumData = null;
         }
 
 

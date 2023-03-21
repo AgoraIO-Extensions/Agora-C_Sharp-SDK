@@ -2153,7 +2153,7 @@ namespace Agora.Rtc
     {
         public RtcEngineContext()
         {
-            eventHandler = null;
+            //eventHandler = null;
             appId = "";
             context = 0;
 
@@ -2182,7 +2182,7 @@ namespace Agora.Rtc
             this.autoRegisterAgoraExtensions = autoRegisterAgoraExtensions;
         }
 
-        private IRtcEngineEventHandler eventHandler = null;
+        //private IRtcEngineEventHandler eventHandler = null;
 
         ///
         /// <summary>
