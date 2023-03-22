@@ -945,10 +945,12 @@ namespace Agora.Rtc
         {
             param = VIDEO_TRANSCODER_ERROR.VT_ERR_OK;
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+
+        public static void InitParam(out AudioDeviceInfo param)
+        {
+            param = new AudioDeviceInfo();
+        }
+
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =

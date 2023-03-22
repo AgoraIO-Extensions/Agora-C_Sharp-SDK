@@ -3696,6 +3696,11 @@ namespace Agora.Rtc
         public double voicePitch;
     };
 
+
+    public class AudioDeviceInfo
+    {
+        public bool isLowLatencyAudioSupported;
+    };
     ///
     /// <summary>
     /// The audio device information.
