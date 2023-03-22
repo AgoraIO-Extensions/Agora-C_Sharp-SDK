@@ -46,11 +46,7 @@ namespace Agora.Rtc
                 }
 
                 var @event = eventParam.@event;
-                var buffer = eventParam.buffer;
-                var length = eventParam.length;
-                var buffer_count = eventParam.buffer_count;
-
-
+  
                 switch (@event)
                 {
                     case "AudioSpectrumObserver_onLocalAudioSpectrum":

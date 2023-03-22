@@ -15,8 +15,6 @@ namespace Agora.Rtc
     {
         private bool _disposed = false;
         private static RtcEngineImpl engineInstance = null;
-        private static readonly string identifier = "AgoraRtcEngine";
-
 
         private IrisRtcEnginePtr _irisRtcEngine;
         private IrisCApiParam _apiParam;
@@ -75,7 +73,7 @@ namespace Agora.Rtc
             _mediaRecorderInstance = new MediaRecorderImpl(_irisRtcEngine);
 
             _rtcRenderingHandle = AgoraRtcNative.CreateIrisRtcRendering(_irisRtcEngine);
-          
+
         }
 
         private void Dispose(bool disposing, bool sync)
@@ -178,7 +176,7 @@ namespace Agora.Rtc
             if (_rtcEventHandlerHandle.handle == IntPtr.Zero) return;
 
 
-          
+
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             RtcEngineEventHandlerNative.CallbackObject = null;
@@ -269,7 +267,7 @@ namespace Agora.Rtc
             //and this time you dont have observer be trigger
             AudioFrameObserverNative.SetAudioFrameObserverAndMode(audioFrameObserver, mode);
             int ret = SetIrisAudioFrameObserver();
-           
+
             return ret;
         }
 
@@ -386,7 +384,7 @@ namespace Agora.Rtc
             //and this time you dont have observer be trigger
             VideoEncodedFrameObserverNative.SetVideoEncodedFrameObserver(VideoEncodedFrameObserver);
             int ret = SetIrisVideoEncodedFrameObserver();
-          
+
             return ret;
         }
 
@@ -2446,7 +2444,7 @@ namespace Agora.Rtc
             //and this time you dont have observer be trigger
             AudioSpectrumObserverNative.SetAudioSpectrumObserver(observer);
             int ret = SetIrisAudioSpectrumObserver();
-          
+
             return ret;
         }
 
@@ -3419,8 +3417,16 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            CONNECTION_STATE_TYPE type = (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            return type;
+            if (nRet == 0)
+            {
+                return (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            }
+            else
+            {
+                AgoraLog.LogWarning("RtcEngine GetConnectionState failed: " + nRet);
+                return CONNECTION_STATE_TYPE.CONNECTION_STATE_FAILED;
+            }
         }
 
         public int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority)
@@ -4249,8 +4255,15 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            CONNECTION_STATE_TYPE type = (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(_apiParam.Result, "result");
-            return type;
+            if (nRet == 0)
+            {
+                return (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            }
+            else
+            {
+                AgoraLog.LogError("RtcEngine GetConnectionStateEx failed: " + nRet);
+                return CONNECTION_STATE_TYPE.CONNECTION_STATE_FAILED;
+            }
         }
 
         public int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config)
@@ -5956,7 +5969,7 @@ namespace Agora.Rtc
         public UInt64 GetNtpTimeInMs()
         {
             _param.Clear();
-         
+
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETNTPTIMEINMS,

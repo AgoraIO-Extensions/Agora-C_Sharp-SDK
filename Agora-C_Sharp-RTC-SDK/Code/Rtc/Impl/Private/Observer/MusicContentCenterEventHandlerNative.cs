@@ -34,9 +34,6 @@ namespace Agora.Rtc
 
             string @event = eventParam.@event;
             string data = eventParam.data;
-            IntPtr buffer = eventParam.buffer;
-            IntPtr length = eventParam.length;
-            uint buffer_count = eventParam.buffer_count;
 
             LitJson.JsonData jsonData = null;
             if (data != null)

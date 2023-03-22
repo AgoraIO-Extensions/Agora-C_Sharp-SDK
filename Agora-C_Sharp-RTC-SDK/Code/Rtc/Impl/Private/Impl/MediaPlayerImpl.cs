@@ -45,7 +45,7 @@ namespace Agora.Rtc
         private static readonly string identifier = "AgoraMediaPlayer";
 #endif
 
-       
+
 
 
         internal MediaPlayerImpl(IrisApiEnginePtr irisApiEngine)
@@ -448,7 +448,7 @@ namespace Agora.Rtc
             //and this time you dont have observer be trigger
             AudioPcmFrameSinkNative.AddAudioFrameObserver(playerId, observer);
             ret = SetIrisAudioFrameObserver(playerId);
-           
+
             return ret;
         }
 
@@ -465,7 +465,7 @@ namespace Agora.Rtc
             //and this time you dont have observer be trigger
             AudioPcmFrameSinkNative.AddAudioFrameObserver(playerId, observer);
             ret = SetIrisAudioFrameObserverWithMode(playerId, mode);
-          
+
             return ret;
         }
 
@@ -488,7 +488,7 @@ namespace Agora.Rtc
             //and this time you dont have observer be trigger
             MediaPlayerAudioSpectrumObserverNative.AddAudioSpectrumObserver(playerId, observer);
             ret = SetIrisAudioSpectrumObserver(playerId, intervalInMS);
-           
+
             return ret;
         }
 
@@ -510,7 +510,7 @@ namespace Agora.Rtc
         }
 
         public int DestroyMediaPlayer(int playerId)
-        { 
+        {
             _param.Clear();
             _param.Add("playerId", playerId);
 
@@ -553,7 +553,7 @@ namespace Agora.Rtc
             MediaPlayerCustomDataProviderNative.AddCustomDataProvider(playerId, provider);
             SetMediaPlayerOpenWithCustomSource(playerId, startPos);
 
-       
+
             return 0;
         }
 
@@ -815,7 +815,7 @@ namespace Agora.Rtc
 
         public MEDIA_PLAYER_STATE GetState(int playerId)
         {
-            //TODO CHECK
+
             _param.Clear();
             _param.Add("playerId", playerId);
 
@@ -823,8 +823,17 @@ namespace Agora.Rtc
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_GETSTATE,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
-            return (MEDIA_PLAYER_STATE)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            if (ret == 0)
+            {
+                return (MEDIA_PLAYER_STATE)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            }
+            else
+            {
+                AgoraLog.LogWarning("MediaPlayer GetState failed: " + ret);
+                return MEDIA_PLAYER_STATE.PLAYER_STATE_FAILED;
+            }
         }
+
 
         public int Mute(int playerId, bool muted)
         {

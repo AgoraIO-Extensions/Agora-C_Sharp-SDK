@@ -227,7 +227,6 @@ namespace Agora.Rtc
         public event OnContentInspectResultHandler EventOnContentInspectResult;
         public event OnSnapshotTakenHandlerEx EventOnSnapshotTakenEx;
         public event OnLocalVideoStateChangedHandler EventOnLocalVideoStateChanged;
-        public event OnLocalVideoStateChangedHandlerEx EventOnLocalVideoStateChangedEx;
         public event OnRemoteVideoStateChangedHandler EventOnRemoteVideoStateChanged;
         public event OnFirstRemoteVideoFrameHandler EventOnFirstRemoteVideoFrame;
         public event OnUserJoinedHandler EventOnUserJoined;
