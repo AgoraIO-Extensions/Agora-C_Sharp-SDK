@@ -2733,7 +2733,7 @@ namespace Agora.Rtc
             return SetParameters(parameters);
         }
 
-        public override int GetAudioDeviceInfo(ref DeviceInfo deviceInfo)
+        public override int GetAudioDeviceInfo(ref DeviceInfoMobile deviceInfo)
         {
             if (_rtcEngineImpl == null)
             {

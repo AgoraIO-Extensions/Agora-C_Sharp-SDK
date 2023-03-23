@@ -206,7 +206,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetAudioDeviceInfo()
         {
-            DeviceInfo deviceInfo;
+            DeviceInfoMobile deviceInfo;
             ParamsHelper.InitParam(out deviceInfo);
             var nRet = Engine.GetAudioDeviceInfo(ref deviceInfo);
 
