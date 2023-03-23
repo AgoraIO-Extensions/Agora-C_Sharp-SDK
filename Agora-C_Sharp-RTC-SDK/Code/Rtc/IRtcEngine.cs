@@ -3892,7 +3892,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int GetAudioDeviceInfo(ref AudioDeviceInfo deviceInfo);
+        public abstract int GetAudioDeviceInfo(ref DeviceInfoMobile deviceInfo);
 
         ///
         /// @ignore

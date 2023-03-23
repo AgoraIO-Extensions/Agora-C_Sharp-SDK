@@ -3697,7 +3697,7 @@ namespace Agora.Rtc
     };
 
 
-    public class AudioDeviceInfo
+    public class DeviceInfoMobile
     {
         public bool isLowLatencyAudioSupported;
     };

@@ -4547,7 +4547,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int GetAudioDeviceInfo(ref AudioDeviceInfo deviceInfo)
+        public int GetAudioDeviceInfo(ref DeviceInfoMobile deviceInfo)
         {
             _param.Clear();
 
@@ -4561,11 +4561,11 @@ namespace Agora.Rtc
 
             if (nRet == 0)
             {
-                deviceInfo = AgoraJson.JsonToStruct<AudioDeviceInfo>(_apiParam.Result, "deviceInfo");
+                deviceInfo = AgoraJson.JsonToStruct<DeviceInfoMobile>(_apiParam.Result, "deviceInfo");
             }
             else
             {
-                deviceInfo = new AudioDeviceInfo();
+                deviceInfo = new DeviceInfoMobile();
             }
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
