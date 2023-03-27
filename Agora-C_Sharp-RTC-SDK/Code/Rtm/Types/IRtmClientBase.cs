@@ -191,7 +191,7 @@ namespace Agora.Rtm
 
         public string channelTopic;
 
-        public string message;
+        public IRtmMessage message;
 
         public uint messageLength;
 

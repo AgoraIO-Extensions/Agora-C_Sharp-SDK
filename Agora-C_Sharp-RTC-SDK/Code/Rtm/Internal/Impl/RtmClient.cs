@@ -168,7 +168,7 @@ namespace Agora.Rtm.Internal
             {
                 return ErrorCode;
             }
-            byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(message);
             return _rtmClientImpl.Publish(channelName, bytes, bytes.Length, option, ref requestId);
         }
 
