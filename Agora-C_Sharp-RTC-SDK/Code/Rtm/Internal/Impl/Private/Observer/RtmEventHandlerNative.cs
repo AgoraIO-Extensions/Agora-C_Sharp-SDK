@@ -48,8 +48,9 @@ namespace Agora.Rtm.Internal
                     if (messageEvent.messageLength != 0)
                     {
                         Marshal.Copy((IntPtr)messageEventInternal.message, byteData, 0, (int)messageEvent.messageLength);
-                        messageEvent.message = System.Text.Encoding.UTF8.GetString(byteData);
                     }
+                    messageEvent.message = new RtmMessage(byteData);
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
