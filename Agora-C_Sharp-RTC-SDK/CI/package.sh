@@ -138,6 +138,9 @@ cp $ANDROID_SRC_PATH/iris_*_DCG_Android/ALL_ARCHITECTURE/Release/*.jar "$ANDROID
 #copy AgoraIrisEngine.jar
 cp $ANDROID_SRC_PATH/iris_*_ENGINE_Android/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
+#copy AgoraRtmWrapper.jar
+cp $ANDROID_SRC_PATH/iris_*_RTM_Android/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
+
 # iOS
 echo "[Unity CI] copying iOS ..."
 IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-RTC-SDK/Plugins/iOS"
