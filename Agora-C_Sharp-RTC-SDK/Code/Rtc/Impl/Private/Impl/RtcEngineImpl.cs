@@ -175,9 +175,6 @@ namespace Agora.Rtc
         {
             if (_rtcEventHandlerHandle.handle == IntPtr.Zero) return;
 
-
-
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             RtcEngineEventHandlerNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();

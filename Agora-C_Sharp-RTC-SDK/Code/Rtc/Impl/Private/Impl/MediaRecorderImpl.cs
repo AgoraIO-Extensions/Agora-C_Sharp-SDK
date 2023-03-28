@@ -46,7 +46,7 @@ namespace Agora.Rtc
 
             if (disposing)
             {
-                ReleasAllEventHandler();
+                UnregisterAndReleasAllEventHandler();
             }
 
             _irisApiEngine = IntPtr.Zero;
@@ -97,12 +97,24 @@ namespace Agora.Rtc
 
         }
 
-        private void ReleasAllEventHandler()
+        private void UnregisterAndReleasAllEventHandler()
         {
             List<string> keys = AgoraUtil.GetDicKeys<string, EventHandlerHandle>(_mediaRecorderEventHandlerHandles);
             foreach (var key in keys)
             {
+                _param.Clear();
+                _param.Add("nativeHandler", key);
                 EventHandlerHandle handle = _mediaRecorderEventHandlerHandles[key];
+
+                IntPtr[] arrayPtr = new IntPtr[] { handle.handle };
+                var json = AgoraJson.ToJson(_param);
+                int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER,
+                    json, (UInt32)json.Length,
+                    Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                    ref _apiParam);
+
+                int ret = nRet == 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
                 AgoraUtil.FreeEventHandlerHandle(ref handle);
             }
             _mediaRecorderEventHandlerHandles.Clear();
