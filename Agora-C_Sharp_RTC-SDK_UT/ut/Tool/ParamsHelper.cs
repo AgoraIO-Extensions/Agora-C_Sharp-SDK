@@ -1121,12 +1121,12 @@ namespace Agora.Rtc
 
         public static bool compareFRAME_WIDTH(FRAME_WIDTH selfParam, FRAME_WIDTH outParam)
         {
-            return selfParam == FRAME_WIDTH.FRAME_WIDTH_640;
+            return selfParam == FRAME_WIDTH.FRAME_WIDTH_960;
         }
 
         public static bool compareFRAME_HEIGHT(FRAME_HEIGHT selfParam, FRAME_HEIGHT outParam)
         {
-            return selfParam == FRAME_HEIGHT.FRAME_HEIGHT_360;
+            return selfParam == FRAME_HEIGHT.FRAME_HEIGHT_540;
         }
 
         public static bool compareVIDEO_FRAME_TYPE(VIDEO_FRAME_TYPE selfParam, VIDEO_FRAME_TYPE outParam)
@@ -2990,6 +2990,8 @@ namespace Agora.Rtc
             if (compareUid_t(selfParam.uid, outParam.uid) == false)
                 return false;
             if (compareInt(selfParam.delay, outParam.delay) == false)
+                return false;
+            if (compareInt(selfParam.e2eDelay, outParam.e2eDelay) == false)
                 return false;
             if (compareInt(selfParam.width, outParam.width) == false)
                 return false;

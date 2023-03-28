@@ -853,7 +853,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        FRAME_WIDTH_640 = 640,
+        FRAME_WIDTH_960 = 960,
     };
 
     ///
@@ -864,7 +864,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        FRAME_HEIGHT_360 = 360,
+        FRAME_HEIGHT_540 = 540,
     };
 
     ///
@@ -1965,7 +1965,7 @@ namespace Agora.Rtc
         public VideoEncoderConfiguration()
         {
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
-            dimensions = new VideoDimensions((int)FRAME_WIDTH.FRAME_WIDTH_640, (int)FRAME_HEIGHT.FRAME_HEIGHT_360);
+            dimensions = new VideoDimensions((int)FRAME_WIDTH.FRAME_WIDTH_960, (int)FRAME_HEIGHT.FRAME_HEIGHT_540);
             frameRate = (int)FRAME_RATE.FRAME_RATE_FPS_15;
             bitrate = (int)BITRATE.STANDARD_BITRATE;
             minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
@@ -2840,8 +2840,8 @@ namespace Agora.Rtc
 
         public VideoFormat()
         {
-            width = (int)FRAME_WIDTH.FRAME_WIDTH_640;
-            height = (int)FRAME_HEIGHT.FRAME_HEIGHT_360;
+            width = (int)FRAME_WIDTH.FRAME_WIDTH_960;
+            height = (int)FRAME_HEIGHT.FRAME_HEIGHT_540;
             fps = (int)FRAME_RATE.FRAME_RATE_FPS_15;
         }
 
