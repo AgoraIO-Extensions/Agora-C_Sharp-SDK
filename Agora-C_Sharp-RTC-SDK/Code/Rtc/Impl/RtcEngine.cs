@@ -229,10 +229,10 @@ namespace Agora.Rtc
         public override IMediaRecorder CreateLocalMediaRecorder(RtcConnection connection)
         {
             MediaRecorderImpl impl = this._rtcEngineImpl.GetMediaRecorder();
-            string nativeHander = impl.CreateLocalMediaRecorder(connection);
-            if (nativeHander != null && nativeHander != "")
+            string nativeHande = impl.CreateLocalMediaRecorder(connection);
+            if (nativeHande != null && nativeHande != "")
             {
-                return new MediaRecorder(impl, nativeHander);
+                return new MediaRecorder(impl, nativeHande);
             }
             else
             {
@@ -244,10 +244,10 @@ namespace Agora.Rtc
         public override IMediaRecorder CreateRemoteMediaRecorder(string channelId, uint uid)
         {
             MediaRecorderImpl impl = this._rtcEngineImpl.GetMediaRecorder();
-            string nativeHander = impl.CreateRemoteMediaRecorder(channelId, uid);
-            if (nativeHander != null && nativeHander != "")
+            string nativeHande = impl.CreateRemoteMediaRecorder(channelId, uid);
+            if (nativeHande != null && nativeHande != "")
             {
-                return new MediaRecorder(impl, nativeHander);
+                return new MediaRecorder(impl, nativeHande);
             }
             else
             {
@@ -259,10 +259,10 @@ namespace Agora.Rtc
         {
             MediaRecorder recorder = (MediaRecorder)mediaRecorder;
             MediaRecorderImpl impl = this._rtcEngineImpl.GetMediaRecorder();
-            int nRet = impl.DestroyMediaRecorder(recorder.GetNativeHandler());
+            int nRet = impl.DestroyMediaRecorder(recorder.GetNativeHandle());
             if (nRet == 0)
             {
-                recorder.SetNativeHandler(null);
+                recorder.SetNativeHandle(null);
             }
             return nRet;
         }

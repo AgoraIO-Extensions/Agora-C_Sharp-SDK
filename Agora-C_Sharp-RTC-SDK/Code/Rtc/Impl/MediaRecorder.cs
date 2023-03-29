@@ -3,13 +3,13 @@ namespace Agora.Rtc
     public sealed class MediaRecorder : IMediaRecorder
     {
         private MediaRecorderImpl _mediaRecorderImpl = null;
-        private string _nativeHandler = null;
+        private string _nativeHandle = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        internal MediaRecorder(MediaRecorderImpl impl, string nativeHandler)
+        internal MediaRecorder(MediaRecorderImpl impl, string nativeHandle)
         {
             _mediaRecorderImpl = impl;
-            _nativeHandler = nativeHandler;
+            _nativeHandle = nativeHandle;
         }
 
         ~MediaRecorder()
@@ -17,41 +17,41 @@ namespace Agora.Rtc
             _mediaRecorderImpl = null;
         }
 
-        internal string GetNativeHandler()
+        internal string GetNativeHandle()
         {
-            return this._nativeHandler;
+            return this._nativeHandle;
         }
 
-        internal void SetNativeHandler(string nativeHandler)
+        internal void SetNativeHandle(string nativeHandle)
         {
-            this._nativeHandler = nativeHandler;
+            this._nativeHandle = nativeHandle;
         }
 
         public override int SetMediaRecorderObserver(IMediaRecorderObserver callback)
         {
-            if (_mediaRecorderImpl == null || this._nativeHandler == null)
+            if (_mediaRecorderImpl == null || this._nativeHandle == null)
             {
                 return ErrorCode;
             }
-            return _mediaRecorderImpl.SetMediaRecorderObserver(this._nativeHandler, callback);
+            return _mediaRecorderImpl.SetMediaRecorderObserver(this._nativeHandle, callback);
         }
 
         public override int StartRecording(MediaRecorderConfiguration config)
         {
-            if (_mediaRecorderImpl == null || this._nativeHandler == null)
+            if (_mediaRecorderImpl == null || this._nativeHandle == null)
             {
                 return ErrorCode;
             }
-            return _mediaRecorderImpl.StartRecording(this._nativeHandler, config);
+            return _mediaRecorderImpl.StartRecording(this._nativeHandle, config);
         }
 
         public override int StopRecording()
         {
-            if (_mediaRecorderImpl == null || this._nativeHandler == null)
+            if (_mediaRecorderImpl == null || this._nativeHandle == null)
             {
                 return ErrorCode;
             }
-            return _mediaRecorderImpl.StopRecording(this._nativeHandler);
+            return _mediaRecorderImpl.StopRecording(this._nativeHandle);
         }
     }
 }

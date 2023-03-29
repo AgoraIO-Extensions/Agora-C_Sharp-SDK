@@ -11,24 +11,24 @@ namespace Agora.Rtc
     {
         private static Dictionary<string, IMediaRecorderObserver> mediaRecorderObserverDic = new Dictionary<string, IMediaRecorderObserver>();
 
-        internal static void AddMediaRecorderObserver(string nativeHandler, IMediaRecorderObserver observer)
+        internal static void AddMediaRecorderObserver(string nativeHandle, IMediaRecorderObserver observer)
         {
 
-            if (mediaRecorderObserverDic.ContainsKey(nativeHandler))
-                mediaRecorderObserverDic.Remove(nativeHandler);
+            if (mediaRecorderObserverDic.ContainsKey(nativeHandle))
+                mediaRecorderObserverDic.Remove(nativeHandle);
 
-            mediaRecorderObserverDic.Add(nativeHandler, observer);
+            mediaRecorderObserverDic.Add(nativeHandle, observer);
         }
 
-        internal static bool ContainsMediaRecorderObserver(string nativeHandler)
+        internal static bool ContainsMediaRecorderObserver(string nativeHandle)
         {
-            return mediaRecorderObserverDic.ContainsKey(nativeHandler);
+            return mediaRecorderObserverDic.ContainsKey(nativeHandle);
         }
 
-        internal static void RemoveMediaRecorderObserver(string nativeHandler)
+        internal static void RemoveMediaRecorderObserver(string nativeHandle)
         {
-            if (mediaRecorderObserverDic.ContainsKey(nativeHandler))
-                mediaRecorderObserverDic.Remove(nativeHandler);
+            if (mediaRecorderObserverDic.ContainsKey(nativeHandle))
+                mediaRecorderObserverDic.Remove(nativeHandle);
         }
 
         internal static void ClearMediaRecorderObserver()
@@ -59,7 +59,7 @@ namespace Agora.Rtc
                 jsonData = AgoraJson.ToObject(data);
             }
 
-            string nativeHandler = (string)AgoraJson.GetData<string>(jsonData, "nativeHandler");
+            string nativeHandle = (string)AgoraJson.GetData<string>(jsonData, "nativeHandle");
             switch (@event)
             {
                 case "MediaRecorderObserver_onRecorderStateChanged":
@@ -67,8 +67,8 @@ namespace Agora.Rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandler)) return;
-                    mediaRecorderObserverDic[nativeHandler].OnRecorderStateChanged(
+                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                    mediaRecorderObserverDic[nativeHandle].OnRecorderStateChanged(
                         (string)AgoraJson.GetData<string>(jsonData, "channelId"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
@@ -84,8 +84,8 @@ namespace Agora.Rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandler)) return;
-                    mediaRecorderObserverDic[nativeHandler].OnRecorderInfoUpdated(
+                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                    mediaRecorderObserverDic[nativeHandle].OnRecorderInfoUpdated(
                         (string)AgoraJson.GetData<string>(jsonData, "channelId"),
                         (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")

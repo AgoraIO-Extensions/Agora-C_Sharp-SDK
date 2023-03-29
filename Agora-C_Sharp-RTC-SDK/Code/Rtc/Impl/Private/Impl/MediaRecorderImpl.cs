@@ -62,14 +62,14 @@ namespace Agora.Rtc
         }
 
 
-        private EventHandlerHandle CreateEventHandler(string nativeHandler)
+        private EventHandlerHandle CreateEventHandler(string nativeHandle)
         {
-            if (_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandler))
-                return _mediaRecorderEventHandlerHandles[nativeHandler];
+            if (_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandle))
+                return _mediaRecorderEventHandlerHandles[nativeHandle];
 
             EventHandlerHandle handle = new EventHandlerHandle();
             AgoraUtil.AllocEventHandlerHandle(ref handle, MediaRecorderObserverNative.OnEvent);
-            _mediaRecorderEventHandlerHandles.Add(nativeHandler, handle);
+            _mediaRecorderEventHandlerHandles.Add(nativeHandle, handle);
 
 
 
@@ -84,15 +84,15 @@ namespace Agora.Rtc
             return handle;
         }
 
-        private void ReleaseEventHandler(string nativeHandler)
+        private void ReleaseEventHandler(string nativeHandle)
         {
-            if (!_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandler))
+            if (!_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandle))
                 return;
 
-            EventHandlerHandle handle = _mediaRecorderEventHandlerHandles[nativeHandler];
+            EventHandlerHandle handle = _mediaRecorderEventHandlerHandles[nativeHandle];
             AgoraUtil.FreeEventHandlerHandle(ref handle);
 
-            _mediaRecorderEventHandlerHandles.Remove(nativeHandler);
+            _mediaRecorderEventHandlerHandles.Remove(nativeHandle);
 
 
         }
@@ -103,7 +103,7 @@ namespace Agora.Rtc
             foreach (var key in keys)
             {
                 _param.Clear();
-                _param.Add("nativeHandler", key);
+                _param.Add("nativeHandle", key);
                 EventHandlerHandle handle = _mediaRecorderEventHandlerHandles[key];
 
                 IntPtr[] arrayPtr = new IntPtr[] { handle.handle };
@@ -130,7 +130,7 @@ namespace Agora.Rtc
         }
 
         #region IMediaRecorder
-        public int SetMediaRecorderObserver(string nativeHandler, IMediaRecorderObserver callback)
+        public int SetMediaRecorderObserver(string nativeHandle, IMediaRecorderObserver callback)
         {
             if (callback != null)
             {
@@ -138,12 +138,12 @@ namespace Agora.Rtc
                 //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
                 //and this time you dont have observer be trigger
 
-                MediaRecorderObserverNative.AddMediaRecorderObserver(nativeHandler, callback);
+                MediaRecorderObserverNative.AddMediaRecorderObserver(nativeHandle, callback);
 
                 _param.Clear();
-                _param.Add("nativeHandler", nativeHandler);
+                _param.Add("nativeHandle", nativeHandle);
 
-                EventHandlerHandle handler = CreateEventHandler(nativeHandler);
+                EventHandlerHandle handler = CreateEventHandler(nativeHandle);
 
                 IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
                 var json = AgoraJson.ToJson(_param);
@@ -158,12 +158,12 @@ namespace Agora.Rtc
             {
                 //you must Set(null) lately. because maybe some callback will trigger when unregister,
                 //you set null first, some callback will never triggered 
-                if (_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandler))
+                if (_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandle))
                 {
                     _param.Clear();
-                    _param.Add("nativeHandler", nativeHandler);
+                    _param.Add("nativeHandle", nativeHandle);
 
-                    EventHandlerHandle handler = _mediaRecorderEventHandlerHandles[nativeHandler];
+                    EventHandlerHandle handler = _mediaRecorderEventHandlerHandles[nativeHandle];
 
                     IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
                     var json = AgoraJson.ToJson(_param);
@@ -176,13 +176,13 @@ namespace Agora.Rtc
 
                     if (ret == 0)
                     {
-                        ReleaseEventHandler(nativeHandler);
+                        ReleaseEventHandler(nativeHandle);
                     }
 
                     return ret;
                 }
 
-                MediaRecorderObserverNative.RemoveMediaRecorderObserver(nativeHandler);
+                MediaRecorderObserverNative.RemoveMediaRecorderObserver(nativeHandle);
 
                 return 0;
             }
@@ -190,10 +190,10 @@ namespace Agora.Rtc
 
         }
 
-        public int StartRecording(string nativeHandler, MediaRecorderConfiguration config)
+        public int StartRecording(string nativeHandle, MediaRecorderConfiguration config)
         {
             _param.Clear();
-            _param.Add("nativeHandler", nativeHandler);
+            _param.Add("nativeHandle", nativeHandle);
             _param.Add("config", config);
 
 
@@ -206,10 +206,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StopRecording(string nativeHandler)
+        public int StopRecording(string nativeHandle)
         {
             _param.Clear();
-            _param.Add("nativeHandler", nativeHandler);
+            _param.Add("nativeHandle", nativeHandle);
 
 
             var json = AgoraJson.ToJson(_param);
@@ -268,10 +268,10 @@ namespace Agora.Rtc
         }
 
 
-        public int DestroyMediaRecorder(string nativeHandler) {
+        public int DestroyMediaRecorder(string nativeHandle) {
 
             _param.Clear();
-            _param.Add("nativeHandler", nativeHandler);
+            _param.Add("nativeHandle", nativeHandle);
 
 
             var json = AgoraJson.ToJson(_param);
