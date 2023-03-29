@@ -5,6 +5,7 @@ Shader "UI/RendererShader601"
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         [PerRendererData] _UTex ("uTexture", 2D) = "white" {}
         [PerRendererData] _VTex ("vTexture", 2D) = "white" {}
+        _yStrideScale ("yStride Scale", Float) = 1.0
         _Color ("Tint", Color) = (1,1,1,1)
 
         _StencilComp ("Stencil Comparison", Float) = 8
@@ -99,6 +100,7 @@ Shader "UI/RendererShader601"
             sampler2D _MainTex;
             sampler2D _UTex;
             sampler2D _VTex;
+            float _yStrideScale;
           
 
             fixed4 frag(v2f IN) : SV_Target
@@ -108,7 +110,8 @@ Shader "UI/RendererShader601"
                 //float u_col = tex2D(_UTex, IN.texcoord);
                 //float v_col = 
 
-                half4 color = half4(tex2D(_MainTex, IN.texcoord).r, tex2D(_UTex, IN.texcoord).r,tex2D(_VTex, IN.texcoord).r,1.0);
+                float2 uv = IN.texcoord *float2(_yStrideScale, 1.0);
+                half4 color = half4(tex2D(_MainTex, uv).r, tex2D(_UTex, uv).r,tex2D(_VTex, uv).r,1.0);
 
                 float4x4 yuvToRgb = float4x4(
                     1.1643835616, 0, 1.7927410714, -0.9729450750,

@@ -5,6 +5,7 @@ Shader "Unlit/RendererShader601"
         _MainTex ("Texture", 2D) = "white" {}
         _UTex ("uTexture", 2D) = "white" {}
         _VTex ("vTexture", 2D) = "white" {}
+        _yStrideScale ("yStride Scale", Float) = 1.0
     }
     SubShader
     {
@@ -37,7 +38,9 @@ Shader "Unlit/RendererShader601"
             sampler2D _MainTex;
             sampler2D _UTex;
             sampler2D _VTex;
+            float _yStrideScale;
             float4 _MainTex_ST;
+
 
             v2f vert (appdata v)
             {
@@ -50,7 +53,8 @@ Shader "Unlit/RendererShader601"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                float4 color = float4(tex2D(_MainTex, i.uv).r, tex2D(_UTex, i.uv).r,tex2D(_VTex, i.uv).r,1.0);
+                float2 uv = i.uv * float2(_yStrideScale, 1.0);
+                fixed4 color = fixed4(tex2D(_MainTex, uv).r, tex2D(_UTex, uv).r,tex2D(_VTex, uv).r,1.0);
 
                 float4x4 yuvToRgb = float4x4(
                     1.1643835616, 0, 1.7927410714, -0.9729450750,

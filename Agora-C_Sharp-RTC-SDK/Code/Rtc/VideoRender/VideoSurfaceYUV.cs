@@ -14,6 +14,7 @@ namespace Agora.Rtc
     public class VideoSurfaceYUV : VideoSurface
     {
         protected TextureManagerYUV _textureManagerYUV;
+        protected Material _material = null;
 
         void Start()
         {
@@ -58,8 +59,10 @@ namespace Agora.Rtc
                 {
                     this._textureWidth = _textureManagerYUV.Width;
                     this._textureHeight = _textureManagerYUV.Height;
-                    if (this._textureWidth != 0 && this._textureHeight != 0 )
+
+                    if (this._textureWidth != 0 && this._textureHeight != 0)
                     {
+                        _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
                         this.InvokeOnTextureSizeModify();
                     }
                 }
@@ -157,15 +160,18 @@ namespace Agora.Rtc
 
         protected override void UpdateShader()
         {
+
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
                 rd.material = new Material(Shader.Find("Unlit/RendererShader601"));
+                _material = rd.material;
             }
             else if (VideoSurfaceType == VideoSurfaceType.RawImage)
             {
                 var rd = _renderer as RawImage;
                 rd.material = new Material(Shader.Find("UI/RendererShader601"));
+                _material = rd.material;
             }
         }
 
