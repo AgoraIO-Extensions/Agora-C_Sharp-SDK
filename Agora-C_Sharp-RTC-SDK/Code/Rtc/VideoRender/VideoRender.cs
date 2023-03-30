@@ -32,6 +32,7 @@ namespace Agora.Rtc
             _agoraRtcEngine = agoraRtcEngine;
             _agoraRtcEngine.OnRtcEngineImpleWillDispose += RtcEngineImplWillDispose;
             _videoFrameConfig = new IrisRtcVideoFrameConfig();
+            _videoFrameConfig.extra_identity = 0;
         }
 
         ~VideoStreamManager()
