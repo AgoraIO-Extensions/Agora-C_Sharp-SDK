@@ -1131,11 +1131,6 @@ namespace Agora.Rtc
         VIDEO_CODEC_H265 = 3,
 
         ///
-        /// @ignore
-        ///
-        VIDEO_CODEC_VP9 = 5,
-
-        ///
         /// <summary>
         /// 6: Generic.This type is used for transmitting raw video data, such as encrypted video frames. The SDK returns this type of video frames in callbacks, and you need to decode and render the frames yourself.
         /// </summary>
@@ -1151,6 +1146,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         VIDEO_CODEC_AV1 = 12,
+
+        ///
+        /// @ignore
+        ///
+        VIDEO_CODEC_VP9 = 13,
 
         ///
         /// <summary>

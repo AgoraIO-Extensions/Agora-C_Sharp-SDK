@@ -562,7 +562,21 @@ namespace Agora.Rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            int ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            if (ret == 0)
+            {
+                size = (int)AgoraJson.GetData<int>(_apiParam.Result, "size");
+                codec_info = (CodecCapInfo[])AgoraJson.JsonToStructArray<CodecCapInfo>(_apiParam.Result, "codec_info");
+            }
+            else
+            {
+                size = 0;
+                codec_info = new CodecCapInfo[0];
+            }
+
+            return ret;
         }
 
 
