@@ -83,7 +83,7 @@ namespace Agora.Rtc
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
         internal string channelId;
 
-        int video_view_setup_mode;
+        internal int video_view_setup_mode;
     }
 
 
