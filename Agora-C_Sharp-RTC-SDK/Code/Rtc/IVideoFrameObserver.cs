@@ -21,7 +21,7 @@ namespace Agora.Rtc
         /// true: Sets the SDK to receive the video frame.false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
-        public virtual bool OnCaptureVideoFrame(VIDEO_SOURCE_TYPE type, VideoFrame videoFrame)
+        public virtual bool OnCaptureVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
             return true;
         }
@@ -40,7 +40,7 @@ namespace Agora.Rtc
         /// true: Sets the SDK to receive the video frame.false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
-        public virtual bool OnPreEncodeVideoFrame(VIDEO_SOURCE_TYPE type, VideoFrame videoFrame)
+        public virtual bool OnPreEncodeVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
             return true;
         }

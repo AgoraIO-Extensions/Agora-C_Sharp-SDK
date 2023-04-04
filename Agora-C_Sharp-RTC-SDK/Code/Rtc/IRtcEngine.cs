@@ -872,9 +872,9 @@ namespace Agora.Rtc
         ///
         public abstract int EnableMultiCamera(bool enabled, CameraCapturerConfiguration config);
 
-        public abstract int StartCameraCapture(VIDEO_SOURCE_TYPE type, CameraCapturerConfiguration config);
+        public abstract int StartCameraCapture(VIDEO_SOURCE_TYPE sourceType, CameraCapturerConfiguration config);
 
-        public abstract int StopCameraCapture(VIDEO_SOURCE_TYPE type);
+        public abstract int StopCameraCapture(VIDEO_SOURCE_TYPE sourceType);
 
 
 
@@ -1864,9 +1864,9 @@ namespace Agora.Rtc
         public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
 
-        public abstract int StartScreenCapture(VIDEO_SOURCE_TYPE type, ScreenCaptureConfiguration config);
+        public abstract int StartScreenCapture(VIDEO_SOURCE_TYPE sourceType, ScreenCaptureConfiguration config);
 
-        public abstract int StopScreenCapture(VIDEO_SOURCE_TYPE type);
+        public abstract int StopScreenCapture(VIDEO_SOURCE_TYPE sourceType);
 
         ///
         /// <summary>
@@ -4364,11 +4364,7 @@ namespace Agora.Rtc
         ///
         public abstract int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection);
 
-        ///
-        /// @ignore
-        ///
-        public abstract int SetVideoProfileEx(int width, int height, int frameRate, int bitrate);
-
+       
         ///
         /// <summary>
         /// Enables or disables dual-stream mode on the sender side.

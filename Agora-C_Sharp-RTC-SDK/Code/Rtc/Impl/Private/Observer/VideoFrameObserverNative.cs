@@ -203,10 +203,10 @@ namespace Agora.Rtc
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
-                            VIDEO_SOURCE_TYPE type = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "type");
+                            VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
                             VideoFrame videoFrame1 = GetVideoFrame("", 0);
                             ConvertIrisVideoFrameToVideoFrame(ref videoFrame,ref videoFrame1);
-                            bool result = videoFrameObserver.OnCaptureVideoFrame(type, videoFrame1);
+                            bool result = videoFrameObserver.OnCaptureVideoFrame(sourceType, videoFrame1);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -220,10 +220,10 @@ namespace Agora.Rtc
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
-                            VIDEO_SOURCE_TYPE type = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "type");
+                            VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
                             VideoFrame videoFrame1 = GetVideoFrame("", 1);
                             ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
-                            bool result = videoFrameObserver.OnPreEncodeVideoFrame(type, videoFrame1);
+                            bool result = videoFrameObserver.OnPreEncodeVideoFrame(sourceType, videoFrame1);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);

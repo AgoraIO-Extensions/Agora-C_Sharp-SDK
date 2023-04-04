@@ -1977,7 +1977,7 @@ namespace Agora.Rtc
             return selfParam == VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
         }
 
-        public static bool compareView_t(ulong selfParam, ulong outParam)
+        public static bool compareView_t(long selfParam, long outParam)
         {
             return selfParam == 10;
         }
@@ -2127,7 +2127,7 @@ namespace Agora.Rtc
             return selfParam == HEADPHONE_EQUALIZER_PRESET.HEADPHONE_EQUALIZER_OFF;
         }
 
-        public static bool compareView_tArray(ulong[] selfParam, ulong[] outParam)
+        public static bool compareView_tArray(long[] selfParam, long[] outParam)
         {
             if (selfParam.Length != 10 && selfParam.Length != 1)
                 return false;

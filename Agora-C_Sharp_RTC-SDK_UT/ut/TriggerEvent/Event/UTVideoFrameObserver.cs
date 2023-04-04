@@ -6,23 +6,23 @@ namespace Agora.Rtc
 
 
         public bool OnCaptureVideoFrame_be_trigger = false;
-        public VIDEO_SOURCE_TYPE OnCaptureVideoFrame_type;
+        public VIDEO_SOURCE_TYPE OnCaptureVideoFrame_SourceType;
         public VideoFrame OnCaptureVideoFrame_videoFrame = null;
 
-        public override bool OnCaptureVideoFrame(VIDEO_SOURCE_TYPE type, VideoFrame videoFrame)
+        public override bool OnCaptureVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
             OnCaptureVideoFrame_be_trigger = true;
-            OnCaptureVideoFrame_type = type;
+            OnCaptureVideoFrame_SourceType = sourceType;
             OnCaptureVideoFrame_videoFrame = videoFrame;
             return true;
         }
 
-        public bool OnCaptureVideoFramePassed(VIDEO_SOURCE_TYPE type, VideoFrame videoFrame)
+        public bool OnCaptureVideoFramePassed(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
             if (OnCaptureVideoFrame_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareVIDEO_SOURCE_TYPE(OnCaptureVideoFrame_type, type) == false)
+            if (ParamsHelper.compareVIDEO_SOURCE_TYPE(OnCaptureVideoFrame_SourceType, sourceType) == false)
                 return false;
             if (ParamsHelper.compareVideoFrame(OnCaptureVideoFrame_videoFrame, videoFrame) == false)
                 return false;
@@ -34,23 +34,23 @@ namespace Agora.Rtc
 
 
         public bool OnPreEncodeVideoFrame_be_trigger = false;
-        public VIDEO_SOURCE_TYPE OnPreEncodeVideoFrame_type;
+        public VIDEO_SOURCE_TYPE OnPreEncodeVideoFrame_SourceType;
         public VideoFrame OnPreEncodeVideoFrame_videoFrame = null;
 
-        public override bool OnPreEncodeVideoFrame(VIDEO_SOURCE_TYPE type, VideoFrame videoFrame)
+        public override bool OnPreEncodeVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
             OnPreEncodeVideoFrame_be_trigger = true;
-            OnPreEncodeVideoFrame_type = type;
+            OnPreEncodeVideoFrame_SourceType = sourceType;
             OnPreEncodeVideoFrame_videoFrame = videoFrame;
             return true;
         }
 
-        public bool OnPreEncodeVideoFramePassed(VIDEO_SOURCE_TYPE type, VideoFrame videoFrame)
+        public bool OnPreEncodeVideoFramePassed(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
             if (OnPreEncodeVideoFrame_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareVIDEO_SOURCE_TYPE(OnPreEncodeVideoFrame_type, type) == false)
+            if (ParamsHelper.compareVIDEO_SOURCE_TYPE(OnPreEncodeVideoFrame_SourceType, sourceType) == false)
                 return false;
             if (ParamsHelper.compareVideoFrame(OnPreEncodeVideoFrame_videoFrame, videoFrame) == false)
                 return false;

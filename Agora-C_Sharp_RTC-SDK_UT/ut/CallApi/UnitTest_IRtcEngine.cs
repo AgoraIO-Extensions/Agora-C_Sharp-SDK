@@ -2301,11 +2301,11 @@ namespace Agora.Rtc
         [Test]
         public void Test_StartScreenCapture2()
         {
-            VIDEO_SOURCE_TYPE type;
-            ParamsHelper.InitParam(out type);
+            VIDEO_SOURCE_TYPE sourceType;
+            ParamsHelper.InitParam(out sourceType);
             CameraCapturerConfiguration config;
             ParamsHelper.InitParam(out config);
-            var nRet = Engine.StartCameraCapture(type, config);
+            var nRet = Engine.StartCameraCapture(sourceType, config);
 
             Assert.AreEqual(0, nRet);
         }

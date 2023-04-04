@@ -48,15 +48,15 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME;
 
-            VIDEO_SOURCE_TYPE type;
-            ParamsHelper.InitParam(out type);
+            VIDEO_SOURCE_TYPE sourceType;
+            ParamsHelper.InitParam(out sourceType);
 
             VideoFrame videoFrame;
             ParamsHelper.InitParam(out videoFrame);
 
 
             jsonObj.Clear();
-            jsonObj.Add("type", type);
+            jsonObj.Add("sourceType", sourceType);
             jsonObj.Add("videoFrame", videoFrame);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
@@ -66,7 +66,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(type, videoFrame));
+            Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(sourceType, videoFrame));
         }
 
 
@@ -76,15 +76,15 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME;
 
-            VIDEO_SOURCE_TYPE type;
-            ParamsHelper.InitParam(out type);
+            VIDEO_SOURCE_TYPE sourceType;
+            ParamsHelper.InitParam(out sourceType);
 
             VideoFrame videoFrame;
             ParamsHelper.InitParam(out videoFrame);
 
 
             jsonObj.Clear();
-            jsonObj.Add("type", type);
+            jsonObj.Add("sourceType", sourceType);
             jsonObj.Add("videoFrame", videoFrame);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
@@ -94,7 +94,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPreEncodeVideoFramePassed(type, videoFrame));
+            Assert.AreEqual(true, EventHandler.OnPreEncodeVideoFramePassed(sourceType, videoFrame));
         }
 
 

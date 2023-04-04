@@ -4,7 +4,7 @@ using Agora.Rtc.LitJson;
 namespace Agora.Rtc
 {
     using int64_t = Int64;
-    using view_t = UInt64;
+    using view_t = Int64;
     using uint64_t = UInt64;
 
     #region AgoraBase
@@ -1057,12 +1057,11 @@ namespace Agora.Rtc
         public int height;
     };
 
-
-    public enum SCREEN_CAPTURE_CAPABILITY_LEVEL
+    public enum SCREEN_CAPTURE_FRAMERATE_CAPABILITY
     {
-        SCREEN_CAPTURE_CAPABILITY_LEVEL_15_FPS = 0,
-        SCREEN_CAPTURE_CAPABILITY_LEVEL_30_FPS = 1,
-        SCREEN_CAPTURE_CAPABILITY_LEVEL_60_FPS = 2,
+        SCREEN_CAPTURE_FRAMERATE_CAPABILITY_15_FPS = 0,
+        SCREEN_CAPTURE_FRAMERATE_CAPABILITY_30_FPS = 1,
+        SCREEN_CAPTURE_FRAMERATE_CAPABILITY_60_FPS = 2,
     };
 
     ///

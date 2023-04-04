@@ -633,22 +633,6 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_SetVideoProfileEx()
-        {
-            int width;
-            ParamsHelper.InitParam(out width);
-            int height;
-            ParamsHelper.InitParam(out height);
-            int frameRate;
-            ParamsHelper.InitParam(out frameRate);
-            int bitrate;
-            ParamsHelper.InitParam(out bitrate);
-            var nRet = EngineEx.SetVideoProfileEx(width, height, frameRate, bitrate);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_EnableDualStreamModeEx()
         {
             bool enabled;
