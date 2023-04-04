@@ -70,6 +70,15 @@ namespace Agora.Rtm.Internal
             return _streamChannelImpl.Join(channelName, options, ref requestId);
         }
 
+        public override int RenewToken(string token)
+        {
+            if (_selfCreator == null || _streamChannelImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _streamChannelImpl.RenewToken(token);
+        }
+
         public override int Leave(ref UInt64 requestId)
         {
             if (_selfCreator == null || _streamChannelImpl == null)

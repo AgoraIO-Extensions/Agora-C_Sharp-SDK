@@ -5,6 +5,8 @@ namespace Agora.Rtm.Internal
     {
         public abstract int Join(JoinChannelOptions options, ref UInt64 requestId);
 
+        public abstract int RenewToken(string token);
+
         public abstract int Leave(ref UInt64 requestId);
 
         public abstract string GetChannelName();

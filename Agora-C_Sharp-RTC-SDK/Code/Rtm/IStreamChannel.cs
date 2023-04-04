@@ -6,6 +6,8 @@ namespace Agora.Rtm
     {
         Task<RtmResult<JoinResult>> JoinAsync(JoinChannelOptions options);
 
+        RtmStatus RenewToken(string token);
+
         Task<RtmResult<LeaveResult>> LeaveAsync();
 
         string GetChannelName();
