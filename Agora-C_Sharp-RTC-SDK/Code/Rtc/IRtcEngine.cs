@@ -1,6 +1,6 @@
 using System;
 using video_track_id_t = System.UInt32;
-
+using view_t = System.Int64;
 namespace Agora.Rtc
 {
     ///
@@ -1919,7 +1919,7 @@ namespace Agora.Rtc
         /// ERR_INVALID_ARGUMENT: The parameter is invalid.
         /// </returns>
         ///
-        public abstract int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
+        public abstract int StartScreenCaptureByWindowId(view_t windowId, Rectangle regionRect, ScreenCaptureParameters captureParams);
 
         ///
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
@@ -10,6 +11,7 @@ namespace Agora.Rtc
     using video_track_id_t = System.UInt32;
     using IrisRtcEnginePtr = IntPtr;
     using IrisRtcRenderingHandle = IntPtr;
+    using view_t = System.Int64;
 
     internal class RtcEngineImpl
     {
@@ -3103,7 +3105,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StartScreenCaptureByWindowId(UInt64 windowId, Rectangle regionRect,
+        public int StartScreenCaptureByWindowId(view_t windowId, Rectangle regionRect,
                                                ScreenCaptureParameters captureParams)
         {
             _param.Clear();

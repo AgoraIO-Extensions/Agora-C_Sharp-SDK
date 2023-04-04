@@ -4,6 +4,7 @@ using Agora.Rtc;
 namespace Agora.Rtc
 {
     using uid_t = System.UInt32;
+    using view_t = System.Int64;
     [TestFixture]
     class UnitTest_IRtcEngine
     {
@@ -2237,7 +2238,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StartScreenCaptureByWindowId()
         {
-            ulong windowId;
+            view_t windowId;
             ParamsHelper.InitParam(out windowId);
             Rectangle regionRect;
             ParamsHelper.InitParam(out regionRect);
