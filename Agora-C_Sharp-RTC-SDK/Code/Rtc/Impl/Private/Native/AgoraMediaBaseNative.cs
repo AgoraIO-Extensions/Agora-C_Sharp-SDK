@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace Agora.Rtc
 {
-    using view_t = UInt64;
+    using view_t = Int64;
 
     //use for raw data
     [StructLayout(LayoutKind.Sequential)]

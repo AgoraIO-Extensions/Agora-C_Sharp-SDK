@@ -335,7 +335,6 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_RESUMEALLCHANNELMEDIARELAYEX = "RtcEngineEx_resumeAllChannelMediaRelayEx";
         internal const string FUNC_RTCENGINEEX_GETUSERINFOBYUSERACCOUNTEX = "RtcEngineEx_getUserInfoByUserAccountEx";
         internal const string FUNC_RTCENGINEEX_GETUSERINFOBYUIDEX = "RtcEngineEx_getUserInfoByUidEx";
-        internal const string FUNC_RTCENGINEEX_SETVIDEOPROFILEEX = "RtcEngineEx_setVideoProfileEx";
         internal const string FUNC_RTCENGINEEX_ENABLEDUALSTREAMMODEEX = "RtcEngineEx_enableDualStreamModeEx";
         internal const string FUNC_RTCENGINEEX_SETDUALSTREAMMODEEX = "RtcEngineEx_setDualStreamModeEx";
         internal const string FUNC_RTCENGINEEX_SETHIGHPRIORITYUSERLISTEX = "RtcEngineEx_setHighPriorityUserListEx";

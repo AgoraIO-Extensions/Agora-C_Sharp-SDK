@@ -1998,22 +1998,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StopLocalVideoTranscoder();
         }
 
-        public override int StartCameraCapture(VIDEO_SOURCE_TYPE type, CameraCapturerConfiguration config)
+        public override int StartCameraCapture(VIDEO_SOURCE_TYPE sourceType, CameraCapturerConfiguration config)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartCameraCapture(type, config);
+            return _rtcEngineImpl.StartCameraCapture(sourceType, config);
         }
 
-        public override int StopCameraCapture(VIDEO_SOURCE_TYPE type)
+        public override int StopCameraCapture(VIDEO_SOURCE_TYPE sourceType)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StopCameraCapture(type);
+            return _rtcEngineImpl.StopCameraCapture(sourceType);
         }
 
         public override int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
@@ -2034,22 +2034,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetScreenCaptureOrientation(type, orientation);
         }
 
-        public override int StartScreenCapture(VIDEO_SOURCE_TYPE type, ScreenCaptureConfiguration config)
+        public override int StartScreenCapture(VIDEO_SOURCE_TYPE sourceType, ScreenCaptureConfiguration config)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartScreenCapture(type, config);
+            return _rtcEngineImpl.StartScreenCapture(sourceType, config);
         }
 
-        public override int StopScreenCapture(VIDEO_SOURCE_TYPE type)
+        public override int StopScreenCapture(VIDEO_SOURCE_TYPE sourceType)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StopScreenCapture(type);
+            return _rtcEngineImpl.StopScreenCapture(sourceType);
         }
 
         public override CONNECTION_STATE_TYPE GetConnectionState()
@@ -2992,15 +2992,6 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _rtcEngineImpl.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connection);
-        }
-
-        public override int SetVideoProfileEx(int width, int height, int frameRate, int bitrate)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetVideoProfileEx(width, height, frameRate, bitrate);
         }
 
         public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)

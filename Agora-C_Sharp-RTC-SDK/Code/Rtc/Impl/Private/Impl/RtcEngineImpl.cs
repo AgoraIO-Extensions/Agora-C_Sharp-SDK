@@ -3319,10 +3319,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StartCameraCapture(VIDEO_SOURCE_TYPE type, CameraCapturerConfiguration config)
+        public int StartCameraCapture(VIDEO_SOURCE_TYPE sourceType, CameraCapturerConfiguration config)
         {
             _param.Clear();
-            _param.Add("type", type);
+            _param.Add("sourceType", sourceType);
             _param.Add("config", config);
 
             var json = AgoraJson.ToJson(_param);
@@ -3335,10 +3335,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StopCameraCapture(VIDEO_SOURCE_TYPE type)
+        public int StopCameraCapture(VIDEO_SOURCE_TYPE sourceType)
         {
             _param.Clear();
-            _param.Add("type", type);
+            _param.Add("sourceType", sourceType);
 
             var json = AgoraJson.ToJson(_param);
 
@@ -3384,10 +3384,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StartScreenCapture(VIDEO_SOURCE_TYPE type, ScreenCaptureConfiguration config)
+        public int StartScreenCapture(VIDEO_SOURCE_TYPE sourceType, ScreenCaptureConfiguration config)
         {
             _param.Clear();
-            _param.Add("type", type);
+            _param.Add("sourceType", sourceType);
             _param.Add("config", config);
 
 
@@ -3401,10 +3401,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StopScreenCapture(VIDEO_SOURCE_TYPE type)
+        public int StopScreenCapture(VIDEO_SOURCE_TYPE sourceType)
         {
             _param.Clear();
-            _param.Add("type", type);
+            _param.Add("sourceType", sourceType);
 
             var json = AgoraJson.ToJson(_param);
 
@@ -4993,25 +4993,6 @@ namespace Agora.Rtc
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLEAUDIOVOLUMEINDICATIONEX,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
-
-        public int SetVideoProfileEx(int width, int height, int frameRate, int bitrate)
-        {
-            _param.Clear();
-            _param.Add("width", width);
-            _param.Add("height", height);
-            _param.Add("frameRate", frameRate);
-            _param.Add("bitrate", bitrate);
-
-
-            var json = AgoraJson.ToJson(_param);
-
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_SETVIDEOPROFILEEX,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

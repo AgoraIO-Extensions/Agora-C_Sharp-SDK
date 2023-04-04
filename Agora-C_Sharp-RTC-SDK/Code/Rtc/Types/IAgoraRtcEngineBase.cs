@@ -1,5 +1,5 @@
 ﻿using System;
-using view_t = System.UInt64;
+using view_t = System.Int64;
 using video_track_id_t = System.UInt32;
 using Agora.Rtc.LitJson;
 
@@ -1463,12 +1463,13 @@ namespace Agora.Rtc
         ///
         public bool isOccluded;
 
+        public Rectangle position;
         ///
         /// @ignore
         ///
         public bool minimizeWindow;
 
-        public Rectangle position;
+        public view_t sourceDisplayId;
 
         public ScreenCaptureSourceInfo()
         {
@@ -1481,8 +1482,9 @@ namespace Agora.Rtc
             isOccluded = false;
             thumbImage = new ThumbImageBuffer();
             iconImage = new ThumbImageBuffer();
-            minimizeWindow = false;
             position = new Rectangle();
+            minimizeWindow = false;
+            sourceDisplayId = -2;
         }
     };
 
