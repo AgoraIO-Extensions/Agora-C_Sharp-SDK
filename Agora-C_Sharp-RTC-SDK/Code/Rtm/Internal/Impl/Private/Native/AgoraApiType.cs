@@ -4,6 +4,7 @@
     {
         #region IStreamChannel start
         internal const string FUNC_STREAMCHANNEL_JOIN = "StreamChannel_join";
+        internal const string FUNC_STREAMCHANNEL_RENEWTOKEN = "StreamChannel_renewToken";
         internal const string FUNC_STREAMCHANNEL_LEAVE = "StreamChannel_leave";
         internal const string FUNC_STREAMCHANNEL_GETCHANNELNAME = "StreamChannel_getChannelName";
         internal const string FUNC_STREAMCHANNEL_JOINTOPIC = "StreamChannel_joinTopic";
