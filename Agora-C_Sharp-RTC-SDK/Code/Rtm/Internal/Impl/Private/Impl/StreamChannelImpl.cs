@@ -70,9 +70,10 @@ namespace Agora.Rtm.Internal
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int RenewToken(string token)
+        public int RenewToken(string channelName, string token)
         {
             _param.Clear();
+            _param.Add("channelName", channelName);
             _param.Add("token", token);
           
             var json = AgoraJson.ToJson(_param);

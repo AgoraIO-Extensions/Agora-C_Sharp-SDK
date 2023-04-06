@@ -76,7 +76,7 @@ namespace Agora.Rtm.Internal
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.RenewToken(token);
+            return _streamChannelImpl.RenewToken(channelName,token);
         }
 
         public override int Leave(ref UInt64 requestId)
