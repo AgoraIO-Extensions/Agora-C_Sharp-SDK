@@ -5,6 +5,8 @@ namespace Agora.Rtm
     {
         int Join(string channelName, JoinChannelOptions options, ref UInt64 requestId);
 
+        int RenewToken(string channelName, string token);
+
         int Leave(string channelName, ref UInt64 requestId);
 
         int JoinTopic(string channelName, string topic, JoinTopicOptions options, ref UInt64 requestId);

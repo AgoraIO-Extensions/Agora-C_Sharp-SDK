@@ -34,6 +34,12 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
+        public RtmStatus RenewToken(string token)
+        {
+            int errorCode = this.internalStreamChannel.RenewToken(token);
+            return Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this.internalRtmClient);
+        }
+
         public Task<RtmResult<LeaveResult>> LeaveAsync()
         {
             TaskCompletionSource<RtmResult<LeaveResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LeaveResult>>();

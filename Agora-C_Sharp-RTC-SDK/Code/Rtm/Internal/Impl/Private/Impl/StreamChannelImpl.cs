@@ -70,6 +70,22 @@ namespace Agora.Rtm.Internal
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int RenewToken(string channelName, string token)
+        {
+            _param.Clear();
+            _param.Add("channelName", channelName);
+            _param.Add("token", token);
+          
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_RENEWTOKEN,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int Leave(string channelName, ref UInt64 requestId)
         {
             _param.Clear();
