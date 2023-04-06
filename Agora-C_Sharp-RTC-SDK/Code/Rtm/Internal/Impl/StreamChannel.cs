@@ -10,7 +10,7 @@ namespace Agora.Rtm.Internal
         private const int ErrorCode = -7;
 
         private string channelName = "";
-   
+
         internal StreamChannel(IStreamChannelCreator selfCreator, IStreamChannelImpl impl, string channelName)
         {
             _selfCreator = selfCreator;
@@ -76,7 +76,7 @@ namespace Agora.Rtm.Internal
             {
                 return ErrorCode;
             }
-            return _streamChannelImpl.RenewToken(channelName,token);
+            return _streamChannelImpl.RenewToken(channelName, token);
         }
 
         public override int Leave(ref UInt64 requestId)
