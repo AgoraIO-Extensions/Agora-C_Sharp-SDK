@@ -15,6 +15,7 @@ namespace Agora.Rtc
     {
         protected TextureManagerYUV _textureManagerYUV;
         protected Material _material = null;
+        protected float YStrideScale = 1.0f;
 
         void Start()
         {
@@ -55,16 +56,26 @@ namespace Agora.Rtc
                     _hasAttach = true;
                 }
 
-                if (_textureManagerYUV && (this._textureWidth != _textureManagerYUV.Width || this._textureHeight != _textureManagerYUV.Height))
+                if (_textureManagerYUV)
                 {
-                    this._textureWidth = _textureManagerYUV.Width;
-                    this._textureHeight = _textureManagerYUV.Height;
+                    if (this._textureWidth != _textureManagerYUV.Width || this._textureHeight != _textureManagerYUV.Height)
+                    {
+                        this._textureWidth = _textureManagerYUV.Width;
+                        this._textureHeight = _textureManagerYUV.Height;
 
-                    if (this._textureWidth != 0 && this._textureHeight != 0)
+                        if (this._textureWidth != 0 && this._textureHeight != 0)
+                        {
+                            this.InvokeOnTextureSizeModify();
+                        }
+                    }
+
+                    if (this._textureWidth != 0 && this._textureHeight != 0 && this.YStrideScale != this._textureManagerYUV.YStrideScale)
                     {
                         _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
-                        this.InvokeOnTextureSizeModify();
+                        //AgoraLog.Log("_yStrideScale" + _textureManagerYUV.YStrideScale);
+                        this.YStrideScale = this._textureManagerYUV.YStrideScale;
                     }
+
                 }
             }
             else
