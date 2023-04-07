@@ -76,7 +76,7 @@ namespace Agora.Rtc
            
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_RTMCLIENT_RENEWTOKEN,
+            var nRet = AgoraRtcNative.CallIrisRtcApi(_irisApiEngine, Rtm.Internal.AgoraApiType.FUNC_STREAMCHANNEL_RENEWTOKEN,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 out _result);
