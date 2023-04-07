@@ -553,10 +553,10 @@ namespace Agora.Rtc
             return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
         }
 
-        public int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size)
+        public int QueryCodecCapability(ref CodecCapInfo[] codecInfo, ref int size)
         {
             _param.Clear();
-            _param.Add("codec_info", codec_info);
+            //_param.Add("codecInfo", codecInfo);
             _param.Add("size", size);
             var json = AgoraJson.ToJson(_param);
 
@@ -570,12 +570,12 @@ namespace Agora.Rtc
             if (ret == 0)
             {
                 size = (int)AgoraJson.GetData<int>(_apiParam.Result, "size");
-                codec_info = (CodecCapInfo[])AgoraJson.JsonToStructArray<CodecCapInfo>(_apiParam.Result, "codec_info");
+                codecInfo = (CodecCapInfo[])AgoraJson.JsonToStructArray<CodecCapInfo>(_apiParam.Result, "codecInfo");
             }
             else
             {
                 size = 0;
-                codec_info = new CodecCapInfo[0];
+                codecInfo = new CodecCapInfo[0];
             }
 
             return ret;

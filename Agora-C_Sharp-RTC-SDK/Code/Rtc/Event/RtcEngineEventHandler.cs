@@ -40,7 +40,7 @@ namespace Agora.Rtc
 
     public delegate void OnLastmileQualityHandler(int quality);
 
-    public delegate void OnFirstLocalVideoFrameHandler(RtcConnection connection, int width, int height, int elapsed);
+    public delegate void OnFirstLocalVideoFrameHandler(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed);
 
     public delegate void OnFirstLocalVideoFramePublishedHandler(RtcConnection connection, int elapsed);
 
@@ -424,10 +424,10 @@ namespace Agora.Rtc
             EventOnLastmileQuality.Invoke(quality);
         }
 
-        public override void OnFirstLocalVideoFrame(RtcConnection connection, int width, int height, int elapsed)
+        public override void OnFirstLocalVideoFrame(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed)
         {
             if (EventOnFirstLocalVideoFrame == null) return;
-            EventOnFirstLocalVideoFrame.Invoke(connection, width, height, elapsed);
+            EventOnFirstLocalVideoFrame.Invoke(source, width, height, elapsed);
         }
 
         public override void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed)

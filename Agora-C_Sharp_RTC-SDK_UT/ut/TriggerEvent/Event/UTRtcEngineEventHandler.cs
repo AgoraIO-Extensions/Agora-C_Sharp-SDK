@@ -275,26 +275,26 @@ namespace Agora.Rtc
         ///////////////////////////////////
 
         public bool OnFirstLocalVideoFrame_be_trigger = false;
-        public RtcConnection OnFirstLocalVideoFrame_connection = null;
+        public VIDEO_SOURCE_TYPE OnFirstLocalVideoFrame_source = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA;
         public int OnFirstLocalVideoFrame_width = 0;
         public int OnFirstLocalVideoFrame_height = 0;
         public int OnFirstLocalVideoFrame_elapsed = 0;
 
-        public override void OnFirstLocalVideoFrame(RtcConnection connection, int width, int height, int elapsed)
+        public override void OnFirstLocalVideoFrame(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed)
         {
             OnFirstLocalVideoFrame_be_trigger = true;
-            OnFirstLocalVideoFrame_connection = connection;
+            OnFirstLocalVideoFrame_source = source;
             OnFirstLocalVideoFrame_width = width;
             OnFirstLocalVideoFrame_height = height;
             OnFirstLocalVideoFrame_elapsed = elapsed;
         }
 
-        public bool OnFirstLocalVideoFramePassed(RtcConnection connection, int width, int height, int elapsed)
+        public bool OnFirstLocalVideoFramePassed(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed)
         {
             if (OnFirstLocalVideoFrame_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareRtcConnection(OnFirstLocalVideoFrame_connection, connection) == false)
+            if (ParamsHelper.compareVIDEO_SOURCE_TYPE(OnFirstLocalVideoFrame_source, source) == false)
                 return false;
             if (ParamsHelper.compareInt(OnFirstLocalVideoFrame_width, width) == false)
                 return false;
