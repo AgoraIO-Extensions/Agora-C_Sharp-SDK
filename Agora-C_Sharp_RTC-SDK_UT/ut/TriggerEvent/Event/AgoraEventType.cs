@@ -109,7 +109,6 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONRTCSTATS = "RtcEngineEventHandlerEx_onRtcStats";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONNETWORKQUALITY = "RtcEngineEventHandlerEx_onNetworkQuality";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONINTRAREQUESTRECEIVED = "RtcEngineEventHandlerEx_onIntraRequestReceived";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALVIDEOFRAME = "RtcEngineEventHandlerEx_onFirstLocalVideoFrame";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALVIDEOFRAMEPUBLISHED = "RtcEngineEventHandlerEx_onFirstLocalVideoFramePublished";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEVIDEODECODED = "RtcEngineEventHandlerEx_onFirstRemoteVideoDecoded";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEOSIZECHANGED = "RtcEngineEventHandlerEx_onVideoSizeChanged";

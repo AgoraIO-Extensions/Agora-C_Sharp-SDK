@@ -3414,7 +3414,7 @@ namespace Agora.Rtc
         ///
         public abstract string GetErrorDescription(int code);
 
-        public abstract int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size);
+        public abstract int QueryCodecCapability(ref CodecCapInfo[] codecInfo, ref int size);
 
         #endregion
 

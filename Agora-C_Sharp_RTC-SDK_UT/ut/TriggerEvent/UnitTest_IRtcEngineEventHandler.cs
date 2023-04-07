@@ -267,10 +267,10 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnFirstLocalVideoFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALVIDEOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONFIRSTLOCALVIDEOFRAME;
 
-            RtcConnection connection;
-            ParamsHelper.InitParam(out connection);
+            VIDEO_SOURCE_TYPE source;
+            ParamsHelper.InitParam(out source);
 
             int width;
             ParamsHelper.InitParam(out width);
@@ -282,7 +282,7 @@ namespace Agora.Rtc.Event
             ParamsHelper.InitParam(out elapsed);
 
             jsonObj.Clear();
-            jsonObj.Add("connection", connection);
+            jsonObj.Add("source", source);
             jsonObj.Add("width", width);
             jsonObj.Add("height", height);
             jsonObj.Add("elapsed", elapsed);
@@ -294,7 +294,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnFirstLocalVideoFramePassed(connection, width, height, elapsed));
+            Assert.AreEqual(true, EventHandler.OnFirstLocalVideoFramePassed(source, width, height, elapsed));
         }
 
         [Test]

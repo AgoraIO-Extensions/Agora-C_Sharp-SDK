@@ -325,13 +325,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.GetErrorDescription(code);
         }
 
-        public override int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size)
+        public override int QueryCodecCapability(ref CodecCapInfo[] codecInfo, ref int size)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.QueryCodecCapability(ref codec_info, ref size);
+            return _rtcEngineImpl.QueryCodecCapability(ref codecInfo, ref size);
         }
 
         public override int JoinChannel(string token, string channelId, string info = "", uint uid = 0)

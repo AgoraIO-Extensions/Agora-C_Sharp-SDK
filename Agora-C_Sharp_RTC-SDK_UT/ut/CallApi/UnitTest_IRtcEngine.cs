@@ -80,11 +80,11 @@ namespace Agora.Rtc
         [Test]
         public void Test_QueryCodecCapability()
         {
-            CodecCapInfo[] codec_info;
-            ParamsHelper.InitParam(out codec_info);
+            CodecCapInfo[] codecInfo;
+            ParamsHelper.InitParam(out codecInfo);
             int size;
             ParamsHelper.InitParam(out size);
-            var nRet = Engine.QueryCodecCapability(ref codec_info, ref size);
+            var nRet = Engine.QueryCodecCapability(ref codecInfo, ref size);
 
             Assert.AreEqual(0, nRet);
         }

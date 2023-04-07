@@ -235,7 +235,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public virtual void OnFirstLocalVideoFrame(RtcConnection connection, int width, int height, int elapsed) { }
+        public virtual void OnFirstLocalVideoFrame(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed) { }
 
         ///
         /// <summary>

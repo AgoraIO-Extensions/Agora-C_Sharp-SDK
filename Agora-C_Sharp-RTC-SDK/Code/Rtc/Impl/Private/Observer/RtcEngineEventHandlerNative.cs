@@ -32,7 +32,7 @@ namespace Agora.Rtc
 
             string @event = eventParam.@event;
             string data = eventParam.data;
-  
+
             LitJson.JsonData jsonData = null;
             if (data != null)
             {
@@ -634,14 +634,14 @@ namespace Agora.Rtc
 #endif
                     break;
 
-                case "RtcEngineEventHandler_onFirstLocalVideoFrameEx":
+                case "RtcEngineEventHandler_onFirstLocalVideoFrame":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
                     if (rtcEngineEventHandler == null) return;
                     rtcEngineEventHandler.OnFirstLocalVideoFrame(
-                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "source"),
                         (int)AgoraJson.GetData<int>(jsonData, "width"),
                         (int)AgoraJson.GetData<int>(jsonData, "height"),
                         (int)AgoraJson.GetData<int>(jsonData, "elapsed")
