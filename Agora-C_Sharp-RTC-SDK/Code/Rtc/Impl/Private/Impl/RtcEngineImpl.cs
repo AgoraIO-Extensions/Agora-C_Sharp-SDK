@@ -21,14 +21,15 @@ namespace Agora.Rtc
         private IrisRtcEnginePtr _irisRtcEngine;
         private IrisCApiParam _apiParam;
 
-
-        private EventHandlerHandle _rtcEventHandlerHandle = new EventHandlerHandle();
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private AgoraCallbackObject _callbackObject;
 #endif
-
+        //DirectCdnStreamingEventHandler
+        private EventHandlerHandle _rtcDirectCdnStreamingEventHandle = new EventHandlerHandle();
+        //rtcEventHandler
+        private EventHandlerHandle _rtcEventHandlerHandle = new EventHandlerHandle();
         //audioFrameObserver
         private EventHandlerHandle _rtcAudioFrameObserverHandle = new EventHandlerHandle();
         //videoFrameObserver
@@ -121,6 +122,9 @@ namespace Agora.Rtc
 
             AgoraRtcNative.FreeIrisRtcRendering(_rtcRenderingHandle);
             Release(sync);
+            //You must free cdn event handle after you release engine.
+            //Because when engine releasing. will call some Cdn event function.We need keep cdn event function ptr alive
+            FreeDirectCdnStreamingEventHandle();
             _disposed = true;
         }
 
@@ -198,7 +202,22 @@ namespace Agora.Rtc
             //you must Set(null) lately. because maybe some callback will trigger when unregister,
             //you set null first, some callback will never triggered 
             RtcEngineEventHandlerNative.SetEventHandler(null);
+        }
 
+        private void CreateDirectCdnStreamingEventHandle()
+        {
+            if (_rtcDirectCdnStreamingEventHandle.handle == IntPtr.Zero)
+            {
+                AgoraUtil.AllocEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle, RtcEngineEventHandlerNative.OnEvent);
+            }
+        }
+
+        private void FreeDirectCdnStreamingEventHandle()
+        {
+            if (_rtcDirectCdnStreamingEventHandle.handle != IntPtr.Zero)
+            {
+                AgoraUtil.FreeEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle);
+            }
         }
 
         internal IrisRtcEnginePtr GetNativeHandler()
@@ -3983,16 +4002,15 @@ namespace Agora.Rtc
 
         public int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
         {
-            var nRet = CreateEventHandler();
-            if (nRet != 0) return nRet;
+            CreateDirectCdnStreamingEventHandle();
 
             _param.Clear();
             _param.Add("publishUrl", publishUrl);
             _param.Add("options", options);
 
             var json = AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-            nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTDIRECTCDNSTREAMING,
+            IntPtr[] arrayPtr = new IntPtr[] { _rtcDirectCdnStreamingEventHandle.handle };
+            int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTDIRECTCDNSTREAMING,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
@@ -4004,9 +4022,7 @@ namespace Agora.Rtc
         {
             _param.Clear();
 
-
             var json = AgoraJson.ToJson(_param);
-
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STOPDIRECTCDNSTREAMING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
