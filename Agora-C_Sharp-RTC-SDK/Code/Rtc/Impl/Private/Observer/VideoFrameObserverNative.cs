@@ -107,6 +107,7 @@ namespace Agora.Rtc
                        (int)videoFrameConverted.alpha_buffer_length);
             }
 
+            localVideoFrame.type = (VIDEO_PIXEL_FORMAT)videoFrameConverted.type;
             localVideoFrame.width = videoFrameConverted.width;
             localVideoFrame.height = videoFrameConverted.height;
             localVideoFrame.yBufferPtr = videoFrameConverted.yBuffer;
