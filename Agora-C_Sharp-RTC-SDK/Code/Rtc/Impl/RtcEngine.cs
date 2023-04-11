@@ -1862,6 +1862,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StartScreenCaptureByDisplayId(displayId, regionRect, captureParams);
         }
 
+        [Obsolete]
         public override int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams)
         {
             if (_rtcEngineImpl == null)
@@ -2296,6 +2297,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StartOrUpdateChannelMediaRelay(configuration);
         }
 
+        [Obsolete]
         public override int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
             if (_rtcEngineImpl == null)
@@ -2305,6 +2307,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StartChannelMediaRelay(configuration);
         }
 
+        [Obsolete]
         public override int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
             if (_rtcEngineImpl == null)
@@ -2596,6 +2599,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
         }
 
+        [Obsolete]
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {
             if (_rtcEngineImpl == null)
@@ -3213,6 +3217,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StartOrUpdateChannelMediaRelayEx(configuration, connection);
         }
 
+        [Obsolete]
         public override int StartChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
         {
             if (_rtcEngineImpl == null)
@@ -3222,6 +3227,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StartChannelMediaRelayEx(configuration, connection);
         }
 
+        [Obsolete]
         public override int UpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
         {
             if (_rtcEngineImpl == null)

@@ -339,6 +339,7 @@ namespace Agora.Rtc
             EventOnProxyConnected.Invoke(channel, uid, proxyType, localProxyIp, elapsed);
         }
 
+        [Obsolete]
         public override void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, UInt16 delay, UInt16 lost)
         {
             if (EventOnAudioQuality == null) return;
@@ -550,6 +551,7 @@ namespace Agora.Rtc
             EventOnRemoteVideoStats.Invoke(connection, stats);
         }
 
+        [Obsolete]
         public override void OnCameraReady()
         {
             if (EventOnCameraReady == null) return;
@@ -574,6 +576,7 @@ namespace Agora.Rtc
             EventOnFacePositionChanged.Invoke(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
         }
 
+        [Obsolete]
         public override void OnVideoStopped()
         {
             if (EventOnVideoStopped == null) return;
@@ -598,12 +601,14 @@ namespace Agora.Rtc
             EventOnConnectionLost.Invoke(connection);
         }
 
+        [Obsolete]
         public override void OnConnectionInterrupted(RtcConnection connection)
         {
             if (EventOnConnectionInterrupted == null) return;
             EventOnConnectionInterrupted.Invoke(connection);
         }
 
+        [Obsolete]
         public override void OnConnectionBanned(RtcConnection connection)
         {
             if (EventOnConnectionBanned == null) return;
@@ -646,12 +651,14 @@ namespace Agora.Rtc
             EventOnFirstLocalAudioFramePublished.Invoke(connection, elapsed);
         }
 
+        [Obsolete]
         public override void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed)
         {
             if (EventOnFirstRemoteAudioFrame == null) return;
             EventOnFirstRemoteAudioFrame.Invoke(connection, userId, elapsed);
         }
 
+        [Obsolete]
         public override void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed)
         {
             if (EventOnFirstRemoteAudioDecoded == null) return;
@@ -725,6 +732,7 @@ namespace Agora.Rtc
             EventOnChannelMediaRelayStateChanged.Invoke(state, code);
         }
 
+        [Obsolete]
         public override void OnChannelMediaRelayEvent(int code)
         {
             if (EventOnChannelMediaRelayEvent == null) return;
@@ -743,12 +751,14 @@ namespace Agora.Rtc
             EventOnRemoteSubscribeFallbackToAudioOnly.Invoke(uid, isFallbackOrRecover);
         }
 
+        [Obsolete]
         public override void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate)
         {
             if (EventOnRemoteAudioTransportStats == null) return;
             EventOnRemoteAudioTransportStats.Invoke(connection, remoteUid, delay, lost, rxKBitRate);
         }
 
+        [Obsolete]
         public override void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, UInt16 delay, UInt16 lost, UInt16 rxKBitRate)
         {
             if (EventOnRemoteVideoTransportStats == null) return;
