@@ -69,7 +69,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "MediaPlayerAudioPcmFrameSink_onFrame":
+                    case "AudioPcmFrameSink_onFrame":
                         {
                             AudioPcmFrame frame = AgoraJson.JsonToStruct<AudioPcmFrame>(jsonData, "frame");
                             IntPtr data_ = bufferArray[0];

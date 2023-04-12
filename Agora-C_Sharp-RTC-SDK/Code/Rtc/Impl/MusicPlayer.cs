@@ -480,6 +480,7 @@ namespace Agora.Rtc
             return _musicPlayerImpl.Open(this.playerId, songCode, startPos);
         }
 
+        [Obsolete]
         public override int OpenWithCustomSource(Int64 startPos, IMediaPlayerCustomDataProvider provider)
         {
             if (_musicPlayerImpl == null)
