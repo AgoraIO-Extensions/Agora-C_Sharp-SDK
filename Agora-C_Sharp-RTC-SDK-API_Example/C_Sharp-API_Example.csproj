@@ -42,7 +42,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\Code\agorartc.csproj" />
+      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\Code\agorartc.csproj">
+        <Private>true</Private>
+      </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
@@ -58,8 +60,5 @@
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-      <Exec Command="if not exist %25$(TargetDir)agora_rtc_sdk.dll%25 (&#xD;&#xA;Copy &quot;$(SolutionDir)..\libs\x86_64\*.*&quot; &quot;$(TargetDir)&quot;)" />
-    </Target>
 
 </Project>

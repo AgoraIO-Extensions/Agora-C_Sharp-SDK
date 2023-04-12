@@ -10,7 +10,7 @@
  */
 
 using System;
-using agora.rtc;
+using Agora.Rtc;
 
 namespace C_Sharp_API_Example
 {
@@ -20,8 +20,8 @@ namespace C_Sharp_API_Example
         private string channel_id_ = "";
         private readonly string JoinChannelAudio_TAG = "[JoinChannelAudio] ";
         private readonly string log_file_path = "C_Sharp_API_Example.log";
-        private IAgoraRtcEngine rtc_engine_ = null;
-        private IAgoraRtcEngineEventHandler event_handler_ = null;
+        private IRtcEngine rtc_engine_ = null;
+        private IRtcEngineEventHandler event_handler_ = null;
 
         internal override int Init(string appId, string channelId)
         {
@@ -32,10 +32,10 @@ namespace C_Sharp_API_Example
 
             if (null == rtc_engine_)
             {
-                rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
+                rtc_engine_ = RtcEngine.CreateAgoraRtcEngine();
             }
 
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(JoinChannelAudio_TAG + "Initialize", ret);
             ret = rtc_engine_.SetLogFile(log_file_path);
@@ -89,51 +89,41 @@ namespace C_Sharp_API_Example
         internal override string GetSDKVersion()
         {
             if (null == rtc_engine_)
-                return "-" + (ERROR_CODE_TYPE.ERR_NOT_INITIALIZED).ToString(); 
-
-            return rtc_engine_.GetVersion();
+                return "-" + (ERROR_CODE_TYPE.ERR_NOT_INITIALIZED).ToString();
+            int build = 0;
+            return rtc_engine_.GetVersion(ref build);
         }
 
-        internal override IAgoraRtcEngine GetEngine()
+        internal override IRtcEngine GetEngine()
         {
             return rtc_engine_;
         }
     }
 
     // override if need
-    internal class JoinChannelAudioEventHandler : IAgoraRtcEngineEventHandler
+    internal class JoinChannelAudioEventHandler : IRtcEngineEventHandler
     {
-        public override void OnWarning(int warn, string msg)
-        {
-            Console.WriteLine("=====>OnWarning {0} {1}", warn, msg);
-        }
-
         public override void OnError(int error, string msg)
         {
             Console.WriteLine("=====>OnError {0} {1}", error, msg);
         }
 
-        public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
+        public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
-            Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", channel, uid);
+            Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
         }
 
-        public override void OnRejoinChannelSuccess(string channel, uint uid, int elapsed)
-        {
-            Console.WriteLine("----->OnRejoinChannelSuccess");
-        }
-
-        public override void OnLeaveChannel(RtcStats stats)
+        public override void OnLeaveChannel(RtcConnection connection, RtcStats stats)
         {
             Console.WriteLine("----->OnLeaveChannel duration={0}", stats.duration);
         }
 
-        public override void OnUserJoined(uint uid, int elapsed)
+        public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
-            Console.WriteLine("----->OnUserJoined uid={0} elapsed={1}", uid, elapsed);
+            Console.WriteLine("----->OnUserJoined uid={0} elapsed={1}", remoteUid, elapsed);
         }
 
-        public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
+        public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
             Console.WriteLine("----->OnUserOffline reason={0}", reason);
         }

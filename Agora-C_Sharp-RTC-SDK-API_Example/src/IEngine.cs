@@ -1,5 +1,5 @@
 ﻿using System;
-using agora.rtc;
+using Agora.Rtc;
 
 namespace C_Sharp_API_Example
 {
@@ -13,6 +13,6 @@ namespace C_Sharp_API_Example
 
         // not necessary
         internal abstract string GetSDKVersion();
-        internal abstract IAgoraRtcEngine GetEngine();
+        internal abstract IRtcEngine GetEngine();
     }
 }

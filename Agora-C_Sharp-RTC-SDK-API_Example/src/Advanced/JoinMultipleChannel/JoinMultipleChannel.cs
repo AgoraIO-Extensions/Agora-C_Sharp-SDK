@@ -24,26 +24,22 @@
  */
 
 using System;
-using agora.rtc;
+using Agora.Rtc;
 
 namespace C_Sharp_API_Example
 {
     public class JoinMultipleChannel : IEngine
     {
         private string app_id_ = "";
-        private string first_channel_id_ = "";
-        private string second_channel_id_ = "";
         private readonly string JoinMultipleChannel_TAG = "[JoinMultipleChannel] ";
         private readonly string log_file_path = "C_Sharp_API_Example.log";
-        private IAgoraRtcEngine rtc_engine_ = null;
-        //private IAgoraRtcEngineEventHandler event_handler_ = null;
-        private IAgoraRtcChannel first_channel_ = null;
-        private IAgoraRtcChannelEventHandler first_channel_event_handler_ = null;
-        private IAgoraRtcChannel second_channel_ = null;
-        private IAgoraRtcChannelEventHandler second_channel_event_handler_ = null;
+        private IRtcEngine rtc_engine_ = null;
+        private IRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_first_win_id_ = IntPtr.Zero;
         private IntPtr remote_second_win_id_ = IntPtr.Zero;
+        private RtcConnection first_connection_ = new RtcConnection();
+        private RtcConnection second_connection_ = new RtcConnection();
 
         public JoinMultipleChannel(IntPtr localWindowId, IntPtr remoteFirstWindowId, IntPtr remoteSecondWindowId)
         {
@@ -56,33 +52,24 @@ namespace C_Sharp_API_Example
         {
             int ret = -1;
             app_id_ = appId;
-            first_channel_id_ = channelId.Split(';').GetValue(0).ToString();
-            second_channel_id_ = channelId.Split(';').GetValue(1).ToString();
+            first_connection_.channelId = channelId.Split(';').GetValue(0).ToString();
+            first_connection_.localUid = (uint)new Random().Next(0, 50000);
+
+            second_connection_.channelId = channelId.Split(';').GetValue(1).ToString();
+            second_connection_.localUid = (uint)new Random().Next(50000, 100000);
 
             if (null == rtc_engine_)
             {
-                rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
+                rtc_engine_ = RtcEngine.CreateAgoraRtcEngine();
             }
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Initialize", ret);
             ret = rtc_engine_.SetLogFile(log_file_path);
             CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetLogFile", ret);
-            //event_handler_ = new JoinMultipleChannelEventHandler(this);
-            //rtc_engine_.InitEventHandler(event_handler_);
-            rtc_engine_.SetChannelProfile(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
 
-            first_channel_ = rtc_engine_.CreateChannel(first_channel_id_);
-            ret = first_channel_.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
-            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetClientRole(ch1)", ret);
-            first_channel_event_handler_ = new JoinMultipleChannelChannelEventHandler(this);
-            first_channel_.InitEventHandler(first_channel_event_handler_);
-
-            second_channel_ = rtc_engine_.CreateChannel(second_channel_id_);
-            ret = second_channel_.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_AUDIENCE);
-            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetClientRole(ch2)", ret);
-            second_channel_event_handler_ = new JoinMultipleChannelChannelEventHandler(this);
-            second_channel_.InitEventHandler(second_channel_event_handler_);
+            event_handler_ = new JoinMultipleChannelEventHandler(this);
+            ret = rtc_engine_.InitEventHandler(event_handler_);
 
             return ret;
         }
@@ -91,21 +78,9 @@ namespace C_Sharp_API_Example
         {
             int ret = -1;
 
-            if (null != first_channel_)
-            {
-                first_channel_.Unpublish();
-                ret = first_channel_.LeaveChannel();
-                first_channel_.Dispose();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel", ret);
-            }
-
-            if (null != second_channel_)
-            {
-                second_channel_.Unpublish();
-                ret = second_channel_.LeaveChannel();
-                second_channel_.Dispose();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel", ret);
-            }
+            IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
+            engine_ex.LeaveChannelEx(first_connection_);
+            engine_ex.LeaveChannelEx(second_connection_);
 
             if (null != rtc_engine_)
             {
@@ -120,34 +95,22 @@ namespace C_Sharp_API_Example
         {
             int ret = -1;
 
-            if (null != rtc_engine_)
-            {
-                ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "EnableAudio", ret);
-                ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "EnableVideo", ret);
+            IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
 
-                VideoCanvas vs = new VideoCanvas((ulong)local_win_id_, RENDER_MODE_TYPE.RENDER_MODE_FIT);
-                ret = rtc_engine_.SetupLocalVideo(vs);
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetupLocalVideo", ret);
-            }
+            ChannelMediaOptions options = new ChannelMediaOptions();
+            options.publishCameraTrack.SetValue(true);
+            options.publishMicrophoneTrack.SetValue(true);
 
-            if (null != first_channel_)
-            {
-                ret = first_channel_.JoinChannel("", "", 0, new ChannelMediaOptions(true, true, true, true));
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch1)", ret);
-                ret = first_channel_.Publish();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Publish(ch1)", ret);
-            }
 
-            if (null != second_channel_)
-            {
-                ret = second_channel_.JoinChannel("", "", 0, new ChannelMediaOptions(true, true, false, false));
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch2)", ret);
-                // 同一时刻只能发布一路流
-                //ret = second_channel_.Publish();
-                //CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Publish(ch2)", ret);
-            }
+            ret = engine_ex.JoinChannelEx("", first_connection_, options);
+            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch1)", ret);
+
+            ret = engine_ex.JoinChannelEx("", second_connection_, options);
+            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannel(ch2)", ret);
+
+            VideoCanvas vs = new VideoCanvas((long)local_win_id_, RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
+            ret = rtc_engine_.SetupLocalVideo(vs);
+
             return ret;
         }
 
@@ -155,50 +118,37 @@ namespace C_Sharp_API_Example
         {
             int ret = -1;
 
-            if (null != first_channel_)
-            {
-                ret = first_channel_.LeaveChannel();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch1)", ret);
-            }
+            IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
+            ret = engine_ex.LeaveChannelEx(first_connection_);
+            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch1)", ret);
 
-            if (null != second_channel_)
-            {
-                ret = second_channel_.LeaveChannel();
-                CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch2)", ret);
-            }
+            ret = engine_ex.LeaveChannelEx(second_connection_);
+            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannel(ch2)", ret);
 
             return ret;
         }
 
         internal override string GetSDKVersion()
         {
-            //createEngine();
-            return rtc_engine_.GetVersion();
+            if (null == rtc_engine_)
+                return "-" + (ERROR_CODE_TYPE.ERR_NOT_INITIALIZED).ToString();
+            int build = 0;
+            return rtc_engine_.GetVersion(ref build);
         }
 
-        internal override IAgoraRtcEngine GetEngine()
+        internal override IRtcEngine GetEngine()
         {
             return rtc_engine_;
         }
- 
+
         internal string GetFistChannelId()
         {
-            return first_channel_id_;
+            return first_connection_.channelId;
         }
 
         internal string GetSecondChannelId()
         {
-            return second_channel_id_;
-        }
-
-        internal IAgoraRtcChannel GetFirstChannel()
-        {
-            return first_channel_;
-        }
-
-        internal IAgoraRtcChannel GetSecondChannel()
-        {
-            return second_channel_;
+            return second_connection_.channelId;
         }
 
         internal IntPtr GetLocalWindowId()
@@ -218,114 +168,12 @@ namespace C_Sharp_API_Example
     }
 
     // override if need
-    internal class JoinMultipleChannelChannelEventHandler : IAgoraRtcChannelEventHandler
-    {
-        private JoinMultipleChannel joinMultipleChannelChannel_inst_ = null;
-        public JoinMultipleChannelChannelEventHandler(JoinMultipleChannel _joinMultipleChannelChannel)
-        {
-            joinMultipleChannelChannel_inst_ = _joinMultipleChannelChannel;
-        }
-
-        public override void OnChannelError(string channelId, int err, string msg)
-        {
-            Console.WriteLine("=====>OnChannelError {0} {1} {2}", channelId, err, msg);
-        }
-
-        public override void OnChannelWarning(string channelId, int warn, string msg)
-        {
-            Console.WriteLine("=====>OnChannelError {0} {1} {2}", channelId, warn, msg);
-        }
-
-        public override void OnAudioPublishStateChanged(string channelId, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
-        {
-            Console.WriteLine("----->OnAudioPublishStateChanged, channelId={0}", channelId);
-        }
-
-        public override void OnAudioSubscribeStateChanged(string channelId, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-            Console.WriteLine("----->OnAudioSubscribeStateChanged, channelId={0}", channelId);
-        }
-
-        public override void OnClientRoleChanged(string channelId, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole)
-        {
-            Console.WriteLine("----->OnClientRoleChanged, channelId={0}", channelId);
-        }
-
-        public override void OnJoinChannelSuccess(string channelId, uint uid, int elapsed)
-        {
-            Console.WriteLine("----->OnJoinChannelSuccess, channelId={0} uid={1}", channelId, uid);
-        }
-
-        public override void OnLeaveChannel(string channelId, RtcStats stats)
-        {
-            Console.WriteLine("----->OnLeaveChannel, channelId={0}", channelId);
-        }
-
-        public override void OnRejoinChannelSuccess(string channelId, uint uid, int elapsed)
-        {
-            Console.WriteLine("----->OnRejoinChannelSuccess, channelId={0}", channelId);
-        }
-
-        public override void OnRemoteAudioStateChanged(string channelId, uint uid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
-        {
-            Console.WriteLine("----->OnRemoteAudioStateChanged, channelId={0}", channelId);
-        }
-
-        public override void OnRemoteVideoStateChanged(string channelId, uint uid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
-        {
-            Console.WriteLine("----->OnRemoteVideoStateChanged, channelId={0} state={1} reason={2}", channelId, state, reason);
-        }
-
-        public override void OnUserJoined(string channelId, uint uid, int elapsed)
-        {
-            IntPtr win_id = IntPtr.Zero;
-
-            if (channelId == joinMultipleChannelChannel_inst_.GetFistChannelId())
-            {
-                win_id = joinMultipleChannelChannel_inst_.GetRemoteFirstWinId();
-            }
-            else if(channelId == joinMultipleChannelChannel_inst_.GetSecondChannelId())
-            {
-                win_id = joinMultipleChannelChannel_inst_.GetRemoteSecondWinId();
-            }
-            else
-            {
-                Console.WriteLine("----->OnUserJoined, invalid channelId{0}  !!!", channelId);
-                return;
-            }
-            var vc = new VideoCanvas((ulong)win_id, RENDER_MODE_TYPE.RENDER_MODE_FIT, channelId, uid);
-            int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
-            Console.WriteLine("----->OnUserJoined, channelId={0} uid={1} ret ={2}", channelId, uid, ret);
-        }
-
-        public override void OnUserOffline(string channelId, uint uid, USER_OFFLINE_REASON_TYPE reason)
-        {
-            Console.WriteLine("----->OnUserOffline, channelId={0}", channelId);
-        }
-
-        public override void OnVideoPublishStateChanged(string channelId, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
-        {
-            Console.WriteLine("----->OnVideoPublishStateChanged, channelId={0}", channelId);
-        }
-
-        public override void OnVideoSubscribeStateChanged(string channelId, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-            Console.WriteLine("----->OnVideoSubscribeStateChanged, channelId={0}", channelId);
-        }
-    }
-
-    // override if need
-    internal class JoinMultipleChannelEventHandler : IAgoraRtcEngineEventHandler
+    internal class JoinMultipleChannelEventHandler : IRtcEngineEventHandler
     {
         private JoinMultipleChannel joinMultipleChannel_inst = null;
         public JoinMultipleChannelEventHandler(JoinMultipleChannel _joinMultipleChannel)
         {
             joinMultipleChannel_inst = _joinMultipleChannel;
-        }
-        
-        public override void OnWarning(int warn, string msg)
-        {
-            Console.WriteLine("=====>OnWarning {0} {1}", warn, msg);
         }
 
         public override void OnError(int error, string msg)
@@ -333,44 +181,52 @@ namespace C_Sharp_API_Example
             Console.WriteLine("=====>OnError {0} {1}", error, msg);
         }
 
-        public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
+        public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
-            Console.WriteLine("----->OnJoinChannelSuccess, channel={0}, uid={1}", channel, uid);
+            Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
         }
 
-        public override void OnRejoinChannelSuccess(string channel, uint uid, int elapsed)
+        public override void OnLeaveChannel(RtcConnection connection, RtcStats stats)
         {
-            Console.WriteLine("----->OnRejoinChannelSuccess");
+            Console.WriteLine("----->OnLeaveChannel, channel={0}, duration={1}", connection.channelId, stats.duration);
         }
 
-        public override void OnLeaveChannel(RtcStats stats)
+        public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
-            Console.WriteLine("----->OnLeaveChannel, duration={0}", stats.duration);
+            Console.WriteLine("----->OnUserJoined, channel={0}, uid={1}", connection.channelId, remoteUid);
+
+            IntPtr win_id = IntPtr.Zero;
+
+            if (connection.channelId == joinMultipleChannel_inst.GetFistChannelId())
+            {
+                win_id = joinMultipleChannel_inst.GetRemoteFirstWinId();
+            }
+            else if (connection.channelId == joinMultipleChannel_inst.GetSecondChannelId())
+            {
+                win_id = joinMultipleChannel_inst.GetRemoteSecondWinId();
+            }
+            else
+            {
+                Console.WriteLine("----->OnUserJoined, invalid channelId{0}  !!!", connection.channelId);
+                return;
+            }
+            var vc = new VideoCanvas((long)win_id, RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, remoteUid);
+            int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
         }
 
-        public override void OnUserJoined(uint uid, int elapsed)
+        public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
-            Console.WriteLine("----->OnUserJoined, uid={0}", uid);
+            Console.WriteLine("----->OnUserOffline, channel={0}, remoteUid={1}, reason={2}", connection.channelId, remoteUid, reason);
         }
 
-        public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
+        public override void OnRemoteVideoStats(RtcConnection connection, RemoteVideoStats stats)
         {
-            Console.WriteLine("----->OnUserOffline, reason={0}", reason);
+            Console.WriteLine("----->OnRemoteVideoStats, channel={0}, stats={1}", connection.channelId, stats);
         }
 
-        //public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason)
-        //{
-        //    Console.WriteLine("----->OnAudioMixingStateChanged, state={0} reason={1}", state, reason);
-        //}
-
-        public override void OnRemoteVideoStats(RemoteVideoStats stats)
+        public override void OnRemoteAudioStats(RtcConnection connection, RemoteAudioStats stats)
         {
-            Console.WriteLine("----->OnRemoteVideoStats, stats={0}", stats);
-        }
-
-        public override void OnRemoteAudioStats(RemoteAudioStats stats)
-        {
-            Console.WriteLine("----->OnRemoteAudioStats, stats={0}", stats);
+            Console.WriteLine("----->OnRemoteAudioStats, channel={0}, stats={1}", connection.channelId, stats);
         }
     }
 }

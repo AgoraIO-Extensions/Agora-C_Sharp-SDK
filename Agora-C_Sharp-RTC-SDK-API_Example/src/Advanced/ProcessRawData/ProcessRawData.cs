@@ -12,7 +12,7 @@
 
 using System;
 using System.Threading;
-using agora.rtc;
+using Agora.Rtc;
 
 namespace C_Sharp_API_Example
 {
@@ -22,10 +22,10 @@ namespace C_Sharp_API_Example
         private string channel_id_ = "";
         private readonly string ProcessRawData_TAG = "[ProcessRawData] ";
         private readonly string log_file_path_ = "C_Sharp_API_Example.log";
-        private IAgoraRtcEngine rtc_engine_ = null;
-        private IAgoraRtcEngineEventHandler event_handler_ = null;
-        private IAgoraRtcVideoFrameObserver video_frame_observer = null;
-        private IAgoraRtcAudioFrameObserver audio_frame_observer = null;
+        private IRtcEngine rtc_engine_ = null;
+        private IRtcEngineEventHandler event_handler_ = null;
+        private IVideoFrameObserver video_frame_observer = null;
+        private IAudioFrameObserver audio_frame_observer = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_win_id_ = IntPtr.Zero;
 
@@ -43,10 +43,10 @@ namespace C_Sharp_API_Example
 
             if (null == rtc_engine_)
             {
-                rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
+                rtc_engine_ = RtcEngine.CreateAgoraRtcEngine();
             }
 
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(ProcessRawData_TAG + "Initialize", ret);
             ret = rtc_engine_.SetLogFile(log_file_path_);
@@ -110,11 +110,11 @@ namespace C_Sharp_API_Example
         {
             if (null == rtc_engine_)
                 return "-" + (ERROR_CODE_TYPE.ERR_NOT_INITIALIZED).ToString();
-
-            return rtc_engine_.GetVersion();
+            int build = 0;
+            return rtc_engine_.GetVersion(ref build);
         }
 
-        internal override IAgoraRtcEngine GetEngine()
+        internal override IRtcEngine GetEngine()
         {
             return rtc_engine_;
         }
@@ -136,45 +136,78 @@ namespace C_Sharp_API_Example
     }
 
     // override if need
-    internal class ProcessRawDataAudioFrameObserver : IAgoraRtcAudioFrameObserver
+    internal class ProcessRawDataAudioFrameObserver : IAudioFrameObserver
     {
-        public override bool OnMixedAudioFrame(AudioFrame audioFrame)
+        public override bool OnRecordAudioFrame(string channelId, AudioFrame audioFrame)
+        {
+            Console.WriteLine($"----->OnRecordAudioFrame samplesPerSec:{audioFrame.samplesPerSec}");
+            return true;
+        }
+        
+        public override bool OnPlaybackAudioFrame(string channelId, AudioFrame audioFrame)
+        {
+            Console.WriteLine($"----->OnPlaybackAudioFrame samples:{audioFrame.samplesPerSec}");
+            return true;
+        }
+
+        public override bool OnMixedAudioFrame(string channelId, AudioFrame audioFrame)
         {
             Console.WriteLine($"----->OnMixedAudioFrame channels:{audioFrame.channels}");
             return true;
         }
 
-        public override bool OnPlaybackAudioFrame(AudioFrame audioFrame)
+        public override bool OnEarMonitoringAudioFrame(AudioFrame audioFrame)
         {
-            Console.WriteLine($"----->OnPlaybackAudioFrame samples:{audioFrame.samples}");
+            Console.WriteLine($"----->OnEarMonitoringAudioFrame samples:{audioFrame.samplesPerSec}");
             return true;
         }
 
-        public override bool OnPlaybackAudioFrameBeforeMixing(uint uid, AudioFrame audioFrame)
+        public override bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, AudioFrame audioFrame)
         {
             Console.WriteLine($"----->OnPlaybackAudioFrameBeforeMixing uid={uid}");
             return true;
         }
 
-        public override bool OnPlaybackAudioFrameBeforeMixingEx(string channelId, uint uid, AudioFrame audioFrame)
+        public override bool OnPlaybackAudioFrameBeforeMixing(string channel_id,
+                                                        string userId,
+                                                        AudioFrame audio_frame)
         {
-            Console.WriteLine($"----->OnPlaybackAudioFrameBeforeMixingEx channelId:{channelId} uid:{uid}");
-            return true;
-        }
-
-        public override bool OnRecordAudioFrame(AudioFrame audioFrame)
-        {
-            Console.WriteLine($"----->OnRecordAudioFrame samplesPerSec:{audioFrame.samplesPerSec}");
+            Console.WriteLine($"----->OnPlaybackAudioFrameBeforeMixing uid={userId}");
             return true;
         }
     }
 
     // override if need
-    internal class ProcessRawDataVideoFrameObserver : IAgoraRtcVideoFrameObserver
+    internal class ProcessRawDataVideoFrameObserver : IVideoFrameObserver
     {
-        public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
+        public override bool OnCaptureVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
-            return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER;
+            Console.WriteLine($"----->OnCaptureVideoFrame {Thread.CurrentThread.ManagedThreadId} sourceType={sourceType}");
+            return true;
+        }
+
+        public override bool OnPreEncodeVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
+        {
+            Console.WriteLine($"----->OnPreEncodeVideoFrame {Thread.CurrentThread.ManagedThreadId} sourceType={sourceType}");
+            return true;
+        }
+
+        public override bool OnMediaPlayerVideoFrame(VideoFrame videoFrame, int mediaPlayerId)
+        {
+            Console.WriteLine($"----->OnMediaPlayerVideoFrame {Thread.CurrentThread.ManagedThreadId} mediaPlayerId={mediaPlayerId}");
+            return true;
+        }
+
+        public override bool OnRenderVideoFrame(string channelId, uint remoteUid, VideoFrame videoFrame)
+        {
+            Console.WriteLine($"----->OnRenderVideoFrame {Thread.CurrentThread.ManagedThreadId} remoteUid={remoteUid}");
+            return true;
+        }
+
+        public override bool OnTranscodedVideoFrame(VideoFrame videoFrame)
+        {
+            Console.WriteLine($"----->OnTranscodedVideoFrame {Thread.CurrentThread.ManagedThreadId}");
+            return true;
         }
 
         public override VIDEO_OBSERVER_FRAME_TYPE GetVideoFormatPreference()
@@ -182,27 +215,14 @@ namespace C_Sharp_API_Example
             return VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;  // default:FRAME_TYPE_RGBA
         }
 
-        public override bool OnCaptureVideoFrame(VideoFrame videoFrame)
+        public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
         {
-            Console.WriteLine($"----->OnCaptureVideoFrame {Thread.CurrentThread.ManagedThreadId}");
-            return true;
-        }
-
-        public override bool OnPreEncodeVideoFrame(VideoFrame videoFrame)
-        {
-            Console.WriteLine($"----->OnPreEncodeVideoFrame {Thread.CurrentThread.ManagedThreadId}");
-            return true;
-        }
-
-        public override bool OnRenderVideoFrameEx(string channelId, uint uid, VideoFrame videoFrame)
-        {
-            Console.WriteLine($"----->OnRenderVideoFrameEx {Thread.CurrentThread.ManagedThreadId}");
-            return true;
-        }
+            return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER;
+        }  
     }
 
     // override if need
-    internal class ProcessRawDataEventHandler : IAgoraRtcEngineEventHandler
+    internal class ProcessRawDataEventHandler : IRtcEngineEventHandler
     {
         private ProcessRawData processRawData_inst_ = null;
 
@@ -210,44 +230,34 @@ namespace C_Sharp_API_Example
             processRawData_inst_ = _processRawData;
         }
 
-        public override void OnWarning(int warn, string msg)
-        {
-            Console.WriteLine("=====>OnWarning {0} {1}", warn, msg);
-        }
-
         public override void OnError(int error, string msg)
         {
             Console.WriteLine("=====>OnError {0} {1}", error, msg);
         }
 
-        public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
+        public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
-            Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)processRawData_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
+            VideoCanvas vs = new VideoCanvas((long)processRawData_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO,0);
             int ret = processRawData_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
 
-        public override void OnRejoinChannelSuccess(string channel, uint uid, int elapsed)
-        {
-            Console.WriteLine("----->OnRejoinChannelSuccess");
-        }
-
-        public override void OnLeaveChannel(RtcStats stats)
+        public override void OnLeaveChannel(RtcConnection connection, RtcStats stats)
         {
             Console.WriteLine("----->OnLeaveChannel duration={0}", stats.duration);
         }
 
-        public override void OnUserJoined(uint uid, int elapsed)
+        public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
-            Console.WriteLine("----->OnUserJoined uid={0}", uid);
+            Console.WriteLine("----->OnUserJoined uid={0}", remoteUid);
             if (processRawData_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)processRawData_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, processRawData_inst_.GetChannelId(), uid);
+            var vc = new VideoCanvas((long)processRawData_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, remoteUid);
             int ret = processRawData_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
-        public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
+        public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
             Console.WriteLine("----->OnUserOffline reason={0}", reason);
         }

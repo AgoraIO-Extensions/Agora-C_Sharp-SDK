@@ -10,7 +10,7 @@
  */
 
 using System;
-using agora.rtc;
+using Agora.Rtc;
 
 namespace C_Sharp_API_Example
 {
@@ -20,8 +20,8 @@ namespace C_Sharp_API_Example
         private string channel_id_ = "";
         private readonly string JoinChannelVideo_TAG = "[JoinChannelVideo] ";
         private readonly string log_file_path = "C_Sharp_API_Example.log";
-        private IAgoraRtcEngine rtc_engine_ = null;
-        private IAgoraRtcEngineEventHandler event_handler_ = null;
+        private IRtcEngine rtc_engine_ = null;
+        private IRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_win_id_ = IntPtr.Zero;
 
@@ -39,10 +39,10 @@ namespace C_Sharp_API_Example
 
             if (null == rtc_engine_)
             {
-                rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
+                rtc_engine_ = RtcEngine.CreateAgoraRtcEngine();
             }
 
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_);
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Initialize", ret);
             ret = rtc_engine_.SetLogFile(log_file_path);
@@ -100,11 +100,11 @@ namespace C_Sharp_API_Example
         {
             if (null == rtc_engine_)
                 return "-" + (ERROR_CODE_TYPE.ERR_NOT_INITIALIZED).ToString();
-
-            return rtc_engine_.GetVersion();
+            int build = 0;
+            return rtc_engine_.GetVersion(ref build);
         }
 
-        internal override IAgoraRtcEngine GetEngine()
+        internal override IRtcEngine GetEngine()
         {
             return rtc_engine_;
         }
@@ -126,7 +126,7 @@ namespace C_Sharp_API_Example
     }
 
     // override if need
-    internal class JoinChannelVideoEventHandler : IAgoraRtcEngineEventHandler
+    internal class JoinChannelVideoEventHandler : IRtcEngineEventHandler
     {
         private JoinChannelVideo joinChannelVideo_inst_ = null;
 
@@ -134,44 +134,34 @@ namespace C_Sharp_API_Example
             joinChannelVideo_inst_ = _joinChannelVideo;
         }
 
-        public override void OnWarning(int warn, string msg)
-        {
-            Console.WriteLine("=====>OnWarning {0} {1}", warn, msg);
-        }
-
         public override void OnError(int error, string msg)
         {
             Console.WriteLine("=====>OnError {0} {1}", error, msg);
         }
 
-        public override void OnJoinChannelSuccess(string channel, uint uid, int elapsed)
+        public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
-            Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", channel, uid);
-            VideoCanvas vs = new VideoCanvas((ulong)joinChannelVideo_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, channel);
+            Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
+            VideoCanvas vs = new VideoCanvas((long)joinChannelVideo_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
             int ret = joinChannelVideo_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
 
-        public override void OnRejoinChannelSuccess(string channel, uint uid, int elapsed)
-        {
-            Console.WriteLine("----->OnRejoinChannelSuccess");
-        }
-
-        public override void OnLeaveChannel(RtcStats stats)
+        public override void OnLeaveChannel(RtcConnection connection, RtcStats stats)
         {
             Console.WriteLine("----->OnLeaveChannel duration={0}", stats.duration);
         }
 
-        public override void OnUserJoined(uint uid, int elapsed)
+        public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
-            Console.WriteLine("----->OnUserJoined uid={0}", uid);
+            Console.WriteLine("----->OnUserJoined uid={0}", remoteUid);
             if (joinChannelVideo_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((ulong)joinChannelVideo_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, joinChannelVideo_inst_.GetChannelId(), uid);
+            var vc = new VideoCanvas((long)joinChannelVideo_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, remoteUid);
             int ret = joinChannelVideo_inst_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
-        public override void OnUserOffline(uint uid, USER_OFFLINE_REASON_TYPE reason)
+        public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
             Console.WriteLine("----->OnUserOffline reason={0}", reason);
         }
