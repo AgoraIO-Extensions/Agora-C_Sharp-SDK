@@ -21,11 +21,11 @@
     </PropertyGroup>-->
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-        <OutputPath>binx86\Debug\</OutputPath>
+        <OutputPath>.\bin\x86\Debug</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-        <OutputPath>binx64\Debug</OutputPath>
+        <OutputPath>.\bin\x64\Debug</OutputPath>
         <DefineConstants>DEBUG;TRACE</DefineConstants>
     </PropertyGroup>
 
@@ -34,15 +34,15 @@
     </PropertyGroup>-->
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-        <OutputPath>binx86\Debug\</OutputPath>
+        <OutputPath>.\bin\x86\Debug</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <OutputPath>binx64\Debug</OutputPath>
+        <OutputPath>.\bin\x64\Debug</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\agorartc\agorartc.csproj" />
+      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\Code\agorartc.csproj" />
     </ItemGroup>
 
     <ItemGroup>
