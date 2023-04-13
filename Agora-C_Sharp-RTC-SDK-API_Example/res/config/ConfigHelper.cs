@@ -18,7 +18,6 @@ namespace C_Sharp_API_Example
 
         public ConfigHelper()
         {
-            // path to res/config/API_Example.ini
             config_file_path_ = System.IO.Directory.GetCurrentDirectory() + "/API_Example.ini";
             if (!File.Exists(config_file_path_))
             {

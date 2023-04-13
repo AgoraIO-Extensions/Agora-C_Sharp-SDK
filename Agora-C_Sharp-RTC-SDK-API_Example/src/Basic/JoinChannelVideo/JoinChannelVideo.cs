@@ -1,15 +1,4 @@
-﻿/*
- * 【一对一视频】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 3. 离开频道：（LeaveChannel）
- * 
- * 4. 退出：（Dispose）
- */
-
-using System;
+﻿using System;
 using Agora.Rtc;
 
 namespace C_Sharp_API_Example
@@ -19,7 +8,7 @@ namespace C_Sharp_API_Example
         private string app_id_ = "";
         private string channel_id_ = "";
         private readonly string JoinChannelVideo_TAG = "[JoinChannelVideo] ";
-        private readonly string log_file_path = "logs";
+        private readonly string log_file_path = ".\\logs\\agora.log";
         private IRtcEngine rtc_engine_ = null;
         private IRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
@@ -84,15 +73,19 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
+                // Leave channel
                 ret = rtc_engine_.LeaveChannel();
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
 
+                // Stop preview
                 ret = rtc_engine_.StopPreview();
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "StopPreview", ret);
 
+                // Disable video module
                 ret = rtc_engine_.DisableVideo();
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "DisableVideo", ret);
 
+                // Dispose engine
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
             }
@@ -107,6 +100,7 @@ namespace C_Sharp_API_Example
                 ChannelMediaOptions options = new ChannelMediaOptions();
                 options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
                 options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
+
                 ret = rtc_engine_.JoinChannel("", channel_id_, 0, options);
 
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "JoinChannel", ret);
@@ -182,15 +176,21 @@ namespace C_Sharp_API_Example
         public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
             Console.WriteLine("----->OnUserJoined uid={0}", remoteUid);
+
             if (joinChannelVideo_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((long)joinChannelVideo_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, remoteUid);
-            int ret = joinChannelVideo_inst_.GetEngine().SetupRemoteVideo(vc);
+
+            VideoCanvas canvas = new VideoCanvas();
+            canvas.view = (long)joinChannelVideo_inst_.GetRemoteWinId();
+            canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
+            canvas.uid = remoteUid;
+
+            int ret = joinChannelVideo_inst_.GetEngine().SetupRemoteVideo(canvas);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
         public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
-            Console.WriteLine("----->OnUserOffline reason={0}", reason);
+            Console.WriteLine("----->OnUserOffline remoteUid={0} reason={1}", remoteUid, reason);
         }
     }
 }

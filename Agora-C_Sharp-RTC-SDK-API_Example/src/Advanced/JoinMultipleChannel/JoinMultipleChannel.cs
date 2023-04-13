@@ -32,7 +32,7 @@ namespace C_Sharp_API_Example
     {
         private string app_id_ = "";
         private readonly string JoinMultipleChannel_TAG = "[JoinMultipleChannel] ";
-        private readonly string log_file_path = "C_Sharp_API_Example.log";
+        private readonly string log_file_path = ".\\logs\\agora.log";
         private IRtcEngine rtc_engine_ = null;
         private IRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;

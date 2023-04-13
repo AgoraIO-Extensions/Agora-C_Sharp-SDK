@@ -1,15 +1,4 @@
-﻿/*
- * 【一对一语音】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. 加入频道：（[EnableAudio]、JoinChannel）
- * 
- * 3. 离开频道：（LeaveChannel）
- * 
- * 4. 退出：（Dispose）
- */
-
-using System;
+﻿using System;
 using Agora.Rtc;
 
 namespace C_Sharp_API_Example
@@ -19,7 +8,7 @@ namespace C_Sharp_API_Example
         private string app_id_ = "";
         private string channel_id_ = "";
         private readonly string JoinChannelAudio_TAG = "[JoinChannelAudio] ";
-        private readonly string log_file_path = "C_Sharp_API_Example.log";
+        private readonly string log_file_path = ".\\logs\\agora.log";
         private IRtcEngine rtc_engine_ = null;
         private IRtcEngineEventHandler event_handler_ = null;
 
@@ -35,14 +24,21 @@ namespace C_Sharp_API_Example
                 rtc_engine_ = RtcEngine.CreateAgoraRtcEngine();
             }
 
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
+            // Prepare engine context
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext();
+            rtc_engine_ctx.appId = app_id_;
+            rtc_engine_ctx.logConfig.filePath = log_file_path;
+
+            // Initialize engine
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(JoinChannelAudio_TAG + "Initialize", ret);
-            ret = rtc_engine_.SetLogFile(log_file_path);
-            CSharpForm.dump_handler_(JoinChannelAudio_TAG + "SetLogFile", ret);
 
+            // Register event handler
             event_handler_ = new JoinChannelAudioEventHandler();
-            rtc_engine_.InitEventHandler(event_handler_);
+            ret = rtc_engine_.InitEventHandler(event_handler_);
+            CSharpForm.dump_handler_(JoinChannelAudio_TAG + "InitEventHandler", ret);
+
+            // No need to call EnableAudio, Coz the audio module is enabled by default
 
             return ret;
         }
@@ -52,9 +48,11 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
+                // Leave channel
                 ret = rtc_engine_.LeaveChannel();
                 CSharpForm.dump_handler_(JoinChannelAudio_TAG + "LeaveChannel", ret);
 
+                // Dispose engine
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
             }
@@ -66,11 +64,16 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
-                ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(JoinChannelAudio_TAG + "EnableAudio", ret);
+                // Join channel
+                ChannelMediaOptions options = new ChannelMediaOptions();
+                options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
+                options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
 
-                ret = rtc_engine_.JoinChannel("", channel_id_, "info");
+                ret = rtc_engine_.JoinChannel("", channel_id_, 0, options);
                 CSharpForm.dump_handler_(JoinChannelAudio_TAG + "JoinChannel", ret);
+
+                // Enable audio volume indication
+                ret = rtc_engine_.EnableAudioVolumeIndication(300, 3, false);
             }
             return ret;
         }
@@ -125,7 +128,23 @@ namespace C_Sharp_API_Example
 
         public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
-            Console.WriteLine("----->OnUserOffline reason={0}", reason);
+            Console.WriteLine("----->OnUserOffline remoteUid={0} reason={1}", remoteUid, reason);
+        }
+
+        public override void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume)
+        {
+            if (0 == speakerNumber) return;
+
+            foreach (var speaker in speakers)
+            {
+                Console.WriteLine("----->OnAudioVolumeIndication uid={0} volume={1}", speaker.uid, speaker.volume);
+            }
+
+        }
+
+        public override void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
+        {
+            Console.WriteLine("----->OnRemoteAudioStateChanged remoteUid={0} state={1} reason={2}", remoteUid, state, reason);
         }
     }
 }
