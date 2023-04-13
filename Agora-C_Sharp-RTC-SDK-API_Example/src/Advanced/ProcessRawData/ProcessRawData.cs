@@ -1,16 +1,4 @@
-﻿/*
- * 【祼数据回调】关键步骤：
- * 1. 创建Engine并初始化、重写IAgoraRtcVideoFrameObserver的相关接口并注册：
- * （CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]、[RegisterVideoFrameObserver]）
- * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、JoinChannel）
- * 
- * 3. 离开频道：（LeaveChannel）
- * 
- * 4. 退出：（Dispose）
- */
-
-using System;
+﻿using System;
 using System.Threading;
 using Agora.Rtc;
 
@@ -46,18 +34,46 @@ namespace C_Sharp_API_Example
                 rtc_engine_ = RtcEngine.CreateAgoraRtcEngine();
             }
 
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
+            // Prepare engine context
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext();
+            rtc_engine_ctx.appId = app_id_;
+            rtc_engine_ctx.logConfig.filePath = log_file_path;
+
+            // Initialize engine
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(ProcessRawData_TAG + "Initialize", ret);
 
+            // Register event handler
             event_handler_ = new ProcessRawDataEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
+            ret = rtc_engine_.InitEventHandler(event_handler_);
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "InitEventHandler", ret);
 
+            // Register audio frame observer
             audio_frame_observer = new ProcessRawDataAudioFrameObserver();
-            rtc_engine_.RegisterAudioFrameObserver(audio_frame_observer);
+            ret = rtc_engine_.RegisterAudioFrameObserver(audio_frame_observer);
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "RegisterAudioFrameObserver", ret);
 
+            // Register video frame observer
             video_frame_observer = new ProcessRawDataVideoFrameObserver();
-            rtc_engine_.RegisterVideoFrameObserver(video_frame_observer);
+            ret = rtc_engine_.RegisterVideoFrameObserver(video_frame_observer);
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "RegisterVideoFrameObserver", ret);
+
+            // Enable video module
+            ret = rtc_engine_.EnableVideo();
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "EnableVideo", ret);
+
+            // Enable local video
+            ret = rtc_engine_.EnableLocalVideo(true);
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "EnableLocalVideo", ret);
+
+            // Start preview
+            ret = rtc_engine_.StartPreview(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY);
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "StartPreview", ret);
+
+            // Setup local video
+            VideoCanvas canvas = new VideoCanvas();
+            canvas.view = (long)local_win_id_;
+            canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
 
             return ret;
         }
@@ -67,9 +83,19 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
+                // Leave channel
                 ret = rtc_engine_.LeaveChannel();
                 CSharpForm.dump_handler_(ProcessRawData_TAG + "LeaveChannel", ret);
 
+                // Stop preview
+                ret = rtc_engine_.StopPreview();
+                CSharpForm.dump_handler_(ProcessRawData_TAG + "StopPreview", ret);
+
+                // Disable video module
+                ret = rtc_engine_.DisableVideo();
+                CSharpForm.dump_handler_(ProcessRawData_TAG + "DisableVideo", ret);
+
+                // Dispose engine
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
             }
@@ -81,13 +107,12 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
-                ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(ProcessRawData_TAG + "EnableAudio", ret);
+                ChannelMediaOptions options = new ChannelMediaOptions();
+                options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
+                options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
 
-                ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(ProcessRawData_TAG + "EnableVideo", ret);
+                ret = rtc_engine_.JoinChannel("", channel_id_, 0, options);
 
-                ret = rtc_engine_.JoinChannel("", channel_id_, "info");
                 CSharpForm.dump_handler_(ProcessRawData_TAG + "JoinChannel", ret);
             }
             return ret;
@@ -236,10 +261,7 @@ namespace C_Sharp_API_Example
 
         public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
-            Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
-            VideoCanvas vs = new VideoCanvas((long)processRawData_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
-            int ret = processRawData_inst_.GetEngine().SetupLocalVideo(vs);
-            Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
+            Console.WriteLine("----->OnJoinChannelSuccess uid={0}", connection.localUid);
         }
 
         public override void OnLeaveChannel(RtcConnection connection, RtcStats stats)
@@ -250,15 +272,19 @@ namespace C_Sharp_API_Example
         public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
             Console.WriteLine("----->OnUserJoined uid={0}", remoteUid);
-            if (processRawData_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((long)processRawData_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, remoteUid);
-            int ret = processRawData_inst_.GetEngine().SetupRemoteVideo(vc);
+
+            VideoCanvas canvas = new VideoCanvas();
+            canvas.view = (long)processRawData_inst_.GetRemoteWinId();
+            canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
+            canvas.uid = remoteUid;
+
+            int ret = processRawData_inst_.GetEngine().SetupRemoteVideo(canvas);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 
         public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
-            Console.WriteLine("----->OnUserOffline, channel={0}, remoteUid={1}, reason={2}", connection.channelId, remoteUid, reason);
+            Console.WriteLine("----->OnUserOffline, remoteUid={0}, reason={1}", remoteUid, reason);
         }
     }
 }

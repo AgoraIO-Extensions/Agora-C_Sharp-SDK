@@ -42,19 +42,19 @@ namespace C_Sharp_API_Example
             // 
             // fistUserVideoView
             // 
-            this.fistUserVideoView.Location = new System.Drawing.Point(130, 56);
-            this.fistUserVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.fistUserVideoView.Location = new System.Drawing.Point(24, 48);
+            this.fistUserVideoView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.fistUserVideoView.Name = "fistUserVideoView";
-            this.fistUserVideoView.Size = new System.Drawing.Size(180, 180);
+            this.fistUserVideoView.Size = new System.Drawing.Size(244, 438);
             this.fistUserVideoView.TabIndex = 2;
             this.fistUserVideoView.TabStop = false;
             // 
             // secondUserVideoView
             // 
-            this.secondUserVideoView.Location = new System.Drawing.Point(450, 56);
-            this.secondUserVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.secondUserVideoView.Location = new System.Drawing.Point(299, 48);
+            this.secondUserVideoView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.secondUserVideoView.Name = "secondUserVideoView";
-            this.secondUserVideoView.Size = new System.Drawing.Size(180, 180);
+            this.secondUserVideoView.Size = new System.Drawing.Size(263, 438);
             this.secondUserVideoView.TabIndex = 3;
             this.secondUserVideoView.TabStop = false;
             // 
@@ -64,42 +64,45 @@ namespace C_Sharp_API_Example
             this.localVideoView.Cursor = System.Windows.Forms.Cursors.Default;
             this.localVideoView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.localVideoView.Location = new System.Drawing.Point(0, 0);
-            this.localVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.localVideoView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.localVideoView.Name = "localVideoView";
-            this.localVideoView.Size = new System.Drawing.Size(760, 600);
+            this.localVideoView.Size = new System.Drawing.Size(591, 510);
             this.localVideoView.TabIndex = 4;
             this.localVideoView.TabStop = false;
             // 
             // usrOneLabel
             // 
             this.usrOneLabel.AutoSize = true;
-            this.usrOneLabel.Location = new System.Drawing.Point(56, 77);
+            this.usrOneLabel.Location = new System.Drawing.Point(121, 28);
+            this.usrOneLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.usrOneLabel.Name = "usrOneLabel";
-            this.usrOneLabel.Size = new System.Drawing.Size(48, 20);
+            this.usrOneLabel.Size = new System.Drawing.Size(39, 17);
             this.usrOneLabel.TabIndex = 5;
             this.usrOneLabel.Text = "用户1";
             // 
             // userTwoLabel
             // 
             this.userTwoLabel.AutoSize = true;
-            this.userTwoLabel.Location = new System.Drawing.Point(651, 77);
+            this.userTwoLabel.Location = new System.Drawing.Point(446, 28);
+            this.userTwoLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.userTwoLabel.Name = "userTwoLabel";
-            this.userTwoLabel.Size = new System.Drawing.Size(48, 20);
+            this.userTwoLabel.Size = new System.Drawing.Size(39, 17);
             this.userTwoLabel.TabIndex = 6;
             this.userTwoLabel.Text = "用户2";
             // 
             // tipsLabel
             // 
             this.tipsLabel.AutoSize = true;
-            this.tipsLabel.Location = new System.Drawing.Point(237, 16);
+            this.tipsLabel.Location = new System.Drawing.Point(184, 14);
+            this.tipsLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tipsLabel.Name = "tipsLabel";
-            this.tipsLabel.Size = new System.Drawing.Size(264, 20);
+            this.tipsLabel.Size = new System.Drawing.Size(212, 17);
             this.tipsLabel.TabIndex = 7;
             this.tipsLabel.Text = "多人视频（用户从远端加入相同频道）";
             // 
             // VideoGroupView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tipsLabel);
             this.Controls.Add(this.userTwoLabel);
@@ -107,8 +110,9 @@ namespace C_Sharp_API_Example
             this.Controls.Add(this.fistUserVideoView);
             this.Controls.Add(this.secondUserVideoView);
             this.Controls.Add(this.localVideoView);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "VideoGroupView";
-            this.Size = new System.Drawing.Size(760, 600);
+            this.Size = new System.Drawing.Size(591, 510);
             ((System.ComponentModel.ISupportInitialize)(this.fistUserVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondUserVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();
