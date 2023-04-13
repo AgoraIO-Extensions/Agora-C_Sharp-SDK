@@ -128,7 +128,7 @@ namespace C_Sharp_API_Example
 
         public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
         {
-            Console.WriteLine("----->OnUserOffline remoteUid={0} reason={1}", remoteUid, reason);
+            Console.WriteLine("----->OnUserOffline, channel={0}, remoteUid={1}, reason={2}", connection.channelId, remoteUid, reason);
         }
 
         public override void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume)
