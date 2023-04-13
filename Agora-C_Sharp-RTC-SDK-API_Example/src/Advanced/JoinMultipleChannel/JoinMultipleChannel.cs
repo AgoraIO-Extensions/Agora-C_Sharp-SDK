@@ -65,8 +65,6 @@ namespace C_Sharp_API_Example
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "Initialize", ret);
-            ret = rtc_engine_.SetLogFile(log_file_path);
-            CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "SetLogFile", ret);
 
             event_handler_ = new JoinMultipleChannelEventHandler(this);
             ret = rtc_engine_.InitEventHandler(event_handler_);

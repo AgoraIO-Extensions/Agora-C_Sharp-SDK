@@ -1,15 +1,4 @@
-﻿/*
- * 【虚拟背景】关键步骤：
- * 1. 创建Engine并初始化：（CreateAgoraRtcEngine、Initialize、[SetLogFile]、[InitEventHandler]）
- * 
- * 2. 加入频道：（[EnableAudio]、EnableVideo、EnableVirtualBackground、JoinChannel）
- * 
- * 3. 离开频道：（LeaveChannel）
- * 
- * 4. 退出：（Dispose）
- */
-
-using System;
+﻿using System;
 using Agora.Rtc;
 
 namespace C_Sharp_API_Example
@@ -19,7 +8,7 @@ namespace C_Sharp_API_Example
         private string app_id_ = "";
         private string channel_id_ = "";
         private readonly string VirtualBackground_TAG = "[VirtualBackground] ";
-        private readonly string log_file_path_ = "C_Sharp_API_Example.log";
+        private readonly string log_file_path = ".\\logs\\agora.log";
         private IRtcEngine rtc_engine_ = null;
         private IRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
@@ -42,14 +31,49 @@ namespace C_Sharp_API_Example
                 rtc_engine_ = RtcEngine.CreateAgoraRtcEngine();
             }
 
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
+            // Prepare engine context
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext();
+            rtc_engine_ctx.appId = app_id_;
+            rtc_engine_ctx.logConfig.filePath = log_file_path;
+
+            // Initialize engine
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(VirtualBackground_TAG + "Initialize", ret);
-            ret = rtc_engine_.SetLogFile(log_file_path_);
-            CSharpForm.dump_handler_(VirtualBackground_TAG + "SetLogFile", ret);
 
+            // Register event handler
             event_handler_ = new VirtualBackgroundEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
+            ret = rtc_engine_.InitEventHandler(event_handler_);
+            CSharpForm.dump_handler_(VirtualBackground_TAG + "InitEventHandler", ret);
+
+            // Enable video module
+            ret = rtc_engine_.EnableVideo();
+            CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableVideo", ret);
+
+            // Enable local video
+            ret = rtc_engine_.EnableLocalVideo(true);
+            CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableLocalVideo", ret);
+
+            // Start preview
+            ret = rtc_engine_.StartPreview(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY);
+            CSharpForm.dump_handler_(VirtualBackground_TAG + "StartPreview", ret);
+
+            // Enable virtula background, must call this after enableVideo or startPreview
+            VirtualBackgroundSource virtual_background_source = new VirtualBackgroundSource
+            {
+                background_source_type = BACKGROUND_SOURCE_TYPE.BACKGROUND_IMG,
+                source = ".\\src\\Advanced\\VirtualBackground\\virtual_back_ground.jpg"  // path to background image
+            };
+
+            ret = rtc_engine_.EnableVirtualBackground(true, virtual_background_source, new SegmentationProperty());
+            CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableVirtualBackground", ret);
+
+            // Setup local video
+            VideoCanvas canvas = new VideoCanvas();
+            canvas.view = (long)local_win_id_;
+            canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
+
+            ret = rtc_engine_.SetupLocalVideo(canvas);
+            CSharpForm.dump_handler_(VirtualBackground_TAG + "SetupLocalVideo", ret);
 
             return ret;
         }
@@ -59,9 +83,19 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
+                // Leave channel
                 ret = rtc_engine_.LeaveChannel();
                 CSharpForm.dump_handler_(VirtualBackground_TAG + "LeaveChannel", ret);
 
+                // Stop preview
+                ret = rtc_engine_.StopPreview();
+                CSharpForm.dump_handler_(VirtualBackground_TAG + "StopPreview", ret);
+
+                // Disable video module
+                ret = rtc_engine_.DisableVideo();
+                CSharpForm.dump_handler_(VirtualBackground_TAG + "DisableVideo", ret);
+
+                // Dispose engine
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
             }
@@ -73,22 +107,11 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
-                ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableAudio", ret);
+                ChannelMediaOptions options = new ChannelMediaOptions();
+                options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
+                options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
 
-                ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableVideo", ret);
-
-                VirtualBackgroundSource virtual_background_source = new VirtualBackgroundSource
-                {
-                    background_source_type = BACKGROUND_SOURCE_TYPE.BACKGROUND_IMG,
-                    source = "../../../src/Basic/VirtualBackground/virtual_back_ground.jpg"  // path to background image
-                };
-
-                ret = rtc_engine_.EnableVirtualBackground(true, virtual_background_source, new SegmentationProperty());
-                CSharpForm.dump_handler_(VirtualBackground_TAG + "EnableVirtualBackground", ret);
-
-                ret = rtc_engine_.JoinChannel("", channel_id_, "info");
+                ret = rtc_engine_.JoinChannel("", channel_id_, 0, options);
                 CSharpForm.dump_handler_(VirtualBackground_TAG + "JoinChannel", ret);
             }
             return ret;
@@ -165,9 +188,15 @@ namespace C_Sharp_API_Example
         public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
             Console.WriteLine("----->OnUserJoined uid={0}", remoteUid);
+
             if (virtualBackground_inst_.GetRemoteWinId() == IntPtr.Zero) return;
-            var vc = new VideoCanvas((long)virtualBackground_inst_.GetRemoteWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, remoteUid);
-            int ret = virtualBackground_inst_.GetEngine().SetupRemoteVideo(vc);
+
+            VideoCanvas canvas = new VideoCanvas();
+            canvas.view = (long)virtualBackground_inst_.GetRemoteWinId();
+            canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
+            canvas.uid = remoteUid;
+
+            int ret = virtualBackground_inst_.GetEngine().SetupRemoteVideo(canvas);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 

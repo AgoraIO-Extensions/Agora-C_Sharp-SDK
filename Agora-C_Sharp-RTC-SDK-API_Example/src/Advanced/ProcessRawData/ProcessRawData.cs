@@ -21,7 +21,7 @@ namespace C_Sharp_API_Example
         private string app_id_ = "";
         private string channel_id_ = "";
         private readonly string ProcessRawData_TAG = "[ProcessRawData] ";
-        private readonly string log_file_path_ = "C_Sharp_API_Example.log";
+        private readonly string log_file_path = ".\\logs\\agora.log";
         private IRtcEngine rtc_engine_ = null;
         private IRtcEngineEventHandler event_handler_ = null;
         private IVideoFrameObserver video_frame_observer = null;
@@ -49,8 +49,6 @@ namespace C_Sharp_API_Example
             RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(ProcessRawData_TAG + "Initialize", ret);
-            ret = rtc_engine_.SetLogFile(log_file_path_);
-            CSharpForm.dump_handler_(ProcessRawData_TAG + "SetLogFile", ret);
 
             event_handler_ = new ProcessRawDataEventHandler(this);
             rtc_engine_.InitEventHandler(event_handler_);
