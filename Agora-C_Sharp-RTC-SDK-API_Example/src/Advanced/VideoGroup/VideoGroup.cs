@@ -137,7 +137,7 @@ namespace C_Sharp_API_Example
         {
             videoGroup_inst_ = _videoGroup;
         }
-        
+
         public override void OnError(int error, string msg)
         {
             Console.WriteLine("=====>OnError {0} {1}", error, msg);
@@ -146,7 +146,7 @@ namespace C_Sharp_API_Example
         public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
-            VideoCanvas vs = new VideoCanvas((long)videoGroup_inst_.GetLocalWindowId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO,0);
+            VideoCanvas vs = new VideoCanvas((long)videoGroup_inst_.GetLocalWindowId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
             int ret = CSharpForm.usr_engine_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo, ret={0}", ret);
         }
@@ -170,7 +170,7 @@ namespace C_Sharp_API_Example
             {
                 vc = new VideoCanvas((long)videoGroup_inst_.GetRemoteSecondWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, remoteUid);
             }
-                int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
+            int ret = CSharpForm.usr_engine_.GetEngine().SetupRemoteVideo(vc);
             Console.WriteLine("----->OnUserJoined, ret={0}", ret);
         }
 

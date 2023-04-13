@@ -143,7 +143,7 @@ namespace C_Sharp_API_Example
             Console.WriteLine($"----->OnRecordAudioFrame samplesPerSec:{audioFrame.samplesPerSec}");
             return true;
         }
-        
+
         public override bool OnPlaybackAudioFrame(string channelId, AudioFrame audioFrame)
         {
             Console.WriteLine($"----->OnPlaybackAudioFrame samples:{audioFrame.samplesPerSec}");
@@ -218,7 +218,7 @@ namespace C_Sharp_API_Example
         public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
         {
             return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER;
-        }  
+        }
     }
 
     // override if need
@@ -226,7 +226,8 @@ namespace C_Sharp_API_Example
     {
         private ProcessRawData processRawData_inst_ = null;
 
-        public ProcessRawDataEventHandler(ProcessRawData _processRawData) {
+        public ProcessRawDataEventHandler(ProcessRawData _processRawData)
+        {
             processRawData_inst_ = _processRawData;
         }
 
@@ -238,7 +239,7 @@ namespace C_Sharp_API_Example
         public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
-            VideoCanvas vs = new VideoCanvas((long)processRawData_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO,0);
+            VideoCanvas vs = new VideoCanvas((long)processRawData_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
             int ret = processRawData_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }

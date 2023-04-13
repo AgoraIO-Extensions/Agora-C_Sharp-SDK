@@ -129,7 +129,7 @@ namespace C_Sharp_API_Example
             capture_params.enableHighLight = true;
             capture_params.dimensions.width = 1920;
             capture_params.dimensions.height = 1080;
-            ret = engine_ex.StartScreenCaptureByDisplayId(0,rectangle,capture_params);
+            ret = engine_ex.StartScreenCaptureByDisplayId(0, rectangle, capture_params);
 
             if (ret != 0) return ret;
 
@@ -205,7 +205,7 @@ namespace C_Sharp_API_Example
         public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
-            VideoCanvas vs = new VideoCanvas((long)screenShare_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO,0);
+            VideoCanvas vs = new VideoCanvas((long)screenShare_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
             int ret = screenShare_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo, ret={0}", ret);
         }

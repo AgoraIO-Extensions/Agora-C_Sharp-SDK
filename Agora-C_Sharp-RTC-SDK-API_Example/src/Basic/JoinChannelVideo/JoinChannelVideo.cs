@@ -19,7 +19,7 @@ namespace C_Sharp_API_Example
         private string app_id_ = "";
         private string channel_id_ = "";
         private readonly string JoinChannelVideo_TAG = "[JoinChannelVideo] ";
-        private readonly string log_file_path = "C_Sharp_API_Example.log";
+        private readonly string log_file_path = "logs";
         private IRtcEngine rtc_engine_ = null;
         private IRtcEngineEventHandler event_handler_ = null;
         private IntPtr local_win_id_ = IntPtr.Zero;
@@ -42,14 +42,39 @@ namespace C_Sharp_API_Example
                 rtc_engine_ = RtcEngine.CreateAgoraRtcEngine();
             }
 
-            RtcEngineContext rtc_engine_ctx = new RtcEngineContext(app_id_, 0, CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING, AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT);
+            // Prepare engine context
+            RtcEngineContext rtc_engine_ctx = new RtcEngineContext();
+            rtc_engine_ctx.appId = app_id_;
+            rtc_engine_ctx.logConfig.filePath = log_file_path;
+
+            // Initialize engine
             ret = rtc_engine_.Initialize(rtc_engine_ctx);
             CSharpForm.dump_handler_(JoinChannelVideo_TAG + "Initialize", ret);
-            ret = rtc_engine_.SetLogFile(log_file_path);
-            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetLogFile", ret);
 
+            // Register event handler
             event_handler_ = new JoinChannelVideoEventHandler(this);
-            rtc_engine_.InitEventHandler(event_handler_);
+            ret = rtc_engine_.InitEventHandler(event_handler_);
+            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "InitEventHandler", ret);
+
+            // Enable video module
+            ret = rtc_engine_.EnableVideo();
+            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableVideo", ret);
+
+            // Enable local video
+            ret = rtc_engine_.EnableLocalVideo(true);
+            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableLocalVideo", ret);
+
+            // Start preview
+            ret = rtc_engine_.StartPreview(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY);
+            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "StartPreview", ret);
+
+            // Setup local video
+            VideoCanvas canvas = new VideoCanvas();
+            canvas.view = (long)local_win_id_;
+            canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
+
+            ret = rtc_engine_.SetupLocalVideo(canvas);
+            CSharpForm.dump_handler_(JoinChannelVideo_TAG + "SetupLocalVideo", ret);
 
             return ret;
         }
@@ -62,6 +87,12 @@ namespace C_Sharp_API_Example
                 ret = rtc_engine_.LeaveChannel();
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "LeaveChannel", ret);
 
+                ret = rtc_engine_.StopPreview();
+                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "StopPreview", ret);
+
+                ret = rtc_engine_.DisableVideo();
+                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "DisableVideo", ret);
+
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
             }
@@ -73,13 +104,11 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
-                ret = rtc_engine_.EnableAudio();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableAudio", ret);
+                ChannelMediaOptions options = new ChannelMediaOptions();
+                options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
+                options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
+                ret = rtc_engine_.JoinChannel("", channel_id_, 0, options);
 
-                ret = rtc_engine_.EnableVideo();
-                CSharpForm.dump_handler_(JoinChannelVideo_TAG + "EnableVideo", ret);
-
-                ret = rtc_engine_.JoinChannel("", channel_id_, "info");
                 CSharpForm.dump_handler_(JoinChannelVideo_TAG + "JoinChannel", ret);
             }
             return ret;
@@ -130,7 +159,8 @@ namespace C_Sharp_API_Example
     {
         private JoinChannelVideo joinChannelVideo_inst_ = null;
 
-        public JoinChannelVideoEventHandler(JoinChannelVideo _joinChannelVideo) {
+        public JoinChannelVideoEventHandler(JoinChannelVideo _joinChannelVideo)
+        {
             joinChannelVideo_inst_ = _joinChannelVideo;
         }
 
@@ -142,9 +172,6 @@ namespace C_Sharp_API_Example
         public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
-            VideoCanvas vs = new VideoCanvas((long)joinChannelVideo_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
-            int ret = joinChannelVideo_inst_.GetEngine().SetupLocalVideo(vs);
-            Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
 
         public override void OnLeaveChannel(RtcConnection connection, RtcStats stats)

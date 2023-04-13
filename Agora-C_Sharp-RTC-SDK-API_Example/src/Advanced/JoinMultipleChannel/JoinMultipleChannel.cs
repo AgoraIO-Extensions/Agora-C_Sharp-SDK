@@ -78,12 +78,12 @@ namespace C_Sharp_API_Example
         {
             int ret = -1;
 
-            IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
-            engine_ex.LeaveChannelEx(first_connection_);
-            engine_ex.LeaveChannelEx(second_connection_);
-
             if (null != rtc_engine_)
             {
+                IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
+                engine_ex.LeaveChannelEx(first_connection_);
+                engine_ex.LeaveChannelEx(second_connection_);
+
                 rtc_engine_.Dispose(true);
                 rtc_engine_ = null;
             }

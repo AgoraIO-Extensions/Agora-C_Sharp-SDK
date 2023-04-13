@@ -139,7 +139,8 @@ namespace C_Sharp_API_Example
     {
         private VirtualBackground virtualBackground_inst_ = null;
 
-        public VirtualBackgroundEventHandler(VirtualBackground _virtualBackground) {
+        public VirtualBackgroundEventHandler(VirtualBackground _virtualBackground)
+        {
             virtualBackground_inst_ = _virtualBackground;
         }
 
@@ -151,7 +152,7 @@ namespace C_Sharp_API_Example
         public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
             Console.WriteLine("----->OnJoinChannelSuccess channel={0} uid={1}", connection.channelId, connection.localUid);
-            VideoCanvas vs = new VideoCanvas((long)virtualBackground_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO,0);
+            VideoCanvas vs = new VideoCanvas((long)virtualBackground_inst_.GetLocalWinId(), RENDER_MODE_TYPE.RENDER_MODE_FIT, VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO, 0);
             int ret = virtualBackground_inst_.GetEngine().SetupLocalVideo(vs);
             Console.WriteLine("----->SetupLocalVideo ret={0}", ret);
         }
