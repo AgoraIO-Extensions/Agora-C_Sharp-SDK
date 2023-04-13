@@ -75,6 +75,9 @@ namespace C_Sharp_API_Example
             canvas.view = (long)local_win_id_;
             canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
 
+            ret = rtc_engine_.SetupLocalVideo(canvas);
+            CSharpForm.dump_handler_(ProcessRawData_TAG + "SetupLocalVideo", ret);
+
             return ret;
         }
 

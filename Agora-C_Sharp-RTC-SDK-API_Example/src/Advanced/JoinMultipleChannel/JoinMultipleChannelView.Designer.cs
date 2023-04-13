@@ -34,7 +34,6 @@ namespace C_Sharp_API_Example
             this.localVideoView = new System.Windows.Forms.PictureBox();
             this.channelOneLabel = new System.Windows.Forms.Label();
             this.channelTwoLabel = new System.Windows.Forms.Label();
-            this.pushToLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.firstChannelVideoView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondChannelVideoView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).BeginInit();
@@ -42,19 +41,22 @@ namespace C_Sharp_API_Example
             // 
             // firstChannelVideoView
             // 
-            this.firstChannelVideoView.Location = new System.Drawing.Point(130, 55);
-            this.firstChannelVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.firstChannelVideoView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.firstChannelVideoView.Location = new System.Drawing.Point(101, 47);
+            this.firstChannelVideoView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.firstChannelVideoView.Name = "firstChannelVideoView";
-            this.firstChannelVideoView.Size = new System.Drawing.Size(180, 180);
+            this.firstChannelVideoView.Size = new System.Drawing.Size(140, 153);
             this.firstChannelVideoView.TabIndex = 2;
             this.firstChannelVideoView.TabStop = false;
             // 
             // secondChannelVideoView
             // 
-            this.secondChannelVideoView.Location = new System.Drawing.Point(450, 55);
-            this.secondChannelVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.secondChannelVideoView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.secondChannelVideoView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.secondChannelVideoView.Location = new System.Drawing.Point(350, 47);
+            this.secondChannelVideoView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.secondChannelVideoView.Name = "secondChannelVideoView";
-            this.secondChannelVideoView.Size = new System.Drawing.Size(180, 180);
+            this.secondChannelVideoView.Size = new System.Drawing.Size(140, 153);
             this.secondChannelVideoView.TabIndex = 3;
             this.secondChannelVideoView.TabStop = false;
             // 
@@ -64,51 +66,45 @@ namespace C_Sharp_API_Example
             this.localVideoView.Cursor = System.Windows.Forms.Cursors.Default;
             this.localVideoView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.localVideoView.Location = new System.Drawing.Point(0, 0);
-            this.localVideoView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.localVideoView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.localVideoView.Name = "localVideoView";
-            this.localVideoView.Size = new System.Drawing.Size(760, 600);
+            this.localVideoView.Size = new System.Drawing.Size(591, 510);
             this.localVideoView.TabIndex = 4;
             this.localVideoView.TabStop = false;
             // 
             // channelOneLabel
             // 
             this.channelOneLabel.AutoSize = true;
-            this.channelOneLabel.Location = new System.Drawing.Point(56, 76);
+            this.channelOneLabel.Location = new System.Drawing.Point(157, 27);
+            this.channelOneLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.channelOneLabel.Name = "channelOneLabel";
-            this.channelOneLabel.Size = new System.Drawing.Size(48, 20);
+            this.channelOneLabel.Size = new System.Drawing.Size(28, 17);
             this.channelOneLabel.TabIndex = 5;
-            this.channelOneLabel.Text = "频道1";
+            this.channelOneLabel.Text = "ch1";
             // 
             // channelTwoLabel
             // 
+            this.channelTwoLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.channelTwoLabel.AutoSize = true;
-            this.channelTwoLabel.Location = new System.Drawing.Point(651, 76);
+            this.channelTwoLabel.Location = new System.Drawing.Point(406, 27);
+            this.channelTwoLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.channelTwoLabel.Name = "channelTwoLabel";
-            this.channelTwoLabel.Size = new System.Drawing.Size(48, 20);
+            this.channelTwoLabel.Size = new System.Drawing.Size(28, 17);
             this.channelTwoLabel.TabIndex = 6;
-            this.channelTwoLabel.Text = "频道2";
+            this.channelTwoLabel.Text = "ch2";
             // 
-            // pushToLabel
+            // JoinMultipleChannelView
             // 
-            this.pushToLabel.AutoSize = true;
-            this.pushToLabel.Location = new System.Drawing.Point(246, 16);
-            this.pushToLabel.Name = "pushToLabel";
-            this.pushToLabel.Size = new System.Drawing.Size(309, 20);
-            this.pushToLabel.TabIndex = 7;
-            this.pushToLabel.Text = "加入到不同频道（同一时刻只能发布一路流）";
-            // 
-            // MultiChannelView
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.secondChannelVideoView);
             this.Controls.Add(this.firstChannelVideoView);
-            this.Controls.Add(this.pushToLabel);
             this.Controls.Add(this.channelTwoLabel);
             this.Controls.Add(this.channelOneLabel);
             this.Controls.Add(this.localVideoView);
-            this.Name = "MultiChannelView";
-            this.Size = new System.Drawing.Size(760, 600);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.Name = "JoinMultipleChannelView";
+            this.Size = new System.Drawing.Size(591, 510);
             ((System.ComponentModel.ISupportInitialize)(this.firstChannelVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.secondChannelVideoView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.localVideoView)).EndInit();
@@ -123,6 +119,5 @@ namespace C_Sharp_API_Example
         public System.Windows.Forms.PictureBox localVideoView;
         private System.Windows.Forms.Label channelOneLabel;
         private System.Windows.Forms.Label channelTwoLabel;
-        private System.Windows.Forms.Label pushToLabel;
     }
 }

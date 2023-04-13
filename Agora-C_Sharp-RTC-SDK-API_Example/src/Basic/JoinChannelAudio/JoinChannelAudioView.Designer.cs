@@ -29,33 +29,19 @@ namespace C_Sharp_API_Example
         /// </summary>
         private void InitializeComponent()
         {
-            this.audioLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // audioLabel
+            // JoinChannelAudioView
             // 
-            this.audioLabel.AutoSize = true;
-            this.audioLabel.Location = new System.Drawing.Point(188, 12);
-            this.audioLabel.Name = "audioLabel";
-            this.audioLabel.Size = new System.Drawing.Size(114, 20);
-            this.audioLabel.TabIndex = 0;
-            this.audioLabel.Text = "一对一语音通话";
-            this.audioLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // Audio1To1View
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.audioLabel);
-            this.Name = "Audio1To1View";
-            this.Size = new System.Drawing.Size(502, 367);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.Name = "JoinChannelAudioView";
+            this.Size = new System.Drawing.Size(390, 312);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        public System.Windows.Forms.Label audioLabel;
     }
 }
