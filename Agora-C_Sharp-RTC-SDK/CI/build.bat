@@ -87,7 +87,7 @@ goto :main
 :publish_to_nuget
     setlocal
     SET SOURCE=https://api.nuget.org/v3/index.json
-    SET NUPKG_FILE_NAME=agora_rtc_sdk_test.%~1%.nupkg
+    SET NUPKG_FILE_NAME=agora_rtc_sdk.%~1%.nupkg
 
     call :build %~1 Release publish
 
@@ -199,10 +199,10 @@ goto :main
     xcopy /s /y %CURDIR%\temp\ %CURDIR%\iris
     powershell -command "cp -r %IRIS_PATH_x86%\Release\* %CURDIR%\iris\x86"
     powershell -command "cp -r %NATIVE_SDK_x86%\*.dll %CURDIR%\iris\x86"
-    powershell -command "cp -r %NATIVE_SDK_x86%\*.lib %CURDIR%\iris\x86"
+    @REM powershell -command "cp -r %NATIVE_SDK_x86%\*.lib %CURDIR%\iris\x86"
     powershell -command "cp -r %IRIS_PATH_x64%\Release\* %CURDIR%\iris\x86_64"
     powershell -command "cp -r %NATIVE_SDK_x64%\*.dll %CURDIR%\iris\x86_64"
-    powershell -command "cp -r %NATIVE_SDK_x64%\*.lib %CURDIR%\iris\x86_64"
+    @REM powershell -command "cp -r %NATIVE_SDK_x64%\*.lib %CURDIR%\iris\x86_64"
 
     :: remove tempfiles and downloaded iris file
     rmdir /q /s %CURDIR%\temp

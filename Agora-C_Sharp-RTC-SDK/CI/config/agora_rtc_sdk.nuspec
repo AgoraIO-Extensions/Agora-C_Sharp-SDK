@@ -2,13 +2,13 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>agora_rtc_sdk</id>
-    <version>3.7.2.245</version>
+    <version>4.2.0.0</version>
     <title>agora rtc sdk wrapper</title>
     <authors>berky</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
-    <projectUrl>https://github.com/AgoraIO-Extensions/Agora-C_Sharp-SDK/tree/dev/3.7.2.245</projectUrl>
+    <projectUrl>https://github.com/AgoraIO-Extensions/Agora-C_Sharp-SDK/tree/release/4.2.0</projectUrl>
     <description>Agora C# SDK enables developer one-to-many and many-to-many audio or video live streaming. Agora C# SDK support .netCore(minimum 2.0) and .netFramework(minimum 4.0) application.
 
 Developer can use APIExample to test different case and understand how to integrate C# SDK.Before test APIExample, create a developer account at [Agora.io](https://dashboard.agora.io/signin/), and obtain an App ID.
@@ -19,7 +19,7 @@ For details, see this [FAQ](https://docs.agora.io/en/faq/profile_difference).
     <repository type="GitHub" url="https://github.com/AgoraIO/Agora-C_Sharp-SDK"/>
     <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
     <copyright></copyright>
-    <tags>dev/3.7.2.245</tags>
+    <tags>release/4.2.0</tags>
   </metadata>
   <files>
     <file src="bin\agorartc_core20.props" target="build\netcoreapp20\agora_rtc_sdk.props"/>
