@@ -37,9 +37,6 @@ namespace C_Sharp_API_Example
             // 
             // remoteVideoView
             // 
-            this.remoteVideoView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.remoteVideoView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.remoteVideoView.Location = new System.Drawing.Point(2, 3);
             this.remoteVideoView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);

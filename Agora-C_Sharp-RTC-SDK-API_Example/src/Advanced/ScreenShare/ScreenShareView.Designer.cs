@@ -37,9 +37,6 @@ namespace C_Sharp_API_Example
             // 
             // localVideoView
             // 
-            this.localVideoView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.localVideoView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.localVideoView.Location = new System.Drawing.Point(2, 3);
             this.localVideoView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
