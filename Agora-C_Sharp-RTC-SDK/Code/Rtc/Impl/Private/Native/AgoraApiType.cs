@@ -1,3 +1,5 @@
+using System;
+
 namespace Agora.Rtc
 {
     internal static class AgoraApiType
