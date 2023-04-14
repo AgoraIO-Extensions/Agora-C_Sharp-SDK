@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <RootNamespace>C_Sharp_API_Example</RootNamespace>
+		<Platforms>x64;x86</Platforms>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ApplicationIcon />
+        <StartupObject />
+        <Version>2.1.1</Version>
+        <Authors>mberky</Authors>
+        <Company>Agora.io</Company>
+        <Description>winform version</Description>
+        <Copyright>Agora.io Copyright (C) 2021</Copyright>
+    </PropertyGroup>
+
+    <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+        <OutputPath>binx64\Debug</OutputPath>
+    </PropertyGroup>-->
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+        <OutputPath>.\bin\x86\Debug</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <OutputPath>.\bin\x64\Debug</OutputPath>
+        <DefineConstants>DEBUG;TRACE</DefineConstants>
+    </PropertyGroup>
+
+    <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <OutputPath>binx64\Release</OutputPath>
+    </PropertyGroup>-->
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+        <OutputPath>.\bin\x86\Debug</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <OutputPath>.\bin\x64\Debug</OutputPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Agora-C_Sharp-RTC-SDK\Code\agorartc.csproj">
+        <Private>true</Private>
+      </ProjectReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Properties\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <None Update="src\Advanced\VirtualBackground\virtual_back_ground.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>
