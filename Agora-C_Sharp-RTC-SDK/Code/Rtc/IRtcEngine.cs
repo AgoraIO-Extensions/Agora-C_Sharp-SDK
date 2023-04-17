@@ -3992,7 +3992,7 @@ namespace Agora.Rtc
         public abstract int EnableWirelessAccelerate(bool enabled);
 
 
-        public abstract UInt64 GetNtpTimeInMs();
+        public abstract UInt64 GetNtpWallTimeInMs();
         ///
         /// <summary>
         /// Gets the C++ handle of the native SDK.

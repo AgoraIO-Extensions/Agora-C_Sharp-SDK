@@ -1649,7 +1649,7 @@ namespace Agora.Rtc
         /// Whether to publish the local transcoded video:true: Publish the local transcoded video.false: (Default) Do not publish the local transcoded video.
         /// </summary>
         ///
-        public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
+        public Optional<bool> publishTranscodedVideoTrack = new Optional<bool>();
 
         ///
         /// <summary>
@@ -1842,10 +1842,10 @@ namespace Agora.Rtc
                 writer.Write(this.publishMediaPlayerVideoTrack.GetValue());
             }
 
-            if (this.publishTrancodedVideoTrack.HasValue())
+            if (this.publishTranscodedVideoTrack.HasValue())
             {
-                writer.WritePropertyName("publishTrancodedVideoTrack");
-                writer.Write(this.publishTrancodedVideoTrack.GetValue());
+                writer.WritePropertyName("publishTranscodedVideoTrack");
+                writer.Write(this.publishTranscodedVideoTrack.GetValue());
             }
             if (this.autoSubscribeAudio.HasValue())
             {

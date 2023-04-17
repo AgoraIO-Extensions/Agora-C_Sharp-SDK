@@ -1846,9 +1846,9 @@ namespace Agora.Rtc
 
     public class CodecCapInfo
     {
-        public VIDEO_CODEC_TYPE codec_type;
+        public VIDEO_CODEC_TYPE codecType;
 
-        public int codec_cap_mask;
+        public int codecCapMask;
     };
 
     ///
