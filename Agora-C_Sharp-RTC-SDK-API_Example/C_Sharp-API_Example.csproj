@@ -34,11 +34,11 @@
     </PropertyGroup>-->
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-        <OutputPath>.\bin\x86\Debug</OutputPath>
+        <OutputPath>.\bin\x86\Release</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-        <OutputPath>.\bin\x64\Debug</OutputPath>
+        <OutputPath>.\bin\x64\Release</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
