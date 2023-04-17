@@ -3134,10 +3134,10 @@ namespace Agora.Rtc
 
 
         [Test]
-        public void Test_GetNtpTimeInMs()
+        public void Test_GetNtpWallTimeInMs()
         {
            
-            var nRet = Engine.GetNtpTimeInMs();
+            var nRet = Engine.GetNtpWallTimeInMs();
 
             Assert.AreEqual(0, nRet);
         }

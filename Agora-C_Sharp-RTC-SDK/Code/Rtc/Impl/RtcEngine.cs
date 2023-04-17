@@ -3308,13 +3308,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StartMediaRenderingTracingEx(connection);
         }
 
-        public override UInt64 GetNtpTimeInMs()
+        public override UInt64 GetNtpWallTimeInMs()
         {
             if (_rtcEngineImpl == null)
             {
                 return 0;
             }
-            return _rtcEngineImpl.GetNtpTimeInMs();
+            return _rtcEngineImpl.GetNtpWallTimeInMs();
         }
     }
 }
