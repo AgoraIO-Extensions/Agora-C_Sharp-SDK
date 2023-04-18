@@ -243,7 +243,10 @@ namespace C_Sharp_API_Example
             canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
             canvas.uid = remoteUid;
 
-            int ret = joinMultipleChannel_inst.GetEngine().SetupRemoteVideo(canvas);
+
+
+            IRtcEngineEx engine_ex = (IRtcEngineEx)joinMultipleChannel_inst.GetEngine();
+            int ret = engine_ex.SetupRemoteVideoEx(canvas, connection);
             Console.WriteLine("----->SetupRemoteVideo, ret={0}", ret);
         }
 

@@ -13,9 +13,6 @@
     <Compile Update="src\Advanced\ScreenShare\ScreenShareView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="src\Advanced\VideoGroup\VideoGroupView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Update="src\Advanced\VirtualBackground\VirtualBackgroundView.cs">
       <SubType>UserControl</SubType>
     </Compile>
