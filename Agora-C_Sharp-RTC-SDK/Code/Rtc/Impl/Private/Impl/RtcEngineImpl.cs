@@ -90,7 +90,7 @@ namespace Agora.Rtc
                     this.OnRtcEngineImpleWillDispose.Invoke(this);
                 }
 
-                ReleaseEventHandler();
+               
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
@@ -122,6 +122,8 @@ namespace Agora.Rtc
 
             AgoraRtcNative.FreeIrisRtcRendering(_rtcRenderingHandle);
             Release(sync);
+
+            ReleaseEventHandler();
             //You must free cdn event handle after you release engine.
             //Because when engine releasing. will call some Cdn event function.We need keep cdn event function ptr alive
             FreeDirectCdnStreamingEventHandle();
@@ -194,16 +196,16 @@ namespace Agora.Rtc
             if (_rtcEventHandlerHandle.handle == IntPtr.Zero) return;
 
 
-            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTEREVENTHANDLER,
-                "{}", 2,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam);
+            //IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
+            //var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTEREVENTHANDLER,
+            //    "{}", 2,
+            //    Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+            //    ref _apiParam);
 
-            if (nRet != 0)
-            {
-                AgoraLog.LogError("FUNC_RTCENGINE_UNREGISTEREVENTHANDLER failed: " + nRet);
-            }
+            //if (nRet != 0)
+            //{
+            //    AgoraLog.LogError("FUNC_RTCENGINE_UNREGISTEREVENTHANDLER failed: " + nRet);
+            //}
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
 
