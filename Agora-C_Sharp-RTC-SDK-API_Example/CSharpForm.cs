@@ -1,14 +1,4 @@
-﻿/*
- * 须知：
- * 1. 准备好AppId、ChannelId，并通过界面设置（点更新ID按钮），避免应用程序重启重复输入
- * 2. 根据实际需要，准备好一定数量的“窗口”，用于显示，构造时传给各场景。
- * 3. 各场景APIs调用流程略有不同，具体请参考各场景的示例
- * 
- * 注意：多个频道Id请以“;”分隔，但都必须有效，此时，如果是单频道场景，则仅使用第一个频道Id。
- * 如输入了“123;456;789”，对于单频道场景，仅使用123；对于多频道场景，则频道1 Id为123，频道2 Id为456，频道3 Id为789。
- */
-
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -114,33 +104,28 @@ namespace C_Sharp_API_Example
                 usr_engine_ = null;
             }
 
-            if (tabCtrl.SelectedTab == joinChannelVideoTab) // 一对一视频
+            if (tabCtrl.SelectedTab == joinChannelVideoTab)
             {
                 usr_engine_ = new JoinChannelVideo(joinChannelVideoView.localVideoView.Handle, joinChannelVideoView.remoteVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == joinChannelAudioTab) // 一对一语音
+            else if (tabCtrl.SelectedTab == joinChannelAudioTab)
             {
                 usr_engine_ = new JoinChannelAudio();
             }
-            else if (tabCtrl.SelectedTab == screenShareTab) // 摄像头 + 屏幕共享
+            else if (tabCtrl.SelectedTab == screenShareTab)
             {
                 usr_engine_ = new ScreenShare(screenShareView.localVideoView.Handle, screenShareView.remoteVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == joinMultipleChannelTab)  // 多频道
+            else if (tabCtrl.SelectedTab == joinMultipleChannelTab)
             {
                 usr_engine_ = new JoinMultipleChannel(joinMultipleChannelView.localVideoView.Handle, 
                     joinMultipleChannelView.firstChannelVideoView.Handle, joinMultipleChannelView.secondChannelVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == videoGroupTab) // 多人视频
-            {
-                usr_engine_ = new VideoGroup(videoGroupView.localVideoView.Handle,
-                    videoGroupView.fistUserVideoView.Handle, videoGroupView.secondUserVideoView.Handle);
-            }
-            else if (tabCtrl.SelectedTab == processRawDataTab) // 祼数据
+            else if (tabCtrl.SelectedTab == processRawDataTab)
             {
                 usr_engine_ = new ProcessRawData(processRawDataView.localVideoView.Handle, processRawDataView.remoteVideoView.Handle);
             }
-            else if (tabCtrl.SelectedTab == virtualBackgroundTab) // 虚拟背景
+            else if (tabCtrl.SelectedTab == virtualBackgroundTab)
             {
                 usr_engine_ = new VirtualBackground(virtualBackgroundView.localVideoView.Handle, virtualBackgroundView.remoteVideoView.Handle);
             }

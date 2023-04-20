@@ -39,8 +39,6 @@ namespace C_Sharp_API_Example
             this.screenShareView = new C_Sharp_API_Example.ScreenShareView();
             this.joinMultipleChannelTab = new System.Windows.Forms.TabPage();
             this.joinMultipleChannelView = new C_Sharp_API_Example.JoinMultipleChannelView();
-            this.videoGroupTab = new System.Windows.Forms.TabPage();
-            this.videoGroupView = new C_Sharp_API_Example.VideoGroupView();
             this.processRawDataTab = new System.Windows.Forms.TabPage();
             this.processRawDataView = new C_Sharp_API_Example.ProcessRawDataView();
             this.virtualBackgroundTab = new System.Windows.Forms.TabPage();
@@ -67,7 +65,6 @@ namespace C_Sharp_API_Example
             this.joinChannelAudioTab.SuspendLayout();
             this.screenShareTab.SuspendLayout();
             this.joinMultipleChannelTab.SuspendLayout();
-            this.videoGroupTab.SuspendLayout();
             this.processRawDataTab.SuspendLayout();
             this.virtualBackgroundTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_left_part)).BeginInit();
@@ -107,13 +104,12 @@ namespace C_Sharp_API_Example
             this.tabCtrl.Controls.Add(this.joinChannelAudioTab);
             this.tabCtrl.Controls.Add(this.screenShareTab);
             this.tabCtrl.Controls.Add(this.joinMultipleChannelTab);
-            this.tabCtrl.Controls.Add(this.videoGroupTab);
             this.tabCtrl.Controls.Add(this.processRawDataTab);
             this.tabCtrl.Controls.Add(this.virtualBackgroundTab);
             this.tabCtrl.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabCtrl.Location = new System.Drawing.Point(0, 0);
-            this.tabCtrl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabCtrl.Margin = new System.Windows.Forms.Padding(4);
             this.tabCtrl.Multiline = true;
             this.tabCtrl.Name = "tabCtrl";
             this.tabCtrl.SelectedIndex = 0;
@@ -126,7 +122,7 @@ namespace C_Sharp_API_Example
             this.joinChannelVideoTab.Controls.Add(this.joinChannelVideoView);
             this.joinChannelVideoTab.Location = new System.Drawing.Point(4, 26);
             this.joinChannelVideoTab.Name = "joinChannelVideoTab";
-            this.joinChannelVideoTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.joinChannelVideoTab.Padding = new System.Windows.Forms.Padding(3);
             this.joinChannelVideoTab.Size = new System.Drawing.Size(782, 643);
             this.joinChannelVideoTab.TabIndex = 0;
             this.joinChannelVideoTab.Text = "Video Calling";
@@ -146,7 +142,7 @@ namespace C_Sharp_API_Example
             this.joinChannelAudioTab.Controls.Add(this.joinChannelAudioView);
             this.joinChannelAudioTab.Location = new System.Drawing.Point(4, 26);
             this.joinChannelAudioTab.Name = "joinChannelAudioTab";
-            this.joinChannelAudioTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.joinChannelAudioTab.Padding = new System.Windows.Forms.Padding(3);
             this.joinChannelAudioTab.Size = new System.Drawing.Size(782, 643);
             this.joinChannelAudioTab.TabIndex = 1;
             this.joinChannelAudioTab.Text = "Voice Calling";
@@ -166,7 +162,7 @@ namespace C_Sharp_API_Example
             this.screenShareTab.Controls.Add(this.screenShareView);
             this.screenShareTab.Location = new System.Drawing.Point(4, 26);
             this.screenShareTab.Name = "screenShareTab";
-            this.screenShareTab.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.screenShareTab.Padding = new System.Windows.Forms.Padding(3);
             this.screenShareTab.Size = new System.Drawing.Size(782, 643);
             this.screenShareTab.TabIndex = 2;
             this.screenShareTab.Text = "ScreenShare";
@@ -202,27 +198,6 @@ namespace C_Sharp_API_Example
             this.joinMultipleChannelView.Size = new System.Drawing.Size(778, 637);
             this.joinMultipleChannelView.TabIndex = 0;
             // 
-            // videoGroupTab
-            // 
-            this.videoGroupTab.Controls.Add(this.videoGroupView);
-            this.videoGroupTab.Location = new System.Drawing.Point(4, 26);
-            this.videoGroupTab.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.videoGroupTab.Name = "videoGroupTab";
-            this.videoGroupTab.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.videoGroupTab.Size = new System.Drawing.Size(782, 643);
-            this.videoGroupTab.TabIndex = 4;
-            this.videoGroupTab.Text = "Triple Videos";
-            this.videoGroupTab.UseVisualStyleBackColor = true;
-            // 
-            // videoGroupView
-            // 
-            this.videoGroupView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.videoGroupView.Location = new System.Drawing.Point(2, 3);
-            this.videoGroupView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.videoGroupView.Name = "videoGroupView";
-            this.videoGroupView.Size = new System.Drawing.Size(778, 637);
-            this.videoGroupView.TabIndex = 0;
-            // 
             // processRawDataTab
             // 
             this.processRawDataTab.Controls.Add(this.processRawDataView);
@@ -253,7 +228,7 @@ namespace C_Sharp_API_Example
             this.virtualBackgroundTab.Padding = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.virtualBackgroundTab.Size = new System.Drawing.Size(782, 643);
             this.virtualBackgroundTab.TabIndex = 6;
-            this.virtualBackgroundTab.Text = "Virutal Background";
+            this.virtualBackgroundTab.Text = "Virtual Background";
             this.virtualBackgroundTab.UseVisualStyleBackColor = true;
             // 
             // virtualBackgroundView
@@ -507,7 +482,7 @@ namespace C_Sharp_API_Example
             this.MinimizeBox = false;
             this.Name = "CSharpForm";
             this.Opacity = 0.99D;
-            this.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "CSharpForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.tabCtrl.ResumeLayout(false);
@@ -515,7 +490,6 @@ namespace C_Sharp_API_Example
             this.joinChannelAudioTab.ResumeLayout(false);
             this.screenShareTab.ResumeLayout(false);
             this.joinMultipleChannelTab.ResumeLayout(false);
-            this.videoGroupTab.ResumeLayout(false);
             this.processRawDataTab.ResumeLayout(false);
             this.virtualBackgroundTab.ResumeLayout(false);
             this.splitContainer_left_part.Panel1.ResumeLayout(false);
@@ -570,8 +544,6 @@ namespace C_Sharp_API_Example
         private ScreenShareView screenShareView;
         private JoinMultipleChannelView joinMultipleChannelView;
         private System.Windows.Forms.Button updateBtn;
-        private System.Windows.Forms.TabPage videoGroupTab;
-        private VideoGroupView videoGroupView;
         private System.Windows.Forms.TabPage processRawDataTab;
         private ProcessRawDataView processRawDataView;
         private System.Windows.Forms.TabPage virtualBackgroundTab;
