@@ -90,7 +90,7 @@ namespace Agora.Rtc
                     this.OnRtcEngineImpleWillDispose.Invoke(this);
                 }
 
-                ReleaseEventHandler();
+               
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
@@ -122,9 +122,20 @@ namespace Agora.Rtc
 
             AgoraRtcNative.FreeIrisRtcRendering(_rtcRenderingHandle);
             Release(sync);
+
+            ReleaseEventHandler();
             //You must free cdn event handle after you release engine.
             //Because when engine releasing. will call some Cdn event function.We need keep cdn event function ptr alive
-            FreeDirectCdnStreamingEventHandle();
+            ReleaseDirectCdnStreamingEventHandle();
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            if (_callbackObject != null)
+            {
+                _callbackObject.Release();
+                _callbackObject = null;
+                RtcEngineEventHandlerNative.CallbackObject = null;
+            }
+#endif
             _disposed = true;
         }
 
@@ -155,6 +166,15 @@ namespace Agora.Rtc
         {
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero) return 0;
 
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+            if (_callbackObject == null)
+            {
+                _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
+                RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
+            }
+#endif
+
             AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtcEngineEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTEREVENTHANDLER,
@@ -167,12 +187,6 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_RTCENGINE_REGISTEREVENTHANDLER failed: " + nRet);
             }
 
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
-            RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
-#endif
-
             return nRet;
 
         }
@@ -181,21 +195,17 @@ namespace Agora.Rtc
         {
             if (_rtcEventHandlerHandle.handle == IntPtr.Zero) return;
 
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-            RtcEngineEventHandlerNative.CallbackObject = null;
-            if (_callbackObject != null) _callbackObject.Release();
-            _callbackObject = null;
-#endif
-            IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTEREVENTHANDLER,
-                "{}", 2,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam);
 
-            if (nRet != 0)
-            {
-                AgoraLog.LogError("FUNC_RTCENGINE_UNREGISTEREVENTHANDLER failed: " + nRet);
-            }
+            //IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
+            //var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTEREVENTHANDLER,
+            //    "{}", 2,
+            //    Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+            //    ref _apiParam);
+
+            //if (nRet != 0)
+            //{
+            //    AgoraLog.LogError("FUNC_RTCENGINE_UNREGISTEREVENTHANDLER failed: " + nRet);
+            //}
 
             AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
 
@@ -208,11 +218,11 @@ namespace Agora.Rtc
         {
             if (_rtcDirectCdnStreamingEventHandle.handle == IntPtr.Zero)
             {
-                AgoraUtil.AllocEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle, RtcEngineEventHandlerNative.OnEvent);
+                AgoraUtil.AllocEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle, RtcEngineEventHandlerNative.OnEventForDirectCdnStreaming);
             }
         }
 
-        private void FreeDirectCdnStreamingEventHandle()
+        private void ReleaseDirectCdnStreamingEventHandle()
         {
             if (_rtcDirectCdnStreamingEventHandle.handle != IntPtr.Zero)
             {
