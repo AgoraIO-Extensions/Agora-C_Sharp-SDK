@@ -126,7 +126,7 @@ namespace Agora.Rtc
             ReleaseEventHandler();
             //You must free cdn event handle after you release engine.
             //Because when engine releasing. will call some Cdn event function.We need keep cdn event function ptr alive
-            FreeDirectCdnStreamingEventHandle();
+            ReleaseDirectCdnStreamingEventHandle();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (_callbackObject != null)
@@ -222,7 +222,7 @@ namespace Agora.Rtc
             }
         }
 
-        private void FreeDirectCdnStreamingEventHandle()
+        private void ReleaseDirectCdnStreamingEventHandle()
         {
             if (_rtcDirectCdnStreamingEventHandle.handle != IntPtr.Zero)
             {
