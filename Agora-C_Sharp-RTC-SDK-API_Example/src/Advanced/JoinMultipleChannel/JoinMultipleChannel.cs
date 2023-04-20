@@ -123,15 +123,23 @@ namespace C_Sharp_API_Example
             {
                 IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
 
-                ChannelMediaOptions options = new ChannelMediaOptions();
-                options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
-                options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
+                ChannelMediaOptions options_ch1 = new ChannelMediaOptions();
+                options_ch1.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
+                options_ch1.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
+                options_ch1.publishCameraTrack.SetValue(true);
+                options_ch1.publishMicrophoneTrack.SetValue(true);
 
 
-                ret = engine_ex.JoinChannelEx("", first_connection_, options);
+                ret = engine_ex.JoinChannelEx("", first_connection_, options_ch1);
                 CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannelEx(ch1)", ret);
 
-                ret = engine_ex.JoinChannelEx("", second_connection_, options);
+                ChannelMediaOptions options_ch2 = new ChannelMediaOptions();
+                options_ch2.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
+                options_ch2.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
+                options_ch2.publishCameraTrack.SetValue(true);
+                options_ch2.publishMicrophoneTrack.SetValue(false);
+
+                ret = engine_ex.JoinChannelEx("", second_connection_, options_ch2);
                 CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannelEx(ch2)", ret);
             }
 
