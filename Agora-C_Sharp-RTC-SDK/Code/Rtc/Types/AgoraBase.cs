@@ -7504,7 +7504,7 @@ namespace Agora.Rtc
             enableVideo = true;
             token = "";
             channelId = "";
-            intervalInSeconds = 0;
+            intervalInSeconds = 2;
         }
     };
 
