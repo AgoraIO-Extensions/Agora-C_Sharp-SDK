@@ -3,6 +3,9 @@
 
 Use Agora RTC SDK with C#! 
 
+- You can find full API document(Unity) at [Document Center](https://api-ref.agora.io/en/video-sdk/unity/4.x/API/rtc_api_overview_ng.html)
+- You can find full release note(Unity) at [Release Note](https://docs.agora.io/en/video-calling/reference/release-notes?platform=unity)
+
 ## Prerequisites
 
 - Visual Studio 2019+ with C++ (Windows)

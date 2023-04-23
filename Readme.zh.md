@@ -4,6 +4,9 @@
 
 Agora RTC C# SDK，目前支持 Windows 平台。
 
+- 您可以在 [文档中心](https://docs.agora.io/cn/All/API%20Reference/unity_ng/API/rtc_api_overview_ng.html)找到完整的API文档(Unity)
+- 您可以在 [发版说明](https://docs.agora.io/cn/video-call-4.x/release_unity_ng?platform=Unity)找到完整的发版说明(Unity)
+
 ## 运行环境
 
 - Visual Studio 2019+ with C++ (Windows)
