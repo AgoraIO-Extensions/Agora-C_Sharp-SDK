@@ -136,8 +136,9 @@ namespace C_Sharp_API_Example
                 ChannelMediaOptions options_ch2 = new ChannelMediaOptions();
                 options_ch2.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
                 options_ch2.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
-                options_ch2.publishCameraTrack.SetValue(true);
-                options_ch2.publishMicrophoneTrack.SetValue(false);
+                // coz video can only pub to one channel at the same time
+                options_ch2.publishCameraTrack.SetValue(false);
+                options_ch2.publishMicrophoneTrack.SetValue(true);
 
                 ret = engine_ex.JoinChannelEx("", second_connection_, options_ch2);
                 CSharpForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannelEx(ch2)", ret);
