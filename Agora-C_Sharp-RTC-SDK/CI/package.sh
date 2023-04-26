@@ -49,10 +49,10 @@ echo "[Unity CI] start preparing resources"
 cd "$CI_DIR" || exit 1
 mkdir temp
 ./download_plugin.sh "$SDK_TYPE" "$API_KEY" "$5" "$6" "$7" "$8"
-IOS_SRC_PATH=$CI_DIR/temp/ios
-MAC_SRC_PATH="$CI_DIR"/temp/mac
-WIN_SRC_PATH="$CI_DIR"/temp/win
-ANDROID_SRC_PATH="$CI_DIR"/temp/android
+IOS_SRC_PATH=$CI_DIR/temp/ios/iris_*
+MAC_SRC_PATH="$CI_DIR"/temp/mac/iris_*
+WIN_SRC_PATH="$CI_DIR"/temp/win/iris_*
+ANDROID_SRC_PATH="$CI_DIR"/temp/android/iris_*
 cd temp || exit 1
 git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
 cd "$CI_DIR" || exit 1
