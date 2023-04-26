@@ -19,14 +19,12 @@ namespace Agora.Rtm
     {
         public string ChannelName;
         public string UserId;
-        public RTM_CHANNEL_ERROR_CODE ErrorCode;
     };
 
     public class LeaveResult
     {
         public string ChannelName;
         public string UserId;
-        public RTM_CHANNEL_ERROR_CODE ErrorCode;
     };
 
     public class JoinTopicResult
@@ -35,7 +33,6 @@ namespace Agora.Rtm
         public string UserId;
         public string Topic;
         public string Meta;
-        public RTM_CHANNEL_ERROR_CODE ErrorCode;
     };
 
     public class PublishTopicMessageResult
@@ -49,7 +46,6 @@ namespace Agora.Rtm
         public string UserId;
         public string Topic;
         public string Meta;
-        public RTM_CHANNEL_ERROR_CODE ErrorCode;
     };
 
     public class SubscribeTopicResult
@@ -59,7 +55,6 @@ namespace Agora.Rtm
         public string Topic;
         public UserList SucceedUsers;
         public UserList FailedUsers;
-        public RTM_CHANNEL_ERROR_CODE ErrorCode;
     };
 
     public class UnsubscribeTopicResult
@@ -87,7 +82,6 @@ namespace Agora.Rtm
     public class SubscribeResult
     {
         public string ChannelName;
-        public RTM_CHANNEL_ERROR_CODE ErrorCode;
     };
 
     public class UnsubscribeResult
@@ -97,33 +91,30 @@ namespace Agora.Rtm
 
     public class PublishResult
     {
-        public RTM_CHANNEL_ERROR_CODE ErrorCode;
+      
     };
 
     public class LoginResult
     {
-        public RTM_LOGIN_ERROR_CODE ErrorCode;
+       
     };
 
     public class SetChannelMetadataResult
     {
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class UpdateChannelMetadataResult
     {
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class RemoveChannelMetadataResult
     {
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class GetChannelMetadataResult
@@ -131,38 +122,32 @@ namespace Agora.Rtm
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
         public RtmMetadata Data;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class SetUserMetadataResult
     {
         public string UserId;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class UpdateUserMetadataResult
     {
         public string UserId;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class RemoveUserMetadataResult
     {
         public string UserId;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class GetUserMetadataResult
     {
         public string UserId;
         public RtmMetadata Data;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class SubscribeUserMetadataResult
     {
         public string UserId;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class UnsubscribeUserMetadataResult
@@ -175,7 +160,6 @@ namespace Agora.Rtm
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
         public string LockName;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class RemoveLockResult
@@ -183,7 +167,6 @@ namespace Agora.Rtm
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
         public string LockName;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class ReleaseLockResult
@@ -191,7 +174,6 @@ namespace Agora.Rtm
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
         public string LockName;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class AcquireLockResult
@@ -199,7 +181,6 @@ namespace Agora.Rtm
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
         public string LockName;
-        public OPERATION_ERROR_CODE ErrorCode;
         public string ErrorDetails;
     };
 
@@ -208,7 +189,6 @@ namespace Agora.Rtm
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
         public string LockName;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class GetLocksResult
@@ -217,7 +197,6 @@ namespace Agora.Rtm
         public RTM_CHANNEL_TYPE ChannelType;
         public LockDetail[] LockDetailList;
         public UInt64 Count;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class WhoNowResult
@@ -225,30 +204,25 @@ namespace Agora.Rtm
         public UserState[] UserStateList;
         public UInt64 Count;
         public string NextPage;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class WhereNowResult
     {
         public ChannelInfo[] Channels;
         public UInt64 Count;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class SetStateResult
-    {
-        public OPERATION_ERROR_CODE ErrorCode;
+    { 
     };
 
     public class RemoveStateResult
     {
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class GetStateResult
     {
         public UserState State;
-        public OPERATION_ERROR_CODE ErrorCode;
     };
 
     public class RTMException : Exception
