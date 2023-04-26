@@ -126,47 +126,39 @@ fi
 
 for so_path in "arm64-v8a" "armeabi-v7a" "x86" "x86_64"
 do
-    cp -r $ANDROID_SRC_PATH/iris_*_DCG_Android/DCG/Agora_*/rtc/sdk/${so_path} "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/iris_*_DCG_Android/ALL_ARCHITECTURE/Release/${so_path}/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/${so_path}
-    cp $ANDROID_SRC_PATH/iris_*_ENGINE_Android/ALL_ARCHITECTURE/Release/${so_path}/libAgoraRtmWrapper.so "$ANDROID_DST_PATH"/libs/${so_path}
-    cp $ANDROID_SRC_PATH/iris_*_ENGINE_Android/ALL_ARCHITECTURE/Release/${so_path}/libAgoraIrisEngine.so "$ANDROID_DST_PATH"/libs/${so_path}    
+    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/${so_path} "$ANDROID_DST_PATH"/libs
+    #copy libAgoraIrisEngine.so libAgoraRtcWrapper.so libAgoraRtmWrapper.so
+    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/${so_path}/*.so "$ANDROID_DST_PATH"/libs/${so_path}  
 done
 
-#copy AgoraRtcWrapper.jar
-cp $ANDROID_SRC_PATH/iris_*_DCG_Android/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
+#copy AgoraRtcWrapper.jar AgoraIrisEngine.jar AgoraRtmWrapper.jar
+cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
-#copy AgoraIrisEngine.jar
-cp $ANDROID_SRC_PATH/iris_*_ENGINE_Android/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
-
-#copy AgoraRtmWrapper.jar
-cp $ANDROID_SRC_PATH/iris_*_RTM_Android/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
 # iOS
 echo "[Unity CI] copying iOS ..."
 IOS_DST_PATH="$PLUGIN_PATH/Agora-Unity-RTC-SDK/Plugins/iOS"
-cp -PRf $IOS_SRC_PATH/iris_*_DCG_iOS/DCG/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
-cp -PRf $IOS_SRC_PATH/iris_*_DCG_iOS/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
-cp -PRf $IOS_SRC_PATH/iris_*_ENGINE_iOS/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+
 
 # macOS
 echo "[Unity CI] copying macOS ..."
 MAC_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/macOS
-cp -PRf $MAC_SRC_PATH/iris_*_DCG_Mac/MAC/Release/*.bundle "$MAC_DST_PATH"
-cp -PRf $MAC_SRC_PATH/iris_*_ENGINE_Mac/MAC/Release/*.bundle "$MAC_DST_PATH"
+cp -PRf $MAC_SRC_PATH/MAC/Release/AgoraIrisEngineUnity.bundle "$MAC_DST_PATH"
+cp -PRf $MAC_SRC_PATH/MAC/Release/AgoraRtcWrapperUnity.bundle "$MAC_DST_PATH"
 
 # Windows x86-64
 echo "[Unity CI] copying Windows x86-64 ..."
 WIN64_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86_64
-cp $WIN_SRC_PATH/iris_*_ENGINE_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
-cp $WIN_SRC_PATH/iris_*_DCG_Windows/x64/Release/*.dll "$WIN64_DST_PATH"
-cp $WIN_SRC_PATH/iris_*_DCG_Windows/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
+cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
 
 # Windows x86
 echo "[Unity CI] copying Windows x86 ..."
 WIN32_DST_PATH="$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/x86
-cp $WIN_SRC_PATH/iris_*_ENGINE_Windows/Win32/Release/*.dll "$WIN32_DST_PATH"
-cp $WIN_SRC_PATH/iris_*_DCG_Windows/Win32/Release/*.dll "$WIN32_DST_PATH"
-cp $WIN_SRC_PATH/iris_*_DCG_Windows/DCG/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
+cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
 
 echo "[Unity CI] finish copying files"
 
