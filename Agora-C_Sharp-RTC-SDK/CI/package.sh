@@ -118,10 +118,10 @@ elif [ "$SDK_TYPE" == "video" ]; then
 fi
 
 mkdir "$ANDROID_DST_PATH"/libs
-cp $ANDROID_SRC_PATH/iris_*_DCG_Android/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
+cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
 if [ "$SDK_TYPE" == "video" ]; then
-cp $ANDROID_SRC_PATH/iris_*_DCG_Android/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
+cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
 fi
 
 for so_path in "arm64-v8a" "armeabi-v7a" "x86" "x86_64"
