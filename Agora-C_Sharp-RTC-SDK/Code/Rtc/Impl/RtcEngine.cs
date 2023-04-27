@@ -227,25 +227,10 @@ namespace Agora.Rtc
             return _mediaPlayerCacheManager;
         }
 
-        public override IMediaRecorder CreateLocalMediaRecorder(RtcConnection connection)
+        public override IMediaRecorder CreateMediaRecorder(RecorderStreamInfo info)
         {
             MediaRecorderImpl impl = this._rtcEngineImpl.GetMediaRecorder();
-            string nativeHande = impl.CreateLocalMediaRecorder(connection);
-            if (nativeHande != null && nativeHande != "")
-            {
-                return new MediaRecorder(impl, nativeHande);
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-
-        public override IMediaRecorder CreateRemoteMediaRecorder(string channelId, uint uid)
-        {
-            MediaRecorderImpl impl = this._rtcEngineImpl.GetMediaRecorder();
-            string nativeHande = impl.CreateRemoteMediaRecorder(channelId, uid);
+            string nativeHande = impl.CreateMediaRecorder(info);
             if (nativeHande != null && nativeHande != "")
             {
                 return new MediaRecorder(impl, nativeHande);

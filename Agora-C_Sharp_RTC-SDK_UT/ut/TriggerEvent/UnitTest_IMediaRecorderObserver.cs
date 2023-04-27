@@ -28,7 +28,7 @@ namespace Agora.Rtc.Event
 
 
             EventHandler = new UTMediaRecorderObserver();
-            MediaRecorder = Engine.CreateLocalMediaRecorder(new RtcConnection("10", 10));
+            MediaRecorder = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
             int ret = MediaRecorder.SetMediaRecorderObserver(EventHandler);
             Assert.AreEqual(0, ret);
 

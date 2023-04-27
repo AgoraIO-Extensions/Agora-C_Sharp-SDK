@@ -222,14 +222,14 @@ namespace Agora.Rtc
         }
 
 
-        public string CreateLocalMediaRecorder(RtcConnection connection)
+        public string CreateMediaRecorder(RecorderStreamInfo info)
         {
 
             _param.Clear();
-            _param.Add("connection", connection);
+            _param.Add("info", info);
 
             var json = AgoraJson.ToJson(_param);
-            int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_CREATELOCALMEDIARECORDER,
+            int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_CREATEMEDIARECORDER,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -244,29 +244,6 @@ namespace Agora.Rtc
             }
 
         }
-
-        public string CreateRemoteMediaRecorder(string channelId, uint uid)
-        {
-            _param.Clear();
-            _param.Add("channelId", channelId);
-            _param.Add("uid", uid);
-
-            var json = AgoraJson.ToJson(_param);
-            int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_CREATEREMOTEMEDIARECORDER,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-
-            if (nRet == 0)
-            {
-                return (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
-            }
-            else
-            {
-                return null;
-            }
-        }
-
 
         public int DestroyMediaRecorder(string nativeHandle) {
 
