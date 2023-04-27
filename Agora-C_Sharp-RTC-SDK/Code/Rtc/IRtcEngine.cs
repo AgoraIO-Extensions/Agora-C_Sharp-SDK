@@ -3977,10 +3977,9 @@ namespace Agora.Rtc
         public abstract int GetAudioTrackCount();
 
 
-        public abstract IMediaRecorder CreateLocalMediaRecorder(RtcConnection connection);
+        public abstract IMediaRecorder CreateMediaRecorder(RecorderStreamInfo info);
 
-        public abstract IMediaRecorder CreateRemoteMediaRecorder(string channelId, uint uid);
-
+       
         public abstract int DestroyMediaRecorder(IMediaRecorder mediaRecorder);
 
         ///

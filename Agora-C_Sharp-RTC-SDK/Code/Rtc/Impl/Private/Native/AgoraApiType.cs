@@ -78,8 +78,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_STOPAUDIORECORDING = "RtcEngine_stopAudioRecording";
         internal const string FUNC_RTCENGINE_CREATEMEDIAPLAYER = "RtcEngine_createMediaPlayer";
         internal const string FUNC_RTCENGINE_DESTROYMEDIAPLAYER = "RtcEngine_destroyMediaPlayer";
-        internal const string FUNC_RTCENGINE_CREATELOCALMEDIARECORDER = "RtcEngine_createLocalMediaRecorder";
-        internal const string FUNC_RTCENGINE_CREATEREMOTEMEDIARECORDER = "RtcEngine_createRemoteMediaRecorder";
+        internal const string FUNC_RTCENGINE_CREATEMEDIARECORDER = "RtcEngine_createMediaRecorder";
         internal const string FUNC_RTCENGINE_DESTROYMEDIARECORDER = "RtcEngine_destroyMediaRecorder";
         internal const string FUNC_RTCENGINE_STARTAUDIOMIXING = "RtcEngine_startAudioMixing";
         internal const string FUNC_RTCENGINE_STARTAUDIOMIXING2 = "RtcEngine_startAudioMixing2";

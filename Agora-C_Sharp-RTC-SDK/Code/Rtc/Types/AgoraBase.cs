@@ -4605,7 +4605,7 @@ namespace Agora.Rtc
         }
 
         public TranscodingVideoStream(VIDEO_SOURCE_TYPE sourceType, uint remoteUserUid,
-            string imageUrl, int mediaPlayerId,int x, int y, int width, int height, int zOrder, double alpha,
+            string imageUrl, int mediaPlayerId, int x, int y, int width, int height, int zOrder, double alpha,
             bool mirror)
         {
             this.sourceType = sourceType;
@@ -6151,25 +6151,25 @@ namespace Agora.Rtc
         VOICE_CHANGER_BASS = 0x03010400,
 
         VOICE_CHANGER_CARTOON = 0x03010500,
-       
+
         VOICE_CHANGER_CHILDLIKE = 0x03010600,
-       
+
         VOICE_CHANGER_PHONE_OPERATOR = 0x03010700,
-       
+
         VOICE_CHANGER_MONSTER = 0x03010800,
-        
+
         VOICE_CHANGER_TRANSFORMERS = 0x03010900,
-       
+
         VOICE_CHANGER_GROOT = 0x03010A00,
-        
+
         VOICE_CHANGER_DARTH_VADER = 0x03010B00,
-       
+
         VOICE_CHANGER_IRON_LADY = 0x03010C00,
-        
+
         VOICE_CHANGER_SHIN_CHAN = 0x03010D00,
-       
+
         VOICE_CHANGER_GIRLISH_MAN = 0x03010E00,
-        
+
         VOICE_CHANGER_CHIPMUNK = 0x03010F00,
     };
 
@@ -7789,6 +7789,32 @@ namespace Agora.Rtc
          * The minimum value is 0.
          */
         public int remoteJoined2PacketReceived;
+    };
+
+
+    public class RecorderStreamInfo
+    {
+        public RecorderStreamInfo()
+        {
+            channelId = "";
+            uid = 0;
+        }
+
+        public RecorderStreamInfo(string channelId, uint uid)
+        {
+            this.channelId = channelId;
+            this.uid = uid;
+        }
+
+        /**
+         * The channel ID of the video track.
+         */
+        public string channelId;
+        /**
+         * The user ID.
+         */
+        public uint uid;
+
     };
 
     ///
