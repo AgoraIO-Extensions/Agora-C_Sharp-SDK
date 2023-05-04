@@ -42,7 +42,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="agora_rtc_sdk" Version="4.2.0-alpha.1" />
+      <PackageReference Include="agora_rtc_sdk" Version="4.2.0-alpha.2" />
     </ItemGroup>
 
     <ItemGroup>
