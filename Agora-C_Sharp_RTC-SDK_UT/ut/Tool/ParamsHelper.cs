@@ -939,10 +939,11 @@ namespace Agora.Rtc
         {
             param = AUDIO_TRACK_TYPE.AUDIO_TRACK_INVALID;
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out ExternalVideoFrame param)
+        {
+            param = new ExternalVideoFrame();
+            param.buffer = new byte[10];
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
@@ -3155,7 +3156,7 @@ namespace Agora.Rtc
                 return false;
             if (compareView_t(selfParam.windowId, outParam.windowId) == false)
                 return false;
-            if (compareScreenCaptureParameters(selfParam.parameters, outParam.parameters) == false)
+            if (compareScreenCaptureParameters(selfParam.@params, outParam.@params) == false)
                 return false;
             if (compareRectangle(selfParam.regionRect, outParam.regionRect) == false)
                 return false;

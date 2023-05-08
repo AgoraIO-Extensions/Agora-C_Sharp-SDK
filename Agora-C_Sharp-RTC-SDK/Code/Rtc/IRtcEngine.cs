@@ -871,9 +871,9 @@ namespace Agora.Rtc
         ///
         public abstract int EnableMultiCamera(bool enabled, CameraCapturerConfiguration config);
 
-        public abstract int StartCameraCapture(VIDEO_SOURCE_TYPE sourceType, CameraCapturerConfiguration config);
+        public abstract int StartCameraCapture(VIDEO_SOURCE_TYPE type, CameraCapturerConfiguration config);
 
-        public abstract int StopCameraCapture(VIDEO_SOURCE_TYPE sourceType);
+        public abstract int StopCameraCapture(VIDEO_SOURCE_TYPE type);
 
 
        
@@ -1865,9 +1865,9 @@ namespace Agora.Rtc
         public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
 
 
-        public abstract int StartScreenCapture(VIDEO_SOURCE_TYPE sourceType, ScreenCaptureConfiguration config);
+        public abstract int StartScreenCapture(VIDEO_SOURCE_TYPE type, ScreenCaptureConfiguration config);
 
-        public abstract int StopScreenCapture(VIDEO_SOURCE_TYPE sourceType);
+        public abstract int StopScreenCapture(VIDEO_SOURCE_TYPE type);
         ///
         /// <summary>
         /// Starts screen sharing.
@@ -3411,7 +3411,7 @@ namespace Agora.Rtc
         ///
         public abstract string GetErrorDescription(int code);
 
-        public abstract int QueryCodecCapability(ref CodecCapInfo[] codecInfo, ref int size);
+        public abstract int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size);
 
         #endregion
 

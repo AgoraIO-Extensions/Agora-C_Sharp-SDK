@@ -295,13 +295,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.GetErrorDescription(code);
         }
 
-        public override int QueryCodecCapability(ref CodecCapInfo[] codecInfo, ref int size)
+        public override int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.QueryCodecCapability(ref codecInfo, ref size);
+            return _rtcEngineImpl.QueryCodecCapability(ref codec_info, ref size);
         }
 
         public override int JoinChannel(string token, string channelId, string info = "", uint uid = 0)
@@ -1990,22 +1990,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.StopLocalVideoTranscoder();
         }
 
-        public override int StartCameraCapture(VIDEO_SOURCE_TYPE sourceType, CameraCapturerConfiguration config)
+        public override int StartCameraCapture(VIDEO_SOURCE_TYPE type, CameraCapturerConfiguration config)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartCameraCapture(sourceType, config);
+            return _rtcEngineImpl.StartCameraCapture(type, config);
         }
 
-        public override int StopCameraCapture(VIDEO_SOURCE_TYPE sourceType)
+        public override int StopCameraCapture(VIDEO_SOURCE_TYPE type)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StopCameraCapture(sourceType);
+            return _rtcEngineImpl.StopCameraCapture(type);
         }
 
         public override int SetCameraDeviceOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation)
@@ -2026,22 +2026,22 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetScreenCaptureOrientation(type, orientation);
         }
 
-        public override int StartScreenCapture(VIDEO_SOURCE_TYPE sourceType, ScreenCaptureConfiguration config)
+        public override int StartScreenCapture(VIDEO_SOURCE_TYPE type, ScreenCaptureConfiguration config)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartScreenCapture(sourceType, config);
+            return _rtcEngineImpl.StartScreenCapture(type, config);
         }
 
-        public override int StopScreenCapture(VIDEO_SOURCE_TYPE sourceType)
+        public override int StopScreenCapture(VIDEO_SOURCE_TYPE type)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StopScreenCapture(sourceType);
+            return _rtcEngineImpl.StopScreenCapture(type);
         }
 
         public override CONNECTION_STATE_TYPE GetConnectionState()

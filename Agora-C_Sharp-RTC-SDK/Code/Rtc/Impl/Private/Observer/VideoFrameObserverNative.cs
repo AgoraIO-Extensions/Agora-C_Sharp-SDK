@@ -202,6 +202,22 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
+                    case "VideoFrameObserver_onMediaPlayerVideoFrame":
+                        {
+                            LitJson.JsonData jsonData = AgoraJson.ToObject(data);
+                            IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
+                            int mediaPlayerId = (int)AgoraJson.GetData<int>(jsonData, "mediaPlayerId");
+                            VideoFrame videoFrame1 = GetVideoFrame("", 2);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
+                            bool result = videoFrameObserver.OnMediaPlayerVideoFrame(videoFrame1, mediaPlayerId);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
                     case "VideoFrameObserver_onRenderVideoFrame":
                         {
                             LitJson.JsonData jsonData = AgoraJson.ToObject(data);
@@ -236,6 +252,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
+
                     case "VideoFrameObserver_getVideoFormatPreference":
                         {
                             VIDEO_OBSERVER_FRAME_TYPE result = videoFrameObserver.GetVideoFormatPreference();

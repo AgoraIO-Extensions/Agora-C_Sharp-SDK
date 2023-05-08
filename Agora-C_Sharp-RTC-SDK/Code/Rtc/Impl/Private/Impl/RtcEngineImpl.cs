@@ -534,7 +534,7 @@ namespace Agora.Rtc
             return nRet != 0 ? null : (string)AgoraJson.GetData<string>(_apiParam.Result, "result");
         }
 
-        public int QueryCodecCapability(ref CodecCapInfo[] codecInfo, ref int size)
+        public int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size)
         {
             _param.Clear();
             //_param.Add("codecInfo", codecInfo);
@@ -551,12 +551,12 @@ namespace Agora.Rtc
             if (ret == 0)
             {
                 size = (int)AgoraJson.GetData<int>(_apiParam.Result, "size");
-                codecInfo = (CodecCapInfo[])AgoraJson.JsonToStructArray<CodecCapInfo>(_apiParam.Result, "codecInfo");
+                codec_info = (CodecCapInfo[])AgoraJson.JsonToStructArray<CodecCapInfo>(_apiParam.Result, "codec_info");
             }
             else
             {
                 size = 0;
-                codecInfo = new CodecCapInfo[0];
+                codec_info = new CodecCapInfo[0];
             }
 
             return ret;
@@ -3260,10 +3260,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StartCameraCapture(VIDEO_SOURCE_TYPE sourceType, CameraCapturerConfiguration config)
+        public int StartCameraCapture(VIDEO_SOURCE_TYPE type, CameraCapturerConfiguration config)
         {
             _param.Clear();
-            _param.Add("sourceType", sourceType);
+            _param.Add("type", type);
             _param.Add("config", config);
 
             var json = AgoraJson.ToJson(_param);
@@ -3276,10 +3276,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StopCameraCapture(VIDEO_SOURCE_TYPE sourceType)
+        public int StopCameraCapture(VIDEO_SOURCE_TYPE type)
         {
             _param.Clear();
-            _param.Add("sourceType", sourceType);
+            _param.Add("type", type);
 
             var json = AgoraJson.ToJson(_param);
 
@@ -3326,10 +3326,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StartScreenCapture(VIDEO_SOURCE_TYPE sourceType, ScreenCaptureConfiguration config)
+        public int StartScreenCapture(VIDEO_SOURCE_TYPE type, ScreenCaptureConfiguration config)
         {
             _param.Clear();
-            _param.Add("sourceType", sourceType);
+            _param.Add("type", type);
             _param.Add("config", config);
 
 
@@ -3343,10 +3343,10 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int StopScreenCapture(VIDEO_SOURCE_TYPE sourceType)
+        public int StopScreenCapture(VIDEO_SOURCE_TYPE type)
         {
             _param.Clear();
-            _param.Add("sourceType", sourceType);
+            _param.Add("type", type);
 
             var json = AgoraJson.ToJson(_param);
 
@@ -4963,12 +4963,16 @@ namespace Agora.Rtc
                 {
                     var screenCaptureSourceInfo = new ScreenCaptureSourceInfo();
                     screenCaptureSourceInfo.type = infoInternal[i].type;
-                    screenCaptureSourceInfo.isOccluded = infoInternal[i].isOccluded;
-                    screenCaptureSourceInfo.primaryMonitor = infoInternal[i].primaryMonitor;
-                    screenCaptureSourceInfo.processPath = infoInternal[i].processPath;
                     screenCaptureSourceInfo.sourceId = infoInternal[i].sourceId;
                     screenCaptureSourceInfo.sourceName = infoInternal[i].sourceName;
+                    screenCaptureSourceInfo.processPath = infoInternal[i].processPath;
                     screenCaptureSourceInfo.sourceTitle = infoInternal[i].sourceTitle;
+                    screenCaptureSourceInfo.primaryMonitor = infoInternal[i].primaryMonitor;
+                    screenCaptureSourceInfo.isOccluded = infoInternal[i].isOccluded;
+                    screenCaptureSourceInfo.position = infoInternal[i].position;
+                    screenCaptureSourceInfo.minimizeWindow = infoInternal[i].minimizeWindow;
+                    screenCaptureSourceInfo.sourceDisplayId = infoInternal[i].sourceDisplayId;
+
                     ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
                     imageBuffer.height = infoInternal[i].thumbImage.height;
                     imageBuffer.width = infoInternal[i].thumbImage.width;
@@ -4992,6 +4996,7 @@ namespace Agora.Rtc
                     }
                     imageBuffer2.buffer = iconbBuffer;
                     screenCaptureSourceInfo.iconImage = imageBuffer2;
+
                     info[i] = screenCaptureSourceInfo;
                 }
                 IntPtr sources = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "sources");
