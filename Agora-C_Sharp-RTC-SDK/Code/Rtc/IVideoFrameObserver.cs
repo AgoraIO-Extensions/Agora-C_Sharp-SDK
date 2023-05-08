@@ -15,13 +15,17 @@ namespace Agora.Rtc
         ///
         /// <param name="videoFrame"> The video frame. See VideoFrame .</param>
         ///
-        /// <param name="config"> The configuration of the video frame. See VideoFrameBufferConfig .</param>
         ///
         /// <returns>
         /// true: Sets the SDK to receive the video frame.false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
-        public virtual bool OnCaptureVideoFrame(VideoFrame videoFrame, VideoFrameBufferConfig config)
+        public virtual bool OnCaptureVideoFrame(VIDEO_SOURCE_TYPE type, VideoFrame videoFrame)
+        {
+            return true;
+        }
+
+        public virtual bool OnMediaPlayerVideoFrame(VideoFrame videoFrame, int mediaPlayerId)
         {
             return true;
         }
@@ -40,7 +44,7 @@ namespace Agora.Rtc
         /// true: Sets the SDK to receive the video frame.false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
-        public virtual bool OnPreEncodeVideoFrame(VideoFrame videoFrame, VideoFrameBufferConfig config)
+        public virtual bool OnPreEncodedVideoFrame(VIDEO_SOURCE_TYPE type, VideoFrame videoFrame)
         {
             return true;
         }
@@ -61,11 +65,17 @@ namespace Agora.Rtc
         /// true: Sets the SDK to receive the video frame.false: Sets the SDK to discard the video frame.
         /// </returns>
         ///
-        public virtual bool OnRenderVideoFrame(string channelId, uint uid, VideoFrame videoFrame)
+        public virtual bool OnRenderVideoFrame(string channelId, uint remoteUid, VideoFrame videoFrame)
         {
             return true;
         }
-        
+
+        public virtual bool OnTranscodedVideoFrame(VideoFrame videoFrame)
+        {
+            return true;
+        }
+
+
         ///
         /// <summary>
         /// Sets the format of the raw video data output by the SDK.

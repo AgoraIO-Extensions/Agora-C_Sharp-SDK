@@ -72,7 +72,7 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return ErrorCode; 
+                return ErrorCode;
             }
             return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
         }
@@ -81,7 +81,7 @@ namespace Agora.Rtc
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
-                return ErrorCode; 
+                return ErrorCode;
             }
             return _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
         }
@@ -516,6 +516,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _mediaPlayerImpl.UnloadSrc(playerId, src);
+        }
+
+        public override int SetAudioPlaybackDelay(int delay_ms)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.SetAudioPlaybackDelay(this.playerId, delay_ms);
         }
     }
 }

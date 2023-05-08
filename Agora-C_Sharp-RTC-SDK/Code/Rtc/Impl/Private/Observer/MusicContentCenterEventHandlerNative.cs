@@ -55,8 +55,8 @@ namespace Agora.Rtc
                     if (EventHandler == null) return;
                     EventHandler.OnMusicChartsResult(
                         (string)AgoraJson.GetData<string>(jsonData, "requestId"),
-                        (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "status"),
-                        AgoraJson.JsonToStructArray<MusicChartInfo>(jsonData, "result")
+                        AgoraJson.JsonToStructArray<MusicChartInfo>(jsonData, "result"),
+                        (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "error_code")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -71,8 +71,8 @@ namespace Agora.Rtc
                     if (EventHandler == null) return;
                     EventHandler.OnMusicCollectionResult(
                         (string)AgoraJson.GetData<string>(jsonData, "requestId"),
-                        (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "status"),
-                        (MusicCollection)AgoraJson.JsonToStruct<MusicCollection>(jsonData, "result")
+                        (MusicCollection)AgoraJson.JsonToStruct<MusicCollection>(jsonData, "result"),
+                        (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "error_code")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -87,7 +87,8 @@ namespace Agora.Rtc
                     if (EventHandler == null) return;
                     EventHandler.OnLyricResult(
                         (string)AgoraJson.GetData<string>(jsonData, "requestId"),
-                        (string)AgoraJson.GetData<string>(jsonData, "lyricUrl")
+                        (string)AgoraJson.GetData<string>(jsonData, "lyricUrl"),
+                        (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "error_code")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
@@ -103,9 +104,9 @@ namespace Agora.Rtc
                     EventHandler.OnPreLoadEvent(
                         (Int64)AgoraJson.GetData<Int64>(jsonData, "songCode"),
                         (int)AgoraJson.GetData<int>(jsonData, "percent"),
+                        (string)AgoraJson.GetData<string>(jsonData, "lyricUrl"),
                         (PreloadStatusCode)AgoraJson.GetData<int>(jsonData, "status"),
-                        (string)AgoraJson.GetData<string>(jsonData, "msg"),
-                        (string)AgoraJson.GetData<string>(jsonData, "lyricUrl")
+                        (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "error_code")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

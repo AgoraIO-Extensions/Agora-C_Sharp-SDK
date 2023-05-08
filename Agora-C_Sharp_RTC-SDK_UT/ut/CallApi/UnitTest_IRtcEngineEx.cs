@@ -389,6 +389,30 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_AdjustRecordingSignalVolumeEx()
+        {
+            int volume;
+            ParamsHelper.InitParam(out volume);
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.AdjustRecordingSignalVolumeEx(volume, connection);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_MuteRecordingSignalEx()
+        {
+            bool mute;
+            ParamsHelper.InitParam(out mute);
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.MuteRecordingSignalEx(mute, connection);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_AdjustUserPlaybackSignalVolumeEx()
         {
             uint uid;

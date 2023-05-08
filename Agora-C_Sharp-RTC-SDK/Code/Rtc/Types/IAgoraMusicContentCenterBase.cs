@@ -29,6 +29,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         kPreloadStatusPreloading = 2,
+
+        kPreloadStatusRemoved = 3,
     };
 
     ///
@@ -45,6 +47,16 @@ namespace Agora.Rtc
         /// @ignore
         ///
         kMusicContentCenterStatusErr = 1,
+
+        kMusicContentCenterStatusErrGateway = 2,
+
+        kMusicContentCenterStatusErrPermissionAndResource = 3,
+
+        kMusicContentCenterStatusErrInternalDataParse = 4,
+
+        kMusicContentCenterStatusErrMusicLoading = 5,
+
+        kMusicContentCenterStatusErrMusicDecryption = 6,
     };
 
     ///
@@ -61,6 +73,26 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public int id;
+    };
+
+    public enum MUSIC_CACHE_STATUS_TYPE
+    {
+        MUSIC_CACHE_STATUS_TYPE_CACHED = 0,
+     
+        MUSIC_CACHE_STATUS_TYPE_CACHING = 1
+    };
+
+    public class MusicCacheInfo
+    {
+        public Int64 songCode;
+     
+        public MUSIC_CACHE_STATUS_TYPE status;
+
+        public MusicCacheInfo()
+        {
+            songCode = 0;
+            status = MUSIC_CACHE_STATUS_TYPE.MUSIC_CACHE_STATUS_TYPE_CACHED;
+        }
     };
 
     ///
@@ -223,18 +255,22 @@ namespace Agora.Rtc
         ///
         public UInt64 mccUid;
 
+        public UInt64 maxCacheSize;
+
         public MusicContentCenterConfiguration()
         {
             appId = "";
             token = "";
             mccUid = 0;
+            maxCacheSize = 0;
         }
 
-        public MusicContentCenterConfiguration(string appId, string token, UInt64 uid)
+        public MusicContentCenterConfiguration(string appId, string token, UInt64 uid, UInt64 maxCacheSize)
         {
             this.appId = appId;
             this.token = token;
             this.mccUid = uid;
+            this.maxCacheSize = maxCacheSize;
         }
     }
 }

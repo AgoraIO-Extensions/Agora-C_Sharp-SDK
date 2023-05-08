@@ -853,7 +853,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        FRAME_WIDTH_640 = 640,
+        FRAME_WIDTH_960 = 960,
     };
 
     ///
@@ -864,7 +864,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        FRAME_HEIGHT_360 = 360,
+        FRAME_HEIGHT_540 = 540,
     };
 
     ///
@@ -1055,6 +1055,14 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int height;
+    };
+
+
+    public enum SCREEN_CAPTURE_CAPABILITY_LEVEL
+    {
+        SCREEN_CAPTURE_CAPABILITY_LEVEL_15_FPS = 0,
+        SCREEN_CAPTURE_CAPABILITY_LEVEL_30_FPS = 1,
+        SCREEN_CAPTURE_CAPABILITY_LEVEL_60_FPS = 2,
     };
 
     ///
@@ -1823,6 +1831,53 @@ namespace Agora.Rtc
         VIDEO_MIRROR_MODE_DISABLED = 2,
     };
 
+    public enum CAMERA_FORMAT_TYPE
+    {
+        /** 0: (Default) NV12. */
+        CAMERA_FORMAT_NV12,
+        /** 1: BGRA. */
+        CAMERA_FORMAT_BGRA,
+    };
+
+    /** Supported codec type bit mask. */
+    public enum CODEC_CAP_MASK
+    {
+        /** 0: No codec support. */
+        CODEC_CAP_MASK_NONE = 0,
+
+        /** bit 1: Hardware decoder support flag. */
+        CODEC_CAP_MASK_HW_DEC = 1 << 0,
+
+        /** bit 2: Hardware encoder support flag. */
+        CODEC_CAP_MASK_HW_ENC = 1 << 1,
+
+        /** bit 3: Software decoder support flag. */
+        CODEC_CAP_MASK_SW_DEC = 1 << 2,
+
+        /** bit 4: Software encoder support flag. */
+        CODEC_CAP_MASK_SW_ENC = 1 << 3,
+    };
+
+    /** The codec support information. */
+    public class CodecCapInfo
+    {
+        public CodecCapInfo(VIDEO_CODEC_TYPE codec_type, int codec_cap_mask)
+        {
+            this.codec_type = codec_type;
+            this.codec_cap_mask = codec_cap_mask;
+        }
+
+        public CodecCapInfo()
+        {
+
+        }
+
+        /** The codec type: #VIDEO_CODEC_TYPE. */
+        public VIDEO_CODEC_TYPE codec_type;
+        /** The codec support flag. */
+        public int codec_cap_mask;
+    };
+
     ///
     /// <summary>
     /// Video encoder configurations.
@@ -1936,7 +1991,7 @@ namespace Agora.Rtc
         public VideoEncoderConfiguration()
         {
             codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
-            dimensions = new VideoDimensions((int)FRAME_WIDTH.FRAME_WIDTH_640, (int)FRAME_HEIGHT.FRAME_HEIGHT_360);
+            dimensions = new VideoDimensions((int)FRAME_WIDTH.FRAME_WIDTH_960, (int)FRAME_HEIGHT.FRAME_HEIGHT_540);
             frameRate = (int)FRAME_RATE.FRAME_RATE_FPS_15;
             bitrate = (int)BITRATE.STANDARD_BITRATE;
             minBitrate = (int)BITRATE.DEFAULT_MIN_BITRATE;
@@ -2464,44 +2519,6 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The capture type of the custom video source.
-    /// </summary>
-    ///
-    public enum VIDEO_SOURCE_TYPE
-    {
-        VIDEO_SOURCE_CAMERA_PRIMARY,
-        ///
-        /// <summary>
-        /// The camera.
-        /// </summary>
-        ///
-        VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
-        VIDEO_SOURCE_CAMERA_SECONDARY,
-        VIDEO_SOURCE_SCREEN_PRIMARY,
-        ///
-        /// <summary>
-        /// The screen.
-        /// </summary>
-        ///
-        VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
-        VIDEO_SOURCE_SCREEN_SECONDARY,
-        VIDEO_SOURCE_CUSTOM,
-        VIDEO_SOURCE_MEDIA_PLAYER,
-        VIDEO_SOURCE_RTC_IMAGE_PNG,
-        VIDEO_SOURCE_RTC_IMAGE_JPEG,
-        VIDEO_SOURCE_RTC_IMAGE_GIF,
-        VIDEO_SOURCE_REMOTE,
-        VIDEO_SOURCE_TRANSCODED,
-        ///
-        /// <summary>
-        /// An unknown video source.
-        /// </summary>
-        ///
-        VIDEO_SOURCE_UNKNOWN = 100
-    };
-
-    ///
-    /// <summary>
     /// The user role in the interactive live streaming.
     /// </summary>
     ///
@@ -2660,159 +2677,6 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// Audio statistics of the remote user.
-    /// </summary>
-    ///
-    public class RemoteAudioStats
-    {
-        public RemoteAudioStats()
-        {
-            uid = 0;
-            quality = 0;
-            networkTransportDelay = 0;
-            jitterBufferDelay = 0;
-            audioLossRate = 0;
-            numChannels = 0;
-            receivedSampleRate = 0;
-            receivedBitrate = 0;
-            totalFrozenTime = 0;
-            frozenRate = 0;
-            mosValue = 0;
-            totalActiveTime = 0;
-            publishDuration = 0;
-            qoeQuality = 0;
-            qualityChangedReason = 0;
-        }
-
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay,
-            int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime,
-            int frozenRate, int mosValue, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason)
-        {
-            this.uid = uid;
-            this.quality = quality;
-            this.networkTransportDelay = networkTransportDelay;
-            this.jitterBufferDelay = jitterBufferDelay;
-            this.audioLossRate = audioLossRate;
-            this.numChannels = numChannels;
-            this.receivedSampleRate = receivedSampleRate;
-            this.receivedBitrate = receivedBitrate;
-            this.totalFrozenTime = totalFrozenTime;
-            this.frozenRate = frozenRate;
-            this.mosValue = mosValue;
-            this.totalActiveTime = totalActiveTime;
-            this.publishDuration = publishDuration;
-            this.qoeQuality = qoeQuality;
-            this.qualityChangedReason = qualityChangedReason;
-        }
-
-        ///
-        /// <summary>
-        /// The user ID of the remote user.
-        /// </summary>
-        ///
-        public uint uid;
-
-        ///
-        /// <summary>
-        /// The quality of the audio stream sent by the user. See QUALITY_TYPE .
-        /// </summary>
-        ///
-        public int quality;
-
-        ///
-        /// <summary>
-        /// The network delay (ms) from the sender to the receiver.
-        /// </summary>
-        ///
-        public int networkTransportDelay;
-
-        ///
-        /// <summary>
-        /// The network delay (ms) from the audio receiver to the jitter buffer.When the receiving end is an audience member and audienceLatencyLevel of ClientRoleOptions is 1, this parameter does not take effect.
-        /// </summary>
-        ///
-        public int jitterBufferDelay;
-
-        ///
-        /// <summary>
-        /// The frame loss rate (%) of the remote audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int audioLossRate;
-
-        ///
-        /// <summary>
-        /// The number of audio channels.
-        /// </summary>
-        ///
-        public int numChannels;
-
-        ///
-        /// <summary>
-        /// The sampling rate of the received audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int receivedSampleRate;
-
-        ///
-        /// <summary>
-        /// The average bitrate (Kbps) of the received audio stream in the reported interval.
-        /// </summary>
-        ///
-        public int receivedBitrate;
-
-        ///
-        /// <summary>
-        /// The total freeze time (ms) of the remote audio stream after the remote user joins the channel. In a session, audio freeze occurs when the audio frame loss rate reaches 4%.
-        /// </summary>
-        ///
-        public int totalFrozenTime;
-
-        ///
-        /// <summary>
-        /// The total audio freeze time as a percentage (%) of the total time when the audio is available. The audio is considered available when the remote user neither stops sending the audio stream nor disables the audio module after joining the channel.
-        /// </summary>
-        ///
-        public int frozenRate;
-
-        ///
-        /// <summary>
-        /// The quality of the remote audio stream in the reported interval. The quality is determined by the Agora real-time audio MOS (Mean Opinion Score) measurement method. The return value range is [0, 500]. Dividing the return value by 100 gets the MOS score, which ranges from 0 to 5. The higher the score, the better the audio quality.The subjective perception of audio quality corresponding to the Agora real-time audio MOS scores is as follows:MOS scorePerception of audio qualityGreater than 4Excellent. The audio sounds clear and smooth.From 3.5 to 4Good. The audio has some perceptible impairment but still sounds clear.From 3 to 3.5Fair. The audio freezes occasionally and requires attentive listening.From 2.5 to 3Poor. The audio sounds choppy and requires considerable effort to understand.From 2 to 2.5Bad. The audio has occasional noise. Consecutive audio dropouts occur, resulting in some information loss. The users can communicate only with difficulty.Less than 2Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible.
-        /// </summary>
-        ///
-        public int mosValue;
-
-        ///
-        /// <summary>
-        /// The total active time (ms) between the start of the audio call and the callback of the remote user.The active time refers to the total duration of the remote user without the mute state.
-        /// </summary>
-        ///
-        public int totalActiveTime;
-
-        ///
-        /// <summary>
-        /// The total duration (ms) of the remote audio stream.
-        /// </summary>
-        ///
-        public int publishDuration;
-
-        ///
-        /// <summary>
-        /// The Quality of Experience (QoE) of the local user when receiving a remote audio stream. See EXPERIENCE_QUALITY_TYPE .
-        /// </summary>
-        ///
-        public int qoeQuality;
-
-        ///
-        /// <summary>
-        /// Reasons why the QoE of the local user when receiving a remote audio stream is poor. See EXPERIENCE_POOR_REASON .
-        /// </summary>
-        ///
-        public int qualityChangedReason;
-    };
-
-    ///
-    /// <summary>
     /// The audio profile.
     /// </summary>
     ///
@@ -2955,8 +2819,8 @@ namespace Agora.Rtc
 
         public VideoFormat()
         {
-            width = (int)FRAME_WIDTH.FRAME_WIDTH_640;
-            height = (int)FRAME_HEIGHT.FRAME_HEIGHT_360;
+            width = (int)FRAME_WIDTH.FRAME_WIDTH_960;
+            height = (int)FRAME_HEIGHT.FRAME_HEIGHT_540;
             fps = (int)FRAME_RATE.FRAME_RATE_FPS_15;
         }
 
@@ -3290,12 +3154,10 @@ namespace Agora.Rtc
         ///
         LOCAL_VIDEO_STREAM_ERROR_CAPTURE_FAILURE = 4,
 
-        ///
-        /// <summary>
-        /// 5: The local video encoding fails.
-        /// </summary>
-        ///
-        LOCAL_VIDEO_STREAM_ERROR_ENCODE_FAILURE = 5,
+        /**
+         * 5: The local video encoder is not supported.
+        */
+        LOCAL_VIDEO_STREAM_ERROR_CODEC_NOT_SUPPORT = 5,
 
         ///
         /// <summary>
@@ -3607,6 +3469,14 @@ namespace Agora.Rtc
         /// @ignore
         ///
         REMOTE_VIDEO_STATE_REASON_VIDEO_STREAM_TYPE_CHANGE_TO_HIGH = 11,
+
+        /** (iOS only) 12: The app of the remote user is in background.
+        */
+        REMOTE_VIDEO_STATE_REASON_SDK_IN_BACKGROUND = 12,
+
+        /** 13: The remote video stream is not supported by the decoder
+         */
+        REMOTE_VIDEO_STATE_REASON_CODEC_NOT_SUPPORT = 13,
     };
 
     [Flags]
@@ -3940,7 +3810,8 @@ namespace Agora.Rtc
         {
         }
 
-        public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec, ushort txPacketLossRate, int audioDeviceDelay)
+        public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec,
+            ushort txPacketLossRate, int audioDeviceDelay, int audioPlayoutDelay)
         {
             this.numChannels = numChannels;
             this.sentSampleRate = sentSampleRate;
@@ -3948,6 +3819,7 @@ namespace Agora.Rtc
             this.internalCodec = internalCodec;
             this.txPacketLossRate = txPacketLossRate;
             this.audioDeviceDelay = audioDeviceDelay;
+            this.audioPlayoutDelay = audioPlayoutDelay;
         }
 
         ///
@@ -3991,6 +3863,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int audioDeviceDelay;
+
+        /**
+        * The playout delay of the device
+        */
+        public int audioPlayoutDelay;
     }
 
     ///
@@ -4690,7 +4567,7 @@ namespace Agora.Rtc
     {
         public TranscodingVideoStream()
         {
-            this.sourceType = MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE;
+            this.sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA;
             remoteUserUid = 0;
             imageUrl = null;
             x = 0;
@@ -4702,7 +4579,7 @@ namespace Agora.Rtc
             mirror = false;
         }
 
-        public TranscodingVideoStream(MEDIA_SOURCE_TYPE sourceType, uint remoteUserUid,
+        public TranscodingVideoStream(VIDEO_SOURCE_TYPE sourceType, uint remoteUserUid,
             string imageUrl, int x, int y, int width, int height, int zOrder, double alpha,
             bool mirror)
         {
@@ -4723,7 +4600,7 @@ namespace Agora.Rtc
         /// The source type of video for the video mixing on the local client. See VIDEO_SOURCE_TYPE .
         /// </summary>
         ///
-        public MEDIA_SOURCE_TYPE sourceType;
+        public VIDEO_SOURCE_TYPE sourceType;
 
         ///
         /// <summary>
@@ -4738,6 +4615,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public string imageUrl;
+
+        public int mediaPlayerId;
 
         ///
         /// <summary>
@@ -4799,16 +4678,16 @@ namespace Agora.Rtc
         public LocalTranscoderConfiguration()
         {
             streamCount = 0;
-            VideoInputStreams = null;
+            videoInputStreams = null;
             videoOutputConfiguration = new VideoEncoderConfiguration();
             syncWithPrimaryCamera = true;
         }
 
-        public LocalTranscoderConfiguration(uint streamCount, TranscodingVideoStream[] VideoInputStreams,
+        public LocalTranscoderConfiguration(uint streamCount, TranscodingVideoStream[] videoInputStreams,
                                             VideoEncoderConfiguration videoOutputConfiguration)
         {
             this.streamCount = streamCount;
-            this.VideoInputStreams = VideoInputStreams;
+            this.videoInputStreams = videoInputStreams;
             this.videoOutputConfiguration = videoOutputConfiguration;
         }
 
@@ -4824,7 +4703,7 @@ namespace Agora.Rtc
         /// The video streams for the video mixing on the local client. See TranscodingVideoStream .
         /// </summary>
         ///
-        public TranscodingVideoStream[] VideoInputStreams;
+        public TranscodingVideoStream[] videoInputStreams;
 
         ///
         /// <summary>
@@ -4837,6 +4716,38 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public bool syncWithPrimaryCamera;
+    };
+
+    public enum VIDEO_TRANSCODER_ERROR
+    {
+        /**
+         * No error
+         */
+        VT_ERR_OK = 0,
+        /**
+         * The video track of the video source is not started.
+         */
+        VT_ERR_VIDEO_SOURCE_NOT_READY = 1,
+        /**
+         * The video source type is not supported.
+         */
+        VT_ERR_INVALID_VIDEO_SOURCE_TYPE = 2,
+        /**
+         * The image url is not correctly of image source.
+         */
+        VT_ERR_INVALID_IMAGE_PATH = 3,
+        /**
+         * The image format not the type png/jpeg/gif of image source.
+         */
+        VT_ERR_UNSUPPORT_IMAGE_FORMAT = 4,
+        /**
+         * The layout is invalid such as width is zero.
+         */
+        VT_ERR_INVALID_LAYOUT = 5,
+        /**
+         * Internal error.
+         */
+        VT_ERR_INTERNAL = 20
     };
 
     ///
@@ -5895,6 +5806,47 @@ namespace Agora.Rtc
         }
     };
 
+    /** The type of custom audio track
+    */
+    public enum AUDIO_TRACK_TYPE
+    {
+        /** 
+         * -1: Invalid audio track
+         */
+        AUDIO_TRACK_INVALID = -1,
+        /** 
+         * 0: Mixable audio track
+         * You can push more than one mixable Audio tracks into one RTC connection(channel id + uid), 
+         * and SDK will mix these tracks into one audio track automatically.
+         * However, compare to direct audio track, mixable track might cause extra 30ms+ delay.
+         */
+        AUDIO_TRACK_MIXABLE = 0,
+        /**
+         * 1: Direct audio track
+         * You can only push one direct (non-mixable) audio track into one RTC connection(channel id + uid). 
+         * Compare to mixable stream, you can have lower lantency using direct audio track.
+         */
+        AUDIO_TRACK_DIRECT = 1,
+    };
+
+    /** The configuration of custom audio track
+    */
+    public class AudioTrackConfig
+    {
+        /**
+         * Enable local playback, enabled by default
+         * true: (Default) Enable local playback
+         * false: Do not enable local playback
+         */
+        public bool enableLocalPlayback;
+
+        public AudioTrackConfig()
+        {
+            this.enableLocalPlayback = true;
+        }
+
+    };
+
     [Flags]
     ///
     /// <summary>
@@ -6011,147 +5963,140 @@ namespace Agora.Rtc
     ///
     public enum AUDIO_EFFECT_PRESET
     {
-        ///
-        /// <summary>
-        /// Turn off voice effects, that is, use the original voice.
-        /// </summary>
-        ///
+        /** Turn off voice effects, that is, use the original voice.
+         */
         AUDIO_EFFECT_OFF = 0x00000000,
-
-        ///
-        /// <summary>
-        /// The voice effect typical of a KTV venue.
-        /// </summary>
-        ///
+        /** The voice effect for backing vocals when the lead vocal turns off audio effect.
+        * @note: When this effect is used, the voice of the backing vocals will be softer.
+        */
+        AUDIO_EFFECT_OFF_HARMONY = 0x02010120,
+        /** The voice effect typical of a KTV venue.
+         */
         ROOM_ACOUSTICS_KTV = 0x02010100,
-
-        ///
-        /// <summary>
-        /// The voice effect typical of a concert hall.
-        /// </summary>
-        ///
+        /** The voice effect typical of a KTV venue for backing vocals.
+        * @note: This effect is used for backing vocals when KTV venue is chosen for the lead vocal.
+        */
+        ROOM_ACOUSTICS_KTV_HARMONY = 0x02010110,
+        /** The voice effect typical of a concert hall.
+         */
         ROOM_ACOUSTICS_VOCAL_CONCERT = 0x02010200,
-
-        ///
-        /// <summary>
-        /// The voice effect typical of a recording studio.
-        /// </summary>
-        ///
+        /** The voice effect typical of a concert hall for backing vocals.
+        * @note: This effect is used for backing vocals when concert hall is chosen for the lead vocal.
+        */
+        ROOM_ACOUSTICS_VOCAL_CONCERT_HARMONY = 0x02010210,
+        /** The voice effect typical of a recording studio.
+         */
         ROOM_ACOUSTICS_STUDIO = 0x02010300,
-
-        ///
-        /// <summary>
-        /// The voice effect typical of a vintage phonograph.
-        /// </summary>
-        ///
+        /** The voice effect typical of a studio venue for backing vocals.
+        * @note: This effect is used for backing vocals when studio venue is chosen for the lead vocal.
+        */
+        ROOM_ACOUSTICS_STUDIO_HARMONY = 0x02010310,
+        /** The voice effect typical of a vintage phonograph.
+         */
         ROOM_ACOUSTICS_PHONOGRAPH = 0x02010400,
-
-        ///
-        /// <summary>
-        /// The virtual stereo effect, which renders monophonic audio as stereo audio.
-        /// </summary>
-        ///
+        /** The voice effect typical of a phonograph venue for backing vocals.
+        * @note: This effect is used for backing vocals when phonograph venue is chosen for the lead vocal.
+        */
+        ROOM_ACOUSTICS_PHONOGRAPH_HARMONY = 0x02010410,
+        /** The virtual stereo effect, which renders monophonic audio as stereo audio.
+         *
+         * @note Before using this preset, set the `profile` parameter of `setAudioProfile`
+         * to `AUDIO_PROFILE_MUSIC_STANDARD_STEREO(3)` or `AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5)`;
+         * otherwise, the preset setting is invalid.
+         */
         ROOM_ACOUSTICS_VIRTUAL_STEREO = 0x02010500,
-
-        ///
-        /// <summary>
-        /// A more spatial voice effect.
-        /// </summary>
-        ///
+        /** A more spatial voice effect.
+         */
         ROOM_ACOUSTICS_SPACIAL = 0x02010600,
-
-        ///
-        /// <summary>
-        /// A more ethereal voice effect.
-        /// </summary>
-        ///
+        /** A more ethereal voice effect.
+         */
         ROOM_ACOUSTICS_ETHEREAL = 0x02010700,
-
-        ///
-        /// <summary>
-        /// A 3D voice effect that makes the voice appear to be moving around the user. The default cycle period is 10 seconds. After setting this effect, you can call SetAudioEffectParameters to modify the movement period.If the 3D voice effect is enabled, users need to use stereo audio playback devices to hear the anticipated voice effect.
-        /// </summary>
-        ///
+        /** A 3D voice effect that makes the voice appear to be moving around the user. The default cycle
+         * period of the 3D voice effect is 10 seconds. To change the cycle period, call `setAudioEffectParameters`
+         * after this method.
+         *
+         * @note
+         * - Before using this preset, set the `profile` parameter of `setAudioProfile` to
+         * `AUDIO_PROFILE_MUSIC_STANDARD_STEREO` or `AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO`; otherwise,
+         * the preset setting is invalid.
+         * - If the 3D voice effect is enabled, users need to use stereo audio playback devices to hear
+         * the anticipated voice effect.
+         */
         ROOM_ACOUSTICS_3D_VOICE = 0x02010800,
-
-        ///
-        /// <summary>
-        /// Virtual surround sound, that is, the SDK generates a simulated surround sound field on the basis of stereo channels, thereby creating a surround sound effect.If the virtual surround sound is enabled, users need to use stereo audio playback devices to hear the anticipated audio effect.
-        /// </summary>
-        ///
+        /** virtual suround sound.
+         *
+         * @note
+         * - Agora recommends using this enumerator to process virtual suround sound; otherwise, you may
+         * not hear the anticipated voice effect.
+         * - To achieve better audio effect quality, Agora recommends calling \ref
+         * IRtcEngine::setAudioProfile "setAudioProfile" and setting the `profile` parameter to
+         * `AUDIO_PROFILE_MUSIC_HIGH_QUALITY(4)` or `AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO(5)` before
+         * setting this enumerator.
+         */
         ROOM_ACOUSTICS_VIRTUAL_SURROUND_SOUND = 0x02010900,
-
-        ///
-        /// <summary>
-        /// A middle-aged man's voice.Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect.
-        /// </summary>
-        ///
+        /** A middle-aged man's voice.
+         *
+         * @note
+         * Agora recommends using this enumerator to process a male-sounding voice; otherwise, you may
+         * not hear the anticipated voice effect.
+         */
         VOICE_CHANGER_EFFECT_UNCLE = 0x02020100,
-
-        ///
-        /// <summary>
-        /// An older man's voice.Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect.
-        /// </summary>
-        ///
+        /** A senior man's voice.
+         *
+         * @note Agora recommends using this enumerator to process a male-sounding voice; otherwise, you may
+         * not hear the anticipated voice effect.
+         */
         VOICE_CHANGER_EFFECT_OLDMAN = 0x02020200,
-
-        ///
-        /// <summary>
-        /// A boy's voice.Agora recommends using this preset to process a male-sounding voice; otherwise, you may not hear the anticipated voice effect.
-        /// </summary>
-        ///
+        /** A boy's voice.
+         *
+         * @note Agora recommends using this enumerator to process a male-sounding voice; otherwise, you may
+         * not hear the anticipated voice effect.
+         */
         VOICE_CHANGER_EFFECT_BOY = 0x02020300,
-
-        ///
-        /// <summary>
-        /// A young woman's voice.Agora recommends using this preset to process a female-sounding voice; otherwise, you may not hear the anticipated voice effect.
-        /// </summary>
-        ///
+        /** A young woman's voice.
+         *
+         * @note
+         * - Agora recommends using this enumerator to process a female-sounding voice; otherwise, you may
+         * not hear the anticipated voice effect.
+         */
         VOICE_CHANGER_EFFECT_SISTER = 0x02020400,
-
-        ///
-        /// <summary>
-        /// A girl's voice.Agora recommends using this preset to process a female-sounding voice; otherwise, you may not hear the anticipated voice effect.
-        /// </summary>
-        ///
+        /** A girl's voice.
+         *
+         * @note Agora recommends using this enumerator to process a female-sounding voice; otherwise, you may
+         * not hear the anticipated voice effect.
+         */
         VOICE_CHANGER_EFFECT_GIRL = 0x02020500,
-
-        ///
-        /// <summary>
-        /// The voice of Pig King, a character in Journey to the West who has a voice like a growling bear.
-        /// </summary>
-        ///
+        /** The voice of Pig King, a character in Journey to the West who has a voice like a growling
+         * bear.
+         */
         VOICE_CHANGER_EFFECT_PIGKING = 0x02020600,
-
-        ///
-        /// <summary>
-        /// The Hulk's voice.
-        /// </summary>
-        ///
+        /** The Hulk's voice.
+         */
         VOICE_CHANGER_EFFECT_HULK = 0x02020700,
-
-        ///
-        /// <summary>
-        /// The voice effect typical of R&B music.
-        /// </summary>
-        ///
+        /** An audio effect typical of R&B music.
+         *
+         * @note Before using this preset, set the `profile` parameter of `setAudioProfile` to
+         - `AUDIO_PROFILE_MUSIC_HIGH_QUALITY` or `AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO`; otherwise,
+         * the preset setting is invalid.
+         */
         STYLE_TRANSFORMATION_RNB = 0x02030100,
-
-        ///
-        /// <summary>
-        /// The voice effect typical of popular music.
-        /// </summary>
-        ///
+        /** The voice effect typical of popular music.
+         *
+         * @note Before using this preset, set the `profile` parameter of `setAudioProfile` to
+         - `AUDIO_PROFILE_MUSIC_HIGH_QUALITY` or `AUDIO_PROFILE_MUSIC_HIGH_QUALITY_STEREO`; otherwise,
+         * the preset setting is invalid.
+         */
         STYLE_TRANSFORMATION_POPULAR = 0x02030200,
-
-        ///
-        /// <summary>
-        /// A pitch correction effect that corrects the user's pitch based on the pitch of the natural C major scale. After setting this voice effect, you can call SetAudioEffectParameters to adjust the basic mode of tuning and the pitch of the main tone.
-        /// </summary>
-        ///
+        /** A pitch correction effect that corrects the user's pitch based on the pitch of the natural C
+        * major scale. After setting this voice effect, you can call `setAudioEffectParameters` to adjust
+        * the basic mode of tuning and the pitch of the main tone.
+         */
         PITCH_CORRECTION = 0x02040100,
-    };
 
+        /** Todo:  Electronic sound, Magic tone haven't been implemented.
+         *
+         */
+    };
     [Flags]
     ///
     /// <summary>
@@ -6690,6 +6635,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AREA_CODE_US = 0x00000800,
+
+        /**
+        * Russia
+         */
+        AREA_CODE_RU = 0x00001000,
 
         ///
         /// @ignore

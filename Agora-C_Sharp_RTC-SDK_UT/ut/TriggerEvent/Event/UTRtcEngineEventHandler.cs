@@ -2773,6 +2773,31 @@ namespace Agora.Rtc
         }
 
         ///////////////////////////////////
+     
+        public bool OnLocalVideoTranscoderError_be_trigger = false;
+        public TranscodingVideoStream OnLocalVideoTranscoderError_stream = null;
+        public VIDEO_TRANSCODER_ERROR OnLocalVideoTranscoderError_error;
+
+        public override void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        {
+            OnLocalVideoTranscoderError_be_trigger = true;
+            OnLocalVideoTranscoderError_stream = stream;
+            OnLocalVideoTranscoderError_error = error;
+        }
+
+        public bool OnLocalVideoTranscoderErrorPassed(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        {
+            if (OnLocalVideoTranscoderError_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareTranscodingVideoStream(OnLocalVideoTranscoderError_stream, stream) == false)
+                return false;
+            if (ParamsHelper.compareVIDEO_TRANSCODER_ERROR(OnLocalVideoTranscoderError_error, error) == false)
+                return false;
+
+            return true;
+        }
+
         #endregion
 
     }
