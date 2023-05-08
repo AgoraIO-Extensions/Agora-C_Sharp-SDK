@@ -2963,7 +2963,7 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out type);
             var nRet = Engine.IsFeatureAvailableOnDevice(type);
 
-            Assert.AreEqual(0, true);
+            Assert.AreEqual(true, nRet);
         }
 
 
@@ -3058,18 +3058,6 @@ namespace Agora.Rtc
             int channels;
             ParamsHelper.InitParam(out channels);
             var nRet = Engine.SetExternalAudioSink(enabled, sampleRate, channels);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_EnableCustomAudioLocalPlayback()
-        {
-            uint trackId;
-            ParamsHelper.InitParam(out trackId);
-            bool enabled;
-            ParamsHelper.InitParam(out enabled);
-            var nRet = Engine.EnableCustomAudioLocalPlayback(trackId, enabled);
 
             Assert.AreEqual(0, nRet);
         }

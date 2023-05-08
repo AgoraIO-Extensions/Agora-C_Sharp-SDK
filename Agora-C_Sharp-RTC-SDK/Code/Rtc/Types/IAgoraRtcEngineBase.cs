@@ -1198,7 +1198,7 @@ namespace Agora.Rtc
         /// (For Windows and macOS only) The screen capture configuration. See ScreenCaptureParameters .
         /// </summary>
         ///
-        public ScreenCaptureParameters parameters;
+        public ScreenCaptureParameters @params;
 
         ///
         /// <summary>
@@ -1392,6 +1392,7 @@ namespace Agora.Rtc
         ///
         public bool minimizeWindow;
 
+        public view_t sourceDisplayId;
         public ScreenCaptureSourceInfo()
         {
             type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;

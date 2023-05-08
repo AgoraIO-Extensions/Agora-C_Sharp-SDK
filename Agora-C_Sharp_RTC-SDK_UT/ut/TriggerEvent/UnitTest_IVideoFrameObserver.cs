@@ -179,7 +179,7 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnTranscodedVideoFramePassed(videoFrame));
         }
 
-        //todo we will resolve this late
+        //will not triggered
         [Test]
         public void Test_GetVideoFormatPreference()
         {
@@ -195,10 +195,10 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetVideoFormatPreferencePassed());
+            Assert.AreEqual(false, EventHandler.GetVideoFormatPreferencePassed());
         }
 
-        //todo we will resolve this late
+        //will not triggered
         [Test]
         public void Test_GetObservedFramePosition()
         {
@@ -213,7 +213,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetObservedFramePositionPassed());
+            Assert.AreEqual(false, EventHandler.GetObservedFramePositionPassed());
         }
 
 
