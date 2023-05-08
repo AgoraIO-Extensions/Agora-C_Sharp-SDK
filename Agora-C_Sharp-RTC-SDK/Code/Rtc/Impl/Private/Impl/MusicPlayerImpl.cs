@@ -310,6 +310,11 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetSoundPositionParams(playerId, pan, gain);
         }
 
+        public int SetAudioPlaybackDelay(int playerId, int delay_ms)
+        {
+            return _mediaPlayerImpl.SetAudioPlaybackDelay(playerId, delay_ms);
+        }
+
         public int Open(int playerId, Int64 songCode, Int64 startPos = 0)
         {
             _param.Clear();

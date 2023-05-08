@@ -1,5 +1,6 @@
 using System;
 using video_track_id_t = System.UInt32;
+using track_id_t = System.UInt32;
 
 namespace Agora.Rtc
 {
@@ -869,93 +870,13 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int EnableMultiCamera(bool enabled, CameraCapturerConfiguration config);
-        ///
-        /// <summary>
-        /// Starts video capture with a primary camera.
-        /// </summary>
-        ///
-        /// <param name="config"> The configuration of the video capture with a primary camera. See CameraCapturerConfiguration .</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int StartPrimaryCameraCapture(CameraCapturerConfiguration config);
 
-        ///
-        /// <summary>
-        /// Starts video capture with a secondary camera.
-        /// </summary>
-        ///
-        /// <param name="config"> The configuration of the video capture with a primary camera. See CameraCapturerConfiguration .</param>
-        ///
-        public abstract int StartSecondaryCameraCapture(CameraCapturerConfiguration config);
+        public abstract int StartCameraCapture(VIDEO_SOURCE_TYPE sourceType, CameraCapturerConfiguration config);
 
-        ///
-        /// <summary>
-        /// Stops capturing video through a primary camera.
-        /// You can call this method to stop capturing video through the primary camera after calling the StartPrimaryCameraCapture .
-        /// </summary>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int StopPrimaryCameraCapture();
+        public abstract int StopCameraCapture(VIDEO_SOURCE_TYPE sourceType);
 
-        ///
-        /// <summary>
-        ///  Stops capturing video through the second camera.
-        /// StartSecondaryCameraCapture You can call this method to stop capturing video through the second camera after calling the .On the iOS platform, if you want to disable multi-camera capture, you need to call EnableMultiCamera after calling this method and set enabled to false.
-        /// </summary>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int StopSecondaryCameraCapture();
 
-        ///
-        /// <summary>
-        /// Starts sharing the primary screen.
-        /// </summary>
-        ///
-        /// <param name="config"> The configuration of the captured screen. See ScreenCaptureConfiguration .</param>
-        ///
-        public abstract int StartPrimaryScreenCapture(ScreenCaptureConfiguration config);
-
-        ///
-        /// <summary>
-        /// Starts sharing a secondary screen.
-        /// </summary>
-        ///
-        /// <param name="config"> The configuration of the captured screen. See ScreenCaptureConfiguration .</param>
-        ///
-        public abstract int StartSecondaryScreenCapture(ScreenCaptureConfiguration config);
-
-        ///
-        /// <summary>
-        /// Stop sharing the first screen.
-        /// After calling StartPrimaryScreenCapture , you can call this method to stop sharing the first screen.
-        /// </summary>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int StopPrimaryScreenCapture();
-
-        ///
-        /// <summary>
-        /// Stops sharing the secondary screen.
-        /// After calling StartSecondaryScreenCapture , you can call this method to stop sharing the secondary screen.
-        /// </summary>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
-        ///
-        public abstract int StopSecondaryScreenCapture();
+       
         #endregion
 
         #region Media player
@@ -1943,6 +1864,10 @@ namespace Agora.Rtc
         ///
         public abstract int StartScreenCapture(byte[] mediaProjectionPermissionResultData, ScreenCaptureParameters captureParams);
 
+
+        public abstract int StartScreenCapture(VIDEO_SOURCE_TYPE sourceType, ScreenCaptureConfiguration config);
+
+        public abstract int StopScreenCapture(VIDEO_SOURCE_TYPE sourceType);
         ///
         /// <summary>
         /// Starts screen sharing.
@@ -1973,6 +1898,7 @@ namespace Agora.Rtc
         ///
         public abstract int UpdateScreenCapture(ScreenCaptureParameters2 captureParams);
 
+        public abstract int QueryScreenCaptureCapability();
         ///
         /// <summary>
         /// Shares the whole or part of a window by specifying the window ID.
@@ -2377,7 +2303,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int PushAudioFrame(MEDIA_SOURCE_TYPE type, AudioFrame frame, bool wrap = false, int sourceId = 0);
+        public abstract int PushAudioFrame(AudioFrame frame, track_id_t trackId = 0);
 
         ///
         /// @ignore
@@ -2410,8 +2336,12 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, int sourceNumber, bool localPlayback = false, bool publish = true);
+        public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true);
 
+
+        public abstract track_id_t CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config);
+
+        public abstract int DestroyCustomAudioTrack(track_id_t trackId);
         ///
         /// <summary>
         /// Adjusts the volume of the custom external audio source when it is published in the channel.
@@ -2426,12 +2356,12 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int AdjustCustomAudioPublishVolume(int sourceId, int volume);
+        public abstract int AdjustCustomAudioPublishVolume(track_id_t trackId, int volume);
 
         ///
         /// @ignore
         ///
-        public abstract int AdjustCustomAudioPlayoutVolume(int sourceId, int volume);
+        public abstract int AdjustCustomAudioPlayoutVolume(track_id_t trackId, int volume);
         #endregion
 
         #region Custom audio renderer
@@ -3481,6 +3411,7 @@ namespace Agora.Rtc
         ///
         public abstract string GetErrorDescription(int code);
 
+        public abstract int QueryCodecCapability(ref CodecCapInfo[] codecInfo, ref int size);
 
         #endregion
 
@@ -3816,27 +3747,6 @@ namespace Agora.Rtc
         #region DualStream
         #endregion
 
-
-        ///
-        /// @ignore
-        ///
-        public abstract int StartPrimaryCustomAudioTrack(AudioTrackConfig config);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int StopPrimaryCustomAudioTrack();
-
-        ///
-        /// @ignore
-        ///
-        public abstract int StartSecondaryCustomAudioTrack(AudioTrackConfig config);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int StopSecondaryCustomAudioTrack();
-
         ///
         /// <summary>
         /// Sets the rotation angle of the captured video.
@@ -3982,7 +3892,7 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract int EnableCustomAudioLocalPlayback(int sourceId, bool enabled);
+        public abstract int EnableCustomAudioLocalPlayback(track_id_t trackId, bool enabled);
 
         ///
         /// @ignore
@@ -3993,21 +3903,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int SetRemoteSubscribeFallbackOption(STREAM_FALLBACK_OPTIONS option);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int EnableEchoCancellationExternal(bool enabled, int audioSourceDelay);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int SetDirectExternalAudioSource(bool enable, bool localPlayback);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int PushDirectAudioFrame(AudioFrame frame);
 
         ///
         /// @ignore
@@ -4094,7 +3989,9 @@ namespace Agora.Rtc
         ///
         public abstract long GetCurrentMonotonicTimeInMs();
 
+        public abstract UInt64 GetNtpWallTimeInMs();
 
+        public abstract bool IsFeatureAvailableOnDevice(FeatureType type);
         ///
         /// <summary>
         /// Gets the C++ handle of the native SDK.
@@ -4303,6 +4200,11 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName);
+
+        public abstract int AdjustRecordingSignalVolumeEx(int volume, RtcConnection connection);
+
+
+        public abstract int MuteRecordingSignalEx(bool mute, RtcConnection connection);
 
         ///
         /// <summary>

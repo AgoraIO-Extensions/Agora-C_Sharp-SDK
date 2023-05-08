@@ -506,5 +506,14 @@ namespace Agora.Rtc
             }
             return _musicPlayerImpl.SetSoundPositionParams(this.playerId, pan, gain);
         }
+
+        public override int SetAudioPlaybackDelay(int delay_ms)
+        {
+            if (_musicPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicPlayerImpl.SetAudioPlaybackDelay(this.playerId, delay_ms);
+        }
     }
 }

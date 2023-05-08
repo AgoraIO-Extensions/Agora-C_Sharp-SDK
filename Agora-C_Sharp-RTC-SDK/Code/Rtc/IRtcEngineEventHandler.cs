@@ -998,6 +998,8 @@ namespace Agora.Rtc
 
         public virtual void OnVideoRenderingTracingResult(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo) { }
 
+        public virtual void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error) { }
+
         ///
         /// <summary>
         /// Occurs when the SDK cannot get the device permission.

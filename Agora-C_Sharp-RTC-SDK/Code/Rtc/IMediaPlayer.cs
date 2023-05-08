@@ -601,5 +601,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int UnloadSrc(string src);
+
+
+        public abstract int SetAudioPlaybackDelay(int delay_ms);
     }
 }

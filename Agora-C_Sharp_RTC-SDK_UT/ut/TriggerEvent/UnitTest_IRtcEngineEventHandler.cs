@@ -2662,9 +2662,31 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnVideoRenderingTracingResultPassed(connection, uid, currentEvent, tracingInfo));
         }
 
+        [Test]
+        public void Test_OnLocalVideoTranscoderError()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOTRANSCODERERROR;
+
+            TranscodingVideoStream stream;
+            ParamsHelper.InitParam(out stream);
+
+            VIDEO_TRANSCODER_ERROR error;
+            ParamsHelper.InitParam(out error);
+
+
+            jsonObj.Clear();
+            jsonObj.Add("stream", stream);
+            jsonObj.Add("error", error);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnLocalVideoTranscoderErrorPassed(stream, error));
+        }
         #endregion
-
-
-
     }
 }

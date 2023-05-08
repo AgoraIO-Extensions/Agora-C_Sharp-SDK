@@ -540,6 +540,101 @@ namespace Agora.Rtc
         public int hwEncoderAccelerating;
     };
 
+    public class RemoteAudioStats
+    {
+
+        public RemoteAudioStats()
+        {
+
+        }
+        /**
+         * User ID of the remote user sending the audio stream.
+         */
+        public uint uid;
+        /**
+         * The quality of the remote audio: #QUALITY_TYPE.
+         */
+        public int quality;
+        /**
+         * The network delay (ms) from the sender to the receiver.
+         */
+        public int networkTransportDelay;
+        /**
+         * The network delay (ms) from the receiver to the jitter buffer.
+         * @note When the receiving end is an audience member and `audienceLatencyLevel` of `ClientRoleOptions`
+         * is 1, this parameter does not take effect.
+         */
+        public int jitterBufferDelay;
+        /**
+         * The audio frame loss rate in the reported interval.
+         */
+        public int audioLossRate;
+        /**
+         * The number of channels.
+         */
+        public int numChannels;
+        /**
+         * The sample rate (Hz) of the remote audio stream in the reported interval.
+         */
+        public int receivedSampleRate;
+        /**
+         * The average bitrate (Kbps) of the remote audio stream in the reported
+         * interval.
+         */
+        public int receivedBitrate;
+        /**
+         * The total freeze time (ms) of the remote audio stream after the remote
+         * user joins the channel.
+         *
+         * In a session, audio freeze occurs when the audio frame loss rate reaches 4%.
+         */
+        public int totalFrozenTime;
+        /**
+         * The total audio freeze time as a percentage (%) of the total time when the
+         * audio is available.
+         */
+        public int frozenRate;
+        /**
+         * The quality of the remote audio stream as determined by the Agora
+         * real-time audio MOS (Mean Opinion Score) measurement method in the
+         * reported interval. The return value ranges from 0 to 500. Dividing the
+         * return value by 100 gets the MOS score, which ranges from 0 to 5. The
+         * higher the score, the better the audio quality.
+         *
+         * | MOS score       | Perception of audio quality                                                                                                                                 |
+         * |-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+         * | Greater than 4  | Excellent. The audio sounds clear and smooth.                                                                                                               |
+         * | From 3.5 to 4   | Good. The audio has some perceptible impairment, but still sounds clear.                                                                                    |
+         * | From 3 to 3.5   | Fair. The audio freezes occasionally and requires attentive listening.                                                                                      |
+         * | From 2.5 to 3   | Poor. The audio sounds choppy and requires considerable effort to understand.                                                                               |
+         * | From 2 to 2.5   | Bad. The audio has occasional noise. Consecutive audio dropouts occur, resulting in some information loss. The users can communicate only with difficulty.  |
+         * | Less than 2     | Very bad. The audio has persistent noise. Consecutive audio dropouts are frequent, resulting in severe information loss. Communication is nearly impossible. |
+         */
+        public int mosValue;
+        /**
+         * The total time (ms) when the remote user neither stops sending the audio
+         * stream nor disables the audio module after joining the channel.
+         */
+        public int totalActiveTime;
+        /**
+         * The total publish duration (ms) of the remote audio stream.
+         */
+        public int publishDuration;
+        /**
+         * Quality of experience (QoE) of the local user when receiving a remote audio stream. See #EXPERIENCE_QUALITY_TYPE.
+         */
+        public int qoeQuality;
+        /**
+         * The reason for poor QoE of the local user when receiving a remote audio stream. See #EXPERIENCE_POOR_REASON.
+         */
+        public int qualityChangedReason;
+        /**
+         * The total number of audio bytes received (bytes), inluding the FEC bytes, represented by an aggregate value.
+         */
+        public uint rxAudioBytes;
+
+    }
+
     ///
     /// <summary>
     /// Statistics of the remote video stream.
@@ -657,6 +752,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public int mosValue;
+
+        public uint rxVideoBytes;
     };
 
     ///
@@ -949,22 +1046,6 @@ namespace Agora.Rtc
             rawStreamUrl = "";
             extraInfo = "";
         }
-    };
-
-    ///
-    /// @ignore
-    ///
-    public class AudioTrackConfig
-    {
-        public AudioTrackConfig()
-        {
-            enableLocalPlayback = true;
-        }
-
-        ///
-        /// @ignore
-        ///
-        public bool enableLocalPlayback;
     };
 
     ///
@@ -1304,6 +1385,8 @@ namespace Agora.Rtc
         ///
         public bool isOccluded;
 
+
+        public Rectangle position;
         ///
         /// @ignore
         ///
@@ -1450,19 +1533,7 @@ namespace Agora.Rtc
         /// The ID of the custom audio source to publish. The default value is 0.If you have set the value of sourceNumber greater than 1 in SetExternalAudioSource , the SDK creates the corresponding number of custom audio tracks and assigns an ID to each audio track starting from 0.
         /// </summary>
         ///
-        public Optional<int> publishCustomAudioSourceId = new Optional<int>();
-
-        ///
-        /// <summary>
-        /// Whether to enable AEC when publishing the audio captured from a custom source:true: Enable AEC when publishing the captured audio from a custom source.false: (Default) Do not enable AEC when publishing the audio captured from the custom source.
-        /// </summary>
-        ///
-        public Optional<bool> publishCustomAudioTrackEnableAec = new Optional<bool>();
-
-        ///
-        /// @ignore
-        ///
-        public Optional<bool> publishDirectCustomAudioTrack = new Optional<bool>();
+        public Optional<int> publishCustomAudioTrackId = new Optional<int>();
 
         ///
         /// @ignore
@@ -1664,21 +1735,10 @@ namespace Agora.Rtc
                 writer.Write(this.publishCustomAudioTrack.GetValue());
             }
 
-            if (this.publishCustomAudioSourceId.HasValue())
+            if (this.publishCustomAudioTrackId.HasValue())
             {
-                writer.WritePropertyName("publishCustomAudioSourceId");
-                writer.Write(this.publishCustomAudioSourceId.GetValue());
-            }
-            if (this.publishCustomAudioTrackEnableAec.HasValue())
-            {
-                writer.WritePropertyName("publishCustomAudioTrackEnableAec");
-                writer.Write(this.publishCustomAudioTrackEnableAec.GetValue());
-            }
-
-            if (this.publishDirectCustomAudioTrack.HasValue())
-            {
-                writer.WritePropertyName("publishDirectCustomAudioTrack");
-                writer.Write(this.publishDirectCustomAudioTrack.GetValue());
+                writer.WritePropertyName("publishCustomAudioTrackId");
+                writer.Write(this.publishCustomAudioTrackId.GetValue());
             }
 
             if (this.publishCustomAudioTrackAec.HasValue())
@@ -1873,6 +1933,13 @@ namespace Agora.Rtc
         TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
     };
 
+    public enum FeatureType
+    {
+        VIDEO_VIRTUAL_BACKGROUND = 1,
+        VIDEO_BEAUTY_EFFECT = 2,
+    };
+
+
     ///
     /// @ignore
     ///
@@ -2032,6 +2099,7 @@ namespace Agora.Rtc
             logConfig = new LogConfig();
             useExternalEglContext = false;
             domainLimit = false;
+            autoRegisterAgoraExtensions = true;
         }
 
         public RtcEngineContext(string appId, UInt64 context,
@@ -2123,6 +2191,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public bool domainLimit;
+
+        public bool autoRegisterAgoraExtensions;
 
         public override void ToJson(JsonWriter writer)
         {

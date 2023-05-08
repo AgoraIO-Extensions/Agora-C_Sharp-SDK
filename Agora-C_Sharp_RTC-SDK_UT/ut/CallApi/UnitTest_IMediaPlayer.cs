@@ -558,6 +558,18 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#endregion
+
+        [Test]
+        public void Test_SetAudioPlaybackDelay()
+        {
+            int delay_ms;
+            ParamsHelper.InitParam(out delay_ms);
+           
+            var nRet = MediaPlayer.SetAudioPlaybackDelay(delay_ms);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        #endregion
     }
 }
