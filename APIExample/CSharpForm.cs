@@ -273,6 +273,10 @@ namespace CSharp_API_Example
             {
                 usr_engine_ = new StringUid(stringUidView.localVideoView.Handle, stringUidView.remoteVideoView.Handle);
             }
+            else if(tabCtrl.SelectedTab == tabRTT)
+            {
+                usr_engine_ = new RTT(rttView.localVideoView.Handle, rttView.remoteVideoView.Handle);
+            }
             else
             {
                 DumpStatus("todo", 0);
