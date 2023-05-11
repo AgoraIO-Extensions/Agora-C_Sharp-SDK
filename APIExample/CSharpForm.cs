@@ -275,7 +275,7 @@ namespace CSharp_API_Example
             }
             else if(tabCtrl.SelectedTab == tabRTT)
             {
-                usr_engine_ = new RTT(rttView.localVideoView.Handle, rttView.remoteVideoView.Handle);
+                usr_engine_ = new RTT(rttView.localVideoView.Handle, rttView.remoteVideoView.Handle, rttView);
             }
             else
             {
@@ -367,7 +367,18 @@ namespace CSharp_API_Example
             {
                 tips += " ok";
             }
-            status_tips.Text += tips + "\r\n";
+
+            if (!status_tips.InvokeRequired)
+            {
+                status_tips.Text += tips + "\r\n";
+            }
+            else
+            {
+                status_tips.Invoke(new Action(() =>
+                {
+                    status_tips.Text += tips + "\r\n";
+                }));
+            }
         }
 
         private bool IsAllChannelIdValid(string channel_ids)

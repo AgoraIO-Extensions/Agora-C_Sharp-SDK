@@ -30,10 +30,14 @@ namespace CSharp_API_Example
         private IntPtr local_win_id_ = IntPtr.Zero;
         private IntPtr remote_win_id_ = IntPtr.Zero;
         private int data_stream_id_ = -1;
-        public RTT(IntPtr localWindowId, IntPtr remoteWindowId)
+
+        private RTTView view_ = null;
+
+        public RTT(IntPtr localWindowId, IntPtr remoteWindowId, RTTView view)
         {
             local_win_id_ = localWindowId;
             remote_win_id_ = remoteWindowId;
+            view_ = view;
         }
 
         internal override int Init(string appId, string channelId)
@@ -46,7 +50,7 @@ namespace CSharp_API_Example
             {
                 rtc_engine_ = AgoraRtcEngine.CreateAgoraRtcEngine();
             }
-            event_handler_ = new RTTEventHandler(this);
+            event_handler_ = new RTTEventHandler(this, view_);
             rtc_engine_.InitEventHandler(event_handler_);
 
             LogConfig log_config = new LogConfig(agora_sdk_log_file_path_);
@@ -149,9 +153,11 @@ namespace CSharp_API_Example
     internal class RTTEventHandler : IAgoraRtcEngineEventHandler
     {
         private RTT rtt_inst_ = null;
+        private RTTView view_ = null;
 
-        public RTTEventHandler(RTT _StreamMessage) {
+        public RTTEventHandler(RTT _StreamMessage, RTTView view) {
             rtt_inst_ = _StreamMessage;
+            view_ = view;
         }
 
         public override void OnWarning(int warn, string msg)
@@ -201,6 +207,11 @@ namespace CSharp_API_Example
             string str = System.Text.Encoding.Default.GetString(data);
 
             CSharpForm.dump_handler_("OnStreamMessage,recv message: " + str , 0);
+
+            if(view_ != null)
+            {
+                view_.AddFinalRttText(uid,str);
+            }
 
             Console.WriteLine("----->OnStreamMessage uid={0},streamId={1},data={2},length={3}"
               , uid, streamId, str, length);
