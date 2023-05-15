@@ -3187,7 +3187,7 @@ namespace Agora.Rtc
         /// 5: The local video encoding fails.
         /// </summary>
         ///
-        LOCAL_VIDEO_STREAM_ERROR_CODEC_NOT_SUPPORT = 5,
+        LOCAL_VIDEO_STREAM_ERROR_ENCODE_FAILURE = 5,
 
         ///
         /// <summary>
