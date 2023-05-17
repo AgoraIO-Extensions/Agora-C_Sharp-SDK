@@ -96,6 +96,7 @@ namespace Agora.Rtc
                         (int)videoFrameConverted.v_buffer_length);
             }
 
+            localVideoFrame.type = ConvertIrisFrameType(videoFrameConverted.type);
             localVideoFrame.width = videoFrameConverted.width;
             localVideoFrame.height = videoFrameConverted.height;
             localVideoFrame.yBufferPtr = videoFrameConverted.yBuffer;
@@ -141,6 +142,24 @@ namespace Agora.Rtc
             }
 
             return false;
+        }
+
+
+        private static VIDEO_PIXEL_FORMAT ConvertIrisFrameType(VIDEO_OBSERVER_FRAME_TYPE type)
+        {
+            switch (type)
+            {
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420:
+                    return VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_I420;
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV422:
+                    return VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422;
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA:
+                    return VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_RGBA;
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_BGRA:
+                    return VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_BGRA;
+                default:
+                    return VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
+            }
         }
 
 
