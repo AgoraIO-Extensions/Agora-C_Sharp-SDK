@@ -1608,7 +1608,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SetAudioMixingPosition(int pos /*in ms*/)
+        public int SetAudioMixingPosition(int pos)
         {
             _param.Clear();
             _param.Add("pos", pos);

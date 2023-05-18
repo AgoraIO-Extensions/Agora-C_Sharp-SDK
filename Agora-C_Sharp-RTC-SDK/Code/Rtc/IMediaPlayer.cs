@@ -103,7 +103,6 @@ namespace Agora.Rtc
         public abstract int Open(string url, Int64 startPos);
 
         [Obsolete]
-        [Obsolete]
         ///
         /// <summary>
         /// Opens the custom media resource file.

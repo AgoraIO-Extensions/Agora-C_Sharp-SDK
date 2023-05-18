@@ -1244,7 +1244,7 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetAudioMixingPosition(int pos /*in ms*/);
+        public abstract int SetAudioMixingPosition(int pos);
 
         ///
         /// <summary>

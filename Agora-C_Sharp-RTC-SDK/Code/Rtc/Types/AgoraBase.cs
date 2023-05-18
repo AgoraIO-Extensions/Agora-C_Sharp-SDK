@@ -7935,7 +7935,6 @@ namespace Agora.Rtc
         }
     };
 
-    /**
     ///
     /// <summary>
     /// The rendering state of the media frame.`
@@ -7943,14 +7942,14 @@ namespace Agora.Rtc
     ///
     public enum MEDIA_TRACE_EVENT
     {
-        /**
+         
         ///
         /// <summary>
         /// 0: The video frame has been rendered.
         /// </summary>
         ///
         MEDIA_TRACE_EVENT_VIDEO_RENDERED = 0,
-        /**
+         
         ///
         /// <summary>
         /// 1: The video frame has been decoded.
@@ -7959,7 +7958,7 @@ namespace Agora.Rtc
         MEDIA_TRACE_EVENT_VIDEO_DECODED = 1,
     };
 
-    /**
+     
     ///
     /// <summary>
     /// Indicators during video frame rendering progress.
@@ -7967,49 +7966,49 @@ namespace Agora.Rtc
     ///
     public class VideoRenderingTracingInfo
     {
-        /**
+         
         ///
         /// <summary>
         /// The time interval from calling the StartMediaRenderingTracing method to SDK triggering the OnVideoRenderingTracingResult callback. The unit is milliseconds. Agora recommends you call StartMediaRenderingTracing before joining a channel.
         /// </summary>
         ///
         public int elapsedTime;
-        /**
+         
         ///
         /// <summary>
         /// The time interval from calling StartMediaRenderingTracing to calling JoinChannel [2/2] . The unit is milliseconds. A negative number means to call JoinChannel [2/2] after calling StartMediaRenderingTracing.
         /// </summary>
         ///
         public int start2JoinChannel;
-        /**
+         
         ///
         /// <summary>
         /// Time interval from calling JoinChannel [2/2] to successfully joining the channel. The unit is milliseconds.
         /// </summary>
         ///
         public int join2JoinSuccess;
-        /**
+         
         ///
         /// <summary>
         /// If the local user calls StartMediaRenderingTracing before successfully joining the channel, this value is the time interval from the local user successfully joining the channel to the remote user joining the channel. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after successfully joining the channel, the value is the time interval from calling StartMediaRenderingTracing to when the remote user joins the channel. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after the remote user joins the channel, the value is 0 and meaningless.In order to reduce the time of rendering the first frame for remote users, Agora recommends that the local user joins the channel when the remote user is in the channel to reduce this value.
         /// </summary>
         ///
         public int joinSuccess2RemoteJoined;
-        /**
+         
         ///
         /// <summary>
         /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from when the remote user joins the channel to when the local user sets the remote view. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to setting the remote view. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after setting the remote view, the value is 0 and has no effect.In order to reduce the time of rendering the first frame for remote users, Agora recommends that the local user sets the remote view before the remote user joins the channel, or sets the remote view immediately after the remote user joins the channel to reduce this value.
         /// </summary>
         ///
         public int remoteJoined2SetView;
-        /**
+         
         ///
         /// <summary>
         /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from the remote user joining the channel to subscribing to the remote video stream. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to subscribing to the remote video stream. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after subscribing to the remote video stream, the value is 0 and has no effect.In order to reduce the time of rendering the first frame for remote users, Agora recommends that after the remote user joins the channel, the local user immediately subscribes to the remote video stream to reduce this value.
         /// </summary>
         ///
         public int remoteJoined2UnmuteVideo;
-        /**
+         
         ///
         /// <summary>
         /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from when the remote user joins the channel to when the local user receives the remote video stream. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to receiving the remote video stream. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after receiving the remote video stream, the value is 0 and has no effect.In order to reduce the time of rendering the first frame for remote users, Agora recommends that the remote user publishes video streams immediately after joining the channel, and the local user immediately subscribes to remote video streams to reduce this value.
@@ -8038,14 +8037,14 @@ namespace Agora.Rtc
             this.uid = uid;
         }
 
-        /**
+         
         ///
         /// <summary>
         /// The name of the channel in which the media streams publish.
         /// </summary>
         ///
         public string channelId;
-        /**
+         
         ///
         /// <summary>
         /// The ID of the user whose media streams you want to record.
