@@ -11,11 +11,11 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Reports the playback state change.
+        /// Reports the changes of playback state.
         /// When the state of the media player changes, the SDK triggers this callback to report the current playback state.
         /// </summary>
         ///
-        /// <param name="state"> The playback state, see MEDIA_PLAYER_STATE .</param>
+        /// <param name="state"> The playback state. See MEDIA_PLAYER_STATE .</param>
         ///
         /// <param name="ec"> The error code. See MEDIA_PLAYER_ERROR .</param>
         ///
@@ -24,7 +24,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports current playback progress.
-        /// When playing media files, the SDK triggers this callback every one second to report current playback progress.
+        /// When playing media files, the SDK triggers this callback every two second to report current playback progress.
         /// </summary>
         ///
         /// <param name="position_ms"> The playback position (ms) of media files.</param>
@@ -33,11 +33,11 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Reports the playback event.
+        /// Reports the player events.
         /// After calling the Seek method, the SDK triggers the callback to report the results of the seek operation.
         /// </summary>
         ///
-        /// <param name="eventCode"> The playback event. See MEDIA_PLAYER_EVENT .</param>
+        /// <param name="eventCode"> The player events. See MEDIA_PLAYER_EVENT .</param>
         ///
         /// <param name="elapsedTime"> The time (ms) when the event occurs.</param>
         ///

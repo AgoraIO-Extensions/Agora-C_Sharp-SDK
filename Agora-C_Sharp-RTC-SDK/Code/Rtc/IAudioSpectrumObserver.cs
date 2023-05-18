@@ -16,7 +16,7 @@
         /// <param name="data"> The audio spectrum data of the local user. See AudioSpectrumData .</param>
         ///
         /// <returns>
-        /// Whether you have received the spectrum data:true: Spectrum data is received.false: No spectrum data is received.
+        /// Whether the spectrum data is received:true: Spectrum data is received.false: No spectrum data is received.
         /// </returns>
         ///
         public virtual bool OnLocalAudioSpectrum(AudioSpectrumData data)
@@ -35,7 +35,7 @@
         /// <param name="spectrumNumber"> The number of remote users.</param>
         ///
         /// <returns>
-        /// Whether you have received the spectrum data:true: Spectrum data is received.false: No spectrum data is received.
+        /// Whether the spectrum data is received:true: Spectrum data is received.false: No spectrum data is received.
         /// </returns>
         ///
         public virtual bool OnRemoteAudioSpectrum(UserAudioSpectrumInfo[] spectrums, uint spectrumNumber)

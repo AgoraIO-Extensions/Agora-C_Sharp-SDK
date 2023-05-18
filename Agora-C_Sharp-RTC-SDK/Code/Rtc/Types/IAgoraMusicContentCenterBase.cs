@@ -3,33 +3,28 @@ using System;
 namespace Agora.Rtc
 {
     ///
-    /// <summary>
-    /// The loading statuses of music assets.
-    /// </summary>
+    /// @ignore
     ///
     public enum PreloadStatusCode
     {
         ///
-        /// <summary>
-        /// 0: The preload of music assets is complete.
-        /// </summary>
+        /// @ignore
         ///
         kPreloadStatusCompleted = 0,
 
         ///
-        /// <summary>
-        /// 1: The preload of music assets fails.
-        /// </summary>
+        /// @ignore
         ///
         kPreloadStatusFailed = 1,
 
         ///
-        /// <summary>
-        /// 2: The music assets are preloading.
-        /// </summary>
+        /// @ignore
         ///
         kPreloadStatusPreloading = 2,
 
+        ///
+        /// @ignore
+        ///
         kPreloadStatusRemoved = 3,
     };
 
@@ -48,14 +43,29 @@ namespace Agora.Rtc
         ///
         kMusicContentCenterStatusErr = 1,
 
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrGateway = 2,
 
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrPermissionAndResource = 3,
 
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrInternalDataParse = 4,
 
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrMusicLoading = 5,
 
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrMusicDecryption = 6,
     };
 
@@ -75,17 +85,35 @@ namespace Agora.Rtc
         public int id;
     };
 
+    ///
+    /// @ignore
+    ///
     public enum MUSIC_CACHE_STATUS_TYPE
     {
+        ///
+        /// @ignore
+        ///
         MUSIC_CACHE_STATUS_TYPE_CACHED = 0,
 
+        ///
+        /// @ignore
+        ///
         MUSIC_CACHE_STATUS_TYPE_CACHING = 1
     };
 
+    ///
+    /// @ignore
+    ///
     public class MusicCacheInfo
     {
+        ///
+        /// @ignore
+        ///
         public Int64 songCode;
 
+        ///
+        /// @ignore
+        ///
         public MUSIC_CACHE_STATUS_TYPE status;
 
         public MusicCacheInfo()
@@ -262,6 +290,9 @@ namespace Agora.Rtc
         public UInt64 mccUid;
 
 
+        ///
+        /// @ignore
+        ///
         public UInt32 maxCacheSize;
 
         public MusicContentCenterConfiguration()

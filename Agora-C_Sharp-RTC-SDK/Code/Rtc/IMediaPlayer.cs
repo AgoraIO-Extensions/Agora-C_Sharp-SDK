@@ -38,7 +38,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Registers an audio frame observer object.
+        /// Registers a PCM audio frame observer object.
         /// You need to implement the IAudioPcmFrameSink class in this method and register callbacks according to your scenarios. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.
         /// </summary>
         ///
@@ -55,7 +55,7 @@ namespace Agora.Rtc
         /// Registers an audio frame observer object.
         /// </summary>
         ///
-        /// <param name="observer"> The audio frame observer, reporting the reception of each audio frame. See IAudioFrameObserver .</param>
+        /// <param name="observer"> The audio frame observer, reporting the reception of each audio frame. See IAudioPcmFrameSink .</param>
         ///
         /// <param name="mode"> The use mode of the audio frame. See RAW_AUDIO_FRAME_OP_MODE_TYPE .</param>
         ///
@@ -67,7 +67,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Unregisters an audio observer.
+        /// Unregisters an audio frame observer.
         /// </summary>
         ///
         /// <returns>
@@ -92,7 +92,7 @@ namespace Agora.Rtc
         /// This method is called asynchronously.If you need to play a media file, make sure you receive the OnPlayerSourceStateChanged callback reporting PLAYER_STATE_OPEN_COMPLETED before calling the Play method to play the file.
         /// </summary>
         ///
-        /// <param name="url"> The path of the media file. Both local path and online path are supported.On the Android platform, if you need to open a file in URI format, use Open .</param>
+        /// <param name="url"> The path of the media file. Both local path and online path are supported.</param>
         ///
         /// <param name="startPos"> The starting position (ms) for playback. Default value is 0.</param>
         ///
@@ -102,13 +102,15 @@ namespace Agora.Rtc
         ///
         public abstract int Open(string url, Int64 startPos);
 
+        [Obsolete]
+        [Obsolete]
         ///
         /// <summary>
         /// Opens the custom media resource file.
-        /// Deprecated:This method is deprecated. This method allows you to open custom media resource files. For example, you can call this method to open encrypted media resources.
+        /// Deprecated:This method is deprecated, use OpenWithMediaSource instead.This method allows you to open custom media resource files. For example, you can call this method to open encrypted media resources.
         /// </summary>
         ///
-        /// <param name="startPos"> The starting position (ms) for playback. The default value is 0.</param>
+        /// <param name="startPos"> The starting position (ms) for playback. Default value is 0.</param>
         ///
         /// <param name="provider"> The callback for custom media resource files. See IMediaPlayerCustomDataProvider .</param>
         ///
@@ -116,7 +118,6 @@ namespace Agora.Rtc
         /// 0: Success.&lt; 0: Failure.
         /// </returns>
         ///
-        [Obsolete]
         public abstract int OpenWithCustomSource(Int64 startPos, IMediaPlayerCustomDataProvider provider);
 
         ///
@@ -186,7 +187,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Seeks to a new playback position.
-        /// After successfully calling this method, you will receive the OnPlayerEvent callback, reporting the result of the seek operation to the new playback position.To play the media file from a specific position, do the following:Call this method to seek to the position you want to begin playback.Call the Play method to play the media file.
+        /// fter successfully calling this method, you will receive the OnPlayerEvent callback, reporting the result of the seek operation to the new playback position.To play the media file from a specific position, do the following:Call this method to seek to the position you want to begin playback.Call the Play method to play the media file.
         /// </summary>
         ///
         /// <param name="newPos"> The new playback position (ms).</param>
@@ -245,7 +246,7 @@ namespace Agora.Rtc
         ///
         /// <param name="index"> The index of the media stream.</param>
         ///
-        /// <param name="info"> An output parameter. The detailed information of the media stream. See PlayerStreamInfo .</param>
+        /// <param name="info"> Output parameter. The detailed information of the media stream. See PlayerStreamInfo .</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -298,7 +299,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the private options for the media player.
-        /// The media player supports setting private options by key and value. Under normal circumstances, you do not need to know the private option settings, and just use the default option settings.Ensure that you call this method before Open .If you need to push streams with SEI into the CDN, callSetPlayerOption [1/2] ("sei_data_with_uuid", 1); otherwise, the loss of SEI might occurs.
+        /// The media player supports setting private options by key and value. Under normal circumstances, you do not need to know the private option settings, and just use the default option settings.Ensure that you call this method before Open .If you need to push streams with SEI into the CDN, call SetPlayerOption [1/2]("sei_data_with_uuid", 1); otherwise, the loss of SEI might occurs.
         /// </summary>
         ///
         /// <param name="key"> The key of the option.</param>
@@ -314,7 +315,8 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the private options for the media player.
-        /// The media player supports setting private options by key and value. Under normal circumstances, you do not need to know the private option settings, and just use the default option settings.Ensure that you call this method before Open .If you need to push streams with SEI into the CDN, callSetPlayerOption [1/2] ("sei_data_with_uuid", 1); otherwise, the loss of SEI might occurs.
+        /// The media player supports setting private options by key and value. Under normal circumstances, you do not need to know the private option settings, and just use the default option settings. Ensure that you call this method before Open .
+        /// If you need to push streams with SEI into the CDN, call SetPlayerOption [1/2]("sei_data_with_uuid", 1); otherwise, the loss of SEI might occurs.
         /// </summary>
         ///
         /// <param name="key"> The key of the option.</param>
@@ -371,7 +373,7 @@ namespace Agora.Rtc
         /// Reports whether the media resource is muted.
         /// </summary>
         ///
-        /// <param name="muted"> Output parameter. Whether the media file is muted:true: Mute the media file.false: The media file is unmuted.</param>
+        /// <param name="muted"> Output parameter. Whether the media file is muted:true: The media file is muted.false: The media file is unmuted.</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -476,7 +478,13 @@ namespace Agora.Rtc
         public abstract string GetPlayerSdkVersion();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets the path of the media resource being played.
+        /// </summary>
+        ///
+        /// <returns>
+        /// The path of the media resource being played.
+        /// </returns>
         ///
         public abstract string GetPlaySrc();
 
@@ -500,7 +508,7 @@ namespace Agora.Rtc
         /// After successfully setting the spatial audio effect parameters of the media player, the SDK enables the spatial audio effect for the media player, and the local user can hear the media resources with a sense of space.If you need to disable the spatial audio effect for the media player, set the params parameter to null.
         /// </summary>
         ///
-        /// <param name="spatial_audio_params"> The spatial audio effect parameters of the media player. See SpatialAudioParams for details.</param>
+        /// <param name="spatial_audio_params"> The spatial audio effect parameters of the media player. See SpatialAudioParams .</param>
         ///
         /// <returns>
         /// 0: Success.&lt; 0: Failure.
@@ -546,7 +554,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Switches the media resource being played.
-        /// You can call this method to switch the media resource to be played according to the current network status. For example:When the network is poor, the media resource to be played is switched to a media resource address with a lower bitrate.When the network is good, the media resource to be played is switched to a media resource address with a higher bitrate.After calling this method, if you receive the OnPlayerEvent event in the PLAYER_EVENT_SWITCH_COMPLETE callback, the switch is successful; If you receive the OnPlayerEvent event in the PLAYER_EVENT_SWITCH_ERROR callback, the switch fails.Ensure that you call this method after Open .To ensure normal playback, pay attention to the following when calling this method:Do not call this method when playback is paused.Do not call the Seek method during switching.Before switching the media resource, make sure that the playback position does not exceed the total duration of the media resource to be switched.
+        /// You can call this method to switch the media resource to be played according to the current network status. For example:When the network is poor, the media resource to be played is switched to a media resource address with a lower bitrate.When the network is good, the media resource to be played is switched to a media resource address with a higher bitrate.After calling this method, if you receive the PLAYER_EVENT_SWITCH_COMPLETE event in the OnPlayerEvent callback, the switch is successful; If you receive the PLAYER_EVENT_SWITCH_ERROR event in the OnPlayerEvent callback, the switch fails.Ensure that you call this method after Open .To ensure normal playback, pay attention to the following when calling this method:Do not call this method when playback is paused.Do not call the Seek method during switching.Before switching the media resource, make sure that the playback position does not exceed the total duration of the media resource to be switched.
         /// </summary>
         ///
         /// <param name="src"> The URL of the media resource.</param>
