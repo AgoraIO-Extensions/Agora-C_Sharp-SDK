@@ -143,14 +143,6 @@ namespace Agora.Rtc
         {
             if (_mediaPlayerEventHandlerHandle.handle == IntPtr.Zero) return;
 
-            MediaPlayerSourceObserverNative.ClearSourceObserver();
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
-            MediaPlayerSourceObserverNative.CallbackObject = null;
-            if (_callbackObject != null) _callbackObject.Release();
-            _callbackObject = null;
-#endif
-
             IntPtr[] arrayPtr = new IntPtr[] { _mediaPlayerEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYER_UNREGISTERPLAYERSOURCEOBSERVER,
                 "{}", 2,
@@ -163,6 +155,17 @@ namespace Agora.Rtc
             }
 
             AgoraUtil.FreeEventHandlerHandle(ref _mediaPlayerEventHandlerHandle);
+
+
+            ///You must release callbackObject after you release eventhandler.
+            ///Otherwise may be agcallback and unity main loop can will both access callback object. make crash
+            MediaPlayerSourceObserverNative.ClearSourceObserver();
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+            MediaPlayerSourceObserverNative.CallbackObject = null;
+            if (_callbackObject != null) _callbackObject.Release();
+            _callbackObject = null;
+#endif
 
         }
 
