@@ -3995,7 +3995,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets whether to enable the AI ​​noise reduction function and set the noise reduction mode.
-        /// You can call this method to enable AI noise reduction function. Once enabled, the SDK automatically detects and reduce stationary and non-stationary noises from your audio on the premise of ensuring the quality of human voice. Stationary noises refers to noise signal with constant average statistical properties and negligibly small fluctuations of level within the period of observation. Common sources of stationary noises are:Television;Air conditioner;Machinery, etc.Non-stationary noises refers to noise signal with huge fluctuations of level within the period of observation, Common source of non-stationary noises are:Thunder;Explosion;Cracking, etc.
+        /// You can call this method to enable AI noise reduction function. Once enabled, the SDK automatically detects and reduces stationary and non-stationary noise from your audio on the premise of ensuring the quality of human voice. Stationary noise refers to noise signal with constant average statistical properties and negligibly small fluctuations of level within the period of observation. Common sources of stationary noises are:Television;Air conditioner;Machinery, etc.Non-stationary noise refers to noise signal with huge fluctuations of level within the period of observation. Common sources of non-stationary noises are:Thunder;Explosion;Cracking, etc.
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable the AI noise reduction function:true: Enable the AI noise reduction.false: (Default) Disable the AI noise reduction.</param>
@@ -4185,31 +4185,13 @@ namespace Agora.Rtc
 
 
         ///
-        /// <summary>
-        /// Creates a recording object for audio and video recording.
-        /// Before you start recording, you need to call this method to create a recording object. Agora SDKs support recording the audio and video streams of both local and remote users. You can call this method as needed to create muitiple recording objects and specify the streams that you want to record through the info parameter.After successfully creating a recording object, you need to call SetMediaRecorderObserver to register a recording observer to listen for recording callbacks, and then call StartRecording to start recording.
-        /// </summary>
-        ///
-        /// <param name="info"> The information about the media streams you want to record. See RecorderStreamInfo .</param>
-        ///
-        /// <returns>
-        /// The IMediaRecorder object, if the method call succeeds.An empty pointer, if the method call fails.
-        /// </returns>
+        /// @ignore
         ///
         public abstract IMediaRecorder CreateMediaRecorder(RecorderStreamInfo info);
 
        
         ///
-        /// <summary>
-        /// Destroys a recording object for audio and video recording.
-        /// When you do not need to record any audio and video streams, you can call this method to destroy the recording object. Before you call this method, if you are recording a media stream, you need to call StopRecording to stop recording.
-        /// </summary>
-        ///
-        /// <param name="mediaRecorder"> The recording object to be destroyed.</param>
-        ///
-        /// <returns>
-        /// 0: Success.&lt; 0: Failure.
-        /// </returns>
+        /// @ignore
         ///
         public abstract int DestroyMediaRecorder(IMediaRecorder mediaRecorder);
 

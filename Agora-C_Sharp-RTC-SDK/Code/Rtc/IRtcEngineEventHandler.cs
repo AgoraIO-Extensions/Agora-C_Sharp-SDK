@@ -1035,6 +1035,8 @@ namespace Agora.Rtc
         /// After calling the StartMediaRenderingTracing method or joining the channel, the SDK triggers this callback to report the events of video frame rendering and the indicators during the rendering process. Developers can optimize the indicators to improve the efficiency of the first video frame rendering.
         /// </summary>
         ///
+        /// <param name="connection"> The connection information. See RtcConnection .</param>
+        ///
         /// <param name="uid"> The user ID.</param>
         ///
         /// <param name="currentEvent"> The current video frame rendering event. See MEDIA_TRACE_EVENT .</param>

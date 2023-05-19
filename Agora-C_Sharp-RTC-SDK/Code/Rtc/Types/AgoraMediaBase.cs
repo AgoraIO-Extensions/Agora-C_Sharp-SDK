@@ -1655,44 +1655,32 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// The recording configuration.
-    /// </summary>
+    /// @ignore
     ///
     public class MediaRecorderConfiguration
     {
         ///
-        /// <summary>
-        /// The absolute path (including the filename extensions) of the recording file. For example:Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4iOS: /App Sandbox/Library/Caches/example.mp4macOS: ～/Library/Logs/example.mp4Android: /storage/emulated/0/Android/data/<package name>/files/agorasdk.mp4Ensure that the directory for the log files exists and is writable.
-        /// </summary>
+        /// @ignore
         ///
         public string storagePath;
 
         ///
-        /// <summary>
-        /// The format of the recording file. See MediaRecorderContainerFormat .
-        /// </summary>
+        /// @ignore
         ///
         public MediaRecorderContainerFormat containerFormat;
 
         ///
-        /// <summary>
-        /// The recording content. See MediaRecorderStreamType .
-        /// </summary>
+        /// @ignore
         ///
         public MediaRecorderStreamType streamType;
 
         ///
-        /// <summary>
-        /// The maximum recording duration, in milliseconds. The default value is 120000.
-        /// </summary>
+        /// @ignore
         ///
         public int maxDurationMs;
 
         ///
-        /// <summary>
-        /// The interval (ms) of updating the recording information. The value range is [1000,10000]. Based on the value you set in this parameter, the SDK triggers the OnRecorderInfoUpdated callback to report the updated recording information.
-        /// </summary>
+        /// @ignore
         ///
         public int recorderInfoUpdateInterval;
 
@@ -1716,30 +1704,22 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// The information about the file that is recorded.
-    /// </summary>
+    /// @ignore
     ///
     public class RecorderInfo
     {
         ///
-        /// <summary>
-        /// The absolute path of the recording file.
-        /// </summary>
+        /// @ignore
         ///
         public string fileName;
 
         ///
-        /// <summary>
-        /// The recording duration (ms).
-        /// </summary>
+        /// @ignore
         ///
         public uint durationMs;
 
         ///
-        /// <summary>
-        /// The size (byte) of the recording file.
-        /// </summary>
+        /// @ignore
         ///
         public uint fileSize;
 

@@ -2741,7 +2741,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 2: Aggressive mode with low latency. The noise reduction delay of this mode is about only half of that of the balance and aggressive mode. It is suitable for scenarios that have high requirements on noise reduction with low latency, such as sing together online in real-time.
+        /// 2: Aggressive mode with low latency. The noise reduction delay of this mode is about only half of that of the balance and aggressive modes. It is suitable for scenarios that have high requirements on noise reduction with low latency, such as sing together online in real time.
         /// </summary>
         ///
         AINS_MODE_ULTRALOWLATENCY = 2
