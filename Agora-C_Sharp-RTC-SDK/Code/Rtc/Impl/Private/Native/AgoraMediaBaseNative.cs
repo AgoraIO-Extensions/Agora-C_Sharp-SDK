@@ -109,7 +109,6 @@ namespace Agora.Rtc
     internal class ScreenCaptureSourceInfoInternal
     {
         public ScreenCaptureSourceType type;
-        /** in Mac: pointer to NSNumber */
         public view_t sourceId;
         public string sourceName;
         public ThumbImageBufferInternal thumbImage;

@@ -2,7 +2,8 @@ namespace Agora.Rtc
 {
     ///
     /// <summary>
-    /// The audio frame observer for the media player.
+    /// This class is used to get raw PCM audio. 
+    /// You can inherit this class and implement the OnFrame callback to get raw PCM audio.
     /// </summary>
     ///
     public abstract class IAudioPcmFrameSink
@@ -13,7 +14,7 @@ namespace Agora.Rtc
         /// After registering the audio frame observer, the callback occurs every time the player receives an audio frame, reporting the detailed information of the audio frame.
         /// </summary>
         ///
-        /// <param name="videoFrame"> Audio frame information. See AudioPcmFrame .</param>
+        /// <param name="frame"> Audio frame information. See AudioPcmFrame .</param>
         ///
         /// <returns>
         /// Reserved for future use.
