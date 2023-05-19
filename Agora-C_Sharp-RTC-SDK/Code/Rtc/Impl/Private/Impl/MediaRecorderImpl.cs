@@ -119,6 +119,10 @@ namespace Agora.Rtc
             }
             _mediaRecorderEventHandlerHandles.Clear();
 
+
+
+            ///You must release callbackObject after you release eventhandler.
+            ///Otherwise may be agcallback and unity main loop can will both access callback object. make crash
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (_callbackObject != null)
             {

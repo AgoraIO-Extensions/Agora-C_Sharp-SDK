@@ -124,9 +124,12 @@ namespace Agora.Rtc
             Release(sync);
 
             ReleaseEventHandler();
-            //You must free cdn event handle after you release engine.
-            //Because when engine releasing. will call some Cdn event function.We need keep cdn event function ptr alive
+            ///You must free cdn event handle after you release engine.
+            ///Because when engine releasing. will call some Cdn event function.We need keep cdn event function ptr alive
             ReleaseDirectCdnStreamingEventHandle();
+
+            ///You must release callbackObject after you release eventhandler.
+            ///Otherwise may be agcallback and unity main loop can will both access callback object. make crash
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if (_callbackObject != null)
