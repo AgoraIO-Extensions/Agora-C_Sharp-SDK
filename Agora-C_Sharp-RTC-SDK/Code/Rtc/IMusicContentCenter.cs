@@ -52,6 +52,17 @@ namespace Agora.Rtc
         ///
         public abstract int Preload(Int64 songCode, string jsonOption = "");
 
+
+        ///
+        /// @ignore
+        ///
+        public abstract int RemoveCache(Int64 songCode);
+
+
+        ///
+        /// @ignore
+        ///
+        public abstract int GetCaches(ref MusicCacheInfo[] cacheInfo, ref Int32 cacheInfoSize);
         ///
         /// @ignore
         ///

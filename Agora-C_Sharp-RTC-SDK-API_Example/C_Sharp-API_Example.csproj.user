@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Compile Update="CSharpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\JoinMultipleChannel\JoinMultipleChannelView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\ProcessRawData\ProcessRawDataView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\ScreenShare\ScreenShareView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Advanced\VirtualBackground\VirtualBackgroundView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Basic\JoinChannelAudio\JoinChannelAudioView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="src\Basic\JoinChannelVideo\JoinChannelVideoView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+</Project>

@@ -1,10 +1,10 @@
-namespace Agora.Rtc
+﻿namespace Agora.Rtc
 {
     public sealed class AudioDeviceManager : IAudioDeviceManager
     {
         private IRtcEngine _rtcEngineInstance = null;
         private AudioDeviceManagerImpl _audioDeviecManagerImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
         private AudioDeviceManager(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
         {
@@ -304,6 +304,6 @@ namespace Agora.Rtc
             instance = null;
         }
 
-     
+
     }
 }

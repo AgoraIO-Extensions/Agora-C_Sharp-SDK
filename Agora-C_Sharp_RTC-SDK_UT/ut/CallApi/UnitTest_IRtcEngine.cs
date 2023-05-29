@@ -4,6 +4,7 @@ using Agora.Rtc;
 namespace Agora.Rtc
 {
     using uid_t = System.UInt32;
+    using view_t = System.Int64;
     [TestFixture]
     class UnitTest_IRtcEngine
     {
@@ -74,6 +75,28 @@ namespace Agora.Rtc
             string nRet = Engine.GetErrorDescription(code);
 
             Assert.AreEqual("", nRet);
+        }
+
+        [Test]
+        public void Test_QueryCodecCapability()
+        {
+            CodecCapInfo[] codecInfo;
+            ParamsHelper.InitParam(out codecInfo);
+            int size;
+            ParamsHelper.InitParam(out size);
+            var nRet = Engine.QueryCodecCapability(ref codecInfo, ref size);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetVideoScenario()
+        {
+            VIDEO_APPLICATION_SCENARIO_TYPE scenarioType;
+            ParamsHelper.InitParam(out scenarioType);
+            var nRet = Engine.SetVideoScenario(scenarioType);
+
+            Assert.AreEqual(0, nRet);
         }
 
         [Test]
@@ -184,7 +207,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetAudioDeviceInfo()
         {
-            DeviceInfo deviceInfo;
+            DeviceInfoMobile deviceInfo;
             ParamsHelper.InitParam(out deviceInfo);
             var nRet = Engine.GetAudioDeviceInfo(ref deviceInfo);
 
@@ -625,7 +648,7 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-  
+
         [Test]
         public void Test_SetupRemoteVideo()
         {
@@ -1443,6 +1466,16 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_SetLocalVoiceFormant()
+        {
+            double formantRatio;
+            ParamsHelper.InitParam(out formantRatio);
+            var nRet = Engine.SetLocalVoiceFormant(formantRatio);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_SetLocalVoiceEqualization()
         {
             AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency;
@@ -1618,67 +1651,6 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-        [Test]
-        public void Test_EnableEchoCancellationExternal()
-        {
-            bool enabled;
-            ParamsHelper.InitParam(out enabled);
-            int audioSourceDelay;
-            ParamsHelper.InitParam(out audioSourceDelay);
-            var nRet = Engine.EnableEchoCancellationExternal(enabled, audioSourceDelay);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_EnableCustomAudioLocalPlayback()
-        {
-            int sourceId;
-            ParamsHelper.InitParam(out sourceId);
-            bool enabled;
-            ParamsHelper.InitParam(out enabled);
-            var nRet = Engine.EnableCustomAudioLocalPlayback(sourceId, enabled);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StartPrimaryCustomAudioTrack()
-        {
-            AudioTrackConfig config;
-            ParamsHelper.InitParam(out config);
-            var nRet = Engine.StartPrimaryCustomAudioTrack(config);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StopPrimaryCustomAudioTrack()
-        {
-
-            var nRet = Engine.StopPrimaryCustomAudioTrack();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StartSecondaryCustomAudioTrack()
-        {
-            AudioTrackConfig config;
-            ParamsHelper.InitParam(out config);
-            var nRet = Engine.StartSecondaryCustomAudioTrack(config);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StopSecondaryCustomAudioTrack()
-        {
-
-            var nRet = Engine.StopSecondaryCustomAudioTrack();
-
-            Assert.AreEqual(0, nRet);
-        }
 
         [Test]
         public void Test_SetRecordingAudioFrameParameters()
@@ -1834,6 +1806,21 @@ namespace Agora.Rtc
 
             Assert.AreEqual(0, nRet);
         }
+
+        [Test]
+        public void Test_SetHighPriorityUserList()
+        {
+            uint[] uidList;
+            ParamsHelper.InitParam(out uidList);
+            int uidNum;
+            ParamsHelper.InitParam(out uidNum);
+            STREAM_FALLBACK_OPTIONS option;
+            ParamsHelper.InitParam(out option);
+            var nRet = Engine.SetHighPriorityUserList(uidList, uidNum, option);
+
+            Assert.AreEqual(0, nRet);
+        }
+
 
         [Test]
         public void Test_EnableLoopbackRecording()
@@ -2251,7 +2238,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StartScreenCaptureByWindowId()
         {
-            ulong windowId;
+            view_t windowId;
             ParamsHelper.InitParam(out windowId);
             Rectangle regionRect;
             ParamsHelper.InitParam(out regionRect);
@@ -2313,6 +2300,18 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_StartScreenCapture2()
+        {
+            VIDEO_SOURCE_TYPE sourceType;
+            ParamsHelper.InitParam(out sourceType);
+            CameraCapturerConfiguration config;
+            ParamsHelper.InitParam(out config);
+            var nRet = Engine.StartCameraCapture(sourceType, config);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_UpdateScreenCapture()
         {
             ScreenCaptureParameters2 captureParams;
@@ -2325,10 +2324,47 @@ namespace Agora.Rtc
         [Test]
         public void Test_StopScreenCapture()
         {
-
             var nRet = Engine.StopScreenCapture();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_StopScreenCapture2()
+        {
+            VIDEO_SOURCE_TYPE type;
+            ParamsHelper.InitParam(out type);
+            var nRet = Engine.StopScreenCapture(type);
 
             Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_StartCameraCapture()
+        {
+            VIDEO_SOURCE_TYPE type;
+            ParamsHelper.InitParam(out type);
+            CameraCapturerConfiguration config;
+            ParamsHelper.InitParam(out config);
+            var nRet = Engine.StartCameraCapture(type, config);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_StopCameraCapture()
+        {
+            VIDEO_SOURCE_TYPE type;
+            ParamsHelper.InitParam(out type);
+            var nRet = Engine.StopCameraCapture(type);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_QueryScreenCaptureCapability()
+        {
+            var nRet = Engine.QueryScreenCaptureCapability();
+            Assert.AreEqual(true, nRet == 0 || nRet == -4);
         }
 
         [Test]
@@ -2422,47 +2458,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StopLocalVideoTranscoder()
         {
-
             var nRet = Engine.StopLocalVideoTranscoder();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StartPrimaryCameraCapture()
-        {
-            CameraCapturerConfiguration config;
-            ParamsHelper.InitParam(out config);
-            var nRet = Engine.StartPrimaryCameraCapture(config);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StartSecondaryCameraCapture()
-        {
-            CameraCapturerConfiguration config;
-            ParamsHelper.InitParam(out config);
-            var nRet = Engine.StartSecondaryCameraCapture(config);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StopPrimaryCameraCapture()
-        {
-
-            var nRet = Engine.StopPrimaryCameraCapture();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StopSecondaryCameraCapture()
-        {
-
-            var nRet = Engine.StopSecondaryCameraCapture();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -2486,44 +2482,6 @@ namespace Agora.Rtc
             VIDEO_ORIENTATION orientation;
             ParamsHelper.InitParam(out orientation);
             var nRet = Engine.SetScreenCaptureOrientation(type, orientation);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StartPrimaryScreenCapture()
-        {
-            ScreenCaptureConfiguration config;
-            ParamsHelper.InitParam(out config);
-            var nRet = Engine.StartPrimaryScreenCapture(config);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StartSecondaryScreenCapture()
-        {
-            ScreenCaptureConfiguration config;
-            ParamsHelper.InitParam(out config);
-            var nRet = Engine.StartSecondaryScreenCapture(config);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StopPrimaryScreenCapture()
-        {
-
-            var nRet = Engine.StopPrimaryScreenCapture();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StopSecondaryScreenCapture()
-        {
-
-            var nRet = Engine.StopSecondaryScreenCapture();
 
             Assert.AreEqual(0, nRet);
         }
@@ -2700,6 +2658,18 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_SetAINSMode()
+        {
+            bool enabled;
+            ParamsHelper.InitParam(out enabled);
+            AUDIO_AINS_MODE mode;
+            ParamsHelper.InitParam(out mode);
+            var nRet = Engine.SetAINSMode(enabled, mode);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_RegisterLocalUserAccount()
         {
             string appId;
@@ -2737,6 +2707,16 @@ namespace Agora.Rtc
             ChannelMediaOptions options;
             ParamsHelper.InitParam(out options);
             var nRet = Engine.JoinChannelWithUserAccount(token, channelId, userAccount, options);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_StartOrUpdateChannelMediaRelay()
+        {
+            ChannelMediaRelayConfiguration configuration;
+            ParamsHelper.InitParam(out configuration);
+            var nRet = Engine.StartOrUpdateChannelMediaRelay(configuration);
 
             Assert.AreEqual(0, nRet);
         }
@@ -2887,26 +2867,30 @@ namespace Agora.Rtc
         [Test]
         public void Test_AdjustCustomAudioPublishVolume()
         {
-            int sourceId;
-            ParamsHelper.InitParam(out sourceId);
+            uint trackId;
+            ParamsHelper.InitParam(out trackId);
             int volume;
             ParamsHelper.InitParam(out volume);
-            var nRet = Engine.AdjustCustomAudioPublishVolume(sourceId, volume);
+            var nRet = Engine.AdjustCustomAudioPublishVolume(trackId, volume);
 
             Assert.AreEqual(0, nRet);
         }
+
 
         [Test]
         public void Test_AdjustCustomAudioPlayoutVolume()
         {
-            int sourceId;
-            ParamsHelper.InitParam(out sourceId);
+            uint trackId;
+            ParamsHelper.InitParam(out trackId);
             int volume;
             ParamsHelper.InitParam(out volume);
-            var nRet = Engine.AdjustCustomAudioPlayoutVolume(sourceId, volume);
+            var nRet = Engine.AdjustCustomAudioPlayoutVolume(trackId, volume);
 
             Assert.AreEqual(0, nRet);
         }
+
+
+
 
         [Test]
         public void Test_SetCloudProxy()
@@ -3009,6 +2993,153 @@ namespace Agora.Rtc
 
             Assert.AreEqual(0, nRet);
         }
+
+
+        #region mediaEngine
+
+        [Test]
+        public void Test_PushAudioFrame()
+        {
+            AudioFrame frame;
+            ParamsHelper.InitParam(out frame);
+            uint trackId;
+            ParamsHelper.InitParam(out trackId);
+            var nRet = Engine.PushAudioFrame(frame, trackId);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_PullAudioFrame()
+        {
+            AudioFrame frame;
+            ParamsHelper.InitParam(out frame);
+            var nRet = Engine.PullAudioFrame(frame);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetExternalVideoSource()
+        {
+            bool enabled;
+            ParamsHelper.InitParam(out enabled);
+            bool useTexture;
+            ParamsHelper.InitParam(out useTexture);
+            EXTERNAL_VIDEO_SOURCE_TYPE sourceType;
+            ParamsHelper.InitParam(out sourceType);
+            SenderOptions encodedVideoOption;
+            ParamsHelper.InitParam(out encodedVideoOption);
+            var nRet = Engine.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetExternalAudioSource()
+        {
+            bool enabled;
+            ParamsHelper.InitParam(out enabled);
+            int sampleRate;
+            ParamsHelper.InitParam(out sampleRate);
+            int channels;
+            ParamsHelper.InitParam(out channels);
+            bool localPlayback;
+            ParamsHelper.InitParam(out localPlayback);
+            bool publish;
+            ParamsHelper.InitParam(out publish);
+            var nRet = Engine.SetExternalAudioSource(enabled, sampleRate, channels, localPlayback, publish);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_CreateCustomAudioTrack()
+        {
+            AUDIO_TRACK_TYPE trackType;
+            ParamsHelper.InitParam(out trackType);
+            AudioTrackConfig config;
+            ParamsHelper.InitParam(out config);
+            var nRet = Engine.CreateCustomAudioTrack(trackType, config);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_DestroyCustomAudioTrack()
+        {
+            uint trackId;
+            ParamsHelper.InitParam(out trackId);
+            var nRet = Engine.DestroyCustomAudioTrack(trackId);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetExternalAudioSink()
+        {
+            bool enabled;
+            ParamsHelper.InitParam(out enabled);
+            int sampleRate;
+            ParamsHelper.InitParam(out sampleRate);
+            int channels;
+            ParamsHelper.InitParam(out channels);
+            var nRet = Engine.SetExternalAudioSink(enabled, sampleRate, channels);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_EnableCustomAudioLocalPlayback()
+        {
+            uint trackId;
+            ParamsHelper.InitParam(out trackId);
+            bool enabled;
+            ParamsHelper.InitParam(out enabled);
+            var nRet = Engine.EnableCustomAudioLocalPlayback(trackId, enabled);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_PushVideoFrame()
+        {
+            ExternalVideoFrame frame;
+            ParamsHelper.InitParam(out frame);
+            uint videoTrackId;
+            ParamsHelper.InitParam(out videoTrackId);
+            var nRet = Engine.PushVideoFrame(frame, videoTrackId);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_PushEncodedVideoImage()
+        {
+            byte[] imageBuffer;
+            ParamsHelper.InitParam(out imageBuffer);
+            uint length;
+            ParamsHelper.InitParam(out length);
+            EncodedVideoFrameInfo videoEncodedFrameInfo;
+            ParamsHelper.InitParam(out videoEncodedFrameInfo);
+            uint videoTrackId;
+            ParamsHelper.InitParam(out videoTrackId);
+            var nRet = Engine.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_GetNtpWallTimeInMs()
+        {
+           
+            var nRet = Engine.GetNtpWallTimeInMs();
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        #endregion
 
         #endregion
     }

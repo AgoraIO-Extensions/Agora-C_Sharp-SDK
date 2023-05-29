@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Agora.Rtc
 {
@@ -6,7 +6,7 @@ namespace Agora.Rtc
     {
         private IRtcEngine _rtcEngineInstance = null;
         private MusicContentCenterImpl _musicContentCenterImpl = null;
-        private const int ErrorCode = -7;
+        private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
         public MusicContentCenter(IRtcEngine rtcEngine, MusicContentCenterImpl impl)
         {
@@ -136,6 +136,24 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _musicContentCenterImpl.RenewToken(token);
+        }
+
+        public override int RemoveCache(long songCode)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.RemoveCache(songCode);
+        }
+
+        public override int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.GetCaches(ref cacheInfo, ref cacheInfoSize);
         }
     }
 }

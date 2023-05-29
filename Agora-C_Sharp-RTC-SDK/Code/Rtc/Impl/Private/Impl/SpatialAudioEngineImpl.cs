@@ -318,6 +318,12 @@ namespace Agora.Rtc
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_INITIALIZE,
                 "", 0, IntPtr.Zero, 0, ref _apiParam);
+
+            if (ret != 0)
+            {
+                return ret;
+            }
+
             var init = (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (init == 0)
             {

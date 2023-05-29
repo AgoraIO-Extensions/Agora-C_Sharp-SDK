@@ -36,7 +36,7 @@ namespace Agora.Rtc
         protected bool isFresh = false;
 
         protected IVideoStreamManager _videoStreamManager;
-        protected IrisVideoFrame _cachedVideoFrame = new IrisVideoFrame();
+        protected IrisCVideoFrame _cachedVideoFrame;
 
         // reference count
         protected int _refCount = 0;
@@ -70,7 +70,7 @@ namespace Agora.Rtc
 
             if (_videoStreamManager != null)
             {
-                _videoStreamManager.DisableVideoFrameBuffer(_sourceType, _uid, _channelId);
+                _videoStreamManager.DisableVideoFrameBuffer(_sourceType, _uid, _channelId, _frameType);
                 _videoStreamManager.Dispose();
                 _videoStreamManager = null;
             }
@@ -94,10 +94,12 @@ namespace Agora.Rtc
 
         internal virtual void InitIrisVideoFrame()
         {
-            _cachedVideoFrame = new IrisVideoFrame
+            _cachedVideoFrame = new IrisCVideoFrame
             {
-                type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
+                type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
                 yStride = _videoPixelWidth * 4,
+                uStride = 0,
+                vStride = 0,
                 height = _videoPixelHeight,
                 width = _videoPixelWidth,
                 yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4)
@@ -134,32 +136,22 @@ namespace Agora.Rtc
 
         internal virtual void ReFreshTexture()
         {
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
-            //this.Width = _cachedVideoFrame.width;
-            //this.Height = _cachedVideoFrame.height;
+            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
-            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY || ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
+            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
                 _canAttach = false;
-                //AgoraLog.LogWarning(string.Format("no video frame for user channel: {0} uid: {1}", _channelId, _uid));
                 return;
             }
-            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_FRAM_TYPE_NOT_MATCHING) {
-                _canAttach = false;
-                AgoraLog.LogWarning("RGBA ERR_FRAM_TYPE_NOT_MATCHING: may be you use both VideoSurface.cs and VideoSurfaceYUV.cs in same");
-                return;
-            }
-            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_SIZE_NOT_MATCHING)
+
+            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_RESIZED)
             {
                 _needResize = true;
                 _videoPixelWidth = _cachedVideoFrame.width;
                 _videoPixelHeight = _cachedVideoFrame.height;
                 FreeMemory();
 
-                _cachedVideoFrame.type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-                _cachedVideoFrame.yStride = _videoPixelWidth * 4;
-                _cachedVideoFrame.height = _videoPixelHeight;
-                _cachedVideoFrame.width = _videoPixelWidth;
+                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
                 _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
                 return;
             }
@@ -168,27 +160,32 @@ namespace Agora.Rtc
                 _canAttach = true;
             }
 
-            if (isFresh)
+
+            if (isFresh == false)
             {
-                try
-                {
-                    if (_needResize)
-                    {
-                        _texture.Resize(_videoPixelWidth, _videoPixelHeight);
-                        _texture.Apply();
-                        _needResize = false;
-                    }
-
-                    _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
-                        (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
-                    _texture.Apply();
-
-                }
-                catch (Exception e)
-                {
-                    AgoraLog.Log("Exception e = " + e);
-                }
+                return;
             }
+
+            try
+            {
+                if (_needResize)
+                {
+                    _texture.Resize(_videoPixelWidth, _videoPixelHeight);
+                    _texture.Apply();
+                    _needResize = false;
+                }
+
+                _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
+                    (int)_videoPixelWidth * (int)_videoPixelHeight * 4);
+                _texture.Apply();
+
+
+            }
+            catch (Exception e)
+            {
+                AgoraLog.Log("Exception e = " + e);
+            }
+
         }
 
         internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",

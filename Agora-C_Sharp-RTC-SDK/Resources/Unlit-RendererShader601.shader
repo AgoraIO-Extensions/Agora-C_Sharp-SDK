@@ -5,6 +5,7 @@ Shader "Unlit/RendererShader601"
         _MainTex ("Texture", 2D) = "white" {}
         _UTex ("uTexture", 2D) = "white" {}
         _VTex ("vTexture", 2D) = "white" {}
+        _yStrideScale ("yStride Scale", Float) = 1.0
     }
     SubShader
     {
@@ -37,7 +38,9 @@ Shader "Unlit/RendererShader601"
             sampler2D _MainTex;
             sampler2D _UTex;
             sampler2D _VTex;
+            float _yStrideScale;
             float4 _MainTex_ST;
+
 
             v2f vert (appdata v)
             {
@@ -50,20 +53,18 @@ Shader "Unlit/RendererShader601"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
-                float y_col = tex2D(_MainTex, i.uv) - 0.5;
-                float u_col = tex2D(_UTex, i.uv) - 0.5;
-                float v_col = tex2D(_VTex, i.uv) - 0.5;
+                float2 uv = i.uv * float2(_yStrideScale, 1.0);
+                fixed4 color = fixed4(tex2D(_MainTex, uv).r, tex2D(_UTex, uv).r,tex2D(_VTex, uv).r,1.0);
 
-                float4 col;
+                float4x4 yuvToRgb = float4x4(
+                    1.1643835616, 0, 1.7927410714, -0.9729450750,
+                    1.1643835616, -0.2132486143, -0.5329093286, 0.3014826655,
+                    1.1643835616, 2.1124017857, 0, -1.1334022179,
+                    0, 0, 0, 1);
+               
+                color = mul(yuvToRgb,color);
 
-                // color space 601
-                col.r = y_col + 1.140*v_col + 0.5;
-                col.g = y_col - 0.395*u_col - 0.581*v_col + 0.5;
-                col.b = y_col + 2.032*u_col + 0.5;
-                col.a = 1.0;
-
-                return col;
+                return color;
             }
             ENDCG
         }

@@ -45,16 +45,22 @@ namespace Agora.Rtc
             }
         }
 
+        public float YStrideScale = 1.0f;
 
         internal override void InitTexture()
         {
             try
             {
                 _texture = new Texture2D(_videoPixelWidth, _videoPixelHeight, TextureFormat.R8, false);
+                _texture.wrapMode = TextureWrapMode.Clamp;
                 _texture.Apply();
+
                 _uTexture = new Texture2D(_videoPixelWidth / 2, _videoPixelHeight / 2, TextureFormat.R8, false);
+                _uTexture.wrapMode = TextureWrapMode.Clamp;
                 _uTexture.Apply();
+
                 _vTexture = new Texture2D(_videoPixelWidth / 2, _videoPixelHeight / 2, TextureFormat.R8, false);
+                _vTexture.wrapMode = TextureWrapMode.Clamp;
                 _vTexture.Apply();
             }
             catch (Exception e)
@@ -65,9 +71,9 @@ namespace Agora.Rtc
 
         internal override void InitIrisVideoFrame()
         {
-            _cachedVideoFrame = new IrisVideoFrame
+            _cachedVideoFrame = new IrisCVideoFrame
             {
-                type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420,
+                type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420,
                 yStride = _videoPixelWidth,
                 height = _videoPixelHeight,
                 width = _videoPixelWidth,
@@ -83,36 +89,37 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId);
+            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
 
 
-            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_BUFFER_EMPTY || ret == IRIS_VIDEO_PROCESS_ERR.ERR_NULL_POINTER)
+
+
+            if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
                 _canAttach = false;
                 return;
             }
-            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_FRAM_TYPE_NOT_MATCHING)
-            {
-                _canAttach = false;
-                AgoraLog.LogWarning("YUV ERR_FRAM_TYPE_NOT_MATCHING may be you use both VideoSurface.cs and VideoSurfaceYUV.cs in same");
-                return;
-            }
-            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_SIZE_NOT_MATCHING)
+            else if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_RESIZED)
             {
                 _needResize = true;
-                _videoPixelWidth = _cachedVideoFrame.width;
-                _videoPixelHeight = _cachedVideoFrame.height;
+
                 FreeMemory();
 
-                _cachedVideoFrame.type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
-                _cachedVideoFrame.yStride = _videoPixelWidth; // ???
-                _cachedVideoFrame.height = _videoPixelHeight;
-                _cachedVideoFrame.width = _videoPixelWidth;
-                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _videoPixelHeight);
-                _cachedVideoFrame.uStride = _cachedVideoFrame.yStride / 2;
-                _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _videoPixelHeight / 2);
-                _cachedVideoFrame.vStride = _cachedVideoFrame.yStride / 2;
-                _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _videoPixelHeight / 2);
+                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420;
+
+                _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.yStride * _cachedVideoFrame.height);
+                _cachedVideoFrame.uBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.uStride * _cachedVideoFrame.height / 2);
+                _cachedVideoFrame.vBuffer = Marshal.AllocHGlobal(_cachedVideoFrame.vStride * _cachedVideoFrame.height / 2);
+
+                if (_cachedVideoFrame.width == 0 || _cachedVideoFrame.width == _cachedVideoFrame.yStride)
+                {
+                    YStrideScale = 1.0f;
+                }
+                else
+                {
+                    YStrideScale = ((float)_cachedVideoFrame.width / (float)_cachedVideoFrame.yStride) - 0.02f;
+                }
+
                 return;
             }
             else
@@ -120,38 +127,43 @@ namespace Agora.Rtc
                 _canAttach = true;
             }
 
-            if (isFresh)
+            if (isFresh == false)
             {
+                return;
+            }
 
-                try
+            try
+            {
+                if (_needResize)
                 {
-                    if (_needResize)
-                    {
-                        _texture.Resize(_cachedVideoFrame.yStride, _videoPixelHeight);
-                        _texture.Apply();
-                        _uTexture.Resize(_cachedVideoFrame.uStride, _videoPixelHeight / 2);
-                        _uTexture.Apply();
-                        _vTexture.Resize(_cachedVideoFrame.vStride, _videoPixelHeight / 2);
-                        _vTexture.Apply();
-                        _needResize = false;
-                    }
-
-                    _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
-                        (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
+                    _texture.Resize(_cachedVideoFrame.yStride, _cachedVideoFrame.height);
                     _texture.Apply();
-                    _uTexture.LoadRawTextureData(_cachedVideoFrame.uBuffer,
-                        (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
+                    _uTexture.Resize(_cachedVideoFrame.uStride, _cachedVideoFrame.height / 2);
                     _uTexture.Apply();
-                    _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
-                        (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
+                    _vTexture.Resize(_cachedVideoFrame.vStride, _cachedVideoFrame.height / 2);
                     _vTexture.Apply();
 
+                    _videoPixelWidth = _cachedVideoFrame.width;
+                    _videoPixelHeight = _cachedVideoFrame.height;
+                    _needResize = false;
                 }
-                catch (Exception e)
-                {
-                    AgoraLog.Log("Exception e = " + e);
-                }
+
+                _texture.LoadRawTextureData(_cachedVideoFrame.yBuffer,
+                    (int)_cachedVideoFrame.yStride * (int)_videoPixelHeight);
+                _texture.Apply();
+                _uTexture.LoadRawTextureData(_cachedVideoFrame.uBuffer,
+                    (int)_cachedVideoFrame.uStride * (int)_videoPixelHeight / 2);
+                _uTexture.Apply();
+                _vTexture.LoadRawTextureData(_cachedVideoFrame.vBuffer,
+                    (int)_cachedVideoFrame.vStride * (int)_videoPixelHeight / 2);
+                _vTexture.Apply();
+
             }
+            catch (Exception e)
+            {
+                AgoraLog.Log("Exception e = " + e);
+            }
+
         }
 
         protected override void DestroyTexture()

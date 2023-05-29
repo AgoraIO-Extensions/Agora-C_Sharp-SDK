@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
@@ -52,12 +52,12 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-        public int RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer)
+        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer)
         {
             return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
         }
 
-        public int RegisterAudioFrameObserver(int playerId, IMediaPlayerAudioFrameObserver observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
         {
             return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
         }

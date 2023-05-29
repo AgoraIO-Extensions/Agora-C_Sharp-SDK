@@ -5,6 +5,7 @@ Shader "UI/RendererShader601"
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         [PerRendererData] _UTex ("uTexture", 2D) = "white" {}
         [PerRendererData] _VTex ("vTexture", 2D) = "white" {}
+        _yStrideScale ("yStride Scale", Float) = 1.0
         _Color ("Tint", Color) = (1,1,1,1)
 
         _StencilComp ("Stencil Comparison", Float) = 8
@@ -80,6 +81,8 @@ Shader "UI/RendererShader601"
             fixed4 _TextureSampleAdd;
             float4 _ClipRect;
 
+          
+
             v2f vert(appdata_t v)
             {
                 v2f OUT;
@@ -97,22 +100,27 @@ Shader "UI/RendererShader601"
             sampler2D _MainTex;
             sampler2D _UTex;
             sampler2D _VTex;
+            float _yStrideScale;
+          
 
             fixed4 frag(v2f IN) : SV_Target
             {
                 // sample the texture
-                float y_col = tex2D(_MainTex, IN.texcoord) - 0.5;
-                float u_col = tex2D(_UTex, IN.texcoord) - 0.5;
-                float v_col = tex2D(_VTex, IN.texcoord) - 0.5;
+                //float y_col = ;
+                //float u_col = tex2D(_UTex, IN.texcoord);
+                //float v_col = 
 
-                half4 color;
+                float2 uv = IN.texcoord *float2(_yStrideScale, 1.0);
+                half4 color = half4(tex2D(_MainTex, uv).r, tex2D(_UTex, uv).r,tex2D(_VTex, uv).r,1.0);
 
-                // color space 601
-                color.r = y_col + 1.140*v_col + 0.5;
-                color.g = y_col - 0.395*u_col - 0.581*v_col + 0.5;
-                color.b = y_col + 2.032*u_col + 0.5;
-                color.a = 1.0;
-
+                float4x4 yuvToRgb = float4x4(
+                    1.1643835616, 0, 1.7927410714, -0.9729450750,
+                    1.1643835616, -0.2132486143, -0.5329093286, 0.3014826655,
+                    1.1643835616, 2.1124017857, 0, -1.1334022179,
+                    0, 0, 0, 1);
+               
+                color = mul(yuvToRgb,color);
+            
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
                 #endif

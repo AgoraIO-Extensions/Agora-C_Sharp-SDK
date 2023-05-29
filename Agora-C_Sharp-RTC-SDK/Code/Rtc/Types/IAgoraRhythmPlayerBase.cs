@@ -41,7 +41,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 814: Failed to start virtual metronome. You can use the reported errorcode to troubleshoot the cause of the error, or you can try to start the virtual metronome again.
+        /// 814: Failed to start virtual metronome. You can use the reported errorCode to troubleshoot the cause of the error, or you can try to start the virtual metronome again.
         /// </summary>
         ///
         RHYTHM_PLAYER_STATE_FAILED = 814,
@@ -63,7 +63,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 1: General error; no clear reason.
+        /// 1: A general error; no specific reason.
         /// </summary>
         ///
         RHYTHM_PLAYER_ERROR_FAILED = 1,

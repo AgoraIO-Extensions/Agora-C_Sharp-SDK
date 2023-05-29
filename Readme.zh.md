@@ -4,6 +4,9 @@
 
 Agora RTC C# SDK，目前支持 Windows 平台。
 
+- 您可以在 [文档中心](https://docs.agora.io/cn/All/API%20Reference/unity_ng/API/rtc_api_overview_ng.html)找到完整的API文档(Unity)
+- 您可以在 [发版说明](https://docs.agora.io/cn/video-call-4.x/release_unity_ng?platform=Unity)找到完整的发版说明(Unity)
+
 ## 运行环境
 
 - Visual Studio 2019+ with C++ (Windows)
@@ -17,16 +20,10 @@ Agora RTC C# SDK，目前支持 Windows 平台。
    git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
    ```
 
-   ```bash
-   git checkout dev/3.5.0.3
-   ```
-
-2. 下载运行所需的SDK
+2. 打开示例工程
 
 	以Debug、X64为例。
-	通过Visual Studio打开 `Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln`解决方案，选择x64平台。
-
-   在 [Agora Video SDK for Windows](https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/IRIS/3.5.0.3/iris_3.5.0.3_RTC_Windows_20210909_0439.zip) 下载 SDK。解压缩之后，将 `RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64`以及`x64/Release` 目录下所有的 `.dll` 文件复制到`Agora-C_Sharp-SDK/CSharp-API_Example/binx64/Debug/netcoreapp3.1` 文件夹中。
+	通过Visual Studio打开 `Agora-C_Sharp-SDK/Agora-C_Sharp-RTC-SDK-API_Example/C_Sharp-API_Example.sln`解决方案，选择x64平台。
 
 3. 编译、运行示例
 

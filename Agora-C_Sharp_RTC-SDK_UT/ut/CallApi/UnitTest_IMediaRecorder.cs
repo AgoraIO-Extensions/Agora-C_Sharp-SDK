@@ -6,8 +6,8 @@ namespace Agora.Rtc
     public class UnitTest_IMediaRecorder
     {
         public IRtcEngine Engine;
-        public IMediaRecorder MediaRecorder;
-
+        public IMediaRecorder MediaRecorder1;
+  
         [SetUp]
         public void Setup()
         {
@@ -16,47 +16,43 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = Engine.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
-            MediaRecorder = Engine.GetMediaRecorder();
+            MediaRecorder1 = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
         }
 
         [TearDown]
-        public void TearDown() { Engine.Dispose(); }
+        public void TearDown()
+        {
+            Engine.DestroyMediaRecorder(MediaRecorder1);
+            Engine.Dispose();
+        }
 
-#region terr
+        #region terr
         [Test]
         public void Test_SetMediaRecorderObserver()
         {
-            RtcConnection connection;
-            ParamsHelper.InitParam(out connection);
+
             IMediaRecorderObserver callback;
             ParamsHelper.InitParam(out callback);
-            var nRet = MediaRecorder.SetMediaRecorderObserver(connection, callback);
-
+            var nRet = MediaRecorder1.SetMediaRecorderObserver(callback);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_StartRecording()
         {
-            RtcConnection connection;
-            ParamsHelper.InitParam(out connection);
             MediaRecorderConfiguration config;
             ParamsHelper.InitParam(out config);
-            var nRet = MediaRecorder.StartRecording(connection, config);
-
+            var nRet = MediaRecorder1.StartRecording(config);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_StopRecording()
         {
-            RtcConnection connection;
-            ParamsHelper.InitParam(out connection);
-            var nRet = MediaRecorder.StopRecording(connection);
-
+            var nRet = MediaRecorder1.StopRecording();
             Assert.AreEqual(0, nRet);
         }
 
-#endregion
+        #endregion
     }
 }

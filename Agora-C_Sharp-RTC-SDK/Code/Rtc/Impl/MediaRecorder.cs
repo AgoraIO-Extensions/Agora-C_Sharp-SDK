@@ -2,66 +2,56 @@ namespace Agora.Rtc
 {
     public sealed class MediaRecorder : IMediaRecorder
     {
-        private IRtcEngine _rtcEngineInstance = null;
         private MediaRecorderImpl _mediaRecorderImpl = null;
-        private const int ErrorCode = -7;
+        private string _nativeHandle = null;
+        private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        internal MediaRecorder(IRtcEngine rtcEngine, MediaRecorderImpl impl)
+        internal MediaRecorder(MediaRecorderImpl impl, string nativeHandle)
         {
-            _rtcEngineInstance = rtcEngine;
             _mediaRecorderImpl = impl;
+            _nativeHandle = nativeHandle;
         }
 
         ~MediaRecorder()
         {
             _mediaRecorderImpl = null;
-            _rtcEngineInstance = null;
         }
 
-        private static MediaRecorder instance = null;
-        public static MediaRecorder Instance
+        internal string GetNativeHandle()
         {
-            get
-            {
-                return instance;
-            }
+            return this._nativeHandle;
         }
 
-        internal static IMediaRecorder GetInstance(IRtcEngine rtcEngine, MediaRecorderImpl impl)
+        internal void SetNativeHandle(string nativeHandle)
         {
-            return instance ?? (instance = new MediaRecorder(rtcEngine, impl));
+            this._nativeHandle = nativeHandle;
         }
 
-        internal static void ReleaseInstance()
+        public override int SetMediaRecorderObserver(IMediaRecorderObserver callback)
         {
-            instance = null;
-        }
-
-        public override int SetMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver callback)
-        {
-            if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+            if (_mediaRecorderImpl == null || this._nativeHandle == null)
             {
                 return ErrorCode;
             }
-            return _mediaRecorderImpl.SetMediaRecorderObserver(connection, callback);
+            return _mediaRecorderImpl.SetMediaRecorderObserver(this._nativeHandle, callback);
         }
 
-        public override int StartRecording(RtcConnection connection, MediaRecorderConfiguration config)
+        public override int StartRecording(MediaRecorderConfiguration config)
         {
-            if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+            if (_mediaRecorderImpl == null || this._nativeHandle == null)
             {
                 return ErrorCode;
             }
-            return _mediaRecorderImpl.StartRecording(connection, config);
+            return _mediaRecorderImpl.StartRecording(this._nativeHandle, config);
         }
 
-        public override int StopRecording(RtcConnection connection)
+        public override int StopRecording()
         {
-            if (_rtcEngineInstance == null || _mediaRecorderImpl == null)
+            if (_mediaRecorderImpl == null || this._nativeHandle == null)
             {
                 return ErrorCode;
             }
-            return _mediaRecorderImpl.StopRecording(connection);
+            return _mediaRecorderImpl.StopRecording(this._nativeHandle);
         }
     }
 }

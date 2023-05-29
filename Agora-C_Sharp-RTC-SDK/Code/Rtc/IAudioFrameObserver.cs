@@ -84,11 +84,11 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the frame position for the video observer.
-        /// After successfully registering the audio data observer, the SDK uses this callback for each specific audio frame processing node to determine whether to trigger the following callbacks: OnRecordAudioFrame OnPlaybackAudioFrame OnPlaybackAudioFrameBeforeMixing [1/2] OnMixedAudioFrame OnEarMonitoringAudioFrame You can set one or more positions you need to observe by modifying the return value of GetObservedAudioFramePosition based on your scenario requirements:When the annotation observes multiple locations, the | (or operator) is required. To conserve system resources, you can reduce the number of frame positions that you want to observe.
+        /// After successfully registering the audio data observer, the SDK uses this callback for each specific audio frame processing node to determine whether to trigger the following callbacks: OnRecordAudioFrame OnPlaybackAudioFrame OnPlaybackAudioFrameBeforeMixing OnMixedAudioFrame OnEarMonitoringAudioFrame You can set one or more positions you need to observe by modifying the return value of GetObservedAudioFramePosition based on your scenario requirements:When the annotation observes multiple locations, the | (or operator) is required. To conserve system resources, you can reduce the number of frame positions that you want to observe.
         /// </summary>
         ///
         /// <returns>
-        /// Returns a bitmask that sets the observation position, with the following values:AUDIO_FRAME_POSITION_PLAYBACK(0x0001): This position can observe the playback audio mixed by all remote users, corresponding to the OnPlaybackAudioFrame callback.AUDIO_FRAME_POSITION_RECORD(0x0002): This position can observe the collected local user's audio, corresponding to the OnRecordAudioFrame callback.AUDIO_FRAME_POSITION_MIXED(0x0004): This position can observe the playback audio mixed by the loacl user and all remote users, corresponding to the OnMixedAudioFrame callback.AUDIO_FRAME_POSITION_BEFORE_MIXING(0x0008): This position can observe the audio of a single remote user before mixing, corresponding to the OnPlaybackAudioFrameBeforeMixing [1/2] callback.AUDIO_FRAME_POSITION_EAR_MONITORING(0x0010): This position can observe the audio of a single remote user before mixing, corresponding to the OnEarMonitoringAudioFrame callback.
+        /// Returns a bitmask that sets the observation position, with the following values:AUDIO_FRAME_POSITION_PLAYBACK(0x0001): This position can observe the playback audio mixed by all remote users, corresponding to the OnPlaybackAudioFrame callback.AUDIO_FRAME_POSITION_RECORD(0x0002): This position can observe the collected local user's audio, corresponding to the OnRecordAudioFrame callback.AUDIO_FRAME_POSITION_MIXED(0x0004): This position can observe the playback audio mixed by the loacl user and all remote users, corresponding to the OnMixedAudioFrame callback.AUDIO_FRAME_POSITION_BEFORE_MIXING(0x0008): This position can observe the audio of a single remote user before mixing, corresponding to the OnPlaybackAudioFrameBeforeMixing callback.AUDIO_FRAME_POSITION_EAR_MONITORING(0x0010): This position can observe the in-ear monitoring audio of the local user, corresponding to the OnEarMonitoringAudioFrame callback.
         /// </returns>
         ///
         public virtual int GetObservedAudioFramePosition()
@@ -185,7 +185,7 @@ namespace Agora.Rtc
         ///
         /// <param name="channel_id"> The channel name that the audio frame came from.</param>
         ///
-        /// <param name="uid"> The ID of the user sending the audio frame.</param>
+        /// <param name="userId"> The ID of the user sending the audio frame.</param>
         ///
         /// <param name="audio_Frame"> The raw audio data. See AudioFrame .</param>
         ///
