@@ -8,6 +8,136 @@ namespace Agora.Rtc
 
     #region AgoraMediaBase.h
 
+
+    ///
+    /// <summary>
+    /// The type of the video source.
+    /// </summary>
+    ///
+    public enum VIDEO_SOURCE_TYPE
+    {
+        ///
+        /// <summary>
+        /// 0: (Default) The primary camera.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_CAMERA_PRIMARY = 0,
+        ///
+        /// <summary>
+        /// 0: (Default) The primary camera.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
+        ///
+        /// <summary>
+        /// 1: The secondary camera.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_CAMERA_SECONDARY = 1,
+        ///
+        /// <summary>
+        /// 2: The primary screen.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_SCREEN_PRIMARY = 2,
+        ///
+        /// <summary>
+        /// 2: The primary screen.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
+        ///
+        /// <summary>
+        /// 3: The secondary screen.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_SCREEN_SECONDARY = 3,
+        ///
+        /// <summary>
+        /// 4: A custom video source.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_CUSTOM = 4,
+       
+        ///
+        /// <summary>
+        /// 5: The media player.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_MEDIA_PLAYER = 5,
+      
+        ///
+        /// <summary>
+        /// 6: One PNG image.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_RTC_IMAGE_PNG = 6,
+       
+        ///
+        /// <summary>
+        /// 7: One JPEG image.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_RTC_IMAGE_JPEG = 7,
+       
+        ///
+        /// <summary>
+        /// 8: One GIF image.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_RTC_IMAGE_GIF = 8,
+       
+        ///
+        /// <summary>
+        /// 9: One remote video acquired by the network.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_REMOTE = 9,
+       
+        ///
+        /// <summary>
+        /// 10: One transcoded video source.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_TRANSCODED = 10,
+
+       
+        ///
+        /// <summary>
+        /// 11: (For Windows and macOS only) The third camera.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_CAMERA_THIRD = 11,
+       
+        ///
+        /// <summary>
+        /// 12: (For Windows and macOS only) The fourth camera.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_CAMERA_FOURTH = 12,
+       
+        ///
+        /// <summary>
+        /// 13: (For Windows and macOS only) The third screen.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_SCREEN_THIRD = 13,
+      
+        ///
+        /// <summary>
+        /// 14: (For Windows and macOS only) The fourth screen.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_SCREEN_FOURTH = 14,
+
+        ///
+        /// <summary>
+        /// 100: An unknown video source.
+        /// </summary>
+        ///
+        VIDEO_SOURCE_UNKNOWN = 100
+    };
+
     ///
     /// <summary>
     /// The type of the audio route.
@@ -147,14 +277,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: Read-only mode, 
+        /// 0: Read-only mode,
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
 
         ///
         /// <summary>
-        /// 2: Read and write mode, 
+        /// 2: Read and write mode,
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
@@ -336,7 +466,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The video frame.
+        /// The audio frame.
         /// </summary>
         ///
         public Int16[] data_;
@@ -486,17 +616,16 @@ namespace Agora.Rtc
         RENDER_MODE_ADAPTIVE = 3,
     };
 
-    namespace Media.Base
+
+    enum CAMERA_VIDEO_SOURCE_TYPE
     {
-        enum VIDEO_SOURCE_TYPE
-        {
-            CAMERA_SOURCE_FRONT = 0,
+        CAMERA_SOURCE_FRONT = 0,
 
-            CAMERA_SOURCE_BACK = 1,
+        CAMERA_SOURCE_BACK = 1,
 
-            VIDEO_SOURCE_UNSPECIFIED = 2,
-        };
+        VIDEO_SOURCE_UNSPECIFIED = 2,
     };
+
 
     ///
     /// @ignore
@@ -568,6 +697,7 @@ namespace Agora.Rtc
             this.textureId = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
+            this.alphaBuffer = null;
         }
 
         public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride,
@@ -679,14 +809,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. Texture ID of the frame.
+        /// This parameter only applies to video data in Texture format. Texture ID of the video frame.
         /// </summary>
         ///
         public EGL_CONTEXT_TYPE eglType;
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format. Incoming 4 x 4 transformational matrix. The typical value is a unit matrix.
+        /// This parameter only applies to video data in Texture format. Incoming 4 × 4 transformational matrix. The typical value is a unit matrix.
         /// </summary>
         ///
         public int textureId;
@@ -704,12 +834,18 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int metadata_size;
+
+
+        ///
+        /// @ignore
+        ///
+        public byte[] alphaBuffer;
     };
 
     ///
     /// <summary>
     /// Configurations of the video frame.
-    /// The video data format is YUV420. Note that the buffer provides a pointer to a pointer. This interface cannot modify the pointer of the buffer, but it can modify the content of the buffer.
+    /// Note that the buffer provides a pointer to a pointer. This interface cannot modify the pointer of the buffer, but it can modify the content of the buffer.
     /// </summary>
     ///
     public class VideoFrame
@@ -1008,7 +1144,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of bytes per audio sample, which is usually 16-bit (2 bytes).
+        /// The number of bytes per sample. The number of bytes per audio sample, which is usually 16-bit (2-byte).
         /// </summary>
         ///
         public BYTES_PER_SAMPLE bytesPerSample;
@@ -1035,7 +1171,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.The size of the data buffer is as follows: buffer = samples ×channels × bytesPerSample.
+        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.The size of the data buffer is as follows: buffer = samples × channels × bytesPerSample.
         /// </summary>
         ///
         public byte[] RawBuffer;
@@ -1183,7 +1319,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Audio spectrum information of the remote user.See AudioSpectrumData .
+        /// Audio spectrum information of the remote user. See AudioSpectrumData .
         /// </summary>
         ///
         public AudioSpectrumData spectrumData;
@@ -1519,44 +1655,32 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// Configurations for the local audio and video recording.
-    /// </summary>
+    /// @ignore
     ///
     public class MediaRecorderConfiguration
     {
         ///
-        /// <summary>
-        /// The absolute path (including the filename extensions) of the recording file. For example:Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\example.mp4iOS: /App Sandbox/Library/Caches/example.mp4macOS: /Library/Logs/example.mp4Android: /storage/emulated/0/Android/data/<package name>/files/example.mp4Ensure that the directory for the log files exists and is writable.
-        /// </summary>
+        /// @ignore
         ///
         public string storagePath;
 
         ///
-        /// <summary>
-        /// The format of the recording file. See MediaRecorderContainerFormat .
-        /// </summary>
+        /// @ignore
         ///
         public MediaRecorderContainerFormat containerFormat;
 
         ///
-        /// <summary>
-        /// The recording content. See MediaRecorderStreamType .
-        /// </summary>
+        /// @ignore
         ///
         public MediaRecorderStreamType streamType;
 
         ///
-        /// <summary>
-        /// The maximum recording duration, in milliseconds. The default value is 120000.
-        /// </summary>
+        /// @ignore
         ///
         public int maxDurationMs;
 
         ///
-        /// <summary>
-        /// The interval (ms) of updating the recording information. The value range is [1000,10000]. Based on the value you set in this parameter, the SDK triggers the OnRecorderInfoUpdated callback to report the updated recording information.
-        /// </summary>
+        /// @ignore
         ///
         public int recorderInfoUpdateInterval;
 
@@ -1580,30 +1704,22 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// The information about the file that is recorded.
-    /// </summary>
+    /// @ignore
     ///
     public class RecorderInfo
     {
         ///
-        /// <summary>
-        /// The absolute path of the recording file.
-        /// </summary>
+        /// @ignore
         ///
         public string fileName;
 
         ///
-        /// <summary>
-        /// The recording duration (ms).
-        /// </summary>
+        /// @ignore
         ///
         public uint durationMs;
 
         ///
-        /// <summary>
-        /// The size (bytes) of the recording file.
-        /// </summary>
+        /// @ignore
         ///
         public uint fileSize;
 

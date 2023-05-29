@@ -10,21 +10,21 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        public abstract void OnMusicChartsResult(string requestId, MusicContentCenterStatusCode status, MusicChartInfo[] result);
+        public abstract void OnMusicChartsResult(string requestId, MusicChartInfo[] result, MusicContentCenterStatusCode error_code);
 
         ///
         /// @ignore
         ///
-        public abstract void OnMusicCollectionResult(string requestId, MusicContentCenterStatusCode status, MusicCollection result);
+        public abstract void OnMusicCollectionResult(string requestId, MusicCollection result, MusicContentCenterStatusCode error_code);
 
         ///
         /// @ignore
         ///
-        public abstract void OnLyricResult(string requestId, string lyricUrl);
+        public abstract void OnLyricResult(string requestId, string lyricUrl, MusicContentCenterStatusCode error_code);
     
         ///
         /// @ignore
         ///
-        public abstract void OnPreLoadEvent(Int64 songCode, int percent, PreloadStatusCode status, string msg, string lyricUrl);
+        public abstract void OnPreLoadEvent(Int64 songCode, int percent,string lyricUrl, PreloadStatusCode status, MusicContentCenterStatusCode error_code);
     }
 }

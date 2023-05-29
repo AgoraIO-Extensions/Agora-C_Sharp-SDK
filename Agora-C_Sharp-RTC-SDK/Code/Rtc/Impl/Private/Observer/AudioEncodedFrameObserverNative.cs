@@ -33,22 +33,19 @@ namespace Agora.Rtc
                 IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
                 var @event = eventParam.@event;
                 var data = eventParam.data;
-                var buffer = eventParam.buffer;
-                var length = eventParam.length;
-                var buffer_count = eventParam.buffer_count;
-
+                
                 EncodedAudioFrameInfo audioEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedAudioFrameInfo>(data, "audioEncodedFrameInfo");
                 IntPtr frameBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(data, "frameBuffer");
                 int frameLength = (int)AgoraJson.GetData<int>(data, "length");
                 switch (@event)
                 {
-                    case "AudioEncodedFrameObserver_OnRecordAudioEncodedFrame":
+                    case "AudioEncodedFrameObserver_onRecordAudioEncodedFrame":
                         audioEncodedFrameObserver.OnRecordAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
-                    case "AudioEncodedFrameObserver_OnPlaybackAudioEncodedFrame":
+                    case "AudioEncodedFrameObserver_onPlaybackAudioEncodedFrame":
                         audioEncodedFrameObserver.OnPlaybackAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
-                    case "AudioEncodedFrameObserver_OnMixedAudioEncodedFrame":
+                    case "AudioEncodedFrameObserver_onMixedAudioEncodedFrame":
                         audioEncodedFrameObserver.OnMixedAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
                     default:

@@ -30,10 +30,10 @@
         ///
         /// <param name="source_type"> Video data type. See VIDEO_SOURCE_TYPE .</param>
         ///
-        /// <param name="metadata"> The metadata the user wants to send. See Metadata .</param>
+        /// <param name="metadata"> The metadata that the user wants to send. See Metadata .</param>
         ///
         /// <returns>
-        /// true: Send it.false: Do not send it.
+        /// true: Send the video frame.false: Do not send the video frame.
         /// </returns>
         ///
         public virtual bool OnReadyToSendMetadata(ref Metadata metadata, VIDEO_SOURCE_TYPE source_type)
@@ -46,7 +46,7 @@
         /// Occurs when the local user receives the metadata.
         /// </summary>
         ///
-        /// <param name="metadata"> The metadata received, see Metadata .</param>
+        /// <param name="metadata"> The metadata received. See Metadata .</param>
         ///
         public virtual void OnMetadataReceived(Metadata metadata)
         {

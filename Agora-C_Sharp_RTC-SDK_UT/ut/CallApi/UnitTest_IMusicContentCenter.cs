@@ -136,6 +136,28 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_RemoveCache()
+        {
+            long songCode;
+            ParamsHelper.InitParam(out songCode);
+            var nRet = MusicContentCenter.RemoveCache(songCode);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetCaches()
+        {
+            MusicCacheInfo[] cacheInfo;
+            ParamsHelper.InitParam(out cacheInfo);
+            int cacheInfoSize;
+            ParamsHelper.InitParam(out cacheInfoSize);
+            var nRet = MusicContentCenter.GetCaches(ref cacheInfo, ref cacheInfoSize);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_IsPreloaded()
         {
             long songCode;

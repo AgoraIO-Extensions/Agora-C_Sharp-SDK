@@ -127,6 +127,9 @@ if [ "$SDK_TYPE" == "video" ]; then
 cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
 fi
 
+#copy AgoraRtcWrapper.jar 
+cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
+
 cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
@@ -189,7 +192,7 @@ then
     echo "[Unity CI] Build package. It may take a while ..."
     mkdir "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/Agora-RTC-Plugin
     cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/Agora-RTC-Plugin || exit 1
-    $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "$CI_DIR/temp/Agora-Unity-Quickstart/API-Example-Unity" -executeMethod CommandBuild.BuildAll
+    $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "$CI_DIR/temp/Agora-Unity-Quickstart/API-Example-Unity" -executeMethod Agora_RTC_Plugin.API_Example.CommandBuild.BuildAll
     cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/Build "$CI_DIR"/output || exit 1
     echo "[Unity CI] Build package finish"
 else 

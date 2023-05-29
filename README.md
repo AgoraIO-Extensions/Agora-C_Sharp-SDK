@@ -3,6 +3,9 @@
 
 Use Agora RTC SDK with C#! 
 
+- You can find full API document(Unity) at [Document Center](https://api-ref.agora.io/en/video-sdk/unity/4.x/API/rtc_api_overview_ng.html)
+- You can find full release note(Unity) at [Release Note](https://docs.agora.io/en/video-calling/reference/release-notes?platform=unity)
+
 ## Prerequisites
 
 - Visual Studio 2019+ with C++ (Windows)
@@ -16,19 +19,13 @@ Use Agora RTC SDK with C#!
 	git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
 	```
 
-	```bash
-	git checkout dev/3.5.0.3
-	```
-
-2. Download required SDK.
+2. Open solution file or API_Example.
     
-	Open `Agora-C_Sharp-SDK/CSharp-API_Example/CSharp-API_Example.sln` via Visual Studio. select x64 platform.
-
-	Download SDK [Agora Video SDK for Windows](https://artifactory-api.bj2.agoralab.co/artifactory/CSDC_repo/IRIS/3.5.0.3/iris_3.5.0.3_RTC_Windows_20210909_0439.zip). Unzip the downloaded SDK package and copy all the `.dll` files from `RTC/Agora_Native_SDK_for_Windows_FULL/libs/x86_64` and `x64/Release` to `Agora-C_Sharp-SDK/CSharp-API_Example/binx64/Debug/netcoreapp3.1` folder.
+	Open `Agora-C_Sharp-SDK/Agora-C_Sharp-RTC-SDK-API_Example/C_Sharp-API_Example.sln` via Visual Studio. select x64 platform.
    
 3. Build and Run
 
-    Build CSharp-API_Example Project and Run.  
+    Build C_Sharp-API_Example Project and Run.  
 	Have fun!
 
 *If you do not have an App ID, see Appendix.*

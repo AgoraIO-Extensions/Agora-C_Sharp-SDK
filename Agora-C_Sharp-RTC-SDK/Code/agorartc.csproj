@@ -22,29 +22,21 @@ The Agora RTC SDK is applicable to scenarios that encourage active engagement, s
     <PackageId>agora_rtc_sdk_test</PackageId>
   </PropertyGroup>
 
-  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\CSharp-API_Example\binx64\Debug\</OutputPath>
-    </PropertyGroup>-->
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
-    <OutputPath>..\..\CSharp-API_Example\binx86\Debug\netcoreapp20\netcoreapp20\netcoreapp20\netcoreapp20</OutputPath>
+    <OutputPath>.\bin\x86\Debug</OutputPath>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutputPath>..\..\CSharp-API_Example\binx64\Debug\netcoreapp20\netcoreapp20\netcoreapp20\netcoreapp20</OutputPath>
+    <OutputPath>.\bin\x64\Debug</OutputPath>
   </PropertyGroup>
 
-  <!--<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>..\..\CSharp-API_Example\binx64\Release\</OutputPath>
-    </PropertyGroup>-->
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
-    <OutputPath>..\..\CSharp-API_Example\binx86\Release\netcoreapp20\netcoreapp20\netcoreapp20\netcoreapp20</OutputPath>
+    <OutputPath>.\bin\x86\Release</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutputPath>..\..\CSharp-API_Example\binx64\Release\netcoreapp20\netcoreapp20\netcoreapp20\netcoreapp20</OutputPath>
+    <OutputPath>.\bin\x64\Release</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>

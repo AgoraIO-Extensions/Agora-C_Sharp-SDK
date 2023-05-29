@@ -14,6 +14,8 @@ namespace Agora.Rtc
     public class VideoSurfaceYUV : VideoSurface
     {
         protected TextureManagerYUV _textureManagerYUV;
+        protected Material _material = null;
+        protected float YStrideScale = 1.0f;
 
         void Start()
         {
@@ -54,14 +56,26 @@ namespace Agora.Rtc
                     _hasAttach = true;
                 }
 
-                if (_textureManagerYUV && (this._textureWidth != _textureManagerYUV.Width || this._textureHeight != _textureManagerYUV.Height))
+                if (_textureManagerYUV)
                 {
-                    this._textureWidth = _textureManagerYUV.Width;
-                    this._textureHeight = _textureManagerYUV.Height;
-                    if (this._textureWidth != 0 && this._textureHeight != 0 )
+                    if (this._textureWidth != _textureManagerYUV.Width || this._textureHeight != _textureManagerYUV.Height)
                     {
-                        this.InvokeOnTextureSizeModify();
+                        this._textureWidth = _textureManagerYUV.Width;
+                        this._textureHeight = _textureManagerYUV.Height;
+
+                        if (this._textureWidth != 0 && this._textureHeight != 0)
+                        {
+                            this.InvokeOnTextureSizeModify();
+                        }
                     }
+
+                    if (this._textureWidth != 0 && this._textureHeight != 0 && this.YStrideScale != this._textureManagerYUV.YStrideScale)
+                    {
+                        _material.SetFloat("_yStrideScale", _textureManagerYUV.YStrideScale);
+                        //AgoraLog.Log("_yStrideScale" + _textureManagerYUV.YStrideScale);
+                        this.YStrideScale = this._textureManagerYUV.YStrideScale;
+                    }
+
                 }
             }
             else
@@ -157,15 +171,18 @@ namespace Agora.Rtc
 
         protected override void UpdateShader()
         {
+
             if (VideoSurfaceType == VideoSurfaceType.Renderer)
             {
                 var rd = _renderer as Renderer;
                 rd.material = new Material(Shader.Find("Unlit/RendererShader601"));
+                _material = rd.material;
             }
             else if (VideoSurfaceType == VideoSurfaceType.RawImage)
             {
                 var rd = _renderer as RawImage;
                 rd.material = new Material(Shader.Find("UI/RendererShader601"));
+                _material = rd.material;
             }
         }
 

@@ -109,7 +109,6 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONRTCSTATS = "RtcEngineEventHandlerEx_onRtcStats";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONNETWORKQUALITY = "RtcEngineEventHandlerEx_onNetworkQuality";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONINTRAREQUESTRECEIVED = "RtcEngineEventHandlerEx_onIntraRequestReceived";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALVIDEOFRAME = "RtcEngineEventHandlerEx_onFirstLocalVideoFrame";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALVIDEOFRAMEPUBLISHED = "RtcEngineEventHandlerEx_onFirstLocalVideoFramePublished";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEVIDEODECODED = "RtcEngineEventHandlerEx_onFirstRemoteVideoDecoded";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEOSIZECHANGED = "RtcEngineEventHandlerEx_onVideoSizeChanged";
@@ -153,6 +152,7 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONUPLOADLOGRESULT = "RtcEngineEventHandlerEx_onUploadLogResult";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONUSERACCOUNTUPDATED = "RtcEngineEventHandlerEx_onUserAccountUpdated";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONSNAPSHOTTAKEN = "RtcEngineEventHandlerEx_onSnapshotTaken";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOTRANSCODERERROR = "RtcEngineEventHandler_onLocalVideoTranscoderError";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEORENDERINGTRACINGRESULT = "RtcEngineEventHandlerEx_onVideoRenderingTracingResult";
         #endregion
 
@@ -162,9 +162,9 @@ namespace Agora.Rtc
         #endregion
 
         #region IAudioEncodedFrameObserver Start
-        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnRecordAudioEncodedFrame";
-        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnPlaybackAudioEncodedFrame";
-        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnMixedAudioEncodedFrame";
+        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onRecordAudioEncodedFrame";
+        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onPlaybackAudioEncodedFrame";
+        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onMixedAudioEncodedFrame";
         #endregion
 
         #region IAudioFrameObserver Start
@@ -186,8 +186,8 @@ namespace Agora.Rtc
         internal const string EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM = "AudioSpectrumObserver_onRemoteAudioSpectrum";
         #endregion
 
-        #region IMediaPlayerAudioFrameObserver Start
-        internal const string EVENT_MEDIAPLAYERAUDIOFRAMEOBSERVER_ONFRAME = "MediaPlayerAudioFrameObserver_onFrame";
+        #region IAudioPcmFrameSink Start
+        internal const string EVENT_AUDIOPCMFRAMESINK_ONFRAME = "AudioPcmFrameSink_onFrame";
         #endregion
 
         #region IMediaPlayerCustomDataProvider Start

@@ -11,32 +11,24 @@ namespace Agora.Rtc
     {
         private static Dictionary<string, IMediaRecorderObserver> mediaRecorderObserverDic = new Dictionary<string, IMediaRecorderObserver>();
 
-
-        private static string generateKey(RtcConnection connection)
+        internal static void AddMediaRecorderObserver(string nativeHandle, IMediaRecorderObserver observer)
         {
-            return connection.localUid.ToString() + "_" + connection.channelId;
+
+            if (mediaRecorderObserverDic.ContainsKey(nativeHandle))
+                mediaRecorderObserverDic.Remove(nativeHandle);
+
+            mediaRecorderObserverDic.Add(nativeHandle, observer);
         }
 
-        internal static void AddMediaRecorderObserver(RtcConnection connection, IMediaRecorderObserver observer)
+        internal static bool ContainsMediaRecorderObserver(string nativeHandle)
         {
-            var key = generateKey(connection);
-            if (mediaRecorderObserverDic.ContainsKey(key))
-                mediaRecorderObserverDic.Remove(key);
-
-            mediaRecorderObserverDic.Add(key, observer);
+            return mediaRecorderObserverDic.ContainsKey(nativeHandle);
         }
 
-        internal static bool ContainsMediaRecorderObserver(RtcConnection connection)
+        internal static void RemoveMediaRecorderObserver(string nativeHandle)
         {
-            var key = generateKey(connection);
-            return mediaRecorderObserverDic.ContainsKey(key);
-        }
-
-        internal static void RemoveMediaRecorderObserver(RtcConnection connection)
-        {
-            var key = generateKey(connection);
-            if (mediaRecorderObserverDic.ContainsKey(key))
-                mediaRecorderObserverDic.Remove(key);
+            if (mediaRecorderObserverDic.ContainsKey(nativeHandle))
+                mediaRecorderObserverDic.Remove(nativeHandle);
         }
 
         internal static void ClearMediaRecorderObserver()
@@ -60,17 +52,14 @@ namespace Agora.Rtc
             IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
             var @event = eventParam.@event;
             var data = eventParam.data;
-            var buffer = eventParam.buffer;
-            var length = eventParam.length;
-            var buffer_count = eventParam.buffer_count;
 
             LitJson.JsonData jsonData = null;
             if (data != null)
             {
                 jsonData = AgoraJson.ToObject(data);
             }
-            RtcConnection connection = AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection");
-            string key = generateKey(connection);
+
+            string nativeHandle = (string)AgoraJson.GetData<string>(jsonData, "nativeHandle");
             switch (@event)
             {
                 case "MediaRecorderObserver_onRecorderStateChanged":
@@ -78,8 +67,10 @@ namespace Agora.Rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                    if (!mediaRecorderObserverDic.ContainsKey(key)) return;
-                    mediaRecorderObserverDic[key].OnRecorderStateChanged(
+                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                    mediaRecorderObserverDic[nativeHandle].OnRecorderStateChanged(
+                        (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
                         (RecorderErrorCode)AgoraJson.GetData<int>(jsonData, "error")
                     );
@@ -93,8 +84,10 @@ namespace Agora.Rtc
                     CallbackObject._CallbackQueue.EnQueue(() =>
                     {
 #endif
-                    if (!mediaRecorderObserverDic.ContainsKey(key)) return;
-                    mediaRecorderObserverDic[key].OnRecorderInfoUpdated(
+                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                    mediaRecorderObserverDic[nativeHandle].OnRecorderInfoUpdated(
+                        (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
