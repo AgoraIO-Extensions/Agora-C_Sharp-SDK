@@ -9,7 +9,7 @@ namespace C_Sharp_API_Example
 {
     delegate void dumpHandler(string tag, int ret);
 
-    public partial class CSharpForm : Form
+    public partial class MainForm : Form
     {
         internal static IEngine usr_engine_ = null;
         internal static dumpHandler dump_handler_ = null;
@@ -19,7 +19,7 @@ namespace C_Sharp_API_Example
         private readonly string APPID_KEY = "AppId";
         private readonly string CHANNELID_KEY = "ChannelId";
 
-        public CSharpForm()
+        public MainForm()
         {
             InitializeComponent();
             InitUI();
@@ -28,7 +28,9 @@ namespace C_Sharp_API_Example
             dump_handler_ = new dumpHandler(DumpStatus);
 
             // local_win_id, remote_win_id
-            usr_engine_ = new JoinChannelVideo(joinChannelVideoView.localVideoView.Handle, joinChannelVideoView.remoteVideoView.Handle);
+            usr_engine_ = new JoinChannelVideo(joinChannelVideoView);
+
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void CheckId()
@@ -44,7 +46,7 @@ namespace C_Sharp_API_Example
             }
 
             string channel_id = channelId_textBox.Text;
-            if(IsAllChannelIdValid(channel_id))
+            if (IsAllChannelIdValid(channel_id))
             {
                 channelId_textBox.BackColor = Color.White;
             }
@@ -61,9 +63,9 @@ namespace C_Sharp_API_Example
             channelId_textBox.Text = config_helper_.GetValue(SECTION, CHANNELID_KEY);
             CheckId();
 
-            string api_ref_url = @"https://docs.agora.io/cn/Video/API Reference/cpp/index.html";
+            string api_ref_url = @"https://docportal.shengwang.cn/cn/video-call-4.x/API%20Reference/cs_ng/v4.2.0/API/rtc_api_overview_ng.html";
             string reg_url = @"https://console.agora.io/";
-            string eg_url = @"https://github.com/AgoraIO/API-Examples";
+            string eg_url = @"https://github.com/AgoraIO-Extensions/Agora-C_Sharp-SDK";
             string faq_url = @"https://docs.agora.io/cn/Video/faq?platform=All Platforms";
             api_ref.Links.Add(0, api_ref_url.Length, api_ref_url);
             reg_linkLabel.Links.Add(0, reg_url.Length, reg_url);
@@ -76,13 +78,16 @@ namespace C_Sharp_API_Example
             if (null != usr_engine_)
             {
                 int ret = -1;
-                ret = usr_engine_.Init(appId_textBox.Text, channelId_textBox.Text);
+                ret = usr_engine_.Init(appId_textBox.Text);
                 DumpStatus("Init", ret);
-                if(0 == ret) {
-                    sdk_version.Text = "SDK Version: " + usr_engine_.GetSDKVersion();
+                if (0 == ret)
+                {
+                    int build = 0;
+                    sdk_version.Text = "SDK Version: " + usr_engine_.GetEngine().GetVersion(ref build);
+                    sdk_version.Text += "." + build;
                 }
 
-                ret = usr_engine_.JoinChannel();
+                ret = usr_engine_.JoinChannel(channelId_textBox.Text);
                 DumpStatus("joinChannel", ret);
             }
         }
@@ -106,7 +111,7 @@ namespace C_Sharp_API_Example
 
             if (tabCtrl.SelectedTab == joinChannelVideoTab)
             {
-                usr_engine_ = new JoinChannelVideo(joinChannelVideoView.localVideoView.Handle, joinChannelVideoView.remoteVideoView.Handle);
+                usr_engine_ = new JoinChannelVideo(joinChannelVideoView);
             }
             else if (tabCtrl.SelectedTab == joinChannelAudioTab)
             {
@@ -114,20 +119,23 @@ namespace C_Sharp_API_Example
             }
             else if (tabCtrl.SelectedTab == screenShareTab)
             {
-                usr_engine_ = new ScreenShare(screenShareView.localVideoView.Handle, screenShareView.remoteVideoView.Handle);
+                usr_engine_ = new ScreenShare(screenShareView);
             }
             else if (tabCtrl.SelectedTab == joinMultipleChannelTab)
             {
-                usr_engine_ = new JoinMultipleChannel(joinMultipleChannelView.localVideoView.Handle, 
-                    joinMultipleChannelView.firstChannelVideoView.Handle, joinMultipleChannelView.secondChannelVideoView.Handle);
+                usr_engine_ = new JoinMultipleChannel(joinMultipleChannelView);
             }
             else if (tabCtrl.SelectedTab == processRawDataTab)
             {
-                usr_engine_ = new ProcessRawData(processRawDataView.localVideoView.Handle, processRawDataView.remoteVideoView.Handle);
+                usr_engine_ = new ProcessRawData(processRawDataView);
             }
             else if (tabCtrl.SelectedTab == virtualBackgroundTab)
             {
-                usr_engine_ = new VirtualBackground(virtualBackgroundView.localVideoView.Handle, virtualBackgroundView.remoteVideoView.Handle);
+                usr_engine_ = new VirtualBackground(virtualBackgroundView);
+            }
+            else if (tabCtrl.SelectedTab == customRenderTab)
+            {
+                usr_engine_ = new CustomRender(customRenderView);
             }
             else
             {
@@ -210,16 +218,21 @@ namespace C_Sharp_API_Example
 
         public void DumpStatus(string tag, int ret)
         {
-            string tips = tag;
-            if (ret != 0)
+            Console.WriteLine("**** DumpStatus {0} {1}", tag, ret);
+            status_tips.Invoke(new Action(() =>
             {
-                tips += " failed, ret =" + ret.ToString();
-            }
-            else
-            {
-                tips += " ok";
-            }
-            status_tips.Text += tips + "\r\n";
+                string tips = tag;
+                if (ret != 0)
+                {
+                    tips += " failed, ret =" + ret.ToString();
+                }
+                else
+                {
+                    tips += " ok";
+                }
+
+                status_tips.Text += tips + "\r\n";
+            }));
         }
 
         private bool IsAllChannelIdValid(string channel_ids)
