@@ -3,12 +3,12 @@
 
 Use Agora RTC SDK with C#! 
 
-- You can find full API document(Unity) at [Document Center](https://api-ref.agora.io/en/video-sdk/unity/4.x/API/rtc_api_overview_ng.html)
-- You can find full release note(Unity) at [Release Note](https://docs.agora.io/en/video-calling/reference/release-notes?platform=unity)
+- You can find full API document(Unity) at [Document Center](https://docportal.shengwang.cn/cn/video-call-4.x/API%20Reference/cs_ng/v4.2.0/API/rtc_api_overview_ng.html)
+- You can find full release note(Unity) at [Release Note](https://docportal.shengwang.cn/cn/video-call-4.x/release_cs_ng?platform=Windows)
 
 ## Prerequisites
 
-- Visual Studio 2019+ with C++ (Windows)
+- Visual Studio 2017+ with C++ (Windows)
 - .NET
 
 ## Usage
@@ -16,7 +16,7 @@ Use Agora RTC SDK with C#!
 1. Clone the repository.
 
 	```bash
-	git clone https://github.com/AgoraIO-Community/Agora-C_Sharp-SDK.git
+	git clone https://github.com/AgoraIO-Extensions/Agora-C_Sharp-SDK.git
 	```
 
 2. Open solution file or API_Example.
@@ -32,9 +32,7 @@ Use Agora RTC SDK with C#!
 
 ## Help
 
-For more information about our API, please refer to [Agora C++ API](https://docs.agora.io/en/Video/API%20Reference/cpp/v3.1.2/index.html).
-
-*C# API reference is on proceeding while C++ API is similar.*
+For more information about our API, please refer to [C# API Reference](https://docportal.shengwang.cn/cn/video-call-4.x/API%20Reference/cs_ng/v4.2.0/API/rtc_api_overview_ng.html).
 
 ## Appendix
 

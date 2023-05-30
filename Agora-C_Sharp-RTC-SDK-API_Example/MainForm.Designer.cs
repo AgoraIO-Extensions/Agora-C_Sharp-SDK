@@ -1,7 +1,7 @@
 ﻿
 namespace C_Sharp_API_Example
 {
-    partial class CSharpForm
+    partial class MainForm
     {
         /// <summary>
         ///  Required designer variable.
@@ -43,6 +43,8 @@ namespace C_Sharp_API_Example
             this.processRawDataView = new C_Sharp_API_Example.ProcessRawDataView();
             this.virtualBackgroundTab = new System.Windows.Forms.TabPage();
             this.virtualBackgroundView = new C_Sharp_API_Example.VirtualBackgroundView();
+            this.customRenderTab = new System.Windows.Forms.TabPage();
+            this.customRenderView = new C_Sharp_API_Example.CustomRenderView();
             this.leave_channel_btn = new System.Windows.Forms.Button();
             this.join_channel_btn = new System.Windows.Forms.Button();
             this.appId_label = new System.Windows.Forms.Label();
@@ -67,6 +69,7 @@ namespace C_Sharp_API_Example
             this.joinMultipleChannelTab.SuspendLayout();
             this.processRawDataTab.SuspendLayout();
             this.virtualBackgroundTab.SuspendLayout();
+            this.customRenderTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_left_part)).BeginInit();
             this.splitContainer_left_part.Panel1.SuspendLayout();
             this.splitContainer_left_part.Panel2.SuspendLayout();
@@ -106,6 +109,7 @@ namespace C_Sharp_API_Example
             this.tabCtrl.Controls.Add(this.joinMultipleChannelTab);
             this.tabCtrl.Controls.Add(this.processRawDataTab);
             this.tabCtrl.Controls.Add(this.virtualBackgroundTab);
+            this.tabCtrl.Controls.Add(this.customRenderTab);
             this.tabCtrl.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabCtrl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabCtrl.Location = new System.Drawing.Point(0, 0);
@@ -132,7 +136,7 @@ namespace C_Sharp_API_Example
             // 
             this.joinChannelVideoView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.joinChannelVideoView.Location = new System.Drawing.Point(3, 3);
-            this.joinChannelVideoView.Margin = new System.Windows.Forms.Padding(2, 1, 2, 5);
+            this.joinChannelVideoView.Margin = new System.Windows.Forms.Padding(0);
             this.joinChannelVideoView.Name = "joinChannelVideoView";
             this.joinChannelVideoView.Size = new System.Drawing.Size(776, 637);
             this.joinChannelVideoView.TabIndex = 0;
@@ -152,7 +156,7 @@ namespace C_Sharp_API_Example
             // 
             this.joinChannelAudioView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.joinChannelAudioView.Location = new System.Drawing.Point(3, 3);
-            this.joinChannelAudioView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.joinChannelAudioView.Margin = new System.Windows.Forms.Padding(0);
             this.joinChannelAudioView.Name = "joinChannelAudioView";
             this.joinChannelAudioView.Size = new System.Drawing.Size(776, 637);
             this.joinChannelAudioView.TabIndex = 0;
@@ -172,7 +176,7 @@ namespace C_Sharp_API_Example
             // 
             this.screenShareView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.screenShareView.Location = new System.Drawing.Point(3, 3);
-            this.screenShareView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.screenShareView.Margin = new System.Windows.Forms.Padding(0);
             this.screenShareView.Name = "screenShareView";
             this.screenShareView.Size = new System.Drawing.Size(776, 637);
             this.screenShareView.TabIndex = 0;
@@ -193,7 +197,7 @@ namespace C_Sharp_API_Example
             // 
             this.joinMultipleChannelView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.joinMultipleChannelView.Location = new System.Drawing.Point(2, 3);
-            this.joinMultipleChannelView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.joinMultipleChannelView.Margin = new System.Windows.Forms.Padding(0);
             this.joinMultipleChannelView.Name = "joinMultipleChannelView";
             this.joinMultipleChannelView.Size = new System.Drawing.Size(778, 637);
             this.joinMultipleChannelView.TabIndex = 0;
@@ -214,7 +218,7 @@ namespace C_Sharp_API_Example
             // 
             this.processRawDataView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.processRawDataView.Location = new System.Drawing.Point(2, 3);
-            this.processRawDataView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.processRawDataView.Margin = new System.Windows.Forms.Padding(0);
             this.processRawDataView.Name = "processRawDataView";
             this.processRawDataView.Size = new System.Drawing.Size(778, 637);
             this.processRawDataView.TabIndex = 1;
@@ -235,10 +239,30 @@ namespace C_Sharp_API_Example
             // 
             this.virtualBackgroundView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.virtualBackgroundView.Location = new System.Drawing.Point(2, 3);
-            this.virtualBackgroundView.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.virtualBackgroundView.Margin = new System.Windows.Forms.Padding(0);
             this.virtualBackgroundView.Name = "virtualBackgroundView";
             this.virtualBackgroundView.Size = new System.Drawing.Size(778, 637);
             this.virtualBackgroundView.TabIndex = 0;
+            // 
+            // customRenderTab
+            // 
+            this.customRenderTab.Controls.Add(this.customRenderView);
+            this.customRenderTab.ForeColor = System.Drawing.Color.Transparent;
+            this.customRenderTab.Location = new System.Drawing.Point(4, 26);
+            this.customRenderTab.Name = "customRenderTab";
+            this.customRenderTab.Size = new System.Drawing.Size(782, 643);
+            this.customRenderTab.TabIndex = 7;
+            this.customRenderTab.Text = "CustomRender";
+            this.customRenderTab.UseVisualStyleBackColor = true;
+            // 
+            // customRenderView
+            // 
+            this.customRenderView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.customRenderView.Location = new System.Drawing.Point(0, 0);
+            this.customRenderView.Margin = new System.Windows.Forms.Padding(0);
+            this.customRenderView.Name = "customRenderView";
+            this.customRenderView.Size = new System.Drawing.Size(782, 643);
+            this.customRenderView.TabIndex = 0;
             // 
             // leave_channel_btn
             // 
@@ -471,16 +495,17 @@ namespace C_Sharp_API_Example
             this.btn_splitContainer.SplitterWidth = 2;
             this.btn_splitContainer.TabIndex = 8;
             // 
-            // CSharpForm
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1184, 725);
             this.Controls.Add(this.splitContainer_horizon_all);
+            this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "CSharpForm";
+            this.Name = "MainForm";
             this.Opacity = 0.99D;
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "CSharpForm";
@@ -492,6 +517,7 @@ namespace C_Sharp_API_Example
             this.joinMultipleChannelTab.ResumeLayout(false);
             this.processRawDataTab.ResumeLayout(false);
             this.virtualBackgroundTab.ResumeLayout(false);
+            this.customRenderTab.ResumeLayout(false);
             this.splitContainer_left_part.Panel1.ResumeLayout(false);
             this.splitContainer_left_part.Panel1.PerformLayout();
             this.splitContainer_left_part.Panel2.ResumeLayout(false);
@@ -548,6 +574,8 @@ namespace C_Sharp_API_Example
         private ProcessRawDataView processRawDataView;
         private System.Windows.Forms.TabPage virtualBackgroundTab;
         private VirtualBackgroundView virtualBackgroundView;
+        private System.Windows.Forms.TabPage customRenderTab;
+        private CustomRenderView customRenderView;
     }
 }
 

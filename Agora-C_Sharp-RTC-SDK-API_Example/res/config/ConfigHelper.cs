@@ -21,7 +21,7 @@ namespace C_Sharp_API_Example
             config_file_path_ = System.IO.Directory.GetCurrentDirectory() + "\\res\\config\\API_Example.ini";
             if (!File.Exists(config_file_path_))
             {
-                CSharpForm.dump_handler_(config_file_path_ + " not Exists!!!!", -1);
+                MainForm.dump_handler_(config_file_path_ + " not Exists!!!!", -1);
             }
         }
 
@@ -32,7 +32,7 @@ namespace C_Sharp_API_Example
             {
                 // fail
                 string msg = "save " + Key + "/" + Value;
-                CSharpForm.dump_handler_(msg, -1);
+                MainForm.dump_handler_(msg, -1);
             }
         }
 

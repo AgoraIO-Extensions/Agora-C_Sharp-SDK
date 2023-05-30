@@ -17,7 +17,7 @@ namespace C_Sharp_API_Example
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CSharpForm());
+            Application.Run(new MainForm());
         }
     }
 }
