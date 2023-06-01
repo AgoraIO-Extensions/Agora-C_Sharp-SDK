@@ -8,6 +8,8 @@ namespace C_Sharp_API_Example
         private readonly string JoinChannelAudio_TAG = "[JoinChannelAudio] ";
         private readonly string log_file_path = ".\\logs\\agora.log";
 
+        private bool joined_ = false;
+
         internal override int Init(string appId)
         {
             int ret = -1;
@@ -40,10 +42,6 @@ namespace C_Sharp_API_Example
             int ret = -1;
             if (null != rtc_engine_)
             {
-                // Leave channel
-                ret = rtc_engine_.LeaveChannel();
-                MainForm.dump_handler_(JoinChannelAudio_TAG + "LeaveChannel", ret);
-
                 // Dispose engine
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
@@ -54,7 +52,7 @@ namespace C_Sharp_API_Example
         internal override int JoinChannel(string channelId)
         {
             int ret = -1;
-            if (null != rtc_engine_)
+            if (null != rtc_engine_ && joined_ != true)
             {
                 // Join channel
                 ChannelMediaOptions options = new ChannelMediaOptions();
@@ -66,6 +64,8 @@ namespace C_Sharp_API_Example
 
                 // Enable audio volume indication
                 ret = rtc_engine_.EnableAudioVolumeIndication(300, 3, false);
+
+                joined_ = true;
             }
             return ret;
         }
@@ -73,11 +73,15 @@ namespace C_Sharp_API_Example
         internal override int LeaveChannel()
         {
             int ret = -1;
-            if (null != rtc_engine_)
+            
+            if (null != rtc_engine_ && joined_ == true)
             {
                 ret = rtc_engine_.LeaveChannel();
                 MainForm.dump_handler_(JoinChannelAudio_TAG + "LeaveChannel", ret);
+
+                joined_ = false;
             }
+
             return ret;
         }
 

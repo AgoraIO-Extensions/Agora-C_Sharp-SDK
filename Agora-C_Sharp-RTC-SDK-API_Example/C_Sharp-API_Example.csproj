@@ -9,7 +9,7 @@
         <ApplicationIcon />
         <StartupObject />
         <Version>2.1.1</Version>
-        <Authors>mberky</Authors>
+        <Authors>Agora.io</Authors>
         <Company>Agora.io</Company>
         <Description>winform version</Description>
         <Copyright>Agora.io Copyright (C) 2021</Copyright>
@@ -42,7 +42,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="agora_rtc_sdk" Version="4.2.0" />
+      <PackageReference Include="agora_rtc_sdk" Version="4.2.0-beta.2" />
       <PackageReference Include="SharpDX" Version="4.2.0" />
       <PackageReference Include="SharpDX.Direct3D9" Version="4.2.0" />
       <PackageReference Include="SharpDX.Mathematics" Version="4.2.0" />

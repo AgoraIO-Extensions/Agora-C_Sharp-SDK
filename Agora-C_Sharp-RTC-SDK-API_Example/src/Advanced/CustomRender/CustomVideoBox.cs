@@ -12,7 +12,6 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
     {
         private BaseRender render_ = null;
         private BaseRender.CustomVideoBoxRenderType type_ = BaseRender.CustomVideoBoxRenderType.kBufferedGraphics;
-        private bool rendering_ = false;
 
         private object obj_ = new object();
 
@@ -66,6 +65,24 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                 // coze we will set style with AllPaintingInWmPaint true...
                 if (render_ != null)
                     this.ReInitRender();
+            }
+        }
+
+        public void DestroyRender()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => {
+                    if (render_ != null)
+                        render_.Dispose();
+                    render_ = null;
+                }));
+            }
+            else
+            {
+                if (render_ != null)
+                    render_.Dispose();
+                render_ = null;
             }
         }
 

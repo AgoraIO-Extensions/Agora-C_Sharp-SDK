@@ -510,6 +510,7 @@ namespace C_Sharp_API_Example
             this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "CSharpForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.tabCtrl.ResumeLayout(false);
             this.joinChannelVideoTab.ResumeLayout(false);
             this.joinChannelAudioTab.ResumeLayout(false);
