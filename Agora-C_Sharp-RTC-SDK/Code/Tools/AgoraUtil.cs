@@ -256,6 +256,15 @@ namespace Agora.Rtc
             return re.Substring(0, index);
         }
 
+        public static string StringFromNativeUtf8(IntPtr nativeUtf8)
+        {
+            int len = 0;
+            while (Marshal.ReadByte(nativeUtf8, len) != 0) ++len;
+            byte[] buffer = new byte[len];
+            Marshal.Copy(nativeUtf8, buffer, 0, buffer.Length);
+            return Encoding.UTF8.GetString(buffer);
+        }
+
         internal static List<T> GetDicKeys<T, D>(Dictionary<T, D> dic)
         {
             List<T> list = new List<T>();
@@ -314,8 +323,11 @@ namespace Agora.Rtc
         {
             get
             {
-                var re = Marshal.PtrToStringAnsi(result);
-                return re;
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                return Marshal.PtrToStringAnsi(result);
+#else
+                return AgoraUtil.StringFromNativeUtf8(result);
+#endif
             }
         }
 
