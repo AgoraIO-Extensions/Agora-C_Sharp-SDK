@@ -401,8 +401,8 @@ namespace C_Sharp_API_Example
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1861, 1024);
             this.Controls.Add(this.join_channel_btn);
             this.Controls.Add(this.leave_channel_btn);
