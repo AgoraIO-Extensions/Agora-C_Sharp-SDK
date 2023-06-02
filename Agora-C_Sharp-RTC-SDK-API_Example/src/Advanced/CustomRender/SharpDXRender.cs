@@ -142,7 +142,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
             {
                 for (int i = 0; i < videoFrame.height; i++)
                 {
-                    CopyMemory(locked_data.DataPointer + locked_data.Pitch * i, videoFrame.yBufferPtr + i * videoFrame.yStride, videoFrame.yStride);
+                    CopyMemory(locked_data.DataPointer + locked_data.Pitch * i, videoFrame.yBufferPtr + i * videoFrame.yStride, Math.Min(videoFrame.yStride, locked_data.Pitch));
                 }
             }
             else if (data_type_ == DataType.kYUV420)
@@ -151,7 +151,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                 IntPtr dst_y_ptr = locked_data.DataPointer;
                 for (int i = 0; i < videoFrame.height; i++)
                 {
-                    CopyMemory(dst_y_ptr + i * locked_data.Pitch, videoFrame.yBufferPtr + i * videoFrame.yStride, videoFrame.width);
+                    CopyMemory(dst_y_ptr + i * locked_data.Pitch, videoFrame.yBufferPtr + i * videoFrame.yStride, Math.Min(videoFrame.yStride, locked_data.Pitch));
                 }
 
                 // coz dst data is yv12
@@ -159,7 +159,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                 IntPtr dst_u_ptr = dst_y_ptr + locked_data.Pitch * videoFrame.height;
                 for (int i = 0; i < videoFrame.height / 2; i++)
                 {
-                    CopyMemory(dst_u_ptr + i * locked_data.Pitch / 2, videoFrame.vBufferPtr + i * videoFrame.vStride, videoFrame.width / 2);
+                    CopyMemory(dst_u_ptr + i * locked_data.Pitch / 2, videoFrame.vBufferPtr + i * videoFrame.vStride, Math.Min(videoFrame.vStride, locked_data.Pitch / 2));
                 }
 
                 // coz dst data is yv12
@@ -167,7 +167,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                 IntPtr dst_v_ptr = dst_u_ptr + locked_data.Pitch / 2 * videoFrame.height / 2;
                 for (int i = 0; i < videoFrame.height / 2; i++)
                 {
-                    CopyMemory(dst_v_ptr + i * locked_data.Pitch / 2, videoFrame.uBufferPtr + i * videoFrame.uStride, videoFrame.width / 2);
+                    CopyMemory(dst_v_ptr + i * locked_data.Pitch / 2, videoFrame.uBufferPtr + i * videoFrame.uStride, Math.Min(videoFrame.uStride, locked_data.Pitch / 2));
                 }
             }
 

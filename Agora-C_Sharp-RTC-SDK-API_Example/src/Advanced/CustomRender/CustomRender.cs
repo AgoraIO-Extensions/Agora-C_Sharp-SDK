@@ -127,13 +127,13 @@ namespace C_Sharp_API_Example
 
         public override bool OnPreEncodeVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
-            view_.remoteVideoView.DeliverFrame(videoFrame);
+            view_.localVideoView.DeliverFrame(videoFrame);
             return true;
         }
 
         public override bool OnRenderVideoFrame(string channelId, uint remoteUid, VideoFrame videoFrame)
         {
-            view_.localVideoView.DeliverFrame(videoFrame);
+            view_.remoteVideoView.DeliverFrame(videoFrame);
             return true;
         }
 
