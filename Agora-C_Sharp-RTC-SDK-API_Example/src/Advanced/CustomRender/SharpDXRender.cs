@@ -110,7 +110,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                 {
                     locked_data = d3d_offscreen_surface_.LockRectangle(SharpDX.Direct3D9.LockFlags.DoNotWait);
                 }
-                catch (Exception e)
+                catch (SharpDX.SharpDXException e)
                 {
                     // D3DERR_WASSTILLDRAWING
                     if (e.Message.Contains("WASSTILLDRAWING"))
@@ -140,7 +140,10 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
 
             if (data_type_ == DataType.kBGRA)
             {
-                CopyMemory(locked_data.DataPointer, videoFrame.yBufferPtr, videoFrame.width * videoFrame.height * 4);
+                for (int i = 0; i < videoFrame.height; i++)
+                {
+                    CopyMemory(locked_data.DataPointer + locked_data.Pitch * i, videoFrame.yBufferPtr + i * videoFrame.yStride, videoFrame.yStride);
+                }
             }
             else if (data_type_ == DataType.kYUV420)
             {
@@ -193,10 +196,10 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                     tips_fps,
                     new SharpDX.Mathematics.Interop.RawRectangle(0, 0, d3d_backend_surface_buffer_size_.Width, d3d_backend_surface_buffer_size_.Height),
                     SharpDX.Direct3D9.FontDrawFlags.Center | SharpDX.Direct3D9.FontDrawFlags.VerticalCenter);
-                d3d_fps_font_.DrawText(null, 
+                d3d_fps_font_.DrawText(null,
                     tips_fps,
-                    d3d_backend_surface_buffer_size_.Width - (font_rect.Right - font_rect.Left) -10, 
-                    10, 
+                    d3d_backend_surface_buffer_size_.Width - (font_rect.Right - font_rect.Left) - 10,
+                    10,
                     new SharpDX.Mathematics.Interop.RawColorBGRA(0, 0, 255, 255));
             }
 

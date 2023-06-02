@@ -53,8 +53,6 @@ namespace C_Sharp_API_Example
 
         internal override int UnInit()
         {
-            int ret = -1;
-
             if (null != rtc_engine_)
             {
                 // Dispose engine
@@ -64,7 +62,7 @@ namespace C_Sharp_API_Example
                 inited_ = false;
             }
 
-            return ret;
+            return 0;
         }
 
         internal override int JoinChannel(string channelId)
