@@ -105,7 +105,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                 {
                     images_[backend_index_] = new Bitmap(videoFrame.width,
                         videoFrame.height,
-                        videoFrame.width * 4,
+                        videoFrame.yStride,
                         System.Drawing.Imaging.PixelFormat.Format32bppArgb,
                         videoFrame.yBufferPtr);
                 }
@@ -114,7 +114,10 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                     var data = images_[backend_index_].LockBits(new Rectangle(0, 0, images_[backend_index_].Width, images_[backend_index_].Height),
                         System.Drawing.Imaging.ImageLockMode.WriteOnly,
                         images_[backend_index_].PixelFormat);
-                    CopyMemory(data.Scan0, videoFrame.yBufferPtr, videoFrame.width * videoFrame.height * 4);
+                    for (int i = 0; i < videoFrame.height; i++)
+                    {
+                        CopyMemory(data.Scan0 + data.Stride * i, videoFrame.yBufferPtr + videoFrame.yStride * i, videoFrame.yStride);
+                    }
                     images_[backend_index_].UnlockBits(data);
                 }
             }
