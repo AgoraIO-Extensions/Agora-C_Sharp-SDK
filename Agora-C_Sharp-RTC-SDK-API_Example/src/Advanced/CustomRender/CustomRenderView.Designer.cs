@@ -36,6 +36,7 @@ namespace C_Sharp_API_Example
             // 
             // remoteVideoView
             // 
+            this.remoteVideoView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.remoteVideoView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.remoteVideoView.Location = new System.Drawing.Point(0, 0);
             this.remoteVideoView.Name = "remoteVideoView";
@@ -45,7 +46,7 @@ namespace C_Sharp_API_Example
             // localVideoView
             // 
             this.localVideoView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.localVideoView.Location = new System.Drawing.Point(0, 0);
+            this.localVideoView.Location = new System.Drawing.Point(3, 3);
             this.localVideoView.Name = "localVideoView";
             this.localVideoView.Size = new System.Drawing.Size(240, 160);
             this.localVideoView.TabIndex = 1;

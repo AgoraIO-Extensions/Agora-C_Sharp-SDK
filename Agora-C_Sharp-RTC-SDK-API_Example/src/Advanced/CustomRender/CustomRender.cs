@@ -11,7 +11,9 @@ namespace C_Sharp_API_Example
         private readonly string tag_ = "[CustomRender] ";
         private readonly string log_file_path = ".\\logs\\agora.log";
         private IVideoFrameObserver video_frame_observer = null;
+
         private CustomRenderView view_ = null;
+        private bool joined_ = false;
 
         public CustomRender(System.Windows.Forms.UserControl view)
         {
@@ -45,25 +47,55 @@ namespace C_Sharp_API_Example
             ret = rtc_engine_.RegisterVideoFrameObserver(video_frame_observer);
             MainForm.dump_handler_(tag_ + "RegisterVideoFrameObserver", ret);
 
-            // Enable video module
-            ret = rtc_engine_.EnableVideo();
-            MainForm.dump_handler_(tag_ + "EnableVideo", ret);
-
-            // Enable local video
-            ret = rtc_engine_.EnableLocalVideo(true);
-            MainForm.dump_handler_(tag_ + "EnableLocalVideo", ret);
-
-            // Start preview
-            ret = rtc_engine_.StartPreview(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY);
-            MainForm.dump_handler_(tag_ + "StartPreview", ret);
-
             return ret;
         }
 
         internal override int UnInit()
         {
-            int ret = -1;
             if (null != rtc_engine_)
+            {
+                // Stop all renderer
+                view_.StopAll();
+
+                // Dispose engine
+                rtc_engine_.Dispose();
+                rtc_engine_ = null;
+            }
+
+            return 0;
+        }
+
+        internal override int JoinChannel(string channelId)
+        {
+            int ret = -1;
+            if (null != rtc_engine_ && joined_ != true)
+            {
+                // Enable video module
+                ret = rtc_engine_.EnableVideo();
+                MainForm.dump_handler_(tag_ + "EnableVideo", ret);
+
+                // Start preview
+                ret = rtc_engine_.StartPreview(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY);
+                MainForm.dump_handler_(tag_ + "StartPreview", ret);
+
+                // Join channel
+                ChannelMediaOptions options = new ChannelMediaOptions();
+                options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
+                options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
+
+                ret = rtc_engine_.JoinChannel("", channelId.Split(';').GetValue(0).ToString(), 0, options);
+
+                MainForm.dump_handler_(tag_ + "JoinChannel", ret);
+
+                joined_ = true;
+            }
+            return ret;
+        }
+
+        internal override int LeaveChannel()
+        {
+            int ret = -1;
+            if (null != rtc_engine_ && joined_ == true)
             {
                 // Stop preview
                 ret = rtc_engine_.StopPreview();
@@ -77,36 +109,7 @@ namespace C_Sharp_API_Example
                 ret = rtc_engine_.LeaveChannel();
                 MainForm.dump_handler_(tag_ + "LeaveChannel", ret);
 
-                // Dispose engine
-                rtc_engine_.Dispose();
-                rtc_engine_ = null;
-            }
-            return ret;
-        }
-
-        internal override int JoinChannel(string channelId)
-        {
-            int ret = -1;
-            if (null != rtc_engine_)
-            {
-                ChannelMediaOptions options = new ChannelMediaOptions();
-                options.channelProfile.SetValue(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING);
-                options.clientRoleType.SetValue(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
-
-                ret = rtc_engine_.JoinChannel("", channelId.Split(';').GetValue(0).ToString(), 0, options);
-
-                MainForm.dump_handler_(tag_ + "JoinChannel", ret);
-            }
-            return ret;
-        }
-
-        internal override int LeaveChannel()
-        {
-            int ret = -1;
-            if (null != rtc_engine_)
-            {
-                ret = rtc_engine_.LeaveChannel();
-                MainForm.dump_handler_(tag_ + "LeaveChannel", ret);
+                joined_ = false;
             }
             return ret;
         }
@@ -124,13 +127,13 @@ namespace C_Sharp_API_Example
 
         public override bool OnPreEncodeVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
-            view_.remoteVideoView.DeliverFrame(videoFrame);
+            view_.localVideoView.DeliverFrame(videoFrame);
             return true;
         }
 
         public override bool OnRenderVideoFrame(string channelId, uint remoteUid, VideoFrame videoFrame)
         {
-            view_.localVideoView.DeliverFrame(videoFrame);
+            view_.remoteVideoView.DeliverFrame(videoFrame);
             return true;
         }
 
