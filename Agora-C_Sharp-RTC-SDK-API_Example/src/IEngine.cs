@@ -3,7 +3,6 @@ using Agora.Rtc;
 
 namespace C_Sharp_API_Example
 {
-    // convenient to use
     public abstract class IEngine : IRtcEngineEventHandler
     {
         protected IRtcEngine rtc_engine_ = null;

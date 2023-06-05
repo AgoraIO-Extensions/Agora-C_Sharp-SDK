@@ -90,7 +90,7 @@ namespace Agora.Rtc
                     this.OnRtcEngineImpleWillDispose.Invoke(this);
                 }
 
-               
+
                 // TODO: Unmanaged resources.
                 UnSetIrisAudioFrameObserver();
                 UnSetIrisVideoFrameObserver();
@@ -5100,6 +5100,10 @@ namespace Agora.Rtc
                     screenCaptureSourceInfo.primaryMonitor = infoInternal[i].primaryMonitor;
                     screenCaptureSourceInfo.processPath = infoInternal[i].processPath;
                     screenCaptureSourceInfo.sourceId = infoInternal[i].sourceId;
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+#else
+                    screenCaptureSourceInfo.sourceDisplayId = infoInternal[i].sourceDisplayId;
+#endif
                     screenCaptureSourceInfo.sourceName = infoInternal[i].sourceName;
                     screenCaptureSourceInfo.sourceTitle = infoInternal[i].sourceTitle;
                     ThumbImageBuffer imageBuffer = new ThumbImageBuffer();

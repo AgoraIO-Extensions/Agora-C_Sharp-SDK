@@ -9,7 +9,9 @@ namespace C_Sharp_API_Example
         private readonly string log_file_path = ".\\logs\\agora.log";
         private RtcConnection first_connection_ = new RtcConnection();
         private RtcConnection second_connection_ = new RtcConnection();
+
         private JoinMultipleChannelView view_ = null;
+        private bool joined_ = false;
 
         public JoinMultipleChannel(System.Windows.Forms.UserControl view)
         {
@@ -38,67 +40,44 @@ namespace C_Sharp_API_Example
             ret = rtc_engine_.InitEventHandler(this);
             MainForm.dump_handler_(JoinMultipleChannel_TAG + "InitEventHandler", ret);
 
-            // Enable video module
-            ret = rtc_engine_.EnableVideo();
-            MainForm.dump_handler_(JoinMultipleChannel_TAG + "EnableVideo", ret);
-
-            // Enable local video
-            ret = rtc_engine_.EnableLocalVideo(true);
-            MainForm.dump_handler_(JoinMultipleChannel_TAG + "EnableLocalVideo", ret);
-
-            // Start preview
-            ret = rtc_engine_.StartPreview(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY);
-            MainForm.dump_handler_(JoinMultipleChannel_TAG + "StartPreview", ret);
-
-            // Setup local video
-            VideoCanvas canvas = new VideoCanvas();
-            canvas.view = (long)view_.localVideoView.Handle;
-            canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
-
-            ret = rtc_engine_.SetupLocalVideo(canvas);
-            MainForm.dump_handler_(JoinMultipleChannel_TAG + "SetupLocalVideo", ret);
-
             return ret;
         }
 
         internal override int UnInit()
         {
-            int ret = -1;
-
             if (null != rtc_engine_)
             {
-                IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
-
-                // Stop preview
-                ret = rtc_engine_.StopPreview();
-                MainForm.dump_handler_(JoinMultipleChannel_TAG + "StopPreview", ret);
-
-                // Disable video module
-                ret = rtc_engine_.DisableVideo();
-                MainForm.dump_handler_(JoinMultipleChannel_TAG + "DisableVideo", ret);
-
-                // Leave channel
-                ret = engine_ex.LeaveChannelEx(first_connection_);
-                MainForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannelEx first connection", ret);
-
-                // Leave channel
-                ret = engine_ex.LeaveChannelEx(second_connection_);
-                MainForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannelEx second connection", ret);
-
                 // Dispose engine
                 rtc_engine_.Dispose();
                 rtc_engine_ = null;
             }
 
-            return ret;
+            return 0;
         }
 
         internal override int JoinChannel(string channelId)
         {
             int ret = -1;
 
-            if (null != rtc_engine_)
+            if (null != rtc_engine_ && joined_ != true)
             {
+                // Enable video module
+                ret = rtc_engine_.EnableVideo();
+                MainForm.dump_handler_(JoinMultipleChannel_TAG + "EnableVideo", ret);
+
+                // Start preview
+                ret = rtc_engine_.StartPreview(VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY);
+                MainForm.dump_handler_(JoinMultipleChannel_TAG + "StartPreview", ret);
+
+                // Setup local video
+                VideoCanvas canvas = new VideoCanvas();
+                canvas.view = (long)view_.localVideoView.Handle;
+                canvas.renderMode = RENDER_MODE_TYPE.RENDER_MODE_FIT;
+
+                ret = rtc_engine_.SetupLocalVideo(canvas);
+                MainForm.dump_handler_(JoinMultipleChannel_TAG + "SetupLocalVideo", ret);
+
+                // Join channel
                 IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
 
                 var channels = channelId.Split(';');
@@ -133,6 +112,8 @@ namespace C_Sharp_API_Example
 
                 ret = engine_ex.JoinChannelEx("", second_connection_, options_ch2);
                 MainForm.dump_handler_(JoinMultipleChannel_TAG + "JoinChannelEx(ch2)", ret);
+
+                joined_ = true;
             }
 
             return ret;
@@ -142,14 +123,28 @@ namespace C_Sharp_API_Example
         {
             int ret = -1;
 
-            if (null != rtc_engine_)
+            if (null != rtc_engine_ && joined_ == true)
             {
                 IRtcEngineEx engine_ex = (IRtcEngineEx)rtc_engine_;
-                ret = engine_ex.LeaveChannelEx(first_connection_);
-                MainForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannelEx(ch1)", ret);
 
+                // Stop preview
+                ret = rtc_engine_.StopPreview();
+                MainForm.dump_handler_(JoinMultipleChannel_TAG + "StopPreview", ret);
+
+                // Disable video module
+                ret = rtc_engine_.DisableVideo();
+                MainForm.dump_handler_(JoinMultipleChannel_TAG + "DisableVideo", ret);
+
+                // Leave channel
+                ret = engine_ex.LeaveChannelEx(first_connection_);
+                MainForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannelEx first connection", ret);
+
+                // Leave channel
                 ret = engine_ex.LeaveChannelEx(second_connection_);
-                MainForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannelEx(ch2)", ret);
+                MainForm.dump_handler_(JoinMultipleChannel_TAG + "LeaveChannelEx second connection", ret);
+
+
+                joined_ = false;
             }
 
             return ret;

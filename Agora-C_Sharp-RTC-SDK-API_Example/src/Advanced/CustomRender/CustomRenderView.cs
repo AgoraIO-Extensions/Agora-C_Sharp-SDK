@@ -48,5 +48,13 @@ namespace C_Sharp_API_Example
                 }
             }
         }
+
+        public void StopAll()
+        {
+            localVideoView.DestroyRender();
+            remoteVideoView.DestroyRender();
+        }
+
+
     }
 }

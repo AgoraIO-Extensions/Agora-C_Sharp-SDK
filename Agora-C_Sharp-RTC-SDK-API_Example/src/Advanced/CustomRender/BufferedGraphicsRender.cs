@@ -13,7 +13,8 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
         private BufferedGraphics grafx_ = null;
         private Graphics gra_ = null;
 
-        private Size size_ = new Size(0, 0);
+        private Size control_size_ = new Size(0, 0);
+        private Size frame_size_ = new Size(0, 0);
 
         private System.Windows.Forms.Timer timer_ = new System.Windows.Forms.Timer();
 
@@ -51,7 +52,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
 
         public override bool Initialize(IntPtr handle, Size size, DataType dataType)
         {
-            size_ = size;
+            control_size_ = size;
 
             AllocatteBufferedGraphics(size);
             if (grafx_ == null)
@@ -72,7 +73,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
 
         public override void UpdateSize(Size size)
         {
-            if (size_.Width == size.Width && size_.Height == size.Height)
+            if (control_size_.Width == size.Width && control_size_.Height == size.Height)
                 return;
 
 
@@ -85,7 +86,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
             // ReAllocate graphics buffer with new size
             AllocatteBufferedGraphics(size);
 
-            size_ = size;
+            control_size_ = size;
         }
 
         public override void DeliverFrame(Agora.Rtc.VideoFrame videoFrame)
@@ -96,6 +97,9 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
             if (videoFrame.type != Agora.Rtc.VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_BGRA)
                 return;
 
+            frame_size_.Width = videoFrame.width;
+            frame_size_.Height = videoFrame.height;
+
             // Lock backend index to write frame data into backend buffer
             lock (obj_)
             {
@@ -105,7 +109,7 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                 {
                     images_[backend_index_] = new Bitmap(videoFrame.width,
                         videoFrame.height,
-                        videoFrame.width * 4,
+                        videoFrame.yStride,
                         System.Drawing.Imaging.PixelFormat.Format32bppArgb,
                         videoFrame.yBufferPtr);
                 }
@@ -114,7 +118,10 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
                     var data = images_[backend_index_].LockBits(new Rectangle(0, 0, images_[backend_index_].Width, images_[backend_index_].Height),
                         System.Drawing.Imaging.ImageLockMode.WriteOnly,
                         images_[backend_index_].PixelFormat);
-                    CopyMemory(data.Scan0, videoFrame.yBufferPtr, videoFrame.width * videoFrame.height * 4);
+                    for (int i = 0; i < videoFrame.height; i++)
+                    {
+                        CopyMemory(data.Scan0 + data.Stride * i, videoFrame.yBufferPtr + videoFrame.yStride * i, videoFrame.yStride);
+                    }
                     images_[backend_index_].UnlockBits(data);
                 }
             }
@@ -167,23 +174,26 @@ namespace C_Sharp_API_Example.src.Advanced.CustomRender
 
             SwapIndex();
 
-            if (images_[present_index_] != null)
-            {
-                // Fill fps area with black background
-                string tips_fps = "FPS:" + GetCurrentFps().ToString();
-                SizeF tips_fps_size = grafx_.Graphics.MeasureString(tips_fps, SystemFonts.DefaultFont);
-                Rectangle tips_fps_rect = new Rectangle(size_.Width - 50, 10, (int)tips_fps_size.Width, (int)tips_fps_size.Height);
-                grafx_.Graphics.FillRectangle(Brushes.Black, tips_fps_rect);
+            // Return when there is no frame arrivied or cached image size is not equal to current frame size
+            if (images_[present_index_] == null || frame_size_.Width != images_[present_index_].Width || frame_size_.Height != images_[present_index_].Height)
+                return;
 
-                // Draw image to calced area
-                grafx_.Graphics.DrawImage(images_[present_index_], CalcDestRectangle(images_[present_index_].Size, size_), new Rectangle(0, 0, images_[present_index_].Width, images_[present_index_].Height), GraphicsUnit.Pixel);
+            // Fill background with black
+            grafx_.Graphics.FillRectangle(Brushes.Black, new Rectangle(0, 0, control_size_.Width, control_size_.Height));
 
-                // Draw current fps
-                grafx_.Graphics.DrawString(tips_fps, SystemFonts.DefaultFont, Brushes.Red, tips_fps_rect.X, tips_fps_rect.Y);
+            // Fill fps area with black background
+            string tips_fps = "FPS:" + GetCurrentFps().ToString();
+            SizeF tips_fps_size = grafx_.Graphics.MeasureString(tips_fps, SystemFonts.DefaultFont);
+            Rectangle tips_fps_rect = new Rectangle(control_size_.Width - 50, 10, (int)tips_fps_size.Width, (int)tips_fps_size.Height);
 
-                // Feed one frame into fps counter
-                FeedOneFrame();
-            }
+            // Draw image to calced area
+            grafx_.Graphics.DrawImage(images_[present_index_], CalcDestRectangle(images_[present_index_].Size, control_size_), new Rectangle(0, 0, images_[present_index_].Width, images_[present_index_].Height), GraphicsUnit.Pixel);
+
+            // Draw current fps
+            grafx_.Graphics.DrawString(tips_fps, SystemFonts.DefaultFont, Brushes.Red, tips_fps_rect.X, tips_fps_rect.Y);
+
+            // Feed one frame into fps counter
+            FeedOneFrame();
 
 
             // Update to specified graphics obj by handle

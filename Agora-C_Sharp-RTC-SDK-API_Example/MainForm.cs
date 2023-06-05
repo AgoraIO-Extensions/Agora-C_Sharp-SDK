@@ -11,9 +11,9 @@ namespace C_Sharp_API_Example
 
     public partial class MainForm : Form
     {
-        internal static IEngine usr_engine_ = null;
+        internal static IEngine engine_ = null;
         internal static dumpHandler dump_handler_ = null;
-        // config
+
         private ConfigHelper config_helper_ = null;
         private readonly string SECTION = "must";
         private readonly string APPID_KEY = "AppId";
@@ -24,13 +24,19 @@ namespace C_Sharp_API_Example
             InitializeComponent();
             InitUI();
 
-            // just for debug
+            // Register dump handler
             dump_handler_ = new dumpHandler(DumpStatus);
 
-            // local_win_id, remote_win_id
-            usr_engine_ = new JoinChannelVideo(joinChannelVideoView);
-
             CheckForIllegalCrossThreadCalls = false;
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            // Select default engine
+            this.BeginInvoke(new Action(() =>
+            {
+                SelectEngine(new JoinChannelVideo(joinChannelVideoView));
+            }));
         }
 
         private void CheckId()
@@ -75,80 +81,87 @@ namespace C_Sharp_API_Example
 
         private void JoinChannelClicked(object sender, EventArgs e)
         {
-            if (null != usr_engine_)
+            if (null != engine_)
             {
                 int ret = -1;
-                ret = usr_engine_.Init(appId_textBox.Text);
+                ret = engine_.Init(appId_textBox.Text);
                 DumpStatus("Init", ret);
+
                 if (0 == ret)
                 {
                     int build = 0;
-                    sdk_version.Text = "SDK Version: " + usr_engine_.GetEngine().GetVersion(ref build);
+                    sdk_version.Text = "SDK Version: " + engine_.GetEngine().GetVersion(ref build);
                     sdk_version.Text += "." + build;
                 }
 
-                ret = usr_engine_.JoinChannel(channelId_textBox.Text);
+                ret = engine_.JoinChannel(channelId_textBox.Text);
                 DumpStatus("joinChannel", ret);
             }
         }
 
         private void LeaveChannelClicked(object sender, EventArgs e)
         {
-            if (null != usr_engine_)
+            if (null != engine_)
             {
-                int ret = usr_engine_.LeaveChannel();
+                int ret = engine_.LeaveChannel();
                 DumpStatus("LeaveChannel", ret);
+
+                ret = engine_.UnInit();
+                DumpStatus("UnInit", ret);
             }
+        }
+
+        private void SelectEngine(IEngine engine)
+        {
+            if (null != engine_)
+            {
+                engine_.LeaveChannel();
+                engine_.UnInit();
+                engine_ = null;
+            }
+
+            engine_ = engine;
         }
 
         private void OnSceneChanged(object sender, EventArgs e)
         {
-            if (null != usr_engine_)
-            {
-                usr_engine_.UnInit();
-                usr_engine_ = null;
-            }
-
             if (tabCtrl.SelectedTab == joinChannelVideoTab)
             {
-                usr_engine_ = new JoinChannelVideo(joinChannelVideoView);
+                SelectEngine(new JoinChannelVideo(joinChannelVideoView));
             }
             else if (tabCtrl.SelectedTab == joinChannelAudioTab)
             {
-                usr_engine_ = new JoinChannelAudio();
+                SelectEngine(new JoinChannelAudio());
             }
             else if (tabCtrl.SelectedTab == screenShareTab)
             {
-                usr_engine_ = new ScreenShare(screenShareView);
+                SelectEngine(new ScreenShare(screenShareView));
             }
             else if (tabCtrl.SelectedTab == joinMultipleChannelTab)
             {
-                usr_engine_ = new JoinMultipleChannel(joinMultipleChannelView);
+                SelectEngine(new JoinMultipleChannel(joinMultipleChannelView));
             }
             else if (tabCtrl.SelectedTab == processRawDataTab)
             {
-                usr_engine_ = new ProcessRawData(processRawDataView);
+                SelectEngine(new ProcessRawData(processRawDataView));
             }
             else if (tabCtrl.SelectedTab == virtualBackgroundTab)
             {
-                usr_engine_ = new VirtualBackground(virtualBackgroundView);
+                SelectEngine(new VirtualBackground(virtualBackgroundView));
             }
             else if (tabCtrl.SelectedTab == customRenderTab)
             {
-                usr_engine_ = new CustomRender(customRenderView);
-            }
-            else
-            {
-                DumpStatus("todo", 0);
+                SelectEngine(new CustomRender(customRenderView));
             }
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            if (null != usr_engine_)
+            if (null != engine_)
             {
-                usr_engine_.UnInit();
-                usr_engine_ = null;
+                engine_.LeaveChannel();
+                engine_.UnInit();
+                engine_ = null;
             }
         }
 
