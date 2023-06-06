@@ -288,7 +288,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_ENABLEINSTANTMEDIARENDERING = "RtcEngine_enableInstantMediaRendering";
         internal const string FUNC_RTCENGINE_GETNTPWALLTIMEINMS = "RtcEngine_getNtpWallTimeInMs";
         internal const string FUNC_RTCENGINE_SETMAXMETADATASIZE = "RtcEngine_setMaxMetadataSize";
-        internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_setMaxMetadataSize";
+        internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_sendMetaData";
         #endregion
 
         #region IRtcEngineEx start
