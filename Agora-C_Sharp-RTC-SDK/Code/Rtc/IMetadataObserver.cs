@@ -17,11 +17,12 @@
         /// The maximum size of the buffer of the metadata that you want to use. The highest value is 1024 bytes. Ensure that you set the return value.
         /// </returns>
         ///
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
         public virtual int GetMaxMetadataSize()
         {
             return 0;
         }
-
+#endif
         ///
         /// <summary>
         /// Occurs when the SDK is ready to send metadata.
@@ -36,10 +37,12 @@
         /// true: Send the video frame.false: Do not send the video frame.
         /// </returns>
         ///
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
         public virtual bool OnReadyToSendMetadata(ref Metadata metadata, VIDEO_SOURCE_TYPE source_type)
         {
             return false;
         }
+#endif
 
         ///
         /// <summary>

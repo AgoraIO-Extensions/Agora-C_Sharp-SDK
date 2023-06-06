@@ -4189,7 +4189,7 @@ namespace Agora.Rtc
         ///
         public abstract IMediaRecorder CreateMediaRecorder(RecorderStreamInfo info);
 
-       
+
         ///
         /// @ignore
         ///
@@ -4238,6 +4238,15 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetNativeHandler(ref IntPtr nativeHandler);
+
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+
+        public abstract int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type);
+
+        public abstract int SetMaxMetadataSize(int size);
+#endif
+
     };
 
     ///
@@ -4624,7 +4633,7 @@ namespace Agora.Rtc
         ///
         public abstract int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection);
 
-       
+
         ///
         /// <summary>
         /// Enables or disables dual-stream mode on the sender side.

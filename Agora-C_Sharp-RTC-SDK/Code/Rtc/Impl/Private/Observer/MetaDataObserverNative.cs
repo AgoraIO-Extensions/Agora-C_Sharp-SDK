@@ -77,6 +77,7 @@ namespace Agora.Rtc
        
                 switch (@event)
                 {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
                     case "MetadataObserver_getMaxMetadataSize":
                         {
                             int result = metadataObserver.GetMaxMetadataSize();
@@ -103,6 +104,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
+#endif
                     case "MetadataObserver_onMetadataReceived":
                         {
                             var jsonData = AgoraJson.ToObject(data);
@@ -123,6 +125,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
+#if !(UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID)
                 case "MetadataObserver_getMaxMetadataSize":
                     {
                         int result = 0;
@@ -147,6 +150,7 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                     }
                     break;
+#endif
                 case "MetadataObserver_onMetadataReceived":
                     break;
                 default:
