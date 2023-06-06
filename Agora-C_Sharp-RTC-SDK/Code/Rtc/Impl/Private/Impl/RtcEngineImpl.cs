@@ -6018,7 +6018,7 @@ namespace Agora.Rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
-            return nRet != 0 ? 0 : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 #endif
 
@@ -6039,7 +6039,7 @@ namespace Agora.Rtc
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
-            return nRet != 0 ? 0 : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
 #endif
