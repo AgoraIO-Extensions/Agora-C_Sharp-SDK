@@ -3301,5 +3301,26 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.GetNtpWallTimeInMs();
         }
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        public override int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SendMetadata(metadata, source_type);
+        }
+
+        public override int SetMaxMetadataSize(int size)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetMaxMetadataSize(size);
+        }
+#endif
+
     }
 }
