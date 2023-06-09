@@ -1604,6 +1604,9 @@ namespace Agora.Rtc
         ///
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
 
+        public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
+
+        public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
         ///
         /// <summary>
         /// Whether to publish the audio captured by the microphone:true: Publish the audio captured by the microphone.false: Do not publish the audio captured by the microphone.
@@ -1639,6 +1642,10 @@ namespace Agora.Rtc
         ///
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
 
+
+        public Optional<bool> publishThirdScreenTrack = new Optional<bool>();
+
+        public Optional<bool> publishFourthScreenTrack = new Optional<bool>();
         ///
         /// <summary>
         /// Whether to publish the audio captured from a custom source:true: Publish the audio captured from the custom source.false: Do not publish the captured audio from a custom source.
@@ -1812,6 +1819,18 @@ namespace Agora.Rtc
                 writer.Write(this.publishSecondaryCameraTrack.GetValue());
             }
 
+            if (this.publishThirdCameraTrack.HasValue())
+            {
+                writer.WritePropertyName("publishThirdCameraTrack");
+                writer.Write(this.publishThirdCameraTrack.GetValue());
+            }
+
+            if (this.publishFourthCameraTrack.HasValue())
+            {
+                writer.WritePropertyName("publishFourthCameraTrack");
+                writer.Write(this.publishFourthCameraTrack.GetValue());
+            }
+
             if (this.publishMicrophoneTrack.HasValue())
             {
                 writer.WritePropertyName("publishMicrophoneTrack");
@@ -1840,6 +1859,18 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("publishSecondaryScreenTrack");
                 writer.Write(this.publishSecondaryScreenTrack.GetValue());
+            }
+
+            if (this.publishThirdScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishThirdScreenTrack");
+                writer.Write(this.publishThirdScreenTrack.GetValue());
+            }
+
+            if (this.publishFourthScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishFourthScreenTrack");
+                writer.Write(this.publishFourthScreenTrack.GetValue());
             }
 
             if (this.publishCustomAudioTrack.HasValue())
@@ -1983,22 +2014,6 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
-    ///
-    public enum LOCAL_PROXY_MODE
-    {
-        ///
-        /// @ignore
-        ///
-        kConnectivityFirst = 0,
-
-        ///
-        /// @ignore
-        ///
-        kLocalOnly = 1,
-    };
-
-    ///
     /// <summary>
     /// The cloud proxy type.
     /// </summary>
@@ -2049,109 +2064,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         HTTPS_PROXY_TYPE = 6,
-    };
-
-    ///
-    /// @ignore
-    ///
-    public class LogUploadServerInfo
-    {
-
-        ///
-        /// @ignore
-        ///
-        public string serverDomain;
-
-        ///
-        /// @ignore
-        ///
-        public string serverPath;
-
-        ///
-        /// @ignore
-        ///
-        public int serverPort;
-
-        ///
-        /// @ignore
-        ///
-        public bool serverHttps;
-
-        public LogUploadServerInfo()
-        {
-            serverDomain = null;
-            serverPath = null;
-            serverPort = 0;
-            serverHttps = true;
-        }
-
-        public LogUploadServerInfo(string domain, string path, int port, bool https)
-        {
-            serverDomain = domain;
-            serverPath = path;
-            serverPort = port;
-            serverHttps = https;
-        }
-    };
-
-    ///
-    /// @ignore
-    ///
-    public class AdvancedConfigInfo
-    {
-        public LogUploadServerInfo logUploadServer = new LogUploadServerInfo();
-    };
-
-    ///
-    /// @ignore
-    ///
-    public class LocalAccessPointConfiguration
-    {
-        ///
-        /// @ignore
-        ///
-        public string[] ipList;
-
-        ///
-        /// @ignore
-        ///
-        public int ipListSize;
-
-        ///
-        /// @ignore
-        ///
-        public string[] domainList;
-
-        ///
-        /// @ignore
-        ///
-        public int domainListSize;
-
-        ///
-        /// @ignore
-        ///
-        public string verifyDomainName;
-
-        ///
-        /// @ignore
-        ///
-        public LOCAL_PROXY_MODE mode;
-
-        ///
-        /// @ignore
-        ///
-        public AdvancedConfigInfo advancedConfig;
-
-        public LocalAccessPointConfiguration()
-        {
-            ipList = new string[0];
-            ipListSize = 0;
-            domainList = new string[0];
-            domainListSize = 0;
-            verifyDomainName = "";
-            mode = LOCAL_PROXY_MODE.kConnectivityFirst;
-            advancedConfig = new AdvancedConfigInfo();
-        }
     };
 
     ///

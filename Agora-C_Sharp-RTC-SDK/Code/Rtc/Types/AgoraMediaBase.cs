@@ -58,42 +58,42 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_SOURCE_CUSTOM = 4,
-       
+
         ///
         /// <summary>
         /// 5: The media player.
         /// </summary>
         ///
         VIDEO_SOURCE_MEDIA_PLAYER = 5,
-      
+
         ///
         /// <summary>
         /// 6: One PNG image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_PNG = 6,
-       
+
         ///
         /// <summary>
         /// 7: One JPEG image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_JPEG = 7,
-       
+
         ///
         /// <summary>
         /// 8: One GIF image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_GIF = 8,
-       
+
         ///
         /// <summary>
         /// 9: One remote video acquired by the network.
         /// </summary>
         ///
         VIDEO_SOURCE_REMOTE = 9,
-       
+
         ///
         /// <summary>
         /// 10: One transcoded video source.
@@ -101,28 +101,28 @@ namespace Agora.Rtc
         ///
         VIDEO_SOURCE_TRANSCODED = 10,
 
-       
+
         ///
         /// <summary>
         /// 11: (For Windows and macOS only) The third camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_THIRD = 11,
-       
+
         ///
         /// <summary>
         /// 12: (For Windows and macOS only) The fourth camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_FOURTH = 12,
-       
+
         ///
         /// <summary>
         /// 13: (For Windows and macOS only) The third screen.
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN_THIRD = 13,
-      
+
         ///
         /// <summary>
         /// 14: (For Windows and macOS only) The fourth screen.
@@ -1113,10 +1113,11 @@ namespace Agora.Rtc
             RawBuffer = new byte[0];
             renderTimeMs = 0;
             avsync_type = 0;
+            presentationMs = 0;
         }
 
         public AudioFrame(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels, int samplesPerSec,
-            byte[] buffer, long renderTimeMs, int avsync_type)
+            byte[] buffer, long renderTimeMs, int avsync_type, int64_t presentationMs)
         {
             this.type = type;
             this.samplesPerChannel = samplesPerChannel;
@@ -1126,6 +1127,7 @@ namespace Agora.Rtc
             this.RawBuffer = buffer;
             this.renderTimeMs = renderTimeMs;
             this.avsync_type = avsync_type;
+            this.presentationMs = presentationMs;
         }
 
         ///
@@ -1189,6 +1191,15 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int avsync_type;
+
+        /**
+        * A reserved parameter.
+        * 
+        * You can use this presentationMs parameter to indicate the presenation milisecond timestamp,
+        * this will then filled into audio4 extension part, the remote side could use this pts in av
+        * sync process with video frame.
+        */
+        public int64_t presentationMs;
     };
 
     [Flags]

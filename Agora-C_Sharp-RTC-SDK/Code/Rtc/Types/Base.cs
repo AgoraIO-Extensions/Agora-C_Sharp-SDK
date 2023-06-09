@@ -35,6 +35,7 @@ namespace Agora.Rtc
             this.buffer = audioFrame.buffer;
             this.renderTimeMs = audioFrame.renderTimeMs;
             this.avsync_type = audioFrame.avsync_type;
+            this.presentationMs = audioFrame.presentationMs;
         }
 
         public AUDIO_FRAME_TYPE type;
@@ -45,6 +46,7 @@ namespace Agora.Rtc
         public IntPtr buffer;
         public long renderTimeMs;
         public int avsync_type;
+        public Int64 presentationMs;
     }
 
     internal class ExternalVideoFrameInternal

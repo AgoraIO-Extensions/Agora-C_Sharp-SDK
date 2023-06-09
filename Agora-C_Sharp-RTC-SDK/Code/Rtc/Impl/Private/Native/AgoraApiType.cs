@@ -17,6 +17,9 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_GETVERSION = "RtcEngine_getVersion";
         internal const string FUNC_RTCENGINE_GETERRORDESCRIPTION = "RtcEngine_getErrorDescription";
         internal const string FUNC_RTCENGINE_QUERYCODECCAPABILITY = "RtcEngine_queryCodecCapability";
+        internal const string FUNC_RTCENGINE_PRELOADCHANNEL = "RtcEngine_preloadChannel";
+        internal const string FUNC_RTCENGINE_PRELOADCHANNEL2 = "RtcEngine_preloadChannel2";
+        internal const string FUNC_RTCENGINE_UPDATEPRELOADCHANNELTOKEN = "RtcEngine_updatePreloadChannelToken";
         internal const string FUNC_RTCENGINE_JOINCHANNEL = "RtcEngine_joinChannel";
         internal const string FUNC_RTCENGINE_JOINCHANNEL2 = "RtcEngine_joinChannel2";
         internal const string FUNC_RTCENGINE_UPDATECHANNELMEDIAOPTIONS = "RtcEngine_updateChannelMediaOptions";
@@ -194,11 +197,14 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETCAMERAAUTOFOCUSFACEMODEENABLED = "RtcEngine_setCameraAutoFocusFaceModeEnabled";
         internal const string FUNC_RTCENGINE_ISCAMERAEXPOSUREPOSITIONSUPPORTED = "RtcEngine_isCameraExposurePositionSupported";
         internal const string FUNC_RTCENGINE_SETCAMERAEXPOSUREPOSITION = "RtcEngine_setCameraExposurePosition";
+        internal const string FUNC_RTCENGINE_ISCAMERAEXPOSURESUPPORTED = "RtcEngine_isCameraExposureSupported";
+        internal const string FUNC_RTCENGINE_SETCAMERAEXPOSUREFACTOR = "RtcEngine_setCameraExposureFactor";
         internal const string FUNC_RTCENGINE_ISCAMERAAUTOEXPOSUREFACEMODESUPPORTED = "RtcEngine_isCameraAutoExposureFaceModeSupported";
         internal const string FUNC_RTCENGINE_SETCAMERAAUTOEXPOSUREFACEMODEENABLED = "RtcEngine_setCameraAutoExposureFaceModeEnabled";
         internal const string FUNC_RTCENGINE_SETDEFAULTAUDIOROUTETOSPEAKERPHONE = "RtcEngine_setDefaultAudioRouteToSpeakerphone";
         internal const string FUNC_RTCENGINE_SETENABLESPEAKERPHONE = "RtcEngine_setEnableSpeakerphone";
         internal const string FUNC_RTCENGINE_ISSPEAKERPHONEENABLED = "RtcEngine_isSpeakerphoneEnabled";
+        internal const string FUNC_RTCENGINE_SETROUTEINCOMMUNICATIONMODE = "RtcEngine_setRouteInCommunicationMode";
         internal const string FUNC_RTCENGINE_GETSCREENCAPTURESOURCES = "RtcEngine_getScreenCaptureSources";
         internal const string FUNC_RTCENGINE_SETAUDIOSESSIONOPERATIONRESTRICTION = "RtcEngine_setAudioSessionOperationRestriction";
         internal const string FUNC_RTCENGINE_STARTSCREENCAPTUREBYDISPLAYID = "RtcEngine_startScreenCaptureByDisplayId";
@@ -537,10 +543,13 @@ namespace Agora.Rtc
         internal const string FUNC_MUSICCONTENTCENTER_GETMUSICCOLLECTIONBYMUSICCHARTID = "MusicContentCenter_getMusicCollectionByMusicChartId";
         internal const string FUNC_MUSICCONTENTCENTER_SEARCHMUSIC = "MusicContentCenter_searchMusic";
         internal const string FUNC_MUSICCONTENTCENTER_PRELOAD = "MusicContentCenter_preload";
+        internal const string FUNC_MUSICCONTENTCENTER_PRELOAD2 = "MusicContentCenter_preload2";
         internal const string FUNC_MUSICCONTENTCENTER_REMOVECACHE = "MusicContentCenter_removeCache";
         internal const string FUNC_MUSICCONTENTCENTER_GETCACHES = "MusicContentCenter_getCaches";
         internal const string FUNC_MUSICCONTENTCENTER_ISPRELOADED = "MusicContentCenter_isPreloaded";
         internal const string FUNC_MUSICCONTENTCENTER_GETLYRIC = "MusicContentCenter_getLyric";
+        internal const string FUNC_MUSICCONTENTCENTER_GETSONGSIMPLEINFO = "MusicContentCenter_getSongSimpleInfo";
+        internal const string FUNC_MUSICCONTENTCENTER_GETINTERNALSONGCODE = "MusicContentCenter_getInternalSongCode";
         #endregion
 
         #region IMusicPlayer start

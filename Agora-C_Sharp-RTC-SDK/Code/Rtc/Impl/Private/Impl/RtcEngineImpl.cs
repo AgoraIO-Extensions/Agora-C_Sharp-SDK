@@ -613,7 +613,48 @@ namespace Agora.Rtc
             return ret;
         }
 
+        public int PreloadChannel(string token, string channelId, uint uid)
+        {
+            _param.Clear();
+            _param.Add("token", token);
+            _param.Add("channelId", channelId);
+            _param.Add("uid", uid);
+            var json = AgoraJson.ToJson(_param);
 
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PRELOADCHANNEL,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int PreloadChannel(string token, string channelId, string userAccount)
+        {
+            _param.Clear();
+            _param.Add("token", token);
+            _param.Add("channelId", channelId);
+            _param.Add("userAccount", userAccount);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PRELOADCHANNEL2,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+        public int UpdatePreloadChannelToken(string token)
+        {
+            _param.Clear();
+            _param.Add("token", token);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATEPRELOADCHANNELTOKEN,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
 
         public int JoinChannel(string token, string channelId, string info = "",
                                 uint uid = 0)
@@ -3024,6 +3065,32 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public bool IsCameraExposureSupported()
+        {
+            _param.Clear();
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISCAMERAEXPOSURESUPPORTED,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
+        }
+
+        public int SetCameraExposureFactor(float value)
+        {
+            _param.Clear();
+            _param.Add("value", value);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAEXPOSUREFACTOR,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public bool IsCameraAutoExposureFaceModeSupported()
         {
             _param.Clear();
@@ -3097,6 +3164,19 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
+        }
+
+        public int SetRouteInCommunicationMode(int route)
+        {
+            _param.Clear();
+            _param.Add("route", route);
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETROUTEINCOMMUNICATIONMODE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect,
@@ -6241,6 +6321,7 @@ namespace Agora.Rtc
                 frame.bytesPerSample = f.bytesPerSample;
                 frame.renderTimeMs = f.renderTimeMs;
                 frame.samplesPerSec = f.samplesPerSec;
+                frame.presentationMs = f.presentationMs;
             }
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
