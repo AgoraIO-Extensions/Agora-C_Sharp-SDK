@@ -93,6 +93,16 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.Preload(songCode, jsonOption);
         }
 
+        public override int Preload(ref string requestId, Int64 songCode)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.Preload(ref requestId, songCode);
+        }
+
+
         public override int RegisterEventHandler(IMusicContentCenterEventHandler eventHandler)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
@@ -154,6 +164,24 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _musicContentCenterImpl.GetCaches(ref cacheInfo, ref cacheInfoSize);
+        }
+
+        public override int GetSongSimpleInfo(ref string requestId, Int64 songCode)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.GetSongSimpleInfo(ref requestId, songCode);
+        }
+
+        public override int GetInternalSongCode(Int64 songCode, string jsonOption, ref Int64 internalSongCode)
+        {
+            if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _musicContentCenterImpl.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
         }
     }
 }

@@ -319,6 +319,33 @@ namespace Agora.Rtc
             return _rtcEngineImpl.QueryCodecCapability(ref codecInfo, ref size);
         }
 
+        public override int PreloadChannel(string token, string channelId, uint uid)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PreloadChannel(token, channelId, uid);
+        }
+
+        public override int PreloadChannel(string token, string channelId, string userAccount)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PreloadChannel(token, channelId, userAccount);
+        }
+
+        public override int UpdatePreloadChannelToken(string token)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.UpdatePreloadChannelToken(token);
+        }
+
         public override int JoinChannel(string token, string channelId, string info = "", uint uid = 0)
         {
             if (_rtcEngineImpl == null)
@@ -1793,6 +1820,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetCameraExposurePosition(positionXinView, positionYinView);
         }
 
+        public override bool IsCameraExposureSupported()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return false;
+            }
+            return _rtcEngineImpl.IsCameraExposureSupported();
+        }
+
+        public override int SetCameraExposureFactor(float value)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetCameraExposureFactor(value);
+        }
+
         public override bool IsCameraAutoExposureFaceModeSupported()
         {
             if (_rtcEngineImpl == null)
@@ -1836,6 +1881,15 @@ namespace Agora.Rtc
                 return false;
             }
             return _rtcEngineImpl.IsSpeakerphoneEnabled();
+        }
+
+        public override int SetRouteInCommunicationMode(int route)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetRouteInCommunicationMode(route);
         }
 
         public override int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams)

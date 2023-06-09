@@ -1086,6 +1086,24 @@ namespace Agora.Rtc
         SCREEN_CAPTURE_FRAMERATE_CAPABILITY_60_FPS = 2,
     };
 
+
+    /**
+    * Video codec capability levels.
+    */
+    public enum VIDEO_CODEC_CAPABILITY_LEVEL
+    {
+        /** No specified level */
+        CODEC_CAPABILITY_LEVEL_UNSPECIFIED = -1,
+        /** Only provide basic support for the codec type */
+        CODEC_CAPABILITY_LEVEL_BASIC_SUPPORT = 5,
+        /** Can process 1080p video at a rate of approximately 30 fps. */
+        CODEC_CAPABILITY_LEVEL_1080P30FPS = 10,
+        /** Can process 1080p video at a rate of approximately 60 fps. */
+        CODEC_CAPABILITY_LEVEL_1080P60FPS = 20,
+        /** Can process 4k video at a rate of approximately 30 fps. */
+        CODEC_CAPABILITY_LEVEL_4K60FPS = 30,
+    };
+
     ///
     /// <summary>
     /// The encoding bitrate of the video.
@@ -1896,6 +1914,19 @@ namespace Agora.Rtc
         CODEC_CAP_MASK_SW_ENC = 1 << 3,
     };
 
+
+    public class CodecCapLevels
+    {
+        public VIDEO_CODEC_CAPABILITY_LEVEL hwDecodingLevel;
+        public VIDEO_CODEC_CAPABILITY_LEVEL swDecodingLevel;
+
+        public CodecCapLevels()
+        {
+            hwDecodingLevel = VIDEO_CODEC_CAPABILITY_LEVEL.CODEC_CAPABILITY_LEVEL_UNSPECIFIED;
+            swDecodingLevel = VIDEO_CODEC_CAPABILITY_LEVEL.CODEC_CAPABILITY_LEVEL_UNSPECIFIED;
+        }
+    };
+
     ///
     /// <summary>
     /// The codec capability of the device.
@@ -1916,6 +1947,9 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int codecCapMask;
+
+        /** The codec capability level, estimated based on the device hardware.*/
+        public CodecCapLevels codecLevels;
     };
 
     ///
@@ -5416,6 +5450,7 @@ namespace Agora.Rtc
         {
             view = 0;
             uid = 0;
+            backgroundColor = 0x00000000;
             renderMode = RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
 
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO;
@@ -5433,6 +5468,7 @@ namespace Agora.Rtc
             this.renderMode = m;
             this.mirrorMode = mt;
             this.uid = u;
+            backgroundColor = 0x00000000;
             setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
@@ -5446,6 +5482,7 @@ namespace Agora.Rtc
             this.renderMode = m;
             this.mirrorMode = mt;
             this.uid = 0;
+            backgroundColor = 0x00000000;
             setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
@@ -5469,6 +5506,11 @@ namespace Agora.Rtc
         ///
         public uint uid;
 
+
+        /**
+        * A RGBA value indicates background color of the render view. Defaults to 0x00000000.
+        */
+        public uint backgroundColor;
         ///
         /// <summary>
         /// The rendering mode of the video. See RENDER_MODE_TYPE .
@@ -7942,14 +7984,14 @@ namespace Agora.Rtc
     ///
     public enum MEDIA_TRACE_EVENT
     {
-         
+
         ///
         /// <summary>
         /// 0: The video frame has been rendered.
         /// </summary>
         ///
         MEDIA_TRACE_EVENT_VIDEO_RENDERED = 0,
-         
+
         ///
         /// <summary>
         /// 1: The video frame has been decoded.
@@ -7958,7 +8000,7 @@ namespace Agora.Rtc
         MEDIA_TRACE_EVENT_VIDEO_DECODED = 1,
     };
 
-     
+
     ///
     /// <summary>
     /// Indicators during video frame rendering progress.
@@ -7966,49 +8008,49 @@ namespace Agora.Rtc
     ///
     public class VideoRenderingTracingInfo
     {
-         
+
         ///
         /// <summary>
         /// The time interval from calling the StartMediaRenderingTracing method to SDK triggering the OnVideoRenderingTracingResult callback. The unit is milliseconds. Agora recommends you call StartMediaRenderingTracing before joining a channel.
         /// </summary>
         ///
         public int elapsedTime;
-         
+
         ///
         /// <summary>
         /// The time interval from calling StartMediaRenderingTracing to calling JoinChannel [2/2] . The unit is milliseconds. A negative number means to call JoinChannel [2/2] after calling StartMediaRenderingTracing.
         /// </summary>
         ///
         public int start2JoinChannel;
-         
+
         ///
         /// <summary>
         /// Time interval from calling JoinChannel [2/2] to successfully joining the channel. The unit is milliseconds.
         /// </summary>
         ///
         public int join2JoinSuccess;
-         
+
         ///
         /// <summary>
         /// If the local user calls StartMediaRenderingTracing before successfully joining the channel, this value is the time interval from the local user successfully joining the channel to the remote user joining the channel. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after successfully joining the channel, the value is the time interval from calling StartMediaRenderingTracing to when the remote user joins the channel. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after the remote user joins the channel, the value is 0 and meaningless.In order to reduce the time of rendering the first frame for remote users, Agora recommends that the local user joins the channel when the remote user is in the channel to reduce this value.
         /// </summary>
         ///
         public int joinSuccess2RemoteJoined;
-         
+
         ///
         /// <summary>
         /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from when the remote user joins the channel to when the local user sets the remote view. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to setting the remote view. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after setting the remote view, the value is 0 and has no effect.In order to reduce the time of rendering the first frame for remote users, Agora recommends that the local user sets the remote view before the remote user joins the channel, or sets the remote view immediately after the remote user joins the channel to reduce this value.
         /// </summary>
         ///
         public int remoteJoined2SetView;
-         
+
         ///
         /// <summary>
         /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from the remote user joining the channel to subscribing to the remote video stream. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to subscribing to the remote video stream. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after subscribing to the remote video stream, the value is 0 and has no effect.In order to reduce the time of rendering the first frame for remote users, Agora recommends that after the remote user joins the channel, the local user immediately subscribes to the remote video stream to reduce this value.
         /// </summary>
         ///
         public int remoteJoined2UnmuteVideo;
-         
+
         ///
         /// <summary>
         /// If the local user calls StartMediaRenderingTracing before the remote user joins the channel, this value is the time interval from when the remote user joins the channel to when the local user receives the remote video stream. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after the remote user joins the channel, this value is the time interval from calling StartMediaRenderingTracing to receiving the remote video stream. The unit is milliseconds.If the local user calls StartMediaRenderingTracing after receiving the remote video stream, the value is 0 and has no effect.In order to reduce the time of rendering the first frame for remote users, Agora recommends that the remote user publishes video streams immediately after joining the channel, and the local user immediately subscribes to remote video streams to reduce this value.
@@ -8037,14 +8079,14 @@ namespace Agora.Rtc
             this.uid = uid;
         }
 
-         
+
         ///
         /// <summary>
         /// The name of the channel in which the media streams publish.
         /// </summary>
         ///
         public string channelId;
-         
+
         ///
         /// <summary>
         /// The ID of the user whose media streams you want to record.
@@ -8052,6 +8094,100 @@ namespace Agora.Rtc
         ///
         public uint uid;
 
+    };
+
+
+    /** The local  proxy mode type. */
+    public enum LOCAL_PROXY_MODE
+    {
+        /** 0: Connect local proxy with high priority, if not connected to local proxy, fallback to sdrtn.
+         */
+        ConnectivityFirst = 0,
+        /** 1: Only connect local proxy
+         */
+        LocalOnly = 1,
+    };
+
+    public class LogUploadServerInfo
+    {
+
+        public LogUploadServerInfo()
+        {
+            serverDomain = "";
+            serverPath = "";
+            serverPort = 0;
+            serverHttps = true;
+        }
+
+        public LogUploadServerInfo(string domain, string path, int port, bool https)
+        {
+            serverDomain = domain;
+            serverPath = path;
+            serverPort = port;
+            serverHttps = https;
+        }
+
+        /** Log upload server domain
+         */
+        public string serverDomain;
+        /** Log upload server path
+         */
+        public string serverPath;
+        /** Log upload server port
+         */
+        public int serverPort;
+        /** Whether to use HTTPS request:
+          - true: Use HTTPS request
+          - fasle: Use HTTP request
+         */
+        public bool serverHttps;
+
+
+    };
+
+    public class AdvancedConfigInfo
+    {
+        /** Log upload server
+         */
+        public LogUploadServerInfo logUploadServer = new LogUploadServerInfo();
+    };
+
+    public class LocalAccessPointConfiguration
+    {
+
+        public LocalAccessPointConfiguration()
+        {
+            ipList = new string[0];
+            ipListSize = 0;
+            domainList = new string[0];
+            domainListSize = 0;
+            verifyDomainName = "";
+            mode = LOCAL_PROXY_MODE.ConnectivityFirst;
+            advancedConfig = new AdvancedConfigInfo();
+        }
+
+        /** Local access point IP address list.
+         */
+        public string[] ipList;
+        /** The number of local access point IP address.
+         */
+        public int ipListSize;
+        /** Local access point domain list.
+         */
+        public string[] domainList;
+        /** The number of local access point domain.
+         */
+        public int domainListSize;
+        /** Certificate domain name installed on specific local access point. pass "" means using sni domain on specific local access point
+         *  SNI(Server Name Indication) is an extension to the TLS protocol.
+         */
+        public string verifyDomainName;
+        /** Local proxy connection mode, connectivity first or local only.
+         */
+        public LOCAL_PROXY_MODE mode;
+        /** Local proxy connection, advanced Config info.
+         */
+        public AdvancedConfigInfo advancedConfig;
     };
 
     ///

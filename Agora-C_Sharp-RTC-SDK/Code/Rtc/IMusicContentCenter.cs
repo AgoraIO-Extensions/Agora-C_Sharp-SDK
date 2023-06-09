@@ -50,8 +50,11 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
+        [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
         public abstract int Preload(Int64 songCode, string jsonOption = "");
 
+
+        public abstract int Preload(ref string requestId, Int64 songCode);
 
         ///
         /// @ignore
@@ -72,6 +75,13 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int GetLyric(ref string requestId, Int64 songCode, int LyricType = 0);
+
+
+        public abstract int GetSongSimpleInfo(ref string requestId, Int64 songCode);
+
+
+        public abstract int GetInternalSongCode(Int64 songCode, string jsonOption, ref Int64 internalSongCode);
+
 
         ///
         /// @ignore
