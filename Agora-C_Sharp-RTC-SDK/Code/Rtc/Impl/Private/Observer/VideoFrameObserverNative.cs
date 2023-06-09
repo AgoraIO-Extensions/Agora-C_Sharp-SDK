@@ -93,16 +93,19 @@ namespace Agora.Rtc
                     localVideoFrame.alphaBuffer = new byte[videoFrameConverted.alpha_buffer_length];
                 }
 
-                if (videoFrameConverted.yBuffer != IntPtr.Zero)
+                if (videoFrameConverted.yBuffer != IntPtr.Zero && videoFrameConverted.y_buffer_length > 0)
                     Marshal.Copy(videoFrameConverted.yBuffer, localVideoFrame.yBuffer, 0,
                         (int)videoFrameConverted.y_buffer_length);
-                if (videoFrameConverted.uBuffer != IntPtr.Zero)
+
+                if (videoFrameConverted.uBuffer != IntPtr.Zero && videoFrameConverted.u_buffer_length > 0)
                     Marshal.Copy(videoFrameConverted.uBuffer, localVideoFrame.uBuffer, 0,
                         (int)videoFrameConverted.u_buffer_length);
-                if (videoFrameConverted.vBuffer != IntPtr.Zero)
+
+                if (videoFrameConverted.vBuffer != IntPtr.Zero && videoFrameConverted.v_buffer_length > 0)
                     Marshal.Copy(videoFrameConverted.vBuffer, localVideoFrame.vBuffer, 0,
                         (int)videoFrameConverted.v_buffer_length);
-                if (videoFrameConverted.alphaBuffer != IntPtr.Zero)
+
+                if (videoFrameConverted.alphaBuffer != IntPtr.Zero && videoFrameConverted.alpha_buffer_length > 0)
                     Marshal.Copy(videoFrameConverted.alphaBuffer, localVideoFrame.alphaBuffer, 0,
                        (int)videoFrameConverted.alpha_buffer_length);
             }
@@ -130,26 +133,50 @@ namespace Agora.Rtc
 
         private static void CalculationYUVLength(ref IrisVideoFrame videoFrame)
         {
-            if (videoFrame.type == VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420)
+            switch (videoFrame.type)
             {
-                videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
-                videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height / 2);
-                videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height / 2);
-                videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
-            }
-            else if (videoFrame.type == VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV422)
-            {
-                videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
-                videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height);
-                videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height);
-                videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
-            }
-            else
-            {
-                videoFrame.y_buffer_length = (uint)(videoFrame.width * videoFrame.height * 4);
-                videoFrame.u_buffer_length = 0;
-                videoFrame.v_buffer_length = 0;
-                videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV420:
+                    {
+                        videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
+                        videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height / 2);
+                        videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height / 2);
+                        videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
+                    }
+                    break;
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_YUV422:
+                    {
+                        videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
+                        videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height);
+                        videoFrame.v_buffer_length = (uint)(videoFrame.vStride * videoFrame.height);
+                        videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
+                    }
+                    break;
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_BGRA:
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA:
+                    {
+                        videoFrame.y_buffer_length = (uint)(videoFrame.width * videoFrame.height * 4);
+                        videoFrame.u_buffer_length = 0;
+                        videoFrame.v_buffer_length = 0;
+                        videoFrame.alpha_buffer_length = (uint)(videoFrame.width * videoFrame.height);
+                    }
+                    break;
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_NV12:
+                case VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_NV21:
+                    {
+                        videoFrame.y_buffer_length = (uint)(videoFrame.yStride * videoFrame.height);
+                        videoFrame.u_buffer_length = (uint)(videoFrame.uStride * videoFrame.height);
+                        videoFrame.v_buffer_length = 0;
+                        videoFrame.alpha_buffer_length = videoFrame.y_buffer_length;
+                    }
+                    break;
+                default:
+                    {
+                        videoFrame.y_buffer_length = 0;
+                        videoFrame.u_buffer_length = 0;
+                        videoFrame.v_buffer_length = 0;
+                        videoFrame.alpha_buffer_length = 0;
+                    }
+                    break;
             }
         }
 
@@ -197,7 +224,7 @@ namespace Agora.Rtc
 
                 var @event = eventParam.@event;
                 var data = eventParam.data;
-             
+
                 switch (@event)
                 {
                     case "VideoFrameObserver_onCaptureVideoFrame":
@@ -206,7 +233,7 @@ namespace Agora.Rtc
                             IrisVideoFrame videoFrame = AgoraJson.JsonToStruct<IrisVideoFrame>(jsonData, "videoFrame");
                             VIDEO_SOURCE_TYPE sourceType = (VIDEO_SOURCE_TYPE)AgoraJson.GetData<int>(jsonData, "sourceType");
                             VideoFrame videoFrame1 = GetVideoFrame("", 0);
-                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame,ref videoFrame1);
+                            ConvertIrisVideoFrameToVideoFrame(ref videoFrame, ref videoFrame1);
                             bool result = videoFrameObserver.OnCaptureVideoFrame(sourceType, videoFrame1);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
