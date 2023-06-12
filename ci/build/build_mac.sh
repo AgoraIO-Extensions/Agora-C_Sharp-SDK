@@ -89,9 +89,10 @@ echo TYPE: $TYPE
 echo RTC: $RTC
 echo RTM: $RTM
 
-if [ "$RTC" == "true" ]; then
+if [ "$RTC" == "true" ]
+then
     PLUGIN_NAME="Agora-RTC-Plugin"
-elif 
+else
     PLUGIN_NAME="Agora-RTM-Plugin"
 fi
 
