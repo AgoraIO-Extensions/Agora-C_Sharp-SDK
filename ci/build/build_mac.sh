@@ -88,3 +88,27 @@ echo IOS_URL: $IOS_URL
 echo TYPE: $TYPE
 echo RTC: $RTC
 echo RTM: $RTM
+
+if [ "$RTC" == "true" ]; then
+    PLUGIN_NAME="Agora-RTC-Plugin"
+elif 
+    PLUGIN_NAME="Agora-RTM-Plugin"
+fi
+
+echo PLUGIN_NAME $PLUGIN_NAME
+
+mkdir temp || exit 1
+cd temp
+
+python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
+unzip -d ./ ./iris_*_Mac_*.zip || exit 1
+python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
+unzip -d ./ ./iris_*_Windows_*.zip || exit 1
+python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
+unzip -d ./ ./iris_*_iOS_*.zip || exit 1
+python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
+unzip -d ./ ./iris_*_Mac_*.zip || exit 1
+ls ./
+
+
+
