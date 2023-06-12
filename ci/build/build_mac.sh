@@ -79,3 +79,12 @@ echo build_time: $build_time
 echo release_version: $release_version
 echo short_version: $short_version
 echo pwd: `pwd`
+echo UNITY_VERSION: $UNITY_VERSION
+echo SDK_VERSION: $SDK_VERSION
+echo MAC_URL: $MAC_URL
+echo WIN_URL: $WIN_URL
+echo ANDROID_URL: $ANDROID_URL
+echo IOS_URL: $IOS_URL
+echo TYPE: $TYPE
+echo RTC: $RTC
+echo RTM: $RTM
