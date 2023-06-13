@@ -104,8 +104,8 @@ echo PLUGIN_CODE_NAME $PLUGIN_CODE_NAME
 ROOT=$(pwd)
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 
-echo source_root: ${source_root} 
 cd ../agora-unity-quickstart
+echo "agora-unity-quickstart git status:"
 git status
 cd $ROOT
 
@@ -139,11 +139,9 @@ PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
-cp -r ../agora-unity-quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
-ls $PLUGIN_PATH
-ls $PLUGIN_PATH/API-Example/
-cp -r ../agora-unity-quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
-cp -r ../agora-unity-quickstart/API-Example-Unity/README.zh.md $PLUGIN_PATH/API-Example/
+cp -r ../../agora-unity-quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
+cp -r ../../agora-unity-quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
+cp -r ../../agora-unity-quickstart/API-Example-Unity/README.zh.md $PLUGIN_PATH/API-Example/
 
 # Copy SDK
 echo "[Unity CI] copying scripts ..."
