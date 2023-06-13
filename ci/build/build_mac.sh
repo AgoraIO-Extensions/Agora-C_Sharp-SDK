@@ -69,6 +69,8 @@
 # ========== Guidelines End=============
 # --------------------------------------------------------------------------------------------------------------------------
 
+set -ex
+
 echo Package_Publish: $Package_Publish
 echo is_tag_fetch: $is_tag_fetch
 echo arch: $arch
@@ -134,6 +136,7 @@ echo "[Unity CI] start creating unity project"
 $UNITY_DIR/Unity -quit -batchmode -nographics -createProject "project"
 echo "[Unity CI] finish creating unity project"
 
+ls ./
 #--------------------------------------
 # Copy files to the Unity project
 #--------------------------------------
