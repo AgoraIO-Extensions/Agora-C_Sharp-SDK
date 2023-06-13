@@ -109,20 +109,9 @@ ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 mkdir tempDir || exit 1
 cd tempDir
 
-# python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
-# unzip -d ./ ./iris_*_Mac_*.zip || exit 1
-# python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
-# unzip -d ./ ./iris_*_Windows_*.zip || exit 1
-# python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
-# unzip -d ./ ./iris_*_iOS_*.zip || exit 1
-# python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
-# unzip -d ./ ./iris_*_Android_*.zip || exit 1
 
 
-ANDROID_SRC_PATH="./iris_*_Android"
-IOS_SRC_PATH="./iris_*_iOS"
-MAC_SRC_PATH="./iris_*_Mac"
-WIN_SRC_PATH="./iris_*_Windows"
+
 
 # git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
 git clone -b "$DEMO_BRANCH" https://gitee.com/agoraio-community/Agora-Unity-Quickstart.git
@@ -173,6 +162,19 @@ cp -r "$ROOT_DIR"/Resources "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/agorartc.csproj
 
 
+python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
+unzip -d ./ ./iris_*_Mac_*.zip || exit 1
+python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
+unzip -d ./ ./iris_*_Windows_*.zip || exit 1
+python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
+unzip -d ./ ./iris_*_iOS_*.zip || exit 1
+python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
+unzip -d ./ ./iris_*_Android_*.zip || exit 1
+
+ANDROID_SRC_PATH="./iris_*_Android"
+IOS_SRC_PATH="./iris_*_iOS"
+MAC_SRC_PATH="./iris_*_Mac"
+WIN_SRC_PATH="./iris_*_Windows"
 
 # Android
 echo "[Unity CI] copying Android ..."
