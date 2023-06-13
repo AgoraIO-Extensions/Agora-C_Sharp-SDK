@@ -243,11 +243,11 @@ echo "[Unity CI] finish copying files"
 #--------------------------------------
 # Export Package
 #--------------------------------------
-if [ "$SDK_TYPE" == "audio" ]; then
+if [ "$TYPE" == "VOICE" ]; then
     python3 ${ROOT}/ci/build/remove_video_case.py "$PLUGIN_PATH"/API-Example
 fi
 
-//todo RTM or RTC clear code and meta file
+#todo RTM or RTC clear code and meta file
 
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects  "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_time}.zip
