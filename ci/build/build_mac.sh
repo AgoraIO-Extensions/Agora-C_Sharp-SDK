@@ -106,7 +106,8 @@ ls ./
 
 ls ../
 echo source_root: ${source_root} 
-ls ${source_root}
+cd ../agora-unity-quickstart
+git status
 
 ROOT=$(pwd)
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
