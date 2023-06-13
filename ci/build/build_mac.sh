@@ -106,7 +106,7 @@ echo PLUGIN_CODE_NAME $PLUGIN_CODE_NAME
 ROOT=`pwd`
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 
-if [ -d "./tempDir"]
+if [ -d "./tempDir" ]
 then
     rm -rf "./tempDir"
 fi
