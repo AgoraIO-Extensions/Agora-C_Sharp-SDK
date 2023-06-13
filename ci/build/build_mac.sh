@@ -117,7 +117,7 @@ python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_UR
 unzip -d ./ ./iris_*_iOS_*.zip || exit 1
 python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
 unzip -d ./ ./iris_*_Android_*.zip || exit 1
-ls ./
+
 
 ANDROID_SRC_PATH="./iris_*_Android"
 IOS_SRC_PATH="./iris_*_iOS"
@@ -148,6 +148,8 @@ PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
 cp -r "./Agora-Unity-Quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
+ls "$PLUGIN_PATH"
+ls "$PLUGIN_PATH"/API-Example/
 cp -r "./Agora-Unity-Quickstart/API-Example-Unity/README.md "$PLUGIN_PATH"/API-Example/
 cp -r "./Agora-Unity-Quickstart/API-Example-Unity/README.zh.md "$PLUGIN_PATH"/API-Example/
 
