@@ -88,7 +88,7 @@ echo IOS_URL: $IOS_URL
 echo TYPE: $TYPE
 echo RTC: $RTC
 echo RTM: $RTM
-each DEMO_BRANCH: $DEMO_BRANCH
+echo DEMO_BRANCH: $DEMO_BRANCH
 
 if [ "$RTC" == "true" ]
 then
@@ -125,7 +125,7 @@ WIN_SRC_PATH="./iris_*_Windows"
 git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
 echo "[Unity CI] finish preparing resources"
 
-UNITY_DIR=/Applications/Unity/Hub/Editor/$4/Unity.app/Contents/MacOS
+UNITY_DIR=/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS
 
 #--------------------------------------
 # Create a Unity project
