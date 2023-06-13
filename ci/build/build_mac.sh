@@ -258,7 +258,7 @@ $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportP
 ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_time}.zip
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
-python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./{ZIP_FILE} --project
+python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project
 
 cd ..
 rm -rf ./tempDir
