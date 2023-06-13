@@ -102,163 +102,165 @@ fi
 echo PLUGIN_NAME $PLUGIN_NAME
 echo PLUGIN_CODE_NAME $PLUGIN_CODE_NAME
 
+ls ./
+
 ROOT=$(pwd)
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 
-if [ -d "./tempDir" ]; then
-    rm -rf "./tempDir"
-fi
+# if [ -d "./tempDir" ]; then
+#     rm -rf "./tempDir"
+# fi
 
-mkdir tempDir || exit 1
-cd tempDir
+# mkdir tempDir || exit 1
+# cd tempDir
 
-# git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
-git clone -b "$DEMO_BRANCH" https://gitee.com/agoraio-community/Agora-Unity-Quickstart.git
-echo "[Unity CI] finish preparing resources"
+# # git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
+# git clone -b "$DEMO_BRANCH" https://gitee.com/agoraio-community/Agora-Unity-Quickstart.git
+# echo "[Unity CI] finish preparing resources"
 
-UNITY_DIR=/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS
+# UNITY_DIR=/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS
 
-#--------------------------------------
-# Create a Unity project
-#--------------------------------------
-echo "[Unity CI] start creating unity project"
-$UNITY_DIR/Unity -quit -batchmode -nographics -createProject "project"
-echo "[Unity CI] finish creating unity project"
+# #--------------------------------------
+# # Create a Unity project
+# #--------------------------------------
+# echo "[Unity CI] start creating unity project"
+# $UNITY_DIR/Unity -quit -batchmode -nographics -createProject "project"
+# echo "[Unity CI] finish creating unity project"
 
-ls ./
-#--------------------------------------
-# Copy files to the Unity project
-#--------------------------------------
-echo "[Unity CI] start copying files"
-mkdir ./project/Assets/"$PLUGIN_NAME"
-PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
-# Copy API-Example
-echo "[Unity CI] copying API-Example ..."
-cp -r ./Agora-Unity-Quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
-ls $PLUGIN_PATH
-ls $PLUGIN_PATH/API-Example/
-cp -r ./Agora-Unity-Quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
-cp -r ./Agora-Unity-Quickstart/API-Example-Unity/README.zh.md $PLUGIN_PATH/API-Example/
+# #--------------------------------------
+# # Copy files to the Unity project
+# #--------------------------------------
+# echo "[Unity CI] start copying files"
+# mkdir ./project/Assets/"$PLUGIN_NAME"
+# PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
-# Copy SDK
-echo "[Unity CI] copying scripts ..."
-mkdir "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
-cp -r "$ROOT_DIR"/Unity/Editor "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
-if [ "$TYPE" == "VOICE" ]; then
-    POST_PROCESS_SCRIPT_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Editor/BL_BuildPostProcess.cs
-    sed -i '' 's/var cameraPermission = "NSCameraUsageDescription";//' "$POST_PROCESS_SCRIPT_PATH"
-    sed -i '' 's/rootDic.SetString(cameraPermission, "Video need to use camera");//' "$POST_PROCESS_SCRIPT_PATH"
-    perl -0777 -pi -e 's|Start Tag for video SDK only[\s\S]*End Tag||g' "$POST_PROCESS_SCRIPT_PATH"
-fi
+# # Copy API-Example
+# echo "[Unity CI] copying API-Example ..."
+# cp -r ./Agora-Unity-Quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
+# ls $PLUGIN_PATH
+# ls $PLUGIN_PATH/API-Example/
+# cp -r ./Agora-Unity-Quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
+# cp -r ./Agora-Unity-Quickstart/API-Example-Unity/README.zh.md $PLUGIN_PATH/API-Example/
 
-mkdir "$ROOT_DIR"/Unity/Plugins/iOS
-cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
-cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
-cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
-cp -r "$ROOT_DIR"/Resources "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
-rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/agorartc.csproj
+# # Copy SDK
+# echo "[Unity CI] copying scripts ..."
+# mkdir "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
+# cp -r "$ROOT_DIR"/Unity/Editor "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
+# if [ "$TYPE" == "VOICE" ]; then
+#     POST_PROCESS_SCRIPT_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Editor/BL_BuildPostProcess.cs
+#     sed -i '' 's/var cameraPermission = "NSCameraUsageDescription";//' "$POST_PROCESS_SCRIPT_PATH"
+#     sed -i '' 's/rootDic.SetString(cameraPermission, "Video need to use camera");//' "$POST_PROCESS_SCRIPT_PATH"
+#     perl -0777 -pi -e 's|Start Tag for video SDK only[\s\S]*End Tag||g' "$POST_PROCESS_SCRIPT_PATH"
+# fi
 
-# Android
-if [ "$ANDROID_URL" != "" ]; then
-    echo "[Unity CI] copying Android ..."
-    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
-    unzip -d ./ ./iris_*_Android_*.zip || exit 1
-    ANDROID_SRC_PATH="./iris_*_Android"
+# mkdir "$ROOT_DIR"/Unity/Plugins/iOS
+# cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
+# cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
+# cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
+# cp -r "$ROOT_DIR"/Resources "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
+# rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/agorartc.csproj
 
-    mkdir "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
-    ANDROID_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
-    mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/project.properties "$ANDROID_DST_PATH"
+# # Android
+# if [ "$ANDROID_URL" != "" ]; then
+#     echo "[Unity CI] copying Android ..."
+#     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
+#     unzip -d ./ ./iris_*_Android_*.zip || exit 1
+#     ANDROID_SRC_PATH="./iris_*_Android"
 
-    if [ "$TYPE" == "VOICE" ]; then
-        mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-audio.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
-        rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-video.xml
-    elif [ "$TYPE" == "FULL" ]; then
-        mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-video.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
-        rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-audio.xml
-    fi
+#     mkdir "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
+#     ANDROID_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
+#     mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/project.properties "$ANDROID_DST_PATH"
 
-    mkdir "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
+#     if [ "$TYPE" == "VOICE" ]; then
+#         mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-audio.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
+#         rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-video.xml
+#     elif [ "$TYPE" == "FULL" ]; then
+#         mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-video.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
+#         rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-audio.xml
+#     fi
 
-    if [ "$TYPE" == "FULL" ]; then
-        cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
-    fi
+#     mkdir "$ANDROID_DST_PATH"/libs
+#     cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
+#     if [ "$TYPE" == "FULL" ]; then
+#         cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
+#     fi
 
-    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
+#     cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
+#     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
-    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86
+#     cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
+#     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
-    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+#     cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
+#     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86
 
-fi
+#     cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
+#     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
 
-# iOS
-if [ "$IOS_URL" != "" ]; then
-    echo "[Unity CI] copying iOS ..."
-    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
-    unzip -d ./ ./iris_*_iOS_*.zip || exit 1
-    IOS_SRC_PATH="./iris_*_iOS"
-    IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
-    cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
-    cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
-fi
+# fi
 
-# macOS
-if [ "$MAC_URL" != "" ]; then
-    echo "[Unity CI] copying macOS ..."
-    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
-    unzip -d ./ ./iris_*_Mac_*.zip || exit 1
-    MAC_SRC_PATH="./iris_*_Mac"
-    MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
-    cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
-fi
+# # iOS
+# if [ "$IOS_URL" != "" ]; then
+#     echo "[Unity CI] copying iOS ..."
+#     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
+#     unzip -d ./ ./iris_*_iOS_*.zip || exit 1
+#     IOS_SRC_PATH="./iris_*_iOS"
+#     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
+#     cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+#     cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+# fi
 
-#Windows
-if [ "$WIN_URL" != "" ]; then
-    python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
-    unzip -d ./ ./iris_*_Windows_*.zip || exit 1
-    WIN_SRC_PATH="./iris_*_Windows"
+# # macOS
+# if [ "$MAC_URL" != "" ]; then
+#     echo "[Unity CI] copying macOS ..."
+#     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
+#     unzip -d ./ ./iris_*_Mac_*.zip || exit 1
+#     MAC_SRC_PATH="./iris_*_Mac"
+#     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
+#     cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
+# fi
 
-    # Windows x86-64
-    echo "[Unity CI] copying Windows x86-64 ..."
-    WIN64_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86_64
-    cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-    cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
-    cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
-    cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
+# #Windows
+# if [ "$WIN_URL" != "" ]; then
+#     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
+#     unzip -d ./ ./iris_*_Windows_*.zip || exit 1
+#     WIN_SRC_PATH="./iris_*_Windows"
 
-    # Windows x86
-    echo "[Unity CI] copying Windows x86 ..."
-    WIN32_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86
-    cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-    cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
-    cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
-    cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
-fi
+#     # Windows x86-64
+#     echo "[Unity CI] copying Windows x86-64 ..."
+#     WIN64_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86_64
+#     cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
+#     cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
+#     cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
+#     cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
 
-echo "[Unity CI] finish copying files"
+#     # Windows x86
+#     echo "[Unity CI] copying Windows x86 ..."
+#     WIN32_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86
+#     cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
+#     cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
+#     cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
+#     cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
+# fi
 
-#--------------------------------------
-# Export Package
-#--------------------------------------
-if [ "$TYPE" == "VOICE" ]; then
-    python3 ${ROOT}/ci/build/remove_video_case.py "$PLUGIN_PATH"/API-Example
-fi
+# echo "[Unity CI] finish copying files"
 
-#todo RTM or RTC clear code and meta file
+# #--------------------------------------
+# # Export Package
+# #--------------------------------------
+# if [ "$TYPE" == "VOICE" ]; then
+#     python3 ${ROOT}/ci/build/remove_video_case.py "$PLUGIN_PATH"/API-Example
+# fi
 
-$UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
-ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_time}.zip
-7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
+# #todo RTM or RTC clear code and meta file
 
-python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project
+# $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
+# ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_time}.zip
+# 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
-cd ..
-rm -rf ./tempDir
+# python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project
+
+# cd ..
+# rm -rf ./tempDir
