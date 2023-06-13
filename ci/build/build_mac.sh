@@ -106,17 +106,17 @@ echo PLUGIN_CODE_NAME $PLUGIN_CODE_NAME
 ROOT=`pwd`
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 
-mkdir temp || exit 1
-cd temp
+mkdir tempDir || exit 1
+cd tempDir
 
-python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
-unzip -d ./ ./iris_*_Mac_*.zip || exit 1
-python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
-unzip -d ./ ./iris_*_Windows_*.zip || exit 1
-python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
-unzip -d ./ ./iris_*_iOS_*.zip || exit 1
-python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
-unzip -d ./ ./iris_*_Android_*.zip || exit 1
+# python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
+# unzip -d ./ ./iris_*_Mac_*.zip || exit 1
+# python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
+# unzip -d ./ ./iris_*_Windows_*.zip || exit 1
+# python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
+# unzip -d ./ ./iris_*_iOS_*.zip || exit 1
+# python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
+# unzip -d ./ ./iris_*_Android_*.zip || exit 1
 
 
 ANDROID_SRC_PATH="./iris_*_Android"
