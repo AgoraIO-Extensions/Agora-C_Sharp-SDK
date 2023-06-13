@@ -104,6 +104,10 @@ echo PLUGIN_CODE_NAME $PLUGIN_CODE_NAME
 
 ls ./
 
+ls ../
+echo source_root: ${source_root} 
+ls ${source_root}
+
 ROOT=$(pwd)
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 
@@ -257,7 +261,7 @@ ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 # #todo RTM or RTC clear code and meta file
 
 # $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
-# ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_time}.zip
+# ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}.zip
 # 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
 # python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project
