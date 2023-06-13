@@ -106,11 +106,13 @@ echo PLUGIN_CODE_NAME $PLUGIN_CODE_NAME
 ROOT=`pwd`
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 
+if [ -d "./tempDir"]
+then
+    rm -rf "./tempDir"
+fi
+
 mkdir tempDir || exit 1
 cd tempDir
-
-
-
 
 
 # git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
@@ -254,4 +256,4 @@ ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_time}.zip
 python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./{ZIP_FILE} --project
 
 cd ..
-rm -rf ./temp
+rm -rf ./tempDir
