@@ -147,11 +147,11 @@ PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
-cp -r "./Agora-Unity-Quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
-ls "$PLUGIN_PATH"
-ls "$PLUGIN_PATH"/API-Example/
-cp -r "./Agora-Unity-Quickstart/API-Example-Unity/README.md "$PLUGIN_PATH"/API-Example/
-cp -r "./Agora-Unity-Quickstart/API-Example-Unity/README.zh.md "$PLUGIN_PATH"/API-Example/
+cp -r ./Agora-Unity-Quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
+ls $PLUGIN_PATH
+ls $PLUGIN_PATH/API-Example/
+cp -r ./Agora-Unity-Quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
+cp -r ./Agora-Unity-Quickstart/API-Example-Unity/README.zh.md $PLUGIN_PATH/API-Example/
 
 
 # Copy SDK
