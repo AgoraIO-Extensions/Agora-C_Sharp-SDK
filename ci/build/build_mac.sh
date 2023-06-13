@@ -124,8 +124,8 @@ IOS_SRC_PATH="./iris_*_iOS"
 MAC_SRC_PATH="./iris_*_Mac"
 WIN_SRC_PATH="./iris_*_Windows"
 
-git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
-# git clone -b "$DEMO_BRANCH" https://gitee.com/agoraio-community/Agora-Unity-Quickstart.git
+# git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
+git clone -b "$DEMO_BRANCH" https://gitee.com/agoraio-community/Agora-Unity-Quickstart.git
 echo "[Unity CI] finish preparing resources"
 
 UNITY_DIR=/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS
