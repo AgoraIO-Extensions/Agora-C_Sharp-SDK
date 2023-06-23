@@ -222,6 +222,27 @@ namespace Agora.Rtc
         //internal static extern void UnsetIrisMediaRecorderEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
 
         #endregion
+
+
+
+        #region iris_c_unity_api.h
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_UpdateSelfPosition(float positionX, float positionY, float positionZ,
+            float axisForwardX, float axisForwardY, float axisForwardZ,
+            float axisRightX, float axisRightY, float axisRightZ,
+            float axisUpX, float axisUpY, float axisUpZ);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_UpdateRemotePosition(uint uid,
+            float positionX, float positionY, float positionZ,
+            float forwardX, float forwardY, float forwardZ);
+
+
+
+
+        #endregion
+
+
     }
 
     #region callback native
@@ -250,7 +271,7 @@ namespace Agora.Rtc
     //    internal uint buffer_count;
     //}
 
- 
+
 
     //audio_frame
     //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -480,6 +501,8 @@ namespace Agora.Rtc
     //    internal Func_ReadyToSendMetadata_Native OnReadyToSendMetadata;
     //    internal Func_MetadataReceived_Native OnMetadataReceived;
     //}
+
+
 
     #endregion
 }
