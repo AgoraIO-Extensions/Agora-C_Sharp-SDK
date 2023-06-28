@@ -205,29 +205,30 @@ namespace Agora.Rtc
             float baseParam = 292.232f;
             for (int i = 0; i < zones.Length; i++) {
                 zones[i] = new SpatialAudioZone();
+                zones[i].zoneSetId = i;
                 zones[i].position = new float[3];
-                zones[i].position[0] = baseParam + 0;
-                zones[i].position[1] = baseParam + 1;
-                zones[i].position[2] = baseParam + 2;
+                zones[i].position[0] = baseParam + 0 + i*10;
+                zones[i].position[1] = baseParam + 1 + i * 10;
+                zones[i].position[2] = baseParam + 2 + i * 10;
                 zones[i].forward = new float[3];
-                zones[i].forward[0] = baseParam + 3;
-                zones[i].forward[1] = baseParam + 4;
-                zones[i].forward[2] = baseParam + 5;
+                zones[i].forward[0] = baseParam + 3 + i * 10;
+                zones[i].forward[1] = baseParam + 4 + i * 10;
+                zones[i].forward[2] = baseParam + 5 + i * 10;
 
                 zones[i].right = new float[3];
-                zones[i].right[0] = baseParam + 6;
-                zones[i].right[1] = baseParam + 7;
-                zones[i].right[2] = baseParam + 8;
+                zones[i].right[0] = baseParam + 6 + i * 10;
+                zones[i].right[1] = baseParam + 7 + i * 10;
+                zones[i].right[2] = baseParam + 8 + i * 10;
                 zones[i].up = new float[3];
-                zones[i].up[0] = baseParam + 9;
-                zones[i].up[1] = baseParam + 10;
-                zones[i].up[2] = baseParam + 11;
+                zones[i].up[0] = baseParam + 9 + i * 10;
+                zones[i].up[1] = baseParam + 10 + i * 10;
+                zones[i].up[2] = baseParam + 11 + i * 10;
 
-                zones[i].forwardLength = baseParam + 12;
-                zones[i].rightLength = baseParam + 13;
-                zones[i].upLength = baseParam + 14;
+                zones[i].forwardLength = baseParam + 12 + i * 10;
+                zones[i].rightLength = baseParam + 13 + i * 10;
+                zones[i].upLength = baseParam + 14 + i * 10;
 
-                zones[i].audioAttenuation = baseParam + 15;
+                zones[i].audioAttenuation = baseParam + 15 + i * 10;
             }
 
           
