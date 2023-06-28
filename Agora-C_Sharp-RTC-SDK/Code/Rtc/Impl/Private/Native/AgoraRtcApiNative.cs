@@ -158,12 +158,112 @@ namespace Agora.Rtc
 
 
         #endregion
+
+        #region iris_rtc_high_performance_c_api
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_SetMaxAudioRecvCount(int maxCount);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_SetAudioRecvRange(float range);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_SetDistanceUnit(float unit);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_UpdateSelfPosition(
+          float positionX, float positionY, float positionZ, float axisForwardX,
+          float axisForwardY, float axisForwardZ, float axisRightX, float axisRightY,
+          float axisRightZ, float axisUpX, float axisUpY, float axisUpZ);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_UpdateSelfPositionEx(
+          float positionX, float positionY, float positionZ, float axisForwardX,
+          float axisForwardY, float axisForwardZ, float axisRightX, float axisRightY,
+          float axisRightZ, float axisUpX, float axisUpY, float axisUpZ,
+          string channelId, uint localUid);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_UpdatePlayerPositionInfo(
+          int playerId, float positionX, float positionY, float positionZ,
+          float forwardX, float forwardY, float forwardZ);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_MuteLocalAudioStream(bool mute);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_MuteAllRemoteAudioStreams(bool mute);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_SetZones(IrisSpatialAudioZone[] zones, uint zoneCount);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_SetPlayerAttenuation(
+          int playerId, double attenuation, bool forceSet);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_MuteRemoteAudioStream(uint uid, bool mute);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_UpdateRemotePosition(
+          uint uid, float positionX, float positionY, float positionZ,
+          float forwardX, float forwardY, float forwardZ);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_UpdateRemotePositionEx(
+          uint uid, float positionX, float positionY, float positionZ,
+          float forwardX, float forwardY, float forwardZ, string channelId,
+          uint localUid);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_RemoveRemotePosition(uint uid);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_RemoveRemotePositionEx(
+          uint uid, string channelId, uint localUid);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_ClearRemotePositions();
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_ClearRemotePositionsEx(
+           string channelId, uint localUid);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ILocalSpatialAudioEngine_SetRemoteAudioAttenuation(
+          uint uid, double attenuation, bool forceSet);
+
+        #endregion
+
     }
 
-    #region callback native
+    [StructLayout(LayoutKind.Sequential)]
+    public struct IrisSpatialAudioZone
+    {
+        public int zoneSetId;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+        public float[] position;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+        public float[] forward;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+        public float[] right;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+        public float[] up;
+        public float forwardLength;
+        public float rightLength;
+        public float upLength;
+        public float audioAttenuation;
 
-
-
-
-    #endregion
+        public IrisSpatialAudioZone(SpatialAudioZone zone)
+        {
+            this.zoneSetId = zone.zoneSetId;
+            this.position = zone.position;
+            this.forward = zone.forward;
+            this.right = zone.right;
+            this.up = zone.up;
+            this.forwardLength = zone.forwardLength;
+            this.rightLength = zone.rightLength;
+            this.upLength = zone.upLength;
+            this.audioAttenuation = zone.audioAttenuation;
+        }
+    };
 }
