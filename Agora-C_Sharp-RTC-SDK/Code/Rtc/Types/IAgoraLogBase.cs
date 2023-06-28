@@ -89,6 +89,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOG_LEVEL_FATAL = 0x0008,
+
+        LOG_LEVEL_API_CALL = 0x0010,
     };
 
     #endregion

@@ -14,6 +14,7 @@ namespace Agora.Rtc
             Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
             RtcEngineContext rtcEngineContext;
             ParamsHelper.InitParam(out rtcEngineContext);
+            rtcEngineContext.logConfig.level = LOG_LEVEL.LOG_LEVEL_API_CALL;
             int nRet = Engine.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
             LocalSpatialAudioEngine = Engine.GetLocalSpatialAudioEngine();
