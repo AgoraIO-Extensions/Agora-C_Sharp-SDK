@@ -204,16 +204,8 @@ namespace Agora.Rtc
         public int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet)
         {
             if (!_initialized) return UNINITIALIZED;
-            _param.Clear();
-            _param.Add("uid", uid);
-            _param.Add("attenuation", attenuation);
-            _param.Add("forceSet", forceSet);
 
-            string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
-                AgoraApiType.FUNC_LOCALSPATIALAUDIOENGINE_SETREMOTEAUDIOATTENUATION,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return AgoraRtcNative.ILocalSpatialAudioEngine_SetRemoteAudioAttenuation(uid, attenuation, forceSet);
         }
 
 
