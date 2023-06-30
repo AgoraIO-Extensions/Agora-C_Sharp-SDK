@@ -170,16 +170,19 @@ namespace Agora.Rtc
 
         #region IAudioFrameObserver Start
         internal const string EVENT_AUDIOFRAMEOBSERVER_ONRECORDAUDIOFRAME = "AudioFrameObserver_onRecordAudioFrame";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_ONPUBLISHAUDIOFRAME = "AudioFrameObserver_onPublishAudioFrame";
         internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAME = "AudioFrameObserver_onPlaybackAudioFrame";
         internal const string EVENT_AUDIOFRAMEOBSERVER_ONMIXEDAUDIOFRAME = "AudioFrameObserver_onMixedAudioFrame";
         internal const string EVENT_AUDIOFRAMEOBSERVER_ONEARMONITORINGAUDIOFRAME = "AudioFrameObserver_onEarMonitoringAudioFrame";
         internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING = "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING2 = "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2";
         internal const string EVENT_AUDIOFRAMEOBSERVER_GETOBSERVEDAUDIOFRAMEPOSITION = "AudioFrameObserver_getObservedAudioFramePosition";
         internal const string EVENT_AUDIOFRAMEOBSERVER_GETPLAYBACKAUDIOPARAMS = "AudioFrameObserver_getPlaybackAudioParams";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_GETPUBLISHAUDIOPARAMS = "AudioFrameObserver_getPublishAudioParams";
         internal const string EVENT_AUDIOFRAMEOBSERVER_GETRECORDAUDIOPARAMS = "AudioFrameObserver_getRecordAudioParams";
         internal const string EVENT_AUDIOFRAMEOBSERVER_GETMIXEDAUDIOPARAMS = "AudioFrameObserver_getMixedAudioParams";
         internal const string EVENT_AUDIOFRAMEOBSERVER_GETEARMONITORINGAUDIOPARAMS = "AudioFrameObserver_getEarMonitoringAudioParams";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING2 = "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2";
+
         #endregion
 
         #region IAudioSpectrumObserver Start
@@ -225,6 +228,7 @@ namespace Agora.Rtc
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT = "MusicContentCenterEventHandler_onMusicChartsResult";
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT = "MusicContentCenterEventHandler_onMusicCollectionResult";
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT = "MusicContentCenterEventHandler_onLyricResult";
+        internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT = "MusicContentCenterEventHandler_onSongSimpleInfoResult";
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT = "MusicContentCenterEventHandler_onPreLoadEvent";
         #endregion
 

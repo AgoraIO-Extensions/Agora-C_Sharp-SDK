@@ -1487,6 +1487,10 @@ namespace Agora.Rtc
         ///
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
 
+
+        public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
+       
+        public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
         ///
         /// <summary>
         /// Whether to publish the audio captured by the microphone:true: (Default) Publish the audio captured by the microphone.false: Do not publish the audio captured by the microphone.
@@ -1521,6 +1525,10 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
+
+        public Optional<bool> publishThirdScreenTrack = new Optional<bool>();
+
+        public Optional<bool> publishFourthScreenTrack = new Optional<bool>();
 
         ///
         /// <summary>
@@ -1576,6 +1584,8 @@ namespace Agora.Rtc
         ///
         public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
 
+
+        public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
         ///
         /// <summary>
         /// Whether to automatically subscribe to all remote audio streams when the user joins a channel:true: (Default) Automatically subscribe to all remote audio streams.false: Do not automatically subscribe to any remote audio streams.
@@ -1700,6 +1710,18 @@ namespace Agora.Rtc
                 writer.Write(this.publishSecondaryCameraTrack.GetValue());
             }
 
+            if (this.publishThirdCameraTrack.HasValue())
+            {
+                writer.WritePropertyName("publishThirdCameraTrack");
+                writer.Write(this.publishThirdCameraTrack.GetValue());
+            }
+
+            if (this.publishFourthCameraTrack.HasValue())
+            {
+                writer.WritePropertyName("publishFourthCameraTrack");
+                writer.Write(this.publishFourthCameraTrack.GetValue());
+            }
+
             if (this.publishMicrophoneTrack.HasValue())
             {
                 writer.WritePropertyName("publishMicrophoneTrack");
@@ -1728,6 +1750,18 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("publishSecondaryScreenTrack");
                 writer.Write(this.publishSecondaryScreenTrack.GetValue());
+            }
+
+            if (this.publishThirdScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishThirdScreenTrack");
+                writer.Write(this.publishThirdScreenTrack.GetValue());
+            }
+
+            if (this.publishFourthScreenTrack.HasValue())
+            {
+                writer.WritePropertyName("publishFourthScreenTrack");
+                writer.Write(this.publishFourthScreenTrack.GetValue());
             }
 
             if (this.publishCustomAudioTrack.HasValue())
@@ -1777,6 +1811,13 @@ namespace Agora.Rtc
                 writer.WritePropertyName("publishTrancodedVideoTrack");
                 writer.Write(this.publishTrancodedVideoTrack.GetValue());
             }
+
+            if (this.publishMixedAudioTrack.HasValue())
+            {
+                writer.WritePropertyName("publishMixedAudioTrack");
+                writer.Write(this.publishMixedAudioTrack.GetValue());
+            }
+
             if (this.autoSubscribeAudio.HasValue())
             {
                 writer.WritePropertyName("autoSubscribeAudio");

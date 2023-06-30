@@ -4,7 +4,7 @@ namespace Agora.Rtc
 {
     public delegate void OnPlayerSourceStateChangedHandler(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec);
 
-    public delegate void OnPositionChangedHandler(Int64 position_ms);
+    public delegate void OnPositionChangedHandler(Int64 positionMs, Int64 timestampMs);
 
     public delegate void OnPlayerEventHandler(MEDIA_PLAYER_EVENT eventCode, Int64 elapsedTime, string message);
 
@@ -41,10 +41,10 @@ namespace Agora.Rtc
             EventOnPlayerSourceStateChanged.Invoke(state, ec);
         }
 
-        public override void OnPositionChanged(Int64 position_ms)
+        public override void OnPositionChanged(Int64 positionMs, Int64 timestampMs)
         {
             if (EventOnPositionChanged == null) return;
-            EventOnPositionChanged.Invoke(position_ms);
+            EventOnPositionChanged.Invoke(positionMs, timestampMs);
         }
 
         public override void OnPlayerEvent(MEDIA_PLAYER_EVENT eventCode, Int64 elapsedTime, string message)

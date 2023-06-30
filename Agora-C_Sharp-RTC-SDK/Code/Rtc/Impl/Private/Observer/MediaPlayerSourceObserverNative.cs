@@ -77,7 +77,8 @@ namespace Agora.Rtc
 #endif
                     if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                     mediaPlayerSourceObserverDic[playerId].OnPositionChanged(
-                        (Int64)AgoraJson.GetData<Int64>(jsonData, "position_ms")
+                        (Int64)AgoraJson.GetData<Int64>(jsonData, "positionMs"),
+                        (Int64)AgoraJson.GetData<Int64>(jsonData, "timestampMs")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });

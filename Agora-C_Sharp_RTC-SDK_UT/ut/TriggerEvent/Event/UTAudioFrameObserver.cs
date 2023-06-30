@@ -31,6 +31,34 @@ namespace Agora.Rtc
         }
 
         ///////////////////////////////////
+      
+
+        public bool OnPublishAudioFrame_be_trigger = false;
+        public string OnPublishAudioFrame_channelId = null;
+        public AudioFrame OnPublishAudioFrame_audioFrame = null;
+
+        public override bool OnPublishAudioFrame(string channelId, AudioFrame audioFrame)
+        {
+            OnPublishAudioFrame_be_trigger = true;
+            OnPublishAudioFrame_channelId = channelId;
+            OnPublishAudioFrame_audioFrame = audioFrame;
+            return true;
+        }
+
+        public bool OnPublishAudioFramePassed(string channelId, AudioFrame audioFrame)
+        {
+            if (OnPublishAudioFrame_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareString(OnPublishAudioFrame_channelId, channelId) == false)
+                return false;
+            if (ParamsHelper.compareAudioFrame(OnPublishAudioFrame_audioFrame, audioFrame) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
 
         public bool OnPlaybackAudioFrame_be_trigger = false;
         public string OnPlaybackAudioFrame_channelId = null;
@@ -170,6 +198,28 @@ namespace Agora.Rtc
         {
             if (GetPlaybackAudioParams_be_trigger == false)
                 return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+      
+
+        public bool GetPublishAudioParams_be_trigger = false;
+
+
+        public override AudioParams GetPublishAudioParams()
+        {
+            GetPublishAudioParams_be_trigger = true;
+            return new AudioParams();
+        }
+
+        public bool GetPublishAudioParamsPassed()
+        {
+            if (GetPublishAudioParams_be_trigger == false)
+                return false;
+
+
 
             return true;
         }
