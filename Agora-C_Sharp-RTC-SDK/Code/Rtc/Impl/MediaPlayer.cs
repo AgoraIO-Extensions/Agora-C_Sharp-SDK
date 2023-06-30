@@ -254,7 +254,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _mediaPlayerImpl.SelectMultiAudioTrack(playoutTrackIndex, publishTrackIndex);
+            return _mediaPlayerImpl.SelectMultiAudioTrack(playerId, playoutTrackIndex, publishTrackIndex);
         }
 
         public override int SetPlayerOption(string key, int value)

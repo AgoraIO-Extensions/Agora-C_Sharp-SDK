@@ -166,6 +166,7 @@ namespace Agora.Rtc
         internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnRecordAudioEncodedFrame";
         internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnPlaybackAudioEncodedFrame";
         internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnMixedAudioEncodedFrame";
+        internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPUBLISHAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_OnPublishAudioEncodedFrame";
         #endregion
 
         #region IAudioFrameObserver Start

@@ -369,7 +369,7 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYER_SETLOOPCOUNT = "MediaPlayer_setLoopCount";
         internal const string FUNC_MEDIAPLAYER_SETPLAYBACKSPEED = "MediaPlayer_setPlaybackSpeed";
         internal const string FUNC_MEDIAPLAYER_SELECTAUDIOTRACK = "MediaPlayer_selectAudioTrack";
-        internal const string FUNC_MEDIAPLAYER_SELECTMULTIAUDIOTRACK = "MediaPlayer_SelectMultiAudioTrack";
+        internal const string FUNC_MEDIAPLAYER_SELECTMULTIAUDIOTRACK = "MediaPlayer_selectMultiAudioTrack";
         internal const string FUNC_MEDIAPLAYER_SETPLAYEROPTION = "MediaPlayer_setPlayerOption";
         internal const string FUNC_MEDIAPLAYER_SETPLAYEROPTION2 = "MediaPlayer_setPlayerOption2";
         internal const string FUNC_MEDIAPLAYER_TAKESCREENSHOT = "MediaPlayer_takeScreenshot";
