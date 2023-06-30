@@ -8,7 +8,7 @@
     <Win32Resource />
     <Company>Agora.io</Company>
     <Copyright>Agora.io Copyright (C) 2021</Copyright>
-    <Version>4.2.0.1</Version>
+    <Version>4.2.1</Version>
     <Description>Agora's Video Calling allows you to add customized real-time video experiences to any application.
 
 Enabled by Agora’s Video SDK, Video Calling gives you full control over a rich set of features within your app. You can extend the SDK with functionality like recording and content moderation or use Extensions Marketplace to quickly activate background removal, face filters, and more.</Description>

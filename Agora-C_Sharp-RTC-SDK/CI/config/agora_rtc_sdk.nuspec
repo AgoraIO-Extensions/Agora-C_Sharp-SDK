@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>agora_rtc_sdk</id>
-    <version>4.2.0.1</version>
+    <version>4.2.1</version>
     <title>agora rtc sdk wrapper</title>
     <authors>berky</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
@@ -19,7 +19,7 @@ For details, see this [FAQ](https://docs.agora.io/en/faq/profile_difference).
     <repository type="GitHub" url="https://github.com/AgoraIO/Agora-C_Sharp-SDK"/>
     <releaseNotes>Fix bugs.</releaseNotes>
     <copyright></copyright>
-    <tags>v4.2.0.1</tags>
+    <tags>v4.2.1</tags>
   </metadata>
   <files>
     <file src="bin\agorartc_core20.props" target="build\netcoreapp20\agora_rtc_sdk.props"/>

@@ -42,7 +42,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="agora_rtc_sdk" Version="4.2.0.1" />
+      <PackageReference Include="agora_rtc_sdk" Version="4.2.1" />
       <PackageReference Include="SharpDX" Version="4.2.0" />
       <PackageReference Include="SharpDX.Direct3D9" Version="4.2.0" />
       <PackageReference Include="SharpDX.Mathematics" Version="4.2.0" />
