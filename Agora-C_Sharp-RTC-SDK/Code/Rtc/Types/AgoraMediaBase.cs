@@ -1034,6 +1034,7 @@ namespace Agora.Rtc
             samplesPerSec = 0;
             RawBuffer = new byte[0];
             renderTimeMs = 0;
+            audioTrackNumber = 0;
             avsync_type = 0;
         }
 
@@ -1105,6 +1106,7 @@ namespace Agora.Rtc
         ///
         public long renderTimeMs;
 
+        public int audioTrackNumber;
         ///
         /// <summary>
         /// Reserved for future use.
@@ -1147,7 +1149,9 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        AUDIO_FRAME_POSITION_EAR_MONITORING = 0x0010
+        AUDIO_FRAME_POSITION_EAR_MONITORING = 0x0010,
+
+        AUDIO_FRAME_POSITION_BEFORE_PUBLISH = 0x0020,
     };
 
     ///
@@ -1358,7 +1362,9 @@ namespace Agora.Rtc
         /// 2: Screenshot capture. SDK takes screenshots of the video stream in the channel and uploads them.
         /// </summary>
         ///
-        CONTENT_INSPECT_SUPERVISION = 2
+        CONTENT_INSPECT_SUPERVISION = 2,
+
+        CONTENT_INSPECT_IMAGE_MODERATION = 3
     };
 
     ///

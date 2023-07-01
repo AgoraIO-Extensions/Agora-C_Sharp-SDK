@@ -216,6 +216,20 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
+
+                    case "AudioFrameObserver_onPublishAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            bool result = audioFrameObserver.OnPublishAudioFrame(channelId, audioFrame);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
                     case "AudioFrameObserver_onPlaybackAudioFrame":
                         {
                             AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
@@ -268,6 +282,17 @@ namespace Agora.Rtc
                     case "AudioFrameObserver_getPlaybackAudioParams":
                         {
                             var result = audioFrameObserver.GetPlaybackAudioParams();
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_getPublishAudioParams":
+                        {
+                            var result = audioFrameObserver.GetPublishAudioParams();
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -350,6 +375,7 @@ namespace Agora.Rtc
             switch (@event)
             {
                 case "AudioFrameObserver_onRecordAudioFrame":
+                case "AudioFrameObserver_onPublishAudioFrame":
                 case "AudioFrameObserver_onPlaybackAudioFrame":
                 case "AudioFrameObserver_onMixedAudioFrame":
                 case "AudioFrameObserver_onEarMonitoringAudioFrame":
@@ -378,6 +404,7 @@ namespace Agora.Rtc
                     }
                     break;
                 case "AudioFrameObserver_getPlaybackAudioParams":
+                case "AudioFrameObserver_getPublishAudioParams":
                 case "AudioFrameObserver_getRecordAudioParams":
                 case "AudioFrameObserver_getMixedAudioParams":
                 case "AudioFrameObserver_getEarMonitoringAudioParams":

@@ -3868,6 +3868,8 @@ namespace Agora.Rtc
         * The playout delay of the device
         */
         public int audioPlayoutDelay;
+
+        public int earMonitorDelay;
     }
 
     ///
@@ -6395,6 +6397,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         AUDIO_FILE_RECORDING_MIXED = 3,
+
+        AUDIO_FILE_RECORDING_PUBLISH = 4,
     };
 
     ///

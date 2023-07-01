@@ -34,6 +34,7 @@ namespace Agora.Rtc
             this.samplesPerSec = audioFrame.samplesPerSec;
             this.buffer = audioFrame.buffer;
             this.renderTimeMs = audioFrame.renderTimeMs;
+            this.audioTrackNumber = audioFrame.audioTrackNumber;
             this.avsync_type = audioFrame.avsync_type;
         }
 
@@ -44,6 +45,7 @@ namespace Agora.Rtc
         public int samplesPerSec;
         public IntPtr buffer;
         public long renderTimeMs;
+        public int audioTrackNumber;
         public int avsync_type;
     }
 

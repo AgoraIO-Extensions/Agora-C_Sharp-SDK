@@ -67,6 +67,34 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
+        public void Test_OnPublishAudioFrame()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPUBLISHAUDIOFRAME;
+
+            string channelId;
+            ParamsHelper.InitParam(out channelId);
+
+            AudioFrame audioFrame;
+            ParamsHelper.InitParam(out audioFrame);
+
+
+            jsonObj.Clear();
+            jsonObj.Add("channelId", channelId);
+            jsonObj.Add("audioFrame", audioFrame);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnPublishAudioFramePassed(channelId, audioFrame));
+        }
+
+
+
+        [Test]
         public void Test_OnPlaybackAudioFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAME;
@@ -201,6 +229,27 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.GetPlaybackAudioParamsPassed());
         }
+
+        [Test]
+        public void Test_GetPublishAudioParams()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_GETPUBLISHAUDIOPARAMS;
+
+
+
+            jsonObj.Clear();
+
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.GetPublishAudioParamsPassed());
+        }
+
 
         [Test]
         public void Test_GetRecordAudioParams()

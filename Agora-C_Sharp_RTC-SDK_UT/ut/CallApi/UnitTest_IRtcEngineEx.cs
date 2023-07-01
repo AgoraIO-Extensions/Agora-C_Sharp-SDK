@@ -689,6 +689,20 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_EnableContentInspectEx()
+        {
+            bool enabled;
+            ParamsHelper.InitParam(out enabled);
+            ContentInspectConfig config;
+            ParamsHelper.InitParam(out config);
+            RtcConnection connection;
+            ParamsHelper.InitParam(out connection);
+            var nRet = EngineEx.EnableContentInspectEx(enabled, config, connection);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_StartMediaRenderingTracingEx()
         {
             RtcConnection connection;
