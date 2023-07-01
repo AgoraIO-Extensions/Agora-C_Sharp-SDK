@@ -2438,6 +2438,7 @@ namespace Agora.Rtc
         ///
         public abstract int SetRecordingAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
 
+        public abstract int SetPublishAudioFrameParameters(int sampleRate, int channel, int samplesPerCall);
         ///
         /// <summary>
         /// Sets the audio data format for playback.
@@ -3413,6 +3414,7 @@ namespace Agora.Rtc
 
         public abstract int QueryCodecCapability(ref CodecCapInfo[] codec_info, ref int size);
 
+        public abstract int QueryDeviceScore();
         #endregion
 
         #region DeviceManager
@@ -4528,6 +4530,8 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
+
+        public abstract int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection);
 
         ///
         /// <summary>

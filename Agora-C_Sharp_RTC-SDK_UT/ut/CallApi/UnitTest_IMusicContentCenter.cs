@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Agora.Rtc;
+using System;
 namespace Agora.Rtc
 {
     public class UnitTest_IMusicContentCenter
@@ -136,6 +137,18 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_Preload2()
+        {
+            string requestId;
+            ParamsHelper.InitParam(out requestId);
+            long songCode;
+            ParamsHelper.InitParam(out songCode);
+            var nRet = MusicContentCenter.Preload(ref requestId, songCode);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_RemoveCache()
         {
             long songCode;
@@ -163,6 +176,33 @@ namespace Agora.Rtc
             long songCode;
             ParamsHelper.InitParam(out songCode);
             var nRet = MusicContentCenter.IsPreloaded(songCode);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_GetSongSimpleInfo()
+        {
+            string requestId;
+            ParamsHelper.InitParam(out requestId);
+            long songCode;
+            ParamsHelper.InitParam(out songCode);
+            var nRet = MusicContentCenter.GetSongSimpleInfo(ref requestId, songCode);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetInternalSongCode()
+        {
+            long songCode;
+            ParamsHelper.InitParam(out songCode);
+            string jsonOption;
+            ParamsHelper.InitParam(out jsonOption);
+            Int64 internalSongCode;
+            ParamsHelper.InitParam(out internalSongCode);
+            var nRet = MusicContentCenter.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
 
             Assert.AreEqual(0, nRet);
         }

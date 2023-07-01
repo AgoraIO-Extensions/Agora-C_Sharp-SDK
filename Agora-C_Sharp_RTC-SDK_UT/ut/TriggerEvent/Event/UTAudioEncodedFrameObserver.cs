@@ -95,5 +95,36 @@ namespace Agora.Rtc
 
         ///////////////////////////////////
 
+
+        public bool OnPublishAudioEncodedFrame_be_trigger = false;
+        public IntPtr OnPublishAudioEncodedFrame_frameBuffer = IntPtr.Zero;
+        public int OnPublishAudioEncodedFrame_length = 0;
+        public EncodedAudioFrameInfo OnPublishAudioEncodedFrame_audioEncodedFrameInfo = null;
+
+        public override void OnPublishAudioEncodedFrame(IntPtr frameBuffer, int length, EncodedAudioFrameInfo audioEncodedFrameInfo)
+        {
+            OnPublishAudioEncodedFrame_be_trigger = true;
+            OnPublishAudioEncodedFrame_frameBuffer = frameBuffer;
+            OnPublishAudioEncodedFrame_length = length;
+            OnPublishAudioEncodedFrame_audioEncodedFrameInfo = audioEncodedFrameInfo;
+        }
+
+        public bool OnPublishAudioEncodedFramePassed(IntPtr frameBuffer, int length, EncodedAudioFrameInfo audioEncodedFrameInfo)
+        {
+            if (OnPublishAudioEncodedFrame_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareIntPtr(OnPublishAudioEncodedFrame_frameBuffer, frameBuffer) == false)
+                return false;
+            if (ParamsHelper.compareInt(OnPublishAudioEncodedFrame_length, length) == false)
+                return false;
+            if (ParamsHelper.compareEncodedAudioFrameInfo(OnPublishAudioEncodedFrame_audioEncodedFrameInfo, audioEncodedFrameInfo) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
     }
 }

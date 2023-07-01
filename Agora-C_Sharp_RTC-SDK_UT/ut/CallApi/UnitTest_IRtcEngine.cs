@@ -87,6 +87,15 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_QueryDeviceScore()
+        {
+
+            var nRet = Engine.QueryDeviceScore();
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_GetVersion()
         {
             int build;
@@ -1652,6 +1661,20 @@ namespace Agora.Rtc
             int samplesPerCall;
             ParamsHelper.InitParam(out samplesPerCall);
             var nRet = Engine.SetRecordingAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetPublishAudioFrameParameters()
+        {
+            int sampleRate;
+            ParamsHelper.InitParam(out sampleRate);
+            int channel;
+            ParamsHelper.InitParam(out channel);
+            int samplesPerCall;
+            ParamsHelper.InitParam(out samplesPerCall);
+            var nRet = Engine.SetPublishAudioFrameParameters(sampleRate, channel, samplesPerCall);
 
             Assert.AreEqual(0, nRet);
         }

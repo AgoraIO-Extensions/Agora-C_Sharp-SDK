@@ -51,6 +51,9 @@ namespace Agora.Rtc
                     case "AudioEncodedFrameObserver_OnMixedAudioEncodedFrame":
                         audioEncodedFrameObserver.OnMixedAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
                         break;
+                    case "AudioEncodedFrameObserver_OnPublishAudioEncodedFrame":
+                        audioEncodedFrameObserver.OnPublishAudioEncodedFrame(frameBuffer, frameLength, audioEncodedFrameInfo);
+                        break;
                     default:
                         AgoraLog.LogError("unexpected event name :" + @event);
                         break;

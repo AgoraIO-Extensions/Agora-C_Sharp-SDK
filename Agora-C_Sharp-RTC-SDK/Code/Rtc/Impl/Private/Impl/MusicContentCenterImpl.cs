@@ -232,6 +232,26 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int Preload(ref string requestId, Int64 songCode)
+        {
+            _param.Clear();
+            _param.Add("songCode", songCode);
+
+
+            string jsonParam = AgoraJson.ToJson(_param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(
+                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_PRELOAD2,
+                jsonParam, (UInt32)jsonParam.Length,
+                IntPtr.Zero, 0, ref _apiParam);
+
+            if (ret == 0)
+            {
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
+            }
+
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int RemoveCache(Int64 songCode)
         {
             _param.Clear();
@@ -317,7 +337,45 @@ namespace Agora.Rtc
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0, ref _apiParam);
 
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
 
+        public int GetSongSimpleInfo(ref string requestId, Int64 songCode)
+        {
+            _param.Clear();
+            _param.Add("songCode", songCode);
+
+            string jsonParam = AgoraJson.ToJson(_param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(
+                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETSONGSIMPLEINFO,
+                jsonParam, (UInt32)jsonParam.Length,
+                IntPtr.Zero, 0, ref _apiParam);
+
+            if (ret == 0)
+            {
+                requestId = (string)AgoraJson.GetData<string>(_apiParam.Result, "requestId");
+            }
+
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
+
+        public int GetInternalSongCode(Int64 songCode, string jsonOption, ref Int64 internalSongCode)
+        {
+            _param.Clear();
+            _param.Add("songCode", songCode);
+            _param.Add("jsonOption", jsonOption);
+
+            string jsonParam = AgoraJson.ToJson(_param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(
+                _irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETINTERNALSONGCODE,
+                jsonParam, (UInt32)jsonParam.Length,
+                IntPtr.Zero, 0, ref _apiParam);
+
+            if (ret == 0)
+            {
+                internalSongCode = (Int64)AgoraJson.GetData<Int64>(_apiParam.Result, "internalSongCode");
+            }
 
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }

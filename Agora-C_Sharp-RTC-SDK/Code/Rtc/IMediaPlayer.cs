@@ -294,6 +294,8 @@ namespace Agora.Rtc
         ///
         public abstract int SelectAudioTrack(int index);
 
+        public abstract int SelectMultiAudioTrack(int playoutTrackIndex, int publishTrackIndex);
+
         ///
         /// <summary>
         /// Sets the private options for the media player.

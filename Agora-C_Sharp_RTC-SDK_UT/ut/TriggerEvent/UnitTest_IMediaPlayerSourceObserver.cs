@@ -74,11 +74,16 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED;
 
-            long position_ms;
-            ParamsHelper.InitParam(out position_ms);
+            long positionMs;
+            ParamsHelper.InitParam(out positionMs);
+
+            long timestampMs;
+            ParamsHelper.InitParam(out timestampMs);
+
 
             jsonObj.Clear();
-            jsonObj.Add("position_ms", position_ms);
+            jsonObj.Add("positionMs", positionMs);
+            jsonObj.Add("timestampMs", timestampMs);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -87,7 +92,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPositionChangedPassed(position_ms));
+            Assert.AreEqual(true, EventHandler.OnPositionChangedPassed(positionMs, timestampMs));
         }
 
         [Test]
