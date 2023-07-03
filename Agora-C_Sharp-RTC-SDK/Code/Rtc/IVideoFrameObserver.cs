@@ -87,35 +87,5 @@ namespace Agora.Rtc
         {
             return true;
         }
-
-        ///
-        /// <summary>
-        /// Sets the format of the raw video data output by the SDK.
-        /// If you want to get raw video data in a color encoding format other than YUV 420, register this callback when calling RegisterVideoFrameObserver . After you successfully register the video frame observer, the SDK triggers this callback each time it receives a video frame. You need to set your preferred video data in the return value of this callback.
-        /// </summary>
-        ///
-        /// <returns>
-        /// Sets the video format. See VIDEO_OBSERVER_FRAME_TYPE .
-        /// </returns>
-        ///
-        public virtual VIDEO_OBSERVER_FRAME_TYPE GetVideoFormatPreference()
-        {
-            return VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-        }
-
-        ///
-        /// <summary>
-        /// Sets the frame position for the video observer.
-        /// After successfully registering the video data observer, the SDK uses this callback to determine whether to trigger OnCaptureVideoFrame , OnRenderVideoFrame and OnPreEncodeVideoFrame callback at each specific video frame processing position, so that you can observe the locally collected video data, the video data sent by the remote end, and the video data before encoding. You can set one or more positions you need to observe by modifying the return value according to your scenario:POSITION_POST_CAPTURER(1 << 0): The position after capturing the video data, which corresponds to the OnCaptureVideoFrame callback.POSITION_PRE_RENDERER(1 << 1): The position of the received remote video data before rendering, which corresponds to the OnRenderVideoFrame callback.POSITION_PRE_ENCODER(1 << 2): The position before encoding the video data, which corresponds to the OnPreEncodeVideoFrame callback.Use '|' (the OR operator) to observe multiple frame positions.This callback observes POSITION_POST_CAPTURER(1 << 0) and POSITION_PRE_RENDERER(1 << 1) by default.To conserve system resources, you can reduce the number of frame positions that you want to observe.
-        /// </summary>
-        ///
-        /// <returns>
-        /// A bit mask that controls the frame position of the video observer. See VIDEO_MODULE_POSITION .
-        /// </returns>
-        ///
-        public virtual VIDEO_OBSERVER_POSITION GetObservedFramePosition()
-        {
-            return VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
-        }
     }
 }

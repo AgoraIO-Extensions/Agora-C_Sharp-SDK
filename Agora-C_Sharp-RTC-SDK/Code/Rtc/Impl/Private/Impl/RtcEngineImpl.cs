@@ -291,13 +291,13 @@ namespace Agora.Rtc
             return ret;
         }
 
-        public int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             //you must Set Observer first and then SetIrisAudioEncodedFrameObserver second
             //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
             //and this time you dont have observer be trigger
             AudioFrameObserverNative.SetAudioFrameObserverAndMode(audioFrameObserver, mode);
-            int ret = SetIrisAudioFrameObserver();
+            int ret = SetIrisAudioFrameObserver(position);
 
             return ret;
         }
@@ -311,14 +311,18 @@ namespace Agora.Rtc
             return nRet;
         }
 
-        private int SetIrisAudioFrameObserver()
+        private int SetIrisAudioFrameObserver(AUDIO_FRAME_POSITION position)
         {
             if (_rtcAudioFrameObserverHandle.handle != IntPtr.Zero) return 0;
+
+            _param.Clear();
+            _param.Add("position", position);
+            var json = AgoraJson.ToJson(_param);
 
             AgoraUtil.AllocEventHandlerHandle(ref _rtcAudioFrameObserverHandle, AudioFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioFrameObserverHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER,
-                "{}", 2,
+                json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
@@ -349,13 +353,13 @@ namespace Agora.Rtc
             return nRet;
         }
 
-        public int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_OBSERVER_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
             //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
             //and this time you dont have observer be trigger
             VideoFrameObserverNative.SetVideoFrameObserverAndMode(videoFrameObserver, mode);
-            int ret = SetIrisVideoFrameObserver();
+            int ret = SetIrisVideoFrameObserver(formatPreference, position);
             return ret;
         }
 
@@ -368,15 +372,19 @@ namespace Agora.Rtc
             return nRet;
         }
 
-        private int SetIrisVideoFrameObserver()
+        private int SetIrisVideoFrameObserver(VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_OBSERVER_POSITION position)
         {
             if (_rtcVideoFrameObserverHandle.handle != IntPtr.Zero) return 0;
 
+            _param.Clear();
+            _param.Add("formatPreference", formatPreference);
+            _param.Add("position", position);
+            var json = AgoraJson.ToJson(_param);
             AgoraUtil.AllocEventHandlerHandle(ref _rtcVideoFrameObserverHandle, VideoFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcVideoFrameObserverHandle.handle };
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERVIDEOFRAMEOBSERVER,
-                "{}", 2,
+                json, (uint)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 

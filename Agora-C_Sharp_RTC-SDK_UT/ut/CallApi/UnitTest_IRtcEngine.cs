@@ -3130,7 +3130,7 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out config);
             var nRet = Engine.CreateCustomAudioTrack(trackType, config);
 
-            Assert.AreEqual(0, nRet);
+            Assert.Greater(nRet, 0);
         }
 
         [Test]
@@ -3204,7 +3204,7 @@ namespace Agora.Rtc
            
             var nRet = Engine.GetNtpWallTimeInMs();
 
-            Assert.AreEqual(0, nRet);
+            Assert.Greater(nRet, 0);
         }
 
         #endregion
