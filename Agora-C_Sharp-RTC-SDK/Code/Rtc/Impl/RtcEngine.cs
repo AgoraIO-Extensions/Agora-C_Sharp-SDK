@@ -137,13 +137,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.InitEventHandler(engineEventHandler);
         }
 
-        public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
+            return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, position, mode);
         }
 
         public override int UnRegisterAudioFrameObserver()
@@ -155,13 +155,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.UnRegisterAudioFrameObserver();
         }
 
-        public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_OBSERVER_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, mode);
+            return _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, formatPreference, position, mode);
         }
 
         public override int UnRegisterVideoFrameObserver()

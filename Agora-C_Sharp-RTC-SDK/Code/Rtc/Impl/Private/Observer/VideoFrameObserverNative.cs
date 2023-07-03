@@ -312,29 +312,6 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-
-                    case "VideoFrameObserver_getVideoFormatPreference":
-                        {
-                            VIDEO_OBSERVER_FRAME_TYPE result = videoFrameObserver.GetVideoFormatPreference();
-                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                            p.Add("result", result);
-                            string json = AgoraJson.ToJson(p);
-                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                            IntPtr resultPtr = eventParam.result;
-                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                        }
-                        break;
-                    case "VideoFrameObserver_getObservedFramePosition":
-                        {
-                            VIDEO_OBSERVER_POSITION result = videoFrameObserver.GetObservedFramePosition();
-                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                            p.Add("result", result);
-                            string json = AgoraJson.ToJson(p);
-                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                            IntPtr resultPtr = eventParam.result;
-                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                        }
-                        break;
                     default:
                         AgoraLog.LogError("unexpected event: " + @event);
                         break;
@@ -355,29 +332,6 @@ namespace Agora.Rtc
                 case "VideoFrameObserver_onTranscodedVideoFrame":
                     {
                         bool result = true;
-                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                        p.Add("result", result);
-                        string json = AgoraJson.ToJson(p);
-                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                        IntPtr resultPtr = eventParam.result;
-                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                    }
-                    break;
-                case "VideoFrameObserver_getVideoFormatPreference":
-                    {
-                        VIDEO_OBSERVER_FRAME_TYPE result = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                        p.Add("result", result);
-                        string json = AgoraJson.ToJson(p);
-                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                        IntPtr resultPtr = eventParam.result;
-                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                    }
-                    break;
-                case "VideoFrameObserver_getObservedFramePosition":
-                    {
-                        VIDEO_OBSERVER_POSITION result = VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER
-                                                         | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                         p.Add("result", result);
                         string json = AgoraJson.ToJson(p);
