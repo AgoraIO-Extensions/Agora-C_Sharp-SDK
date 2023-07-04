@@ -29,7 +29,7 @@ namespace Agora.Rtc
         ///
         /// <param name="position_ms"> The playback position (ms) of media files.</param>
         ///
-        public virtual void OnPositionChanged(Int64 positionMs, Int64 timestampMs) { }
+        public virtual void OnPositionChanged(Int64 position_ms, Int64 timestamp_ms) { }
 
         ///
         /// <summary>

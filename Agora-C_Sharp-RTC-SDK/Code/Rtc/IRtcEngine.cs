@@ -2438,7 +2438,7 @@ namespace Agora.Rtc
         ///
         public abstract int SetRecordingAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
 
-        public abstract int SetPublishAudioFrameParameters(int sampleRate, int channel, int samplesPerCall);
+      
         ///
         /// <summary>
         /// Sets the audio data format for playback.

@@ -62,12 +62,5 @@ namespace Agora.Rtc
         {
 
         }
-
-        public virtual void OnPublishAudioEncodedFrame(IntPtr frameBuffer, int length,
-                                                    EncodedAudioFrameInfo audioEncodedFrameInfo)
-        {
-
-        }
-
     };
 }

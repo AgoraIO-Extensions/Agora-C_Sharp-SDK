@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using NUnit.Framework;
 using uid_t = System.UInt32;
 using System.Collections.Generic;
@@ -74,16 +74,16 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED;
 
-            long positionMs;
-            ParamsHelper.InitParam(out positionMs);
+            long position_ms;
+            ParamsHelper.InitParam(out position_ms);
 
-            long timestampMs;
-            ParamsHelper.InitParam(out timestampMs);
+            long timestamp_ms;
+            ParamsHelper.InitParam(out timestamp_ms);
 
 
             jsonObj.Clear();
-            jsonObj.Add("positionMs", positionMs);
-            jsonObj.Add("timestampMs", timestampMs);
+            jsonObj.Add("position_ms", position_ms);
+            jsonObj.Add("timestamp_ms", timestamp_ms);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
@@ -92,7 +92,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPositionChangedPassed(positionMs, timestampMs));
+            Assert.AreEqual(true, EventHandler.OnPositionChangedPassed(position_ms, timestamp_ms));
         }
 
         [Test]

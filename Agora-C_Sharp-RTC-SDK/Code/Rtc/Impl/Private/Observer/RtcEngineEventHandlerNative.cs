@@ -1423,6 +1423,22 @@ namespace Agora.Rtc
 #endif
                     break;
 
+                case "RtcEngineEventHandler_onSetRtmFlagResultEx":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnSetRtmFlagResult(
+                        AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (int)AgoraJson.GetData<int>(jsonData, "code")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
+
                 case "RtcEngineEventHandler_onUserAccountUpdatedEx":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>

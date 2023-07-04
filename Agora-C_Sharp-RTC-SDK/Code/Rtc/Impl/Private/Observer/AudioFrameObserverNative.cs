@@ -290,17 +290,6 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-                    case "AudioFrameObserver_getPublishAudioParams":
-                        {
-                            var result = audioFrameObserver.GetPublishAudioParams();
-                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                            p.Add("result", result);
-                            string json = AgoraJson.ToJson(p);
-                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                            IntPtr resultPtr = eventParam.result;
-                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                        }
-                        break;
                     case "AudioFrameObserver_getRecordAudioParams":
                         {
                             var result = audioFrameObserver.GetRecordAudioParams();
