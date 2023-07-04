@@ -204,28 +204,6 @@ namespace Agora.Rtc
 
         ///////////////////////////////////
       
-
-        public bool GetPublishAudioParams_be_trigger = false;
-
-
-        public override AudioParams GetPublishAudioParams()
-        {
-            GetPublishAudioParams_be_trigger = true;
-            return new AudioParams();
-        }
-
-        public bool GetPublishAudioParamsPassed()
-        {
-            if (GetPublishAudioParams_be_trigger == false)
-                return false;
-
-
-
-            return true;
-        }
-
-        ///////////////////////////////////
-
         public bool GetRecordAudioParams_be_trigger = false;
 
         public override AudioParams GetRecordAudioParams() { GetRecordAudioParams_be_trigger = true; return new AudioParams(); }

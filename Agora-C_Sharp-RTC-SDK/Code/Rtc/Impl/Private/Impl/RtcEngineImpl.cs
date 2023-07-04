@@ -2310,23 +2310,6 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SetPublishAudioFrameParameters(int sampleRate, int channel, int samplesPerCall)
-        {
-            _param.Clear();
-            _param.Add("sampleRate", sampleRate);
-            _param.Add("channel", channel);
-            _param.Add("samplesPerCall", samplesPerCall);
-            var json = AgoraJson.ToJson(_param);
-
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETPUBLISHAUDIOFRAMEPARAMETERS,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
-
-
-
         public int SetPlaybackAudioFrameParameters(int sampleRate, int channel,
             RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
         {

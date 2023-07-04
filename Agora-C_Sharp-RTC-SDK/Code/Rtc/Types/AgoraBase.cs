@@ -503,6 +503,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         ERR_LOGIN_ALREADY_LOGIN = 428,
+
+        ERR_INIT_APPID_MISMATCH = 429,
         ///
         /// <summary>
         /// 1001: The SDK fails to load the media engine.
@@ -5074,7 +5076,14 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21
+        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21,
+
+        CONNECTION_CHANGED_STREAM_CHANNEL_NOT_AVAILABLE = 22,
+
+        /**
+         * 23: The connection is failed due to token and appid inconsistent.
+         */
+        CONNECTION_CHANGED_INCONSISTENT_APPID = 23,
     };
 
     ///
@@ -6397,8 +6406,6 @@ namespace Agora.Rtc
         /// </summary>
         ///
         AUDIO_FILE_RECORDING_MIXED = 3,
-
-        AUDIO_FILE_RECORDING_PUBLISH = 4,
     };
 
     ///

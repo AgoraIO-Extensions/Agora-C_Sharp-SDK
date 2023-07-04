@@ -34,24 +34,24 @@ namespace Agora.Rtc
         ///////////////////////////////////
 
         public bool OnPositionChanged_be_trigger = false;
-        public long OnPositionChanged_positionMs = 0;
+        public long OnPositionChanged_position_ms = 0;
         public long OnPositionChanged_timestampMs = 0;
 
-        public override void OnPositionChanged(long positionMs, long timestampMs)
+        public override void OnPositionChanged(long position_ms, long timestamp_ms)
         {
             OnPositionChanged_be_trigger = true;
-            OnPositionChanged_positionMs = positionMs;
-            OnPositionChanged_timestampMs = timestampMs;
+            OnPositionChanged_position_ms = position_ms;
+            OnPositionChanged_timestampMs = timestamp_ms;
         }
 
-        public bool OnPositionChangedPassed(long positionMs, long timestampMs)
+        public bool OnPositionChangedPassed(long position_ms, long timestamp_ms)
         {
             if (OnPositionChanged_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareLong(OnPositionChanged_positionMs, positionMs) == false)
+            if (ParamsHelper.compareLong(OnPositionChanged_position_ms, position_ms) == false)
                 return false;
-            if (ParamsHelper.compareLong(OnPositionChanged_timestampMs, timestampMs) == false)
+            if (ParamsHelper.compareLong(OnPositionChanged_timestampMs, timestamp_ms) == false)
                 return false;
 
             return true;

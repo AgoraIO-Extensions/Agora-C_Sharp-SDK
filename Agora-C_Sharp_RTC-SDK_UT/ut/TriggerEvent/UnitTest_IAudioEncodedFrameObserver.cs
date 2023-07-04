@@ -130,36 +130,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnMixedAudioEncodedFramePassed(frameBuffer, length, audioEncodedFrameInfo));
         }
 
-        [Test]
-        public void Test_OnPublishAudioEncodedFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPUBLISHAUDIOENCODEDFRAME;
-
-            IntPtr frameBuffer;
-            ParamsHelper.InitParam(out frameBuffer);
-
-            int length;
-            ParamsHelper.InitParam(out length);
-
-            EncodedAudioFrameInfo audioEncodedFrameInfo;
-            ParamsHelper.InitParam(out audioEncodedFrameInfo);
-
-
-            jsonObj.Clear();
-            jsonObj.Add("frameBuffer", frameBuffer);
-            jsonObj.Add("length", length);
-            jsonObj.Add("audioEncodedFrameInfo", audioEncodedFrameInfo);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPublishAudioEncodedFramePassed(frameBuffer, length, audioEncodedFrameInfo));
-        }
-
         #endregion
     }
 }

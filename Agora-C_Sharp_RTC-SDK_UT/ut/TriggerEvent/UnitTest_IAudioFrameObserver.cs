@@ -231,27 +231,6 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_GetPublishAudioParams()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_GETPUBLISHAUDIOPARAMS;
-
-
-
-            jsonObj.Clear();
-
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetPublishAudioParamsPassed());
-        }
-
-
-        [Test]
         public void Test_GetRecordAudioParams()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_GETRECORDAUDIOPARAMS;

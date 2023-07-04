@@ -1414,15 +1414,6 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetRecordingAudioFrameParameters(sampleRate, channel, mode, samplesPerCall);
         }
 
-        public override int SetPublishAudioFrameParameters(int sampleRate, int channel, int samplesPerCall)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetPublishAudioFrameParameters(sampleRate, channel, samplesPerCall);
-        }
-
         public override int SetPlaybackAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall)
         {
             if (_rtcEngineImpl == null)

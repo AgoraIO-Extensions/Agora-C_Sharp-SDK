@@ -1585,7 +1585,7 @@ namespace Agora.Rtc
         public Optional<bool> publishTrancodedVideoTrack = new Optional<bool>();
 
 
-        public Optional<bool> publishMixedAudioTrack = new Optional<bool>();
+       
         ///
         /// <summary>
         /// Whether to automatically subscribe to all remote audio streams when the user joins a channel:true: (Default) Automatically subscribe to all remote audio streams.false: Do not automatically subscribe to any remote audio streams.
@@ -1812,12 +1812,7 @@ namespace Agora.Rtc
                 writer.Write(this.publishTrancodedVideoTrack.GetValue());
             }
 
-            if (this.publishMixedAudioTrack.HasValue())
-            {
-                writer.WritePropertyName("publishMixedAudioTrack");
-                writer.Write(this.publishMixedAudioTrack.GetValue());
-            }
-
+           
             if (this.autoSubscribeAudio.HasValue())
             {
                 writer.WritePropertyName("autoSubscribeAudio");

@@ -116,10 +116,6 @@ namespace Agora.Rtc
             return new AudioParams();
         }
 
-        public virtual AudioParams GetPublishAudioParams()
-        {
-            return new AudioParams();
-        }
         ///
         /// <summary>
         /// Sets the audio format for the OnRecordAudioFrame callback.
