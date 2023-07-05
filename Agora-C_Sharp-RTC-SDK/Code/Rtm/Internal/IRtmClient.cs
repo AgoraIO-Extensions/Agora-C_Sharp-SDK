@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 namespace Agora.Rtm.Internal
 {
-    internal abstract class IRtmClient
+    public abstract class IRtmClient
     {
         public abstract int Initialize(RtmConfig config);
 

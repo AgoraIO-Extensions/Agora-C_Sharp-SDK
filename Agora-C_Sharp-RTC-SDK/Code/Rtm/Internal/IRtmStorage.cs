@@ -1,10 +1,8 @@
 ﻿using System;
 namespace Agora.Rtm.Internal
 {
-    internal abstract class IRtmStorage
+    public abstract class IRtmStorage
     {
-        //public abstract RtmMetadata CreateMetadata();
-
         public abstract int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId);
 
         public abstract int UpdateChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId);

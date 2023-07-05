@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Agora.Rtm.Internal
 {
-    internal sealed class RtmClient : Internal.IRtmClient, IStreamChannelCreator
+    public sealed class RtmClient : Internal.IRtmClient, IStreamChannelCreator
     {
         private bool _disposed = false;
         private RtmClientImpl _rtmClientImpl = null;
@@ -14,9 +14,9 @@ namespace Agora.Rtm.Internal
         private RtmPresence _rtmPresence = null;
         private RtmStorage _rtmStorage = null;
 
-        private RtmClient()
+        private RtmClient(IntPtr engine_ptr)
         {
-            _rtmClientImpl = RtmClientImpl.GetInstance();
+            _rtmClientImpl = RtmClientImpl.GetInstance(engine_ptr);
             _rtmLock = RtmLock.GetInstance(_rtmClientImpl.GetRtmLockImpl());
             _rtmPresence = RtmPresence.GetInstance(_rtmClientImpl.GetRtmPresenceImpl());
             _rtmStorage = RtmStorage.GetInstance(_rtmClientImpl.GetRtmStorageImpl());
@@ -31,7 +31,12 @@ namespace Agora.Rtm.Internal
 
         public static IRtmClient CreateAgoraRtmClient()
         {
-            return instance ?? (instance = new RtmClient());
+            return instance ?? (instance = new RtmClient(IntPtr.Zero));
+        }
+
+        public static IRtmClient CreateAgoraRtmClient(IntPtr engine_ptr)
+        {
+            return instance ?? (instance = new RtmClient(engine_ptr));
         }
 
         public static IRtmClient Get()

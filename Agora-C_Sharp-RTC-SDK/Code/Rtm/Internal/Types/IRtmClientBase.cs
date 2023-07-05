@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Agora.Rtm.Internal
 {
-    internal class RtmConfig
+    public class RtmConfig
     {
         public RtmConfig()
         {

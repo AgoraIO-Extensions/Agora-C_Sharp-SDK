@@ -32,12 +32,12 @@ namespace Agora.Rtm.Internal
 
         public event Action<RtmClientImpl> OnRtmClientImpleWillDispose;
 
-        private RtmClientImpl()
+        private RtmClientImpl(IntPtr engine_ptr)
         {
             _apiParam = new IrisApiParam();
             _apiParam.AllocResult();
 
-            _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(IntPtr.Zero);
+            _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(engine_ptr);
 
             _streamChannelImpl = new StreamChannelImpl(_irisApiRtmEngine);
             _rtmLockImpl = new RtmLockImpl(_irisApiRtmEngine);
@@ -159,9 +159,9 @@ namespace Agora.Rtm.Internal
             return _irisApiRtmEngine;
         }
 
-        public static RtmClientImpl GetInstance()
+        public static RtmClientImpl GetInstance(IntPtr engine_ptr)
         {
-            return clientInstance ?? (clientInstance = new RtmClientImpl());
+            return clientInstance ?? (clientInstance = new RtmClientImpl(engine_ptr));
         }
 
         public static RtmClientImpl Get()
