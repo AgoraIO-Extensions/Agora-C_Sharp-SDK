@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Agora.Rtm.Internal
 {
-    internal abstract class IRtmLock
+    public abstract class IRtmLock
     {
         public abstract int SetLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl, ref UInt64 requestId);
 

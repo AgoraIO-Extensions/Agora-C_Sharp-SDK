@@ -1,7 +1,7 @@
 using System;
 namespace Agora.Rtm.Internal
 {
-    internal abstract class IStreamChannel
+    public abstract class IStreamChannel
     {
         public abstract int Join(JoinChannelOptions options, ref UInt64 requestId);
 
