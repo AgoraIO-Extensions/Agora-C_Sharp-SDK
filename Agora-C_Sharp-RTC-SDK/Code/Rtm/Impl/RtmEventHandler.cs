@@ -1,6 +1,17 @@
-﻿using System;
+﻿#define AGORA_RTC
+#define AGORA_RTM
+
+#if AGORA_RTC
+using Agora.Rtc;
+#elif AGORA_RTM
+using Agora.Rtm;
+#endif
+
+using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+
+
 namespace Agora.Rtm
 {
     internal class RtmEventHandler : Internal.IRtmEventHandler
@@ -244,7 +255,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnJoinResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnJoinResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -269,7 +280,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnLeaveResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnLeaveResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -296,7 +307,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnJoinTopicResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnJoinTopicResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -323,7 +334,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnLeaveTopicResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnLeaveTopicResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -351,7 +362,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnTopicSubscribed unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnTopicSubscribed unrecorded requestId: " + requestId);
             }
         }
 
@@ -376,7 +387,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnSubscribeResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnSubscribeResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -399,7 +410,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnPublishResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnPublishResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -421,7 +432,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnLoginResult unrecorded");
+                AgoraLog.LogWarning("OnLoginResult unrecorded");
             }
         }
 
@@ -446,7 +457,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnSetChannelMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnSetChannelMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -471,7 +482,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnUpdateChannelMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnUpdateChannelMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -496,7 +507,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnRemoveChannelMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnRemoveChannelMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -522,7 +533,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnGetChannelMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnGetChannelMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -546,7 +557,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnSetUserMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnSetUserMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -570,7 +581,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnUpdateUserMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnUpdateUserMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -594,7 +605,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnRemoveUserMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnRemoveUserMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -619,7 +630,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnGetUserMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnGetUserMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -643,7 +654,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnSubscribeUserMetadataResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnSubscribeUserMetadataResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -669,7 +680,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnSetLockResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnSetLockResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -695,7 +706,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnRemoveLockResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnRemoveLockResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -721,7 +732,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnReleaseLockResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnReleaseLockResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -748,7 +759,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnAcquireLockResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnAcquireLockResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -774,7 +785,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnRevokeLockResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnRevokeLockResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -801,7 +812,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnGetLocksResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnGetLocksResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -827,7 +838,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("WhoNowResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("WhoNowResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -852,7 +863,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("WhereNowResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("WhereNowResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -875,7 +886,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnPresenceSetStateResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnPresenceSetStateResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -898,7 +909,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnPresenceRemoveStateResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnPresenceRemoveStateResult unrecorded requestId: " + requestId);
             }
         }
 
@@ -922,7 +933,7 @@ namespace Agora.Rtm
             }
             else
             {
-                Agora.Rtc.AgoraLog.LogWarning("OnPresenceGetStateResult unrecorded requestId: " + requestId);
+                AgoraLog.LogWarning("OnPresenceGetStateResult unrecorded requestId: " + requestId);
             }
 
             #endregion

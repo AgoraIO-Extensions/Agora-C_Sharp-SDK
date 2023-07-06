@@ -1,34 +1,43 @@
-﻿using System;
+﻿#define AGORA_RTC
+#define AGORA_RTM
+
+using System;
 using System.Runtime.InteropServices;
 using IrisEventHandlerMarshal = System.IntPtr;
 using IrisEventHandlerHandle = System.IntPtr;
-namespace Agora
+namespace Agora.Rtm
 {
 
     public class AgoraApiNative
     {
 
+#if AGORA_RTC
+        private const string AgoraRtcLibName = Agora.Rtc.AgoraRtcNative.AgoraRtcLibName;
+#elif AGORA_RTM
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-        private const string AgoraRtcLibName = "AgoraIrisEngine";
+        private const string AgoraRtcLibName = "AgoraRtmEngine";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-        private const string AgoraRtcLibName = "AgoraIrisEngineUnity";
+        private const string AgoraRtcLibName = "AgoraRtmEngineUnity";
 #elif UNITY_IPHONE
 		private const string AgoraRtcLibName = "__Internal";
 #else
-        private const string AgoraRtcLibName = "AgoraIrisEngine";
+        private const string AgoraRtcLibName = "AgoraRtmEngine";
 #endif
+
+#endif
+
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int InitializeIrisEngine(ref IrisEngineParam param);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr CreateIrisApiEngine(string name);
+        internal static extern IntPtr CreateIrisRtmApiEngine(string name);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void DestroyIrisApiEngine(IntPtr handle);
+        internal static extern void DestroyIrisRtmApiEngine(IntPtr handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisApi(IntPtr handle, ref IrisApiParam param);
+        internal static extern int CallIrisRtmApi(IntPtr handle, ref IrisRtmApiParam param);
     }
 
 
@@ -92,7 +101,7 @@ namespace Agora
     };
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisApiParam
+    internal struct IrisRtmApiParam
     {
 
         internal string Result
