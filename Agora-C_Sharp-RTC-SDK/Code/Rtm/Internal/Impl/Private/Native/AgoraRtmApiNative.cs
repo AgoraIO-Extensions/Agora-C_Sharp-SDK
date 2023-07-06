@@ -1,7 +1,15 @@
+#define AGORA_RTC
+#define AGORA_RTM
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Collections.Generic;
+
+#if AGORA_RTC
+using Agora.Rtc;
+#elif AGORA_RTM
+using Agora.Rtm;
+#endif
 
 namespace Agora.Rtm.Internal
 {
@@ -18,18 +26,18 @@ namespace Agora.Rtm.Internal
             irisEngineParam.log_level = IrisLogLevel.levelTrace;
             AgoraApiNative.InitializeIrisEngine(ref irisEngineParam);
 
-            return Agora.AgoraApiNative.CreateIrisApiEngine(Agora.AgoraApiType.IRIS_API_ENGINE_RTM);
+            return AgoraApiNative.CreateIrisRtmApiEngine("todo ");
         }
 
 
         internal static void DestroyIrisRtmEngine(IrisApiRtmEnginePtr engine)
         {
-            Agora.AgoraApiNative.DestroyIrisApiEngine(engine);
+            AgoraApiNative.DestroyIrisRtmApiEngine(engine);
         }
 
 
         internal static int CallIrisApiWithArgs(IrisApiRtmEnginePtr engine_ptr, string func_name,
-            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisApiParam apiParam,
+            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtmApiParam apiParam,
             uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0)
         {
             apiParam.@event = func_name;
@@ -49,7 +57,7 @@ namespace Agora.Rtm.Internal
                 Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
             }
             apiParam.length = lengthPtr;
-            int retval = Agora.AgoraApiNative.CallIrisApi(engine_ptr, ref apiParam);
+            int retval = AgoraApiNative.CallIrisRtmApi(engine_ptr, ref apiParam);
 
             if (lengthPtr != IntPtr.Zero)
             {
@@ -63,25 +71,25 @@ namespace Agora.Rtm.Internal
         internal static IrisEventHandlerHandle CreateIrisRtmEventHandler(IrisApiRtmEnginePtr engine_ptr, IntPtr event_handler)
         {
 
-            IrisApiParam apiParam = new IrisApiParam();
+            IrisRtmApiParam apiParam = new IrisRtmApiParam();
             apiParam.AllocResult();
             Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
 
             _param.Add("cEventHandler", (UInt64)event_handler);
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             IntPtr[] arrayPtr = new IntPtr[] { event_handler };
 
 
-            int nRet = CallIrisApiWithArgs(engine_ptr, Agora.AgoraApiType.FUNC_APIENGINE_CREATEEVENTHANDLER,
+            int nRet = CallIrisApiWithArgs(engine_ptr, "FUNC_APIENGINE_CREATEEVENTHANDLER",
                      json, (uint)json.Length,
                      Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                      ref apiParam);
 
             if (nRet == 0)
             {
-                IrisEventHandlerHandle eventHandler = (IntPtr)(UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(apiParam.Result, "eventHandler");
+                IrisEventHandlerHandle eventHandler = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(apiParam.Result, "eventHandler");
                 apiParam.FreeResult();
                 return eventHandler;
             }
@@ -95,17 +103,17 @@ namespace Agora.Rtm.Internal
 
         internal static void DestroyIrisRtmEventHandler(IrisApiRtmEnginePtr engine_ptr, IrisEventHandlerHandle handler)
         {
-            IrisApiParam apiParam = new IrisApiParam();
+            IrisRtmApiParam apiParam = new IrisRtmApiParam();
             apiParam.AllocResult();
             Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
 
             _param.Add("eventHandler", (UInt64)handler);
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
             IntPtr[] arrayPtr = new IntPtr[] { handler };
 
 
-            int nRet = CallIrisApiWithArgs(engine_ptr, Agora.AgoraApiType.FUNC_APIENGINE_DESTROYEVENTHANDLER,
+            int nRet = CallIrisApiWithArgs(engine_ptr, "FUNC_APIENGINE_DESTROYEVENTHANDLER",
                      json, (uint)json.Length,
                      Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                      ref apiParam);
@@ -208,6 +216,8 @@ namespace Agora.Rtm.Internal
 
         public string publisher;
 
+        public string customType;
+
         public MessageEvent GenerateMessageEvent()
         {
             MessageEvent messageEvent = new MessageEvent();
@@ -217,6 +227,7 @@ namespace Agora.Rtm.Internal
             messageEvent.channelTopic = this.channelTopic;
             messageEvent.messageLength = this.messageLength;
             messageEvent.publisher = this.publisher;
+            messageEvent.customType = this.customType;
             return messageEvent;
         }
     };

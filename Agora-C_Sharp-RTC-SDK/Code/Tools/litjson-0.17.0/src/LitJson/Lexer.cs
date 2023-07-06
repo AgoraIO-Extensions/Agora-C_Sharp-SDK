@@ -8,12 +8,18 @@
  **/
 #endregion
 
+#define AGORA_RTC
+#define AGORA_RTM
 
 using System;
 using System.IO;
 using System.Text;
 
+#if AGORA_RTC
 namespace Agora.Rtc.LitJson
+#elif AGORA_RTM
+namespace Agora.Rtm.LitJson
+#endif
 {
     internal class FsmContext
     {

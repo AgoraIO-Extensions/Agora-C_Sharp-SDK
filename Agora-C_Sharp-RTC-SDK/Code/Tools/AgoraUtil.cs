@@ -1,10 +1,15 @@
+#define AGORA_RTC
+#define AGORA_RTM
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
 
-
+#if AGORA_RTC
 namespace Agora.Rtc
+#elif AGORA_RTM
+namespace Agora.Rtm
+#endif
 {
     using LitJson;
     using IrisEventHandlerMarshal = IntPtr;

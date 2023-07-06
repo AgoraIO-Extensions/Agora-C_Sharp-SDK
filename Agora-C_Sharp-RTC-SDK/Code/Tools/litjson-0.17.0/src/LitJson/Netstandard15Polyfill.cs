@@ -1,4 +1,11 @@
+#define AGORA_RTC
+#define AGORA_RTM
+
+#if AGORA_RTC
 namespace Agora.Rtc.LitJson
+#elif AGORA_RTM
+namespace Agora.Rtm.LitJson
+#endif
 {
 #if NETSTANDARD1_5
 using System;

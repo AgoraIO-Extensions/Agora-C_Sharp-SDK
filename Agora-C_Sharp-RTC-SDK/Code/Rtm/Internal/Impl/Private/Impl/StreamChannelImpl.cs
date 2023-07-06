@@ -1,10 +1,18 @@
-﻿using System;
+﻿#define AGORA_RTC
+#define AGORA_RTM
+
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using AOT;
 #endif
+
+#if AGORA_RTC
 using Agora.Rtc;
+#elif AGORA_RTM
+using Agora.Rtm;
+#endif
 
 namespace Agora.Rtm.Internal
 {
@@ -14,12 +22,12 @@ namespace Agora.Rtm.Internal
     {
         private bool _disposed = false;
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
-        private IrisApiParam _apiParam;
+        private IrisRtmApiParam _apiParam;
         private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
         internal StreamChannelImpl(IrisApiRtmEnginePtr irisApiRtmEngine)
         {
-            _apiParam = new IrisApiParam();
+            _apiParam = new IrisRtmApiParam();
             _apiParam.AllocResult();
             _irisApiRtmEngine = irisApiRtmEngine;
         }

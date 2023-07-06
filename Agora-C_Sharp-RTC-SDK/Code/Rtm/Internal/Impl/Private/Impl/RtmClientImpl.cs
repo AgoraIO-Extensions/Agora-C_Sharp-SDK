@@ -1,10 +1,18 @@
-﻿using System;
+﻿#define AGORA_RTC
+#define AGORA_RTM
+
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using AOT;
 #endif
+
+#if AGORA_RTC
 using Agora.Rtc;
+#elif AGORA_RTM
+using Agora.Rtm;
+#endif
 
 namespace Agora.Rtm.Internal
 {
@@ -18,7 +26,7 @@ namespace Agora.Rtm.Internal
         private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
         private IrisApiRtmEnginePtr _irisApiRtmEngine;
-        private IrisApiParam _apiParam;
+        private IrisRtmApiParam _apiParam;
         private EventHandlerHandle _rtcEventHandlerHandle = new EventHandlerHandle();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -34,7 +42,7 @@ namespace Agora.Rtm.Internal
 
         private RtmClientImpl(IntPtr engine_ptr)
         {
-            _apiParam = new IrisApiParam();
+            _apiParam = new IrisRtmApiParam();
             _apiParam.AllocResult();
 
             _irisApiRtmEngine = AgoraRtmNative.CreateIrisRtmEngine(engine_ptr);
@@ -211,50 +219,50 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("token", token);
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_LOGIN, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int Logout()
         {
             _param.Clear();
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_LOGOUT, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         //public  IRtmStorage* GetStorage()
         //{
         //    _param.Clear();
 
-        //    var json = Agora.Rtc.AgoraJson.ToJson(_param);
+        //    var json = AgoraJson.ToJson(_param);
 
         //    var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_GETSTORAGE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-        //    return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         //}
 
         //public  IRtmLock* GetLock()
         //{
         //    _param.Clear();
 
-        //    var json = Agora.Rtc.AgoraJson.ToJson(_param);
+        //    var json = AgoraJson.ToJson(_param);
 
         //    var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_GETLOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-        //    return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         //}
 
         //public  IRtmPresence* GetPresence()
         //{
         //    _param.Clear();
 
-        //    var json = Agora.Rtc.AgoraJson.ToJson(_param);
+        //    var json = AgoraJson.ToJson(_param);
 
         //    var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_GETPRESENCE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-        //    return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+        //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         //}
 
         public int RenewToken(string token)
@@ -262,10 +270,10 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("token", token);
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_RENEWTOKEN, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int Publish(string channelName, byte[] message, int length, PublishOptions option, ref UInt64 requestId)
@@ -278,18 +286,18 @@ namespace Agora.Rtm.Internal
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(message, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr };
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_PUBLISH,
                 json, (UInt32)json.Length,
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam, (uint)length);
 
-            if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
-                requestId = (UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
 
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int Subscribe(string channelName, SubscribeOptions options, ref UInt64 requestId)
@@ -298,16 +306,16 @@ namespace Agora.Rtm.Internal
             _param.Add("channelName", channelName);
             _param.Add("options", options);
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SUBSCRIBE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
-            if (nRet == 0 && (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
+            if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
-                requestId = (UInt64)Agora.Rtc.AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
+                requestId = (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "requestId");
             }
 
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int Unsubscribe(string channelName)
@@ -315,10 +323,10 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("channelName", channelName);
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_UNSUBSCRIBE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int SetParameters(string parameters)
@@ -326,10 +334,10 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("parameters", parameters);
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETPARAMETERS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
 
@@ -338,10 +346,10 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("filePath", filePath);
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETLOGFILE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int SetLogLevel(LOG_LEVEL level)
@@ -349,10 +357,10 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("level", level);
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETLOGLEVEL, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
         public int SetLogFileSize(uint fileSizeInKBytes)
@@ -360,10 +368,10 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("fileSizeInKBytes", fileSizeInKBytes);
 
-            var json = Agora.Rtc.AgoraJson.ToJson(_param);
+            var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETLOGFILESIZE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
-            return nRet != 0 ? nRet : (int)Agora.Rtc.AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
     }
 }
