@@ -30,7 +30,7 @@ namespace Agora.Rtc
 
                 if (audioEncodedFrameObserver == null) return;
 
-                IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
                 var @event = eventParam.@event;
                 var data = eventParam.data;
                 var buffer = eventParam.buffer;

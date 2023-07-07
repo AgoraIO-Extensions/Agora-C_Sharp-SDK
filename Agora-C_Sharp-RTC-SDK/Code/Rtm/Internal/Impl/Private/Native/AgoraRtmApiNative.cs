@@ -15,28 +15,71 @@ namespace Agora.Rtm.Internal
 {
     using IrisApiRtmEnginePtr = IntPtr;
     using IrisEventHandlerHandle = IntPtr;
+    using IrisEventHandlerMarshal = IntPtr;
 
     internal static class AgoraRtmNative
     {
-        internal static IrisApiRtmEnginePtr CreateIrisRtmEngine(IntPtr engine)
-        {
-            IrisEngineParam irisEngineParam;
-            irisEngineParam.log_name = "";
-            irisEngineParam.log_path = "";
-            irisEngineParam.log_level = IrisLogLevel.levelTrace;
-            AgoraApiNative.InitializeIrisEngine(ref irisEngineParam);
 
-            return AgoraApiNative.CreateIrisRtmApiEngine("todo ");
+#if AGORA_RTC
+        private const string AgoraRtcLibName = Agora.Rtc.AgoraRtcNative.AgoraRtcLibName;
+#elif AGORA_RTM
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+        private const string AgoraRtcLibName = "AgoraRtmWrapper";
+#elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+        private const string AgoraRtcLibName = "AgoraRtmWrapper";
+#elif UNITY_IPHONE
+		private const string AgoraRtcLibName = "__Internal";
+#else
+        private const string AgoraRtcLibName = "AgoraRtmWrapper";
+#endif
+
+#endif
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr CreateIrisRtmEngine(IntPtr client);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void DestroyIrisRtmEngine(IntPtr handle);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int CallIrisRtmApi(IntPtr handle, ref IrisRtmApiParam param);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IrisEventHandlerHandle CreateIrisRtmEventHandler(IrisEventHandlerMarshal event_Handler);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void DestroyIrisRtmEventHandler(IrisEventHandlerHandle handle);
+
+        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr GetIrisRtmErrorReason(int err_code);
+
+        internal static void AllocEventHandlerHandle(ref RtmEventHandlerHandle eventHandlerHandle, Rtm_Func_Event_Native onEvent)
+        {
+            eventHandlerHandle.cEvent = new IrisRtmCEventHandler
+            {
+                OnEvent = onEvent,
+            };
+
+            var cEventHandlerNativeLocal = new IrisRtmCEventHandlerNative
+            {
+                onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
+            };
+
+            eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
+            Marshal.StructureToPtr(cEventHandlerNativeLocal, eventHandlerHandle.marshal, true);
+            eventHandlerHandle.handle = AgoraRtmNative.CreateIrisRtmEventHandler(eventHandlerHandle.marshal);
         }
 
-
-        internal static void DestroyIrisRtmEngine(IrisApiRtmEnginePtr engine)
+        internal static void FreeEventHandlerHandle(ref RtmEventHandlerHandle eventHandlerHandle)
         {
-            AgoraApiNative.DestroyIrisRtmApiEngine(engine);
+            AgoraRtmNative.DestroyIrisRtmEventHandler(eventHandlerHandle.handle);
+            eventHandlerHandle.handle = IntPtr.Zero;
+
+            Marshal.FreeHGlobal(eventHandlerHandle.marshal);
+            eventHandlerHandle.marshal = IntPtr.Zero;
+            eventHandlerHandle.cEvent = new IrisRtmCEventHandler();
         }
 
-
-        internal static int CallIrisApiWithArgs(IrisApiRtmEnginePtr engine_ptr, string func_name,
+        internal static int CallIrisRtmApiWithArgs(IrisApiRtmEnginePtr engine_ptr, string func_name,
             string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtmApiParam apiParam,
             uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0)
         {
@@ -57,7 +100,7 @@ namespace Agora.Rtm.Internal
                 Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
             }
             apiParam.length = lengthPtr;
-            int retval = AgoraApiNative.CallIrisRtmApi(engine_ptr, ref apiParam);
+            int retval = AgoraRtmNative.CallIrisRtmApi(engine_ptr, ref apiParam);
 
             if (lengthPtr != IntPtr.Zero)
             {
@@ -66,139 +109,143 @@ namespace Agora.Rtm.Internal
 
             return retval;
         }
-
-
-        internal static IrisEventHandlerHandle CreateIrisRtmEventHandler(IrisApiRtmEnginePtr engine_ptr, IntPtr event_handler)
-        {
-
-            IrisRtmApiParam apiParam = new IrisRtmApiParam();
-            apiParam.AllocResult();
-            Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
-
-
-            _param.Add("cEventHandler", (UInt64)event_handler);
-            var json = AgoraJson.ToJson(_param);
-
-            IntPtr[] arrayPtr = new IntPtr[] { event_handler };
-
-
-            int nRet = CallIrisApiWithArgs(engine_ptr, "FUNC_APIENGINE_CREATEEVENTHANDLER",
-                     json, (uint)json.Length,
-                     Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                     ref apiParam);
-
-            if (nRet == 0)
-            {
-                IrisEventHandlerHandle eventHandler = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(apiParam.Result, "eventHandler");
-                apiParam.FreeResult();
-                return eventHandler;
-            }
-            else
-            {
-                apiParam.FreeResult();
-                return IntPtr.Zero;
-            }
-        }
-
-
-        internal static void DestroyIrisRtmEventHandler(IrisApiRtmEnginePtr engine_ptr, IrisEventHandlerHandle handler)
-        {
-            IrisRtmApiParam apiParam = new IrisRtmApiParam();
-            apiParam.AllocResult();
-            Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
-
-
-            _param.Add("eventHandler", (UInt64)handler);
-            var json = AgoraJson.ToJson(_param);
-            IntPtr[] arrayPtr = new IntPtr[] { handler };
-
-
-            int nRet = CallIrisApiWithArgs(engine_ptr, "FUNC_APIENGINE_DESTROYEVENTHANDLER",
-                     json, (uint)json.Length,
-                     Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                     ref apiParam);
-
-            apiParam.FreeResult();
-        }
-    }
-
-    internal class AgoraUtil
-    {
-
-        internal static void AllocEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle, Func_Event_Native onEvent, IntPtr enginePtr)
-        {
-            eventHandlerHandle.cEvent = new IrisCEventHandler
-            {
-                OnEvent = onEvent,
-            };
-
-            var cEventHandlerNativeLocal = new IrisCEventHandlerNative
-            {
-                onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
-            };
-
-            eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
-            Marshal.StructureToPtr(cEventHandlerNativeLocal, eventHandlerHandle.marshal, true);
-            eventHandlerHandle.handle = AgoraRtmNative.CreateIrisRtmEventHandler(enginePtr, eventHandlerHandle.marshal);
-        }
-
-        internal static void FreeEventHandlerHandle(ref EventHandlerHandle eventHandlerHandle, IntPtr enginePtr)
-        {
-            AgoraRtmNative.DestroyIrisRtmEventHandler(enginePtr, eventHandlerHandle.handle);
-            eventHandlerHandle.handle = IntPtr.Zero;
-
-            Marshal.FreeHGlobal(eventHandlerHandle.marshal);
-            eventHandlerHandle.marshal = IntPtr.Zero;
-
-            eventHandlerHandle.cEvent = new IrisCEventHandler();
-        }
-
-        internal static string ConvertByteToString(ref byte[] array)
-        {
-            var re = Encoding.UTF8.GetString(array);
-            var index = re.IndexOf('\0');
-            return re.Substring(0, index);
-        }
-
     }
 
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Rtm_Func_Event_Native(IntPtr param);
 
 
     [StructLayout(LayoutKind.Sequential)]
-    internal struct IrisCApiParam
+    internal struct IrisRtmCEventHandlerNative
     {
-        internal IrisCApiParam(int param = 0)
-        {
-            @event = "";
-            data = "";
-            data_size = 0;
-            result = new byte[65536];
-            buffer = IntPtr.Zero;
-            length = IntPtr.Zero;
-            buffer_count = 0;
-        }
+        internal IntPtr onEvent;
+    }
 
-        public string Result
-        {
-            get
-            {
-                var re = Encoding.UTF8.GetString(result);
-                var index = re.IndexOf('\0');
-                return re.Substring(0, index);
-            }
-        }
+    internal struct IrisRtmCEventHandler
+    {
+        internal Rtm_Func_Event_Native OnEvent;
+    }
 
+    internal struct RtmEventHandlerHandle
+    {
+        internal IrisRtmCEventHandler cEvent;
+        internal IrisEventHandlerMarshal marshal;
+        internal IrisEventHandlerHandle handle;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisCRtmEventParam
+    {
         internal string @event;
         internal string data;
         internal uint data_size;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
-        internal byte[] result;
-
+        internal IntPtr result;
+        internal uint result_size;
         internal IntPtr buffer;
         internal IntPtr length;
         internal uint buffer_count;
     }
+
+    internal enum IrisLogLevel
+    {
+        levelTrace = 0,
+        levelDebug = 1,
+        levelInfo = 2,
+        levelWarn = 3,
+        levelErr = 4,
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisEngineParam
+    {
+        internal string log_path;
+        internal string log_name;
+        internal IrisLogLevel log_level;
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisApiEngineParam
+    {
+        internal string log_path;
+        internal IrisLogLevel log_level;
+    };
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtmApiParam
+    {
+
+        internal string Result
+        {
+            get
+            {
+                var re = Marshal.PtrToStringAnsi(result);
+                return re;
+            }
+        }
+
+        internal void AllocResult()
+        {
+            if (result == IntPtr.Zero)
+            {
+                result = Marshal.AllocHGlobal(65536);
+            }
+        }
+
+        internal void FreeResult()
+        {
+            if (result != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(result);
+                result = IntPtr.Zero;
+            }
+        }
+
+
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+        internal IntPtr result;
+        internal uint result_size;
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    //[StructLayout(LayoutKind.Sequential)]
+    //internal struct IrisCApiParam
+    //{
+    //    internal IrisCApiParam(int param = 0)
+    //    {
+    //        @event = "";
+    //        data = "";
+    //        data_size = 0;
+    //        result = new byte[65536];
+    //        buffer = IntPtr.Zero;
+    //        length = IntPtr.Zero;
+    //        buffer_count = 0;
+    //    }
+
+    //    public string Result
+    //    {
+    //        get
+    //        {
+    //            var re = Encoding.UTF8.GetString(result);
+    //            var index = re.IndexOf('\0');
+    //            return re.Substring(0, index);
+    //        }
+    //    }
+
+    //    internal string @event;
+    //    internal string data;
+    //    internal uint data_size;
+    //    [MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
+    //    internal byte[] result;
+
+    //    internal IntPtr buffer;
+    //    internal IntPtr length;
+    //    internal uint buffer_count;
+    //}
 
     internal class MessageEventInternal
     {

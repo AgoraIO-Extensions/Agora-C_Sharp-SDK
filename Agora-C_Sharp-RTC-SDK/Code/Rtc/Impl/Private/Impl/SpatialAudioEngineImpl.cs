@@ -13,7 +13,7 @@ namespace Agora.Rtc
     public class LocalSpatialAudioEngineImpl
     {
         private IrisApiEnginePtr _irisApiEngine;
-        private IrisCApiParam _apiParam;
+        private IrisRtcCApiParam _apiParam;
         private bool _disposed = false;
         private bool _initialized = false;
         private const int UNINITIALIZED = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
@@ -22,7 +22,7 @@ namespace Agora.Rtc
 
         internal LocalSpatialAudioEngineImpl(IrisApiEnginePtr irisApiEngine)
         {
-            _apiParam = new IrisCApiParam();
+            _apiParam = new IrisRtcCApiParam();
             _apiParam.AllocResult();
             _irisApiEngine = irisApiEngine;
         }
