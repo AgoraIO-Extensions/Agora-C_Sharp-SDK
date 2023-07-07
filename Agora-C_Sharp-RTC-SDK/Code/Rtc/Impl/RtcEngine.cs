@@ -1,3 +1,6 @@
+#define AGORA_RTC
+#define AGORA_RTM
+
 using System;
 using video_track_id_t = System.UInt32;
 using track_id_t = System.UInt32;
@@ -8,7 +11,11 @@ using UnityEngine;
 
 namespace Agora.Rtc
 {
+#if AGORA_RTM
+    public sealed class RtcEngine : IRtcEngineEx, Rtm.IStreamChannelCreator
+#else
     public sealed class RtcEngine : IRtcEngineEx
+#endif
     {
         private RtcEngineImpl _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
@@ -18,6 +25,10 @@ namespace Agora.Rtc
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
         private IMediaRecorder _mediaRecorder = null;
         private const int ErrorCode = -7;
+
+#if AGORA_RTM
+        private Dictionary<string, Rtm.StreamChannel> _streamChannelDic = new Dictionary<string, Rtm.StreamChannel>();
+#endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private GameObject _agoraEngineObject;
@@ -330,6 +341,40 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.JoinChannel(token, channelId, uid, options);
         }
+
+#if AGORA_RTM
+        public override Rtm.IStreamChannel GetStreamChannel(string channelId)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return null;
+            }
+
+            Rtm.IRtmClient irtmClient = Rtm.RtmClient.Get();
+            if (irtmClient == null)
+            {
+                AgoraLog.LogError("need init rtm client first.");
+                return null;
+            }
+
+            if (_streamChannelDic.ContainsKey(channelId))
+            {
+                return _streamChannelDic[channelId];
+            }
+
+            int ret = _rtcEngineImpl.GetStreamChannel(channelId);
+            if (ret != 0)
+            {
+                return null;
+            }
+
+            Rtm.RtmClient rtmClient = (Rtm.RtmClient)irtmClient;
+            Rtm.Internal.StreamChannel internalStreamChannel = new Rtm.Internal.StreamChannel(this, _rtcEngineImpl.GetStreamChannel(), channelId);
+            Rtm.StreamChannel streamChannel = new Rtm.StreamChannel(internalStreamChannel, rtmClient.GetRtmEventHandler(), rtmClient.GetInternalRtmClient());
+            _streamChannelDic.Add(channelId, streamChannel);
+            return streamChannel;
+        }
+#endif
 
         public override int UpdateChannelMediaOptions(ChannelMediaOptions options)
         {
@@ -3337,6 +3382,16 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
+
+#if AGORA_RTM
+        public void RemoveStreamChannelIfExist(string channelName)
+        {
+            if (this._streamChannelDic.ContainsKey(channelName))
+            {
+                this._streamChannelDic.Remove(channelName);
+            }
+        }
+#endif
 
     }
 }
