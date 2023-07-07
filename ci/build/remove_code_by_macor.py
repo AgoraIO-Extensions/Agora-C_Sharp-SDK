@@ -34,12 +34,11 @@ def remove_key_word_in_path(file_path, key_word):
             f.close()
 
 
-if RTC == 'false':
+if RTC == 'false' and os.path.isdir(code_root + "/Rtc") :
     shutil.rmtree(code_root + "/Rtc")
 
-if RTM == 'false':
+if RTM == 'false' and os.path.isdir(code_root + '/Rtm'):
     shutil.rmtree(code_root + '/Rtm')
-
 
 if RTC == 'false':
     remove_key_word_in_path(code_root, '#define AGORA_RTC')
