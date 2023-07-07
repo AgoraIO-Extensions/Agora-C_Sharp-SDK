@@ -1,3 +1,5 @@
+#define AGORA_RTC
+#define AGORA_RTM
 namespace Agora.Rtc
 {
     internal static class AgoraApiType
@@ -18,6 +20,9 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_QUERYDEVICESCORE = "RtcEngine_queryDeviceScore";
         internal const string FUNC_RTCENGINE_JOINCHANNEL = "RtcEngine_joinChannel";
         internal const string FUNC_RTCENGINE_JOINCHANNEL2 = "RtcEngine_joinChannel2";
+#if AGORA_RTM
+        internal const string FUNC_RTCENGINE_GETSTREAMCHANNEL = "RtcEngine_getStreamChannel";
+#endif
         internal const string FUNC_RTCENGINE_UPDATECHANNELMEDIAOPTIONS = "RtcEngine_updateChannelMediaOptions";
         internal const string FUNC_RTCENGINE_LEAVECHANNEL = "RtcEngine_leaveChannel";
         internal const string FUNC_RTCENGINE_LEAVECHANNEL2 = "RtcEngine_leaveChannel2";

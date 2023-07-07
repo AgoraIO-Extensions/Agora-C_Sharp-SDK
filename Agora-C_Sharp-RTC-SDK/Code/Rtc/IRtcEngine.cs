@@ -1,3 +1,5 @@
+#define AGORA_RTC
+#define AGORA_RTM
 using System;
 using video_track_id_t = System.UInt32;
 using track_id_t = System.UInt32;
@@ -118,6 +120,9 @@ namespace Agora.Rtc
         ///
         public abstract int JoinChannel(string token, string channelId, string info = "", uint uid = 0);
 
+#if AGORA_RTM
+        public abstract Rtm.IStreamChannel GetStreamChannel(string channelId);
+#endif
         ///
         /// <summary>
         /// Joins a channel with media options.
