@@ -59,7 +59,7 @@ namespace Agora.Rtc
         internal static extern void DestroyIrisEventHandler(IrisEventHandlerHandle handle);
 
         internal static int CallIrisApiWithArgs(IrisRtcEnginePtr engine_ptr, string func_name,
-            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisCApiParam apiParam,
+            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtcCApiParam apiParam,
             uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0)
         {
             apiParam.@event = func_name;
@@ -91,7 +91,7 @@ namespace Agora.Rtc
 
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisCApiParam apiParam);
+        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisRtcCApiParam apiParam);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void Attach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
@@ -160,219 +160,120 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void ClearVideoFrame(ref IrisVideoFrame video_frame);
 
-        // IrisMediaPlayerPtr
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern IrisEventHandlerHandle SetIrisMediaPlayerEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
-
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern void UnsetIrisMediaPlayerEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
-
-        // media player audio frame observer 
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern IrisMediaPlayerAudioFrameObserverHandle
-        //    RegisterMediaPlayerAudioFrameObserver(IrisRtcEnginePtr engine_ptr, IntPtr observer, string @params);
-
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern void UnRegisterMediaPlayerAudioFrameObserver(
-        //    IrisRtcEnginePtr engine_ptr, IrisMediaPlayerAudioFrameObserverHandle handle, string @params);
-
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern IrisMediaPlayerAudioSpectrumObserverHandle
-        //    RegisterMediaPlayerAudioSpectrumObserver(IrisRtcEnginePtr engine_ptr, IntPtr observer, string @params);
-
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern void UnRegisterMediaPlayerAudioSpectrumObserver(
-        //    IrisRtcEnginePtr engine_ptr, IrisMediaPlayerAudioSpectrumObserverHandle handle, string @params);
 
 
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern IrisMediaPlayerCustomDataProviderHandle MediaPlayerOpenWithCustomSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
+        internal static void AllocEventHandlerHandle(ref RtcEventHandlerHandle eventHandlerHandle, Rtc_Func_Event_Native onEvent)
+        {
+            eventHandlerHandle.cEvent = new IrisRtcCEventHandler
+            {
+                OnEvent = onEvent,
+            };
 
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern int MediaPlayerUnOpenWithCustomSource(IrisRtcEnginePtr engine_ptr,
-        //                    IrisMediaPlayerCustomDataProviderHandle handle, string @params);
+            var cEventHandlerNativeLocal = new IrisRtcCEventHandlerNative
+            {
+                onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
+            };
 
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern IrisMediaPlayerCustomDataProviderHandle MediaPlayerOpenWithMediaSource(IrisRtcEnginePtr engine_ptr, IntPtr provider, string @params);
+            eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
+            Marshal.StructureToPtr(cEventHandlerNativeLocal, eventHandlerHandle.marshal, true);
+            eventHandlerHandle.handle = AgoraRtcNative.CreateIrisEventHandler(eventHandlerHandle.marshal);
+        }
 
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern int MediaPlayerUnOpenWithMediaSource(IrisRtcEnginePtr engine_ptr,
-        //                    IrisMediaPlayerCustomDataProviderHandle handle, string @params);
+        internal static void FreeEventHandlerHandle(ref RtcEventHandlerHandle eventHandlerHandle)
+        {
+            AgoraRtcNative.DestroyIrisEventHandler(eventHandlerHandle.handle);
+            eventHandlerHandle.handle = IntPtr.Zero;
 
+            Marshal.FreeHGlobal(eventHandlerHandle.marshal);
+            eventHandlerHandle.marshal = IntPtr.Zero;
 
-        //IrisCloudSpatialAudioEnginePtr
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern IrisEventHandlerHandle SetIrisCloudAudioEngineEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
+            eventHandlerHandle.cEvent = new IrisRtcCEventHandler();
+        }
 
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern void UnsetIrisCloudAudioEngineEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
-
-        ////IrisMetaDataObserver
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern IrisMetaDataObserverHandle RegisterMediaMetadataObserver(IrisRtcEnginePtr engine_ptr, IntPtr observer, string @params);
-
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern void UnRegisterMediaMetadataObserver(IrisRtcEnginePtr engine_ptr, IrisMetaDataObserverHandle handle, string @params);
-
-        ////IrisMediaRecorderObserver
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern IrisEventHandlerHandle SetIrisMediaRecorderEventHandler(IrisRtcEnginePtr engine_ptr, IntPtr event_handler);
-
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern void UnsetIrisMediaRecorderEventHandler(IrisRtcEnginePtr engine_ptr, IrisEventHandlerHandle handle);
 
         #endregion
     }
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Rtc_Func_Event_Native(IntPtr param);
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtcCEventParam
+    {
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+
+        internal IntPtr result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtcCApiParam
+    {
+
+        internal string Result
+        {
+            get
+            {
+                var re = Marshal.PtrToStringAnsi(result);
+                return re;
+            }
+        }
+
+        internal void AllocResult()
+        {
+            if (result == IntPtr.Zero)
+            {
+                result = Marshal.AllocHGlobal(65536);
+            }
+        }
+
+        internal void FreeResult()
+        {
+            if (result != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(result);
+                result = IntPtr.Zero;
+            }
+        }
+
+
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+
+        internal IntPtr result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtcCEventHandlerNative
+    {
+        internal IntPtr onEvent;
+    }
+
+    internal struct IrisRtcCEventHandler
+    {
+        internal Rtc_Func_Event_Native OnEvent;
+    }
+
+
+    internal struct RtcEventHandlerHandle
+    {
+        internal IrisRtcCEventHandler cEvent;
+        internal IrisEventHandlerMarshal marshal;
+        internal IrisEventHandlerHandle handle;
+    }
+
     #region callback native
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_Bool_Native();
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate uint Func_Uint32_t_Native();
-
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate void Func_EventEx_Native(string @event, string data, IntPtr result, IntPtr buffer, IntPtr length, uint buffer_count);
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisCEventParam2
-    //{
-    //    internal string @event;
-    //    internal string data;
-    //    internal uint data_size;
-
-    //    //[MarshalAs(UnmanagedType.ByValArray, SizeConst = 65536)]
-    //    internal IntPtr result;
-
-    //    internal IntPtr buffer;
-    //    internal IntPtr length;
-    //    internal uint buffer_count;
-    //}
-
-
-
-    //audio_frame
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_AudioFrameLocal_Native(string channelId, IntPtr audio_frame);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_AudioFrameRemote_Native(string channel_id, uint uid, IntPtr audio_frame);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_AudioFrameRemoteStringUid_Native(string channel_id, string uid, IntPtr audio_frame);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate IrisAudioParams Func_AudioParams_Native();
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate int Func_AudioFramePosition_Native();
-
-    //public enum IRIS_AUDIO_FRAME_POSITION
-    //{
-    //    IRIS_AUDIO_FRAME_POSITION_NONE = 0x0000,
-    //    IRIS_AUDIO_FRAME_POSITION_PLAYBACK = 0x0001,
-    //    IRIS_AUDIO_FRAME_POSITION_RECORD = 0x0002,
-    //    IRIS_AUDIO_FRAME_POSITION_MIXED = 0x0004,
-    //    IRIS_AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
-    //};
-
-    //public enum IRIS_RAW_AUDIO_FRAME_OP_MODE_TYPE
-    //{
-    //    IRIS_RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
-    //    IRIS_RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
-    //};
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisAudioParams
-    //{
-    //    internal int sample_rate;
-    //    internal int channels;
-    //    internal IRIS_RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
-    //    internal int samples_per_call;
-    //};
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisRtcCAudioFrameObserverNative
-    //{
-    //    internal IntPtr OnRecordAudioFrame;
-    //    internal IntPtr OnPlaybackAudioFrame;
-    //    internal IntPtr OnMixedAudioFrame;
-    //    internal IntPtr OnPlaybackAudioFrameBeforeMixing;
-    //    internal IntPtr OnPlaybackAudioFrameBeforeMixing2;
-    //    internal IntPtr GetPlaybackAudioParams;
-    //    internal IntPtr GetRecordAudioParams;
-    //    internal IntPtr GetMixedAudioParams;
-    //    internal IntPtr GetObservedAudioFramePosition;
-    //}
-
-    //internal struct IrisRtcCAudioFrameObserver
-    //{
-    //    internal Func_AudioFrameLocal_Native OnRecordAudioFrame;
-    //    internal Func_AudioFrameLocal_Native OnPlaybackAudioFrame;
-    //    internal Func_AudioFrameLocal_Native OnMixedAudioFrame;
-    //    internal Func_AudioFrameRemote_Native OnPlaybackAudioFrameBeforeMixing;
-    //    internal Func_AudioFrameRemoteStringUid_Native OnPlaybackAudioFrameBeforeMixing2;
-    //    internal Func_AudioParams_Native GetPlaybackAudioParams;
-    //    internal Func_AudioParams_Native GetRecordAudioParams;
-    //    internal Func_AudioParams_Native GetMixedAudioParams;
-    //    internal Func_AudioFramePosition_Native GetObservedAudioFramePosition;
-    //}
-
-    //audio_encoded_frame
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate void Func_RecordAudioEncodedFrame_Native(IntPtr frame_buffer, int length, IntPtr encoded_audio_frame_info);
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisRtcCAudioEncodedFrameObserverNative
-    //{
-    //    internal IntPtr OnRecordAudioEncodedFrame;
-    //    internal IntPtr OnPlaybackAudioEncodedFrame;
-    //    internal IntPtr OnMixedAudioEncodedFrame;
-    //}
-
-    //internal struct IrisRtcCAudioEncodedFrameObserver
-    //{
-    //    internal Func_RecordAudioEncodedFrame_Native OnRecordAudioEncodedFrame;
-    //    internal Func_RecordAudioEncodedFrame_Native OnPlaybackAudioEncodedFrame;
-    //    internal Func_RecordAudioEncodedFrame_Native OnMixedAudioEncodedFrame;
-    //}
-
-    ////video_frame
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_VideoFrameLocal_Native(IntPtr video_frame);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_VideoCaptureLocal_Native(IntPtr video_frame, IntPtr config);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_VideoFrameRemote_Native(string channel_id, uint uid, IntPtr video_frame);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_VideoFrameEx_Native(string channel_id, uint uid, IntPtr video_frame);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate void Func_VideoFrame_Native(IntPtr video_frame, IntPtr config, bool resize);
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisRtcCVideoFrameObserverNative
-    //{
-    //    internal IntPtr OnCaptureVideoFrame;
-    //    internal IntPtr OnPreEncodeVideoFrame;
-    //    internal IntPtr OnRenderVideoFrame;
-    //    internal IntPtr GetObservedFramePosition;
-    //    //internal IntPtr IsMultipleChannelFrameWanted;
-    //}
-
-    //internal struct IrisRtcCVideoFrameObserver
-    //{
-    //    internal Func_VideoCaptureLocal_Native OnCaptureVideoFrame;
-    //    internal Func_VideoCaptureLocal_Native OnPreEncodeVideoFrame;
-    //    internal Func_VideoFrameRemote_Native OnRenderVideoFrame;
-    //    internal Func_Uint32_t_Native GetObservedFramePosition;
-    //    //internal Func_Bool_Native IsMultipleChannelFrameWanted;
-    //}
-
+  
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisCVideoFrameBufferNative
     {
@@ -380,106 +281,6 @@ namespace Agora.Rtc
         internal IntPtr OnVideoFrameReceived;
         internal int bytes_per_row_alignment;
     }
-
-    //internal struct IrisCVideoFrameBuffer
-    //{
-    //    internal VIDEO_OBSERVER_FRAME_TYPE type;
-    //    internal Func_VideoFrame_Native OnVideoFrameReceived;
-    //    internal int bytes_per_row_alignment;
-    //}
-
-    //encoded_video_image
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_EncodedVideoFrameObserver_Native(uint uid, IntPtr imageBuffer, UInt64 length, IntPtr videoEncodedFrameInfo);
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisRtcCVideoEncodedFrameObserverNative
-    //{
-    //    internal IntPtr OnEncodedVideoFrameReceived;
-    //}
-
-    //internal struct IrisRtcCVideoEncodedFrameObserver
-    //{
-    //    internal Func_EncodedVideoFrameObserver_Native OnEncodedVideoFrameReceived;
-    //}
-
-    //media player
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_AudioOnFrame_Native(IntPtr audio_frame, int mediaPlayerId);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate Int64 Func_OnSeek_Native(Int64 offset, int whence, int playerId);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate int Func_onReadData_Native(IntPtr buffer, int bufferSize, int playerId);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_LocalAudioSpectrum_Native(int playerId, IntPtr data);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_RemoteAudioSpectrum_Native(int playerId, IntPtr audio_frame, uint spectrumNumber);
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisMediaPlayerCAudioSpectrumObserverNative
-    //{
-    //    internal IntPtr onLocalAudioSpectrum;
-    //    internal IntPtr onRemoteAudioSpectrum;
-    //}
-
-    //internal struct IrisMediaPlayerCAudioSpectrumObserver
-    //{
-    //    internal Func_LocalAudioSpectrum_Native OnLocalAudioSpectrum;
-    //    internal Func_RemoteAudioSpectrum_Native OnRemoteAudioSpectrum;
-    //}
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisMediaPlayerCAudioFrameObserverNative
-    //{
-    //    internal IntPtr onFrame;
-    //}
-
-    //internal struct IrisMediaPlayerCAudioFrameObserver
-    //{
-    //    internal Func_AudioOnFrame_Native OnFrame;
-    //}
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisMediaPlayerCCustomProviderNative
-    //{
-    //    internal IntPtr onSeek;
-    //    internal IntPtr onReadData;
-    //}
-
-    //internal struct IrisMediaPlayerCCustomProvider
-    //{
-    //    internal Func_OnSeek_Native OnSeek;
-    //    internal Func_onReadData_Native OnReadData;
-    //}
-
-    //meta data
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate int Func_MaxMetadataSize_Native();
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate bool Func_ReadyToSendMetadata_Native(ref IrisMetadata metaData, VIDEO_SOURCE_TYPE source_type);
-
-    //[UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-    //internal delegate void Func_MetadataReceived_Native(IntPtr metadata);
-
-    //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisCMediaMetadataObserverNative
-    //{
-    //    internal IntPtr getMaxMetadataSize;
-    //    internal IntPtr onReadyToSendMetadata;
-    //    internal IntPtr onMetadataReceived;
-    //}
-
-    //internal struct IrisCMediaMetadataObserver
-    //{
-    //    internal Func_MaxMetadataSize_Native GetMaxMetadataSize;
-    //    internal Func_ReadyToSendMetadata_Native OnReadyToSendMetadata;
-    //    internal Func_MetadataReceived_Native OnMetadataReceived;
-    //}
 
     #endregion
 }

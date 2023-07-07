@@ -38,7 +38,7 @@ namespace Agora.Rtc
         {
             lock (observerLock)
             {
-                IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
 
                 var data = eventParam.data;
 
@@ -93,7 +93,7 @@ namespace Agora.Rtc
         }
 
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
+        private static void CreateDefaultReturn(ref IrisRtcCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)

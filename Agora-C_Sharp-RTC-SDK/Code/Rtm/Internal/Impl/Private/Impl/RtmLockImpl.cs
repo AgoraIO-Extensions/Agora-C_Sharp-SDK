@@ -71,7 +71,7 @@ namespace Agora.Rtm.Internal
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_SETLOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_SETLOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
@@ -90,7 +90,7 @@ namespace Agora.Rtm.Internal
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_GETLOCKS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_GETLOCKS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
@@ -110,7 +110,7 @@ namespace Agora.Rtm.Internal
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_REMOVELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_REMOVELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
@@ -131,7 +131,7 @@ namespace Agora.Rtm.Internal
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_ACQUIRELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_ACQUIRELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
@@ -151,7 +151,7 @@ namespace Agora.Rtm.Internal
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_RELEASELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_RELEASELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
@@ -172,7 +172,7 @@ namespace Agora.Rtm.Internal
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtmNative.CallIrisApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_REVOKELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
+            var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_REVOKELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {

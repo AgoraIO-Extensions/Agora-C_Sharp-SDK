@@ -44,7 +44,7 @@ namespace Agora.Rtc
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
 
-            IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+            IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
             var @event = eventParam.@event;
             var data = eventParam.data;
             var buffer = eventParam.buffer;

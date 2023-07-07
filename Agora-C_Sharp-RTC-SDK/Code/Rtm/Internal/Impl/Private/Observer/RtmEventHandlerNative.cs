@@ -38,7 +38,7 @@ namespace Agora.Rtm.Internal
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
 
-            IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+            IrisCRtmEventParam eventParam = (IrisCRtmEventParam)Marshal.PtrToStructure(param, typeof(IrisCRtmEventParam));
             var @event = eventParam.@event;
             var data = eventParam.data;
             var buffer = eventParam.buffer;

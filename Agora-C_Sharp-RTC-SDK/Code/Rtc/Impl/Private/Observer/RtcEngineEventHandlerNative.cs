@@ -28,7 +28,7 @@ namespace Agora.Rtc
             if (rtcEngineEventHandler == null) return;
 
 
-            IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+            IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
 
             string @event = eventParam.@event;
             string data = eventParam.data;

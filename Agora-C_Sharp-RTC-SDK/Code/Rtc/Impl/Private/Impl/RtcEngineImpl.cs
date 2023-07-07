@@ -20,10 +20,10 @@ namespace Agora.Rtc
 
 
         private IrisRtcEnginePtr _irisRtcEngine;
-        private IrisCApiParam _apiParam;
+        private IrisRtcCApiParam _apiParam;
 
 
-        private EventHandlerHandle _rtcEventHandlerHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcEventHandlerHandle = new RtcEventHandlerHandle();
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -31,17 +31,17 @@ namespace Agora.Rtc
 #endif
 
         //audioFrameObserver
-        private EventHandlerHandle _rtcAudioFrameObserverHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcAudioFrameObserverHandle = new RtcEventHandlerHandle();
         //videoFrameObserver
-        private EventHandlerHandle _rtcVideoFrameObserverHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcVideoFrameObserverHandle = new RtcEventHandlerHandle();
         //audioEncodedFrameObserver
-        private EventHandlerHandle _rtcAudioEncodedFrameObserverHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcAudioEncodedFrameObserverHandle = new RtcEventHandlerHandle();
         //videoEncodedFrameObserver
-        private EventHandlerHandle _rtcVideoEncodedFrameObserverHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcVideoEncodedFrameObserverHandle = new RtcEventHandlerHandle();
         //metaData
-        private EventHandlerHandle _rtcMetaDataObserverHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcMetaDataObserverHandle = new RtcEventHandlerHandle();
         //audioSpectrumOberver
-        private EventHandlerHandle _rtcAudioSpectrumObserverHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcAudioSpectrumObserverHandle = new RtcEventHandlerHandle();
 
 
         private IrisVideoFrameBufferManagerPtr _videoFrameBufferManagerPtr;
@@ -61,7 +61,7 @@ namespace Agora.Rtc
 
         private RtcEngineImpl(IntPtr nativePtr)
         {
-            _apiParam = new IrisCApiParam();
+            _apiParam = new IrisRtcCApiParam();
             _apiParam.AllocResult();
 
             //AgoraRtcNative.CreateApiParamsPtr();
@@ -156,7 +156,7 @@ namespace Agora.Rtc
         {
             if (_rtcEventHandlerHandle.handle != IntPtr.Zero) return 0;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtcEngineEventHandlerNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtcEngineEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTEREVENTHANDLER,
                 "{}", 2,
@@ -201,7 +201,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_RTCENGINE_UNREGISTEREVENTHANDLER failed: " + nRet);
             }
 
-            AgoraUtil.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
+            AgoraRtcNative.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
 
         }
 
@@ -277,7 +277,7 @@ namespace Agora.Rtc
         {
             if (_rtcAudioFrameObserverHandle.handle != IntPtr.Zero) return 0;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcAudioFrameObserverHandle, AudioFrameObserverNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcAudioFrameObserverHandle, AudioFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioFrameObserverHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER,
                 "{}", 2,
@@ -307,7 +307,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAENGINE_UNREGISTERAUDIOFRAMEOBSERVER failed: " + nRet);
             }
 
-            AgoraUtil.FreeEventHandlerHandle(ref _rtcAudioFrameObserverHandle);
+            AgoraRtcNative.FreeEventHandlerHandle(ref _rtcAudioFrameObserverHandle);
             return nRet;
         }
 
@@ -328,7 +328,7 @@ namespace Agora.Rtc
         {
             if (_rtcVideoFrameObserverHandle.handle != IntPtr.Zero) return 0;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcVideoFrameObserverHandle, VideoFrameObserverNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcVideoFrameObserverHandle, VideoFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcVideoFrameObserverHandle.handle };
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERVIDEOFRAMEOBSERVER,
@@ -359,7 +359,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAENGINE_UNREGISTERVIDEOFRAMEOBSERVER failed: " + nRet);
             }
 
-            AgoraUtil.FreeEventHandlerHandle(ref _rtcVideoFrameObserverHandle);
+            AgoraRtcNative.FreeEventHandlerHandle(ref _rtcVideoFrameObserverHandle);
 
             return nRet;
         }
@@ -381,7 +381,7 @@ namespace Agora.Rtc
         {
             if (_rtcVideoEncodedFrameObserverHandle.handle != IntPtr.Zero) return 0;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcVideoEncodedFrameObserverHandle, VideoEncodedFrameObserverNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcVideoEncodedFrameObserverHandle, VideoEncodedFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcVideoEncodedFrameObserverHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERVIDEOENCODEDFRAMEOBSERVER,
                 "{}", 2,
@@ -410,7 +410,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_MEDIAENGINE_UNREGISTERVIDEOENCODEDFRAMEOBSERVER failed: " + nRet);
             }
 
-            AgoraUtil.FreeEventHandlerHandle(ref _rtcVideoEncodedFrameObserverHandle);
+            AgoraRtcNative.FreeEventHandlerHandle(ref _rtcVideoEncodedFrameObserverHandle);
 
             return nRet;
         }
@@ -419,7 +419,7 @@ namespace Agora.Rtc
         {
             if (_rtcMetaDataObserverHandle.handle != IntPtr.Zero) return 0;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcMetaDataObserverHandle, MetadataObserverNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcMetaDataObserverHandle, MetadataObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcMetaDataObserverHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERMEDIAMETADATAOBSERVER,
                 "{}", 2,
@@ -448,7 +448,7 @@ namespace Agora.Rtc
                 AgoraLog.LogError("FUNC_RTCENGINE_UNREGISTERMEDIAMETADATAOBSERVER failed: " + nRet);
             }
 
-            AgoraUtil.FreeEventHandlerHandle(ref _rtcMetaDataObserverHandle);
+            AgoraRtcNative.FreeEventHandlerHandle(ref _rtcMetaDataObserverHandle);
 
             return nRet;
         }
@@ -1356,7 +1356,7 @@ namespace Agora.Rtc
         {
             if (_rtcAudioEncodedFrameObserverHandle.handle != IntPtr.Zero) return 0;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcAudioEncodedFrameObserverHandle, AudioEncodedFrameObserverNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcAudioEncodedFrameObserverHandle, AudioEncodedFrameObserverNative.OnEvent);
             _param.Clear();
             _param.Add("config", config);
 
@@ -1379,7 +1379,7 @@ namespace Agora.Rtc
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
-            AgoraUtil.FreeEventHandlerHandle(ref _rtcAudioEncodedFrameObserverHandle);
+            AgoraRtcNative.FreeEventHandlerHandle(ref _rtcAudioEncodedFrameObserverHandle);
             return ret;
         }
 
@@ -2413,7 +2413,7 @@ namespace Agora.Rtc
         {
             if (_rtcAudioSpectrumObserverHandle.handle != IntPtr.Zero) return 0;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcAudioSpectrumObserverHandle, AudioSpectrumObserverNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcAudioSpectrumObserverHandle, AudioSpectrumObserverNative.OnEvent);
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioSpectrumObserverHandle.handle };
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERAUDIOSPECTRUMOBSERVER,
@@ -2433,7 +2433,7 @@ namespace Agora.Rtc
                 Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                 ref _apiParam);
 
-            AgoraUtil.FreeEventHandlerHandle(ref _rtcAudioSpectrumObserverHandle);
+            AgoraRtcNative.FreeEventHandlerHandle(ref _rtcAudioSpectrumObserverHandle);
             return ret;
         }
 
