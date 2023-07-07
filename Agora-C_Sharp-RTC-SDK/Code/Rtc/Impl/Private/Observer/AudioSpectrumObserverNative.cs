@@ -21,7 +21,7 @@ namespace Agora.Rtc
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_Event_Native))]
+        [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
         {
