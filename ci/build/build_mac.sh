@@ -137,7 +137,7 @@ PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
-python3 ../../agora-unity-quickstart/ci/build/remove_example_by_macor.py ${pwd}/../../agora-unity-quickstart/API-Example-Unity/Assets ${RTC} ${RTM}
+python3 ../../agora-unity-quickstart/ci/build/remove_example_by_macor.py $ROOT/../agora-unity-quickstart/API-Example-Unity/Assets ${RTC} ${RTM}
 cp -r ../../agora-unity-quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
 cp -r ../../agora-unity-quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
 cp -r ../../agora-unity-quickstart/API-Example-Unity/README.zh.md $PLUGIN_PATH/API-Example/
@@ -158,7 +158,7 @@ fi
 mkdir "$ROOT_DIR"/Unity/Plugins/iOS
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
-python3 "$(pwd)"/ci/build/remove_code_by_macor "$ROOT_DIR"/Code ${RTC} ${RTM}
+python3 ../ci/build/remove_code_by_macor "$ROOT_DIR"/Code ${RTC} ${RTM}
 cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Resources "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/agorartc.csproj
