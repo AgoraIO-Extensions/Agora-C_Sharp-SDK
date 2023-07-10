@@ -26,11 +26,6 @@ namespace Agora.Rtc
             return true;
         }
 
-
-        public virtual bool OnPublishAudioFrame(string channelId, AudioFrame audioFrame)
-        {
-            return true;
-        }
         ///
         /// <summary>
         /// Gets the raw audio frame for playback.

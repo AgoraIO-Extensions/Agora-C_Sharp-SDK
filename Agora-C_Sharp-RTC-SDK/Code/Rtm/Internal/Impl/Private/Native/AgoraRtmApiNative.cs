@@ -21,35 +21,35 @@ namespace Agora.Rtm.Internal
     {
 
 #if AGORA_RTC
-        private const string AgoraRtcLibName = Agora.Rtc.AgoraRtcNative.AgoraRtcLibName;
+        private const string AgoraRtmLibName = Agora.Rtc.AgoraRtcNative.AgoraRtcLibName;
 #elif AGORA_RTM
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-        private const string AgoraRtcLibName = "AgoraRtmWrapper";
+        private const string AgoraRtmLibName = "AgoraRtmWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-        private const string AgoraRtcLibName = "AgoraRtmWrapper";
+        private const string AgoraRtmLibName = "AgoraRtmWrapper";
 #elif UNITY_IPHONE
-		private const string AgoraRtcLibName = "__Internal";
+		private const string AgoraRtmLibName = "__Internal";
 #else
-        private const string AgoraRtcLibName = "AgoraRtmWrapper";
+        private const string AgoraRtmLibName = "AgoraRtmWrapper";
 #endif
 
 #endif
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr CreateIrisRtmEngine(IntPtr client);
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisRtmEngine(IntPtr handle);
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisRtmApi(IntPtr handle, ref IrisRtmApiParam param);
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisEventHandlerHandle CreateIrisRtmEventHandler(IrisEventHandlerMarshal event_Handler);
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisRtmEventHandler(IrisEventHandlerHandle handle);
 
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr GetIrisRtmErrorReason(int err_code);
 
         internal static void AllocEventHandlerHandle(ref RtmEventHandlerHandle eventHandlerHandle, Rtm_Func_Event_Native onEvent)
@@ -201,12 +201,12 @@ namespace Agora.Rtm.Internal
             }
         }
 
-
         internal string @event;
         internal string data;
         internal uint data_size;
+
         internal IntPtr result;
-        internal uint result_size;
+
         internal IntPtr buffer;
         internal IntPtr length;
         internal uint buffer_count;

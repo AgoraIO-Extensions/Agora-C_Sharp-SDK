@@ -1122,7 +1122,9 @@ namespace Agora.Rtm
 
         public RtmMetadata()
         {
-
+            majorRevision = 0;
+            metadataItems = new MetadataItem[0];
+            metadataItemsSize = 0;
         }
     }
 }

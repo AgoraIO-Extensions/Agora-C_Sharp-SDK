@@ -1150,8 +1150,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         AUDIO_FRAME_POSITION_EAR_MONITORING = 0x0010,
-
-        AUDIO_FRAME_POSITION_BEFORE_PUBLISH = 0x0020,
     };
 
     ///

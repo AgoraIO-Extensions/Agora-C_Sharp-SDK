@@ -372,11 +372,8 @@ namespace Agora.Rtc
                 jsonParam, (UInt32)jsonParam.Length,
                 IntPtr.Zero, 0, ref _apiParam);
 
-            if (ret == 0)
-            {
-                internalSongCode = (Int64)AgoraJson.GetData<Int64>(_apiParam.Result, "internalSongCode");
-            }
-
+            
+            internalSongCode = (Int64)AgoraJson.GetData<Int64>(_apiParam.Result, "internalSongCode");
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
     }
