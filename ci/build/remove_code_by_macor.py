@@ -8,6 +8,8 @@ code_root = sys.argv[1]
 RTC = sys.argv[2]
 RTM = sys.argv[3]
 
+print('remove code by macor.py {0},{1},{2}'.format(code_root,RTC,RTM))
+
 def get_all_files(target_dir):
     files = []
     list_files = os.listdir(target_dir)
