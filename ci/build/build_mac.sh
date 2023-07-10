@@ -127,7 +127,6 @@ echo "[Unity CI] start creating unity project"
 $UNITY_DIR/Unity -quit -batchmode -nographics -createProject "project"
 echo "[Unity CI] finish creating unity project"
 
-
 #--------------------------------------
 # Copy files to the Unity project
 #--------------------------------------
@@ -153,8 +152,6 @@ if [ "$TYPE" == "VOICE" ]; then
     perl -0777 -pi -e 's|Start Tag for video SDK only[\s\S]*End Tag||g' "$POST_PROCESS_SCRIPT_PATH"
 fi
 
-
-
 mkdir "$ROOT_DIR"/Unity/Plugins/iOS
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
@@ -174,7 +171,7 @@ if [ "$ANDROID_URL" != "" ]; then
     ANDROID_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
     mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/project.properties "$ANDROID_DST_PATH"
 
-    if [ "$RTC" == "false"]; then
+    if [ "$RTC" == "false" ]; then
         mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-rtm.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
     elif [ "$TYPE" == "VOICE" ]; then
         mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-audio.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
@@ -259,10 +256,10 @@ fi
 
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
-if [ "$RTC" == "true"];then
-   ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}.zip
+if [ "$RTC" == "true" ]; then
+    ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}.zip
 else
-   ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}.zip
+    ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 

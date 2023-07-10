@@ -1,3 +1,6 @@
+#define AGORA_RTC
+#define AGORA_RTM
+
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -10,29 +13,36 @@ using UnityEditor.iOS.Xcode.Extensions;
 
 using UnityEngine;
 
-public class BL_BuildPostProcess
+
+#if AGORA_RTC
+namespace Agora.RTC
+#else
+namespace Agora.RTM
+#endif
 {
-    [PostProcessBuild]
-    public static void OnPostprocessBuild(BuildTarget buildTarget, string path)
+    public class BL_BuildPostProcess
     {
-        if (buildTarget == BuildTarget.iOS)
+        [PostProcessBuild]
+        public static void OnPostprocessBuild(BuildTarget buildTarget, string path)
         {
+            if (buildTarget == BuildTarget.iOS)
+            {
 #if UNITY_IOS
             LinkLibraries(path);
             UpdatePermission(path + "/Info.plist");
 #endif
+            }
         }
-    }
 
-    //public static void DisableBitcode(string projPath)
-    //{
-    //    PBXProject proj = new PBXProject();
-    //    proj.ReadFromString(File.ReadAllText(projPath));
+        //public static void DisableBitcode(string projPath)
+        //{
+        //    PBXProject proj = new PBXProject();
+        //    proj.ReadFromString(File.ReadAllText(projPath));
 
-//    string target = GetTargetGuid(proj);
-//    proj.SetBuildProperty(target, "ENABLE_BITCODE", "false");
-//    File.WriteAllText(projPath, proj.WriteToString());
-//}
+        //    string target = GetTargetGuid(proj);
+        //    proj.SetBuildProperty(target, "ENABLE_BITCODE", "false");
+        //    File.WriteAllText(projPath, proj.WriteToString());
+        //}
 
 #if UNITY_IOS
     static string GetTargetGuid(PBXProject proj)
@@ -103,5 +113,6 @@ public class BL_BuildPostProcess
         File.WriteAllText(pListPath, plist.WriteToString());
     }
 #endif
+    }
 }
 
