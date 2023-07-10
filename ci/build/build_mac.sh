@@ -116,8 +116,6 @@ fi
 mkdir tempDir || exit 1
 cd tempDir
 
-# git clone -b "$DEMO_BRANCH" ssh://git@git.agoralab.co/agio/agora-unity-quickstart.git
-# git clone -b "$DEMO_BRANCH" https://gitee.com/agoraio-community/Agora-Unity-Quickstart.git
 echo "[Unity CI] finish preparing resources"
 
 UNITY_DIR=/Applications/Unity/Hub/Editor/${UNITY_VERSION}/Unity.app/Contents/MacOS
@@ -139,6 +137,7 @@ PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
+python3 ../../agora-unity-quickstart/ci/build/remove_example_by_macor.py ${pwd}/../../agora-unity-quickstart/API-Example-Unity/Assets ${RTC} ${RTM}
 cp -r ../../agora-unity-quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
 cp -r ../../agora-unity-quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
 cp -r ../../agora-unity-quickstart/API-Example-Unity/README.zh.md $PLUGIN_PATH/API-Example/
@@ -154,9 +153,12 @@ if [ "$TYPE" == "VOICE" ]; then
     perl -0777 -pi -e 's|Start Tag for video SDK only[\s\S]*End Tag||g' "$POST_PROCESS_SCRIPT_PATH"
 fi
 
+
+
 mkdir "$ROOT_DIR"/Unity/Plugins/iOS
 cp -r "$ROOT_DIR"/Unity/Plugins "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Unity/Tools "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
+python3 "$(pwd)"/ci/build/remove_code_by_macor "$ROOT_DIR"/Code ${RTC} ${RTM}
 cp -r "$ROOT_DIR"/Code "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Resources "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/agorartc.csproj
@@ -172,18 +174,19 @@ if [ "$ANDROID_URL" != "" ]; then
     ANDROID_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
     mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/project.properties "$ANDROID_DST_PATH"
 
-    if [ "$TYPE" == "VOICE" ]; then
+    if [ "$RTC" == "false"]; then
+        mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-rtm.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
+    elif [ "$TYPE" == "VOICE" ]; then
         mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-audio.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
-        rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-video.xml
     elif [ "$TYPE" == "FULL" ]; then
         mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-video.xml "$ANDROID_DST_PATH"/AndroidManifest.xml
-        rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-audio.xml
     fi
+    rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-*.xml
 
     mkdir "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-    if [ "$TYPE" == "FULL" ]; then
+    if [ "$RTC" == "true" && "$TYPE" == "FULL" ]; then
         cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
     fi
 
@@ -254,10 +257,13 @@ if [ "$TYPE" == "VOICE" ]; then
     python3 ${ROOT}/ci/build/remove_video_case.py "$PLUGIN_PATH"/API-Example
 fi
 
-#todo RTM or RTC clear code and meta file
-
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
-ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}.zip
+ZIP_FILE="Unknow"
+if [ "$RTC" == "true"];then
+   ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}.zip
+else
+   ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}.zip
+fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
 python3 ${WORKSPACE}/artifactory_utils.py --action=upload_file --file=./$ZIP_FILE --project
