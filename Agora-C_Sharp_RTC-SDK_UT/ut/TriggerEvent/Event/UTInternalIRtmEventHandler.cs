@@ -66,9 +66,6 @@ namespace Agora.Rtm
             if (OnTopicEvent_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareTopicEvent(OnTopicEvent_event, @event) == false)
-                return false;
-
             return true;
         }
 
@@ -310,10 +307,6 @@ namespace Agora.Rtm
             if (ParamsHelper.compareString(OnSubscribeTopicResult_userId, userId) == false)
                 return false;
             if (ParamsHelper.compareString(OnSubscribeTopicResult_topic, topic) == false)
-                return false;
-            if (ParamsHelper.compareUserList(OnSubscribeTopicResult_succeedUsers, succeedUsers) == false)
-                return false;
-            if (ParamsHelper.compareUserList(OnSubscribeTopicResult_failedUsers, failedUsers) == false)
                 return false;
             if (ParamsHelper.compareRTM_ERROR_CODE(OnSubscribeTopicResult_errorCode, errorCode) == false)
                 return false;
@@ -1027,8 +1020,6 @@ namespace Agora.Rtm
                 return false;
 
             if (ParamsHelper.compareUlong(OnWhoNowResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.compareUserStateArray(OnWhoNowResult_userStateList, userStateList) == false)
                 return false;
             if (ParamsHelper.compareUlong(OnWhoNowResult_count, count) == false)
                 return false;

@@ -203,7 +203,7 @@ namespace Agora.Rtc
             Int64 internalSongCode;
             ParamsHelper.InitParam(out internalSongCode);
             var nRet = MusicContentCenter.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
-
+            Assert.AreEqual(10, internalSongCode);
             Assert.AreEqual(0, nRet);
         }
 

@@ -11,8 +11,9 @@ namespace Agora.Rtm
         [SetUp]
         public void Setup()
         {
-            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmEngine());
-            Internal.RtmConfig config = new Internal.RtmConfig();
+            RtmClient = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmClient());
+            Internal.RtmConfig config;
+            ParamsHelper.InitParam(out config);
             int ret = RtmClient.Initialize(config);
             Assert.AreEqual(0, ret);
 

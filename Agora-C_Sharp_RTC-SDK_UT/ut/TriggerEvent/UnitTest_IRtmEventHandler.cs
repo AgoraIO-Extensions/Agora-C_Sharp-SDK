@@ -12,14 +12,15 @@ namespace Agora.Rtm.Event
 
         public Internal.IRtmClient Client;
         public UTInternalRtmEventHandler EventHandler;
-        public IntPtr FakeRtmEnginePtr;
+        public IntPtr FakeRtmClientPtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
 
         [SetUp]
         public void Setup()
         {
-            Client = Internal.RtmClient.CreateAgoraRtmClient(DLLHelper.CreateFakeRtmEngine());
+            FakeRtmClientPtr = DLLHelper.CreateFakeRtmClient();
+            Client = Internal.RtmClient.CreateAgoraRtmClient(FakeRtmClientPtr);
             Internal.RtmConfig config = new Internal.RtmConfig();
             EventHandler = new UTInternalRtmEventHandler();
             config.setEventHandler(EventHandler);
@@ -53,7 +54,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnMessageEventPassed(@event));
         }
@@ -76,7 +77,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPresenceEventPassed(@event));
         }
@@ -99,7 +100,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnTopicEventPassed(@event));
         }
@@ -122,7 +123,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnLockEventPassed(@event));
         }
@@ -145,7 +146,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnStorageEventPassed(@event));
         }
@@ -180,7 +181,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnJoinResultPassed(requestId, channelName, userId, errorCode));
         }
@@ -215,7 +216,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnLeaveResultPassed(requestId, channelName, userId, errorCode));
         }
@@ -258,7 +259,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnJoinTopicResultPassed(requestId, channelName, userId, topic, meta, errorCode));
         }
@@ -301,7 +302,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnLeaveTopicResultPassed(requestId, channelName, userId, topic, meta, errorCode));
         }
@@ -348,7 +349,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnSubscribeTopicResultPassed(requestId, channelName, userId, topic, succeedUsers, failedUsers, errorCode));
         }
@@ -379,7 +380,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnConnectionStateChangePassed(channelName, state, reason));
         }
@@ -402,7 +403,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnTokenPrivilegeWillExpirePassed(channelName));
         }
@@ -433,7 +434,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnSubscribeResultPassed(requestId, channelName, errorCode));
         }
@@ -460,7 +461,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPublishResultPassed(requestId, errorCode));
         }
@@ -483,7 +484,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnLoginResultPassed(errorCode));
         }
@@ -518,7 +519,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnSetChannelMetadataResultPassed(requestId, channelName, channelType, errorCode));
         }
@@ -553,7 +554,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnUpdateChannelMetadataResultPassed(requestId, channelName, channelType, errorCode));
         }
@@ -588,7 +589,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnRemoveChannelMetadataResultPassed(requestId, channelName, channelType, errorCode));
         }
@@ -627,7 +628,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnGetChannelMetadataResultPassed(requestId, channelName, channelType, data, errorCode));
         }
@@ -658,7 +659,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnSetUserMetadataResultPassed(requestId, userId, errorCode));
         }
@@ -689,7 +690,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnUpdateUserMetadataResultPassed(requestId, userId, errorCode));
         }
@@ -720,7 +721,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnRemoveUserMetadataResultPassed(requestId, userId, errorCode));
         }
@@ -755,7 +756,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnGetUserMetadataResultPassed(requestId, userId, data, errorCode));
         }
@@ -786,7 +787,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnSubscribeUserMetadataResultPassed(requestId, userId, errorCode));
         }
@@ -825,7 +826,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnSetLockResultPassed(requestId, channelName, channelType, lockName, errorCode));
         }
@@ -864,7 +865,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnRemoveLockResultPassed(requestId, channelName, channelType, lockName, errorCode));
         }
@@ -903,7 +904,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnReleaseLockResultPassed(requestId, channelName, channelType, lockName, errorCode));
         }
@@ -946,7 +947,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnAcquireLockResultPassed(requestId, channelName, channelType, lockName, errorCode, errorDetails));
         }
@@ -985,7 +986,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnRevokeLockResultPassed(requestId, channelName, channelType, lockName, errorCode));
         }
@@ -1028,7 +1029,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnGetLocksResultPassed(requestId, channelName, channelType, lockDetailList, count, errorCode));
         }
@@ -1067,7 +1068,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnWhoNowResultPassed(requestId, userStateList, count, nextPage, errorCode));
         }
@@ -1102,7 +1103,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnWhereNowResultPassed(requestId, channels, count, errorCode));
         }
@@ -1129,7 +1130,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPresenceSetStateResultPassed(requestId, errorCode));
         }
@@ -1156,7 +1157,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPresenceRemoveStateResultPassed(requestId, errorCode));
         }
@@ -1187,7 +1188,7 @@ namespace Agora.Rtm.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtmEngine(FakeRtmEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtmClient(FakeRtmClientPtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPresenceGetStateResultPassed(requestId, state, errorCode));
         }

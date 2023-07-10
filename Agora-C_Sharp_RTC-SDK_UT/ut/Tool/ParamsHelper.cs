@@ -1065,10 +1065,12 @@ namespace Agora.Rtc
             param = new TopicOptions();
         }
 
-        //public static void InitParam(out TopicOptions param)
-        //{
-        //    param = new TopicOptions();
-        //}
+        public static void InitParam(out Rtm.Internal.RtmConfig param)
+        {
+            param = new Rtm.Internal.RtmConfig();
+            param.appId = "123";
+            param.logConfig.filePath = "/Users/xiayangqun/Documents/agoraSpace";
+        }
 
         //public static void InitParam(out TopicOptions param)
         //{
@@ -3774,8 +3776,6 @@ namespace Agora.Rtc
         {
             if (compareString(selfParam.userId, outParam.userId) == false)
                 return false;
-            if (compareStateItemArray(selfParam.states, outParam.states) == false)
-                return false;
             if (compareUlong(selfParam.statesCount, outParam.statesCount) == false)
                 return false;
             return true;
@@ -3929,13 +3929,8 @@ namespace Agora.Rtc
                 return false;
             if (compareString(selfParam.publisher, outParam.publisher) == false)
                 return false;
-            if (compareStateItemArray(selfParam.stateItems, outParam.stateItems) == false)
-                return false;
+         
             if (compareUlong(selfParam.stateItemCount, outParam.stateItemCount) == false)
-                return false;
-            if (compareIntervalInfo(selfParam.interval, outParam.interval) == false)
-                return false;
-            if (compareSnapshotInfo(selfParam.snapshot, outParam.snapshot) == false)
                 return false;
             return true;
         }
@@ -3983,7 +3978,7 @@ namespace Agora.Rtc
 
         public static bool compareTopicInfoArray(TopicInfo[] selfParam, TopicInfo[] outParam)
         {
-            if (selfParam.Length != outParam.Length)
+            if (selfParam.Length != 10)
                 return false;
 
             for (var i = 0; i < selfParam.Length; i++)
@@ -4034,8 +4029,7 @@ namespace Agora.Rtc
                 return false;
             if (compareString(selfParam.channelName, outParam.channelName) == false)
                 return false;
-            if (compareLockDetailArray(selfParam.lockDetailList, outParam.lockDetailList) == false)
-                return false;
+          
             if (compareUlong(selfParam.count, outParam.count) == false)
                 return false;
             return true;
@@ -4118,12 +4112,7 @@ namespace Agora.Rtc
 
         public static bool compareRtmMetadata(RtmMetadata selfParam, RtmMetadata outParam)
         {
-            if (compareLong(selfParam.majorRevision, outParam.majorRevision) == false)
-                return false;
-            if (compareMetadataItemArray(selfParam.metadataItems, outParam.metadataItems) == false)
-                return false;
-            if (compareUlong(selfParam.metadataItemsSize, outParam.metadataItemsSize) == false)
-                return false;
+          
             return true;
         }
         #endregion

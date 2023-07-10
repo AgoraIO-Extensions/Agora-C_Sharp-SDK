@@ -14,10 +14,10 @@ namespace Agora.Rtc
         internal static extern int TriggerEventWithFakeRtcEngine(IntPtr engine_ptr, ref IrisCApiParam2 apiParam);
 
         [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        public static extern IntPtr CreateFakeRtmEngine();
+        public static extern IntPtr CreateFakeRtmClient();
 
         [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int TriggerEventWithFakeRtmEngine(IntPtr engine_ptr, ref IrisCApiParam2 apiParam);
+        internal static extern int TriggerEventWithFakeRtmClient(IntPtr engine_ptr, ref IrisCApiParam2 apiParam);
     }
 
 
