@@ -51,5 +51,5 @@ if RTM == 'false':
     remove_key_word_in_path(ROOT, '#define AGORA_RTM')
 
 if RTC == 'false':
-    shutil.rmtree(os.path.join(ROOT, 'Resource'))
-    os.mkdir(os.path.join(ROOT, 'Resource'))
+    shutil.rmtree(os.path.join(ROOT, 'Resources'))
+    os.mkdir(os.path.join(ROOT, 'Resources'))
