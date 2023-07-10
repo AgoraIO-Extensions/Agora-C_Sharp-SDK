@@ -15,9 +15,9 @@ using UnityEngine;
 
 
 #if AGORA_RTC
-namespace Agora.RTC
+namespace Agora.Rtc
 #else
-namespace Agora.RTM
+namespace Agora.Rtm
 #endif
 {
     public class BL_BuildPostProcess
