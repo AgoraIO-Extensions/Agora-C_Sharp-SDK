@@ -5,14 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
-
 #if UNITY_IOS
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
-
 using UnityEngine;
-
 
 #if AGORA_RTC
 namespace Agora.Rtc
