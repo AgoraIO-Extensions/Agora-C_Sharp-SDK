@@ -100,7 +100,7 @@ else
     PLUGIN_CODE_NAME="Agora-Unity-RTM-SDK"
 fi
 
-if [[ "$RTC"=="true" && "$RTM"=="true" ]]; then
+if [ "$RTC" == "true" ] && [ "$RTM" == "true" ]; then
     NATIVE_FOLDER="ALL"
 elif [ "$RTC" == "true" ]; then
     NATIVE_FOLDER="DCG"
