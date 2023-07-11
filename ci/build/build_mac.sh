@@ -197,16 +197,16 @@ if [ "$ANDROID_URL" != "" ]; then
     fi
 
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
+    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
+    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86
+    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86
 
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86_64
 
 fi
 
