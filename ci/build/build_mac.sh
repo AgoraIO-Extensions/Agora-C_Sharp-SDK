@@ -99,6 +99,15 @@ else
     PLUGIN_NAME="Agora-RTM-Plugin"
     PLUGIN_CODE_NAME="Agora-Unity-RTM-SDK"
 fi
+
+if [ "$RTC" == "true" && "$RTM" == "true" ]; then
+    NATIVE_FOLDER="ALL"
+elif [ "$RTC" == "true" ]; then
+    NATIVE_FOLDER="DCG"
+elif [ "$RTM" == "true" ]; then
+    NATIVE_FOLDER="RTM"
+fi
+
 echo PLUGIN_NAME $PLUGIN_NAME
 echo PLUGIN_CODE_NAME $PLUGIN_CODE_NAME
 ROOT=$(pwd)
@@ -181,22 +190,22 @@ if [ "$ANDROID_URL" != "" ]; then
     rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-*.xml
 
     mkdir "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
+    cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-    if [ -f $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar ]; then
-        cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
+    if [ -f $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/*.aar ]; then
+        cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
     fi
 
-    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
-    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
-    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86
 
-    cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgoraRtcWrapper.so "$ANDROID_DST_PATH"/libs/x86_64
 
 fi
@@ -208,7 +217,7 @@ if [ "$IOS_URL" != "" ]; then
     unzip -d ./ ./iris_*_iOS_*.zip || exit 1
     IOS_SRC_PATH="./iris_*_iOS"
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
-    cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+    cp -PRf $IOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
     cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
 fi
 
@@ -231,16 +240,16 @@ if [ "$WIN_URL" != "" ]; then
     # Windows x86-64
     echo "[Unity CI] copying Windows x86-64 ..."
     WIN64_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86_64
-    cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-    cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
+    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
+    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
     cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
     cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
 
     # Windows x86
     echo "[Unity CI] copying Windows x86 ..."
     WIN32_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86
-    cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-    cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
+    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
+    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
 fi
