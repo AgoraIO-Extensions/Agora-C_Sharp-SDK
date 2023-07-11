@@ -266,9 +266,9 @@ fi
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
 if [ "$RTC" == "true" ]; then
-    ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}.zip
+    ZIP_FILE=Agora_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}.zip
 else
-    ZIP_FILE="$PLUGIN_CODE_NAME"_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}.zip
+    ZIP_FILE=Agora_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 
