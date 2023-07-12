@@ -150,7 +150,7 @@ for filename in $files
 do
     extension=${filename##*.}
     basename=${filename%.*} 
-    if [ extension == "framework" ]; then 
+    if [ "$extension" == "framework" ]; then 
         lipo -remove x86_64 $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
     fi
 
@@ -176,7 +176,7 @@ for filename in $files
 do
     extension=${filename##*.}
     basename=${filename%.*}
-    if [ extension == "dll" ]; then 
+    if [ "$extension" == "dll" ]; then 
        cp "$ROOT_DIR"/Unity/Plugins/x86_64/dll.meta $WIN64_DST_PATH/${filename}.meta
     fi
 
@@ -194,7 +194,7 @@ for filename in $files
 do
     extension=${filename##*.}
     basename=${filename%.*}
-    if [ extension == "dll" ]; then 
+    if [ "$extension" == "dll" ]; then 
        cp "$ROOT_DIR"/Unity/Plugins/x86/dll.meta $WIN32_DST_PATH/${filename}.meta
     fi
 
