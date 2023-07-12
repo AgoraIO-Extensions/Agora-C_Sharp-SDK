@@ -213,15 +213,16 @@ namespace Agora.Rtc
 
         private void ReleaseEventHandler()
         {
+            AgoraRtcNative.UnsetIrisRtcEngineEventHandler(_irisRtcEngine, _irisEngineEventHandlerHandleNative);
+            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
+            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
+
             RtcEngineEventHandlerNative.EngineEventHandler = null;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             RtcEngineEventHandlerNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
-            AgoraRtcNative.UnsetIrisRtcEngineEventHandler(_irisRtcEngine, _irisEngineEventHandlerHandleNative);
-            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
-            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
         internal IrisRtcEnginePtr GetNativeHandler()
