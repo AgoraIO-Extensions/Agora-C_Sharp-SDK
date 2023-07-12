@@ -144,15 +144,16 @@ namespace Agora.Rtc
 
         private void ReleaseEventHandler()
         {
+            AgoraRtcNative.UnsetIrisMediaPlayerEventHandler(_irisApiEngine, _irisEngineEventHandlerHandleNative);
+            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
+            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
+
             MediaPlayerSourceObserverNative.RtcMediaPlayerEventHandlerDic.Clear();
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
             MediaPlayerSourceObserverNative.CallbackObject = null;
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
-            AgoraRtcNative.UnsetIrisMediaPlayerEventHandler(_irisApiEngine, _irisEngineEventHandlerHandleNative);
-            Marshal.FreeHGlobal(_irisCEngineEventHandlerNative);
-            _irisEngineEventHandlerHandleNative = IntPtr.Zero;
         }
 
         private void SetIrisAudioFrameObserver()
