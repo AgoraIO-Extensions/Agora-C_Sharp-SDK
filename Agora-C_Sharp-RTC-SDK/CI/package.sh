@@ -147,12 +147,13 @@ cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework
 #remove x86_64 from iris ios framework
 files=$(ls $IOS_SRC_PATH/ALL_ARCHITECTURE/Release)
 for filename in $files
+do
     extension=${filename##*.}
-    basename=${filename%.*}
+    basename=${filename%.*} 
     if [ extension == "framework" ]; then 
         lipo -remove x86_64 $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
     fi
-do
+
 done
 cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
 
@@ -172,12 +173,13 @@ cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
 #create dll.meta
 files=$(ls $WIN64_DST_PATH)
 for filename in $files
+do
     extension=${filename##*.}
     basename=${filename%.*}
     if [ extension == "dll" ]; then 
        cp "$ROOT_DIR"/Unity/Plugins/x86_64/dll.meta $WIN64_DST_PATH/${filename}.meta
     fi
-do
+
 done
 
 # Windows x86
@@ -189,12 +191,13 @@ cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
 files=$(ls $WIN32_DST_PATH)
 for filename in $files
+do
     extension=${filename##*.}
     basename=${filename%.*}
     if [ extension == "dll" ]; then 
        cp "$ROOT_DIR"/Unity/Plugins/x86/dll.meta $WIN32_DST_PATH/${filename}.meta
     fi
-do
+
 done
 
 
