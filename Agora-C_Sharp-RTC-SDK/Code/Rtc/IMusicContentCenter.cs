@@ -47,13 +47,16 @@ namespace Agora.Rtc
         ///
         public abstract int SearchMusic(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "");
 
+        [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
         ///
         /// @ignore
         ///
-        [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
         public abstract int Preload(Int64 songCode, string jsonOption = "");
 
 
+        ///
+        /// @ignore
+        ///
         public abstract int Preload(ref string requestId, Int64 songCode);
 
         ///
@@ -77,9 +80,15 @@ namespace Agora.Rtc
         public abstract int GetLyric(ref string requestId, Int64 songCode, int LyricType = 0);
 
 
+        ///
+        /// @ignore
+        ///
         public abstract int GetSongSimpleInfo(ref string requestId, Int64 songCode);
 
 
+        ///
+        /// @ignore
+        ///
         public abstract int GetInternalSongCode(Int64 songCode, string jsonOption, ref Int64 internalSongCode);
 
 
