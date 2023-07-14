@@ -92,7 +92,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out message);
             int length;
             ParamsHelper.InitParam(out length);
-            PublishOptions option;
+            Internal.PublishOptions option;
             ParamsHelper.InitParam(out option);
             var nRet = StreamChannel.PublishTopicMessage(topic, message, length, option);
 
@@ -108,7 +108,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out message);
             int length;
             ParamsHelper.InitParam(out length);
-            PublishOptions option;
+            Internal.PublishOptions option;
             ParamsHelper.InitParam(out option);
             var nRet = StreamChannel.PublishTopicMessage(topic, message, length, option);
 
@@ -155,7 +155,7 @@ namespace Agora.Rtm
 
         [Test]
         public void Test_GetSubscribedUserList()
-        {
+       {
             string topic;
             ParamsHelper.InitParam(out topic);
             UserList users;

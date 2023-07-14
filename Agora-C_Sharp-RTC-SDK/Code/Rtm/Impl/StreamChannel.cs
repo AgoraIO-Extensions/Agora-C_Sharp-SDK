@@ -83,8 +83,9 @@ namespace Agora.Rtm
 
         public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option)
         {
+            Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY);
             //fake async
-            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, option);
+            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions);
 
             RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
             rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);
@@ -100,8 +101,9 @@ namespace Agora.Rtm
 
         public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option)
         {
+            Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_STRING);
             //fake async
-            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, option);
+            int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions);
 
             RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
             rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishTopicMessageOperation, this.internalRtmClient);

@@ -11,7 +11,7 @@ namespace Agora.Rtm
 
         int JoinTopic(string channelName, string topic, JoinTopicOptions options, ref UInt64 requestId);
 
-        int PublishTopicMessage(string channelName, string topic, byte[] message, int length, PublishOptions option);
+        int PublishTopicMessage(string channelName, string topic, byte[] message, int length, Internal.PublishOptions option);
 
         int LeaveTopic(string channelName, string topic, ref UInt64 requestId);
 

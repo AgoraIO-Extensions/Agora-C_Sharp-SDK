@@ -134,7 +134,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int PublishTopicMessage(string channelName, string topic, byte[] message, int length, Rtm.PublishOptions option)
+        public int PublishTopicMessage(string channelName, string topic, byte[] message, int length, Rtm.Internal.PublishOptions option)
         {
             _param.Clear();
             _param.Add("channelName", channelName);

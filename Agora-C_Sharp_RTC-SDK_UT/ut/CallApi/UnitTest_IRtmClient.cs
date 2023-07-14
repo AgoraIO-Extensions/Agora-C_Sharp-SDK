@@ -62,7 +62,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out message);
             int  length;
             ParamsHelper.InitParam(out length);
-            PublishOptions option;
+            Internal.PublishOptions option;
             ParamsHelper.InitParam(out option);
              ulong requestId;
             ParamsHelper.InitParam(out requestId);
@@ -80,7 +80,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out message);
             int length;
             ParamsHelper.InitParam(out length);
-            PublishOptions option;
+            Internal.PublishOptions option;
             ParamsHelper.InitParam(out option);
             ulong requestId;
             ParamsHelper.InitParam(out requestId);

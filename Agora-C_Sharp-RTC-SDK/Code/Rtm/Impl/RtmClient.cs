@@ -185,7 +185,8 @@ namespace Agora.Rtm
         {
             TaskCompletionSource<RtmResult<PublishResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishResult>>();
             UInt64 requestId = 0;
-            int errorCode = internalRtmClient.Publish(channelName, message, message.Length, option, ref requestId);
+            Internal.PublishOptions internalOptione = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY);
+            int errorCode = internalRtmClient.Publish(channelName, message, message.Length, internalOptione, ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<PublishResult> result = new RtmResult<PublishResult>();
@@ -201,8 +202,21 @@ namespace Agora.Rtm
 
         public Task<RtmResult<PublishResult>> PublishAsync(string channelName, string message, PublishOptions option)
         {
-            byte[] bytes = System.Text.Encoding.Default.GetBytes(message);
-            return this.PublishAsync(channelName, bytes, option);
+            TaskCompletionSource<RtmResult<PublishResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishResult>>();
+            UInt64 requestId = 0;
+            Internal.PublishOptions internalOptione = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_STRING);
+            int errorCode = internalRtmClient.Publish(channelName, message, message.Length, internalOptione, ref requestId);
+            if (errorCode != 0)
+            {
+                RtmResult<PublishResult> result = new RtmResult<PublishResult>();
+                result.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMPublishOperation, this.internalRtmClient);
+                taskCompletionSource.SetResult(result);
+            }
+            else
+            {
+                rtmEventHandler.PutPublishResultTask(requestId, taskCompletionSource);
+            }
+            return taskCompletionSource.Task;
         }
 
         public RtmStatus RenewToken(string token)
