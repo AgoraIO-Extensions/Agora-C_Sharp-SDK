@@ -769,6 +769,9 @@ namespace Agora.Rtc
             writer.WritePropertyName("enableCache");
             writer.Write(enableCache);
 
+            writer.WritePropertyName("enableMultiAudioTrack");
+            writer.Write(enableMultiAudioTrack);
+
             if (isAgoraSource.HasValue())
             {
                 writer.WritePropertyName("isAgoraSource");
