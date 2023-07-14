@@ -1034,22 +1034,18 @@ namespace Agora.Rtm
 
     public class PublishOptions
     {
-        public RTM_MESSAGE_TYPE type;
-
         public UInt64 sendTs;
 
         public string customType;
 
         public PublishOptions()
         {
-            type = RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY;
             sendTs = 0;
             customType = "";
         }
 
-        public PublishOptions(RTM_MESSAGE_TYPE type, UInt64 sendTs, string customType)
+        public PublishOptions(UInt64 sendTs, string customType)
         {
-            this.type = type;
             this.sendTs = sendTs;
             this.customType = customType;
         }

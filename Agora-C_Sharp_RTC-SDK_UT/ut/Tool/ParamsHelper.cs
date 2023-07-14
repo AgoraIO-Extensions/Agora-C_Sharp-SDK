@@ -1017,9 +1017,9 @@ namespace Agora.Rtc
         {
             param = RTM_CONNECTION_CHANGE_REASON.RTM_CONNECTION_CHANGED_CONNECTING;
         }
-        public static void InitParam(out PublishOptions param)
+        public static void InitParam(out Rtm.Internal.PublishOptions param)
         {
-            param = new PublishOptions();
+            param = new Rtm.Internal.PublishOptions();
         }
         public static void InitParam(out SubscribeOptions param)
         {
@@ -3832,7 +3832,7 @@ namespace Agora.Rtc
         }
 
 
-        public static bool comparePublishOptions(PublishOptions selfParam, PublishOptions outParam)
+        public static bool comparePublishOptions(Rtm.Internal.PublishOptions selfParam, Rtm.Internal.PublishOptions outParam)
         {
             if (compareRTM_MESSAGE_TYPE(selfParam.type, outParam.type) == false)
                 return false;
