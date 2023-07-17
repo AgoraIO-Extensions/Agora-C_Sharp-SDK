@@ -44,7 +44,7 @@ namespace Agora.Rtc
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceIdUTF8"> Output parameter. The device ID.</param>
+        /// <param name="deviceIdUTF8"> An output parameter. The device ID.</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -73,7 +73,7 @@ namespace Agora.Rtc
         ///
         /// <param name="deviceCapabilityNumber"> The index number of the video format. If the return value of NumberOfCapabilities is i, the value range of this parameter is [0,i).</param>
         ///
-        /// <param name="capability"> Output parameter. Indicates the specific information of the specified video format, including width (px), height (px), and frame rate (fps). See VideoFormat.</param>
+        /// <param name="capability"> An output parameter. Indicates the specific information of the specified video format, including width (px), height (px), and frame rate (fps). See VideoFormat.</param>
         ///
         /// <returns>
         /// 0: Success.

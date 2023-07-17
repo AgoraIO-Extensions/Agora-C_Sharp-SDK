@@ -123,7 +123,7 @@ namespace Agora.Rtc
         ///  All uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
         ///  Space
-        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "= ", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <param name="token"> The token generated on your server for authentication.</param>
         ///
@@ -162,7 +162,7 @@ namespace Agora.Rtc
         ///  All uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
         ///  Space
-        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "= ", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <param name="uid"> The user ID. This parameter is used to identify the user in the channel for real-time audio and video interaction. You need to set and manage user IDs yourself, and ensure that each user ID in the same channel is unique. This parameter is a 32-bit unsigned integer. The value range is 1 to 2 32 -1. If the user ID is not assigned (or set to 0), the SDK assigns a random user ID and returns it in the OnJoinChannelSuccess callback. Your application must record and maintain the returned user ID, because the SDK does not do so.</param>
         ///
@@ -266,7 +266,7 @@ namespace Agora.Rtc
         ///  The 26 uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
         ///  Space
-        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "= ", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <param name="token"> The token generated on your server for authentication.</param>
         ///
@@ -275,7 +275,7 @@ namespace Agora.Rtc
         ///  All uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
         ///  Space
-        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "= ", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -305,14 +305,14 @@ namespace Agora.Rtc
         ///  All uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
         ///  Space
-        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "= ", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <param name="userAccount"> The user account. This parameter is used to identify the user in the channel for real-time audio and video engagement. You need to set and manage user accounts yourself and ensure that each user account in the same channel is unique. The maximum length of this parameter is 255 bytes. Ensure that you set this parameter and do not set it as NULL. Supported characters are (89 in total):
         ///  The 26 lowercase English letters: a to z.
         ///  The 26 uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
         ///  Space
-        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "= ", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -369,7 +369,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Preloads a channel with token, channelId uid
+        /// Preloads a channel with token, channelId and uid
         /// When audience members need to switch between different channels frequently, calling the method can help shortening the time of joining a channel, thus reducing the time it takes for audience members to hear and see the host. As it may take a while for the SDK to preload a channel, Agora recommends that you call this method as soon as possible after obtaining the channel name and user ID to join a channel.
         /// When calling this method, ensure you set the user role as audience and do not set the audio scenario as AUDIO_SCENARIO_CHORUS, otherwise, this method does not take effect.
         /// You also need to make sure that the channel name, user ID and token passed in for preloading are the same as the values passed in when joinning the channel, otherwise, this method does not take effect.
@@ -395,7 +395,6 @@ namespace Agora.Rtc
         /// <returns>
         /// 0: Success.
         /// &lt; 0: Failure.
-        /// -2: The parameter is invalid. For example, the token is invalid. You need to pass in a valid parameter and join the channel again.
         /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
         /// -102: The channel name is invalid. You need to pass in a valid channel name and join the channel again.
         /// </returns>
@@ -404,7 +403,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Preloads a channel with token, channelId userAccount.
+        /// Preloads a channel with token, channelId and userAccount.
         /// When audience members need to switch between different channels frequently, calling the method can help shortening the time of joining a channel, thus reducing the time it takes for audience members to hear and see the host. As it may take a while for the SDK to preload a channel, Agora recommends that you call this method as soon as possible after obtaining the channel name and user ID to join a channel. If you join a preloaded channel, leave it and want to rejoin the same channel, you do not need to call this method unless the token for preloading the channel expires.
         /// Failing to preload a channel does not mean that you can't join a channel, nor will it increase the time of joining a channel.
         /// One IRtcEngine instance supports preloading 20 channels at most. When exceeding this limit, the latest 20 preloaded channels take effect.
@@ -417,7 +416,7 @@ namespace Agora.Rtc
         ///  The 26 uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
         ///  Space
-        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "= ", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <param name="channelId"> The channel name that you want to preload. This parameter signifies the channel in which users engage in real-time audio and video interaction. Under the premise of the same App ID, users who fill in the same channel ID enter the same channel for audio and video interaction. The string length must be less than 64 bytes. Supported characters (89 characters in total):
         ///  All lowercase English letters: a to z.
@@ -435,7 +434,7 @@ namespace Agora.Rtc
         /// <returns>
         /// 0: Success.
         /// &lt; 0: Failure.
-        /// -2: The parameter is invalid. For example, an invalid token or User Account is used. You need to pass in a valid parameter and join the channel again.
+        /// -2: The parameter is invalid. For example, the User Account is empty. You need to pass in a valid parameter and join the channel again.
         /// -7: The IRtcEngine object has not been initialized. You need to initialize the IRtcEngine object before calling this method.
         /// -102: The channel name is invalid. You need to pass in a valid channel name and join the channel again.
         /// </returns>
@@ -1360,7 +1359,7 @@ namespace Agora.Rtc
         /// You can call this method either before or after joining a channel. This method is for Android and iOS only. Once face detection is enabled, the SDK triggers the OnFacePositionChanged callback to report the face information of the local user, which includes the following:
         /// The width and height of the local video.
         /// The position of the human face in the local view.
-        /// The distance between the human face and the screen. This method needs to be called after the camera is started (for example, by calling StartPreview [1/2] EnableVideo).
+        /// The distance between the human face and the screen. This method needs to be called after the camera is started (for example, by calling StartPreview [2/2] or EnableVideo ).
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable face detection for the local user: true : Enable face detection. false : (Default) Disable face detection.</param>
@@ -3707,13 +3706,13 @@ namespace Agora.Rtc
         /// Gets detailed information on the extensions.
         /// </summary>
         ///
-        /// <param name="provider"> Output parameter. The name of the extension provider.</param>
+        /// <param name="provider"> An output parameter. The name of the extension provider.</param>
         ///
-        /// <param name="extension"> Output parameter. The name of the extension.</param>
+        /// <param name="extension"> An output parameter. The name of the extension.</param>
         ///
-        /// <param name="key"> Output parameter. The key of the extension.</param>
+        /// <param name="key"> An output parameter. The key of the extension.</param>
         ///
-        /// <param name="value"> Output parameter. The value of the extension key.</param>
+        /// <param name="value"> An output parameter. The value of the extension key.</param>
         ///
         /// <param name="type"> Source type of the extension. See MEDIA_SOURCE_TYPE.</param>
         ///
@@ -4074,7 +4073,7 @@ namespace Agora.Rtc
         /// By calling this method, you adjust the exposure value of the currently active camera, that is, the camera specified when calling SetCameraCapturerConfiguration.
         /// </summary>
         ///
-        /// <param name="value"> The camera exposure value. The default value is 0, which means using the default exposure of the camera. The larger the value, the greater the exposure. When the video image is overexposed, you can reduce the exposure value; when the video image is underexposed and the dark details are lost, you can increase the exposure value. If the exposure value you specified is beyond the range supported by the device, the SDK will automatically adjust it to the actual supported range of the device. On Android, the value range is [-20.0, 20.0]. On iOS, the value range is [-8.0, 8.0].</param>
+        /// <param name="factor"> The camera exposure value. The default value is 0, which means using the default exposure of the camera. The larger the value, the greater the exposure. When the video image is overexposed, you can reduce the exposure value; when the video image is underexposed and the dark details are lost, you can increase the exposure value. If the exposure value you specified is beyond the range supported by the device, the SDK will automatically adjust it to the actual supported range of the device. On Android, the value range is [-20.0, 20.0]. On iOS, the value range is [-8.0, 8.0].</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -4983,7 +4982,7 @@ namespace Agora.Rtc
         ///  The 26 uppercase English letters: A to Z.
         ///  All numeric characters: 0 to 9.
         ///  Space
-        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "= ", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
+        ///  "!", "#", "$", "%", "&", "(", ")", "+", "-", ":", ";", "<", "=", ".", ">", "?", "@", "[", "]", "^", "_", "{", "}", "|", "~", ","</param>
         ///
         /// <returns>
         /// 0: Success.

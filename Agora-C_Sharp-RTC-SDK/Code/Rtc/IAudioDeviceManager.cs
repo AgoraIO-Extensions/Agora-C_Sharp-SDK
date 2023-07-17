@@ -191,7 +191,7 @@ namespace Agora.Rtc
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
-        /// <param name="deviceId"> Output parameter. The device ID of the recording device.</param>
+        /// <param name="deviceId"> An output parameter. The device ID of the recording device.</param>
         ///
         /// <returns>
         /// 0: Success.

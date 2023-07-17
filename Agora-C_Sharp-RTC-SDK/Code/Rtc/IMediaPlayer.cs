@@ -197,7 +197,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Seeks to a new playback position.
-        /// fter successfully calling this method, you will receive the OnPlayerEvent callback, reporting the result of the seek operation to the new playback position. To play the media file from a specific position, do the following:
+        /// After successfully calling this method, you will receive the OnPlayerEvent callback, reporting the result of the seek operation to the new playback position. To play the media file from a specific position, do the following:
         /// Call this method to seek to the position you want to begin playback.
         /// Call the Play method to play the media file.
         /// </summary>
@@ -216,7 +216,7 @@ namespace Agora.Rtc
         /// Gets the duration of the media resource.
         /// </summary>
         ///
-        /// <param name="duration"> Output parameter. The total duration (ms) of the media file.</param>
+        /// <param name="duration"> An output parameter. The total duration (ms) of the media file.</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -245,7 +245,7 @@ namespace Agora.Rtc
         /// Call this method after calling Open.
         /// </summary>
         ///
-        /// <param name="count"> Output parameter. The number of the media streams in the media resource.</param>
+        /// <param name="count"> An output parameter. The number of the media streams in the media resource.</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -262,7 +262,7 @@ namespace Agora.Rtc
         ///
         /// <param name="index"> The index of the media stream.</param>
         ///
-        /// <param name="info"> Output parameter. The detailed information of the media stream. See PlayerStreamInfo.</param>
+        /// <param name="info"> An output parameter. The detailed information of the media stream. See PlayerStreamInfo.</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -292,7 +292,7 @@ namespace Agora.Rtc
         /// Call this method after calling Open.
         /// </summary>
         ///
-        /// <param name="speed"> The playback speed. Agora recommends that you limit this value to between 50 and 400, defined as follows:
+        /// <param name="speed"> The playback speed. Agora recommends that you limit this value to a range between 50 and 400, which is defined as follows:
         ///  50: Half the original speed.
         ///  100: The original speed.
         ///  400: 4 times the original speed.</param>
@@ -402,7 +402,7 @@ namespace Agora.Rtc
         /// Reports whether the media resource is muted.
         /// </summary>
         ///
-        /// <param name="muted"> Output parameter. Whether the media file is muted: true : The media file is muted. false : The media file is unmuted.</param>
+        /// <param name="muted"> An output parameter. Whether the media file is muted: true : The media file is muted. false : The media file is unmuted.</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -432,7 +432,7 @@ namespace Agora.Rtc
         /// Gets the local playback volume.
         /// </summary>
         ///
-        /// <param name="volume"> Output parameter. The local playback volume, which ranges from 0 to 100:
+        /// <param name="volume"> An output parameter. The local playback volume, which ranges from 0 to 100:
         ///  0: Mute.
         ///  100: (Default) The original volume.</param>
         ///
@@ -466,7 +466,7 @@ namespace Agora.Rtc
         /// Gets the volume of the media file for publishing.
         /// </summary>
         ///
-        /// <param name="volume"> Output parameter. The remote playback volume.</param>
+        /// <param name="volume"> An output parameter. The remote playback volume.</param>
         ///
         /// <returns>
         /// 0: Success.

@@ -10,7 +10,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the captured audio frame.
-        /// To ensure that the data format of captured audio frame is as expected, Agora recommends that you set the SetRecordingAudioFrameParameters audio data format as follows: After calling to set the audio data format, call to register the RegisterAudioFrameObserver audio observer object, the SDK will calculate the sampling interval according to the parameters set in this method, and triggers the callback according to the sampling interval OnRecordAudioFrame.
+        /// To ensure that the data format of captured audio frame is as expected, Agora recommends that you set the audio data format as follows: After calling SetRecordingAudioFrameParameters to set the audio data format, call RegisterAudioFrameObserver to register the audio observer object, the SDK will calculate the sampling interval according to the parameters set in this method, and triggers the OnRecordAudioFrame callback according to the sampling interval.
         /// </summary>
         ///
         /// <param name="audioFrame"> The raw audio data. See AudioFrame.</param>
