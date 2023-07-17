@@ -170,7 +170,11 @@
         public float upLength;
         ///
         /// <summary>
-        /// The sound attenuation coefficient when users within the sound insulation area communicate with external users. The value range is [0,1]. The values are as follows:0: Broadcast mode, where the volume and timbre are not attenuated with distance, and the volume and timbre heard by local users do not change regardless of distance.(0,0.5): Weak attenuation mode, that is, the volume and timbre are only weakly attenuated during the propagation process, and the sound can travel farther than the real environment.0.5: (Default) simulates the attenuation of the volume in the real environment; the effect is equivalent to not setting the audioAttenuation parameter.(0.5,1]: Strong attenuation mode (default value is 1), that is, the volume and timbre attenuate rapidly during propagation.
+        /// The sound attenuation coefficient when users within the sound insulation area communicate with external users. The value range is [0,1]. The values are as follows:
+        /// 0: Broadcast mode, where the volume and timbre are not attenuated with distance, and the volume and timbre heard by local users do not change regardless of distance.
+        /// (0,0.5): Weak attenuation mode, that is, the volume and timbre are only weakly attenuated during the propagation process, and the sound can travel farther than the real environment.
+        /// 0.5: (Default) simulates the attenuation of the volume in the real environment; the effect is equivalent to not setting the audioAttenuation parameter.
+        /// (0.5,1]: Strong attenuation mode (default value is 1), that is, the volume and timbre attenuate rapidly during propagation.
         /// </summary>
         ///
         public float audioAttenuation;
@@ -204,14 +208,14 @@
 
     ///
     /// <summary>
-    /// The configuration of ILocalSpatialAudioEngine .
+    /// The configuration of ILocalSpatialAudioEngine.
     /// </summary>
     ///
     public class LocalSpatialAudioConfig
     {
         ///
         /// <summary>
-        ///  IRtcEngine .
+        /// IRtcEngine.
         /// </summary>
         ///
         public IRtcEngine rtcEngine;

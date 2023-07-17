@@ -19,7 +19,7 @@ namespace Agora.Rtc
         ///
         /// <param name="length"> The data length (byte).</param>
         ///
-        /// <param name="audioEncodedFrameInfo"> Audio information after encoding. See EncodedAudioFrameInfo .</param>
+        /// <param name="audioEncodedFrameInfo"> Audio information after encoding. See EncodedAudioFrameInfo.</param>
         ///
         public virtual void OnRecordAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
@@ -37,7 +37,7 @@ namespace Agora.Rtc
         ///
         /// <param name="length"> The data length (byte).</param>
         ///
-        /// <param name="audioEncodedFrameInfo"> Audio information after encoding. See EncodedAudioFrameInfo .</param>
+        /// <param name="audioEncodedFrameInfo"> Audio information after encoding. See EncodedAudioFrameInfo.</param>
         ///
         public virtual void OnPlaybackAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
@@ -55,7 +55,7 @@ namespace Agora.Rtc
         ///
         /// <param name="length"> The data length (byte).</param>
         ///
-        /// <param name="audioEncodedFrameInfo"> Audio information after encoding. See EncodedAudioFrameInfo .</param>
+        /// <param name="audioEncodedFrameInfo"> Audio information after encoding. See EncodedAudioFrameInfo.</param>
         ///
         public virtual void OnMixedAudioEncodedFrame(IntPtr frameBufferPtr, int length, 
                                                     EncodedAudioFrameInfo audioEncodedFrameInfo)
