@@ -3086,10 +3086,10 @@ namespace Agora.Rtc
             return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
         }
 
-        public int SetCameraExposureFactor(float value)
+        public int SetCameraExposureFactor(float factor)
         {
             _param.Clear();
-            _param.Add("value", value);
+            _param.Add("factor", factor);
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETCAMERAEXPOSUREFACTOR,

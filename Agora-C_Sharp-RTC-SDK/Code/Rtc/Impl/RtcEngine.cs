@@ -1829,13 +1829,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.IsCameraExposureSupported();
         }
 
-        public override int SetCameraExposureFactor(float value)
+        public override int SetCameraExposureFactor(float factor)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetCameraExposureFactor(value);
+            return _rtcEngineImpl.SetCameraExposureFactor(factor);
         }
 
         public override bool IsCameraAutoExposureFaceModeSupported()
