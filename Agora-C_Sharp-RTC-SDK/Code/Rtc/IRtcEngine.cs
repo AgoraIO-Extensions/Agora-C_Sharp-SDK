@@ -4080,7 +4080,7 @@ namespace Agora.Rtc
         /// &lt; 0: Failure.
         /// </returns>
         ///
-        public abstract int SetCameraExposureFactor(float value);
+        public abstract int SetCameraExposureFactor(float factor);
 
         ///
         /// <summary>

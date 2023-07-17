@@ -8,7 +8,7 @@ namespace Agora.Rtc
         private const string  DebugLibName = "libName";
 
         [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        public  static extern IntPtr CreateFakeRtcEngine();
+        public static extern IntPtr CreateFakeRtcEngine();
 
         [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int TriggerEventWithFakeRtcEngine(IntPtr engine_ptr, ref IrisCApiParam2 apiParam);

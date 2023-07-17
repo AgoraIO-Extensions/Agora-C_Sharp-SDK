@@ -2200,9 +2200,9 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetCameraExposureFactor()
         {
-            float value;
-            ParamsHelper.InitParam(out value);
-            var nRet = Engine.SetCameraExposureFactor(value);
+            float factor;
+            ParamsHelper.InitParam(out factor);
+            var nRet = Engine.SetCameraExposureFactor(factor);
 
             Assert.AreEqual(-4, nRet);
         }
