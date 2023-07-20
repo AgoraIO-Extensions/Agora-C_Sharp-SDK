@@ -99,6 +99,16 @@ namespace Agora.Rtm
        
     };
 
+    public class LogoutResult
+    {
+
+    };
+
+    public class RenewTokenResult
+    {
+
+    };
+
     public class SetChannelMetadataResult
     {
         public string ChannelName;
