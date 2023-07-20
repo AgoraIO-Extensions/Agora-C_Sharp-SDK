@@ -36,7 +36,7 @@ namespace Agora.Rtm
 
         Task<RtmResult<LoginResult>> LoginAsync(string token);
 
-        RtmStatus Logout();
+        Task<RtmResult<LogoutResult>> LogoutAsync();
 
         IRtmStorage GetStorage();
 
@@ -44,7 +44,7 @@ namespace Agora.Rtm
 
         IRtmPresence GetPresence();
 
-        RtmStatus RenewToken(string token);
+        Task<RtmResult<RenewTokenResult>> RenewTokenAsync(string token);
 
         Task<RtmResult<PublishResult>> PublishAsync(string channelName, byte[] message, PublishOptions option);
 

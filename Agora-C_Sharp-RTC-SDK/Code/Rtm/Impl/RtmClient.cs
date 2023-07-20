@@ -175,10 +175,20 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public RtmStatus Logout()
+        public Task<RtmResult<LogoutResult>> LogoutAsync()
         {
+            //fake async
             int errorCode = internalRtmClient.Logout();
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMLogoutOperation, this.internalRtmClient);
+            RtmResult<LogoutResult> rtmResult = new RtmResult<LogoutResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLogoutOperation, this.internalRtmClient);
+            if (errorCode == 0)
+            {
+                rtmResult.Response = new LogoutResult();
+            }
+
+            TaskCompletionSource<RtmResult<LogoutResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<LogoutResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
         public Task<RtmResult<PublishResult>> PublishAsync(string channelName, byte[] message, PublishOptions option)
@@ -219,10 +229,20 @@ namespace Agora.Rtm
             return taskCompletionSource.Task;
         }
 
-        public RtmStatus RenewToken(string token)
+        public Task<RtmResult<RenewTokenResult>> RenewTokenAsync(string token)
         {
+            //fake async
             int errorCode = internalRtmClient.RenewToken(token);
-            return Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this.internalRtmClient);
+            RtmResult<RenewTokenResult> rtmResult = new RtmResult<RenewTokenResult>();
+            rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this.internalRtmClient);
+            if (errorCode == 0)
+            {
+                rtmResult.Response = new RenewTokenResult();
+            }
+
+            TaskCompletionSource<RtmResult<RenewTokenResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<RenewTokenResult>>();
+            taskCompletionSource.SetResult(rtmResult);
+            return taskCompletionSource.Task;
         }
 
         public RtmStatus SetParameters(string parameters)
