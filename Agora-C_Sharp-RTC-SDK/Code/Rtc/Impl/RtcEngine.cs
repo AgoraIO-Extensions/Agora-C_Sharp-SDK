@@ -496,7 +496,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartPreview();
+            return _rtcEngineImpl.StartPreview(sourceType);
         }
 
         public override int StopPreview()
