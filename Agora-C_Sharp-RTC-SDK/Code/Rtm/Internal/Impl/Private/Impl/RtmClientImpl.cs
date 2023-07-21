@@ -87,6 +87,10 @@ namespace Agora.Rtm.Internal
             //must call free event handler after rtm release
             ReleaseEventHandler();
 
+
+            AgoraRtmNative.DestroyIrisRtmEngine(_irisApiRtmEngine);
+            _irisApiRtmEngine = IntPtr.Zero;
+            clientInstance = null;
             _apiParam.FreeResult();
             _disposed = true;
         }
@@ -98,11 +102,6 @@ namespace Agora.Rtm.Internal
                 "{}", 2,
                 IntPtr.Zero, 0,
                 ref _apiParam);
-
-            AgoraRtmNative.DestroyIrisRtmEngine(_irisApiRtmEngine);
-
-            _irisApiRtmEngine = IntPtr.Zero;
-            clientInstance = null;
         }
 
         public void Dispose()
@@ -149,6 +148,7 @@ namespace Agora.Rtm.Internal
         {
             if (_rtcEventHandlerHandle.handle == IntPtr.Zero) return;
 
+            AgoraRtmNative.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
 
             RtmEventHandlerNative.SetEventHandler(null);
 
@@ -157,8 +157,6 @@ namespace Agora.Rtm.Internal
             if (_callbackObject != null) _callbackObject.Release();
             _callbackObject = null;
 #endif
-
-            AgoraRtmNative.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
 
         }
 
