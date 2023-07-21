@@ -199,6 +199,7 @@ if [ "$ANDROID_URL" != "" ]; then
         cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
     fi
 
+    #copy iris  
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
@@ -210,6 +211,8 @@ if [ "$ANDROID_URL" != "" ]; then
 
     cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+
+    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
 fi
 
