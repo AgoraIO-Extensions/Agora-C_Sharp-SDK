@@ -221,7 +221,20 @@ if [ "$IOS_URL" != "" ]; then
     IOS_SRC_PATH="./iris_*_iOS"
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
     cp -PRf $IOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+
+    #remove x86_64 from iris ios framework
+    files=$(ls $IOS_SRC_PATH/ALL_ARCHITECTURE/Release)
+    for filename in $files; do
+        extension=${filename##*.}
+        basename=${filename%.*}
+        if [ "$extension" == "framework" ]; then
+            lipo -remove x86_64 $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
+        fi
+
+    done
+
     cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+
 fi
 
 # macOS
@@ -257,6 +270,28 @@ if [ "$WIN_URL" != "" ]; then
     cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtm/sdk/x86/*.lib "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
+
+    #create dll.meta
+    files=$(ls $WIN64_DST_PATH)
+    for filename in $files; do
+        extension=${filename##*.}
+        basename=${filename%.*}
+        if [ "$extension" == "dll" ]; then
+            cp "$ROOT_DIR"/Unity/Plugins/x86_64/dll.meta $WIN64_DST_PATH/${filename}.meta
+        fi
+
+    done
+
+    files=$(ls $WIN32_DST_PATH)
+    for filename in $files; do
+        extension=${filename##*.}
+        basename=${filename%.*}
+        if [ "$extension" == "dll" ]; then
+            cp "$ROOT_DIR"/Unity/Plugins/x86/dll.meta $WIN32_DST_PATH/${filename}.meta
+        fi
+
+    done
+
 fi
 
 echo "[Unity CI] finish copying files"
