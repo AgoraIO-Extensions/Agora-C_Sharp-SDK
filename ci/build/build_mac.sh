@@ -102,10 +102,13 @@ fi
 
 if [ "$RTC" == "true" ] && [ "$RTM" == "true" ]; then
     NATIVE_FOLDER="ALL"
+    SUB_PATH="rtc"
 elif [ "$RTC" == "true" ]; then
     NATIVE_FOLDER="DCG"
+    SUB_PATH="rtc"
 elif [ "$RTM" == "true" ]; then
     NATIVE_FOLDER="RTM"
+    SUB_PATH="rtm"
 fi
 
 echo PLUGIN_NAME $PLUGIN_NAME
@@ -190,23 +193,26 @@ if [ "$ANDROID_URL" != "" ]; then
     rm -r "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AndroidManifest-*.xml
 
     mkdir "$ANDROID_DST_PATH"/libs
-    cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
+    cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-    if [ -f $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/*.aar ]; then
-        cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
+    if [ -f $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.aar ]; then
+        cp $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/*.aar "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android
     fi
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
+    #copy iris  
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/arm64-v8a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/arm64-v8a
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/armeabi-v7a "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/armeabi-v7a/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/armeabi-v7a
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/x86 "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86
 
-    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtc/sdk/x86_64 "$ANDROID_DST_PATH"/libs
+    cp -r $ANDROID_SRC_PATH/$NATIVE_FOLDER/Agora_*/$SUB_PATH/sdk/x86_64 "$ANDROID_DST_PATH"/libs
     cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/x86_64/libAgora*Wrapper.so "$ANDROID_DST_PATH"/libs/x86_64
+
+    cp $ANDROID_SRC_PATH/ALL_ARCHITECTURE/Release/*.jar "$ANDROID_DST_PATH"/libs
 
 fi
 
@@ -218,7 +224,20 @@ if [ "$IOS_URL" != "" ]; then
     IOS_SRC_PATH="./iris_*_iOS"
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
     cp -PRf $IOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
+
+    #remove x86_64 from iris ios framework
+    files=$(ls $IOS_SRC_PATH/ALL_ARCHITECTURE/Release)
+    for filename in $files; do
+        extension=${filename##*.}
+        basename=${filename%.*}
+        if [ "$extension" == "framework" ]; then
+            lipo -remove x86_64 $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
+        fi
+
+    done
+
     cp -PRf $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/*.framework "$IOS_DST_PATH"
+
 fi
 
 # macOS
@@ -237,21 +256,45 @@ if [ "$WIN_URL" != "" ]; then
     unzip -d ./ ./iris_*_Windows_*.zip || exit 1
     WIN_SRC_PATH="./iris_*_Windows"
 
+    #workaround add rtm in path
     # Windows x86-64
     echo "[Unity CI] copying Windows x86-64 ..."
     WIN64_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86_64
-    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.dll "$WIN64_DST_PATH"
-    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86_64/*.lib "$WIN64_DST_PATH"
+    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtm/sdk/x86_64/*.dll "$WIN64_DST_PATH"
+    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtm/sdk/x86_64/*.lib "$WIN64_DST_PATH"
     cp $WIN_SRC_PATH/x64/Release/*.dll "$WIN64_DST_PATH"
     cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
 
+    #workaround add rtm in path
     # Windows x86
     echo "[Unity CI] copying Windows x86 ..."
     WIN32_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/x86
-    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.dll "$WIN32_DST_PATH"
-    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
+    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtm/sdk/x86/*.dll "$WIN32_DST_PATH"
+    cp $WIN_SRC_PATH/$NATIVE_FOLDER/Agora_*/rtm/sdk/x86/*.lib "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
     cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
+
+    #create dll.meta
+    files=$(ls $WIN64_DST_PATH)
+    for filename in $files; do
+        extension=${filename##*.}
+        basename=${filename%.*}
+        if [ "$extension" == "dll" ]; then
+            cp "$ROOT_DIR"/Unity/Plugins/x86_64/dll.meta $WIN64_DST_PATH/${filename}.meta
+        fi
+
+    done
+
+    files=$(ls $WIN32_DST_PATH)
+    for filename in $files; do
+        extension=${filename##*.}
+        basename=${filename%.*}
+        if [ "$extension" == "dll" ]; then
+            cp "$ROOT_DIR"/Unity/Plugins/x86/dll.meta $WIN32_DST_PATH/${filename}.meta
+        fi
+
+    done
+
 fi
 
 echo "[Unity CI] finish copying files"
