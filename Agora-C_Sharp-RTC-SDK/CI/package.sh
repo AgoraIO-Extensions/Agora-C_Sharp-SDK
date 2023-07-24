@@ -1,7 +1,7 @@
 #!/bin/bash
-#============================================================================== 
+#==============================================================================
 #   package.sh :  pack Agora Unity RTC SDK into a unity package
-#   
+#
 #  $1 SDK Type:
 #  video/audio
 #
@@ -27,7 +27,7 @@
 #
 #  $11 wayang_branch (The branch name of Wayang unitydemo)
 #
-#============================================================================== 
+#==============================================================================
 
 set -ex
 
@@ -79,7 +79,6 @@ cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/README.md "$PLUGIN
 cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/README.zh.md "$PLUGIN_PATH"/API-Example/
 cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/StreamingAssets "$CI_DIR"/project/Assets/
 
-
 # Copy SDK
 echo "[Unity CI] copying scripts ..."
 mkdir "$PLUGIN_PATH"/Agora-Unity-RTC-SDK
@@ -123,8 +122,8 @@ fi
 mkdir "$ANDROID_DST_PATH"/libs
 cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.jar "$ANDROID_DST_PATH"/libs
 
-if [ "$SDK_TYPE" == "video" ]; then
-cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
+if [ -f $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar ]; then
+    cp $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/*.aar "$PLUGIN_PATH"/Agora-Unity-RTC-SDK/Plugins/Android
 fi
 
 cp -r $ANDROID_SRC_PATH/DCG/Agora_*/rtc/sdk/arm64-v8a "$ANDROID_DST_PATH"/libs
@@ -146,11 +145,10 @@ cp -PRf $IOS_SRC_PATH/DCG/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework
 
 #remove x86_64 from iris ios framework
 files=$(ls $IOS_SRC_PATH/ALL_ARCHITECTURE/Release)
-for filename in $files
-do
+for filename in $files; do
     extension=${filename##*.}
-    basename=${filename%.*} 
-    if [ "$extension" == "framework" ]; then 
+    basename=${filename%.*}
+    if [ "$extension" == "framework" ]; then
         lipo -remove x86_64 $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename -o $IOS_SRC_PATH/ALL_ARCHITECTURE/Release/$filename/$basename
     fi
 
@@ -172,12 +170,11 @@ cp $WIN_SRC_PATH/x64/Release/*.lib "$WIN64_DST_PATH"
 
 #create dll.meta
 files=$(ls $WIN64_DST_PATH)
-for filename in $files
-do
+for filename in $files; do
     extension=${filename##*.}
     basename=${filename%.*}
-    if [ "$extension" == "dll" ]; then 
-       cp "$ROOT_DIR"/Unity/Plugins/x86_64/dll.meta $WIN64_DST_PATH/${filename}.meta
+    if [ "$extension" == "dll" ]; then
+        cp "$ROOT_DIR"/Unity/Plugins/x86_64/dll.meta $WIN64_DST_PATH/${filename}.meta
     fi
 
 done
@@ -190,17 +187,14 @@ cp $WIN_SRC_PATH/DCG/Agora_*/sdk/x86/*.lib "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/Win32/Release/*.dll "$WIN32_DST_PATH"
 cp $WIN_SRC_PATH/Win32/Release/*.lib "$WIN32_DST_PATH"
 files=$(ls $WIN32_DST_PATH)
-for filename in $files
-do
+for filename in $files; do
     extension=${filename##*.}
     basename=${filename%.*}
-    if [ "$extension" == "dll" ]; then 
-       cp "$ROOT_DIR"/Unity/Plugins/x86/dll.meta $WIN32_DST_PATH/${filename}.meta
+    if [ "$extension" == "dll" ]; then
+        cp "$ROOT_DIR"/Unity/Plugins/x86/dll.meta $WIN32_DST_PATH/${filename}.meta
     fi
 
 done
-
-
 
 echo "[Unity CI] finish copying files"
 
@@ -211,7 +205,7 @@ if [ "$SDK_TYPE" == "audio" ]; then
     python3 ./remove_video_case.py "$PLUGIN_PATH"/API-Example
 fi
 
-$UNITY_DIR/Unity -quit -batchmode -nographics -openProjects  "$CI_DIR/project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage"
+$UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "$CI_DIR/project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage"
 
 #--------------------------------------
 # Copy to $CI_DIR/output
@@ -219,22 +213,18 @@ $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects  "$CI_DIR/project" -
 mkdir "$CI_DIR"/output
 cp "$CI_DIR"/project/*.unitypackage "$CI_DIR"/output || exit 1
 
-
-if [ $BUILD_PACKAGE == "true" ] 
-then
+if [ $BUILD_PACKAGE == "true" ]; then
     echo "[Unity CI] Build package. It may take a while ..."
     mkdir "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/Agora-RTC-Plugin
     cp -r "$PLUGIN_PATH"/Agora-Unity-RTC-SDK "$CI_DIR"/temp/Agora-Unity-Quickstart/API-Example-Unity/Assets/Agora-RTC-Plugin || exit 1
     $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "$CI_DIR/temp/Agora-Unity-Quickstart/API-Example-Unity" -executeMethod CommandBuild.BuildAll
     cp -r "$CI_DIR"/temp/Agora-Unity-Quickstart/Build "$CI_DIR"/output || exit 1
     echo "[Unity CI] Build package finish"
-else 
+else
     echo "[Unity CI] Do not build package"
 fi
 
-
-if [ $BUILD_WAYANG == "true" ]
-then 
+if [ $BUILD_WAYANG == "true" ]; then
     echo "[Unity CI] Build Wayang, It may take a while ..."
     cd temp
     git clone -b $WAYANG_BRANCH ssh://git@git.agoralab.co/apps/unitydemo.git
