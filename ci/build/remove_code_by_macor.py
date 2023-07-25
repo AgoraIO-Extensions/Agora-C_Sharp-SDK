@@ -37,6 +37,20 @@ def remove_key_word_in_path(file_path, key_word):
             f.write(content)
             f.close()
 
+def replace_key_word_in_path(file_path, key_word, replace_word):
+    files = get_all_files(file_path)
+    for i in range(0, len(files)):
+        file_name = files[i]
+        if file_name.endswith(".cs"):
+            # print(file_name)
+            f = open(file_name, 'r', encoding='UTF-8')
+            content = f.read()
+            content = content.replace(key_word, replace_word)
+            f.close()
+            f = open(file_name, 'w')
+            f.write(content)
+            f.close()
+
 
 if RTC == 'false' and os.path.isdir(os.path.join(ROOT, "Code/Rtc")):
     shutil.rmtree(os.path.join(ROOT, "Code/Rtc"))
@@ -53,3 +67,7 @@ if RTM == 'false':
 if RTC == 'false':
     shutil.rmtree(os.path.join(ROOT, 'Resources'))
     os.mkdir(os.path.join(ROOT, 'Resources'))
+
+if RTC == 'false':
+    replace_key_word_in_path(os.path.join(ROOT,'Unity/Editor'), 'Agora-RTC-Plugin/Agora-Unity-RTC-SDK/Plugins/iOS','Agora-RTM-Plugin/Agora-Unity-RTM-SDK/Plugins/iOS')
+
