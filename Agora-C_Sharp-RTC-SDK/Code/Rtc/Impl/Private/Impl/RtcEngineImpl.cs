@@ -3888,7 +3888,7 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
 
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_PRELOADCHANNEL2,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UPDATEPRELOADCHANNELTOKEN,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

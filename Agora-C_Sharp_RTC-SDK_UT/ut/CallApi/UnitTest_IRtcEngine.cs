@@ -104,7 +104,7 @@ namespace Agora.Rtc
 
             var nRet = Engine.UpdatePreloadChannelToken(token);
 
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual(0, nRet);
         }
 
 
@@ -122,7 +122,7 @@ namespace Agora.Rtc
 
             int nRet = Engine.PreloadChannel(token, channelId, uid);
 
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual(0, nRet);
         }
 
 
@@ -140,24 +140,8 @@ namespace Agora.Rtc
 
             int nRet = Engine.PreloadChannel(token, channelId, userAccount);
 
-            Assert.AreEqual("", nRet);
+            Assert.AreEqual(0, nRet);
         }
-
-
-
-
-        [Test]
-        public void Test_GetVersion()
-        {
-            int build;
-            ParamsHelper.InitParam(out build);
-
-            string nRet = Engine.GetVersion(ref build);
-
-            Assert.AreEqual("", nRet);
-        }
-
-
 
         [Test]
         public void Test_GetVersion()
