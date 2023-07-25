@@ -57,6 +57,8 @@ namespace Agora.Rtc
         kMusicContentCenterStatusErrMusicLoading = 5,
 
         kMusicContentCenterStatusErrMusicDecryption = 6,
+
+        kMusicContentCenterStatusErHttpInternalError = 7,
     };
 
     ///
