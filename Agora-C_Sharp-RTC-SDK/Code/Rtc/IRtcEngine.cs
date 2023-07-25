@@ -283,6 +283,12 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetUserInfoByUid(uint uid, ref UserInfo userInfo);
+
+
+        public abstract int PreloadChannel(string token, string channelId, uint uid);
+        public abstract int PreloadChannel(string token, string channelId, string userAccount);
+        public abstract int UpdatePreloadChannelToken(string token);
+
         #endregion
 
         #region Event handler
@@ -876,7 +882,7 @@ namespace Agora.Rtc
         public abstract int StopCameraCapture(VIDEO_SOURCE_TYPE type);
 
 
-       
+
         #endregion
 
         #region Media player
