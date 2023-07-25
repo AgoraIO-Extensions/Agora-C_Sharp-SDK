@@ -95,6 +95,54 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
+
+        [Test]
+        public void Test_UpdatePreloadChannelToken()
+        {
+            string token;
+            ParamsHelper.InitParam(out token);
+
+            var nRet = Engine.UpdatePreloadChannelToken(token);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_PreloadChannel()
+        {
+            string token;
+            ParamsHelper.InitParam(out token);
+
+            string channelId;
+            ParamsHelper.InitParam(out channelId);
+
+            uint uid;
+            ParamsHelper.InitParam(out uid);
+
+            int nRet = Engine.PreloadChannel(token, channelId, uid);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
+        public void Test_PreloadChannel2()
+        {
+            string token;
+            ParamsHelper.InitParam(out token);
+
+            string channelId;
+            ParamsHelper.InitParam(out channelId);
+
+            string userAccount;
+            ParamsHelper.InitParam(out userAccount);
+
+            int nRet = Engine.PreloadChannel(token, channelId, userAccount);
+
+            Assert.AreEqual(0, nRet);
+        }
+
         [Test]
         public void Test_GetVersion()
         {
@@ -644,7 +692,7 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-  
+
         [Test]
         public void Test_SetupRemoteVideo()
         {
@@ -2486,7 +2534,7 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-       
+
 
         [Test]
         public void Test_SetRemoteUserPriority()

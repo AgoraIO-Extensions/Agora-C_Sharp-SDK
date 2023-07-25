@@ -439,6 +439,10 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ERR_INVALID_USER_ACCOUNT = 134,
+
+
+        ERR_CERT_VERIFY_FAILURE = 135,
+
         ///
         /// @ignore
         ///
@@ -5074,7 +5078,9 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21
+        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21,
+
+        CONNECTION_CHANGED_CERTIFICATION_VERYFY_FAILURE = 22,
     };
 
     ///
@@ -7644,7 +7650,7 @@ namespace Agora.Rtc
 
         public ScreenAudioParameters()
         {
-            sampleRate = 16000;
+            sampleRate = 48000;
             channels = 2;
             captureSignalVolume = 100;
         }

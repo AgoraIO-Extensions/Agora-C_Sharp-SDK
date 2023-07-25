@@ -260,6 +260,9 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_JOINCHANNELWITHUSERACCOUNTEX = "RtcEngine_joinChannelWithUserAccountEx";
         internal const string FUNC_RTCENGINE_GETUSERINFOBYUSERACCOUNT = "RtcEngine_getUserInfoByUserAccount";
         internal const string FUNC_RTCENGINE_GETUSERINFOBYUID = "RtcEngine_getUserInfoByUid";
+        internal const string FUNC_RTCENGINE_PRELOADCHANNEL = "RtcEngine_preloadChannel";
+        internal const string FUNC_RTCENGINE_PRELOADCHANNEL2 = "RtcEngine_preloadChannel2";
+        internal const string FUNC_RTCENGINE_UPDATEPRELOADCHANNELTOKEN = "RtcEngine_updatePreloadChannelToken";
         internal const string FUNC_RTCENGINE_STARTCHANNELMEDIARELAY = "RtcEngine_startChannelMediaRelay";
         internal const string FUNC_RTCENGINE_UPDATECHANNELMEDIARELAY = "RtcEngine_updateChannelMediaRelay";
         internal const string FUNC_RTCENGINE_STOPCHANNELMEDIARELAY = "RtcEngine_stopChannelMediaRelay";

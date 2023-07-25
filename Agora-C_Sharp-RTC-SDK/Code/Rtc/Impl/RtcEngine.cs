@@ -2296,6 +2296,33 @@ namespace Agora.Rtc
             return _rtcEngineImpl.GetUserInfoByUid(uid, ref userInfo);
         }
 
+        public override int PreloadChannel(string token, string channelId, uint uid)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PreloadChannel(token, channelId, uid);
+        }
+
+        public override int PreloadChannel(string token, string channelId, string userAccount)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PreloadChannel(token, channelId, userAccount);
+        }
+
+        public override int UpdatePreloadChannelToken(string token)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.UpdatePreloadChannelToken(token);
+        }
+
         public override int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
             if (_rtcEngineImpl == null)
