@@ -30,15 +30,15 @@ namespace Agora.Rtm
 
 
         public bool OnPresenceEvent_be_trigger = false;
-        public PresenceEvent OnPresenceEvent_event = null;
+        public Internal.PresenceEvent OnPresenceEvent_event = null;
 
-        public override void OnPresenceEvent(PresenceEvent @event)
+        public override void OnPresenceEvent(Internal.PresenceEvent @event)
         {
             OnPresenceEvent_be_trigger = true;
             OnPresenceEvent_event = @event;
         }
 
-        public bool OnPresenceEventPassed(PresenceEvent @event)
+        public bool OnPresenceEventPassed(Internal.PresenceEvent @event)
         {
             if (OnPresenceEvent_be_trigger == false)
                 return false;
@@ -122,7 +122,7 @@ namespace Agora.Rtm
         public UInt64 OnJoinResult_requestId = 0;
         public string OnJoinResult_channelName = null;
         public string OnJoinResult_userId = null;
-        public RTM_ERROR_CODE OnJoinResult_errorCode = Rtm.RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnJoinResult_errorCode = Rtm.RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnJoinResult(UInt64 requestId, string channelName, string userId, RTM_ERROR_CODE errorCode)
         {
@@ -157,7 +157,7 @@ namespace Agora.Rtm
         public UInt64 OnLeaveResult_requestId = 0;
         public string OnLeaveResult_channelName = null;
         public string OnLeaveResult_userId = null;
-        public RTM_ERROR_CODE OnLeaveResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnLeaveResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnLeaveResult(UInt64 requestId, string channelName, string userId, RTM_ERROR_CODE errorCode)
         {
@@ -194,7 +194,7 @@ namespace Agora.Rtm
         public string OnJoinTopicResult_userId = null;
         public string OnJoinTopicResult_topic = null;
         public string OnJoinTopicResult_meta = null;
-        public RTM_ERROR_CODE OnJoinTopicResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnJoinTopicResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnJoinTopicResult(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_ERROR_CODE errorCode)
         {
@@ -237,7 +237,7 @@ namespace Agora.Rtm
         public string OnLeaveTopicResult_userId = null;
         public string OnLeaveTopicResult_topic = null;
         public string OnLeaveTopicResult_meta = null;
-        public RTM_ERROR_CODE OnLeaveTopicResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnLeaveTopicResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnLeaveTopicResult(UInt64 requestId, string channelName, string userId, string topic, string meta, RTM_ERROR_CODE errorCode)
         {
@@ -279,11 +279,11 @@ namespace Agora.Rtm
         public string OnSubscribeTopicResult_channelName = null;
         public string OnSubscribeTopicResult_userId = null;
         public string OnSubscribeTopicResult_topic = null;
-        public UserList OnSubscribeTopicResult_succeedUsers = null;
-        public UserList OnSubscribeTopicResult_failedUsers = null;
-        public RTM_ERROR_CODE OnSubscribeTopicResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public Agora.Rtm.Internal.UserList OnSubscribeTopicResult_succeedUsers = null;
+        public Agora.Rtm.Internal.UserList OnSubscribeTopicResult_failedUsers = null;
+        public RTM_ERROR_CODE OnSubscribeTopicResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
-        public override void OnSubscribeTopicResult(UInt64 requestId, string channelName, string userId, string topic, UserList succeedUsers, UserList failedUsers, RTM_ERROR_CODE errorCode)
+        public override void OnSubscribeTopicResult(UInt64 requestId, string channelName, string userId, string topic, Agora.Rtm.Internal.UserList succeedUsers, Agora.Rtm.Internal.UserList failedUsers, RTM_ERROR_CODE errorCode)
         {
             OnSubscribeTopicResult_be_trigger = true;
             OnSubscribeTopicResult_requestId = requestId;
@@ -295,7 +295,7 @@ namespace Agora.Rtm
             OnSubscribeTopicResult_errorCode = errorCode;
         }
 
-        public bool OnSubscribeTopicResultPassed(UInt64 requestId, string channelName, string userId, string topic, UserList succeedUsers, UserList failedUsers, RTM_ERROR_CODE errorCode)
+        public bool OnSubscribeTopicResultPassed(UInt64 requestId, string channelName, string userId, string topic, Agora.Rtm.Internal.UserList succeedUsers, Agora.Rtm.Internal.UserList failedUsers, RTM_ERROR_CODE errorCode)
         {
             if (OnSubscribeTopicResult_be_trigger == false)
                 return false;
@@ -319,8 +319,8 @@ namespace Agora.Rtm
 
         public bool OnConnectionStateChange_be_trigger = false;
         public string OnConnectionStateChange_channelName = null;
-        public RTM_CONNECTION_STATE OnConnectionStateChange_state = RTM_CONNECTION_STATE.RTM_CONNECTION_STATE_CONNECTING;
-        public RTM_CONNECTION_CHANGE_REASON OnConnectionStateChange_reason = RTM_CONNECTION_CHANGE_REASON.RTM_CONNECTION_CHANGED_BANNED_BY_SERVER;
+        public RTM_CONNECTION_STATE OnConnectionStateChange_state = RTM_CONNECTION_STATE.CONNECTING;
+        public RTM_CONNECTION_CHANGE_REASON OnConnectionStateChange_reason = RTM_CONNECTION_CHANGE_REASON.BANNED_BY_SERVER;
 
         public override void OnConnectionStateChange(string channelName, RTM_CONNECTION_STATE state, RTM_CONNECTION_CHANGE_REASON reason)
         {
@@ -374,7 +374,7 @@ namespace Agora.Rtm
         public bool OnSubscribeResult_be_trigger = false;
         public UInt64 OnSubscribeResult_requestId = 0;
         public string OnSubscribeResult_channelName = null;
-        public RTM_ERROR_CODE OnSubscribeResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnSubscribeResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnSubscribeResult(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode)
         {
@@ -404,7 +404,7 @@ namespace Agora.Rtm
 
         public bool OnPublishResult_be_trigger = false;
         public UInt64 OnPublishResult_requestId = 0;
-        public RTM_ERROR_CODE OnPublishResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnPublishResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnPublishResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
@@ -430,7 +430,7 @@ namespace Agora.Rtm
 
 
         public bool OnLoginResult_be_trigger = false;
-        public RTM_ERROR_CODE OnLoginResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnLoginResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnLoginResult(RTM_ERROR_CODE errorCode)
         {
@@ -455,8 +455,8 @@ namespace Agora.Rtm
         public bool OnSetChannelMetadataResult_be_trigger = false;
         public UInt64 OnSetChannelMetadataResult_requestId = 0;
         public string OnSetChannelMetadataResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnSetChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
-        public RTM_ERROR_CODE OnSetChannelMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_CHANNEL_TYPE OnSetChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.STREAM;
+        public RTM_ERROR_CODE OnSetChannelMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnSetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RTM_ERROR_CODE errorCode)
         {
@@ -490,8 +490,8 @@ namespace Agora.Rtm
         public bool OnUpdateChannelMetadataResult_be_trigger = false;
         public UInt64 OnUpdateChannelMetadataResult_requestId = 0;
         public string OnUpdateChannelMetadataResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnUpdateChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
-        public RTM_ERROR_CODE OnUpdateChannelMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_CHANNEL_TYPE OnUpdateChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.STREAM;
+        public RTM_ERROR_CODE OnUpdateChannelMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnUpdateChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RTM_ERROR_CODE errorCode)
         {
@@ -525,8 +525,8 @@ namespace Agora.Rtm
         public bool OnRemoveChannelMetadataResult_be_trigger = false;
         public UInt64 OnRemoveChannelMetadataResult_requestId = 0;
         public string OnRemoveChannelMetadataResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnRemoveChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
-        public RTM_ERROR_CODE OnRemoveChannelMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_CHANNEL_TYPE OnRemoveChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.STREAM;
+        public RTM_ERROR_CODE OnRemoveChannelMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnRemoveChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RTM_ERROR_CODE errorCode)
         {
@@ -560,9 +560,9 @@ namespace Agora.Rtm
         public bool OnGetChannelMetadataResult_be_trigger = false;
         public UInt64 OnGetChannelMetadataResult_requestId = 0;
         public string OnGetChannelMetadataResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnGetChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
+        public RTM_CHANNEL_TYPE OnGetChannelMetadataResult_channelType = RTM_CHANNEL_TYPE.STREAM;
         public RtmMetadata OnGetChannelMetadataResult_data = null;
-        public RTM_ERROR_CODE OnGetChannelMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnGetChannelMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnGetChannelMetadataResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, RTM_ERROR_CODE errorCode)
         {
@@ -599,7 +599,7 @@ namespace Agora.Rtm
         public bool OnSetUserMetadataResult_be_trigger = false;
         public UInt64 OnSetUserMetadataResult_requestId = 0;
         public string OnSetUserMetadataResult_userId = null;
-        public RTM_ERROR_CODE OnSetUserMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnSetUserMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnSetUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode)
         {
@@ -630,7 +630,7 @@ namespace Agora.Rtm
         public bool OnUpdateUserMetadataResult_be_trigger = false;
         public UInt64 OnUpdateUserMetadataResult_requestId = 0;
         public string OnUpdateUserMetadataResult_userId = null;
-        public RTM_ERROR_CODE OnUpdateUserMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnUpdateUserMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnUpdateUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode)
         {
@@ -661,7 +661,7 @@ namespace Agora.Rtm
         public bool OnRemoveUserMetadataResult_be_trigger = false;
         public UInt64 OnRemoveUserMetadataResult_requestId = 0;
         public string OnRemoveUserMetadataResult_userId = null;
-        public RTM_ERROR_CODE OnRemoveUserMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnRemoveUserMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnRemoveUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode)
         {
@@ -693,7 +693,7 @@ namespace Agora.Rtm
         public UInt64 OnGetUserMetadataResult_requestId = 0;
         public string OnGetUserMetadataResult_userId = null;
         public RtmMetadata OnGetUserMetadataResult_data = null;
-        public RTM_ERROR_CODE OnGetUserMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnGetUserMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnGetUserMetadataResult(UInt64 requestId, string userId, RtmMetadata data, RTM_ERROR_CODE errorCode)
         {
@@ -727,7 +727,7 @@ namespace Agora.Rtm
         public bool OnSubscribeUserMetadataResult_be_trigger = false;
         public UInt64 OnSubscribeUserMetadataResult_requestId = 0;
         public string OnSubscribeUserMetadataResult_userId = null;
-        public RTM_ERROR_CODE OnSubscribeUserMetadataResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnSubscribeUserMetadataResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnSubscribeUserMetadataResult(UInt64 requestId, string userId, RTM_ERROR_CODE errorCode)
         {
@@ -758,9 +758,9 @@ namespace Agora.Rtm
         public bool OnSetLockResult_be_trigger = false;
         public UInt64 OnSetLockResult_requestId = 0;
         public string OnSetLockResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnSetLockResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
+        public RTM_CHANNEL_TYPE OnSetLockResult_channelType = RTM_CHANNEL_TYPE.STREAM;
         public string OnSetLockResult_lockName = null;
-        public RTM_ERROR_CODE OnSetLockResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnSetLockResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnSetLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, RTM_ERROR_CODE errorCode)
         {
@@ -797,9 +797,9 @@ namespace Agora.Rtm
         public bool OnRemoveLockResult_be_trigger = false;
         public UInt64 OnRemoveLockResult_requestId = 0;
         public string OnRemoveLockResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnRemoveLockResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
+        public RTM_CHANNEL_TYPE OnRemoveLockResult_channelType = RTM_CHANNEL_TYPE.STREAM;
         public string OnRemoveLockResult_lockName = null;
-        public RTM_ERROR_CODE OnRemoveLockResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnRemoveLockResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnRemoveLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, RTM_ERROR_CODE errorCode)
         {
@@ -836,9 +836,9 @@ namespace Agora.Rtm
         public bool OnReleaseLockResult_be_trigger = false;
         public UInt64 OnReleaseLockResult_requestId = 0;
         public string OnReleaseLockResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnReleaseLockResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
+        public RTM_CHANNEL_TYPE OnReleaseLockResult_channelType = RTM_CHANNEL_TYPE.STREAM;
         public string OnReleaseLockResult_lockName = null;
-        public RTM_ERROR_CODE OnReleaseLockResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnReleaseLockResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnReleaseLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, RTM_ERROR_CODE errorCode)
         {
@@ -875,9 +875,9 @@ namespace Agora.Rtm
         public bool OnAcquireLockResult_be_trigger = false;
         public UInt64 OnAcquireLockResult_requestId = 0;
         public string OnAcquireLockResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnAcquireLockResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
+        public RTM_CHANNEL_TYPE OnAcquireLockResult_channelType = RTM_CHANNEL_TYPE.STREAM;
         public string OnAcquireLockResult_lockName = null;
-        public RTM_ERROR_CODE OnAcquireLockResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnAcquireLockResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
         public string OnAcquireLockResult_errorDetails = null;
 
         public override void OnAcquireLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, RTM_ERROR_CODE errorCode, string errorDetails)
@@ -918,9 +918,9 @@ namespace Agora.Rtm
         public bool OnRevokeLockResult_be_trigger = false;
         public UInt64 OnRevokeLockResult_requestId = 0;
         public string OnRevokeLockResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnRevokeLockResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
+        public RTM_CHANNEL_TYPE OnRevokeLockResult_channelType = RTM_CHANNEL_TYPE.STREAM;
         public string OnRevokeLockResult_lockName = null;
-        public RTM_ERROR_CODE OnRevokeLockResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnRevokeLockResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnRevokeLockResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, string lockName, RTM_ERROR_CODE errorCode)
         {
@@ -957,10 +957,10 @@ namespace Agora.Rtm
         public bool OnGetLocksResult_be_trigger = false;
         public UInt64 OnGetLocksResult_requestId = 0;
         public string OnGetLocksResult_channelName = null;
-        public RTM_CHANNEL_TYPE OnGetLocksResult_channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_STREAM;
+        public RTM_CHANNEL_TYPE OnGetLocksResult_channelType = RTM_CHANNEL_TYPE.STREAM;
         public LockDetail[] OnGetLocksResult_lockDetailList = null;
         public UInt64 OnGetLocksResult_count = 0;
-        public RTM_ERROR_CODE OnGetLocksResult_errorCode = Rtm.RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnGetLocksResult_errorCode = Rtm.RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnGetLocksResult(UInt64 requestId, string channelName, RTM_CHANNEL_TYPE channelType, LockDetail[] lockDetailList, UInt64 count, RTM_ERROR_CODE errorCode)
         {
@@ -1002,7 +1002,7 @@ namespace Agora.Rtm
         public UserState[] OnWhoNowResult_userStateList = null;
         public UInt64 OnWhoNowResult_count = 0;
         public string OnWhoNowResult_nextPage = null;
-        public RTM_ERROR_CODE OnWhoNowResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnWhoNowResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnWhoNowResult(UInt64 requestId, UserState[] userStateList, UInt64 count, string nextPage, RTM_ERROR_CODE errorCode)
         {
@@ -1038,7 +1038,7 @@ namespace Agora.Rtm
         public UInt64 OnWhereNowResult_requestId = 0;
         public ChannelInfo[] OnWhereNowResult_channels = null;
         public UInt64 OnWhereNowResult_count = 0;
-        public RTM_ERROR_CODE OnWhereNowResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnWhereNowResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnWhereNowResult(UInt64 requestId, ChannelInfo[] channels, UInt64 count, RTM_ERROR_CODE errorCode)
         {
@@ -1071,7 +1071,7 @@ namespace Agora.Rtm
 
         public bool OnPresenceSetStateResult_be_trigger = false;
         public UInt64 OnPresenceSetStateResult_requestId = 0;
-        public RTM_ERROR_CODE OnPresenceSetStateResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnPresenceSetStateResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnPresenceSetStateResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
@@ -1098,7 +1098,7 @@ namespace Agora.Rtm
 
         public bool OnPresenceRemoveStateResult_be_trigger = false;
         public UInt64 OnPresenceRemoveStateResult_requestId = 0;
-        public RTM_ERROR_CODE OnPresenceRemoveStateResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnPresenceRemoveStateResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnPresenceRemoveStateResult(UInt64 requestId, RTM_ERROR_CODE errorCode)
         {
@@ -1126,7 +1126,7 @@ namespace Agora.Rtm
         public bool OnPresenceGetStateResult_be_trigger = false;
         public UInt64 OnPresenceGetStateResult_requestId = 0;
         public UserState OnPresenceGetStateResult_state = null;
-        public RTM_ERROR_CODE OnPresenceGetStateResult_errorCode = RTM_ERROR_CODE.RTM_ERROR_NOT_INITIALIZED;
+        public RTM_ERROR_CODE OnPresenceGetStateResult_errorCode = RTM_ERROR_CODE.NOT_INITIALIZED;
 
         public override void OnPresenceGetStateResult(UInt64 requestId, UserState state, RTM_ERROR_CODE errorCode)
         {

@@ -45,6 +45,11 @@ namespace Agora.Rtm
             rtmEventHandler = new RtmEventHandler(this);
         }
 
+        public string GetVersion()
+        {
+            return internalRtmClient.GetVersion();
+        }
+
         internal RtmEventHandler GetRtmEventHandler()
         {
             return this.rtmEventHandler;
@@ -195,7 +200,7 @@ namespace Agora.Rtm
         {
             TaskCompletionSource<RtmResult<PublishResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishResult>>();
             UInt64 requestId = 0;
-            Internal.PublishOptions internalOptione = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY);
+            Internal.PublishOptions internalOptione = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.BINARY);
             int errorCode = internalRtmClient.Publish(channelName, message, message.Length, internalOptione, ref requestId);
             if (errorCode != 0)
             {
@@ -214,7 +219,7 @@ namespace Agora.Rtm
         {
             TaskCompletionSource<RtmResult<PublishResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<PublishResult>>();
             UInt64 requestId = 0;
-            Internal.PublishOptions internalOptione = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_STRING);
+            Internal.PublishOptions internalOptione = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.STRING);
             int errorCode = internalRtmClient.Publish(channelName, message, message.Length, internalOptione, ref requestId);
             if (errorCode != 0)
             {

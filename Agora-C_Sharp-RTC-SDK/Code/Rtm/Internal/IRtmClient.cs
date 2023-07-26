@@ -6,6 +6,8 @@ namespace Agora.Rtm.Internal
     {
         public abstract int Initialize(RtmConfig config);
 
+        public abstract string GetVersion();
+
         public abstract int Dispose();
 
         public abstract int Login(string token);

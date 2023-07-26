@@ -4,20 +4,20 @@ namespace Agora.Rtm
 {
     public enum RTM_MESSAGE_QOS
     {
-        RTM_MESSAGE_QOS_UNORDERED = 0,
+        UNORDERED = 0,
 
-        RTM_MESSAGE_QOS_ORDERED = 1,
+        ORDERED = 1,
     };
 
     public enum RTM_MESSAGE_PRIORITY
     {
-        RTM_MESSAGE_PRIORITY_HIGHEST = 0,
-      
-        RTM_MESSAGE_PRIORITY_HIGH = 1,
-       
-        RTM_MESSAGE_PRIORITY_NORMAL = 4,
-       
-        RTM_MESSAGE_PRIORITY_LOW = 8,
+        HIGHEST = 0,
+
+        HIGH = 1,
+
+        NORMAL = 4,
+
+        LOW = 8,
     };
 
     public class JoinChannelOptions
@@ -42,8 +42,8 @@ namespace Agora.Rtm
     {
         public JoinTopicOptions()
         {
-            this.qos = RTM_MESSAGE_QOS.RTM_MESSAGE_QOS_ORDERED;
-            this.priority = RTM_MESSAGE_PRIORITY.RTM_MESSAGE_PRIORITY_NORMAL;
+            this.qos = RTM_MESSAGE_QOS.ORDERED;
+            this.priority = RTM_MESSAGE_PRIORITY.NORMAL;
             this.meta = "";
             this.syncWithMedia = true;
         }
@@ -62,19 +62,15 @@ namespace Agora.Rtm
         public TopicOptions()
         {
             users = new string[0];
-            userCount = 0;
         }
 
         public TopicOptions(string[] users, uint userCount)
         {
             this.users = users;
-            this.userCount = userCount;
         }
 
         public string[] users;
-
-        public uint userCount;
     };
 
-  
+
 }

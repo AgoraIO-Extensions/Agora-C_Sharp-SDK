@@ -158,7 +158,7 @@ namespace Agora.Rtm
        {
             string topic;
             ParamsHelper.InitParam(out topic);
-            UserList users;
+            Internal.UserList users;
             ParamsHelper.InitParam(out users);
             var nRet = StreamChannel.GetSubscribedUserList(topic, ref users);
 

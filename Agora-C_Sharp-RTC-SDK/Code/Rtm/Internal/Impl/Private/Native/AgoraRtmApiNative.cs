@@ -52,6 +52,9 @@ namespace Agora.Rtm.Internal
         [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IntPtr GetIrisRtmErrorReason(int err_code);
 
+        [DllImport(AgoraRtmLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern IntPtr GetIrisRtmVersion();
+
         internal static void AllocEventHandlerHandle(ref RtmEventHandlerHandle eventHandlerHandle, Rtm_Func_Event_Native onEvent)
         {
             eventHandlerHandle.cEvent = new IrisRtmCEventHandler
@@ -272,7 +275,6 @@ namespace Agora.Rtm.Internal
             messageEvent.messageType = this.messageType;
             messageEvent.channelName = this.channelName;
             messageEvent.channelTopic = this.channelTopic;
-            messageEvent.messageLength = this.messageLength;
             messageEvent.publisher = this.publisher;
             messageEvent.customType = this.customType;
             return messageEvent;
