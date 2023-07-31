@@ -52,10 +52,10 @@ namespace Agora.Rtm.Internal
                     MessageEventInternal messageEventInternal = AgoraJson.JsonToStruct<MessageEventInternal>(jsonData, "event");
                     MessageEvent messageEvent = messageEventInternal.GenerateMessageEvent();
 
-                    var byteData = new byte[messageEvent.messageLength];
-                    if (messageEvent.messageLength != 0)
+                    var byteData = new byte[messageEventInternal.messageLength];
+                    if (messageEventInternal.messageLength != 0)
                     {
-                        Marshal.Copy((IntPtr)messageEventInternal.message, byteData, 0, (int)messageEvent.messageLength);
+                        Marshal.Copy((IntPtr)messageEventInternal.message, byteData, 0, (int)messageEventInternal.messageLength);
                     }
                     messageEvent.message = new RtmMessage(byteData);
 

@@ -197,6 +197,13 @@ namespace Agora.Rtm.Internal
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public string GetVersion()
+        {
+            IntPtr versionPtr = AgoraRtmNative.GetIrisRtmVersion();
+            string version = Marshal.PtrToStringAnsi(versionPtr);
+            return version;
+        }
+
         public int CreateStreamChannel(string channelName)
         {
             _param.Clear();

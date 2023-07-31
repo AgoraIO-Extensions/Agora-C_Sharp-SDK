@@ -204,9 +204,9 @@ namespace Agora.Rtm
             rtmClient.InvokeOnMessageEvent(@event);
         }
 
-        public override void OnPresenceEvent(PresenceEvent @event)
+        public override void OnPresenceEvent(Internal.PresenceEvent @event)
         {
-            rtmClient.InvokeOnPresenceEvent(@event);
+            rtmClient.InvokeOnPresenceEvent(@event.GeneratePresenceEvent());
         }
 
         public override void OnTopicEvent(TopicEvent @event)
@@ -338,7 +338,7 @@ namespace Agora.Rtm
             }
         }
 
-        public override void OnSubscribeTopicResult(UInt64 requestId, string channelName, string userId, string topic, UserList succeedUsers, UserList failedUsers, RTM_ERROR_CODE errorCode)
+        public override void OnSubscribeTopicResult(UInt64 requestId, string channelName, string userId, string topic, Internal.UserList succeedUsers, Internal.UserList failedUsers, RTM_ERROR_CODE errorCode)
         {
             if (topicSubscribedTaskMap.ContainsKey(requestId))
             {
@@ -346,8 +346,8 @@ namespace Agora.Rtm
                 topicSubscribed.ChannelName = channelName;
                 topicSubscribed.UserId = userId;
                 topicSubscribed.Topic = topic;
-                topicSubscribed.SucceedUsers = succeedUsers;
-                topicSubscribed.FailedUsers = failedUsers;
+                topicSubscribed.SucceedUsers = succeedUsers.users;
+                topicSubscribed.FailedUsers = failedUsers.users;
 
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMSubscribeTopicOperation, rtmClient.GetInternalRtmClient());
 
@@ -797,7 +797,6 @@ namespace Agora.Rtm
                 getLocksResult.ChannelName = channelName;
                 getLocksResult.ChannelType = channelType;
                 getLocksResult.LockDetailList = lockDetailList;
-                getLocksResult.Count = count;
 
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMGetLocksOperation, this.rtmClient.GetInternalRtmClient());
 

@@ -217,7 +217,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int GetSubscribedUserList(string channelName, string topic, ref Rtm.UserList users)
+        public int GetSubscribedUserList(string channelName, string topic, ref Rtm.Internal.UserList users)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -235,11 +235,11 @@ namespace Agora.Rtc
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
 
-                users = AgoraJson.JsonToStruct<Rtm.UserList>(_apiParam.Result, "users");
+                users = AgoraJson.JsonToStruct<Rtm.Internal.UserList>(_apiParam.Result, "users");
             }
             else
             {
-                users = new Rtm.UserList();
+                users = new Rtm.Internal.UserList();
             }
             return (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }

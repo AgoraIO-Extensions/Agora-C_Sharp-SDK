@@ -69,7 +69,6 @@ namespace Agora.Rtm.Internal
             return 0;
         }
 
-
         public override int Initialize(RtmConfig config)
         {
             if (_rtmClientImpl == null)
@@ -77,6 +76,15 @@ namespace Agora.Rtm.Internal
                 return ErrorCode;
             }
             return _rtmClientImpl.Initialize(config);
+        }
+
+        public override string GetVersion()
+        {
+            if (_rtmClientImpl == null)
+            {
+                return "";
+            }
+            return _rtmClientImpl.GetVersion();
         }
 
         public override IStreamChannel CreateStreamChannel(string channelName)

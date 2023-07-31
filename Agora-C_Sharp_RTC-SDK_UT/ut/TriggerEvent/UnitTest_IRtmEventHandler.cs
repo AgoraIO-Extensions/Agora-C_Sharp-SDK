@@ -65,7 +65,7 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONPRESENCEEVENT;
 
-            PresenceEvent @event;
+            Internal.PresenceEvent @event;
             ParamsHelper.InitParam(out @event);
 
 
@@ -325,10 +325,10 @@ namespace Agora.Rtm.Event
             string topic;
             ParamsHelper.InitParam(out topic);
 
-            UserList succeedUsers;
+            Internal.UserList succeedUsers;
             ParamsHelper.InitParam(out succeedUsers);
 
-            UserList failedUsers;
+            Internal.UserList failedUsers;
             ParamsHelper.InitParam(out failedUsers);
 
             RTM_ERROR_CODE errorCode;

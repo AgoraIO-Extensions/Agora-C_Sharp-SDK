@@ -8,7 +8,7 @@ namespace Agora.Rtm
         {
             appId = "";
             userId = "";
-            areaCode = RTM_AREA_CODE.RTM_AREA_CODE_GLOB;
+            areaCode = RTM_AREA_CODE.GLOB;
             presenceTimeout = 300;
             useStringUserId = true;
             logConfig = new RtmLogConfig();
@@ -51,49 +51,49 @@ namespace Agora.Rtm
         /// 0: Do not output any log information.
         /// </summary>
         ///
-        LOG_LEVEL_NONE = 0x0000,
+        NONE = 0x0000,
 
         ///
         /// <summary>
         /// 0x0001: (Default) Output FATAL, ERROR, WARN, and INFO level log information. We recommend setting your log filter to this level.
         /// </summary>
         ///
-        LOG_LEVEL_INFO = 0x0001,
+        INFO = 0x0001,
 
         ///
         /// <summary>
         /// 0x0002: Output FATAL, ERROR, and WARN level log information.
         /// </summary>
         ///
-        LOG_LEVEL_WARN = 0x0002,
+        WARN = 0x0002,
 
         ///
         /// <summary>
         /// 0x0004: Output FATAL and ERROR level log information.
         /// </summary>
         ///
-        LOG_LEVEL_ERROR = 0x0004,
+        ERROR = 0x0004,
 
         ///
         /// <summary>
         /// 0x0008: Output FATAL level log information.
         /// </summary>
         ///
-        LOG_LEVEL_FATAL = 0x0008,
+        FATAL = 0x0008,
 
-        LOG_LEVEL_API_CALL = 0x0010,
+        API_CALL = 0x0010,
     };
 
 
     public enum STREAM_CHANNEL_ERROR_CODE
     {
-        STREAM_CHANNEL_ERROR_OK = 0,
-        STREAM_CHANNEL_ERROR_INVALID_ARGUMENT = 1,
-        STREAM_CHANNEL_ERROR_JOIN_FAILURE = 2,
-        STREAM_CHANNEL_ERROR_JOIN_REJECTED = 3,
-        STREAM_CHANNEL_ERROR_REJOIN_FAILURE = 4,
-        STREAM_CHANNEL_ERROR_LEAVE_FAILURE = 5,
-        STREAM_CHANNEL_ERROR_EXCEED_LIMITATION = 6,
+        OK = 0,
+        INVALID_ARGUMENT = 1,
+        JOIN_FAILURE = 2,
+        JOIN_REJECTED = 3,
+        REJOIN_FAILURE = 4,
+        LEAVE_FAILURE = 5,
+        EXCEED_LIMITATION = 6,
     };
 
     public class TopicSubUsersUpdated
@@ -101,18 +101,14 @@ namespace Agora.Rtm
         public TopicSubUsersUpdated()
         {
             topic = "";
-            succeedUserCount = 0;
             succeedUsers = new string[0];
-            failedUserCount = 0;
             failedUsers = new string[0];
         }
 
-        public TopicSubUsersUpdated(string topic, string[] succeedUsers, uint succeedUserCount, string[] failedUsers, uint failedUserCount)
+        public TopicSubUsersUpdated(string topic, string[] succeedUsers, string[] failedUsers)
         {
             this.topic = topic;
-            this.succeedUserCount = succeedUserCount;
             this.succeedUsers = succeedUsers;
-            this.failedUserCount = failedUserCount;
             this.failedUsers = failedUsers;
         }
 
@@ -120,23 +116,18 @@ namespace Agora.Rtm
 
         public string[] succeedUsers;
 
-        public uint succeedUserCount;
-
         public string[] failedUsers;
-
-        public uint failedUserCount;
     };
 
     public class MessageEvent
     {
         public MessageEvent()
         {
-            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_MESSAGE;
-            messageType = RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY;
+            channelType = RTM_CHANNEL_TYPE.MESSAGE;
+            messageType = RTM_MESSAGE_TYPE.BINARY;
             channelName = "";
             channelTopic = "";
             message = null;
-            messageLength = 0;
             publisher = "";
             customType = "";
         }
@@ -151,8 +142,6 @@ namespace Agora.Rtm
 
         public IRtmMessage message;
 
-        public uint messageLength;
-
         public string publisher;
 
         public string customType;
@@ -161,34 +150,27 @@ namespace Agora.Rtm
 
     public class IntervalInfo
     {
-        public UserList joinUserList;
+        public string[] joinUserList;
 
-        public UserList leaveUserList;
+        public string[] leaveUserList;
 
-        public UserList timeoutUserList;
+        public string[] timeoutUserList;
 
         public UserState[] userStateList;
-
-        public UInt64 userStateCount;
 
         public IntervalInfo()
         {
             userStateList = new UserState[0];
-            userStateCount = 0;
         }
     };
 
     public class SnapshotInfo
     {
-
         public UserState[] userStateList;
-
-        public UInt64 userCount;
 
         public SnapshotInfo()
         {
             userStateList = new UserState[0];
-            userCount = 0;
         }
     };
 
@@ -196,12 +178,11 @@ namespace Agora.Rtm
     {
         public PresenceEvent()
         {
-            type = RTM_PRESENCE_EVENT_TYPE.RTM_PRESENCE_EVENT_TYPE_NONE;
-            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_NONE;
+            type = RTM_PRESENCE_EVENT_TYPE.NONE;
+            channelType = RTM_CHANNEL_TYPE.NONE;
             channelName = "";
             publisher = "";
             stateItems = new StateItem[0];
-            stateItemCount = 0;
             interval = new IntervalInfo();
             snapshot = new SnapshotInfo();
         }
@@ -214,8 +195,6 @@ namespace Agora.Rtm
         public string publisher;
 
         public StateItem[] stateItems;
-
-        public UInt64 stateItemCount;
 
         public IntervalInfo interval;
 
@@ -232,15 +211,12 @@ namespace Agora.Rtm
 
         public TopicInfo[] topicInfos;
 
-        public UInt64 topicInfoCount;
-
         public TopicEvent()
         {
-            type = RTM_TOPIC_EVENT_TYPE.RTM_TOPIC_EVENT_TYPE_SNAPSHOT;
+            type = RTM_TOPIC_EVENT_TYPE.SNAPSHOT;
             channelName = "";
             publisher = "";
             topicInfos = new TopicInfo[0];
-            topicInfoCount = 0;
         }
     };
 
@@ -254,15 +230,12 @@ namespace Agora.Rtm
 
         public LockDetail[] lockDetailList;
 
-        public UInt64 count;
-
         public LockEvent()
         {
-            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_NONE;
-            eventType = RTM_LOCK_EVENT_TYPE.RTM_LOCK_EVENT_TYPE_NONE;
+            channelType = RTM_CHANNEL_TYPE.NONE;
+            eventType = RTM_LOCK_EVENT_TYPE.NONE;
             channelName = "";
             lockDetailList = new LockDetail[0];
-            count = 0;
         }
     };
 
@@ -291,9 +264,9 @@ namespace Agora.Rtm
 
         public StorageEvent()
         {
-            channelType = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_NONE;
-            storageType = RTM_STORAGE_TYPE.RTM_STORAGE_TYPE_NONE;
-            eventType = RTM_STORAGE_EVENT_TYPE.RTM_STORAGE_EVENT_TYPE_NONE;
+            channelType = RTM_CHANNEL_TYPE.NONE;
+            storageType = RTM_STORAGE_TYPE.NONE;
+            eventType = RTM_STORAGE_EVENT_TYPE.NONE;
             target = "";
             data = null;
         }

@@ -19,7 +19,7 @@ namespace Agora.Rtm
 
         int UnsubscribeTopic(string channelName, string topic, TopicOptions options);
 
-        int GetSubscribedUserList(string channelName, string topic, ref UserList users);
+        int GetSubscribedUserList(string channelName, string topic, ref Internal.UserList users);
 
         int Release(string channelName);
     }

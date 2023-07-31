@@ -7,7 +7,7 @@ namespace Agora.Rtm.Internal
         {
             appId = "";
             userId = "";
-            areaCode = RTM_AREA_CODE.RTM_AREA_CODE_GLOB;
+            areaCode = RTM_AREA_CODE.GLOB;
             presenceTimeout = 300;
             useStringUserId = true;
             eventHandler = null;
@@ -67,5 +67,71 @@ namespace Agora.Rtm.Internal
         public RtmProxyConfig proxyConfig;
 
         public RtmEncryptionConfig encryptionConfig;
+    };
+
+    public class IntervalInfo
+    {
+        public UserList joinUserList;
+
+        public UserList leaveUserList;
+
+        public UserList timeoutUserList;
+
+        public UserState[] userStateList;
+
+        public IntervalInfo()
+        {
+            userStateList = new UserState[0];
+        }
+
+        public Rtm.IntervalInfo GenerateIntervalInfo()
+        {
+            Rtm.IntervalInfo intervalInfo = new Rtm.IntervalInfo();
+            intervalInfo.joinUserList = this.joinUserList.users;
+            intervalInfo.leaveUserList = this.joinUserList.users;
+            intervalInfo.timeoutUserList = this.timeoutUserList.users;
+            intervalInfo.userStateList = this.userStateList;
+            return intervalInfo;
+        }
+    };
+
+    public class PresenceEvent
+    {
+        public PresenceEvent()
+        {
+            type = RTM_PRESENCE_EVENT_TYPE.NONE;
+            channelType = RTM_CHANNEL_TYPE.NONE;
+            channelName = "";
+            publisher = "";
+            stateItems = new StateItem[0];
+            interval = new IntervalInfo();
+            snapshot = new SnapshotInfo();
+        }
+        public RTM_PRESENCE_EVENT_TYPE type;
+
+        public RTM_CHANNEL_TYPE channelType;
+
+        public string channelName;
+
+        public string publisher;
+
+        public StateItem[] stateItems;
+
+        public Internal.IntervalInfo interval;
+
+        public SnapshotInfo snapshot;
+
+        public Rtm.PresenceEvent GeneratePresenceEvent()
+        {
+            Rtm.PresenceEvent presenceEvent = new Rtm.PresenceEvent();
+            presenceEvent.type = this.type;
+            presenceEvent.channelType = this.channelType;
+            presenceEvent.channelName = this.channelName;
+            presenceEvent.publisher = this.publisher;
+            presenceEvent.stateItems = this.stateItems;
+            presenceEvent.interval = this.interval.GenerateIntervalInfo();
+            presenceEvent.snapshot = this.snapshot;
+            return presenceEvent;
+        }
     };
 }
