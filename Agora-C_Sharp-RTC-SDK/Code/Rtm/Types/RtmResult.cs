@@ -53,8 +53,8 @@ namespace Agora.Rtm
         public string ChannelName;
         public string UserId;
         public string Topic;
-        public UserList SucceedUsers;
-        public UserList FailedUsers;
+        public string[] SucceedUsers;
+        public string[] FailedUsers;
     };
 
     public class UnsubscribeTopicResult
@@ -64,7 +64,7 @@ namespace Agora.Rtm
 
     public class GetSubscribedUserListResult
     {
-        public UserList Users;
+        public string[] Users;
     }
 
     public class ConnectionStateChange
@@ -206,7 +206,6 @@ namespace Agora.Rtm
         public string ChannelName;
         public RTM_CHANNEL_TYPE ChannelType;
         public LockDetail[] LockDetailList;
-        public UInt64 Count;
     };
 
     public class WhoNowResult

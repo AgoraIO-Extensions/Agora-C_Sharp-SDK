@@ -20,4 +20,24 @@ namespace Agora.Rtm.Internal
             this.customType = options.customType;
         }
     };
+
+    public class UserList
+    {
+        public UserList()
+        {
+            users = new string[0];
+            userCount = 0;
+        }
+
+        public UserList(string[] users, uint userCount)
+        {
+            this.users = users;
+            this.userCount = userCount;
+        }
+
+        public string[] users;
+
+        public uint userCount;
+    };
+
 }

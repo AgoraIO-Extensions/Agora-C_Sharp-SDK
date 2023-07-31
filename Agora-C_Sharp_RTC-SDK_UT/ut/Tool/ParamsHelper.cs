@@ -949,9 +949,9 @@ namespace Agora.Rtc
         {
             param = new MessageEvent();
         }
-        public static void InitParam(out PresenceEvent param)
+        public static void InitParam(out Agora.Rtm.Internal.PresenceEvent param)
         {
-            param = new PresenceEvent();
+            param = new Agora.Rtm.Internal.PresenceEvent();
         }
         public static void InitParam(out TopicEvent param)
         {
@@ -967,11 +967,11 @@ namespace Agora.Rtc
         }
         public static void InitParam(out RTM_ERROR_CODE param)
         {
-            param = RTM_ERROR_CODE.RTM_ERROR_OK;
+            param = RTM_ERROR_CODE.OK;
         }
         public static void InitParam(out RTM_CHANNEL_TYPE param)
         {
-            param = RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_NONE;
+            param = RTM_CHANNEL_TYPE.NONE;
         }
         public static void InitParam(out RtmMetadata param)
         {
@@ -1005,17 +1005,17 @@ namespace Agora.Rtc
         {
             param = new UserState();
         }
-        public static void InitParam(out UserList param)
+        public static void InitParam(out Agora.Rtm.Internal.UserList param)
         {
-            param = new UserList();
+            param = new Agora.Rtm.Internal.UserList();
         }
         public static void InitParam(out RTM_CONNECTION_STATE param)
         {
-            param = RTM_CONNECTION_STATE.RTM_CONNECTION_STATE_DISCONNECTED;
+            param = RTM_CONNECTION_STATE.DISCONNECTED;
         }
         public static void InitParam(out RTM_CONNECTION_CHANGE_REASON param)
         {
-            param = RTM_CONNECTION_CHANGE_REASON.RTM_CONNECTION_CHANGED_CONNECTING;
+            param = RTM_CONNECTION_CHANGE_REASON.CONNECTING;
         }
         public static void InitParam(out Rtm.Internal.PublishOptions param)
         {
@@ -3583,83 +3583,83 @@ namespace Agora.Rtc
 
         public static bool compareRTM_AREA_CODE(RTM_AREA_CODE selfParam, RTM_AREA_CODE outParam)
         {
-            return selfParam == RTM_AREA_CODE.RTM_AREA_CODE_CN;
+            return selfParam == RTM_AREA_CODE.CN;
         }
 
 
         public static bool compareRTM_LOG_LEVEL(RTM_LOG_LEVEL selfParam, RTM_LOG_LEVEL outParam)
         {
-            return selfParam == RTM_LOG_LEVEL.RTM_LOG_LEVEL_NONE;
+            return selfParam == RTM_LOG_LEVEL.NONE;
         }
 
 
         public static bool compareRTM_ENCRYPTION_MODE(RTM_ENCRYPTION_MODE selfParam, RTM_ENCRYPTION_MODE outParam)
         {
-            return selfParam == RTM_ENCRYPTION_MODE.RTM_ENCRYPTION_MODE_NONE;
+            return selfParam == RTM_ENCRYPTION_MODE.NONE;
         }
 
         public static bool compareRTM_ERROR_CODE(RTM_ERROR_CODE selfParam, RTM_ERROR_CODE outParam)
         {
-            return selfParam == RTM_ERROR_CODE.RTM_ERROR_OK;
+            return selfParam == RTM_ERROR_CODE.OK;
         }
 
 
         public static bool compareRTM_CONNECTION_STATE(RTM_CONNECTION_STATE selfParam, RTM_CONNECTION_STATE outParam)
         {
-            return selfParam == RTM_CONNECTION_STATE.RTM_CONNECTION_STATE_DISCONNECTED;
+            return selfParam == RTM_CONNECTION_STATE.DISCONNECTED;
         }
 
 
         public static bool compareRTM_CONNECTION_CHANGE_REASON(RTM_CONNECTION_CHANGE_REASON selfParam, RTM_CONNECTION_CHANGE_REASON outParam)
         {
-            return selfParam == RTM_CONNECTION_CHANGE_REASON.RTM_CONNECTION_CHANGED_CONNECTING;
+            return selfParam == RTM_CONNECTION_CHANGE_REASON.CONNECTING;
         }
 
         public static bool compareRTM_CHANNEL_TYPE(RTM_CHANNEL_TYPE selfParam, RTM_CHANNEL_TYPE outParam)
         {
-            return selfParam == RTM_CHANNEL_TYPE.RTM_CHANNEL_TYPE_NONE;
+            return selfParam == RTM_CHANNEL_TYPE.NONE;
         }
 
 
         public static bool compareRTM_MESSAGE_TYPE(RTM_MESSAGE_TYPE selfParam, RTM_MESSAGE_TYPE outParam)
         {
-            return selfParam == RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY;
+            return selfParam == RTM_MESSAGE_TYPE.BINARY;
         }
 
 
         public static bool compareRTM_STORAGE_TYPE(RTM_STORAGE_TYPE selfParam, RTM_STORAGE_TYPE outParam)
         {
-            return selfParam == RTM_STORAGE_TYPE.RTM_STORAGE_TYPE_NONE;
+            return selfParam == RTM_STORAGE_TYPE.NONE;
         }
 
 
         public static bool compareRTM_STORAGE_EVENT_TYPE(RTM_STORAGE_EVENT_TYPE selfParam, RTM_STORAGE_EVENT_TYPE outParam)
         {
-            return selfParam == RTM_STORAGE_EVENT_TYPE.RTM_STORAGE_EVENT_TYPE_NONE;
+            return selfParam == RTM_STORAGE_EVENT_TYPE.NONE;
         }
 
 
         public static bool compareRTM_LOCK_EVENT_TYPE(RTM_LOCK_EVENT_TYPE selfParam, RTM_LOCK_EVENT_TYPE outParam)
         {
-            return selfParam == RTM_LOCK_EVENT_TYPE.RTM_LOCK_EVENT_TYPE_NONE;
+            return selfParam == RTM_LOCK_EVENT_TYPE.NONE;
         }
 
 
         public static bool compareRTM_PROXY_TYPE(RTM_PROXY_TYPE selfParam, RTM_PROXY_TYPE outParam)
         {
-            return selfParam == RTM_PROXY_TYPE.RTM_PROXY_TYPE_NONE;
+            return selfParam == RTM_PROXY_TYPE.NONE;
         }
 
 
         public static bool compareRTM_TOPIC_EVENT_TYPE(RTM_TOPIC_EVENT_TYPE selfParam, RTM_TOPIC_EVENT_TYPE outParam)
         {
-            return selfParam == RTM_TOPIC_EVENT_TYPE.RTM_TOPIC_EVENT_TYPE_NONE;
+            return selfParam == RTM_TOPIC_EVENT_TYPE.NONE;
         }
 
 
         public static bool compareRTM_PRESENCE_EVENT_TYPE(RTM_PRESENCE_EVENT_TYPE selfParam, RTM_PRESENCE_EVENT_TYPE outParam)
         {
-            return selfParam == RTM_PRESENCE_EVENT_TYPE.RTM_PRESENCE_EVENT_TYPE_NONE;
+            return selfParam == RTM_PRESENCE_EVENT_TYPE.NONE;
         }
 
 
@@ -3690,7 +3690,7 @@ namespace Agora.Rtc
             return true;
         }
 
-        public static bool compareUserList(UserList selfParam, UserList outParam)
+        public static bool compareUserList(Agora.Rtm.Internal.UserList selfParam, Agora.Rtm.Internal.UserList outParam)
         {
             if (compareStringArray(selfParam.users, outParam.users) == false)
                 return false;
@@ -3729,8 +3729,6 @@ namespace Agora.Rtc
             if (compareString(selfParam.topic, outParam.topic) == false)
                 return false;
             if (comparePublisherInfoArray(selfParam.publishers, outParam.publishers) == false)
-                return false;
-            if (compareUlong(selfParam.publisherCount, outParam.publisherCount) == false)
                 return false;
             return true;
         }
@@ -3776,8 +3774,7 @@ namespace Agora.Rtc
         {
             if (compareString(selfParam.userId, outParam.userId) == false)
                 return false;
-            if (compareUlong(selfParam.statesCount, outParam.statesCount) == false)
-                return false;
+     
             return true;
         }
 
@@ -3909,8 +3906,6 @@ namespace Agora.Rtc
                 return false;
             if (compareIRtmMessage(selfParam.message, outParam.message) == false)
                 return false;
-            if (compareSize_t(selfParam.messageLength, outParam.messageLength) == false)
-                return false;
             if (compareString(selfParam.publisher, outParam.publisher) == false)
                 return false;
             if (compareString(selfParam.customType, outParam.customType) == false)
@@ -3919,7 +3914,7 @@ namespace Agora.Rtc
         }
 
 
-        public static bool comparePresenceEvent(PresenceEvent selfParam, PresenceEvent outParam)
+        public static bool comparePresenceEvent(Agora.Rtm.Internal.PresenceEvent selfParam, Agora.Rtm.Internal.PresenceEvent outParam)
         {
             if (compareRTM_PRESENCE_EVENT_TYPE(selfParam.type, outParam.type) == false)
                 return false;
@@ -3928,9 +3923,6 @@ namespace Agora.Rtc
             if (compareString(selfParam.channelName, outParam.channelName) == false)
                 return false;
             if (compareString(selfParam.publisher, outParam.publisher) == false)
-                return false;
-         
-            if (compareUlong(selfParam.stateItemCount, outParam.stateItemCount) == false)
                 return false;
             return true;
         }
@@ -3953,15 +3945,13 @@ namespace Agora.Rtc
 
         public static bool compareIntervalInfo(IntervalInfo selfParam, IntervalInfo outParam)
         {
-            if (compareUserList(selfParam.joinUserList, outParam.joinUserList) == false)
+            if (compareStringArray(selfParam.joinUserList, outParam.joinUserList) == false)
                 return false;
-            if (compareUserList(selfParam.leaveUserList, outParam.leaveUserList) == false)
+            if (compareStringArray(selfParam.leaveUserList, outParam.leaveUserList) == false)
                 return false;
-            if (compareUserList(selfParam.timeoutUserList, outParam.timeoutUserList) == false)
+            if (compareStringArray(selfParam.timeoutUserList, outParam.timeoutUserList) == false)
                 return false;
             if (compareUserStateArray(selfParam.userStateList, outParam.userStateList) == false)
-                return false;
-            if (compareUlong(selfParam.userStateCount, outParam.userStateCount) == false)
                 return false;
             return true;
         }
@@ -3970,8 +3960,6 @@ namespace Agora.Rtc
         public static bool compareSnapshotInfo(SnapshotInfo selfParam, SnapshotInfo outParam)
         {
             if (compareUserStateArray(selfParam.userStateList, outParam.userStateList) == false)
-                return false;
-            if (compareUlong(selfParam.userCount, outParam.userCount) == false)
                 return false;
             return true;
         }
@@ -4001,8 +3989,6 @@ namespace Agora.Rtc
                 return false;
             if (compareTopicInfoArray(selfParam.topicInfos, outParam.topicInfos) == false)
                 return false;
-            if (compareUlong(selfParam.topicInfoCount, outParam.topicInfoCount) == false)
-                return false;
             return true;
         }
 
@@ -4028,9 +4014,6 @@ namespace Agora.Rtc
             if (compareRTM_LOCK_EVENT_TYPE(selfParam.eventType, outParam.eventType) == false)
                 return false;
             if (compareString(selfParam.channelName, outParam.channelName) == false)
-                return false;
-          
-            if (compareUlong(selfParam.count, outParam.count) == false)
                 return false;
             return true;
         }

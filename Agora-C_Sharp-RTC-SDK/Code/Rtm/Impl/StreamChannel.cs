@@ -93,7 +93,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option)
         {
-            Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_BINARY);
+            Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.BINARY);
             //fake async
             int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions);
 
@@ -111,7 +111,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option)
         {
-            Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.RTM_MESSAGE_TYPE_STRING);
+            Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.STRING);
             //fake async
             int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions);
 
@@ -182,7 +182,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<GetSubscribedUserListResult>> GetSubscribedUserListAsync(string topic)
         {
-            UserList users = null;
+            Internal.UserList users = null;
             int errorCode = internalStreamChannel.GetSubscribedUserList(topic, ref users);
 
             RtmResult<GetSubscribedUserListResult> rtmResult = new RtmResult<GetSubscribedUserListResult>();
@@ -190,7 +190,7 @@ namespace Agora.Rtm
             if (errorCode == 0)
             {
                 rtmResult.Response = new GetSubscribedUserListResult();
-                rtmResult.Response.Users = users;
+                rtmResult.Response.Users = users.users;
             }
 
             TaskCompletionSource<RtmResult<GetSubscribedUserListResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<GetSubscribedUserListResult>>();

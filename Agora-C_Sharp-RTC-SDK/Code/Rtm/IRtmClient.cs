@@ -32,6 +32,8 @@ namespace Agora.Rtm
 
         event OnTokenPrivilegeWillExpireHandler OnTokenPrivilegeWillExpire;
 
+        string GetVersion();
+
         RtmStatus Dispose();
 
         Task<RtmResult<LoginResult>> LoginAsync(string token);
