@@ -176,7 +176,7 @@ rm -rf "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Code/agorartc.csproj
 if [ "$ANDROID_URL" != "" ]; then
     echo "[Unity CI] copying Android ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${ANDROID_URL}
-    unzip -d ./ ./iris_*_Android_*.zip || exit 1
+    7za x ./iris_*_Android_*.zip || exit 1
     ANDROID_SRC_PATH="./iris_*_Android"
 
     mkdir "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
@@ -220,7 +220,7 @@ fi
 if [ "$IOS_URL" != "" ]; then
     echo "[Unity CI] copying iOS ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${IOS_URL}
-    unzip -d ./ ./iris_*_iOS_*.zip || exit 1
+    7za x ./iris_*_iOS_*.zip || exit 1
     IOS_SRC_PATH="./iris_*_iOS"
     IOS_DST_PATH="$PLUGIN_PATH/"$PLUGIN_CODE_NAME"/Plugins/iOS"
     cp -PRf $IOS_SRC_PATH/$NATIVE_FOLDER/Agora_*/libs/*.xcframework/ios-arm64_armv7/*.framework "$IOS_DST_PATH"
@@ -244,7 +244,7 @@ fi
 if [ "$MAC_URL" != "" ]; then
     echo "[Unity CI] copying macOS ..."
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${MAC_URL}
-    unzip -d ./ ./iris_*_Mac_*.zip || exit 1
+    7za x ./iris_*_Mac_*.zip || exit 1
     MAC_SRC_PATH="./iris_*_Mac"
     MAC_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/macOS
     cp -PRf $MAC_SRC_PATH/MAC/Release/*.bundle "$MAC_DST_PATH"
@@ -253,7 +253,7 @@ fi
 #Windows
 if [ "$WIN_URL" != "" ]; then
     python3 ${WORKSPACE}/artifactory_utils.py --action=download_file --file=${WIN_URL}
-    unzip -d ./ ./iris_*_Windows_*.zip || exit 1
+    7za x ./iris_*_Windows_*.zip || exit 1
     WIN_SRC_PATH="./iris_*_Windows"
 
     # Windows x86-64
