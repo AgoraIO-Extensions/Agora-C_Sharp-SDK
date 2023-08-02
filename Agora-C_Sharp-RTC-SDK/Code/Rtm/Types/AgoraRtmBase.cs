@@ -609,30 +609,12 @@ namespace Agora.Rtm
         STREAM = 2,
     };
 
-
-    public enum RTM_PRESENCE_TYPE
-    {
-        REMOTE_JOIN_CHANNEL = 0,
-
-        REMOTE_LEAVE_CHANNEL = 1,
-
-        REMOTE_CONNECTION_TIMEOUT = 2,
-
-        REMOTE_JOIN_TOPIC = 3,
-
-        REMOTE_LEAVE_TOPIC = 4,
-
-        SELF_JOIN_CHANNEL = 5,
-
-        USER_STATE_CHANGED = 6,
-    };
-
     public enum RTM_MESSAGE_TYPE
     {
 
-          BINARY = 0,
+        BINARY = 0,
 
-          STRING = 1,
+        STRING = 1,
     };
 
 
@@ -644,15 +626,15 @@ namespace Agora.Rtm
         /**
           0: Unknown type.
           */
-          NONE = 0,
+        NONE = 0,
         /**
           1: The user storage event.
           */
-          USER = 1,
+        USER = 1,
         /**
           2: The channel storage event.
           */
-          CHANNEL = 2,
+        CHANNEL = 2,
     };
 
     /**
@@ -663,23 +645,23 @@ namespace Agora.Rtm
         /**
           0: Unknown event type.
           */
-          NONE = 0,
+        NONE = 0,
         /**
           1: Triggered when user subscribe user metadata state or join channel with options.withMetadata = true
           */
-          SNAPSHOT = 1,
+        SNAPSHOT = 1,
         /**
           2: Triggered when a remote user set metadata
           */
-          SET = 2,
+        SET = 2,
         /**
           3: Triggered when a remote user update metadata
           */
-          UPDATE = 3,
+        UPDATE = 3,
         /**
           4: Triggered when a remote user remove metadata
           */
-          REMOVE = 4,
+        REMOVE = 4,
     };
 
 
@@ -692,40 +674,40 @@ namespace Agora.Rtm
         /**
          * 0: Unknown event type
          */
-          NONE = 0,
+        NONE = 0,
         /**
          * 1: Triggered when user subscribe lock state
          */
-          SNAPSHOT = 1,
+        SNAPSHOT = 1,
         /**
          * 2: Triggered when a remote user set lock
          */
-          LOCK_SET = 2,
+        SET = 2,
         /**
          * 3: Triggered when a remote user remove lock
          */
-          LOCK_REMOVED = 3,
+        REMOVED = 3,
         /**
          * 4: Triggered when a remote user acquired lock
          */
-          LOCK_ACQUIRED = 4,
+        ACQUIRED = 4,
         /**
          * 5: Triggered when a remote user released lock
          */
-          LOCK_RELEASED = 5,
+        RELEASED = 5,
         /**
          * 6: Triggered when user reconnect to rtm service,
          * detect the lock has been acquired and released by others.
          */
-          LOCK_EXPIRED = 6,
+        EXPIRED = 6,
     };
 
     public enum RTM_PROXY_TYPE
     {
 
-          NONE = 0,
+        NONE = 0,
 
-          HTTP = 1,
+        HTTP = 1,
     };
 
     /**
@@ -736,19 +718,19 @@ namespace Agora.Rtm
         /**
          * 0: Unknown event type
          */
-          NONE = 0,
+        NONE = 0,
         /**
          * 1: The topic snapshot of this channel
          */
-          SNAPSHOT = 1,
+        SNAPSHOT = 1,
         /**
          * 2: Triggered when remote user join a topic
          */
-          REMOTE_JOIN_TOPIC = 2,
+        REMOTE_JOIN = 2,
         /**
          * 3: Triggered when remote user leave a topic
          */
-          REMOTE_LEAVE_TOPIC = 3,
+        REMOTE_LEAVE = 3,
     };
 
     /**
@@ -759,35 +741,35 @@ namespace Agora.Rtm
         /**
          * 0: Unknown event type
          */
-          NONE = 0,
+        NONE = 0,
         /**
          * 1: The presence snapshot of this channel
          */
-          SNAPSHOT = 1,
+        SNAPSHOT = 1,
         /**
          * 2: The presence event triggered in interval mode
          */
-          INTERVAL = 2,
+        INTERVAL = 2,
         /**
          * 3: Triggered when remote user join channel
          */
-          REMOTE_JOIN_CHANNEL = 3,
+        REMOTE_JOIN = 3,
         /**
          * 4: Triggered when remote user leave channel
          */
-          REMOTE_LEAVE_CHANNEL = 4,
+        REMOTE_LEAVE = 4,
         /**
          * 5: Triggered when remote user's connection timeout
          */
-          REMOTE_TIMEOUT = 5,
+        REMOTE_TIMEOUT = 5,
         /**
          * 6: Triggered when user changed state
          */
-          REMOTE_STATE_CHANGED = 6,
+        REMOTE_STATE_CHANGED = 6,
         /**
          * 7: Triggered when user joined channel without presence service
          */
-          ERROR_OUT_OF_SERVICE = 7,
+        ERROR_OUT_OF_SERVICE = 7,
     };
 
     /** 
@@ -823,7 +805,7 @@ namespace Agora.Rtm
         }
     };
 
-    
+
 
     public class PublisherInfo
     {
@@ -850,12 +832,12 @@ namespace Agora.Rtm
         public string topic;
 
         public PublisherInfo[] publishers;
-      
+
         public TopicInfo()
         {
             topic = "";
             publishers = new PublisherInfo[0];
-          
+
         }
 
         public TopicInfo(string topic, PublisherInfo[] publishers)
@@ -1040,7 +1022,7 @@ namespace Agora.Rtm
 
         public RtmProxyConfig()
         {
-            proxyType = RTM_PROXY_TYPE.  NONE;
+            proxyType = RTM_PROXY_TYPE.NONE;
             server = "";
             port = 0;
             account = "";
