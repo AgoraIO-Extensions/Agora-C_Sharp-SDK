@@ -88,7 +88,7 @@ namespace Agora.Rtm.Internal
         {
             Rtm.IntervalInfo intervalInfo = new Rtm.IntervalInfo();
             intervalInfo.joinUserList = this.joinUserList.users;
-            intervalInfo.leaveUserList = this.joinUserList.users;
+            intervalInfo.leaveUserList = this.leaveUserList.users;
             intervalInfo.timeoutUserList = this.timeoutUserList.users;
             intervalInfo.userStateList = this.userStateList;
             return intervalInfo;
