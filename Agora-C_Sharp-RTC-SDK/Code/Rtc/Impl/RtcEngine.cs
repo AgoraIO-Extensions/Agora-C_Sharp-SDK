@@ -12,7 +12,7 @@ using UnityEngine;
 namespace Agora.Rtc
 {
 #if AGORA_RTM
-    public sealed class RtcEngine : IRtcEngineEx, Rtm.IStreamChannelCreator
+    public sealed class RtcEngine : IRtcEngineEx, Rtm.Internal.IStreamChannelCreator
 #else
     public sealed class RtcEngine : IRtcEngineEx
 #endif

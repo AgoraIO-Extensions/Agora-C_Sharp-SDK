@@ -821,7 +821,6 @@ namespace Agora.Rtm
             {
                 WhoNowResult whoNowResult = new WhoNowResult();
                 whoNowResult.UserStateList = userStateList;
-                whoNowResult.Count = count;
                 whoNowResult.NextPage = nextPage;
 
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMWhoNowOperation, this.rtmClient.GetInternalRtmClient());
@@ -847,7 +846,6 @@ namespace Agora.Rtm
             {
                 WhereNowResult whereNowResult = new WhereNowResult();
                 whereNowResult.Channels = channels;
-                whereNowResult.Count = count;
 
                 RtmStatus status = Tools.GenerateStatus((int)errorCode, RtmOperation.RTMWhereNowOperation, this.rtmClient.GetInternalRtmClient());
 

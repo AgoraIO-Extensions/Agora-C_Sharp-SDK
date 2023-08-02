@@ -611,9 +611,13 @@ namespace Agora.Rtm
 
     public enum RTM_MESSAGE_TYPE
     {
-
+        /**
+        0: The binary message.
+        */
         BINARY = 0,
-
+        /**
+        1: The ascii message.
+        */
         STRING = 1,
     };
 
@@ -806,11 +810,19 @@ namespace Agora.Rtm
     };
 
 
-
+    /**
+     @brief Topic publisher information
+    */
     public class PublisherInfo
     {
+        /**
+        * The publisher user ID
+        */
         public string publisherUserId;
 
+        /**
+        * The metadata of the publisher
+        */
         public string publisherMeta;
 
         public PublisherInfo()
@@ -826,11 +838,19 @@ namespace Agora.Rtm
         }
     };
 
-
+    /**
+    @brief Topic information
+    */
     public class TopicInfo
     {
+        /**
+        * The name of the topic
+        */
         public string topic;
 
+        /**
+        * The publisher array
+        */
         public PublisherInfo[] publishers;
 
         public TopicInfo()
@@ -847,12 +867,19 @@ namespace Agora.Rtm
         }
     };
 
-
+    /**
+    @brief User state property
+    */
     public class StateItem
     {
-
+        /**
+        * The key of the state item.
+        */
         public string key;
 
+        /**
+        * The value of the state item.
+        */
         public string value;
 
         public StateItem()
@@ -868,13 +895,24 @@ namespace Agora.Rtm
         }
     };
 
-
+    /**
+     *  The information of a Lock.
+    */
     public class LockDetail
     {
+        /**
+        * The name of the lock.
+        */
         public string lockName;
 
+        /**
+        * The owner of the lock. Only valid when user getLocks or receive LockEvent with RTM_LOCK_EVENT_TYPE_SNAPSHOT
+        */
         public string owner;
 
+        /**
+        * The ttl of the lock.
+        */
         public uint ttl;
 
         public LockDetail()
@@ -892,12 +930,19 @@ namespace Agora.Rtm
         }
     }
 
-
+    /**
+    *  The states of user.
+    */
     public class UserState
     {
-
+        /**
+        * The user id.
+        */
         public string userId;
 
+        /**
+        * The user states.
+        */
         public StateItem[] states;
 
         public UserState()
@@ -913,16 +958,29 @@ namespace Agora.Rtm
         }
     };
 
-
+    /**
+     *  The subscribe option.
+     */
     public class SubscribeOptions
     {
-
+        /**
+        * Whether to subscribe channel with message
+        */
         public bool withMessage;
 
+        /**
+        * Whether to subscribe channel with metadata
+        */
         public bool withMetadata;
 
+        /**
+        * Whether to subscribe channel with user presence
+        */
         public bool withPresence;
 
+        /**
+        * Whether to subscribe channel with lock
+        */
         public bool withLock;
 
         public SubscribeOptions()
@@ -942,11 +1000,19 @@ namespace Agora.Rtm
         }
     };
 
-
+    /**
+    *  The channel information.
+    */
     public class ChannelInfo
     {
+        /**
+        * The channel which the message was published
+        */
         public string channelName;
 
+        /**
+        * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
+        */
         public RTM_CHANNEL_TYPE channelType;
 
         public ChannelInfo()
@@ -962,13 +1028,24 @@ namespace Agora.Rtm
         }
     };
 
+    /**
+    *  The option to query user presence.
+    */
     public class PresenceOptions
     {
-
+        /**
+        * Whether to display user id in query result
+        */
         public bool includeUserId;
 
+        /**
+        * Whether to display user state in query result
+        */
         public bool includeState;
 
+        /**
+        * The paging object used for pagination.
+        */
         public string page;
 
         public PresenceOptions()
@@ -986,11 +1063,20 @@ namespace Agora.Rtm
         }
     };
 
-
+    /**
+    @brief Publish message option
+    */
     public class PublishOptions
     {
+        /**
+        The time to calibrate data with media,
+        only valid when user join topic with syncWithMedia in stream channel
+        */
         public UInt64 sendTs;
 
+        /**
+        The custom type of the message, up to 32 bytes for customize
+        */
         public string customType;
 
         public PublishOptions()
@@ -1006,18 +1092,34 @@ namespace Agora.Rtm
         }
     };
 
-
+    /**
+    @brief Proxy configuration
+    */
     public class RtmProxyConfig
     {
-
+        /**
+        The Proxy type.
+        */
         public RTM_PROXY_TYPE proxyType;
 
+        /**
+        The Proxy server address.
+        */
         public string server;
 
+        /**
+        The Proxy server port.
+        */
         public UInt16 port;
 
+        /**
+        The Proxy user account.
+        */
         public string account;
 
+        /**
+        The Proxy password.
+        */
         public string password;
 
         public RtmProxyConfig()
@@ -1040,14 +1142,24 @@ namespace Agora.Rtm
 
     };
 
-
+    /**
+    @brief encryption configuration
+    */
     public class RtmEncryptionConfig
     {
-
+        /**
+        * The encryption mode.
+        */
         public RTM_ENCRYPTION_MODE encryptionMode;
 
+        /**
+        * The encryption key in the string format.
+        */
         public string encryptionKey;
 
+        /**
+        * The encryption salt.
+        */
         private byte[] encryptionSalt32 = new byte[32];
 
         public byte[] encryptionSalt

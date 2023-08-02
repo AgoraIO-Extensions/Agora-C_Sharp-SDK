@@ -2,8 +2,12 @@ using System;
 
 namespace Agora.Rtm
 {
+    /**
+     *  Configurations for RTM Client.
+    */
     public class RtmConfig
     {
+       
         public RtmConfig()
         {
             appId = "";
@@ -26,20 +30,52 @@ namespace Agora.Rtm
             this.encryptionConfig = encryptionConfig;
         }
 
+        /**
+        * The App ID of your project.
+        */
         public string appId;
 
+        /**
+        * The ID of the user.
+        */
         public string userId;
 
+        /**
+        * The region for connection. This advanced feature applies to scenarios that
+        * have regional restrictions.
+        *
+        * For the regions that Agora supports, see #AREA_CODE.
+        *
+        * After specifying the region, the SDK connects to the Agora servers within
+        * that region.
+        */
         public RTM_AREA_CODE areaCode;
 
+        /**
+        * Presence timeout in seconds, specify the timeout value when you lost connection between sdk
+        * and rtm service.
+        */
         public UInt32 presenceTimeout;
 
+        /**
+        * Whether to use String user IDs, if you are using RTC products with Int user IDs,
+        * set this value as 'false'. Otherwise errors might occur.
+        */
         public bool useStringUserId;
 
+        /**
+        * The config for customer set log path, log size and log level.
+        */
         public RtmLogConfig logConfig;
 
+        /**
+        * The config for proxy setting
+        */
         public RtmProxyConfig proxyConfig;
 
+        /**
+        * The config for encryption setting
+        */
         public RtmEncryptionConfig encryptionConfig;
     };
 
@@ -81,42 +117,12 @@ namespace Agora.Rtm
         ///
         FATAL = 0x0008,
 
+        ///
+        /// <summary>
+        /// 0x0010: Output all API_CALL log information.
+        /// </summary>
+        ///
         API_CALL = 0x0010,
-    };
-
-
-    public enum STREAM_CHANNEL_ERROR_CODE
-    {
-        OK = 0,
-        INVALID_ARGUMENT = 1,
-        JOIN_FAILURE = 2,
-        JOIN_REJECTED = 3,
-        REJOIN_FAILURE = 4,
-        LEAVE_FAILURE = 5,
-        EXCEED_LIMITATION = 6,
-    };
-
-    public class TopicSubUsersUpdated
-    {
-        public TopicSubUsersUpdated()
-        {
-            topic = "";
-            succeedUsers = new string[0];
-            failedUsers = new string[0];
-        }
-
-        public TopicSubUsersUpdated(string topic, string[] succeedUsers, string[] failedUsers)
-        {
-            this.topic = topic;
-            this.succeedUsers = succeedUsers;
-            this.failedUsers = failedUsers;
-        }
-
-        public string topic;
-
-        public string[] succeedUsers;
-
-        public string[] failedUsers;
     };
 
     public class MessageEvent
@@ -132,30 +138,63 @@ namespace Agora.Rtm
             customType = "";
         }
 
+        /**
+        * Which channel type, RTM_CHANNEL_TYPE.STREAM or RTM_CHANNEL_TYPE.MESSAGE
+        */
         public RTM_CHANNEL_TYPE channelType;
 
+        /**
+        * Message type
+        */
         public RTM_MESSAGE_TYPE messageType;
 
+        /**
+        * The channel which the message was published
+        */
         public string channelName;
 
+        /**
+        * If the channelType is RTM_CHANNEL_TYPE_STREAM, which topic the message came from. only for RTM_CHANNEL_TYPE_STREAM
+        */
         public string channelTopic;
 
+        /**
+         * The payload
+         */
         public IRtmMessage message;
 
+        /**
+        * The publisher
+        */
         public string publisher;
 
+        /**
+        * The custom type of the message
+        */
         public string customType;
     };
 
 
     public class IntervalInfo
     {
+        /**
+        * Joined users during this interval
+        */
         public string[] joinUserList;
 
+        /**
+        * Left users during this interval
+        */
         public string[] leaveUserList;
 
+        /**
+        * Timeout users during this interval
+        */
         public string[] timeoutUserList;
 
+        /**
+        * The user state changed during this interval
+        */
         public UserState[] userStateList;
 
         public IntervalInfo()
@@ -166,6 +205,9 @@ namespace Agora.Rtm
 
     public class SnapshotInfo
     {
+        /**
+        * The user state in this snapshot event
+        */
         public UserState[] userStateList;
 
         public SnapshotInfo()
@@ -186,18 +228,40 @@ namespace Agora.Rtm
             interval = new IntervalInfo();
             snapshot = new SnapshotInfo();
         }
+
+        /**
+        * Indicate presence event type
+        */
         public RTM_PRESENCE_EVENT_TYPE type;
 
+        /**
+        * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
+        */
         public RTM_CHANNEL_TYPE channelType;
 
+        /**
+        * The channel which the presence event was triggered
+        */
         public string channelName;
 
+        /**
+        * The user who triggered this event.
+        */
         public string publisher;
 
+        /**
+        * The user states
+        */
         public StateItem[] stateItems;
 
+        /**
+        * Only valid when in interval mode
+        */
         public IntervalInfo interval;
 
+        /**
+        * Only valid when receive snapshot event
+        */
         public SnapshotInfo snapshot;
     };
 
@@ -222,12 +286,24 @@ namespace Agora.Rtm
 
     public class LockEvent
     {
+        /**
+        * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
+        */
         public RTM_CHANNEL_TYPE channelType;
 
+        /**
+        * Lock event type, indicate lock states
+        */
         public RTM_LOCK_EVENT_TYPE eventType;
 
+        /**
+        * The channel which the lock event was triggered
+        */
         public string channelName;
 
+        /**
+        * The detail information of locks
+        */
         public LockDetail[] lockDetailList;
 
         public LockEvent()
