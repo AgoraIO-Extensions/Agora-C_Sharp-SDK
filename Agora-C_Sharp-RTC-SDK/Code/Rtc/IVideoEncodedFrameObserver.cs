@@ -21,10 +21,10 @@ namespace Agora.Rtc
         ///
         /// <param name="length"> The data length of the video image.</param>
         ///
-        /// <param name="videoEncodedFrameInfo"> For the information of the encoded video frame, see EncodedVideoFrameInfo .</param>
+        /// <param name="videoEncodedFrameInfo"> For the information of the encoded video frame, see EncodedVideoFrameInfo.</param>
         ///
         /// <returns>
-        /// Reserved for future use.
+        /// Without practical meaning.
         /// </returns>
         ///
         public virtual bool OnEncodedVideoFrameReceived(uint uid, IntPtr imageBufferPtr, UInt64 length, EncodedVideoFrameInfo videoEncodedFrameInfo)

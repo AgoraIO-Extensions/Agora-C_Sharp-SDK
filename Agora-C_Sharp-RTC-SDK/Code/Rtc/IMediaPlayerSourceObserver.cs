@@ -15,9 +15,9 @@ namespace Agora.Rtc
         /// When the state of the media player changes, the SDK triggers this callback to report the current playback state.
         /// </summary>
         ///
-        /// <param name="state"> The playback state. See MEDIA_PLAYER_STATE .</param>
+        /// <param name="state"> The playback state. See MEDIA_PLAYER_STATE.</param>
         ///
-        /// <param name="ec"> The error code. See MEDIA_PLAYER_ERROR .</param>
+        /// <param name="ec"> The error code. See MEDIA_PLAYER_ERROR.</param>
         ///
         public virtual void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec) { }
 
@@ -37,7 +37,7 @@ namespace Agora.Rtc
         /// After calling the Seek method, the SDK triggers the callback to report the results of the seek operation.
         /// </summary>
         ///
-        /// <param name="eventCode"> The player events. See MEDIA_PLAYER_EVENT .</param>
+        /// <param name="eventCode"> The player events. See MEDIA_PLAYER_EVENT.</param>
         ///
         /// <param name="elapsedTime"> The time (ms) when the event occurs.</param>
         ///
@@ -60,7 +60,9 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the playback duration that the buffered data can support.
-        /// When playing online media resources, the SDK triggers this callback every two seconds to report the playback duration that the currently buffered data can support.When the playback duration supported by the buffered data is less than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_LOW.When the playback duration supported by the buffered data is greater than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_RECOVER.
+        /// When playing online media resources, the SDK triggers this callback every two seconds to report the playback duration that the currently buffered data can support.
+        /// When the playback duration supported by the buffered data is less than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_LOW.
+        /// When the playback duration supported by the buffered data is greater than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_RECOVER.
         /// </summary>
         ///
         /// <param name="playCachedBuffer"> The playback duration (ms) that the buffered data can support.</param>
@@ -74,7 +76,7 @@ namespace Agora.Rtc
         ///
         /// <param name="src"> The URL of the media resource.</param>
         ///
-        /// <param name="@event"> Events that occur when media resources are preloaded. See PLAYER_PRELOAD_EVENT .</param>
+        /// <param name="@event"> Events that occur when media resources are preloaded. See PLAYER_PRELOAD_EVENT.</param>
         ///
         public virtual void OnPreloadEvent(string src, PLAYER_PRELOAD_EVENT @event) { }
 
@@ -93,9 +95,9 @@ namespace Agora.Rtc
         /// Occurs when the video bitrate of the media resource changes.
         /// </summary>
         ///
-        /// <param name="from"> Information about the video bitrate of the media resource being played. See SrcInfo .</param>
+        /// <param name="from"> Information about the video bitrate of the media resource being played. See SrcInfo.</param>
         ///
-        /// <param name="to"> Information about the changed video bitrate of media resource being played. See SrcInfo .</param>
+        /// <param name="to"> Information about the changed video bitrate of media resource being played. See SrcInfo.</param>
         ///
         public virtual void OnPlayerSrcInfoChanged(SrcInfo from, SrcInfo to) { }
 
@@ -105,7 +107,7 @@ namespace Agora.Rtc
         /// When the information about the media player changes, the SDK triggers this callback. You can use this callback for troubleshooting.
         /// </summary>
         ///
-        /// <param name="info"> Information related to the media player. See PlayerUpdatedInfo .</param>
+        /// <param name="info"> Information related to the media player. See PlayerUpdatedInfo.</param>
         ///
         public virtual void OnPlayerInfoUpdated(PlayerUpdatedInfo info) { }
 

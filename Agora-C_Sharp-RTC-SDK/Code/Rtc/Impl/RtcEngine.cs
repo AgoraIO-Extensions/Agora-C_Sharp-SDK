@@ -137,13 +137,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.InitEventHandler(engineEventHandler);
         }
 
-        public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, mode);
+            return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, position, mode);
         }
 
         public override int UnRegisterAudioFrameObserver()
@@ -155,13 +155,13 @@ namespace Agora.Rtc
             return _rtcEngineImpl.UnRegisterAudioFrameObserver();
         }
 
-        public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_OBSERVER_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, mode);
+            return _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, formatPreference, position, mode);
         }
 
         public override int UnRegisterVideoFrameObserver()
@@ -319,6 +319,33 @@ namespace Agora.Rtc
             return _rtcEngineImpl.QueryCodecCapability(ref codecInfo, ref size);
         }
 
+        public override int PreloadChannel(string token, string channelId, uint uid)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PreloadChannel(token, channelId, uid);
+        }
+
+        public override int PreloadChannel(string token, string channelId, string userAccount)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.PreloadChannel(token, channelId, userAccount);
+        }
+
+        public override int UpdatePreloadChannelToken(string token)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.UpdatePreloadChannelToken(token);
+        }
+
         public override int JoinChannel(string token, string channelId, string info = "", uint uid = 0)
         {
             if (_rtcEngineImpl == null)
@@ -469,7 +496,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartPreview();
+            return _rtcEngineImpl.StartPreview(sourceType);
         }
 
         public override int StopPreview()
@@ -1793,6 +1820,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetCameraExposurePosition(positionXinView, positionYinView);
         }
 
+        public override bool IsCameraExposureSupported()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return false;
+            }
+            return _rtcEngineImpl.IsCameraExposureSupported();
+        }
+
+        public override int SetCameraExposureFactor(float factor)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetCameraExposureFactor(factor);
+        }
+
         public override bool IsCameraAutoExposureFaceModeSupported()
         {
             if (_rtcEngineImpl == null)
@@ -1836,6 +1881,15 @@ namespace Agora.Rtc
                 return false;
             }
             return _rtcEngineImpl.IsSpeakerphoneEnabled();
+        }
+
+        public override int SetRouteInCommunicationMode(int route)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetRouteInCommunicationMode(route);
         }
 
         public override int StartScreenCaptureByDisplayId(uint displayId, Rectangle regionRect, ScreenCaptureParameters captureParams)

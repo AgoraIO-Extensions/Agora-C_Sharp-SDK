@@ -90,6 +90,45 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_PreloadChannel()
+        {
+            string token;
+            ParamsHelper.InitParam(out token);
+            string channelId;
+            ParamsHelper.InitParam(out channelId);
+            uid_t uid;
+            ParamsHelper.InitParam(out uid);
+            var nRet = Engine.PreloadChannel(token, channelId, uid);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_PreloadChannel2()
+        {
+            string token;
+            ParamsHelper.InitParam(out token);
+            string channelId;
+            ParamsHelper.InitParam(out channelId);
+            string userAccount;
+            ParamsHelper.InitParam(out userAccount);
+            var nRet = Engine.PreloadChannel(token, channelId, userAccount);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_UpdatePreloadChannelToken()
+        {
+            string token;
+            ParamsHelper.InitParam(out token);
+            var nRet = Engine.UpdatePreloadChannelToken(token);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+
+        [Test]
         public void Test_SetVideoScenario()
         {
             VIDEO_APPLICATION_SCENARIO_TYPE scenarioType;
@@ -2150,6 +2189,25 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_IsCameraExposureSupported()
+        {
+
+            var nRet = Engine.IsCameraExposureSupported();
+
+            Assert.AreEqual(false, nRet);
+        }
+
+        [Test]
+        public void Test_SetCameraExposureFactor()
+        {
+            float factor;
+            ParamsHelper.InitParam(out factor);
+            var nRet = Engine.SetCameraExposureFactor(factor);
+
+            Assert.AreEqual(-4, nRet);
+        }
+
+        [Test]
         public void Test_IsCameraAutoExposureFaceModeSupported()
         {
 
@@ -2195,6 +2253,16 @@ namespace Agora.Rtc
             var nRet = Engine.IsSpeakerphoneEnabled();
 
             Assert.AreEqual(false, nRet);
+        }
+
+        [Test]
+        public void Test_SetRouteInCommunicationMode()
+        {
+            int route;
+            ParamsHelper.InitParam(out route);
+            var nRet = Engine.SetRouteInCommunicationMode(route);
+
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
@@ -3062,7 +3130,7 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out config);
             var nRet = Engine.CreateCustomAudioTrack(trackType, config);
 
-            Assert.AreEqual(0, nRet);
+            Assert.Greater(nRet, 0);
         }
 
         [Test]
@@ -3136,7 +3204,7 @@ namespace Agora.Rtc
            
             var nRet = Engine.GetNtpWallTimeInMs();
 
-            Assert.AreEqual(0, nRet);
+            Assert.Greater(nRet, 0);
         }
 
         #endregion

@@ -144,50 +144,5 @@ namespace Agora.Rtc
 
         ///////////////////////////////////
 
-
-   
-        public bool GetVideoFormatPreference_be_trigger = false;
-
-
-        public override VIDEO_OBSERVER_FRAME_TYPE GetVideoFormatPreference()
-        {
-            GetVideoFormatPreference_be_trigger = true;
-            return VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
-
-        }
-
-        public bool GetVideoFormatPreferencePassed()
-        {
-            if (GetVideoFormatPreference_be_trigger == false)
-                return false;
-
-
-
-            return true;
-        }
-
-        ///////////////////////////////////
-
-        public bool GetObservedFramePosition_be_trigger = false;
-
-
-        public override VIDEO_OBSERVER_POSITION GetObservedFramePosition()
-        {
-            GetObservedFramePosition_be_trigger = true;
-            return  VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER;
-
-        }
-
-        public bool GetObservedFramePositionPassed()
-        {
-            if (GetObservedFramePosition_be_trigger == false)
-                return false;
-
-
-
-            return true;
-        }
-
-        ///////////////////////////////////
     }
 }

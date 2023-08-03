@@ -26,7 +26,9 @@ namespace Agora.Rtc.Event
 
 
             EventHandler = new UTVideoFrameObserver();
-            int ret = Engine.RegisterVideoFrameObserver(EventHandler, OBSERVER_MODE.INTPTR);
+            int ret = Engine.RegisterVideoFrameObserver(EventHandler, VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA,
+                VIDEO_OBSERVER_POSITION.POSITION_POST_CAPTURER | VIDEO_OBSERVER_POSITION.POSITION_PRE_RENDERER | VIDEO_OBSERVER_POSITION.POSITION_PRE_ENCODER,
+                OBSERVER_MODE.INTPTR);
             Assert.AreEqual(0, ret);
         }
 
@@ -180,44 +182,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnTranscodedVideoFramePassed(videoFrame));
         }
-
-        //todo we will resolve this late
-        [Test]
-        public void Test_GetVideoFormatPreference()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_GETVIDEOFORMATPREFERENCE;
-
-            jsonObj.Clear();
-
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetVideoFormatPreferencePassed());
-        }
-
-        //todo we will resolve this late
-        [Test]
-        public void Test_GetObservedFramePosition()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_GETOBSERVEDFRAMEPOSITION;
-
-            jsonObj.Clear();
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetObservedFramePositionPassed());
-        }
-
         #endregion
     }
 }
