@@ -90,7 +90,6 @@ namespace Agora.Rtm
         * Get the metadata of a specified user.
         *
         * @param [in] userId The user ID of the specified user.
-        * @param [out] requestId The unique ID of this request.
         * 
         * @return The result of GetUserMetadata
         */
