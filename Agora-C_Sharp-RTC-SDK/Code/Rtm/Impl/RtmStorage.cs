@@ -180,7 +180,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<UnsubscribeUserMetadataResult>> UnsubscribeUserMetadataAsync(string userId)
         {
-            //fake async
+            // fake async
             int errorCode = this.internalRtmStorage.UnsubscribeUserMetadata(userId);
 
             RtmResult<UnsubscribeUserMetadataResult> rtmResult = new RtmResult<UnsubscribeUserMetadataResult>();
@@ -194,6 +194,5 @@ namespace Agora.Rtm
             taskCompletionSource.SetResult(rtmResult);
             return taskCompletionSource.Task;
         }
-
     }
 }

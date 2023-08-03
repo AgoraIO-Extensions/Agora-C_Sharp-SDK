@@ -182,7 +182,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<LogoutResult>> LogoutAsync()
         {
-            //fake async
+            // fake async
             int errorCode = internalRtmClient.Logout();
             RtmResult<LogoutResult> rtmResult = new RtmResult<LogoutResult>();
             rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMLogoutOperation, this.internalRtmClient);
@@ -236,7 +236,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<RenewTokenResult>> RenewTokenAsync(string token)
         {
-            //fake async
+            // fake async
             int errorCode = internalRtmClient.RenewToken(token);
             RtmResult<RenewTokenResult> rtmResult = new RtmResult<RenewTokenResult>();
             rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this.internalRtmClient);
@@ -276,7 +276,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<UnsubscribeResult>> UnsubscribeAsync(string channelName)
         {
-            //fake async
+            // fake async
             int errorCode = internalRtmClient.Unsubscribe(channelName);
 
             RtmResult<UnsubscribeResult> rtmResult = new RtmResult<UnsubscribeResult>();

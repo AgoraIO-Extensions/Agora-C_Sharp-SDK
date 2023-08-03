@@ -28,7 +28,7 @@ namespace Agora.Rtm.Internal
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
         private const string AgoraRtmLibName = "AgoraRtmWrapperUnity";
 #elif UNITY_IPHONE
-		private const string AgoraRtmLibName = "__Internal";
+        private const string AgoraRtmLibName = "__Internal";
 #else
         private const string AgoraRtmLibName = "AgoraRtmWrapper";
 #endif
@@ -57,13 +57,11 @@ namespace Agora.Rtm.Internal
 
         internal static void AllocEventHandlerHandle(ref RtmEventHandlerHandle eventHandlerHandle, Rtm_Func_Event_Native onEvent)
         {
-            eventHandlerHandle.cEvent = new IrisRtmCEventHandler
-            {
+            eventHandlerHandle.cEvent = new IrisRtmCEventHandler {
                 OnEvent = onEvent,
             };
 
-            var cEventHandlerNativeLocal = new IrisRtmCEventHandlerNative
-            {
+            var cEventHandlerNativeLocal = new IrisRtmCEventHandlerNative {
                 onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
             };
 
@@ -83,8 +81,8 @@ namespace Agora.Rtm.Internal
         }
 
         internal static int CallIrisRtmApiWithArgs(IrisApiRtmEnginePtr engine_ptr, string func_name,
-            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtmApiParam apiParam,
-            uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0)
+                                                   string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtmApiParam apiParam,
+                                                   uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0)
         {
             apiParam.@event = func_name;
             apiParam.data = @params;
@@ -114,10 +112,8 @@ namespace Agora.Rtm.Internal
         }
     }
 
-
     [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
     internal delegate void Rtm_Func_Event_Native(IntPtr param);
-
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtmCEventHandlerNative
@@ -157,7 +153,8 @@ namespace Agora.Rtm.Internal
         levelInfo = 2,
         levelWarn = 3,
         levelErr = 4,
-    };
+    }
+    ;
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisEngineParam
@@ -180,8 +177,7 @@ namespace Agora.Rtm.Internal
 
         internal string Result
         {
-            get
-            {
+            get {
                 var re = Marshal.PtrToStringAnsi(result);
                 return re;
             }
@@ -216,7 +212,7 @@ namespace Agora.Rtm.Internal
     }
 
     //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisCApiParam
+    // internal struct IrisCApiParam
     //{
     //    internal IrisCApiParam(int param = 0)
     //    {

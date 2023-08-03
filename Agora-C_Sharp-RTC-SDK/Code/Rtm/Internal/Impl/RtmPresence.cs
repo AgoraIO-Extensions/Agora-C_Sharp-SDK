@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace Agora.Rtm.Internal
 {
     internal sealed class RtmPresence : IRtmPresence
@@ -52,7 +51,7 @@ namespace Agora.Rtm.Internal
             return _rtmPresenceImpl.SetState(channelName, channelType, items, count, ref requestId);
         }
 
-        public override int RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, int count,  ref UInt64 requestId)
+        public override int RemoveState(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys, int count, ref UInt64 requestId)
         {
             if (_rtmPresenceImpl == null)
             {
@@ -69,6 +68,5 @@ namespace Agora.Rtm.Internal
             }
             return _rtmPresenceImpl.GetState(channelName, channelType, userId, ref requestId);
         }
-
     }
 }
