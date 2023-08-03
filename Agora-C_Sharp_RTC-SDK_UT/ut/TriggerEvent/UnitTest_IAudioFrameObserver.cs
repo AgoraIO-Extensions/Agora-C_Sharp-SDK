@@ -27,7 +27,12 @@ namespace Agora.Rtc.Event
 
             AudioEncodedFrameObserverConfig config = new AudioEncodedFrameObserverConfig();
             EventHandler = new UTAudioFrameObserver();
-            Engine.RegisterAudioFrameObserver(EventHandler);
+            Engine.RegisterAudioFrameObserver(EventHandler,
+                AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_PLAYBACK |
+                AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_RECORD |
+                AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_MIXED |
+                AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_BEFORE_MIXING|
+                AUDIO_FRAME_POSITION.AUDIO_FRAME_POSITION_EAR_MONITORING);
         }
 
         [TearDown]
@@ -164,93 +169,6 @@ namespace Agora.Rtc.Event
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPlaybackAudioFrameBeforeMixingPassed(channelId, uid, audioFrame));
-        }
-
-        [Test]
-        public void Test_GetObservedAudioFramePosition()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_GETOBSERVEDAUDIOFRAMEPOSITION;
-
-            jsonObj.Clear();
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-
-            //iris will not trigger these 
-            //Assert.AreEqual(true, EventHandler.GetObservedAudioFramePositionPassed());
-        }
-
-        [Test]
-        public void Test_GetPlaybackAudioParams()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_GETPLAYBACKAUDIOPARAMS;
-
-            jsonObj.Clear();
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetPlaybackAudioParamsPassed());
-        }
-
-        [Test]
-        public void Test_GetRecordAudioParams()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_GETRECORDAUDIOPARAMS;
-
-            jsonObj.Clear();
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetRecordAudioParamsPassed());
-        }
-
-        [Test]
-        public void Test_GetMixedAudioParams()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_GETMIXEDAUDIOPARAMS;
-
-            jsonObj.Clear();
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetMixedAudioParamsPassed());
-        }
-
-        [Test]
-        public void Test_GetEarMonitoringAudioParams()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_GETEARMONITORINGAUDIOPARAMS;
-
-            jsonObj.Clear();
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.GetEarMonitoringAudioParamsPassed());
         }
 
         [Test]

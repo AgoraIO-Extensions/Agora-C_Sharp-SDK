@@ -27,21 +27,27 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The complete path of the log files. Ensure that the path for the log file exists and is writable. You can use this parameter to rename the log files.The default path is:Android：/storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.iOS：App Sandbox/Library/caches/agorasdk.log.macOS:If Sandbox is enabled: App Sandbox/Library/Logs/agorasdk.log. For example, /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log.If Sandbox is disabled: ~/Library/Logs/agorasdk.logWindows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\agorasdk.log.
+        /// The complete path of the log files. Ensure that the path for the log file exists and is writable. You can use this parameter to rename the log files. The default path is:
+        /// Android： /storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.
+        /// iOS： App Sandbox/Library/caches/agorasdk.log.
+        /// macOS:
+        /// If Sandbox is enabled: App Sandbox/Library/Logs/agorasdk.log. For example, /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log.
+        /// If Sandbox is disabled: ~/Library/Logs/agorasdk.log
+        /// Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\agorasdk.log.
         /// </summary>
         ///
         public string filePath;
 
         ///
         /// <summary>
-        /// The size (KB) of an agorasdk.log file. The value range is [128,1024]. The default value is 1,024 KB. If you set fileSizeInKByte smaller than 128 KB, the SDK automatically adjusts it to 128 KB; if you set fileSizeInKByte greater than 1,024 KB, the SDK automatically adjusts it to 1,024 KB.
+        /// The size (KB) of an agorasdk.log file. The value range is [128,20480]. The default value is 2,048 KB. If you set fileSizeInKByte smaller than 128 KB, the SDK automatically adjusts it to 128 KB; if you set fileSizeInKByte greater than 20,480 KB, the SDK automatically adjusts it to 20,480 KB.
         /// </summary>
         ///
         public uint fileSizeInKB;
 
         ///
         /// <summary>
-        /// The output level of the SDK log file. See LOG_LEVEL .For example, if you set the log level to WARN, the SDK outputs the logs within levels FATAL, ERROR, and WARN.
+        /// The output level of the SDK log file. See LOG_LEVEL. For example, if you set the log level to WARN, the SDK outputs the logs within levels FATAL, ERROR, and WARN.
         /// </summary>
         ///
         public LOG_LEVEL level;
@@ -89,6 +95,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         LOG_LEVEL_FATAL = 0x0008,
+
+        ///
+        /// @ignore
+        ///
+        LOG_LEVEL_API_CALL = 0x0010,
     };
 
     #endregion

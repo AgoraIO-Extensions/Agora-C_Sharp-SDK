@@ -95,7 +95,7 @@ namespace Agora.Rtc
         public uint width;
         public uint height;
 
-        public Int64 buffer;
+        public UInt64 buffer;
 
         public ThumbImageBufferInternal()
         {

@@ -58,42 +58,42 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_SOURCE_CUSTOM = 4,
-       
+
         ///
         /// <summary>
         /// 5: The media player.
         /// </summary>
         ///
         VIDEO_SOURCE_MEDIA_PLAYER = 5,
-      
+
         ///
         /// <summary>
         /// 6: One PNG image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_PNG = 6,
-       
+
         ///
         /// <summary>
         /// 7: One JPEG image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_JPEG = 7,
-       
+
         ///
         /// <summary>
         /// 8: One GIF image.
         /// </summary>
         ///
         VIDEO_SOURCE_RTC_IMAGE_GIF = 8,
-       
+
         ///
         /// <summary>
         /// 9: One remote video acquired by the network.
         /// </summary>
         ///
         VIDEO_SOURCE_REMOTE = 9,
-       
+
         ///
         /// <summary>
         /// 10: One transcoded video source.
@@ -101,28 +101,28 @@ namespace Agora.Rtc
         ///
         VIDEO_SOURCE_TRANSCODED = 10,
 
-       
+
         ///
         /// <summary>
         /// 11: (For Windows and macOS only) The third camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_THIRD = 11,
-       
+
         ///
         /// <summary>
         /// 12: (For Windows and macOS only) The fourth camera.
         /// </summary>
         ///
         VIDEO_SOURCE_CAMERA_FOURTH = 12,
-       
+
         ///
         /// <summary>
         /// 13: (For Windows and macOS only) The third screen.
         /// </summary>
         ///
         VIDEO_SOURCE_SCREEN_THIRD = 13,
-      
+
         ///
         /// <summary>
         /// 14: (For Windows and macOS only) The fourth screen.
@@ -610,7 +610,7 @@ namespace Agora.Rtc
         [Obsolete]
         ///
         /// <summary>
-        /// Deprecated:3: This mode is deprecated.
+        /// Deprecated: 3: This mode is deprecated.
         /// </summary>
         ///
         RENDER_MODE_ADAPTIVE = 3,
@@ -725,14 +725,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The video type. See VIDEO_BUFFER_TYPE .
+        /// The video type. See VIDEO_BUFFER_TYPE.
         /// </summary>
         ///
         public VIDEO_BUFFER_TYPE type;
 
         ///
         /// <summary>
-        /// The pixel format. See VIDEO_PIXEL_FORMAT .
+        /// The pixel format. See VIDEO_PIXEL_FORMAT.
         /// </summary>
         ///
         public VIDEO_PIXEL_FORMAT format;
@@ -802,7 +802,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// This parameter only applies to video data in Texture format.When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos, set eglContext to this field.When using the OpenGL interface (android.opengl.*) defined by Android, set eglContext to this field.
+        /// This parameter only applies to video data in Texture format.
+        /// When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos, set eglContext to this field.
+        /// When using the OpenGL interface (android.opengl.*) defined by Android, set eglContext to this field.
         /// </summary>
         ///
         public byte[] eglContext;
@@ -876,7 +878,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The pixel format. See VIDEO_PIXEL_FORMAT .
+        /// The pixel format. See VIDEO_PIXEL_FORMAT.
         /// </summary>
         ///
         public VIDEO_PIXEL_FORMAT type;
@@ -1113,10 +1115,11 @@ namespace Agora.Rtc
             RawBuffer = new byte[0];
             renderTimeMs = 0;
             avsync_type = 0;
+            presentationMs = 0;
         }
 
         public AudioFrame(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels, int samplesPerSec,
-            byte[] buffer, long renderTimeMs, int avsync_type)
+            byte[] buffer, long renderTimeMs, int avsync_type, int64_t presentationMs)
         {
             this.type = type;
             this.samplesPerChannel = samplesPerChannel;
@@ -1126,11 +1129,12 @@ namespace Agora.Rtc
             this.RawBuffer = buffer;
             this.renderTimeMs = renderTimeMs;
             this.avsync_type = avsync_type;
+            this.presentationMs = presentationMs;
         }
 
         ///
         /// <summary>
-        /// The type of the audio frame. See AUDIO_FRAME_TYPE .
+        /// The type of the audio frame. See AUDIO_FRAME_TYPE.
         /// </summary>
         ///
         public AUDIO_FRAME_TYPE type;
@@ -1151,7 +1155,9 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The number of audio channels (the data are interleaved if it is stereo).1: Mono.2: Stereo.
+        /// The number of audio channels (the data are interleaved if it is stereo).
+        /// 1: Mono.
+        /// 2: Stereo.
         /// </summary>
         ///
         public int channels;
@@ -1171,14 +1177,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved.The size of the data buffer is as follows: buffer = samples × channels × bytesPerSample.
+        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved. The size of the data buffer is as follows: buffer = samples × channels × bytesPerSample.
         /// </summary>
         ///
         public byte[] RawBuffer;
 
         ///
         /// <summary>
-        /// The timestamp (ms) of the external audio frame.You can use this timestamp to restore the order of the captured audio frame, and synchronize audio and video frames in video scenarios, including scenarios where external video sources are used.
+        /// The timestamp (ms) of the external audio frame. You can use this timestamp to restore the order of the captured audio frame, and synchronize audio and video frames in video scenarios, including scenarios where external video sources are used.
         /// </summary>
         ///
         public long renderTimeMs;
@@ -1189,6 +1195,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int avsync_type;
+
+        ///
+        /// @ignore
+        ///
+        public int64_t presentationMs;
     };
 
     [Flags]
@@ -1231,28 +1242,37 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Audio data format.
-    /// You can pass the AudioParams object in the return value of the following callbacksto set the audio data format for the corresponding callback: GetRecordAudioParams : Sets the audio data format for the OnRecordAudioFrame callback. GetPlaybackAudioParams : Sets the audio data format for the OnPlaybackAudioFrame callback. GetMixedAudioParams : Sets the audio data format for the OnMixedAudioFrame callback. GetEarMonitoringAudioParams : Sets the audio data format for the OnEarMonitoringAudioFrame callback.The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, OnMixedAudioFrame, and OnEarMonitoringAudioFrame callbacks according to the sampling interval.Sample interval (sec) = samplePerCall/(sampleRate × channel).Ensure that the sample interval ≥ 0.01 (s).
+    /// You can pass the AudioParams object in the following APIs to set the audio data format for the corresponding callback: SetRecordingAudioFrameParameters : Sets the audio data format for the OnRecordAudioFrame callback. SetPlaybackAudioFrameParameters : Sets the audio data format for the OnPlaybackAudioFrame callback. SetMixedAudioFrameParameters : Sets the audio data format for the OnMixedAudioFrame callback. SetEarMonitoringAudioFrameParameters : Sets the audio data format for the OnEarMonitoringAudioFrame callback.
+    /// The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, OnMixedAudioFrame, and OnEarMonitoringAudioFrame callbacks according to the sampling interval. Sample interval (sec) = samplePerCall /(sampleRate × channel).
+    /// Ensure that the sample interval ≥ 0.01 (s).
     /// </summary>
     ///
     public class AudioParams
     {
         ///
         /// <summary>
-        /// The audio sample rate (Hz), which can be set as one of the following values:8000.(Default) 16000.32000.4410048000
+        /// The audio sample rate (Hz), which can be set as one of the following values:
+        /// 8000.
+        /// (Default) 16000.
+        /// 32000.
+        /// 44100
+        /// 48000
         /// </summary>
         ///
         public int sample_rate;
 
         ///
         /// <summary>
-        /// The number of audio channels, which can be set as either of the following values:1: (Default) Mono.2: Stereo.
+        /// The number of audio channels, which can be set as either of the following values:
+        /// 1: (Default) Mono.
+        /// 2: Stereo.
         /// </summary>
         ///
         public int channels;
 
         ///
         /// <summary>
-        /// The use mode of the audio data. See RAW_AUDIO_FRAME_OP_MODE_TYPE .
+        /// The use mode of the audio data. See RAW_AUDIO_FRAME_OP_MODE_TYPE.
         /// </summary>
         ///
         public RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
@@ -1319,7 +1339,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Audio spectrum information of the remote user. See AudioSpectrumData .
+        /// Audio spectrum information of the remote user. See AudioSpectrumData.
         /// </summary>
         ///
         public AudioSpectrumData spectrumData;
@@ -1462,14 +1482,14 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// A structure used to configure the frequency of video screenshot and upload.ContentInspectModule
+    /// A ContentInspectModule structure used to configure the frequency of video screenshot and upload.
     /// </summary>
     ///
     public class ContentInspectModule
     {
         ///
         /// <summary>
-        /// Types of functional module. See CONTENT_INSPECT_TYPE .
+        /// Types of functional module. See CONTENT_INSPECT_TYPE.
         /// </summary>
         ///
         public CONTENT_INSPECT_TYPE type;
@@ -1497,7 +1517,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// Functional module. See ContentInspectModule .A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32].A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
+        /// Functional module. See ContentInspectModule. A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32]. A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
         /// </summary>
         ///
         public ContentInspectModule[] modules;
@@ -1539,16 +1559,12 @@ namespace Agora.Rtc
     };
 
     ///
-    /// <summary>
-    /// The format of the recording file.
-    /// </summary>
+    /// @ignore
     ///
     public enum MediaRecorderContainerFormat
     {
         ///
-        /// <summary>
-        /// 1: (Default) MP4.
-        /// </summary>
+        /// @ignore
         ///
         FORMAT_MP4 = 1,
     };

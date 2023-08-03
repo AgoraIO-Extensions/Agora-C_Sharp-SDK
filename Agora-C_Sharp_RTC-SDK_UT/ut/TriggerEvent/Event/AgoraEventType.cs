@@ -224,6 +224,7 @@ namespace Agora.Rtc
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT = "MusicContentCenterEventHandler_onMusicChartsResult";
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT = "MusicContentCenterEventHandler_onMusicCollectionResult";
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT = "MusicContentCenterEventHandler_onLyricResult";
+        internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT = "MusicContentCenterEventHandler_onSongSimpleInfoResult";
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT = "MusicContentCenterEventHandler_onPreLoadEvent";
         #endregion
 

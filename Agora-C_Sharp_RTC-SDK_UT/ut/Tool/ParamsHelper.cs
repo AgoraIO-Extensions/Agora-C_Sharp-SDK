@@ -3220,7 +3220,7 @@ namespace Agora.Rtc
 
         public static bool compareLOCAL_PROXY_MODE(LOCAL_PROXY_MODE selfParam, LOCAL_PROXY_MODE outParam)
         {
-            return selfParam == LOCAL_PROXY_MODE.kConnectivityFirst;
+            return selfParam == LOCAL_PROXY_MODE.ConnectivityFirst;
         }
 
         public static bool comparePROXY_TYPE(PROXY_TYPE selfParam, PROXY_TYPE outParam)
