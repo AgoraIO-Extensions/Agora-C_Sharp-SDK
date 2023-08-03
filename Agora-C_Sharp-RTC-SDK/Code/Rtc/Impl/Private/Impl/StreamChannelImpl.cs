@@ -15,7 +15,7 @@ namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
 
-    internal class StreamChannelImpl : Rtm.IStreamChannelImpl
+    internal class StreamChannelImpl : Rtm.Internal.IStreamChannelImpl
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;

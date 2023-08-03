@@ -1,7 +1,6 @@
 ﻿#define AGORA_RTC
 #define AGORA_RTM
 
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -26,7 +25,6 @@ namespace Agora.Rtm.Internal
         private IrisRtmApiParam _apiParam;
         private Dictionary<string, System.Object> _param = new Dictionary<string, System.Object>();
 
-
         internal RtmLockImpl(IrisApiRtmEnginePtr irisApiRtmEngine)
         {
             _apiParam = new IrisRtmApiParam();
@@ -41,7 +39,8 @@ namespace Agora.Rtm.Internal
 
         private void Dispose(bool disposing)
         {
-            if (_disposed) return;
+            if (_disposed)
+                return;
 
             if (disposing)
             {
@@ -59,7 +58,6 @@ namespace Agora.Rtm.Internal
             GC.SuppressFinalize(this);
         }
 
-
         public int SetLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl, ref UInt64 requestId)
         {
             _param.Clear();
@@ -67,7 +65,6 @@ namespace Agora.Rtm.Internal
             _param.Add("channelType", channelType);
             _param.Add("lockName", lockName);
             _param.Add("ttl", ttl);
-
 
             var json = AgoraJson.ToJson(_param);
 
@@ -87,7 +84,6 @@ namespace Agora.Rtm.Internal
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
 
-
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_GETLOCKS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
@@ -106,7 +102,6 @@ namespace Agora.Rtm.Internal
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
             _param.Add("lockName", lockName);
-
 
             var json = AgoraJson.ToJson(_param);
 
@@ -128,7 +123,6 @@ namespace Agora.Rtm.Internal
             _param.Add("lockName", lockName);
             _param.Add("retry", retry);
 
-
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_ACQUIRELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
@@ -147,7 +141,6 @@ namespace Agora.Rtm.Internal
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
             _param.Add("lockName", lockName);
-
 
             var json = AgoraJson.ToJson(_param);
 
@@ -169,7 +162,6 @@ namespace Agora.Rtm.Internal
             _param.Add("lockName", lockName);
             _param.Add("owner", owner);
 
-
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMLOCK_REVOKELOCK, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
@@ -181,6 +173,5 @@ namespace Agora.Rtm.Internal
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
-
     }
 }

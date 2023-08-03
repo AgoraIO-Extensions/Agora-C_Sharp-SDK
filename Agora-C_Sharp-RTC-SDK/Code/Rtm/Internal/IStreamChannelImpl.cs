@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Agora.Rtm
+namespace Agora.Rtm.Internal
 {
     interface IStreamChannelImpl
     {

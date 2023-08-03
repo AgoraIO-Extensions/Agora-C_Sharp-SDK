@@ -46,7 +46,8 @@ namespace Agora.Rtm.Internal
 
         public override int Dispose()
         {
-            if (_disposed) return 0;
+            if (_disposed)
+                return 0;
 
             GC.SuppressFinalize(this);
 
@@ -109,7 +110,6 @@ namespace Agora.Rtm.Internal
             _streamChannelDic.Add(channelName, streamChannel);
             return streamChannel;
         }
-
 
         public override int Login(string token)
         {

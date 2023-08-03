@@ -36,7 +36,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<RenewTokenResult>> RenewTokenAsync(string token)
         {
-            //fake async
+            // fake async
             int errorCode = this.internalStreamChannel.RenewToken(token);
             RtmResult<RenewTokenResult> rtmResult = new RtmResult<RenewTokenResult>();
             rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMRenewTokenOperation, this.internalRtmClient);
@@ -94,7 +94,7 @@ namespace Agora.Rtm
         public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option)
         {
             Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.BINARY);
-            //fake async
+            // fake async
             int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions);
 
             RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
@@ -112,7 +112,7 @@ namespace Agora.Rtm
         public Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option)
         {
             Internal.PublishOptions internalOptions = new Internal.PublishOptions(option, RTM_MESSAGE_TYPE.STRING);
-            //fake async
+            // fake async
             int errorCode = internalStreamChannel.PublishTopicMessage(topic, message, message.Length, internalOptions);
 
             RtmResult<PublishTopicMessageResult> rtmResult = new RtmResult<PublishTopicMessageResult>();
@@ -165,7 +165,7 @@ namespace Agora.Rtm
 
         public Task<RtmResult<UnsubscribeTopicResult>> UnsubscribeTopicAsync(string topic, TopicOptions options)
         {
-            //fake async
+            // fake async
             int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, options);
 
             RtmResult<UnsubscribeTopicResult> rtmResult = new RtmResult<UnsubscribeTopicResult>();
@@ -207,6 +207,5 @@ namespace Agora.Rtm
             }
             return Tools.GenerateStatus(errorCode, RtmOperation.RTMDisposeOperation, this.internalRtmClient);
         }
-
     }
 }
