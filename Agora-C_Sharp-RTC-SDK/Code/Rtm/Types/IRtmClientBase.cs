@@ -2,12 +2,14 @@ using System;
 
 namespace Agora.Rtm
 {
-    /**
-     *  Configurations for RTM Client.
-    */
+    ///
+    /// <summary>
+    /// Configurations for RTM Client.
+    /// </summary>
+    ///
     public class RtmConfig
     {
-       
+
         public RtmConfig()
         {
             appId = "";
@@ -30,52 +32,66 @@ namespace Agora.Rtm
             this.encryptionConfig = encryptionConfig;
         }
 
-        /**
-        * The App ID of your project.
-        */
+        ///
+        /// <summary>
+        /// The App ID of your project.
+        /// </summary>
+        ///
         public string appId;
 
-        /**
-        * The ID of the user.
-        */
+        ///
+        /// <summary>
+        /// The ID of the user.
+        /// </summary>
+        ///
         public string userId;
 
-        /**
-        * The region for connection. This advanced feature applies to scenarios that
-        * have regional restrictions.
-        *
-        * For the regions that Agora supports, see #AREA_CODE.
-        *
-        * After specifying the region, the SDK connects to the Agora servers within
-        * that region.
-        */
+        ///
+        /// <summary>
+        /// The region for connection. This advanced feature applies to scenarios that
+        /// have regional restrictions.
+        /// For the regions that Agora supports, see #AREA_CODE.
+        /// After specifying the region, the SDK connects to the Agora servers within
+        /// that region.
+        /// </summary>
+        ///
         public RTM_AREA_CODE areaCode;
 
-        /**
-        * Presence timeout in seconds, specify the timeout value when you lost connection between sdk
-        * and rtm service.
-        */
+        ///
+        /// <summary>
+        /// Presence timeout in seconds, specify the timeout value when you lost connection between sdk
+        /// and rtm service.
+        /// </summary>
+        ///
         public UInt32 presenceTimeout;
 
-        /**
-        * Whether to use String user IDs, if you are using RTC products with Int user IDs,
-        * set this value as 'false'. Otherwise errors might occur.
-        */
+        ///
+        /// <summary>
+        /// Whether to use String user IDs, if you are using RTC products with Int user IDs,
+        /// set this value as 'false'. Otherwise errors might occur.
+        /// </summary>
+        ///
         public bool useStringUserId;
 
-        /**
-        * The config for customer set log path, log size and log level.
-        */
+        ///
+        /// <summary>
+        /// The config for customer set log path, log size and log level.
+        /// </summary>
+        ///
         public RtmLogConfig logConfig;
 
-        /**
-        * The config for proxy setting
-        */
+        ///
+        /// <summary>
+        /// The config for proxy setting
+        /// </summary>
+        ///
         public RtmProxyConfig proxyConfig;
 
-        /**
-        * The config for encryption setting
-        */
+        ///
+        /// <summary>
+        /// The config for encryption setting
+        /// </summary>
+        ///
         public RtmEncryptionConfig encryptionConfig;
     };
 
@@ -123,7 +139,7 @@ namespace Agora.Rtm
         /// </summary>
         ///
         API_CALL = 0x0010,
-    };
+    }
 
     public class MessageEvent
     {
@@ -138,63 +154,84 @@ namespace Agora.Rtm
             customType = "";
         }
 
-        /**
-        * Which channel type, RTM_CHANNEL_TYPE.STREAM or RTM_CHANNEL_TYPE.MESSAGE
-        */
+        ///
+        /// <summary>
+        /// Which channel type, RTM_CHANNEL_TYPE.STREAM or RTM_CHANNEL_TYPE.MESSAGE
+        /// </summary>
+        ///
         public RTM_CHANNEL_TYPE channelType;
 
-        /**
-        * Message type
-        */
+        ///
+        /// <summary>
+        /// Message type
+        /// </summary>
+        ///
         public RTM_MESSAGE_TYPE messageType;
 
-        /**
-        * The channel which the message was published
-        */
+        ///
+        /// <summary>
+        /// The channel which the message was published
+        /// </summary>
+        ///
         public string channelName;
 
-        /**
-        * If the channelType is RTM_CHANNEL_TYPE_STREAM, which topic the message came from. only for RTM_CHANNEL_TYPE_STREAM
-        */
+        ///
+        /// <summary>
+        /// If the channelType is RTM_CHANNEL_TYPE_STREAM, which topic the message came from. only for RTM_CHANNEL_TYPE_STREAM
+        /// </summary>
+        ///
         public string channelTopic;
 
-        /**
-         * The payload
-         */
+        ///
+        /// <summary>
+        /// The payload
+        /// </summary>
+        ///
         public IRtmMessage message;
 
-        /**
-        * The publisher
-        */
+        ///
+        /// <summary>
+        /// The publisher
+        /// </summary>
+        ///
         public string publisher;
 
-        /**
-        * The custom type of the message
-        */
+        ///
+        /// <summary>
+        /// The custom type of the message
+        /// </summary>
+        ///
         public string customType;
     };
 
-
     public class IntervalInfo
     {
-        /**
-        * Joined users during this interval
-        */
+        ///
+        /// <summary>
+        /// Joined users during this interval
+        /// </summary>
+        ///
         public string[] joinUserList;
 
-        /**
-        * Left users during this interval
-        */
+        ///
+        /// <summary>
+        /// Left users during this interval
+        /// </summary>
+        ///
         public string[] leaveUserList;
 
-        /**
-        * Timeout users during this interval
-        */
+        ///
+        /// <summary>
+        /// Timeout users during this interval
+        /// </summary>
+        ///
         public string[] timeoutUserList;
 
-        /**
-        * The user state changed during this interval
-        */
+        ///
+        /// <summary>
+        /// The user state changed during this interval
+        /// </summary>
+        ///
         public UserState[] userStateList;
 
         public IntervalInfo()
@@ -205,9 +242,11 @@ namespace Agora.Rtm
 
     public class SnapshotInfo
     {
-        /**
-        * The user state in this snapshot event
-        */
+        ///
+        /// <summary>
+        /// The user state in this snapshot event
+        /// </summary>
+        ///
         public UserState[] userStateList;
 
         public SnapshotInfo()
@@ -229,39 +268,53 @@ namespace Agora.Rtm
             snapshot = new SnapshotInfo();
         }
 
-        /**
-        * Indicate presence event type
-        */
+        ///
+        /// <summary>
+        /// Indicate presence event type
+        /// </summary>
+        ///
         public RTM_PRESENCE_EVENT_TYPE type;
 
-        /**
-        * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
-        */
+        ///
+        /// <summary>
+        /// Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
+        /// </summary>
+        ///
         public RTM_CHANNEL_TYPE channelType;
 
-        /**
-        * The channel which the presence event was triggered
-        */
+        ///
+        /// <summary>
+        /// The channel which the presence event was triggered
+        /// </summary>
+        ///
         public string channelName;
 
-        /**
-        * The user who triggered this event.
-        */
+        ///
+        /// <summary>
+        /// The user who triggered this event.
+        /// </summary>
+        ///
         public string publisher;
 
-        /**
-        * The user states
-        */
+        ///
+        /// <summary>
+        /// The user states
+        /// </summary>
+        ///
         public StateItem[] stateItems;
 
-        /**
-        * Only valid when in interval mode
-        */
+        ///
+        /// <summary>
+        /// Only valid when in interval mode
+        /// </summary>
+        ///
         public IntervalInfo interval;
 
-        /**
-        * Only valid when receive snapshot event
-        */
+        ///
+        /// <summary>
+        /// Only valid when receive snapshot event
+        /// </summary>
+        ///
         public SnapshotInfo snapshot;
     };
 
@@ -286,24 +339,32 @@ namespace Agora.Rtm
 
     public class LockEvent
     {
-        /**
-        * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
-        */
+        ///
+        /// <summary>
+        /// Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
+        /// </summary>
+        ///
         public RTM_CHANNEL_TYPE channelType;
 
-        /**
-        * Lock event type, indicate lock states
-        */
+        ///
+        /// <summary>
+        /// Lock event type, indicate lock states
+        /// </summary>
+        ///
         public RTM_LOCK_EVENT_TYPE eventType;
 
-        /**
-        * The channel which the lock event was triggered
-        */
+        ///
+        /// <summary>
+        /// The channel which the lock event was triggered
+        /// </summary>
+        ///
         public string channelName;
 
-        /**
-        * The detail information of locks
-        */
+        ///
+        /// <summary>
+        /// The detail information of locks
+        /// </summary>
+        ///
         public LockDetail[] lockDetailList;
 
         public LockEvent()
@@ -317,25 +378,35 @@ namespace Agora.Rtm
 
     public class StorageEvent
     {
-        /**
-         * Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
-         */
+        ///
+        /// <summary>
+        /// Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE
+        /// </summary>
+        ///
         public RTM_CHANNEL_TYPE channelType;
-        /**
-        * Storage type, RTM_STORAGE_TYPE_USER or RTM_STORAGE_TYPE_CHANNEL
-        */
+        ///
+        /// <summary>
+        /// Storage type, RTM_STORAGE_TYPE_USER or RTM_STORAGE_TYPE_CHANNEL
+        /// </summary>
+        ///
         public RTM_STORAGE_TYPE storageType;
-        /**
-        * Indicate storage event type
-        */
+        ///
+        /// <summary>
+        /// Indicate storage event type
+        /// </summary>
+        ///
         public RTM_STORAGE_EVENT_TYPE eventType;
-        /**
-         * The target name of user or channel, depends on the RTM_STORAGE_TYPE
-         */
+        ///
+        /// <summary>
+        /// The target name of user or channel, depends on the RTM_STORAGE_TYPE
+        /// </summary>
+        ///
         public string target;
-        /**
-         * The metadata infomation
-         */
+        ///
+        /// <summary>
+        /// The metadata infomation
+        /// </summary>
+        ///
         public RtmMetadata data;
 
         public StorageEvent()

@@ -24,14 +24,14 @@ namespace Agora.Rtm.Internal
             instance = null;
         }
 
-        //public override RtmMetadata CreateMetadata()
+        // public override RtmMetadata CreateMetadata()
         //{
-        //    if (_rtmStorageImpl == null)
-        //    {
-        //        return null;
-        //    }
-        //    return _rtmStorageImpl.CreateMetadata();
-        //}
+        //     if (_rtmStorageImpl == null)
+        //     {
+        //         return null;
+        //     }
+        //     return _rtmStorageImpl.CreateMetadata();
+        // }
 
         public override int SetChannelMetadata(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName, ref UInt64 requestId)
         {

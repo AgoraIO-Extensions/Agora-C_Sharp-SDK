@@ -4,113 +4,153 @@ namespace Agora.Rtm
 
     public interface IRtmStorage
     {
-        /**
-        * Set the metadata of a specified channel.
-        *
-        * @param [in] channelName The name of the channel.
-        * @param [in] channelType Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE.
-        * @param [in] data Metadata data.
-        * @param [in] options The options of operate metadata.
-        * @param [in] lock lock for operate channel metadata.
-        * 
-        * @return The result of SetChannelMetadata
-        */
+        ///
+        /// <summary>
+        /// Set the metadata of a specified channel.
+        /// </summary>
+        ///
+        /// <param name="channelName"> The name of the channel.</param>
+        /// <param name="channelType"> Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE.</param>
+        /// <param name="data"> Metadata data.</param>
+        /// <param name="options"> The options of operate metadata.</param>
+        /// <param name="lock"> lock for operate channel metadata.</param>
+        ///
+        /// <returns>
+        /// The result of SetChannelMetadata
+        /// </returns>
+        ///
         Task<RtmResult<SetChannelMetadataResult>> SetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
 
-        /**
-        * Update the metadata of a specified channel.
-        *
-        * @param [in] channelName The channel Name of the specified channel.
-        * @param [in] channelType Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE.
-        * @param [in] data Metadata data.
-        * @param [in] options The options of operate metadata.
-        * @param [in] lock lock for operate channel metadata.
-        * 
-        * @return The result of UpdateChannelMetadata
-        */
+        ///
+        /// <summary>
+        /// Update the metadata of a specified channel.
+        /// </summary>
+        ///
+        /// <param name="channelName"> The channel Name of the specified channel.</param>
+        /// <param name="channelType"> Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE.</param>
+        /// <param name="data"> Metadata data.</param>
+        /// <param name="options"> The options of operate metadata.</param>
+        /// <param name="lock"> lock for operate channel metadata.</param>
+        ///
+        /// <returns>
+        /// The result of UpdateChannelMetadata
+        /// </returns>
+        ///
         Task<RtmResult<UpdateChannelMetadataResult>> UpdateChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
 
-        /**
-        * Remove the metadata of a specified channel.
-        *
-        * @param [in] channelName The channel Name of the specified channel.
-        * @param [in] channelType Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE.
-        * @param [in] data Metadata data.
-        * @param [in] options The options of operate metadata.
-        * @param [in] lock lock for operate channel metadata.
-        * 
-        * @return The result of RemoveChannelMetadata
-        */
+        ///
+        /// <summary>
+        /// Remove the metadata of a specified channel.
+        /// </summary>
+        ///
+        /// <param name="channelName"> The channel Name of the specified channel.</param>
+        /// <param name="channelType"> Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE.</param>
+        /// <param name="data"> Metadata data.</param>
+        /// <param name="options"> The options of operate metadata.</param>
+        /// <param name="lock"> lock for operate channel metadata.</param>
+        ///
+        /// <returns>
+        /// The result of RemoveChannelMetadata
+        /// </returns>
+        ///
         Task<RtmResult<RemoveChannelMetadataResult>> RemoveChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType, RtmMetadata data, MetadataOptions options, string lockName);
 
-        /**
-        * Get the metadata of a specified channel.
-        *
-        * @param [in] channelName The channel Name of the specified channel.
-        * @param [in] channelType Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE.
-        * 
-        * @return The result of GetChannelMetadata
-        */
+        ///
+        /// <summary>
+        /// Get the metadata of a specified channel.
+        /// </summary>
+        ///
+        /// <param name="channelName"> The channel Name of the specified channel.</param>
+        /// <param name="channelType"> Which channel type, RTM_CHANNEL_TYPE_STREAM or RTM_CHANNEL_TYPE_MESSAGE.</param>
+        ///
+        /// <returns>
+        /// The result of GetChannelMetadata
+        /// </returns>
+        ///
         Task<RtmResult<GetChannelMetadataResult>> GetChannelMetadataAsync(string channelName, RTM_CHANNEL_TYPE channelType);
 
-        /**
-        * Set the metadata of a specified user.
-        *
-        * @param [in] userId The user ID of the specified user.
-        * @param [in] data Metadata data.
-        * @param [in] options The options of operate metadata.
-        * 
-        * @return The result of SetUserMetadata
-        */
+        ///
+        /// <summary>
+        /// Set the metadata of a specified user.
+        /// </summary>
+        ///
+        /// <param name="userId"> The user ID of the specified user.</param>
+        /// <param name="data"> Metadata data.</param>
+        /// <param name="options"> The options of operate metadata.</param>
+        ///
+        /// <returns>
+        /// The result of SetUserMetadata
+        /// </returns>
+        ///
         Task<RtmResult<SetUserMetadataResult>> SetUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
 
-        /**
-        * Update the metadata of a specified user.
-        *
-        * @param [in] userId The user ID of the specified user.
-        * @param [in] data Metadata data.
-        * @param [in] options The options of operate metadata.
-        * 
-        * @return The result of UpdateUserMetadata
-        */
+        ///
+        /// <summary>
+        /// Update the metadata of a specified user.
+        /// </summary>
+        ///
+        /// <param name="userId"> The user ID of the specified user.</param>
+        /// <param name="data"> Metadata data.</param>
+        /// <param name="options"> The options of operate metadata.</param>
+        ///
+        /// <returns>
+        /// The result of UpdateUserMetadata
+        /// </returns>
+        ///
         Task<RtmResult<UpdateUserMetadataResult>> UpdateUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
 
-        /**
-        * Remove the metadata of a specified user.
-        *
-        * @param [in] userId The user ID of the specified user.
-        * @param [in] data Metadata data.
-        * @param [in] options The options of operate metadata.
-        * 
-        * @return The result of RemoveUserMetadata
-        */
+        ///
+        /// <summary>
+        /// Remove the metadata of a specified user.
+        /// </summary>
+        ///
+        /// <param name="userId"> The user ID of the specified user.</param>
+        /// <param name="data"> Metadata data.</param>
+        /// <param name="options"> The options of operate metadata.</param>
+        ///
+        /// <returns>
+        /// The result of RemoveUserMetadata
+        /// </returns>
+        ///
         Task<RtmResult<RemoveUserMetadataResult>> RemoveUserMetadataAsync(string userId, RtmMetadata data, MetadataOptions options);
 
-        /**
-        * Get the metadata of a specified user.
-        *
-        * @param [in] userId The user ID of the specified user.
-        * 
-        * @return The result of GetUserMetadata
-        */
+        ///
+        /// <summary>
+        /// Get the metadata of a specified user.
+        /// </summary>
+        ///
+        /// <param name="userId"> The user ID of the specified user.</param>
+        ///
+        /// <returns>
+        /// The result of GetUserMetadata
+        /// </returns>
+        ///
         Task<RtmResult<GetUserMetadataResult>> GetUserMetadataAsync(string userId);
 
-        /**
-        * Subscribe the metadata update event of a specified user.
-        *
-        * @param [in] userId The user ID of the specified user.
-        * 
-        * @return The result of SubscribeUserMetadata
-        */
+        ///
+        /// <summary>
+        /// Subscribe the metadata update event of a specified user.
+        /// </summary>
+        ///
+        /// <param name="userId"> The user ID of the specified user.</param>
+        ///
+        /// <returns>
+        /// The result of SubscribeUserMetadata
+        /// </returns>
+        ///
         Task<RtmResult<SubscribeUserMetadataResult>> SubscribeUserMetadataAsync(string userId);
 
-        /**
-        * unsubscribe the metadata update event of a specified user.
-        *
-        * @param [in] userId The user ID of the specified user.
-        * 
-        * @return The result of UnsubscribeUserMetadata
-        */
+        ///
+        /// <summary>
+        /// unsubscribe the metadata update event of a specified user.
+        /// </summary>
+        ///
+        /// <param name="userId"> The user ID of the specified user.</param>
+        ///
+        /// <returns>
+        /// The result of UnsubscribeUserMetadata
+        /// </returns>
+        ///
         Task<RtmResult<UnsubscribeUserMetadataResult>> UnsubscribeUserMetadataAsync(string userId);
     }
 

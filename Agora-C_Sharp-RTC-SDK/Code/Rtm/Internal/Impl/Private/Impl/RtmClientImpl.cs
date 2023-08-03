@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using AOT;
 #endif
 
@@ -60,7 +60,8 @@ namespace Agora.Rtm.Internal
 
         private void Dispose(bool disposing)
         {
-            if (_disposed) return;
+            if (_disposed)
+                return;
 
             if (disposing)
             {
@@ -68,7 +69,6 @@ namespace Agora.Rtm.Internal
                 {
                     this.OnRtmClientImpleWillDispose.Invoke(this);
                 }
-
 
                 _streamChannelImpl.Dispose();
                 _streamChannelImpl = null;
@@ -84,9 +84,8 @@ namespace Agora.Rtm.Internal
             }
 
             Release();
-            //must call free event handler after rtm release
+            // must call free event handler after rtm release
             ReleaseEventHandler();
-
 
             AgoraRtmNative.DestroyIrisRtmEngine(_irisApiRtmEngine);
             _irisApiRtmEngine = IntPtr.Zero;
@@ -110,7 +109,6 @@ namespace Agora.Rtm.Internal
             GC.SuppressFinalize(this);
         }
 
-
         internal StreamChannelImpl GetStreamChannelImpl()
         {
             return _streamChannelImpl;
@@ -131,10 +129,10 @@ namespace Agora.Rtm.Internal
             return _rtmStorageImpl;
         }
 
-
         private void CreateEventHandler()
         {
-            if (_rtcEventHandlerHandle.handle != IntPtr.Zero) return;
+            if (_rtcEventHandlerHandle.handle != IntPtr.Zero)
+                return;
 
             AgoraRtmNative.AllocEventHandlerHandle(ref _rtcEventHandlerHandle, RtmEventHandlerNative.OnEvent);
 
@@ -146,7 +144,8 @@ namespace Agora.Rtm.Internal
 
         private void ReleaseEventHandler()
         {
-            if (_rtcEventHandlerHandle.handle == IntPtr.Zero) return;
+            if (_rtcEventHandlerHandle.handle == IntPtr.Zero)
+                return;
 
             AgoraRtmNative.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
 
@@ -154,10 +153,10 @@ namespace Agora.Rtm.Internal
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             RtmEventHandlerNative.CallbackObject = null;
-            if (_callbackObject != null) _callbackObject.Release();
+            if (_callbackObject != null)
+                _callbackObject.Release();
             _callbackObject = null;
 #endif
-
         }
 
         internal IrisApiRtmEnginePtr GetNativeHandler()
@@ -183,16 +182,14 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("config", config);
 
-
             var json = AgoraJson.ToJson(_param);
-
 
             IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_INITIALIZE,
-                json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam);
+                                                             json, (UInt32)json.Length,
+                                                             Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                                                             ref _apiParam);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
@@ -209,15 +206,13 @@ namespace Agora.Rtm.Internal
             _param.Clear();
             _param.Add("channelName", channelName);
 
-
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_CREATESTREAMCHANNEL,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
+                                                             json, (UInt32)json.Length,
+                                                             IntPtr.Zero, 0,
+                                                             ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
-
 
         public int Login(string token)
         {
@@ -240,9 +235,9 @@ namespace Agora.Rtm.Internal
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        //public  IRtmStorage* GetStorage()
+        // public  IRtmStorage* GetStorage()
         //{
-        //    _param.Clear();
+        //     _param.Clear();
 
         //    var json = AgoraJson.ToJson(_param);
 
@@ -250,9 +245,9 @@ namespace Agora.Rtm.Internal
         //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         //}
 
-        //public  IRtmLock* GetLock()
+        // public  IRtmLock* GetLock()
         //{
-        //    _param.Clear();
+        //     _param.Clear();
 
         //    var json = AgoraJson.ToJson(_param);
 
@@ -260,9 +255,9 @@ namespace Agora.Rtm.Internal
         //    return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         //}
 
-        //public  IRtmPresence* GetPresence()
+        // public  IRtmPresence* GetPresence()
         //{
-        //    _param.Clear();
+        //     _param.Clear();
 
         //    var json = AgoraJson.ToJson(_param);
 
@@ -293,9 +288,9 @@ namespace Agora.Rtm.Internal
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_PUBLISH,
-                json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-                ref _apiParam, (uint)length);
+                                                             json, (UInt32)json.Length,
+                                                             Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                                                             ref _apiParam, (uint)length);
 
             if (nRet == 0 && (int)AgoraJson.GetData<int>(_apiParam.Result, "result") == 0)
             {
@@ -344,7 +339,6 @@ namespace Agora.Rtm.Internal
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMCLIENT_SETPARAMETERS, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
-
 
         public int SetLogFile(string filePath)
         {

@@ -11,7 +11,6 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
-
 namespace Agora.Rtm
 {
     internal class RtmEventHandler : Internal.IRtmEventHandler
@@ -48,14 +47,12 @@ namespace Agora.Rtm
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveStateResult>>> presenceRemoveStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<RemoveStateResult>>>();
         private Dictionary<UInt64, TaskCompletionSource<RtmResult<GetStateResult>>> presenceGetStateResultTaskMap = new Dictionary<UInt64, TaskCompletionSource<RtmResult<GetStateResult>>>();
 
-
-
         public RtmEventHandler(RtmClient rtmClient)
         {
             this.rtmClient = rtmClient;
         }
 
-        #region addTask
+#region addTask
         public void PutJoinResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<JoinResult>> task)
         {
             joinResultTaskMap.Add(requestId, task);
@@ -195,10 +192,9 @@ namespace Agora.Rtm
         {
             presenceGetStateResultTaskMap.Add(requestId, task);
         }
-        #endregion
+#endregion
 
-
-        #region eventHandler
+#region eventHandler
         public override void OnMessageEvent(MessageEvent @event)
         {
             rtmClient.InvokeOnMessageEvent(@event);
@@ -365,7 +361,6 @@ namespace Agora.Rtm
                 AgoraLog.LogWarning("OnTopicSubscribed unrecorded requestId: " + requestId);
             }
         }
-
 
         public override void OnSubscribeResult(UInt64 requestId, string channelName, RTM_ERROR_CODE errorCode)
         {
@@ -933,8 +928,7 @@ namespace Agora.Rtm
                 AgoraLog.LogWarning("OnPresenceGetStateResult unrecorded requestId: " + requestId);
             }
 
-            #endregion
-
+#endregion
         }
     }
 }

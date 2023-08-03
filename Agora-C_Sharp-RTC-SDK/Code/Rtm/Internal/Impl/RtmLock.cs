@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace Agora.Rtm.Internal
 {
     internal sealed class RtmLock : IRtmLock
@@ -24,7 +23,6 @@ namespace Agora.Rtm.Internal
         {
             instance = null;
         }
-
 
         public override int SetLock(string channelName, RTM_CHANNEL_TYPE channelType, string lockName, int ttl, ref UInt64 requestId)
         {
@@ -79,6 +77,5 @@ namespace Agora.Rtm.Internal
             }
             return _rtmLockImpl.RevokeLock(channelName, channelType, lockName, owner, ref requestId);
         }
-
     }
 }

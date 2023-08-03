@@ -2,120 +2,169 @@
 using System.Threading.Tasks;
 namespace Agora.Rtm
 {
-    /**
-    * The IStreamChannel class.
-    *
-    * This class provides the stream channel methods that can be invoked by your app.
-    */
+    ///
+    /// <summary>
+    /// The IStreamChannel class.
+    /// This class provides the stream channel methods that can be invoked by your app.
+    /// </summary>
+    ///
     public interface IStreamChannel
     {
-        /**
-        * Join the channel.
-        *
-        * @param [in] options join channel options.
-        * 
-        * @return The result of Join
-        */
+        ///
+        /// <summary>
+        /// Join the channel.
+        /// </summary>
+        ///
+        /// <param name="options"> join channel options.</param>
+        ///
+        /// <returns>
+        /// The result of Join
+        /// </returns>
+        ///
         Task<RtmResult<JoinResult>> JoinAsync(JoinChannelOptions options);
 
-        /**
-        * Renews the token. Once a token is enabled and used, it expires after a certain period of time.
-        * You should generate a new token on your server, call this method to renew it.
-        *
-        * @param [in] token Token used renew.
-        * 
-        * @return The result of RenewToken
-        */
+        ///
+        /// <summary>
+        /// Renews the token. Once a token is enabled and used, it expires after a certain period of time.
+        /// You should generate a new token on your server, call this method to renew it.
+        /// </summary>
+        ///
+        /// <param name="token"> Token used renew.</param>
+        ///
+        /// <returns>
+        /// The result of RenewToken
+        /// </returns>
+        ///
         Task<RtmResult<RenewTokenResult>> RenewTokenAsync(string token);
 
-        /**
-        * Leave the channel.
-        * 
-        * @return The result of Leave
-        */
+        ///
+        /// <summary>
+        /// Leave the channel.
+        /// </summary>
+        ///
+        /// <returns>
+        /// The result of Leave
+        /// </returns>
+        ///
         Task<RtmResult<LeaveResult>> LeaveAsync();
 
-        /**
-        * Return the channel name of this stream channel.
-        * 
-        * @return The name of channel
-        */
+        ///
+        /// <summary>
+        /// Return the channel name of this stream channel.
+        /// </summary>
+        ///
+        /// <returns>
+        /// The name of channel
+        /// </returns>
+        ///
         string GetChannelName();
 
-        /**
-        * Join a topic.
-        *
-        * @param [in] topic The name of the topic.
-        * @param [in] options The options of the topic.
-        * 
-        * @return The name of JoinTopic
-        */
+        ///
+        /// <summary>
+        /// Join a topic.
+        /// </summary>
+        ///
+        /// <param name="topic"> The name of the topic.</param>
+        /// <param name="options"> The options of the topic.</param>
+        ///
+        /// <returns>
+        /// The name of JoinTopic
+        /// </returns>
+        ///
         Task<RtmResult<JoinTopicResult>> JoinTopicAsync(string topic, JoinTopicOptions options);
 
-        /**
-        * Publish a message in the topic.
-        *
-        * @param [in] topic The name of the topic.
-        * @param [in] message The content of the message.
-        * @param [in] length The length of the message.
-        * 
-        * @return The name of PublishTopicMessage
-        */
+        ///
+        /// <summary>
+        /// Publish a message in the topic.
+        /// </summary>
+        ///
+        /// <param name="topic"> The name of the topic.</param>
+        /// <param name="message"> The content of the message.</param>
+        /// <param name="length"> The length of the message.</param>
+        ///
+        /// <returns>
+        /// The name of PublishTopicMessage
+        /// </returns>
+        ///
         Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, byte[] message, PublishOptions option);
 
-        /**
-        * Publish a message in the topic.
-        *
-        * @param [in] topic The name of the topic.
-        * @param [in] message The content of the message.
-        * @param [in] length The length of the message.
-        * 
-        * @return The name of PublishTopicMessage
-        */
+        ///
+        /// <summary>
+        /// Publish a message in the topic.
+        /// </summary>
+        ///
+        /// <param name="topic"> The name of the topic.</param>
+        /// <param name="message"> The content of the message.</param>
+        /// <param name="length"> The length of the message.</param>
+        ///
+        /// <returns>
+        /// The name of PublishTopicMessage
+        /// </returns>
+        ///
         Task<RtmResult<PublishTopicMessageResult>> PublishTopicMessageAsync(string topic, string message, PublishOptions option);
 
-        /**
-        * Leave the topic.
-        *
-        * @param [in] topic The name of the topic.
-        * 
-        * @return The name of LeaveTopic
-        */
+        ///
+        /// <summary>
+        /// Leave the topic.
+        /// </summary>
+        ///
+        /// <param name="topic"> The name of the topic.</param>
+        ///
+        /// <returns>
+        /// The name of LeaveTopic
+        /// </returns>
+        ///
         Task<RtmResult<LeaveTopicResult>> LeaveTopicAsync(string topic);
 
-        /**
-        * Subscribe a topic.
-        *
-        * @param [in] topic The name of the topic.
-        * @param [in] options The options of subscribe the topic.
-        * 
-        * @return The name of SubscribeTopic
-        */
+        ///
+        /// <summary>
+        /// Subscribe a topic.
+        /// </summary>
+        ///
+        /// <param name="topic"> The name of the topic.</param>
+        /// <param name="options"> The options of subscribe the topic.</param>
+        ///
+        /// <returns>
+        /// The name of SubscribeTopic
+        /// </returns>
+        ///
         Task<RtmResult<SubscribeTopicResult>> SubscribeTopicAsync(string topic, TopicOptions options);
 
-        /**
-        * Unsubscribe a topic.
-        *
-        * @param [in] topic The name of the topic.
-        * 
-        * @return The name of UnsubscribeTopic
-        */
+        ///
+        /// <summary>
+        /// Unsubscribe a topic.
+        /// </summary>
+        ///
+        /// <param name="topic"> The name of the topic.</param>
+        ///
+        /// <returns>
+        /// The name of UnsubscribeTopic
+        /// </returns>
+        ///
         Task<RtmResult<UnsubscribeTopicResult>> UnsubscribeTopicAsync(string topic, TopicOptions options);
 
-        /**
-        * Get subscribed user list
-        *
-        * @param [in] topic The name of the topic.
-        * 
-        * @return The name of GetSubscribedUserList
-        */
+        ///
+        /// <summary>
+        /// Get subscribed user list
+        /// </summary>
+        ///
+        /// <param name="topic"> The name of the topic.</param>
+        ///
+        /// <returns>
+        /// The name of GetSubscribedUserList
+        /// </returns>
+        ///
         Task<RtmResult<GetSubscribedUserListResult>> GetSubscribedUserListAsync(string topic);
 
-        /**
-        * Release the stream channel instance.
-        * 
-        * @return The name of Dispose
-        */
+        ///
+        /// <summary>
+        /// Release the stream channel instance.
+        /// </summary>
+        ///
+        /// <returns>
+        /// The name of Dispose
+        /// </returns>
+        ///
         RtmStatus Dispose();
     }
 }

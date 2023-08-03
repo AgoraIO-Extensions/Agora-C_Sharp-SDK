@@ -38,7 +38,8 @@ namespace Agora.Rtm.Internal
 
         private void Dispose(bool disposing)
         {
-            if (_disposed) return;
+            if (_disposed)
+                return;
 
             if (disposing)
             {
@@ -55,14 +56,12 @@ namespace Agora.Rtm.Internal
             GC.SuppressFinalize(this);
         }
 
-
         public int WhoNow(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
             _param.Add("options", options);
-
 
             var json = AgoraJson.ToJson(_param);
 
@@ -80,7 +79,6 @@ namespace Agora.Rtm.Internal
         {
             _param.Clear();
             _param.Add("userId", userId);
-
 
             var json = AgoraJson.ToJson(_param);
 
@@ -102,7 +100,6 @@ namespace Agora.Rtm.Internal
             _param.Add("items", items);
             _param.Add("count", count);
 
-
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_SETSTATE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
@@ -123,7 +120,6 @@ namespace Agora.Rtm.Internal
             _param.Add("keys", keys);
             _param.Add("count", count);
 
-
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_REMOVESTATE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);
@@ -142,7 +138,6 @@ namespace Agora.Rtm.Internal
             _param.Add("channelName", channelName);
             _param.Add("channelType", channelType);
             _param.Add("userId", userId);
-
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtmNative.CallIrisRtmApiWithArgs(_irisApiRtmEngine, AgoraApiType.FUNC_RTMPRESENCE_GETSTATE, json, (UInt32)json.Length, IntPtr.Zero, 0, ref _apiParam);

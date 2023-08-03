@@ -2,50 +2,68 @@ using System;
 
 namespace Agora.Rtm
 {
-    /**
-     * The qos of rtm message.
-    */
+    ///
+    /// <summary>
+    /// The qos of rtm message.
+    /// </summary>
+    ///
     public enum RTM_MESSAGE_QOS
     {
-        /**
-        * Will not ensure that messages arrive in order.
-        */
+        ///
+        /// <summary>
+        /// Will not ensure that messages arrive in order.
+        /// </summary>
+        ///
         UNORDERED = 0,
-        /**
-        * Will ensure that messages arrive in order.
-        */
+        ///
+        /// <summary>
+        /// Will ensure that messages arrive in order.
+        /// </summary>
+        ///
         ORDERED = 1,
-    };
+    }
 
-    /**
-    * The priority of rtm message.
-    */
+    ///
+    /// <summary>
+    /// The priority of rtm message.
+    /// </summary>
+    ///
     public enum RTM_MESSAGE_PRIORITY
     {
-        /**
-        * The highest priority
-        */
+        ///
+        /// <summary>
+        /// The highest priority
+        /// </summary>
+        ///
         HIGHEST = 0,
 
-        /**
-        * The high priority
-        */
+        ///
+        /// <summary>
+        /// The high priority
+        /// </summary>
+        ///
         HIGH = 1,
 
-        /**
-        * The normal priority (Default)
-        */
+        ///
+        /// <summary>
+        /// The normal priority (Default)
+        /// </summary>
+        ///
         NORMAL = 4,
 
-        /**
-        * The low priority
-        */
+        ///
+        /// <summary>
+        /// The low priority
+        /// </summary>
+        ///
         LOW = 8,
-    };
+    }
 
-    /**
-    * Join channel options.
-    */
+    ///
+    /// <summary>
+    /// Join channel options.
+    /// </summary>
+    ///
     public class JoinChannelOptions
     {
         public JoinChannelOptions()
@@ -56,30 +74,40 @@ namespace Agora.Rtm
             withLock = false;
         }
 
-        /**
-        * Token used to join channel.
-        */
+        ///
+        /// <summary>
+        /// Token used to join channel.
+        /// </summary>
+        ///
         public string token;
 
-        /**
-        * Whether to subscribe channel metadata information
-        */
+        ///
+        /// <summary>
+        /// Whether to subscribe channel metadata information
+        /// </summary>
+        ///
         public bool withMetadata;
 
-        /**
-        * Whether to subscribe channel with user presence
-        */
+        ///
+        /// <summary>
+        /// Whether to subscribe channel with user presence
+        /// </summary>
+        ///
         public bool withPresence;
 
-        /**
-        * Whether to subscribe channel with lock
-        */
+        ///
+        /// <summary>
+        /// Whether to subscribe channel with lock
+        /// </summary>
+        ///
         public bool withLock;
     };
 
-    /**
-    * Join topic options.
-    */
+    ///
+    /// <summary>
+    /// Join topic options.
+    /// </summary>
+    ///
     public class JoinTopicOptions
     {
         public JoinTopicOptions()
@@ -90,30 +118,40 @@ namespace Agora.Rtm
             this.syncWithMedia = true;
         }
 
-        /**
-        * The qos of rtm message.
-        */
+        ///
+        /// <summary>
+        /// The qos of rtm message.
+        /// </summary>
+        ///
         public RTM_MESSAGE_QOS qos;
 
-        /**
-        * The priority of rtm message.
-        */
+        ///
+        /// <summary>
+        /// The priority of rtm message.
+        /// </summary>
+        ///
         public RTM_MESSAGE_PRIORITY priority;
 
-        /**
-        * The metaData of topic.
-        */
+        ///
+        /// <summary>
+        /// The metaData of topic.
+        /// </summary>
+        ///
         public string meta;
 
-        /**
-        * The rtm data will sync with media
-        */
+        ///
+        /// <summary>
+        /// The rtm data will sync with media
+        /// </summary>
+        ///
         public bool syncWithMedia;
     };
 
-    /**
-    * Topic options.
-    */
+    ///
+    /// <summary>
+    /// Topic options.
+    /// </summary>
+    ///
     public class TopicOptions
     {
         public TopicOptions()
@@ -126,11 +164,12 @@ namespace Agora.Rtm
             this.users = users;
         }
 
-        /**
-        * The list of users to subscribe.
-        */
+        ///
+        /// <summary>
+        /// The list of users to subscribe.
+        /// </summary>
+        ///
         public string[] users;
     };
-
 
 }

@@ -29,6 +29,5 @@ namespace Agora.Rtm
             }
             return status;
         }
-
     }
 }

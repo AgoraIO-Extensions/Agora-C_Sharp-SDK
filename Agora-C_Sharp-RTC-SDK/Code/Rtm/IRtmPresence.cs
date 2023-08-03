@@ -3,68 +3,86 @@ using System.Threading.Tasks;
 namespace Agora.Rtm
 {
 
-    /**
-     * The IRtmPresence class.
-     *
-     * This class provides the rtm presence methods that can be invoked by your app.
-     */
+    ///
+    /// <summary>
+    /// The IRtmPresence class.
+    /// This class provides the rtm presence methods that can be invoked by your app.
+    /// </summary>
+    ///
     public interface IRtmPresence
     {
 
-        /**
-        * To query who joined this channel
-        *
-        * @param [in] channelName The name of the channel.
-        * @param [in] channelType The type of the channel.
-        * @param [in] options The query option.
-        * 
-        * @return The result of whoNow
-        */
+        ///
+        /// <summary>
+        /// To query who joined this channel
+        /// </summary>
+        ///
+        /// <param name="channelName"> The name of the channel.</param>
+        /// <param name="channelType"> The type of the channel.</param>
+        /// <param name="options"> The query option.</param>
+        ///
+        /// <returns>
+        /// The result of whoNow
+        /// </returns>
+        ///
         Task<RtmResult<WhoNowResult>> WhoNowAsync(string channelName, RTM_CHANNEL_TYPE channelType, PresenceOptions options);
 
-        /**
-        * To query which channels the user joined
-        *
-        * @param [in] userId The id of the user.
-        * 
-        * @return The result of WhereNow
-        * 
-        */
+        ///
+        /// <summary>
+        /// To query which channels the user joined
+        /// </summary>
+        ///
+        /// <param name="userId"> The id of the user.</param>
+        ///
+        /// <returns>
+        /// The result of WhereNow
+        /// </returns>
+        ///
         Task<RtmResult<WhereNowResult>> WhereNowAsync(string userId);
 
-
-        /**
-        * Set user state
-        *
-        * @param [in] channelName The name of the channel.
-        * @param [in] channelType The type of the channel.
-        * @param [in] items The states item of user.
-        * 
-        * @return The result of SetState
-        * 
-        */
+        ///
+        /// <summary>
+        /// Set user state
+        /// </summary>
+        ///
+        /// <param name="channelName"> The name of the channel.</param>
+        /// <param name="channelType"> The type of the channel.</param>
+        /// <param name="items"> The states item of user.</param>
+        ///
+        /// <returns>
+        /// The result of SetState
+        /// </returns>
+        ///
         Task<RtmResult<SetStateResult>> SetStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, StateItem[] items);
 
-        /**
-        * Delete user state
-        *
-        * @param [in] channelName The name of the channel.
-        * @param [in] channelType The type of the channel.
-        * @param [in] keys The keys of state item.
-        * 
-        * @return The result of SetState
-        */
+        ///
+        /// <summary>
+        /// Delete user state
+        /// </summary>
+        ///
+        /// <param name="channelName"> The name of the channel.</param>
+        /// <param name="channelType"> The type of the channel.</param>
+        /// <param name="keys"> The keys of state item.</param>
+        ///
+        /// <returns>
+        /// The result of SetState
+        /// </returns>
+        ///
         Task<RtmResult<RemoveStateResult>> RemoveStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, string[] keys);
 
-        /**
-        * Get user state
-        *
-        * @param [in] channelName The name of the channel.
-        * @param [in] channelType The type of the channel.
-        * @param [in] userId The id of the user.
-        * 
-        * @return The result of GetState
-        */
+        ///
+        /// <summary>
+        /// Get user state
+        /// </summary>
+        ///
+        /// <param name="channelName"> The name of the channel.</param>
+        /// <param name="channelType"> The type of the channel.</param>
+        /// <param name="userId"> The id of the user.</param>
+        ///
+        /// <returns>
+        /// The result of GetState
+        /// </returns>
+        ///
         Task<RtmResult<GetStateResult>> GetStateAsync(string channelName, RTM_CHANNEL_TYPE channelType, string userId);
     }
 }
