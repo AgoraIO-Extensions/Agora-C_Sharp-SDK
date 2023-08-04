@@ -159,7 +159,7 @@ namespace Agora.Rtm
             users = new string[0];
         }
 
-        public TopicOptions(string[] users, uint userCount)
+        public TopicOptions(string[] users)
         {
             this.users = users;
         }

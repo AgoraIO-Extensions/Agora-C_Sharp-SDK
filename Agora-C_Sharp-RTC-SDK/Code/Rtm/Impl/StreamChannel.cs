@@ -149,7 +149,7 @@ namespace Agora.Rtm
         {
             TaskCompletionSource<RtmResult<SubscribeTopicResult>> taskCompletionSource = new TaskCompletionSource<RtmResult<SubscribeTopicResult>>();
             UInt64 requestId = 0;
-            int errorCode = internalStreamChannel.SubscribeTopic(topic, options, ref requestId);
+            int errorCode = internalStreamChannel.SubscribeTopic(topic, new Internal.TopicOptions(options), ref requestId);
             if (errorCode != 0)
             {
                 RtmResult<SubscribeTopicResult> result = new RtmResult<SubscribeTopicResult>();
@@ -166,7 +166,7 @@ namespace Agora.Rtm
         public Task<RtmResult<UnsubscribeTopicResult>> UnsubscribeTopicAsync(string topic, TopicOptions options)
         {
             // fake async
-            int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, options);
+            int errorCode = this.internalStreamChannel.UnsubscribeTopic(topic, new Internal.TopicOptions(options)); ;
 
             RtmResult<UnsubscribeTopicResult> rtmResult = new RtmResult<UnsubscribeTopicResult>();
             rtmResult.Status = Tools.GenerateStatus(errorCode, RtmOperation.RTMUnsubscribeTopicOperation, this.internalRtmClient);
