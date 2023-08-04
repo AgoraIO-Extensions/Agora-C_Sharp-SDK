@@ -19,9 +19,9 @@ namespace Agora.Rtm.Internal
 
         public abstract int LeaveTopic(string topic, ref UInt64 requestId);
 
-        public abstract int SubscribeTopic(string topic, TopicOptions options, ref UInt64 requestId);
+        public abstract int SubscribeTopic(string topic, Internal.TopicOptions options, ref UInt64 requestId);
 
-        public abstract int UnsubscribeTopic(string topic, TopicOptions options);
+        public abstract int UnsubscribeTopic(string topic, Internal.TopicOptions options);
 
         public abstract int GetSubscribedUserList(string topic, ref UserList users);
 

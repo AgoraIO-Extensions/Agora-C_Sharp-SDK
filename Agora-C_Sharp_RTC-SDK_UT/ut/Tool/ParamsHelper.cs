@@ -1065,6 +1065,11 @@ namespace Agora.Rtc
             param = new TopicOptions();
         }
 
+        public static void InitParam(out Rtm.Internal.TopicOptions param)
+        {
+            param = new Rtm.Internal.TopicOptions();
+        }
+
         public static void InitParam(out Rtm.Internal.RtmConfig param)
         {
             param = new Rtm.Internal.RtmConfig();

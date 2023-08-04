@@ -175,7 +175,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int SubscribeTopic(string channelName, string topic, Rtm.TopicOptions options, ref UInt64 requestId)
+        public int SubscribeTopic(string channelName, string topic, Rtm.Internal.TopicOptions options, ref UInt64 requestId)
         {
             _param.Clear();
             _param.Add("channelName", channelName);
@@ -199,7 +199,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int UnsubscribeTopic(string channelName, string topic, Rtm.TopicOptions options)
+        public int UnsubscribeTopic(string channelName, string topic, Rtm.Internal.TopicOptions options)
         {
             _param.Clear();
             _param.Add("channelName", channelName);

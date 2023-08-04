@@ -132,7 +132,7 @@ namespace Agora.Rtm
         {
             string topic;
             ParamsHelper.InitParam(out topic);
-            TopicOptions options;
+            Internal.TopicOptions options;
             ParamsHelper.InitParam(out options);
             ulong requestId;
             ParamsHelper.InitParam(out requestId);
@@ -146,7 +146,7 @@ namespace Agora.Rtm
         {
             string topic;
             ParamsHelper.InitParam(out topic);
-            TopicOptions options;
+            Internal.TopicOptions options;
             ParamsHelper.InitParam(out options);
             var nRet = StreamChannel.UnsubscribeTopic(topic, options);
 
