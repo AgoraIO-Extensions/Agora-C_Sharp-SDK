@@ -146,11 +146,7 @@ echo "[Unity CI] start copying files"
 mkdir ./project/Assets/"$PLUGIN_NAME"
 PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
-# API-Example replace guids
-if [ "$RTC" == "false" ]; then
-    $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "../../agora-unity-quickstart/API-Example-Unity" -executeMethod Agora_RTC_Plugin.API_Example.PackageTools.ReplaceGUIDs
-    echo "replace guids for rtm finish"
-fi
+
 
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
@@ -306,9 +302,19 @@ echo "[Unity CI] finish copying files"
 #--------------------------------------
 # Export Package
 #--------------------------------------
+# remove only video case
 if [ "$TYPE" == "VOICE" ]; then
     python3 ${ROOT}/ci/build/remove_video_case.py "$PLUGIN_PATH"/API-Example
 fi
+
+# API-Example replace guids
+if [ "$RTC" == "false" ]; then
+    cp "$ROOT"/../agora-unity-quickstart/API-Example-Unity/Assets/PackageTools.cs ./project/Assets/PackageTools.cs
+    $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "./project" -executeMethod Agora_RTC_Plugin.API_Example.PackageTools.ReplaceGUIDs
+    echo "replace guids for rtm finish"
+    rm -r ./project/Assets/PackageTools.cs
+fi
+
 
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
