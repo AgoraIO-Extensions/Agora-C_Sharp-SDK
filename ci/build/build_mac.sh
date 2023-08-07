@@ -146,6 +146,13 @@ echo "[Unity CI] start copying files"
 mkdir ./project/Assets/"$PLUGIN_NAME"
 PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
+# API-Example replace guids
+if [ $RTC== "false"]: then 
+    $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "../../agora-unity-quickstart/API-Example-Unity" -executeMethod Agora_RTC_Plugin.API_Example.PackageTools.ReplaceGUIDs   
+    echo "replace guids for rtm finish"
+fi
+
+
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
 python3 ../../agora-unity-quickstart/ci/build/remove_example_by_macor.py $ROOT/../agora-unity-quickstart/API-Example-Unity/Assets ${RTC} ${RTM}
