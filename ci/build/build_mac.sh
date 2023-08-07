@@ -309,10 +309,9 @@ fi
 
 # API-Example replace guids
 if [ "$RTC" == "false" ]; then
-    cp "$ROOT"/../agora-unity-quickstart/API-Example-Unity/Assets/PackageTools.cs ./project/Assets/PackageTools.cs
     $UNITY_DIR/Unity -quit -batchmode -nographics -projectPath "./project" -executeMethod Agora_RTC_Plugin.API_Example.PackageTools.ReplaceGUIDs
     echo "replace guids for rtm finish"
-    rm -r ./project/Assets/PackageTools.cs
+    rm -r $PLUGIN_PATH/API-Example/Editor/PackageTools.cs
 fi
 
 
