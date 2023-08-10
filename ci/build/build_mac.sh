@@ -146,8 +146,6 @@ echo "[Unity CI] start copying files"
 mkdir ./project/Assets/"$PLUGIN_NAME"
 PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
-
-
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
 python3 ../../agora-unity-quickstart/ci/build/remove_example_by_macor.py $ROOT/../agora-unity-quickstart/API-Example-Unity/Assets ${RTC} ${RTM}
@@ -181,8 +179,14 @@ if [ "$ANDROID_URL" != "" ]; then
     7za x ./iris_*_Android_*.zip || exit 1
     ANDROID_SRC_PATH="./iris_*_Android"
 
-    mkdir "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
-    ANDROID_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/AgoraRtcEngineKit.plugin
+    if [ "$RTC" == "true" ]; then
+        ANDROID_PATH="AgoraRtcEngineKit.plugin"
+    else
+        ANDROID_PATH="AgoraRtmEngineKit.plugin"
+    fi
+
+    mkdir "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/"$ANDROID_PATH"
+    ANDROID_DST_PATH="$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/"$ANDROID_PATH"
     mv "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"/Plugins/Android/project.properties "$ANDROID_DST_PATH"
 
     if [ "$RTC" == "false" ]; then
@@ -313,7 +317,6 @@ if [ "$RTC" == "false" ]; then
     echo "replace guids for rtm finish"
     rm -r $PLUGIN_PATH/API-Example/Editor/PackageTools.cs
 fi
-
 
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
