@@ -22,6 +22,9 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_UPDATEPRELOADCHANNELTOKEN = "RtcEngine_updatePreloadChannelToken";
         internal const string FUNC_RTCENGINE_JOINCHANNEL = "RtcEngine_joinChannel";
         internal const string FUNC_RTCENGINE_JOINCHANNEL2 = "RtcEngine_joinChannel2";
+#if AGORA_RTM
+        internal const string FUNC_RTCENGINE_GETSTREAMCHANNEL = "RtcEngine_getStreamChannel";
+#endif
         internal const string FUNC_RTCENGINE_UPDATECHANNELMEDIAOPTIONS = "RtcEngine_updateChannelMediaOptions";
         internal const string FUNC_RTCENGINE_LEAVECHANNEL = "RtcEngine_leaveChannel";
         internal const string FUNC_RTCENGINE_LEAVECHANNEL2 = "RtcEngine_leaveChannel2";
@@ -523,9 +526,7 @@ namespace Agora.Rtc
         #endregion
 
         #region IMediaRecorder start
-
         internal const string FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER = "MediaRecorder_unsetMediaRecorderObserver";
-
         internal const string FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER = "MediaRecorder_setMediaRecorderObserver";
         internal const string FUNC_MEDIARECORDER_STARTRECORDING = "MediaRecorder_startRecording";
         internal const string FUNC_MEDIARECORDER_STOPRECORDING = "MediaRecorder_stopRecording";

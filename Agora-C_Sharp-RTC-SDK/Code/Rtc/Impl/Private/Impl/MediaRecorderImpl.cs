@@ -16,11 +16,10 @@ namespace Agora.Rtc
     public class MediaRecorderImpl
     {
         private IrisApiEnginePtr _irisApiEngine;
-        private IrisCApiParam _apiParam;
+        private IrisRtcCApiParam _apiParam;
         private bool _disposed = false;
 
-        private Dictionary<string, EventHandlerHandle> _mediaRecorderEventHandlerHandles = new Dictionary<string, EventHandlerHandle>();
-
+        private Dictionary<string, RtcEventHandlerHandle> _mediaRecorderEventHandlerHandles = new Dictionary<string, RtcEventHandlerHandle>();
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -30,7 +29,7 @@ namespace Agora.Rtc
 
         internal MediaRecorderImpl(IrisApiEnginePtr irisApiEngine)
         {
-            _apiParam = new IrisCApiParam();
+            _apiParam = new IrisRtcCApiParam();
             _apiParam.AllocResult();
             _irisApiEngine = irisApiEngine;
         }
@@ -70,8 +69,6 @@ namespace Agora.Rtc
             EventHandlerHandle handle = new EventHandlerHandle();
             AgoraUtil.AllocEventHandlerHandle(ref handle, MediaRecorderObserverNative.OnEvent);
             _mediaRecorderEventHandlerHandles.Add(nativeHandle, handle);
-
-
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
             if(_callbackObject == null)

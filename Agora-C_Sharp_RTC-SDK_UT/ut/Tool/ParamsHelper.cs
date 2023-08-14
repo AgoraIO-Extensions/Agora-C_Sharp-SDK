@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Agora.Rtc;
+using Agora.Rtm;
 namespace Agora.Rtc
 {
     [StructLayout(LayoutKind.Sequential)]
@@ -946,6 +947,7 @@ namespace Agora.Rtc
             param = VIDEO_TRANSCODER_ERROR.VT_ERR_OK;
         }
 
+
         public static void InitParam(out DeviceInfoMobile param)
         {
             param = new DeviceInfoMobile();
@@ -994,6 +996,174 @@ namespace Agora.Rtc
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
+
+        public static void InitParam(out CodecCapInfo[] param)
+        {
+            param = new CodecCapInfo[0];
+        }
+
+        public static void InitParam(out FeatureType param)
+        {
+            param = FeatureType.VIDEO_VIRTUAL_BACKGROUND;
+        }
+
+        public static void InitParam(out MusicCacheInfo[] param)
+        {
+            param = new MusicCacheInfo[0];
+        }
+        public static void InitParam(out EXTERNAL_VIDEO_SOURCE_TYPE param)
+        {
+            param = EXTERNAL_VIDEO_SOURCE_TYPE.VIDEO_FRAME;
+        }
+        public static void InitParam(out AUDIO_TRACK_TYPE param)
+        {
+            param = AUDIO_TRACK_TYPE.AUDIO_TRACK_INVALID;
+        }
+        public static void InitParam(out ExternalVideoFrame param)
+        {
+            param = new ExternalVideoFrame();
+            param.buffer = new byte[10];
+        }
+        public static void InitParam(out MessageEvent param)
+        {
+            param = new MessageEvent();
+        }
+        public static void InitParam(out Agora.Rtm.Internal.PresenceEvent param)
+        {
+            param = new Agora.Rtm.Internal.PresenceEvent();
+        }
+        public static void InitParam(out TopicEvent param)
+        {
+            param = new TopicEvent();
+        }
+        public static void InitParam(out LockEvent param)
+        {
+            param = new LockEvent();
+        }
+        public static void InitParam(out StorageEvent param)
+        {
+            param = new StorageEvent();
+        }
+        public static void InitParam(out RTM_ERROR_CODE param)
+        {
+            param = RTM_ERROR_CODE.OK;
+        }
+        public static void InitParam(out RTM_CHANNEL_TYPE param)
+        {
+            param = RTM_CHANNEL_TYPE.NONE;
+        }
+        public static void InitParam(out RtmMetadata param)
+        {
+            param = new RtmMetadata();
+        }
+        public static void InitParam(out LockDetail[] param)
+        {
+            param = new LockDetail[10];
+            for (var i = 0; i < param.Length; i++)
+            {
+                param[i] = new LockDetail();
+            }
+        }
+        public static void InitParam(out UserState[] param)
+        {
+            param = new UserState[10];
+            for (var i = 0; i < param.Length; i++)
+            {
+                param[i] = new UserState();
+            }
+        }
+        public static void InitParam(out ChannelInfo[] param)
+        {
+            param = new ChannelInfo[10];
+            for (var i = 0; i < param.Length; i++)
+            {
+                param[i] = new ChannelInfo();
+            }
+        }
+        public static void InitParam(out UserState param)
+        {
+            param = new UserState();
+        }
+        public static void InitParam(out Agora.Rtm.Internal.UserList param)
+        {
+            param = new Agora.Rtm.Internal.UserList();
+        }
+        public static void InitParam(out RTM_CONNECTION_STATE param)
+        {
+            param = RTM_CONNECTION_STATE.DISCONNECTED;
+        }
+        public static void InitParam(out RTM_CONNECTION_CHANGE_REASON param)
+        {
+            param = RTM_CONNECTION_CHANGE_REASON.CONNECTING;
+        }
+        public static void InitParam(out Rtm.Internal.PublishOptions param)
+        {
+            param = new Rtm.Internal.PublishOptions();
+        }
+        public static void InitParam(out SubscribeOptions param)
+        {
+            param = new SubscribeOptions();
+        }
+        public static void InitParam(out PresenceOptions param)
+        {
+            param = new PresenceOptions();
+        }
+        public static void InitParam(out StateItem[] param)
+        {
+            param = new StateItem[10];
+            for (var i = 0; i < param.Length; i++)
+            {
+                param[i] = new StateItem();
+            }
+        }
+        public static void InitParam(out string[] param)
+        {
+            param = new string[10];
+            for (var i = 0; i < param.Length; i++)
+            {
+                param[i] = "10";
+            }
+        }
+        public static void InitParam(out MetadataOptions param)
+        {
+            param = new MetadataOptions();
+        }
+
+        public static void InitParam(out JoinChannelOptions param)
+        {
+            param = new JoinChannelOptions();
+        }
+
+        public static void InitParam(out JoinTopicOptions param)
+        {
+            param = new JoinTopicOptions();
+        }
+
+        public static void InitParam(out TopicOptions param)
+        {
+            param = new TopicOptions();
+        }
+
+        public static void InitParam(out Rtm.Internal.TopicOptions param)
+        {
+            param = new Rtm.Internal.TopicOptions();
+        }
+
+        public static void InitParam(out Rtm.Internal.RtmConfig param)
+        {
+            param = new Rtm.Internal.RtmConfig();
+            param.appId = "123";
+            param.logConfig.filePath = "/Users/xiayangqun/Documents/agoraSpace";
+        }
+
+        //public static void InitParam(out TopicOptions param)
+        //{
+        //    param = new TopicOptions();
+        //}
+
+        //public static void InitParam(out TopicOptions param)
+        //{
+        //    param = new TopicOptions();
         //}
         #endregion
 
@@ -1794,6 +1964,8 @@ namespace Agora.Rtc
             if (compareUnsignedShort(selfParam.txPacketLossRate, outParam.txPacketLossRate) == false)
                 return false;
             if (compareInt(selfParam.audioDeviceDelay, outParam.audioDeviceDelay) == false)
+                return false;
+            if (compareInt(selfParam.audioPlayoutDelay, outParam.audioPlayoutDelay) == false)
                 return false;
             return true;
         }
@@ -3498,6 +3670,524 @@ namespace Agora.Rtc
             return selfParam == VIDEO_TRANSCODER_ERROR.VT_ERR_OK;
         }
 
+
+        public static bool compareRTM_AREA_CODE(RTM_AREA_CODE selfParam, RTM_AREA_CODE outParam)
+        {
+            return selfParam == RTM_AREA_CODE.CN;
+        }
+
+
+        public static bool compareRTM_LOG_LEVEL(RTM_LOG_LEVEL selfParam, RTM_LOG_LEVEL outParam)
+        {
+            return selfParam == RTM_LOG_LEVEL.NONE;
+        }
+
+
+        public static bool compareRTM_ENCRYPTION_MODE(RTM_ENCRYPTION_MODE selfParam, RTM_ENCRYPTION_MODE outParam)
+        {
+            return selfParam == RTM_ENCRYPTION_MODE.NONE;
+        }
+
+        public static bool compareRTM_ERROR_CODE(RTM_ERROR_CODE selfParam, RTM_ERROR_CODE outParam)
+        {
+            return selfParam == RTM_ERROR_CODE.OK;
+        }
+
+
+        public static bool compareRTM_CONNECTION_STATE(RTM_CONNECTION_STATE selfParam, RTM_CONNECTION_STATE outParam)
+        {
+            return selfParam == RTM_CONNECTION_STATE.DISCONNECTED;
+        }
+
+
+        public static bool compareRTM_CONNECTION_CHANGE_REASON(RTM_CONNECTION_CHANGE_REASON selfParam, RTM_CONNECTION_CHANGE_REASON outParam)
+        {
+            return selfParam == RTM_CONNECTION_CHANGE_REASON.CONNECTING;
+        }
+
+        public static bool compareRTM_CHANNEL_TYPE(RTM_CHANNEL_TYPE selfParam, RTM_CHANNEL_TYPE outParam)
+        {
+            return selfParam == RTM_CHANNEL_TYPE.NONE;
+        }
+
+
+        public static bool compareRTM_MESSAGE_TYPE(RTM_MESSAGE_TYPE selfParam, RTM_MESSAGE_TYPE outParam)
+        {
+            return selfParam == RTM_MESSAGE_TYPE.BINARY;
+        }
+
+
+        public static bool compareRTM_STORAGE_TYPE(RTM_STORAGE_TYPE selfParam, RTM_STORAGE_TYPE outParam)
+        {
+            return selfParam == RTM_STORAGE_TYPE.NONE;
+        }
+
+
+        public static bool compareRTM_STORAGE_EVENT_TYPE(RTM_STORAGE_EVENT_TYPE selfParam, RTM_STORAGE_EVENT_TYPE outParam)
+        {
+            return selfParam == RTM_STORAGE_EVENT_TYPE.NONE;
+        }
+
+
+        public static bool compareRTM_LOCK_EVENT_TYPE(RTM_LOCK_EVENT_TYPE selfParam, RTM_LOCK_EVENT_TYPE outParam)
+        {
+            return selfParam == RTM_LOCK_EVENT_TYPE.NONE;
+        }
+
+
+        public static bool compareRTM_PROXY_TYPE(RTM_PROXY_TYPE selfParam, RTM_PROXY_TYPE outParam)
+        {
+            return selfParam == RTM_PROXY_TYPE.NONE;
+        }
+
+
+        public static bool compareRTM_TOPIC_EVENT_TYPE(RTM_TOPIC_EVENT_TYPE selfParam, RTM_TOPIC_EVENT_TYPE outParam)
+        {
+            return selfParam == RTM_TOPIC_EVENT_TYPE.NONE;
+        }
+
+
+        public static bool compareRTM_PRESENCE_EVENT_TYPE(RTM_PRESENCE_EVENT_TYPE selfParam, RTM_PRESENCE_EVENT_TYPE outParam)
+        {
+            return selfParam == RTM_PRESENCE_EVENT_TYPE.NONE;
+        }
+
+
+        public static bool compareRtmLogConfig(RtmLogConfig selfParam, RtmLogConfig outParam)
+        {
+            if (compareString(selfParam.filePath, outParam.filePath) == false)
+                return false;
+            if (compareUint(selfParam.fileSizeInKB, outParam.fileSizeInKB) == false)
+                return false;
+            if (compareRTM_LOG_LEVEL(selfParam.level, outParam.level) == false)
+                return false;
+            return true;
+        }
+
+        public static bool compareStringArray(string[] selfParam, string[] outParam)
+        {
+            if (selfParam.Length != outParam.Length)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (selfParam[i] != outParam[i])
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool compareUserList(Agora.Rtm.Internal.UserList selfParam, Agora.Rtm.Internal.UserList outParam)
+        {
+            if (compareStringArray(selfParam.users, outParam.users) == false)
+                return false;
+            if (compareUint(selfParam.userCount, outParam.userCount) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool comparePublisherInfo(PublisherInfo selfParam, PublisherInfo outParam)
+        {
+            if (compareString(selfParam.publisherUserId, outParam.publisherUserId) == false)
+                return false;
+            if (compareString(selfParam.publisherMeta, outParam.publisherMeta) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool comparePublisherInfoArray(PublisherInfo[] selfParam, PublisherInfo[] outParam)
+        {
+            if (selfParam.Length != outParam.Length)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (comparePublisherInfo(selfParam[i], outParam[i]) == false)
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool compareTopicInfo(TopicInfo selfParam, TopicInfo outParam)
+        {
+            if (compareString(selfParam.topic, outParam.topic) == false)
+                return false;
+            if (comparePublisherInfoArray(selfParam.publishers, outParam.publishers) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareStateItem(StateItem selfParam, StateItem outParam)
+        {
+            if (compareString(selfParam.key, outParam.key) == false)
+                return false;
+            if (compareString(selfParam.value, outParam.value) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareLockDetail(LockDetail selfParam, LockDetail outParam)
+        {
+            if (compareString(selfParam.lockName, outParam.lockName) == false)
+                return false;
+            if (compareString(selfParam.owner, outParam.owner) == false)
+                return false;
+            if (compareUint(selfParam.ttl, outParam.ttl) == false)
+                return false;
+            return true;
+        }
+
+        public static bool compareStateItemArray(StateItem[] selfParam, StateItem[] outParam)
+        {
+            if (selfParam.Length != outParam.Length)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareStateItem(selfParam[i], outParam[i]) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool compareUserState(UserState selfParam, UserState outParam)
+        {
+            if (compareString(selfParam.userId, outParam.userId) == false)
+                return false;
+     
+            return true;
+        }
+
+
+        public static bool compareSubscribeOptions(SubscribeOptions selfParam, SubscribeOptions outParam)
+        {
+            if (compareBool(selfParam.withMessage, outParam.withMessage) == false)
+                return false;
+            if (compareBool(selfParam.withMetadata, outParam.withMetadata) == false)
+                return false;
+            if (compareBool(selfParam.withPresence, outParam.withPresence) == false)
+                return false;
+            if (compareBool(selfParam.withLock, outParam.withLock) == false)
+                return false;
+            return true;
+        }
+
+        public static bool compareChannelInfoArray(ChannelInfo[] selfParam, ChannelInfo[] outParam)
+        {
+            if (selfParam.Length != outParam.Length)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareChannelInfo(selfParam[i], outParam[i]) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool compareChannelInfo(ChannelInfo selfParam, ChannelInfo outParam)
+        {
+            if (compareString(selfParam.channelName, outParam.channelName) == false)
+                return false;
+            if (compareRTM_CHANNEL_TYPE(selfParam.channelType, outParam.channelType) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool comparePresenceOptions(PresenceOptions selfParam, PresenceOptions outParam)
+        {
+            if (compareBool(selfParam.includeUserId, outParam.includeUserId) == false)
+                return false;
+            if (compareBool(selfParam.includeState, outParam.includeState) == false)
+                return false;
+            if (compareString(selfParam.page, outParam.page) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool comparePublishOptions(Rtm.Internal.PublishOptions selfParam, Rtm.Internal.PublishOptions outParam)
+        {
+            if (compareRTM_MESSAGE_TYPE(selfParam.type, outParam.type) == false)
+                return false;
+            if (compareUlong(selfParam.sendTs, outParam.sendTs) == false)
+                return false;
+            if (compareString(selfParam.customType, outParam.customType) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareRtmProxyConfig(RtmProxyConfig selfParam, RtmProxyConfig outParam)
+        {
+            if (compareRTM_PROXY_TYPE(selfParam.proxyType, outParam.proxyType) == false)
+                return false;
+            if (compareString(selfParam.server, outParam.server) == false)
+                return false;
+            if (compareInt(selfParam.port, outParam.port) == false)
+                return false;
+            if (compareString(selfParam.account, outParam.account) == false)
+                return false;
+            if (compareString(selfParam.password, outParam.password) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareRtmEncryptionConfig(RtmEncryptionConfig selfParam, RtmEncryptionConfig outParam)
+        {
+            if (compareRTM_ENCRYPTION_MODE(selfParam.encryptionMode, outParam.encryptionMode) == false)
+                return false;
+            if (compareString(selfParam.encryptionKey, outParam.encryptionKey) == false)
+                return false;
+            if (compareByteArray(selfParam.encryptionSalt, outParam.encryptionSalt) == false)
+                return false;
+            return true;
+        }
+
+        public static bool compareRtmConfig(RtmConfig selfParam, RtmConfig outParam)
+        {
+            if (compareString(selfParam.appId, outParam.appId) == false)
+                return false;
+            if (compareString(selfParam.userId, outParam.userId) == false)
+                return false;
+            if (compareRTM_AREA_CODE(selfParam.areaCode, outParam.areaCode) == false)
+                return false;
+            if (compareUint(selfParam.presenceTimeout, outParam.presenceTimeout) == false)
+                return false;
+            if (compareBool(selfParam.useStringUserId, outParam.useStringUserId) == false)
+                return false;
+            if (compareRtmLogConfig(selfParam.logConfig, outParam.logConfig) == false)
+                return false;
+            if (compareRtmProxyConfig(selfParam.proxyConfig, outParam.proxyConfig) == false)
+                return false;
+            if (compareRtmEncryptionConfig(selfParam.encryptionConfig, outParam.encryptionConfig) == false)
+                return false;
+            return true;
+        }
+
+        public static bool compareIRtmMessage(IRtmMessage selfParam, IRtmMessage outParam)
+        {
+            return true;
+        }
+
+        public static bool compareMessageEvent(MessageEvent selfParam, MessageEvent outParam)
+        {
+            if (compareRTM_CHANNEL_TYPE(selfParam.channelType, outParam.channelType) == false)
+                return false;
+            if (compareRTM_MESSAGE_TYPE(selfParam.messageType, outParam.messageType) == false)
+                return false;
+            if (compareString(selfParam.channelName, outParam.channelName) == false)
+                return false;
+            if (compareString(selfParam.channelTopic, outParam.channelTopic) == false)
+                return false;
+            if (compareIRtmMessage(selfParam.message, outParam.message) == false)
+                return false;
+            if (compareString(selfParam.publisher, outParam.publisher) == false)
+                return false;
+            if (compareString(selfParam.customType, outParam.customType) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool comparePresenceEvent(Agora.Rtm.Internal.PresenceEvent selfParam, Agora.Rtm.Internal.PresenceEvent outParam)
+        {
+            if (compareRTM_PRESENCE_EVENT_TYPE(selfParam.type, outParam.type) == false)
+                return false;
+            if (compareRTM_CHANNEL_TYPE(selfParam.channelType, outParam.channelType) == false)
+                return false;
+            if (compareString(selfParam.channelName, outParam.channelName) == false)
+                return false;
+            if (compareString(selfParam.publisher, outParam.publisher) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareUserStateArray(UserState[] selfParam, UserState[] outParam)
+        {
+            if (selfParam.Length != outParam.Length)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareUserState(selfParam[i], outParam[i]) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool compareIntervalInfo(IntervalInfo selfParam, IntervalInfo outParam)
+        {
+            if (compareStringArray(selfParam.joinUserList, outParam.joinUserList) == false)
+                return false;
+            if (compareStringArray(selfParam.leaveUserList, outParam.leaveUserList) == false)
+                return false;
+            if (compareStringArray(selfParam.timeoutUserList, outParam.timeoutUserList) == false)
+                return false;
+            if (compareUserStateArray(selfParam.userStateList, outParam.userStateList) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareSnapshotInfo(SnapshotInfo selfParam, SnapshotInfo outParam)
+        {
+            if (compareUserStateArray(selfParam.userStateList, outParam.userStateList) == false)
+                return false;
+            return true;
+        }
+
+        public static bool compareTopicInfoArray(TopicInfo[] selfParam, TopicInfo[] outParam)
+        {
+            if (selfParam.Length != 10)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareTopicInfo(selfParam[i], outParam[i]) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool compareTopicEvent(TopicEvent selfParam, TopicEvent outParam)
+        {
+            if (compareRTM_TOPIC_EVENT_TYPE(selfParam.type, outParam.type) == false)
+                return false;
+            if (compareString(selfParam.channelName, outParam.channelName) == false)
+                return false;
+            if (compareString(selfParam.publisher, outParam.publisher) == false)
+                return false;
+            if (compareTopicInfoArray(selfParam.topicInfos, outParam.topicInfos) == false)
+                return false;
+            return true;
+        }
+
+        public static bool compareLockDetailArray(LockDetail[] selfParam, LockDetail[] outParam)
+        {
+            if (selfParam.Length != outParam.Length)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareLockDetail(selfParam[i], outParam[i]) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool compareLockEvent(LockEvent selfParam, LockEvent outParam)
+        {
+            if (compareRTM_CHANNEL_TYPE(selfParam.channelType, outParam.channelType) == false)
+                return false;
+            if (compareRTM_LOCK_EVENT_TYPE(selfParam.eventType, outParam.eventType) == false)
+                return false;
+            if (compareString(selfParam.channelName, outParam.channelName) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareStorageEvent(StorageEvent selfParam, StorageEvent outParam)
+        {
+            if (compareRTM_CHANNEL_TYPE(selfParam.channelType, outParam.channelType) == false)
+                return false;
+            if (compareRTM_STORAGE_TYPE(selfParam.storageType, outParam.storageType) == false)
+                return false;
+            if (compareRTM_STORAGE_EVENT_TYPE(selfParam.eventType, outParam.eventType) == false)
+                return false;
+            if (compareString(selfParam.target, outParam.target) == false)
+                return false;
+            if (compareRtmMetadata(selfParam.data, outParam.data) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareIRtmClient(IRtmClient selfParam, IRtmClient outParam)
+        {
+
+            return true;
+        }
+
+
+
+
+        public static bool compareIRtmPresence(IRtmPresence selfParam, IRtmPresence outParam)
+        {
+
+            return true;
+        }
+
+
+
+
+        public static bool compareMetadataOptions(MetadataOptions selfParam, MetadataOptions outParam)
+        {
+            if (compareBool(selfParam.recordTs, outParam.recordTs) == false)
+                return false;
+            if (compareBool(selfParam.recordUserId, outParam.recordUserId) == false)
+                return false;
+            return true;
+        }
+
+
+        public static bool compareMetadataItem(MetadataItem selfParam, MetadataItem outParam)
+        {
+            if (compareString(selfParam.key, outParam.key) == false)
+                return false;
+            if (compareString(selfParam.value, outParam.value) == false)
+                return false;
+            if (compareString(selfParam.authorUserId, outParam.authorUserId) == false)
+                return false;
+            if (compareLong(selfParam.revision, outParam.revision) == false)
+                return false;
+            if (compareLong(selfParam.updateTs, outParam.updateTs) == false)
+                return false;
+            return true;
+        }
+
+        public static bool compareMetadataItemArray(MetadataItem[] selfParam, MetadataItem[] outParam)
+        {
+            if (selfParam.Length != outParam.Length)
+                return false;
+
+            for (var i = 0; i < selfParam.Length; i++)
+            {
+                if (compareMetadataItem(selfParam[i], outParam[i]) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool compareRtmMetadata(RtmMetadata selfParam, RtmMetadata outParam)
+        {
+          
+            return true;
+        }
         #endregion
 
     }

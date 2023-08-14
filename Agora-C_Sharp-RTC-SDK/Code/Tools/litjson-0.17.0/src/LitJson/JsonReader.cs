@@ -7,14 +7,19 @@
  * the COPYING file included with this distribution.
  **/
 #endregion
-
+#define AGORA_RTC
+#define AGORA_RTM
 
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 
+#if AGORA_RTC
 namespace Agora.Rtc.LitJson
+#elif AGORA_RTM
+namespace Agora.Rtm.LitJson
+#endif
 {
     public enum JsonToken
     {

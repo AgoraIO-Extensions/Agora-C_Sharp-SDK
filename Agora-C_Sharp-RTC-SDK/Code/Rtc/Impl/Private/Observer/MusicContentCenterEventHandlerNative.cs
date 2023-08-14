@@ -20,7 +20,7 @@ namespace Agora.Rtc
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_Event_Native))]
+        [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
         {
@@ -30,7 +30,7 @@ namespace Agora.Rtc
             if (CallbackObject == null || CallbackObject._CallbackQueue == null) return;
 #endif
 
-            IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+            IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
 
             string @event = eventParam.@event;
             string data = eventParam.data;
@@ -71,7 +71,6 @@ namespace Agora.Rtc
                         (string)AgoraJson.GetData<string>(jsonData, "requestId"),
                         (MusicCollection)AgoraJson.JsonToStruct<MusicCollection>(jsonData, "result"),
                         (MusicContentCenterStatusCode)AgoraJson.GetData<int>(jsonData, "errorCode")
-
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     });
