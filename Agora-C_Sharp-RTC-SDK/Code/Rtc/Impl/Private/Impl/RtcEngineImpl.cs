@@ -5210,7 +5210,6 @@ namespace Agora.Rtc
                     screenCaptureSourceInfo.isOccluded = infoInternal[i].isOccluded;
                     screenCaptureSourceInfo.position = infoInternal[i].position;
                     screenCaptureSourceInfo.minimizeWindow = infoInternal[i].minimizeWindow;
-                    screenCaptureSourceInfo.sourceDisplayId = infoInternal[i].sourceDisplayId;
 
                     ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
                     imageBuffer.height = infoInternal[i].thumbImage.height;
