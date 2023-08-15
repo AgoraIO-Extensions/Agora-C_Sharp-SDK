@@ -45,7 +45,7 @@ namespace Agora.Rtc
                         localVideoFrame = LocalVideoFrames.CaptureVideoFrame;
                         break;
                     case 1:
-                        localVideoFrame = LocalVideoFrames.PreEncodedVideoFrame;
+                        localVideoFrame = LocalVideoFrames.PreEncodeVideoFrame;
                         break;
                     case 2:
                         localVideoFrame = LocalVideoFrames.MediaPlayerVideoFrame;

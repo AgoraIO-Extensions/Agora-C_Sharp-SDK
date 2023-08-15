@@ -31,9 +31,9 @@ namespace Agora.Rtc
         private AgoraCallbackObject _callbackObject;
 #endif
         //DirectCdnStreamingEventHandler
-        private RtcEventHandlerHandle _rtcDirectCdnStreamingEventHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcDirectCdnStreamingEventHandle = new RtcEventHandlerHandle();
         //rtcEventHandler
-        private RtcEventHandlerHandle _rtcEventHandlerHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _rtcEventHandlerHandle = new RtcEventHandlerHandle();
         //audioFrameObserver
         private RtcEventHandlerHandle _rtcAudioFrameObserverHandle = new RtcEventHandlerHandle();
         //videoFrameObserver
@@ -234,7 +234,7 @@ namespace Agora.Rtc
         {
             if (_rtcDirectCdnStreamingEventHandle.handle == IntPtr.Zero)
             {
-                AgoraUtil.AllocEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle, RtcEngineEventHandlerNative.OnEventForDirectCdnStreaming);
+                AgoraRtcNative.AllocEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle, RtcEngineEventHandlerNative.OnEventForDirectCdnStreaming);
             }
         }
 
@@ -242,7 +242,7 @@ namespace Agora.Rtc
         {
             if (_rtcDirectCdnStreamingEventHandle.handle != IntPtr.Zero)
             {
-                AgoraUtil.FreeEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle);
+                AgoraRtcNative.FreeEventHandlerHandle(ref _rtcDirectCdnStreamingEventHandle);
             }
         }
 
@@ -332,7 +332,7 @@ namespace Agora.Rtc
             _param.Add("position", position);
             var json = AgoraJson.ToJson(_param);
 
-            AgoraUtil.AllocEventHandlerHandle(ref _rtcAudioFrameObserverHandle, AudioFrameObserverNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcAudioFrameObserverHandle, AudioFrameObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioFrameObserverHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER,
                 json, (uint)json.Length,
@@ -4676,22 +4676,6 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        public int AdjustCustomAudioPlayoutVolume(track_id_t trackId, int volume)
-        {
-            _param.Clear();
-            _param.Add("trackId", trackId);
-            _param.Add("volume", volume);
-
-
-            var json = AgoraJson.ToJson(_param);
-
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPLAYOUTVOLUME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
-
         public int SetParameters(string parameters)
         {
             _param.Clear();
@@ -5379,20 +5363,6 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
 
-            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
-
-        public int AdjustCustomAudioPublishVolume(uint trackId, int volume)
-        {
-            _param.Clear();
-            _param.Add("trackId", trackId);
-            _param.Add("volume", volume);
-            var json = AgoraJson.ToJson(_param);
-
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ADJUSTCUSTOMAUDIOPUBLISHVOLUME,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 

@@ -1,3 +1,5 @@
+#define AGORA_RTC
+#define AGORA_RTM
 using System;
 
 namespace Agora.Rtc
@@ -414,6 +416,7 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYER_UNLOADSRC = "MediaPlayer_unloadSrc";
         internal const string FUNC_MEDIAPLAYER_SETSPATIALAUDIOPARAMS = "MediaPlayer_setSpatialAudioParams";
         internal const string FUNC_MEDIAPLAYER_SETSOUNDPOSITIONPARAMS = "MediaPlayer_setSoundPositionParams";
+        internal const string FUNC_MEDIAPLAYER_SETAUDIOPLAYBACKDELAY = "MediaPlayer_setAudioPlaybackDelay";
         #endregion
 
         #region IAudioDeviceManager start

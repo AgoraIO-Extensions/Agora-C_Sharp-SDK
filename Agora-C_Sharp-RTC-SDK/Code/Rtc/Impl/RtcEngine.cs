@@ -3421,5 +3421,15 @@ namespace Agora.Rtc
         }
 #endif
 
+#if AGORA_RTM
+        public void RemoveStreamChannelIfExist(string channelName)
+        {
+            if (this._streamChannelDic.ContainsKey(channelName))
+            {
+                this._streamChannelDic.Remove(channelName);
+            }
+        }
+#endif
+
     }
 }

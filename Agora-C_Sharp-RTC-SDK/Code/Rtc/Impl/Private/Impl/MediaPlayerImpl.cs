@@ -69,9 +69,8 @@ namespace Agora.Rtc
                 ReleaseEventHandler();
 
 
-<<<<<<< HEAD
                 //must unset and then free. If you only free. When callback trigger. Your eventHandler will be bed address
-                var keys = AgoraUtil.GetDicKeys<int, EventHandlerHandle>(_mediaPlayerAudioFrameObserverHandles);
+                var keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(_mediaPlayerAudioFrameObserverHandles);
                 foreach (var playerId in keys)
                 { 
                     this.UnSetIrisAudioFrameObserver(playerId);
@@ -79,7 +78,7 @@ namespace Agora.Rtc
                 _mediaPlayerAudioFrameObserverHandles.Clear();
 
 
-                keys = AgoraUtil.GetDicKeys<int, EventHandlerHandle>(_mediaPlayerCustomProviderHandles);
+                keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(_mediaPlayerCustomProviderHandles);
                 foreach (var playerId in keys)
                 {
                     this.UnSetMediaPlayerOpenWithCustomSource(playerId);
@@ -87,54 +86,17 @@ namespace Agora.Rtc
                 _mediaPlayerCustomProviderHandles.Clear();
 
 
-                keys = AgoraUtil.GetDicKeys<int, EventHandlerHandle>(this._mediaPlayerMediaProviderHandles);
+                keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(this._mediaPlayerMediaProviderHandles);
                 foreach (var playerId in keys)
                 {
                     this.UnsetMediaPlayerOpenWithMediaSource(playerId);
                 }
                 _mediaPlayerMediaProviderHandles.Clear();
 
-                keys = AgoraUtil.GetDicKeys<int, EventHandlerHandle>(this._mediaPlayerAudioSpectrumObserverHandles);
+                keys = AgoraUtil.GetDicKeys<int, RtcEventHandlerHandle>(this._mediaPlayerAudioSpectrumObserverHandles);
                 foreach (var playerId in keys)
                 {
                     this.UnSetIrisAudioSpectrumObserver(playerId);
-=======
-                /// Dont need unset.Because rtc engine will destroy soon when this call finish.
-                /// so all mediaplay observer wiil destroy because they are smart pointer
-                var keys = GetDicKeys<int, RtcEventHandlerHandle>(_mediaPlayerAudioFrameObserverHandles);
-                foreach (var playerId in keys)
-                {
-                    //this.UnSetIrisAudioFrameObserver(playerId);
-                    RtcEventHandlerHandle eventHandler = _mediaPlayerAudioFrameObserverHandles[playerId];
-                    AgoraRtcNative.FreeEventHandlerHandle(ref eventHandler);
-                }
-                _mediaPlayerAudioFrameObserverHandles.Clear();
-
-                keys = GetDicKeys<int, RtcEventHandlerHandle>(_mediaPlayerCustomProviderHandles);
-                foreach (var playerId in keys)
-                {
-                    //this.UnSetMediaPlayerOpenWithCustomSource(playerId);
-                    RtcEventHandlerHandle eventHandler = _mediaPlayerCustomProviderHandles[playerId];
-                    AgoraRtcNative.FreeEventHandlerHandle(ref eventHandler);
-                }
-                _mediaPlayerCustomProviderHandles.Clear();
-
-                keys = GetDicKeys<int, RtcEventHandlerHandle>(this._mediaPlayerMediaProviderHandles);
-                foreach (var playerId in keys)
-                {
-                    //this.UnsetMediaPlayerOpenWithMediaSource(playerId);
-                    RtcEventHandlerHandle eventHandler = _mediaPlayerMediaProviderHandles[playerId];
-                    AgoraRtcNative.FreeEventHandlerHandle(ref eventHandler);
-                }
-                _mediaPlayerMediaProviderHandles.Clear();
-
-                keys = GetDicKeys<int, RtcEventHandlerHandle>(this._mediaPlayerAudioSpectrumObserverHandles);
-                foreach (var playerId in keys)
-                {
-                    //this.UnSetIrisAudioSpectrumObserver(playerId);
-                    RtcEventHandlerHandle eventHandler = _mediaPlayerAudioSpectrumObserverHandles[playerId];
-                    AgoraRtcNative.FreeEventHandlerHandle(ref eventHandler);
->>>>>>> release/4.1.1.8-rtm2.1.1
                 }
                 _mediaPlayerAudioSpectrumObserverHandles.Clear();
 
@@ -211,13 +173,8 @@ namespace Agora.Rtc
         {
             if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == true) return 0;
 
-<<<<<<< HEAD
-            var mediaPlayerAudioFrameObserverHandle = new EventHandlerHandle();
-            AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, AudioPcmFrameSinkNative.OnEvent);
-=======
             var mediaPlayerAudioFrameObserverHandle = new RtcEventHandlerHandle();
-            AgoraRtcNative.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, MediaPlayerAudioFrameObserverNative.OnEvent);
->>>>>>> release/4.1.1.8-rtm2.1.1
+            AgoraRtcNative.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, AudioPcmFrameSinkNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { mediaPlayerAudioFrameObserverHandle.handle };
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -241,13 +198,8 @@ namespace Agora.Rtc
         {
             if (_mediaPlayerAudioFrameObserverHandles.ContainsKey(playerId) == true) return 0;
 
-<<<<<<< HEAD
-            var mediaPlayerAudioFrameObserverHandle = new EventHandlerHandle();
-            AgoraUtil.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, AudioPcmFrameSinkNative.OnEvent);
-=======
             var mediaPlayerAudioFrameObserverHandle = new RtcEventHandlerHandle();
-            AgoraRtcNative.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, MediaPlayerAudioFrameObserverNative.OnEvent);
->>>>>>> release/4.1.1.8-rtm2.1.1
+            AgoraRtcNative.AllocEventHandlerHandle(ref mediaPlayerAudioFrameObserverHandle, AudioPcmFrameSinkNative.OnEvent);
 
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -786,20 +738,6 @@ namespace Agora.Rtc
             string jsonParam = AgoraJson.ToJson(_param);
             var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_MEDIAPLAYER_SELECTAUDIOTRACK,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
-
-        public int SelectMultiAudioTrack(int playerId, int playoutTrackIndex, int publishTrackIndex)
-        {
-            _param.Clear();
-            _param.Add("playerId", playerId);
-            _param.Add("playoutTrackIndex", playoutTrackIndex);
-            _param.Add("publishTrackIndex", publishTrackIndex);
-
-            string jsonParam = AgoraJson.ToJson(_param);
-            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
-                AgoraApiType.FUNC_MEDIAPLAYER_SELECTMULTIAUDIOTRACK,
                 jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }

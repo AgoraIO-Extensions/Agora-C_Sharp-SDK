@@ -58,7 +58,7 @@ namespace Agora.Rtc
         internal static extern void DestroyIrisEventHandler(IrisEventHandlerHandle handle);
 
         internal static int CallIrisApiWithArgs(IrisRtcEnginePtr engine_ptr, string func_name,
-            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisCApiParam apiParam,
+            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtcCApiParam apiParam,
             uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0, uint buffer3Length = 0)
         {
             apiParam.@event = func_name;
@@ -346,7 +346,7 @@ namespace Agora.Rtc
     }
 
     #region callback native
-  
+
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisSpatialAudioZone
     {
@@ -377,4 +377,6 @@ namespace Agora.Rtc
             this.audioAttenuation = zone.audioAttenuation;
         }
     };
+
+    #endregion
 }

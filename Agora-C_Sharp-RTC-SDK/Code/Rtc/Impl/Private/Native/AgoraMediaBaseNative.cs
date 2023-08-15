@@ -127,8 +127,6 @@ namespace Agora.Rtc
        
         public bool minimizeWindow;
 
-        public view_t sourceDisplayId;
-
         public ScreenCaptureSourceInfoInternal()
         {
             type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;

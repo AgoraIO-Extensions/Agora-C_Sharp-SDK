@@ -61,13 +61,13 @@ namespace Agora.Rtc
         }
 
 
-        private EventHandlerHandle CreateEventHandler(string nativeHandle)
+        private RtcEventHandlerHandle CreateEventHandler(string nativeHandle)
         {
             if (_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandle))
                 return _mediaRecorderEventHandlerHandles[nativeHandle];
 
-            EventHandlerHandle handle = new EventHandlerHandle();
-            AgoraUtil.AllocEventHandlerHandle(ref handle, MediaRecorderObserverNative.OnEvent);
+            RtcEventHandlerHandle handle = new RtcEventHandlerHandle();
+            AgoraRtcNative.AllocEventHandlerHandle(ref handle, MediaRecorderObserverNative.OnEvent);
             _mediaRecorderEventHandlerHandles.Add(nativeHandle, handle);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -86,8 +86,8 @@ namespace Agora.Rtc
             if (!_mediaRecorderEventHandlerHandles.ContainsKey(nativeHandle))
                 return;
 
-            EventHandlerHandle handle = _mediaRecorderEventHandlerHandles[nativeHandle];
-            AgoraUtil.FreeEventHandlerHandle(ref handle);
+            RtcEventHandlerHandle handle = _mediaRecorderEventHandlerHandles[nativeHandle];
+            AgoraRtcNative.FreeEventHandlerHandle(ref handle);
 
             _mediaRecorderEventHandlerHandles.Remove(nativeHandle);
 
@@ -96,12 +96,12 @@ namespace Agora.Rtc
 
         private void UnregisterAndReleasAllEventHandler()
         {
-            List<string> keys = AgoraUtil.GetDicKeys<string, EventHandlerHandle>(_mediaRecorderEventHandlerHandles);
+            List<string> keys = AgoraUtil.GetDicKeys<string, RtcEventHandlerHandle>(_mediaRecorderEventHandlerHandles);
             foreach (var key in keys)
             {
                 _param.Clear();
                 _param.Add("nativeHandle", key);
-                EventHandlerHandle handle = _mediaRecorderEventHandlerHandles[key];
+                RtcEventHandlerHandle handle = _mediaRecorderEventHandlerHandles[key];
 
                 IntPtr[] arrayPtr = new IntPtr[] { handle.handle };
                 var json = AgoraJson.ToJson(_param);
@@ -112,7 +112,7 @@ namespace Agora.Rtc
 
                 int ret = nRet == 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
-                AgoraUtil.FreeEventHandlerHandle(ref handle);
+                AgoraRtcNative.FreeEventHandlerHandle(ref handle);
             }
             _mediaRecorderEventHandlerHandles.Clear();
 
@@ -144,7 +144,7 @@ namespace Agora.Rtc
                 _param.Clear();
                 _param.Add("nativeHandle", nativeHandle);
 
-                EventHandlerHandle handler = CreateEventHandler(nativeHandle);
+                RtcEventHandlerHandle handler = CreateEventHandler(nativeHandle);
 
                 IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
                 var json = AgoraJson.ToJson(_param);
@@ -164,7 +164,7 @@ namespace Agora.Rtc
                     _param.Clear();
                     _param.Add("nativeHandle", nativeHandle);
 
-                    EventHandlerHandle handler = _mediaRecorderEventHandlerHandles[nativeHandle];
+                    RtcEventHandlerHandle handler = _mediaRecorderEventHandlerHandles[nativeHandle];
 
                     IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
                     var json = AgoraJson.ToJson(_param);

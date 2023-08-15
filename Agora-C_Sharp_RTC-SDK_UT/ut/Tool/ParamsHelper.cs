@@ -995,35 +995,9 @@ namespace Agora.Rtc
         //}
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
-        //    param =
+        //    param
 
-        public static void InitParam(out CodecCapInfo[] param)
-        {
-            param = new CodecCapInfo[0];
-        }
 
-        public static void InitParam(out FeatureType param)
-        {
-            param = FeatureType.VIDEO_VIRTUAL_BACKGROUND;
-        }
-
-        public static void InitParam(out MusicCacheInfo[] param)
-        {
-            param = new MusicCacheInfo[0];
-        }
-        public static void InitParam(out EXTERNAL_VIDEO_SOURCE_TYPE param)
-        {
-            param = EXTERNAL_VIDEO_SOURCE_TYPE.VIDEO_FRAME;
-        }
-        public static void InitParam(out AUDIO_TRACK_TYPE param)
-        {
-            param = AUDIO_TRACK_TYPE.AUDIO_TRACK_INVALID;
-        }
-        public static void InitParam(out ExternalVideoFrame param)
-        {
-            param = new ExternalVideoFrame();
-            param.buffer = new byte[10];
-        }
         public static void InitParam(out MessageEvent param)
         {
             param = new MessageEvent();
@@ -1964,8 +1938,6 @@ namespace Agora.Rtc
             if (compareUnsignedShort(selfParam.txPacketLossRate, outParam.txPacketLossRate) == false)
                 return false;
             if (compareInt(selfParam.audioDeviceDelay, outParam.audioDeviceDelay) == false)
-                return false;
-            if (compareInt(selfParam.audioPlayoutDelay, outParam.audioPlayoutDelay) == false)
                 return false;
             return true;
         }
