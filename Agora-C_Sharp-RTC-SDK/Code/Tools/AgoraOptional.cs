@@ -1,9 +1,21 @@
-﻿using System;
+﻿#define AGORA_RTC
+#define AGORA_RTM
+
+using System;
 using System.Collections;
 using System.Collections.Specialized;
-using Agora.Rtc.LitJson;
 
+#if AGORA_RTC
+using Agora.Rtc.LitJson;
+#elif AGORA_RTM
+using Agora.Rtm.LitJson;
+#endif
+
+#if AGORA_RTC
 namespace Agora.Rtc
+#elif AGORA_RTM
+namespace Agora.Rtm
+#endif
 {
     public class Optional<T>
     {

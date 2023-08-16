@@ -123,6 +123,10 @@ namespace Agora.Rtc
         public bool primaryMonitor;
         public bool isOccluded;
 
+        public Rectangle position;
+       
+        public bool minimizeWindow;
+
         public ScreenCaptureSourceInfoInternal()
         {
             type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;

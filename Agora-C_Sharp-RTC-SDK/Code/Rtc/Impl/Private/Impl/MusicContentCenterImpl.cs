@@ -13,10 +13,10 @@ namespace Agora.Rtc
         private IrisApiEnginePtr _irisApiEngine;
         private MediaPlayerImpl _mediaPlayerImpl;
         private MusicPlayerImpl _musicPlayerImpl;
-        private IrisCApiParam _apiParam;
+        private IrisRtcCApiParam _apiParam;
 
 
-        private EventHandlerHandle _musicContentCenterHandlerHandle = new EventHandlerHandle();
+        private RtcEventHandlerHandle _musicContentCenterHandlerHandle = new RtcEventHandlerHandle();
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -25,7 +25,7 @@ namespace Agora.Rtc
 
         internal MusicContentCenterImpl(IrisApiEnginePtr irisApiEngine, MediaPlayerImpl impl)
         {
-            _apiParam = new IrisCApiParam();
+            _apiParam = new IrisRtcCApiParam();
             _apiParam.AllocResult();
             _irisApiEngine = irisApiEngine;
             _mediaPlayerImpl = impl;
@@ -61,7 +61,7 @@ namespace Agora.Rtc
             if (this._musicContentCenterHandlerHandle.handle != IntPtr.Zero)
                 return;
 
-            AgoraUtil.AllocEventHandlerHandle(ref _musicContentCenterHandlerHandle, MusicContentCenterEventHandlerNative.OnEvent);
+            AgoraRtcNative.AllocEventHandlerHandle(ref _musicContentCenterHandlerHandle, MusicContentCenterEventHandlerNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _musicContentCenterHandlerHandle.handle };
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REGISTEREVENTHANDLER,
                 "{}", 2,
@@ -94,7 +94,7 @@ namespace Agora.Rtc
             {
                 AgoraLog.LogError("FUNC_MUSICCONTENTCENTER_UNREGISTEREVENTHANDLER failed: " + nRet);
             }
-            AgoraUtil.FreeEventHandlerHandle(ref _musicContentCenterHandlerHandle);
+            AgoraRtcNative.FreeEventHandlerHandle(ref _musicContentCenterHandlerHandle);
 
 
             ///You must release callbackObject after you release eventhandler.

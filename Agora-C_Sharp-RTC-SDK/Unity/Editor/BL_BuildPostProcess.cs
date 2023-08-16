@@ -1,16 +1,21 @@
+#define AGORA_RTC
+#define AGORA_RTM
+
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.Callbacks;
-
 #if UNITY_IOS
 using UnityEditor.iOS.Xcode;
 using UnityEditor.iOS.Xcode.Extensions;
 #endif
-
 using UnityEngine;
 
+#if AGORA_RTC
 namespace Agora.Rtc
+#else
+namespace Agora.Rtm
+#endif
 {
     public class BL_BuildPostProcess
     {
@@ -98,10 +103,12 @@ namespace Agora.Rtc
         PlistDocument plist = new PlistDocument();
         plist.ReadFromString(File.ReadAllText(pListPath));
         PlistElementDict rootDic = plist.root;
+#if AGORA_RTC
         var cameraPermission = "NSCameraUsageDescription";
         var micPermission = "NSMicrophoneUsageDescription";
         rootDic.SetString(cameraPermission, "Video need to use camera");
         rootDic.SetString(micPermission, "Voice call need to user mic");
+#endif
         File.WriteAllText(pListPath, plist.WriteToString());
     }
 #endif

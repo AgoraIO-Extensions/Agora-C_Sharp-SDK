@@ -10,13 +10,13 @@ namespace Agora.Rtc
     {
         private bool _disposed = false;
         private IrisApiEnginePtr _irisApiEngine;
-        private IrisCApiParam _apiParam;
+        private IrisRtcCApiParam _apiParam;
         private MediaPlayerImpl _mediaPlayerImpl;
         private Dictionary<string, System.Object> _param = new Dictionary<string, object>();
 
         internal MusicPlayerImpl(IrisApiEnginePtr irisApiEngine, MediaPlayerImpl impl)
         {
-            _apiParam = new IrisCApiParam();
+            _apiParam = new IrisRtcCApiParam();
             _apiParam.AllocResult();
             _irisApiEngine = irisApiEngine;
             _mediaPlayerImpl = impl;

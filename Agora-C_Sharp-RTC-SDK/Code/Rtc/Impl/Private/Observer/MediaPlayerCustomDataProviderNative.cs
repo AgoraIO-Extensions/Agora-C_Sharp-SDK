@@ -32,13 +32,13 @@ namespace Agora.Rtc
 
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        [MonoPInvokeCallback(typeof(Func_Event_Native))]
+        [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
 #endif
         internal static void OnEvent(IntPtr param)
         {
             lock (observerLock)
             {
-                IrisCEventParam eventParam = (IrisCEventParam)Marshal.PtrToStructure(param, typeof(IrisCEventParam));
+                IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
 
                 var data = eventParam.data;
 
@@ -90,7 +90,7 @@ namespace Agora.Rtc
             }
         }
 
-        private static void CreateDefaultReturn(ref IrisCEventParam eventParam, IntPtr param)
+        private static void CreateDefaultReturn(ref IrisRtcCEventParam eventParam, IntPtr param)
         {
             var @event = eventParam.@event;
             switch (@event)

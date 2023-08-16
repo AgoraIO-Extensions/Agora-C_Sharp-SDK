@@ -1060,6 +1060,7 @@ namespace Agora.Rtc
         ///
         public virtual void OnUploadLogResult(RtcConnection connection, string requestId, bool success, UPLOAD_ERROR_REASON reason) { }
 
+        public virtual void OnSetRtmFlagResult(RtcConnection connection, int code) { }
         ///
         /// @ignore
         ///

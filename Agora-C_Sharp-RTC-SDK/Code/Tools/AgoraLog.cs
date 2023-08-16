@@ -1,11 +1,18 @@
+
+#define AGORA_RTC
+#define AGORA_RTM
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
 using UnityEngine;
 #elif NET40_OR_GREATER || NETCOREAPP2_0_OR_GREATER
 using System.Diagnostics;
 #endif
 
-
+#if AGORA_RTC
 namespace Agora.Rtc
+#elif AGORA_RTM
+namespace Agora.Rtm
+#endif
 {
     internal class AgoraLog
     {

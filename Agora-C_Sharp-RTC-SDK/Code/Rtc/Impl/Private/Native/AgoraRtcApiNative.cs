@@ -35,13 +35,13 @@ namespace Agora.Rtc
         #region DllImport
 
 #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-        private const string AgoraRtcLibName = "AgoraRtcWrapper";
+        public const string AgoraRtcLibName = "AgoraRtcWrapper";
 #elif UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-        private const string AgoraRtcLibName = "AgoraRtcWrapperUnity";
+        public const string AgoraRtcLibName = "AgoraRtcWrapperUnity";
 #elif UNITY_IPHONE
-		private const string AgoraRtcLibName = "__Internal";
+		public const string AgoraRtcLibName = "__Internal";
 #else
-        private const string AgoraRtcLibName = "AgoraRtcWrapper";
+        public const string AgoraRtcLibName = "AgoraRtcWrapper";
 #endif
 
         // IrisRtcEngine
@@ -58,7 +58,7 @@ namespace Agora.Rtc
         internal static extern void DestroyIrisEventHandler(IrisEventHandlerHandle handle);
 
         internal static int CallIrisApiWithArgs(IrisRtcEnginePtr engine_ptr, string func_name,
-            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisCApiParam apiParam,
+            string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtcCApiParam apiParam,
             uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0, uint buffer3Length = 0)
         {
             apiParam.@event = func_name;
@@ -91,7 +91,7 @@ namespace Agora.Rtc
 
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisCApiParam apiParam);
+        internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisRtcCApiParam apiParam);
 
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //internal static extern void Attach(IrisRtcEnginePtr engine_ptr, IrisVideoFrameBufferManagerPtr manager_ptr);
@@ -149,13 +149,33 @@ namespace Agora.Rtc
         //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         //internal static extern bool StopDumpVideo(IrisRtcRenderingHandle manager_ptr);
 
-        // Iris Media Base
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern bool AlignAndConvertVideoFrame(ref IrisCVideoFrame dst, ref IrisCVideoFrame src);
+        internal static void AllocEventHandlerHandle(ref RtcEventHandlerHandle eventHandlerHandle, Rtc_Func_Event_Native onEvent)
+        {
+            eventHandlerHandle.cEvent = new IrisRtcCEventHandler
+            {
+                OnEvent = onEvent,
+            };
 
-        //[DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        //internal static extern void ClearVideoFrame(ref IrisCVideoFrame video_frame);
+            var cEventHandlerNativeLocal = new IrisRtcCEventHandlerNative
+            {
+                onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
+            };
 
+            eventHandlerHandle.marshal = Marshal.AllocHGlobal(Marshal.SizeOf(cEventHandlerNativeLocal));
+            Marshal.StructureToPtr(cEventHandlerNativeLocal, eventHandlerHandle.marshal, true);
+            eventHandlerHandle.handle = AgoraRtcNative.CreateIrisEventHandler(eventHandlerHandle.marshal);
+        }
+
+        internal static void FreeEventHandlerHandle(ref RtcEventHandlerHandle eventHandlerHandle)
+        {
+            AgoraRtcNative.DestroyIrisEventHandler(eventHandlerHandle.handle);
+            eventHandlerHandle.handle = IntPtr.Zero;
+
+            Marshal.FreeHGlobal(eventHandlerHandle.marshal);
+            eventHandlerHandle.marshal = IntPtr.Zero;
+
+            eventHandlerHandle.cEvent = new IrisRtcCEventHandler();
+        }
 
         #endregion
 
@@ -236,6 +256,97 @@ namespace Agora.Rtc
 
     }
 
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+    internal delegate void Rtc_Func_Event_Native(IntPtr param);
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtcCEventParam
+    {
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+
+        internal IntPtr result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtcCApiParam
+    {
+
+        internal string Result
+        {
+            get
+            {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                return Marshal.PtrToStringAnsi(result);
+#else
+                return StringFromNativeUtf8(result);
+#endif
+            }
+        }
+
+        internal void AllocResult()
+        {
+            if (result == IntPtr.Zero)
+            {
+                result = Marshal.AllocHGlobal(65536);
+            }
+        }
+
+        internal void FreeResult()
+        {
+            if (result != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(result);
+                result = IntPtr.Zero;
+            }
+        }
+
+        internal string StringFromNativeUtf8(IntPtr nativeUtf8)
+        {
+            int len = 0;
+            while (Marshal.ReadByte(nativeUtf8, len) != 0) ++len;
+            byte[] buffer = new byte[len];
+            Marshal.Copy(nativeUtf8, buffer, 0, buffer.Length);
+            return Encoding.UTF8.GetString(buffer);
+        }
+
+        internal string @event;
+        internal string data;
+        internal uint data_size;
+
+        internal IntPtr result;
+
+        internal IntPtr buffer;
+        internal IntPtr length;
+        internal uint buffer_count;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtcCEventHandlerNative
+    {
+        internal IntPtr onEvent;
+    }
+
+    internal struct IrisRtcCEventHandler
+    {
+        internal Rtc_Func_Event_Native OnEvent;
+    }
+
+
+    internal struct RtcEventHandlerHandle
+    {
+        internal IrisRtcCEventHandler cEvent;
+        internal IrisEventHandlerMarshal marshal;
+        internal IrisEventHandlerHandle handle;
+    }
+
+    #region callback native
+
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisSpatialAudioZone
     {
@@ -266,4 +377,6 @@ namespace Agora.Rtc
             this.audioAttenuation = zone.audioAttenuation;
         }
     };
+
+    #endregion
 }
