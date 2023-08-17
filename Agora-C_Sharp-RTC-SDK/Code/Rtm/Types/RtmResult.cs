@@ -5,6 +5,12 @@ namespace Agora.Rtm
     {
         public RtmStatus Status;
         public T Response;
+
+        public void Deconstruct(out RtmStatus status, out T response)
+        {
+            status = this.Status;
+            response = this.Response;
+        }
     }
 
     public class RtmStatus
