@@ -5218,6 +5218,7 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract UInt64 GetNtpWallTimeInMs();
+#endregion terra node1
         ///
         /// <summary>
         /// Gets the C++ handle of the Native SDK.
@@ -5233,7 +5234,7 @@ namespace Agora.Rtc
         ///
         public abstract int GetNativeHandler(ref IntPtr nativeHandler);
 
-#endregion terra node1
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 
         ///
