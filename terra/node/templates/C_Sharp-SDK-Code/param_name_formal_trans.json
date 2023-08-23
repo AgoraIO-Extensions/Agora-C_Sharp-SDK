@@ -1,0 +1,9 @@
+{
+    "special_class_param": {},
+    "special_method_param": {},
+    "normal": {
+        "params": "@params",
+        "event": "@event"
+    },
+    "reg": {}
+}

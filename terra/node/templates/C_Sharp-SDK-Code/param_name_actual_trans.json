@@ -1,0 +1,28 @@
+{
+    "special_class_param": {},
+    "special_method_param": {
+        "IRtcEngine.getVersion.build": "ref build",
+        "IRtcEngine.queryCodecCapability.codecInfo": "ref codecInfo",
+        "IRtcEngine.queryCodecCapability.size": "ref size",
+        "IRtcEngine.createDataStream.streamId": "ref streamId",
+        "IRtcEngine.getUserInfoByUserAccount.userInfo": "ref userInfo",
+        "IRtcEngine.getUserInfoByUid.userInfo": "ref userInfo",
+        "IRtcEngine.getExtensionProperty.value": "ref value",
+        "IRtcEngine.getAudioDeviceInfo.deviceInfo": "ref deviceInfo",
+        "IRtcEngine.uploadLogFile.requestId": "ref requestId",
+        "IRtcEngine.getCallId.callId": "ref callId",
+        "IRtcEngine.unregisterAudioSpectrumObserver.observer": "@remove",
+        "IRtcEngine.unregisterMediaMetadataObserver.observer": "@remove",
+        "IRtcEngine.unregisterMediaMetadataObserver.type": "@remove",
+        "IRtcEngine.startDirectCdnStreaming.eventHandler": "@remove",
+        "IRtcEngineEx.joinChannelEx.eventHandler": "@remove",
+        "IRtcEngineEx.createDataStreamEx.streamId": "ref streamId",
+        "IRtcEngineEx.getUserInfoByUserAccountEx.userInfo": "ref userInfo",
+        "IRtcEngineEx.getUserInfoByUidEx.userInfo": "ref userInfo"
+    },
+    "normal": {
+        "params": "@params",
+        "event": "@event"
+    },
+    "reg": {}
+}

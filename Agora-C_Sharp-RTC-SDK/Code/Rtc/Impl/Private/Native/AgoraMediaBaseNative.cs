@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-
+using view_t = System.Int64;
 namespace Agora.Rtc
 {
-    using view_t = Int64;
 
-    //use for raw data
+    // use for raw data
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisCVideoFrame
     {
@@ -29,17 +28,16 @@ namespace Agora.Rtc
         public IntPtr alphaBuffer;
     }
 
-
     //[StructLayout(LayoutKind.Sequential)]
-    //internal struct IrisCVideoFrameBufferNative
+    // internal struct IrisCVideoFrameBufferNative
     //{
     //    internal int type;
     //    internal IntPtr OnVideoFrameReceived;
     //    internal int bytes_per_row_alignment;
     //}
 
-    //use for videoFrameObserver json parse
-    //workaround, must be public, so can parse from a json string
+    // use for videoFrameObserver json parse
+    // workaround, must be public, so can parse from a json string
     [StructLayout(LayoutKind.Sequential)]
     public struct IrisVideoFrame
     {
@@ -68,9 +66,6 @@ namespace Agora.Rtc
         public uint alpha_buffer_length;
     }
 
-
-
-
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcVideoFrameConfig
     {
@@ -86,63 +81,81 @@ namespace Agora.Rtc
         internal int video_view_setup_mode;
     }
 
-
-
-
     internal class ThumbImageBufferInternal
     {
+#region terra ThumbImageBufferInternal_List
+
+        public IntPtr buffer;
         public uint length;
         public uint width;
         public uint height;
-
-        public UInt64 buffer;
+#endregion terra ThumbImageBufferInternal_List
 
         public ThumbImageBufferInternal()
         {
-            buffer = 0;
-            length = 0;
-            width = 0;
-            height = 0;
+        }
+
+        public ThumbImageBuffer GenerateThumbImageBuffer()
+        {
+            ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
+#region terra ThumbImageBufferInternal_Generate
+
+            byte[] thumbBuffer = new byte[length];
+            if (imageBuffer.length > 0)
+            {
+                Marshal.Copy((IntPtr)(this.buffer), thumbBuffer, 0, (int)imageBuffer.length);
+            }
+            imageBuffer.buffer = thumbBuffer;
+            imageBuffer.length = this.length;
+            imageBuffer.width = this.width;
+            imageBuffer.height = this.height;
+#endregion terra ThumbImageBufferInternal_Generate
+            return imageBuffer;
         }
     };
 
     internal class ScreenCaptureSourceInfoInternal
     {
+#region terra ScreenCaptureSourceInfoInternal_List
+
         public ScreenCaptureSourceType type;
         public view_t sourceId;
-#if  UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-#else
-        public view_t sourceDisplayId;
-#endif
         public string sourceName;
         public ThumbImageBufferInternal thumbImage;
         public ThumbImageBufferInternal iconImage;
-
         public string processPath;
         public string sourceTitle;
         public bool primaryMonitor;
         public bool isOccluded;
-
         public Rectangle position;
-       
         public bool minimizeWindow;
+        public view_t sourceDisplayId;
+#endregion terra ScreenCaptureSourceInfoInternal_List
 
         public ScreenCaptureSourceInfoInternal()
         {
-            type = ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown;
-            sourceId = 0;
-#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-#else
-            sourceDisplayId = -2;
-#endif
+        }
 
-            sourceName = "";
-            processPath = "";
-            sourceTitle = "";
-            primaryMonitor = false;
-            isOccluded = false;
-            thumbImage = new ThumbImageBufferInternal();
-            iconImage = new ThumbImageBufferInternal();
+        public ScreenCaptureSourceInfo GenerateScreenCaptureSourceInfo()
+        {
+            var screenCaptureSourceInfo = new ScreenCaptureSourceInfo();
+
+#region terra ScreenCaptureSourceInfoInternal_Generate
+
+            screenCaptureSourceInfo.type = this.type;
+            screenCaptureSourceInfo.sourceId = this.sourceId;
+            screenCaptureSourceInfo.sourceName = this.sourceName;
+            screenCaptureSourceInfo.thumbImage = this.thumbImage.GenerateThumbImageBuffer();
+            screenCaptureSourceInfo.iconImage = this.iconImage.GenerateThumbImageBuffer();
+            screenCaptureSourceInfo.processPath = this.processPath;
+            screenCaptureSourceInfo.sourceTitle = this.sourceTitle;
+            screenCaptureSourceInfo.primaryMonitor = this.primaryMonitor;
+            screenCaptureSourceInfo.isOccluded = this.isOccluded;
+            screenCaptureSourceInfo.position = this.position;
+            screenCaptureSourceInfo.minimizeWindow = this.minimizeWindow;
+            screenCaptureSourceInfo.sourceDisplayId = this.sourceDisplayId;
+#endregion terra ScreenCaptureSourceInfoInternal_Generate
+            return screenCaptureSourceInfo;
         }
     };
 }

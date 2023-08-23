@@ -10,3 +10,5 @@ Agora-C_Sharp-RTC-SDK/Code/**/*.meta
 Agora-C_Sharp-RTC-SDK/Resources/**/*.meta
 .DS_Store
 .publish
+terra/node/node/dist
+terra/node/node/node_modules

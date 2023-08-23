@@ -1,0 +1,18 @@
+{
+    "AudioFrameInternal_Assignment": {
+        "type": "ClazzStruct",
+        "name": "AudioFrame",
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "audioFrameInternal_member_assignment",
+        "specialMembersTemplate": "\n"
+    },
+    "audioFrameInternal_member_assignment": "this.${-oMEMBER_NAME} = audioFrame.${-oMEMBER_NAME};",
+    "AudioFrameInternal_Member_List": {
+        "type": "ClazzStruct",
+        "name": "AudioFrame",
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "audioFrameInternal_member_list",
+        "specialMembersTemplate": "\n"
+    },
+    "audioFrameInternal_member_list": "public ${-oMEMBER_TYPE} ${-oMEMBER_NAME};"
+}

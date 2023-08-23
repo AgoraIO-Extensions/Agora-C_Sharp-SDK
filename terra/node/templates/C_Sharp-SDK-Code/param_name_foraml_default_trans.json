@@ -1,0 +1,14 @@
+{
+    "special_class_param": {},
+    "special_method_param": {
+        "IRtcEngine.enableLoopbackRecording.deviceName": "\"\"",
+        "IMediaEngine.setExternalVideoSource.sourceType": "@remove",
+        "IMediaEngine.setExternalVideoSource.encodedVideoOption": "@remove"
+    },
+    "normal": {
+        "agora::media::PRIMARY_CAMERA_SOURCE": "MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE",
+        "agora::media::UNKNOWN_MEDIA_SOURCE": "MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE",
+        "VIDEO_FRAME": "EXTERNAL_VIDEO_SOURCE_TYPE.VIDEO_FRAME"
+    },
+    "reg": {}
+}

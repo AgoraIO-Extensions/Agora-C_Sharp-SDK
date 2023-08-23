@@ -27,6 +27,8 @@ namespace Agora.Rtc
     {
         internal AudioFrameInternal(AudioFrame audioFrame)
         {
+#region terra AudioFrameInternal_Assignment
+
             this.type = audioFrame.type;
             this.samplesPerChannel = audioFrame.samplesPerChannel;
             this.bytesPerSample = audioFrame.bytesPerSample;
@@ -36,7 +38,10 @@ namespace Agora.Rtc
             this.renderTimeMs = audioFrame.renderTimeMs;
             this.avsync_type = audioFrame.avsync_type;
             this.presentationMs = audioFrame.presentationMs;
+#endregion terra AudioFrameInternal_Assignment
         }
+
+#region terra AudioFrameInternal_Member_List
 
         public AUDIO_FRAME_TYPE type;
         public int samplesPerChannel;
@@ -46,7 +51,8 @@ namespace Agora.Rtc
         public IntPtr buffer;
         public long renderTimeMs;
         public int avsync_type;
-        public Int64 presentationMs;
+        public long presentationMs;
+#endregion terra AudioFrameInternal_Member_List
     }
 
     internal class ExternalVideoFrameInternal
@@ -68,7 +74,6 @@ namespace Agora.Rtc
             this.textureId = frame.textureId;
             this.metadata_size = frame.metadata_size;
         }
-
 
         public VIDEO_BUFFER_TYPE type;
         public VIDEO_PIXEL_FORMAT format;
@@ -116,5 +121,6 @@ namespace Agora.Rtc
         FRAME_TYPE_CVPIXEL_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_BGRA,
 
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
-    };
+    }
+    ;
 }
