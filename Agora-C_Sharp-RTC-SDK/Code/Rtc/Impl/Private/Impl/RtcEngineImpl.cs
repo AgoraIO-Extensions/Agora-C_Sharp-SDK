@@ -1941,7 +1941,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int PreloadEffect(int soundId, string filePath, int startPos)
+        public int PreloadEffect(int soundId, string filePath, int startPos = 0)
         {
             _param.Clear();
             _param.Add("soundId", soundId);
@@ -1957,7 +1957,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish, int startPos)
+        public int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
         {
             _param.Clear();
             _param.Add("soundId", soundId);
@@ -1978,7 +1978,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish)
+        public int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false)
         {
             _param.Clear();
             _param.Add("loopCount", loopCount);
@@ -2703,7 +2703,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int EnableAudioSpectrumMonitor(int intervalInMS)
+        public int EnableAudioSpectrumMonitor(int intervalInMS = 100)
         {
             _param.Clear();
             _param.Add("intervalInMS", intervalInMS);
@@ -2932,7 +2932,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int LoadExtensionProvider(string path, bool unload_after_use)
+        public int LoadExtensionProvider(string path, bool unload_after_use = false)
         {
             _param.Clear();
             _param.Add("path", path);
@@ -2979,7 +2979,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int EnableExtension(string provider, string extension, bool enable, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
+        public int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
             _param.Clear();
             _param.Add("provider", provider);
@@ -2996,7 +2996,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable)
+        public int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true)
         {
             _param.Clear();
             _param.Add("provider", provider);
@@ -4573,7 +4573,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SetAdvancedAudioOptions(AdvancedAudioOptions options, int sourceType)
+        public int SetAdvancedAudioOptions(AdvancedAudioOptions options, int sourceType = 0)
         {
             _param.Clear();
             _param.Add("options", options);
@@ -5048,7 +5048,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName)
+        public int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = __null)
         {
             _param.Clear();
             _param.Add("connection", connection);
@@ -5581,7 +5581,7 @@ namespace Agora.Rtc
             _param.Add("videoTrackId", videoTrackId);
 
             IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
-            IntPtr eglContextPtr = IntPtr.Zero;
+            IntPtr eglContextPtr = frame.eglContext;
             IntPtr metadataPtr = IntPtr.Zero;
             IntPtr alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
             IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr, alphaBuffer };
@@ -5645,7 +5645,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback, bool publish)
+        public int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {
             _param.Clear();
             _param.Add("enabled", enabled);

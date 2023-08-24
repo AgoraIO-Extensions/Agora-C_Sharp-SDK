@@ -1,4 +1,6 @@
+import { callbackify } from "util";
 import { ConfigTool } from "./ConfigTool";
+import { CppConstructor, Tool } from "./Tool";
 import { Clazz, MemberFunction, MemberVariable } from "./terra";
 
 export class SpeicalLogic {
@@ -164,4 +166,175 @@ export class SpeicalLogic {
         }
     }
 
+    public cSharpSDK_ExternalVideoFrameInternalMemberAssignment(clazzName: string, m: MemberVariable): string {
+        let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer"];
+        if (excludeList.includes(m.name)) {
+            return "";
+        }
+        else {
+            return `this.${m.name} = frame.${m.name};`;
+        }
+    }
+
+    public cSharpSDK_ExternalVideoFrameInternalMemberList(clazzName: string, m: MemberVariable): string {
+        let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer"];
+        if (excludeList.includes(m.name)) {
+            return "";
+        }
+        else {
+            let transType = ConfigTool.getInstance().paramTypeTrans.transType(clazzName, null, m.type.source, m.name);
+            return `public ${transType} ${m.name};`;
+        }
+    }
+
+    public cSharpSDK_VideoFrameMemberList(clazzName: string, m: MemberVariable): string {
+        if (m.name == "pixelBuffer") return '';
+        let transType = ConfigTool.getInstance().paramTypeTrans.transType(clazzName, null, m.type.source, m.name);
+        if (m.name == "metadata_buffer") {
+            return `public IntPtr ${m.name};`;
+        }
+        if (m.type.source == "uint8_t*" && m.name != "metadata_buffer") {
+            let str1 = `public byte[] ${m.name};`;
+            let str2 = `public IntPtr ${m.name}Ptr;`;
+            return `${str1}\n\n${str2}`;
+        }
+        else {
+            return `public ${transType} ${m.name};`;
+        }
+    }
+
+    public cSharpSDK_ClazzStructConstructor(clazz: Clazz): string {
+        if (clazz.name == "UserAudioSpectrumInfo") {
+            return "";
+        }
+
+        let config = ConfigTool.getInstance();
+        let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
+        let lines = [];
+        for (let constructor of cppConstructors) {
+            let constructorLines = [];
+
+            //参数列表
+            if (constructor.parameters.length > 0) {
+                let parametersLines = [];
+                for (let p of constructor.parameters) {
+                    let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, p.type, p.name);
+                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, p.name);
+                    parametersLines.push(`${transType} ${transName}`);
+                }
+                let parametersStr = parametersLines.join(",");
+                constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+            }
+            else {
+                constructorLines.push(`public ${clazz.name}()\n{`);
+            }
+
+            //初始化构造列表
+            if (constructor.initializes.length > 0) {
+                for (let e of constructor.initializes) {
+                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                    let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, null, e.name, e.value);
+                    constructorLines.push(`this.${transName} = ${transValue};`);
+                }
+            }
+            constructorLines.push("}");
+            lines.push(constructorLines.join('\n'));
+        }
+
+        //生成全量参数构造
+        let needFullParamCtor = true;
+        for (let e of cppConstructors) {
+            if (e.parameters.length == clazz.member_variables.length) {
+                needFullParamCtor = false;
+                break;
+            }
+        }
+        if (needFullParamCtor) {
+            let constructorLines = [];
+            let parametersLines = [];
+            for (let e of clazz.member_variables) {
+                let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, e.type.source, e.name);
+                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                parametersLines.push(`${transType} ${transName}`);
+            }
+            let parametersStr = parametersLines.join(",");
+            constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+            for (let e of clazz.member_variables) {
+                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                constructorLines.push(`this.${transName} = ${transName};`);
+            }
+            constructorLines.push(`}`);
+            lines.push(constructorLines.join('\n'));
+        }
+
+        return lines.join('\n\n');
+    }
+
+    public cSharpSDK_AudioFrameConstructor(clazz: Clazz): string {
+        let config = ConfigTool.getInstance();
+        let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
+        let constructor = cppConstructors[0];
+        let lines = [];
+
+
+        lines.push(`public ${clazz.name}()\n{`);
+        //初始化构造列表
+        if (constructor.initializes.length > 0) {
+            for (let e of constructor.initializes) {
+                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, null, e.name, e.value);
+                lines.push(`this.${transName} = ${transValue};`);
+            }
+        }
+        lines.push(`this.RawBuffer = new byte[0];`);
+        lines.push(`}\n\n`)
+
+        //全量构造函数
+        let constructorLines = [];
+        let parametersLines = [];
+        for (let e of clazz.member_variables) {
+            let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, e.type.source, e.name);
+            let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+            parametersLines.push(`${transType} ${transName}`);
+        }
+        let parametersStr = parametersLines.join(",");
+        constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+        for (let e of clazz.member_variables) {
+            let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+            constructorLines.push(`this.${transName} = ${transName};`);
+        }
+        constructorLines.push(`}\n\n`);
+        lines.push(constructorLines.join('\n'));
+
+        return lines.join(`\n`);
+    }
+
+    public cSharpSDK_VideoFrameConstructor(clazz: Clazz): string {
+        let config = ConfigTool.getInstance();
+        let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
+        let constructor = cppConstructors[0];
+        let lines = [];
+
+
+        lines.push(`public ${clazz.name}()\n{`);
+        //初始化构造列表
+        if (constructor.initializes.length > 0) {
+            for (let e of constructor.initializes) {
+                if (e.name == "pixelBuffer")
+                    continue;
+                else if (e.name.includes('Buffer')) {
+                    lines.push(`this.${e.name} = new byte[0];`);
+                    lines.push(`this.${e.name}Ptr = IntPtr.Zero;`);
+                }
+                else {
+                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                    let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, null, e.name, e.value);
+                    lines.push(`this.${transName} = ${transValue};`);
+                }
+            }
+        }
+        lines.push(`this.matrix = new float[16];`);
+        lines.push(`}`)
+        return lines.join(`\n`);
+    }
 }

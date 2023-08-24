@@ -1,9 +1,10 @@
 {
     "special_class_param": {
         "ExternalVideoFrame.buffer": "byte[]",
-        "ExternalVideoFrame.eglContext": "byte[]",
+        "ExternalVideoFrame.eglContext": "IntPtr",
         "ExternalVideoFrame.metadata_buffer": "byte[]",
-        "ExternalVideoFrame.alphaBuffer": "byte[]"
+        "ExternalVideoFrame.alphaBuffer": "byte[]",
+        "AudioSpectrumData.audioSpectrumData": "float[]"
     },
     "special_method_param": {
         "IRtcEngine.getVersion.build": "ref int",
@@ -36,11 +37,20 @@
         "IVideoDeviceManager.getCapability.deviceCapabilityNumber": "uint",
         "IVideoDeviceManager.startDeviceTest.hwnd": "IntPtr",
         "ILocalSpatialAudioEngine.setZones.zones": "SpatialAudioZone[]",
-        "IMediaEngine.pushEncodedVideoImage.imageBuffer": "byte[]"
+        "IMediaEngine.pushEncodedVideoImage.imageBuffer": "byte[]",
+        "AudioSpectrumData.AudioSpectrumData.audioSpectrumData": "float[]",
+        "AudioSpectrumData.AudioSpectrumData.data": "float[]",
+        "ExternalVideoFrame.ExternalVideoFrame.buffer": "byte[]",
+        "ExternalVideoFrame.ExternalVideoFrame.eglContext": "IntPtr",
+        "ExternalVideoFrame.ExternalVideoFrame.metadata_buffer": "byte[]",
+        "ExternalVideoFrame.ExternalVideoFrame.alphaBuffer": "byte[]",
+        "MediaRecorderConfiguration.MediaRecorderConfiguration.path": "string",
+        "RecorderInfo.RecorderInfo.name": "string"
     },
     "normal": {
         "char*": "string",
         "char const*": "string",
+        "const char*": "string",
         "int": "int",
         "unsigned int": "uint",
         "uid_t": "uint",
@@ -87,6 +97,7 @@
         "agora::media::IAudioFrameObserverBase::*": "${-o*}",
         "agora::rtc::* const&": "${-o*}",
         "media::base::* const&": "${-o*}",
+        "const *&": "${-o*}",
         "media::* const&": "${-o*}",
         "rtc::* const&": "${-o*}",
         "agora::rtc::*&": "${-o*}",

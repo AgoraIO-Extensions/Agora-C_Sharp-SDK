@@ -9,6 +9,144 @@ namespace Agora.Rtc
     using uint32_t = UInt32;
     using int16_t = Int16;
 
+    public class VideoFrame
+    {
+#region terra VideoFrame_Member_List
+
+        public VIDEO_PIXEL_FORMAT type;
+
+        public int width;
+
+        public int height;
+
+        public int yStride;
+
+        public int uStride;
+
+        public int vStride;
+
+        public byte[] yBuffer;
+
+        public IntPtr yBufferPtr;
+
+        public byte[] uBuffer;
+
+        public IntPtr uBufferPtr;
+
+        public byte[] vBuffer;
+
+        public IntPtr vBufferPtr;
+
+        public int rotation;
+
+        public long renderTimeMs;
+
+        public int avsync_type;
+
+        public IntPtr metadata_buffer;
+
+        public int metadata_size;
+
+        public IntPtr sharedContext;
+
+        public int textureId;
+
+        public float[] matrix;
+
+        public byte[] alphaBuffer;
+
+        public IntPtr alphaBufferPtr;
+
+#endregion terra VideoFrame_Member_List
+
+#region terra VideoFrame_Constructor
+
+        public VideoFrame()
+        {
+            this.type = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
+            this.width = 0;
+            this.height = 0;
+            this.yStride = 0;
+            this.uStride = 0;
+            this.vStride = 0;
+            this.yBuffer = new byte[0];
+            this.yBufferPtr = IntPtr.Zero;
+            this.uBuffer = new byte[0];
+            this.uBufferPtr = IntPtr.Zero;
+            this.vBuffer = new byte[0];
+            this.vBufferPtr = IntPtr.Zero;
+            this.rotation = 0;
+            this.renderTimeMs = 0;
+            this.avsync_type = 0;
+            this.metadata_buffer = IntPtr.Zero;
+            this.metadata_size = 0;
+            this.sharedContext = IntPtr.Zero;
+            this.textureId = 0;
+            this.alphaBuffer = new byte[0];
+            this.alphaBufferPtr = IntPtr.Zero;
+            this.matrix = new float[16];
+        }
+
+#endregion terra VideoFrame_Constructor
+    }
+
+    public class AudioFrame
+    {
+#region terra AudioFrame_Member_List
+
+        public AUDIO_FRAME_TYPE type;
+
+        public int samplesPerChannel;
+
+        public BYTES_PER_SAMPLE bytesPerSample;
+
+        public int channels;
+
+        public int samplesPerSec;
+
+        public IntPtr buffer;
+
+        public long renderTimeMs;
+
+        public int avsync_type;
+
+        public long presentationMs;
+#endregion terra AudioFrame_Member_List
+
+        public byte[] RawBuffer;
+
+#region terra AudioFrame_Constructor
+
+        public AudioFrame()
+        {
+            this.type = AUDIO_FRAME_TYPE.FRAME_TYPE_PCM16;
+            this.samplesPerChannel = 0;
+            this.bytesPerSample = BYTES_PER_SAMPLE.TWO_BYTES_PER_SAMPLE;
+            this.channels = 0;
+            this.samplesPerSec = 0;
+            this.buffer = IntPtr.Zero;
+            this.renderTimeMs = 0;
+            this.avsync_type = 0;
+            this.presentationMs = 0;
+            this.RawBuffer = new byte[0];
+        }
+
+        public AudioFrame(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels, int samplesPerSec, IntPtr buffer, long renderTimeMs, int avsync_type, long presentationMs)
+        {
+            this.type = type;
+            this.samplesPerChannel = samplesPerChannel;
+            this.bytesPerSample = bytesPerSample;
+            this.channels = channels;
+            this.samplesPerSec = samplesPerSec;
+            this.buffer = buffer;
+            this.renderTimeMs = renderTimeMs;
+            this.avsync_type = avsync_type;
+            this.presentationMs = presentationMs;
+        }
+
+#endregion terra AudioFrame_Constructor
+    }
+
 #region terra AgoraMediaBase.h
 
     public enum VIDEO_SOURCE_TYPE
@@ -87,6 +225,20 @@ namespace Agora.Rtc
         public ulong channels;
 
         public ulong frames_per_buffer;
+
+        public AudioParameters()
+        {
+            this.sample_rate = 0;
+            this.channels = 0;
+            this.frames_per_buffer = 0;
+        }
+
+        public AudioParameters(int sample_rate, ulong channels, ulong frames_per_buffer)
+        {
+            this.sample_rate = sample_rate;
+            this.channels = channels;
+            this.frames_per_buffer = frames_per_buffer;
+        }
     }
 
     public enum RAW_AUDIO_FRAME_OP_MODE_TYPE
@@ -150,6 +302,16 @@ namespace Agora.Rtc
         public CONTENT_INSPECT_TYPE type;
 
         public uint interval;
+
+        public ContentInspectModule()
+        {
+        }
+
+        public ContentInspectModule(CONTENT_INSPECT_TYPE type, uint interval)
+        {
+            this.type = type;
+            this.interval = interval;
+        }
     }
 
     public class ContentInspectConfig
@@ -159,6 +321,19 @@ namespace Agora.Rtc
         public ContentInspectModule[] modules;
 
         public int moduleCount;
+
+        public ContentInspectConfig()
+        {
+            this.extraInfo = "";
+            this.moduleCount = 0;
+        }
+
+        public ContentInspectConfig(string extraInfo, ContentInspectModule[] modules, int moduleCount)
+        {
+            this.extraInfo = extraInfo;
+            this.modules = modules;
+            this.moduleCount = moduleCount;
+        }
     }
 
     public class PacketOptions
@@ -166,6 +341,18 @@ namespace Agora.Rtc
         public uint32_t timestamp;
 
         public uint8_t audioLevelIndication;
+
+        public PacketOptions()
+        {
+            this.timestamp = 0;
+            this.audioLevelIndication = 127;
+        }
+
+        public PacketOptions(uint32_t timestamp, uint8_t audioLevelIndication)
+        {
+            this.timestamp = timestamp;
+            this.audioLevelIndication = audioLevelIndication;
+        }
     }
 
     public class AudioEncodedFrameInfo
@@ -173,6 +360,18 @@ namespace Agora.Rtc
         public ulong sendTs;
 
         public uint8_t codec;
+
+        public AudioEncodedFrameInfo()
+        {
+            this.sendTs = 0;
+            this.codec = 0;
+        }
+
+        public AudioEncodedFrameInfo(ulong sendTs, uint8_t codec)
+        {
+            this.sendTs = sendTs;
+            this.codec = codec;
+        }
     }
 
     public class AudioPcmFrame
@@ -188,6 +387,34 @@ namespace Agora.Rtc
         public BYTES_PER_SAMPLE bytes_per_sample;
 
         public int16_t[] data_;
+
+        public AudioPcmFrame()
+        {
+            this.capture_timestamp = 0;
+            this.samples_per_channel_ = 0;
+            this.sample_rate_hz_ = 0;
+            this.num_channels_ = 0;
+            this.bytes_per_sample = BYTES_PER_SAMPLE.TWO_BYTES_PER_SAMPLE;
+        }
+
+        public AudioPcmFrame(AudioPcmFrame src)
+        {
+            this.capture_timestamp = src.capture_timestamp;
+            this.samples_per_channel_ = src.samples_per_channel_;
+            this.sample_rate_hz_ = src.sample_rate_hz_;
+            this.num_channels_ = src.num_channels_;
+            this.bytes_per_sample = src.bytes_per_sample;
+        }
+
+        public AudioPcmFrame(long capture_timestamp, ulong samples_per_channel_, int sample_rate_hz_, ulong num_channels_, BYTES_PER_SAMPLE bytes_per_sample, int16_t[] data_)
+        {
+            this.capture_timestamp = capture_timestamp;
+            this.samples_per_channel_ = samples_per_channel_;
+            this.sample_rate_hz_ = sample_rate_hz_;
+            this.num_channels_ = num_channels_;
+            this.bytes_per_sample = bytes_per_sample;
+            this.data_ = data_;
+        }
     }
 
     public enum AUDIO_DUAL_MONO_MODE
@@ -270,7 +497,7 @@ namespace Agora.Rtc
 
         public long timestamp;
 
-        public byte[] eglContext;
+        public IntPtr eglContext;
 
         public EGL_CONTEXT_TYPE eglType;
 
@@ -283,6 +510,49 @@ namespace Agora.Rtc
         public int metadata_size;
 
         public byte[] alphaBuffer;
+
+        public ExternalVideoFrame()
+        {
+            this.type = VIDEO_BUFFER_TYPE.VIDEO_BUFFER_RAW_DATA;
+            this.format = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
+            this.buffer = null;
+            this.stride = 0;
+            this.height = 0;
+            this.cropLeft = 0;
+            this.cropTop = 0;
+            this.cropRight = 0;
+            this.cropBottom = 0;
+            this.rotation = 0;
+            this.timestamp = 0;
+            this.eglContext = IntPtr.Zero;
+            this.eglType = EGL_CONTEXT_TYPE.EGL_CONTEXT10;
+            this.textureId = 0;
+            this.metadata_buffer = null;
+            this.metadata_size = 0;
+            this.alphaBuffer = null;
+        }
+
+        public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride, int height, int cropLeft, int cropTop, int cropRight, int cropBottom, int rotation, long timestamp, IntPtr eglContext, EGL_CONTEXT_TYPE eglType, int textureId, float[] matrix, byte[] metadata_buffer, int metadata_size, byte[] alphaBuffer)
+        {
+            this.type = type;
+            this.format = format;
+            this.buffer = buffer;
+            this.stride = stride;
+            this.height = height;
+            this.cropLeft = cropLeft;
+            this.cropTop = cropTop;
+            this.cropRight = cropRight;
+            this.cropBottom = cropBottom;
+            this.rotation = rotation;
+            this.timestamp = timestamp;
+            this.eglContext = eglContext;
+            this.eglType = eglType;
+            this.textureId = textureId;
+            this.matrix = matrix;
+            this.metadata_buffer = metadata_buffer;
+            this.metadata_size = metadata_size;
+            this.alphaBuffer = alphaBuffer;
+        }
     }
 
     public enum EGL_CONTEXT_TYPE
@@ -301,47 +571,6 @@ namespace Agora.Rtc
         VIDEO_BUFFER_TEXTURE = 3,
     }
 
-    public class VideoFrame
-    {
-        public VIDEO_PIXEL_FORMAT type;
-
-        public int width;
-
-        public int height;
-
-        public int yStride;
-
-        public int uStride;
-
-        public int vStride;
-
-        public uint8_t* yBuffer;
-
-        public uint8_t* uBuffer;
-
-        public uint8_t* vBuffer;
-
-        public int rotation;
-
-        public long renderTimeMs;
-
-        public int avsync_type;
-
-        public uint8_t* metadata_buffer;
-
-        public int metadata_size;
-
-        public IntPtr sharedContext;
-
-        public int textureId;
-
-        public float[] matrix;
-
-        public uint8_t* alphaBuffer;
-
-        public IntPtr pixelBuffer;
-    }
-
     public enum MEDIA_PLAYER_SOURCE_TYPE
     {
         MEDIA_PLAYER_SOURCE_DEFAULT,
@@ -351,6 +580,7 @@ namespace Agora.Rtc
         MEDIA_PLAYER_SOURCE_SIMPLE,
     }
 
+    [Flags]
     public enum VIDEO_MODULE_POSITION
     {
         POSITION_POST_CAPTURER = 1 << 0,
@@ -365,27 +595,7 @@ namespace Agora.Rtc
         FRAME_TYPE_PCM16 = 0,
     }
 
-    public class AudioFrame
-    {
-        public AUDIO_FRAME_TYPE type;
-
-        public int samplesPerChannel;
-
-        public BYTES_PER_SAMPLE bytesPerSample;
-
-        public int channels;
-
-        public int samplesPerSec;
-
-        public IntPtr buffer;
-
-        public long renderTimeMs;
-
-        public int avsync_type;
-
-        public long presentationMs;
-    }
-
+    [Flags]
     public enum AUDIO_FRAME_POSITION
     {
         AUDIO_FRAME_POSITION_NONE = 0x0000,
@@ -410,13 +620,41 @@ namespace Agora.Rtc
         public RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
 
         public int samples_per_call;
+
+        public AudioParams()
+        {
+            this.sample_rate = 0;
+            this.channels = 0;
+            this.mode = RAW_AUDIO_FRAME_OP_MODE_TYPE.RAW_AUDIO_FRAME_OP_MODE_READ_ONLY;
+            this.samples_per_call = 0;
+        }
+
+        public AudioParams(int samplerate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE type, int samplesPerCall)
+        {
+            this.sample_rate = samplerate;
+            this.channels = channel;
+            this.mode = type;
+            this.samples_per_call = samplesPerCall;
+        }
     }
 
     public class AudioSpectrumData
     {
-        public float audioSpectrumData;
+        public float[] audioSpectrumData;
 
         public int dataLength;
+
+        public AudioSpectrumData()
+        {
+            this.audioSpectrumData = null;
+            this.dataLength = 0;
+        }
+
+        public AudioSpectrumData(float[] data, int length)
+        {
+            this.audioSpectrumData = data;
+            this.dataLength = length;
+        }
     }
 
     public class UserAudioSpectrumInfo
@@ -487,6 +725,24 @@ namespace Agora.Rtc
         public int maxDurationMs;
 
         public int recorderInfoUpdateInterval;
+
+        public MediaRecorderConfiguration()
+        {
+            this.storagePath = "";
+            this.containerFormat = MediaRecorderContainerFormat.FORMAT_MP4;
+            this.streamType = MediaRecorderStreamType.STREAM_TYPE_BOTH;
+            this.maxDurationMs = 120000;
+            this.recorderInfoUpdateInterval = 0;
+        }
+
+        public MediaRecorderConfiguration(string path, MediaRecorderContainerFormat format, MediaRecorderStreamType type, int duration, int interval)
+        {
+            this.storagePath = path;
+            this.containerFormat = format;
+            this.streamType = type;
+            this.maxDurationMs = duration;
+            this.recorderInfoUpdateInterval = interval;
+        }
     }
 
     public class RecorderInfo
@@ -496,6 +752,20 @@ namespace Agora.Rtc
         public uint durationMs;
 
         public uint fileSize;
+
+        public RecorderInfo()
+        {
+            this.fileName = "";
+            this.durationMs = 0;
+            this.fileSize = 0;
+        }
+
+        public RecorderInfo(string name, uint dur, uint size)
+        {
+            this.fileName = name;
+            this.durationMs = dur;
+            this.fileSize = size;
+        }
     }
 
 #endregion terra AgoraMediaBase.h

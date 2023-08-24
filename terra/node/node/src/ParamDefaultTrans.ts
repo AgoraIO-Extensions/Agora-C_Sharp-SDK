@@ -23,11 +23,11 @@ export class ParamDefaultTrans {
             return defaultValue;
         }
 
-        var retval = "";
+        var retval = defaultValue;
         do {
             if (funName == null || funName == "") {
                 //是否匹配 类的成员属性
-                let clazzParamType = clazzName + "." + cxxParamName;
+                let clazzParamType = clazzName + "." + cxxParamName + ":" + defaultValue;
                 if (this._specialClzzParamMap[clazzParamType]) {
                     retval = this._specialClzzParamMap[clazzParamType];
                     break;
@@ -35,7 +35,7 @@ export class ParamDefaultTrans {
             }
             else {
                 //是否匹配了 方法名字属性
-                let methodParamType = clazzName + "." + funName + "." + cxxParamName;
+                let methodParamType = clazzName + "." + funName + "." + cxxParamName + ":" + defaultValue;
                 if (this._specialMethodParamMap[methodParamType]) {
                     retval = this._specialMethodParamMap[methodParamType];
                     break;

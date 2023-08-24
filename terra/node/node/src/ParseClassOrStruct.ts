@@ -61,6 +61,20 @@ export class ParseClassOrStruct {
                     replaceString = replaceString.replace(enumzMatched, newEnumzMatched);
                 }
             }
+
+
+            //解析SPECIAL_CLAZZ_STRUCT_LOGIC
+            let specialLogicArray = replaceString.match(/\${SPECIAL_CLAZZ_STRUCT_LOGIC:.+?}/g);
+            if (specialLogicArray) {
+                for (let e of specialLogicArray) {
+                    let pos = e.indexOf(":");
+                    let methodName = e.substring(pos + 1, e.length - 1);
+                    let logic = new SpeicalLogic() as any;
+                    var str = logic[methodName](clazz);
+                    replaceString = replaceString.replace(e, str);
+                }
+            }
+
             outputStr += replaceString;
         }
 
@@ -153,7 +167,6 @@ export class ParseClassOrStruct {
             //替换class的命名空间
             replaceString = Tool.processNamespaces(replaceString, clazz.namespaces);
 
-
             let enumzArray = replaceString.match(/\${-[a-z]+CLAZZ_STRUCT_NAME}/g);
             if (enumzArray) {
                 let enumzArrayLength = enumzArray.length;
@@ -163,6 +176,18 @@ export class ParseClassOrStruct {
                     replaceString = replaceString.replace(enumzMatched, newEnumzMatched);
                 }
 
+            }
+
+            //解析SPECIAL_CLAZZ_STRUCT_LOGIC
+            let specialLogicArray = replaceString.match(/\${SPECIAL_CLAZZ_STRUCT_LOGIC:.+?}/g);
+            if (specialLogicArray) {
+                for (let e of specialLogicArray) {
+                    let pos = e.indexOf(":");
+                    let methodName = e.substring(pos + 1, e.length - 1);
+                    let logic = new SpeicalLogic() as any;
+                    var str = logic[methodName](clazz);
+                    replaceString = replaceString.replace(e, str);
+                }
             }
             outputStr += replaceString;
         }

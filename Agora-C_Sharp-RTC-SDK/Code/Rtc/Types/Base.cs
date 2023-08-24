@@ -60,8 +60,11 @@ namespace Agora.Rtc
 
         internal ExternalVideoFrameInternal(ExternalVideoFrame frame)
         {
+#region terra ExternalVideoFrameInternal_Assignment
+
             this.type = frame.type;
             this.format = frame.format;
+
             this.stride = frame.stride;
             this.height = frame.height;
             this.cropLeft = frame.cropLeft;
@@ -70,10 +73,17 @@ namespace Agora.Rtc
             this.cropBottom = frame.cropBottom;
             this.rotation = frame.rotation;
             this.timestamp = frame.timestamp;
+
             this.eglType = frame.eglType;
             this.textureId = frame.textureId;
+            this.matrix = frame.matrix;
+
             this.metadata_size = frame.metadata_size;
+
+#endregion terra ExternalVideoFrameInternal_Assignment
         }
+
+#region terra ExternalVideoFrameInternal_Member_List
 
         public VIDEO_BUFFER_TYPE type;
         public VIDEO_PIXEL_FORMAT format;
@@ -86,9 +96,14 @@ namespace Agora.Rtc
         public int cropBottom;
         public int rotation;
         public long timestamp;
+
         public EGL_CONTEXT_TYPE eglType;
         public int textureId;
+        public float[] matrix;
+
         public int metadata_size;
+
+#endregion terra ExternalVideoFrameInternal_Member_List
     }
 
     ///

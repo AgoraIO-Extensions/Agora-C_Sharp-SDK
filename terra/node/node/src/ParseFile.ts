@@ -48,9 +48,9 @@ export class ParseFile {
                 }
 
 
-                let templateEnumz: TemplateEnumz = templateJson[info.commmonEnumTemplate];
+                let templateEnumz: TemplateEnumz = templateJson[templatePath];
                 if (templateEnumz == null) {
-                    console.error(`templateEnumz : ${info.commmonEnumTemplate} not found`);
+                    console.error(`templateEnumz : ${templatePath} not found`);
                     exit(0);
                 }
 
@@ -78,9 +78,9 @@ export class ParseFile {
                 }
 
 
-                let templateClassStruct: TemplateClassStruct = templateJson[info.commonClassStructTemplate];
+                let templateClassStruct: TemplateClassStruct = templateJson[templatePath];
                 if (templateClassStruct == null) {
-                    console.error(`templateClassStruct : ${info.commmonEnumTemplate} not found`);
+                    console.error(`templateClassStruct : ${templatePath} not found`);
                     exit(0);
                 }
                 templateClassStruct.name = structOrClass.name;

@@ -1088,7 +1088,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetEffectsVolume(volume);
         }
 
-        public override int PreloadEffect(int soundId, string filePath, int startPos)
+        public override int PreloadEffect(int soundId, string filePath, int startPos = 0)
         {
             if (_rtcEngineImpl == null)
             {
@@ -1097,7 +1097,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.PreloadEffect(soundId, filePath, startPos);
         }
 
-        public override int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish, int startPos)
+        public override int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0)
         {
             if (_rtcEngineImpl == null)
             {
@@ -1106,7 +1106,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.PlayEffect(soundId, filePath, loopCount, pitch, pan, gain, publish, startPos);
         }
 
-        public override int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish)
+        public override int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false)
         {
             if (_rtcEngineImpl == null)
             {
@@ -1549,7 +1549,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetPlaybackAudioFrameBeforeMixingParameters(sampleRate, channel);
         }
 
-        public override int EnableAudioSpectrumMonitor(int intervalInMS)
+        public override int EnableAudioSpectrumMonitor(int intervalInMS = 100)
         {
             if (_rtcEngineImpl == null)
             {
@@ -1693,7 +1693,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetInEarMonitoringVolume(volume);
         }
 
-        public override int LoadExtensionProvider(string path, bool unload_after_use)
+        public override int LoadExtensionProvider(string path, bool unload_after_use = false)
         {
             if (_rtcEngineImpl == null)
             {
@@ -1720,7 +1720,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.RegisterExtension(provider, extension, type);
         }
 
-        public override int EnableExtension(string provider, string extension, bool enable, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
+        public override int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE)
         {
             if (_rtcEngineImpl == null)
             {
@@ -1729,7 +1729,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.EnableExtension(provider, extension, enable, type);
         }
 
-        public override int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable)
+        public override int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2699,7 +2699,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetLocalAccessPoint(config);
         }
 
-        public override int SetAdvancedAudioOptions(AdvancedAudioOptions options, int sourceType)
+        public override int SetAdvancedAudioOptions(AdvancedAudioOptions options, int sourceType = 0)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2981,7 +2981,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
         }
 
-        public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName)
+        public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = __null)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3320,7 +3320,7 @@ namespace Agora.Rtc
 
 #region terra IMediaEngine
 
-        public override int PushAudioFrame(AudioFrame frame, track_id_t trackId)
+        public override int PushAudioFrame(AudioFrame frame, track_id_t trackId = 0)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3348,7 +3348,7 @@ namespace Agora.Rtc
         }
 
         [Obsolete("This method is deprecated. Use createCustomAudioTrack(rtc::AUDIO_TRACK_TYPE trackType, const rtc::AudioTrackConfig& config) instead.")]
-        public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback, bool publish)
+        public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3384,7 +3384,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetExternalAudioSink(enabled, sampleRate, channels);
         }
 
-        public override int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId)
+        public override int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3393,7 +3393,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.PushVideoFrame(frame, videoTrackId);
         }
 
-        public override int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId)
+        public override int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0)
         {
             if (_rtcEngineImpl == null)
             {

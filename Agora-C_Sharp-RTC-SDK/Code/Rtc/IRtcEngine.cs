@@ -225,11 +225,11 @@ namespace Agora.Rtc
 
         public abstract int SetEffectsVolume(int volume);
 
-        public abstract int PreloadEffect(int soundId, string filePath, int startPos);
+        public abstract int PreloadEffect(int soundId, string filePath, int startPos = 0);
 
-        public abstract int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish, int startPos);
+        public abstract int PlayEffect(int soundId, string filePath, int loopCount, double pitch, double pan, int gain, bool publish = false, int startPos = 0);
 
-        public abstract int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish);
+        public abstract int PlayAllEffects(int loopCount, double pitch, double pan, int gain, bool publish = false);
 
         public abstract int GetVolumeOfEffect(int soundId);
 
@@ -329,7 +329,7 @@ namespace Agora.Rtc
 
         public abstract int SetPlaybackAudioFrameBeforeMixingParameters(int sampleRate, int channel);
 
-        public abstract int EnableAudioSpectrumMonitor(int intervalInMS);
+        public abstract int EnableAudioSpectrumMonitor(int intervalInMS = 100);
 
         public abstract int DisableAudioSpectrumMonitor();
 
@@ -361,15 +361,15 @@ namespace Agora.Rtc
 
         public abstract int SetInEarMonitoringVolume(int volume);
 
-        public abstract int LoadExtensionProvider(string path, bool unload_after_use);
+        public abstract int LoadExtensionProvider(string path, bool unload_after_use = false);
 
         public abstract int SetExtensionProviderProperty(string provider, string key, string value);
 
         public abstract int RegisterExtension(string provider, string extension, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
-        public abstract int EnableExtension(string provider, string extension, bool enable, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
+        public abstract int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
-        public abstract int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable);
+        public abstract int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true);
 
         public abstract int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
@@ -590,7 +590,7 @@ namespace Agora.Rtc
 
         public abstract int SetLocalAccessPoint(LocalAccessPointConfiguration config);
 
-        public abstract int SetAdvancedAudioOptions(AdvancedAudioOptions options, int sourceType);
+        public abstract int SetAdvancedAudioOptions(AdvancedAudioOptions options, int sourceType = 0);
 
         public abstract int SetAVSyncSource(string channelId, uint uid);
 
@@ -627,14 +627,14 @@ namespace Agora.Rtc
 
 #region terra IMediaEngine
 
-        public abstract int PushAudioFrame(AudioFrame frame, track_id_t trackId);
+        public abstract int PushAudioFrame(AudioFrame frame, track_id_t trackId = 0);
 
         public abstract int PullAudioFrame(AudioFrame frame);
 
         public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
 
         [Obsolete("This method is deprecated. Use createCustomAudioTrack(rtc::AUDIO_TRACK_TYPE trackType, const rtc::AudioTrackConfig& config) instead.")]
-        public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback, bool publish);
+        public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true);
 
         public abstract track_id_t CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config);
 
@@ -642,9 +642,9 @@ namespace Agora.Rtc
 
         public abstract int SetExternalAudioSink(bool enabled, int sampleRate, int channels);
 
-        public abstract int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId);
+        public abstract int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0);
 
-        public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId);
+        public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
 
 #endregion terra IMediaEngine
     };
@@ -702,7 +702,7 @@ namespace Agora.Rtc
 
         public abstract int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
 
-        public abstract int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName);
+        public abstract int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = __null);
 
         public abstract int AdjustRecordingSignalVolumeEx(int volume, RtcConnection connection);
 

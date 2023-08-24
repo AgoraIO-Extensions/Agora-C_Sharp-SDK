@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import { execSync } from 'child_process';
 import { ParamDefaultTrans } from "./ParamDefaultTrans";
 import { ParseEngine } from "./PraseEngine";
+import { Tool } from "./Tool";
 // ConfigTool.getInstance().loadDistMark("#region terra", "#endregion terra");
 // ConfigTool.getInstance().loadParamTypeTrans(new ParamTypeTrans("/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/node/templates/C_Sharp-SDK-Code/param_type_trans.json"));
 // ConfigTool.getInstance().loadParamNameFormalTrans(new ParamNameTrans("/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/node/templates/C_Sharp-SDK-Code/param_name_formal_trans.json"));
@@ -28,3 +29,7 @@ new ParseEngine(
     "#region terra",
     "#endregion terra"
 );
+
+console.log("++++++++++++++++");
+
+// Tool.getCppConstructor("MediaRecorderConfiguration", "/Users/xiayangqun/Documents/agoraSpace/iris-ast/agora_rtc_ast/tmp/AgoraMediaBase.h")
