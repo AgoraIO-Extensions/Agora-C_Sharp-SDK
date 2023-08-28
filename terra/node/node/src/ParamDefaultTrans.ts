@@ -19,9 +19,7 @@ export class ParamDefaultTrans {
     }
 
     public transType(clazzName: string, funName: string, cxxTypeSource: string, cxxParamName: string, defaultValue: string): string {
-        if (defaultValue == "") {
-            return defaultValue;
-        }
+
 
         var retval = defaultValue;
         do {
@@ -60,13 +58,7 @@ export class ParamDefaultTrans {
             }
         } while (false);
 
-        if (retval == "@remove") {
-            return "";
-        }
-        else {
-            return retval;
-        }
-
+        return retval;
     }
 
     private _matchReg(inputTemplate: string, cxxTypeSource: string, outputTemplate: string): string {

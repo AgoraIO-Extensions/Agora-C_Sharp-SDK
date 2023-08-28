@@ -6,6 +6,7 @@ import { Tool } from "./Tool";
 import { ParamTypeTrans } from "./ParamTypeTrans";
 import { ConfigTool } from "./ConfigTool";
 import { EnumConstant, Enumz } from "./terra";
+import { SpeicalLogic } from "./SpecialLogic";
 
 export class ParseEnumz {
 
@@ -147,6 +148,18 @@ export class ParseEnumz {
                         replaceString = replaceString.replace(enumzMatched, newEnumzMatched);
                     }
 
+                }
+
+                //SPECIAL_ENUMCONSTANT_LOGIC
+                let specialEnumConstantArray = replaceString.match(/\${SPECIAL_ENUMCONSTANT_LOGIC:.+?}/g);
+                if (specialEnumConstantArray) {
+                    for (let e of specialEnumConstantArray) {
+                        let pos = e.indexOf(":");
+                        let methodName = e.substring(pos + 1, e.length - 1);
+                        let logic = new SpeicalLogic() as any;
+                        var str = logic[methodName](enumzName, f);
+                        replaceString = replaceString.replace(e, str);
+                    }
                 }
 
                 if (i != fieldLength - 1) {

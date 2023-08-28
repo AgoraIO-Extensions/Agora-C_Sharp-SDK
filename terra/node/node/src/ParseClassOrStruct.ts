@@ -380,8 +380,15 @@ export class ParseClassOrStruct {
             if (nameArray) {
                 for (let e of nameArray) {
                     let newName = config.paramDefaultTrans.transType(clazzName, method.name, parameters[i].type.source, parameters[i].name, parameters[i].default_value)
+                    if (newName == "@remove") {
+                        newName = "";
+                    }
                     let newType = Tool.processString(e, newName);
                     str = str.replace(e, newType);
+                    if (newName == "@remove") {
+                        needContinue = true;
+                        break;
+                    }
                 }
             }
 

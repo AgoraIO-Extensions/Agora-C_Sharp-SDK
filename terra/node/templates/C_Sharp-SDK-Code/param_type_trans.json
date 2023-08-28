@@ -4,7 +4,11 @@
         "ExternalVideoFrame.eglContext": "IntPtr",
         "ExternalVideoFrame.metadata_buffer": "byte[]",
         "ExternalVideoFrame.alphaBuffer": "byte[]",
-        "AudioSpectrumData.audioSpectrumData": "float[]"
+        "AudioSpectrumData.audioSpectrumData": "float[]",
+        "ThumbImageBuffer.buffer": "byte[]",
+        "RtcEngineContext.context": "UInt64",
+        "RtcEngineContext.areaCode": "AREA_CODE",
+        "Metadata.buffer": "IntPtr"
     },
     "special_method_param": {
         "IRtcEngine.getVersion.build": "ref int",
@@ -45,12 +49,17 @@
         "ExternalVideoFrame.ExternalVideoFrame.metadata_buffer": "byte[]",
         "ExternalVideoFrame.ExternalVideoFrame.alphaBuffer": "byte[]",
         "MediaRecorderConfiguration.MediaRecorderConfiguration.path": "string",
-        "RecorderInfo.RecorderInfo.name": "string"
+        "RecorderInfo.RecorderInfo.name": "string",
+        "ThumbImageBuffer.ThumbImageBuffer.buffer": "byte[]",
+        "RtcEngineContext.RtcEngineContext.context": "UInt64",
+        "RtcEngineContext.RtcEngineContext.areaCode": "AREA_CODE",
+        "Metadata.Metadata.buffer": "IntPtr"
     },
     "normal": {
         "char*": "string",
         "char const*": "string",
         "const char*": "string",
+        "const char *": "string",
         "int": "int",
         "unsigned int": "uint",
         "uid_t": "uint",
@@ -90,7 +99,10 @@
         "IAudioFrameObserver::AudioFrame*": "AudioFrame",
         "base::ExternalVideoFrame*": "ExternalVideoFrame",
         "uint8_t const*": "IntPtr",
-        "void*": "IntPtr"
+        "void*": "IntPtr",
+        "unsigned short": "ushort",
+        "uint32_t": "UInt32",
+        "agora::rtc::VideoCompositingLayout::Region const*": "Region[]"
     },
     "reg": {
         "agora::media::base::ExternalVideoFrame::*": "${-o*}",

@@ -1,12 +1,30 @@
 import { callbackify } from "util";
 import { ConfigTool } from "./ConfigTool";
 import { CppConstructor, Tool } from "./Tool";
-import { Clazz, MemberFunction, MemberVariable } from "./terra";
+import { CXXTYPE, Clazz, EnumConstant, MemberFunction, MemberVariable, Struct } from "./terra";
 
 export class SpeicalLogic {
 
-    public cSharpSDK_Obsolete(clazzName: string, info: MemberFunction): string {
+    public cSharpSDK_MethodObsolete(clazzName: string, info: MemberFunction): string {
         var lines = info.comment.split("\n");
+        for (var i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            line = line.trim();
+            if (line.includes("@deprecated")) {
+                var out = line.replace("@deprecated", "");
+                out = out.trim();
+                return `[Obsolete("${out}")]`;
+            }
+        }
+        return "";
+    }
+
+    public cSharpSDK_EnumConstantObsolete(enumzName: string, constant: EnumConstant) {
+        let comment = constant.comment;
+        if (!comment)
+            return "";
+
+        var lines = constant.comment.split("\n");
         for (var i = 0; i < lines.length; i++) {
             var line = lines[i];
             line = line.trim();
@@ -67,8 +85,27 @@ export class SpeicalLogic {
     }
 
     public cSharpSDK_IsEnumz(paramType: string): boolean {
-        if (paramType.includes('_') && paramType.toUpperCase() == paramType) {
-            return true;
+        let config = ConfigTool.getInstance();
+        for (let e of config.cxxFiles) {
+            let nodes = e.nodes;
+            for (let node of nodes) {
+                if (node.name == paramType) {
+                    return node.__TYPE == CXXTYPE.Enumz;
+                }
+            }
+        }
+        return false;
+    }
+
+    public cSharpSDK_IsClazzOrStruct(paramType: string): boolean {
+        let config = ConfigTool.getInstance();
+        for (let e of config.cxxFiles) {
+            let nodes = e.nodes;
+            for (let node of nodes) {
+                if (node.name == paramType) {
+                    return node.__TYPE == CXXTYPE.Clazz || node.__TYPE == CXXTYPE.Struct;
+                }
+            }
         }
         return false;
     }
@@ -337,4 +374,182 @@ export class SpeicalLogic {
         lines.push(`}`)
         return lines.join(`\n`);
     }
+
+    public cSharpSDK_ClazzAndStructWithOptional(clazz: Clazz | Struct): string {
+        let hadOptional = false;
+        for (let e of clazz.member_variables) {
+            if (e.type.source.includes('Optional<')) {
+                hadOptional = true;
+                break;
+            }
+        }
+        let config = ConfigTool.getInstance();
+        var lines = [];
+        if (hadOptional) {
+            lines.push(`public class ${clazz.name} : OptionalJsonParse{`);
+        }
+        else {
+            lines.push(`public class ${clazz.name}{`);
+        }
+
+        //members
+        for (let e of clazz.member_variables) {
+            if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                continue;
+
+            let transType = "";
+            if (e.type.source.includes('Optional<')) {
+                let midName = this.cSharpSDK_getMidTypeFromOptinal(e.type.source);
+                console.log("XXXXXXXXXXXXXXXXXXXXxmid name: " + midName);
+                midName = config.paramTypeTrans.transType(clazz.name, null, midName, e.name);
+                //Optional<agora::rtc::VIDEO_STREAM_TYPE> ==> Optional<VIDEO_STREAM_TYPE>
+                transType = `Optional<${midName}>`;
+            }
+            else {
+                transType = config.paramTypeTrans.transType(clazz.name, null, e.type.source, e.name);
+            }
+            let tranName = config.paramNameFormalTrans.transType(clazz.name, null, e.name);
+            if (e.type.source.includes('Optional<')) {
+                lines.push(`public ${transType} ${tranName} = new ${transType}();\n\n`);
+            }
+            else {
+                lines.push(`public ${transType} ${tranName};\n\n`);
+            }
+        }
+
+        //constructor
+        let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
+        for (let constructor of cppConstructors) {
+            if (clazz.name == "ScreenCaptureSourceInfo" && constructor.initializes.length == 7)
+                continue;
+
+
+            let constructorLines = [];
+
+            //参数列表
+            if (constructor.parameters.length > 0) {
+                let parametersLines = [];
+                for (let p of constructor.parameters) {
+                    if (clazz.name == "RtcEngineContext" && p.name == "eventHandler")
+                        continue;
+                    let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, p.type, p.name);
+                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, p.name);
+                    parametersLines.push(`${transType} ${transName}`);
+                }
+                let parametersStr = parametersLines.join(",");
+                constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+            }
+            else {
+                constructorLines.push(`public ${clazz.name}()\n{`);
+            }
+
+            //初始化构造列表
+            if (constructor.initializes.length > 0) {
+                for (let e of constructor.initializes) {
+                    if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                        continue;
+                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                    let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, null, e.name, e.value);
+                    constructorLines.push(`this.${transName} = ${transValue};`);
+                }
+            }
+            constructorLines.push("}\n");
+            lines.push(constructorLines.join('\n'));
+        }
+
+        //生成全量参数构造
+        let needFullParamCtor = true;
+        for (let e of cppConstructors) {
+            if (e.parameters.length == clazz.member_variables.length) {
+                needFullParamCtor = false;
+                break;
+            }
+        }
+        if (needFullParamCtor) {
+            let constructorLines = [];
+            let parametersLines = [];
+            for (let e of clazz.member_variables) {
+                if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                    continue;
+                let transType = "";
+                if (e.type.source.includes('Optional<')) {
+                    let midName = this.cSharpSDK_getMidTypeFromOptinal(e.type.source);
+                    midName = config.paramTypeTrans.transType(clazz.name, clazz.name, midName, e.name);
+                    //Optional<agora::rtc::VIDEO_STREAM_TYPE> ==> Optional<VIDEO_STREAM_TYPE>
+                    transType = `Optional<${midName}>`;
+                }
+                else {
+                    transType = config.paramTypeTrans.transType(clazz.name, clazz.name, e.type.source, e.name);
+                }
+                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                parametersLines.push(`${transType} ${transName}`);
+            }
+            let parametersStr = parametersLines.join(",");
+            constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+            for (let e of clazz.member_variables) {
+                if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                    continue;
+                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                constructorLines.push(`this.${transName} = ${transName};`);
+            }
+            constructorLines.push(`}`);
+            lines.push(constructorLines.join('\n'));
+        }
+
+        //ToJson
+        if (hadOptional) {
+            lines.push(`\npublic override void ToJson(JsonWriter writer){`);
+            lines.push(`writer.WriteObjectStart();\n`);
+
+            for (let e of clazz.member_variables) {
+                if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                    continue;
+                let transType = config.paramTypeTrans.transType(clazz.name, null, e.type.source, e.name);
+                let transName = config.paramNameFormalTrans.transType(clazz.name, null, e.name);
+
+                if (transType.includes('Optional<')) {
+                    let midName = this.cSharpSDK_getMidTypeFromOptinal(transType);
+                    midName = config.paramTypeTrans.transType(clazz.name, null, midName, e.name);
+                    //Optional<agora::rtc::VIDEO_STREAM_TYPE> ==> Optional<VIDEO_STREAM_TYPE>
+                    transType = `Optional<${midName}>`;
+                    lines.push(`if (this.${transName}.HasValue()){`);
+                    lines.push(`writer.WritePropertyName("${transName}");`)
+                    if (this.cSharpSDK_IsEnumz(this.cSharpSDK_getMidTypeFromOptinal(transType))) {
+                        lines.push(`this.WriteEnum(writer, this.${transName}.GetValue());`)
+                    }
+                    else {
+                        lines.push(`writer.Write(this.${transName}.GetValue());`)
+                    }
+                    lines.push(`}\n`);
+                }
+                else if (this.cSharpSDK_IsClazzOrStruct(transType)) {
+                    //是class或者struct
+                    lines.push(`writer.WritePropertyName("${transName}");`);
+                    lines.push(`JsonMapper.WriteValue(this.${transName}, writer, false, 0);\n`);
+                }
+                else {
+                    //是普通变量
+                    lines.push(`writer.WritePropertyName("${transName}");`)
+                    if (this.cSharpSDK_IsEnumz(transType)) {
+                        lines.push(`this.WriteEnum(writer, this.${transName});\n`)
+                    }
+                    else {
+                        lines.push(`writer.Write(this.${transName});\n`)
+                    }
+                }
+            }
+
+            lines.push(`writer.WriteObjectEnd();`);
+            lines.push(`}`)
+        }
+
+        lines.push(`}`);
+        return lines.join('\n');
+    }
+
+    public cSharpSDK_getMidTypeFromOptinal(OptionalName: string) {
+        return OptionalName.substring(OptionalName.indexOf('<') + 1, OptionalName.length - 1);
+    }
+
+
 }

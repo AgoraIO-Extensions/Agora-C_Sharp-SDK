@@ -15,7 +15,27 @@
         "RecorderInfo.RecorderInfo.fileName:NULL": "\"\"",
         "AudioFrame.AudioFrame.buffer:NULL": "IntPtr.Zero",
         "VideoFrame.VideoFrame.metadata_buffer:NULL": "IntPtr.Zero",
-        "VideoFrame.VideoFrame.sharedContext:0": "IntPtr.Zero"
+        "VideoFrame.VideoFrame.sharedContext:0": "IntPtr.Zero",
+        "VideoCompositingLayout.VideoCompositingLayout.backgroundColor:NULL": "\"\"",
+        "VideoCompositingLayout.VideoCompositingLayout.appData:NULL": "\"\"",
+        "VideoCompositingLayout.VideoCompositingLayout.regions:NULL": "new Region[0]",
+        "PublisherConfiguration.PublisherConfiguration.lifecycle:RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL": "(int)RTMP_STREAM_LIFE_CYCLE_TYPE.RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL",
+        "PublisherConfiguration.PublisherConfiguration.injectStreamUrl:NULL": "\"\"",
+        "PublisherConfiguration.PublisherConfiguration.publishUrl:NULL": "\"\"",
+        "PublisherConfiguration.PublisherConfiguration.rawStreamUrl:NULL": "\"\"",
+        "PublisherConfiguration.PublisherConfiguration.extraInfo:NULL": "\"\"",
+        "ThumbImageBuffer.ThumbImageBuffer.buffer:nullptr": "new byte[0]",
+        "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.sourceId:nullptr": "0",
+        "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.sourceName:nullptr": "\"\"",
+        "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.processPath:nullptr": "\"\"",
+        "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.sourceTitle:nullptr": "\"\"",
+        "ScreenCaptureSourceInfo.ScreenCaptureSourceInfo.sourceDisplayId:(view_t)-2": "-2",
+        "ImageTrackOptions.ImageTrackOptions.imageUrl:NULL": "\"\"",
+        "RtcEngineContext.RtcEngineContext.appId:NULL": "\"\"",
+        "RtcEngineContext.RtcEngineContext.context:NULL": "0",
+        "RtcEngineContext.RtcEngineContext.license:NULL": "\"\"",
+        "RtcEngineContext.RtcEngineContext.logConfig:": "new LogConfig()",
+        "ExtensionInfo.ExtensionInfo.channelId:NULL": "\"\""
     },
     "normal": {
         "agora::media::PRIMARY_CAMERA_SOURCE": "MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE",
@@ -28,7 +48,14 @@
         "rtc::RAW_AUDIO_FRAME_OP_MODE_READ_ONLY": "RAW_AUDIO_FRAME_OP_MODE_TYPE.RAW_AUDIO_FRAME_OP_MODE_READ_ONLY",
         "FORMAT_MP4": "MediaRecorderContainerFormat.FORMAT_MP4",
         "STREAM_TYPE_BOTH": "MediaRecorderStreamType.STREAM_TYPE_BOTH",
-        "FRAME_TYPE_PCM16": "AUDIO_FRAME_TYPE.FRAME_TYPE_PCM16"
+        "FRAME_TYPE_PCM16": "AUDIO_FRAME_TYPE.FRAME_TYPE_PCM16",
+        "media::base::RENDER_MODE_HIDDEN": "RENDER_MODE_TYPE.RENDER_MODE_HIDDEN",
+        "AUDIO_SAMPLE_RATE_48000": "AUDIO_SAMPLE_RATE_TYPE.AUDIO_SAMPLE_RATE_48000",
+        "ScreenCaptureSourceType_Unknown": "ScreenCaptureSourceType.ScreenCaptureSourceType_Unknown",
+        "VIDEO_MIRROR_MODE_DISABLED": "VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED",
+        "CHANNEL_PROFILE_LIVE_BROADCASTING": "CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING",
+        "AUDIO_SCENARIO_DEFAULT": "AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT",
+        "AREA_CODE_GLOB": "AREA_CODE.AREA_CODE_GLOB"
     },
     "reg": {}
 }

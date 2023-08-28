@@ -7,9 +7,9 @@ ${-oMETHOD_NAME}
 ${-oMETHOD_RETURN_TYPE}
 
 //制定特殊函数
-${SPECIAL_METHOD_LOGIC:cSharpSDK_Obsolete}
+${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}
 //制定特殊的成员
-${SPECIAL_MEMBER_LOGIC:cSharpSDK_Obsolete}
+${SPECIAL_MEMBER_LOGIC:cSharpSDK_MethodObsolete}
 
 //参数Join的制定格式
 ${METHOD_PARAM_JOIN:xxxxx.txt}

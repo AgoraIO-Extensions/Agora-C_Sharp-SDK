@@ -338,7 +338,7 @@ namespace Agora.Rtc
 
     public class PacketOptions
     {
-        public uint32_t timestamp;
+        public UInt32 timestamp;
 
         public uint8_t audioLevelIndication;
 
@@ -348,7 +348,7 @@ namespace Agora.Rtc
             this.audioLevelIndication = 127;
         }
 
-        public PacketOptions(uint32_t timestamp, uint8_t audioLevelIndication)
+        public PacketOptions(UInt32 timestamp, uint8_t audioLevelIndication)
         {
             this.timestamp = timestamp;
             this.audioLevelIndication = audioLevelIndication;
