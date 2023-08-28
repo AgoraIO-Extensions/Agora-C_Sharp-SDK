@@ -8,7 +8,19 @@
         "ThumbImageBuffer.buffer": "byte[]",
         "RtcEngineContext.context": "UInt64",
         "RtcEngineContext.areaCode": "AREA_CODE",
-        "Metadata.buffer": "IntPtr"
+        "Metadata.buffer": "IntPtr",
+        "LiveTranscoding.transcodingUsers": "TranscodingUser[]",
+        "LiveTranscoding.watermark": "RtcImage[]",
+        "LiveTranscoding.backgroundImage": "RtcImage[]",
+        "LiveTranscoding.advancedFeatures": "LiveStreamAdvancedFeature[]",
+        "LocalTranscoderConfiguration.videoInputStreams": "TranscodingVideoStream[]",
+        "ScreenCaptureParameters.excludeWindowList": "view_t[]",
+        "ChannelMediaRelayConfiguration.srcInfo": "ChannelMediaInfo[]",
+        "ChannelMediaRelayConfiguration.destInfos": "ChannelMediaInfo[]",
+        "DownlinkNetworkInfo.peer_downlink_info": "PeerDownlinkInfo[]",
+        "EncryptionConfig.encryptionKdfSalt": "byte[]",
+        "LocalAccessPointConfiguration.ipList": "string[]",
+        "LocalAccessPointConfiguration.domainList": "string[]"
     },
     "special_method_param": {
         "IRtcEngine.getVersion.build": "ref int",
@@ -53,7 +65,20 @@
         "ThumbImageBuffer.ThumbImageBuffer.buffer": "byte[]",
         "RtcEngineContext.RtcEngineContext.context": "UInt64",
         "RtcEngineContext.RtcEngineContext.areaCode": "AREA_CODE",
-        "Metadata.Metadata.buffer": "IntPtr"
+        "Metadata.Metadata.buffer": "IntPtr",
+        "LiveTranscoding.LiveTranscoding.transcodingUsers": "TranscodingUser[]",
+        "LiveTranscoding.LiveTranscoding.watermark": "RtcImage[]",
+        "LiveTranscoding.LiveTranscoding.backgroundImage": "RtcImage[]",
+        "LiveTranscoding.LiveTranscoding.advancedFeatures": "LiveStreamAdvancedFeature[]",
+        "LocalTranscoderConfiguration.LocalTranscoderConfiguration.videoInputStreams": "TranscodingVideoStream[]",
+        "ScreenCaptureParameters.ScreenCaptureParameters.ex": "view_t[]",
+        "ScreenCaptureParameters.ScreenCaptureParameters.excludeWindowList": "view_t[]",
+        "ChannelMediaRelayConfiguration.ChannelMediaRelayConfiguration.srcInfo": "ChannelMediaInfo[]",
+        "ChannelMediaRelayConfiguration.ChannelMediaRelayConfiguration.destInfos": "ChannelMediaInfo[]",
+        "DownlinkNetworkInfo.DownlinkNetworkInfo.peer_downlink_info": "PeerDownlinkInfo[]",
+        "EncryptionConfig.EncryptionConfig.encryptionKdfSalt": "byte[]",
+        "LocalAccessPointConfiguration.LocalAccessPointConfiguration.ipList": "string[]",
+        "LocalAccessPointConfiguration.LocalAccessPointConfiguration.domainList": "string[]"
     },
     "normal": {
         "char*": "string",
@@ -61,6 +86,7 @@
         "const char*": "string",
         "const char *": "string",
         "int": "int",
+        "const int": "int",
         "unsigned int": "uint",
         "uid_t": "uint",
         "agora::rtc::uid_t": "uint",
@@ -102,9 +128,16 @@
         "void*": "IntPtr",
         "unsigned short": "ushort",
         "uint32_t": "UInt32",
-        "agora::rtc::VideoCompositingLayout::Region const*": "Region[]"
+        "agora::rtc::VideoCompositingLayout::Region const*": "Region[]",
+        "util::AString": "string",
+        "int16_t": "short"
     },
     "reg": {
+        "agora::rtc::SegmentationProperty::*": "${-o*}",
+        "agora::rtc::VirtualBackgroundSource::*": "${-o*}",
+        "agora::rtc::VideoDenoiserOptions::*": "${-o*}",
+        "agora::rtc::BeautyOptions::*": "${-o*}",
+        "agora::rtc::LowlightEnhanceOptions::*": "${-o*}",
         "agora::media::base::ExternalVideoFrame::*": "${-o*}",
         "agora::media::IAudioFrameObserverBase::*": "${-o*}",
         "agora::rtc::* const&": "${-o*}",

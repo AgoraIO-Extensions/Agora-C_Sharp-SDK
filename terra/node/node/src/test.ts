@@ -18,6 +18,5 @@ new ParseEngine(
     "#endregion terra"
 );
 
-console.log("++++++++++++++++");
-
-// Tool.getCppConstructor("MediaRecorderConfiguration", "/Users/xiayangqun/Documents/agoraSpace/iris-ast/agora_rtc_ast/tmp/AgoraMediaBase.h")
+var data = Tool.getCppConstructor("VideoEncoderConfiguration", "/Users/xiayangqun/Documents/agoraSpace/iris-ast/agora_rtc_ast/tmp/AgoraBase.h")
+console.log(JSON.stringify(data));

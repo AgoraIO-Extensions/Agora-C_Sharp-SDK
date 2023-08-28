@@ -3,7 +3,8 @@
     "special_method_param": {},
     "normal": {
         "params": "@params",
-        "event": "@event"
+        "event": "@event",
+        "is": "@is"
     },
     "reg": {}
 }

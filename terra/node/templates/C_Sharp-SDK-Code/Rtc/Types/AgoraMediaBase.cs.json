@@ -30,14 +30,11 @@
     "common_class_struct_template": {
         "type": "ClazzStruct",
         "name": "",
-        "headTailTemple": "common_class_head_tail",
-        "includeMethods": [],
-        "memberSplitSymbol": "\n\n",
-        "commonMemberTemplate": "common_class_member_template"
+        "headTailTemple": "common_class_head_tail"
     },
     "common_class_head_tail": {
-        "head": "public class ${-oCLAZZ_STRUCT_NAME}{",
-        "tail": "\n\n${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_ClazzStructConstructor}\n}"
+        "head": "${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_ClazzAndStructWithOptional}",
+        "tail": "\n"
     },
     "common_class_member_template": "public ${-oMEMBER_TYPE} ${-oMEMBER_NAME};",
     "flags_commmon_enum_template": {

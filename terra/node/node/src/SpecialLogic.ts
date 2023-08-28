@@ -1,7 +1,7 @@
 import { callbackify } from "util";
 import { ConfigTool } from "./ConfigTool";
 import { CppConstructor, Tool } from "./Tool";
-import { CXXTYPE, Clazz, EnumConstant, MemberFunction, MemberVariable, Struct } from "./terra";
+import { CXXTYPE, Clazz, EnumConstant, Enumz, MemberFunction, MemberVariable, Struct } from "./terra";
 
 export class SpeicalLogic {
 
@@ -257,7 +257,14 @@ export class SpeicalLogic {
                 for (let p of constructor.parameters) {
                     let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, p.type, p.name);
                     let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, p.name);
-                    parametersLines.push(`${transType} ${transName}`);
+                    let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, p.type, p.name, p.value == null ? "" : p.value);
+                    console.log("xxxxxxxxxxxxxxx " + p.value + " " + transValue);
+                    if (transValue == null || transValue == "@remove") {
+                        parametersLines.push(`${transType} ${transName}`);
+                    }
+                    else {
+                        parametersLines.push(`${transType} ${transName} = ${transValue}`);
+                    }
                 }
                 let parametersStr = parametersLines.join(",");
                 constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
@@ -400,7 +407,6 @@ export class SpeicalLogic {
             let transType = "";
             if (e.type.source.includes('Optional<')) {
                 let midName = this.cSharpSDK_getMidTypeFromOptinal(e.type.source);
-                console.log("XXXXXXXXXXXXXXXXXXXXxmid name: " + midName);
                 midName = config.paramTypeTrans.transType(clazz.name, null, midName, e.name);
                 //Optional<agora::rtc::VIDEO_STREAM_TYPE> ==> Optional<VIDEO_STREAM_TYPE>
                 transType = `Optional<${midName}>`;
@@ -418,82 +424,103 @@ export class SpeicalLogic {
         }
 
         //constructor
-        let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
-        for (let constructor of cppConstructors) {
-            if (clazz.name == "ScreenCaptureSourceInfo" && constructor.initializes.length == 7)
-                continue;
+        if (clazz.name != "UserAudioSpectrumInfo") {
+
+            let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
+            for (let constructor of cppConstructors) {
+                if (clazz.name == "ScreenCaptureSourceInfo" && constructor.initializes.length == 7)
+                    continue;
 
 
-            let constructorLines = [];
+                let constructorLines = [];
 
-            //参数列表
-            if (constructor.parameters.length > 0) {
+                //参数列表
+                if (constructor.parameters.length > 0) {
+                    let parametersLines = [];
+                    for (let p of constructor.parameters) {
+                        if (clazz.name == "RtcEngineContext" && p.name == "eventHandler")
+                            continue;
+                        let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, p.type, p.name);
+                        let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, p.name);
+                        let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, p.type, p.name, p.value);
+                        console.log("constructor.parameters " + p.value + " " + transValue);
+                        if (transValue == null || transValue == "@remove") {
+                            parametersLines.push(`${transType} ${transName}`);
+                        }
+                        else {
+                            parametersLines.push(`${transType} ${transName} = ${transValue}`);
+                        }
+                    }
+                    let parametersStr = parametersLines.join(",");
+                    constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+                }
+                else {
+                    constructorLines.push(`public ${clazz.name}()\n{`);
+                }
+
+                //初始化构造列表
+                if (constructor.initializes.length > 0) {
+                    for (let e of constructor.initializes) {
+                        if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                            continue;
+                        let transType = this.cSharpSDK_FindType(e.name, clazz);
+                        let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+                        let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, null, e.name, e.value);
+                        if (transValue.includes(",") == false || transType == '' || transValue != e.value) {
+                            constructorLines.push(`this.${transName} = ${this.cSharpSDK_AddEnumzPrefixIfIsIsEnumz(transValue)};`);
+                        }
+                        else {
+                            let params = transValue.split(",");
+                            let transParams = [];
+                            for (let p of params) {
+                                transParams.push(this.cSharpSDK_AddEnumzPrefixIfIsIsEnumz(p.trim()));
+                            }
+                            constructorLines.push(`this.${transName} = new ${transType}(${transParams.join(",")});`)
+                        }
+                    }
+                }
+                constructorLines.push("}\n");
+                lines.push(constructorLines.join('\n'));
+            }
+
+            //生成全量参数构造
+            let needFullParamCtor = true;
+            for (let e of cppConstructors) {
+                if (e.parameters.length == clazz.member_variables.length) {
+                    needFullParamCtor = false;
+                    break;
+                }
+            }
+            if (needFullParamCtor) {
+                let constructorLines = [];
                 let parametersLines = [];
-                for (let p of constructor.parameters) {
-                    if (clazz.name == "RtcEngineContext" && p.name == "eventHandler")
+                for (let e of clazz.member_variables) {
+                    if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                         continue;
-                    let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, p.type, p.name);
-                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, p.name);
+                    let transType = "";
+                    if (e.type.source.includes('Optional<')) {
+                        let midName = this.cSharpSDK_getMidTypeFromOptinal(e.type.source);
+                        midName = config.paramTypeTrans.transType(clazz.name, clazz.name, midName, e.name);
+                        //Optional<agora::rtc::VIDEO_STREAM_TYPE> ==> Optional<VIDEO_STREAM_TYPE>
+                        transType = `Optional<${midName}>`;
+                    }
+                    else {
+                        transType = config.paramTypeTrans.transType(clazz.name, clazz.name, e.type.source, e.name);
+                    }
+                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
                     parametersLines.push(`${transType} ${transName}`);
                 }
                 let parametersStr = parametersLines.join(",");
                 constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
-            }
-            else {
-                constructorLines.push(`public ${clazz.name}()\n{`);
-            }
-
-            //初始化构造列表
-            if (constructor.initializes.length > 0) {
-                for (let e of constructor.initializes) {
+                for (let e of clazz.member_variables) {
                     if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                         continue;
                     let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
-                    let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, null, e.name, e.value);
-                    constructorLines.push(`this.${transName} = ${transValue};`);
+                    constructorLines.push(`this.${transName} = ${transName};`);
                 }
+                constructorLines.push(`}`);
+                lines.push(constructorLines.join('\n'));
             }
-            constructorLines.push("}\n");
-            lines.push(constructorLines.join('\n'));
-        }
-
-        //生成全量参数构造
-        let needFullParamCtor = true;
-        for (let e of cppConstructors) {
-            if (e.parameters.length == clazz.member_variables.length) {
-                needFullParamCtor = false;
-                break;
-            }
-        }
-        if (needFullParamCtor) {
-            let constructorLines = [];
-            let parametersLines = [];
-            for (let e of clazz.member_variables) {
-                if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
-                    continue;
-                let transType = "";
-                if (e.type.source.includes('Optional<')) {
-                    let midName = this.cSharpSDK_getMidTypeFromOptinal(e.type.source);
-                    midName = config.paramTypeTrans.transType(clazz.name, clazz.name, midName, e.name);
-                    //Optional<agora::rtc::VIDEO_STREAM_TYPE> ==> Optional<VIDEO_STREAM_TYPE>
-                    transType = `Optional<${midName}>`;
-                }
-                else {
-                    transType = config.paramTypeTrans.transType(clazz.name, clazz.name, e.type.source, e.name);
-                }
-                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
-                parametersLines.push(`${transType} ${transName}`);
-            }
-            let parametersStr = parametersLines.join(",");
-            constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
-            for (let e of clazz.member_variables) {
-                if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
-                    continue;
-                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
-                constructorLines.push(`this.${transName} = ${transName};`);
-            }
-            constructorLines.push(`}`);
-            lines.push(constructorLines.join('\n'));
         }
 
         //ToJson
@@ -545,6 +572,37 @@ export class SpeicalLogic {
 
         lines.push(`}`);
         return lines.join('\n');
+    }
+
+    public cSharpSDK_FindType(name, clazz: Clazz | Struct): string {
+        let config = ConfigTool.getInstance();
+        for (let e of clazz.member_variables) {
+            let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, e.type.source, e.name);
+            let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+            if (transName == name) {
+                return transType;
+            }
+        }
+        return "";
+    }
+
+    public cSharpSDK_AddEnumzPrefixIfIsIsEnumz(name: string): string {
+        let config: ConfigTool = ConfigTool.getInstance();
+        for (let c of config.cxxFiles) {
+            let nodes = c.nodes;
+            for (let node of nodes) {
+                if (node.__TYPE == CXXTYPE.Enumz) {
+                    let enumz: Enumz = node as Enumz;
+                    for (let e of enumz.enum_constants) {
+                        if (e.name == name) {
+                            return `${enumz.name}.${name}`;
+                        }
+                    }
+
+                }
+            }
+        }
+        return name;
     }
 
     public cSharpSDK_getMidTypeFromOptinal(OptionalName: string) {

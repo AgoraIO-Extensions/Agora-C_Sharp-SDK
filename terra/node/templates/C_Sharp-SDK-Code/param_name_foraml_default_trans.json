@@ -35,7 +35,32 @@
         "RtcEngineContext.RtcEngineContext.context:NULL": "0",
         "RtcEngineContext.RtcEngineContext.license:NULL": "\"\"",
         "RtcEngineContext.RtcEngineContext.logConfig:": "new LogConfig()",
-        "ExtensionInfo.ExtensionInfo.channelId:NULL": "\"\""
+        "ExtensionInfo.ExtensionInfo.channelId:NULL": "\"\"",
+        "VideoEncoderConfiguration.VideoEncoderConfiguration.minBitrate:DEFAULT_MIN_BITRATE": "(int)BITRATE.DEFAULT_MIN_BITRATE",
+        "VideoEncoderConfiguration.VideoEncoderConfiguration.dimensions:FRAME_WIDTH_960,FRAME_HEIGHT_540": "new VideoDimensions((int)FRAME_WIDTH.FRAME_WIDTH_960, (int)FRAME_HEIGHT.FRAME_HEIGHT_540)",
+        "VideoEncoderConfiguration.VideoEncoderConfiguration.frameRate:FRAME_RATE_FPS_15": "(int)FRAME_RATE.FRAME_RATE_FPS_15",
+        "VideoEncoderConfiguration.VideoEncoderConfiguration.bitrate:STANDARD_BITRATE": "(int)BITRATE.STANDARD_BITRATE",
+        "VideoFormat.VideoFormat.width:FRAME_WIDTH_960": "(int)FRAME_WIDTH.FRAME_WIDTH_960",
+        "VideoFormat.VideoFormat.height:FRAME_HEIGHT_540": "(int)FRAME_HEIGHT.FRAME_HEIGHT_540",
+        "VideoFormat.VideoFormat.fps:FRAME_RATE_FPS_15": "(int)FRAME_RATE.FRAME_RATE_FPS_15",
+        "LiveTranscoding.LiveTranscoding.transcodingUsers:NULL": "new TranscodingUser[0]",
+        "LiveTranscoding.LiveTranscoding.watermark:NULL": "new RtcImage[0]",
+        "LiveTranscoding.LiveTranscoding.backgroundImage:NULL": "new RtcImage[0]",
+        "LiveTranscoding.LiveTranscoding.advancedFeatures:NULL": "new LiveStreamAdvancedFeature[0]",
+        "LocalTranscoderConfiguration.LocalTranscoderConfiguration.videoInputStreams:NULL": "new TranscodingVideoStream[0]",
+        "LocalTranscoderConfiguration.LocalTranscoderConfiguration.videoOutputConfiguration:": "new VideoEncoderConfiguration()",
+        "VideoCanvas.VideoCanvas.view:NULL": "0",
+        "VideoCanvas.VideoCanvas.mediaPlayerId:-ERR_NOT_READY": "-(int)ERROR_CODE_TYPE.ERR_NOT_READY",
+        "ScreenCaptureParameters.ScreenCaptureParameters.bitrate:STANDARD_BITRATE": "(int)BITRATE.STANDARD_BITRATE",
+        "ScreenCaptureParameters.ScreenCaptureParameters.excludeWindowList:OPTIONAL_NULLPTR": "new view_t[0]",
+        "ChannelMediaRelayConfiguration.ChannelMediaRelayConfiguration.srcInfo:NULL": "new ChannelMediaInfo[0]",
+        "ChannelMediaRelayConfiguration.ChannelMediaRelayConfiguration.destInfos:NULL": "new ChannelMediaInfo[0]",
+        "DownlinkNetworkInfo.DownlinkNetworkInfo.peer_downlink_info:OPTIONAL_NULLPTR": "new PeerDownlinkInfo[0]",
+        "PeerDownlinkInfo.PeerDownlinkInfo.uid:OPTIONAL_NULLPTR": "0",
+        "EchoTestConfiguration.EchoTestConfiguration.intervalInSeconds:is": "@is",
+        "EchoTestConfiguration.EchoTestConfiguration.view:OPTIONAL_NULLPTR": "0",
+        "LocalAccessPointConfiguration.LocalAccessPointConfiguration.ipList:NULL": "new string[0]",
+        "LocalAccessPointConfiguration.LocalAccessPointConfiguration.domainList:NULL": "new string[0]"
     },
     "normal": {
         "agora::media::PRIMARY_CAMERA_SOURCE": "MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE",
@@ -55,7 +80,17 @@
         "VIDEO_MIRROR_MODE_DISABLED": "VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_DISABLED",
         "CHANNEL_PROFILE_LIVE_BROADCASTING": "CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_LIVE_BROADCASTING",
         "AUDIO_SCENARIO_DEFAULT": "AUDIO_SCENARIO_TYPE.AUDIO_SCENARIO_DEFAULT",
-        "AREA_CODE_GLOB": "AREA_CODE.AREA_CODE_GLOB"
+        "AREA_CODE_GLOB": "AREA_CODE.AREA_CODE_GLOB",
+        "0.0": "0.0f",
+        "NULL": "\"\"",
+        "0.5": "0.5f",
+        "OPTIONAL_NULLPTR": "\"\"",
+        "__null": "\"\""
     },
-    "reg": {}
+    "reg": {
+        "agora::media::base::*": "${-o*}",
+        "rtc::*": "${-o*}",
+        "media::base::*": "${-o*}",
+        "agora::media::*": "${-o*}"
+    }
 }

@@ -1,22 +1,33 @@
 {
-    "IAgoraRtcEngine.h": {
+    "AgoraBase.h": {
         "type": "File",
-        "name": "IAgoraRtcEngine.h",
+        "name": "AgoraBase.h",
         "commonClassStructTemplate": "common_class_struct_template",
         "specialClassStructTemplate": {},
         "excludeClassStruct": [
-            "IScreenCaptureSourceList",
-            "IRtcEngineEventHandler",
-            "IVideoDeviceCollection",
-            "IVideoDeviceManager",
-            "IMetadataObserver",
-            "IDirectCdnStreamingEventHandler",
-            "IRtcEngine",
-            "AAudioDeviceManager",
-            "AVideoDeviceManager"
+            "AutoPtr",
+            "CopyableAutoPtr",
+            "IString",
+            "IIterator",
+            "IContainer",
+            "AOutputIterator",
+            "AList",
+            "UserInfo",
+            "IPacketObserver",
+            "Packet",
+            "DownlinkNetworkInfo",
+            "EncryptionConfig",
+            "IEngineBase",
+            "AParameter",
+            "LicenseCallback",
+            "DeviceInfo",
+            "IAudioEncodedFrameObserver"
         ],
         "commmonEnumTemplate": "commmon_enum_template",
-        "specialEnumTemplate": {},
+        "specialEnumTemplate": {
+            "AREA_CODE": "uint_commmon_enum_template",
+            "AREA_CODE_EX": "uint_commmon_enum_template"
+        },
         "excludeEnum": [
             ""
         ],
@@ -46,12 +57,23 @@
         "FieldSplitSymbol": "\n\n",
         "commonFieldTemple": "common_enum_member_template"
     },
+    "uint_commmon_enum_template": {
+        "type": "Enum",
+        "name": "",
+        "headTailTemple": "uint_common_enum_head_tail",
+        "FieldSplitSymbol": "\n\n",
+        "commonFieldTemple": "common_enum_member_template"
+    },
     "common_enum_head_tail": {
         "head": "public enum ${-oENUMZ_NAME}{",
         "tail": "}"
     },
     "flags_common_enum_head_tail": {
         "head": "[Flags]\npublic enum ${-oENUMZ_NAME}{",
+        "tail": "}"
+    },
+    "uint_common_enum_head_tail": {
+        "head": "public enum ${-oENUMZ_NAME}:uint{",
         "tail": "}"
     },
     "common_enum_member_template": "${SPECIAL_ENUMCONSTANT_LOGIC:cSharpSDK_EnumConstantObsolete}${-oENUMZ_FIELD_NAME} ${-eENUMZ_FIELD_VALUE},",

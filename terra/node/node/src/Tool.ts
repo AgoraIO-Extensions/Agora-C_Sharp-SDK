@@ -6,7 +6,7 @@ import { normalize } from "path";
 
 export interface CppConstructor {
     //参数列表
-    parameters: { type: string, name: string }[];
+    parameters: { type: string, name: string, value: string }[];
     //初始化列表
     initializes: { name: string, value: string }[];
     //body内部复制
@@ -21,10 +21,7 @@ export class Tool {
         let array = context.match(reg);
         if (array) {
             for (let e of array) {
-                console.log(e);
-
                 let cppConstructor: CppConstructor = { parameters: [], initializes: [], bodys: [] };
-
                 //解析参数列表
                 let firstPos = e.indexOf("(");
                 let endPos = e.indexOf(")");
@@ -34,6 +31,14 @@ export class Tool {
                     let eachParameter = parametersStr.split(",");
                     for (let each of eachParameter) {
                         let eachTrim = each.trim();
+                        //has default value
+                        let value = null;
+                        if (eachTrim.indexOf("=") != -1) {
+                            value = eachTrim.substring(eachTrim.indexOf("=") + 1);
+                            value = value.trim();
+                            eachTrim = eachTrim.substring(0, eachTrim.indexOf("=") - 1);
+                        }
+
                         let length = eachTrim.length;
                         let endPos = 0;
                         for (let i = length - 1; i >= 0; i--) {
@@ -46,7 +51,7 @@ export class Tool {
                         }
                         let type = eachTrim.substring(0, endPos + 1).trim();
                         let name = eachTrim.substring(endPos + 1, length).trim();
-                        cppConstructor.parameters.push({ type, name });
+                        cppConstructor.parameters.push({ type, name, value });
                     }
                 }
 
@@ -54,9 +59,15 @@ export class Tool {
                 let initializePos = e.indexOf(":", e.indexOf(")"));
                 if (initializePos != -1) {
                     let initializeStr = e.substring(initializePos + 1, e.indexOf("{"));
-                    let eachInitialize = initializeStr.split(",");
-                    for (let each of eachInitialize) {
+                    initializeStr = initializeStr.replace(/\ +/g, "");
+                    initializeStr = initializeStr.replace(/[\r\n]/g, "");
+                    let eachInitialize = initializeStr.split("),")
+                    for (let i = 0; i < eachInitialize.length; i++) {
+                        let each = eachInitialize[i];
                         let eachTrim = each.trim();
+                        if (i != eachInitialize.length - 1) {
+                            eachTrim = eachTrim + ")";
+                        }
                         let length = eachTrim.length;
                         let leftPos = eachTrim.indexOf("(");
                         let name = eachTrim.substring(0, leftPos).trim();
@@ -66,9 +77,6 @@ export class Tool {
                 }
 
                 //todo body有点沙雕。暂时不处理了
-                console.log("cppConstructor");
-                console.log(JSON.stringify(cppConstructor));
-                console.log("+++++++++++\n")
                 cppConstructors.push(cppConstructor);
             }
         }

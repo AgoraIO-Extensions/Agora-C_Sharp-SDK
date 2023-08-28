@@ -137,5 +137,5 @@ namespace Agora.Rtc
 
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
     }
-    
+
 }

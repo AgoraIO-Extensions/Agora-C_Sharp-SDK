@@ -40,20 +40,21 @@ export class ParamDefaultTrans {
                 }
             }
 
-            //是否匹配了普通
             if (this._normalMap[defaultValue]) {
                 retval = this._normalMap[defaultValue];
                 break;
             }
 
             //匹配正则
-            for (let key in this._regMap) {
-                let inputTemplate: string = key as string;
-                let outputTemplate: string = this._regMap[key];
-                let out = this._matchReg(inputTemplate, defaultValue, outputTemplate);
-                if (out) {
-                    retval = out;
-                    break;
+            if (defaultValue != null) {
+                for (let key in this._regMap) {
+                    let inputTemplate: string = key as string;
+                    let outputTemplate: string = this._regMap[key];
+                    let out = this._matchReg(inputTemplate, defaultValue, outputTemplate);
+                    if (out) {
+                        retval = out;
+                        break;
+                    }
                 }
             }
         } while (false);
@@ -61,7 +62,7 @@ export class ParamDefaultTrans {
         return retval;
     }
 
-    private _matchReg(inputTemplate: string, cxxTypeSource: string, outputTemplate: string): string {
+    private _matchReg(inputTemplate: string, defaultValue: string, outputTemplate: string): string {
         let starPos = inputTemplate.indexOf("*");
         if (starPos == -1) {
             console.error("_matchReg error invalid inputTemplate: " + inputTemplate);
@@ -76,19 +77,19 @@ export class ParamDefaultTrans {
 
         let findStr: string = null;
 
-        if (splitArray[0] == "" && inputTemplate.endsWith(splitArray[1]) && cxxTypeSource.endsWith(splitArray[1])) {
+        if (splitArray[0] == "" && inputTemplate.endsWith(splitArray[1]) && defaultValue.endsWith(splitArray[1])) {
             //类型于 *xxxxyy
-            let suffixPos = cxxTypeSource.indexOf(splitArray[1]);
-            findStr = cxxTypeSource.substring(0, suffixPos);
+            let suffixPos = defaultValue.indexOf(splitArray[1]);
+            findStr = defaultValue.substring(0, suffixPos);
         }
-        else if (splitArray[1] == "" && inputTemplate.startsWith(splitArray[0]) && cxxTypeSource.startsWith(splitArray[0])) {
+        else if (splitArray[1] == "" && inputTemplate.startsWith(splitArray[0]) && defaultValue.startsWith(splitArray[0])) {
             //类似于 xxyyy*
-            findStr = cxxTypeSource.substring(splitArray[0].length, cxxTypeSource.length);
+            findStr = defaultValue.substring(splitArray[0].length, defaultValue.length);
         }
         //类型于 xxx*yyy
-        else if (cxxTypeSource.startsWith(splitArray[0]) && cxxTypeSource.endsWith(splitArray[1])) {
-            let suffixPos = cxxTypeSource.indexOf(splitArray[1]);
-            findStr = cxxTypeSource.substring(splitArray[0].length, suffixPos);
+        else if (defaultValue.startsWith(splitArray[0]) && defaultValue.endsWith(splitArray[1])) {
+            let suffixPos = defaultValue.indexOf(splitArray[1]);
+            findStr = defaultValue.substring(splitArray[0].length, suffixPos);
         }
 
 
