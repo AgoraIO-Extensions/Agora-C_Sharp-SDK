@@ -369,7 +369,7 @@ namespace Agora.Rtc
             return nRet;
         }
 
-        public int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_OBSERVER_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_MODULE_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             // you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
             // because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
@@ -388,7 +388,7 @@ namespace Agora.Rtc
             return nRet;
         }
 
-        private int SetIrisVideoFrameObserver(VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_OBSERVER_POSITION position)
+        private int SetIrisVideoFrameObserver(VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_MODULE_POSITION position)
         {
             if (_rtcVideoFrameObserverHandle.handle != IntPtr.Zero)
                 return 0;
@@ -5048,7 +5048,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = __null)
+        public int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = "")
         {
             _param.Clear();
             _param.Add("connection", connection);

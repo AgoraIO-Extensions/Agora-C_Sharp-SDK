@@ -3118,13 +3118,6 @@ namespace Agora.Rtc
         }
     }
 
-    public class IAudioEncodedFrameObserver
-    {
-        public IAudioEncodedFrameObserver()
-        {
-        }
-    }
-
     public enum AREA_CODE : uint
     {
         AREA_CODE_CN = 0x00000001,

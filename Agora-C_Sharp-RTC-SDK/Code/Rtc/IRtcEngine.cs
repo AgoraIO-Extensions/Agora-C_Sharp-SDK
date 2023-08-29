@@ -613,7 +613,7 @@ namespace Agora.Rtc
 
         public abstract int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
-        public abstract int RegisterVideoFrameObserver(IVideoFrameObserver observer, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_OBSERVER_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
+        public abstract int RegisterVideoFrameObserver(IVideoFrameObserver observer, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_MODULE_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         public abstract int RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver observer, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
@@ -702,7 +702,7 @@ namespace Agora.Rtc
 
         public abstract int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection);
 
-        public abstract int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = __null);
+        public abstract int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = "");
 
         public abstract int AdjustRecordingSignalVolumeEx(int volume, RtcConnection connection);
 

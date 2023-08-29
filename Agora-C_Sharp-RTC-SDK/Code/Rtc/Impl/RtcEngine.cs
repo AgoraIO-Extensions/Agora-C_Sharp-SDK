@@ -2981,7 +2981,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
         }
 
-        public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = __null)
+        public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = "")
         {
             if (_rtcEngineImpl == null)
             {
@@ -3264,7 +3264,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, position, mode);
         }
 
-        public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_OBSERVER_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_MODULE_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
