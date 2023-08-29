@@ -204,6 +204,9 @@ namespace Agora.Rtc
             this.dualStreamEnabled = dualStreamEnabled;
             this.hwEncoderAccelerating = hwEncoderAccelerating;
         }
+        public LocalVideoStats()
+        {
+        }
     }
 
     public class RemoteAudioStats
@@ -347,6 +350,9 @@ namespace Agora.Rtc
             this.publishDuration = publishDuration;
             this.mosValue = mosValue;
             this.rxVideoBytes = rxVideoBytes;
+        }
+        public RemoteVideoStats()
+        {
         }
     }
 
@@ -1274,6 +1280,9 @@ namespace Agora.Rtc
             this.buffer = buffer;
             this.timeStampMs = timeStampMs;
         }
+        public Metadata()
+        {
+        }
     }
 
     public enum DIRECT_CDN_STREAMING_ERROR
@@ -1323,6 +1332,9 @@ namespace Agora.Rtc
             this.fps = fps;
             this.videoBitrate = videoBitrate;
             this.audioBitrate = audioBitrate;
+        }
+        public DirectCdnStreamingStats()
+        {
         }
     }
 

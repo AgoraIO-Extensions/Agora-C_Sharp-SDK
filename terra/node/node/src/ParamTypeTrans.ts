@@ -35,7 +35,6 @@ export class ParamTypeTrans {
             let methodParamType = clazzName + "." + funName + "." + cxxParamName;
             console.log("class.method.name:" + methodParamType)
             if (this._specialMethodParamMap[methodParamType]) {
-
                 return this._specialMethodParamMap[methodParamType];
             }
         }

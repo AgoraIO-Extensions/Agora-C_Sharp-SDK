@@ -404,6 +404,9 @@ export class SpeicalLogic {
             if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                 continue;
 
+            if (clazz.name == "MusicContentCenterConfiguration" && e.name == "eventHandler")
+                continue;
+
             let transType = "";
             if (e.type.source.includes('Optional<')) {
                 let midName = this.cSharpSDK_getMidTypeFromOptinal(e.type.source);
@@ -424,7 +427,7 @@ export class SpeicalLogic {
         }
 
         //constructor
-        if (clazz.name != "UserAudioSpectrumInfo") {
+        if (clazz.name != "UserAudioSpectrumInfo" && clazz.name != "SpatialAudioZone") {
 
             let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
             for (let constructor of cppConstructors) {
@@ -441,6 +444,8 @@ export class SpeicalLogic {
                         if (clazz.name == "RtcEngineContext" && p.name == "eventHandler")
                             continue;
                         let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, p.type, p.name);
+                        if (transType == "@remove")
+                            continue;
                         let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, p.name);
                         let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, p.type, p.name, p.value);
                         console.log("constructor.parameters " + p.value + " " + transValue);
@@ -462,6 +467,8 @@ export class SpeicalLogic {
                 if (constructor.initializes.length > 0) {
                     for (let e of constructor.initializes) {
                         if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                            continue;
+                        if (clazz.name == "MusicContentCenterConfiguration" && e.name == "eventHandler")
                             continue;
                         let transType = this.cSharpSDK_FindType(e.name, clazz);
                         let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
@@ -485,10 +492,13 @@ export class SpeicalLogic {
 
             //生成全量参数构造
             let needFullParamCtor = true;
+            let needEmptyParamCtor = true;
             for (let e of cppConstructors) {
                 if (e.parameters.length == clazz.member_variables.length) {
                     needFullParamCtor = false;
-                    break;
+                }
+                if (e.parameters.length == 0) {
+                    needEmptyParamCtor = false;
                 }
             }
             if (needFullParamCtor) {
@@ -521,6 +531,9 @@ export class SpeicalLogic {
                 constructorLines.push(`}`);
                 lines.push(constructorLines.join('\n'));
             }
+            if (needEmptyParamCtor) {
+                lines.push(`public ${clazz.name}(){\n}\n`);
+            }
         }
 
         //ToJson
@@ -531,6 +544,9 @@ export class SpeicalLogic {
             for (let e of clazz.member_variables) {
                 if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                     continue;
+                if (clazz.name == "MediaSource" && e.name == "provider")
+                    continue;
+
                 let transType = config.paramTypeTrans.transType(clazz.name, null, e.type.source, e.name);
                 let transName = config.paramNameFormalTrans.transType(clazz.name, null, e.name);
 
@@ -541,7 +557,10 @@ export class SpeicalLogic {
                     transType = `Optional<${midName}>`;
                     lines.push(`if (this.${transName}.HasValue()){`);
                     lines.push(`writer.WritePropertyName("${transName}");`)
-                    if (this.cSharpSDK_IsEnumz(this.cSharpSDK_getMidTypeFromOptinal(transType))) {
+                    if (this.cSharpSDK_IsClazzOrStruct(this.cSharpSDK_getMidTypeFromOptinal(transType))) {
+                        lines.push(`JsonMapper.WriteValue(this.${transName}.GetValue(), writer, false, 0);`)
+                    }
+                    else if (this.cSharpSDK_IsEnumz(this.cSharpSDK_getMidTypeFromOptinal(transType))) {
                         lines.push(`this.WriteEnum(writer, this.${transName}.GetValue());`)
                     }
                     else {

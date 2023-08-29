@@ -20,7 +20,10 @@
         "DownlinkNetworkInfo.peer_downlink_info": "PeerDownlinkInfo[]",
         "EncryptionConfig.encryptionKdfSalt": "byte[]",
         "LocalAccessPointConfiguration.ipList": "string[]",
-        "LocalAccessPointConfiguration.domainList": "string[]"
+        "LocalAccessPointConfiguration.domainList": "string[]",
+        "Music.lyricList": "int[]",
+        "Music.climaxSegmentList": "ClimaxSegment[]",
+        "Music.mvPropertyList": "MvProperty[]"
     },
     "special_method_param": {
         "IRtcEngine.getVersion.build": "ref int",
@@ -46,10 +49,17 @@
         "IRtcEngineEx.getUserInfoByUserAccountEx.userInfo": "ref UserInfo",
         "IRtcEngineEx.getUserInfoByUidEx.userInfo": "ref UserInfo",
         "IRtcEngineEx.joinChannelEx.eventHandler": "@remove",
-        "IAudioDeviceManager.getPlaybackDeviceVolume.volume": "int",
-        "IAudioDeviceManager.getRecordingDeviceVolume.volume": "int",
-        "IAudioDeviceManager.getPlaybackDeviceMute.mute": "bool",
-        "IAudioDeviceManager.getRecordingDeviceMute.mute": "bool",
+        "IAudioDeviceManager.getPlaybackDevice.deviceId": "ref string",
+        "IAudioDeviceManager.getPlaybackDeviceVolume.volume": "ref int",
+        "IAudioDeviceManager.getPlaybackDeviceInfo.deviceId": "ref string",
+        "IAudioDeviceManager.getPlaybackDeviceInfo.deviceName": "ref string",
+        "IAudioDeviceManager.getRecordingDevice.deviceId": "ref string",
+        "IAudioDeviceManager.getRecordingDeviceInfo.deviceId": "ref string",
+        "IAudioDeviceManager.getRecordingDeviceInfo.deviceName": "ref string",
+        "IAudioDeviceManager.getRecordingDeviceVolume.volume": "ref int",
+        "IAudioDeviceManager.getLoopbackDevice.deviceId": "ref string",
+        "IAudioDeviceManager.getPlaybackDeviceMute.mute": "ref bool",
+        "IAudioDeviceManager.getRecordingDeviceMute.mute": "ref bool",
         "IVideoDeviceManager.getCapability.deviceCapabilityNumber": "uint",
         "IVideoDeviceManager.startDeviceTest.hwnd": "IntPtr",
         "ILocalSpatialAudioEngine.setZones.zones": "SpatialAudioZone[]",
@@ -78,7 +88,12 @@
         "DownlinkNetworkInfo.DownlinkNetworkInfo.peer_downlink_info": "PeerDownlinkInfo[]",
         "EncryptionConfig.EncryptionConfig.encryptionKdfSalt": "byte[]",
         "LocalAccessPointConfiguration.LocalAccessPointConfiguration.ipList": "string[]",
-        "LocalAccessPointConfiguration.LocalAccessPointConfiguration.domainList": "string[]"
+        "LocalAccessPointConfiguration.LocalAccessPointConfiguration.domainList": "string[]",
+        "VideoCanvas.VideoCanvas.null": "@remove",
+        "Music.Music.lyricList": "int[]",
+        "Music.Music.climaxSegmentList": "ClimaxSegment[]",
+        "Music.Music.mvPropertyList": "MvProperty[]",
+        "MusicContentCenterConfiguration.MusicContentCenterConfiguration.handler": "@remove"
     },
     "normal": {
         "char*": "string",
@@ -130,7 +145,10 @@
         "uint32_t": "UInt32",
         "agora::rtc::VideoCompositingLayout::Region const*": "Region[]",
         "util::AString": "string",
-        "int16_t": "short"
+        "int16_t": "short",
+        "char[50]": "string",
+        "agora::media::base::IMediaPlayerCustomDataProvider*": "IMediaPlayerCustomDataProvider",
+        "agora::rtc::IRtcEngine*": "IRtcEngine"
     },
     "reg": {
         "agora::rtc::SegmentationProperty::*": "${-o*}",
@@ -154,12 +172,13 @@
         "agora::media::*": "${-o*}",
         "media::base::*": "${-o*}",
         "agora::rtc::*": "${-o*}",
+        "agora::commons::*": "${-o*}",
+        "commons::*": "${-o*}",
         "agora::*": "${-o*}",
         "media::*": "${-o*}",
         "rtc::*": "${-o*}",
         "agora::base::*": "${-o*}",
         "IMetadataObserver::*": "${-o*}",
-        "commons::*": "${-o*}",
         "* const&": "${-o*}",
         "* const": "${-o*}",
         "*[3840]": "${-o*}[]"

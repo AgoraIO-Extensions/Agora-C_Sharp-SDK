@@ -18,7 +18,18 @@
         "IRtcEngineEx.joinChannelEx.eventHandler": "@remove",
         "IRtcEngineEx.createDataStreamEx.streamId": "ref streamId",
         "IRtcEngineEx.getUserInfoByUserAccountEx.userInfo": "ref userInfo",
-        "IRtcEngineEx.getUserInfoByUidEx.userInfo": "ref userInfo"
+        "IRtcEngineEx.getUserInfoByUidEx.userInfo": "ref userInfo",
+        "IAudioDeviceManager.getPlaybackDevice.deviceId": "ref deviceId",
+        "IAudioDeviceManager.getPlaybackDeviceVolume.volume": "ref volume",
+        "IAudioDeviceManager.getPlaybackDeviceInfo.deviceId": "ref deviceId",
+        "IAudioDeviceManager.getPlaybackDeviceInfo.deviceName": "ref deviceName",
+        "IAudioDeviceManager.getRecordingDevice.deviceId": "ref deviceId",
+        "IAudioDeviceManager.getRecordingDeviceInfo.deviceId": "ref deviceId",
+        "IAudioDeviceManager.getRecordingDeviceInfo.deviceName": "ref deviceName",
+        "IAudioDeviceManager.getRecordingDeviceVolume.volume": "ref volume",
+        "IAudioDeviceManager.getLoopbackDevice.deviceId": "ref deviceId",
+        "IAudioDeviceManager.getPlaybackDeviceMute.mute": "ref mute",
+        "IAudioDeviceManager.getRecordingDeviceMute.mute": "ref mute"
     },
     "normal": {
         "params": "@params",

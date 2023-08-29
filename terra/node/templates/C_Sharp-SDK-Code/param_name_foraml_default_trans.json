@@ -56,11 +56,16 @@
         "ChannelMediaRelayConfiguration.ChannelMediaRelayConfiguration.srcInfo:NULL": "new ChannelMediaInfo[0]",
         "ChannelMediaRelayConfiguration.ChannelMediaRelayConfiguration.destInfos:NULL": "new ChannelMediaInfo[0]",
         "DownlinkNetworkInfo.DownlinkNetworkInfo.peer_downlink_info:OPTIONAL_NULLPTR": "new PeerDownlinkInfo[0]",
-        "PeerDownlinkInfo.PeerDownlinkInfo.uid:OPTIONAL_NULLPTR": "0",
+        "PeerDownlinkInfo.PeerDownlinkInfo.uid:OPTIONAL_NULLPTR": "\"\"",
         "EchoTestConfiguration.EchoTestConfiguration.intervalInSeconds:is": "@is",
         "EchoTestConfiguration.EchoTestConfiguration.view:OPTIONAL_NULLPTR": "0",
         "LocalAccessPointConfiguration.LocalAccessPointConfiguration.ipList:NULL": "new string[0]",
-        "LocalAccessPointConfiguration.LocalAccessPointConfiguration.domainList:NULL": "new string[0]"
+        "LocalAccessPointConfiguration.LocalAccessPointConfiguration.domainList:NULL": "new string[0]",
+        "VideoTrackInfo.VideoTrackInfo.observationPosition:agora::media::base::POSITION_POST_CAPTURER": "(uint)VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER",
+        "MediaSource.MediaSource.provider:NULL": "null",
+        "MusicContentCenterConfiguration.MusicContentCenterConfiguration.appId:nullptr": "\"\"",
+        "MusicContentCenterConfiguration.MusicContentCenterConfiguration.token:nullptr": "\"\"",
+        "LocalSpatialAudioConfig.LocalSpatialAudioConfig.rtcEngine:NULL": "null"
     },
     "normal": {
         "agora::media::PRIMARY_CAMERA_SOURCE": "MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE",
@@ -85,7 +90,9 @@
         "NULL": "\"\"",
         "0.5": "0.5f",
         "OPTIONAL_NULLPTR": "\"\"",
-        "__null": "\"\""
+        "__null": "\"\"",
+        "DEFAULT_LOG_SIZE_IN_KB": "1024",
+        "OPTIONAL_LOG_LEVEL_SPECIFIERLOG_LEVEL_INFO": "LOG_LEVEL.LOG_LEVEL_INFO"
     },
     "reg": {
         "agora::media::base::*": "${-o*}",

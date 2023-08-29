@@ -45,12 +45,20 @@ export class Tool {
                             let e = eachTrim.charAt(i);
                             if (e == " " || e == "*" || e == "&") {
                                 endPos = i;
-                                context
                                 break;
                             }
                         }
-                        let type = eachTrim.substring(0, endPos + 1).trim();
-                        let name = eachTrim.substring(endPos + 1, length).trim();
+
+                        let type = null;
+                        let name = null;
+                        if (endPos != 0) {
+                            type = eachTrim.substring(0, endPos + 1).trim();
+                            name = eachTrim.substring(endPos + 1, length).trim();
+                        }
+                        else {
+                            type = eachTrim;
+                            name = null;
+                        }
                         cppConstructor.parameters.push({ type, name, value });
                     }
                 }

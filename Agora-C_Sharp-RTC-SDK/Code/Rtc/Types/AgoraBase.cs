@@ -1062,6 +1062,9 @@ namespace Agora.Rtc
             this.codecCapMask = codecCapMask;
             this.codecLevels = codecLevels;
         }
+        public CodecCapInfo()
+        {
+        }
     }
 
     public class VideoEncoderConfiguration
@@ -1160,6 +1163,9 @@ namespace Agora.Rtc
         {
             this.syncWithAudio = syncWithAudio;
             this.ordered = ordered;
+        }
+        public DataStreamConfig()
+        {
         }
     }
 
@@ -1783,7 +1789,7 @@ namespace Agora.Rtc
             this.codecType = VIDEO_CODEC_TYPE.VIDEO_CODEC_H264;
             this.encodedFrameOnly = false;
             this.sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
-            this.observationPosition = VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
+            this.observationPosition = (uint)VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
         }
 
         public VideoTrackInfo(bool isLocal, uint ownerUid, track_id_t trackId, string channelId, VIDEO_STREAM_TYPE streamType, VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly, VIDEO_SOURCE_TYPE sourceType, UInt32 observationPosition)
@@ -1896,6 +1902,9 @@ namespace Agora.Rtc
             this.internalCodec = internalCodec;
             this.txPacketLossRate = txPacketLossRate;
             this.audioDeviceDelay = audioDeviceDelay;
+        }
+        public LocalAudioStats()
+        {
         }
     }
 
@@ -2294,6 +2303,9 @@ namespace Agora.Rtc
             this.expectedUplinkBitrate = expectedUplinkBitrate;
             this.expectedDownlinkBitrate = expectedDownlinkBitrate;
         }
+        public LastmileProbeConfig()
+        {
+        }
     }
 
     public enum LASTMILE_PROBE_RESULT_STATE
@@ -2443,6 +2455,9 @@ namespace Agora.Rtc
             this.frozenRatioPercent = frozenRatioPercent;
             this.lossRatePercent = lossRatePercent;
         }
+        public WlAccStats()
+        {
+        }
     }
 
     public enum NETWORK_TYPE
@@ -2521,7 +2536,7 @@ namespace Agora.Rtc
             this.enableAlphaMask = false;
         }
 
-        public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, u ser_id_t)
+        public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt)
         {
             this.view = v;
             this.uid = 0;
@@ -3239,6 +3254,9 @@ namespace Agora.Rtc
             this.token = token;
             this.uid = uid;
         }
+        public ChannelMediaInfo()
+        {
+        }
     }
 
     public class ChannelMediaRelayConfiguration
@@ -3291,7 +3309,7 @@ namespace Agora.Rtc
 
         public PeerDownlinkInfo()
         {
-            this.uid = 0;
+            this.uid = "";
             this.stream_type = VIDEO_STREAM_TYPE.VIDEO_STREAM_HIGH;
             this.current_downscale_level = REMOTE_VIDEO_DOWNSCALE_LEVEL.REMOTE_VIDEO_DOWNSCALE_LEVEL_NONE;
             this.expected_bitrate_bps = -1;
@@ -3478,6 +3496,9 @@ namespace Agora.Rtc
             this.channels = channels;
             this.captureSignalVolume = captureSignalVolume;
         }
+        public ScreenAudioParameters()
+        {
+        }
     }
 
     public class ScreenCaptureParameters2
@@ -3496,6 +3517,9 @@ namespace Agora.Rtc
             this.audioParams = audioParams;
             this.captureVideo = captureVideo;
             this.videoParams = videoParams;
+        }
+        public ScreenCaptureParameters2()
+        {
         }
     }
 
@@ -3531,6 +3555,9 @@ namespace Agora.Rtc
             this.remoteJoined2SetView = remoteJoined2SetView;
             this.remoteJoined2UnmuteVideo = remoteJoined2UnmuteVideo;
             this.remoteJoined2PacketReceived = remoteJoined2PacketReceived;
+        }
+        public VideoRenderingTracingInfo()
+        {
         }
     }
 
@@ -3602,6 +3629,9 @@ namespace Agora.Rtc
         {
             this.logUploadServer = logUploadServer;
         }
+        public AdvancedConfigInfo()
+        {
+        }
     }
 
     public class LocalAccessPointConfiguration
@@ -3670,6 +3700,9 @@ namespace Agora.Rtc
             this.enable_air_absorb = enable_air_absorb;
             this.speaker_attenuation = speaker_attenuation;
             this.enable_doppler = enable_doppler;
+        }
+        public SpatialAudioParams()
+        {
         }
 
         public override void ToJson(JsonWriter writer)
