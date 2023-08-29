@@ -29,7 +29,9 @@
         "IAudioDeviceManager.getRecordingDeviceVolume.volume": "ref volume",
         "IAudioDeviceManager.getLoopbackDevice.deviceId": "ref deviceId",
         "IAudioDeviceManager.getPlaybackDeviceMute.mute": "ref mute",
-        "IAudioDeviceManager.getRecordingDeviceMute.mute": "ref mute"
+        "IAudioDeviceManager.getRecordingDeviceMute.mute": "ref mute",
+        "IVideoDeviceManager.getCapability.capability": "ref capability",
+        "IVideoDeviceManager.getDevice.deviceIdUTF8": "ref deviceIdUTF8"
     },
     "normal": {
         "params": "@params",

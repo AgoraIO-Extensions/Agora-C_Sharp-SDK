@@ -22,10 +22,19 @@ namespace Agora.Rtc
         private static IVideoDeviceManager instance = null;
         public static IVideoDeviceManager Instance
         {
-            get
-            {
+            get {
                 return instance;
             }
+        }
+
+        internal static IVideoDeviceManager GetInstance(IRtcEngine rtcEngine, VideoDeviceManagerImpl impl)
+        {
+            return instance ?? (instance = new VideoDeviceManager(rtcEngine, impl));
+        }
+
+        internal static void ReleaseInstance()
+        {
+            instance = null;
         }
 
         public override DeviceInfo[] EnumerateVideoDevices()
@@ -36,6 +45,8 @@ namespace Agora.Rtc
             }
             return _videoDeviecManagerImpl.EnumerateVideoDevices();
         }
+
+#region terra IVideoDeviceManager
 
         public override int SetDevice(string deviceIdUTF8)
         {
@@ -53,6 +64,24 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _videoDeviecManagerImpl.GetDevice(ref deviceIdUTF8);
+        }
+
+        public override int NumberOfCapabilities(string deviceIdUTF8)
+        {
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _videoDeviecManagerImpl.NumberOfCapabilities(deviceIdUTF8);
+        }
+
+        public override int GetCapability(string deviceIdUTF8, uint deviceCapabilityNumber, ref VideoFormat capability)
+        {
+            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _videoDeviecManagerImpl.GetCapability(deviceIdUTF8, deviceCapabilityNumber, ref capability);
         }
 
         public override int StartDeviceTest(IntPtr hwnd)
@@ -73,33 +102,6 @@ namespace Agora.Rtc
             return _videoDeviecManagerImpl.StopDeviceTest();
         }
 
-        public override int GetCapability(string deviceIdUTF8, uint deviceCapabilityNumber, out VideoFormat capability)
-        {
-            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
-            {
-                capability = new VideoFormat();
-                return ErrorCode;
-            }
-            return _videoDeviecManagerImpl.GetCapability(deviceIdUTF8, deviceCapabilityNumber, out capability);
-        }
-
-        public override int NumberOfCapabilities(string deviceIdUTF8)
-        {
-            if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _videoDeviecManagerImpl.NumberOfCapabilities(deviceIdUTF8);
-        }
-
-        internal static IVideoDeviceManager GetInstance(IRtcEngine rtcEngine, VideoDeviceManagerImpl impl)
-        {
-            return instance ?? (instance = new VideoDeviceManager(rtcEngine, impl));
-        }
-
-        internal static void ReleaseInstance()
-        {
-            instance = null;
-        }
+#endregion terra IVideoDeviceManager
     }
 }
