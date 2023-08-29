@@ -59,6 +59,7 @@ export class SpeicalLogic {
             string: '""',
             bool: 'false',
             CONNECTION_STATE_TYPE: 'CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED',
+            MEDIA_PLAYER_STATE: 'MEDIA_PLAYER_STATE.PLAYER_STATE_FAILED',
             track_id_t: '0',
             float: '0'
         };
@@ -626,6 +627,40 @@ export class SpeicalLogic {
 
     public cSharpSDK_getMidTypeFromOptinal(OptionalName: string) {
         return OptionalName.substring(OptionalName.indexOf('<') + 1, OptionalName.length - 1);
+    }
+
+    public cSharpSDK_AppendPlayerId(clazzName: string, fun: MemberFunction) {
+        let length = 0;
+        for (let p of fun.parameters) {
+            let tranName = ConfigTool.getInstance().paramNameActualTrans.transType(clazzName, fun.name, p.name);
+            if (tranName != "@remove" && tranName != "") {
+                length++;
+            }
+        }
+
+        if (length > 0) {
+            return "playerId, ";
+        }
+        else {
+            return "playerId";
+        }
+    }
+
+    public cSharpSDK_AppendPlayerIdWithInt(clazzName: string, fun: MemberFunction) {
+        let length = 0;
+        for (let p of fun.parameters) {
+            let tranName = ConfigTool.getInstance().paramNameActualTrans.transType(clazzName, fun.name, p.name);
+            if (tranName != "@remove" && tranName != "") {
+                length++;
+            }
+        }
+
+        if (length > 0) {
+            return "int playerId, ";
+        }
+        else {
+            return "int playerId";
+        }
     }
 
 

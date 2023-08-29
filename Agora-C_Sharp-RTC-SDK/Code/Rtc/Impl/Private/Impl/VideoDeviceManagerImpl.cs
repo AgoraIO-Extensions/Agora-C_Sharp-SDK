@@ -47,8 +47,8 @@ namespace Agora.Rtc
         public DeviceInfo[] EnumerateVideoDevices()
         {
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
-                                                      AgoraApiType.FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES,
-                                                      "", 0, IntPtr.Zero, 0, ref _apiParam);
+                                                          AgoraApiType.FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES,
+                                                          "", 0, IntPtr.Zero, 0, ref _apiParam);
             if (nRet != 0)
             {
                 return new DeviceInfo[0];
@@ -56,7 +56,7 @@ namespace Agora.Rtc
             return AgoraJson.JsonToStructArray<DeviceInfo>(_apiParam.Result, "result");
         }
 
-        #region terra IVideoDeviceManager
+#region terra IVideoDeviceManager
 
         public int SetDevice(string deviceIdUTF8)
         {
@@ -149,6 +149,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        #endregion terra IVideoDeviceManager
+#endregion terra IVideoDeviceManager
     }
 }

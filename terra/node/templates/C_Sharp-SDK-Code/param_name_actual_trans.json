@@ -31,7 +31,16 @@
         "IAudioDeviceManager.getPlaybackDeviceMute.mute": "ref mute",
         "IAudioDeviceManager.getRecordingDeviceMute.mute": "ref mute",
         "IVideoDeviceManager.getCapability.capability": "ref capability",
-        "IVideoDeviceManager.getDevice.deviceIdUTF8": "ref deviceIdUTF8"
+        "IVideoDeviceManager.getDevice.deviceIdUTF8": "ref deviceIdUTF8",
+        "IMediaPlayer.getDuration.duration": "ref duration",
+        "IMediaPlayer.getPlayPosition.pos": "ref pos",
+        "IMediaPlayer.getStreamCount.count": "ref count",
+        "IMediaPlayer.getMute.muted": "ref muted",
+        "IMediaPlayer.getPlayoutVolume.volume": "ref volume",
+        "IMediaPlayer.getPublishSignalVolume.volume": "ref volume",
+        "IMediaPlayer.getStreamInfo.info": "ref info",
+        "IMediaPlayer.unregisterAudioFrameObserver.observer": "@remove",
+        "IMediaPlayer.unregisterMediaPlayerAudioSpectrumObserver.observer": "@remove"
     },
     "normal": {
         "params": "@params",

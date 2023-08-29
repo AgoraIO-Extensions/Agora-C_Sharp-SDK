@@ -2,6 +2,7 @@
 
 namespace Agora.Rtc
 {
+    using view_t = Int64;
     public sealed class MusicPlayer : IMusicPlayer
     {
         private MusicPlayerImpl _musicPlayerImpl = null;
@@ -309,13 +310,13 @@ namespace Agora.Rtc
             return _musicPlayerImpl.GetPublishSignalVolume(playerId, ref volume);
         }
 
-        public override int SetView()
+        public override int SetView(view_t view)
         {
             if (_musicPlayerImpl == null)
             {
                 return ErrorCode;
             }
-            return _musicPlayerImpl.SetView(playerId);
+            return _musicPlayerImpl.SetView(playerId, view);
         }
 
         public override int SetRenderMode(RENDER_MODE_TYPE renderMode)

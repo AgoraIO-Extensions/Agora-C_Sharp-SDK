@@ -63,6 +63,15 @@
         "IVideoDeviceManager.getCapability.capability": "ref VideoFormat",
         "IVideoDeviceManager.getDevice.deviceIdUTF8": "ref string",
         "IVideoDeviceManager.startDeviceTest.hwnd": "IntPtr",
+        "IMediaPlayer.getDuration.duration": "ref Int64",
+        "IMediaPlayer.getPlayPosition.pos": "ref Int64",
+        "IMediaPlayer.getStreamCount.count": "ref Int64",
+        "IMediaPlayer.getMute.muted": "ref bool",
+        "IMediaPlayer.getPlayoutVolume.volume": "ref int",
+        "IMediaPlayer.getPublishSignalVolume.volume": "ref int",
+        "IMediaPlayer.getStreamInfo.info": "ref PlayerStreamInfo",
+        "IMediaPlayer.unregisterAudioFrameObserver.observer": "@remove",
+        "IMediaPlayer.unregisterMediaPlayerAudioSpectrumObserver.observer": "@remove",
         "ILocalSpatialAudioEngine.setZones.zones": "SpatialAudioZone[]",
         "IMediaEngine.pushEncodedVideoImage.imageBuffer": "byte[]",
         "AudioSpectrumData.AudioSpectrumData.audioSpectrumData": "float[]",
@@ -150,7 +159,8 @@
         "int16_t": "short",
         "char[50]": "string",
         "agora::media::base::IMediaPlayerCustomDataProvider*": "IMediaPlayerCustomDataProvider",
-        "agora::rtc::IRtcEngine*": "IRtcEngine"
+        "agora::rtc::IRtcEngine*": "IRtcEngine",
+        "media::IAudioPcmFrameSink*": "IAudioPcmFrameSink"
     },
     "reg": {
         "agora::rtc::SegmentationProperty::*": "${-o*}",

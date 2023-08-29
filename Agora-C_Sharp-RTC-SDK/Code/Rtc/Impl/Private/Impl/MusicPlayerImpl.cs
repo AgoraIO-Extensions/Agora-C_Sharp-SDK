@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Agora.Rtc
 {
     using IrisApiEnginePtr = IntPtr;
-
+    using view_t = Int64;
     public class MusicPlayerImpl
     {
         private bool _disposed = false;
@@ -205,9 +205,9 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetPublishSignalVolume(playerId, ref volume);
         }
 
-        public int SetView(int playerId)
+        public int SetView(int playerId, view_t view)
         {
-            return _mediaPlayerImpl.SetView(playerId);
+            return _mediaPlayerImpl.SetView(playerId, view);
         }
 
         public int SetRenderMode(int playerId, RENDER_MODE_TYPE renderMode)
