@@ -306,7 +306,7 @@ namespace Agora.Rtc
             if (nRet == 0)
             {
                 cacheInfo = AgoraJson.JsonToStructArray<MusicCacheInfo>(_apiParam.Result, "cacheInfo");
-                cacheInfoSize = AgoraJson.JsonToStruct<Int32>(_apiParam.Result, "cacheInfoSize");
+                cacheInfoSize = (Int32)AgoraJson.GetData<Int32>(_apiParam.Result, "cacheInfoSize");
             }
             return result;
         }

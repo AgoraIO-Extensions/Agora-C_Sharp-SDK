@@ -2,6 +2,8 @@ import { callbackify } from "util";
 import { ConfigTool } from "./ConfigTool";
 import { CppConstructor, Tool } from "./Tool";
 import { CXXTYPE, Clazz, EnumConstant, Enumz, MemberFunction, MemberVariable, Struct } from "./terra";
+import { copyFile } from "fs";
+import { publicDecrypt } from "crypto";
 
 export class SpeicalLogic {
 
@@ -126,24 +128,8 @@ export class SpeicalLogic {
             var transType = configTool.paramTypeTrans.transType(clazzName, info.name, p.type.source, p.name);
             if (transType.includes("ref ")) {
                 //是ref类型
-                transType = transType.substring(4);
-                if (valueMap.includes(transType)) {
-                    //基本数据类型
-                    lines.push(`${p.name} = (${transType})AgoraJson.GetData<${transType}>(_apiParam.Result, "${p.name}");`);
-                }
-                else if (transType.includes('[]')) {
-                    //是数组
-                    lines.push(`${p.name} = AgoraJson.JsonToStructArray<${transType.substring(0, transType.length - 2)}>(_apiParam.Result, "${p.name}");`);
-                }
-                else {
-                    //是结构体
-                    if (this.cSharpSDK_IsEnumz(transType)) {
-                        lines.push(`${p.name} = (${transType})AgoraJson.JsonToStruct<int>(_apiParam.Result, "${p.name}");`);
-                    }
-                    else {
-                        lines.push(`${p.name} = AgoraJson.JsonToStruct<${transType}>(_apiParam.Result, "${p.name}");`);
-                    }
-                }
+                let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, info.name, p.type.source, p.name, "_apiParam.Result");
+                lines.push(`${p.name} =${jsonString};`);
             }
         }
         if (lines.length > 0) {
@@ -695,6 +681,136 @@ export class SpeicalLogic {
             return "string nativeHandle";
         }
     }
+
+    public cSharpSDK_GenerateRtcEngineEventHandlerInterface(clazz: Clazz): string {
+        let lines = [];
+        let config = ConfigTool.getInstance();
+        let rtcEngineEventHandlerClazzName = "IRtcEngineEventHandler";
+        let rtcEngineEventHandlerExClazzName = "IRtcEngineEventHandlerEx";
+        let eventHandlerMethods = config.getClassOrStruct(rtcEngineEventHandlerClazzName).methods;
+        let eventHandlerExMethods = config.getClassOrStruct(rtcEngineEventHandlerExClazzName).methods;
+        let excludeMethods = [
+            "eventHandlerType"
+        ]
+        for (let m of eventHandlerMethods) {
+            if (excludeMethods.includes(m.name))
+                continue;
+
+            let mEx = eventHandlerExMethods.find((e) => { return e.name == m.name });
+            let clazzName: string;
+            if (mEx != null) {
+                m = mEx;
+                clazzName = rtcEngineEventHandlerExClazzName;
+            }
+            else {
+                m = m;
+                clazzName = rtcEngineEventHandlerClazzName;
+            }
+            m = mEx || m;
+
+            let paramslines = [];
+            for (let p of m.parameters) {
+                let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
+                let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
+                if (transType == "@remove")
+                    continue;
+                paramslines.push(`${transType} ${transName}`);
+            }
+            let methodName = Tool._processStringWithU(m.name);
+            lines.push(`public virtual void ${methodName}(${paramslines.join(", ")}){\n }`);
+        }
+
+        return lines.join("\n\n");
+    }
+
+    public cSharpSDK_GenerateRtcEngineEventHandlerNative(clazz: Clazz): string {
+        let lines = [];
+        let config = ConfigTool.getInstance();
+        let rtcEngineEventHandlerClazzName = "IRtcEngineEventHandler";
+        let rtcEngineEventHandlerExClazzName = "IRtcEngineEventHandlerEx";
+        let eventHandlerMethods = config.getClassOrStruct(rtcEngineEventHandlerClazzName).methods;
+        let eventHandlerExMethods = config.getClassOrStruct(rtcEngineEventHandlerExClazzName).methods;
+        let excludeMethods = [
+            "eventHandlerType",
+            "onStreamMessage"
+        ]
+        for (let m of eventHandlerMethods) {
+            if (excludeMethods.includes(m.name))
+                continue;
+
+            let mEx = eventHandlerExMethods.find((e) => { return e.name == m.name });
+            let switchKey: string;
+            let clazzName: string;
+            if (mEx != null) {
+                m = mEx;
+                switchKey = `RtcEngineEventHandler_${m.name}Ex`;
+                clazzName = rtcEngineEventHandlerExClazzName;
+            }
+            else {
+                m = m;
+                switchKey = `RtcEngineEventHandler_${m.name}`;
+                clazzName = rtcEngineEventHandlerClazzName
+            }
+            m = mEx || m;
+
+            lines.push(`case "${switchKey}":`);
+            lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+            lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
+            lines.push(`#endif`);
+            lines.push(`if (rtcEngineEventHandler == null) return;`);
+            let methodName = Tool._processStringWithU(m.name);
+            lines.push(`rtcEngineEventHandler.${methodName}(`);
+
+            let paramslines = [];
+
+            for (let p of m.parameters) {
+                let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
+                if (jsonString != null)
+                    paramslines.push(jsonString);
+            }
+
+            lines.push(`${paramslines.join(",\n")}`);
+
+            lines.push(`\n); `);
+            lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+            lines.push(` }); `);
+            lines.push(`#endif`);
+            lines.push(`break; \n`);
+        }
+
+        return lines.join("\n");
+    }
+
+    public cSharpSDK_GetValueFromJson(clazzName: string, funName: string, originType: string, originName: string, jsonMapName: string) {
+        let config = ConfigTool.getInstance();
+        let transType = config.paramTypeTrans.transType(clazzName, funName, originType, originName);
+        if (transType.startsWith('ref '))
+            transType = transType.substring(4);
+        let transName = config.paramNameFormalTrans.transType(clazzName, funName, originName);
+        if (transType == "@remove")
+            return null;
+
+        var simpleType = ["Int32", "UInt32", "int", "ulong", "uint", "long", "string", "bool", "track_id_t", "float", "ushort", "short"];
+        if (simpleType.includes(transType)) {
+            //基本数据类型
+            return `(${transType})AgoraJson.GetData <${transType}>(${jsonMapName}, "${transName}")`;
+        }
+        else if (transType.includes('[]')) {
+            //是数组
+            return `AgoraJson.JsonToStructArray<${transType.substring(0, transType.length - 2)}> (${jsonMapName}, "${transName}")`;
+        }
+        else {
+            //是枚举或者结构体 
+            if (this.cSharpSDK_IsEnumz(transType)) {
+                return `(${transType})AgoraJson.GetData<int>(${jsonMapName}, "${transName}")`;
+            }
+            else {
+                return `AgoraJson.JsonToStruct < ${transType}> (${jsonMapName}, "${transName}")`;
+            }
+        }
+    }
+
+
 
 
 

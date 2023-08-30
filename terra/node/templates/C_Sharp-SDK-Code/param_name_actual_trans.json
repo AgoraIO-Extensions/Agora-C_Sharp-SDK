@@ -60,7 +60,8 @@
         "IMusicContentCenter.getLyric.requestId": "ref requestId",
         "IMusicContentCenter.getSongSimpleInfo.requestId": "ref requestId",
         "IMusicContentCenter.getInternalSongCode.internalSongCode": "ref internalSongCode",
-        "IMusicContentCenter.preload.requestId": "ref requestId"
+        "IMusicContentCenter.preload.requestId": "ref requestId",
+        "ILocalSpatialAudioEngine.initialize.config": "@remove"
     },
     "normal": {
         "params": "@params",

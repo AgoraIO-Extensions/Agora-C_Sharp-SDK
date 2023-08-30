@@ -122,7 +122,15 @@
         "IMusicContentCenter.getCaches.cacheInfoSize": "ref Int32",
         "IMusicContentCenter.getLyric.requestId": "ref string",
         "IMusicContentCenter.getSongSimpleInfo.requestId": "ref string",
-        "IMusicContentCenter.getInternalSongCode.internalSongCode": "ref Int64"
+        "IMusicContentCenter.getInternalSongCode.internalSongCode": "ref Int64",
+        "ILocalSpatialAudioEngine.initialize.config": "@remove",
+        "IRtcEngineEventHandler.onFacePositionChanged.vecRectangle": "Rectangle[]",
+        "IRtcEngineEventHandler.onFacePositionChanged.vecDistance": "int[]",
+        "IRtcEngineEventHandler.onAudioDeviceStateChanged.deviceType": "MEDIA_DEVICE_TYPE",
+        "IRtcEngineEventHandler.onAudioDeviceStateChanged.deviceState": "MEDIA_DEVICE_STATE_TYPE",
+        "IRtcEngineEventHandler.onVideoDeviceStateChanged.deviceType": "MEDIA_DEVICE_TYPE",
+        "IRtcEngineEventHandler.onVideoDeviceStateChanged.deviceState": "MEDIA_DEVICE_STATE_TYPE",
+        "IRtcEngineEventHandlerEx.onStreamMessage.data": "byte[]"
     },
     "normal": {
         "char*": "string",
@@ -179,7 +187,8 @@
         "char[50]": "string",
         "agora::media::base::IMediaPlayerCustomDataProvider*": "IMediaPlayerCustomDataProvider",
         "agora::rtc::IRtcEngine*": "IRtcEngine",
-        "media::IAudioPcmFrameSink*": "IAudioPcmFrameSink"
+        "media::IAudioPcmFrameSink*": "IAudioPcmFrameSink",
+        "agora::rtc::AudioVolumeInfo const*": "AudioVolumeInfo[]"
     },
     "reg": {
         "agora::rtc::SegmentationProperty::*": "${-o*}",

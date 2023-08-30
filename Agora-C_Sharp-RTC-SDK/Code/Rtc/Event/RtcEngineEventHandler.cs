@@ -104,7 +104,7 @@ namespace Agora.Rtc
 
     public delegate void OnConnectionBannedHandler(RtcConnection connection);
 
-    public delegate void OnStreamMessageHandler(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs);
+    public delegate void OnStreamMessageHandler(RtcConnection connection, uint remoteUid, int streamId, byte[] data, ulong length, UInt64 sentTs);
 
     public delegate void OnStreamMessageErrorHandler(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached);
 
@@ -221,7 +221,7 @@ namespace Agora.Rtc
         public event OnLastmileQualityHandler EventOnLastmileQuality;
         public event OnFirstLocalVideoFrameHandler EventOnFirstLocalVideoFrame;
         public event OnFirstLocalVideoFramePublishedHandler EventOnFirstLocalVideoFramePublished;
-        public event OnVideoSourceFrameSizeChangedHandler EventOnVideoSourceFrameSizeChanged;
+     
         public event OnFirstRemoteVideoDecodedHandler EventOnFirstRemoteVideoDecoded;
         public event OnVideoSizeChangedHandler EventOnVideoSizeChanged;
         public event OnContentInspectResultHandler EventOnContentInspectResult;
@@ -437,11 +437,7 @@ namespace Agora.Rtc
             EventOnFirstLocalVideoFramePublished.Invoke(connection, elapsed);
         }
 
-        public override void OnVideoSourceFrameSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, int width, int height)
-        {
-            if (EventOnVideoSourceFrameSizeChanged == null) return;
-            EventOnVideoSourceFrameSizeChanged.Invoke(connection, sourceType, width, height);
-        }
+     
 
         public override void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
         {
@@ -467,11 +463,6 @@ namespace Agora.Rtc
             EventOnSnapshotTakenEx.Invoke(connection, uid, filePath, width, height, errCode);
         }
 
-        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
-        {
-            if (EventOnLocalVideoStateChanged == null) return;
-            EventOnLocalVideoStateChanged.Invoke(source, state, errorCode);
-        }
 
         public override void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
@@ -615,7 +606,7 @@ namespace Agora.Rtc
             EventOnConnectionBanned.Invoke(connection);
         }
 
-        public override void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, uint length, UInt64 sentTs)
+        public override void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, ulong length, UInt64 sentTs)
         {
             if (EventOnStreamMessage == null) return;
             EventOnStreamMessage.Invoke(connection, remoteUid, streamId, data, length, sentTs);
