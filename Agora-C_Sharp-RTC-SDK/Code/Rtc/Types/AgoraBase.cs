@@ -1,11 +1,8 @@
 ﻿using System;
 using Agora.Rtc.LitJson;
-using track_id_t = System.UInt64;
 namespace Agora.Rtc
 {
-    using int64_t = Int64;
     using view_t = Int64;
-    using uint64_t = UInt64;
 
     internal enum AppType
     {
@@ -1765,7 +1762,7 @@ namespace Agora.Rtc
 
         public uint ownerUid;
 
-        public track_id_t trackId;
+        public uint trackId;
 
         public string channelId;
 
@@ -1792,7 +1789,7 @@ namespace Agora.Rtc
             this.observationPosition = (uint)VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
         }
 
-        public VideoTrackInfo(bool isLocal, uint ownerUid, track_id_t trackId, string channelId, VIDEO_STREAM_TYPE streamType, VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly, VIDEO_SOURCE_TYPE sourceType, uint observationPosition)
+        public VideoTrackInfo(bool isLocal, uint ownerUid, uint trackId, string channelId, VIDEO_STREAM_TYPE streamType, VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly, VIDEO_SOURCE_TYPE sourceType, uint observationPosition)
         {
             this.isLocal = isLocal;
             this.ownerUid = ownerUid;

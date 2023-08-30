@@ -1495,7 +1495,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetDualStreamMode(mode, streamConfig);
         }
 
-        public override int EnableCustomAudioLocalPlayback(track_id_t trackId, bool enabled)
+        public override int EnableCustomAudioLocalPlayback(uint trackId, bool enabled)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2663,7 +2663,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.EnableContentInspect(enabled, config);
         }
 
-        public override int AdjustCustomAudioPublishVolume(track_id_t trackId, int volume)
+        public override int AdjustCustomAudioPublishVolume(uint trackId, int volume)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2672,7 +2672,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.AdjustCustomAudioPublishVolume(trackId, volume);
         }
 
-        public override int AdjustCustomAudioPlayoutVolume(track_id_t trackId, int volume)
+        public override int AdjustCustomAudioPlayoutVolume(uint trackId, int volume)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3320,7 +3320,7 @@ namespace Agora.Rtc
 
 #region terra IMediaEngine
 
-        public override int PushAudioFrame(AudioFrame frame, track_id_t trackId = 0)
+        public override int PushAudioFrame(AudioFrame frame, uint trackId = 0)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3357,7 +3357,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetExternalAudioSource(enabled, sampleRate, channels, localPlayback, publish);
         }
 
-        public override track_id_t CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config)
+        public override uint CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3366,7 +3366,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.CreateCustomAudioTrack(trackType, config);
         }
 
-        public override int DestroyCustomAudioTrack(track_id_t trackId)
+        public override int DestroyCustomAudioTrack(uint trackId)
         {
             if (_rtcEngineImpl == null)
             {

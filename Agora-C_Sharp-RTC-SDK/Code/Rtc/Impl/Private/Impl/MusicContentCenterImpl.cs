@@ -292,7 +292,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetCaches(ref MusicCacheInfo[] cacheInfo, ref Int32 cacheInfoSize)
+        public int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize)
         {
             _param.Clear();
             _param.Add("cacheInfoSize", cacheInfoSize);
@@ -306,7 +306,7 @@ namespace Agora.Rtc
             if (nRet == 0)
             {
                 cacheInfo = AgoraJson.JsonToStructArray<MusicCacheInfo>(_apiParam.Result, "cacheInfo");
-                cacheInfoSize = (Int32)AgoraJson.GetData<Int32>(_apiParam.Result, "cacheInfoSize");
+                cacheInfoSize = (int)AgoraJson.GetData<int>(_apiParam.Result, "cacheInfoSize");
             }
             return result;
         }

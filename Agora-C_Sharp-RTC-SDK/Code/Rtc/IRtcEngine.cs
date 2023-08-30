@@ -317,7 +317,7 @@ namespace Agora.Rtc
 
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
 
-        public abstract int EnableCustomAudioLocalPlayback(track_id_t trackId, bool enabled);
+        public abstract int EnableCustomAudioLocalPlayback(uint trackId, bool enabled);
 
         public abstract int SetRecordingAudioFrameParameters(int sampleRate, int channel, RAW_AUDIO_FRAME_OP_MODE_TYPE mode, int samplesPerCall);
 
@@ -582,9 +582,9 @@ namespace Agora.Rtc
 
         public abstract int EnableContentInspect(bool enabled, ContentInspectConfig config);
 
-        public abstract int AdjustCustomAudioPublishVolume(track_id_t trackId, int volume);
+        public abstract int AdjustCustomAudioPublishVolume(uint trackId, int volume);
 
-        public abstract int AdjustCustomAudioPlayoutVolume(track_id_t trackId, int volume);
+        public abstract int AdjustCustomAudioPlayoutVolume(uint trackId, int volume);
 
         public abstract int SetCloudProxy(CLOUD_PROXY_TYPE proxyType);
 
@@ -627,7 +627,7 @@ namespace Agora.Rtc
 
 #region terra IMediaEngine
 
-        public abstract int PushAudioFrame(AudioFrame frame, track_id_t trackId = 0);
+        public abstract int PushAudioFrame(AudioFrame frame, uint trackId = 0);
 
         public abstract int PullAudioFrame(AudioFrame frame);
 
@@ -636,9 +636,9 @@ namespace Agora.Rtc
         [Obsolete("This method is deprecated. Use createCustomAudioTrack(rtc::AUDIO_TRACK_TYPE trackType, const rtc::AudioTrackConfig& config) instead.")]
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true);
 
-        public abstract track_id_t CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config);
+        public abstract uint CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config);
 
-        public abstract int DestroyCustomAudioTrack(track_id_t trackId);
+        public abstract int DestroyCustomAudioTrack(uint trackId);
 
         public abstract int SetExternalAudioSink(bool enabled, int sampleRate, int channels);
 

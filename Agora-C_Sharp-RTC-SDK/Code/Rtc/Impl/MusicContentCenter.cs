@@ -141,7 +141,7 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.RemoveCache(songCode);
         }
 
-        public override int GetCaches(ref MusicCacheInfo[] cacheInfo, ref Int32 cacheInfoSize)
+        public override int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {

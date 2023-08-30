@@ -2606,7 +2606,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int EnableCustomAudioLocalPlayback(track_id_t trackId, bool enabled)
+        public int EnableCustomAudioLocalPlayback(uint trackId, bool enabled)
         {
             _param.Clear();
             _param.Add("trackId", trackId);
@@ -4515,7 +4515,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int AdjustCustomAudioPublishVolume(track_id_t trackId, int volume)
+        public int AdjustCustomAudioPublishVolume(uint trackId, int volume)
         {
             _param.Clear();
             _param.Add("trackId", trackId);
@@ -4530,7 +4530,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int AdjustCustomAudioPlayoutVolume(track_id_t trackId, int volume)
+        public int AdjustCustomAudioPlayoutVolume(uint trackId, int volume)
         {
             _param.Clear();
             _param.Add("trackId", trackId);
@@ -5663,7 +5663,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public track_id_t CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config)
+        public uint CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config)
         {
             _param.Clear();
             _param.Add("trackType", trackType);
@@ -5673,12 +5673,12 @@ namespace Agora.Rtc
                                                           json, (UInt32)json.Length,
                                                           IntPtr.Zero, 0,
                                                           ref _apiParam);
-            var result = nRet != 0 ? 0 : (track_id_t)AgoraJson.GetData<track_id_t>(_apiParam.Result, "result");
+            var result = nRet != 0 ? 0 : (uint)AgoraJson.GetData<uint>(_apiParam.Result, "result");
 
             return result;
         }
 
-        public int DestroyCustomAudioTrack(track_id_t trackId)
+        public int DestroyCustomAudioTrack(uint trackId)
         {
             _param.Clear();
             _param.Add("trackId", trackId);
