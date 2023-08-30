@@ -29,11 +29,11 @@ namespace Agora.Rtc
 
         private void Dispose(bool disposing)
         {
-            if (_disposed) return;
+            if (_disposed)
+                return;
 
             if (disposing)
             {
-
             }
 
             _irisApiEngine = IntPtr.Zero;
@@ -52,37 +52,21 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer)
-        {
-            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
-        }
+#region terra InheritedFromIMediaPlayer
 
-        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
-        {
-            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
-        }
-
-        public int UnregisterAudioFrameObserver(int playerId)
-        {
-            return _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
-        }
-
-
-        public int RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
-        {
-            return _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
-        }
-
-        public int UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
-        {
-            return _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
-        }
-
-        //normal feature
-
-        public int Open(int playerId, string url, Int64 startPos)
+        public int Open(int playerId, string url, long startPos)
         {
             return _mediaPlayerImpl.Open(playerId, url, startPos);
+        }
+
+        public int OpenWithCustomSource(int playerId, long startPos, IMediaPlayerCustomDataProvider provider)
+        {
+            return _mediaPlayerImpl.OpenWithCustomSource(playerId, startPos, provider);
+        }
+
+        public int OpenWithMediaSource(int playerId, MediaSource source)
+        {
+            return _mediaPlayerImpl.OpenWithMediaSource(playerId, source);
         }
 
         public int Play(int playerId)
@@ -105,9 +89,14 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.Resume(playerId);
         }
 
-        public int Seek(int playerId, Int64 newPos)
+        public int Seek(int playerId, long newPos)
         {
             return _mediaPlayerImpl.Seek(playerId, newPos);
+        }
+
+        public int SetAudioPitch(int playerId, int pitch)
+        {
+            return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
         }
 
         public int GetDuration(int playerId, ref Int64 duration)
@@ -125,7 +114,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetStreamCount(playerId, ref count);
         }
 
-        public int GetStreamInfo(int playerId, Int64 index, ref PlayerStreamInfo info)
+        public int GetStreamInfo(int playerId, long index, ref PlayerStreamInfo info)
         {
             return _mediaPlayerImpl.GetStreamInfo(playerId, index, ref info);
         }
@@ -175,14 +164,14 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetState(playerId);
         }
 
-        public int Mute(int playerId, bool mute)
+        public int Mute(int playerId, bool muted)
         {
-            return _mediaPlayerImpl.Mute(playerId, mute);
+            return _mediaPlayerImpl.Mute(playerId, muted);
         }
 
-        public int GetMute(int playerId, ref bool mute)
+        public int GetMute(int playerId, ref bool muted)
         {
-            return _mediaPlayerImpl.GetMute(playerId, ref mute);
+            return _mediaPlayerImpl.GetMute(playerId, ref muted);
         }
 
         public int AdjustPlayoutVolume(int playerId, int volume)
@@ -215,6 +204,31 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetRenderMode(playerId, renderMode);
         }
 
+        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer)
+        {
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer);
+        }
+
+        public int RegisterAudioFrameObserver(int playerId, IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode)
+        {
+            return _mediaPlayerImpl.RegisterAudioFrameObserver(playerId, observer, mode);
+        }
+
+        public int UnregisterAudioFrameObserver(int playerId)
+        {
+            return _mediaPlayerImpl.UnregisterAudioFrameObserver(playerId);
+        }
+
+        public int RegisterMediaPlayerAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer, int intervalInMS)
+        {
+            return _mediaPlayerImpl.RegisterMediaPlayerAudioSpectrumObserver(playerId, observer, intervalInMS);
+        }
+
+        public int UnregisterMediaPlayerAudioSpectrumObserver(int playerId)
+        {
+            return _mediaPlayerImpl.UnregisterMediaPlayerAudioSpectrumObserver(playerId);
+        }
+
         public int SetAudioDualMonoMode(int playerId, AUDIO_DUAL_MONO_MODE mode)
         {
             return _mediaPlayerImpl.SetAudioDualMonoMode(playerId, mode);
@@ -230,17 +244,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetPlaySrc(playerId);
         }
 
-        public int SetAudioPitch(int playerId, int pitch)
-        {
-            return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
-        }
-
-        public int SetSpatialAudioParams(int playerId, SpatialAudioParams spatial_audio_params)
-        {
-            return _mediaPlayerImpl.SetSpatialAudioParams(playerId, spatial_audio_params);
-        }
-
-        public int OpenWithAgoraCDNSrc(int playerId, string src, Int64 startPos)
+        public int OpenWithAgoraCDNSrc(int playerId, string src, long startPos)
         {
             return _mediaPlayerImpl.OpenWithAgoraCDNSrc(playerId, src, startPos);
         }
@@ -265,7 +269,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.EnableAutoSwitchAgoraCDN(playerId, enable);
         }
 
-        public int RenewAgoraCDNSrcToken(int playerId, string token, Int64 ts)
+        public int RenewAgoraCDNSrcToken(int playerId, string token, long ts)
         {
             return _mediaPlayerImpl.RenewAgoraCDNSrcToken(playerId, token, ts);
         }
@@ -280,7 +284,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SwitchSrc(playerId, src, syncPts);
         }
 
-        public int PreloadSrc(int playerId, string src, Int64 startPos)
+        public int PreloadSrc(int playerId, string src, long startPos)
         {
             return _mediaPlayerImpl.PreloadSrc(playerId, src, startPos);
         }
@@ -292,37 +296,37 @@ namespace Agora.Rtc
 
         public int UnloadSrc(int playerId, string src)
         {
-            return _mediaPlayerImpl.PlayPreloadedSrc(playerId, src);
+            return _mediaPlayerImpl.UnloadSrc(playerId, src);
         }
 
-        public int OpenWithCustomSource(int playerId, Int64 startPos, IMediaPlayerCustomDataProvider provider)
+        public int SetSpatialAudioParams(int playerId, SpatialAudioParams @params)
         {
-            return _mediaPlayerImpl.OpenWithCustomSource(playerId, startPos, provider);
-        }
-
-        public int OpenWithMediaSource(int playerId, MediaSource source)
-        {
-            return _mediaPlayerImpl.OpenWithMediaSource(playerId, source);
+            return _mediaPlayerImpl.SetSpatialAudioParams(playerId, @params);
         }
 
         public int SetSoundPositionParams(int playerId, float pan, float gain)
         {
             return _mediaPlayerImpl.SetSoundPositionParams(playerId, pan, gain);
         }
+#endregion terra InheritedFromIMediaPlayer
 
-        public int Open(int playerId, Int64 songCode, Int64 startPos = 0)
+#region terra IMusicPlayer
+
+        public int Open(int playerId, long songCode, long startPos = 0)
         {
             _param.Clear();
             _param.Add("playerId", playerId);
             _param.Add("songCode", songCode);
             _param.Add("startPos", startPos);
+            var json = AgoraJson.ToJson(_param);
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICPLAYER_OPEN,
+                                                          json, (UInt32)json.Length,
+                                                          IntPtr.Zero, 0,
+                                                          ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
-            string jsonParam = AgoraJson.ToJson(_param);
-
-            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
-                AgoraApiType.FUNC_MUSICPLAYER_OPEN,
-                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
-            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return result;
         }
+#endregion terra IMusicPlayer
     }
 }

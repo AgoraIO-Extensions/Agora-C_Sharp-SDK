@@ -1,0 +1,28 @@
+{
+    "IMediaPlayerCacheManager": {
+        "type": "ClazzStruct",
+        "name": "IMediaPlayerCacheManager",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_interface_return_int",
+        "includeMembers": [],
+        "excludeMethods": [],
+        "specialMethodsTemplate": {},
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "specialMembersTemplate": ""
+    },
+    "method_interface_return_int": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null){ return ErrorCode;}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
+    "method_interface_return_bool": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaPlayerCacheManagerImpl == null)\n{\nreturn false;\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
+    "method_interface_return_uint": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaPlayerCacheManagerImpl == null)\n{\nreturn 0;\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
+    "method_interface_return_string": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaPlayerCacheManagerImpl == null)\n{\nreturn \"\";\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
+    "method_interface_return_null": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaPlayerCacheManagerImpl == null)\n{\nreturn null;\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
+    "method_interface_return_CONNECTION_STATE_TYPE": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaPlayerCacheManagerImpl == null)\n{\nreturn CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
+    "method_interface_param_join": {
+        "format": "${-oPARAM_TYPE} ${-oPARAM_NAME_FORMAL} ${-ePARAM_NAME_FORMAL_DEFAULT}",
+        "split": ", "
+    },
+    "method_interface_param_join2": {
+        "format": "${-oPARAM_NAME_ACTUAL}",
+        "split": ", "
+    }
+}

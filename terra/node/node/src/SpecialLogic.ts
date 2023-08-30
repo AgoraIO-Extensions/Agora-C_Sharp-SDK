@@ -662,6 +662,41 @@ export class SpeicalLogic {
             return "int playerId";
         }
     }
+    public cSharpSDK_AppendNativeHandle(clazzName: string, fun: MemberFunction) {
+        let length = 0;
+        for (let p of fun.parameters) {
+            let tranName = ConfigTool.getInstance().paramNameActualTrans.transType(clazzName, fun.name, p.name);
+            if (tranName != "@remove" && tranName != "") {
+                length++;
+            }
+        }
+
+        if (length > 0) {
+            return "_nativeHandle, ";
+        }
+        else {
+            return "_nativeHandle";
+        }
+    }
+
+    public cSharpSDK_AppendNativeHandleWithString(clazzName: string, fun: MemberFunction) {
+        let length = 0;
+        for (let p of fun.parameters) {
+            let tranName = ConfigTool.getInstance().paramNameActualTrans.transType(clazzName, fun.name, p.name);
+            if (tranName != "@remove" && tranName != "") {
+                length++;
+            }
+        }
+
+        if (length > 0) {
+            return "string nativeHandle, ";
+        }
+        else {
+            return "string nativeHandle";
+        }
+    }
+
+
 
 
 }

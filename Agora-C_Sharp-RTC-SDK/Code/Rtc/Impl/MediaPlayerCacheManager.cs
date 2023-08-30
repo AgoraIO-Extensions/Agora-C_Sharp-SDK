@@ -7,7 +7,6 @@ namespace Agora.Rtc
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManagerImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-
         private MediaPlayerCacheManager(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)
         {
             _rtcEngineInstance = rtcEngine;
@@ -19,12 +18,10 @@ namespace Agora.Rtc
             _rtcEngineInstance = null;
         }
 
-
         private static MediaPlayerCacheManager instance = null;
         public static MediaPlayerCacheManager Instance
         {
-            get
-            {
+            get {
                 return instance;
             }
         }
@@ -38,6 +35,8 @@ namespace Agora.Rtc
         {
             instance = null;
         }
+
+#region terra IMediaPlayerCacheManager
 
         public override int RemoveAllCaches()
         {
@@ -102,14 +101,13 @@ namespace Agora.Rtc
             return _mediaPlayerCacheManagerImpl.EnableAutoRemoveCache(enable);
         }
 
-        public override int GetCacheDir(out string path, int length)
+        public override int GetCacheDir(ref string path, int length)
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
             {
-                path = "";
                 return ErrorCode;
             }
-            return _mediaPlayerCacheManagerImpl.GetCacheDir(out path, length);
+            return _mediaPlayerCacheManagerImpl.GetCacheDir(ref path, length);
         }
 
         public override int GetMaxCacheFileCount()
@@ -138,5 +136,6 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.GetCacheFileCount();
         }
+#endregion terra IMediaPlayerCacheManager
     }
 }

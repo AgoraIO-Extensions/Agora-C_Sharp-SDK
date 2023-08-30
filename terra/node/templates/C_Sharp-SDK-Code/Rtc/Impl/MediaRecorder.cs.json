@@ -1,0 +1,23 @@
+{
+    "IMediaRecorder": {
+        "type": "ClazzStruct",
+        "name": "IMediaRecorder",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_interface_return_int",
+        "includeMembers": [],
+        "excludeMethods": [],
+        "specialMethodsTemplate": {},
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "specialMembersTemplate": ""
+    },
+    "method_interface_return_int": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaRecorderImpl == null || this._nativeHandle == null){return ErrorCode;}\nreturn _mediaRecorderImpl.${-uMETHOD_NAME}(${SPECIAL_METHOD_LOGIC:cSharpSDK_AppendNativeHandle}${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
+    "method_interface_param_join": {
+        "format": "${-oPARAM_TYPE} ${-oPARAM_NAME_FORMAL} ${-ePARAM_NAME_FORMAL_DEFAULT}",
+        "split": ", "
+    },
+    "method_interface_param_join2": {
+        "format": "${-oPARAM_NAME_ACTUAL}",
+        "split": ", "
+    }
+}

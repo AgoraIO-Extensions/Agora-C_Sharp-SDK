@@ -65,7 +65,9 @@
         "MediaSource.MediaSource.provider:NULL": "null",
         "MusicContentCenterConfiguration.MusicContentCenterConfiguration.appId:nullptr": "\"\"",
         "MusicContentCenterConfiguration.MusicContentCenterConfiguration.token:nullptr": "\"\"",
-        "LocalSpatialAudioConfig.LocalSpatialAudioConfig.rtcEngine:NULL": "null"
+        "LocalSpatialAudioConfig.LocalSpatialAudioConfig.rtcEngine:NULL": "null",
+        "IMusicContentCenter.getMusicCollectionByMusicChartId.jsonOption:nullptr": "\"\"",
+        "IMusicContentCenter.searchMusic.jsonOption:nullptr": "\"\""
     },
     "normal": {
         "agora::media::PRIMARY_CAMERA_SOURCE": "MEDIA_SOURCE_TYPE.PRIMARY_CAMERA_SOURCE",
