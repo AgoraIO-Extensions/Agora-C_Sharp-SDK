@@ -1777,7 +1777,7 @@ namespace Agora.Rtc
 
         public VIDEO_SOURCE_TYPE sourceType;
 
-        public UInt32 observationPosition;
+        public uint observationPosition;
 
         public VideoTrackInfo()
         {
@@ -1792,7 +1792,7 @@ namespace Agora.Rtc
             this.observationPosition = (uint)VIDEO_MODULE_POSITION.POSITION_POST_CAPTURER;
         }
 
-        public VideoTrackInfo(bool isLocal, uint ownerUid, track_id_t trackId, string channelId, VIDEO_STREAM_TYPE streamType, VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly, VIDEO_SOURCE_TYPE sourceType, UInt32 observationPosition)
+        public VideoTrackInfo(bool isLocal, uint ownerUid, track_id_t trackId, string channelId, VIDEO_STREAM_TYPE streamType, VIDEO_CODEC_TYPE codecType, bool encodedFrameOnly, VIDEO_SOURCE_TYPE sourceType, uint observationPosition)
         {
             this.isLocal = isLocal;
             this.ownerUid = ownerUid;
@@ -2492,7 +2492,7 @@ namespace Agora.Rtc
 
         public uint uid;
 
-        public UInt32 backgroundColor;
+        public uint backgroundColor;
 
         public RENDER_MODE_TYPE renderMode;
 
@@ -2550,7 +2550,7 @@ namespace Agora.Rtc
             this.enableAlphaMask = false;
         }
 
-        public VideoCanvas(view_t view, uint uid, UInt32 backgroundColor, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_VIEW_SETUP_MODE setupMode, VIDEO_SOURCE_TYPE sourceType, int mediaPlayerId, Rectangle cropArea, bool enableAlphaMask)
+        public VideoCanvas(view_t view, uint uid, uint backgroundColor, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, VIDEO_VIEW_SETUP_MODE setupMode, VIDEO_SOURCE_TYPE sourceType, int mediaPlayerId, Rectangle cropArea, bool enableAlphaMask)
         {
             this.view = view;
             this.uid = uid;

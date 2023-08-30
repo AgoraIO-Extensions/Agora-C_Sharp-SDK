@@ -233,9 +233,9 @@ namespace Agora.Rtc
 
         public int mosValue;
 
-        public UInt32 frozenRateByCustomPlcCount;
+        public uint frozenRateByCustomPlcCount;
 
-        public UInt32 plcCount;
+        public uint plcCount;
 
         public int totalActiveTime;
 
@@ -269,7 +269,7 @@ namespace Agora.Rtc
             this.rxAudioBytes = 0;
         }
 
-        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, UInt32 frozenRateByCustomPlcCount, UInt32 plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes)
+        public RemoteAudioStats(uint uid, int quality, int networkTransportDelay, int jitterBufferDelay, int audioLossRate, int numChannels, int receivedSampleRate, int receivedBitrate, int totalFrozenTime, int frozenRate, int mosValue, uint frozenRateByCustomPlcCount, uint plcCount, int totalActiveTime, int publishDuration, int qoeQuality, int qualityChangedReason, uint rxAudioBytes)
         {
             this.uid = uid;
             this.quality = quality;
@@ -595,7 +595,7 @@ namespace Agora.Rtc
     {
         public bool isCaptureWindow;
 
-        public UInt32 displayId;
+        public uint displayId;
 
         public Rectangle screenRect;
 
@@ -612,7 +612,7 @@ namespace Agora.Rtc
             this.windowId = 0;
         }
 
-        public ScreenCaptureConfiguration(bool isCaptureWindow, UInt32 displayId, Rectangle screenRect, view_t windowId, ScreenCaptureParameters @params, Rectangle regionRect)
+        public ScreenCaptureConfiguration(bool isCaptureWindow, uint displayId, Rectangle screenRect, view_t windowId, ScreenCaptureParameters @params, Rectangle regionRect)
         {
             this.isCaptureWindow = isCaptureWindow;
             this.displayId = displayId;
@@ -1154,7 +1154,7 @@ namespace Agora.Rtc
     {
         public string appId;
 
-        public UInt64 context;
+        public ulong context;
 
         public CHANNEL_PROFILE_TYPE channelProfile;
 

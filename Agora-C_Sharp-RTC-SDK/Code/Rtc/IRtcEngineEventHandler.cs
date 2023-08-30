@@ -136,7 +136,7 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnUserStateChanged(RtcConnection connection, uint remoteUid, UInt32 state)
+        public virtual void OnUserStateChanged(RtcConnection connection, uint remoteUid, uint state)
         {
         }
 

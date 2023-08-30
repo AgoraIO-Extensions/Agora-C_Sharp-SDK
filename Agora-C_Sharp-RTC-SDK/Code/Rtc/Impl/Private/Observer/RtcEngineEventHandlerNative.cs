@@ -637,7 +637,7 @@ namespace Agora.Rtc
                                                               rtcEngineEventHandler.OnUserStateChanged(
                                                                   AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
                                                                   (uint)AgoraJson.GetData<uint>(jsonData, "remoteUid"),
-                                                                  (UInt32)AgoraJson.GetData<UInt32>(jsonData, "state")
+                                                                  (uint)AgoraJson.GetData<uint>(jsonData, "state")
 
                                                               );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
