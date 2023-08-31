@@ -130,7 +130,8 @@
         "IRtcEngineEventHandler.onAudioDeviceStateChanged.deviceState": "MEDIA_DEVICE_STATE_TYPE",
         "IRtcEngineEventHandler.onVideoDeviceStateChanged.deviceType": "MEDIA_DEVICE_TYPE",
         "IRtcEngineEventHandler.onVideoDeviceStateChanged.deviceState": "MEDIA_DEVICE_STATE_TYPE",
-        "IRtcEngineEventHandlerEx.onStreamMessage.data": "byte[]"
+        "IRtcEngineEventHandlerEx.onStreamMessage.data": "byte[]",
+        "IMediaPlayerSourceObserver.onMetaData.data": "byte[]"
     },
     "normal": {
         "char*": "string",

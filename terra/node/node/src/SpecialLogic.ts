@@ -753,7 +753,7 @@ export class SpeicalLogic {
             }
             m = mEx || m;
 
-            lines.push(`case "${switchKey}":`);
+            lines.push(`case "${switchKey}":\n{`);
             lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
             lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
             lines.push(`#endif`);
@@ -771,11 +771,11 @@ export class SpeicalLogic {
 
             lines.push(`${paramslines.join(",\n")}`);
 
-            lines.push(`\n); `);
+            lines.push(`\n);`);
             lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
-            lines.push(` }); `);
+            lines.push(`}\n);`);
             lines.push(`#endif`);
-            lines.push(`break; \n`);
+            lines.push(`break;\n}\n`);
         }
 
         return lines.join("\n");
@@ -790,7 +790,7 @@ export class SpeicalLogic {
         if (transType == "@remove")
             return null;
 
-        var simpleType = ["Int32", "UInt32", "int", "ulong", "uint", "long", "string", "bool", "track_id_t", "float", "ushort", "short"];
+        var simpleType = ["view_t", "int", "ulong", "uint", "long", "string", "bool", "double", "float", "ushort", "short", "byte"];
         if (simpleType.includes(transType)) {
             //基本数据类型
             return `(${transType})AgoraJson.GetData <${transType}>(${jsonMapName}, "${transName}")`;
@@ -808,6 +808,72 @@ export class SpeicalLogic {
                 return `AgoraJson.JsonToStruct < ${transType}> (${jsonMapName}, "${transName}")`;
             }
         }
+    }
+
+    public cSharpSDK_GenerateCommonEventHandlerNative(clazzName: string, m: MemberFunction): string {
+        let lines = [];
+        let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
+        let handlerNameMap = {
+            "IDirectCdnStreamingEventHandler": "rtcEngineEventHandler"
+        }
+        let handlerName = handlerNameMap[clazzName] || "commonEventHandler";
+        lines.push(`case "${switchKey}":\n{`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
+        lines.push(`#endif`);
+        lines.push(`if (${handlerName} == null) return;`);
+        let methodName = Tool._processStringWithU(m.name);
+        lines.push(`${handlerName}.${methodName}(`);
+
+        let paramslines = [];
+
+        for (let p of m.parameters) {
+            let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
+            if (jsonString != null)
+                paramslines.push(jsonString);
+        }
+
+        lines.push(`${paramslines.join(",\n")}`);
+
+        lines.push(`\n); `);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(` }); `);
+        lines.push(`#endif`);
+        lines.push(`break;\n}`);
+
+        return lines.join("\n");
+
+    }
+
+    public cSharpSDK_GenerateMediaPlayerSourceObserverNative(clazzName: string, m: MemberFunction): string {
+        let lines = [];
+        let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
+        lines.push(`case "${switchKey}":\n{`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
+        lines.push(`#endif`);
+        lines.push(` if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;`);
+        let methodName = Tool._processStringWithU(m.name);
+        lines.push(`mediaPlayerSourceObserverDic[playerId].${methodName}(`);
+
+        let paramslines = [];
+
+        for (let p of m.parameters) {
+            let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
+            if (jsonString != null)
+                paramslines.push(jsonString);
+        }
+
+        lines.push(`${paramslines.join(",\n")}`);
+
+        lines.push(`\n); `);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(` }); `);
+        lines.push(`#endif`);
+        lines.push(`break;\n}`);
+
+        return lines.join("\n");
+
     }
 
 
