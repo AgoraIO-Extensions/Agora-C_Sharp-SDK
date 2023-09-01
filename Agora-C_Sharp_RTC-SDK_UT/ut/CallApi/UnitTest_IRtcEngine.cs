@@ -3207,6 +3207,16 @@ namespace Agora.Rtc
             Assert.Greater(nRet, 0);
         }
 
+        [Test]
+        public void Test_IsFeatureAvailableOnDevice()
+        {
+            FeatureType type;
+            ParamsHelper.InitParam(out type);
+            var nRet = Engine.IsFeatureAvailableOnDevice(type);
+
+            Assert.AreEqual(true, nRet);
+        }
+
         #endregion
 
         #endregion

@@ -67,7 +67,6 @@ namespace Agora.Rtc
             this.eglType = frame.eglType;
             this.textureId = frame.textureId;
             this.metadata_size = frame.metadata_size;
-            this.d3d11_texture_2d = frame.d3d11_texture_2d;
             this.texture_slice_index = frame.texture_slice_index;
         }
 
@@ -86,7 +85,6 @@ namespace Agora.Rtc
         public EGL_CONTEXT_TYPE eglType;
         public int textureId;
         public int metadata_size;
-        public IntPtr d3d11_texture_2d;
         public int texture_slice_index;
 
     }

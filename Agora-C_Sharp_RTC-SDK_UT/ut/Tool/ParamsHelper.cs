@@ -951,10 +951,10 @@ namespace Agora.Rtc
             param = new DeviceInfoMobile();
         }
 
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out FeatureType param)
+        {
+            param = FeatureType.VIDEO_VIRTUAL_BACKGROUND;
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
