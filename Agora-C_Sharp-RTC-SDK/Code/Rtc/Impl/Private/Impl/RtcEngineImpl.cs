@@ -1344,6 +1344,24 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection)
+
+        {
+            _param.Clear();
+            _param.Add("enabled", enabled);
+            _param.Add("config", config);
+            _param.Add("connection", connection);
+
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLECONTENTINSPECTEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
 
         public int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
         {
@@ -6092,6 +6110,20 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
             return nRet != 0 ? 0 : (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "result");
+        }
+
+        public bool IsFeatureAvailableOnDevice(FeatureType type)
+        {
+            _param.Clear();
+            _param.Add("type", type);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISFEATUREAVAILABLEONDEVICE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

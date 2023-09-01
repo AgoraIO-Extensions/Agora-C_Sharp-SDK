@@ -2092,6 +2092,13 @@ namespace Agora.Rtc
         HTTPS_PROXY_TYPE = 6,
     };
 
+    public enum FeatureType
+    {
+        VIDEO_VIRTUAL_BACKGROUND = 1,
+        VIDEO_BEAUTY_EFFECT = 2,
+    };
+
+
     ///
     /// <summary>
     /// The options for leaving a channel.

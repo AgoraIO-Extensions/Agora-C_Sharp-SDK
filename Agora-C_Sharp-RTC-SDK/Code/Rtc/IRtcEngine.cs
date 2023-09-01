@@ -5212,6 +5212,9 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract UInt64 GetNtpWallTimeInMs();
+
+
+        public abstract bool IsFeatureAvailableOnDevice(FeatureType type);
         ///
         /// <summary>
         /// Gets the C++ handle of the Native SDK.
@@ -5889,6 +5892,8 @@ namespace Agora.Rtc
         ///
         public abstract int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath);
 
+
+        public abstract int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection);
         ///
         /// <summary>
         /// Stops or resumes publishing the local audio stream.
