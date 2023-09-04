@@ -584,6 +584,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_PIXEL_I422 = 16,
+
+        VIDEO_TEXTURE_ID3D11TEXTURE2D = 17,
     };
 
     ///
@@ -698,6 +700,8 @@ namespace Agora.Rtc
             this.metadata_buffer = null;
             this.metadata_size = 0;
             this.alphaBuffer = null;
+            this.d3d11_texture_2d = IntPtr.Zero;
+            this.texture_slice_index = 0;
         }
 
         public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride,
@@ -721,6 +725,8 @@ namespace Agora.Rtc
             this.textureId = textureId;
             this.metadata_buffer = metadata_buffer;
             this.metadata_size = metadata_size;
+            this.d3d11_texture_2d = IntPtr.Zero;
+            this.texture_slice_index = 0;
         }
 
         ///
@@ -842,6 +848,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public byte[] alphaBuffer;
+
+
+        public IntPtr d3d11_texture_2d;
+
+        public int texture_slice_index;
     };
 
     ///
@@ -874,6 +885,7 @@ namespace Agora.Rtc
             sharedContext = IntPtr.Zero;
             textureId = 0;
             matrix = new float[16];
+            d3d11Texture2d = IntPtr.Zero;
         }
 
         ///
@@ -1019,6 +1031,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public IntPtr alphaBufferPtr;
+
+        public IntPtr d3d11Texture2d;
     };
 
     ///
@@ -1449,6 +1463,7 @@ namespace Agora.Rtc
         /// 1: Video content moderation. SDK takes screenshots, inspects video content of the video stream in the channel, and uploads the screenshots and moderation results.
         /// </summary>
         ///
+        [Obsolete]
         CONTENT_INSPECT_MODERATION = 1,
 
         ///
@@ -1456,7 +1471,9 @@ namespace Agora.Rtc
         /// 2: Screenshot capture. SDK takes screenshots of the video stream in the channel and uploads them.
         /// </summary>
         ///
-        CONTENT_INSPECT_SUPERVISION = 2
+        CONTENT_INSPECT_SUPERVISION = 2,
+
+        CONTENT_INSPECT_IMAGE_MODERATION = 3,
     };
 
     ///
@@ -1515,6 +1532,8 @@ namespace Agora.Rtc
     ///
     public class ContentInspectConfig
     {
+        public string extraInfo;
+        public string serverConfig;
         ///
         /// <summary>
         /// Functional module. See ContentInspectModule. A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32]. A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
@@ -1531,6 +1550,8 @@ namespace Agora.Rtc
 
         public ContentInspectConfig()
         {
+            extraInfo = "";
+            serverConfig = "";
             modules = null;
             moduleCount = 0;
         }

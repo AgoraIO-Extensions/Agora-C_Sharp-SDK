@@ -574,6 +574,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
+
+        ERR_ADM_APPLICATION_LOOPBACK = 2007,
     };
 
 
@@ -3450,6 +3452,16 @@ namespace Agora.Rtc
         /// @ignore
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_NO_PERMISSION = 22,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_PAUSED = 23,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_RESUMED = 24,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_HIDDEN = 25,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_HIDDEN = 26,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_MINIMIZED = 27,
     };
 
     ///
@@ -5376,7 +5388,9 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21
+        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21,
+
+        CONNECTION_CHANGED_CERTIFICATION_VERYFY_FAILURE = 22,
     };
 
     ///
@@ -5533,6 +5547,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         NETWORK_TYPE_MOBILE_4G = 5,
+
+        NETWORK_TYPE_MOBILE_5G = 6,
     };
 
     ///
@@ -8284,7 +8300,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         ConnectivityFirst = 0,
-       
+
         ///
         /// @ignore
         ///
@@ -8313,17 +8329,17 @@ namespace Agora.Rtc
             serverHttps = https;
         }
 
-       
+
         ///
         /// @ignore
         ///
         public string serverDomain;
-        
+
         ///
         /// @ignore
         ///
         public string serverPath;
-      
+
         ///
         /// @ignore
         ///
@@ -8362,22 +8378,22 @@ namespace Agora.Rtc
             advancedConfig = new AdvancedConfigInfo();
         }
 
-      
+
         ///
         /// @ignore
         ///
         public string[] ipList;
-      
+
         ///
         /// @ignore
         ///
         public int ipListSize;
-       
+
         ///
         /// @ignore
         ///
         public string[] domainList;
-       
+
         ///
         /// @ignore
         ///
@@ -8387,12 +8403,12 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public string verifyDomainName;
-       
+
         ///
         /// @ignore
         ///
         public LOCAL_PROXY_MODE mode;
-      
+
         ///
         /// @ignore
         ///

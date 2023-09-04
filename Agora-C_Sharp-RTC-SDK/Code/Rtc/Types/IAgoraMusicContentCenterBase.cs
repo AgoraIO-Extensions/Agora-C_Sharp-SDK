@@ -67,6 +67,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         kMusicContentCenterStatusErrMusicDecryption = 6,
+
+        kMusicContentCenterStatusErrHttpInternalError = 7,
     };
 
     ///
@@ -295,20 +297,24 @@ namespace Agora.Rtc
         ///
         public UInt32 maxCacheSize;
 
+        public string mccDomain;
+
         public MusicContentCenterConfiguration()
         {
             appId = "";
             token = "";
             mccUid = 0;
             maxCacheSize = 10;
+            mccDomain = "";
         }
 
-        public MusicContentCenterConfiguration(string appId, string token, UInt64 uid, UInt32 maxCacheSize)
+        public MusicContentCenterConfiguration(string appId, string token, UInt64 uid, UInt32 maxCacheSize, string mccDomain)
         {
             this.appId = appId;
             this.token = token;
             this.mccUid = uid;
             this.maxCacheSize = maxCacheSize;
+            this.mccDomain = mccDomain;
         }
     }
 }

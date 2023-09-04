@@ -67,6 +67,7 @@ namespace Agora.Rtc
             this.eglType = frame.eglType;
             this.textureId = frame.textureId;
             this.metadata_size = frame.metadata_size;
+            this.texture_slice_index = frame.texture_slice_index;
         }
 
 
@@ -84,6 +85,8 @@ namespace Agora.Rtc
         public EGL_CONTEXT_TYPE eglType;
         public int textureId;
         public int metadata_size;
+        public int texture_slice_index;
+
     }
 
     ///
@@ -116,5 +119,7 @@ namespace Agora.Rtc
         FRAME_TYPE_CVPIXEL_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_BGRA,
 
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
+
+        FRAME_TYPE_ID3D11TEXTURE2D = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_ID3D11TEXTURE2D,
     };
 }

@@ -128,6 +128,7 @@ namespace Agora.Rtc
             localVideoFrame.matrix = videoFrameConverted.matrix;
             localVideoFrame.textureId = videoFrameConverted.textureId;
             localVideoFrame.alphaBufferPtr = videoFrameConverted.alphaBuffer;
+            localVideoFrame.d3d11Texture2d = videoFrameConverted.d3d11Texture2d;
         }
 
 

@@ -1344,6 +1344,24 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection)
+
+        {
+            _param.Clear();
+            _param.Add("enabled", enabled);
+            _param.Add("config", config);
+            _param.Add("connection", connection);
+
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINEEX_ENABLECONTENTINSPECTEX,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
 
         public int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
         {
@@ -6094,6 +6112,20 @@ namespace Agora.Rtc
             return nRet != 0 ? 0 : (UInt64)AgoraJson.GetData<UInt64>(_apiParam.Result, "result");
         }
 
+        public bool IsFeatureAvailableOnDevice(FeatureType type)
+        {
+            _param.Clear();
+            _param.Add("type", type);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ISFEATUREAVAILABLEONDEVICE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? false : (bool)AgoraJson.GetData<bool>(_apiParam.Result, "result");
+        }
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         public int SetMaxMetadataSize(int size)
         {
@@ -6267,18 +6299,19 @@ namespace Agora.Rtc
             _param.Add("frame", new ExternalVideoFrameInternal(frame));
             _param.Add("videoTrackId", videoTrackId);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
+            IntPtr bufferPtr = frame.buffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
             IntPtr eglContextPtr = IntPtr.Zero;
             IntPtr metadataPtr = IntPtr.Zero;
             IntPtr alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr, alphaBuffer };
+            IntPtr d3d11_texture_2d = frame.d3d11_texture_2d;
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr, alphaBuffer, d3d11_texture_2d };
             int alphaLength = frame.alphaBuffer == null ? 0 : frame.alphaBuffer.Length;
             var json = AgoraJson.ToJson(_param);
 
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME,
                 json, (UInt32)json.Length,
-                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 4,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 5,
                 ref _apiParam, (uint)frame.buffer.Length, 0, 0, (uint)alphaLength);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
