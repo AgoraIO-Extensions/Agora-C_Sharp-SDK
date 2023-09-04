@@ -24,10 +24,10 @@ namespace Agora.Rtc
     internal enum IRIS_VIDEO_PROCESS_ERR
     {
         ERR_OK = 0,
-        ERR_NULL_POINTER = 1,
-        ERR_SIZE_NOT_MATCHING = 2,
-        ERR_BUFFER_EMPTY = 5,
-        ERR_FRAM_TYPE_NOT_MATCHING = 6
+        ERR_NULL_POINTER = 1001,
+        ERR_SIZE_NOT_MATCHING = 1002,
+        ERR_BUFFER_EMPTY = 1005,
+        ERR_FRAM_TYPE_NOT_MATCHING = 10006
     };
 
 

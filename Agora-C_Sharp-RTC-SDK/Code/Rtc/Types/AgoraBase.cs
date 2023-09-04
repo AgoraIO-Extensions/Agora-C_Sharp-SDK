@@ -189,6 +189,9 @@ namespace Agora.Rtc
         /// @ignore
         ///
         WARN_ADM_IMPROPER_SETTINGS = 1053,
+
+
+        WARN_ADM_REG_PHONE_LISTENNER_FAILED = 1060,
         ///
         /// @ignore
         ///
@@ -2270,7 +2273,7 @@ namespace Agora.Rtc
             int firstAudioPacketDuration, int firstVideoPacketDuration, int firstVideoKeyFramePacketDuration,
             int packetsBeforeFirstKeyFramePacket, int firstAudioPacketDurationAfterUnmute, int firstVideoPacketDurationAfterUnmute,
             int firstVideoKeyFramePacketDurationAfterUnmute, int firstVideoKeyFrameDecodedDurationAfterUnmute,
-            int firstVideoKeyFrameRenderedDurationAfterUnmute, int txPacketLossRate, int rxPacketLossRate)
+            int firstVideoKeyFrameRenderedDurationAfterUnmute, int txPacketLossRate, int rxPacketLossRate, int playoutDeviceGlitch)
         {
             this.duration = duration;
             this.txBytes = txBytes;
@@ -2305,6 +2308,7 @@ namespace Agora.Rtc
             this.firstVideoKeyFrameRenderedDurationAfterUnmute = firstVideoKeyFrameRenderedDurationAfterUnmute;
             this.txPacketLossRate = txPacketLossRate;
             this.rxPacketLossRate = rxPacketLossRate;
+            this.playoutDeviceGlitch = playoutDeviceGlitch;
         }
 
         ///
@@ -2519,6 +2523,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public int rxPacketLossRate;
+
+        public int playoutDeviceGlitch;
     };
 
     ///
@@ -3239,6 +3245,10 @@ namespace Agora.Rtc
         /// @ignore
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_NO_PERMISSION = 22,
+
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_HIDDEN = 25,
+       
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_HIDDEN = 26,
     };
 
     ///
@@ -3815,7 +3825,7 @@ namespace Agora.Rtc
         }
 
         public LocalAudioStats(int numChannels, int sentSampleRate, int sentBitrate, int internalCodec,
-            ushort txPacketLossRate, int audioDeviceDelay, int audioPlayoutDelay)
+            ushort txPacketLossRate, int audioDeviceDelay, int audioPlayoutDelay, int aecEstimatedDelay)
         {
             this.numChannels = numChannels;
             this.sentSampleRate = sentSampleRate;
@@ -3824,6 +3834,7 @@ namespace Agora.Rtc
             this.txPacketLossRate = txPacketLossRate;
             this.audioDeviceDelay = audioDeviceDelay;
             this.audioPlayoutDelay = audioPlayoutDelay;
+            this.aecEstimatedDelay = aecEstimatedDelay;
         }
 
         ///
@@ -3874,6 +3885,8 @@ namespace Agora.Rtc
         public int audioPlayoutDelay;
 
         public int earMonitorDelay;
+
+        public int aecEstimatedDelay;
     }
 
     ///
@@ -5237,6 +5250,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         NETWORK_TYPE_MOBILE_4G = 5,
+
+        NETWORK_TYPE_MOBILE_5G = 6,
     };
 
     ///
@@ -6042,6 +6057,8 @@ namespace Agora.Rtc
          * setting this enumerator.
          */
         ROOM_ACOUSTICS_VIRTUAL_SURROUND_SOUND = 0x02010900,
+
+        ROOM_ACOUSTICS_CHORUS = 0x02010D00,
         /** A middle-aged man's voice.
          *
          * @note
