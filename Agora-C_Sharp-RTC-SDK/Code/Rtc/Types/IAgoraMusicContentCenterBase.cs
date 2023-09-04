@@ -259,20 +259,24 @@ namespace Agora.Rtc
 
         public UInt64 maxCacheSize;
 
+        public string mccDomain;
+
         public MusicContentCenterConfiguration()
         {
             appId = "";
             token = "";
             mccUid = 0;
             maxCacheSize = 0;
+            mccDomain = "";
         }
 
-        public MusicContentCenterConfiguration(string appId, string token, UInt64 uid, UInt64 maxCacheSize)
+        public MusicContentCenterConfiguration(string appId, string token, UInt64 uid, UInt64 maxCacheSize, string mccDomain)
         {
             this.appId = appId;
             this.token = token;
             this.mccUid = uid;
             this.maxCacheSize = maxCacheSize;
+            this.mccDomain = mccDomain;
         }
     }
 }
