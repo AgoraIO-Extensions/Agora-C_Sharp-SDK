@@ -6299,7 +6299,7 @@ namespace Agora.Rtc
             _param.Add("frame", new ExternalVideoFrameInternal(frame));
             _param.Add("videoTrackId", videoTrackId);
 
-            IntPtr bufferPtr = Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
+            IntPtr bufferPtr = frame.buffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.buffer, 0);
             IntPtr eglContextPtr = IntPtr.Zero;
             IntPtr metadataPtr = IntPtr.Zero;
             IntPtr alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
