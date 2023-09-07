@@ -2194,6 +2194,25 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_IsCameraExposureSupported()
+        {
+
+            var nRet = Engine.IsCameraExposureSupported();
+
+            Assert.AreEqual(false, nRet);
+        }
+
+        [Test]
+        public void Test_SetCameraExposureFactor()
+        {
+            float factor;
+            ParamsHelper.InitParam(out factor);
+            var nRet = Engine.SetCameraExposureFactor(factor);
+
+            Assert.AreEqual(-4, nRet);
+        }
+
+        [Test]
         public void Test_IsCameraAutoExposureFaceModeSupported()
         {
 
