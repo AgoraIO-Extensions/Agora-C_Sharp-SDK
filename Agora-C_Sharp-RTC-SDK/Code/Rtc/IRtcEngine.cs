@@ -3159,6 +3159,39 @@ namespace Agora.Rtc
         ///
         public abstract int SetCameraExposurePosition(float positionXinView, float positionYinView);
 
+
+        ///
+        /// <summary>
+        /// Queries whether the current camera supports adjusting exposure value.
+        /// This method is for Android and iOS only.
+        /// This method must be called after the camera is successfully enabled, that is, after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
+        /// Before calling SetCameraExposureFactor, Agora recoomends that you call this method to query whether the current camera supports adjusting the exposure value.
+        /// By calling this method, you adjust the exposure value of the currently active camera, that is, the camera specified when calling SetCameraCapturerConfiguration.
+        /// </summary>
+        ///
+        /// <returns>
+        /// true : Success. false : Failure.
+        /// </returns>
+        ///
+        public abstract bool IsCameraExposureSupported();
+        ///
+        /// <summary>
+        /// Sets the camera exposure value.
+        /// Insufficient or excessive lighting in the shooting environment can affect the image quality of video capture. To achieve optimal video quality, you can use this method to adjust the camera's exposure value.
+        /// This method is for Android and iOS only.
+        /// You must call this method after EnableVideo. The setting result will take effect after the camera is successfully turned on, that is, after the SDK triggers the OnLocalVideoStateChanged callback and returns the local video state as LOCAL_VIDEO_STREAM_STATE_CAPTURING (1).
+        /// Before calling this method, Agora recommends calling IsCameraExposureSupported to check whether the current camera supports adjusting the exposure value.
+        /// By calling this method, you adjust the exposure value of the currently active camera, that is, the camera specified when calling SetCameraCapturerConfiguration.
+        /// </summary>
+        ///
+        /// <param name="factor"> The camera exposure value. The default value is 0, which means using the default exposure of the camera. The larger the value, the greater the exposure. When the video image is overexposed, you can reduce the exposure value; when the video image is underexposed and the dark details are lost, you can increase the exposure value. If the exposure value you specified is beyond the range supported by the device, the SDK will automatically adjust it to the actual supported range of the device. On Android, the value range is [-20.0, 20.0]. On iOS, the value range is [-8.0, 8.0].</param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
+        ///
+        public abstract int SetCameraExposureFactor(float factor);
         ///
         /// <summary>
         /// Checks whether the device supports auto exposure.

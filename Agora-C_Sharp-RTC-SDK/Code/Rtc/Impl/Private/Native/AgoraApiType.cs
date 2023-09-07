@@ -189,6 +189,8 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_SETCAMERAAUTOFOCUSFACEMODEENABLED = "RtcEngine_setCameraAutoFocusFaceModeEnabled";
         internal const string FUNC_RTCENGINE_ISCAMERAEXPOSUREPOSITIONSUPPORTED = "RtcEngine_isCameraExposurePositionSupported";
         internal const string FUNC_RTCENGINE_SETCAMERAEXPOSUREPOSITION = "RtcEngine_setCameraExposurePosition";
+        internal const string FUNC_RTCENGINE_ISCAMERAEXPOSURESUPPORTED = "RtcEngine_isCameraExposureSupported";
+        internal const string FUNC_RTCENGINE_SETCAMERAEXPOSUREFACTOR = "RtcEngine_setCameraExposureFactor";
         internal const string FUNC_RTCENGINE_ISCAMERAAUTOEXPOSUREFACEMODESUPPORTED = "RtcEngine_isCameraAutoExposureFaceModeSupported";
         internal const string FUNC_RTCENGINE_SETCAMERAAUTOEXPOSUREFACEMODEENABLED = "RtcEngine_setCameraAutoExposureFaceModeEnabled";
         internal const string FUNC_RTCENGINE_SETDEFAULTAUDIOROUTETOSPEAKERPHONE = "RtcEngine_setDefaultAudioRouteToSpeakerphone";
