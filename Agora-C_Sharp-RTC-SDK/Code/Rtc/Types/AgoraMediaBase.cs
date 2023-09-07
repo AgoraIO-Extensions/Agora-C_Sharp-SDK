@@ -147,7 +147,9 @@ namespace Agora.Rtc
         /// 9: The audio route is Apple AirPlay. (For macOS only)
         /// </summary>
         ///
-        ROUTE_AIRPLAY = 9
+        ROUTE_AIRPLAY = 9,
+
+        ROUTE_BLUETOOTH_SPEAKER = 10,
     };
 
     ///

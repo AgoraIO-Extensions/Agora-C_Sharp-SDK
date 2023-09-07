@@ -1787,6 +1787,24 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetCameraExposurePosition(positionXinView, positionYinView);
         }
 
+        public override bool IsCameraExposureSupported()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return false;
+            }
+            return _rtcEngineImpl.IsCameraExposureSupported();
+        }
+
+        public override int SetCameraExposureFactor(float factor)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.SetCameraExposureFactor(factor);
+        }
+
         public override bool IsCameraAutoExposureFaceModeSupported()
         {
             if (_rtcEngineImpl == null)
