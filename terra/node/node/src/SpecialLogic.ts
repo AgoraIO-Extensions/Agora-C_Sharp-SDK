@@ -781,6 +781,7 @@ export class SpeicalLogic {
         return lines.join("\n");
     }
 
+
     public cSharpSDK_GetValueFromJson(clazzName: string, funName: string, originType: string, originName: string, jsonMapName: string) {
         let config = ConfigTool.getInstance();
         let transType = config.paramTypeTrans.transType(clazzName, funName, originType, originName);
@@ -876,8 +877,36 @@ export class SpeicalLogic {
 
     }
 
+    public cSharpSDK_GenerateMusicContentCenterEventHandlerNative(clazzName: string, m: MemberFunction): string {
+        let lines = [];
+        let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
+        lines.push(`case "${switchKey}":\n{`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
+        lines.push(`#endif`);
+        lines.push(`if (EventHandler == null) return;`);
+        let methodName = Tool._processStringWithU(m.name);
+        lines.push(`EventHandler.${methodName}(`);
 
+        let paramslines = [];
 
+        for (let p of m.parameters) {
+            let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
+            if (jsonString != null)
+                paramslines.push(jsonString);
+        }
+
+        lines.push(`${paramslines.join(",\n")}`);
+
+        lines.push(`\n); `);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(` }); `);
+        lines.push(`#endif`);
+        lines.push(`break;\n}`);
+
+        return lines.join("\n");
+
+    }
 
 
 

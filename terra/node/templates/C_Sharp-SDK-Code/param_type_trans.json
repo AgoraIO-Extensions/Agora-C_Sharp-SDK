@@ -193,7 +193,8 @@
         "agora::rtc::IRtcEngine*": "IRtcEngine",
         "media::IAudioPcmFrameSink*": "IAudioPcmFrameSink",
         "agora::rtc::AudioVolumeInfo const*": "AudioVolumeInfo[]",
-        "agora::media::IVideoFrameObserver::VideoFrame&": "VideoFrame"
+        "agora::media::IVideoFrameObserver::VideoFrame&": "VideoFrame",
+        "agora_refptr<agora::rtc::MusicChartCollection>": "MusicChartInfo[]"
     },
     "reg": {
         "agora::rtc::SegmentationProperty::*": "${-o*}",
