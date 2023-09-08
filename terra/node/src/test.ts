@@ -12,7 +12,7 @@ var cxxiles = JSON.parse(fs.readFileSync("/Users/xiayangqun/Documents/agoraSpace
 
 new ParseEngine(
     "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/Agora-C_Sharp-RTC-SDK/Code",
-    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/node/templates/C_Sharp-SDK-Code",
+    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/templates/C_Sharp-SDK-Code",
     cxxiles,
     "#region terra",
     "#endregion terra"

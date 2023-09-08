@@ -194,7 +194,9 @@
         "media::IAudioPcmFrameSink*": "IAudioPcmFrameSink",
         "agora::rtc::AudioVolumeInfo const*": "AudioVolumeInfo[]",
         "agora::media::IVideoFrameObserver::VideoFrame&": "VideoFrame",
-        "agora_refptr<agora::rtc::MusicChartCollection>": "MusicChartInfo[]"
+        "agora_refptr<agora::rtc::MusicChartCollection>": "MusicChartInfo[]",
+        "agora::media::IAudioFrameObserverBase::AudioFrame&": "AudioFrame",
+        "base::user_id_t": "string"
     },
     "reg": {
         "agora::rtc::SegmentationProperty::*": "${-o*}",

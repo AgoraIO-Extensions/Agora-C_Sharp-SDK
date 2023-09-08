@@ -192,8 +192,9 @@ export class ParseClassOrStruct {
             outputStr += replaceString;
         }
 
-
-        result.push(outputStr);
+        if (outputStr != "") {
+            result.push(outputStr);
+        }
     }
 
     _parseMember(replaceString: string, member: MemberVariable, clazzName: string): string {
