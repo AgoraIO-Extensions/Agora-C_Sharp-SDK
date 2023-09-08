@@ -2,6 +2,7 @@
 using Agora.Rtc;
 namespace Agora.Rtc
 {
+    using view_t = System.Int64;
     public class UnitTest_IMediaPlayer
     {
         public IRtcEngine Engine;
@@ -26,149 +27,18 @@ namespace Agora.Rtc
             Engine.Dispose();
         }
 
-#region custom
+#region terra IMediaPlayer
 
-        [Test]
-        public void Test_GetDuration()
-        {
-            long duration;
-            ParamsHelper.InitParam(out duration);
-            var nRet = MediaPlayer.GetDuration(ref duration);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetPlayPosition()
-        {
-            long pos;
-            ParamsHelper.InitParam(out pos);
-            var nRet = MediaPlayer.GetPlayPosition(ref pos);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetStreamCount()
-        {
-            long count;
-            ParamsHelper.InitParam(out count);
-            var nRet = MediaPlayer.GetStreamCount(ref count);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetStreamInfo()
-        {
-            long index;
-            ParamsHelper.InitParam(out index);
-            PlayerStreamInfo info;
-            ParamsHelper.InitParam(out info);
-            var nRet = MediaPlayer.GetStreamInfo(index, ref info);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetMute()
-        {
-            bool muted;
-            ParamsHelper.InitParam(out muted);
-            var nRet = MediaPlayer.GetMute(ref muted);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetPlayoutVolume()
-        {
-            int volume;
-            ParamsHelper.InitParam(out volume);
-            var nRet = MediaPlayer.GetPlayoutVolume(ref volume);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetPublishSignalVolume()
-        {
-            int volume;
-            ParamsHelper.InitParam(out volume);
-            var nRet = MediaPlayer.GetPublishSignalVolume(ref volume);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_RegisterPlayerSourceObserver()
-        {
-            IMediaPlayerSourceObserver observer;
-            ParamsHelper.InitParam(out observer);
-            MediaPlayer.InitEventHandler(observer);
-        }
-
-        [Test]
-        public void Test_UnregisterPlayerSourceObserver() { MediaPlayer.InitEventHandler(null); }
-
-        [Test]
-        public void Test_UnregisterAudioFrameObserver()
-        {
-            IAudioPcmFrameSink observer;
-            ParamsHelper.InitParam(out observer);
-            var nRet = MediaPlayer.UnregisterAudioFrameObserver();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_UnregisterMediaPlayerAudioSpectrumObserver()
-        {
-            IAudioSpectrumObserver observer;
-            ParamsHelper.InitParam(out observer);
-            var nRet = MediaPlayer.UnregisterMediaPlayerAudioSpectrumObserver();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetPlaySrc()
-        {
-
-            var nRet = MediaPlayer.GetPlaySrc();
-
-            Assert.AreEqual("", nRet);
-        }
-
-        [Test]
-        public void Test_GetPlayerSdkVersion()
-        {
-
-            var nRet = MediaPlayer.GetPlayerSdkVersion();
-
-            Assert.AreEqual("", nRet);
-        }
-
-        [Test]
-        public void Test_GetState()
-        {
-
-            var nRet = MediaPlayer.GetState();
-
-            Assert.AreEqual(MEDIA_PLAYER_STATE.PLAYER_STATE_IDLE, nRet);
-        }
-#endregion
-
-#region terr
         [Test]
         public void Test_Open()
         {
             string url;
             ParamsHelper.InitParam(out url);
+
             long startPos;
             ParamsHelper.InitParam(out startPos);
-            var nRet = MediaPlayer.Open(url, startPos);
 
+            var nRet = MediaPlayer.Open(url, startPos);
             Assert.AreEqual(0, nRet);
         }
 
@@ -177,10 +47,11 @@ namespace Agora.Rtc
         {
             long startPos;
             ParamsHelper.InitParam(out startPos);
+
             IMediaPlayerCustomDataProvider provider;
             ParamsHelper.InitParam(out provider);
-            var nRet = MediaPlayer.OpenWithCustomSource(startPos, provider);
 
+            var nRet = MediaPlayer.OpenWithCustomSource(startPos, provider);
             Assert.AreEqual(0, nRet);
         }
 
@@ -189,8 +60,8 @@ namespace Agora.Rtc
         {
             MediaSource source;
             ParamsHelper.InitParam(out source);
-            var nRet = MediaPlayer.OpenWithMediaSource(source);
 
+            var nRet = MediaPlayer.OpenWithMediaSource(source);
             Assert.AreEqual(0, nRet);
         }
 
@@ -199,7 +70,6 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayer.Play();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -208,7 +78,6 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayer.Pause();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -217,7 +86,6 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayer.Stop();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -226,7 +94,6 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayer.Resume();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -235,8 +102,8 @@ namespace Agora.Rtc
         {
             long newPos;
             ParamsHelper.InitParam(out newPos);
-            var nRet = MediaPlayer.Seek(newPos);
 
+            var nRet = MediaPlayer.Seek(newPos);
             Assert.AreEqual(0, nRet);
         }
 
@@ -245,8 +112,51 @@ namespace Agora.Rtc
         {
             int pitch;
             ParamsHelper.InitParam(out pitch);
-            var nRet = MediaPlayer.SetAudioPitch(pitch);
 
+            var nRet = MediaPlayer.SetAudioPitch(pitch);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetDuration()
+        {
+            long duration;
+            ParamsHelper.InitParam(out duration);
+
+            var nRet = MediaPlayer.GetDuration(ref duration);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetPlayPosition()
+        {
+            long pos;
+            ParamsHelper.InitParam(out pos);
+
+            var nRet = MediaPlayer.GetPlayPosition(ref pos);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetStreamCount()
+        {
+            long count;
+            ParamsHelper.InitParam(out count);
+
+            var nRet = MediaPlayer.GetStreamCount(ref count);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetStreamInfo()
+        {
+            long index;
+            ParamsHelper.InitParam(out index);
+
+            PlayerStreamInfo info;
+            ParamsHelper.InitParam(out info);
+
+            var nRet = MediaPlayer.GetStreamInfo(index, ref info);
             Assert.AreEqual(0, nRet);
         }
 
@@ -255,8 +165,8 @@ namespace Agora.Rtc
         {
             int loopCount;
             ParamsHelper.InitParam(out loopCount);
-            var nRet = MediaPlayer.SetLoopCount(loopCount);
 
+            var nRet = MediaPlayer.SetLoopCount(loopCount);
             Assert.AreEqual(0, nRet);
         }
 
@@ -265,8 +175,8 @@ namespace Agora.Rtc
         {
             int speed;
             ParamsHelper.InitParam(out speed);
-            var nRet = MediaPlayer.SetPlaybackSpeed(speed);
 
+            var nRet = MediaPlayer.SetPlaybackSpeed(speed);
             Assert.AreEqual(0, nRet);
         }
 
@@ -275,8 +185,8 @@ namespace Agora.Rtc
         {
             int index;
             ParamsHelper.InitParam(out index);
-            var nRet = MediaPlayer.SelectAudioTrack(index);
 
+            var nRet = MediaPlayer.SelectAudioTrack(index);
             Assert.AreEqual(0, nRet);
         }
 
@@ -285,10 +195,11 @@ namespace Agora.Rtc
         {
             string key;
             ParamsHelper.InitParam(out key);
+
             int value;
             ParamsHelper.InitParam(out value);
-            var nRet = MediaPlayer.SetPlayerOption(key, value);
 
+            var nRet = MediaPlayer.SetPlayerOption(key, value);
             Assert.AreEqual(0, nRet);
         }
 
@@ -297,10 +208,11 @@ namespace Agora.Rtc
         {
             string key;
             ParamsHelper.InitParam(out key);
+
             string value;
             ParamsHelper.InitParam(out value);
-            var nRet = MediaPlayer.SetPlayerOption(key, value);
 
+            var nRet = MediaPlayer.SetPlayerOption(key, value);
             Assert.AreEqual(0, nRet);
         }
 
@@ -309,8 +221,8 @@ namespace Agora.Rtc
         {
             string filename;
             ParamsHelper.InitParam(out filename);
-            var nRet = MediaPlayer.TakeScreenshot(filename);
 
+            var nRet = MediaPlayer.TakeScreenshot(filename);
             Assert.AreEqual(0, nRet);
         }
 
@@ -319,8 +231,8 @@ namespace Agora.Rtc
         {
             int index;
             ParamsHelper.InitParam(out index);
-            var nRet = MediaPlayer.SelectInternalSubtitle(index);
 
+            var nRet = MediaPlayer.SelectInternalSubtitle(index);
             Assert.AreEqual(0, nRet);
         }
 
@@ -329,8 +241,16 @@ namespace Agora.Rtc
         {
             string url;
             ParamsHelper.InitParam(out url);
-            var nRet = MediaPlayer.SetExternalSubtitle(url);
 
+            var nRet = MediaPlayer.SetExternalSubtitle(url);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetState()
+        {
+
+            var nRet = MediaPlayer.GetState();
             Assert.AreEqual(0, nRet);
         }
 
@@ -339,8 +259,18 @@ namespace Agora.Rtc
         {
             bool muted;
             ParamsHelper.InitParam(out muted);
-            var nRet = MediaPlayer.Mute(muted);
 
+            var nRet = MediaPlayer.Mute(muted);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetMute()
+        {
+            bool muted;
+            ParamsHelper.InitParam(out muted);
+
+            var nRet = MediaPlayer.GetMute(ref muted);
             Assert.AreEqual(0, nRet);
         }
 
@@ -349,8 +279,18 @@ namespace Agora.Rtc
         {
             int volume;
             ParamsHelper.InitParam(out volume);
-            var nRet = MediaPlayer.AdjustPlayoutVolume(volume);
 
+            var nRet = MediaPlayer.AdjustPlayoutVolume(volume);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetPlayoutVolume()
+        {
+            int volume;
+            ParamsHelper.InitParam(out volume);
+
+            var nRet = MediaPlayer.GetPlayoutVolume(ref volume);
             Assert.AreEqual(0, nRet);
         }
 
@@ -359,8 +299,28 @@ namespace Agora.Rtc
         {
             int volume;
             ParamsHelper.InitParam(out volume);
-            var nRet = MediaPlayer.AdjustPublishSignalVolume(volume);
 
+            var nRet = MediaPlayer.AdjustPublishSignalVolume(volume);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetPublishSignalVolume()
+        {
+            int volume;
+            ParamsHelper.InitParam(out volume);
+
+            var nRet = MediaPlayer.GetPublishSignalVolume(ref volume);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetView()
+        {
+            view_t view;
+            ParamsHelper.InitParam(out view);
+
+            var nRet = MediaPlayer.SetView(view);
             Assert.AreEqual(0, nRet);
         }
 
@@ -369,8 +329,8 @@ namespace Agora.Rtc
         {
             RENDER_MODE_TYPE renderMode;
             ParamsHelper.InitParam(out renderMode);
-            var nRet = MediaPlayer.SetRenderMode(renderMode);
 
+            var nRet = MediaPlayer.SetRenderMode(renderMode);
             Assert.AreEqual(0, nRet);
         }
 
@@ -379,8 +339,8 @@ namespace Agora.Rtc
         {
             IAudioPcmFrameSink observer;
             ParamsHelper.InitParam(out observer);
-            var nRet = MediaPlayer.RegisterAudioFrameObserver(observer);
 
+            var nRet = MediaPlayer.RegisterAudioFrameObserver(observer);
             Assert.AreEqual(0, nRet);
         }
 
@@ -389,10 +349,19 @@ namespace Agora.Rtc
         {
             IAudioPcmFrameSink observer;
             ParamsHelper.InitParam(out observer);
+
             RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
             ParamsHelper.InitParam(out mode);
-            var nRet = MediaPlayer.RegisterAudioFrameObserver(observer, mode);
 
+            var nRet = MediaPlayer.RegisterAudioFrameObserver(observer, mode);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_UnregisterAudioFrameObserver()
+        {
+
+            var nRet = MediaPlayer.UnregisterAudioFrameObserver();
             Assert.AreEqual(0, nRet);
         }
 
@@ -401,10 +370,19 @@ namespace Agora.Rtc
         {
             IAudioSpectrumObserver observer;
             ParamsHelper.InitParam(out observer);
+
             int intervalInMS;
             ParamsHelper.InitParam(out intervalInMS);
-            var nRet = MediaPlayer.RegisterMediaPlayerAudioSpectrumObserver(observer, intervalInMS);
 
+            var nRet = MediaPlayer.RegisterMediaPlayerAudioSpectrumObserver(observer, intervalInMS);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_UnregisterMediaPlayerAudioSpectrumObserver()
+        {
+
+            var nRet = MediaPlayer.UnregisterMediaPlayerAudioSpectrumObserver();
             Assert.AreEqual(0, nRet);
         }
 
@@ -413,8 +391,24 @@ namespace Agora.Rtc
         {
             AUDIO_DUAL_MONO_MODE mode;
             ParamsHelper.InitParam(out mode);
-            var nRet = MediaPlayer.SetAudioDualMonoMode(mode);
 
+            var nRet = MediaPlayer.SetAudioDualMonoMode(mode);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetPlayerSdkVersion()
+        {
+
+            var nRet = MediaPlayer.GetPlayerSdkVersion();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetPlaySrc()
+        {
+
+            var nRet = MediaPlayer.GetPlaySrc();
             Assert.AreEqual(0, nRet);
         }
 
@@ -423,10 +417,11 @@ namespace Agora.Rtc
         {
             string src;
             ParamsHelper.InitParam(out src);
+
             long startPos;
             ParamsHelper.InitParam(out startPos);
-            var nRet = MediaPlayer.OpenWithAgoraCDNSrc(src, startPos);
 
+            var nRet = MediaPlayer.OpenWithAgoraCDNSrc(src, startPos);
             Assert.AreEqual(0, nRet);
         }
 
@@ -435,7 +430,6 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayer.GetAgoraCDNLineCount();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -444,8 +438,8 @@ namespace Agora.Rtc
         {
             int index;
             ParamsHelper.InitParam(out index);
-            var nRet = MediaPlayer.SwitchAgoraCDNLineByIndex(index);
 
+            var nRet = MediaPlayer.SwitchAgoraCDNLineByIndex(index);
             Assert.AreEqual(0, nRet);
         }
 
@@ -454,7 +448,6 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayer.GetCurrentAgoraCDNIndex();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -463,8 +456,8 @@ namespace Agora.Rtc
         {
             bool enable;
             ParamsHelper.InitParam(out enable);
-            var nRet = MediaPlayer.EnableAutoSwitchAgoraCDN(enable);
 
+            var nRet = MediaPlayer.EnableAutoSwitchAgoraCDN(enable);
             Assert.AreEqual(0, nRet);
         }
 
@@ -473,10 +466,11 @@ namespace Agora.Rtc
         {
             string token;
             ParamsHelper.InitParam(out token);
+
             long ts;
             ParamsHelper.InitParam(out ts);
-            var nRet = MediaPlayer.RenewAgoraCDNSrcToken(token, ts);
 
+            var nRet = MediaPlayer.RenewAgoraCDNSrcToken(token, ts);
             Assert.AreEqual(0, nRet);
         }
 
@@ -485,10 +479,11 @@ namespace Agora.Rtc
         {
             string src;
             ParamsHelper.InitParam(out src);
+
             bool syncPts;
             ParamsHelper.InitParam(out syncPts);
-            var nRet = MediaPlayer.SwitchAgoraCDNSrc(src, syncPts);
 
+            var nRet = MediaPlayer.SwitchAgoraCDNSrc(src, syncPts);
             Assert.AreEqual(0, nRet);
         }
 
@@ -497,10 +492,11 @@ namespace Agora.Rtc
         {
             string src;
             ParamsHelper.InitParam(out src);
+
             bool syncPts;
             ParamsHelper.InitParam(out syncPts);
-            var nRet = MediaPlayer.SwitchSrc(src, syncPts);
 
+            var nRet = MediaPlayer.SwitchSrc(src, syncPts);
             Assert.AreEqual(0, nRet);
         }
 
@@ -509,10 +505,11 @@ namespace Agora.Rtc
         {
             string src;
             ParamsHelper.InitParam(out src);
+
             long startPos;
             ParamsHelper.InitParam(out startPos);
-            var nRet = MediaPlayer.PreloadSrc(src, startPos);
 
+            var nRet = MediaPlayer.PreloadSrc(src, startPos);
             Assert.AreEqual(0, nRet);
         }
 
@@ -521,8 +518,8 @@ namespace Agora.Rtc
         {
             string src;
             ParamsHelper.InitParam(out src);
-            var nRet = MediaPlayer.PlayPreloadedSrc(src);
 
+            var nRet = MediaPlayer.PlayPreloadedSrc(src);
             Assert.AreEqual(0, nRet);
         }
 
@@ -531,8 +528,8 @@ namespace Agora.Rtc
         {
             string src;
             ParamsHelper.InitParam(out src);
-            var nRet = MediaPlayer.UnloadSrc(src);
 
+            var nRet = MediaPlayer.UnloadSrc(src);
             Assert.AreEqual(0, nRet);
         }
 
@@ -541,8 +538,8 @@ namespace Agora.Rtc
         {
             SpatialAudioParams @params;
             ParamsHelper.InitParam(out @params);
-            var nRet = MediaPlayer.SetSpatialAudioParams(@params);
 
+            var nRet = MediaPlayer.SetSpatialAudioParams(@params);
             Assert.AreEqual(0, nRet);
         }
 
@@ -551,13 +548,13 @@ namespace Agora.Rtc
         {
             float pan;
             ParamsHelper.InitParam(out pan);
+
             float gain;
             ParamsHelper.InitParam(out gain);
-            var nRet = MediaPlayer.SetSoundPositionParams(pan, gain);
 
+            var nRet = MediaPlayer.SetSoundPositionParams(pan, gain);
             Assert.AreEqual(0, nRet);
         }
-
-#endregion
+#endregion terra IMediaPlayer
     }
 }

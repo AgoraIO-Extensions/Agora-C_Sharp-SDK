@@ -143,7 +143,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
         }
 
-        public override int GetDuration(ref Int64 duration)
+        public override int GetDuration(ref long duration)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -152,7 +152,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetDuration(playerId, ref duration);
         }
 
-        public override int GetPlayPosition(ref Int64 pos)
+        public override int GetPlayPosition(ref long pos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {
@@ -161,7 +161,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.GetPlayPosition(playerId, ref pos);
         }
 
-        public override int GetStreamCount(ref Int64 count)
+        public override int GetStreamCount(ref long count)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
             {

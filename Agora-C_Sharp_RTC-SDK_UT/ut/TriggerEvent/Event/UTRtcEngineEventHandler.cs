@@ -876,10 +876,10 @@ namespace Agora.Rtc
         public uid_t OnStreamMessage_remoteUid = 0;
         public int OnStreamMessage_streamId = 0;
         public byte[] OnStreamMessage_data = null;
-        public uint OnStreamMessage_length = 0;
+        public ulong OnStreamMessage_length = 0;
         public ulong OnStreamMessage_sentTs = 0;
 
-        public override void OnStreamMessage(RtcConnection connection, uid_t remoteUid, int streamId, byte[] data, uint length, ulong sentTs)
+        public override void OnStreamMessage(RtcConnection connection, uid_t remoteUid, int streamId, byte[] data, ulong length, ulong sentTs)
         {
             OnStreamMessage_be_trigger = true;
             OnStreamMessage_connection = connection;
@@ -890,7 +890,7 @@ namespace Agora.Rtc
             OnStreamMessage_sentTs = sentTs;
         }
 
-        public bool OnStreamMessagePassed(RtcConnection connection, uid_t remoteUid, int streamId, byte[] data, uint length, ulong sentTs)
+        public bool OnStreamMessagePassed(RtcConnection connection, uid_t remoteUid, int streamId, byte[] data, ulong length, ulong sentTs)
         {
             if (OnStreamMessage_be_trigger == false)
                 return false;
@@ -903,7 +903,7 @@ namespace Agora.Rtc
                 return false;
             //if (ParamsHelper.compareString(OnStreamMessage_data, data) == false)
             //    return false;
-            if (ParamsHelper.compareUint(OnStreamMessage_length, length) == false)
+            if (ParamsHelper.compareUlong(OnStreamMessage_length, length) == false)
                 return false;
             if (ParamsHelper.compareUlong(OnStreamMessage_sentTs, sentTs) == false)
                 return false;
@@ -1858,12 +1858,13 @@ namespace Agora.Rtc
         public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged_state;
         public LOCAL_VIDEO_STREAM_ERROR OnLocalVideoStateChanged_error;
 
-        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR error)
+        public override void  OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+      
         {
-            OnLocalVideoStateChanged_be_trigger = true;
-            OnLocalVideoStateChanged_source = source;
-            OnLocalVideoStateChanged_state = state;
-            OnLocalVideoStateChanged_error = error;
+            //OnLocalVideoStateChanged_be_trigger = true;
+            //OnLocalVideoStateChanged_source = source;
+            //OnLocalVideoStateChanged_state = state;
+            //OnLocalVideoStateChanged_error = error;
         }
 
         public bool OnLocalVideoStateChangedPassed(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR error)

@@ -99,17 +99,17 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SetAudioPitch(playerId, pitch);
         }
 
-        public int GetDuration(int playerId, ref Int64 duration)
+        public int GetDuration(int playerId, ref long duration)
         {
             return _mediaPlayerImpl.GetDuration(playerId, ref duration);
         }
 
-        public int GetPlayPosition(int playerId, ref Int64 pos)
+        public int GetPlayPosition(int playerId, ref long pos)
         {
             return _mediaPlayerImpl.GetPlayPosition(playerId, ref pos);
         }
 
-        public int GetStreamCount(int playerId, ref Int64 count)
+        public int GetStreamCount(int playerId, ref long count)
         {
             return _mediaPlayerImpl.GetStreamCount(playerId, ref count);
         }

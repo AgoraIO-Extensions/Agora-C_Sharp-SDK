@@ -262,6 +262,16 @@ export class Tool {
         return input;
     }
 
+    //-f: 删除最前边的ref
+    public static _processStringWithF(input: string, repeat: number = 1): string {
+        if (input.startsWith("ref ")) {
+            return input.substring(4, input.length);
+        }
+        else {
+            return input;
+        }
+    }
+
     public static readFile(fullPath: string): string {
         return fs.readFileSync(fullPath, 'utf-8');
     }

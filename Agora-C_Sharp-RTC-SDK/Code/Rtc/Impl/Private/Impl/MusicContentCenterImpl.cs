@@ -360,7 +360,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetInternalSongCode(long songCode, string jsonOption, ref Int64 internalSongCode)
+        public int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode)
         {
             _param.Clear();
             _param.Add("songCode", songCode);
@@ -373,7 +373,7 @@ namespace Agora.Rtc
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
-                internalSongCode = AgoraJson.JsonToStruct<Int64>(_apiParam.Result, "internalSongCode");
+                internalSongCode = (long)AgoraJson.GetData<long>(_apiParam.Result, "internalSongCode");
             }
             return result;
         }

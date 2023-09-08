@@ -26,5 +26,14 @@ new ParseEngine(
     "#endregion terra"
 );
 
+new ParseEngine(
+    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/Agora-C_Sharp_RTC-SDK_UT/ut",
+    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/templates/C_Sharp-SDK-UT",
+    "/Users/xiayangqun/Documents/agoraSpace/Agora-C_Sharp-SDK-NG/terra/templates/C_Sharp-SDK-Trans",
+    cxxiles,
+    "#region terra",
+    "#endregion terra"
+);
+
 var data = Tool.getCppConstructor("VideoTrackInfo", "/Users/xiayangqun/Documents/agoraSpace/iris-ast/agora_rtc_ast/tmp/AgoraBase.h")
 console.log(JSON.stringify(data));

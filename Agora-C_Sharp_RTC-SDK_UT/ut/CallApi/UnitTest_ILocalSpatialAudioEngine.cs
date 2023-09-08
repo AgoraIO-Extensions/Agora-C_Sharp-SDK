@@ -26,20 +26,6 @@ namespace Agora.Rtc
         [TearDown]
         public void TearDown() { Engine.Dispose(); }
 
-#region custom
-
-        [Test]
-        public void Test_Initialize()
-        {
-
-            var nRet = LocalSpatialAudioEngine.Initialize();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-#endregion
-
-#region terr
         [Test]
         public void Test_SetMaxAudioRecvCount()
         {
@@ -109,7 +95,7 @@ namespace Agora.Rtc
             axisUp[0] = 98232.9f;
             axisUp[1] = 823.23f;
             axisUp[2] = -2382.232f;
-           
+
             var nRet = LocalSpatialAudioEngine.UpdateSelfPosition(position, axisForward, axisRight, axisUp);
 
             Assert.AreEqual(0, nRet);
@@ -150,7 +136,7 @@ namespace Agora.Rtc
         {
             int playerId;
             playerId = 123;
-          
+
             float[] position = new float[3];
             position[0] = 232;
             position[1] = 2332f;
@@ -162,39 +148,7 @@ namespace Agora.Rtc
             forward[2] = 9437.232f;
             RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
 
-
-
             var nRet = LocalSpatialAudioEngine.UpdatePlayerPositionInfo(playerId, positionInfo);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_SetParameters()
-        {
-            string @params;
-            ParamsHelper.InitParam(out @params);
-            var nRet = LocalSpatialAudioEngine.SetParameters(@params);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_MuteLocalAudioStream()
-        {
-            bool mute;
-            ParamsHelper.InitParam(out mute);
-            var nRet = LocalSpatialAudioEngine.MuteLocalAudioStream(mute);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_MuteAllRemoteAudioStreams()
-        {
-            bool mute;
-            ParamsHelper.InitParam(out mute);
-            var nRet = LocalSpatialAudioEngine.MuteAllRemoteAudioStreams(mute);
 
             Assert.AreEqual(0, nRet);
         }
@@ -204,11 +158,12 @@ namespace Agora.Rtc
         {
             SpatialAudioZone[] zones = new SpatialAudioZone[5];
             float baseParam = 292.232f;
-            for (int i = 0; i < zones.Length; i++) {
+            for (int i = 0; i < zones.Length; i++)
+            {
                 zones[i] = new SpatialAudioZone();
                 zones[i].zoneSetId = i;
                 zones[i].position = new float[3];
-                zones[i].position[0] = baseParam + 0 + i*10;
+                zones[i].position[0] = baseParam + 0 + i * 10;
                 zones[i].position[1] = baseParam + 1 + i * 10;
                 zones[i].position[2] = baseParam + 2 + i * 10;
                 zones[i].forward = new float[3];
@@ -232,9 +187,8 @@ namespace Agora.Rtc
                 zones[i].audioAttenuation = baseParam + 15 + i * 10;
             }
 
-          
             uint zoneCount = (uint)zones.Length;
-          
+
             var nRet = LocalSpatialAudioEngine.SetZones(zones, zoneCount);
 
             Assert.AreEqual(0, nRet);
@@ -254,17 +208,6 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-        [Test]
-        public void Test_MuteRemoteAudioStream()
-        {
-            uid_t uid = 12009;
-          
-            bool mute = false;
-           
-            var nRet = LocalSpatialAudioEngine.MuteRemoteAudioStream(uid, mute);
-
-            Assert.AreEqual(0, nRet);
-        }
         [Test]
         public void Test_UpdateRemotePosition()
         {
@@ -291,7 +234,7 @@ namespace Agora.Rtc
         public void Test_UpdateRemotePositionEx()
         {
             uid_t uid = uint.MaxValue;
-          
+
             RemoteVoicePositionInfo posInfo;
             float[] position = new float[3];
             position[0] = 26632;
@@ -304,7 +247,7 @@ namespace Agora.Rtc
             forward[2] = 1937.232f;
             RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
             RtcConnection connection = new RtcConnection("yanddsad", 1223);
-           
+
             var nRet = LocalSpatialAudioEngine.UpdateRemotePositionEx(uid, positionInfo, connection);
 
             Assert.AreEqual(0, nRet);
@@ -325,27 +268,8 @@ namespace Agora.Rtc
             uid_t uid = 83;
 
             RtcConnection connection = new RtcConnection("s2dfskds", 923);
-          
+
             var nRet = LocalSpatialAudioEngine.RemoveRemotePositionEx(uid, connection);
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_ClearRemotePositions()
-        {
-
-            var nRet = LocalSpatialAudioEngine.ClearRemotePositions();
-
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_ClearRemotePositionsEx()
-        {
-            RtcConnection connection = new RtcConnection("dasd", 982);
-         
-            var nRet = LocalSpatialAudioEngine.ClearRemotePositionsEx(connection);
 
             Assert.AreEqual(0, nRet);
         }
@@ -354,16 +278,75 @@ namespace Agora.Rtc
         public void Test_SetRemoteAudioAttenuation()
         {
             uid_t uid = 232;
-    
+
             double attenuation = -983.2;
-        
+
             bool forceSet = false;
 
             var nRet = LocalSpatialAudioEngine.SetRemoteAudioAttenuation(uid, attenuation, forceSet);
 
             Assert.AreEqual(0, nRet);
         }
+#region terra ILocalSpatialAudioEngine
 
-#endregion
+        [Test]
+        public void Test_SetParameters()
+        {
+            string @params;
+            ParamsHelper.InitParam(out @params);
+
+            var nRet = LocalSpatialAudioEngine.SetParameters(@params);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_MuteLocalAudioStream()
+        {
+            bool mute;
+            ParamsHelper.InitParam(out mute);
+
+            var nRet = LocalSpatialAudioEngine.MuteLocalAudioStream(mute);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_MuteAllRemoteAudioStreams()
+        {
+            bool mute;
+            ParamsHelper.InitParam(out mute);
+
+            var nRet = LocalSpatialAudioEngine.MuteAllRemoteAudioStreams(mute);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_MuteRemoteAudioStream()
+        {
+            uint uid;
+            ParamsHelper.InitParam(out uid);
+
+            bool mute;
+            ParamsHelper.InitParam(out mute);
+
+            var nRet = LocalSpatialAudioEngine.MuteRemoteAudioStream(uid, mute);
+            Assert.AreEqual(0, nRet);
+        }
+        [Test]
+        public void Test_Initialize()
+        {
+
+            var nRet = LocalSpatialAudioEngine.Initialize();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_ClearRemotePositions()
+        {
+
+            var nRet = LocalSpatialAudioEngine.ClearRemotePositions();
+            Assert.AreEqual(0, nRet);
+        }
+
+#endregion terra ILocalSpatialAudioEngine
     }
 }

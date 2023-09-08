@@ -658,7 +658,7 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetDuration(int playerId, ref Int64 duration)
+        public int GetDuration(int playerId, ref long duration)
         {
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -670,12 +670,12 @@ namespace Agora.Rtc
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
-                duration = AgoraJson.JsonToStruct<Int64>(_apiParam.Result, "duration");
+                duration = (long)AgoraJson.GetData<long>(_apiParam.Result, "duration");
             }
             return result;
         }
 
-        public int GetPlayPosition(int playerId, ref Int64 pos)
+        public int GetPlayPosition(int playerId, ref long pos)
         {
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -687,12 +687,12 @@ namespace Agora.Rtc
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
-                pos = AgoraJson.JsonToStruct<Int64>(_apiParam.Result, "pos");
+                pos = (long)AgoraJson.GetData<long>(_apiParam.Result, "pos");
             }
             return result;
         }
 
-        public int GetStreamCount(int playerId, ref Int64 count)
+        public int GetStreamCount(int playerId, ref long count)
         {
             _param.Clear();
             _param.Add("playerId", playerId);
@@ -704,7 +704,7 @@ namespace Agora.Rtc
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
-                count = AgoraJson.JsonToStruct<Int64>(_apiParam.Result, "count");
+                count = (long)AgoraJson.GetData<long>(_apiParam.Result, "count");
             }
             return result;
         }

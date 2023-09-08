@@ -34,7 +34,7 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out deviceCapabilityNumber);
             VideoFormat capability;
             ParamsHelper.InitParam(out capability);
-            var nRet = VideoDeviceManager.GetCapability(deviceIdUTF8, deviceCapabilityNumber, out capability);
+            var nRet = VideoDeviceManager.GetCapability(deviceIdUTF8, deviceCapabilityNumber, ref capability);
 
             Assert.AreEqual(0, nRet);
         }

@@ -59,11 +59,11 @@ namespace Agora.Rtc
 
         public abstract int SetAudioPitch(int pitch);
 
-        public abstract int GetDuration(ref Int64 duration);
+        public abstract int GetDuration(ref long duration);
 
-        public abstract int GetPlayPosition(ref Int64 pos);
+        public abstract int GetPlayPosition(ref long pos);
 
-        public abstract int GetStreamCount(ref Int64 count);
+        public abstract int GetStreamCount(ref long count);
 
         public abstract int GetStreamInfo(long index, ref PlayerStreamInfo info);
 

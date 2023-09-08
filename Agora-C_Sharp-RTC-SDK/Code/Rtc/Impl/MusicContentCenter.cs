@@ -177,7 +177,7 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.GetSongSimpleInfo(ref requestId, songCode);
         }
 
-        public override int GetInternalSongCode(long songCode, string jsonOption, ref Int64 internalSongCode)
+        public override int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
             {

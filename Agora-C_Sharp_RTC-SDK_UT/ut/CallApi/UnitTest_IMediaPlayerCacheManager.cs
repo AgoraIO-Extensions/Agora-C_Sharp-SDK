@@ -31,7 +31,7 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out path);
             int length;
             ParamsHelper.InitParam(out length);
-            var nRet = MediaPlayerCacheManager.GetCacheDir(out path, length);
+            var nRet = MediaPlayerCacheManager.GetCacheDir(ref path, length);
 
             Assert.AreEqual(0, nRet);
         }
