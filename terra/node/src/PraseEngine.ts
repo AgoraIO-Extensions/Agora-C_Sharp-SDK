@@ -16,13 +16,13 @@ import { ParseTemplate } from "./ParseTemplate";
 export class ParseEngine {
 
 
-    constructor(distPath: string, templatePath: string, cxxFiles: CXXFile[], markStart: string, markEnd: string) {
+    constructor(distPath: string, templatePath: string, tansPath: string, cxxFiles: CXXFile[], markStart: string, markEnd: string) {
         var configTool = ConfigTool.getInstance();
         configTool.loadDistMark(markStart, markEnd);
-        configTool.loadParamTypeTrans(new ParamTypeTrans(path.join(templatePath, "param_type_trans.json")));
-        configTool.loadParamNameFormalTrans(new ParamNameTrans(path.join(templatePath, "param_name_formal_trans.json")));
-        configTool.loadParamNameActualTrans(new ParamNameTrans(path.join(templatePath, "param_name_actual_trans.json")));
-        configTool.loadParamDefaultTrans(new ParamDefaultTrans(path.join(templatePath, "param_name_foraml_default_trans.json")));
+        configTool.loadParamTypeTrans(new ParamTypeTrans(path.join(tansPath, "param_type_trans.json")));
+        configTool.loadParamNameFormalTrans(new ParamNameTrans(path.join(tansPath, "param_name_formal_trans.json")));
+        configTool.loadParamNameActualTrans(new ParamNameTrans(path.join(tansPath, "param_name_actual_trans.json")));
+        configTool.loadParamDefaultTrans(new ParamDefaultTrans(path.join(tansPath, "param_name_foraml_default_trans.json")));
         configTool.loadCXXFiles(cxxFiles);
 
         var parseTemplate = new ParseTemplate();
