@@ -4,29 +4,30 @@ namespace Agora.Rtc
 {
     public class UTIAudioPcmFrameSink : IAudioPcmFrameSink
     {
+#region terra IAudioPcmFrameSink
 
         public bool OnFrame_be_trigger = false;
-        public AudioPcmFrame OnFrame_frame = null;
+        public AudioPcmFrame OnFrame_frame;
 
-        public override bool OnFrame(AudioPcmFrame frame)
+        public override void OnFrame(AudioPcmFrame frame)
         {
             OnFrame_be_trigger = true;
             OnFrame_frame = frame;
-            return true;
         }
 
         public bool OnFramePassed(AudioPcmFrame frame)
         {
+
             if (OnFrame_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareAudioPcmFrame(OnFrame_frame, frame) == false)
+            if (ParamsHelper.Compare<AudioPcmFrame>(OnFrame_frame, frame) == false)
                 return false;
 
             return true;
         }
 
-        ///////////////////////////////////
-
+        /////////////////////////////////
+#endregion terra IAudioPcmFrameSink
     }
 }

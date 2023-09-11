@@ -76,13 +76,7 @@ namespace Agora.Rtc
                             int dataLength = lengthArray[0];
                             frame.data_ = new Int16[dataLength];
                             Marshal.Copy(data_, frame.data_, 0, dataLength);
-                            var result = audioFrameObserver.OnFrame(frame);
-                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                            p.Add("result", result);
-                            string json = AgoraJson.ToJson(p);
-                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                            IntPtr resultPtr = eventParam.result;
-                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                            audioFrameObserver.OnFrame(frame);
                         }
                         break;
                     default:
@@ -98,16 +92,7 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case "MediaPlayerAudioFrameObserver_onFrame":
-                    {
-                        var result = true;
-                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                        p.Add("result", result);
-                        string json = AgoraJson.ToJson(p);
-                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                        IntPtr resultPtr = eventParam.result;
-                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                    }
+                case "AudioPcmFrameSink_onFrame":
                     break;
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);

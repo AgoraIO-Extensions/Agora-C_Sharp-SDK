@@ -4,11 +4,12 @@ namespace Agora.Rtc
 {
     public class UTAudioSpectrumObserver : IAudioSpectrumObserver
     {
-
         public string TAG;
 
+#region terra IAudioSpectrumObserver
+
         public bool OnLocalAudioSpectrum_be_trigger = false;
-        public AudioSpectrumData OnLocalAudioSpectrum_data = null;
+        public AudioSpectrumData OnLocalAudioSpectrum_data;
 
         public override bool OnLocalAudioSpectrum(AudioSpectrumData data)
         {
@@ -19,20 +20,21 @@ namespace Agora.Rtc
 
         public bool OnLocalAudioSpectrumPassed(AudioSpectrumData data)
         {
+
             if (OnLocalAudioSpectrum_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareAudioSpectrumData(OnLocalAudioSpectrum_data, data) == false)
+            if (ParamsHelper.Compare<AudioSpectrumData>(OnLocalAudioSpectrum_data, data) == false)
                 return false;
 
             return true;
         }
 
-        ///////////////////////////////////
+        /////////////////////////////////
 
         public bool OnRemoteAudioSpectrum_be_trigger = false;
-        public UserAudioSpectrumInfo[] OnRemoteAudioSpectrum_spectrums = null;
-        public uint OnRemoteAudioSpectrum_spectrumNumber = 0;
+        public UserAudioSpectrumInfo[] OnRemoteAudioSpectrum_spectrums;
+        public uint OnRemoteAudioSpectrum_spectrumNumber;
 
         public override bool OnRemoteAudioSpectrum(UserAudioSpectrumInfo[] spectrums, uint spectrumNumber)
         {
@@ -42,20 +44,21 @@ namespace Agora.Rtc
             return true;
         }
 
-        public bool OnRemoteAudioSpectrumPassed(UserAudioSpectrumInfo[]  spectrums, uint spectrumNumber)
-    {
-        if (OnRemoteAudioSpectrum_be_trigger == false)
-            return false;
+        public bool OnRemoteAudioSpectrumPassed(UserAudioSpectrumInfo[] spectrums, uint spectrumNumber)
+        {
 
-        if (ParamsHelper.compareUserAudioSpectrumInfoArray(OnRemoteAudioSpectrum_spectrums, spectrums) == false)
-            return false;
-        if (ParamsHelper.compareUint(OnRemoteAudioSpectrum_spectrumNumber, spectrumNumber) == false)
-            return false;
+            if (OnRemoteAudioSpectrum_be_trigger == false)
+                return false;
 
-        return true;
+            if (ParamsHelper.Compare<UserAudioSpectrumInfo[]>(OnRemoteAudioSpectrum_spectrums, spectrums) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRemoteAudioSpectrum_spectrumNumber, spectrumNumber) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+#endregion terra IAudioSpectrumObserver
     }
-
-    ///////////////////////////////////
-
-}
 }

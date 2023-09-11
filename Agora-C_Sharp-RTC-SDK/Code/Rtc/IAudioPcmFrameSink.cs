@@ -20,9 +20,9 @@ namespace Agora.Rtc
         /// Without practical meaning.
         /// </returns>
         ///
-        public virtual bool OnFrame(AudioPcmFrame frame)
+        public virtual void OnFrame(AudioPcmFrame frame)
         {
-            return true;
+
         }
     }
 }
