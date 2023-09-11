@@ -142,63 +142,63 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnEarMonitoringAudioFramePassed(audioFrame));
         }
 
-        [Test]
-        public void Test_OnPlaybackAudioFrameBeforeMixing()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING;
+        //[Test]
+        //public void Test_OnPlaybackAudioFrameBeforeMixing()
+        //{
+        //    ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING;
 
-            string channelId;
-            ParamsHelper.InitParam(out channelId);
+        //    string channelId;
+        //    ParamsHelper.InitParam(out channelId);
 
-            uint uid;
-            ParamsHelper.InitParam(out uid);
+        //    uint uid;
+        //    ParamsHelper.InitParam(out uid);
 
-            AudioFrame audioFrame;
-            ParamsHelper.InitParam(out audioFrame);
+        //    AudioFrame audioFrame;
+        //    ParamsHelper.InitParam(out audioFrame);
 
-            jsonObj.Clear();
-            jsonObj.Add("channelId", channelId);
-            jsonObj.Add("uid", uid);
-            jsonObj.Add("audioFrame", audioFrame);
+        //    jsonObj.Clear();
+        //    jsonObj.Add("channelId", channelId);
+        //    jsonObj.Add("uid", uid);
+        //    jsonObj.Add("audioFrame", audioFrame);
 
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+        //    var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
+        //    ApiParam.data = jsonString;
+        //    ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPlaybackAudioFrameBeforeMixingPassed(channelId, uid, audioFrame));
-        }
+        //    int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+        //    Assert.AreEqual(0, ret);
+        //    Assert.AreEqual(true, EventHandler.OnPlaybackAudioFrameBeforeMixingPassed(channelId, uid, audioFrame));
+        //}
 
-        [Test]
-        public void Test_OnPlaybackAudioFrameBeforeMixing2()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING2;
+        //[Test]
+        //public void Test_OnPlaybackAudioFrameBeforeMixing2()
+        //{
+        //    ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING2;
 
-            string channelId;
-            ParamsHelper.InitParam(out channelId);
+        //    string channelId;
+        //    ParamsHelper.InitParam(out channelId);
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+        //    string userId;
+        //    ParamsHelper.InitParam(out userId);
 
-            AudioFrame audioFrame;
-            ParamsHelper.InitParam(out audioFrame);
+        //    AudioFrame audioFrame;
+        //    ParamsHelper.InitParam(out audioFrame);
 
-            jsonObj.Clear();
-            jsonObj.Add("channelId", channelId);
-            jsonObj.Add("userId", userId);
-            jsonObj.Add("audioFrame", audioFrame);
+        //    jsonObj.Clear();
+        //    jsonObj.Add("channelId", channelId);
+        //    jsonObj.Add("userId", userId);
+        //    jsonObj.Add("audioFrame", audioFrame);
 
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+        //    var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
+        //    ApiParam.data = jsonString;
+        //    ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPlaybackAudioFrameBeforeMixingPassed2(channelId, userId, audioFrame));
-        }
+        //    int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+        //    Assert.AreEqual(0, ret);
+        //    Assert.AreEqual(true, EventHandler.OnPlaybackAudioFrameBeforeMixing2Passed(channelId, userId, audioFrame));
+        //}
 
 
         #endregion

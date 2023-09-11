@@ -283,7 +283,7 @@ export class ParseClassOrStruct {
             for (let e of paramArray) {
                 let pos = e.indexOf(":");
                 let configKey = e.substring(pos + 1, e.length - 1);
-                let str = this._paraseParamJoin(templateJson, configKey, method, clazzName);
+                let str = this._paraseParamJoin(templateJson, configKey, method, clazzName, repeat);
                 replaceString = replaceString.replace(e, str);
             }
         }
@@ -303,7 +303,7 @@ export class ParseClassOrStruct {
         return replaceString;
     }
 
-    _paraseParamJoin(templateJson: any, configKey: string, method: MemberFunction, clazzName: string) {
+    _paraseParamJoin(templateJson: any, configKey: string, method: MemberFunction, clazzName: string, repeat: number) {
         var config: ConfigTool = ConfigTool.getInstance();
         let json: TemplateJoin = templateJson[configKey];
         let outputStrings: string[] = [];
@@ -327,7 +327,7 @@ export class ParseClassOrStruct {
                 let methodArrayLength = methodArray.length;
                 for (let i = 0; i < methodArrayLength; i++) {
                     let methodMatched = methodArray[i];
-                    let newMethodName = Tool.processString(methodMatched, method.name, 0);
+                    let newMethodName = Tool.processString(methodMatched, method.name, repeat);
                     str = str.replace(methodMatched, newMethodName);
                 }
             }

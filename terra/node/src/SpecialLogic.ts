@@ -908,6 +908,15 @@ export class SpeicalLogic {
 
     }
 
+    public cSharpSDK_UTEventReturnValue(clazzName: string, m: MemberFunction): string {
+        if (m.return_type.source == "void")
+            return "";
+        else if (m.return_type.source == "bool")
+            return "return true;\n";
+
+        return "";
+    }
+
 
 
 }
