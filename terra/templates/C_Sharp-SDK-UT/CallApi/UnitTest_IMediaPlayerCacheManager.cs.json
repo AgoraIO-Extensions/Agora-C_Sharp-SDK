@@ -1,20 +1,10 @@
 {
-    "IMediaPlayer": {
+    "IMediaPlayerCacheManager": {
         "type": "ClazzStruct",
-        "name": "IMediaPlayer",
+        "name": "IMediaPlayerCacheManager",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_unitTest_compare_0",
-        "excludeMethods": [
-            "release",
-            "initialize",
-            "getMediaPlayerId",
-            "registerVideoFrameObserver",
-            "unregisterVideoFrameObserver",
-            "registerPlayerSourceObserver",
-            "unregisterPlayerSourceObserver",
-            "openWithCustomSource",
-            "openWithMediaSource"
-        ],
+        "excludeMethods": [],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
         "pecialMembersTemplate": ""

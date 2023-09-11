@@ -292,8 +292,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetParameters()
         {
-            string @params;
-            ParamsHelper.InitParam(out @params);
+            string @params = ParamsHelper.CreateParam<string>();
 
             var nRet = LocalSpatialAudioEngine.SetParameters(@params);
             Assert.AreEqual(0, nRet);
@@ -302,8 +301,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_MuteLocalAudioStream()
         {
-            bool mute;
-            ParamsHelper.InitParam(out mute);
+            bool mute = ParamsHelper.CreateParam<bool>();
 
             var nRet = LocalSpatialAudioEngine.MuteLocalAudioStream(mute);
             Assert.AreEqual(0, nRet);
@@ -312,8 +310,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_MuteAllRemoteAudioStreams()
         {
-            bool mute;
-            ParamsHelper.InitParam(out mute);
+            bool mute = ParamsHelper.CreateParam<bool>();
 
             var nRet = LocalSpatialAudioEngine.MuteAllRemoteAudioStreams(mute);
             Assert.AreEqual(0, nRet);
@@ -322,11 +319,8 @@ namespace Agora.Rtc
         [Test]
         public void Test_MuteRemoteAudioStream()
         {
-            uint uid;
-            ParamsHelper.InitParam(out uid);
-
-            bool mute;
-            ParamsHelper.InitParam(out mute);
+            uint uid = ParamsHelper.CreateParam<uint>();
+            bool mute = ParamsHelper.CreateParam<bool>();
 
             var nRet = LocalSpatialAudioEngine.MuteRemoteAudioStream(uid, mute);
             Assert.AreEqual(0, nRet);

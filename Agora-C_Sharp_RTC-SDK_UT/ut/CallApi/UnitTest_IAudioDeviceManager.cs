@@ -68,8 +68,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetPlaybackDevice()
         {
-            string deviceId;
-            ParamsHelper.InitParam(out deviceId);
+            string deviceId = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.SetPlaybackDevice(deviceId);
             Assert.AreEqual(0, nRet);
@@ -78,8 +77,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetPlaybackDevice()
         {
-            string deviceId;
-            ParamsHelper.InitParam(out deviceId);
+            string deviceId = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.GetPlaybackDevice(ref deviceId);
             Assert.AreEqual(0, nRet);
@@ -88,11 +86,8 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetPlaybackDeviceInfo()
         {
-            string deviceId;
-            ParamsHelper.InitParam(out deviceId);
-
-            string deviceName;
-            ParamsHelper.InitParam(out deviceName);
+            string deviceId = ParamsHelper.CreateParam<string>();
+            string deviceName = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.GetPlaybackDeviceInfo(ref deviceId, ref deviceName);
             Assert.AreEqual(0, nRet);
@@ -101,8 +96,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetPlaybackDeviceVolume()
         {
-            int volume;
-            ParamsHelper.InitParam(out volume);
+            int volume = ParamsHelper.CreateParam<int>();
 
             var nRet = AudioDeviceManager.SetPlaybackDeviceVolume(volume);
             Assert.AreEqual(0, nRet);
@@ -111,8 +105,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetPlaybackDeviceVolume()
         {
-            int volume;
-            ParamsHelper.InitParam(out volume);
+            int volume = ParamsHelper.CreateParam<int>();
 
             var nRet = AudioDeviceManager.GetPlaybackDeviceVolume(ref volume);
             Assert.AreEqual(0, nRet);
@@ -121,8 +114,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetRecordingDevice()
         {
-            string deviceId;
-            ParamsHelper.InitParam(out deviceId);
+            string deviceId = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.SetRecordingDevice(deviceId);
             Assert.AreEqual(0, nRet);
@@ -131,8 +123,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetRecordingDevice()
         {
-            string deviceId;
-            ParamsHelper.InitParam(out deviceId);
+            string deviceId = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.GetRecordingDevice(ref deviceId);
             Assert.AreEqual(0, nRet);
@@ -141,11 +132,8 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetRecordingDeviceInfo()
         {
-            string deviceId;
-            ParamsHelper.InitParam(out deviceId);
-
-            string deviceName;
-            ParamsHelper.InitParam(out deviceName);
+            string deviceId = ParamsHelper.CreateParam<string>();
+            string deviceName = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.GetRecordingDeviceInfo(ref deviceId, ref deviceName);
             Assert.AreEqual(0, nRet);
@@ -154,8 +142,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetRecordingDeviceVolume()
         {
-            int volume;
-            ParamsHelper.InitParam(out volume);
+            int volume = ParamsHelper.CreateParam<int>();
 
             var nRet = AudioDeviceManager.SetRecordingDeviceVolume(volume);
             Assert.AreEqual(0, nRet);
@@ -164,8 +151,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetRecordingDeviceVolume()
         {
-            int volume;
-            ParamsHelper.InitParam(out volume);
+            int volume = ParamsHelper.CreateParam<int>();
 
             var nRet = AudioDeviceManager.GetRecordingDeviceVolume(ref volume);
             Assert.AreEqual(0, nRet);
@@ -174,8 +160,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetLoopbackDevice()
         {
-            string deviceId;
-            ParamsHelper.InitParam(out deviceId);
+            string deviceId = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.SetLoopbackDevice(deviceId);
             Assert.AreEqual(0, nRet);
@@ -184,8 +169,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetLoopbackDevice()
         {
-            string deviceId;
-            ParamsHelper.InitParam(out deviceId);
+            string deviceId = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.GetLoopbackDevice(ref deviceId);
             Assert.AreEqual(0, nRet);
@@ -194,8 +178,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetPlaybackDeviceMute()
         {
-            bool mute;
-            ParamsHelper.InitParam(out mute);
+            bool mute = ParamsHelper.CreateParam<bool>();
 
             var nRet = AudioDeviceManager.SetPlaybackDeviceMute(mute);
             Assert.AreEqual(0, nRet);
@@ -204,8 +187,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetPlaybackDeviceMute()
         {
-            bool mute;
-            ParamsHelper.InitParam(out mute);
+            bool mute = ParamsHelper.CreateParam<bool>();
 
             var nRet = AudioDeviceManager.GetPlaybackDeviceMute(ref mute);
             Assert.AreEqual(0, nRet);
@@ -214,8 +196,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetRecordingDeviceMute()
         {
-            bool mute;
-            ParamsHelper.InitParam(out mute);
+            bool mute = ParamsHelper.CreateParam<bool>();
 
             var nRet = AudioDeviceManager.SetRecordingDeviceMute(mute);
             Assert.AreEqual(0, nRet);
@@ -224,8 +205,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetRecordingDeviceMute()
         {
-            bool mute;
-            ParamsHelper.InitParam(out mute);
+            bool mute = ParamsHelper.CreateParam<bool>();
 
             var nRet = AudioDeviceManager.GetRecordingDeviceMute(ref mute);
             Assert.AreEqual(0, nRet);
@@ -234,8 +214,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StartPlaybackDeviceTest()
         {
-            string testAudioFilePath;
-            ParamsHelper.InitParam(out testAudioFilePath);
+            string testAudioFilePath = ParamsHelper.CreateParam<string>();
 
             var nRet = AudioDeviceManager.StartPlaybackDeviceTest(testAudioFilePath);
             Assert.AreEqual(0, nRet);
@@ -252,8 +231,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StartRecordingDeviceTest()
         {
-            int indicationInterval;
-            ParamsHelper.InitParam(out indicationInterval);
+            int indicationInterval = ParamsHelper.CreateParam<int>();
 
             var nRet = AudioDeviceManager.StartRecordingDeviceTest(indicationInterval);
             Assert.AreEqual(0, nRet);
@@ -270,8 +248,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StartAudioDeviceLoopbackTest()
         {
-            int indicationInterval;
-            ParamsHelper.InitParam(out indicationInterval);
+            int indicationInterval = ParamsHelper.CreateParam<int>();
 
             var nRet = AudioDeviceManager.StartAudioDeviceLoopbackTest(indicationInterval);
             Assert.AreEqual(0, nRet);
@@ -288,8 +265,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_FollowSystemPlaybackDevice()
         {
-            bool enable;
-            ParamsHelper.InitParam(out enable);
+            bool enable = ParamsHelper.CreateParam<bool>();
 
             var nRet = AudioDeviceManager.FollowSystemPlaybackDevice(enable);
             Assert.AreEqual(0, nRet);
@@ -298,8 +274,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_FollowSystemRecordingDevice()
         {
-            bool enable;
-            ParamsHelper.InitParam(out enable);
+            bool enable = ParamsHelper.CreateParam<bool>();
 
             var nRet = AudioDeviceManager.FollowSystemRecordingDevice(enable);
             Assert.AreEqual(0, nRet);
@@ -308,8 +283,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_FollowSystemLoopbackDevice()
         {
-            bool enable;
-            ParamsHelper.InitParam(out enable);
+            bool enable = ParamsHelper.CreateParam<bool>();
 
             var nRet = AudioDeviceManager.FollowSystemLoopbackDevice(enable);
             Assert.AreEqual(0, nRet);

@@ -6,8 +6,8 @@ namespace Agora.Rtc
     public class UnitTest_IMediaRecorder
     {
         public IRtcEngine Engine;
-        public IMediaRecorder MediaRecorder1;
-  
+        public IMediaRecorder MediaRecorder;
+
         [SetUp]
         public void Setup()
         {
@@ -16,43 +16,43 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = Engine.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
-            MediaRecorder1 = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
+            MediaRecorder = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
         }
 
         [TearDown]
         public void TearDown()
         {
-            Engine.DestroyMediaRecorder(MediaRecorder1);
+            Engine.DestroyMediaRecorder(MediaRecorder);
             Engine.Dispose();
         }
 
-        #region terr
+#region terra IMediaRecorder
+
         [Test]
         public void Test_SetMediaRecorderObserver()
         {
+            IMediaRecorderObserver callback = ParamsHelper.CreateParam<IMediaRecorderObserver>();
 
-            IMediaRecorderObserver callback;
-            ParamsHelper.InitParam(out callback);
-            var nRet = MediaRecorder1.SetMediaRecorderObserver(callback);
+            var nRet = MediaRecorder.SetMediaRecorderObserver(callback);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_StartRecording()
         {
-            MediaRecorderConfiguration config;
-            ParamsHelper.InitParam(out config);
-            var nRet = MediaRecorder1.StartRecording(config);
+            MediaRecorderConfiguration config = ParamsHelper.CreateParam<MediaRecorderConfiguration>();
+
+            var nRet = MediaRecorder.StartRecording(config);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_StopRecording()
         {
-            var nRet = MediaRecorder1.StopRecording();
+
+            var nRet = MediaRecorder.StopRecording();
             Assert.AreEqual(0, nRet);
         }
-
-        #endregion
+#endregion terra IMediaRecorder
     }
 }

@@ -19,13 +19,21 @@ namespace Agora.Rtc
 
        
         [Test]
-        public void Test_GetCapability()
+        public void Test_Create()
         {
-            //RtcEngineContext context = ParamsHelper.CreateParam<RtcEngineContext>();
+            RtcEngineContext context = ParamsHelper.CreateParam<RtcEngineContext>();
             Metadata metadata = ParamsHelper.CreateParam<Metadata>();
+            ChannelMediaOptions options = ParamsHelper.CreateParam<ChannelMediaOptions>();
 
-            Console.Write("Hello World");
+        }
 
+        [Test]
+        public void Test_Compare()
+        {
+            var context1 = ParamsHelper.CreateParam<ChannelMediaOptions>();
+            var context2 = ParamsHelper.CreateParam<ChannelMediaOptions>();
+            context2.autoSubscribeVideo.SetEmpty();
+            Assert.AreEqual(false, ParamsHelper.Compare<ChannelMediaOptions>(context1, context2));
 
         }
     }

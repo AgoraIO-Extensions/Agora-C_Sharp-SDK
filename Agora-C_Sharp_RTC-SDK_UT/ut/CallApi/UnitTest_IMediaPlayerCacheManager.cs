@@ -23,27 +23,13 @@ namespace Agora.Rtc
         [TearDown]
         public void TearDown() { Engine.Dispose(); }
 
-#region custom
-        [Test]
-        public void Test_GetCacheDir()
-        {
-            string path;
-            ParamsHelper.InitParam(out path);
-            int length;
-            ParamsHelper.InitParam(out length);
-            var nRet = MediaPlayerCacheManager.GetCacheDir(ref path, length);
+#region terra IMediaPlayerCacheManager
 
-            Assert.AreEqual(0, nRet);
-        }
-#endregion
-
-#region terr
         [Test]
         public void Test_RemoveAllCaches()
         {
 
             var nRet = MediaPlayerCacheManager.RemoveAllCaches();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -52,57 +38,61 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayerCacheManager.RemoveOldCache();
-
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_RemoveCacheByUri()
         {
-            string uri;
-            ParamsHelper.InitParam(out uri);
-            var nRet = MediaPlayerCacheManager.RemoveCacheByUri(uri);
+            string uri = ParamsHelper.CreateParam<string>();
 
+            var nRet = MediaPlayerCacheManager.RemoveCacheByUri(uri);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetCacheDir()
         {
-            string path;
-            ParamsHelper.InitParam(out path);
-            var nRet = MediaPlayerCacheManager.SetCacheDir(path);
+            string path = ParamsHelper.CreateParam<string>();
 
+            var nRet = MediaPlayerCacheManager.SetCacheDir(path);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetMaxCacheFileCount()
         {
-            int count;
-            ParamsHelper.InitParam(out count);
-            var nRet = MediaPlayerCacheManager.SetMaxCacheFileCount(count);
+            int count = ParamsHelper.CreateParam<int>();
 
+            var nRet = MediaPlayerCacheManager.SetMaxCacheFileCount(count);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetMaxCacheFileSize()
         {
-            long cacheSize;
-            ParamsHelper.InitParam(out cacheSize);
-            var nRet = MediaPlayerCacheManager.SetMaxCacheFileSize(cacheSize);
+            long cacheSize = ParamsHelper.CreateParam<long>();
 
+            var nRet = MediaPlayerCacheManager.SetMaxCacheFileSize(cacheSize);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_EnableAutoRemoveCache()
         {
-            bool enable;
-            ParamsHelper.InitParam(out enable);
-            var nRet = MediaPlayerCacheManager.EnableAutoRemoveCache(enable);
+            bool enable = ParamsHelper.CreateParam<bool>();
 
+            var nRet = MediaPlayerCacheManager.EnableAutoRemoveCache(enable);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetCacheDir()
+        {
+            string path = ParamsHelper.CreateParam<string>();
+            int length = ParamsHelper.CreateParam<int>();
+
+            var nRet = MediaPlayerCacheManager.GetCacheDir(ref path, length);
             Assert.AreEqual(0, nRet);
         }
 
@@ -111,7 +101,6 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayerCacheManager.GetMaxCacheFileCount();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -120,7 +109,6 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayerCacheManager.GetMaxCacheFileSize();
-
             Assert.AreEqual(0, nRet);
         }
 
@@ -129,10 +117,8 @@ namespace Agora.Rtc
         {
 
             var nRet = MediaPlayerCacheManager.GetCacheFileCount();
-
             Assert.AreEqual(0, nRet);
         }
-
-#endregion
+#endregion terra IMediaPlayerCacheManager
     }
 }

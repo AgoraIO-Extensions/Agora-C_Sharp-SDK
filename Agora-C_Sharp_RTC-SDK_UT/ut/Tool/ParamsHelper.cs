@@ -81,6 +81,9 @@ namespace Agora.Rtc
                 if (instType.Name == "String")
                     return "10";
 
+                if (instType.Name.StartsWith("Optional") && instType.IsGenericType)
+                    return CreateOptinal(instType);
+
                 Object obj = Activator.CreateInstance(instType);
                 FieldInfo[] files = instType.GetFields();
                 int length = files.Length;
@@ -133,8 +136,126 @@ namespace Agora.Rtc
             }
         }
 
+        private static Object CreateOptinal(Type instType)
+        {
+            Object obj = Activator.CreateInstance(instType);
+            MethodInfo methodInfo = instType.GetMethod("SetValue");
+            ParameterInfo[] args = methodInfo.GetParameters();
+            if (args.Length == 1)
+            {
+                ParameterInfo argInfo = args[0];
+                Type argType = argInfo.ParameterType;
+                methodInfo.Invoke(obj, new object[] { CreateParam(argType) });
+            }
+            return obj;
+        }
 
 
+        public static bool Compare<T>(object obj1, object obj2)
+        {
+            Type instType = typeof(T);
+            return Compare(instType, obj1, obj2);
+        }
+
+        private static bool Compare(Type instType, object obj1, object obj2)
+        {
+            if (instType.IsArray)
+            {
+                var elementType = instType.GetElementType();
+                int length1 = (obj1 as Array).Length;
+                int length2 = (obj2 as Array).Length;
+                if (length1 != length2)
+                {
+                    return false;
+                }
+                else
+                {
+                    for (int i = 0; i < length1; i++)
+                    {
+                        object item1 = (obj1 as Array).GetValue(i);
+                        object item2 = (obj2 as Array).GetValue(i);
+                        if (Compare(elementType, item1, item2) == false)
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+            else if (instType.IsEnum)
+            {
+                return obj1.Equals(obj2);
+            }
+            else if (instType.IsClass)
+            {
+                if (instType.Name == "String")
+                    return obj1.Equals(obj2);
+
+                if (instType.Name.StartsWith("Optional") && instType.IsGenericType)
+                    return CompareOptinal(instType, obj1, obj2);
+
+                FieldInfo[] files = instType.GetFields();
+                int length = files.Length;
+                for (int i = 0; i < length; i++)
+                {
+                    var f = files[i];
+                    object item1 = f.GetValue(obj1);
+                    object item2 = f.GetValue(obj2);
+                    if (Compare(f.FieldType, item1, item2) == false)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                switch (instType.Name)
+                {
+                    case "Boolean":
+                    case "Byte":
+                    case "Decimal":
+                    case "Double":
+                    case "Int16":
+                    case "Int32":
+                    case "Int64":
+                    case "SByte":
+                    case "Single":
+                    case "UInt16":
+                    case "UInt32":
+                    case "UInt64":
+                        return obj1.Equals(obj2);
+                    case "IntPtr":
+                        return obj1.Equals(obj2);
+                    default:
+                        Console.Write(instType.Name);
+                        return true;
+                }
+            }
+        }
+
+        static private bool CompareOptinal(Type instType, object obj1, object obj2)
+        {
+            MethodInfo methodInfo = instType.GetMethod("HasValue");
+            var hasValue1 = (bool)methodInfo.Invoke(obj1, new object[] { });
+            var hasValue2 = (bool)methodInfo.Invoke(obj2, new object[] { });
+
+            if (hasValue1 != hasValue2)
+            {
+                return false;
+            }
+            else if (hasValue1 == false)
+            {
+                return true;
+            }
+            else {
+
+                MethodInfo methodInfo2 = instType.GetMethod("GetValue");
+                object value1 = methodInfo2.Invoke(obj1, new object[] { });
+                object value2 = methodInfo2.Invoke(obj2, new object[] { });
+                return Compare(value1.GetType(), value1, value2);
+            }
+        }
 
         #region init
         public static void InitParam(out string param)
