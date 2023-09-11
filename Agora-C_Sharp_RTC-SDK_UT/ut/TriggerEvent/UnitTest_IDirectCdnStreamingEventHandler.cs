@@ -9,7 +9,7 @@ namespace Agora.Rtc.Event
     {
 
         public IRtcEngineEx Engine;
-        public UTRtcEngineEventHandler EventHandler;
+        public UTDirectCdnStreamingEventHandler EventHandler;
         public IntPtr FakeRtcEnginePtr;
         public IrisCApiParam2 ApiParam;
         public Dictionary<string, System.Object> jsonObj = new Dictionary<string, object>();
@@ -26,7 +26,7 @@ namespace Agora.Rtc.Event
             ApiParam.AllocResult();
 
             
-            EventHandler = new UTRtcEngineEventHandler();
+            EventHandler = new UTDirectCdnStreamingEventHandler();
             Engine.InitEventHandler(EventHandler);
 
             Engine.StartDirectCdnStreaming("url", new DirectCdnStreamingMediaOptions());

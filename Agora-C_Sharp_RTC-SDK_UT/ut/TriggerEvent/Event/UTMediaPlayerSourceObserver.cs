@@ -6,7 +6,7 @@ namespace Agora.Rtc
     public class UTMediaPlayerSourceObserver : IMediaPlayerSourceObserver
     {
 
-
+        #region terra IMediaPlayerSourceObserver
         public bool OnPlayerSourceStateChanged_be_trigger = false;
         public MEDIA_PLAYER_STATE OnPlayerSourceStateChanged_state;
         public MEDIA_PLAYER_ERROR OnPlayerSourceStateChanged_ec;
@@ -259,6 +259,7 @@ namespace Agora.Rtc
         }
 
         ///////////////////////////////////
+         #endregion terra IMediaPlayerSourceObserver
 
     }
 }

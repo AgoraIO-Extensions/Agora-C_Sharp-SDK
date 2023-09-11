@@ -82,7 +82,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnReadyToSendMetadataPassed(metadata, source_type));
+            Assert.AreEqual(true, EventHandler.OnReadyToSendMetadataPassed(ref metadata, source_type));
         }
 
         [Test]

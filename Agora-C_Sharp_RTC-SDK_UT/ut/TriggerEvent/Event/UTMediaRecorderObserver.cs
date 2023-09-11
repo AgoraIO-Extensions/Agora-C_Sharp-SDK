@@ -4,11 +4,11 @@ namespace Agora.Rtc
 {
     public class UTMediaRecorderObserver : IMediaRecorderObserver
     {
-
+#region terra IMediaRecorderObserver
 
         public bool OnRecorderStateChanged_be_trigger = false;
-        public string OnRecorderStateChanged_channelId = null;
-        public uint OnRecorderStateChanged_uid = 0;
+        public string OnRecorderStateChanged_channelId;
+        public uint OnRecorderStateChanged_uid;
         public RecorderState OnRecorderStateChanged_state;
         public RecorderErrorCode OnRecorderStateChanged_error;
 
@@ -23,28 +23,28 @@ namespace Agora.Rtc
 
         public bool OnRecorderStateChangedPassed(string channelId, uint uid, RecorderState state, RecorderErrorCode error)
         {
+
             if (OnRecorderStateChanged_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareString(OnRecorderStateChanged_channelId, channelId) == false)
+            if (ParamsHelper.Compare<string>(OnRecorderStateChanged_channelId, channelId) == false)
                 return false;
-            if (ParamsHelper.compareUid_t(OnRecorderStateChanged_uid, uid) == false)
+            if (ParamsHelper.Compare<uint>(OnRecorderStateChanged_uid, uid) == false)
                 return false;
-            if (ParamsHelper.compareRecorderState(OnRecorderStateChanged_state, state) == false)
+            if (ParamsHelper.Compare<RecorderState>(OnRecorderStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.compareRecorderErrorCode(OnRecorderStateChanged_error, error) == false)
+            if (ParamsHelper.Compare<RecorderErrorCode>(OnRecorderStateChanged_error, error) == false)
                 return false;
 
             return true;
         }
 
-        ///////////////////////////////////
-
+        /////////////////////////////////
 
         public bool OnRecorderInfoUpdated_be_trigger = false;
-        public string OnRecorderInfoUpdated_channelId = null;
-        public uint OnRecorderInfoUpdated_uid = 0;
-        public RecorderInfo OnRecorderInfoUpdated_info = null;
+        public string OnRecorderInfoUpdated_channelId;
+        public uint OnRecorderInfoUpdated_uid;
+        public RecorderInfo OnRecorderInfoUpdated_info;
 
         public override void OnRecorderInfoUpdated(string channelId, uint uid, RecorderInfo info)
         {
@@ -56,21 +56,21 @@ namespace Agora.Rtc
 
         public bool OnRecorderInfoUpdatedPassed(string channelId, uint uid, RecorderInfo info)
         {
+
             if (OnRecorderInfoUpdated_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.compareString(OnRecorderInfoUpdated_channelId, channelId) == false)
+            if (ParamsHelper.Compare<string>(OnRecorderInfoUpdated_channelId, channelId) == false)
                 return false;
-            if (ParamsHelper.compareUid_t(OnRecorderInfoUpdated_uid, uid) == false)
+            if (ParamsHelper.Compare<uint>(OnRecorderInfoUpdated_uid, uid) == false)
                 return false;
-            if (ParamsHelper.compareRecorderInfo(OnRecorderInfoUpdated_info, info) == false)
+            if (ParamsHelper.Compare<RecorderInfo>(OnRecorderInfoUpdated_info, info) == false)
                 return false;
 
             return true;
         }
 
-        ///////////////////////////////////
-
-
+        /////////////////////////////////
+#endregion terra IMediaRecorderObserver
     }
 }

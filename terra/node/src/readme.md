@@ -10,7 +10,7 @@ ${-oMETHOD_RETURN_TYPE}
 ${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}
 //制定特殊的成员
 ${SPECIAL_MEMBER_LOGIC:cSharpSDK_MethodObsolete}
-${SPECIAL_CLASS}
+${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_MethodObsolete}
 
 //参数Join的制定格式
 ${METHOD_PARAM_JOIN:xxxxx.txt}

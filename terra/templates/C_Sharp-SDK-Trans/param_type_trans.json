@@ -132,7 +132,9 @@
         "IRtcEngineEventHandler.onVideoDeviceStateChanged.deviceState": "MEDIA_DEVICE_STATE_TYPE",
         "IRtcEngineEventHandlerEx.onStreamMessage.data": "byte[]",
         "IMediaPlayerSourceObserver.onMetaData.data": "byte[]",
-        "IAudioSpectrumObserver.onRemoteAudioSpectrum.spectrums": "UserAudioSpectrumInfo[]"
+        "IAudioSpectrumObserver.onRemoteAudioSpectrum.spectrums": "UserAudioSpectrumInfo[]",
+        "IMediaPlayerCustomDataProvider.onReadData.buffer": "IntPtr",
+        "IMetadataObserver.onReadyToSendMetadata.metadata": "ref Metadata"
     },
     "normal": {
         "char*": "string",
@@ -199,7 +201,9 @@
         "agora::media::IAudioFrameObserverBase::AudioFrame&": "AudioFrame",
         "base::user_id_t": "string",
         "agora::media::base::AudioPcmFrame*": "AudioPcmFrame",
-        "agora::media::AudioSpectrumData const&": "AudioSpectrumData"
+        "agora::media::AudioSpectrumData const&": "AudioSpectrumData",
+        "agora::media::RecorderInfo const&": "RecorderInfo",
+        "agora::rtc::IMetadataObserver::Metadata const&": "Metadata"
     },
     "reg": {
         "agora::rtc::SegmentationProperty::*": "${-o*}",

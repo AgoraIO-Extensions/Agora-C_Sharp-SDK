@@ -1,17 +1,10 @@
 {
-    "IAudioFrameObserver": {
+    "IVideoEncodedFrameObserver": {
         "type": "ClazzStruct",
-        "name": "IAudioFrameObserver",
-        "namespaces": "agora::media",
+        "name": "IVideoEncodedFrameObserver",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_event_compare",
-        "excludeMethods": [
-            "getObservedAudioFramePosition",
-            "getPlaybackAudioParams",
-            "getRecordAudioParams",
-            "getMixedAudioParams",
-            "getEarMonitoringAudioParams"
-        ],
+        "excludeMethods": [],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
         "pecialMembersTemplate": "",

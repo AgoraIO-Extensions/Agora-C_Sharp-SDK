@@ -909,12 +909,91 @@ export class SpeicalLogic {
     }
 
     public cSharpSDK_UTEventReturnValue(clazzName: string, m: MemberFunction): string {
-        if (m.return_type.source == "void")
-            return "";
-        else if (m.return_type.source == "bool")
-            return "return true;\n";
+        let map = {
+            bool: "true",
+            int64_t: "0",
+            int: "0"
+        };
 
-        return "";
+        let value = map[m.return_type.source];
+        if (value == null) {
+            return "";
+        }
+        else {
+            return `return ${value};\n`;
+        }
+    }
+
+    public cSharpSDK_GenerateUTRtcEngineEventHandler(clazz: Clazz): string {
+        let lines = [];
+        let config = ConfigTool.getInstance();
+        let rtcEngineEventHandlerClazzName = "IRtcEngineEventHandler";
+        let rtcEngineEventHandlerExClazzName = "IRtcEngineEventHandlerEx";
+        let eventHandlerMethods = config.getClassOrStruct(rtcEngineEventHandlerClazzName).methods;
+        let eventHandlerExMethods = config.getClassOrStruct(rtcEngineEventHandlerExClazzName).methods;
+        let excludeMethods = [
+            "eventHandlerType"
+        ]
+        for (let m of eventHandlerMethods) {
+            if (excludeMethods.includes(m.name))
+                continue;
+
+            let mEx = eventHandlerExMethods.find((e) => { return e.name == m.name });
+            let clazzName: string;
+            if (mEx != null) {
+                m = mEx;
+                clazzName = rtcEngineEventHandlerExClazzName;
+            }
+            else {
+                m = m;
+                clazzName = rtcEngineEventHandlerClazzName;
+            }
+            m = mEx || m;
+            let funLines = [];
+            let methodName = Tool._processStringWithU(m.name);
+            funLines.push(`public bool ${methodName}_be_trigger = false;`);
+
+            let paramslines = [];
+            for (let p of m.parameters) {
+                let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
+                let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
+
+                if (transType == "@remove")
+                    continue;
+                funLines.push(`public ${transType} ${methodName}_${transName};`);
+                paramslines.push(`${transType} ${transName}`);
+            }
+            let tranReturn = config.paramTypeTrans.transType(clazzName, m.name, m.return_type.source, "return");
+            funLines.push(`public override ${tranReturn} ${methodName}(${paramslines.join(", ")})\n{`);
+            funLines.push(`${methodName}_be_trigger = true;`);
+
+            for (let p of m.parameters) {
+                let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
+                let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
+
+                if (transType == "@remove")
+                    continue;
+                funLines.push(`${methodName}_${transName}=${transName};`);
+            }
+            funLines.push(`}\n`);
+
+            funLines.push(`public bool ${methodName}Passed(${paramslines.join(", ")})\n{`);
+            funLines.push(`if(${methodName}_be_trigger == false) return false;`);
+            for (let p of m.parameters) {
+                let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
+                let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
+
+                if (transType == "@remove")
+                    continue;
+
+                funLines.push(`if (ParamsHelper.Compare<${transType}>(${methodName}_${transName}, ${transName}) == false)`);
+                funLines.push(`return false;`);
+            }
+            funLines.push(`return true;}`);
+            lines.push(funLines.join("\n"));
+            lines.push("//////////////////")
+        }
+        return lines.join("\n\n");
     }
 
 

@@ -272,7 +272,7 @@ export class ParseClassOrStruct {
             let returnArrayLength = returnArray.length;
             for (let i = 0; i < returnArrayLength; i++) {
                 let returnMatched = returnArray[i];
-                let newReturn = config.paramTypeTrans.transType(clazzName, method.name, method.return_type.source, method.return_type.name);
+                let newReturn = config.paramTypeTrans.transType(clazzName, method.name, method.return_type.source, "return");
                 replaceString = replaceString.replace(returnMatched, newReturn);
             }
         }

@@ -1,0 +1,11 @@
+{
+    "IRtcEngineEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandler",
+        "headTailTemple": "head_tail"
+    },
+    "head_tail": {
+        "head": "${SPECIAL_CLAZZ_STRUCT_LOGIC:cSharpSDK_GenerateUTRtcEngineEventHandler}",
+        "tail": ""
+    }
+}

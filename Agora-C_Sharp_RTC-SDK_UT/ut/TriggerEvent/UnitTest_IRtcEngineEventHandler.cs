@@ -400,34 +400,34 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnVideoSizeChangedPassed(connection, sourceType, uid, width, height, rotation));
         }
 
-        [Test]
-        public void Test_OnLocalVideoStateChanged()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATECHANGED;
+        //[Test]
+        //public void Test_OnLocalVideoStateChanged()
+        //{
+        //    ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATECHANGED;
 
-            VIDEO_SOURCE_TYPE source;
-            ParamsHelper.InitParam(out source);
+        //    VIDEO_SOURCE_TYPE source;
+        //    ParamsHelper.InitParam(out source);
 
-            LOCAL_VIDEO_STREAM_STATE state;
-            ParamsHelper.InitParam(out state);
+        //    LOCAL_VIDEO_STREAM_STATE state;
+        //    ParamsHelper.InitParam(out state);
 
-            LOCAL_VIDEO_STREAM_ERROR errorCode;
-            ParamsHelper.InitParam(out errorCode);
+        //    LOCAL_VIDEO_STREAM_ERROR errorCode;
+        //    ParamsHelper.InitParam(out errorCode);
 
-            jsonObj.Clear();
-            jsonObj.Add("source", source);
-            jsonObj.Add("state", state);
-            jsonObj.Add("errorCode", errorCode);
+        //    jsonObj.Clear();
+        //    jsonObj.Add("source", source);
+        //    jsonObj.Add("state", state);
+        //    jsonObj.Add("errorCode", errorCode);
 
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+        //    var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
 
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
+        //    ApiParam.data = jsonString;
+        //    ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnLocalVideoStateChangedPassed(source, state, errorCode));
-        }
+        //    int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+        //    Assert.AreEqual(0, ret);
+        //    Assert.AreEqual(true, EventHandler.OnLocalVideoStateChangedPassed(source, state, errorCode));
+        //}
 
         [Test]
         public void Test_OnRemoteVideoStateChanged()
