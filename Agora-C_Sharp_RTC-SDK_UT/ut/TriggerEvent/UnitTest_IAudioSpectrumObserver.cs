@@ -26,7 +26,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-
             EventHandler = new UTAudioSpectrumObserver();
             EventHandler.TAG = "FOR_RTCENGINE";
             int ret = Engine.RegisterAudioSpectrumObserver(EventHandler);
@@ -53,30 +52,26 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region
+#region terra IAudioSpectrumObserver
 
         [Test]
         public void Test_OnLocalAudioSpectrum()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM;
 
-            AudioSpectrumData data;
-            ParamsHelper.InitParam(out data);
-
             jsonObj.Clear();
+
+            AudioSpectrumData data = ParamsHelper.CreateParam<AudioSpectrumData>();
             jsonObj.Add("data", data);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-
             Assert.AreEqual(true, EventHandler.OnLocalAudioSpectrumPassed(data));
             Assert.AreEqual(true, EventHandlerForMediaPlayer.OnLocalAudioSpectrumPassed(data));
-
         }
 
         [Test]
@@ -84,28 +79,23 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM;
 
-            UserAudioSpectrumInfo[] spectrums;
-            ParamsHelper.InitParam(out spectrums);
-
-            uint spectrumNumber;
-            ParamsHelper.InitParam(out spectrumNumber);
-
             jsonObj.Clear();
+
+            UserAudioSpectrumInfo[] spectrums = ParamsHelper.CreateParam<UserAudioSpectrumInfo[]>();
             jsonObj.Add("spectrums", spectrums);
+
+            uint spectrumNumber = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("spectrumNumber", spectrumNumber);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-
             Assert.AreEqual(true, EventHandler.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
             Assert.AreEqual(true, EventHandlerForMediaPlayer.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
         }
-
-        #endregion
+#endregion terra IAudioSpectrumObserver
     }
 }

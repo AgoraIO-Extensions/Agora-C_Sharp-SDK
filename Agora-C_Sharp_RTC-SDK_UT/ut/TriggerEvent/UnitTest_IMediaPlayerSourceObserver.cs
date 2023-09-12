@@ -41,26 +41,22 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region
-
+#region terra IMediaPlayerSourceObserver
 
         [Test]
         public void Test_OnPlayerSourceStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSOURCESTATECHANGED;
 
-            MEDIA_PLAYER_STATE state;
-            ParamsHelper.InitParam(out state);
-
-            MEDIA_PLAYER_ERROR ec;
-            ParamsHelper.InitParam(out ec);
-
             jsonObj.Clear();
+
+            MEDIA_PLAYER_STATE state = ParamsHelper.CreateParam<MEDIA_PLAYER_STATE>();
             jsonObj.Add("state", state);
+
+            MEDIA_PLAYER_ERROR ec = ParamsHelper.CreateParam<MEDIA_PLAYER_ERROR>();
             jsonObj.Add("ec", ec);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -74,14 +70,12 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED;
 
-            long position_ms;
-            ParamsHelper.InitParam(out position_ms);
-
             jsonObj.Clear();
+
+            long position_ms = ParamsHelper.CreateParam<long>();
             jsonObj.Add("position_ms", position_ms);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -95,22 +89,18 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYEREVENT;
 
-            MEDIA_PLAYER_EVENT eventCode;
-            ParamsHelper.InitParam(out eventCode);
-
-            long elapsedTime;
-            ParamsHelper.InitParam(out elapsedTime);
-
-            string message;
-            ParamsHelper.InitParam(out message);
-
             jsonObj.Clear();
+
+            MEDIA_PLAYER_EVENT eventCode = ParamsHelper.CreateParam<MEDIA_PLAYER_EVENT>();
             jsonObj.Add("eventCode", eventCode);
+
+            long elapsedTime = ParamsHelper.CreateParam<long>();
             jsonObj.Add("elapsedTime", elapsedTime);
+
+            string message = ParamsHelper.CreateParam<string>();
             jsonObj.Add("message", message);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -124,18 +114,15 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONMETADATA;
 
-            byte[]  data;
-            ParamsHelper.InitParam(out data);
-
-            int length;
-            ParamsHelper.InitParam(out length);
-
             jsonObj.Clear();
+
+            byte[] data = ParamsHelper.CreateParam<byte[]>();
             jsonObj.Add("data", data);
+
+            int length = ParamsHelper.CreateParam<int>();
             jsonObj.Add("length", length);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -149,14 +136,12 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYBUFFERUPDATED;
 
-            long playCachedBuffer;
-            ParamsHelper.InitParam(out playCachedBuffer);
-
             jsonObj.Clear();
+
+            long playCachedBuffer = ParamsHelper.CreateParam<long>();
             jsonObj.Add("playCachedBuffer", playCachedBuffer);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -170,18 +155,15 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPRELOADEVENT;
 
-            string src;
-            ParamsHelper.InitParam(out src);
-
-            PLAYER_PRELOAD_EVENT @event;
-            ParamsHelper.InitParam(out @event);
-
             jsonObj.Clear();
+
+            string src = ParamsHelper.CreateParam<string>();
             jsonObj.Add("src", src);
+
+            PLAYER_PRELOAD_EVENT @event = ParamsHelper.CreateParam<PLAYER_PRELOAD_EVENT>();
             jsonObj.Add("@event", @event);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -198,7 +180,6 @@ namespace Agora.Rtc.Event
             jsonObj.Clear();
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -215,7 +196,6 @@ namespace Agora.Rtc.Event
             jsonObj.Clear();
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -229,18 +209,15 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSRCINFOCHANGED;
 
-            SrcInfo from;
-            ParamsHelper.InitParam(out from);
-
-            SrcInfo to;
-            ParamsHelper.InitParam(out to);
-
             jsonObj.Clear();
+
+            SrcInfo from = ParamsHelper.CreateParam<SrcInfo>();
             jsonObj.Add("from", from);
+
+            SrcInfo to = ParamsHelper.CreateParam<SrcInfo>();
             jsonObj.Add("to", to);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -254,14 +231,12 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERINFOUPDATED;
 
-            PlayerUpdatedInfo info;
-            ParamsHelper.InitParam(out info);
-
             jsonObj.Clear();
+
+            PlayerUpdatedInfo info = ParamsHelper.CreateParam<PlayerUpdatedInfo>();
             jsonObj.Add("info", info);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -275,14 +250,12 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAUDIOVOLUMEINDICATION;
 
-            int volume;
-            ParamsHelper.InitParam(out volume);
-
             jsonObj.Clear();
+
+            int volume = ParamsHelper.CreateParam<int>();
             jsonObj.Add("volume", volume);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -290,8 +263,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnAudioVolumeIndicationPassed(volume));
         }
-
-
-        #endregion
+#endregion terra IMediaPlayerSourceObserver
     }
 }

@@ -24,7 +24,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-
             EventHandler = new UTVideoEncodedFrameObserver();
             int ret = Engine.RegisterVideoEncodedFrameObserver(EventHandler, OBSERVER_MODE.INTPTR);
             Assert.AreEqual(0, ret);
@@ -39,33 +38,28 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region
+#region terra IVideoEncodedFrameObserver
 
         [Test]
         public void Test_OnEncodedVideoFrameReceived()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED;
 
-            uint uid;
-            ParamsHelper.InitParam(out uid);
-
-            IntPtr imageBuffer;
-            ParamsHelper.InitParam(out imageBuffer);
-
-            ulong length;
-            ParamsHelper.InitParam(out length);
-
-            EncodedVideoFrameInfo videoEncodedFrameInfo;
-            ParamsHelper.InitParam(out videoEncodedFrameInfo);
-
             jsonObj.Clear();
+
+            uint uid = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("uid", uid);
+
+            IntPtr imageBuffer = ParamsHelper.CreateParam<IntPtr>();
             jsonObj.Add("imageBuffer", imageBuffer);
+
+            ulong length = ParamsHelper.CreateParam<ulong>();
             jsonObj.Add("length", length);
+
+            EncodedVideoFrameInfo videoEncodedFrameInfo = ParamsHelper.CreateParam<EncodedVideoFrameInfo>();
             jsonObj.Add("videoEncodedFrameInfo", videoEncodedFrameInfo);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -73,8 +67,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnEncodedVideoFrameReceivedPassed(uid, imageBuffer, length, videoEncodedFrameInfo));
         }
-
-        #endregion
+#endregion terra IVideoEncodedFrameObserver
     }
 }
-

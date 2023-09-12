@@ -41,22 +41,19 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region
-
+#region terra IAudioPcmFrameSink
 
         [Test]
         public void Test_OnFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOPCMFRAMESINK_ONFRAME;
 
-            AudioPcmFrame frame;
-            ParamsHelper.InitParam(out frame);
-
             jsonObj.Clear();
+
+            AudioPcmFrame frame = ParamsHelper.CreateParam<AudioPcmFrame>();
             jsonObj.Add("frame", frame);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -64,10 +61,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnFramePassed(frame));
         }
-
-
-        ///////////////////////////////////
-
-        #endregion
+#endregion terra IAudioPcmFrameSink
     }
 }

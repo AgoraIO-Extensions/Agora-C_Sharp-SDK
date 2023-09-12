@@ -25,7 +25,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-            
             EventHandler = new UTDirectCdnStreamingEventHandler();
             Engine.InitEventHandler(EventHandler);
 
@@ -41,29 +40,25 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region
+#region terra IDirectCdnStreamingEventHandler
 
         [Test]
         public void Test_OnDirectCdnStreamingStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED;
 
-            DIRECT_CDN_STREAMING_STATE state;
-            ParamsHelper.InitParam(out state);
-
-            DIRECT_CDN_STREAMING_ERROR error;
-            ParamsHelper.InitParam(out error);
-
-            string message;
-            ParamsHelper.InitParam(out message);
-
             jsonObj.Clear();
+
+            DIRECT_CDN_STREAMING_STATE state = ParamsHelper.CreateParam<DIRECT_CDN_STREAMING_STATE>();
             jsonObj.Add("state", state);
+
+            DIRECT_CDN_STREAMING_ERROR error = ParamsHelper.CreateParam<DIRECT_CDN_STREAMING_ERROR>();
             jsonObj.Add("error", error);
+
+            string message = ParamsHelper.CreateParam<string>();
             jsonObj.Add("message", message);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -77,14 +72,12 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS;
 
-            DirectCdnStreamingStats stats;
-            ParamsHelper.InitParam(out stats);
-
             jsonObj.Clear();
+
+            DirectCdnStreamingStats stats = ParamsHelper.CreateParam<DirectCdnStreamingStats>();
             jsonObj.Add("stats", stats);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -92,7 +85,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnDirectCdnStreamingStatsPassed(stats));
         }
-
-        #endregion
+#endregion terra IDirectCdnStreamingEventHandler
     }
 }

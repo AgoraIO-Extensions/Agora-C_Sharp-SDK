@@ -61,7 +61,8 @@
         "IMusicContentCenter.getSongSimpleInfo.requestId": "ref requestId",
         "IMusicContentCenter.getInternalSongCode.internalSongCode": "ref internalSongCode",
         "IMusicContentCenter.preload.requestId": "ref requestId",
-        "ILocalSpatialAudioEngine.initialize.config": "@remove"
+        "ILocalSpatialAudioEngine.initialize.config": "@remove",
+        "IMetadataObserver.onReadyToSendMetadata.metadata": "ref metadata"
     },
     "normal": {
         "params": "@params",

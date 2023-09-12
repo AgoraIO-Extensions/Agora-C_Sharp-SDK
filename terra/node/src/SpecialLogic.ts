@@ -996,6 +996,55 @@ export class SpeicalLogic {
         return lines.join("\n\n");
     }
 
+    public cSharpSDK_GenerateUnitTest_ICommonObserver(clazzName: string, m: MemberFunction, repeat: number): string {
+        let lines = [];
+        lines.push(`[Test]`)
+        lines.push(`public void Test_${Tool.processString('-un', m.name, repeat)}()`)
+        lines.push(`{`)
 
+        let className = Tool.processString('-rv', clazzName, 1);
+        let methodName = Tool.processString('-v', m.name, repeat);
+        let config = ConfigTool.getInstance();
+        lines.push(`ApiParam.@event = AgoraEventType.EVENT_${className}_${methodName};`);
+        lines.push(`\n`);
+        lines.push(`jsonObj.Clear();`);
+        lines.push(`\n`);
+        let paramsLines = [];
+        for (let p of m.parameters) {
+            let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
+            transType = Tool.processString('-f', transType);
+            let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
+            if (transType == "@remove")
+                continue;
+            lines.push(`${transType} ${transName} = ParamsHelper.CreateParam<${transType}>();`);
+            lines.push(`jsonObj.Add("${transName}", ${transName});`);
+            lines.push(`\n`);
+            paramsLines.push(`${config.paramNameActualTrans.transType(clazzName, m.name, p.name)}`);
+        }
+        lines.push(`var jsonString = LitJson.JsonMapper.ToJson(jsonObj);`)
+        lines.push(`ApiParam.data = jsonString;`);
+        lines.push(`ApiParam.data_size = (uint)jsonString.Length;`);
+        lines.push(`\n`);
+        lines.push(`int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);`);
+        lines.push(`Assert.AreEqual(0, ret);`);
 
+        lines.push(`Assert.AreEqual(true, EventHandler.${Tool.processString('-u', m.name)}Passed(${paramsLines.join(',')}));`);
+        lines.push(`}`)
+        return lines.join("\n");
+    }
+
+    public cSharpSDK_GenerateUnitTest_IAudioSpectrumObserver(clazzName: string, m: MemberFunction, repeat: number): string {
+        let config = ConfigTool.getInstance();
+        let lines = [];
+        let prefixString = this.cSharpSDK_GenerateUnitTest_ICommonObserver(clazzName, m, repeat);
+        prefixString = prefixString.substring(0, prefixString.length - 2);
+        lines.push(prefixString);
+        let paramsLines = [];
+        for (let p of m.parameters) {
+            paramsLines.push(`${config.paramNameActualTrans.transType(clazzName, m.name, p.name)}`);
+        }
+        lines.push(`Assert.AreEqual(true, EventHandlerForMediaPlayer.${Tool.processString('-u', m.name)}Passed(${paramsLines.join(',')}));`)
+        lines.push(`}`);
+        return lines.join('\n');
+    }
 }

@@ -26,7 +26,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-
             EventHandler = new UTMetadataObserver();
             int ret = Engine.RegisterMediaMetadataObserver(EventHandler, METADATA_TYPE.VIDEO_METADATA);
             Assert.AreEqual(0, ret);
@@ -41,7 +40,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region
+#region terra IMetadataObserver
 
         [Test]
         public void Test_GetMaxMetadataSize()
@@ -51,7 +50,6 @@ namespace Agora.Rtc.Event
             jsonObj.Clear();
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -65,18 +63,15 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA;
 
-            Metadata metadata;
-            ParamsHelper.InitParam(out metadata);
-
-            VIDEO_SOURCE_TYPE source_type;
-            ParamsHelper.InitParam(out source_type);
-
             jsonObj.Clear();
+
+            Metadata metadata = ParamsHelper.CreateParam<Metadata>();
             jsonObj.Add("metadata", metadata);
+
+            VIDEO_SOURCE_TYPE source_type = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
             jsonObj.Add("source_type", source_type);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -90,14 +85,12 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVER_ONMETADATARECEIVED;
 
-            Metadata metadata;
-            ParamsHelper.InitParam(out metadata);
-
             jsonObj.Clear();
+
+            Metadata metadata = ParamsHelper.CreateParam<Metadata>();
             jsonObj.Add("metadata", metadata);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -105,10 +98,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnMetadataReceivedPassed(metadata));
         }
-
-
-
-        #endregion
+#endregion terra IMetadataObserver
     }
 }
-

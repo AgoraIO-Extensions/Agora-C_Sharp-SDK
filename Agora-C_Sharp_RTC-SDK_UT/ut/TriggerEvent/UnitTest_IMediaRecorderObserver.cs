@@ -26,12 +26,10 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, nRet);
             ApiParam.AllocResult();
 
-
             EventHandler = new UTMediaRecorderObserver();
             MediaRecorder = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
             int ret = MediaRecorder.SetMediaRecorderObserver(EventHandler);
             Assert.AreEqual(0, ret);
-
         }
 
         [TearDown]
@@ -43,35 +41,28 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region
-
+#region terra IMediaRecorderObserver
 
         [Test]
         public void Test_OnRecorderStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED;
 
-            string channelId;
-            ParamsHelper.InitParam(out channelId);
-
-            uint uid;
-            ParamsHelper.InitParam(out uid);
-
-            RecorderState state;
-            ParamsHelper.InitParam(out state);
-
-            RecorderErrorCode error;
-            ParamsHelper.InitParam(out error);
-
-
             jsonObj.Clear();
+
+            string channelId = ParamsHelper.CreateParam<string>();
             jsonObj.Add("channelId", channelId);
+
+            uint uid = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("uid", uid);
+
+            RecorderState state = ParamsHelper.CreateParam<RecorderState>();
             jsonObj.Add("state", state);
+
+            RecorderErrorCode error = ParamsHelper.CreateParam<RecorderErrorCode>();
             jsonObj.Add("error", error);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -80,29 +71,23 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnRecorderStateChangedPassed(channelId, uid, state, error));
         }
 
-
         [Test]
         public void Test_OnRecorderInfoUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED;
 
-            string channelId;
-            ParamsHelper.InitParam(out channelId);
-
-            uint uid;
-            ParamsHelper.InitParam(out uid);
-
-            RecorderInfo info;
-            ParamsHelper.InitParam(out info);
-
-
             jsonObj.Clear();
+
+            string channelId = ParamsHelper.CreateParam<string>();
             jsonObj.Add("channelId", channelId);
+
+            uint uid = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("uid", uid);
+
+            RecorderInfo info = ParamsHelper.CreateParam<RecorderInfo>();
             jsonObj.Add("info", info);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -110,8 +95,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnRecorderInfoUpdatedPassed(channelId, uid, info));
         }
-
-
-        #endregion
+#endregion terra IMediaRecorderObserver
     }
 }

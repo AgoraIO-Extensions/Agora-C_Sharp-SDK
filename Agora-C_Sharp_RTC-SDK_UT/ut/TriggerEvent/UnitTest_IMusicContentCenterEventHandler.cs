@@ -44,32 +44,25 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region
-
-
+#region terra IMusicContentCenterEventHandler
 
         [Test]
         public void Test_OnMusicChartsResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT;
 
-            string requestId;
-            ParamsHelper.InitParam(out requestId);
-
-            MusicChartInfo[] result;
-            ParamsHelper.InitParam(out result);
-
-            MusicContentCenterStatusCode errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
-
             jsonObj.Clear();
+
+            string requestId = ParamsHelper.CreateParam<string>();
             jsonObj.Add("requestId", requestId);
+
+            MusicChartInfo[] result = ParamsHelper.CreateParam<MusicChartInfo[]>();
             jsonObj.Add("result", result);
+
+            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
             jsonObj.Add("errorCode", errorCode);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -78,29 +71,23 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnMusicChartsResultPassed(requestId, result, errorCode));
         }
 
-
         [Test]
         public void Test_OnMusicCollectionResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT;
 
-            string requestId;
-            ParamsHelper.InitParam(out requestId);
-
-            MusicCollection result;
-            ParamsHelper.InitParam(out result);
-
-            MusicContentCenterStatusCode errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
-
             jsonObj.Clear();
+
+            string requestId = ParamsHelper.CreateParam<string>();
             jsonObj.Add("requestId", requestId);
+
+            MusicCollection result = ParamsHelper.CreateParam<MusicCollection>();
             jsonObj.Add("result", result);
+
+            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
             jsonObj.Add("errorCode", errorCode);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -109,33 +96,26 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnMusicCollectionResultPassed(requestId, result, errorCode));
         }
 
-
         [Test]
         public void Test_OnLyricResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT;
 
-            string requestId;
-            ParamsHelper.InitParam(out requestId);
-
-            long songCode;
-            ParamsHelper.InitParam(out songCode);
-
-            string lyricUrl;
-            ParamsHelper.InitParam(out lyricUrl);
-
-            MusicContentCenterStatusCode errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
-
             jsonObj.Clear();
+
+            string requestId = ParamsHelper.CreateParam<string>();
             jsonObj.Add("requestId", requestId);
+
+            long songCode = ParamsHelper.CreateParam<long>();
             jsonObj.Add("songCode", songCode);
+
+            string lyricUrl = ParamsHelper.CreateParam<string>();
             jsonObj.Add("lyricUrl", lyricUrl);
+
+            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
             jsonObj.Add("errorCode", errorCode);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -144,33 +124,26 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnLyricResultPassed(requestId, songCode, lyricUrl, errorCode));
         }
 
-
         [Test]
         public void Test_OnSongSimpleInfoResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT;
 
-            string requestId;
-            ParamsHelper.InitParam(out requestId);
-
-            long songCode;
-            ParamsHelper.InitParam(out songCode);
-
-            string simpleInfo;
-            ParamsHelper.InitParam(out simpleInfo);
-
-            MusicContentCenterStatusCode errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
-
             jsonObj.Clear();
+
+            string requestId = ParamsHelper.CreateParam<string>();
             jsonObj.Add("requestId", requestId);
+
+            long songCode = ParamsHelper.CreateParam<long>();
             jsonObj.Add("songCode", songCode);
+
+            string simpleInfo = ParamsHelper.CreateParam<string>();
             jsonObj.Add("simpleInfo", simpleInfo);
+
+            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
             jsonObj.Add("errorCode", errorCode);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -179,41 +152,32 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnSongSimpleInfoResultPassed(requestId, songCode, simpleInfo, errorCode));
         }
 
-
         [Test]
         public void Test_OnPreLoadEvent()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT;
 
-            string requestId;
-            ParamsHelper.InitParam(out requestId);
-
-            long songCode;
-            ParamsHelper.InitParam(out songCode);
-
-            int percent;
-            ParamsHelper.InitParam(out percent);
-
-            string lyricUrl;
-            ParamsHelper.InitParam(out lyricUrl);
-
-            PreloadStatusCode status;
-            ParamsHelper.InitParam(out status);
-
-            MusicContentCenterStatusCode errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
-
             jsonObj.Clear();
+
+            string requestId = ParamsHelper.CreateParam<string>();
             jsonObj.Add("requestId", requestId);
+
+            long songCode = ParamsHelper.CreateParam<long>();
             jsonObj.Add("songCode", songCode);
+
+            int percent = ParamsHelper.CreateParam<int>();
             jsonObj.Add("percent", percent);
+
+            string lyricUrl = ParamsHelper.CreateParam<string>();
             jsonObj.Add("lyricUrl", lyricUrl);
+
+            PreloadStatusCode status = ParamsHelper.CreateParam<PreloadStatusCode>();
             jsonObj.Add("status", status);
+
+            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
             jsonObj.Add("errorCode", errorCode);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -221,8 +185,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPreLoadEventPassed(requestId, songCode, percent, lyricUrl, status, errorCode));
         }
-
-
-        #endregion
+#endregion terra IMusicContentCenterEventHandler
     }
 }

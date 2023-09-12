@@ -39,31 +39,25 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-
-        #region
-
+#region terra IAudioEncodedFrameObserver
 
         [Test]
         public void Test_OnRecordAudioEncodedFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME;
 
-            IntPtr frameBuffer;
-            ParamsHelper.InitParam(out frameBuffer);
-
-            int length;
-            ParamsHelper.InitParam(out length);
-
-            EncodedAudioFrameInfo audioEncodedFrameInfo;
-            ParamsHelper.InitParam(out audioEncodedFrameInfo);
-
             jsonObj.Clear();
+
+            IntPtr frameBuffer = ParamsHelper.CreateParam<IntPtr>();
             jsonObj.Add("frameBuffer", frameBuffer);
+
+            int length = ParamsHelper.CreateParam<int>();
             jsonObj.Add("length", length);
+
+            EncodedAudioFrameInfo audioEncodedFrameInfo = ParamsHelper.CreateParam<EncodedAudioFrameInfo>();
             jsonObj.Add("audioEncodedFrameInfo", audioEncodedFrameInfo);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -77,22 +71,18 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME;
 
-            IntPtr frameBuffer;
-            ParamsHelper.InitParam(out frameBuffer);
-
-            int length;
-            ParamsHelper.InitParam(out length);
-
-            EncodedAudioFrameInfo audioEncodedFrameInfo;
-            ParamsHelper.InitParam(out audioEncodedFrameInfo);
-
             jsonObj.Clear();
+
+            IntPtr frameBuffer = ParamsHelper.CreateParam<IntPtr>();
             jsonObj.Add("frameBuffer", frameBuffer);
+
+            int length = ParamsHelper.CreateParam<int>();
             jsonObj.Add("length", length);
+
+            EncodedAudioFrameInfo audioEncodedFrameInfo = ParamsHelper.CreateParam<EncodedAudioFrameInfo>();
             jsonObj.Add("audioEncodedFrameInfo", audioEncodedFrameInfo);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -106,22 +96,18 @@ namespace Agora.Rtc.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME;
 
-            IntPtr frameBuffer;
-            ParamsHelper.InitParam(out frameBuffer);
-
-            int length;
-            ParamsHelper.InitParam(out length);
-
-            EncodedAudioFrameInfo audioEncodedFrameInfo;
-            ParamsHelper.InitParam(out audioEncodedFrameInfo);
-
             jsonObj.Clear();
+
+            IntPtr frameBuffer = ParamsHelper.CreateParam<IntPtr>();
             jsonObj.Add("frameBuffer", frameBuffer);
+
+            int length = ParamsHelper.CreateParam<int>();
             jsonObj.Add("length", length);
+
+            EncodedAudioFrameInfo audioEncodedFrameInfo = ParamsHelper.CreateParam<EncodedAudioFrameInfo>();
             jsonObj.Add("audioEncodedFrameInfo", audioEncodedFrameInfo);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
@@ -129,7 +115,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnMixedAudioEncodedFramePassed(frameBuffer, length, audioEncodedFrameInfo));
         }
-
-        #endregion
+#endregion terra IAudioEncodedFrameObserver
     }
 }

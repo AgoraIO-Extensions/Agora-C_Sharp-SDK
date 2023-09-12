@@ -295,7 +295,7 @@ export class ParseClassOrStruct {
                 let pos = e.indexOf(":");
                 let methodName = e.substring(pos + 1, e.length - 1);
                 let logic = new SpeicalLogic() as any;
-                var str = logic[methodName](clazzName, method);
+                var str = logic[methodName](clazzName, method, repeat);
                 replaceString = replaceString.replace(e, str);
             }
         }
