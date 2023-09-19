@@ -2,11 +2,6 @@
 
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// The SDK uses the IRtcEngineEventHandler interface to send event notifications to your app. Your app can get those notifications through methods that inherit this interface.
-    /// </summary>
-    ///
     public abstract class IRtcEngineEventHandler
     {
 

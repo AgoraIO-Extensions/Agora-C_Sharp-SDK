@@ -1,10 +1,5 @@
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// The IVideoFrameObserver class.
-    /// </summary>
-    ///
     public abstract class IVideoFrameObserver
     {
 #region terra IVideoFrameObserver

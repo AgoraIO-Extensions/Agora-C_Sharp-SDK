@@ -6,176 +6,258 @@ namespace Agora.Rtc
 {
 #region terra IAgoraRtcEngine.h
 
+    /* enum_mediadevicetype */
     public enum MEDIA_DEVICE_TYPE
     {
+        /* enum_mediadevicetype_UNKNOWN_AUDIO_DEVICE */
         UNKNOWN_AUDIO_DEVICE = -1,
 
+        /* enum_mediadevicetype_AUDIO_PLAYOUT_DEVICE */
         AUDIO_PLAYOUT_DEVICE = 0,
 
+        /* enum_mediadevicetype_AUDIO_RECORDING_DEVICE */
         AUDIO_RECORDING_DEVICE = 1,
 
+        /* enum_mediadevicetype_VIDEO_RENDER_DEVICE */
         VIDEO_RENDER_DEVICE = 2,
 
+        /* enum_mediadevicetype_VIDEO_CAPTURE_DEVICE */
         VIDEO_CAPTURE_DEVICE = 3,
 
+        /* enum_mediadevicetype_AUDIO_APPLICATION_PLAYOUT_DEVICE */
         AUDIO_APPLICATION_PLAYOUT_DEVICE = 4,
 
+        /* enum_mediadevicetype_AUDIO_VIRTUAL_PLAYOUT_DEVICE */
         AUDIO_VIRTUAL_PLAYOUT_DEVICE = 5,
 
+        /* enum_mediadevicetype_AUDIO_VIRTUAL_RECORDING_DEVICE */
         AUDIO_VIRTUAL_RECORDING_DEVICE = 6,
     }
 
+    /* enum_audiomixingstatetype */
     public enum AUDIO_MIXING_STATE_TYPE
     {
+        /* enum_audiomixingstatetype_AUDIO_MIXING_STATE_PLAYING */
         AUDIO_MIXING_STATE_PLAYING = 710,
 
+        /* enum_audiomixingstatetype_AUDIO_MIXING_STATE_PAUSED */
         AUDIO_MIXING_STATE_PAUSED = 711,
 
+        /* enum_audiomixingstatetype_AUDIO_MIXING_STATE_STOPPED */
         AUDIO_MIXING_STATE_STOPPED = 713,
 
+        /* enum_audiomixingstatetype_AUDIO_MIXING_STATE_FAILED */
         AUDIO_MIXING_STATE_FAILED = 714,
     }
 
+    /* enum_audiomixingreasontype */
     public enum AUDIO_MIXING_REASON_TYPE
     {
+        /* enum_audiomixingreasontype_AUDIO_MIXING_REASON_CAN_NOT_OPEN */
         AUDIO_MIXING_REASON_CAN_NOT_OPEN = 701,
 
+        /* enum_audiomixingreasontype_AUDIO_MIXING_REASON_TOO_FREQUENT_CALL */
         AUDIO_MIXING_REASON_TOO_FREQUENT_CALL = 702,
 
+        /* enum_audiomixingreasontype_AUDIO_MIXING_REASON_INTERRUPTED_EOF */
         AUDIO_MIXING_REASON_INTERRUPTED_EOF = 703,
 
+        /* enum_audiomixingreasontype_AUDIO_MIXING_REASON_ONE_LOOP_COMPLETED */
         AUDIO_MIXING_REASON_ONE_LOOP_COMPLETED = 721,
 
+        /* enum_audiomixingreasontype_AUDIO_MIXING_REASON_ALL_LOOPS_COMPLETED */
         AUDIO_MIXING_REASON_ALL_LOOPS_COMPLETED = 723,
 
+        /* enum_audiomixingreasontype_AUDIO_MIXING_REASON_STOPPED_BY_USER */
         AUDIO_MIXING_REASON_STOPPED_BY_USER = 724,
 
+        /* enum_audiomixingreasontype_AUDIO_MIXING_REASON_OK */
         AUDIO_MIXING_REASON_OK = 0,
     }
 
+    /* enum_injectstreamstatus */
     public enum INJECT_STREAM_STATUS
     {
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_START_SUCCESS */
         INJECT_STREAM_STATUS_START_SUCCESS = 0,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_START_ALREADY_EXISTS */
         INJECT_STREAM_STATUS_START_ALREADY_EXISTS = 1,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_START_UNAUTHORIZED */
         INJECT_STREAM_STATUS_START_UNAUTHORIZED = 2,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_START_TIMEDOUT */
         INJECT_STREAM_STATUS_START_TIMEDOUT = 3,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_START_FAILED */
         INJECT_STREAM_STATUS_START_FAILED = 4,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_STOP_SUCCESS */
         INJECT_STREAM_STATUS_STOP_SUCCESS = 5,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_STOP_NOT_FOUND */
         INJECT_STREAM_STATUS_STOP_NOT_FOUND = 6,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_STOP_UNAUTHORIZED */
         INJECT_STREAM_STATUS_STOP_UNAUTHORIZED = 7,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_STOP_TIMEDOUT */
         INJECT_STREAM_STATUS_STOP_TIMEDOUT = 8,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_STOP_FAILED */
         INJECT_STREAM_STATUS_STOP_FAILED = 9,
 
+        /* enum_injectstreamstatus_INJECT_STREAM_STATUS_BROKEN */
         INJECT_STREAM_STATUS_BROKEN = 10,
     }
 
+    /* enum_audioequalizationbandfrequency */
     public enum AUDIO_EQUALIZATION_BAND_FREQUENCY
     {
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_31 */
         AUDIO_EQUALIZATION_BAND_31 = 0,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_62 */
         AUDIO_EQUALIZATION_BAND_62 = 1,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_125 */
         AUDIO_EQUALIZATION_BAND_125 = 2,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_250 */
         AUDIO_EQUALIZATION_BAND_250 = 3,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_500 */
         AUDIO_EQUALIZATION_BAND_500 = 4,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_1K */
         AUDIO_EQUALIZATION_BAND_1K = 5,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_2K */
         AUDIO_EQUALIZATION_BAND_2K = 6,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_4K */
         AUDIO_EQUALIZATION_BAND_4K = 7,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_8K */
         AUDIO_EQUALIZATION_BAND_8K = 8,
 
+        /* enum_audioequalizationbandfrequency_AUDIO_EQUALIZATION_BAND_16K */
         AUDIO_EQUALIZATION_BAND_16K = 9,
     }
 
+    /* enum_audioreverbtype */
     public enum AUDIO_REVERB_TYPE
     {
+        /* enum_audioreverbtype_AUDIO_REVERB_DRY_LEVEL */
         AUDIO_REVERB_DRY_LEVEL = 0,
 
+        /* enum_audioreverbtype_AUDIO_REVERB_WET_LEVEL */
         AUDIO_REVERB_WET_LEVEL = 1,
 
+        /* enum_audioreverbtype_AUDIO_REVERB_ROOM_SIZE */
         AUDIO_REVERB_ROOM_SIZE = 2,
 
+        /* enum_audioreverbtype_AUDIO_REVERB_WET_DELAY */
         AUDIO_REVERB_WET_DELAY = 3,
 
+        /* enum_audioreverbtype_AUDIO_REVERB_STRENGTH */
         AUDIO_REVERB_STRENGTH = 4,
     }
 
+    /* enum_streamfallbackoptions */
     public enum STREAM_FALLBACK_OPTIONS
     {
+        /* enum_streamfallbackoptions_STREAM_FALLBACK_OPTION_DISABLED */
         STREAM_FALLBACK_OPTION_DISABLED = 0,
 
+        /* enum_streamfallbackoptions_STREAM_FALLBACK_OPTION_VIDEO_STREAM_LOW */
         STREAM_FALLBACK_OPTION_VIDEO_STREAM_LOW = 1,
 
+        /* enum_streamfallbackoptions_STREAM_FALLBACK_OPTION_AUDIO_ONLY */
         STREAM_FALLBACK_OPTION_AUDIO_ONLY = 2,
     }
 
+    /* enum_prioritytype */
     public enum PRIORITY_TYPE
     {
+        /* enum_prioritytype_PRIORITY_HIGH */
         PRIORITY_HIGH = 50,
 
+        /* enum_prioritytype_PRIORITY_NORMAL */
         PRIORITY_NORMAL = 100,
     }
 
+    /* class_localvideostats */
     public class LocalVideoStats
     {
+        /* class_localvideostats_uid */
         public uint uid;
 
+        /* class_localvideostats_sentBitrate */
         public int sentBitrate;
 
+        /* class_localvideostats_sentFrameRate */
         public int sentFrameRate;
 
+        /* class_localvideostats_captureFrameRate */
         public int captureFrameRate;
 
+        /* class_localvideostats_captureFrameWidth */
         public int captureFrameWidth;
 
+        /* class_localvideostats_captureFrameHeight */
         public int captureFrameHeight;
 
+        /* class_localvideostats_regulatedCaptureFrameRate */
         public int regulatedCaptureFrameRate;
 
+        /* class_localvideostats_regulatedCaptureFrameWidth */
         public int regulatedCaptureFrameWidth;
 
+        /* class_localvideostats_regulatedCaptureFrameHeight */
         public int regulatedCaptureFrameHeight;
 
+        /* class_localvideostats_encoderOutputFrameRate */
         public int encoderOutputFrameRate;
 
+        /* class_localvideostats_encodedFrameWidth */
         public int encodedFrameWidth;
 
+        /* class_localvideostats_encodedFrameHeight */
         public int encodedFrameHeight;
 
+        /* class_localvideostats_rendererOutputFrameRate */
         public int rendererOutputFrameRate;
 
+        /* class_localvideostats_targetBitrate */
         public int targetBitrate;
 
+        /* class_localvideostats_targetFrameRate */
         public int targetFrameRate;
 
+        /* class_localvideostats_qualityAdaptIndication */
         public QUALITY_ADAPT_INDICATION qualityAdaptIndication;
 
+        /* class_localvideostats_encodedBitrate */
         public int encodedBitrate;
 
+        /* class_localvideostats_encodedFrameCount */
         public int encodedFrameCount;
 
+        /* class_localvideostats_codecType */
         public VIDEO_CODEC_TYPE codecType;
 
+        /* class_localvideostats_txPacketLossRate */
         public ushort txPacketLossRate;
 
+        /* class_localvideostats_captureBrightnessLevel */
         public CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel;
 
+        /* class_localvideostats_dualStreamEnabled */
         public bool dualStreamEnabled;
 
+        /* class_localvideostats_hwEncoderAccelerating */
         public int hwEncoderAccelerating;
 
         public LocalVideoStats(uint uid, int sentBitrate, int sentFrameRate, int captureFrameRate, int captureFrameWidth, int captureFrameHeight, int regulatedCaptureFrameRate, int regulatedCaptureFrameWidth, int regulatedCaptureFrameHeight, int encoderOutputFrameRate, int encodedFrameWidth, int encodedFrameHeight, int rendererOutputFrameRate, int targetBitrate, int targetFrameRate, QUALITY_ADAPT_INDICATION qualityAdaptIndication, int encodedBitrate, int encodedFrameCount, VIDEO_CODEC_TYPE codecType, ushort txPacketLossRate, CAPTURE_BRIGHTNESS_LEVEL_TYPE captureBrightnessLevel, bool dualStreamEnabled, int hwEncoderAccelerating)
@@ -209,42 +291,61 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_remoteaudiostats */
     public class RemoteAudioStats
     {
+        /* class_remoteaudiostats_uid */
         public uint uid;
 
+        /* class_remoteaudiostats_quality */
         public int quality;
 
+        /* class_remoteaudiostats_networkTransportDelay */
         public int networkTransportDelay;
 
+        /* class_remoteaudiostats_jitterBufferDelay */
         public int jitterBufferDelay;
 
+        /* class_remoteaudiostats_audioLossRate */
         public int audioLossRate;
 
+        /* class_remoteaudiostats_numChannels */
         public int numChannels;
 
+        /* class_remoteaudiostats_receivedSampleRate */
         public int receivedSampleRate;
 
+        /* class_remoteaudiostats_receivedBitrate */
         public int receivedBitrate;
 
+        /* class_remoteaudiostats_totalFrozenTime */
         public int totalFrozenTime;
 
+        /* class_remoteaudiostats_frozenRate */
         public int frozenRate;
 
+        /* class_remoteaudiostats_mosValue */
         public int mosValue;
 
+        /* class_remoteaudiostats_frozenRateByCustomPlcCount */
         public uint frozenRateByCustomPlcCount;
 
+        /* class_remoteaudiostats_plcCount */
         public uint plcCount;
 
+        /* class_remoteaudiostats_totalActiveTime */
         public int totalActiveTime;
 
+        /* class_remoteaudiostats_publishDuration */
         public int publishDuration;
 
+        /* class_remoteaudiostats_qoeQuality */
         public int qoeQuality;
 
+        /* class_remoteaudiostats_qualityChangedReason */
         public int qualityChangedReason;
 
+        /* class_remoteaudiostats_rxAudioBytes */
         public uint rxAudioBytes;
 
         public RemoteAudioStats()
@@ -292,42 +393,61 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_remotevideostats */
     public class RemoteVideoStats
     {
+        /* class_remotevideostats_uid */
         public uint uid;
 
+        /* class_remotevideostats_delay */
         public int delay;
 
+        /* class_remotevideostats_e2eDelay */
         public int e2eDelay;
 
+        /* class_remotevideostats_width */
         public int width;
 
+        /* class_remotevideostats_height */
         public int height;
 
+        /* class_remotevideostats_receivedBitrate */
         public int receivedBitrate;
 
+        /* class_remotevideostats_decoderOutputFrameRate */
         public int decoderOutputFrameRate;
 
+        /* class_remotevideostats_rendererOutputFrameRate */
         public int rendererOutputFrameRate;
 
+        /* class_remotevideostats_frameLossRate */
         public int frameLossRate;
 
+        /* class_remotevideostats_packetLossRate */
         public int packetLossRate;
 
+        /* class_remotevideostats_rxStreamType */
         public VIDEO_STREAM_TYPE rxStreamType;
 
+        /* class_remotevideostats_totalFrozenTime */
         public int totalFrozenTime;
 
+        /* class_remotevideostats_frozenRate */
         public int frozenRate;
 
+        /* class_remotevideostats_avSyncTimeMs */
         public int avSyncTimeMs;
 
+        /* class_remotevideostats_totalActiveTime */
         public int totalActiveTime;
 
+        /* class_remotevideostats_publishDuration */
         public int publishDuration;
 
+        /* class_remotevideostats_mosValue */
         public int mosValue;
 
+        /* class_remotevideostats_rxVideoBytes */
         public uint rxVideoBytes;
 
         public RemoteVideoStats(uint uid, int delay, int e2eDelay, int width, int height, int receivedBitrate, int decoderOutputFrameRate, int rendererOutputFrameRate, int frameLossRate, int packetLossRate, VIDEO_STREAM_TYPE rxStreamType, int totalFrozenTime, int frozenRate, int avSyncTimeMs, int totalActiveTime, int publishDuration, int mosValue, uint rxVideoBytes)
@@ -356,20 +476,27 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_videocompositinglayout */
     public class VideoCompositingLayout
     {
+        /* class_videocompositinglayout_canvasWidth */
         public int canvasWidth;
 
+        /* class_videocompositinglayout_canvasHeight */
         public int canvasHeight;
 
+        /* class_videocompositinglayout_backgroundColor */
         public string backgroundColor;
 
         public Region[] regions;
 
+        /* class_videocompositinglayout_regionCount */
         public int regionCount;
 
+        /* class_videocompositinglayout_appData */
         public string appData;
 
+        /* class_videocompositinglayout_appDataLength */
         public int appDataLength;
 
         public VideoCompositingLayout()
@@ -395,22 +522,31 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_region */
     public class Region
     {
+        /* class_region_uid */
         public uint uid;
 
+        /* class_region_x */
         public double x;
 
+        /* class_region_y */
         public double y;
 
+        /* class_region_width */
         public double width;
 
+        /* class_region_height */
         public double height;
 
+        /* class_region_zOrder */
         public int zOrder;
 
+        /* class_region_alpha */
         public double alpha;
 
+        /* class_region_renderMode */
         public RENDER_MODE_TYPE renderMode;
 
         public Region()
@@ -438,22 +574,31 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_injectstreamconfig */
     public class InjectStreamConfig
     {
+        /* class_injectstreamconfig_width */
         public int width;
 
+        /* class_injectstreamconfig_height */
         public int height;
 
+        /* class_injectstreamconfig_videoGop */
         public int videoGop;
 
+        /* class_injectstreamconfig_videoFramerate */
         public int videoFramerate;
 
+        /* class_injectstreamconfig_videoBitrate */
         public int videoBitrate;
 
+        /* class_injectstreamconfig_audioSampleRate */
         public AUDIO_SAMPLE_RATE_TYPE audioSampleRate;
 
+        /* class_injectstreamconfig_audioBitrate */
         public int audioBitrate;
 
+        /* class_injectstreamconfig_audioChannels */
         public int audioChannels;
 
         public InjectStreamConfig()
@@ -481,39 +626,56 @@ namespace Agora.Rtc
         }
     }
 
+    /* enum_rtmpstreamlifecycletype */
     public enum RTMP_STREAM_LIFE_CYCLE_TYPE
     {
+        /* enum_rtmpstreamlifecycletype_RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL */
         RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL = 1,
 
+        /* enum_rtmpstreamlifecycletype_RTMP_STREAM_LIFE_CYCLE_BIND2OWNER */
         RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
     }
 
+    /* class_publisherconfiguration */
     public class PublisherConfiguration
     {
+        /* class_publisherconfiguration_width */
         public int width;
 
+        /* class_publisherconfiguration_height */
         public int height;
 
+        /* class_publisherconfiguration_framerate */
         public int framerate;
 
+        /* class_publisherconfiguration_bitrate */
         public int bitrate;
 
+        /* class_publisherconfiguration_defaultLayout */
         public int defaultLayout;
 
+        /* class_publisherconfiguration_lifecycle */
         public int lifecycle;
 
+        /* class_publisherconfiguration_owner */
         public bool owner;
 
+        /* class_publisherconfiguration_injectStreamWidth */
         public int injectStreamWidth;
 
+        /* class_publisherconfiguration_injectStreamHeight */
         public int injectStreamHeight;
 
+        /* class_publisherconfiguration_injectStreamUrl */
         public string injectStreamUrl;
 
+        /* class_publisherconfiguration_publishUrl */
         public string publishUrl;
 
+        /* class_publisherconfiguration_rawStreamUrl */
         public string rawStreamUrl;
 
+        /* class_publisherconfiguration_extraInfo */
         public string extraInfo;
 
         public PublisherConfiguration()
@@ -551,30 +713,42 @@ namespace Agora.Rtc
         }
     }
 
+    /* enum_cameradirection */
     public enum CAMERA_DIRECTION
     {
+        /* enum_cameradirection_CAMERA_REAR */
         CAMERA_REAR = 0,
 
+        /* enum_cameradirection_CAMERA_FRONT */
         CAMERA_FRONT = 1,
     }
 
+    /* enum_cloudproxytype */
     public enum CLOUD_PROXY_TYPE
     {
+        /* enum_cloudproxytype_NONE_PROXY */
         NONE_PROXY = 0,
 
+        /* enum_cloudproxytype_UDP_PROXY */
         UDP_PROXY = 1,
 
+        /* enum_cloudproxytype_TCP_PROXY */
         TCP_PROXY = 2,
     }
 
+    /* class_cameracapturerconfiguration */
     public class CameraCapturerConfiguration
     {
+        /* class_cameracapturerconfiguration_cameraDirection */
         public CAMERA_DIRECTION cameraDirection;
 
+        /* class_cameracapturerconfiguration_deviceId */
         public string deviceId;
 
+        /* class_cameracapturerconfiguration_format */
         public VideoFormat format;
 
+        /* class_cameracapturerconfiguration_followEncodeDimensionRatio */
         public bool followEncodeDimensionRatio;
 
         public CameraCapturerConfiguration()
@@ -591,18 +765,24 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_screencaptureconfiguration */
     public class ScreenCaptureConfiguration
     {
+        /* class_screencaptureconfiguration_isCaptureWindow */
         public bool isCaptureWindow;
 
+        /* class_screencaptureconfiguration_displayId */
         public uint displayId;
 
+        /* class_screencaptureconfiguration_screenRect */
         public Rectangle screenRect;
 
+        /* class_screencaptureconfiguration_windowId */
         public view_t windowId;
 
         public ScreenCaptureParameters @params;
 
+        /* class_screencaptureconfiguration_regionRect */
         public Rectangle regionRect;
 
         public ScreenCaptureConfiguration()
@@ -623,10 +803,13 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_size */
     public class SIZE
     {
+        /* class_size_width */
         public int width;
 
+        /* class_size_height */
         public int height;
 
         public SIZE()
@@ -642,14 +825,18 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_thumbimagebuffer */
     public class ThumbImageBuffer
     {
         public byte[] buffer;
 
+        /* class_thumbimagebuffer_length */
         public uint length;
 
+        /* class_thumbimagebuffer_width */
         public uint width;
 
+        /* class_thumbimagebuffer_height */
         public uint height;
 
         public ThumbImageBuffer()
@@ -669,41 +856,59 @@ namespace Agora.Rtc
         }
     }
 
+    /* enum_screencapturesourcetype */
     public enum ScreenCaptureSourceType
     {
+        /* enum_screencapturesourcetype_ScreenCaptureSourceType_Unknown */
         ScreenCaptureSourceType_Unknown = -1,
 
+        /* enum_screencapturesourcetype_ScreenCaptureSourceType_Window */
         ScreenCaptureSourceType_Window = 0,
 
+        /* enum_screencapturesourcetype_ScreenCaptureSourceType_Screen */
         ScreenCaptureSourceType_Screen = 1,
 
+        /* enum_screencapturesourcetype_ScreenCaptureSourceType_Custom */
         ScreenCaptureSourceType_Custom = 2,
     }
 
+    /* class_screencapturesourceinfo */
     public class ScreenCaptureSourceInfo
     {
+        /* class_screencapturesourceinfo_type */
         public ScreenCaptureSourceType type;
 
+        /* class_screencapturesourceinfo_sourceId */
         public view_t sourceId;
 
+        /* class_screencapturesourceinfo_sourceName */
         public string sourceName;
 
+        /* class_screencapturesourceinfo_thumbImage */
         public ThumbImageBuffer thumbImage;
 
+        /* class_screencapturesourceinfo_iconImage */
         public ThumbImageBuffer iconImage;
 
+        /* class_screencapturesourceinfo_processPath */
         public string processPath;
 
+        /* class_screencapturesourceinfo_sourceTitle */
         public string sourceTitle;
 
+        /* class_screencapturesourceinfo_primaryMonitor */
         public bool primaryMonitor;
 
+        /* class_screencapturesourceinfo_isOccluded */
         public bool isOccluded;
 
+        /* class_screencapturesourceinfo_position */
         public Rectangle position;
 
+        /* class_screencapturesourceinfo_minimizeWindow */
         public bool minimizeWindow;
 
+        /* class_screencapturesourceinfo_sourceDisplayId */
         public view_t sourceDisplayId;
 
         public ScreenCaptureSourceInfo()
@@ -736,8 +941,10 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_advancedaudiooptions */
     public class AdvancedAudioOptions : OptionalJsonParse
     {
+        /* class_advancedaudiooptions_audioProcessingChannels */
         public Optional<int> audioProcessingChannels = new Optional<int>();
 
         public AdvancedAudioOptions()
@@ -763,12 +970,16 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_imagetrackoptions */
     public class ImageTrackOptions
     {
+        /* class_imagetrackoptions_imageUrl */
         public string imageUrl;
 
+        /* class_imagetrackoptions_fps */
         public int fps;
 
+        /* class_imagetrackoptions_mirrorMode */
         public VIDEO_MIRROR_MODE_TYPE mirrorMode;
 
         public ImageTrackOptions()
@@ -786,74 +997,109 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_channelmediaoptions */
     public class ChannelMediaOptions : OptionalJsonParse
     {
+        /* class_channelmediaoptions_publishCameraTrack */
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishSecondaryCameraTrack */
         public Optional<bool> publishSecondaryCameraTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishThirdCameraTrack */
         public Optional<bool> publishThirdCameraTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishFourthCameraTrack */
         public Optional<bool> publishFourthCameraTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishMicrophoneTrack */
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishScreenCaptureVideo */
         public Optional<bool> publishScreenCaptureVideo = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishScreenCaptureAudio */
         public Optional<bool> publishScreenCaptureAudio = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishScreenTrack */
         public Optional<bool> publishScreenTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishSecondaryScreenTrack */
         public Optional<bool> publishSecondaryScreenTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishThirdScreenTrack */
         public Optional<bool> publishThirdScreenTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishFourthScreenTrack */
         public Optional<bool> publishFourthScreenTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishCustomAudioTrack */
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishCustomAudioTrackId */
         public Optional<int> publishCustomAudioTrackId = new Optional<int>();
 
+        /* class_channelmediaoptions_publishCustomVideoTrack */
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishEncodedVideoTrack */
         public Optional<bool> publishEncodedVideoTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishMediaPlayerAudioTrack */
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishMediaPlayerVideoTrack */
         public Optional<bool> publishMediaPlayerVideoTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishTranscodedVideoTrack */
         public Optional<bool> publishTranscodedVideoTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_autoSubscribeAudio */
         public Optional<bool> autoSubscribeAudio = new Optional<bool>();
 
+        /* class_channelmediaoptions_autoSubscribeVideo */
         public Optional<bool> autoSubscribeVideo = new Optional<bool>();
 
+        /* class_channelmediaoptions_enableAudioRecordingOrPlayout */
         public Optional<bool> enableAudioRecordingOrPlayout = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishMediaPlayerId */
         public Optional<int> publishMediaPlayerId = new Optional<int>();
 
+        /* class_channelmediaoptions_clientRoleType */
         public Optional<CLIENT_ROLE_TYPE> clientRoleType = new Optional<CLIENT_ROLE_TYPE>();
 
+        /* class_channelmediaoptions_audienceLatencyLevel */
         public Optional<AUDIENCE_LATENCY_LEVEL_TYPE> audienceLatencyLevel = new Optional<AUDIENCE_LATENCY_LEVEL_TYPE>();
 
+        /* class_channelmediaoptions_defaultVideoStreamType */
         public Optional<VIDEO_STREAM_TYPE> defaultVideoStreamType = new Optional<VIDEO_STREAM_TYPE>();
 
+        /* class_channelmediaoptions_channelProfile */
         public Optional<CHANNEL_PROFILE_TYPE> channelProfile = new Optional<CHANNEL_PROFILE_TYPE>();
 
+        /* class_channelmediaoptions_audioDelayMs */
         public Optional<int> audioDelayMs = new Optional<int>();
 
+        /* class_channelmediaoptions_mediaPlayerAudioDelayMs */
         public Optional<int> mediaPlayerAudioDelayMs = new Optional<int>();
 
+        /* class_channelmediaoptions_token */
         public Optional<string> token = new Optional<string>();
 
+        /* class_channelmediaoptions_enableBuiltInMediaEncryption */
         public Optional<bool> enableBuiltInMediaEncryption = new Optional<bool>();
 
+        /* class_channelmediaoptions_publishRhythmPlayerTrack */
         public Optional<bool> publishRhythmPlayerTrack = new Optional<bool>();
 
+        /* class_channelmediaoptions_isInteractiveAudience */
         public Optional<bool> isInteractiveAudience = new Optional<bool>();
 
+        /* class_channelmediaoptions_customVideoTrackId */
         public Optional<uint> customVideoTrackId = new Optional<uint>();
 
+        /* class_channelmediaoptions_isAudioFilterable */
         public Optional<bool> isAudioFilterable = new Optional<bool>();
 
         public ChannelMediaOptions()
@@ -1110,29 +1356,41 @@ namespace Agora.Rtc
         }
     }
 
+    /* enum_proxytype */
     public enum PROXY_TYPE
     {
+        /* enum_proxytype_NONE_PROXY_TYPE */
         NONE_PROXY_TYPE = 0,
 
+        /* enum_proxytype_UDP_PROXY_TYPE */
         UDP_PROXY_TYPE = 1,
 
+        /* enum_proxytype_TCP_PROXY_TYPE */
         TCP_PROXY_TYPE = 2,
 
+        /* enum_proxytype_LOCAL_PROXY_TYPE */
         LOCAL_PROXY_TYPE = 3,
 
+        /* enum_proxytype_TCP_PROXY_AUTO_FALLBACK_TYPE */
         TCP_PROXY_AUTO_FALLBACK_TYPE = 4,
 
+        /* enum_proxytype_HTTP_PROXY_TYPE */
         HTTP_PROXY_TYPE = 5,
 
+        /* enum_proxytype_HTTPS_PROXY_TYPE */
         HTTPS_PROXY_TYPE = 6,
     }
 
+    /* class_leavechanneloptions */
     public class LeaveChannelOptions
     {
+        /* class_leavechanneloptions_stopAudioMixing */
         public bool stopAudioMixing;
 
+        /* class_leavechanneloptions_stopAllEffect */
         public bool stopAllEffect;
 
+        /* class_leavechanneloptions_stopMicrophoneRecording */
         public bool stopMicrophoneRecording;
 
         public LeaveChannelOptions()
@@ -1150,28 +1408,40 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_rtcenginecontext */
     public class RtcEngineContext : OptionalJsonParse
     {
+        /* class_rtcenginecontext_appId */
         public string appId;
 
+        /* class_rtcenginecontext_context */
         public ulong context;
 
+        /* class_rtcenginecontext_channelProfile */
         public CHANNEL_PROFILE_TYPE channelProfile;
 
+        /* class_rtcenginecontext_license */
         public string license;
 
+        /* class_rtcenginecontext_audioScenario */
         public AUDIO_SCENARIO_TYPE audioScenario;
 
+        /* class_rtcenginecontext_areaCode */
         public AREA_CODE areaCode;
 
+        /* class_rtcenginecontext_logConfig */
         public LogConfig logConfig;
 
+        /* class_rtcenginecontext_threadPriority */
         public Optional<THREAD_PRIORITY_TYPE> threadPriority = new Optional<THREAD_PRIORITY_TYPE>();
 
+        /* class_rtcenginecontext_useExternalEglContext */
         public bool useExternalEglContext;
 
+        /* class_rtcenginecontext_domainLimit */
         public bool domainLimit;
 
+        /* class_rtcenginecontext_autoRegisterAgoraExtensions */
         public bool autoRegisterAgoraExtensions;
 
         public RtcEngineContext()
@@ -1247,30 +1517,42 @@ namespace Agora.Rtc
         }
     }
 
+    /* enum_metadatatype */
     public enum METADATA_TYPE
     {
+        /* enum_metadatatype_UNKNOWN_METADATA */
         UNKNOWN_METADATA = -1,
 
+        /* enum_metadatatype_VIDEO_METADATA */
         VIDEO_METADATA = 0,
     }
 
+    /* enum_maxmetadatasizetype */
     public enum MAX_METADATA_SIZE_TYPE
     {
+        /* enum_maxmetadatasizetype_INVALID_METADATA_SIZE_IN_BYTE */
         INVALID_METADATA_SIZE_IN_BYTE = -1,
 
+        /* enum_maxmetadatasizetype_DEFAULT_METADATA_SIZE_IN_BYTE */
         DEFAULT_METADATA_SIZE_IN_BYTE = 512,
 
+        /* enum_maxmetadatasizetype_MAX_METADATA_SIZE_IN_BYTE */
         MAX_METADATA_SIZE_IN_BYTE = 1024,
     }
 
+    /* class_metadata */
     public class Metadata
     {
+        /* class_metadata_uid */
         public uint uid;
 
+        /* class_metadata_size */
         public uint size;
 
+        /* class_metadata_buffer */
         public IntPtr buffer;
 
+        /* class_metadata_timeStampMs */
         public long timeStampMs;
 
         public Metadata(uint uid, uint size, IntPtr buffer, long timeStampMs)
@@ -1285,44 +1567,63 @@ namespace Agora.Rtc
         }
     }
 
+    /* enum_directcdnstreamingerror */
     public enum DIRECT_CDN_STREAMING_ERROR
     {
+        /* enum_directcdnstreamingerror_DIRECT_CDN_STREAMING_ERROR_OK */
         DIRECT_CDN_STREAMING_ERROR_OK = 0,
 
+        /* enum_directcdnstreamingerror_DIRECT_CDN_STREAMING_ERROR_FAILED */
         DIRECT_CDN_STREAMING_ERROR_FAILED = 1,
 
+        /* enum_directcdnstreamingerror_DIRECT_CDN_STREAMING_ERROR_AUDIO_PUBLICATION */
         DIRECT_CDN_STREAMING_ERROR_AUDIO_PUBLICATION = 2,
 
+        /* enum_directcdnstreamingerror_DIRECT_CDN_STREAMING_ERROR_VIDEO_PUBLICATION */
         DIRECT_CDN_STREAMING_ERROR_VIDEO_PUBLICATION = 3,
 
+        /* enum_directcdnstreamingerror_DIRECT_CDN_STREAMING_ERROR_NET_CONNECT */
         DIRECT_CDN_STREAMING_ERROR_NET_CONNECT = 4,
 
+        /* enum_directcdnstreamingerror_DIRECT_CDN_STREAMING_ERROR_BAD_NAME */
         DIRECT_CDN_STREAMING_ERROR_BAD_NAME = 5,
     }
 
+    /* enum_directcdnstreamingstate */
     public enum DIRECT_CDN_STREAMING_STATE
     {
+        /* enum_directcdnstreamingstate_DIRECT_CDN_STREAMING_STATE_IDLE */
         DIRECT_CDN_STREAMING_STATE_IDLE = 0,
 
+        /* enum_directcdnstreamingstate_DIRECT_CDN_STREAMING_STATE_RUNNING */
         DIRECT_CDN_STREAMING_STATE_RUNNING = 1,
 
+        /* enum_directcdnstreamingstate_DIRECT_CDN_STREAMING_STATE_STOPPED */
         DIRECT_CDN_STREAMING_STATE_STOPPED = 2,
 
+        /* enum_directcdnstreamingstate_DIRECT_CDN_STREAMING_STATE_FAILED */
         DIRECT_CDN_STREAMING_STATE_FAILED = 3,
 
+        /* enum_directcdnstreamingstate_DIRECT_CDN_STREAMING_STATE_RECOVERING */
         DIRECT_CDN_STREAMING_STATE_RECOVERING = 4,
     }
 
+    /* class_directcdnstreamingstats */
     public class DirectCdnStreamingStats
     {
+        /* class_directcdnstreamingstats_videoWidth */
         public int videoWidth;
 
+        /* class_directcdnstreamingstats_videoHeight */
         public int videoHeight;
 
+        /* class_directcdnstreamingstats_fps */
         public int fps;
 
+        /* class_directcdnstreamingstats_videoBitrate */
         public int videoBitrate;
 
+        /* class_directcdnstreamingstats_audioBitrate */
         public int audioBitrate;
 
         public DirectCdnStreamingStats(int videoWidth, int videoHeight, int fps, int videoBitrate, int audioBitrate)
@@ -1338,20 +1639,28 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_directcdnstreamingmediaoptions */
     public class DirectCdnStreamingMediaOptions : OptionalJsonParse
     {
+        /* class_directcdnstreamingmediaoptions_publishCameraTrack */
         public Optional<bool> publishCameraTrack = new Optional<bool>();
 
+        /* class_directcdnstreamingmediaoptions_publishMicrophoneTrack */
         public Optional<bool> publishMicrophoneTrack = new Optional<bool>();
 
+        /* class_directcdnstreamingmediaoptions_publishCustomAudioTrack */
         public Optional<bool> publishCustomAudioTrack = new Optional<bool>();
 
+        /* class_directcdnstreamingmediaoptions_publishCustomVideoTrack */
         public Optional<bool> publishCustomVideoTrack = new Optional<bool>();
 
+        /* class_directcdnstreamingmediaoptions_publishMediaPlayerAudioTrack */
         public Optional<bool> publishMediaPlayerAudioTrack = new Optional<bool>();
 
+        /* class_directcdnstreamingmediaoptions_publishMediaPlayerId */
         public Optional<int> publishMediaPlayerId = new Optional<int>();
 
+        /* class_directcdnstreamingmediaoptions_customVideoTrackId */
         public Optional<uint> customVideoTrackId = new Optional<uint>();
 
         public DirectCdnStreamingMediaOptions()
@@ -1419,14 +1728,19 @@ namespace Agora.Rtc
         }
     }
 
+    /* class_extensioninfo */
     public class ExtensionInfo
     {
+        /* class_extensioninfo_mediaSourceType */
         public MEDIA_SOURCE_TYPE mediaSourceType;
 
+        /* class_extensioninfo_remoteUid */
         public uint remoteUid;
 
+        /* class_extensioninfo_channelId */
         public string channelId;
 
+        /* class_extensioninfo_localUid */
         public uint localUid;
 
         public ExtensionInfo()
@@ -1446,168 +1760,249 @@ namespace Agora.Rtc
         }
     }
 
+    /* enum_qualityreportformattype */
     public enum QUALITY_REPORT_FORMAT_TYPE
     {
+        /* enum_qualityreportformattype_QUALITY_REPORT_JSON */
         QUALITY_REPORT_JSON = 0,
 
+        /* enum_qualityreportformattype_QUALITY_REPORT_HTML */
         QUALITY_REPORT_HTML = 1,
     }
 
+    /* enum_mediadevicestatetype */
     public enum MEDIA_DEVICE_STATE_TYPE
     {
+        /* enum_mediadevicestatetype_MEDIA_DEVICE_STATE_IDLE */
         MEDIA_DEVICE_STATE_IDLE = 0,
 
+        /* enum_mediadevicestatetype_MEDIA_DEVICE_STATE_ACTIVE */
         MEDIA_DEVICE_STATE_ACTIVE = 1,
 
+        /* enum_mediadevicestatetype_MEDIA_DEVICE_STATE_DISABLED */
         MEDIA_DEVICE_STATE_DISABLED = 2,
 
+        /* enum_mediadevicestatetype_MEDIA_DEVICE_STATE_NOT_PRESENT */
         MEDIA_DEVICE_STATE_NOT_PRESENT = 4,
 
+        /* enum_mediadevicestatetype_MEDIA_DEVICE_STATE_UNPLUGGED */
         MEDIA_DEVICE_STATE_UNPLUGGED = 8,
     }
 
+    /* enum_videoprofiletype */
     public enum VIDEO_PROFILE_TYPE
     {
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_120P */
         VIDEO_PROFILE_LANDSCAPE_120P = 0,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_120P_3 */
         VIDEO_PROFILE_LANDSCAPE_120P_3 = 2,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_180P */
         VIDEO_PROFILE_LANDSCAPE_180P = 10,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_180P_3 */
         VIDEO_PROFILE_LANDSCAPE_180P_3 = 12,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_180P_4 */
         VIDEO_PROFILE_LANDSCAPE_180P_4 = 13,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_240P */
         VIDEO_PROFILE_LANDSCAPE_240P = 20,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_240P_3 */
         VIDEO_PROFILE_LANDSCAPE_240P_3 = 22,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_240P_4 */
         VIDEO_PROFILE_LANDSCAPE_240P_4 = 23,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P */
         VIDEO_PROFILE_LANDSCAPE_360P = 30,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P_3 */
         VIDEO_PROFILE_LANDSCAPE_360P_3 = 32,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P_4 */
         VIDEO_PROFILE_LANDSCAPE_360P_4 = 33,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P_6 */
         VIDEO_PROFILE_LANDSCAPE_360P_6 = 35,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P_7 */
         VIDEO_PROFILE_LANDSCAPE_360P_7 = 36,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P_8 */
         VIDEO_PROFILE_LANDSCAPE_360P_8 = 37,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P_9 */
         VIDEO_PROFILE_LANDSCAPE_360P_9 = 38,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P_10 */
         VIDEO_PROFILE_LANDSCAPE_360P_10 = 39,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_360P_11 */
         VIDEO_PROFILE_LANDSCAPE_360P_11 = 100,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_480P */
         VIDEO_PROFILE_LANDSCAPE_480P = 40,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_480P_3 */
         VIDEO_PROFILE_LANDSCAPE_480P_3 = 42,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_480P_4 */
         VIDEO_PROFILE_LANDSCAPE_480P_4 = 43,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_480P_6 */
         VIDEO_PROFILE_LANDSCAPE_480P_6 = 45,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_480P_8 */
         VIDEO_PROFILE_LANDSCAPE_480P_8 = 47,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_480P_9 */
         VIDEO_PROFILE_LANDSCAPE_480P_9 = 48,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_480P_10 */
         VIDEO_PROFILE_LANDSCAPE_480P_10 = 49,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_720P */
         VIDEO_PROFILE_LANDSCAPE_720P = 50,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_720P_3 */
         VIDEO_PROFILE_LANDSCAPE_720P_3 = 52,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_720P_5 */
         VIDEO_PROFILE_LANDSCAPE_720P_5 = 54,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_720P_6 */
         VIDEO_PROFILE_LANDSCAPE_720P_6 = 55,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_1080P */
         VIDEO_PROFILE_LANDSCAPE_1080P = 60,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_1080P_3 */
         VIDEO_PROFILE_LANDSCAPE_1080P_3 = 62,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_1080P_5 */
         VIDEO_PROFILE_LANDSCAPE_1080P_5 = 64,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_1440P */
         VIDEO_PROFILE_LANDSCAPE_1440P = 66,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_1440P_2 */
         VIDEO_PROFILE_LANDSCAPE_1440P_2 = 67,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_4K */
         VIDEO_PROFILE_LANDSCAPE_4K = 70,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_LANDSCAPE_4K_3 */
         VIDEO_PROFILE_LANDSCAPE_4K_3 = 72,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_120P */
         VIDEO_PROFILE_PORTRAIT_120P = 1000,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_120P_3 */
         VIDEO_PROFILE_PORTRAIT_120P_3 = 1002,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_180P */
         VIDEO_PROFILE_PORTRAIT_180P = 1010,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_180P_3 */
         VIDEO_PROFILE_PORTRAIT_180P_3 = 1012,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_180P_4 */
         VIDEO_PROFILE_PORTRAIT_180P_4 = 1013,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_240P */
         VIDEO_PROFILE_PORTRAIT_240P = 1020,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_240P_3 */
         VIDEO_PROFILE_PORTRAIT_240P_3 = 1022,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_240P_4 */
         VIDEO_PROFILE_PORTRAIT_240P_4 = 1023,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P */
         VIDEO_PROFILE_PORTRAIT_360P = 1030,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P_3 */
         VIDEO_PROFILE_PORTRAIT_360P_3 = 1032,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P_4 */
         VIDEO_PROFILE_PORTRAIT_360P_4 = 1033,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P_6 */
         VIDEO_PROFILE_PORTRAIT_360P_6 = 1035,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P_7 */
         VIDEO_PROFILE_PORTRAIT_360P_7 = 1036,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P_8 */
         VIDEO_PROFILE_PORTRAIT_360P_8 = 1037,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P_9 */
         VIDEO_PROFILE_PORTRAIT_360P_9 = 1038,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P_10 */
         VIDEO_PROFILE_PORTRAIT_360P_10 = 1039,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_360P_11 */
         VIDEO_PROFILE_PORTRAIT_360P_11 = 1100,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_480P */
         VIDEO_PROFILE_PORTRAIT_480P = 1040,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_480P_3 */
         VIDEO_PROFILE_PORTRAIT_480P_3 = 1042,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_480P_4 */
         VIDEO_PROFILE_PORTRAIT_480P_4 = 1043,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_480P_6 */
         VIDEO_PROFILE_PORTRAIT_480P_6 = 1045,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_480P_8 */
         VIDEO_PROFILE_PORTRAIT_480P_8 = 1047,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_480P_9 */
         VIDEO_PROFILE_PORTRAIT_480P_9 = 1048,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_480P_10 */
         VIDEO_PROFILE_PORTRAIT_480P_10 = 1049,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_720P */
         VIDEO_PROFILE_PORTRAIT_720P = 1050,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_720P_3 */
         VIDEO_PROFILE_PORTRAIT_720P_3 = 1052,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_720P_5 */
         VIDEO_PROFILE_PORTRAIT_720P_5 = 1054,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_720P_6 */
         VIDEO_PROFILE_PORTRAIT_720P_6 = 1055,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_1080P */
         VIDEO_PROFILE_PORTRAIT_1080P = 1060,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_1080P_3 */
         VIDEO_PROFILE_PORTRAIT_1080P_3 = 1062,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_1080P_5 */
         VIDEO_PROFILE_PORTRAIT_1080P_5 = 1064,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_1440P */
         VIDEO_PROFILE_PORTRAIT_1440P = 1066,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_1440P_2 */
         VIDEO_PROFILE_PORTRAIT_1440P_2 = 1067,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_4K */
         VIDEO_PROFILE_PORTRAIT_4K = 1070,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_PORTRAIT_4K_3 */
         VIDEO_PROFILE_PORTRAIT_4K_3 = 1072,
 
+        /* enum_videoprofiletype_VIDEO_PROFILE_DEFAULT */
         VIDEO_PROFILE_DEFAULT = VIDEO_PROFILE_LANDSCAPE_360P,
     }
 

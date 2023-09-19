@@ -1,10 +1,5 @@
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// The audio frame observer.
-    /// </summary>
-    ///
     public abstract class IAudioFrameObserver
     {
 

@@ -2,9 +2,6 @@ using System;
 using int64_t = System.Int64;
 namespace Agora.Rtc
 {
-    ///
-    /// @ignore
-    ///
     public abstract class IMusicContentCenterEventHandler
     {
 

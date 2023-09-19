@@ -2,11 +2,6 @@
 
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// Provides callbacks for media players.
-    /// </summary>
-    ///
     public abstract class IMediaPlayerSourceObserver
     {
 

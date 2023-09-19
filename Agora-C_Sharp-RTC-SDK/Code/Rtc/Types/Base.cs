@@ -2,13 +2,10 @@
 
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// The mode for receiving data.
-    /// </summary>
-    ///
+    /* enum_observermode */
     public enum OBSERVER_MODE
     {
+        /* enum_observermode_RAW_DATA */
         RAW_DATA,
 
         INTPTR
@@ -106,35 +103,43 @@ namespace Agora.Rtc
 #endregion terra ExternalVideoFrameInternal_Member_List
     }
 
-    ///
-    /// <summary>
-    /// Video frame formats.
-    /// </summary>
-    ///
+    /* enum_videoobserverframetype */
     public enum VIDEO_OBSERVER_FRAME_TYPE
     {
+        /* enum_videoobserverframetype_FRAME_TYPE_DEFAULT */
         FRAME_TYPE_DEFAULT = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_YUV420 */
         FRAME_TYPE_YUV420 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I420,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_BGRA */
         FRAME_TYPE_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_BGRA,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_NV21 */
         FRAME_TYPE_NV21 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_NV21,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_RGBA */
         FRAME_TYPE_RGBA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_RGBA,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_NV12 */
         FRAME_TYPE_NV12 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_NV12,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_TEXTURE_2D */
         FRAME_TYPE_TEXTURE_2D = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_2D,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_TEXTURE_OES */
         FRAME_TYPE_TEXTURE_OES = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_OES,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_CVPIXEL_NV12 */
         FRAME_TYPE_CVPIXEL_NV12 = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_NV12,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_CVPIXEL_I420 */
         FRAME_TYPE_CVPIXEL_I420 = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_I420,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_CVPIXEL_BGRA */
         FRAME_TYPE_CVPIXEL_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_BGRA,
 
+        /* enum_videoobserverframetype_FRAME_TYPE_YUV422 */
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
     }
 

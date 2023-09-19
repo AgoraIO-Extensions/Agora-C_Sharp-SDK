@@ -5,12 +5,6 @@ using view_t = System.Int64;
 using track_id_t = System.UInt32;
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// The basic interface of the Agora SDK that implements the core functions of real-time communication.
-    /// IRtcEngine provides the main methods that your app can call. Before calling other APIs, you must call CreateAgoraRtcEngine to create an IRtcEngine object.
-    /// </summary>
-    ///
     public abstract class IRtcEngine
     {
         public abstract void Dispose(bool sync = false);
@@ -649,12 +643,6 @@ namespace Agora.Rtc
 #endregion terra IMediaEngine
     };
 
-    ///
-    /// <summary>
-    /// This interface class contains multi-channel methods.
-    /// Inherited from IRtcEngine.
-    /// </summary>
-    ///
     public abstract class IRtcEngineEx : IRtcEngine
     {
 

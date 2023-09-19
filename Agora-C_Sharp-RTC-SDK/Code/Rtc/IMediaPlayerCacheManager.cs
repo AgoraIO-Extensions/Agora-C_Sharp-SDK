@@ -1,11 +1,6 @@
 ﻿using System;
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// This class provides methods to manage cached media files.
-    /// </summary>
-    ///
     public abstract class IMediaPlayerCacheManager
     {
 #region terra IMediaPlayerCacheManager

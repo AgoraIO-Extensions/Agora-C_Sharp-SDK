@@ -2,24 +2,8 @@ using System;
 
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// Video device management methods.
-    /// </summary>
-    ///
     public abstract class IVideoDeviceManager
     {
-        ///
-        /// <summary>
-        /// Enumerates the video devices.
-        /// This method is for Windows and macOS only.
-        /// </summary>
-        ///
-        /// <returns>
-        /// Success: A DeviceInfo array including all video devices in the system.
-        /// Failure: An empty array.
-        /// </returns>
-        ///
         public abstract DeviceInfo[] EnumerateVideoDevices();
 
 #region terra IVideoDeviceManager

@@ -2,6 +2,7 @@
 {
 #region terra IAgoraSpatialAudio.h
 
+    /* class_remotevoicepositioninfo */
     public class RemoteVoicePositionInfo
     {
         public float[] position;
@@ -19,8 +20,10 @@
         }
     }
 
+    /* class_spatialaudiozone */
     public class SpatialAudioZone
     {
+        /* class_spatialaudiozone_zoneSetId */
         public int zoneSetId;
 
         public float[] position;
@@ -31,17 +34,23 @@
 
         public float[] up;
 
+        /* class_spatialaudiozone_forwardLength */
         public float forwardLength;
 
+        /* class_spatialaudiozone_rightLength */
         public float rightLength;
 
+        /* class_spatialaudiozone_upLength */
         public float upLength;
 
+        /* class_spatialaudiozone_audioAttenuation */
         public float audioAttenuation;
     }
 
+    /* class_localspatialaudioconfig */
     public class LocalSpatialAudioConfig
     {
+        /* class_localspatialaudioconfig_rtcEngine */
         public IRtcEngine rtcEngine;
 
         public LocalSpatialAudioConfig()

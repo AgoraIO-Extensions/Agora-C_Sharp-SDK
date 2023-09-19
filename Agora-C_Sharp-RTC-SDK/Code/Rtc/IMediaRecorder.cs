@@ -1,8 +1,5 @@
 namespace Agora.Rtc
 {
-    ///
-    /// @ignore
-    ///
     public abstract class IMediaRecorder
     {
 #region terra IMediaRecorder

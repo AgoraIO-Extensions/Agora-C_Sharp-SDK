@@ -2,10 +2,13 @@
 {
 #region terra IAgoraRtcEngineEx.h
 
+    /* class_rtcconnection */
     public class RtcConnection
     {
+        /* class_rtcconnection_channelId */
         public string channelId;
 
+        /* class_rtcconnection_localUid */
         public uint localUid;
 
         public RtcConnection()

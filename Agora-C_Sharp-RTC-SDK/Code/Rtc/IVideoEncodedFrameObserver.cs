@@ -2,11 +2,6 @@ using System;
 
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// Receives encoded video images.
-    /// </summary>
-    ///
     public abstract class IVideoEncodedFrameObserver
     {
 #region terra IVideoEncodedFrameObserver

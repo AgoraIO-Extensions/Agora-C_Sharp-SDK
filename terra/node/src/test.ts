@@ -7,13 +7,7 @@ import { execSync } from 'child_process';
 import { ParamDefaultTrans } from "./ParamDefaultTrans";
 import { ParseEngine } from "./PraseEngine";
 import { Tool } from "./Tool";
-
-
-
-
-
-
-
+import { AddAllDoc, DeleteAllOldDoc } from "./DocHelper";
 
 var cxxiles = JSON.parse(fs.readFileSync("/Users/xiayangqun/Documents/agoraSpace/iris-ast/terra-cli/.dist/src/dump_json.json", { encoding: 'utf-8' }));
 
@@ -35,5 +29,7 @@ new ParseEngine(
     "#endregion terra"
 );
 
-var data = Tool.getCppConstructor("VideoTrackInfo", "/Users/xiayangqun/Documents/agoraSpace/iris-ast/agora_rtc_ast/tmp/AgoraBase.h")
-console.log(JSON.stringify(data));
+// var data = Tool.getCppConstructor("VideoTrackInfo", "/Users/xiayangqun/Documents/agoraSpace/iris-ast/agora_rtc_ast/tmp/AgoraBase.h")
+// console.log(JSON.stringify(data));
+DeleteAllOldDoc();
+AddAllDoc();

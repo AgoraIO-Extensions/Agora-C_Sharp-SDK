@@ -1,10 +1,5 @@
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// Audio device management methods.
-    /// </summary>
-    ///
     public abstract class IAudioDeviceManager
     {
         public abstract DeviceInfo[] EnumeratePlaybackDevices();

@@ -1,19 +1,7 @@
 namespace Agora.Rtc
 {
-    ///
-    /// <summary>
-    /// This class calculates user positions through the SDK to implement the spatial audio effect.
-    /// Before calling other APIs in this class, you need to call the Initialize method to initialize this class.
-    /// </summary>
-    ///
     public abstract class ILocalSpatialAudioEngine
     {
-        ///
-        /// <summary>
-        /// Destroys ILocalSpatialAudioEngine.
-        /// This method releases all resources under ILocalSpatialAudioEngine. When the user does not need to use the spatial audio effect, you can call this method to release resources for other operations. After calling this method, you can no longer use any of the APIs under ILocalSpatialAudioEngine. To use the spatial audio effect again, you need to wait until the Dispose method execution to complete before calling Initialize to create a new ILocalSpatialAudioEngine. Call this method before the Dispose method under IRtcEngine.
-        /// </summary>
-        ///
         public abstract void Dispose();
 
 #region terra ILocalSpatialAudioEngine

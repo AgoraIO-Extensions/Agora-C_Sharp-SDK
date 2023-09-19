@@ -2,9 +2,6 @@ using System;
 
 namespace Agora.Rtc
 {
-    ///
-    /// @ignore
-    ///
     public abstract class IMusicPlayer : IMediaPlayer
     {
 #region terra IMusicPlayer

@@ -3,39 +3,12 @@ using System;
 namespace Agora.Rtc
 {
     using view_t = Int64;
-    ///
-    /// <summary>
-    /// This class provides media player functions and supports multiple instances.
-    /// </summary>
-    ///
     public abstract class IMediaPlayer
     {
-        ///
-        /// <summary>
-        /// Releases all the resources occupied by the media player.
-        /// </summary>
-        ///
         public abstract void Dispose();
 
-        ///
-        /// <summary>
-        /// Gets the ID of the media player.
-        /// </summary>
-        ///
-        /// <returns>
-        /// ≥ 0: Success. The ID of the media player.
-        /// &lt; 0: Failure.
-        /// </returns>
-        ///
         public abstract int GetId();
 
-        ///
-        /// <summary>
-        /// Adds callback event for media player.
-        /// </summary>
-        ///
-        /// <param name="engineEventHandler"> Callback events to be added. See IMediaPlayerSourceObserver.</param>
-        ///
         public abstract int InitEventHandler(IMediaPlayerSourceObserver engineEventHandler);
 
 #region terra IMediaPlayer
