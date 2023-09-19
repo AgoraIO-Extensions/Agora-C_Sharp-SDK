@@ -585,26 +585,53 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnLocalVideoStateChanged_be_trigger = false;
-        public RtcConnection OnLocalVideoStateChanged_connection;
+        public VIDEO_SOURCE_TYPE OnLocalVideoStateChanged_source;
         public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged_state;
-        public LOCAL_VIDEO_STREAM_ERROR OnLocalVideoStateChanged_errorCode;
-        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public LOCAL_VIDEO_STREAM_ERROR OnLocalVideoStateChanged_error;
+        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR error)
         {
             OnLocalVideoStateChanged_be_trigger = true;
-            OnLocalVideoStateChanged_connection = connection;
+            OnLocalVideoStateChanged_source = source;
             OnLocalVideoStateChanged_state = state;
-            OnLocalVideoStateChanged_errorCode = errorCode;
+            OnLocalVideoStateChanged_error = error;
         }
 
-        public bool OnLocalVideoStateChangedPassed(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public bool OnLocalVideoStateChangedPassed(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR error)
         {
             if (OnLocalVideoStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStateChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnLocalVideoStateChanged_source, source) == false)
                 return false;
             if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_ERROR>(OnLocalVideoStateChanged_errorCode, errorCode) == false)
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_ERROR>(OnLocalVideoStateChanged_error, error) == false)
+                return false;
+            return true;
+        }
+
+        //////////////////
+
+        public bool OnLocalVideoStateChanged2_be_trigger = false;
+        public RtcConnection OnLocalVideoStateChanged2_connection;
+        public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged2_state;
+        public LOCAL_VIDEO_STREAM_ERROR OnLocalVideoStateChanged2_errorCode;
+        public override void OnLocalVideoStateChanged2(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        {
+            OnLocalVideoStateChanged2_be_trigger = true;
+            OnLocalVideoStateChanged2_connection = connection;
+            OnLocalVideoStateChanged2_state = state;
+            OnLocalVideoStateChanged2_errorCode = errorCode;
+        }
+
+        public bool OnLocalVideoStateChanged2Passed(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        {
+            if (OnLocalVideoStateChanged2_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStateChanged2_connection, connection) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged2_state, state) == false)
+                return false;
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_ERROR>(OnLocalVideoStateChanged2_errorCode, errorCode) == false)
                 return false;
             return true;
         }
