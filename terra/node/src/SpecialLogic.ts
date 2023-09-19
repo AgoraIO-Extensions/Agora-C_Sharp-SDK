@@ -682,8 +682,8 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_GenerateRtcEngineEventHandlerInterface(clazz: Clazz): string {
-        let lines = [];
+    public cSharpSDK_GetRtcEventHandlerData(excludes: string[]): { clazzName: string, m: MemberFunction, repeart: number }[] {
+        let returns = [];
         let config = ConfigTool.getInstance();
         let rtcEngineEventHandlerClazzName = "IRtcEngineEventHandler";
         let rtcEngineEventHandlerExClazzName = "IRtcEngineEventHandlerEx";
@@ -692,6 +692,10 @@ export class SpeicalLogic {
         let excludeMethods = [
             "eventHandlerType"
         ]
+        excludeMethods.push(...excludes);
+        let bothMethods = [
+            "onLocalVideoStateChanged"
+        ];
         for (let m of eventHandlerMethods) {
             if (excludeMethods.includes(m.name))
                 continue;
@@ -699,15 +703,30 @@ export class SpeicalLogic {
             let mEx = eventHandlerExMethods.find((e) => { return e.name == m.name });
             let clazzName: string;
             if (mEx != null) {
-                m = mEx;
-                clazzName = rtcEngineEventHandlerExClazzName;
+                if (bothMethods.includes(m.name)) {
+                    returns.push({ clazzName: rtcEngineEventHandlerClazzName, m: m, repeart: 1 });
+                    returns.push({ clazzName: rtcEngineEventHandlerExClazzName, m: mEx, repeart: 2 });
+                }
+                else {
+                    returns.push({ clazzName: rtcEngineEventHandlerExClazzName, m: mEx, repeart: 1 });
+                }
+
             }
             else {
-                m = m;
-                clazzName = rtcEngineEventHandlerClazzName;
+                returns.push({ clazzName: rtcEngineEventHandlerClazzName, m: m, repeart: 1 });
             }
-            m = mEx || m;
+        }
+        return returns;
+    }
 
+    public cSharpSDK_GenerateRtcEngineEventHandlerInterface(clazz: Clazz): string {
+        let lines = [];
+        let config = ConfigTool.getInstance();
+        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData([]);
+
+        for (let data of allMethodDatas) {
+            let clazzName = data.clazzName;
+            let m = data.m;
             let paramslines = [];
             for (let p of m.parameters) {
                 let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
@@ -726,32 +745,18 @@ export class SpeicalLogic {
     public cSharpSDK_GenerateRtcEngineEventHandlerNative(clazz: Clazz): string {
         let lines = [];
         let config = ConfigTool.getInstance();
-        let rtcEngineEventHandlerClazzName = "IRtcEngineEventHandler";
-        let rtcEngineEventHandlerExClazzName = "IRtcEngineEventHandlerEx";
-        let eventHandlerMethods = config.getClassOrStruct(rtcEngineEventHandlerClazzName).methods;
-        let eventHandlerExMethods = config.getClassOrStruct(rtcEngineEventHandlerExClazzName).methods;
-        let excludeMethods = [
-            "eventHandlerType",
-            "onStreamMessage"
-        ]
-        for (let m of eventHandlerMethods) {
-            if (excludeMethods.includes(m.name))
-                continue;
+        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData(["onStreamMessage"]);
 
-            let mEx = eventHandlerExMethods.find((e) => { return e.name == m.name });
+        for (let data of allMethodDatas) {
+            let clazzName = data.clazzName;
+            let m = data.m;
             let switchKey: string;
-            let clazzName: string;
-            if (mEx != null) {
-                m = mEx;
+            if (clazzName == "IRtcEngineEventHandlerEx") {
                 switchKey = `RtcEngineEventHandler_${m.name}Ex`;
-                clazzName = rtcEngineEventHandlerExClazzName;
             }
             else {
-                m = m;
                 switchKey = `RtcEngineEventHandler_${m.name}`;
-                clazzName = rtcEngineEventHandlerClazzName
             }
-            m = mEx || m;
 
             lines.push(`case "${switchKey}":\n{`);
             lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
@@ -927,30 +932,15 @@ export class SpeicalLogic {
     public cSharpSDK_GenerateUTRtcEngineEventHandler(clazz: Clazz): string {
         let lines = [];
         let config = ConfigTool.getInstance();
-        let rtcEngineEventHandlerClazzName = "IRtcEngineEventHandler";
-        let rtcEngineEventHandlerExClazzName = "IRtcEngineEventHandlerEx";
-        let eventHandlerMethods = config.getClassOrStruct(rtcEngineEventHandlerClazzName).methods;
-        let eventHandlerExMethods = config.getClassOrStruct(rtcEngineEventHandlerExClazzName).methods;
-        let excludeMethods = [
-            "eventHandlerType"
-        ]
-        for (let m of eventHandlerMethods) {
-            if (excludeMethods.includes(m.name))
-                continue;
+        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData([]);
 
-            let mEx = eventHandlerExMethods.find((e) => { return e.name == m.name });
-            let clazzName: string;
-            if (mEx != null) {
-                m = mEx;
-                clazzName = rtcEngineEventHandlerExClazzName;
-            }
-            else {
-                m = m;
-                clazzName = rtcEngineEventHandlerClazzName;
-            }
-            m = mEx || m;
+        for (let data of allMethodDatas) {
+            let clazzName = data.clazzName;
+            let m = data.m;
+            let repeart = data.repeart;
+
             let funLines = [];
-            let methodName = Tool._processStringWithU(m.name);
+            let methodName = Tool.processString('-un', m.name, repeart);
             funLines.push(`public bool ${methodName}_be_trigger = false;`);
 
             let paramslines = [];
@@ -964,7 +954,7 @@ export class SpeicalLogic {
                 paramslines.push(`${transType} ${transName}`);
             }
             let tranReturn = config.paramTypeTrans.transType(clazzName, m.name, m.return_type.source, "return");
-            funLines.push(`public override ${tranReturn} ${methodName}(${paramslines.join(", ")})\n{`);
+            funLines.push(`public override ${tranReturn} ${Tool.processString('-u', m.name, repeart)}(${paramslines.join(", ")})\n{`);
             funLines.push(`${methodName}_be_trigger = true;`);
 
             for (let p of m.parameters) {

@@ -615,7 +615,7 @@ namespace Agora.Rtc
         public RtcConnection OnLocalVideoStateChanged2_connection;
         public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged2_state;
         public LOCAL_VIDEO_STREAM_ERROR OnLocalVideoStateChanged2_errorCode;
-        public override void OnLocalVideoStateChanged2(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
         {
             OnLocalVideoStateChanged2_be_trigger = true;
             OnLocalVideoStateChanged2_connection = connection;
