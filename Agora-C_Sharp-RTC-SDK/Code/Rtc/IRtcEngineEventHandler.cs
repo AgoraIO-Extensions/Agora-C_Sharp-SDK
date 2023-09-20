@@ -2,6 +2,7 @@
 
 namespace Agora.Rtc
 {
+    /* class_irtcengineeventhandler */
     public abstract class IRtcEngineEventHandler
     {
 

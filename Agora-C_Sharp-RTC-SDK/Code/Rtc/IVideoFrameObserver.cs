@@ -1,5 +1,6 @@
 namespace Agora.Rtc
 {
+    /* class_ivideoframeobserver */
     public abstract class IVideoFrameObserver
     {
 #region terra IVideoFrameObserver

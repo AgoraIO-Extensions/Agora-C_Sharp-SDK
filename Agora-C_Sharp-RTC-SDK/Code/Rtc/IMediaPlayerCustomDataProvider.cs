@@ -2,6 +2,7 @@
 
 namespace Agora.Rtc
 {
+    /* class_imediaplayercustomdataprovider */
     public abstract class IMediaPlayerCustomDataProvider
     {
         public virtual Int64 OnSeek(Int64 offset, int whence)

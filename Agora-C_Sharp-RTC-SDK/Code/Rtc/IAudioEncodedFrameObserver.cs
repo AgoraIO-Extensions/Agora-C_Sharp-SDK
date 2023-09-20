@@ -2,6 +2,7 @@
 
 namespace Agora.Rtc
 {
+    /* class_iaudioencodedframeobserver */
     public abstract class IAudioEncodedFrameObserver
     {
         public virtual void OnRecordAudioEncodedFrame(IntPtr frameBufferPtr, int length,

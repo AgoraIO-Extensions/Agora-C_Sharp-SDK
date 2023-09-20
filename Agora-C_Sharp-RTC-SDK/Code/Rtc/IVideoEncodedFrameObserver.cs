@@ -2,6 +2,7 @@ using System;
 
 namespace Agora.Rtc
 {
+    /* class_ivideoencodedframeobserver */
     public abstract class IVideoEncodedFrameObserver
     {
 #region terra IVideoEncodedFrameObserver

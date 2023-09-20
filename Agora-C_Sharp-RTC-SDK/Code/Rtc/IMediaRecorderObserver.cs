@@ -1,5 +1,6 @@
 namespace Agora.Rtc
 {
+    /* class_imediarecorderobserver */
     public abstract class IMediaRecorderObserver
     {
         public virtual void OnRecorderStateChanged(string channelId, uint uid, RecorderState state, RecorderErrorCode error) {}

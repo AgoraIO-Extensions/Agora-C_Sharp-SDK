@@ -1,5 +1,6 @@
 namespace Agora.Rtc
 {
+    /* class_iaudioframeobserver */
     public abstract class IAudioFrameObserver
     {
 

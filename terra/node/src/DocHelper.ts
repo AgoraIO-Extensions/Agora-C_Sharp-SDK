@@ -48,7 +48,7 @@ enum ContentType {
     Clazz,
     Enumz,
     //real interface, IRtcEngine, IRtcEngineEx like
-    Interfacez,
+    Apiz,
     //IAudioFrameObserver like
     Callbackz
 };
@@ -66,6 +66,12 @@ function AddDocWithFile(filePath: string) {
         name: "",
         braces: []
     };
+    let callbackSuffix = [
+        "observer",
+        "sink",
+        "eventhandler",
+        "dataprovider"
+    ];
     let str = fs.readFileSync(filePath, { encoding: 'utf-8' });
     let lines = str.split('\n');
     let lineLength = lines.length;
@@ -86,7 +92,25 @@ function AddDocWithFile(filePath: string) {
             let matchClassArray = line.match(/^public class ([a-zA-Z0-9_]+)/)
             if (matchClassArray != null) {
                 content.type = ContentType.Clazz;
-                content.name = matchClassArray[1].toLowerCase();
+                content.name = matchClassArray[1].toLowerCase().replaceAll('_', '');
+                lines.splice(i, 0, `/* class_${content.name} */`);
+                i = i + 2;
+                lineLength++;
+                continue;
+            }
+            let matchApiArray = line.match(/^public abstract class ([a-zA-Z0-9_]+)/);
+            if (matchApiArray != null) {
+                let clazzName = matchApiArray[1].toLowerCase().replaceAll('_', '');
+                let isCallback = callbackSuffix.some((e) => {
+                    return clazzName.endsWith(e);
+                });
+                if (isCallback) {
+                    content.type = ContentType.Callbackz;
+                }
+                else {
+                    content.type = ContentType.Apiz;
+                }
+                content.name = clazzName;
                 lines.splice(i, 0, `/* class_${content.name} */`);
                 i = i + 2;
                 lineLength++;
@@ -113,6 +137,16 @@ function AddDocWithFile(filePath: string) {
             let matchParamsArray = line.match(/^public ([a-zA-Z0-9_<>]+) ([a-zA-Z0-9_]+)(;| =)/)
             if (matchParamsArray != null) {
                 lines.splice(i, 0, `/* class_${content.name}_${matchParamsArray[2]} */`)
+                i = i + 2;
+                lineLength++;
+                continue;
+            }
+        }
+        else if (content.type == ContentType.Apiz) {
+            let matchApiArray = line.match(/^public abstract ([\S]+) ([a-zA-Z0-9_]+)\([\s\S]*\)/)
+            if (matchApiArray != null) {
+                let apiName = matchApiArray[2].toLowerCase();
+                lines.splice(i, 0, `/* api_${content.name}_${apiName} */`)
                 i = i + 2;
                 lineLength++;
                 continue;

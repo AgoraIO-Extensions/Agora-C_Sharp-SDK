@@ -2,6 +2,7 @@
 
 namespace Agora.Rtc
 {
+    /* class_imediaplayersourceobserver */
     public abstract class IMediaPlayerSourceObserver
     {
 
