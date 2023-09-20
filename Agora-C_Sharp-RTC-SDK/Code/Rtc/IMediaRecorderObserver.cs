@@ -1,12 +1,18 @@
 namespace Agora.Rtc
 {
-    /* class_imediarecorderobserver */
+    ///
+    /// @ignore
+    ///
     public abstract class IMediaRecorderObserver
     {
-        /* callback_imediarecorderobserver_onrecorderstatechanged */
+        ///
+        /// @ignore
+        ///
         public virtual void OnRecorderStateChanged(string channelId, uint uid, RecorderState state, RecorderErrorCode error) {}
 
-        /* callback_imediarecorderobserver_onrecorderinfoupdated */
+        ///
+        /// @ignore
+        ///
         public virtual void OnRecorderInfoUpdated(string channelId, uint uid, RecorderInfo info) {}
     };
 }

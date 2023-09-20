@@ -3,70 +3,115 @@ using System;
 namespace Agora.Rtc
 {
 
-    /* class_musiccollection */
+    ///
+    /// @ignore
+    ///
     public class MusicCollection
     {
-        /* class_musiccollection_count */
+        ///
+        /// @ignore
+        ///
         public int count;
-        /* class_musiccollection_total */
+        ///
+        /// @ignore
+        ///
         public int total;
-        /* class_musiccollection_page */
+        ///
+        /// @ignore
+        ///
         public int page;
-        /* class_musiccollection_pageSize */
+        ///
+        /// @ignore
+        ///
         public int pageSize;
+        ///
+        /// @ignore
+        ///
         public Music[] music;
     };
 
 #region terra IAgoraMusicContentCenter.h
 
-    /* enum_preloadstatuscode */
+    ///
+    /// @ignore
+    ///
     public enum PreloadStatusCode
     {
-        /* enum_preloadstatuscode_kPreloadStatusCompleted */
+        ///
+        /// @ignore
+        ///
         kPreloadStatusCompleted = 0,
 
-        /* enum_preloadstatuscode_kPreloadStatusFailed */
+        ///
+        /// @ignore
+        ///
         kPreloadStatusFailed = 1,
 
-        /* enum_preloadstatuscode_kPreloadStatusPreloading */
+        ///
+        /// @ignore
+        ///
         kPreloadStatusPreloading = 2,
 
-        /* enum_preloadstatuscode_kPreloadStatusRemoved */
+        ///
+        /// @ignore
+        ///
         kPreloadStatusRemoved = 3,
     }
 
-    /* enum_musiccontentcenterstatuscode */
+    ///
+    /// @ignore
+    ///
     public enum MusicContentCenterStatusCode
     {
-        /* enum_musiccontentcenterstatuscode_kMusicContentCenterStatusOk */
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusOk = 0,
 
-        /* enum_musiccontentcenterstatuscode_kMusicContentCenterStatusErr */
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErr = 1,
 
-        /* enum_musiccontentcenterstatuscode_kMusicContentCenterStatusErrGateway */
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrGateway = 2,
 
-        /* enum_musiccontentcenterstatuscode_kMusicContentCenterStatusErrPermissionAndResource */
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrPermissionAndResource = 3,
 
-        /* enum_musiccontentcenterstatuscode_kMusicContentCenterStatusErrInternalDataParse */
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrInternalDataParse = 4,
 
-        /* enum_musiccontentcenterstatuscode_kMusicContentCenterStatusErrMusicLoading */
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrMusicLoading = 5,
 
-        /* enum_musiccontentcenterstatuscode_kMusicContentCenterStatusErrMusicDecryption */
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrMusicDecryption = 6,
     }
 
-    /* class_musicchartinfo */
+    ///
+    /// @ignore
+    ///
     public class MusicChartInfo
     {
-        /* class_musicchartinfo_chartName */
+        ///
+        /// @ignore
+        ///
         public string chartName;
 
-        /* class_musicchartinfo_id */
+        ///
+        /// @ignore
+        ///
         public int id;
 
         public MusicChartInfo(string chartName, int id)
@@ -79,23 +124,35 @@ namespace Agora.Rtc
         }
     }
 
-    /* enum_musiccachestatustype */
+    ///
+    /// @ignore
+    ///
     public enum MUSIC_CACHE_STATUS_TYPE
     {
-        /* enum_musiccachestatustype_MUSIC_CACHE_STATUS_TYPE_CACHED */
+        ///
+        /// @ignore
+        ///
         MUSIC_CACHE_STATUS_TYPE_CACHED = 0,
 
-        /* enum_musiccachestatustype_MUSIC_CACHE_STATUS_TYPE_CACHING */
+        ///
+        /// @ignore
+        ///
         MUSIC_CACHE_STATUS_TYPE_CACHING = 1,
     }
 
-    /* class_musiccacheinfo */
+    ///
+    /// @ignore
+    ///
     public class MusicCacheInfo
     {
-        /* class_musiccacheinfo_songCode */
+        ///
+        /// @ignore
+        ///
         public long songCode;
 
-        /* class_musiccacheinfo_status */
+        ///
+        /// @ignore
+        ///
         public MUSIC_CACHE_STATUS_TYPE status;
 
         public MusicCacheInfo()
@@ -111,13 +168,19 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_mvproperty */
+    ///
+    /// @ignore
+    ///
     public class MvProperty
     {
-        /* class_mvproperty_resolution */
+        ///
+        /// @ignore
+        ///
         public string resolution;
 
-        /* class_mvproperty_bandwidth */
+        ///
+        /// @ignore
+        ///
         public string bandwidth;
 
         public MvProperty(string resolution, string bandwidth)
@@ -130,13 +193,25 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_climaxsegment */
+    ///
+    /// <summary>
+    /// The climax parts of the music.
+    /// </summary>
+    ///
     public class ClimaxSegment
     {
-        /* class_climaxsegment_startTimeMs */
+        ///
+        /// <summary>
+        /// The time (ms) when the climax part begins.
+        /// </summary>
+        ///
         public int startTimeMs;
 
-        /* class_climaxsegment_endTimeMs */
+        ///
+        /// <summary>
+        /// The time (ms) when the climax part ends.
+        /// </summary>
+        ///
         public int endTimeMs;
 
         public ClimaxSegment(int startTimeMs, int endTimeMs)
@@ -149,46 +224,79 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_music */
+    ///
+    /// @ignore
+    ///
     public class Music
     {
-        /* class_music_songCode */
+        ///
+        /// @ignore
+        ///
         public long songCode;
 
-        /* class_music_name */
+        ///
+        /// @ignore
+        ///
         public string name;
 
-        /* class_music_singer */
+        ///
+        /// @ignore
+        ///
         public string singer;
 
-        /* class_music_poster */
+        ///
+        /// @ignore
+        ///
         public string poster;
 
-        /* class_music_releaseTime */
+        ///
+        /// @ignore
+        ///
         public string releaseTime;
 
-        /* class_music_durationS */
+        ///
+        /// @ignore
+        ///
         public int durationS;
 
-        /* class_music_type */
+        ///
+        /// @ignore
+        ///
         public int type;
 
-        /* class_music_pitchType */
+        ///
+        /// @ignore
+        ///
         public int pitchType;
 
-        /* class_music_lyricCount */
+        ///
+        /// @ignore
+        ///
         public int lyricCount;
 
+        ///
+        /// @ignore
+        ///
         public int[] lyricList;
 
-        /* class_music_climaxSegmentCount */
+        ///
+        /// @ignore
+        ///
         public int climaxSegmentCount;
 
+        ///
+        /// @ignore
+        ///
         public ClimaxSegment[] climaxSegmentList;
 
-        /* class_music_mvPropertyCount */
+        ///
+        /// @ignore
+        ///
         public int mvPropertyCount;
 
+        ///
+        /// @ignore
+        ///
         public MvProperty[] mvPropertyList;
 
         public Music(long songCode, string name, string singer, string poster, string releaseTime, int durationS, int type, int pitchType, int lyricCount, int[] lyricList, int climaxSegmentCount, ClimaxSegment[] climaxSegmentList, int mvPropertyCount, MvProperty[] mvPropertyList)
@@ -213,19 +321,29 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_musiccontentcenterconfiguration */
+    ///
+    /// @ignore
+    ///
     public class MusicContentCenterConfiguration
     {
-        /* class_musiccontentcenterconfiguration_appId */
+        ///
+        /// @ignore
+        ///
         public string appId;
 
-        /* class_musiccontentcenterconfiguration_token */
+        ///
+        /// @ignore
+        ///
         public string token;
 
-        /* class_musiccontentcenterconfiguration_mccUid */
+        ///
+        /// @ignore
+        ///
         public long mccUid;
 
-        /* class_musiccontentcenterconfiguration_maxCacheSize */
+        ///
+        /// @ignore
+        ///
         public int maxCacheSize;
 
         public MusicContentCenterConfiguration()

@@ -1,11 +1,15 @@
 import { execSync } from "child_process";
+import { publicDecrypt } from "crypto";
 import * as fs from "fs";
+import { ParamNameTrans } from "./ParamNameTrans";
 import path from "path";
 
 let AllDirPath = [
     "../../Agora-C_Sharp-RTC-SDK/Code/Rtc",
     "../../Agora-C_Sharp-RTC-SDK/Code/Rtc/Types",
 ];
+
+let DocPath = "../templates/C_Sharp-SDK-Trans/unity_ng_json_template_en.json";
 
 
 function DeleteOldDocWithFile(filePath: string) {
@@ -161,7 +165,7 @@ function AddDocTagWithFile(filePath: string) {
             }
         }
         else if (content.type == ContentType.Clazz) {
-            let matchParamsArray = line.match(/^public ([a-zA-Z0-9_<>]+) ([a-zA-Z0-9_]+)(;| =)/)
+            let matchParamsArray = line.match(/^public ([a-zA-Z0-9_<>\[\]]+) ([a-zA-Z0-9_]+)(;| =)/)
             if (matchParamsArray != null) {
                 lines.splice(i, 0, `/* class_${content.name}_${matchParamsArray[2]} */`);
                 SwapIfHadObsolete(lines, i);
@@ -183,9 +187,9 @@ function AddDocTagWithFile(filePath: string) {
             }
         }
         else if (content.type == ContentType.Callbackz) {
-            let matchApiArray = line.match(/^public virtual ([\S]+) ([a-zA-Z0-9_]+)\([\s\S]*\)/)
+            let matchApiArray = line.match(/^public (virtual|abstract) ([\S]+) ([a-zA-Z0-9_]+)\([\s\S]*\)/)
             if (matchApiArray != null) {
-                let apiName = matchApiArray[2].toLowerCase();
+                let apiName = matchApiArray[3].toLowerCase();
                 apiName = GetMethodName(content.name, apiName);
                 lines.splice(i, 0, `/* callback_${content.name}_${apiName} */`);
                 SwapIfHadObsolete(lines, i);
@@ -228,8 +232,197 @@ export function AddAllDocTag() {
             }
         }
     }
+}
+
+interface DocData {
+    id: string,
+    name: string,
+    description: string,
+    parameters: any[],
+    returns: string,
+    is_hide: boolean
+};
+
+function SplitDocTag(str: string): { clazzName: string, paramName: string | null } {
+    let splitArray = str.split("_");
+    if (splitArray.length == 2) {
+        return { clazzName: splitArray[1], paramName: null };
+    }
+    else {
+        let clazzName = splitArray[1];
+        splitArray.shift();
+        splitArray.shift();
+        let paramName = splitArray.join('_');
+        return { clazzName, paramName };
+    }
+}
+
+function GetDocs(): DocData[] {
+    let docPath = path.join(process.cwd(), DocPath);
+    let str = fs.readFileSync(docPath, { encoding: 'utf-8' });
+    let obj = JSON.parse(str);
+    return obj as DocData[];
+}
+
+function FindDocWithId(id: string, docs: DocData[]) {
+    return docs.find((e) => { return e.id == id });
+}
+
+function GenerateEnumOrClassDoc(doc: DocData) {
+    let lines = [];
+    if (doc == null || doc.is_hide) {
+        lines.push(`///`);
+        lines.push(`/// @ignore`);
+        lines.push(`///`);
+    }
+    else {
+        lines.push(`///`);
+        lines.push(`/// <summary>`);
+        let splitLines = doc.description.split('\n');
+        for (let e of splitLines) {
+            lines.push(`/// ${e}`);
+        }
+        lines.push(`/// </summary>`);
+        lines.push(`///`);
+    }
+    return lines.join('\n');
+}
+
+function GenerateEnumOrClassParamDoc(doc: DocData, paramName: string) {
+    let lines = [];
+    let result: any = null;
+    if (doc) {
+        let parameters = doc.parameters;
+        result = parameters.find((e) => {
+            return e[paramName] != undefined
+        });
+    }
+
+    if (doc == null || doc.is_hide || result == null) {
+        lines.push(`///`);
+        lines.push(`/// @ignore`);
+        lines.push(`///`);
+    }
+    else {
+        lines.push(`///`);
+        lines.push(`/// <summary>`);
+        let splitLines = result[paramName].split('\n');
+        for (let e of splitLines) {
+            lines.push(`/// ${e}`);
+        }
+        lines.push(`/// </summary>`);
+        lines.push(`///`);
+    }
+    return lines.join('\n');
+}
+
+function GenerateCallbackOrApi(doc: DocData): string {
+    let lines = [];
+    if (doc == null || doc.is_hide) {
+        lines.push(`///`);
+        lines.push(`/// @ignore`);
+        lines.push(`///`);
+    }
+    else {
+        lines.push(`///`);
+        lines.push(`/// <summary>`);
+        let splitLines = doc.description.split('\n');
+        for (let e of splitLines) {
+            lines.push(`/// ${e.trim()}`);
+        }
+        lines.push(`/// </summary>`);
+
+        if (doc.parameters.length > 0) {
+            lines.push(`///`);
+            for (let i = 0; i < doc.parameters.length; i++) {
+                let e = doc.parameters[i];
+                let keys = Object.keys(e);
+                let key = keys[0];
+                if (key == null) {
+                    console.error('error id ' + doc.id);
+                    continue;
+                }
+                let paramArray = e[key].split('\n');
+                if (paramArray.length == 1) {
+                    lines.push(`/// <param name="${key}"> ${e[key].trim()} </param>`);
+                }
+                else {
+                    lines.push(`/// <param name="${key}">`);
+                    for (let eachParam of paramArray) {
+                        lines.push(`/// ${eachParam.trim()}`);
+                    }
+                    lines.push(`/// </param>`);
+                }
+
+                if (i != doc.parameters.length - 1) {
+                    lines.push(`///`);
+                }
+            }
+        }
+
+        if (doc.returns != "") {
+            lines.push(`///`);
+            lines.push(`/// <returns>`);
+            let splitArray = doc.returns.split('\n');
+            for (let r of splitArray) {
+                r = r.replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+                lines.push(`/// ${r.trim()}`);
+            }
+            lines.push(`/// </returns>`);
+        }
+
+        lines.push(`///`);
+    }
+    return lines.join('\n');
 
 }
+
+
+function AddDocContentWithFile(filePath: string, docs: DocData[]) {
+    let str = fs.readFileSync(filePath, { encoding: 'utf-8' });
+    let lines = str.split('\n');
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i].trim();
+        let matchDocTagArray = line.match(/^\/\* ([a-zA-Z0-9_]+) \*\//);
+        if (matchDocTagArray != null) {
+            let id = matchDocTagArray[1];
+
+            let { clazzName, paramName } = SplitDocTag(id);
+            if (paramName == null) {
+                let doc: DocData = FindDocWithId(id, docs);
+                lines[i] = GenerateEnumOrClassDoc(doc);
+            }
+            else if (id.startsWith('enum') || id.startsWith('class')) {
+                let doc: DocData = FindDocWithId(`${id.split('_')[0]}_${clazzName}`, docs);
+                lines[i] = GenerateEnumOrClassParamDoc(doc, paramName);
+            }
+            else if (id.startsWith('callback') || id.startsWith('api')) {
+                let doc: DocData = FindDocWithId(id, docs);
+                lines[i] = GenerateCallbackOrApi(doc);
+            }
+        }
+    }
+
+    fs.writeFileSync(filePath, lines.join('\n'), { encoding: 'utf-8' });
+    execSync(`clang-format -i ${filePath}`);
+}
+
+export function AddAllDocContetnt() {
+    let docs = GetDocs();
+    for (let dirPath of AllDirPath) {
+        dirPath = path.join(process.cwd(), dirPath);
+        let fileList = fs.readdirSync(dirPath);
+        for (let file of fileList) {
+            file = path.join(dirPath, file);
+            let state = fs.statSync(file);
+            if (state.isFile()) {
+                AddDocContentWithFile(file, docs);
+            }
+        }
+    }
+}
+
+
 
 
 

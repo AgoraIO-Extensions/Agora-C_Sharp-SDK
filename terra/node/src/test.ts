@@ -7,7 +7,7 @@ import { execSync } from 'child_process';
 import { ParamDefaultTrans } from "./ParamDefaultTrans";
 import { ParseEngine } from "./PraseEngine";
 import { Tool } from "./Tool";
-import { AddAllDocTag, DeleteAllOldDoc } from "./DocHelper";
+import { AddAllDocTag, AddAllDocContetnt, DeleteAllOldDoc } from "./DocHelper";
 
 var cxxiles = JSON.parse(fs.readFileSync("/Users/xiayangqun/Documents/agoraSpace/iris-ast/terra-cli/.dist/src/dump_json.json", { encoding: 'utf-8' }));
 
@@ -33,3 +33,4 @@ new ParseEngine(
 // console.log(JSON.stringify(data));
 DeleteAllOldDoc();
 AddAllDocTag();
+AddAllDocContetnt();

@@ -6,240 +6,524 @@ namespace Agora.Rtc
 
 #region terra AgoraMediaPlayerTypes.h
 
-    /* enum_mediaplayerstate */
+    ///
+    /// <summary>
+    /// The playback state.
+    /// </summary>
+    ///
     public enum MEDIA_PLAYER_STATE
     {
-        /* enum_mediaplayerstate_PLAYER_STATE_IDLE */
+        ///
+        /// <summary>
+        /// 0: The default state. The media player returns this state code before you open the media resource or after you stop the playback.
+        /// </summary>
+        ///
         PLAYER_STATE_IDLE = 0,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_OPENING */
+        ///
+        /// <summary>
+        /// 1: Opening the media resource.
+        /// </summary>
+        ///
         PLAYER_STATE_OPENING,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_OPEN_COMPLETED */
+        ///
+        /// <summary>
+        /// 2: Opens the media resource successfully.
+        /// </summary>
+        ///
         PLAYER_STATE_OPEN_COMPLETED,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_PLAYING */
+        ///
+        /// <summary>
+        /// 3: The media resource is playing.
+        /// </summary>
+        ///
         PLAYER_STATE_PLAYING,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_PAUSED */
+        ///
+        /// <summary>
+        /// 4: Pauses the playback.
+        /// </summary>
+        ///
         PLAYER_STATE_PAUSED,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_PLAYBACK_COMPLETED */
+        ///
+        /// <summary>
+        /// 5: The playback is complete.
+        /// </summary>
+        ///
         PLAYER_STATE_PLAYBACK_COMPLETED,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED */
+        ///
+        /// <summary>
+        /// 6: The loop is complete.
+        /// </summary>
+        ///
         PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_STOPPED */
+        ///
+        /// <summary>
+        /// 7: The playback stops.
+        /// </summary>
+        ///
         PLAYER_STATE_STOPPED,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_PAUSING_INTERNAL */
+        ///
+        /// @ignore
+        ///
         PLAYER_STATE_PAUSING_INTERNAL = 50,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_STOPPING_INTERNAL */
+        ///
+        /// @ignore
+        ///
         PLAYER_STATE_STOPPING_INTERNAL,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_SEEKING_INTERNAL */
+        ///
+        /// @ignore
+        ///
         PLAYER_STATE_SEEKING_INTERNAL,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_GETTING_INTERNAL */
+        ///
+        /// @ignore
+        ///
         PLAYER_STATE_GETTING_INTERNAL,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_NONE_INTERNAL */
+        ///
+        /// @ignore
+        ///
         PLAYER_STATE_NONE_INTERNAL,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_DO_NOTHING_INTERNAL */
+        ///
+        /// @ignore
+        ///
         PLAYER_STATE_DO_NOTHING_INTERNAL,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_SET_TRACK_INTERNAL */
+        ///
+        /// @ignore
+        ///
         PLAYER_STATE_SET_TRACK_INTERNAL,
 
-        /* enum_mediaplayerstate_PLAYER_STATE_FAILED */
+        ///
+        /// <summary>
+        /// 100: The media player fails to play the media resource.
+        /// </summary>
+        ///
         PLAYER_STATE_FAILED = 100,
     }
 
-    /* enum_mediaplayererror */
+    ///
+    /// <summary>
+    /// Error codes of the media player.
+    /// </summary>
+    ///
     public enum MEDIA_PLAYER_ERROR
     {
-        /* enum_mediaplayererror_PLAYER_ERROR_NONE */
+        ///
+        /// <summary>
+        /// 0: No error.
+        /// </summary>
+        ///
         PLAYER_ERROR_NONE = 0,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_INVALID_ARGUMENTS */
+        ///
+        /// <summary>
+        /// -1: Invalid arguments.
+        /// </summary>
+        ///
         PLAYER_ERROR_INVALID_ARGUMENTS = -1,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_INTERNAL */
+        ///
+        /// <summary>
+        /// -2: Internal error.
+        /// </summary>
+        ///
         PLAYER_ERROR_INTERNAL = -2,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_NO_RESOURCE */
+        ///
+        /// <summary>
+        /// -3: No resource.
+        /// </summary>
+        ///
         PLAYER_ERROR_NO_RESOURCE = -3,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_INVALID_MEDIA_SOURCE */
+        ///
+        /// <summary>
+        /// -4: Invalid media resource.
+        /// </summary>
+        ///
         PLAYER_ERROR_INVALID_MEDIA_SOURCE = -4,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_UNKNOWN_STREAM_TYPE */
+        ///
+        /// <summary>
+        /// -5: The media stream type is unknown.
+        /// </summary>
+        ///
         PLAYER_ERROR_UNKNOWN_STREAM_TYPE = -5,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_OBJ_NOT_INITIALIZED */
+        ///
+        /// <summary>
+        /// -6: The object is not initialized.
+        /// </summary>
+        ///
         PLAYER_ERROR_OBJ_NOT_INITIALIZED = -6,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_CODEC_NOT_SUPPORTED */
+        ///
+        /// <summary>
+        /// -7: The codec is not supported.
+        /// </summary>
+        ///
         PLAYER_ERROR_CODEC_NOT_SUPPORTED = -7,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_VIDEO_RENDER_FAILED */
+        ///
+        /// <summary>
+        /// -8: Invalid renderer.
+        /// </summary>
+        ///
         PLAYER_ERROR_VIDEO_RENDER_FAILED = -8,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_INVALID_STATE */
+        ///
+        /// <summary>
+        /// -9: An error with the internal state of the player occurs.
+        /// </summary>
+        ///
         PLAYER_ERROR_INVALID_STATE = -9,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_URL_NOT_FOUND */
+        ///
+        /// <summary>
+        /// -10: The URL of the media resource cannot be found.
+        /// </summary>
+        ///
         PLAYER_ERROR_URL_NOT_FOUND = -10,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_INVALID_CONNECTION_STATE */
+        ///
+        /// <summary>
+        /// -11: Invalid connection between the player and the Agora Server.
+        /// </summary>
+        ///
         PLAYER_ERROR_INVALID_CONNECTION_STATE = -11,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_SRC_BUFFER_UNDERFLOW */
+        ///
+        /// <summary>
+        /// -12: The playback buffer is insufficient.
+        /// </summary>
+        ///
         PLAYER_ERROR_SRC_BUFFER_UNDERFLOW = -12,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_INTERRUPTED */
+        ///
+        /// <summary>
+        /// -13: The playback is interrupted.
+        /// </summary>
+        ///
         PLAYER_ERROR_INTERRUPTED = -13,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_NOT_SUPPORTED */
+        ///
+        /// <summary>
+        /// -14: The SDK does not support the method being called.
+        /// </summary>
+        ///
         PLAYER_ERROR_NOT_SUPPORTED = -14,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_TOKEN_EXPIRED */
+        ///
+        /// <summary>
+        /// -15: The authentication information of the media resource is expired.
+        /// </summary>
+        ///
         PLAYER_ERROR_TOKEN_EXPIRED = -15,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_IP_EXPIRED */
+        ///
+        /// @ignore
+        ///
         PLAYER_ERROR_IP_EXPIRED = -16,
 
-        /* enum_mediaplayererror_PLAYER_ERROR_UNKNOWN */
+        ///
+        /// <summary>
+        /// -17: An unknown error.
+        /// </summary>
+        ///
         PLAYER_ERROR_UNKNOWN = -17,
     }
 
-    /* enum_mediastreamtype */
+    ///
+    /// <summary>
+    /// The type of the media stream.
+    /// </summary>
+    ///
     public enum MEDIA_STREAM_TYPE
     {
-        /* enum_mediastreamtype_STREAM_TYPE_UNKNOWN */
+        ///
+        /// <summary>
+        /// 0: The type is unknown.
+        /// </summary>
+        ///
         STREAM_TYPE_UNKNOWN = 0,
 
-        /* enum_mediastreamtype_STREAM_TYPE_VIDEO */
+        ///
+        /// <summary>
+        /// 1: The video stream.
+        /// </summary>
+        ///
         STREAM_TYPE_VIDEO = 1,
 
-        /* enum_mediastreamtype_STREAM_TYPE_AUDIO */
+        ///
+        /// <summary>
+        /// 2: The audio stream.
+        /// </summary>
+        ///
         STREAM_TYPE_AUDIO = 2,
 
-        /* enum_mediastreamtype_STREAM_TYPE_SUBTITLE */
+        ///
+        /// <summary>
+        /// 3: The subtitle stream.
+        /// </summary>
+        ///
         STREAM_TYPE_SUBTITLE = 3,
     }
 
-    /* enum_mediaplayerevent */
+    ///
+    /// <summary>
+    /// Media player events.
+    /// </summary>
+    ///
     public enum MEDIA_PLAYER_EVENT
     {
-        /* enum_mediaplayerevent_PLAYER_EVENT_SEEK_BEGIN */
+        ///
+        /// <summary>
+        /// 0: The player begins to seek to a new playback position.
+        /// </summary>
+        ///
         PLAYER_EVENT_SEEK_BEGIN = 0,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_SEEK_COMPLETE */
+        ///
+        /// <summary>
+        /// 1: The player finishes seeking to a new playback position.
+        /// </summary>
+        ///
         PLAYER_EVENT_SEEK_COMPLETE = 1,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_SEEK_ERROR */
+        ///
+        /// <summary>
+        /// 2: An error occurs when seeking to a new playback position.
+        /// </summary>
+        ///
         PLAYER_EVENT_SEEK_ERROR = 2,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_AUDIO_TRACK_CHANGED */
+        ///
+        /// <summary>
+        /// 5: The audio track used by the player has been changed.
+        /// </summary>
+        ///
         PLAYER_EVENT_AUDIO_TRACK_CHANGED = 5,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_BUFFER_LOW */
+        ///
+        /// <summary>
+        /// 6: The currently buffered data is not enough to support playback.
+        /// </summary>
+        ///
         PLAYER_EVENT_BUFFER_LOW = 6,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_BUFFER_RECOVER */
+        ///
+        /// <summary>
+        /// 7: The currently buffered data is just enough to support playback.
+        /// </summary>
+        ///
         PLAYER_EVENT_BUFFER_RECOVER = 7,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_FREEZE_START */
+        ///
+        /// <summary>
+        /// 8: The audio or video playback freezes.
+        /// </summary>
+        ///
         PLAYER_EVENT_FREEZE_START = 8,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_FREEZE_STOP */
+        ///
+        /// <summary>
+        /// 9: The audio or video playback resumes without freezing.
+        /// </summary>
+        ///
         PLAYER_EVENT_FREEZE_STOP = 9,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_SWITCH_BEGIN */
+        ///
+        /// <summary>
+        /// 10: The player starts switching the media resource.
+        /// </summary>
+        ///
         PLAYER_EVENT_SWITCH_BEGIN = 10,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_SWITCH_COMPLETE */
+        ///
+        /// <summary>
+        /// 11: Media resource switching is complete.
+        /// </summary>
+        ///
         PLAYER_EVENT_SWITCH_COMPLETE = 11,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_SWITCH_ERROR */
+        ///
+        /// <summary>
+        /// 12: Media resource switching error.
+        /// </summary>
+        ///
         PLAYER_EVENT_SWITCH_ERROR = 12,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_FIRST_DISPLAYED */
+        ///
+        /// <summary>
+        /// 13: The first video frame is rendered.
+        /// </summary>
+        ///
         PLAYER_EVENT_FIRST_DISPLAYED = 13,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_REACH_CACHE_FILE_MAX_COUNT */
+        ///
+        /// <summary>
+        /// 14: The cached media files reach the limit in number.
+        /// </summary>
+        ///
         PLAYER_EVENT_REACH_CACHE_FILE_MAX_COUNT = 14,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_REACH_CACHE_FILE_MAX_SIZE */
+        ///
+        /// <summary>
+        /// 15: The cached media files reach the limit in aggregate storage space.
+        /// </summary>
+        ///
         PLAYER_EVENT_REACH_CACHE_FILE_MAX_SIZE = 15,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_TRY_OPEN_START */
+        ///
+        /// @ignore
+        ///
         PLAYER_EVENT_TRY_OPEN_START = 16,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_TRY_OPEN_SUCCEED */
+        ///
+        /// @ignore
+        ///
         PLAYER_EVENT_TRY_OPEN_SUCCEED = 17,
 
-        /* enum_mediaplayerevent_PLAYER_EVENT_TRY_OPEN_FAILED */
+        ///
+        /// @ignore
+        ///
         PLAYER_EVENT_TRY_OPEN_FAILED = 18,
     }
 
-    /* enum_playerpreloadevent */
+    ///
+    /// <summary>
+    /// Events that occur when media resources are preloaded.
+    /// </summary>
+    ///
     public enum PLAYER_PRELOAD_EVENT
     {
-        /* enum_playerpreloadevent_PLAYER_PRELOAD_EVENT_BEGIN */
+        ///
+        /// <summary>
+        /// 0: Starts preloading media resources.
+        /// </summary>
+        ///
         PLAYER_PRELOAD_EVENT_BEGIN = 0,
 
-        /* enum_playerpreloadevent_PLAYER_PRELOAD_EVENT_COMPLETE */
+        ///
+        /// <summary>
+        /// 1: Preloading media resources is complete.
+        /// </summary>
+        ///
         PLAYER_PRELOAD_EVENT_COMPLETE = 1,
 
-        /* enum_playerpreloadevent_PLAYER_PRELOAD_EVENT_ERROR */
+        ///
+        /// <summary>
+        /// 2: An error occurs when preloading media resources.
+        /// </summary>
+        ///
         PLAYER_PRELOAD_EVENT_ERROR = 2,
     }
 
-    /* class_playerstreaminfo */
+    ///
+    /// <summary>
+    /// The detailed information of the media stream.
+    /// </summary>
+    ///
     public class PlayerStreamInfo
     {
-        /* class_playerstreaminfo_streamIndex */
+        ///
+        /// <summary>
+        /// The index of the media stream.
+        /// </summary>
+        ///
         public int streamIndex;
 
-        /* class_playerstreaminfo_streamType */
+        ///
+        /// <summary>
+        /// The type of the media stream. See MEDIA_STREAM_TYPE.
+        /// </summary>
+        ///
         public MEDIA_STREAM_TYPE streamType;
 
-        /* class_playerstreaminfo_codecName */
+        ///
+        /// <summary>
+        /// The codec of the media stream.
+        /// </summary>
+        ///
         public string codecName;
 
-        /* class_playerstreaminfo_language */
+        ///
+        /// <summary>
+        /// The language of the media stream.
+        /// </summary>
+        ///
         public string language;
 
-        /* class_playerstreaminfo_videoFrameRate */
+        ///
+        /// <summary>
+        /// This parameter only takes effect for video streams, and indicates the video frame rate (fps).
+        /// </summary>
+        ///
         public int videoFrameRate;
 
-        /* class_playerstreaminfo_videoBitRate */
+        ///
+        /// @ignore
+        ///
         public int videoBitRate;
 
-        /* class_playerstreaminfo_videoWidth */
+        ///
+        /// <summary>
+        /// This parameter only takes effect for video streams, and indicates the video width (pixel).
+        /// </summary>
+        ///
         public int videoWidth;
 
-        /* class_playerstreaminfo_videoHeight */
+        ///
+        /// <summary>
+        /// This parameter only takes effect for video streams, and indicates the video height (pixel).
+        /// </summary>
+        ///
         public int videoHeight;
 
-        /* class_playerstreaminfo_videoRotation */
+        ///
+        /// <summary>
+        /// This parameter only takes effect for video streams, and indicates the video rotation angle.
+        /// </summary>
+        ///
         public int videoRotation;
 
-        /* class_playerstreaminfo_audioSampleRate */
+        ///
+        /// <summary>
+        /// This parameter only takes effect for audio streams, and indicates the audio sample rate (Hz).
+        /// </summary>
+        ///
         public int audioSampleRate;
 
-        /* class_playerstreaminfo_audioChannels */
+        ///
+        /// <summary>
+        /// This parameter only takes effect for audio streams, and indicates the audio channel number.
+        /// </summary>
+        ///
         public int audioChannels;
 
-        /* class_playerstreaminfo_audioBitsPerSample */
+        ///
+        /// <summary>
+        /// This parameter only takes effect for audio streams, and indicates the bit number of each audio sample.
+        /// </summary>
+        ///
         public int audioBitsPerSample;
 
-        /* class_playerstreaminfo_duration */
+        ///
+        /// <summary>
+        /// The total duration (ms) of the media stream.
+        /// </summary>
+        ///
         public long duration;
 
         public PlayerStreamInfo()
@@ -275,13 +559,25 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_srcinfo */
+    ///
+    /// <summary>
+    /// Information about the video bitrate of the media resource being played.
+    /// </summary>
+    ///
     public class SrcInfo
     {
-        /* class_srcinfo_bitrateInKbps */
+        ///
+        /// <summary>
+        /// The video bitrate (Kbps) of the media resource being played.
+        /// </summary>
+        ///
         public int bitrateInKbps;
 
-        /* class_srcinfo_name */
+        ///
+        /// <summary>
+        /// The name of the media resource.
+        /// </summary>
+        ///
         public string name;
 
         public SrcInfo(int bitrateInKbps, string name)
@@ -294,26 +590,54 @@ namespace Agora.Rtc
         }
     }
 
-    /* enum_mediaplayermetadatatype */
+    ///
+    /// <summary>
+    /// The type of media metadata.
+    /// </summary>
+    ///
     public enum MEDIA_PLAYER_METADATA_TYPE
     {
-        /* enum_mediaplayermetadatatype_PLAYER_METADATA_TYPE_UNKNOWN */
+        ///
+        /// <summary>
+        /// 0: The type is unknown.
+        /// </summary>
+        ///
         PLAYER_METADATA_TYPE_UNKNOWN = 0,
 
-        /* enum_mediaplayermetadatatype_PLAYER_METADATA_TYPE_SEI */
+        ///
+        /// <summary>
+        /// 1: The type is SEI.
+        /// </summary>
+        ///
         PLAYER_METADATA_TYPE_SEI = 1,
     }
 
-    /* class_cachestatistics */
+    ///
+    /// <summary>
+    /// Statistics about the media files being cached.
+    /// </summary>
+    ///
     public class CacheStatistics
     {
-        /* class_cachestatistics_fileSize */
+        ///
+        /// <summary>
+        /// The size (bytes) of the media file being played.
+        /// </summary>
+        ///
         public long fileSize;
 
-        /* class_cachestatistics_cacheSize */
+        ///
+        /// <summary>
+        /// The size (bytes) of the media file that you want to cache.
+        /// </summary>
+        ///
         public long cacheSize;
 
-        /* class_cachestatistics_downloadSize */
+        ///
+        /// <summary>
+        /// The size (bytes) of the media file that has been downloaded.
+        /// </summary>
+        ///
         public long downloadSize;
 
         public CacheStatistics(long fileSize, long cacheSize, long downloadSize)
@@ -327,16 +651,30 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_playerupdatedinfo */
+    ///
+    /// <summary>
+    /// Information related to the media player.
+    /// </summary>
+    ///
     public class PlayerUpdatedInfo : OptionalJsonParse
     {
-        /* class_playerupdatedinfo_playerId */
+        ///
+        /// <summary>
+        /// The ID of a media player.
+        /// </summary>
+        ///
         public Optional<string> playerId = new Optional<string>();
 
-        /* class_playerupdatedinfo_deviceId */
+        ///
+        /// <summary>
+        /// The ID of a deivce.
+        /// </summary>
+        ///
         public Optional<string> deviceId = new Optional<string>();
 
-        /* class_playerupdatedinfo_cacheStatistics */
+        ///
+        /// @ignore
+        ///
         public Optional<CacheStatistics> cacheStatistics = new Optional<CacheStatistics>();
 
         public PlayerUpdatedInfo(Optional<string> playerId, Optional<string> deviceId, Optional<CacheStatistics> cacheStatistics)
@@ -375,31 +713,70 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_mediasource */
+    ///
+    /// <summary>
+    /// Information related to the media file to be played and the playback scenario configurations.
+    /// </summary>
+    ///
     public class MediaSource : OptionalJsonParse
     {
-        /* class_mediasource_url */
+        ///
+        /// <summary>
+        /// The URL of the media file to be played. If you open a common media resource, pass in the value to url. If you open a custom media resource, pass in the value to provider. Agora recommends that you do not pass in values to both parameters in one call; otherwise, this call may fail.
+        /// </summary>
+        ///
         public string url;
 
-        /* class_mediasource_uri */
+        ///
+        /// <summary>
+        /// The URI (Uniform Resource Identifier) of the media file.
+        /// </summary>
+        ///
         public string uri;
 
-        /* class_mediasource_startPos */
+        ///
+        /// <summary>
+        /// The starting position (ms) for playback. The default value is 0.
+        /// </summary>
+        ///
         public long startPos;
 
-        /* class_mediasource_autoPlay */
+        ///
+        /// <summary>
+        /// Whether to enable autoplay once the media file is opened: true : (Default) Enables autoplay. false : Disables autoplay. If autoplay is disabled, you need to call the Play method to play a media file after it is opened.
+        /// </summary>
+        ///
         public bool autoPlay;
 
-        /* class_mediasource_enableCache */
+        ///
+        /// <summary>
+        /// Whether to cache the media file when it is being played: true :Enables caching. false : (Default) Disables caching.
+        ///  Agora only supports caching on-demand audio and video streams that are not transmitted in HLS protocol.
+        ///  If you need to enable caching, pass in a value to uri; otherwise, caching is based on the url of the media file.
+        ///  If you enable this function, the Media Player caches part of the media file being played on your local device, and you can play the cached media file without internet connection. The statistics about the media file being cached are updated every second after the media file is played. See CacheStatistics.
+        /// </summary>
+        ///
         public bool enableCache;
 
-        /* class_mediasource_isAgoraSource */
+        ///
+        /// <summary>
+        /// Whether the media resource to be opened is a live stream or on-demand video distributed through Media Broadcast service: true : The media resource to be played is a live or on-demand video distributed through Media Broadcast service. false : (Default) The media resource is not a live stream or on-demand video distributed through Media Broadcast service. If you need to open a live stream or on-demand video distributed through Broadcast Streaming service, pass in the URL of the media resource to url, and set isAgoraSource as true; otherwise, you don't need to set the isAgoraSource parameter.
+        /// </summary>
+        ///
         public Optional<bool> isAgoraSource = new Optional<bool>();
 
-        /* class_mediasource_isLiveSource */
+        ///
+        /// <summary>
+        /// Whether the media resource to be opened is a live stream: true : The media resource is a live stream. false : (Default) The media resource is not a live stream. If the media resource you want to open is a live stream, Agora recommends that you set this parameter as true so that the live stream can be loaded more quickly. If the media resource you open is not a live stream, but you set isLiveSource as true, the media resource is not to be loaded more quickly.
+        /// </summary>
+        ///
         public Optional<bool> isLiveSource = new Optional<bool>();
 
-        /* class_mediasource_provider */
+        ///
+        /// <summary>
+        /// The callback for custom media resource files. See IMediaPlayerCustomDataProvider. If you open a custom media resource, pass in the value to provider. If you open a common media resource, pass in the value to url. Agora recommends that you do not pass in values to both url and provider in one call; otherwise, this call may fail.
+        /// </summary>
+        ///
         public IMediaPlayerCustomDataProvider provider;
 
         public MediaSource()

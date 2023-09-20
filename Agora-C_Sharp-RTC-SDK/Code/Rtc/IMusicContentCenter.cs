@@ -2,62 +2,98 @@ using System;
 
 namespace Agora.Rtc
 {
-    /* class_imusiccontentcenter */
+    ///
+    /// @ignore
+    ///
     public abstract class IMusicContentCenter
     {
 
-        /* api_imusiccontentcenter_destroymusicplayer */
+        ///
+        /// @ignore
+        ///
         public abstract int DestroyMusicPlayer(IMusicPlayer player);
 
 #region terra IMusicContentCenter
 
-        /* api_imusiccontentcenter_initialize */
+        ///
+        /// @ignore
+        ///
         public abstract int Initialize(MusicContentCenterConfiguration configuration);
 
-        /* api_imusiccontentcenter_renewtoken */
+        ///
+        /// @ignore
+        ///
         public abstract int RenewToken(string token);
 
-        /* api_imusiccontentcenter_registereventhandler */
+        ///
+        /// @ignore
+        ///
         public abstract int RegisterEventHandler(IMusicContentCenterEventHandler eventHandler);
 
-        /* api_imusiccontentcenter_unregistereventhandler */
+        ///
+        /// @ignore
+        ///
         public abstract int UnregisterEventHandler();
 
-        /* api_imusiccontentcenter_createmusicplayer */
+        ///
+        /// @ignore
+        ///
         public abstract IMusicPlayer CreateMusicPlayer();
 
-        /* api_imusiccontentcenter_getmusiccharts */
+        ///
+        /// @ignore
+        ///
         public abstract int GetMusicCharts(ref string requestId);
 
-        /* api_imusiccontentcenter_getmusiccollectionbymusicchartid */
+        ///
+        /// @ignore
+        ///
         public abstract int GetMusicCollectionByMusicChartId(ref string requestId, int musicChartId, int page, int pageSize, string jsonOption = "");
 
-        /* api_imusiccontentcenter_searchmusic */
+        ///
+        /// @ignore
+        ///
         public abstract int SearchMusic(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "");
 
-        /* api_imusiccontentcenter_preload */
+        ///
+        /// @ignore
+        ///
         [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
         public abstract int Preload(long songCode, string jsonOption);
 
-        /* api_imusiccontentcenter_preload2 */
+        ///
+        /// @ignore
+        ///
         public abstract int Preload(ref string requestId, long songCode);
 
-        /* api_imusiccontentcenter_removecache */
+        ///
+        /// @ignore
+        ///
         public abstract int RemoveCache(long songCode);
 
-        /* api_imusiccontentcenter_getcaches */
+        ///
+        /// @ignore
+        ///
         public abstract int GetCaches(ref MusicCacheInfo[] cacheInfo, ref int cacheInfoSize);
 
-        /* api_imusiccontentcenter_ispreloaded */
+        ///
+        /// @ignore
+        ///
         public abstract int IsPreloaded(long songCode);
 
-        /* api_imusiccontentcenter_getlyric */
+        ///
+        /// @ignore
+        ///
         public abstract int GetLyric(ref string requestId, long songCode, int LyricType = 0);
 
-        /* api_imusiccontentcenter_getsongsimpleinfo */
+        ///
+        /// @ignore
+        ///
         public abstract int GetSongSimpleInfo(ref string requestId, long songCode);
 
-        /* api_imusiccontentcenter_getinternalsongcode */
+        ///
+        /// @ignore
+        ///
         public abstract int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode);
 #endregion terra IMusicContentCenter
     }

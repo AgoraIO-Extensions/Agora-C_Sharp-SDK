@@ -2,10 +2,18 @@
 
 namespace Agora.Rtc
 {
-    /* enum_observermode */
+    ///
+    /// <summary>
+    /// The mode for receiving data.
+    /// </summary>
+    ///
     public enum OBSERVER_MODE
     {
-        /* enum_observermode_RAW_DATA */
+        ///
+        /// <summary>
+        /// Raw data mode, which means the SDK sends you raw data.
+        /// </summary>
+        ///
         RAW_DATA,
 
         INTPTR
@@ -103,43 +111,73 @@ namespace Agora.Rtc
 #endregion terra ExternalVideoFrameInternal_Member_List
     }
 
-    /* enum_videoobserverframetype */
+    ///
+    /// <summary>
+    /// Video frame formats.
+    /// </summary>
+    ///
     public enum VIDEO_OBSERVER_FRAME_TYPE
     {
-        /* enum_videoobserverframetype_FRAME_TYPE_DEFAULT */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_DEFAULT = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_YUV420 */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_YUV420 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I420,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_BGRA */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_BGRA,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_NV21 */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_NV21 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_NV21,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_RGBA */
+        ///
+        /// <summary>
+        /// 2: The format of the video frame is RGBA.
+        /// </summary>
+        ///
         FRAME_TYPE_RGBA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_RGBA,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_NV12 */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_NV12 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_NV12,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_TEXTURE_2D */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_TEXTURE_2D = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_2D,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_TEXTURE_OES */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_TEXTURE_OES = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_OES,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_CVPIXEL_NV12 */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_CVPIXEL_NV12 = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_NV12,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_CVPIXEL_I420 */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_CVPIXEL_I420 = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_I420,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_CVPIXEL_BGRA */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_CVPIXEL_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_BGRA,
 
-        /* enum_videoobserverframetype_FRAME_TYPE_YUV422 */
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
     }
 

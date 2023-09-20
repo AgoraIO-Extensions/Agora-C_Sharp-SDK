@@ -4,51 +4,111 @@ namespace Agora.Rtc
 {
 #region terra IAgoraRhythmPlayer.h
 
-    /* enum_rhythmplayerstatetype */
+    ///
+    /// <summary>
+    /// Virtual metronome state.
+    /// </summary>
+    ///
     public enum RHYTHM_PLAYER_STATE_TYPE
     {
-        /* enum_rhythmplayerstatetype_RHYTHM_PLAYER_STATE_IDLE */
+        ///
+        /// <summary>
+        /// (810): The virtual metronome is not enabled or disabled already.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_STATE_IDLE = 810,
 
-        /* enum_rhythmplayerstatetype_RHYTHM_PLAYER_STATE_OPENING */
+        ///
+        /// <summary>
+        /// 811: Opening the beat files.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_STATE_OPENING,
 
-        /* enum_rhythmplayerstatetype_RHYTHM_PLAYER_STATE_DECODING */
+        ///
+        /// <summary>
+        /// 812: Decoding the beat files.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_STATE_DECODING,
 
-        /* enum_rhythmplayerstatetype_RHYTHM_PLAYER_STATE_PLAYING */
+        ///
+        /// <summary>
+        /// 813: The beat files are playing.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_STATE_PLAYING,
 
-        /* enum_rhythmplayerstatetype_RHYTHM_PLAYER_STATE_FAILED */
+        ///
+        /// <summary>
+        /// 814: Failed to start virtual metronome. You can use the reported errorCode to troubleshoot the cause of the error, or you can try to start the virtual metronome again.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_STATE_FAILED,
     }
 
-    /* enum_rhythmplayererrortype */
+    ///
+    /// <summary>
+    /// Virtual Metronome error message.
+    /// </summary>
+    ///
     public enum RHYTHM_PLAYER_ERROR_TYPE
     {
-        /* enum_rhythmplayererrortype_RHYTHM_PLAYER_ERROR_OK */
+        ///
+        /// <summary>
+        /// (0): The beat files are played normally without errors.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_ERROR_OK = 0,
 
-        /* enum_rhythmplayererrortype_RHYTHM_PLAYER_ERROR_FAILED */
+        ///
+        /// <summary>
+        /// 1: A general error; no specific reason.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_ERROR_FAILED = 1,
 
-        /* enum_rhythmplayererrortype_RHYTHM_PLAYER_ERROR_CAN_NOT_OPEN */
+        ///
+        /// <summary>
+        /// 801: There is an error when opening the beat files.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_ERROR_CAN_NOT_OPEN = 801,
 
-        /* enum_rhythmplayererrortype_RHYTHM_PLAYER_ERROR_CAN_NOT_PLAY */
+        ///
+        /// <summary>
+        /// 802: There is an error when playing the beat files.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_ERROR_CAN_NOT_PLAY,
 
-        /* enum_rhythmplayererrortype_RHYTHM_PLAYER_ERROR_FILE_OVER_DURATION_LIMIT */
+        ///
+        /// <summary>
+        /// (803): The duration of the beat file exceeds the limit. The maximum duration is 1.2 seconds.
+        /// </summary>
+        ///
         RHYTHM_PLAYER_ERROR_FILE_OVER_DURATION_LIMIT,
     }
 
-    /* class_agorarhythmplayerconfig */
+    ///
+    /// <summary>
+    /// The metronome configuration.
+    /// </summary>
+    ///
     public class AgoraRhythmPlayerConfig
     {
-        /* class_agorarhythmplayerconfig_beatsPerMeasure */
+        ///
+        /// <summary>
+        /// The number of beats per measure, which ranges from 1 to 9. The default value is 4, which means that each measure contains one downbeat and three upbeats.
+        /// </summary>
+        ///
         public int beatsPerMeasure;
 
-        /* class_agorarhythmplayerconfig_beatsPerMinute */
+        ///
+        /// <summary>
+        /// The beat speed (beats/minute), which ranges from 60 to 360. The default value is 60, which means that the metronome plays 60 beats in one minute.
+        /// </summary>
+        ///
         public int beatsPerMinute;
 
         public AgoraRhythmPlayerConfig()

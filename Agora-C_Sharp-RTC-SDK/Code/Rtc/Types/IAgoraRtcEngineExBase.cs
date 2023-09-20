@@ -2,13 +2,25 @@
 {
 #region terra IAgoraRtcEngineEx.h
 
-    /* class_rtcconnection */
+    ///
+    /// <summary>
+    /// Contains connection information.
+    /// </summary>
+    ///
     public class RtcConnection
     {
-        /* class_rtcconnection_channelId */
+        ///
+        /// <summary>
+        /// The channel name.
+        /// </summary>
+        ///
         public string channelId;
 
-        /* class_rtcconnection_localUid */
+        ///
+        /// <summary>
+        /// The ID of the local user.
+        /// </summary>
+        ///
         public uint localUid;
 
         public RtcConnection()

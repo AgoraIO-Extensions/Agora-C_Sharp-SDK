@@ -1,17 +1,25 @@
 namespace Agora.Rtc
 {
-    /* class_imediarecorder */
+    ///
+    /// @ignore
+    ///
     public abstract class IMediaRecorder
     {
 #region terra IMediaRecorder
 
-        /* api_imediarecorder_setmediarecorderobserver */
+        ///
+        /// @ignore
+        ///
         public abstract int SetMediaRecorderObserver(IMediaRecorderObserver callback);
 
-        /* api_imediarecorder_startrecording */
+        ///
+        /// @ignore
+        ///
         public abstract int StartRecording(MediaRecorderConfiguration config);
 
-        /* api_imediarecorder_stoprecording */
+        ///
+        /// @ignore
+        ///
         public abstract int StopRecording();
 #endregion terra IMediaRecorder
     };

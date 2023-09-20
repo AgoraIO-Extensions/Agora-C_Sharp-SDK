@@ -4,63 +4,127 @@ namespace Agora.Rtc
 {
 #region terra IAgoraLog.h
 
-    /* enum_loglevel */
+    ///
+    /// <summary>
+    /// The output log level of the SDK.
+    /// </summary>
+    ///
     public enum LOG_LEVEL
     {
-        /* enum_loglevel_LOG_LEVEL_NONE */
+        ///
+        /// <summary>
+        /// 0: Do not output any log information.
+        /// </summary>
+        ///
         LOG_LEVEL_NONE = 0x0000,
 
-        /* enum_loglevel_LOG_LEVEL_INFO */
+        ///
+        /// <summary>
+        /// 0x0001: (Default) Output FATAL, ERROR, WARN, and INFO level log information. We recommend setting your log filter to this level.
+        /// </summary>
+        ///
         LOG_LEVEL_INFO = 0x0001,
 
-        /* enum_loglevel_LOG_LEVEL_WARN */
+        ///
+        /// <summary>
+        /// 0x0002: Output FATAL, ERROR, and WARN level log information.
+        /// </summary>
+        ///
         LOG_LEVEL_WARN = 0x0002,
 
-        /* enum_loglevel_LOG_LEVEL_ERROR */
+        ///
+        /// <summary>
+        /// 0x0004: Output FATAL and ERROR level log information.
+        /// </summary>
+        ///
         LOG_LEVEL_ERROR = 0x0004,
 
-        /* enum_loglevel_LOG_LEVEL_FATAL */
+        ///
+        /// <summary>
+        /// 0x0008: Output FATAL level log information.
+        /// </summary>
+        ///
         LOG_LEVEL_FATAL = 0x0008,
 
-        /* enum_loglevel_LOG_LEVEL_API_CALL */
+        ///
+        /// @ignore
+        ///
         LOG_LEVEL_API_CALL = 0x0010,
     }
 
-    /* enum_logfiltertype */
+    ///
+    /// @ignore
+    ///
     public enum LOG_FILTER_TYPE
     {
-        /* enum_logfiltertype_LOG_FILTER_OFF */
+        ///
+        /// @ignore
+        ///
         LOG_FILTER_OFF = 0,
 
-        /* enum_logfiltertype_LOG_FILTER_DEBUG */
+        ///
+        /// @ignore
+        ///
         LOG_FILTER_DEBUG = 0x080f,
 
-        /* enum_logfiltertype_LOG_FILTER_INFO */
+        ///
+        /// @ignore
+        ///
         LOG_FILTER_INFO = 0x000f,
 
-        /* enum_logfiltertype_LOG_FILTER_WARN */
+        ///
+        /// @ignore
+        ///
         LOG_FILTER_WARN = 0x000e,
 
-        /* enum_logfiltertype_LOG_FILTER_ERROR */
+        ///
+        /// @ignore
+        ///
         LOG_FILTER_ERROR = 0x000c,
 
-        /* enum_logfiltertype_LOG_FILTER_CRITICAL */
+        ///
+        /// @ignore
+        ///
         LOG_FILTER_CRITICAL = 0x0008,
 
-        /* enum_logfiltertype_LOG_FILTER_MASK */
+        ///
+        /// @ignore
+        ///
         LOG_FILTER_MASK = 0x80f,
     }
 
-    /* class_logconfig */
+    ///
+    /// <summary>
+    /// Configuration of Agora SDK log files.
+    /// </summary>
+    ///
     public class LogConfig
     {
-        /* class_logconfig_filePath */
+        ///
+        /// <summary>
+        /// The complete path of the log files. Ensure that the path for the log file exists and is writable. You can use this parameter to rename the log files. The default path is:
+        ///  Android： /storage/emulated/0/Android/data/<packagename>/files/agorasdk.log.
+        ///  iOS： App Sandbox/Library/caches/agorasdk.log.
+        ///  macOS:
+        ///  If Sandbox is enabled: App Sandbox/Library/Logs/agorasdk.log. For example, /Users/<username>/Library/Containers/<AppBundleIdentifier>/Data/Library/Logs/agorasdk.log.
+        ///  If Sandbox is disabled: ~/Library/Logs/agorasdk.log
+        ///  Windows: C:\Users\<user_name>\AppData\Local\Agora\<process_name>\agorasdk.log.
+        /// </summary>
+        ///
         public string filePath;
 
-        /* class_logconfig_fileSizeInKB */
+        ///
+        /// <summary>
+        /// The size (KB) of an agorasdk.log file. The value range is [128,20480]. The default value is 2,048 KB. If you set fileSizeInKByte smaller than 128 KB, the SDK automatically adjusts it to 128 KB; if you set fileSizeInKByte greater than 20,480 KB, the SDK automatically adjusts it to 20,480 KB.
+        /// </summary>
+        ///
         public uint fileSizeInKB;
 
-        /* class_logconfig_level */
+        ///
+        /// <summary>
+        /// The output level of the SDK log file. See LOG_LEVEL. For example, if you set the log level to WARN, the SDK outputs the logs within levels FATAL, ERROR, and WARN.
+        /// </summary>
+        ///
         public LOG_LEVEL level;
 
         public LogConfig()

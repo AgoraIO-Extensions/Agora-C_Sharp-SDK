@@ -2,11 +2,25 @@
 {
 #region terra IAgoraSpatialAudio.h
 
-    /* class_remotevoicepositioninfo */
+    ///
+    /// <summary>
+    /// The spatial position of the remote user or the media player.
+    /// </summary>
+    ///
     public class RemoteVoicePositionInfo
     {
+        ///
+        /// <summary>
+        /// The coordinates in the world coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// </summary>
+        ///
         public float[] position;
 
+        ///
+        /// <summary>
+        /// The unit vector of the x axis in the coordinate system. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// </summary>
+        ///
         public float[] forward;
 
         public RemoteVoicePositionInfo()
@@ -20,37 +34,93 @@
         }
     }
 
-    /* class_spatialaudiozone */
+    ///
+    /// <summary>
+    /// Sound insulation area settings.
+    /// </summary>
+    ///
     public class SpatialAudioZone
     {
-        /* class_spatialaudiozone_zoneSetId */
+        ///
+        /// <summary>
+        /// The ID of the sound insulation area.
+        /// </summary>
+        ///
         public int zoneSetId;
 
+        ///
+        /// <summary>
+        /// The spatial center point of the sound insulation area. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// </summary>
+        ///
         public float[] position;
 
+        ///
+        /// <summary>
+        /// Starting at position, the forward unit vector. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// </summary>
+        ///
         public float[] forward;
 
+        ///
+        /// <summary>
+        /// Starting at position, the right unit vector. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// </summary>
+        ///
         public float[] right;
 
+        ///
+        /// <summary>
+        /// Starting at position, the up unit vector. This parameter is an array of length 3, and the three values represent the front, right, and top coordinates in turn.
+        /// </summary>
+        ///
         public float[] up;
 
-        /* class_spatialaudiozone_forwardLength */
+        ///
+        /// <summary>
+        /// The entire sound insulation area is regarded as a cube; this represents the length of the forward side in the unit length of the game engine.
+        /// </summary>
+        ///
         public float forwardLength;
 
-        /* class_spatialaudiozone_rightLength */
+        ///
+        /// <summary>
+        /// The entire sound insulation area is regarded as a cube; this represents the length of the right side in the unit length of the game engine.
+        /// </summary>
+        ///
         public float rightLength;
 
-        /* class_spatialaudiozone_upLength */
+        ///
+        /// <summary>
+        /// The entire sound insulation area is regarded as a cube; this represents the length of the up side in the unit length of the game engine.
+        /// </summary>
+        ///
         public float upLength;
 
-        /* class_spatialaudiozone_audioAttenuation */
+        ///
+        /// <summary>
+        /// The sound attenuation coefficient when users within the sound insulation area communicate with external users. The value range is [0,1]. The values are as follows:
+        ///  0: Broadcast mode, where the volume and timbre are not attenuated with distance, and the volume and timbre heard by local users do not change regardless of distance.
+        ///  (0,0.5): Weak attenuation mode, that is, the volume and timbre are only weakly attenuated during the propagation process, and the sound can travel farther than the real environment.
+        ///  0.5: (Default) simulates the attenuation of the volume in the real environment; the effect is equivalent to not setting the audioAttenuation parameter.
+        ///  (0.5,1]: Strong attenuation mode (default value is 1), that is, the volume and timbre attenuate rapidly during propagation.
+        /// </summary>
+        ///
         public float audioAttenuation;
     }
 
-    /* class_localspatialaudioconfig */
+    ///
+    /// <summary>
+    /// The configuration of ILocalSpatialAudioEngine.
+    /// </summary>
+    ///
     public class LocalSpatialAudioConfig
     {
-        /* class_localspatialaudioconfig_rtcEngine */
+        ///
+        /// <summary>
+        /// IRtcEngine.
+        /// </summary>
+        ///
         public IRtcEngine rtcEngine;
 
         public LocalSpatialAudioConfig()

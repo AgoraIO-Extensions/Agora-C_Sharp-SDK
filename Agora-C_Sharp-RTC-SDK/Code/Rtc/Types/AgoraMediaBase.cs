@@ -9,70 +9,159 @@ namespace Agora.Rtc
     using uint32_t = UInt32;
     using int16_t = Int16;
 
-    /* class_videoframe */
+    ///
+    /// <summary>
+    /// Configurations of the video frame.
+    ///
+    /// Note that the buffer provides a pointer to a pointer. This interface cannot modify the pointer of the buffer, but it can modify the content of the buffer.
+    /// </summary>
+    ///
     public class VideoFrame
     {
 #region terra VideoFrame_Member_List
 
-        /* class_videoframe_type */
+        ///
+        /// <summary>
+        /// The pixel format. See VIDEO_PIXEL_FORMAT.
+        /// </summary>
+        ///
         public VIDEO_PIXEL_FORMAT type;
 
-        /* class_videoframe_width */
+        ///
+        /// <summary>
+        /// The width of the video, in pixels.
+        /// </summary>
+        ///
         public int width;
 
-        /* class_videoframe_height */
+        ///
+        /// <summary>
+        /// The height of the video, in pixels.
+        /// </summary>
+        ///
         public int height;
 
-        /* class_videoframe_yStride */
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the Y buffer; for RGBA data, the total data length.
+        /// </summary>
+        ///
         public int yStride;
 
-        /* class_videoframe_uStride */
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the U buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
         public int uStride;
 
-        /* class_videoframe_vStride */
+        ///
+        /// <summary>
+        /// For YUV data, the line span of the V buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
         public int vStride;
 
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the Y buffer; for RGBA data, the data buffer.
+        /// </summary>
+        ///
         public byte[] yBuffer;
 
-        /* class_videoframe_yBufferPtr */
+        ///
+        /// @ignore
+        ///
         public IntPtr yBufferPtr;
 
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the U buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
         public byte[] uBuffer;
 
-        /* class_videoframe_uBufferPtr */
+        ///
+        /// @ignore
+        ///
         public IntPtr uBufferPtr;
 
+        ///
+        /// <summary>
+        /// For YUV data, the pointer to the V buffer; for RGBA data, the value is 0.
+        /// </summary>
+        ///
         public byte[] vBuffer;
 
-        /* class_videoframe_vBufferPtr */
+        ///
+        /// @ignore
+        ///
         public IntPtr vBufferPtr;
 
-        /* class_videoframe_rotation */
+        ///
+        /// <summary>
+        /// The clockwise rotation of the video frame before rendering. Supported values include 0, 90, 180, and 270 degrees.
+        /// </summary>
+        ///
         public int rotation;
 
-        /* class_videoframe_renderTimeMs */
+        ///
+        /// <summary>
+        /// The Unix timestamp (ms) when the video frame is rendered. This timestamp can be used to guide the rendering of the video frame. It is required.
+        /// </summary>
+        ///
         public long renderTimeMs;
 
-        /* class_videoframe_avsync_type */
+        ///
+        /// <summary>
+        /// Reserved for future use.
+        /// </summary>
+        ///
         public int avsync_type;
 
-        /* class_videoframe_metadata_buffer */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
+        /// </summary>
+        ///
         public IntPtr metadata_buffer;
 
-        /* class_videoframe_metadata_size */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
+        /// </summary>
+        ///
         public int metadata_size;
 
-        /* class_videoframe_sharedContext */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. EGL Context.
+        /// </summary>
+        ///
         public IntPtr sharedContext;
 
-        /* class_videoframe_textureId */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. Texture ID.
+        /// </summary>
+        ///
         public int textureId;
 
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. Incoming 4 × 4 transformational matrix. The typical value is a unit matrix.
+        /// </summary>
+        ///
         public float[] matrix;
 
+        ///
+        /// @ignore
+        ///
         public byte[] alphaBuffer;
 
-        /* class_videoframe_alphaBufferPtr */
+        ///
+        /// @ignore
+        ///
         public IntPtr alphaBufferPtr;
 
 #endregion terra VideoFrame_Member_List
@@ -108,39 +197,82 @@ namespace Agora.Rtc
 #endregion terra VideoFrame_Constructor
     }
 
-    /* class_audioframe */
+    ///
+    /// <summary>
+    /// Raw audio data.
+    /// </summary>
+    ///
     public class AudioFrame
     {
 #region terra AudioFrame_Member_List
 
-        /* class_audioframe_type */
+        ///
+        /// <summary>
+        /// The type of the audio frame. See AUDIO_FRAME_TYPE.
+        /// </summary>
+        ///
         public AUDIO_FRAME_TYPE type;
 
-        /* class_audioframe_samplesPerChannel */
+        ///
+        /// <summary>
+        /// The number of samples per channel in the audio frame.
+        /// </summary>
+        ///
         public int samplesPerChannel;
 
-        /* class_audioframe_bytesPerSample */
+        ///
+        /// <summary>
+        /// The number of bytes per sample. The number of bytes per audio sample, which is usually 16-bit (2-byte).
+        /// </summary>
+        ///
         public BYTES_PER_SAMPLE bytesPerSample;
 
-        /* class_audioframe_channels */
+        ///
+        /// <summary>
+        /// The number of audio channels (the data are interleaved if it is stereo).
+        ///  1: Mono.
+        ///  2: Stereo.
+        /// </summary>
+        ///
         public int channels;
 
-        /* class_audioframe_samplesPerSec */
+        ///
+        /// <summary>
+        /// The number of samples per channel in the audio frame.
+        /// </summary>
+        ///
         public int samplesPerSec;
 
-        /* class_audioframe_buffer */
+        ///
+        /// @ignore
+        ///
         public IntPtr buffer;
 
-        /* class_audioframe_renderTimeMs */
+        ///
+        /// <summary>
+        /// The timestamp (ms) of the external audio frame. You can use this timestamp to restore the order of the captured audio frame, and synchronize audio and video frames in video scenarios, including scenarios where external video sources are used.
+        /// </summary>
+        ///
         public long renderTimeMs;
 
-        /* class_audioframe_avsync_type */
+        ///
+        /// <summary>
+        /// Reserved for future use.
+        /// </summary>
+        ///
         public int avsync_type;
 
-        /* class_audioframe_presentationMs */
+        ///
+        /// @ignore
+        ///
         public long presentationMs;
 #endregion terra AudioFrame_Member_List
 
+        ///
+        /// <summary>
+        /// The data buffer of the audio frame. When the audio frame uses a stereo channel, the data buffer is interleaved. The size of the data buffer is as follows: buffer = samples × channels × bytesPerSample.
+        /// </summary>
+        ///
         public byte[] RawBuffer;
 
 #region terra AudioFrame_Constructor
@@ -177,118 +309,254 @@ namespace Agora.Rtc
 
 #region terra AgoraMediaBase.h
 
-    /* enum_videosourcetype */
+    ///
+    /// <summary>
+    /// The type of the video source.
+    /// </summary>
+    ///
     public enum VIDEO_SOURCE_TYPE
     {
-        /* enum_videosourcetype_VIDEO_SOURCE_CAMERA_PRIMARY */
+        ///
+        /// <summary>
+        /// 0: (Default) The primary camera.
+        /// </summary>
+        ///
         VIDEO_SOURCE_CAMERA_PRIMARY = 0,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_CAMERA */
+        ///
+        /// <summary>
+        /// 0: (Default) The primary camera.
+        /// </summary>
+        ///
         VIDEO_SOURCE_CAMERA = VIDEO_SOURCE_CAMERA_PRIMARY,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_CAMERA_SECONDARY */
+        ///
+        /// <summary>
+        /// 1: The secondary camera.
+        /// </summary>
+        ///
         VIDEO_SOURCE_CAMERA_SECONDARY = 1,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_SCREEN_PRIMARY */
+        ///
+        /// <summary>
+        /// 2: The primary screen.
+        /// </summary>
+        ///
         VIDEO_SOURCE_SCREEN_PRIMARY = 2,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_SCREEN */
+        ///
+        /// <summary>
+        /// 2: The primary screen.
+        /// </summary>
+        ///
         VIDEO_SOURCE_SCREEN = VIDEO_SOURCE_SCREEN_PRIMARY,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_SCREEN_SECONDARY */
+        ///
+        /// <summary>
+        /// 3: The secondary screen.
+        /// </summary>
+        ///
         VIDEO_SOURCE_SCREEN_SECONDARY = 3,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_CUSTOM */
+        ///
+        /// <summary>
+        /// 4: A custom video source.
+        /// </summary>
+        ///
         VIDEO_SOURCE_CUSTOM = 4,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_MEDIA_PLAYER */
+        ///
+        /// <summary>
+        /// 5: The media player.
+        /// </summary>
+        ///
         VIDEO_SOURCE_MEDIA_PLAYER = 5,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_RTC_IMAGE_PNG */
+        ///
+        /// <summary>
+        /// 6: One PNG image.
+        /// </summary>
+        ///
         VIDEO_SOURCE_RTC_IMAGE_PNG = 6,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_RTC_IMAGE_JPEG */
+        ///
+        /// <summary>
+        /// 7: One JPEG image.
+        /// </summary>
+        ///
         VIDEO_SOURCE_RTC_IMAGE_JPEG = 7,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_RTC_IMAGE_GIF */
+        ///
+        /// <summary>
+        /// 8: One GIF image.
+        /// </summary>
+        ///
         VIDEO_SOURCE_RTC_IMAGE_GIF = 8,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_REMOTE */
+        ///
+        /// <summary>
+        /// 9: One remote video acquired by the network.
+        /// </summary>
+        ///
         VIDEO_SOURCE_REMOTE = 9,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_TRANSCODED */
+        ///
+        /// <summary>
+        /// 10: One transcoded video source.
+        /// </summary>
+        ///
         VIDEO_SOURCE_TRANSCODED = 10,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_CAMERA_THIRD */
+        ///
+        /// <summary>
+        /// 11: (For Windows and macOS only) The third camera.
+        /// </summary>
+        ///
         VIDEO_SOURCE_CAMERA_THIRD = 11,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_CAMERA_FOURTH */
+        ///
+        /// <summary>
+        /// 12: (For Windows and macOS only) The fourth camera.
+        /// </summary>
+        ///
         VIDEO_SOURCE_CAMERA_FOURTH = 12,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_SCREEN_THIRD */
+        ///
+        /// <summary>
+        /// 13: (For Windows and macOS only) The third screen.
+        /// </summary>
+        ///
         VIDEO_SOURCE_SCREEN_THIRD = 13,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_SCREEN_FOURTH */
+        ///
+        /// <summary>
+        /// 14: (For Windows and macOS only) The fourth screen.
+        /// </summary>
+        ///
         VIDEO_SOURCE_SCREEN_FOURTH = 14,
 
-        /* enum_videosourcetype_VIDEO_SOURCE_UNKNOWN */
+        ///
+        /// <summary>
+        /// 100: An unknown video source.
+        /// </summary>
+        ///
         VIDEO_SOURCE_UNKNOWN = 100,
     }
 
-    /* enum_audioroute */
+    ///
+    /// <summary>
+    /// The type of the audio route.
+    /// </summary>
+    ///
     public enum AudioRoute
     {
-        /* enum_audioroute_ROUTE_DEFAULT */
+        ///
+        /// <summary>
+        /// -1: The default audio route.
+        /// </summary>
+        ///
         ROUTE_DEFAULT = -1,
 
-        /* enum_audioroute_ROUTE_HEADSET */
+        ///
+        /// <summary>
+        /// 0: Audio output routing is a headset with microphone.
+        /// </summary>
+        ///
         ROUTE_HEADSET = 0,
 
-        /* enum_audioroute_ROUTE_EARPIECE */
+        ///
+        /// <summary>
+        /// 1: The audio route is an earpiece.
+        /// </summary>
+        ///
         ROUTE_EARPIECE = 1,
 
-        /* enum_audioroute_ROUTE_HEADSETNOMIC */
+        ///
+        /// <summary>
+        /// 2: The audio route is a headset without a microphone.
+        /// </summary>
+        ///
         ROUTE_HEADSETNOMIC = 2,
 
-        /* enum_audioroute_ROUTE_SPEAKERPHONE */
+        ///
+        /// <summary>
+        /// 3: The audio route is the speaker that comes with the device.
+        /// </summary>
+        ///
         ROUTE_SPEAKERPHONE = 3,
 
-        /* enum_audioroute_ROUTE_LOUDSPEAKER */
+        ///
+        /// <summary>
+        /// 4: The audio route is an external speaker. (iOS and macOS only)
+        /// </summary>
+        ///
         ROUTE_LOUDSPEAKER = 4,
 
-        /* enum_audioroute_ROUTE_HEADSETBLUETOOTH */
+        ///
+        /// <summary>
+        /// 5: The audio route is a bluetooth headset.
+        /// </summary>
+        ///
         ROUTE_HEADSETBLUETOOTH = 5,
 
-        /* enum_audioroute_ROUTE_USB */
+        ///
+        /// <summary>
+        /// 7: The audio route is a USB peripheral device. (For macOS only)
+        /// </summary>
+        ///
         ROUTE_USB = 6,
 
-        /* enum_audioroute_ROUTE_HDMI */
+        ///
+        /// <summary>
+        /// 6: The audio route is an HDMI peripheral device. (For macOS only)
+        /// </summary>
+        ///
         ROUTE_HDMI = 7,
 
-        /* enum_audioroute_ROUTE_DISPLAYPORT */
+        ///
+        /// <summary>
+        /// 8: The audio route is a DisplayPort peripheral device. (For macOS only)
+        /// </summary>
+        ///
         ROUTE_DISPLAYPORT = 8,
 
-        /* enum_audioroute_ROUTE_AIRPLAY */
+        ///
+        /// <summary>
+        /// 9: The audio route is Apple AirPlay. (For macOS only)
+        /// </summary>
+        ///
         ROUTE_AIRPLAY = 9,
     }
 
-    /* enum_bytespersample */
+    ///
+    /// @ignore
+    ///
     public enum BYTES_PER_SAMPLE
     {
-        /* enum_bytespersample_TWO_BYTES_PER_SAMPLE */
+        ///
+        /// @ignore
+        ///
         TWO_BYTES_PER_SAMPLE = 2,
     }
 
-    /* class_audioparameters */
+    ///
+    /// @ignore
+    ///
     public class AudioParameters
     {
-        /* class_audioparameters_sample_rate */
+        ///
+        /// @ignore
+        ///
         public int sample_rate;
 
-        /* class_audioparameters_channels */
+        ///
+        /// @ignore
+        ///
         public ulong channels;
 
-        /* class_audioparameters_frames_per_buffer */
+        ///
+        /// @ignore
+        ///
         public ulong frames_per_buffer;
 
         public AudioParameters()
@@ -306,95 +574,185 @@ namespace Agora.Rtc
         }
     }
 
-    /* enum_rawaudioframeopmodetype */
+    ///
+    /// <summary>
+    /// The use mode of the audio data.
+    /// </summary>
+    ///
     public enum RAW_AUDIO_FRAME_OP_MODE_TYPE
     {
-        /* enum_rawaudioframeopmodetype_RAW_AUDIO_FRAME_OP_MODE_READ_ONLY */
+        ///
+        /// <summary>
+        /// 0: Read-only mode,
+        /// </summary>
+        ///
         RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
 
-        /* enum_rawaudioframeopmodetype_RAW_AUDIO_FRAME_OP_MODE_READ_WRITE */
+        ///
+        /// <summary>
+        /// 2: Read and write mode,
+        /// </summary>
+        ///
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
     }
 
-    /* enum_mediasourcetype */
+    ///
+    /// <summary>
+    /// Media source type.
+    /// </summary>
+    ///
     public enum MEDIA_SOURCE_TYPE
     {
-        /* enum_mediasourcetype_AUDIO_PLAYOUT_SOURCE */
+        ///
+        /// <summary>
+        /// 0: Audio playback device.
+        /// </summary>
+        ///
         AUDIO_PLAYOUT_SOURCE = 0,
 
-        /* enum_mediasourcetype_AUDIO_RECORDING_SOURCE */
+        ///
+        /// <summary>
+        /// 1: Audio capturing device.
+        /// </summary>
+        ///
         AUDIO_RECORDING_SOURCE = 1,
 
-        /* enum_mediasourcetype_PRIMARY_CAMERA_SOURCE */
+        ///
+        /// <summary>
+        /// 2: The primary camera.
+        /// </summary>
+        ///
         PRIMARY_CAMERA_SOURCE = 2,
 
-        /* enum_mediasourcetype_SECONDARY_CAMERA_SOURCE */
+        ///
+        /// <summary>
+        /// 3: The secondary camera.
+        /// </summary>
+        ///
         SECONDARY_CAMERA_SOURCE = 3,
 
-        /* enum_mediasourcetype_PRIMARY_SCREEN_SOURCE */
+        ///
+        /// @ignore
+        ///
         PRIMARY_SCREEN_SOURCE = 4,
 
-        /* enum_mediasourcetype_SECONDARY_SCREEN_SOURCE */
+        ///
+        /// @ignore
+        ///
         SECONDARY_SCREEN_SOURCE = 5,
 
-        /* enum_mediasourcetype_CUSTOM_VIDEO_SOURCE */
+        ///
+        /// @ignore
+        ///
         CUSTOM_VIDEO_SOURCE = 6,
 
-        /* enum_mediasourcetype_MEDIA_PLAYER_SOURCE */
+        ///
+        /// @ignore
+        ///
         MEDIA_PLAYER_SOURCE = 7,
 
-        /* enum_mediasourcetype_RTC_IMAGE_PNG_SOURCE */
+        ///
+        /// @ignore
+        ///
         RTC_IMAGE_PNG_SOURCE = 8,
 
-        /* enum_mediasourcetype_RTC_IMAGE_JPEG_SOURCE */
+        ///
+        /// @ignore
+        ///
         RTC_IMAGE_JPEG_SOURCE = 9,
 
-        /* enum_mediasourcetype_RTC_IMAGE_GIF_SOURCE */
+        ///
+        /// @ignore
+        ///
         RTC_IMAGE_GIF_SOURCE = 10,
 
-        /* enum_mediasourcetype_REMOTE_VIDEO_SOURCE */
+        ///
+        /// @ignore
+        ///
         REMOTE_VIDEO_SOURCE = 11,
 
-        /* enum_mediasourcetype_TRANSCODED_VIDEO_SOURCE */
+        ///
+        /// @ignore
+        ///
         TRANSCODED_VIDEO_SOURCE = 12,
 
-        /* enum_mediasourcetype_UNKNOWN_MEDIA_SOURCE */
+        ///
+        /// <summary>
+        /// 100: Unknown media source.
+        /// </summary>
+        ///
         UNKNOWN_MEDIA_SOURCE = 100,
     }
 
-    /* enum_contentinspectresult */
+    ///
+    /// @ignore
+    ///
     public enum CONTENT_INSPECT_RESULT
     {
-        /* enum_contentinspectresult_CONTENT_INSPECT_NEUTRAL */
+        ///
+        /// @ignore
+        ///
         CONTENT_INSPECT_NEUTRAL = 1,
 
-        /* enum_contentinspectresult_CONTENT_INSPECT_SEXY */
+        ///
+        /// @ignore
+        ///
         CONTENT_INSPECT_SEXY = 2,
 
-        /* enum_contentinspectresult_CONTENT_INSPECT_PORN */
+        ///
+        /// @ignore
+        ///
         CONTENT_INSPECT_PORN = 3,
     }
 
-    /* enum_contentinspecttype */
+    ///
+    /// <summary>
+    /// The type of video content moderation module.
+    /// </summary>
+    ///
     public enum CONTENT_INSPECT_TYPE
     {
-        /* enum_contentinspecttype_CONTENT_INSPECT_INVALID */
+        ///
+        /// <summary>
+        /// 0: (Default) This module has no actual function. Do not set type to this value.
+        /// </summary>
+        ///
         CONTENT_INSPECT_INVALID = 0,
 
-        /* enum_contentinspecttype_CONTENT_INSPECT_MODERATION */
+        ///
+        /// <summary>
+        /// 1: Video content moderation. SDK takes screenshots, inspects video content of the video stream in the channel, and uploads the screenshots and moderation results.
+        /// </summary>
+        ///
         CONTENT_INSPECT_MODERATION = 1,
 
-        /* enum_contentinspecttype_CONTENT_INSPECT_SUPERVISION */
+        ///
+        /// <summary>
+        /// 2: Screenshot capture. SDK takes screenshots of the video stream in the channel and uploads them.
+        /// </summary>
+        ///
         CONTENT_INSPECT_SUPERVISION = 2,
     }
 
-    /* class_contentinspectmodule */
+    ///
+    /// <summary>
+    /// A ContentInspectModule structure used to configure the frequency of video screenshot and upload.
+    /// </summary>
+    ///
     public class ContentInspectModule
     {
-        /* class_contentinspectmodule_type */
+        ///
+        /// <summary>
+        /// Types of functional module. See CONTENT_INSPECT_TYPE.
+        /// </summary>
+        ///
         public CONTENT_INSPECT_TYPE type;
 
-        /* class_contentinspectmodule_interval */
+        ///
+        /// <summary>
+        /// The frequency (s) of video screenshot and upload. The value should be set as larger than 0. The default value is 0, the SDK does not take screenshots. Agora recommends that you set the value as 10; you can also adjust it according to your business needs.
+        /// </summary>
+        ///
         public uint interval;
 
         public ContentInspectModule()
@@ -408,15 +766,30 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_contentinspectconfig */
+    ///
+    /// <summary>
+    /// Configuration of video screenshot and upload.
+    /// </summary>
+    ///
     public class ContentInspectConfig
     {
-        /* class_contentinspectconfig_extraInfo */
+        ///
+        /// @ignore
+        ///
         public string extraInfo;
 
+        ///
+        /// <summary>
+        /// Functional module. See ContentInspectModule. A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32]. A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
+        /// </summary>
+        ///
         public ContentInspectModule[] modules;
 
-        /* class_contentinspectconfig_moduleCount */
+        ///
+        /// <summary>
+        /// The number of functional modules, that is,the number of configured ContentInspectModule instances, must be the same as the number of instances configured in modules. The maximum number is 32.
+        /// </summary>
+        ///
         public int moduleCount;
 
         public ContentInspectConfig()
@@ -433,13 +806,19 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_packetoptions */
+    ///
+    /// @ignore
+    ///
     public class PacketOptions
     {
-        /* class_packetoptions_timestamp */
+        ///
+        /// @ignore
+        ///
         public uint timestamp;
 
-        /* class_packetoptions_audioLevelIndication */
+        ///
+        /// @ignore
+        ///
         public uint8_t audioLevelIndication;
 
         public PacketOptions()
@@ -455,13 +834,19 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_audioencodedframeinfo */
+    ///
+    /// @ignore
+    ///
     public class AudioEncodedFrameInfo
     {
-        /* class_audioencodedframeinfo_sendTs */
+        ///
+        /// @ignore
+        ///
         public ulong sendTs;
 
-        /* class_audioencodedframeinfo_codec */
+        ///
+        /// @ignore
+        ///
         public uint8_t codec;
 
         public AudioEncodedFrameInfo()
@@ -477,24 +862,53 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_audiopcmframe */
+    ///
+    /// <summary>
+    /// The parameters of the audio frame in PCM format.
+    /// </summary>
+    ///
     public class AudioPcmFrame
     {
-        /* class_audiopcmframe_capture_timestamp */
+        ///
+        /// <summary>
+        /// The timestamp (ms) of the audio frame.
+        /// </summary>
+        ///
         public long capture_timestamp;
 
-        /* class_audiopcmframe_samples_per_channel_ */
+        ///
+        /// <summary>
+        /// The number of samples per channel in the audio frame.
+        /// </summary>
+        ///
         public ulong samples_per_channel_;
 
-        /* class_audiopcmframe_sample_rate_hz_ */
+        ///
+        /// <summary>
+        /// Audio sample rate (Hz).
+        /// </summary>
+        ///
         public int sample_rate_hz_;
 
-        /* class_audiopcmframe_num_channels_ */
+        ///
+        /// <summary>
+        /// The number of audio channels.
+        /// </summary>
+        ///
         public ulong num_channels_;
 
-        /* class_audiopcmframe_bytes_per_sample */
+        ///
+        /// <summary>
+        /// The number of bytes per sample.
+        /// </summary>
+        ///
         public BYTES_PER_SAMPLE bytes_per_sample;
 
+        ///
+        /// <summary>
+        /// The audio frame.
+        /// </summary>
+        ///
         public int16_t[] data_;
 
         public AudioPcmFrame()
@@ -526,139 +940,299 @@ namespace Agora.Rtc
         }
     }
 
-    /* enum_audiodualmonomode */
+    ///
+    /// <summary>
+    /// The channel mode.
+    /// </summary>
+    ///
     public enum AUDIO_DUAL_MONO_MODE
     {
-        /* enum_audiodualmonomode_AUDIO_DUAL_MONO_STEREO */
+        ///
+        /// <summary>
+        /// 0: Original mode.
+        /// </summary>
+        ///
         AUDIO_DUAL_MONO_STEREO = 0,
 
-        /* enum_audiodualmonomode_AUDIO_DUAL_MONO_L */
+        ///
+        /// <summary>
+        /// 1: Left channel mode. This mode replaces the audio of the right channel with the audio of the left channel, which means the user can only hear the audio of the left channel.
+        /// </summary>
+        ///
         AUDIO_DUAL_MONO_L = 1,
 
-        /* enum_audiodualmonomode_AUDIO_DUAL_MONO_R */
+        ///
+        /// <summary>
+        /// 2: Right channel mode. This mode replaces the audio of the left channel with the audio of the right channel, which means the user can only hear the audio of the right channel.
+        /// </summary>
+        ///
         AUDIO_DUAL_MONO_R = 2,
 
-        /* enum_audiodualmonomode_AUDIO_DUAL_MONO_MIX */
+        ///
+        /// <summary>
+        /// 3: Mixed channel mode. This mode mixes the audio of the left channel and the right channel, which means the user can hear the audio of the left channel and the right channel at the same time.
+        /// </summary>
+        ///
         AUDIO_DUAL_MONO_MIX = 3,
     }
 
-    /* enum_videopixelformat */
+    ///
+    /// <summary>
+    /// The video pixel format.
+    /// </summary>
+    ///
     public enum VIDEO_PIXEL_FORMAT
     {
-        /* enum_videopixelformat_VIDEO_PIXEL_DEFAULT */
+        ///
+        /// <summary>
+        /// 0: Raw video pixel format.
+        /// </summary>
+        ///
         VIDEO_PIXEL_DEFAULT = 0,
 
-        /* enum_videopixelformat_VIDEO_PIXEL_I420 */
+        ///
+        /// <summary>
+        /// 1: The format is I420.
+        /// </summary>
+        ///
         VIDEO_PIXEL_I420 = 1,
 
-        /* enum_videopixelformat_VIDEO_PIXEL_BGRA */
+        ///
+        /// @ignore
+        ///
         VIDEO_PIXEL_BGRA = 2,
 
-        /* enum_videopixelformat_VIDEO_PIXEL_NV21 */
+        ///
+        /// @ignore
+        ///
         VIDEO_PIXEL_NV21 = 3,
 
-        /* enum_videopixelformat_VIDEO_PIXEL_RGBA */
+        ///
+        /// <summary>
+        /// 4: The format is RGBA.
+        /// </summary>
+        ///
         VIDEO_PIXEL_RGBA = 4,
 
-        /* enum_videopixelformat_VIDEO_PIXEL_NV12 */
+        ///
+        /// <summary>
+        /// 8: The format is NV12.
+        /// </summary>
+        ///
         VIDEO_PIXEL_NV12 = 8,
 
-        /* enum_videopixelformat_VIDEO_TEXTURE_2D */
+        ///
+        /// @ignore
+        ///
         VIDEO_TEXTURE_2D = 10,
 
-        /* enum_videopixelformat_VIDEO_TEXTURE_OES */
+        ///
+        /// @ignore
+        ///
         VIDEO_TEXTURE_OES = 11,
 
-        /* enum_videopixelformat_VIDEO_CVPIXEL_NV12 */
+        ///
+        /// @ignore
+        ///
         VIDEO_CVPIXEL_NV12 = 12,
 
-        /* enum_videopixelformat_VIDEO_CVPIXEL_I420 */
+        ///
+        /// @ignore
+        ///
         VIDEO_CVPIXEL_I420 = 13,
 
-        /* enum_videopixelformat_VIDEO_CVPIXEL_BGRA */
+        ///
+        /// @ignore
+        ///
         VIDEO_CVPIXEL_BGRA = 14,
 
-        /* enum_videopixelformat_VIDEO_PIXEL_I422 */
+        ///
+        /// <summary>
+        /// 16: The format is I422.
+        /// </summary>
+        ///
         VIDEO_PIXEL_I422 = 16,
     }
 
-    /* enum_rendermodetype */
+    ///
+    /// <summary>
+    /// Video display modes.
+    /// </summary>
+    ///
     public enum RENDER_MODE_TYPE
     {
-        /* enum_rendermodetype_RENDER_MODE_HIDDEN */
+        ///
+        /// <summary>
+        /// 1: Hidden mode. Uniformly scale the video until one of its dimension fits the boundary (zoomed to fit). One dimension of the video may have clipped contents.
+        /// </summary>
+        ///
         RENDER_MODE_HIDDEN = 1,
 
-        /* enum_rendermodetype_RENDER_MODE_FIT */
+        ///
+        /// <summary>
+        /// 2: Fit mode. Uniformly scale the video until one of its dimension fits the boundary (zoomed to fit). Areas that are not filled due to disparity in the aspect ratio are filled with black.
+        /// </summary>
+        ///
         RENDER_MODE_FIT = 2,
 
-        /* enum_rendermodetype_RENDER_MODE_ADAPTIVE */
+        ///
+        /// <summary>
+        /// Deprecated: 3: This mode is deprecated.
+        /// </summary>
+        ///
         RENDER_MODE_ADAPTIVE = 3,
     }
 
-    /* enum_cameravideosourcetype */
+    ///
+    /// @ignore
+    ///
     public enum CAMERA_VIDEO_SOURCE_TYPE
     {
-        /* enum_cameravideosourcetype_CAMERA_SOURCE_FRONT */
+        ///
+        /// @ignore
+        ///
         CAMERA_SOURCE_FRONT = 0,
 
-        /* enum_cameravideosourcetype_CAMERA_SOURCE_BACK */
+        ///
+        /// @ignore
+        ///
         CAMERA_SOURCE_BACK = 1,
 
-        /* enum_cameravideosourcetype_VIDEO_SOURCE_UNSPECIFIED */
+        ///
+        /// @ignore
+        ///
         VIDEO_SOURCE_UNSPECIFIED = 2,
     }
 
-    /* class_externalvideoframe */
+    ///
+    /// <summary>
+    /// The external video frame.
+    /// </summary>
+    ///
     public class ExternalVideoFrame
     {
-        /* class_externalvideoframe_type */
+        ///
+        /// <summary>
+        /// The video type. See VIDEO_BUFFER_TYPE.
+        /// </summary>
+        ///
         public VIDEO_BUFFER_TYPE type;
 
-        /* class_externalvideoframe_format */
+        ///
+        /// <summary>
+        /// The pixel format. See VIDEO_PIXEL_FORMAT.
+        /// </summary>
+        ///
         public VIDEO_PIXEL_FORMAT format;
 
+        ///
+        /// <summary>
+        /// Video frame buffer.
+        /// </summary>
+        ///
         public byte[] buffer;
 
-        /* class_externalvideoframe_stride */
+        ///
+        /// <summary>
+        /// Line spacing of the incoming video frame, which must be in pixels instead of bytes. For textures, it is the width of the texture.
+        /// </summary>
+        ///
         public int stride;
 
-        /* class_externalvideoframe_height */
+        ///
+        /// <summary>
+        /// Height of the incoming video frame.
+        /// </summary>
+        ///
         public int height;
 
-        /* class_externalvideoframe_cropLeft */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The number of pixels trimmed from the left. The default value is 0.
+        /// </summary>
+        ///
         public int cropLeft;
 
-        /* class_externalvideoframe_cropTop */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The number of pixels trimmed from the top. The default value is 0.
+        /// </summary>
+        ///
         public int cropTop;
 
-        /* class_externalvideoframe_cropRight */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The number of pixels trimmed from the right. The default value is 0.
+        /// </summary>
+        ///
         public int cropRight;
 
-        /* class_externalvideoframe_cropBottom */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The number of pixels trimmed from the bottom. The default value is 0.
+        /// </summary>
+        ///
         public int cropBottom;
 
-        /* class_externalvideoframe_rotation */
+        ///
+        /// <summary>
+        /// Raw data related parameter. The clockwise rotation of the video frame. You can set the rotation angle as 0, 90, 180, or 270. The default value is 0.
+        /// </summary>
+        ///
         public int rotation;
 
-        /* class_externalvideoframe_timestamp */
+        ///
+        /// <summary>
+        /// Timestamp (ms) of the incoming video frame. An incorrect timestamp results in frame loss or unsynchronized audio and video.
+        /// </summary>
+        ///
         public long timestamp;
 
-        /* class_externalvideoframe_eglContext */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format.
+        ///  When using the OpenGL interface (javax.microedition.khronos.egl.*) defined by Khronos, set eglContext to this field.
+        ///  When using the OpenGL interface (android.opengl.*) defined by Android, set eglContext to this field.
+        /// </summary>
+        ///
         public IntPtr eglContext;
 
-        /* class_externalvideoframe_eglType */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. Texture ID of the video frame.
+        /// </summary>
+        ///
         public EGL_CONTEXT_TYPE eglType;
 
-        /* class_externalvideoframe_textureId */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. Incoming 4 × 4 transformational matrix. The typical value is a unit matrix.
+        /// </summary>
+        ///
         public int textureId;
 
+        ///
+        /// @ignore
+        ///
         public float[] matrix;
 
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData buffer. The default value is NULL.
+        /// </summary>
+        ///
         public byte[] metadata_buffer;
 
-        /* class_externalvideoframe_metadata_size */
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Texture format. The MetaData size. The default value is 0.
+        /// </summary>
+        ///
         public int metadata_size;
 
+        ///
+        /// @ignore
+        ///
         public byte[] alphaBuffer;
 
         public ExternalVideoFrame()
@@ -705,99 +1279,198 @@ namespace Agora.Rtc
         }
     }
 
-    /* enum_eglcontexttype */
+    ///
+    /// @ignore
+    ///
     public enum EGL_CONTEXT_TYPE
     {
-        /* enum_eglcontexttype_EGL_CONTEXT10 */
+        ///
+        /// @ignore
+        ///
         EGL_CONTEXT10 = 0,
 
-        /* enum_eglcontexttype_EGL_CONTEXT14 */
+        ///
+        /// @ignore
+        ///
         EGL_CONTEXT14 = 1,
     }
 
-    /* enum_videobuffertype */
+    ///
+    /// <summary>
+    /// The video buffer type.
+    /// </summary>
+    ///
     public enum VIDEO_BUFFER_TYPE
     {
-        /* enum_videobuffertype_VIDEO_BUFFER_RAW_DATA */
+        ///
+        /// <summary>
+        /// 1: The video buffer in the format of raw data.
+        /// </summary>
+        ///
         VIDEO_BUFFER_RAW_DATA = 1,
 
-        /* enum_videobuffertype_VIDEO_BUFFER_ARRAY */
+        ///
+        /// <summary>
+        /// 2: The video buffer in the format of raw data.
+        /// </summary>
+        ///
         VIDEO_BUFFER_ARRAY = 2,
 
-        /* enum_videobuffertype_VIDEO_BUFFER_TEXTURE */
+        ///
+        /// <summary>
+        /// 3: The video buffer in the format of Texture.
+        /// </summary>
+        ///
         VIDEO_BUFFER_TEXTURE = 3,
     }
 
-    /* enum_mediaplayersourcetype */
+    ///
+    /// @ignore
+    ///
     public enum MEDIA_PLAYER_SOURCE_TYPE
     {
-        /* enum_mediaplayersourcetype_MEDIA_PLAYER_SOURCE_DEFAULT */
+        ///
+        /// @ignore
+        ///
         MEDIA_PLAYER_SOURCE_DEFAULT,
 
-        /* enum_mediaplayersourcetype_MEDIA_PLAYER_SOURCE_FULL_FEATURED */
+        ///
+        /// @ignore
+        ///
         MEDIA_PLAYER_SOURCE_FULL_FEATURED,
 
-        /* enum_mediaplayersourcetype_MEDIA_PLAYER_SOURCE_SIMPLE */
+        ///
+        /// @ignore
+        ///
         MEDIA_PLAYER_SOURCE_SIMPLE,
     }
 
     [Flags]
-    /* enum_videomoduleposition */
+    ///
+    /// <summary>
+    /// The frame position of the video observer.
+    /// </summary>
+    ///
     public enum VIDEO_MODULE_POSITION
     {
-        /* enum_videomoduleposition_POSITION_POST_CAPTURER */
+        ///
+        /// <summary>
+        /// 1: The post-capturer position, which corresponds to the video data in the OnCaptureVideoFrame callback.
+        /// </summary>
+        ///
         POSITION_POST_CAPTURER = 1 << 0,
 
-        /* enum_videomoduleposition_POSITION_PRE_RENDERER */
+        ///
+        /// <summary>
+        /// 2: The pre-renderer position, which corresponds to the video data in the OnRenderVideoFrame callback.
+        /// </summary>
+        ///
         POSITION_PRE_RENDERER = 1 << 1,
 
-        /* enum_videomoduleposition_POSITION_PRE_ENCODER */
+        ///
+        /// <summary>
+        /// 4: The pre-encoder position, which corresponds to the video data in the OnPreEncodeVideoFrame callback.
+        /// </summary>
+        ///
         POSITION_PRE_ENCODER = 1 << 2,
     }
 
-    /* enum_audioframetype */
+    ///
+    /// <summary>
+    /// Audio frame type.
+    /// </summary>
+    ///
     public enum AUDIO_FRAME_TYPE
     {
-        /* enum_audioframetype_FRAME_TYPE_PCM16 */
+        ///
+        /// <summary>
+        /// 0: PCM 16
+        /// </summary>
+        ///
         FRAME_TYPE_PCM16 = 0,
     }
 
     [Flags]
-    /* enum_audioframeposition */
+    ///
+    /// @ignore
+    ///
     public enum AUDIO_FRAME_POSITION
     {
-        /* enum_audioframeposition_AUDIO_FRAME_POSITION_NONE */
+        ///
+        /// @ignore
+        ///
         AUDIO_FRAME_POSITION_NONE = 0x0000,
 
-        /* enum_audioframeposition_AUDIO_FRAME_POSITION_PLAYBACK */
+        ///
+        /// @ignore
+        ///
         AUDIO_FRAME_POSITION_PLAYBACK = 0x0001,
 
-        /* enum_audioframeposition_AUDIO_FRAME_POSITION_RECORD */
+        ///
+        /// @ignore
+        ///
         AUDIO_FRAME_POSITION_RECORD = 0x0002,
 
-        /* enum_audioframeposition_AUDIO_FRAME_POSITION_MIXED */
+        ///
+        /// @ignore
+        ///
         AUDIO_FRAME_POSITION_MIXED = 0x0004,
 
-        /* enum_audioframeposition_AUDIO_FRAME_POSITION_BEFORE_MIXING */
+        ///
+        /// @ignore
+        ///
         AUDIO_FRAME_POSITION_BEFORE_MIXING = 0x0008,
 
-        /* enum_audioframeposition_AUDIO_FRAME_POSITION_EAR_MONITORING */
+        ///
+        /// @ignore
+        ///
         AUDIO_FRAME_POSITION_EAR_MONITORING = 0x0010,
     }
 
-    /* class_audioparams */
+    ///
+    /// <summary>
+    /// Audio data format.
+    ///
+    /// You can pass the AudioParams object in the following APIs to set the audio data format for the corresponding callback: SetRecordingAudioFrameParameters : Sets the audio data format for the OnRecordAudioFrame callback. SetPlaybackAudioFrameParameters : Sets the audio data format for the OnPlaybackAudioFrame callback. SetMixedAudioFrameParameters : Sets the audio data format for the OnMixedAudioFrame callback. SetEarMonitoringAudioFrameParameters : Sets the audio data format for the OnEarMonitoringAudioFrame callback.
+    ///  The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, OnMixedAudioFrame, and OnEarMonitoringAudioFrame callbacks according to the sampling interval. Sample interval (sec) = samplePerCall /(sampleRate × channel).
+    ///  Ensure that the sample interval ≥ 0.01 (s).
+    /// </summary>
+    ///
     public class AudioParams
     {
-        /* class_audioparams_sample_rate */
+        ///
+        /// <summary>
+        /// The audio sample rate (Hz), which can be set as one of the following values:
+        ///  8000.
+        ///  (Default) 16000.
+        ///  32000.
+        ///  44100
+        ///  48000
+        /// </summary>
+        ///
         public int sample_rate;
 
-        /* class_audioparams_channels */
+        ///
+        /// <summary>
+        /// The number of audio channels, which can be set as either of the following values:
+        ///  1: (Default) Mono.
+        ///  2: Stereo.
+        /// </summary>
+        ///
         public int channels;
 
-        /* class_audioparams_mode */
+        ///
+        /// <summary>
+        /// The use mode of the audio data. See RAW_AUDIO_FRAME_OP_MODE_TYPE.
+        /// </summary>
+        ///
         public RAW_AUDIO_FRAME_OP_MODE_TYPE mode;
 
-        /* class_audioparams_samples_per_call */
+        ///
+        /// <summary>
+        /// The number of samples, such as 1024 for the media push.
+        /// </summary>
+        ///
         public int samples_per_call;
 
         public AudioParams()
@@ -817,12 +1490,25 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_audiospectrumdata */
+    ///
+    /// <summary>
+    /// The audio spectrum data.
+    /// </summary>
+    ///
     public class AudioSpectrumData
     {
+        ///
+        /// <summary>
+        /// The audio spectrum data. Agora divides the audio frequency into 256 frequency domains, and reports the energy value of each frequency domain through this parameter. The value range of each energy type is [-300, 1] and the unit is dBFS.
+        /// </summary>
+        ///
         public float[] audioSpectrumData;
 
-        /* class_audiospectrumdata_dataLength */
+        ///
+        /// <summary>
+        /// The audio spectrum data length is 256.
+        /// </summary>
+        ///
         public int dataLength;
 
         public AudioSpectrumData()
@@ -838,104 +1524,206 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_useraudiospectruminfo */
+    ///
+    /// <summary>
+    /// Audio spectrum information of the remote user.
+    /// </summary>
+    ///
     public class UserAudioSpectrumInfo
     {
-        /* class_useraudiospectruminfo_uid */
+        ///
+        /// <summary>
+        /// The user ID of the remote user.
+        /// </summary>
+        ///
         public uint uid;
 
-        /* class_useraudiospectruminfo_spectrumData */
+        ///
+        /// <summary>
+        /// Audio spectrum information of the remote user. See AudioSpectrumData.
+        /// </summary>
+        ///
         public AudioSpectrumData spectrumData;
     }
 
-    /* enum_videoframeprocessmode */
+    ///
+    /// @ignore
+    ///
     public enum VIDEO_FRAME_PROCESS_MODE
     {
-        /* enum_videoframeprocessmode_PROCESS_MODE_READ_ONLY */
+        ///
+        /// @ignore
+        ///
         PROCESS_MODE_READ_ONLY,
 
-        /* enum_videoframeprocessmode_PROCESS_MODE_READ_WRITE */
+        ///
+        /// @ignore
+        ///
         PROCESS_MODE_READ_WRITE,
     }
 
-    /* enum_externalvideosourcetype */
+    ///
+    /// <summary>
+    /// The external video frame encoding type.
+    /// </summary>
+    ///
     public enum EXTERNAL_VIDEO_SOURCE_TYPE
     {
-        /* enum_externalvideosourcetype_VIDEO_FRAME */
+        ///
+        /// <summary>
+        /// 0: The video frame is not encoded.
+        /// </summary>
+        ///
         VIDEO_FRAME = 0,
 
-        /* enum_externalvideosourcetype_ENCODED_VIDEO_FRAME */
+        ///
+        /// <summary>
+        /// 1: The video frame is encoded.
+        /// </summary>
+        ///
         ENCODED_VIDEO_FRAME,
     }
 
-    /* enum_mediarecordercontainerformat */
+    ///
+    /// @ignore
+    ///
     public enum MediaRecorderContainerFormat
     {
-        /* enum_mediarecordercontainerformat_FORMAT_MP4 */
+        ///
+        /// @ignore
+        ///
         FORMAT_MP4 = 1,
     }
 
-    /* enum_mediarecorderstreamtype */
+    ///
+    /// <summary>
+    /// The recording content.
+    /// </summary>
+    ///
     public enum MediaRecorderStreamType
     {
-        /* enum_mediarecorderstreamtype_STREAM_TYPE_AUDIO */
+        ///
+        /// <summary>
+        /// Only audio.
+        /// </summary>
+        ///
         STREAM_TYPE_AUDIO = 0x01,
 
-        /* enum_mediarecorderstreamtype_STREAM_TYPE_VIDEO */
+        ///
+        /// <summary>
+        /// Only video.
+        /// </summary>
+        ///
         STREAM_TYPE_VIDEO = 0x02,
 
-        /* enum_mediarecorderstreamtype_STREAM_TYPE_BOTH */
+        ///
+        /// <summary>
+        /// (Default) Audio and video.
+        /// </summary>
+        ///
         STREAM_TYPE_BOTH = STREAM_TYPE_AUDIO | STREAM_TYPE_VIDEO,
     }
 
-    /* enum_recorderstate */
+    ///
+    /// <summary>
+    /// The current recording state.
+    /// </summary>
+    ///
     public enum RecorderState
     {
-        /* enum_recorderstate_RECORDER_STATE_ERROR */
+        ///
+        /// <summary>
+        /// -1: An error occurs during the recording. See RecorderErrorCode for the reason.
+        /// </summary>
+        ///
         RECORDER_STATE_ERROR = -1,
 
-        /* enum_recorderstate_RECORDER_STATE_START */
+        ///
+        /// <summary>
+        /// 2: The audio and video recording starts.
+        /// </summary>
+        ///
         RECORDER_STATE_START = 2,
 
-        /* enum_recorderstate_RECORDER_STATE_STOP */
+        ///
+        /// <summary>
+        /// 3: The audio and video recording stops.
+        /// </summary>
+        ///
         RECORDER_STATE_STOP = 3,
     }
 
-    /* enum_recordererrorcode */
+    ///
+    /// <summary>
+    /// The reason for the state change.
+    /// </summary>
+    ///
     public enum RecorderErrorCode
     {
-        /* enum_recordererrorcode_RECORDER_ERROR_NONE */
+        ///
+        /// <summary>
+        /// 0: No error.
+        /// </summary>
+        ///
         RECORDER_ERROR_NONE = 0,
 
-        /* enum_recordererrorcode_RECORDER_ERROR_WRITE_FAILED */
+        ///
+        /// <summary>
+        /// 1: The SDK fails to write the recorded data to a file.
+        /// </summary>
+        ///
         RECORDER_ERROR_WRITE_FAILED = 1,
 
-        /* enum_recordererrorcode_RECORDER_ERROR_NO_STREAM */
+        ///
+        /// <summary>
+        /// 2: The SDK does not detect any audio and video streams, or audio and video streams are interrupted for more than five seconds during recording.
+        /// </summary>
+        ///
         RECORDER_ERROR_NO_STREAM = 2,
 
-        /* enum_recordererrorcode_RECORDER_ERROR_OVER_MAX_DURATION */
+        ///
+        /// <summary>
+        /// 3: The recording duration exceeds the upper limit.
+        /// </summary>
+        ///
         RECORDER_ERROR_OVER_MAX_DURATION = 3,
 
-        /* enum_recordererrorcode_RECORDER_ERROR_CONFIG_CHANGED */
+        ///
+        /// <summary>
+        /// 4: The recording configuration changes.
+        /// </summary>
+        ///
         RECORDER_ERROR_CONFIG_CHANGED = 4,
     }
 
-    /* class_mediarecorderconfiguration */
+    ///
+    /// @ignore
+    ///
     public class MediaRecorderConfiguration
     {
-        /* class_mediarecorderconfiguration_storagePath */
+        ///
+        /// @ignore
+        ///
         public string storagePath;
 
-        /* class_mediarecorderconfiguration_containerFormat */
+        ///
+        /// @ignore
+        ///
         public MediaRecorderContainerFormat containerFormat;
 
-        /* class_mediarecorderconfiguration_streamType */
+        ///
+        /// @ignore
+        ///
         public MediaRecorderStreamType streamType;
 
-        /* class_mediarecorderconfiguration_maxDurationMs */
+        ///
+        /// @ignore
+        ///
         public int maxDurationMs;
 
-        /* class_mediarecorderconfiguration_recorderInfoUpdateInterval */
+        ///
+        /// @ignore
+        ///
         public int recorderInfoUpdateInterval;
 
         public MediaRecorderConfiguration()
@@ -957,16 +1745,24 @@ namespace Agora.Rtc
         }
     }
 
-    /* class_recorderinfo */
+    ///
+    /// @ignore
+    ///
     public class RecorderInfo
     {
-        /* class_recorderinfo_fileName */
+        ///
+        /// @ignore
+        ///
         public string fileName;
 
-        /* class_recorderinfo_durationMs */
+        ///
+        /// @ignore
+        ///
         public uint durationMs;
 
-        /* class_recorderinfo_fileSize */
+        ///
+        /// @ignore
+        ///
         public uint fileSize;
 
         public RecorderInfo()
