@@ -4,21 +4,51 @@ import { CppConstructor, Tool } from "./Tool";
 import { CXXTYPE, Clazz, EnumConstant, Enumz, MemberFunction, MemberVariable, Struct } from "./terra";
 import { copyFile } from "fs";
 import { publicDecrypt } from "crypto";
+import { start } from "repl";
 
 export class SpeicalLogic {
 
     public cSharpSDK_MethodObsolete(clazzName: string, info: MemberFunction): string {
         var lines = info.comment.split("\n");
+        let startIndex = -1;
+        let endIndex = -1;
         for (var i = 0; i < lines.length; i++) {
             var line = lines[i];
             line = line.trim();
             if (line.includes("@deprecated")) {
-                var out = line.replace("@deprecated", "");
-                out = out.trim();
-                return `[Obsolete("${out}")]`;
+                startIndex = i;
+                endIndex = i;
+                break;
             }
         }
-        return "";
+
+        if (startIndex != -1) {
+            for (let i = startIndex; i < lines.length; i++) {
+                let line = lines[i].trim();
+                if (i > startIndex && line.startsWith("@")) {
+                    endIndex = i - 1;
+                    break;
+                }
+                if (line.endsWith(".")) {
+                    endIndex = i;
+                    break;
+                }
+                if (line == "") {
+                    endIndex = i - 1;
+                    break;
+                }
+            }
+            let deprecatedArray = lines.slice(startIndex, endIndex + 1);
+            let des = deprecatedArray.join(" ");
+            des = des.replaceAll("@deprecated", "");
+            des = des.replaceAll("  ", " ");
+            des = des.replaceAll('"', '\\"')
+            des = des.trim();
+            return `[Obsolete("${des}")]`;
+        }
+        else {
+            return "";
+        };
     }
 
     public cSharpSDK_EnumConstantObsolete(enumzName: string, constant: EnumConstant) {

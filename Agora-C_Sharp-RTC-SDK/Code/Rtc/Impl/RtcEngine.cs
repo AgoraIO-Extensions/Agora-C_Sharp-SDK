@@ -680,7 +680,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.DisableAudio();
         }
 
-        [Obsolete("This method is deprecated. You can use the")]
+        [Obsolete("This method is deprecated. You can use the \ref IRtcEngine::setAudioProfile(AUDIO_PROFILE_TYPE) \"setAudioProfile\" method instead. To set the audio scenario, call the \ref IRtcEngine::initialize \"initialize\" method and pass value in the `audioScenario` member in the RtcEngineContext struct.")]
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
         {
             if (_rtcEngineImpl == null)
@@ -735,7 +735,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.MuteAllRemoteAudioStreams(mute);
         }
 
-        [Obsolete("This method is deprecated. To set whether to receive remote")]
+        [Obsolete("This method is deprecated. To set whether to receive remote audio streams by default, call \ref IRtcEngine::muteAllRemoteAudioStreams \"muteAllRemoteAudioStreams\" before calling `joinChannel`")]
         public override int SetDefaultMuteAllRemoteAudioStreams(bool mute)
         {
             if (_rtcEngineImpl == null)
@@ -781,7 +781,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.MuteAllRemoteVideoStreams(mute);
         }
 
-        [Obsolete("This method is deprecated. To set whether to receive remote")]
+        [Obsolete("This method is deprecated. To set whether to receive remote video streams by default, call \ref IRtcEngine::muteAllRemoteVideoStreams \"muteAllRemoteVideoStreams\" before calling `joinChannel`.")]
         public override int SetDefaultMuteAllRemoteVideoStreams(bool mute)
         {
             if (_rtcEngineImpl == null)
