@@ -20,8 +20,8 @@ namespace Agora.Rtc
         /* api_imediaplayer_open */
         public abstract int Open(string url, long startPos);
 
-        [Obsolete("")]
         /* api_imediaplayer_openwithcustomsource */
+        [Obsolete("")]
         public abstract int OpenWithCustomSource(long startPos, IMediaPlayerCustomDataProvider provider);
 
         /* api_imediaplayer_openwithmediasource */
@@ -69,7 +69,7 @@ namespace Agora.Rtc
         /* api_imediaplayer_setplayeroption */
         public abstract int SetPlayerOption(string key, int value);
 
-        /* api_imediaplayer_setplayeroption */
+        /* api_imediaplayer_setplayeroption2 */
         public abstract int SetPlayerOption(string key, string value);
 
         /* api_imediaplayer_takescreenshot */
@@ -111,7 +111,7 @@ namespace Agora.Rtc
         /* api_imediaplayer_registeraudioframeobserver */
         public abstract int RegisterAudioFrameObserver(IAudioPcmFrameSink observer);
 
-        /* api_imediaplayer_registeraudioframeobserver */
+        /* api_imediaplayer_registeraudioframeobserver2 */
         public abstract int RegisterAudioFrameObserver(IAudioPcmFrameSink observer, RAW_AUDIO_FRAME_OP_MODE_TYPE mode);
 
         /* api_imediaplayer_unregisteraudioframeobserver */
@@ -126,8 +126,8 @@ namespace Agora.Rtc
         /* api_imediaplayer_setaudiodualmonomode */
         public abstract int SetAudioDualMonoMode(AUDIO_DUAL_MONO_MODE mode);
 
-        [Obsolete("This method is deprecated.")]
         /* api_imediaplayer_getplayersdkversion */
+        [Obsolete("This method is deprecated.")]
         public abstract string GetPlayerSdkVersion();
 
         /* api_imediaplayer_getplaysrc */

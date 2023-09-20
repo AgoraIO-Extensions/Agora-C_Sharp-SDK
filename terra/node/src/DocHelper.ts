@@ -60,7 +60,30 @@ interface Content {
 };
 
 
-function AddDocWithFile(filePath: string) {
+let RepeartMap = {};
+
+function GetMethodName(clazzName: string, methodName: string): string {
+    if (RepeartMap[`${clazzName}_${methodName}`] == undefined) {
+        RepeartMap[`${clazzName}_${methodName}`] = 1;
+        return methodName;
+    }
+    else {
+        RepeartMap[`${clazzName}_${methodName}`]++;
+        return methodName + RepeartMap[`${clazzName}_${methodName}`];
+    }
+}
+
+function SwapIfHadObsolete(lines: string[], i: number) {
+    let upLine = lines[i - 1].trim();
+    if (upLine.startsWith('[Obsolete')) {
+        let temp = lines[i];
+        lines[i] = lines[i - 1];
+        lines[i - 1] = temp;
+    }
+}
+
+
+function AddDocTagWithFile(filePath: string) {
     let content: Content = {
         type: ContentType.None,
         name: "",
@@ -85,6 +108,7 @@ function AddDocWithFile(filePath: string) {
                 content.type = ContentType.Enumz;
                 content.name = matchEnumArray[1].toLowerCase().replaceAll('_', '');
                 lines.splice(i, 0, `/* enum_${content.name} */`);
+                SwapIfHadObsolete(lines, i);
                 i = i + 2;
                 lineLength++;
                 continue;
@@ -94,6 +118,7 @@ function AddDocWithFile(filePath: string) {
                 content.type = ContentType.Clazz;
                 content.name = matchClassArray[1].toLowerCase().replaceAll('_', '');
                 lines.splice(i, 0, `/* class_${content.name} */`);
+                SwapIfHadObsolete(lines, i);
                 i = i + 2;
                 lineLength++;
                 continue;
@@ -112,6 +137,7 @@ function AddDocWithFile(filePath: string) {
                 }
                 content.name = clazzName;
                 lines.splice(i, 0, `/* class_${content.name} */`);
+                SwapIfHadObsolete(lines, i);
                 i = i + 2;
                 lineLength++;
                 continue;
@@ -128,6 +154,7 @@ function AddDocWithFile(filePath: string) {
                 }
                 enumParamName = enumParamName.trim();
                 lines.splice(i, 0, `/* enum_${content.name}_${enumParamName} */`)
+                SwapIfHadObsolete(lines, i);
                 i = i + 2;
                 lineLength++;
                 continue;
@@ -136,7 +163,8 @@ function AddDocWithFile(filePath: string) {
         else if (content.type == ContentType.Clazz) {
             let matchParamsArray = line.match(/^public ([a-zA-Z0-9_<>]+) ([a-zA-Z0-9_]+)(;| =)/)
             if (matchParamsArray != null) {
-                lines.splice(i, 0, `/* class_${content.name}_${matchParamsArray[2]} */`)
+                lines.splice(i, 0, `/* class_${content.name}_${matchParamsArray[2]} */`);
+                SwapIfHadObsolete(lines, i);
                 i = i + 2;
                 lineLength++;
                 continue;
@@ -146,11 +174,26 @@ function AddDocWithFile(filePath: string) {
             let matchApiArray = line.match(/^public abstract ([\S]+) ([a-zA-Z0-9_]+)\([\s\S]*\)/)
             if (matchApiArray != null) {
                 let apiName = matchApiArray[2].toLowerCase();
-                lines.splice(i, 0, `/* api_${content.name}_${apiName} */`)
+                apiName = GetMethodName(content.name, apiName);
+                lines.splice(i, 0, `/* api_${content.name}_${apiName} */`);
+                SwapIfHadObsolete(lines, i);
                 i = i + 2;
                 lineLength++;
                 continue;
             }
+        }
+        else if (content.type == ContentType.Callbackz) {
+            let matchApiArray = line.match(/^public virtual ([\S]+) ([a-zA-Z0-9_]+)\([\s\S]*\)/)
+            if (matchApiArray != null) {
+                let apiName = matchApiArray[2].toLowerCase();
+                apiName = GetMethodName(content.name, apiName);
+                lines.splice(i, 0, `/* callback_${content.name}_${apiName} */`);
+                SwapIfHadObsolete(lines, i);
+                i = i + 2;
+                lineLength++;
+                continue;
+            }
+
         }
 
         if (content.type != ContentType.None) {
@@ -173,7 +216,7 @@ function AddDocWithFile(filePath: string) {
 }
 
 
-export function AddAllDoc() {
+export function AddAllDocTag() {
     for (let dirPath of AllDirPath) {
         dirPath = path.join(process.cwd(), dirPath);
         let fileList = fs.readdirSync(dirPath);
@@ -181,7 +224,7 @@ export function AddAllDoc() {
             file = path.join(dirPath, file);
             let state = fs.statSync(file);
             if (state.isFile()) {
-                AddDocWithFile(file);
+                AddDocTagWithFile(file);
             }
         }
     }

@@ -35,11 +35,11 @@ namespace Agora.Rtc
         /* api_imusiccontentcenter_searchmusic */
         public abstract int SearchMusic(ref string requestId, string keyWord, int page, int pageSize, string jsonOption = "");
 
-        [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
         /* api_imusiccontentcenter_preload */
+        [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
         public abstract int Preload(long songCode, string jsonOption);
 
-        /* api_imusiccontentcenter_preload */
+        /* api_imusiccontentcenter_preload2 */
         public abstract int Preload(ref string requestId, long songCode);
 
         /* api_imusiccontentcenter_removecache */

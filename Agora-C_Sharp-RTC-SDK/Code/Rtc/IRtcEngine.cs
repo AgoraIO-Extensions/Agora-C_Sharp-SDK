@@ -66,7 +66,7 @@ namespace Agora.Rtc
         /* api_irtcengine_preloadchannel */
         public abstract int PreloadChannel(string token, string channelId, uint uid);
 
-        /* api_irtcengine_preloadchannel */
+        /* api_irtcengine_preloadchannel2 */
         public abstract int PreloadChannel(string token, string channelId, string userAccount);
 
         /* api_irtcengine_updatepreloadchanneltoken */
@@ -75,7 +75,7 @@ namespace Agora.Rtc
         /* api_irtcengine_joinchannel */
         public abstract int JoinChannel(string token, string channelId, string info, uint uid);
 
-        /* api_irtcengine_joinchannel */
+        /* api_irtcengine_joinchannel2 */
         public abstract int JoinChannel(string token, string channelId, uint uid, ChannelMediaOptions options);
 
         /* api_irtcengine_updatechannelmediaoptions */
@@ -84,7 +84,7 @@ namespace Agora.Rtc
         /* api_irtcengine_leavechannel */
         public abstract int LeaveChannel();
 
-        /* api_irtcengine_leavechannel */
+        /* api_irtcengine_leavechannel2 */
         public abstract int LeaveChannel(LeaveChannelOptions options);
 
         /* api_irtcengine_renewtoken */
@@ -96,16 +96,16 @@ namespace Agora.Rtc
         /* api_irtcengine_setclientrole */
         public abstract int SetClientRole(CLIENT_ROLE_TYPE role);
 
-        /* api_irtcengine_setclientrole */
+        /* api_irtcengine_setclientrole2 */
         public abstract int SetClientRole(CLIENT_ROLE_TYPE role, ClientRoleOptions options);
 
         /* api_irtcengine_startechotest */
         public abstract int StartEchoTest();
 
-        /* api_irtcengine_startechotest */
+        /* api_irtcengine_startechotest2 */
         public abstract int StartEchoTest(int intervalInSeconds);
 
-        /* api_irtcengine_startechotest */
+        /* api_irtcengine_startechotest3 */
         public abstract int StartEchoTest(EchoTestConfiguration config);
 
         /* api_irtcengine_stopechotest */
@@ -123,13 +123,13 @@ namespace Agora.Rtc
         /* api_irtcengine_startpreview */
         public abstract int StartPreview();
 
-        /* api_irtcengine_startpreview */
+        /* api_irtcengine_startpreview2 */
         public abstract int StartPreview(VIDEO_SOURCE_TYPE sourceType);
 
         /* api_irtcengine_stoppreview */
         public abstract int StopPreview();
 
-        /* api_irtcengine_stoppreview */
+        /* api_irtcengine_stoppreview2 */
         public abstract int StopPreview(VIDEO_SOURCE_TYPE sourceType);
 
         /* api_irtcengine_startlastmileprobetest */
@@ -171,11 +171,11 @@ namespace Agora.Rtc
         /* api_irtcengine_disableaudio */
         public abstract int DisableAudio();
 
-        [Obsolete("This method is deprecated. You can use the")]
         /* api_irtcengine_setaudioprofile */
+        [Obsolete("This method is deprecated. You can use the")]
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario);
 
-        /* api_irtcengine_setaudioprofile */
+        /* api_irtcengine_setaudioprofile2 */
         public abstract int SetAudioProfile(AUDIO_PROFILE_TYPE profile);
 
         /* api_irtcengine_setaudioscenario */
@@ -190,8 +190,8 @@ namespace Agora.Rtc
         /* api_irtcengine_muteallremoteaudiostreams */
         public abstract int MuteAllRemoteAudioStreams(bool mute);
 
-        [Obsolete("This method is deprecated. To set whether to receive remote")]
         /* api_irtcengine_setdefaultmuteallremoteaudiostreams */
+        [Obsolete("This method is deprecated. To set whether to receive remote")]
         public abstract int SetDefaultMuteAllRemoteAudioStreams(bool mute);
 
         /* api_irtcengine_muteremoteaudiostream */
@@ -206,8 +206,8 @@ namespace Agora.Rtc
         /* api_irtcengine_muteallremotevideostreams */
         public abstract int MuteAllRemoteVideoStreams(bool mute);
 
-        [Obsolete("This method is deprecated. To set whether to receive remote")]
         /* api_irtcengine_setdefaultmuteallremotevideostreams */
+        [Obsolete("This method is deprecated. To set whether to receive remote")]
         public abstract int SetDefaultMuteAllRemoteVideoStreams(bool mute);
 
         /* api_irtcengine_muteremotevideostream */
@@ -240,10 +240,10 @@ namespace Agora.Rtc
         /* api_irtcengine_startaudiorecording */
         public abstract int StartAudioRecording(string filePath, AUDIO_RECORDING_QUALITY_TYPE quality);
 
-        /* api_irtcengine_startaudiorecording */
+        /* api_irtcengine_startaudiorecording2 */
         public abstract int StartAudioRecording(string filePath, int sampleRate, AUDIO_RECORDING_QUALITY_TYPE quality);
 
-        /* api_irtcengine_startaudiorecording */
+        /* api_irtcengine_startaudiorecording3 */
         public abstract int StartAudioRecording(AudioRecordingConfiguration config);
 
         /* api_irtcengine_registeraudioencodedframeobserver */
@@ -267,7 +267,7 @@ namespace Agora.Rtc
         /* api_irtcengine_startaudiomixing */
         public abstract int StartAudioMixing(string filePath, bool loopback, int cycle);
 
-        /* api_irtcengine_startaudiomixing */
+        /* api_irtcengine_startaudiomixing2 */
         public abstract int StartAudioMixing(string filePath, bool loopback, int cycle, int startPos);
 
         /* api_irtcengine_stopaudiomixing */
@@ -438,24 +438,24 @@ namespace Agora.Rtc
         /* api_irtcengine_setremoterendermode */
         public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
-        /* api_irtcengine_setlocalrendermode */
+        /* api_irtcengine_setlocalrendermode2 */
         public abstract int SetLocalRenderMode(RENDER_MODE_TYPE renderMode);
 
         /* api_irtcengine_setlocalvideomirrormode */
         public abstract int SetLocalVideoMirrorMode(VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
-        [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamMode instead.")]
         /* api_irtcengine_enabledualstreammode */
+        [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamMode instead.")]
         public abstract int EnableDualStreamMode(bool enabled);
 
+        /* api_irtcengine_enabledualstreammode2 */
         [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamMode instead.")]
-        /* api_irtcengine_enabledualstreammode */
         public abstract int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig);
 
         /* api_irtcengine_setdualstreammode */
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode);
 
-        /* api_irtcengine_setdualstreammode */
+        /* api_irtcengine_setdualstreammode2 */
         public abstract int SetDualStreamMode(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig);
 
         /* api_irtcengine_enablecustomaudiolocalplayback */
@@ -536,7 +536,7 @@ namespace Agora.Rtc
         /* api_irtcengine_enableextension */
         public abstract int EnableExtension(string provider, string extension, bool enable = true, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
-        /* api_irtcengine_enableextension */
+        /* api_irtcengine_enableextension2 */
         public abstract int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true);
 
         /* api_irtcengine_setextensionproperty */
@@ -545,10 +545,10 @@ namespace Agora.Rtc
         /* api_irtcengine_getextensionproperty */
         public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
-        /* api_irtcengine_setextensionproperty */
+        /* api_irtcengine_setextensionproperty2 */
         public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value);
 
-        /* api_irtcengine_getextensionproperty */
+        /* api_irtcengine_getextensionproperty2 */
         public abstract int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len);
 
         /* api_irtcengine_setcameracapturerconfiguration */
@@ -716,10 +716,10 @@ namespace Agora.Rtc
         /* api_irtcengine_setscreencaptureorientation */
         public abstract int SetScreenCaptureOrientation(VIDEO_SOURCE_TYPE type, VIDEO_ORIENTATION orientation);
 
-        /* api_irtcengine_startscreencapture */
+        /* api_irtcengine_startscreencapture2 */
         public abstract int StartScreenCapture(VIDEO_SOURCE_TYPE sourceType, ScreenCaptureConfiguration config);
 
-        /* api_irtcengine_stopscreencapture */
+        /* api_irtcengine_stopscreencapture2 */
         public abstract int StopScreenCapture(VIDEO_SOURCE_TYPE sourceType);
 
         /* api_irtcengine_getconnectionstate */
@@ -728,12 +728,12 @@ namespace Agora.Rtc
         /* api_irtcengine_setremoteuserpriority */
         public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
 
-        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
         /* api_irtcengine_setencryptionmode */
+        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
         public abstract int SetEncryptionMode(string encryptionMode);
 
-        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
         /* api_irtcengine_setencryptionsecret */
+        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
         public abstract int SetEncryptionSecret(string secret);
 
         /* api_irtcengine_enableencryption */
@@ -742,7 +742,7 @@ namespace Agora.Rtc
         /* api_irtcengine_createdatastream */
         public abstract int CreateDataStream(ref int streamId, bool reliable, bool ordered);
 
-        /* api_irtcengine_createdatastream */
+        /* api_irtcengine_createdatastream2 */
         public abstract int CreateDataStream(ref int streamId, DataStreamConfig config);
 
         /* api_irtcengine_sendstreammessage */
@@ -751,22 +751,22 @@ namespace Agora.Rtc
         /* api_irtcengine_addvideowatermark */
         public abstract int AddVideoWatermark(RtcImage watermark);
 
-        /* api_irtcengine_addvideowatermark */
+        /* api_irtcengine_addvideowatermark2 */
         public abstract int AddVideoWatermark(string watermarkUrl, WatermarkOptions options);
 
         /* api_irtcengine_clearvideowatermarks */
         public abstract int ClearVideoWatermarks();
 
-        [Obsolete("Use disableAudio() instead.")]
         /* api_irtcengine_pauseaudio */
+        [Obsolete("Use disableAudio() instead.")]
         public abstract int PauseAudio();
 
-        [Obsolete("Use enableAudio() instead.")]
         /* api_irtcengine_resumeaudio */
+        [Obsolete("Use enableAudio() instead.")]
         public abstract int ResumeAudio();
 
-        [Obsolete("The Agora NG SDK enables the interoperablity with the Web SDK.")]
         /* api_irtcengine_enablewebsdkinteroperability */
+        [Obsolete("The Agora NG SDK enables the interoperablity with the Web SDK.")]
         public abstract int EnableWebSdkInteroperability(bool enabled);
 
         /* api_irtcengine_sendcustomreportmessage */
@@ -793,7 +793,7 @@ namespace Agora.Rtc
         /* api_irtcengine_joinchannelwithuseraccount */
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount);
 
-        /* api_irtcengine_joinchannelwithuseraccount */
+        /* api_irtcengine_joinchannelwithuseraccount2 */
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
         /* api_irtcengine_getuserinfobyuseraccount */
@@ -805,12 +805,12 @@ namespace Agora.Rtc
         /* api_irtcengine_startorupdatechannelmediarelay */
         public abstract int StartOrUpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
         /* api_irtcengine_startchannelmediarelay */
+        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
         public abstract int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
         /* api_irtcengine_updatechannelmediarelay */
+        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
         public abstract int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
         /* api_irtcengine_stopchannelmediarelay */
@@ -882,7 +882,7 @@ namespace Agora.Rtc
         /* api_irtcengine_getnetworktype */
         public abstract int GetNetworkType();
 
-        /* api_irtcengine_setparameters */
+        /* api_irtcengine_setparameters2 */
         public abstract int SetParameters(string parameters);
 
         /* api_irtcengine_startmediarenderingtracing */
@@ -927,8 +927,8 @@ namespace Agora.Rtc
         /* api_irtcengine_setexternalvideosource */
         public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
 
-        [Obsolete("This method is deprecated. Use createCustomAudioTrack(rtc::AUDIO_TRACK_TYPE trackType, const rtc::AudioTrackConfig& config) instead.")]
         /* api_irtcengine_setexternalaudiosource */
+        [Obsolete("This method is deprecated. Use createCustomAudioTrack(rtc::AUDIO_TRACK_TYPE trackType, const rtc::AudioTrackConfig& config) instead.")]
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true);
 
         /* api_irtcengine_createcustomaudiotrack */
@@ -961,7 +961,7 @@ namespace Agora.Rtc
         /* api_irtcengineex_leavechannelex */
         public abstract int LeaveChannelEx(RtcConnection connection);
 
-        /* api_irtcengineex_leavechannelex */
+        /* api_irtcengineex_leavechannelex2 */
         public abstract int LeaveChannelEx(RtcConnection connection, LeaveChannelOptions options);
 
         /* api_irtcengineex_updatechannelmediaoptionsex */
@@ -1039,7 +1039,7 @@ namespace Agora.Rtc
         /* api_irtcengineex_createdatastreamex */
         public abstract int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection);
 
-        /* api_irtcengineex_createdatastreamex */
+        /* api_irtcengineex_createdatastreamex2 */
         public abstract int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection);
 
         /* api_irtcengineex_sendstreammessageex */
@@ -1072,12 +1072,12 @@ namespace Agora.Rtc
         /* api_irtcengineex_startorupdatechannelmediarelayex */
         public abstract int StartOrUpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
 
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
         /* api_irtcengineex_startchannelmediarelayex */
+        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
         public abstract int StartChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
 
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
         /* api_irtcengineex_updatechannelmediarelayex */
+        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
         public abstract int UpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
 
         /* api_irtcengineex_stopchannelmediarelayex */
@@ -1095,8 +1095,8 @@ namespace Agora.Rtc
         /* api_irtcengineex_getuserinfobyuidex */
         public abstract int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection);
 
-        [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamModeEx instead")]
         /* api_irtcengineex_enabledualstreammodeex */
+        [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamModeEx instead")]
         public abstract int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection);
 
         /* api_irtcengineex_setdualstreammodeex */
