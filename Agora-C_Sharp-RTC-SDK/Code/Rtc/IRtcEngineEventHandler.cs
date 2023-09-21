@@ -1156,6 +1156,9 @@ namespace Agora.Rtc
         ///
         public virtual void OnExtensionError(string provider, string extension, int error, string message) { }
 
+
+        public virtual void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist) { }
+
         ///
         /// @ignore
         ///

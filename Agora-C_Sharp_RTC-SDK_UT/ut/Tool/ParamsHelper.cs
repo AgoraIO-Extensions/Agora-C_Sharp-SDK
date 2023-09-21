@@ -944,14 +944,25 @@ namespace Agora.Rtc
             param = new ExternalVideoFrame();
             param.buffer = new byte[10];
         }
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
-        //public static void InitParam(out VirtualBackgroundSource param)
-        //{
-        //    param =
-        //}
+        public static void InitParam(out VideoLayout[] param)
+        {
+            param = new VideoLayout[10];
+            for (int i = 0; i < param.Length; i++) {
+                InitParam(out param[i]);
+            }
+        }
+        public static void InitParam(out VideoLayout param)
+        {
+            param = new VideoLayout();
+            param.channelId = "10";
+            param.uid = 10;
+            param.strUid = "10";
+            param.x = 10;
+            param.y = 10;
+            param.width = 10;
+            param.height = 10;
+            param.videoState = 10;
+        }
         //public static void InitParam(out VirtualBackgroundSource param)
         //{
         //    param =
@@ -3494,6 +3505,53 @@ namespace Agora.Rtc
         {
             return selfParam == VIDEO_TRANSCODER_ERROR.VT_ERR_OK;
         }
+
+        public static bool compareVideoLayout(VideoLayout selfParam, VideoLayout outParam)
+        {
+            if (compareString(selfParam.channelId, outParam.channelId) == false)
+                return false;
+            if (compareUint(selfParam.uid, outParam.uid) == false)
+                return false;
+            if (compareString(selfParam.strUid, outParam.strUid) == false)
+                return false;
+            if (compareUint(selfParam.x, outParam.x) == false)
+                return false;
+            if (compareUint(selfParam.y, outParam.y) == false)
+                return false;
+            if (compareUint(selfParam.width, outParam.width) == false)
+                return false;
+            if (compareUint(selfParam.height, outParam.height) == false)
+                return false;
+            if (compareUint(selfParam.videoState, outParam.videoState) == false)
+                return false;
+
+            return true;
+        }
+
+        public static bool compareVideoLayoutArray(VideoLayout[] selfParam, VideoLayout[] outParam)
+        {
+            if (selfParam.Length != selfParam.Length)
+            {
+                return false;
+            }
+
+            if (selfParam.Length != 10)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < selfParam.Length; i++)
+            {
+                if (compareVideoLayout(selfParam[i], outParam[i]) == false)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+
 
         #endregion
 
