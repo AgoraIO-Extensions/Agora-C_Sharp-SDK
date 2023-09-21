@@ -2798,6 +2798,49 @@ namespace Agora.Rtc
             return true;
         }
 
+        ///////////////////////////////////
+
+        public bool OnTranscodedStreamLayoutInfo_be_trigger = false;
+        public RtcConnection OnTranscodedStreamLayoutInfo_connection = null;
+        public uint OnTranscodedStreamLayoutInfo_uid =0;
+        public int OnTranscodedStreamLayoutInfo_width = 0;
+        public int OnTranscodedStreamLayoutInfo_height = 0;
+        public int OnTranscodedStreamLayoutInfo_layoutNumber = 0;
+        public VideoLayout[] OnTranscodedStreamLayoutInfo_layoutlist = null;
+
+
+        public override void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        {
+            OnTranscodedStreamLayoutInfo_be_trigger = true;
+            OnTranscodedStreamLayoutInfo_connection = connection;
+            OnTranscodedStreamLayoutInfo_uid = uid;
+            OnTranscodedStreamLayoutInfo_width = width;
+            OnTranscodedStreamLayoutInfo_height = height;
+            OnTranscodedStreamLayoutInfo_layoutNumber = layoutNumber;
+            OnTranscodedStreamLayoutInfo_layoutlist = layoutlist;
+        }
+
+        public bool OnTranscodedStreamLayoutInfoPassed(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        {
+            if (OnTranscodedStreamLayoutInfo_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareRtcConnection(OnTranscodedStreamLayoutInfo_connection, connection) == false)
+                return false;
+            if (ParamsHelper.compareUint(OnTranscodedStreamLayoutInfo_uid, uid) == false)
+                return false;
+            if (ParamsHelper.compareInt(OnTranscodedStreamLayoutInfo_width, width) == false)
+                return false;
+            if (ParamsHelper.compareInt(OnTranscodedStreamLayoutInfo_height, height) == false)
+                return false;
+            if (ParamsHelper.compareInt(OnTranscodedStreamLayoutInfo_layoutNumber, layoutNumber) == false)
+                return false;
+            if (ParamsHelper.compareVideoLayoutArray(OnTranscodedStreamLayoutInfo_layoutlist, layoutlist) == false)
+                return false;
+
+            return true;
+        }
+
         #endregion
 
     }

@@ -3247,7 +3247,7 @@ namespace Agora.Rtc
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_NO_PERMISSION = 22,
 
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_HIDDEN = 25,
-       
+
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_HIDDEN = 26,
     };
 
@@ -5294,6 +5294,7 @@ namespace Agora.Rtc
         {
             view = 0;
             uid = 0;
+            subviewUid = 0;
             renderMode = RENDER_MODE_TYPE.RENDER_MODE_HIDDEN;
 
             mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_AUTO;
@@ -5301,7 +5302,7 @@ namespace Agora.Rtc
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
-
+            enableAlphaMask = false;
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, uint u)
@@ -5310,10 +5311,12 @@ namespace Agora.Rtc
             this.renderMode = m;
             this.mirrorMode = mt;
             this.uid = u;
+            this.subviewUid = 0;
             setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
+            enableAlphaMask = false;
         }
 
         public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, string u)
@@ -5322,11 +5325,28 @@ namespace Agora.Rtc
             this.renderMode = m;
             this.mirrorMode = mt;
             this.uid = 0;
+            this.subviewUid = 0;
             setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
             sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
             mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
             cropArea = new Rectangle();
+            enableAlphaMask = false;
         }
+
+        public VideoCanvas(view_t v, RENDER_MODE_TYPE m, VIDEO_MIRROR_MODE_TYPE mt, uint u, uint subu)
+        {
+            this.view = v;
+            this.uid = u;
+            this.subviewUid = subu;
+            this.renderMode = m;
+            this.mirrorMode = mt;
+            this.setupMode = VIDEO_VIEW_SETUP_MODE.VIDEO_VIEW_SETUP_REPLACE;
+            this.sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
+            this.mediaPlayerId = -(int)ERROR_CODE_TYPE.ERR_NOT_READY;
+            this.cropArea = new Rectangle(0, 0, 0, 0);
+            this.enableAlphaMask = false;
+        }
+
 
         ///
         /// <summary>
@@ -5343,6 +5363,9 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public uint uid;
+
+
+        public uint subviewUid;
 
         ///
         /// <summary>
@@ -5387,6 +5410,9 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public Rectangle cropArea;
+
+
+        public bool enableAlphaMask;
     };
 
     ///
@@ -7907,6 +7933,21 @@ namespace Agora.Rtc
             writer.WriteObjectEnd();
         }
     };
+
+
+    public class VideoLayout
+    {
+        public string channelId;
+        public uint uid;
+        public string strUid;
+        public uint x;
+        public uint y;
+        public uint width;
+        public uint height;
+        //0 for Video, 1 for placeholderimage, 2 for BlackgroundImage, 3 for frame
+        public uint videoState;
+    };
+
 
     #endregion
 }

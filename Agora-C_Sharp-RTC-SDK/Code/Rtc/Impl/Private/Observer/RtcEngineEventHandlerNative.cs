@@ -1564,6 +1564,25 @@ namespace Agora.Rtc
 #endif
                     break;
 
+                case "RtcEngineEventHandler_onTranscodedStreamLayoutInfoEx":
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    CallbackObject._CallbackQueue.EnQueue(() =>
+                    {
+#endif
+                    if (rtcEngineEventHandler == null) return;
+                    rtcEngineEventHandler.OnTranscodedStreamLayoutInfo(
+                        (RtcConnection)AgoraJson.JsonToStruct<RtcConnection>(jsonData, "connection"),
+                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                        (int)AgoraJson.GetData<int>(jsonData, "width"),
+                        (int)AgoraJson.GetData<int>(jsonData, "height"),
+                        (int)AgoraJson.GetData<int>(jsonData, "layoutNumber"),
+                        AgoraJson.JsonToStructArray<VideoLayout>(jsonData, "layoutlist")
+                    );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+                    });
+#endif
+                    break;
+
                 case "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged":
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                     CallbackObject._CallbackQueue.EnQueue(() =>
