@@ -289,6 +289,21 @@ namespace Agora.Rtc
             return ret;
         }
 
+        private int SetAppType(AppType appType)
+        {
+            _param.Clear();
+            _param.Add("appType", appType);
+
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETAPPTYPE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public void Dispose(bool sync = false)
         {
             Dispose(true, sync);
