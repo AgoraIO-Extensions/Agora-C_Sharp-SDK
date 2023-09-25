@@ -2805,22 +2805,22 @@ namespace Agora.Rtc
         public uint OnTranscodedStreamLayoutInfo_uid =0;
         public int OnTranscodedStreamLayoutInfo_width = 0;
         public int OnTranscodedStreamLayoutInfo_height = 0;
-        public int OnTranscodedStreamLayoutInfo_layoutNumber = 0;
+        public int OnTranscodedStreamLayoutInfo_layoutCount = 0;
         public VideoLayout[] OnTranscodedStreamLayoutInfo_layoutlist = null;
 
 
-        public override void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        public override void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {
             OnTranscodedStreamLayoutInfo_be_trigger = true;
             OnTranscodedStreamLayoutInfo_connection = connection;
             OnTranscodedStreamLayoutInfo_uid = uid;
             OnTranscodedStreamLayoutInfo_width = width;
             OnTranscodedStreamLayoutInfo_height = height;
-            OnTranscodedStreamLayoutInfo_layoutNumber = layoutNumber;
+            OnTranscodedStreamLayoutInfo_layoutCount = layoutCount;
             OnTranscodedStreamLayoutInfo_layoutlist = layoutlist;
         }
 
-        public bool OnTranscodedStreamLayoutInfoPassed(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        public bool OnTranscodedStreamLayoutInfoPassed(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {
             if (OnTranscodedStreamLayoutInfo_be_trigger == false)
                 return false;
@@ -2833,7 +2833,7 @@ namespace Agora.Rtc
                 return false;
             if (ParamsHelper.compareInt(OnTranscodedStreamLayoutInfo_height, height) == false)
                 return false;
-            if (ParamsHelper.compareInt(OnTranscodedStreamLayoutInfo_layoutNumber, layoutNumber) == false)
+            if (ParamsHelper.compareInt(OnTranscodedStreamLayoutInfo_layoutCount, layoutCount) == false)
                 return false;
             if (ParamsHelper.compareVideoLayoutArray(OnTranscodedStreamLayoutInfo_layoutlist, layoutlist) == false)
                 return false;
