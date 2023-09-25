@@ -1575,7 +1575,7 @@ namespace Agora.Rtc
                         (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
                         (int)AgoraJson.GetData<int>(jsonData, "width"),
                         (int)AgoraJson.GetData<int>(jsonData, "height"),
-                        (int)AgoraJson.GetData<int>(jsonData, "layoutNumber"),
+                        (int)AgoraJson.GetData<int>(jsonData, "layoutCount"),
                         AgoraJson.JsonToStructArray<VideoLayout>(jsonData, "layoutlist")
                     );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

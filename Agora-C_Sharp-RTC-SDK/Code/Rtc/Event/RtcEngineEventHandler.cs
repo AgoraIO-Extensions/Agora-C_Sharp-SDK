@@ -200,7 +200,7 @@ namespace Agora.Rtc
 
     public delegate void OnVideoRenderingTracingResultHandler(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo);
 
-    public delegate void OnTranscodedStreamLayoutInfoHandler(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist);
+    public delegate void OnTranscodedStreamLayoutInfoHandler(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist);
 
     public class RtcEngineEventHandler : IRtcEngineEventHandler
     {
@@ -895,10 +895,10 @@ namespace Agora.Rtc
             EventOnVideoRenderingTracingResult.Invoke(connection, uid, currentEvent, tracingInfo);
         }
 
-        public override void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        public override void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {
             if (EventOnTranscodedStreamLayoutInfo == null) return;
-            EventOnTranscodedStreamLayoutInfo.Invoke(connection, uid, width, height, layoutNumber, layoutlist);
+            EventOnTranscodedStreamLayoutInfo.Invoke(connection, uid, width, height, layoutCount, layoutlist);
         }
     }
 }

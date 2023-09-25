@@ -2705,8 +2705,8 @@ namespace Agora.Rtc.Event
             int height;
             ParamsHelper.InitParam(out height);
 
-            int layoutNumber;
-            ParamsHelper.InitParam(out layoutNumber);
+            int layoutCount;
+            ParamsHelper.InitParam(out layoutCount);
 
             VideoLayout[] layoutlist;
             ParamsHelper.InitParam(out layoutlist);
@@ -2717,7 +2717,7 @@ namespace Agora.Rtc.Event
             jsonObj.Add("uid", uid);
             jsonObj.Add("width", width);
             jsonObj.Add("height", height);
-            jsonObj.Add("layoutNumber", layoutNumber);
+            jsonObj.Add("layoutCount", layoutCount);
             jsonObj.Add("layoutlist", layoutlist);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
@@ -2727,7 +2727,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnTranscodedStreamLayoutInfoPassed(connection, uid, width, height, layoutNumber, layoutlist));
+            Assert.AreEqual(true, EventHandler.OnTranscodedStreamLayoutInfoPassed(connection, uid, width, height, layoutCount, layoutlist));
         }
         #endregion
     }
