@@ -68,6 +68,9 @@ namespace Agora.Rtc
         ///
         kMusicContentCenterStatusErrMusicDecryption = 6,
 
+        ///
+        /// @ignore
+        ///
         kMusicContentCenterStatusErrHttpInternalError = 7,
     };
 
@@ -297,6 +300,9 @@ namespace Agora.Rtc
         ///
         public UInt32 maxCacheSize;
 
+        ///
+        /// @ignore
+        ///
         public string mccDomain;
 
         public MusicContentCenterConfiguration()

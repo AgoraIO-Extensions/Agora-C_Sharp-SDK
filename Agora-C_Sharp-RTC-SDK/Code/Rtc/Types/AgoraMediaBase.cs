@@ -277,14 +277,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: Read-only mode,
+        /// 0: Read-only mode, For example, when users acquire the data with the Agora SDK, then start the media push.
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
 
         ///
         /// <summary>
-        /// 2: Read and write mode,
+        /// 2: Read and write mode, For example, when users have their own audio-effect processing module and perform some voice preprocessing, such as a voice change.
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
@@ -585,6 +585,9 @@ namespace Agora.Rtc
         ///
         VIDEO_PIXEL_I422 = 16,
 
+        ///
+        /// @ignore
+        ///
         VIDEO_TEXTURE_ID3D11TEXTURE2D = 17,
     };
 
@@ -850,8 +853,14 @@ namespace Agora.Rtc
         public byte[] alphaBuffer;
 
 
+        ///
+        /// @ignore
+        ///
         public IntPtr d3d11_texture_2d;
 
+        ///
+        /// @ignore
+        ///
         public int texture_slice_index;
     };
 
@@ -1032,6 +1041,9 @@ namespace Agora.Rtc
         ///
         public IntPtr alphaBufferPtr;
 
+        ///
+        /// @ignore
+        ///
         public IntPtr d3d11Texture2d;
     };
 
@@ -1458,12 +1470,12 @@ namespace Agora.Rtc
         ///
         CONTENT_INSPECT_INVALID = 0,
 
+        [Obsolete]
         ///
         /// <summary>
         /// 1: Video content moderation. SDK takes screenshots, inspects video content of the video stream in the channel, and uploads the screenshots and moderation results.
         /// </summary>
         ///
-        [Obsolete]
         CONTENT_INSPECT_MODERATION = 1,
 
         ///
@@ -1473,6 +1485,9 @@ namespace Agora.Rtc
         ///
         CONTENT_INSPECT_SUPERVISION = 2,
 
+        ///
+        /// @ignore
+        ///
         CONTENT_INSPECT_IMAGE_MODERATION = 3,
     };
 
@@ -1532,7 +1547,13 @@ namespace Agora.Rtc
     ///
     public class ContentInspectConfig
     {
+        ///
+        /// @ignore
+        ///
         public string extraInfo;
+        ///
+        /// @ignore
+        ///
         public string serverConfig;
         ///
         /// <summary>

@@ -23,8 +23,8 @@ namespace Agora.Rtc
         ///  65536: Do not perform position seeking, return the file size. Agora recommends that you use this parameter value when playing pure audio files such as MP3 and WAV.</param>
         ///
         /// <returns>
-        /// When when ce is 65536, the media file size is returned.
-        /// When when ce is 0, 1, or 2, the actual data offset after the seeking is returned.
+        /// When whence is 65536, the media file size is returned.
+        /// When whence is 0, 1, or 2, the actual data offset after the seeking is returned.
         /// -1: Seeking failed.
         /// </returns>
         ///
