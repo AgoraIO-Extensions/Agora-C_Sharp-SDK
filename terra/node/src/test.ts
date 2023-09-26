@@ -34,3 +34,6 @@ new ParseEngine(
 DeleteAllOldDoc();
 AddAllDocTag();
 AddAllDocContetnt();
+execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
+
+
