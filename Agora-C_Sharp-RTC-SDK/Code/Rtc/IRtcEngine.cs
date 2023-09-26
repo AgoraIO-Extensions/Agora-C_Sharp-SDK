@@ -647,7 +647,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables or disables the local audio capture.
-        /// The audio function is enabled by default when users joining a channel. This method disables or re-enables the local audio function to stop or restart local audio capturing. This method does not affect receiving or playing the remote audio streams, and EnableLocalAudio (false) is applicable to scenarios where the user wants to receive remote audio streams without sending any audio stream to other users in the channel. Once the local audio function is disabled or re-enabled, the SDK triggers the OnLocalAudioStateChanged callback, which reports LOCAL_AUDIO_STREAM_STATE_STOPPED (0) or LOCAL_AUDIO_STREAM_STATE_RECORDING (1).
+        /// The audio function is enabled by default when users joining a channel. This method disables or re-enables the local audio function to stop or restart local audio capturing. This method does not affect receiving the remote audio streams, and EnableLocalAudio (false) is applicable to scenarios where the user wants to receive remote audio streams without sending any audio stream to other users in the channel. Once the local audio function is disabled or re-enabled, the SDK triggers the OnLocalAudioStateChanged callback, which reports LOCAL_AUDIO_STREAM_STATE_STOPPED (0) or LOCAL_AUDIO_STREAM_STATE_RECORDING (1).
         /// The difference between this method and MuteLocalAudioStream are as follow: EnableLocalAudio : Disables or re-enables the local audio capturing and processing. If you disable or re-enable local audio capturing using the EnableLocalAudio method, the local user might hear a pause in the remote audio playback. MuteLocalAudioStream : Sends or stops sending the local audio streams.
         /// You can call this method either before or after joining a channel. Calling it before joining a channel only sets the device state, and it takes effect immediately after you join the channel.
         /// </summary>
@@ -1484,7 +1484,7 @@ namespace Agora.Rtc
         /// <summary>
         /// Sets the channel mode of the current audio file.
         /// In a stereo music file, the left and right channels can store different audio data. According to your needs, you can set the channel mode to original mode, left channel mode, right channel mode, or mixed channel mode. For example, in the KTV scenario, the left channel of the music file stores the musical accompaniment, and the right channel stores the singing voice. If you only need to listen to the accompaniment, call this method to set the channel mode of the music file to left channel mode; if you need to listen to the accompaniment and the singing voice at the same time, call this method to set the channel mode to mixed channel mode.
-        /// Call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback.
+        /// You need to call this method after calling StartAudioMixing [2/2] and receiving the OnAudioMixingStateChanged (AUDIO_MIXING_STATE_PLAYING) callback.
         /// This method only applies to stereo audio files.
         /// </summary>
         ///
@@ -2368,9 +2368,9 @@ namespace Agora.Rtc
         /// You can call this method before sharing a screen or window to get a list of shareable screens and windows, which enables a user to use thumbnails in the list to easily choose a particular screen or window to share. This list also contains important information such as window ID and screen ID, with which you can call StartScreenCaptureByWindowId or StartScreenCaptureByDisplayId to start the sharing. This method applies to macOS and Windows only.
         /// </summary>
         ///
-        /// <param name="thumbSize"> The target size of the screen or window thumbnail (the width and height are in pixels). The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and thumbSize is 100 × 100, the actual size of the thumbnail is 100 × 75. If the target size is larger than the original size, the thumbnail is the original image and the SDK does not scale it.</param>
+        /// <param name="thumbSize"> The target size of the screen or window thumbnail (the width and height are in pixels).. The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and thumbSize is 100 × 100, the actual size of the thumbnail is 100 × 75. If the target size is larger than the original size, the thumbnail is the original image and the SDK does not scale it.</param>
         ///
-        /// <param name="iconSize"> The target size of the icon corresponding to the application program (the width and height are in pixels). The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and iconSize is 100 × 100, the actual size of the icon is 100 × 75. If the target size is larger than the original size, the icon is the original image and the SDK does not scale it.</param>
+        /// <param name="iconSize"> The target size of the icon corresponding to the application program (the width and height are in pixels).. The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and iconSize is 100 × 100, the actual size of the icon is 100 × 75. If the target size is larger than the original size, the icon is the original image and the SDK does not scale it.</param>
         ///
         /// <param name="includeScreen"> Whether the SDK returns the screen information in addition to the window information: true : The SDK returns screen and window information. false : The SDK returns window information only.</param>
         ///
@@ -2485,7 +2485,7 @@ namespace Agora.Rtc
         /// Call this method after joining a channel, then call UpdateChannelMediaOptions and set publishScreenCaptureVideo to true to start screen sharing.
         /// This method applies to Android and iOS only.
         /// On the iOS platform, screen sharing is only available on iOS 12.0 and later.
-        /// The billing for the screen sharing stream is based on the dimensions in ScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value.
+        /// The billing for the screen sharing stream is based on the dimensions in ScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value. For billing details, see.
         /// If you are using the custom audio source instead of the SDK to capture audio, Agora recommends you add the keep-alive processing logic to your application to avoid screen sharing stopping when the application goes to the background.
         /// This feature requires high-performance device, and Agora recommends that you use it on iPhone X and later models.
         /// This method relies on the iOS screen sharing dynamic library AgoraReplayKitExtension.xcframework. If the dynamic library is deleted, screen sharing cannot be enabled normally.
@@ -2693,7 +2693,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the default stream type of subscrption for remote video streams.
-        /// By default, the SDK enables the low-quality video stream auto mode on the sending end (it does not actively send the low-quality video stream). The host identity receiver can initiate a low-quality video stream application at the receiving end by calling this method (the call to this method by the audience receiver does not take effect). After receiving the application, the sending end automatically switches to the low-quality video stream mode. Under limited network conditions, if the publisher has not disabled the dual-stream mode using EnableDualStreamMode [2/2] (false), the receiver can choose to receive either the high-quality video stream or the low-quality video stream. The high-quality video stream has a higher resolution and bitrate, and the low-quality video stream has a lower resolution and bitrate. By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. This method allows the app to adjust the corresponding video stream type based on the size of the video window to reduce the bandwidth and resources. The aspect ratio of the low-quality video stream is the same as the high-quality video stream. Once the resolution of the high-quality video stream is set, the system automatically sets the resolution, frame rate, and bitrate of the low-quality video stream.
+        /// By default, the SDK enables the low-quality video stream auto mode on the sending end (it does not actively send the low-quality video stream). The host identity receiver can initiate a low-quality video stream application at the receiving end by calling this method (the call to this method by the audience receiver does not take effect). After receiving the application, the sending end automatically switches to the low-quality video stream mode. Under limited network conditions, if the publisher has not disabled the dual-stream mode using EnableDualStreamMode [2/2] (false), the receiver can choose to receive either the high-quality video stream or the low-video stream. The high-quality video stream has a higher resolution and bitrate, and the low-quality video stream has a lower resolution and bitrate. By default, users receive the high-quality video stream. Call this method if you want to switch to the low-quality video stream. This method allows the app to adjust the corresponding video stream type based on the size of the video window to reduce the bandwidth and resources. The aspect ratio of the low-quality video stream is the same as the high-quality video stream. Once the resolution of the high-quality video stream is set, the system automatically sets the resolution, frame rate, and bitrate of the low-quality video stream.
         /// Call this method before joining a channel. The SDK does not support changing the default subscribed video stream type after joining a channel.
         /// If you call both this method and SetRemoteVideoStreamType, the SDK applies the settings in the SetRemoteVideoStreamType method.
         /// </summary>
@@ -3584,7 +3584,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Unregisters a receiver object for the encoded video image.
+        /// Unregisters a receiver object for the encoded video frame.
         /// </summary>
         ///
         /// <returns>
@@ -3786,7 +3786,7 @@ namespace Agora.Rtc
         /// The sample rate of recording is 32 kHz by default and cannot be modified. The Agora SDK allows recording during a call. This method records the audio of all the users in the channel and generates an audio recording file. Supported formats of the recording file are as follows:.wav : Large file size with high fidelity..aac : Small file size with low fidelity. Ensure that the directory for the recording file exists and is writable. This method should be called after the JoinChannel [2/2] method. The recording automatically stops when you call the LeaveChannel [2/2] method.
         /// </summary>
         ///
-        /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.mp4. Ensure that the directory for the log files exists and is writable.</param>
+        /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.aac. Ensure that the directory for the log files exists and is writable.</param>
         ///
         /// <param name="quality"> Audio recording quality. See AUDIO_RECORDING_QUALITY_TYPE.</param>
         ///
@@ -3808,7 +3808,7 @@ namespace Agora.Rtc
         /// For better recording effects, set quality to AUDIO_RECORDING_QUALITY_MEDIUM or AUDIO_RECORDING_QUALITY_HIGH when sampleRate is 44.1 kHz or 48 kHz.
         /// </summary>
         ///
-        /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.mp4. Ensure that the directory for the log files exists and is writable.</param>
+        /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.aac. Ensure that the directory for the log files exists and is writable.</param>
         ///
         /// <param name="sampleRate"> The sample rate (kHz) of the recording file. Supported values are as follows:
         ///  16000
@@ -5120,13 +5120,12 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables or disables video screenshot and upload.
-        /// When video screenshot and upload function is enabled, the SDK takes screenshots and upload videos sent by local users based on the type and frequency of the module you set in ContentInspectConfig. After video screenshot and upload, the Agora server sends the callback notification to your app server in HTTPS requests and sends all screenshots to the third-party cloud storage service. Before calling this method, ensure that the video screenshot upload service has been activated. Before calling this method, ensure that Video content moderation service has been activated.
-        /// This method relies on the video screenshot and upload dynamic library libagora_content_inspect_extension.dll. If the dynamic library is deleted, the function cannot be enabled normally.
+        /// When video screenshot and upload function is enabled, the SDK takes screenshots and upload videos sent by local users based on the type and frequency of the module you set in ContentInspectConfig. After video screenshot and upload, the Agora server sends the callback notification to your app server in HTTPS requests and sends all screenshots to the third-party cloud storage service. Before calling this method, ensure that you have contacted to activate the video screenshot upload service.
         /// </summary>
         ///
         /// <param name="enabled"> Whether to enable video screenshot and upload : true : Enables video screenshot and upload. false : Disables video screenshot and upload.</param>
         ///
-        /// <param name="config"> Configuration of video screenshot and upload. See ContentInspectConfig.</param>
+        /// <param name="config"> Configuration of video screenshot and upload. See ContentInspectConfig. When the video moderation module is set to video moderation via Agora self-developed extension(CONTENT_INSPECT_SUPERVISE), the video screenshot and upload dynamic library libagora_content_inspect_extension.dll is required. Deleting this library disables the screenshot and upload feature.</param>
         ///
         /// <returns>
         /// 0: Success.
@@ -5229,7 +5228,16 @@ namespace Agora.Rtc
 
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Checks whether the device supports the specified advanced feature.
+        /// Checks whether the capabilities of the current device meet the requirements for advanced features such as virtual background and image enhancement.
+        /// </summary>
+        ///
+        /// <param name="type"> The specific of the advanced feature, see FeatureType.</param>
+        ///
+        /// <returns>
+        /// true : The current device supports the specified feature. false : The current device does not support the specified feature.
+        /// </returns>
         ///
         public abstract bool IsFeatureAvailableOnDevice(FeatureType type);
         ///
@@ -5911,7 +5919,21 @@ namespace Agora.Rtc
 
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Enables or disables video screenshot and upload.
+        /// This method can take screenshots for multiple video streams and upload them. When video screenshot and upload function is enabled, the SDK takes screenshots and upload videos sent by local users based on the type and frequency of the module you set in ContentInspectConfig. After video screenshot and upload, the Agora server sends the callback notification to your app server in HTTPS requests and sends all screenshots to the third-party cloud storage service. Before calling this method, ensure that you have contacted to activate the video screenshot upload service.
+        /// </summary>
+        ///
+        /// <param name="connection"> The connection information. See RtcConnection.</param>
+        ///
+        /// <param name="config"> Configuration of video screenshot and upload. See ContentInspectConfig. When the video moderation module is set to video moderation via Agora self-developed extension(CONTENT_INSPECT_SUPERVISE), the video screenshot and upload dynamic library libagora_content_inspect_extension.dll is required. Deleting this library disables the screenshot and upload feature.</param>
+        ///
+        /// <param name="enabled"> Whether to enable video screenshot and upload : true : Enables video screenshot and upload. false : Disables video screenshot and upload.</param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection);
         ///

@@ -1494,7 +1494,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The position of a window relative to the entire screen space (including all shareable screens). See Rectangle.
+        /// The position of a window relative to the entire screen space (including all shareable screens). See Rectangle..
         /// </summary>
         ///
         public Rectangle position;
@@ -2093,16 +2093,22 @@ namespace Agora.Rtc
     };
 
     ///
-    /// @ignore
+    /// <summary>
+    /// The name of the advanced feature.
+    /// </summary>
     ///
     public enum FeatureType
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// 1: Virtual background.
+        /// </summary>
         ///
         VIDEO_VIRTUAL_BACKGROUND = 1,
         ///
-        /// @ignore
+        /// <summary>
+        /// 2: Image enhancement.
+        /// </summary>
         ///
         VIDEO_BEAUTY_EFFECT = 2,
     };

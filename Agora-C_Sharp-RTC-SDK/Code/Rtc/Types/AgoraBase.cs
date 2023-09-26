@@ -1156,7 +1156,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: (Recommended) Standard bitrate mode. In this mode, the bitrates of the live broadcasting profile is higher than that of the communication profile.
+        /// 0: (Recommended) Standard bitrate mode. In this mode, the bitrates of the live broadcasting profile is higher than that of the communication profile..
         /// </summary>
         ///
         STANDARD_BITRATE = 0,
@@ -3378,14 +3378,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: (For iOS only) The app is in the background. Remind the user that video capture cannot be performed normally when the app is in the background.
+        /// 6: (iOS only) The app is in the background. Remind the user that video capture cannot be performed normally when the app is in the background.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_CAPTURE_INBACKGROUND = 6,
 
         ///
         /// <summary>
-        /// 7: (For iOS only) The current application window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Remind the user that the application cannot capture video properly when the app is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera.
+        /// 7: (iOS only) The current application window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Remind the user that the application cannot capture video properly when the app is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_CAPTURE_MULTIPLE_FOREGROUND_APPS = 7,
@@ -3399,14 +3399,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 9: (For macOS only) The video capture device currently in use is disconnected (such as being unplugged).
+        /// 9: (macOS only) The video capture device currently in use is disconnected (such as being unplugged).
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_DISCONNECTED = 9,
 
         ///
         /// <summary>
-        /// 10: (For macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID of the video device is valid.
+        /// 10: (macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID of the video device is valid.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_INVALID_ID = 10,
@@ -3420,14 +3420,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 11: (For macOS only) The shared window is minimized when you call StartScreenCaptureByWindowId to share a window. The SDK cannot share a minimized window. You can cancel the minimization of this window at the application layer, for example by maximizing this window.
+        /// 11: (macOS only) The shared window is minimized when you call StartScreenCaptureByWindowId to share a window. The SDK cannot share a minimized window. You can cancel the minimization of this window at the application layer, for example by maximizing this window.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
 
         ///
         /// <summary>
-        /// 12: (For macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing. Common scenarios for reporting this error code:
+        /// 12: (macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing. Common scenarios reporting this error code:
         /// When the local user closes the shared window, the SDK reports this error code.
         /// The local user shows some slides in full-screen mode first, and then shares the windows of the slides. After the user exits full-screen mode, the SDK reports this error code.
         /// The local user watches a web video or reads a web document in full-screen mode first, and then shares the window of the web video or document. After the user exits full-screen mode, the SDK reports this error code.
@@ -3437,7 +3437,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 13: (For Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by the SDK during window sharing.
+        /// 13: (Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by the SDK during window sharing.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_OCCLUDED = 13,
@@ -3452,32 +3452,44 @@ namespace Agora.Rtc
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_FAILURE = 21,
         ///
-        /// @ignore
+        /// <summary>
+        /// 22: (Windows and macOS only) No permission for screen capture.
+        /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_NO_PERMISSION = 22,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 23: (Windows only) Screen capture has been paused. Common scenarios reporting this error code: The current screen may have been switched to a secure desktop, such as a UAC dialog box or Winlogon desktop.
+        /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_PAUSED = 23,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 24: (Windows only) Screen capture has resumed from paused state.
+        /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_RESUMED = 24,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 25: (Windows only) The window for the current screen capture is hidden and not visible on the current screen.
+        /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_HIDDEN = 25,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 26: (Windows only) The window for screen capture has been restored from hidden state.
+        /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_HIDDEN = 26,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 27: (Windows only) The window for screen capture has been restored from minimized state.
+        /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_MINIMIZED = 27,
     };
@@ -5570,7 +5582,9 @@ namespace Agora.Rtc
         NETWORK_TYPE_MOBILE_4G = 5,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 6: The network type is mobile 5G.
+        /// </summary>
         ///
         NETWORK_TYPE_MOBILE_5G = 6,
     };
@@ -6746,7 +6760,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to capture the mouse in screen sharing: true : (Default) Capture the mouse. false : Do not capture the mouse.
+        /// Whether to capture the mouse in screen sharing: true : (Default) Capture the mouse. false : Do not capture the mouse. Due to macOS system restrictions, setting this parameter to false is ineffective during screen sharing (it has no impact when sharing a window).
         /// </summary>
         ///
         public bool captureMouseCursor;
@@ -6930,7 +6944,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.mp4. Ensure that the directory for the log files exists and is writable.
+        /// The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.aac. Ensure that the directory for the log files exists and is writable.
         /// </summary>
         ///
         public string filePath;

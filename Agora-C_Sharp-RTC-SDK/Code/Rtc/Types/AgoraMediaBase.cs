@@ -586,7 +586,9 @@ namespace Agora.Rtc
         VIDEO_PIXEL_I422 = 16,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 17: The ID3D11TEXTURE2D format. Currently supported types are DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_B8G8R8A8_TYPELESS and DXGI_FORMAT_NV12.
+        /// </summary>
         ///
         VIDEO_TEXTURE_ID3D11TEXTURE2D = 17,
     };
@@ -854,12 +856,16 @@ namespace Agora.Rtc
 
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
+        /// </summary>
         ///
         public IntPtr d3d11_texture_2d;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// This parameter only applies to video data in Windows Texture format. It represents an index of an ID3D11Texture2D texture object used by the video frame in the ID3D11Texture2D array.
+        /// </summary>
         ///
         public int texture_slice_index;
     };
@@ -1472,9 +1478,7 @@ namespace Agora.Rtc
 
         [Obsolete]
         ///
-        /// <summary>
-        /// 1: Video content moderation. SDK takes screenshots, inspects video content of the video stream in the channel, and uploads the screenshots and moderation results.
-        /// </summary>
+        /// @ignore
         ///
         CONTENT_INSPECT_MODERATION = 1,
 
@@ -1486,7 +1490,9 @@ namespace Agora.Rtc
         CONTENT_INSPECT_SUPERVISION = 2,
 
         ///
-        /// @ignore
+        /// <summary>
+        /// 3: Video screenshot and upload via extensions from Agora Extensions Marketplace. SDK uses video moderation extensions from Agora Extensions Marketplace to take screenshots of the video stream in the channel and uploads them.
+        /// </summary>
         ///
         CONTENT_INSPECT_IMAGE_MODERATION = 3,
     };
@@ -1548,11 +1554,15 @@ namespace Agora.Rtc
     public class ContentInspectConfig
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// Additional information on the video content (maximum length: 1024 Bytes). The SDK sends the screenshots and additional information on the video content to the Agora server. Once the video screenshot and upload process is completed, the Agora server sends the additional information and the callback notification to your server.
+        /// </summary>
         ///
         public string extraInfo;
         ///
-        /// @ignore
+        /// <summary>
+        /// (Optional) Server configuration related to uploading video screenshots via extensions from Agora Extensions Marketplace. This parameter only takes effect when type in ContentInspectModule is set to CONTENT_INSPECT_IMAGE_MODERATION. If you want to use it, contact.
+        /// </summary>
         ///
         public string serverConfig;
         ///
