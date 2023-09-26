@@ -17,7 +17,7 @@ namespace Agora.Rtc
         {
         }
 
-       
+
         [Test]
         public void Test_Create()
         {

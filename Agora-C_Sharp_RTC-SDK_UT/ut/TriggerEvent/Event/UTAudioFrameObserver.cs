@@ -5,7 +5,7 @@ namespace Agora.Rtc
     public class UTAudioFrameObserver : IAudioFrameObserver
     {
 
-#region terra IAudioFrameObserver
+        #region terra IAudioFrameObserver
 
         public bool OnRecordAudioFrame_be_trigger = false;
         public string OnRecordAudioFrame_channelId;
@@ -178,6 +178,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-#endregion terra IAudioFrameObserver
+        #endregion terra IAudioFrameObserver
     }
 }

@@ -30,7 +30,7 @@ namespace Agora.Rtc
             Engine.Dispose();
         }
 
-#region terra IMusicPlayer
+        #region terra IMusicPlayer
 
         [Test]
         public void Test_Open()
@@ -41,6 +41,6 @@ namespace Agora.Rtc
             var nRet = MusicPlayer.Open(songCode, startPos);
             Assert.AreEqual(0, nRet);
         }
-#endregion terra IMusicPlayer
+        #endregion terra IMusicPlayer
     }
 }

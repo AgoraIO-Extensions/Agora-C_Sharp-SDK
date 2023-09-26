@@ -107,7 +107,7 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-#region terra IAudioDeviceManager
+        #region terra IAudioDeviceManager
 
         public int SetPlaybackDevice(string deviceId)
         {
@@ -488,6 +488,6 @@ namespace Agora.Rtc
             return result;
         }
 
-#endregion terra IAudioDeviceManager
+        #endregion terra IAudioDeviceManager
     }
 }

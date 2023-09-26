@@ -20,7 +20,8 @@
         private static IAudioDeviceManager instance = null;
         public static IAudioDeviceManager Instance
         {
-            get {
+            get
+            {
                 return instance;
             }
         }
@@ -71,7 +72,7 @@
             return _audioDeviecManagerImpl.EnumerateRecordingDevices();
         }
 
-#region terra IAudioDeviceManager
+        #region terra IAudioDeviceManager
 
         public override int SetPlaybackDevice(string deviceId)
         {
@@ -298,6 +299,6 @@
             return _audioDeviecManagerImpl.FollowSystemLoopbackDevice(enable);
         }
 
-#endregion terra IAudioDeviceManager
+        #endregion terra IAudioDeviceManager
     }
 }

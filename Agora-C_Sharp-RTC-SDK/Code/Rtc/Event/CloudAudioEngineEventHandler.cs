@@ -1,7 +1,7 @@
 namespace Agora.Rtc
 {
     //public delegate void OnTokenWillExpireHandler();
-  
+
     //public delegate void OnConnectionStateChangeHandler(SAE_CONNECTION_STATE_TYPE state, SAE_CONNECTION_CHANGED_REASON_TYPE reason);
 
     //public delegate void OnTeammateLeftHandler(uint uid);
@@ -27,7 +27,7 @@ namespace Agora.Rtc
     //        if (EventOnTokenWillExpire == null) return;
     //        EventOnTokenWillExpire.Invoke();
     //    }
-  
+
     //    public override void OnConnectionStateChange(SAE_CONNECTION_STATE_TYPE state, SAE_CONNECTION_CHANGED_REASON_TYPE reason)
     //    {
     //        if (EventOnConnectionStateChange == null) return;

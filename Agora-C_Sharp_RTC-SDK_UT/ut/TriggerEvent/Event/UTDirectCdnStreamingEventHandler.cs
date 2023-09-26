@@ -6,7 +6,7 @@ namespace Agora.Rtc
     public class UTDirectCdnStreamingEventHandler : IRtcEngineEventHandler
     {
 
-#region terra IDirectCdnStreamingEventHandler
+        #region terra IDirectCdnStreamingEventHandler
 
         public bool OnDirectCdnStreamingStateChanged_be_trigger = false;
         public DIRECT_CDN_STREAMING_STATE OnDirectCdnStreamingStateChanged_state;
@@ -61,6 +61,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-#endregion terra IDirectCdnStreamingEventHandler
+        #endregion terra IDirectCdnStreamingEventHandler
     }
 }

@@ -5,7 +5,7 @@ namespace Agora.Rtc
 {
     internal class DLLHelper
     {
-        private const string  DebugLibName = "libName";
+        private const string DebugLibName = "libName";
 
         [DllImport(DebugLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateFakeRtcEngine();

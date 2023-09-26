@@ -27,7 +27,7 @@ namespace Agora.Rtc
             this._nativeHandle = nativeHandle;
         }
 
-#region terra IMediaRecorder
+        #region terra IMediaRecorder
 
         public override int SetMediaRecorderObserver(IMediaRecorderObserver callback)
         {
@@ -55,6 +55,6 @@ namespace Agora.Rtc
             }
             return _mediaRecorderImpl.StopRecording(_nativeHandle);
         }
-#endregion terra IMediaRecorder
+        #endregion terra IMediaRecorder
     }
 }

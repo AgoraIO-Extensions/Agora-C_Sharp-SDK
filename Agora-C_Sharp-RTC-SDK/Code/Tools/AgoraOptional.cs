@@ -51,7 +51,7 @@ namespace Agora.Rtm
     }
 
 
-    public class OptionalJsonParse 
+    public class OptionalJsonParse
     {
         public virtual void ToJson(JsonWriter writer)
         {

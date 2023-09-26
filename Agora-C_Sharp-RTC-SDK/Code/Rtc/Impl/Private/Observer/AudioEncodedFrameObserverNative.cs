@@ -33,7 +33,7 @@ namespace Agora.Rtc
                 IrisRtcCEventParam eventParam = (IrisRtcCEventParam)Marshal.PtrToStructure(param, typeof(IrisRtcCEventParam));
                 var @event = eventParam.@event;
                 var data = eventParam.data;
-                
+
                 EncodedAudioFrameInfo audioEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedAudioFrameInfo>(data, "audioEncodedFrameInfo");
                 IntPtr frameBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(data, "frameBuffer");
                 int frameLength = (int)AgoraJson.GetData<int>(data, "length");

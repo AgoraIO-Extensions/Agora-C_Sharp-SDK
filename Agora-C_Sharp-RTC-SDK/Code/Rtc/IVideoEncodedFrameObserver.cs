@@ -9,7 +9,7 @@ namespace Agora.Rtc
     ///
     public abstract class IVideoEncodedFrameObserver
     {
-#region terra IVideoEncodedFrameObserver
+        #region terra IVideoEncodedFrameObserver
 
         ///
         /// <summary>
@@ -34,6 +34,6 @@ namespace Agora.Rtc
         {
             return true;
         }
-#endregion terra IVideoEncodedFrameObserver
+        #endregion terra IVideoEncodedFrameObserver
     }
 }

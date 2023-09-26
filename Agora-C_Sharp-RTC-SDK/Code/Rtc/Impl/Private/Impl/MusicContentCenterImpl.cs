@@ -159,7 +159,7 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-#region terra IMusicContentCenter
+        #region terra IMusicContentCenter
 
         public int Initialize(MusicContentCenterConfiguration configuration)
         {
@@ -377,6 +377,6 @@ namespace Agora.Rtc
             }
             return result;
         }
-#endregion terra IMusicContentCenter
+        #endregion terra IMusicContentCenter
     }
 }

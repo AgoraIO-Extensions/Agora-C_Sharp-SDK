@@ -984,7 +984,7 @@ namespace Agora.Rtm
                 return false;
             if (ParamsHelper.compareRTM_CHANNEL_TYPE(OnGetLocksResult_channelType, channelType) == false)
                 return false;
-            if (ParamsHelper.compareLockDetailArray (OnGetLocksResult_lockDetailList, lockDetailList) == false)
+            if (ParamsHelper.compareLockDetailArray(OnGetLocksResult_lockDetailList, lockDetailList) == false)
                 return false;
             if (ParamsHelper.compareUlong(OnGetLocksResult_count, count) == false)
                 return false;

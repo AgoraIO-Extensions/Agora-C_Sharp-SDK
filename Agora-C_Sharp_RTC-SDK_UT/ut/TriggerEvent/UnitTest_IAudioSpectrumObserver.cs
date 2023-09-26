@@ -52,7 +52,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IAudioSpectrumObserver
+        #region terra IAudioSpectrumObserver
 
         [Test]
         public void Test_OnLocalAudioSpectrum()
@@ -96,6 +96,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
             Assert.AreEqual(true, EventHandlerForMediaPlayer.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
         }
-#endregion terra IAudioSpectrumObserver
+        #endregion terra IAudioSpectrumObserver
     }
 }

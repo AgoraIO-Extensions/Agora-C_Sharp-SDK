@@ -4,7 +4,7 @@ namespace Agora.Rtc
 {
     public class UTMediaRecorderObserver : IMediaRecorderObserver
     {
-#region terra IMediaRecorderObserver
+        #region terra IMediaRecorderObserver
 
         public bool OnRecorderStateChanged_be_trigger = false;
         public string OnRecorderStateChanged_channelId;
@@ -71,6 +71,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-#endregion terra IMediaRecorderObserver
+        #endregion terra IMediaRecorderObserver
     }
 }

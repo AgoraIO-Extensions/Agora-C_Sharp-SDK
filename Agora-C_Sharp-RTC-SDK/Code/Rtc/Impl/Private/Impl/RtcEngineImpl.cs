@@ -742,7 +742,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-#region terra IRtcEngine
+        #region terra IRtcEngine
 
         public string GetErrorDescription(int code)
         {
@@ -4730,9 +4730,9 @@ namespace Agora.Rtc
 
             return result;
         }
-#endregion terra IRtcEngine
+        #endregion terra IRtcEngine
 
-#region terra IRtcEngineEx
+        #region terra IRtcEngineEx
 
         public int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
         {
@@ -5538,7 +5538,7 @@ namespace Agora.Rtc
 
             return result;
         }
-#endregion terra IRtcEngineEx
+        #endregion terra IRtcEngineEx
 
         public int PushAudioFrame(AudioFrame frame, uint trackId)
         {
@@ -5573,7 +5573,7 @@ namespace Agora.Rtc
             if (nRet == 0)
             {
                 var f = AgoraJson.JsonToStruct<AudioFrame>(_apiParam.Result, "frame");
-#region terra PullAudioFrame_Assignment
+                #region terra PullAudioFrame_Assignment
 
                 frame.type = f.type;
                 frame.samplesPerChannel = f.samplesPerChannel;
@@ -5584,7 +5584,7 @@ namespace Agora.Rtc
                 frame.renderTimeMs = f.renderTimeMs;
                 frame.avsync_type = f.avsync_type;
                 frame.presentationMs = f.presentationMs;
-#endregion terra PullAudioFrame_Assignment
+                #endregion terra PullAudioFrame_Assignment
             }
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
@@ -5641,7 +5641,7 @@ namespace Agora.Rtc
             return nRet;
         }
 
-#region terra IMediaEngine
+        #region terra IMediaEngine
 
         public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
@@ -5723,6 +5723,6 @@ namespace Agora.Rtc
             return result;
         }
 
-#endregion terra IMediaEngine
+        #endregion terra IMediaEngine
     }
 }

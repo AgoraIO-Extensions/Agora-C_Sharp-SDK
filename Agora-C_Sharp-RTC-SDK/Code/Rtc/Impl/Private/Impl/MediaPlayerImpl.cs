@@ -554,7 +554,7 @@ namespace Agora.Rtc
             return 0;
         }
 
-#region terra IMediaPlayer
+        #region terra IMediaPlayer
 
         public int Open(int playerId, string url, long startPos)
         {
@@ -1230,6 +1230,6 @@ namespace Agora.Rtc
 
             return result;
         }
-#endregion terra IMediaPlayer
+        #endregion terra IMediaPlayer
     }
 }

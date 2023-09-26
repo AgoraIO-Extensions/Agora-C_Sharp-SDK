@@ -5,7 +5,7 @@ namespace Agora.Rtc
     public class UTRtcEngineEventHandler : IRtcEngineEventHandler
     {
 
-#region terra IRtcEngineEventHandler
+        #region terra IRtcEngineEventHandler
 
         public bool OnJoinChannelSuccess_be_trigger = false;
         public RtcConnection OnJoinChannelSuccess_connection;
@@ -2455,7 +2455,7 @@ namespace Agora.Rtc
             return true;
         }
 
-//////////////////
-#endregion terra IRtcEngineEventHandler
+        //////////////////
+        #endregion terra IRtcEngineEventHandler
     }
 }

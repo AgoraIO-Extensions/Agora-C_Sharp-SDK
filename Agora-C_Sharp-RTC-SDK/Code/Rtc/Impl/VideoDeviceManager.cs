@@ -22,7 +22,8 @@ namespace Agora.Rtc
         private static IVideoDeviceManager instance = null;
         public static IVideoDeviceManager Instance
         {
-            get {
+            get
+            {
                 return instance;
             }
         }
@@ -46,7 +47,7 @@ namespace Agora.Rtc
             return _videoDeviecManagerImpl.EnumerateVideoDevices();
         }
 
-#region terra IVideoDeviceManager
+        #region terra IVideoDeviceManager
 
         public override int SetDevice(string deviceIdUTF8)
         {
@@ -102,6 +103,6 @@ namespace Agora.Rtc
             return _videoDeviecManagerImpl.StopDeviceTest();
         }
 
-#endregion terra IVideoDeviceManager
+        #endregion terra IVideoDeviceManager
     }
 }

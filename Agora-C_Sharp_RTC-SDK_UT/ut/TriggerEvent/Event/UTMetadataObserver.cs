@@ -5,7 +5,7 @@ namespace Agora.Rtc
     public class UTMetadataObserver : IMetadataObserver
     {
 
-#region terra IMetadataObserver
+        #region terra IMetadataObserver
 
         public bool GetMaxMetadataSize_be_trigger = false;
 
@@ -77,6 +77,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-#endregion terra IMetadataObserver
+        #endregion terra IMetadataObserver
     }
 }

@@ -44,7 +44,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IMusicContentCenterEventHandler
+        #region terra IMusicContentCenterEventHandler
 
         [Test]
         public void Test_OnMusicChartsResult()
@@ -185,6 +185,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPreLoadEventPassed(requestId, songCode, percent, lyricUrl, status, errorCode));
         }
-#endregion terra IMusicContentCenterEventHandler
+        #endregion terra IMusicContentCenterEventHandler
     }
 }

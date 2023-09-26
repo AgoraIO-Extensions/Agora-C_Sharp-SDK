@@ -40,7 +40,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IDirectCdnStreamingEventHandler
+        #region terra IDirectCdnStreamingEventHandler
 
         [Test]
         public void Test_OnDirectCdnStreamingStateChanged()
@@ -85,6 +85,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnDirectCdnStreamingStatsPassed(stats));
         }
-#endregion terra IDirectCdnStreamingEventHandler
+        #endregion terra IDirectCdnStreamingEventHandler
     }
 }

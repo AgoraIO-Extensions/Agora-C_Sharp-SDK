@@ -23,7 +23,7 @@ namespace Agora.Rtc
         ///
         public abstract DeviceInfo[] EnumerateVideoDevices();
 
-#region terra IVideoDeviceManager
+        #region terra IVideoDeviceManager
 
         ///
         /// <summary>
@@ -104,6 +104,6 @@ namespace Agora.Rtc
         ///
         public abstract int StopDeviceTest();
 
-#endregion terra IVideoDeviceManager
+        #endregion terra IVideoDeviceManager
     }
 }

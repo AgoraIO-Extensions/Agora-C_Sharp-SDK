@@ -30,7 +30,7 @@ namespace Agora.Rtc
         public Music[] music;
     };
 
-#region terra IAgoraMusicContentCenter.h
+    #region terra IAgoraMusicContentCenter.h
 
     ///
     /// @ignore
@@ -363,5 +363,5 @@ namespace Agora.Rtc
         }
     }
 
-#endregion terra IAgoraMusicContentCenter.h
+    #endregion terra IAgoraMusicContentCenter.h
 }

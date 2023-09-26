@@ -8,7 +8,7 @@ namespace Agora.Rtc
     ///
     public abstract class IMediaPlayerCacheManager
     {
-#region terra IMediaPlayerCacheManager
+        #region terra IMediaPlayerCacheManager
 
         ///
         /// <summary>
@@ -171,6 +171,6 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int GetCacheFileCount();
-#endregion terra IMediaPlayerCacheManager
+        #endregion terra IMediaPlayerCacheManager
     };
 }

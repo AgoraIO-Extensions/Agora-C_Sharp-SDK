@@ -38,7 +38,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IVideoEncodedFrameObserver
+        #region terra IVideoEncodedFrameObserver
 
         [Test]
         public void Test_OnEncodedVideoFrameReceived()
@@ -67,6 +67,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnEncodedVideoFrameReceivedPassed(uid, imageBuffer, length, videoEncodedFrameInfo));
         }
-#endregion terra IVideoEncodedFrameObserver
+        #endregion terra IVideoEncodedFrameObserver
     }
 }

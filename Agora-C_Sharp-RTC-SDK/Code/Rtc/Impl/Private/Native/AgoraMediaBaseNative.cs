@@ -83,13 +83,13 @@ namespace Agora.Rtc
 
     internal class ThumbImageBufferInternal
     {
-#region terra ThumbImageBufferInternal_List
+        #region terra ThumbImageBufferInternal_List
 
         public IntPtr buffer;
         public uint length;
         public uint width;
         public uint height;
-#endregion terra ThumbImageBufferInternal_List
+        #endregion terra ThumbImageBufferInternal_List
 
         public ThumbImageBufferInternal()
         {
@@ -98,7 +98,7 @@ namespace Agora.Rtc
         public ThumbImageBuffer GenerateThumbImageBuffer()
         {
             ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
-#region terra ThumbImageBufferInternal_Generate
+            #region terra ThumbImageBufferInternal_Generate
 
             byte[] thumbBuffer = new byte[length];
             if (imageBuffer.length > 0)
@@ -109,14 +109,14 @@ namespace Agora.Rtc
             imageBuffer.length = this.length;
             imageBuffer.width = this.width;
             imageBuffer.height = this.height;
-#endregion terra ThumbImageBufferInternal_Generate
+            #endregion terra ThumbImageBufferInternal_Generate
             return imageBuffer;
         }
     };
 
     internal class ScreenCaptureSourceInfoInternal
     {
-#region terra ScreenCaptureSourceInfoInternal_List
+        #region terra ScreenCaptureSourceInfoInternal_List
 
         public ScreenCaptureSourceType type;
         public view_t sourceId;
@@ -130,7 +130,7 @@ namespace Agora.Rtc
         public Rectangle position;
         public bool minimizeWindow;
         public view_t sourceDisplayId;
-#endregion terra ScreenCaptureSourceInfoInternal_List
+        #endregion terra ScreenCaptureSourceInfoInternal_List
 
         public ScreenCaptureSourceInfoInternal()
         {
@@ -140,7 +140,7 @@ namespace Agora.Rtc
         {
             var screenCaptureSourceInfo = new ScreenCaptureSourceInfo();
 
-#region terra ScreenCaptureSourceInfoInternal_Generate
+            #region terra ScreenCaptureSourceInfoInternal_Generate
 
             screenCaptureSourceInfo.type = this.type;
             screenCaptureSourceInfo.sourceId = this.sourceId;
@@ -154,7 +154,7 @@ namespace Agora.Rtc
             screenCaptureSourceInfo.position = this.position;
             screenCaptureSourceInfo.minimizeWindow = this.minimizeWindow;
             screenCaptureSourceInfo.sourceDisplayId = this.sourceDisplayId;
-#endregion terra ScreenCaptureSourceInfoInternal_Generate
+            #endregion terra ScreenCaptureSourceInfoInternal_Generate
             return screenCaptureSourceInfo;
         }
     };

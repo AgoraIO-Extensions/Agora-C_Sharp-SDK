@@ -8,7 +8,7 @@ namespace Agora.Rtc
     public abstract class IAudioFrameObserver
     {
 
-#region terra IAudioFrameObserver
+        #region terra IAudioFrameObserver
 
         ///
         /// @ignore
@@ -69,7 +69,7 @@ namespace Agora.Rtc
         {
             return true;
         }
-#endregion terra IAudioFrameObserver
+        #endregion terra IAudioFrameObserver
     }
 
 }

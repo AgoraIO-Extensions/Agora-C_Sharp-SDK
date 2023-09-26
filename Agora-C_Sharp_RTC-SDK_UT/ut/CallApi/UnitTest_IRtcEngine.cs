@@ -62,7 +62,7 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#region terra IRtcEngine
+        #region terra IRtcEngine
 
         [Test]
         public void Test_Initialize()
@@ -2679,9 +2679,9 @@ namespace Agora.Rtc
             var nRet = RtcEngine.GetNtpWallTimeInMs();
             Assert.AreEqual(0, nRet);
         }
-#endregion terra IRtcEngine
+        #endregion terra IRtcEngine
 
-#region terra IMediaEngine
+        #region terra IMediaEngine
 
         [Test]
         public void Test_PushAudioFrame()
@@ -2779,7 +2779,7 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#endregion terra IMediaEngine
+        #endregion terra IMediaEngine
     }
 
 }

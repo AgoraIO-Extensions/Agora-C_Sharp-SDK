@@ -194,24 +194,24 @@ namespace Agora.Rtc
         {
             switch (encryptionMode)
             {
-            case ENCRYPTION_MODE.AES_128_XTS:
-                return "aes-128-xts";
-            case ENCRYPTION_MODE.AES_128_ECB:
-                return "aes-128-ecb";
-            case ENCRYPTION_MODE.AES_256_XTS:
-                return "aes-256-xts";
-            case ENCRYPTION_MODE.SM4_128_ECB:
-                return "sm4-128-ecb";
-            case ENCRYPTION_MODE.AES_128_GCM:
-                return "aes-128-gcm";
-            case ENCRYPTION_MODE.AES_256_GCM:
-                return "aes-256-gcm";
-            case ENCRYPTION_MODE.AES_128_GCM2:
-                return "aes-128-gcm-2";
-            case ENCRYPTION_MODE.AES_256_GCM2:
-                return "aes-256-gcm-2";
-            default:
-                return "aes-128-gcm-2";
+                case ENCRYPTION_MODE.AES_128_XTS:
+                    return "aes-128-xts";
+                case ENCRYPTION_MODE.AES_128_ECB:
+                    return "aes-128-ecb";
+                case ENCRYPTION_MODE.AES_256_XTS:
+                    return "aes-256-xts";
+                case ENCRYPTION_MODE.SM4_128_ECB:
+                    return "sm4-128-ecb";
+                case ENCRYPTION_MODE.AES_128_GCM:
+                    return "aes-128-gcm";
+                case ENCRYPTION_MODE.AES_256_GCM:
+                    return "aes-256-gcm";
+                case ENCRYPTION_MODE.AES_128_GCM2:
+                    return "aes-128-gcm-2";
+                case ENCRYPTION_MODE.AES_256_GCM2:
+                    return "aes-256-gcm-2";
+                default:
+                    return "aes-128-gcm-2";
             }
         }
     }
@@ -257,7 +257,7 @@ namespace Agora.Rtc
         public string deviceId;
     };
 
-#region terra AgoraBase.h
+    #region terra AgoraBase.h
 
     ///
     /// <summary>
@@ -8882,5 +8882,5 @@ namespace Agora.Rtc
         }
     }
 
-#endregion terra AgoraBase.h
+    #endregion terra AgoraBase.h
 }

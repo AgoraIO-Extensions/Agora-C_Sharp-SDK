@@ -259,7 +259,7 @@ namespace Agora.Rtc
         }
 
         ///////////////////////////////////
-         #endregion terra IMediaPlayerSourceObserver
+        #endregion terra IMediaPlayerSourceObserver
 
     }
 }

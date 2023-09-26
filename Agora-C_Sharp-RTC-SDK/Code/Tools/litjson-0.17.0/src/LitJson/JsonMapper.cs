@@ -1628,7 +1628,8 @@ namespace Agora.Rtm.LitJson
                 return;
             }
 
-            if (obj is IntPtr) {
+            if (obj is IntPtr)
+            {
                 writer.Write((UInt64)(IntPtr)obj);
                 return;
             }

@@ -39,7 +39,7 @@ namespace Agora.Rtc
             return _musicContentCenterImpl.DestroyMusicPlayer(player);
         }
 
-#region terra IMusicContentCenter
+        #region terra IMusicContentCenter
 
         public override int Initialize(MusicContentCenterConfiguration configuration)
         {
@@ -185,6 +185,6 @@ namespace Agora.Rtc
             }
             return _musicContentCenterImpl.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
         }
-#endregion terra IMusicContentCenter
+        #endregion terra IMusicContentCenter
     }
 }

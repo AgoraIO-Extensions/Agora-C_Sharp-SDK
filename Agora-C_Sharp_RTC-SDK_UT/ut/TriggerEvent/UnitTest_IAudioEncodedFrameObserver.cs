@@ -39,7 +39,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IAudioEncodedFrameObserver
+        #region terra IAudioEncodedFrameObserver
 
         [Test]
         public void Test_OnRecordAudioEncodedFrame()
@@ -115,6 +115,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnMixedAudioEncodedFramePassed(frameBuffer, length, audioEncodedFrameInfo));
         }
-#endregion terra IAudioEncodedFrameObserver
+        #endregion terra IAudioEncodedFrameObserver
     }
 }

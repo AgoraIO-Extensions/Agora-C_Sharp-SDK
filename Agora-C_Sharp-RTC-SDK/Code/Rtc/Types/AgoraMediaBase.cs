@@ -18,7 +18,7 @@ namespace Agora.Rtc
     ///
     public class VideoFrame
     {
-#region terra VideoFrame_Member_List
+        #region terra VideoFrame_Member_List
 
         ///
         /// <summary>
@@ -164,9 +164,9 @@ namespace Agora.Rtc
         ///
         public IntPtr alphaBufferPtr;
 
-#endregion terra VideoFrame_Member_List
+        #endregion terra VideoFrame_Member_List
 
-#region terra VideoFrame_Constructor
+        #region terra VideoFrame_Constructor
 
         public VideoFrame()
         {
@@ -194,7 +194,7 @@ namespace Agora.Rtc
             this.matrix = new float[16];
         }
 
-#endregion terra VideoFrame_Constructor
+        #endregion terra VideoFrame_Constructor
     }
 
     ///
@@ -204,7 +204,7 @@ namespace Agora.Rtc
     ///
     public class AudioFrame
     {
-#region terra AudioFrame_Member_List
+        #region terra AudioFrame_Member_List
 
         ///
         /// <summary>
@@ -266,7 +266,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public long presentationMs;
-#endregion terra AudioFrame_Member_List
+        #endregion terra AudioFrame_Member_List
 
         ///
         /// <summary>
@@ -275,7 +275,7 @@ namespace Agora.Rtc
         ///
         public byte[] RawBuffer;
 
-#region terra AudioFrame_Constructor
+        #region terra AudioFrame_Constructor
 
         public AudioFrame()
         {
@@ -304,10 +304,10 @@ namespace Agora.Rtc
             this.presentationMs = presentationMs;
         }
 
-#endregion terra AudioFrame_Constructor
+        #endregion terra AudioFrame_Constructor
     }
 
-#region terra AgoraMediaBase.h
+    #region terra AgoraMediaBase.h
 
     ///
     /// <summary>
@@ -1780,5 +1780,5 @@ namespace Agora.Rtc
         }
     }
 
-#endregion terra AgoraMediaBase.h
+    #endregion terra AgoraMediaBase.h
 }

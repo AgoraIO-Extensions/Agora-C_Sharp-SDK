@@ -57,11 +57,13 @@ namespace Agora.Rtm.Internal
 
         internal static void AllocEventHandlerHandle(ref RtmEventHandlerHandle eventHandlerHandle, Rtm_Func_Event_Native onEvent)
         {
-            eventHandlerHandle.cEvent = new IrisRtmCEventHandler {
+            eventHandlerHandle.cEvent = new IrisRtmCEventHandler
+            {
                 OnEvent = onEvent,
             };
 
-            var cEventHandlerNativeLocal = new IrisRtmCEventHandlerNative {
+            var cEventHandlerNativeLocal = new IrisRtmCEventHandlerNative
+            {
                 onEvent = Marshal.GetFunctionPointerForDelegate(eventHandlerHandle.cEvent.OnEvent),
             };
 
@@ -177,7 +179,8 @@ namespace Agora.Rtm.Internal
 
         internal string Result
         {
-            get {
+            get
+            {
                 var re = Marshal.PtrToStringAnsi(result);
                 return re;
             }

@@ -10,7 +10,7 @@ namespace Agora.Rtc
     public abstract class IRtcEngineEventHandler
     {
 
-#region terra IRtcEngineEventHandler
+        #region terra IRtcEngineEventHandler
 
         ///
         /// <summary>
@@ -1505,9 +1505,9 @@ namespace Agora.Rtc
         public virtual void OnVideoRenderingTracingResult(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
         {
         }
-#endregion terra IRtcEngineEventHandler
+        #endregion terra IRtcEngineEventHandler
 
-#region terra IDirectCdnStreamingEventHandler
+        #region terra IDirectCdnStreamingEventHandler
 
         ///
         /// @ignore
@@ -1522,6 +1522,6 @@ namespace Agora.Rtc
         public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats)
         {
         }
-#endregion terra IDirectCdnStreamingEventHandler
+        #endregion terra IDirectCdnStreamingEventHandler
     };
 }

@@ -10,7 +10,7 @@ namespace Agora.Rtc
     public abstract class IMediaPlayerSourceObserver
     {
 
-#region terra IMediaPlayerSourceObserver
+        #region terra IMediaPlayerSourceObserver
 
         ///
         /// <summary>
@@ -152,6 +152,6 @@ namespace Agora.Rtc
         public virtual void OnAudioVolumeIndication(int volume)
         {
         }
-#endregion terra IMediaPlayerSourceObserver
+        #endregion terra IMediaPlayerSourceObserver
     }
 }

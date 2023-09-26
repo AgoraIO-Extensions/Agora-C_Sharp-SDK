@@ -2,7 +2,7 @@
 {
     internal static class AgoraApiType
     {
-#region IStreamChannel start
+        #region IStreamChannel start
         internal const string FUNC_STREAMCHANNEL_JOIN = "StreamChannel_join";
         internal const string FUNC_STREAMCHANNEL_RENEWTOKEN = "StreamChannel_renewToken";
         internal const string FUNC_STREAMCHANNEL_LEAVE = "StreamChannel_leave";
@@ -14,17 +14,17 @@
         internal const string FUNC_STREAMCHANNEL_UNSUBSCRIBETOPIC = "StreamChannel_unsubscribeTopic";
         internal const string FUNC_STREAMCHANNEL_GETSUBSCRIBEDUSERLIST = "StreamChannel_getSubscribedUserList";
         internal const string FUNC_STREAMCHANNEL_RELEASE = "StreamChannel_release";
-#endregion
+        #endregion
 
-#region RtmMetadata start
+        #region RtmMetadata start
         internal const string FUNC_METADATA_SETMAJORREVISION = "Metadata_setMajorRevision";
         internal const string FUNC_METADATA_SETMETADATAITEM = "Metadata_setMetadataItem";
         internal const string FUNC_METADATA_GETMETADATAITEMS = "Metadata_getMetadataItems";
         internal const string FUNC_METADATA_CLEARMETADATA = "Metadata_clearMetadata";
         internal const string FUNC_METADATA_RELEASE = "Metadata_release";
-#endregion
+        #endregion
 
-#region IRtmStorage start
+        #region IRtmStorage start
         internal const string FUNC_RTMSTORAGE_CREATEMETADATA = "RtmStorage_createMetadata";
         internal const string FUNC_RTMSTORAGE_SETCHANNELMETADATA = "RtmStorage_setChannelMetadata";
         internal const string FUNC_RTMSTORAGE_UPDATECHANNELMETADATA = "RtmStorage_updateChannelMetadata";
@@ -36,18 +36,18 @@
         internal const string FUNC_RTMSTORAGE_GETUSERMETADATA = "RtmStorage_getUserMetadata";
         internal const string FUNC_RTMSTORAGE_SUBSCRIBEUSERMETADATA = "RtmStorage_subscribeUserMetadata";
         internal const string FUNC_RTMSTORAGE_UNSUBSCRIBEUSERMETADATA = "RtmStorage_unsubscribeUserMetadata";
-#endregion
+        #endregion
 
-#region IRtmLock start
+        #region IRtmLock start
         internal const string FUNC_RTMLOCK_SETLOCK = "RtmLock_setLock";
         internal const string FUNC_RTMLOCK_GETLOCKS = "RtmLock_getLocks";
         internal const string FUNC_RTMLOCK_REMOVELOCK = "RtmLock_removeLock";
         internal const string FUNC_RTMLOCK_ACQUIRELOCK = "RtmLock_acquireLock";
         internal const string FUNC_RTMLOCK_RELEASELOCK = "RtmLock_releaseLock";
         internal const string FUNC_RTMLOCK_REVOKELOCK = "RtmLock_revokeLock";
-#endregion
+        #endregion
 
-#region IRtmClient start
+        #region IRtmClient start
         internal const string FUNC_RTMCLIENT_INITIALIZE = "RtmClient_initialize";
         internal const string FUNC_RTMCLIENT_RELEASE = "RtmClient_release";
         internal const string FUNC_RTMCLIENT_LOGIN = "RtmClient_login";
@@ -64,14 +64,14 @@
         internal const string FUNC_RTMCLIENT_SETLOGFILE = "RtmClient_setLogFile";
         internal const string FUNC_RTMCLIENT_SETLOGLEVEL = "RtmClient_setLogLevel";
         internal const string FUNC_RTMCLIENT_SETLOGFILESIZE = "RtmClient_setLogFileSize";
-#endregion
+        #endregion
 
-#region IRtmPresence start
+        #region IRtmPresence start
         internal const string FUNC_RTMPRESENCE_WHONOW = "RtmPresence_whoNow";
         internal const string FUNC_RTMPRESENCE_WHERENOW = "RtmPresence_whereNow";
         internal const string FUNC_RTMPRESENCE_SETSTATE = "RtmPresence_setState";
         internal const string FUNC_RTMPRESENCE_REMOVESTATE = "RtmPresence_removeState";
         internal const string FUNC_RTMPRESENCE_GETSTATE = "RtmPresence_getState";
-#endregion
+        #endregion
     }
 }

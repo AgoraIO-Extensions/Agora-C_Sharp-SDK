@@ -59,7 +59,7 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-#region terra IMediaPlayer
+        #region terra IMediaPlayer
 
         public override int Open(string url, long startPos)
         {
@@ -521,6 +521,6 @@ namespace Agora.Rtc
             }
             return _mediaPlayerImpl.SetSoundPositionParams(playerId, pan, gain);
         }
-#endregion terra IMediaPlayer
+        #endregion terra IMediaPlayer
     }
 }

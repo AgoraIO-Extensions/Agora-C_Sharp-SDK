@@ -287,7 +287,7 @@ namespace Agora.Rtc
 
             Assert.AreEqual(0, nRet);
         }
-#region terra ILocalSpatialAudioEngine
+        #region terra ILocalSpatialAudioEngine
 
         [Test]
         public void Test_SetParameters()
@@ -341,6 +341,6 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#endregion terra ILocalSpatialAudioEngine
+        #endregion terra ILocalSpatialAudioEngine
     }
 }

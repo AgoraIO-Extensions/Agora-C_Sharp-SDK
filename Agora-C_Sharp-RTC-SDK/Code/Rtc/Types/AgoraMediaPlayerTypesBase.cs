@@ -4,7 +4,7 @@ namespace Agora.Rtc
     using int64_t = Int64;
     using LitJson;
 
-#region terra AgoraMediaPlayerTypes.h
+    #region terra AgoraMediaPlayerTypes.h
 
     ///
     /// <summary>
@@ -836,5 +836,5 @@ namespace Agora.Rtc
         }
     }
 
-#endregion terra AgoraMediaPlayerTypes.h
+    #endregion terra AgoraMediaPlayerTypes.h
 }

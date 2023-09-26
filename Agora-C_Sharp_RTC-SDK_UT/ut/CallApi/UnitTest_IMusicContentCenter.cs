@@ -21,7 +21,7 @@ namespace Agora.Rtc
         [TearDown]
         public void TearDown() { Engine.Dispose(); }
 
-#region terra IMusicContentCenter
+        #region terra IMusicContentCenter
 
         [Test]
         public void Test_Initialize()
@@ -180,6 +180,6 @@ namespace Agora.Rtc
             var nRet = MusicContentCenter.GetInternalSongCode(songCode, jsonOption, ref internalSongCode);
             Assert.AreEqual(0, nRet);
         }
-#endregion terra IMusicContentCenter
+        #endregion terra IMusicContentCenter
     }
 }

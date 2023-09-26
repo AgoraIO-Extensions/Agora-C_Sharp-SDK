@@ -26,7 +26,7 @@ namespace Agora.Rtc
             Engine.Dispose();
         }
 
-#region terra IMediaRecorder
+        #region terra IMediaRecorder
 
         [Test]
         public void Test_SetMediaRecorderObserver()
@@ -53,6 +53,6 @@ namespace Agora.Rtc
             var nRet = MediaRecorder.StopRecording();
             Assert.AreEqual(0, nRet);
         }
-#endregion terra IMediaRecorder
+        #endregion terra IMediaRecorder
     }
 }

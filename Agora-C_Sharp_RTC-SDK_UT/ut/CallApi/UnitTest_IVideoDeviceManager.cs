@@ -32,7 +32,7 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet.Length);
         }
 
-#region terra IVideoDeviceManager
+        #region terra IVideoDeviceManager
 
         [Test]
         public void Test_SetDevice()
@@ -89,6 +89,6 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#endregion terra IVideoDeviceManager
+        #endregion terra IVideoDeviceManager
     }
 }

@@ -41,7 +41,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IMediaRecorderObserver
+        #region terra IMediaRecorderObserver
 
         [Test]
         public void Test_OnRecorderStateChanged()
@@ -95,6 +95,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnRecorderInfoUpdatedPassed(channelId, uid, info));
         }
-#endregion terra IMediaRecorderObserver
+        #endregion terra IMediaRecorderObserver
     }
 }

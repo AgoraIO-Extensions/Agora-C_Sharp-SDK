@@ -40,7 +40,7 @@ namespace Agora.Rtc
             return _musicPlayerImpl.InitEventHandler(playerId, engineEventHandler);
         }
 
-#region terra IMusicPlayer
+        #region terra IMusicPlayer
 
         public override int Open(string url, long startPos)
         {
@@ -511,6 +511,6 @@ namespace Agora.Rtc
             }
             return this._musicPlayerImpl.Open(playerId, songCode, startPos);
         }
-#endregion terra IMusicPlayer
+        #endregion terra IMusicPlayer
     }
 }

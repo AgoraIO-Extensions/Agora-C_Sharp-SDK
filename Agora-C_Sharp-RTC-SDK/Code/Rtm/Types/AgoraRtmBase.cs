@@ -1593,11 +1593,13 @@ namespace Agora.Rtm
 
         public byte[] encryptionSalt
         {
-            set {
+            set
+            {
                 Buffer.BlockCopy(value, 0, encryptionSalt32, 0, 32);
             }
 
-            get {
+            get
+            {
                 return encryptionSalt32;
             }
         }

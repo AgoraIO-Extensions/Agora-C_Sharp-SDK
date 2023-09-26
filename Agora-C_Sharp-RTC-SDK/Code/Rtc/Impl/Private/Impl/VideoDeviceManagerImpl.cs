@@ -56,7 +56,7 @@ namespace Agora.Rtc
             return AgoraJson.JsonToStructArray<DeviceInfo>(_apiParam.Result, "result");
         }
 
-#region terra IVideoDeviceManager
+        #region terra IVideoDeviceManager
 
         public int SetDevice(string deviceIdUTF8)
         {
@@ -149,6 +149,6 @@ namespace Agora.Rtc
             return result;
         }
 
-#endregion terra IVideoDeviceManager
+        #endregion terra IVideoDeviceManager
     }
 }

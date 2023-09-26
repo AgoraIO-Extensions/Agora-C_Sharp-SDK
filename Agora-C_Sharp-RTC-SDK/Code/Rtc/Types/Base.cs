@@ -32,7 +32,7 @@ namespace Agora.Rtc
     {
         internal AudioFrameInternal(AudioFrame audioFrame)
         {
-#region terra AudioFrameInternal_Assignment
+            #region terra AudioFrameInternal_Assignment
 
             this.type = audioFrame.type;
             this.samplesPerChannel = audioFrame.samplesPerChannel;
@@ -43,10 +43,10 @@ namespace Agora.Rtc
             this.renderTimeMs = audioFrame.renderTimeMs;
             this.avsync_type = audioFrame.avsync_type;
             this.presentationMs = audioFrame.presentationMs;
-#endregion terra AudioFrameInternal_Assignment
+            #endregion terra AudioFrameInternal_Assignment
         }
 
-#region terra AudioFrameInternal_Member_List
+        #region terra AudioFrameInternal_Member_List
 
         public AUDIO_FRAME_TYPE type;
         public int samplesPerChannel;
@@ -57,7 +57,7 @@ namespace Agora.Rtc
         public long renderTimeMs;
         public int avsync_type;
         public long presentationMs;
-#endregion terra AudioFrameInternal_Member_List
+        #endregion terra AudioFrameInternal_Member_List
     }
 
     internal class ExternalVideoFrameInternal
@@ -65,7 +65,7 @@ namespace Agora.Rtc
 
         internal ExternalVideoFrameInternal(ExternalVideoFrame frame)
         {
-#region terra ExternalVideoFrameInternal_Assignment
+            #region terra ExternalVideoFrameInternal_Assignment
 
             this.type = frame.type;
             this.format = frame.format;
@@ -85,10 +85,10 @@ namespace Agora.Rtc
 
             this.metadata_size = frame.metadata_size;
 
-#endregion terra ExternalVideoFrameInternal_Assignment
+            #endregion terra ExternalVideoFrameInternal_Assignment
         }
 
-#region terra ExternalVideoFrameInternal_Member_List
+        #region terra ExternalVideoFrameInternal_Member_List
 
         public VIDEO_BUFFER_TYPE type;
         public VIDEO_PIXEL_FORMAT format;
@@ -108,7 +108,7 @@ namespace Agora.Rtc
 
         public int metadata_size;
 
-#endregion terra ExternalVideoFrameInternal_Member_List
+        #endregion terra ExternalVideoFrameInternal_Member_List
     }
 
     ///

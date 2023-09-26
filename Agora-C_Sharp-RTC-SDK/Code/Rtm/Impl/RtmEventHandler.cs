@@ -52,7 +52,7 @@ namespace Agora.Rtm
             this.rtmClient = rtmClient;
         }
 
-#region addTask
+        #region addTask
         public void PutJoinResultTask(UInt64 requestId, TaskCompletionSource<RtmResult<JoinResult>> task)
         {
             joinResultTaskMap.Add(requestId, task);
@@ -192,9 +192,9 @@ namespace Agora.Rtm
         {
             presenceGetStateResultTaskMap.Add(requestId, task);
         }
-#endregion
+        #endregion
 
-#region eventHandler
+        #region eventHandler
         public override void OnMessageEvent(MessageEvent @event)
         {
             rtmClient.InvokeOnMessageEvent(@event);
@@ -928,7 +928,7 @@ namespace Agora.Rtm
                 AgoraLog.LogWarning("OnPresenceGetStateResult unrecorded requestId: " + requestId);
             }
 
-#endregion
+            #endregion
         }
     }
 }

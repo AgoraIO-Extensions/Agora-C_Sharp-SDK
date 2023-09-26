@@ -248,7 +248,8 @@ namespace Agora.Rtc
             {
                 return true;
             }
-            else {
+            else
+            {
 
                 MethodInfo methodInfo2 = instType.GetMethod("GetValue");
                 object value1 = methodInfo2.Invoke(obj1, new object[] { });

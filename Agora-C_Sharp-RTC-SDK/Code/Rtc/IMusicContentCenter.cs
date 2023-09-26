@@ -13,7 +13,7 @@ namespace Agora.Rtc
         ///
         public abstract int DestroyMusicPlayer(IMusicPlayer player);
 
-#region terra IMusicContentCenter
+        #region terra IMusicContentCenter
 
         ///
         /// @ignore
@@ -95,6 +95,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int GetInternalSongCode(long songCode, string jsonOption, ref long internalSongCode);
-#endregion terra IMusicContentCenter
+        #endregion terra IMusicContentCenter
     }
 }

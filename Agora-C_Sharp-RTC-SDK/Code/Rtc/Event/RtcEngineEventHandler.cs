@@ -221,7 +221,7 @@ namespace Agora.Rtc
         public event OnLastmileQualityHandler EventOnLastmileQuality;
         public event OnFirstLocalVideoFrameHandler EventOnFirstLocalVideoFrame;
         public event OnFirstLocalVideoFramePublishedHandler EventOnFirstLocalVideoFramePublished;
-     
+
         public event OnFirstRemoteVideoDecodedHandler EventOnFirstRemoteVideoDecoded;
         public event OnVideoSizeChangedHandler EventOnVideoSizeChanged;
         public event OnContentInspectResultHandler EventOnContentInspectResult;
@@ -437,7 +437,7 @@ namespace Agora.Rtc
             EventOnFirstLocalVideoFramePublished.Invoke(connection, elapsed);
         }
 
-     
+
 
         public override void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
         {

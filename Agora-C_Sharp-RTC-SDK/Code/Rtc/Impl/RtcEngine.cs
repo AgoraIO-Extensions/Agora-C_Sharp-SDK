@@ -60,14 +60,16 @@ namespace Agora.Rtc
         private static IRtcEngine instance = null;
         public static IRtcEngine Instance
         {
-            get {
+            get
+            {
                 return instance ?? (instance = new RtcEngine(IntPtr.Zero));
             }
         }
 
         public static IRtcEngineEx InstanceEx
         {
-            get {
+            get
+            {
                 return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
             }
         }
@@ -318,7 +320,7 @@ namespace Agora.Rtc
         }
 #endif
 
-#region terra IRtcEngine
+        #region terra IRtcEngine
 
         public override int Initialize(RtcEngineContext context)
         {
@@ -2788,9 +2790,9 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.GetNtpWallTimeInMs();
         }
-#endregion terra IRtcEngine
+        #endregion terra IRtcEngine
 
-#region terra IRtcEngineEx
+        #region terra IRtcEngineEx
 
         public override int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
         {
@@ -3253,7 +3255,7 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.StartMediaRenderingTracingEx(connection);
         }
-#endregion terra IRtcEngineEx
+        #endregion terra IRtcEngineEx
 
         public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
@@ -3318,7 +3320,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.UnRegisterVideoEncodedFrameObserver();
         }
 
-#region terra IMediaEngine
+        #region terra IMediaEngine
 
         public override int PushAudioFrame(AudioFrame frame, uint trackId = 0)
         {
@@ -3402,6 +3404,6 @@ namespace Agora.Rtc
             return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
         }
 
-#endregion terra IMediaEngine
+        #endregion terra IMediaEngine
     }
 }

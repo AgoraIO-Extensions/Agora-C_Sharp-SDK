@@ -41,7 +41,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IMediaPlayerCustomDataProvider
+        #region terra IMediaPlayerCustomDataProvider
 
         [Test]
         public void Test_OnReadData()
@@ -86,6 +86,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnSeekPassed(offset, whence));
         }
-#endregion terra IMediaPlayerCustomDataProvider
+        #endregion terra IMediaPlayerCustomDataProvider
     }
 }

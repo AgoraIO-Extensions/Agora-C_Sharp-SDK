@@ -134,7 +134,7 @@ namespace Agora.Rtc
         public abstract int SetMaxMetadataSize(int size);
 #endif
 
-#region terra IRtcEngine
+        #region terra IRtcEngine
 
         ///
         /// <summary>
@@ -5070,7 +5070,7 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract ulong GetNtpWallTimeInMs();
-#endregion terra IRtcEngine
+        #endregion terra IRtcEngine
 
         ///
         /// @ignore
@@ -5116,7 +5116,7 @@ namespace Agora.Rtc
         ///
         public abstract int UnRegisterVideoEncodedFrameObserver();
 
-#region terra IMediaEngine
+        #region terra IMediaEngine
 
         ///
         /// @ignore
@@ -5164,7 +5164,7 @@ namespace Agora.Rtc
         ///
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
 
-#endregion terra IMediaEngine
+        #endregion terra IMediaEngine
     };
 
     ///
@@ -5177,7 +5177,7 @@ namespace Agora.Rtc
     public abstract class IRtcEngineEx : IRtcEngine
     {
 
-#region terra IRtcEngineEx
+        #region terra IRtcEngineEx
 
         ///
         /// <summary>
@@ -6152,6 +6152,6 @@ namespace Agora.Rtc
         /// </returns>
         ///
         public abstract int StartMediaRenderingTracingEx(RtcConnection connection);
-#endregion terra IRtcEngineEx
+        #endregion terra IRtcEngineEx
     }
 }

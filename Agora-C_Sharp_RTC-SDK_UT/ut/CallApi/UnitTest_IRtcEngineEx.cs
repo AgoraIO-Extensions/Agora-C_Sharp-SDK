@@ -23,7 +23,7 @@ namespace Agora.Rtc
         [TearDown]
         public void TearDown() { RtcEngineEx.Dispose(); }
 
-#region terra IRtcEngineEx
+        #region terra IRtcEngineEx
 
         [Test]
         public void Test_JoinChannelEx()
@@ -564,7 +564,7 @@ namespace Agora.Rtc
             var nRet = RtcEngineEx.StartMediaRenderingTracingEx(connection);
             Assert.AreEqual(0, nRet);
         }
-#endregion terra IRtcEngineEx
+        #endregion terra IRtcEngineEx
     }
 
 }

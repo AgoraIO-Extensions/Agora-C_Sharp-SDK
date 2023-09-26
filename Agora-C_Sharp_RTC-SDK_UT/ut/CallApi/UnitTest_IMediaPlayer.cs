@@ -47,7 +47,7 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#region terra IMediaPlayer
+        #region terra IMediaPlayer
 
         [Test]
         public void Test_Open()
@@ -490,6 +490,6 @@ namespace Agora.Rtc
             var nRet = MediaPlayer.SetSoundPositionParams(pan, gain);
             Assert.AreEqual(0, nRet);
         }
-#endregion terra IMediaPlayer
+        #endregion terra IMediaPlayer
     }
 }

@@ -221,7 +221,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-#region terra IMediaRecorder
+        #region terra IMediaRecorder
 
         public int StartRecording(string nativeHandle, MediaRecorderConfiguration config)
         {
@@ -251,6 +251,6 @@ namespace Agora.Rtc
 
             return result;
         }
-#endregion terra IMediaRecorder
+        #endregion terra IMediaRecorder
     }
 }

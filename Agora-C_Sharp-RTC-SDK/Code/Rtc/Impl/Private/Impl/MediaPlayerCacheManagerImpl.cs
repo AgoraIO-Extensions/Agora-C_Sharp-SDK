@@ -45,7 +45,7 @@ namespace Agora.Rtc
             _disposed = true;
         }
 
-#region terra IMediaPlayerCacheManager
+        #region terra IMediaPlayerCacheManager
 
         public int RemoveAllCaches()
         {
@@ -203,6 +203,6 @@ namespace Agora.Rtc
 
             return result;
         }
-#endregion terra IMediaPlayerCacheManager
+        #endregion terra IMediaPlayerCacheManager
     }
 }

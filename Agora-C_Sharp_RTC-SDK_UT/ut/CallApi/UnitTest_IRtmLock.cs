@@ -54,7 +54,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out channelType);
             ulong requestId;
             ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.GetLocks(channelName, channelType,ref requestId);
+            var nRet = RtmLock.GetLocks(channelName, channelType, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -70,7 +70,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out lockName);
             ulong requestId;
             ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.RemoveLock(channelName, channelType, lockName,ref requestId);
+            var nRet = RtmLock.RemoveLock(channelName, channelType, lockName, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -88,7 +88,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out retry);
             ulong requestId;
             ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.AcquireLock(channelName, channelType, lockName, retry,ref requestId);
+            var nRet = RtmLock.AcquireLock(channelName, channelType, lockName, retry, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -104,7 +104,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out lockName);
             ulong requestId;
             ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.ReleaseLock(channelName, channelType, lockName,ref requestId);
+            var nRet = RtmLock.ReleaseLock(channelName, channelType, lockName, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }
@@ -122,7 +122,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out owner);
             ulong requestId;
             ParamsHelper.InitParam(out requestId);
-            var nRet = RtmLock.RevokeLock(channelName, channelType, lockName, owner,ref requestId);
+            var nRet = RtmLock.RevokeLock(channelName, channelType, lockName, owner, ref requestId);
 
             Assert.AreEqual(0, nRet);
         }

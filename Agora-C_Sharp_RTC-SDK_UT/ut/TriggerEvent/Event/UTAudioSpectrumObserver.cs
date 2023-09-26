@@ -6,7 +6,7 @@ namespace Agora.Rtc
     {
         public string TAG;
 
-#region terra IAudioSpectrumObserver
+        #region terra IAudioSpectrumObserver
 
         public bool OnLocalAudioSpectrum_be_trigger = false;
         public AudioSpectrumData OnLocalAudioSpectrum_data;
@@ -59,6 +59,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-#endregion terra IAudioSpectrumObserver
+        #endregion terra IAudioSpectrumObserver
     }
 }

@@ -44,7 +44,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IAudioFrameObserver
+        #region terra IAudioFrameObserver
 
         [Test]
         public void Test_OnRecordAudioFrame()
@@ -180,6 +180,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPlaybackAudioFrameBeforeMixingPassed(channelId, uid, audioFrame));
         }
-#endregion terra IAudioFrameObserver
+        #endregion terra IAudioFrameObserver
     }
 }

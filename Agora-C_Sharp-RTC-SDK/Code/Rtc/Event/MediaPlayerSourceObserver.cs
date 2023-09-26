@@ -21,7 +21,7 @@ namespace Agora.Rtc
     public delegate void OnPlayerInfoUpdatedHandler(PlayerUpdatedInfo info);
 
     public delegate void MediaPlayerOnAudioVolumeIndicationHandler(int volume);
-    
+
     public class MediaPlayerSourceObserver : IMediaPlayerSourceObserver
     {
         public event OnPlayerSourceStateChangedHandler EventOnPlayerSourceStateChanged;

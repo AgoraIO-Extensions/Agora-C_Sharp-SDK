@@ -8,7 +8,7 @@ namespace Agora.Rtc
     public abstract class IMusicContentCenterEventHandler
     {
 
-#region terra IMusicContentCenterEventHandler
+        #region terra IMusicContentCenterEventHandler
 
         ///
         /// @ignore
@@ -34,6 +34,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract void OnPreLoadEvent(string requestId, long songCode, int percent, string lyricUrl, PreloadStatusCode status, MusicContentCenterStatusCode errorCode);
-#endregion terra IMusicContentCenterEventHandler
+        #endregion terra IMusicContentCenterEventHandler
     }
 }

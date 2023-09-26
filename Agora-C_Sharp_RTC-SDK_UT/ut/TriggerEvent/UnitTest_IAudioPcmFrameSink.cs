@@ -41,7 +41,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IAudioPcmFrameSink
+        #region terra IAudioPcmFrameSink
 
         [Test]
         public void Test_OnFrame()
@@ -61,6 +61,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnFramePassed(frame));
         }
-#endregion terra IAudioPcmFrameSink
+        #endregion terra IAudioPcmFrameSink
     }
 }

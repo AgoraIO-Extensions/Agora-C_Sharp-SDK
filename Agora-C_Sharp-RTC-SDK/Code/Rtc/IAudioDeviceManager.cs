@@ -71,7 +71,7 @@ namespace Agora.Rtc
         ///
         public abstract int GetRecordingDefaultDevice(ref string deviceId, ref string deviceName);
 
-#region terra IAudioDeviceManager
+        #region terra IAudioDeviceManager
 
         ///
         /// <summary>
@@ -417,6 +417,6 @@ namespace Agora.Rtc
         ///
         public abstract int FollowSystemLoopbackDevice(bool enable);
 
-#endregion terra IAudioDeviceManager
+        #endregion terra IAudioDeviceManager
     }
 }

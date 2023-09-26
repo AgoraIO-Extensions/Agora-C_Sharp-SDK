@@ -20,7 +20,8 @@
         private static ILocalSpatialAudioEngine instance = null;
         public static ILocalSpatialAudioEngine Instance
         {
-            get {
+            get
+            {
                 return instance;
             }
         }
@@ -44,7 +45,7 @@
             instance = null;
         }
 
-#region terra ILocalSpatialAudioEngine
+        #region terra ILocalSpatialAudioEngine
 
         public override int SetMaxAudioRecvCount(int maxCount)
         {
@@ -225,6 +226,6 @@
             }
             return _localSpatialAudioEngineImpl.SetRemoteAudioAttenuation(uid, attenuation, forceSet);
         }
-#endregion terra ILocalSpatialAudioEngine
+        #endregion terra ILocalSpatialAudioEngine
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Agora.Rtc
 {
-#region terra IAgoraLog.h
+    #region terra IAgoraLog.h
 
     ///
     /// <summary>
@@ -142,5 +142,5 @@ namespace Agora.Rtc
         }
     }
 
-#endregion terra IAgoraLog.h
+    #endregion terra IAgoraLog.h
 }

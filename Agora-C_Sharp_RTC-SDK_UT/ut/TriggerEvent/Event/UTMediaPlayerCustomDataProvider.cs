@@ -6,7 +6,7 @@ namespace Agora.Rtc
     public class UTMediaPlayerCustomDataProvider : IMediaPlayerCustomDataProvider
     {
 
-#region terra IMediaPlayerCustomDataProvider
+        #region terra IMediaPlayerCustomDataProvider
 
         public bool OnReadData_be_trigger = false;
         public IntPtr OnReadData_buffer;
@@ -63,6 +63,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-#endregion terra IMediaPlayerCustomDataProvider
+        #endregion terra IMediaPlayerCustomDataProvider
     }
 }

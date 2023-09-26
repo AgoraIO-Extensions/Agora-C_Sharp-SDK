@@ -3,7 +3,7 @@ namespace Agora.Rtc
 {
     public class UTVideoFrameObserver : IVideoFrameObserver
     {
-#region terra IVideoFrameObserver
+        #region terra IVideoFrameObserver
 
         public bool OnCaptureVideoFrame_be_trigger = false;
         public VIDEO_SOURCE_TYPE OnCaptureVideoFrame_sourceType;
@@ -145,6 +145,6 @@ namespace Agora.Rtc
 
         /////////////////////////////////
 
-#endregion terra IVideoFrameObserver
+        #endregion terra IVideoFrameObserver
     }
 }

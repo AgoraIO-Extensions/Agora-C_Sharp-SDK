@@ -5,7 +5,7 @@ namespace Agora.Rtc
     ///
     public abstract class IMediaRecorder
     {
-#region terra IMediaRecorder
+        #region terra IMediaRecorder
 
         ///
         /// @ignore
@@ -21,6 +21,6 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public abstract int StopRecording();
-#endregion terra IMediaRecorder
+        #endregion terra IMediaRecorder
     };
 }

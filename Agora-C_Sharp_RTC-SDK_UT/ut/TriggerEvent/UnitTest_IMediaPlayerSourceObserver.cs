@@ -41,7 +41,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IMediaPlayerSourceObserver
+        #region terra IMediaPlayerSourceObserver
 
         [Test]
         public void Test_OnPlayerSourceStateChanged()
@@ -263,6 +263,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnAudioVolumeIndicationPassed(volume));
         }
-#endregion terra IMediaPlayerSourceObserver
+        #endregion terra IMediaPlayerSourceObserver
     }
 }

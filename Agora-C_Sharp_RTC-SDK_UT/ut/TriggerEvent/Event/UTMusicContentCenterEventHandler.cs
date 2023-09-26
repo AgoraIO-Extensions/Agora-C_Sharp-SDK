@@ -5,7 +5,7 @@ namespace Agora.Rtc
     public class UTMusicContentCenterEventHandler : IMusicContentCenterEventHandler
     {
 
-#region terra IMusicContentCenterEventHandler
+        #region terra IMusicContentCenterEventHandler
 
         public bool OnMusicChartsResult_be_trigger = false;
         public string OnMusicChartsResult_requestId;
@@ -181,6 +181,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-#endregion terra IMusicContentCenterEventHandler
+        #endregion terra IMusicContentCenterEventHandler
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Agora.Rtc
 {
-#region terra IAgoraSpatialAudio.h
+    #region terra IAgoraSpatialAudio.h
 
     ///
     /// <summary>
@@ -134,5 +134,5 @@
         }
     }
 
-#endregion terra IAgoraSpatialAudio.h
+    #endregion terra IAgoraSpatialAudio.h
 }

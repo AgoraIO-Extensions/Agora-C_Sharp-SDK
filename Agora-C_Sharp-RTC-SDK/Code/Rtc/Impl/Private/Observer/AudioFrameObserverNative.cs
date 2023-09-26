@@ -70,92 +70,92 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                case "AudioFrameObserver_onRecordAudioFrame":
-                {
-                    AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                    string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                    bool result = audioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
-                    Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                    p.Add("result", result);
-                    string json = AgoraJson.ToJson(p);
-                    var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                    IntPtr resultPtr = eventParam.result;
-                    Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                }
-                break;
-                case "AudioFrameObserver_onPlaybackAudioFrame":
-                {
-                    AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                    string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                    bool result = audioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
-                    Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                    p.Add("result", result);
-                    string json = AgoraJson.ToJson(p);
-                    var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                    IntPtr resultPtr = eventParam.result;
-                    Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                }
-                break;
-                case "AudioFrameObserver_onMixedAudioFrame":
-                {
-                    AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                    string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                    bool result = audioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
-                    Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                    p.Add("result", result);
-                    string json = AgoraJson.ToJson(p);
-                    var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                    IntPtr resultPtr = eventParam.result;
-                    Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                }
-                break;
-                case "AudioFrameObserver_onEarMonitoringAudioFrame":
-                {
-                    AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                    bool result = audioFrameObserver.OnEarMonitoringAudioFrame(audioFrame);
-                    Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                    p.Add("result", result);
-                    string json = AgoraJson.ToJson(p);
-                    var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                    IntPtr resultPtr = eventParam.result;
-                    Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                }
-                break;
-                case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing":
-                {
-                    AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                    string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                    uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
-                    var result = audioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
-                    Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                    p.Add("result", result);
-                    string json = AgoraJson.ToJson(p);
-                    var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                    IntPtr resultPtr = eventParam.result;
-                    Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                }
-                break;
-                case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2":
-                {
-                    AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
-                    string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
-                    string userId = (string)AgoraJson.GetData<string>(jsonData, "userId");
-                    var result = audioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, userId, audioFrame);
-                    Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                    p.Add("result", result);
-                    string json = AgoraJson.ToJson(p);
-                    var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                    IntPtr resultPtr = eventParam.result;
-                    Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-                }
-                break;
+                    case "AudioFrameObserver_onRecordAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            bool result = audioFrameObserver.OnRecordAudioFrame(channelId, audioFrame);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onPlaybackAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            bool result = audioFrameObserver.OnPlaybackAudioFrame(channelId, audioFrame);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onMixedAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            bool result = audioFrameObserver.OnMixedAudioFrame(channelId, audioFrame);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onEarMonitoringAudioFrame":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            bool result = audioFrameObserver.OnEarMonitoringAudioFrame(audioFrame);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            uint uid = (uint)AgoraJson.GetData<uint>(jsonData, "uid");
+                            var result = audioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, uid, audioFrame);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+                    case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2":
+                        {
+                            AudioFrame audioFrame = GetAudioFrameFromJsonData(ref jsonData, "audioFrame", lengthArray != null ? lengthArray[0] : 0);
+                            string channelId = (string)AgoraJson.GetData<string>(jsonData, "channelId");
+                            string userId = (string)AgoraJson.GetData<string>(jsonData, "userId");
+                            var result = audioFrameObserver.OnPlaybackAudioFrameBeforeMixing(channelId, userId, audioFrame);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
 
-#region terra IAudioFrameObserver
+                    #region terra IAudioFrameObserver
 
-#endregion terra IAudioFrameObserver
-                default:
-                    AgoraLog.LogError("unexpected event: " + @event);
-                    break;
+                    #endregion terra IAudioFrameObserver
+                    default:
+                        AgoraLog.LogError("unexpected event: " + @event);
+                        break;
                 }
             }
         }
@@ -165,40 +165,40 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-            case "AudioFrameObserver_onRecordAudioFrame":
-            case "AudioFrameObserver_onPublishAudioFrame":
-            case "AudioFrameObserver_onPlaybackAudioFrame":
-            case "AudioFrameObserver_onMixedAudioFrame":
-            case "AudioFrameObserver_onEarMonitoringAudioFrame":
-            {
-                bool result = true;
-                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                p.Add("result", result);
-                string json = AgoraJson.ToJson(p);
-                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                IntPtr resultPtr = eventParam.result;
-                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-            }
-            break;
-            case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing":
-            case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2":
-            {
-                var result = true;
-                Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
-                p.Add("result", result);
-                string json = AgoraJson.ToJson(p);
-                var jsonByte = System.Text.Encoding.Default.GetBytes(json);
-                IntPtr resultPtr = eventParam.result;
-                Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
-            }
-            break;
+                case "AudioFrameObserver_onRecordAudioFrame":
+                case "AudioFrameObserver_onPublishAudioFrame":
+                case "AudioFrameObserver_onPlaybackAudioFrame":
+                case "AudioFrameObserver_onMixedAudioFrame":
+                case "AudioFrameObserver_onEarMonitoringAudioFrame":
+                    {
+                        bool result = true;
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
+                        string json = AgoraJson.ToJson(p);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                        IntPtr resultPtr = eventParam.result;
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                    }
+                    break;
+                case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing":
+                case "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2":
+                    {
+                        var result = true;
+                        Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                        p.Add("result", result);
+                        string json = AgoraJson.ToJson(p);
+                        var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                        IntPtr resultPtr = eventParam.result;
+                        Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                    }
+                    break;
 
-#region terra IAudioFrameObserver_CreateDefaultReturn
+                #region terra IAudioFrameObserver_CreateDefaultReturn
 
-#endregion terra IAudioFrameObserver_CreateDefaultReturn
-            default:
-                AgoraLog.LogError("unexpected event: " + @event);
-                break;
+                #endregion terra IAudioFrameObserver_CreateDefaultReturn
+                default:
+                    AgoraLog.LogError("unexpected event: " + @event);
+                    break;
             }
         }
 

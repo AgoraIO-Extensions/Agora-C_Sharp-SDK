@@ -40,7 +40,7 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-#region terra IMetadataObserver
+        #region terra IMetadataObserver
 
         [Test]
         public void Test_GetMaxMetadataSize()
@@ -98,6 +98,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnMetadataReceivedPassed(metadata));
         }
-#endregion terra IMetadataObserver
+        #endregion terra IMetadataObserver
     }
 }

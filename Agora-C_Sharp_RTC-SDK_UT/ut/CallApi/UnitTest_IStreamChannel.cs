@@ -155,7 +155,7 @@ namespace Agora.Rtm
 
         [Test]
         public void Test_GetSubscribedUserList()
-       {
+        {
             string topic;
             ParamsHelper.InitParam(out topic);
             Internal.UserList users;

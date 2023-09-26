@@ -60,11 +60,11 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out channelName);
             string message;
             ParamsHelper.InitParam(out message);
-            int  length;
+            int length;
             ParamsHelper.InitParam(out length);
             Internal.PublishOptions option;
             ParamsHelper.InitParam(out option);
-             ulong requestId;
+            ulong requestId;
             ParamsHelper.InitParam(out requestId);
             var nRet = RtmClient.Publish(channelName, message, length, option, ref requestId);
 
@@ -96,7 +96,7 @@ namespace Agora.Rtm
             ParamsHelper.InitParam(out channelName);
             SubscribeOptions options;
             ParamsHelper.InitParam(out options);
-             ulong requestId;
+            ulong requestId;
             ParamsHelper.InitParam(out requestId);
             var nRet = RtmClient.Subscribe(channelName, options, ref requestId);
 

@@ -2,7 +2,7 @@
 
 namespace Agora.Rtc
 {
-#region terra IAgoraRhythmPlayer.h
+    #region terra IAgoraRhythmPlayer.h
 
     ///
     /// <summary>
@@ -124,5 +124,5 @@ namespace Agora.Rtc
         }
     }
 
-#endregion terra IAgoraRhythmPlayer.h
+    #endregion terra IAgoraRhythmPlayer.h
 }

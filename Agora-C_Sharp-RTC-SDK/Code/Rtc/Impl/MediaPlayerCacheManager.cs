@@ -21,7 +21,8 @@ namespace Agora.Rtc
         private static MediaPlayerCacheManager instance = null;
         public static MediaPlayerCacheManager Instance
         {
-            get {
+            get
+            {
                 return instance;
             }
         }
@@ -36,7 +37,7 @@ namespace Agora.Rtc
             instance = null;
         }
 
-#region terra IMediaPlayerCacheManager
+        #region terra IMediaPlayerCacheManager
 
         public override int RemoveAllCaches()
         {
@@ -136,6 +137,6 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.GetCacheFileCount();
         }
-#endregion terra IMediaPlayerCacheManager
+        #endregion terra IMediaPlayerCacheManager
     }
 }
