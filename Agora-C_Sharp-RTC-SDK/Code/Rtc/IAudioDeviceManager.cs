@@ -79,12 +79,27 @@ namespace Agora.Rtc
         public abstract int GetPlaybackDeviceVolume(ref int volume);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Mutes the audio playback device.
+        /// </summary>
+        ///
+        /// <param name="mute"> Whether to mute the audio playback device: true : Mute the audio playback device. false : Unmute the audio playback device.</param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetPlaybackDeviceMute(bool mute);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Retrieves whether the audio playback device is muted.
+        /// </summary>
+        ///
+        /// <returns>
+        /// true : The audio playback device is muted. false : The audio playback device is unmuted.
+        /// </returns>
         ///
         public abstract int GetPlaybackDeviceMute(ref bool mute);
 

@@ -96,30 +96,71 @@ namespace Agora.Rtc
     ///
     public enum VIDEO_OBSERVER_FRAME_TYPE
     {
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_DEFAULT = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_YUV420 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I420,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_BGRA,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_NV21 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_NV21,
 
+        ///
+        /// <summary>
+        /// 2: The format of the video frame is RGBA.
+        /// </summary>
+        ///
         FRAME_TYPE_RGBA = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_RGBA,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_NV12 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_NV12,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_TEXTURE_2D = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_2D,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_TEXTURE_OES = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_OES,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_CVPIXEL_NV12 = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_NV12,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_CVPIXEL_I420 = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_I420,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_CVPIXEL_BGRA = VIDEO_PIXEL_FORMAT.VIDEO_CVPIXEL_BGRA,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
 
+        ///
+        /// @ignore
+        ///
         FRAME_TYPE_ID3D11TEXTURE2D = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_ID3D11TEXTURE2D,
     };
 }

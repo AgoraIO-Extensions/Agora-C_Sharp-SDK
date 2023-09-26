@@ -168,7 +168,7 @@ namespace Agora.Rtc
         /// If the sound source and the receiver belong to two sound insulation areas, the receiver cannot hear the sound source. If this method is called multiple times, the last sound insulation area set takes effect.
         /// </summary>
         ///
-        /// <param name="zones"> Sound insulation area settings. See SpatialAudioZone.</param>
+        /// <param name="zones"> Sound insulation area settings. See SpatialAudioZone. On the Windows platform, it is necessary to ensure that the number of members in the zones array is equal to the value of zoneCount; otherwise, it may cause a crash.</param>
         ///
         /// <param name="zoneCount"> The number of sound insulation areas.</param>
         ///

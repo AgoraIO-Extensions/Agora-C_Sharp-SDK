@@ -242,7 +242,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the number of the media streams in the media resource.
-        /// Call this method after calling Open.
+        /// Call this method after you call Open and receive the OnPlayerSourceStateChanged callback reporting the state PLAYER_STATE_OPEN_COMPLETED.
         /// </summary>
         ///
         /// <param name="count"> An output parameter. The number of the media streams in the media resource.</param>

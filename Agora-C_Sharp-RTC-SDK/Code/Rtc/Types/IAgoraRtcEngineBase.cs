@@ -1454,14 +1454,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The image content of the thumbnail. See ThumbImageBuffer
+        /// The image content of the thumbnail. See ThumbImageBuffer.
         /// </summary>
         ///
         public ThumbImageBuffer thumbImage;
 
         ///
         /// <summary>
-        /// The image content of the icon. See ThumbImageBuffer
+        /// The image content of the icon. See ThumbImageBuffer.
         /// </summary>
         ///
         public ThumbImageBuffer iconImage;
@@ -1494,7 +1494,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The position of a window relative to the entire screen space (including all shareable screens). See Rectangle.
+        /// The position of a window relative to the entire screen space (including all shareable screens). See Rectangle..
         /// </summary>
         ///
         public Rectangle position;
@@ -1564,7 +1564,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// The URL of the image that you want to use to replace the video feeds. The image must be in PNG format. This method supports adding an image from the local absolute or relative file path. On the Android platform, adding images from /assets/ is not supported.
+        /// The image URL. Supported formats of images include JPEG, JPG, PNG and GIF. This method supports adding an image from the local absolute or relative file path. On the Android platform, adding images from /assets/ is not supported.
         /// </summary>
         ///
         public string imageUrl;
@@ -1587,7 +1587,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The channel media options.
-    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection. For example, publishMicrophoneTrack, publishAudioTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishScreenCaptureVideo publishScreenTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true. Agora recommends that you set member parameter values yourself according to your business scenario, otherwise the SDK will automatically assign values to member parameters.
+    /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection. For example, publishMicrophoneTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishScreenCaptureVideo publishScreenTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true. Agora recommends that you set member parameter values yourself according to your business scenario, otherwise the SDK will automatically assign values to member parameters.
     /// </summary>
     ///
     public class ChannelMediaOptions : OptionalJsonParse
@@ -1785,7 +1785,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// (Optional) The token generated on your server for authentication. See
+        /// (Optional) The token generated on your server for authentication.
         /// This parameter takes effect only when calling UpdateChannelMediaOptions or UpdateChannelMediaOptionsEx.
         /// Ensure that the App ID, channel name, and user name used for creating the token are the same as those used by the Initialize method for initializing the RTC engine, and those used by the JoinChannel [2/2] and JoinChannelEx methods for joining the channel.
         /// </summary>
@@ -2092,9 +2092,24 @@ namespace Agora.Rtc
         HTTPS_PROXY_TYPE = 6,
     };
 
+    ///
+    /// <summary>
+    /// The name of the advanced feature.
+    /// </summary>
+    ///
     public enum FeatureType
     {
+        ///
+        /// <summary>
+        /// 1: Virtual background.
+        /// </summary>
+        ///
         VIDEO_VIRTUAL_BACKGROUND = 1,
+        ///
+        /// <summary>
+        /// 2: Image enhancement.
+        /// </summary>
+        ///
         VIDEO_BEAUTY_EFFECT = 2,
     };
 

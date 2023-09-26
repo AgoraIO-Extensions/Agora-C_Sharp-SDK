@@ -43,7 +43,7 @@ namespace Agora.Rtc
         ///
         /// <param name="uid"> The user ID.</param>
         ///
-        /// <param name="proxyType"> The proxy type connected. See CLOUD_PROXY_TYPE.</param>
+        /// <param name="proxyType"> The proxy type connected. See PROXY_TYPE.</param>
         ///
         /// <param name="localProxyIp"> Reserved for future use.</param>
         ///
@@ -114,7 +114,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when a user leaves a channel.
-        /// This callback notifies the app that the user leaves the channel by calling LeaveChannel [1/2]
+        /// This callback notifies the app that the user leaves the channel by calling LeaveChannel [2/2]. From this callback, the app can get information such as the call duration and quality statistics.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection.</param>
@@ -202,7 +202,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the last mile network quality of each user in the channel.
-        /// This callback reports the last mile network conditions of each user in the channel. Last mile refers to the connection between the local device and Agora's edge server. The SDK triggers this callback once every two seconds. If a channel includes multiple users, the SDK triggers this callback as many times. txQuality is UNKNOWN rxQuality is UNKNOWN
+        /// This callback reports the last mile network conditions of each user in the channel. Last mile refers to the connection between the local device and Agora's edge server. The SDK triggers this callback once every two seconds. If a channel includes multiple users, the SDK triggers this callback as many times. txQuality is UNKNOWN when the user is not sending a stream; rxQuality is UNKNOWN when the user is not receiving a stream.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection.</param>
@@ -257,7 +257,7 @@ namespace Agora.Rtc
         ///
         /// <param name="height"> The height (px) of the first local video frame.</param>
         ///
-        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback. If you call StartPreview [1/2] JoinChannel [2/2], then this parameter is the time elapsed from calling the StartPreview [1/2]</param>
+        /// <param name="elapsed"> Time elapsed (ms) from the local user calling JoinChannel [2/2] until the SDK triggers this callback. If you call StartPreview [2/2] before calling JoinChannel [2/2], then this parameter is the time elapsed from calling the StartPreview [2/2] method until the SDK triggers this callback.</param>
         ///
         public virtual void OnFirstLocalVideoFrame(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed) { }
 
@@ -409,7 +409,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Occurs when a remote user (in the communication profile)/ host (in the live streaming profile) leaves the channel.
+        /// Occurs when a remote user (in the communication profile)/ host (in the live streaming profile) joins the channel.
         /// In a communication channel, this callback indicates that a remote user joins the channel. The SDK also triggers this callback to report the existing users in the channel when a user joins the channel.
         /// In a live-broadcast channel, this callback indicates that a host joins the channel. The SDK also triggers this callback to report the existing hosts in the channel when a host joins the channel. Agora recommends limiting the number of hosts to 17. The SDK triggers this callback under one of the following circumstances:
         /// A remote user/host joins the channel.
@@ -599,7 +599,7 @@ namespace Agora.Rtc
         /// The position of the human face in the local view.
         /// The distance between the human face and the screen. This value is based on the fitting calculation of the local video size and the position of the human face.
         /// This callback is for Android and iOS only.
-        /// When it is detected that the face in front of the camera disappears, the callback will be triggered immediately. When no human face is detected, the frequency of this callback to be rtriggered wil be decreased to reduce power consumption on the local device.
+        /// When it is detected that the face in front of the camera disappears, the callback will be triggered immediately. When no human face is detected, the frequency of this callback to be triggered wil be decreased to reduce power consumption on the local device.
         /// The SDK stops triggering this callback when a human face is in close proximity to the screen.
         /// </summary>
         ///
@@ -727,7 +727,7 @@ namespace Agora.Rtc
         /// Occurs when the token expires.
         /// When the token expires during a call, the SDK triggers this callback to remind the app to renew the token. When receiving this callback, you need to generate a new token on your token server and you can renew your token through one of the following ways:
         /// Call RenewToken to pass in the new token.
-        /// Call LeaveChannel [1/2] to leave the current channel and then pass in the new token when you call JoinChannel [2/2] to join a channel.
+        /// Call LeaveChannel [2/2] to leave the current channel and then pass in the new token when you call JoinChannel [2/2] to join a channel.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection.</param>
@@ -868,7 +868,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the user role switching fails in the interactive live streaming.
-        /// In the live broadcasting channel profile, when the local user calls SetClientRole [1/2] to switch the user role after joining the channel but the switch fails, the SDK triggers this callback to report the reason for the failure and the current user role.
+        /// In the live broadcasting channel profile, when the local user calls SetClientRole [2/2] to switch the user role after joining the channel but the switch fails, the SDK triggers this callback to report the reason for the failure and the current user role.
         /// </summary>
         ///
         /// <param name="connection"> The connection information. See RtcConnection.</param>
