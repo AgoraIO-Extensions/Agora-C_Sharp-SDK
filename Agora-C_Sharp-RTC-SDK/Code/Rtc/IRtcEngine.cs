@@ -2368,7 +2368,7 @@ namespace Agora.Rtc
         /// You can call this method before sharing a screen or window to get a list of shareable screens and windows, which enables a user to use thumbnails in the list to easily choose a particular screen or window to share. This list also contains important information such as window ID and screen ID, with which you can call StartScreenCaptureByWindowId or StartScreenCaptureByDisplayId to start the sharing. This method applies to macOS and Windows only.
         /// </summary>
         ///
-        /// <param name="thumbSize"> The target size of the screen or window thumbnail (the width and height are in pixels).. The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and thumbSize is 100 × 100, the actual size of the thumbnail is 100 × 75. If the target size is larger than the original size, the thumbnail is the original image and the SDK does not scale it.</param>
+        /// <param name="thumbSize"> The target size of the screen or window thumbnail (the width and height are in pixels). The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and thumbSize is 100 × 100, the actual size of the thumbnail is 100 × 75. If the target size is larger than the original size, the thumbnail is the original image and the SDK does not scale it.</param>
         ///
         /// <param name="iconSize"> The target size of the icon corresponding to the application program (the width and height are in pixels).. The SDK scales the original image to make the length of the longest side of the image the same as that of the target size without distorting the original image. For example, if the original image is 400 × 300 and iconSize is 100 × 100, the actual size of the icon is 100 × 75. If the target size is larger than the original size, the icon is the original image and the SDK does not scale it.</param>
         ///
@@ -2485,7 +2485,7 @@ namespace Agora.Rtc
         /// Call this method after joining a channel, then call UpdateChannelMediaOptions and set publishScreenCaptureVideo to true to start screen sharing.
         /// This method applies to Android and iOS only.
         /// On the iOS platform, screen sharing is only available on iOS 12.0 and later.
-        /// The billing for the screen sharing stream is based on the dimensions in ScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value. For billing details, see.
+        /// The billing for the screen sharing stream is based on the dimensions in ScreenVideoParameters. When you do not pass in a value, Agora bills you at 1280 × 720; when you pass a value in, Agora bills you at that value.
         /// If you are using the custom audio source instead of the SDK to capture audio, Agora recommends you add the keep-alive processing logic to your application to avoid screen sharing stopping when the application goes to the background.
         /// This feature requires high-performance device, and Agora recommends that you use it on iPhone X and later models.
         /// This method relies on the iOS screen sharing dynamic library AgoraReplayKitExtension.xcframework. If the dynamic library is deleted, screen sharing cannot be enabled normally.
@@ -3783,7 +3783,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Starts audio recording on the client.
-        /// The sample rate of recording is 32 kHz by default and cannot be modified. The Agora SDK allows recording during a call. This method records the audio of all the users in the channel and generates an audio recording file. Supported formats of the recording file are as follows:.wav : Large file size with high fidelity..aac : Small file size with low fidelity. Ensure that the directory for the recording file exists and is writable. This method should be called after the JoinChannel [2/2] method. The recording automatically stops when you call the LeaveChannel [2/2] method.
+        /// The sample rate of recording is 32 kHz by default and cannot be modified. The Agora SDK allows recording during a call. This method records the audio of all the users in the channel and generates an audio recording file. Supported formats of the recording file are as follows:.wav : Large file size with high fidelity. aac : Small file size with low fidelity. Ensure that the directory for the recording file exists and is writable. This method should be called after the JoinChannel [2/2] method. The recording automatically stops when you call the LeaveChannel [2/2] method.
         /// </summary>
         ///
         /// <param name="filePath"> The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.aac. Ensure that the directory for the log files exists and is writable.</param>

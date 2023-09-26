@@ -1156,7 +1156,7 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: (Recommended) Standard bitrate mode. In this mode, the bitrates of the live broadcasting profile is higher than that of the communication profile..
+        /// 0: (Recommended) Standard bitrate mode. In this mode, the bitrates of the live broadcasting profile is higher than that of the communication profile.
         /// </summary>
         ///
         STANDARD_BITRATE = 0,
