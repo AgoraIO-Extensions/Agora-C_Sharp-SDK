@@ -276,15 +276,20 @@ export class Tool {
         return fs.readFileSync(fullPath, 'utf-8');
     }
 
-    public static writeFile(fullPath: string, lines: string[]) {
-        let newLines = [];
-        newLines.push(lines[0]);
-        for (let i = 1; i < lines.length; i++) {
-            if (lines[i - 1].trim() == "" && lines[i].trim() == "")
-                continue;
-            newLines.push(lines[i]);
+    public static writeFile(fullPath: string, lines: string[], removeMultipleBlankLines: boolean = true) {
+        if (removeMultipleBlankLines) {
+            let newLines = [];
+            newLines.push(lines[0]);
+            for (let i = 1; i < lines.length; i++) {
+                if (lines[i - 1].trim() == "" && lines[i].trim() == "")
+                    continue;
+                newLines.push(lines[i]);
 
+            }
+            fs.writeFileSync(fullPath, newLines.join("\n"), 'utf-8');
         }
-        fs.writeFileSync(fullPath, newLines.join("\n"), 'utf-8');
+        else {
+            fs.writeFileSync(fullPath, lines.join("\n"), 'utf-8');
+        }
     }
 }

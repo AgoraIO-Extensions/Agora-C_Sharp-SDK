@@ -52,7 +52,15 @@ namespace Agora.Rtc
         public abstract IMusicContentCenter GetMusicContentCenter();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets one IMediaPlayerCacheManager instance.
+        /// 
+        /// When you successfully call this method, the SDK returns a media player cache manager instance. The cache manager is a singleton pattern. Therefore, multiple calls to this method returns the same instance. Make sure the IRtcEngine is initialized before you call this method.
+        /// </summary>
+        ///
+        /// <returns>
+        /// The IMediaPlayerCacheManager instance.
+        /// </returns>
         ///
         public abstract IMediaPlayerCacheManager GetMediaPlayerCacheManager();
 
@@ -93,7 +101,18 @@ namespace Agora.Rtc
 #endif
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Gets the C++ handle of the Native SDK.
+        /// 
+        /// This method retrieves the C++ handle of the SDK, which is used for registering the audio and video frame observer.
+        /// </summary>
+        ///
+        /// <param name="nativeHandler"> Output parameter, the native handle of the SDK. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int GetNativeHandler(ref IntPtr nativeHandler);
 
@@ -2604,7 +2623,25 @@ namespace Agora.Rtc
         public abstract int EnableDualStreamMode(bool enabled);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Enables or disables the dual-stream mode on the sender and sets the low-quality video stream.
+        /// 
+        /// Deprecated: This method is deprecated as of v4.2.0. Use SetDualStreamMode [2/2] instead. You can call this method to enable or disable the dual-stream mode on the publisher side. Dual streams are a pairing of a high-quality video stream and a low-quality video stream:
+        /// High-quality video stream: High bitrate, high resolution.
+        /// Low-quality video stream: Low bitrate, low resolution. After you enable dual-stream mode, you can call SetRemoteVideoStreamType to choose to receive either the high-quality video stream or the low-quality video stream on the subscriber side.
+        /// This method is applicable to all types of streams from the sender, including but not limited to video streams collected from cameras, screen sharing streams, and custom-collected video streams.
+        /// If you need to enable dual video streams in a multi-channel scenario, you can call the EnableDualStreamModeEx method.
+        /// You can call this method either before or after joining a channel.
+        /// </summary>
+        ///
+        /// <param name="enabled"> Whether to enable dual-stream mode: true : Enable dual-stream mode. false : (Default) Disable dual-stream mode. </param>
+        ///
+        /// <param name="streamConfig"> The configuration of the low-quality video stream. See SimulcastStreamConfig. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamMode instead.")]
         public abstract int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig);
@@ -3116,16 +3153,6 @@ namespace Agora.Rtc
         public abstract int SetExtensionProperty(string provider, string extension, string key, string value, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
 
         ///
-        /// @ignore
-        ///
-        public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
-
-        ///
-        /// @ignore
-        ///
-        public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value);
-
-        ///
         /// <summary>
         /// Gets detailed information on the extensions.
         /// </summary>
@@ -3146,6 +3173,16 @@ namespace Agora.Rtc
         /// 0: Success.
         /// &lt; 0: Failure.
         /// </returns>
+        ///
+        public abstract int GetExtensionProperty(string provider, string extension, string key, ref string value, int buf_len, MEDIA_SOURCE_TYPE type = MEDIA_SOURCE_TYPE.UNKNOWN_MEDIA_SOURCE);
+
+        ///
+        /// @ignore
+        ///
+        public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value);
+
+        ///
+        /// @ignore
         ///
         public abstract int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len);
 
@@ -5021,7 +5058,18 @@ namespace Agora.Rtc
         public abstract int GetNetworkType();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Provides the technical preview functionalities or special customizations by configuring the SDK with JSON options.
+        /// 
+        /// Contact to get the JSON configuration method.
+        /// </summary>
+        ///
+        /// <param name="parameters"> Pointer to the set parameters in a JSON string. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetParameters(string parameters);
 
@@ -5074,17 +5122,79 @@ namespace Agora.Rtc
         #endregion terra IRtcEngine
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Registers an audio frame observer object.
+        /// 
+        /// Call this method to register an audio frame observer object (register a callback). When you need the SDK to trigger OnMixedAudioFrame, OnRecordAudioFrame, OnPlaybackAudioFrame or OnEarMonitoringAudioFrame callback, you need to use this method to register the callbacks. Ensure that you call this method before joining a channel.
+        /// </summary>
+        ///
+        /// <param name="audioFrameObserver"> The observer instance. See IAudioFrameObserver. Set the value as NULL to release the instance. Agora recommends calling this method after receiving OnLeaveChannel to release the audio observer object. </param>
+        ///
+        /// <param name="mode"> The audio data callback mode. See OBSERVER_MODE. </param>
+        ///
+        /// <param name="position"> The frame position of the audio observer. AUDIO_FRAME_POSITION_PLAYBACK (0x0001): This position can observe the playback audio mixed by all remote users, corresponding to the OnPlaybackAudioFrame callback. AUDIO_FRAME_POSITION_RECORD (0x0002): This position can observe the collected local user's audio, corresponding to the OnRecordAudioFrame callback. AUDIO_FRAME_POSITION_MIXED (0x0004): This position can observe the playback audio mixed by the loacl user and all remote users, corresponding to the OnMixedAudioFrame callback. AUDIO_FRAME_POSITION_BEFORE_MIXING (0x0008): This position can observe the audio of a single remote user before mixing, corresponding to the OnPlaybackAudioFrameBeforeMixing callback. AUDIO_FRAME_POSITION_EAR_MONITORING (0x0010): This position can observe the in-ear monitoring audio of the local user, corresponding to the OnEarMonitoringAudioFrame callback. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Registers a raw video frame observer object.
+        /// 
+        /// If you want to obtain the original video data of some remote users (referred to as group A) and the encoded video data of other remote users (referred to as group B), you can refer to the following steps:
+        /// Call RegisterVideoFrameObserver to register the raw video frame observer before joining the channel.
+        /// Call RegisterVideoEncodedFrameObserver to register the encoded video frame observer before joining the channel.
+        /// After joining the channel, get the user IDs of group B users through OnUserJoined, and then call SetRemoteVideoSubscriptionOptions to set the encodedFrameOnly of this group of users to true.
+        /// Call MuteAllRemoteVideoStreams (false) to start receiving the video streams of all remote users. Then:
+        /// The raw video data of group A users can be obtained through the callback in IVideoFrameObserver, and the SDK renders the data by default.
+        /// The encoded video data of group B users can be obtained through the callback in IVideoEncodedFrameObserver. If you want to observe raw video frames (such as YUV or RGBA format), Agora recommends that you implement one IVideoFrameObserver class with this method. When calling this method to register a video observer, you can register callbacks in the IVideoFrameObserver class as needed. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.
+        /// Ensure that you call this method before joining a channel.
+        /// When handling the video data returned in the callbacks, pay attention to the changes in the width and height parameters, which may be adapted under the following circumstances:
+        /// When network conditions deteriorate, the video resolution decreases incrementally.
+        /// If the user adjusts the video profile, the resolution of the video returned in the callbacks also changes. After registering the raw video observer, you can use the obtained raw video data in various video pre-processing scenarios, such as implementing virtual backgrounds and image enhacement scenarios by yourself, Agora provides some open source sample projects on GitHub for your reference.
+        /// </summary>
+        ///
+        /// <param name="videoFrameObserver"> The observer instance. See IVideoFrameObserver. To release the instance, set the value as NULL. </param>
+        ///
+        /// <param name="mode"> The video data callback mode. See OBSERVER_MODE. </param>
+        ///
+        /// <param name="formatPreference"> The video frame type. See VIDEO_OBSERVER_FRAME_TYPE. </param>
+        ///
+        /// <param name="position"> A bit mask that controls the frame position of the video observer. See VIDEO_MODULE_POSITION. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int RegisterVideoFrameObserver(IVideoFrameObserver observer, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_MODULE_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Registers a receiver object for the encoded video image.
+        /// 
+        /// If you only want to observe encoded video frames (such as h.264 format) without decoding and rendering the video, Agora recommends that you implement one IVideoEncodedFrameObserver class through this method. If you want to obtain the original video data of some remote users (referred to as group A) and the encoded video data of other remote users (referred to as group B), you can refer to the following steps:
+        /// Call RegisterVideoFrameObserver to register the raw video frame observer before joining the channel.
+        /// Call RegisterVideoEncodedFrameObserver to register the encoded video frame observer before joining the channel.
+        /// After joining the channel, get the user IDs of group B users through OnUserJoined, and then call SetRemoteVideoSubscriptionOptions to set the encodedFrameOnly of this group of users to true.
+        /// Call MuteAllRemoteVideoStreams (false) to start receiving the video streams of all remote users. Then:
+        /// The raw video data of group A users can be obtained through the callback in IVideoFrameObserver, and the SDK renders the data by default.
+        /// The encoded video data of group B users can be obtained through the callback in IVideoEncodedFrameObserver.
+        /// Call this method before joining a channel.
+        /// </summary>
+        ///
+        /// <param name="videoEncodedImageReceiver"> The video frame observer object. See IVideoEncodedFrameObserver. </param>
+        ///
+        /// <param name="mode"> The video data callback mode. See OBSERVER_MODE. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver observer, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR);
 
@@ -5096,7 +5206,14 @@ namespace Agora.Rtc
         public abstract int UnRegisterAudioFrameObserver();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Unregisters the video frame observer.
+        /// </summary>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int UnRegisterVideoFrameObserver();
 
@@ -5113,24 +5230,76 @@ namespace Agora.Rtc
         public abstract int UnRegisterAudioEncodedFrameObserver();
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Unregisters a receiver object for the encoded video image.
+        /// </summary>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int UnRegisterVideoEncodedFrameObserver();
 
         #region terra IMediaEngine
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Pushes the external audio frame.
+        /// </summary>
+        ///
+        /// <param name="frame"> The external audio frame. See AudioFrame. </param>
+        ///
+        /// <param name="trackId"> The audio track ID. If you want to publish a custom external audio source, set this parameter to the ID of the corresponding custom audio track you want to publish. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int PushAudioFrame(AudioFrame frame, uint trackId = 0);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Pulls the remote audio data.
+        /// 
+        /// Before calling this method, you need to call SetExternalAudioSink to notify the app to enable and set the external rendering. After a successful method call, the app pulls the decoded and mixed audio data for playback.
+        /// This method only supports pulling data from custom audio source. If you need to pull the data captured by the SDK, do not call this method.
+        /// Call this method after joining a channel.
+        /// Once you enable the external audio sink, the app will not retrieve any audio data from the OnPlaybackAudioFrame callback.
+        /// The difference between this method and the OnPlaybackAudioFrame callback is as follows:
+        /// The SDK sends the audio data to the app through the OnPlaybackAudioFrame callback. Any delay in processing the audio frames may result in audio jitter.
+        /// After a successful method call, the app automatically pulls the audio data from the SDK. After setting the audio data parameters, the SDK adjusts the frame buffer and avoids problems caused by jitter in the external audio playback.
+        /// </summary>
+        ///
+        /// <param name="frame"> Pointers to AudioFrame. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int PullAudioFrame(AudioFrame frame);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Configures the external video source.
+        /// 
+        /// Call this method before joining a channel.
+        /// </summary>
+        ///
+        /// <param name="enabled"> Whether to use the external video source: true : Use the external video source. The SDK prepares to accept the external video frame. false : (Default) Do not use the external video source. </param>
+        ///
+        /// <param name="useTexture"> Whether to use the external video frame in the Texture format. true : Use the external video frame in the Texture format. false : (Default) Do not use the external video frame in the Texture format. </param>
+        ///
+        /// <param name="sourceType"> Whether the external video frame is encoded. See EXTERNAL_VIDEO_SOURCE_TYPE. </param>
+        ///
+        /// <param name="encodedVideoOption"> Video encoding options. This parameter needs to be set if sourceType is ENCODED_VIDEO_FRAME. To set this parameter, contact. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption);
 
@@ -5141,22 +5310,79 @@ namespace Agora.Rtc
         public abstract int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Creates a customized audio track.
+        /// 
+        /// When you need to publish multiple custom captured audios in the channel, you can refer to the following steps:
+        /// Call this method to create a custom audio track and get the audio track ID.
+        /// In ChannelMediaOptions of each channel, set publishCustomAduioTrackId to the audio track ID that you want to publish, and set publishCustomAudioTrack to true.
+        /// If you call PushAudioFrame trackId as the audio track ID set in step 2, you can publish the corresponding custom audio source in multiple channels.
+        /// </summary>
+        ///
+        /// <param name="trackType"> The type of the custom audio track. See AUDIO_TRACK_TYPE. </param>
+        ///
+        /// <param name="config"> The configuration of the custom audio track. See AudioTrackConfig. </param>
+        ///
+        /// <returns>
+        /// If the method call is successful, the audio track ID is returned as the unique identifier of the audio track.
+        /// If the method call fails, a negative value is returned.
+        /// </returns>
         ///
         public abstract uint CreateCustomAudioTrack(AUDIO_TRACK_TYPE trackType, AudioTrackConfig config);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Destroys the specified audio track.
+        /// </summary>
+        ///
+        /// <param name="trackId"> The custom audio track ID returned in CreateCustomAudioTrack. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int DestroyCustomAudioTrack(uint trackId);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Sets the external audio sink.
+        /// 
+        /// This method applies to scenarios where you want to use external audio data for playback. After you set the external audio sink, you can call PullAudioFrame to pull remote audio frames. The app can process the remote audio and play it with the audio effects that you want.
+        /// </summary>
+        ///
+        /// <param name="enabled"> Whether to enable or disable the external audio sink: true : Enables the external audio sink. false : (Default) Disables the external audio sink. </param>
+        ///
+        /// <param name="sampleRate"> The sample rate (Hz) of the external audio sink, which can be set as 16000, 32000, 44100, or 48000. </param>
+        ///
+        /// <param name="channels">
+        /// The number of audio channels of the external audio sink:
+        /// 1: Mono.
+        /// 2: Stereo.
+        /// </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int SetExternalAudioSink(bool enabled, int sampleRate, int channels);
 
         ///
-        /// @ignore
+        /// <summary>
+        /// Pushes the external raw video frame to the SDK.
+        /// 
+        /// If you call CreateCustomVideoTrack method to get the video track ID, set the customVideoTrackId parameter to the video track ID you want to publish in the ChannelMediaOptions of each channel, and set the publishCustomVideoTrack parameter to true, you can call this method to push the unencoded external video frame to the SDK.
+        /// </summary>
+        ///
+        /// <param name="frame"> The external raw video frame to be pushed. See ExternalVideoFrame. </param>
+        ///
+        /// <param name="videoTrackId"> The video track ID returned by calling the CreateCustomVideoTrack method. The default value is 0. </param>
+        ///
+        /// <returns>
+        /// 0: Success.
+        /// &lt; 0: Failure.
+        /// </returns>
         ///
         public abstract int PushVideoFrame(ExternalVideoFrame frame, uint videoTrackId = 0);
 

@@ -217,12 +217,18 @@ namespace Agora.Rtc
     }
 
     ///
-    /// @ignore
+    /// <summary>
+    /// The audio device information.
+    /// 
+    /// This class is for Android only.
+    /// </summary>
     ///
     public class DeviceInfoMobile
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// Whether the audio device supports ultra-low-latency capture and playback: true : The device supports ultra-low-latency capture and playback. false : The device does not support ultra-low-latency capture and playback.
+        /// </summary>
         ///
         public bool isLowLatencyAudioSupported;
 
@@ -239,20 +245,22 @@ namespace Agora.Rtc
 
     ///
     /// <summary>
-    /// The audio device information.
-    /// 
-    /// This class is for Android only.
+    /// The DeviceInfo class that contains the ID and device name of the video devices.
     /// </summary>
     ///
     public class DeviceInfo
     {
         ///
-        /// @ignore
+        /// <summary>
+        /// The device name.
+        /// </summary>
         ///
         public string deviceName;
 
         ///
-        /// @ignore
+        /// <summary>
+        /// The device ID.
+        /// </summary>
         ///
         public string deviceId;
     };

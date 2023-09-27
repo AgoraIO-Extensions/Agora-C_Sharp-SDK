@@ -261,9 +261,36 @@ function SplitDocTag(str: string): { clazzName: string, paramName: string | null
 function GetDocs(): DocData[] {
     let docPath = path.join(process.cwd(), DocPath);
     let str = fs.readFileSync(docPath, { encoding: 'utf-8' });
+    str = str.replaceAll("iaudioframeobserverbase", "iaudioframeobserver")
+    str = str.replaceAll("api_iaudioframeobserver", "callback_iaudioframeobserver")
+    str = str.replaceAll("ibasespatialaudioengine", "ilocalspatialaudioengine")
+    str = str.replaceAll("api_imediaengine", "api_irtcengine")
+    str = str.replaceAll("pushaudioframe0", "pushaudioframe")
+    str = str.replaceAll("\"api_irtcengine_getextensionproperty2\"", "\"api_irtcengine_getextensionproperty\"")
+    str = str.replaceAll("\"api_irtcengine_enabledualstreammode2\"", "\"api_irtcengine_delete\"")
+    str = str.replaceAll("\"api_irtcengine_enabledualstreammode3\"", "\"api_irtcengine_enabledualstreammode2\"")
+    str = str.replaceAll("\"api_getmediaplayercachemanager\"", "\"api_irtcengine_getmediaplayercachemanager\"")
+    str = str.replaceAll("\"api_iagoraparameter_setparameters\"", "\"api_irtcengine_setparameters2\"")
+    str = str.replaceAll("\"api_irtcengine_getnativehandle\"", "\"api_irtcengine_getnativehandler\"")
+
+    str = str.replaceAll("class_deviceinfo", "class_deviceinfomobile")
+    str = str.replaceAll("class_videodeviceinfo", "class_deviceinfo")
+
+    fs.writeFileSync(path.join(process.cwd(), "process_json"), str);
+
     let obj = JSON.parse(str);
     return obj as DocData[];
 }
+
+function SwapString(src: string, str1: string, str2: string): string {
+    src = src.replace(str1, "ABCDEF");
+    src = src.replace(str2, str1);
+    src = src.replace("ABCDEF", str2);
+    return src;
+}
+
+
+
 
 function FindDocWithId(id: string, docs: DocData[]) {
     return docs.find((e) => { return e.id == id });
