@@ -13,6 +13,7 @@ namespace Agora.Rtc
         {
             OnFrame_be_trigger = true;
             OnFrame_frame = frame;
+
         }
 
         public bool OnFramePassed(AudioPcmFrame frame)

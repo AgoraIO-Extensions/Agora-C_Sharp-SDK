@@ -78,7 +78,12 @@ export class SpeicalLogic {
                 lines.push(` _param.Add("${p.name}", ${configTool.paramNameFormalTrans.transType(clazzName, info.name, p.name)});`)
             }
         }
-        return lines.join('\n');
+        if (lines.length > 0) {
+            return lines.join('\n') + "\n";
+        }
+        else {
+            return "";
+        }
     }
 
     public cSharpSDK_ImplResultGet(clazzName: string, info: MemberFunction): string {
@@ -801,14 +806,14 @@ export class SpeicalLogic {
             for (let p of m.parameters) {
                 let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
                 if (jsonString != null)
-                    paramslines.push(jsonString);
+                    paramslines.push("\t" + jsonString);
             }
 
             lines.push(`${paramslines.join(",\n")}`);
 
-            lines.push(`\n);`);
+            lines.push(`);`);
             lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
-            lines.push(`}\n);`);
+            lines.push(`});`);
             lines.push(`#endif`);
             lines.push(`break;\n}\n`);
         }
@@ -871,9 +876,9 @@ export class SpeicalLogic {
 
         lines.push(`${paramslines.join(",\n")}`);
 
-        lines.push(`\n); `);
+        lines.push(`); `);
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
-        lines.push(` }); `);
+        lines.push(`}); `);
         lines.push(`#endif`);
         lines.push(`break;\n}`);
 
@@ -888,7 +893,7 @@ export class SpeicalLogic {
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
         lines.push(`#endif`);
-        lines.push(` if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;`);
+        lines.push(`if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;`);
         let methodName = Tool._processStringWithU(m.name);
         lines.push(`mediaPlayerSourceObserverDic[playerId].${methodName}(`);
 
@@ -897,14 +902,14 @@ export class SpeicalLogic {
         for (let p of m.parameters) {
             let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
             if (jsonString != null)
-                paramslines.push(jsonString);
+                paramslines.push("\t" + jsonString);
         }
 
         lines.push(`${paramslines.join(",\n")}`);
 
-        lines.push(`\n); `);
+        lines.push(`); `);
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
-        lines.push(` }); `);
+        lines.push(`});`);
         lines.push(`#endif`);
         lines.push(`break;\n}`);
 
@@ -928,12 +933,12 @@ export class SpeicalLogic {
         for (let p of m.parameters) {
             let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
             if (jsonString != null)
-                paramslines.push(jsonString);
+                paramslines.push("\t" + jsonString);
         }
 
         lines.push(`${paramslines.join(",\n")}`);
 
-        lines.push(`\n); `);
+        lines.push(`); `);
         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
         lines.push(` }); `);
         lines.push(`#endif`);
@@ -998,7 +1003,7 @@ export class SpeicalLogic {
             funLines.push(`}\n`);
 
             funLines.push(`public bool ${methodName}Passed(${paramslines.join(", ")})\n{`);
-            funLines.push(`if(${methodName}_be_trigger == false) return false;`);
+            funLines.push(`if(${methodName}_be_trigger == false)\n return false;`);
             for (let p of m.parameters) {
                 let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
                 let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
@@ -1025,10 +1030,8 @@ export class SpeicalLogic {
         let className = Tool.processString('-rv', clazzName, 1);
         let methodName = Tool.processString('-v', m.name, repeat);
         let config = ConfigTool.getInstance();
-        lines.push(`ApiParam.@event = AgoraEventType.EVENT_${className}_${methodName};`);
-        lines.push(`\n`);
-        lines.push(`jsonObj.Clear();`);
-        lines.push(`\n`);
+        lines.push(`ApiParam.@event = AgoraEventType.EVENT_${className}_${methodName};\n`);
+        lines.push(`jsonObj.Clear();\n`);
         let paramsLines = [];
         for (let p of m.parameters) {
             let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
@@ -1037,14 +1040,12 @@ export class SpeicalLogic {
             if (transType == "@remove")
                 continue;
             lines.push(`${transType} ${transName} = ParamsHelper.CreateParam<${transType}>();`);
-            lines.push(`jsonObj.Add("${transName}", ${transName});`);
-            lines.push(`\n`);
+            lines.push(`jsonObj.Add("${transName}", ${transName});\n`);
             paramsLines.push(`${config.paramNameActualTrans.transType(clazzName, m.name, p.name)}`);
         }
         lines.push(`var jsonString = LitJson.JsonMapper.ToJson(jsonObj);`)
         lines.push(`ApiParam.data = jsonString;`);
-        lines.push(`ApiParam.data_size = (uint)jsonString.Length;`);
-        lines.push(`\n`);
+        lines.push(`ApiParam.data_size = (uint)jsonString.Length;\n`);
         lines.push(`int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);`);
         lines.push(`Assert.AreEqual(0, ret);`);
 

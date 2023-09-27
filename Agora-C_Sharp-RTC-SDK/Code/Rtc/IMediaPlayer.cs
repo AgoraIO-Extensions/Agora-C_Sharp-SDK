@@ -36,7 +36,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Opens the media resource.
-        ///
+        /// 
         /// This method is called asynchronously. If you need to play a media file, make sure you receive the OnPlayerSourceStateChanged callback reporting PLAYER_STATE_OPEN_COMPLETED before calling the Play method to play the file.
         /// </summary>
         ///
@@ -54,7 +54,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Opens the custom media resource file.
-        ///
+        /// 
         /// Deprecated: This method is deprecated, use OpenWithMediaSource instead. This method allows you to open custom media resource files. For example, you can call this method to open encrypted media resources.
         /// </summary>
         ///
@@ -73,7 +73,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Opens a media file and configures the playback scenarios.
-        ///
+        /// 
         /// This method supports opening media files of different sources, including a custom media source, and allows you to configure the playback scenarios.
         /// </summary>
         ///
@@ -89,7 +89,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Plays the media file.
-        ///
+        /// 
         /// After calling Open or Seek, you can call this method to play the media file.
         /// </summary>
         ///
@@ -139,7 +139,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Seeks to a new playback position.
-        ///
+        /// 
         /// After successfully calling this method, you will receive the OnPlayerEvent callback, reporting the result of the seek operation to the new playback position. To play the media file from a specific position, do the following:
         /// Call this method to seek to the position you want to begin playback.
         /// Call the Play method to play the media file.
@@ -157,7 +157,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the pitch of the current media resource.
-        ///
+        /// 
         /// Call this method after calling Open.
         /// </summary>
         ///
@@ -201,7 +201,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the number of the media streams in the media resource.
-        ///
+        /// 
         /// Call this method after calling Open.
         /// </summary>
         ///
@@ -217,7 +217,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the detailed information of the media stream.
-        ///
+        /// 
         /// Call this method after calling GetStreamCount.
         /// </summary>
         ///
@@ -235,7 +235,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the loop playback.
-        ///
+        /// 
         /// If you want to loop, call this method and set the number of the loops. When the loop finishes, the SDK triggers OnPlayerSourceStateChanged and reports the playback state as PLAYER_STATE_PLAYBACK_ALL_LOOPS_COMPLETED.
         /// </summary>
         ///
@@ -251,7 +251,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the channel mode of the current audio file.
-        ///
+        /// 
         /// Call this method after calling Open.
         /// </summary>
         ///
@@ -272,7 +272,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Selects the audio track used during playback.
-        ///
+        /// 
         /// After getting the track index of the audio file, you can call this method to specify any track to play. For example, if different tracks of a multi-track file store songs in different languages, you can call this method to set the playback language. You need to call this method after calling GetStreamInfo to get the audio stream index value.
         /// </summary>
         ///
@@ -288,7 +288,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the private options for the media player.
-        ///
+        /// 
         /// The media player supports setting private options by key and value. Under normal circumstances, you do not need to know the private option settings, and just use the default option settings.
         /// Ensure that you call this method before Open.
         /// If you need to push streams with SEI into the CDN, call SetPlayerOption [1/2] ("sei_data_with_uuid", 1); otherwise, the loss of SEI might occurs.
@@ -308,7 +308,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the private options for the media player.
-        ///
+        /// 
         /// The media player supports setting private options by key and value. Under normal circumstances, you do not need to know the private option settings, and just use the default option settings.
         /// Ensure that you call this method before Open.
         /// If you need to push streams with SEI into the CDN, call SetPlayerOption [1/2] ("sei_data_with_uuid", 1); otherwise, the loss of SEI might occurs.
@@ -418,7 +418,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Adjusts the volume of the media file for publishing.
-        ///
+        /// 
         /// After connected to the Agora server, you can call this method to adjust the volume of the media file heard by the remote user.
         /// </summary>
         ///
@@ -479,7 +479,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Registers a PCM audio frame observer object.
-        ///
+        /// 
         /// You need to implement the IAudioPcmFrameSink class in this method and register callbacks according to your scenarios. After you successfully register the video frame observer, the SDK triggers the registered callbacks each time a video frame is received.
         /// </summary>
         ///
@@ -533,7 +533,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the channel mode of the current audio file.
-        ///
+        /// 
         /// In a stereo music file, the left and right channels can store different audio data. According to your needs, you can set the channel mode to original mode, left channel mode, right channel mode, or mixed channel mode. For example, in the KTV scenario, the left channel of the music file stores the musical accompaniment, and the right channel stores the singing voice. If you only need to listen to the accompaniment, call this method to set the channel mode of the music file to left channel mode; if you need to listen to the accompaniment and the singing voice at the same time, call this method to set the channel mode to mixed channel mode.
         /// Call this method after calling Open.
         /// This method only applies to stereo audio files.
@@ -603,7 +603,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Switches the media resource being played.
-        ///
+        /// 
         /// You can call this method to switch the media resource to be played according to the current network status. For example:
         /// When the network is poor, the media resource to be played is switched to a media resource address with a lower bitrate.
         /// When the network is good, the media resource to be played is switched to a media resource address with a higher bitrate. After calling this method, if you receive the PLAYER_EVENT_SWITCH_COMPLETE event in the OnPlayerEvent callback, the switch is successful; If you receive the PLAYER_EVENT_SWITCH_ERROR event in the OnPlayerEvent callback, the switch fails.
@@ -628,7 +628,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Preloads a media resource.
-        ///
+        /// 
         /// You can call this method to preload a media resource into the playlist. If you need to preload multiple media resources, you can call this method multiple times. If the preload is successful and you want to play the media resource, call PlayPreloadedSrc; if you want to clear the playlist, call Stop. Agora does not support preloading duplicate media resources to the playlist. However, you can preload the media resources that are being played to the playlist again.
         /// </summary>
         ///
@@ -646,7 +646,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Plays preloaded media resources.
-        ///
+        /// 
         /// After calling the PreloadSrc method to preload the media resource into the playlist, you can call this method to play the preloaded media resource. After calling this method, if you receive the OnPlayerSourceStateChanged callback which reports the PLAYER_STATE_PLAYING state, the playback is successful. If you want to change the preloaded media resource to be played, you can call this method again and specify the URL of the new media resource that you want to preload. If you want to replay the media resource, you need to call PreloadSrc to preload the media resource to the playlist again before playing. If you want to clear the playlist, call the Stop method. If you call this method when playback is paused, this method does not take effect until playback is resumed.
         /// </summary>
         ///
@@ -662,7 +662,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Unloads media resources that are preloaded.
-        ///
+        /// 
         /// This method cannot release the media resource being played.
         /// </summary>
         ///
@@ -678,7 +678,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enables or disables the spatial audio effect for the media player.
-        ///
+        /// 
         /// After successfully setting the spatial audio effect parameters of the media player, the SDK enables the spatial audio effect for the media player, and the local user can hear the media resources with a sense of space. If you need to disable the spatial audio effect for the media player, set the params parameter to null.
         /// </summary>
         ///

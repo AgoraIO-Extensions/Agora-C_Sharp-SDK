@@ -17,6 +17,7 @@ namespace Agora.Rtc
             OnRecordAudioFrame_channelId = channelId;
             OnRecordAudioFrame_audioFrame = audioFrame;
             return true;
+
         }
 
         public bool OnRecordAudioFramePassed(string channelId, AudioFrame audioFrame)
@@ -45,6 +46,7 @@ namespace Agora.Rtc
             OnPlaybackAudioFrame_channelId = channelId;
             OnPlaybackAudioFrame_audioFrame = audioFrame;
             return true;
+
         }
 
         public bool OnPlaybackAudioFramePassed(string channelId, AudioFrame audioFrame)
@@ -73,6 +75,7 @@ namespace Agora.Rtc
             OnMixedAudioFrame_channelId = channelId;
             OnMixedAudioFrame_audioFrame = audioFrame;
             return true;
+
         }
 
         public bool OnMixedAudioFramePassed(string channelId, AudioFrame audioFrame)
@@ -99,6 +102,7 @@ namespace Agora.Rtc
             OnEarMonitoringAudioFrame_be_trigger = true;
             OnEarMonitoringAudioFrame_audioFrame = audioFrame;
             return true;
+
         }
 
         public bool OnEarMonitoringAudioFramePassed(AudioFrame audioFrame)
@@ -127,6 +131,7 @@ namespace Agora.Rtc
             OnPlaybackAudioFrameBeforeMixing_userId = userId;
             OnPlaybackAudioFrameBeforeMixing_audioFrame = audioFrame;
             return true;
+
         }
 
         public bool OnPlaybackAudioFrameBeforeMixingPassed(string channelId, string userId, AudioFrame audioFrame)
@@ -147,6 +152,7 @@ namespace Agora.Rtc
 
         /////////////////////////////////
 
+
         public bool OnPlaybackAudioFrameBeforeMixing2_be_trigger = false;
         public string OnPlaybackAudioFrameBeforeMixing2_channelId;
         public uint OnPlaybackAudioFrameBeforeMixing2_uid;
@@ -159,6 +165,7 @@ namespace Agora.Rtc
             OnPlaybackAudioFrameBeforeMixing2_uid = uid;
             OnPlaybackAudioFrameBeforeMixing2_audioFrame = audioFrame;
             return true;
+
         }
 
         public bool OnPlaybackAudioFrameBeforeMixingPassed(string channelId, uint uid, AudioFrame audioFrame)

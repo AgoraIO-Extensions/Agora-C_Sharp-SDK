@@ -19,6 +19,7 @@ namespace Agora.Rtc
             OnRecorderStateChanged_uid = uid;
             OnRecorderStateChanged_state = state;
             OnRecorderStateChanged_error = error;
+
         }
 
         public bool OnRecorderStateChangedPassed(string channelId, uint uid, RecorderState state, RecorderErrorCode error)
@@ -52,6 +53,7 @@ namespace Agora.Rtc
             OnRecorderInfoUpdated_channelId = channelId;
             OnRecorderInfoUpdated_uid = uid;
             OnRecorderInfoUpdated_info = info;
+
         }
 
         public bool OnRecorderInfoUpdatedPassed(string channelId, uint uid, RecorderInfo info)

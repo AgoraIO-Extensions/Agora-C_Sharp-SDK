@@ -113,11 +113,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("deviceId", deviceId);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETPLAYBACKDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -129,9 +130,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -146,9 +147,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICEINFO,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -162,11 +163,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("volume", volume);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETPLAYBACKDEVICEVOLUME,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -178,9 +180,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICEVOLUME,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -193,11 +195,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("deviceId", deviceId);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETRECORDINGDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -209,9 +212,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -226,9 +229,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEVICEINFO,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -242,11 +245,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("volume", volume);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETRECORDINGDEVICEVOLUME,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -258,9 +262,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEVICEVOLUME,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -273,11 +277,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("deviceId", deviceId);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETLOOPBACKDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -289,9 +294,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETLOOPBACKDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -304,11 +309,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("mute", mute);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETPLAYBACKDEVICEMUTE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -320,9 +326,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEVICEMUTE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -335,11 +341,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("mute", mute);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_SETRECORDINGDEVICEMUTE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -351,9 +358,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEVICEMUTE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
             if (nRet == 0)
             {
@@ -366,11 +373,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("testAudioFilePath", testAudioFilePath);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_STARTPLAYBACKDEVICETEST,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -382,9 +390,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_STOPPLAYBACKDEVICETEST,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -394,11 +402,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("indicationInterval", indicationInterval);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_STARTRECORDINGDEVICETEST,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -410,9 +419,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_STOPRECORDINGDEVICETEST,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -422,11 +431,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("indicationInterval", indicationInterval);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_STARTAUDIODEVICELOOPBACKTEST,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -438,9 +448,9 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_STOPAUDIODEVICELOOPBACKTEST,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -450,11 +460,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("enable", enable);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMPLAYBACKDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -464,11 +475,12 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("enable", enable);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMRECORDINGDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
@@ -478,15 +490,17 @@ namespace Agora.Rtc
         {
             _param.Clear();
             _param.Add("enable", enable);
+
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_AUDIODEVICEMANAGER_FOLLOWSYSTEMLOOPBACKDEVICE,
-                                                          json, (UInt32)json.Length,
-                                                          IntPtr.Zero, 0,
-                                                          ref _apiParam);
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
         }
+
 
         #endregion terra IAudioDeviceManager
     }

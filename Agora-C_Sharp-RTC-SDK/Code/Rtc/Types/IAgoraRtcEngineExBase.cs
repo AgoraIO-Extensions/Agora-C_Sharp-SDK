@@ -34,6 +34,7 @@
             this.channelId = channel_id;
             this.localUid = local_uid;
         }
+
     }
 
     #endregion terra IAgoraRtcEngineEx.h

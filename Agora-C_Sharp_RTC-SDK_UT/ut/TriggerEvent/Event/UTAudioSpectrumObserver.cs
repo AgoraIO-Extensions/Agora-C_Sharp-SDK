@@ -16,6 +16,7 @@ namespace Agora.Rtc
             OnLocalAudioSpectrum_be_trigger = true;
             OnLocalAudioSpectrum_data = data;
             return true;
+
         }
 
         public bool OnLocalAudioSpectrumPassed(AudioSpectrumData data)
@@ -42,6 +43,7 @@ namespace Agora.Rtc
             OnRemoteAudioSpectrum_spectrums = spectrums;
             OnRemoteAudioSpectrum_spectrumNumber = spectrumNumber;
             return true;
+
         }
 
         public bool OnRemoteAudioSpectrumPassed(UserAudioSpectrumInfo[] spectrums, uint spectrumNumber)

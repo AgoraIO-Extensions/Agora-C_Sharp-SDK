@@ -15,7 +15,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the changes of playback state.
-        ///
+        /// 
         /// When the state of the media player changes, the SDK triggers this callback to report the current playback state.
         /// </summary>
         ///
@@ -30,7 +30,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports current playback progress.
-        ///
+        /// 
         /// When playing media files, the SDK triggers this callback every two second to report current playback progress.
         /// </summary>
         ///
@@ -43,7 +43,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the player events.
-        ///
+        /// 
         /// After calling the Seek method, the SDK triggers the callback to report the results of the seek operation.
         /// </summary>
         ///
@@ -60,7 +60,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when the media metadata is received.
-        ///
+        /// 
         /// The callback occurs when the player receives the media metadata and reports the detailed information of the media metadata.
         /// </summary>
         ///
@@ -75,7 +75,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the playback duration that the buffered data can support.
-        ///
+        /// 
         /// When playing online media resources, the SDK triggers this callback every two seconds to report the playback duration that the currently buffered data can support.
         /// When the playback duration supported by the buffered data is less than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_LOW.
         /// When the playback duration supported by the buffered data is greater than the threshold (0 by default), the SDK returns PLAYER_EVENT_BUFFER_RECOVER.
@@ -130,7 +130,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Occurs when information related to the media player changes.
-        ///
+        /// 
         /// When the information about the media player changes, the SDK triggers this callback. You can use this callback for troubleshooting.
         /// </summary>
         ///
@@ -143,7 +143,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports the volume of the media player.
-        ///
+        /// 
         /// The SDK triggers this callback every 200 milliseconds to report the current volume of the media player.
         /// </summary>
         ///

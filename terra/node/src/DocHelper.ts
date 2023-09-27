@@ -3,6 +3,7 @@ import { publicDecrypt } from "crypto";
 import * as fs from "fs";
 import { ParamNameTrans } from "./ParamNameTrans";
 import path from "path";
+import { Tool } from "./Tool";
 
 let AllDirPath = [
     "../../Agora-C_Sharp-RTC-SDK/Code/Rtc",
@@ -28,7 +29,7 @@ function DeleteOldDocWithFile(filePath: string) {
         }
         writeLines.push(line);
     }
-    fs.writeFileSync(filePath, writeLines.join('\n'));
+    Tool.writeFile(filePath, writeLines);
 }
 
 
@@ -79,7 +80,7 @@ function GetMethodName(clazzName: string, methodName: string): string {
 
 function SwapIfHadObsolete(lines: string[], i: number) {
     let upLine = lines[i - 1].trim();
-    if (upLine.startsWith('[Obsolete')) {
+    if (upLine.startsWith('[Obsolete') || upLine.startsWith("#if")) {
         let temp = lines[i];
         lines[i] = lines[i - 1];
         lines[i - 1] = temp;
@@ -215,8 +216,8 @@ function AddDocTagWithFile(filePath: string) {
         i++;
     }
 
-    fs.writeFileSync(filePath, lines.join('\n'), { encoding: 'utf-8' });
-    execSync(`clang-format -i ${filePath}`);
+    Tool.writeFile(filePath, lines);
+    // execSync(`clang-format -i ${filePath}`);
 }
 
 
@@ -403,8 +404,8 @@ function AddDocContentWithFile(filePath: string, docs: DocData[]) {
         }
     }
 
-    fs.writeFileSync(filePath, lines.join('\n'), { encoding: 'utf-8' });
-    execSync(`clang-format -i ${filePath}`);
+    Tool.writeFile(filePath, lines);
+    // execSync(`clang-format -i ${filePath}`);
 }
 
 export function AddAllDocContetnt() {

@@ -50,6 +50,7 @@ namespace Agora.Rtc
         public void Test_StopRecording()
         {
 
+
             var nRet = MediaRecorder.StopRecording();
             Assert.AreEqual(0, nRet);
         }

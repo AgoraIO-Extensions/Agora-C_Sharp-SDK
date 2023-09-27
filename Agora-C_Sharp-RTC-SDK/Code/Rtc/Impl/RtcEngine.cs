@@ -322,6 +322,7 @@ namespace Agora.Rtc
 
         #region terra IRtcEngine
 
+
         public override int Initialize(RtcEngineContext context)
         {
             if (_rtcEngineImpl == null)
@@ -681,7 +682,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.DisableAudio();
         }
-
         [Obsolete("This method is deprecated. You can use the \ref IRtcEngine::setAudioProfile(AUDIO_PROFILE_TYPE) \"setAudioProfile\" method instead. To set the audio scenario, call the \ref IRtcEngine::initialize \"initialize\" method and pass value in the `audioScenario` member in the RtcEngineContext struct.")]
         public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
         {
@@ -736,7 +736,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.MuteAllRemoteAudioStreams(mute);
         }
-
         [Obsolete("This method is deprecated. To set whether to receive remote audio streams by default, call \ref IRtcEngine::muteAllRemoteAudioStreams \"muteAllRemoteAudioStreams\" before calling `joinChannel`")]
         public override int SetDefaultMuteAllRemoteAudioStreams(bool mute)
         {
@@ -782,7 +781,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.MuteAllRemoteVideoStreams(mute);
         }
-
         [Obsolete("This method is deprecated. To set whether to receive remote video streams by default, call \ref IRtcEngine::muteAllRemoteVideoStreams \"muteAllRemoteVideoStreams\" before calling `joinChannel`.")]
         public override int SetDefaultMuteAllRemoteVideoStreams(bool mute)
         {
@@ -1458,7 +1456,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SetLocalVideoMirrorMode(mirrorMode);
         }
-
         [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamMode instead.")]
         public override int EnableDualStreamMode(bool enabled)
         {
@@ -1468,7 +1465,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.EnableDualStreamMode(enabled);
         }
-
         [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamMode instead.")]
         public override int EnableDualStreamMode(bool enabled, SimulcastStreamConfig streamConfig)
         {
@@ -2306,7 +2302,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SetRemoteUserPriority(uid, userPriority);
         }
-
         [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
         public override int SetEncryptionMode(string encryptionMode)
         {
@@ -2316,7 +2311,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SetEncryptionMode(encryptionMode);
         }
-
         [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
         public override int SetEncryptionSecret(string secret)
         {
@@ -2389,7 +2383,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.ClearVideoWatermarks();
         }
-
         [Obsolete("Use disableAudio() instead.")]
         public override int PauseAudio()
         {
@@ -2399,7 +2392,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.PauseAudio();
         }
-
         [Obsolete("Use enableAudio() instead.")]
         public override int ResumeAudio()
         {
@@ -2409,7 +2401,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.ResumeAudio();
         }
-
         [Obsolete("The Agora NG SDK enables the interoperablity with the Web SDK.")]
         public override int EnableWebSdkInteroperability(bool enabled)
         {
@@ -2527,7 +2518,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.StartOrUpdateChannelMediaRelay(configuration);
         }
-
         [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
         public override int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
@@ -2537,7 +2527,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.StartChannelMediaRelay(configuration);
         }
-
         [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
         public override int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
         {
@@ -2793,6 +2782,7 @@ namespace Agora.Rtc
         #endregion terra IRtcEngine
 
         #region terra IRtcEngineEx
+
 
         public override int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
         {
@@ -3144,7 +3134,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.StartOrUpdateChannelMediaRelayEx(configuration, connection);
         }
-
         [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
         public override int StartChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
         {
@@ -3154,7 +3143,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.StartChannelMediaRelayEx(configuration, connection);
         }
-
         [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
         public override int UpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
         {
@@ -3209,7 +3197,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.GetUserInfoByUidEx(uid, ref userInfo, connection);
         }
-
         [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamModeEx instead")]
         public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
         {
@@ -3322,6 +3309,7 @@ namespace Agora.Rtc
 
         #region terra IMediaEngine
 
+
         public override int PushAudioFrame(AudioFrame frame, uint trackId = 0)
         {
             if (_rtcEngineImpl == null)
@@ -3348,7 +3336,6 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SetExternalVideoSource(enabled, useTexture, sourceType, encodedVideoOption);
         }
-
         [Obsolete("This method is deprecated. Use createCustomAudioTrack(rtc::AUDIO_TRACK_TYPE trackType, const rtc::AudioTrackConfig& config) instead.")]
         public override int SetExternalAudioSource(bool enabled, int sampleRate, int channels, bool localPlayback = false, bool publish = true)
         {

@@ -31,9 +31,11 @@ new ParseEngine(
 
 // var data = Tool.getCppConstructor("VideoTrackInfo", "/Users/xiayangqun/Documents/agoraSpace/iris-ast/agora_rtc_ast/tmp/AgoraBase.h")
 // console.log(JSON.stringify(data));
+execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
 DeleteAllOldDoc();
 AddAllDocTag();
 AddAllDocContetnt();
 execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
+
 
 

@@ -14,7 +14,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Reports that the receiver has received the to-be-decoded video frame sent by the remote end.
-        ///
+        /// 
         /// If you call the SetRemoteVideoSubscriptionOptions method and set encodedFrameOnly to true, the SDK triggers this callback locally to report the received encoded video frame information.
         /// </summary>
         ///

@@ -63,37 +63,39 @@ namespace Agora.Rtc
             switch (@event)
             {
                 case "MediaRecorderObserver_onRecorderStateChanged":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
                     {
-#endif
-                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
-                    mediaRecorderObserverDic[nativeHandle].OnRecorderStateChanged(
-                        (string)AgoraJson.GetData<string>(jsonData, "channelId"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
-                        (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
-                        (RecorderErrorCode)AgoraJson.GetData<int>(jsonData, "error")
-                    );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
+CallbackObject._CallbackQueue.EnQueue(() =>{
 #endif
-                    break;
+                        if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                        mediaRecorderObserverDic[nativeHandle].OnRecorderStateChanged(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                            (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                            (RecorderState)AgoraJson.GetData<int>(jsonData, "state"),
+                            (RecorderErrorCode)AgoraJson.GetData<int>(jsonData, "error")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+});
+#endif
+                        break;
+                    }
 
                 case "MediaRecorderObserver_onRecorderInfoUpdated":
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    CallbackObject._CallbackQueue.EnQueue(() =>
                     {
-#endif
-                    if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
-                    mediaRecorderObserverDic[nativeHandle].OnRecorderInfoUpdated(
-                        (string)AgoraJson.GetData<string>(jsonData, "channelId"),
-                        (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
-                        AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
-                    );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                    });
+CallbackObject._CallbackQueue.EnQueue(() =>{
 #endif
-                    break;
+                        if (!mediaRecorderObserverDic.ContainsKey(nativeHandle)) return;
+                        mediaRecorderObserverDic[nativeHandle].OnRecorderInfoUpdated(
+                            (string)AgoraJson.GetData<string>(jsonData, "channelId"),
+                            (uint)AgoraJson.GetData<uint>(jsonData, "uid"),
+                            AgoraJson.JsonToStruct<RecorderInfo>(jsonData, "info")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+});
+#endif
+                        break;
+                    }
             }
         }
 

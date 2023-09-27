@@ -9,11 +9,13 @@ namespace Agora.Rtc
 
         public bool GetMaxMetadataSize_be_trigger = false;
 
+
         public override int GetMaxMetadataSize()
         {
             GetMaxMetadataSize_be_trigger = true;
 
             return 0;
+
         }
 
         public bool GetMaxMetadataSizePassed()
@@ -21,6 +23,8 @@ namespace Agora.Rtc
 
             if (GetMaxMetadataSize_be_trigger == false)
                 return false;
+
+
 
             return true;
         }
@@ -37,6 +41,7 @@ namespace Agora.Rtc
             OnReadyToSendMetadata_metadata = metadata;
             OnReadyToSendMetadata_source_type = source_type;
             return true;
+
         }
 
         public bool OnReadyToSendMetadataPassed(ref Metadata metadata, VIDEO_SOURCE_TYPE source_type)
@@ -62,6 +67,7 @@ namespace Agora.Rtc
         {
             OnMetadataReceived_be_trigger = true;
             OnMetadataReceived_metadata = metadata;
+
         }
 
         public bool OnMetadataReceivedPassed(Metadata metadata)

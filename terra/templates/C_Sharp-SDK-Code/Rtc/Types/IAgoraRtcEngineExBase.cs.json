@@ -40,11 +40,11 @@
         "commonFieldTemple": "common_enum_member_template"
     },
     "common_enum_head_tail": {
-        "head": "public enum ${-oENUMZ_NAME}{",
+        "head": "public enum ${-oENUMZ_NAME}\n{\n",
         "tail": "}"
     },
     "flags_common_enum_head_tail": {
-        "head": "[Flags]\npublic enum ${-oENUMZ_NAME}{",
+        "head": "[Flags]\npublic enum ${-oENUMZ_NAME}\n{\n",
         "tail": "}"
     },
     "common_enum_member_template": "${SPECIAL_ENUMCONSTANT_LOGIC:cSharpSDK_EnumConstantObsolete}${-oENUMZ_FIELD_NAME} ${-eENUMZ_FIELD_VALUE},",

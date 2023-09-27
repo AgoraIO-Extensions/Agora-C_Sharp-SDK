@@ -17,6 +17,7 @@ namespace Agora.Rtc
             OnRecordAudioEncodedFrame_frameBuffer = frameBuffer;
             OnRecordAudioEncodedFrame_length = length;
             OnRecordAudioEncodedFrame_audioEncodedFrameInfo = audioEncodedFrameInfo;
+
         }
 
         public bool OnRecordAudioEncodedFramePassed(IntPtr frameBuffer, int length, EncodedAudioFrameInfo audioEncodedFrameInfo)
@@ -48,6 +49,7 @@ namespace Agora.Rtc
             OnPlaybackAudioEncodedFrame_frameBuffer = frameBuffer;
             OnPlaybackAudioEncodedFrame_length = length;
             OnPlaybackAudioEncodedFrame_audioEncodedFrameInfo = audioEncodedFrameInfo;
+
         }
 
         public bool OnPlaybackAudioEncodedFramePassed(IntPtr frameBuffer, int length, EncodedAudioFrameInfo audioEncodedFrameInfo)
@@ -79,6 +81,7 @@ namespace Agora.Rtc
             OnMixedAudioEncodedFrame_frameBuffer = frameBuffer;
             OnMixedAudioEncodedFrame_length = length;
             OnMixedAudioEncodedFrame_audioEncodedFrameInfo = audioEncodedFrameInfo;
+
         }
 
         public bool OnMixedAudioEncodedFramePassed(IntPtr frameBuffer, int length, EncodedAudioFrameInfo audioEncodedFrameInfo)

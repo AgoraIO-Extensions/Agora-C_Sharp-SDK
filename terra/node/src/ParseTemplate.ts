@@ -5,6 +5,7 @@ import { TemplateType } from "./Template";
 import { ParseClassOrStruct } from "./ParseClassOrStruct";
 import { ParseEnumz } from "./ParseEnumz";
 import { ParseFile } from "./ParseFile";
+import { Tool } from "./Tool";
 
 export class ParseTemplate {
 
@@ -52,7 +53,6 @@ export class ParseTemplate {
 
             }
         }
-        var context = distLines.join("\n");
-        fs.writeFileSync(distPath, context);
+        Tool.writeFile(distPath, distLines);
     }
 }

@@ -41,6 +41,7 @@ namespace Agora.Rtc
 
         #region terra IMusicContentCenter
 
+
         public override int Initialize(MusicContentCenterConfiguration configuration)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)
@@ -112,7 +113,6 @@ namespace Agora.Rtc
             }
             return _musicContentCenterImpl.SearchMusic(ref requestId, keyWord, page, pageSize, jsonOption);
         }
-
         [Obsolete("This method is deprecated. Use preload(int64_t songCode) instead.")]
         public override int Preload(long songCode, string jsonOption)
         {

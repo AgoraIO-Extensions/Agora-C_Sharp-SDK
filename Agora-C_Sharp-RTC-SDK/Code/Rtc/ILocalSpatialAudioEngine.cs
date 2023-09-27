@@ -3,7 +3,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// This class calculates user positions through the SDK to implement the spatial audio effect.
-    ///
+    /// 
     /// Before calling other APIs in this class, you need to call the Initialize method to initialize this class.
     /// </summary>
     ///
@@ -79,7 +79,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Initializes ILocalSpatialAudioEngine.
-        ///
+        /// 
         /// Before calling other methods of the ILocalSpatialAudioEngine class, you need to call this method to initialize ILocalSpatialAudioEngine.
         /// The SDK supports creating only one ILocalSpatialAudioEngine instance for an app.
         /// </summary>
@@ -94,7 +94,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Updates the spatial position of the specified remote user.
-        ///
+        /// 
         /// After successfully calling this method, the SDK calculates the spatial audio parameters based on the relative position of the local and remote user. Call this method after JoinChannel [2/2].
         /// </summary>
         ///
@@ -117,7 +117,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Removes the spatial position of the specified remote user.
-        ///
+        /// 
         /// After successfully calling this method, the local user no longer hears the specified remote user. After leaving the channel, to avoid wasting resources, you can also call this method to delete the spatial position of the specified remote user.
         /// </summary>
         ///
@@ -138,7 +138,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Removes the spatial positions of all remote users.
-        ///
+        /// 
         /// After successfully calling this method, the local user no longer hears any remote users. After leaving the channel, to avoid wasting resources, you can also call this method to delete the spatial positions of all remote users.
         /// </summary>
         ///

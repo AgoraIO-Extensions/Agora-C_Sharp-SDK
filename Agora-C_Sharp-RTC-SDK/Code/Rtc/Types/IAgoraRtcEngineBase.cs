@@ -579,6 +579,7 @@ namespace Agora.Rtc
         public LocalVideoStats()
         {
         }
+
     }
 
     ///
@@ -906,6 +907,7 @@ namespace Agora.Rtc
         public RemoteVideoStats()
         {
         }
+
     }
 
     ///
@@ -1114,7 +1116,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Lifecycle of the CDN live video stream.
-    ///
+    /// 
     /// Deprecated
     /// </summary>
     ///
@@ -1428,12 +1430,13 @@ namespace Agora.Rtc
             this.width = ww;
             this.height = hh;
         }
+
     }
 
     ///
     /// <summary>
     /// The image content of the thumbnail or icon. Set in ScreenCaptureSourceInfo.
-    ///
+    /// 
     /// The default image is in the ARGB format. If you need to use another format, you need to convert the image on your own.
     /// </summary>
     ///
@@ -1718,7 +1721,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The channel media options.
-    ///
+    /// 
     /// Agora supports publishing multiple audio streams and one video stream at the same time and in the same RtcConnection. For example, publishMicrophoneTrack, publishAudioTrack, publishCustomAudioTrack, and publishMediaPlayerAudioTrack can be set as true at the same time, but only one of publishCameraTrack, publishScreenCaptureVideo publishScreenTrack, publishCustomVideoTrack, or publishEncodedVideoTrack can be set as true. Agora recommends that you set member parameter values yourself according to your business scenario, otherwise the SDK will automatically assign values to member parameters.
     /// </summary>
     ///
@@ -2533,6 +2536,7 @@ namespace Agora.Rtc
         public Metadata()
         {
         }
+
     }
 
     ///
@@ -2681,6 +2685,7 @@ namespace Agora.Rtc
         public DirectCdnStreamingStats()
         {
         }
+
     }
 
     ///

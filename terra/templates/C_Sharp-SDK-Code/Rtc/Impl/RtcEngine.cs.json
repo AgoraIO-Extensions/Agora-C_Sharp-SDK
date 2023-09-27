@@ -2,7 +2,7 @@
     "IRtcEngine": {
         "type": "ClazzStruct",
         "name": "IRtcEngine",
-        "methodSplitSymbol": "\n\n",
+        "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [
@@ -42,7 +42,7 @@
     "IRtcEngineEx": {
         "type": "ClazzStruct",
         "name": "IRtcEngineEx",
-        "methodSplitSymbol": "\n\n",
+        "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [
@@ -63,7 +63,7 @@
     "IMediaEngine": {
         "type": "ClazzStruct",
         "name": "IMediaEngine",
-        "methodSplitSymbol": "\n\n",
+        "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [

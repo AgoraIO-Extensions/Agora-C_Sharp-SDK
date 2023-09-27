@@ -107,6 +107,7 @@
         /// </summary>
         ///
         public float audioAttenuation;
+
     }
 
     ///

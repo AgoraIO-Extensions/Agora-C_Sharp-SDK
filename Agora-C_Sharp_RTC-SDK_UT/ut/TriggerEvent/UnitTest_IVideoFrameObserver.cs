@@ -152,6 +152,7 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnTranscodedVideoFramePassed(videoFrame));
         }
 
+
         #endregion terra IVideoFrameObserver
     }
 }

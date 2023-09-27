@@ -12,7 +12,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Configurations of the video frame.
-    ///
+    /// 
     /// Note that the buffer provides a pointer to a pointer. This interface cannot modify the pointer of the buffer, but it can modify the content of the buffer.
     /// </summary>
     ///
@@ -1430,7 +1430,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Audio data format.
-    ///
+    /// 
     /// You can pass the AudioParams object in the following APIs to set the audio data format for the corresponding callback: SetRecordingAudioFrameParameters : Sets the audio data format for the OnRecordAudioFrame callback. SetPlaybackAudioFrameParameters : Sets the audio data format for the OnPlaybackAudioFrame callback. SetMixedAudioFrameParameters : Sets the audio data format for the OnMixedAudioFrame callback. SetEarMonitoringAudioFrameParameters : Sets the audio data format for the OnEarMonitoringAudioFrame callback.
     ///  The SDK calculates the sampling interval through the samplesPerCall, sampleRate, and channel parameters in AudioParams, and triggers the OnRecordAudioFrame, OnPlaybackAudioFrame, OnMixedAudioFrame, and OnEarMonitoringAudioFrame callbacks according to the sampling interval. Sample interval (sec) = samplePerCall /(sampleRate × channel).
     ///  Ensure that the sample interval ≥ 0.01 (s).
@@ -1488,6 +1488,7 @@ namespace Agora.Rtc
             this.mode = type;
             this.samples_per_call = samplesPerCall;
         }
+
     }
 
     ///
@@ -1522,6 +1523,7 @@ namespace Agora.Rtc
             this.audioSpectrumData = data;
             this.dataLength = length;
         }
+
     }
 
     ///
@@ -1544,6 +1546,7 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public AudioSpectrumData spectrumData;
+
     }
 
     ///
@@ -1743,6 +1746,7 @@ namespace Agora.Rtc
             this.maxDurationMs = duration;
             this.recorderInfoUpdateInterval = interval;
         }
+
     }
 
     ///
@@ -1778,6 +1782,7 @@ namespace Agora.Rtc
             this.durationMs = dur;
             this.fileSize = size;
         }
+
     }
 
     #endregion terra AgoraMediaBase.h

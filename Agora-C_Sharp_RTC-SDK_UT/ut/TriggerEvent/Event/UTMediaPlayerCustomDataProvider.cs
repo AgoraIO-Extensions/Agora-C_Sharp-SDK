@@ -18,6 +18,7 @@ namespace Agora.Rtc
             OnReadData_buffer = buffer;
             OnReadData_bufferSize = bufferSize;
             return 0;
+
         }
 
         public bool OnReadDataPassed(IntPtr buffer, int bufferSize)
@@ -46,6 +47,7 @@ namespace Agora.Rtc
             OnSeek_offset = offset;
             OnSeek_whence = whence;
             return 0;
+
         }
 
         public bool OnSeekPassed(long offset, int whence)

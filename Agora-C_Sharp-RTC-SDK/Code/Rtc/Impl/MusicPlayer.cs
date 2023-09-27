@@ -42,6 +42,7 @@ namespace Agora.Rtc
 
         #region terra IMusicPlayer
 
+
         public override int Open(string url, long startPos)
         {
             if (_musicPlayerImpl == null)
@@ -50,7 +51,6 @@ namespace Agora.Rtc
             }
             return this._musicPlayerImpl.Open(playerId, url, startPos);
         }
-
         [Obsolete("")]
         public override int OpenWithCustomSource(long startPos, IMediaPlayerCustomDataProvider provider)
         {
@@ -366,7 +366,6 @@ namespace Agora.Rtc
             }
             return this._musicPlayerImpl.SetAudioDualMonoMode(playerId, mode);
         }
-
         [Obsolete("This method is deprecated.")]
         public override string GetPlayerSdkVersion()
         {

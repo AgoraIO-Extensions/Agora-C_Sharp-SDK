@@ -18,6 +18,7 @@ namespace Agora.Rtc
             OnMusicChartsResult_requestId = requestId;
             OnMusicChartsResult_result = result;
             OnMusicChartsResult_errorCode = errorCode;
+
         }
 
         public bool OnMusicChartsResultPassed(string requestId, MusicChartInfo[] result, MusicContentCenterStatusCode errorCode)
@@ -49,6 +50,7 @@ namespace Agora.Rtc
             OnMusicCollectionResult_requestId = requestId;
             OnMusicCollectionResult_result = result;
             OnMusicCollectionResult_errorCode = errorCode;
+
         }
 
         public bool OnMusicCollectionResultPassed(string requestId, MusicCollection result, MusicContentCenterStatusCode errorCode)
@@ -82,6 +84,7 @@ namespace Agora.Rtc
             OnLyricResult_songCode = songCode;
             OnLyricResult_lyricUrl = lyricUrl;
             OnLyricResult_errorCode = errorCode;
+
         }
 
         public bool OnLyricResultPassed(string requestId, long songCode, string lyricUrl, MusicContentCenterStatusCode errorCode)
@@ -117,6 +120,7 @@ namespace Agora.Rtc
             OnSongSimpleInfoResult_songCode = songCode;
             OnSongSimpleInfoResult_simpleInfo = simpleInfo;
             OnSongSimpleInfoResult_errorCode = errorCode;
+
         }
 
         public bool OnSongSimpleInfoResultPassed(string requestId, long songCode, string simpleInfo, MusicContentCenterStatusCode errorCode)
@@ -156,6 +160,7 @@ namespace Agora.Rtc
             OnPreLoadEvent_lyricUrl = lyricUrl;
             OnPreLoadEvent_status = status;
             OnPreLoadEvent_errorCode = errorCode;
+
         }
 
         public bool OnPreLoadEventPassed(string requestId, long songCode, int percent, string lyricUrl, PreloadStatusCode status, MusicContentCenterStatusCode errorCode)

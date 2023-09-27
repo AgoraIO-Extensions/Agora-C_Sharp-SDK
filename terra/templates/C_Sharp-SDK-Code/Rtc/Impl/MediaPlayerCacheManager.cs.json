@@ -2,7 +2,7 @@
     "IMediaPlayerCacheManager": {
         "type": "ClazzStruct",
         "name": "IMediaPlayerCacheManager",
-        "methodSplitSymbol": "\n\n",
+        "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [],
@@ -11,7 +11,7 @@
         "commonMemberTemplate": "",
         "specialMembersTemplate": ""
     },
-    "method_interface_return_int": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null){ return ErrorCode;}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
+    "method_interface_return_int": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)\n{\n return ErrorCode;\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
     "method_interface_return_bool": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaPlayerCacheManagerImpl == null)\n{\nreturn false;\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
     "method_interface_return_uint": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaPlayerCacheManagerImpl == null)\n{\nreturn 0;\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
     "method_interface_return_string": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}\npublic override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_mediaPlayerCacheManagerImpl == null)\n{\nreturn \"\";\n}\nreturn _mediaPlayerCacheManagerImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",

@@ -169,6 +169,7 @@ namespace Agora.Rtc
         public void Test_LeaveChannel()
         {
 
+
             var nRet = RtcEngine.LeaveChannel();
             Assert.AreEqual(0, nRet);
         }
@@ -223,6 +224,7 @@ namespace Agora.Rtc
         public void Test_StartEchoTest()
         {
 
+
             var nRet = RtcEngine.StartEchoTest();
             Assert.AreEqual(0, nRet);
         }
@@ -249,6 +251,7 @@ namespace Agora.Rtc
         public void Test_StopEchoTest()
         {
 
+
             var nRet = RtcEngine.StopEchoTest();
             Assert.AreEqual(0, nRet);
         }
@@ -267,6 +270,7 @@ namespace Agora.Rtc
         public void Test_EnableVideo()
         {
 
+
             var nRet = RtcEngine.EnableVideo();
             Assert.AreEqual(0, nRet);
         }
@@ -275,6 +279,7 @@ namespace Agora.Rtc
         public void Test_DisableVideo()
         {
 
+
             var nRet = RtcEngine.DisableVideo();
             Assert.AreEqual(0, nRet);
         }
@@ -282,6 +287,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StartPreview()
         {
+
 
             var nRet = RtcEngine.StartPreview();
             Assert.AreEqual(0, nRet);
@@ -299,6 +305,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StopPreview()
         {
+
 
             var nRet = RtcEngine.StopPreview();
             Assert.AreEqual(0, nRet);
@@ -325,6 +332,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StopLastmileProbeTest()
         {
+
 
             var nRet = RtcEngine.StopLastmileProbeTest();
             Assert.AreEqual(0, nRet);
@@ -426,6 +434,7 @@ namespace Agora.Rtc
         public void Test_EnableAudio()
         {
 
+
             var nRet = RtcEngine.EnableAudio();
             Assert.AreEqual(0, nRet);
         }
@@ -433,6 +442,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_DisableAudio()
         {
+
 
             var nRet = RtcEngine.DisableAudio();
             Assert.AreEqual(0, nRet);
@@ -682,6 +692,7 @@ namespace Agora.Rtc
         public void Test_StopAudioRecording()
         {
 
+
             var nRet = RtcEngine.StopAudioRecording();
             Assert.AreEqual(0, nRet);
         }
@@ -689,6 +700,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_CreateMediaPlayer()
         {
+
 
             var nRet = RtcEngine.CreateMediaPlayer();
             Assert.AreEqual(0, nRet);
@@ -748,6 +760,7 @@ namespace Agora.Rtc
         public void Test_StopAudioMixing()
         {
 
+
             var nRet = RtcEngine.StopAudioMixing();
             Assert.AreEqual(0, nRet);
         }
@@ -756,6 +769,7 @@ namespace Agora.Rtc
         public void Test_PauseAudioMixing()
         {
 
+
             var nRet = RtcEngine.PauseAudioMixing();
             Assert.AreEqual(0, nRet);
         }
@@ -763,6 +777,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_ResumeAudioMixing()
         {
+
 
             var nRet = RtcEngine.ResumeAudioMixing();
             Assert.AreEqual(0, nRet);
@@ -780,6 +795,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetAudioTrackCount()
         {
+
 
             var nRet = RtcEngine.GetAudioTrackCount();
             Assert.AreEqual(0, nRet);
@@ -807,6 +823,7 @@ namespace Agora.Rtc
         public void Test_GetAudioMixingPublishVolume()
         {
 
+
             var nRet = RtcEngine.GetAudioMixingPublishVolume();
             Assert.AreEqual(0, nRet);
         }
@@ -824,6 +841,7 @@ namespace Agora.Rtc
         public void Test_GetAudioMixingPlayoutVolume()
         {
 
+
             var nRet = RtcEngine.GetAudioMixingPlayoutVolume();
             Assert.AreEqual(0, nRet);
         }
@@ -832,6 +850,7 @@ namespace Agora.Rtc
         public void Test_GetAudioMixingDuration()
         {
 
+
             var nRet = RtcEngine.GetAudioMixingDuration();
             Assert.AreEqual(0, nRet);
         }
@@ -839,6 +858,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetAudioMixingCurrentPosition()
         {
+
 
             var nRet = RtcEngine.GetAudioMixingCurrentPosition();
             Assert.AreEqual(0, nRet);
@@ -874,6 +894,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetEffectsVolume()
         {
+
 
             var nRet = RtcEngine.GetEffectsVolume();
             Assert.AreEqual(0, nRet);
@@ -960,6 +981,7 @@ namespace Agora.Rtc
         public void Test_PauseAllEffects()
         {
 
+
             var nRet = RtcEngine.PauseAllEffects();
             Assert.AreEqual(0, nRet);
         }
@@ -976,6 +998,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_ResumeAllEffects()
         {
+
 
             var nRet = RtcEngine.ResumeAllEffects();
             Assert.AreEqual(0, nRet);
@@ -994,6 +1017,7 @@ namespace Agora.Rtc
         public void Test_StopAllEffects()
         {
 
+
             var nRet = RtcEngine.StopAllEffects();
             Assert.AreEqual(0, nRet);
         }
@@ -1010,6 +1034,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_UnloadAllEffects()
         {
+
 
             var nRet = RtcEngine.UnloadAllEffects();
             Assert.AreEqual(0, nRet);
@@ -1401,6 +1426,7 @@ namespace Agora.Rtc
         public void Test_DisableAudioSpectrumMonitor()
         {
 
+
             var nRet = RtcEngine.DisableAudioSpectrumMonitor();
             Assert.AreEqual(0, nRet);
         }
@@ -1417,6 +1443,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_UnregisterAudioSpectrumObserver()
         {
+
 
             var nRet = RtcEngine.UnregisterAudioSpectrumObserver();
             Assert.AreEqual(0, nRet);
@@ -1510,6 +1537,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetLoopbackRecordingVolume()
         {
+
 
             var nRet = RtcEngine.GetLoopbackRecordingVolume();
             Assert.AreEqual(0, nRet);
@@ -1657,6 +1685,7 @@ namespace Agora.Rtc
         public void Test_CreateCustomVideoTrack()
         {
 
+
             var nRet = RtcEngine.CreateCustomVideoTrack();
             Assert.AreEqual(0, nRet);
         }
@@ -1692,6 +1721,7 @@ namespace Agora.Rtc
         public void Test_SwitchCamera()
         {
 
+
             var nRet = RtcEngine.SwitchCamera();
             Assert.AreEqual(0, nRet);
         }
@@ -1699,6 +1729,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_IsCameraZoomSupported()
         {
+
 
             var nRet = RtcEngine.IsCameraZoomSupported();
             Assert.AreEqual(0, nRet);
@@ -1708,6 +1739,7 @@ namespace Agora.Rtc
         public void Test_IsCameraFaceDetectSupported()
         {
 
+
             var nRet = RtcEngine.IsCameraFaceDetectSupported();
             Assert.AreEqual(0, nRet);
         }
@@ -1715,6 +1747,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_IsCameraTorchSupported()
         {
+
 
             var nRet = RtcEngine.IsCameraTorchSupported();
             Assert.AreEqual(0, nRet);
@@ -1724,6 +1757,7 @@ namespace Agora.Rtc
         public void Test_IsCameraFocusSupported()
         {
 
+
             var nRet = RtcEngine.IsCameraFocusSupported();
             Assert.AreEqual(0, nRet);
         }
@@ -1731,6 +1765,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_IsCameraAutoFocusFaceModeSupported()
         {
+
 
             var nRet = RtcEngine.IsCameraAutoFocusFaceModeSupported();
             Assert.AreEqual(0, nRet);
@@ -1757,6 +1792,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetCameraMaxZoomFactor()
         {
+
 
             var nRet = RtcEngine.GetCameraMaxZoomFactor();
             Assert.AreEqual(0, nRet);
@@ -1794,6 +1830,7 @@ namespace Agora.Rtc
         public void Test_IsCameraExposurePositionSupported()
         {
 
+
             var nRet = RtcEngine.IsCameraExposurePositionSupported();
             Assert.AreEqual(0, nRet);
         }
@@ -1812,6 +1849,7 @@ namespace Agora.Rtc
         public void Test_IsCameraExposureSupported()
         {
 
+
             var nRet = RtcEngine.IsCameraExposureSupported();
             Assert.AreEqual(0, nRet);
         }
@@ -1828,6 +1866,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_IsCameraAutoExposureFaceModeSupported()
         {
+
 
             var nRet = RtcEngine.IsCameraAutoExposureFaceModeSupported();
             Assert.AreEqual(0, nRet);
@@ -1863,6 +1902,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_IsSpeakerphoneEnabled()
         {
+
 
             var nRet = RtcEngine.IsSpeakerphoneEnabled();
             Assert.AreEqual(0, nRet);
@@ -1988,6 +2028,7 @@ namespace Agora.Rtc
         public void Test_QueryScreenCaptureCapability()
         {
 
+
             var nRet = RtcEngine.QueryScreenCaptureCapability();
             Assert.AreEqual(0, nRet);
         }
@@ -2004,6 +2045,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StopScreenCapture()
         {
+
 
             var nRet = RtcEngine.StopScreenCapture();
             Assert.AreEqual(0, nRet);
@@ -2098,6 +2140,7 @@ namespace Agora.Rtc
         public void Test_StopLocalVideoTranscoder()
         {
 
+
             var nRet = RtcEngine.StopLocalVideoTranscoder();
             Assert.AreEqual(0, nRet);
         }
@@ -2163,6 +2206,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetConnectionState()
         {
+
 
             var nRet = RtcEngine.GetConnectionState();
             Assert.AreEqual(0, nRet);
@@ -2261,6 +2305,7 @@ namespace Agora.Rtc
         public void Test_ClearVideoWatermarks()
         {
 
+
             var nRet = RtcEngine.ClearVideoWatermarks();
             Assert.AreEqual(0, nRet);
         }
@@ -2269,6 +2314,7 @@ namespace Agora.Rtc
         public void Test_PauseAudio()
         {
 
+
             var nRet = RtcEngine.PauseAudio();
             Assert.AreEqual(0, nRet);
         }
@@ -2276,6 +2322,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_ResumeAudio()
         {
+
 
             var nRet = RtcEngine.ResumeAudio();
             Assert.AreEqual(0, nRet);
@@ -2316,6 +2363,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_UnregisterMediaMetadataObserver()
         {
+
 
             var nRet = RtcEngine.UnregisterMediaMetadataObserver();
             Assert.AreEqual(0, nRet);
@@ -2441,6 +2489,7 @@ namespace Agora.Rtc
         public void Test_StopChannelMediaRelay()
         {
 
+
             var nRet = RtcEngine.StopChannelMediaRelay();
             Assert.AreEqual(0, nRet);
         }
@@ -2449,6 +2498,7 @@ namespace Agora.Rtc
         public void Test_PauseAllChannelMediaRelay()
         {
 
+
             var nRet = RtcEngine.PauseAllChannelMediaRelay();
             Assert.AreEqual(0, nRet);
         }
@@ -2456,6 +2506,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_ResumeAllChannelMediaRelay()
         {
+
 
             var nRet = RtcEngine.ResumeAllChannelMediaRelay();
             Assert.AreEqual(0, nRet);
@@ -2493,6 +2544,7 @@ namespace Agora.Rtc
         public void Test_StopDirectCdnStreaming()
         {
 
+
             var nRet = RtcEngine.StopDirectCdnStreaming();
             Assert.AreEqual(0, nRet);
         }
@@ -2520,6 +2572,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StopRhythmPlayer()
         {
+
 
             var nRet = RtcEngine.StopRhythmPlayer();
             Assert.AreEqual(0, nRet);
@@ -2626,6 +2679,7 @@ namespace Agora.Rtc
         public void Test_GetCurrentMonotonicTimeInMs()
         {
 
+
             var nRet = RtcEngine.GetCurrentMonotonicTimeInMs();
             Assert.AreEqual(0, nRet);
         }
@@ -2642,6 +2696,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetNetworkType()
         {
+
 
             var nRet = RtcEngine.GetNetworkType();
             Assert.AreEqual(0, nRet);
@@ -2660,6 +2715,7 @@ namespace Agora.Rtc
         public void Test_StartMediaRenderingTracing()
         {
 
+
             var nRet = RtcEngine.StartMediaRenderingTracing();
             Assert.AreEqual(0, nRet);
         }
@@ -2668,6 +2724,7 @@ namespace Agora.Rtc
         public void Test_EnableInstantMediaRendering()
         {
 
+
             var nRet = RtcEngine.EnableInstantMediaRendering();
             Assert.AreEqual(0, nRet);
         }
@@ -2675,6 +2732,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetNtpWallTimeInMs()
         {
+
 
             var nRet = RtcEngine.GetNtpWallTimeInMs();
             Assert.AreEqual(0, nRet);
@@ -2778,6 +2836,7 @@ namespace Agora.Rtc
             var nRet = MediaEngine.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
             Assert.AreEqual(0, nRet);
         }
+
 
         #endregion terra IMediaEngine
     }

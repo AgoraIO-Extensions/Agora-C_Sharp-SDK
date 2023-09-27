@@ -329,6 +329,7 @@ namespace Agora.Rtc
         public void Test_Initialize()
         {
 
+
             var nRet = LocalSpatialAudioEngine.Initialize();
             Assert.AreEqual(0, nRet);
         }
@@ -337,9 +338,11 @@ namespace Agora.Rtc
         public void Test_ClearRemotePositions()
         {
 
+
             var nRet = LocalSpatialAudioEngine.ClearRemotePositions();
             Assert.AreEqual(0, nRet);
         }
+
 
         #endregion terra ILocalSpatialAudioEngine
     }

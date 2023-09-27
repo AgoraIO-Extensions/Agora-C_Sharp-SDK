@@ -13,7 +13,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Deletes all cached media files in the media player.
-        ///
+        /// 
         /// The cached media file currently being played will not be deleted.
         /// </summary>
         ///
@@ -27,7 +27,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Deletes a cached media file that is the least recently used.
-        ///
+        /// 
         /// You can call this method to delete a cached media file when the storage space for the cached files is about to reach its limit. After you call this method, the SDK deletes the cached media file that is least used. The cached media file currently being played will not be deleted.
         /// </summary>
         ///
@@ -41,7 +41,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Deletes a cached media file.
-        ///
+        /// 
         /// The cached media file currently being played will not be deleted.
         /// </summary>
         ///
@@ -57,7 +57,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets the storage path for the media files that you want to cache.
-        ///
+        /// 
         /// Make sure IRtcEngine is initialized before you call this method.
         /// </summary>
         ///
@@ -101,7 +101,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Sets whether to delete cached media files automatically.
-        ///
+        /// 
         /// If you enable this function to remove cached media files automatically, when the cached media files exceed either the number or size limit you set, the SDK automatically deletes the least recently used cache file.
         /// </summary>
         ///
@@ -117,7 +117,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the storage path of the cached media files.
-        ///
+        /// 
         /// If you have not called the SetCacheDir method to set the storage path for the media files to be cached before calling this method, you get the default storage path used by the SDK.
         /// </summary>
         ///
@@ -135,7 +135,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the maximum number of media files that can be cached.
-        ///
+        /// 
         /// By default, the maximum number of media files that can be cached is 1,000.
         /// </summary>
         ///
@@ -149,7 +149,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the maximum size of the aggregate storage space for cached media files.
-        ///
+        /// 
         /// By default, the maximum size of the aggregate storage space for cached media files is 1 GB. You can call the SetMaxCacheFileSize method to set the limit according to your scenarios.
         /// </summary>
         ///

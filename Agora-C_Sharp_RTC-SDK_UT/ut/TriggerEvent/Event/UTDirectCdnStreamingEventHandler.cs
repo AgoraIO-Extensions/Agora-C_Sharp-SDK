@@ -19,6 +19,7 @@ namespace Agora.Rtc
             OnDirectCdnStreamingStateChanged_state = state;
             OnDirectCdnStreamingStateChanged_error = error;
             OnDirectCdnStreamingStateChanged_message = message;
+
         }
 
         public bool OnDirectCdnStreamingStateChangedPassed(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
@@ -46,6 +47,7 @@ namespace Agora.Rtc
         {
             OnDirectCdnStreamingStats_be_trigger = true;
             OnDirectCdnStreamingStats_stats = stats;
+
         }
 
         public bool OnDirectCdnStreamingStatsPassed(DirectCdnStreamingStats stats)

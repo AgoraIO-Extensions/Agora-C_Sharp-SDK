@@ -20,6 +20,7 @@ namespace Agora.Rtc
             OnEncodedVideoFrameReceived_length = length;
             OnEncodedVideoFrameReceived_videoEncodedFrameInfo = videoEncodedFrameInfo;
             return true;
+
         }
 
         public bool OnEncodedVideoFrameReceivedPassed(uint uid, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo)

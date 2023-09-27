@@ -224,6 +224,7 @@ namespace Agora.Rtc
         public void Test_StopPlaybackDeviceTest()
         {
 
+
             var nRet = AudioDeviceManager.StopPlaybackDeviceTest();
             Assert.AreEqual(0, nRet);
         }
@@ -241,6 +242,7 @@ namespace Agora.Rtc
         public void Test_StopRecordingDeviceTest()
         {
 
+
             var nRet = AudioDeviceManager.StopRecordingDeviceTest();
             Assert.AreEqual(0, nRet);
         }
@@ -257,6 +259,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_StopAudioDeviceLoopbackTest()
         {
+
 
             var nRet = AudioDeviceManager.StopAudioDeviceLoopbackTest();
             Assert.AreEqual(0, nRet);
@@ -288,6 +291,7 @@ namespace Agora.Rtc
             var nRet = AudioDeviceManager.FollowSystemLoopbackDevice(enable);
             Assert.AreEqual(0, nRet);
         }
+
 
         #endregion terra IAudioDeviceManager
     }

@@ -85,9 +85,11 @@ namespace Agora.Rtc
         public void Test_StopDeviceTest()
         {
 
+
             var nRet = VideoDeviceManager.StopDeviceTest();
             Assert.AreEqual(0, nRet);
         }
+
 
         #endregion terra IVideoDeviceManager
     }

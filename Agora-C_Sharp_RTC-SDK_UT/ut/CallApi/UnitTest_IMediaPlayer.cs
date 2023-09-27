@@ -63,6 +63,7 @@ namespace Agora.Rtc
         public void Test_Play()
         {
 
+
             var nRet = MediaPlayer.Play();
             Assert.AreEqual(0, nRet);
         }
@@ -70,6 +71,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_Pause()
         {
+
 
             var nRet = MediaPlayer.Pause();
             Assert.AreEqual(0, nRet);
@@ -79,6 +81,7 @@ namespace Agora.Rtc
         public void Test_Stop()
         {
 
+
             var nRet = MediaPlayer.Stop();
             Assert.AreEqual(0, nRet);
         }
@@ -86,6 +89,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_Resume()
         {
+
 
             var nRet = MediaPlayer.Resume();
             Assert.AreEqual(0, nRet);
@@ -224,6 +228,7 @@ namespace Agora.Rtc
         public void Test_GetState()
         {
 
+
             var nRet = MediaPlayer.GetState();
             Assert.AreEqual(0, nRet);
         }
@@ -323,6 +328,7 @@ namespace Agora.Rtc
         public void Test_UnregisterAudioFrameObserver()
         {
 
+
             var nRet = MediaPlayer.UnregisterAudioFrameObserver();
             Assert.AreEqual(0, nRet);
         }
@@ -341,6 +347,7 @@ namespace Agora.Rtc
         public void Test_UnregisterMediaPlayerAudioSpectrumObserver()
         {
 
+
             var nRet = MediaPlayer.UnregisterMediaPlayerAudioSpectrumObserver();
             Assert.AreEqual(0, nRet);
         }
@@ -358,6 +365,7 @@ namespace Agora.Rtc
         public void Test_GetPlayerSdkVersion()
         {
 
+
             var nRet = MediaPlayer.GetPlayerSdkVersion();
             Assert.AreEqual(0, nRet);
         }
@@ -365,6 +373,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetPlaySrc()
         {
+
 
             var nRet = MediaPlayer.GetPlaySrc();
             Assert.AreEqual(0, nRet);
@@ -384,6 +393,7 @@ namespace Agora.Rtc
         public void Test_GetAgoraCDNLineCount()
         {
 
+
             var nRet = MediaPlayer.GetAgoraCDNLineCount();
             Assert.AreEqual(0, nRet);
         }
@@ -400,6 +410,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetCurrentAgoraCDNIndex()
         {
+
 
             var nRet = MediaPlayer.GetCurrentAgoraCDNIndex();
             Assert.AreEqual(0, nRet);

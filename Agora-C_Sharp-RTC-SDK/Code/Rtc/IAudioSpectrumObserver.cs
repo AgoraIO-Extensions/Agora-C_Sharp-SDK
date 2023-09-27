@@ -10,7 +10,7 @@
         ///
         /// <summary>
         /// Gets the statistics of a local audio spectrum.
-        ///
+        /// 
         /// After successfully calling RegisterAudioSpectrumObserver to implement the OnLocalAudioSpectrum callback in IAudioSpectrumObserver and calling EnableAudioSpectrumMonitor to enable audio spectrum monitoring, the SDK will trigger the callback as the time interval you set to report the received remote audio data spectrum.
         /// </summary>
         ///
@@ -28,7 +28,7 @@
         ///
         /// <summary>
         /// Gets the remote audio spectrum.
-        ///
+        /// 
         /// After successfully calling RegisterAudioSpectrumObserver to implement the OnRemoteAudioSpectrum callback in the IAudioSpectrumObserver and calling EnableAudioSpectrumMonitor to enable audio spectrum monitoring, the SDK will trigger the callback as the time interval you set to report the received remote audio data spectrum.
         /// </summary>
         ///

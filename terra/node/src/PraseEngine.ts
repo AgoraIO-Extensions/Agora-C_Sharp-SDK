@@ -35,7 +35,7 @@ export class ParseEngine {
             if (fs.existsSync(fullDistFileName)) {
                 console.log(fullDistFileName + " : " + fullTemplateFileName);
                 parseTemplate.parse(fullDistFileName, fullTemplateFileName);
-                execSync(`clang-format -i ${fullDistFileName}`);
+                // execSync(`clang-format -i ${fullDistFileName}`);
             }
         }
     }

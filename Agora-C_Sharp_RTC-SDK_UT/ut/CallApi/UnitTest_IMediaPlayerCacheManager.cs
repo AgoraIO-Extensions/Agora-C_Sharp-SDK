@@ -29,6 +29,7 @@ namespace Agora.Rtc
         public void Test_RemoveAllCaches()
         {
 
+
             var nRet = MediaPlayerCacheManager.RemoveAllCaches();
             Assert.AreEqual(0, nRet);
         }
@@ -36,6 +37,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_RemoveOldCache()
         {
+
 
             var nRet = MediaPlayerCacheManager.RemoveOldCache();
             Assert.AreEqual(0, nRet);
@@ -100,6 +102,7 @@ namespace Agora.Rtc
         public void Test_GetMaxCacheFileCount()
         {
 
+
             var nRet = MediaPlayerCacheManager.GetMaxCacheFileCount();
             Assert.AreEqual(0, nRet);
         }
@@ -108,6 +111,7 @@ namespace Agora.Rtc
         public void Test_GetMaxCacheFileSize()
         {
 
+
             var nRet = MediaPlayerCacheManager.GetMaxCacheFileSize();
             Assert.AreEqual(0, nRet);
         }
@@ -115,6 +119,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_GetCacheFileCount()
         {
+
 
             var nRet = MediaPlayerCacheManager.GetCacheFileCount();
             Assert.AreEqual(0, nRet);

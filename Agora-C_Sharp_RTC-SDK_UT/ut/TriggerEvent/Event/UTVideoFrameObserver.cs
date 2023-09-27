@@ -15,6 +15,7 @@ namespace Agora.Rtc
             OnCaptureVideoFrame_sourceType = sourceType;
             OnCaptureVideoFrame_videoFrame = videoFrame;
             return true;
+
         }
 
         public bool OnCaptureVideoFramePassed(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
@@ -43,6 +44,7 @@ namespace Agora.Rtc
             OnPreEncodeVideoFrame_sourceType = sourceType;
             OnPreEncodeVideoFrame_videoFrame = videoFrame;
             return true;
+
         }
 
         public bool OnPreEncodeVideoFramePassed(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
@@ -71,6 +73,7 @@ namespace Agora.Rtc
             OnMediaPlayerVideoFrame_videoFrame = videoFrame;
             OnMediaPlayerVideoFrame_mediaPlayerId = mediaPlayerId;
             return true;
+
         }
 
         public bool OnMediaPlayerVideoFramePassed(VideoFrame videoFrame, int mediaPlayerId)
@@ -101,6 +104,7 @@ namespace Agora.Rtc
             OnRenderVideoFrame_remoteUid = remoteUid;
             OnRenderVideoFrame_videoFrame = videoFrame;
             return true;
+
         }
 
         public bool OnRenderVideoFramePassed(string channelId, uint remoteUid, VideoFrame videoFrame)
@@ -129,6 +133,7 @@ namespace Agora.Rtc
             OnTranscodedVideoFrame_be_trigger = true;
             OnTranscodedVideoFrame_videoFrame = videoFrame;
             return true;
+
         }
 
         public bool OnTranscodedVideoFramePassed(VideoFrame videoFrame)
@@ -144,6 +149,7 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
+
 
         #endregion terra IVideoFrameObserver
     }

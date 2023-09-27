@@ -12,7 +12,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Enumerates the video devices.
-        ///
+        /// 
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
@@ -28,7 +28,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Specifies the video capture device with the device ID.
-        ///
+        /// 
         /// Plugging or unplugging a device does not change its device ID.
         /// This method is for Windows and macOS only.
         /// </summary>
@@ -45,7 +45,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Retrieves the current video capture device.
-        ///
+        /// 
         /// This method is for Windows and macOS only.
         /// </summary>
         ///
@@ -61,7 +61,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the number of video formats supported by the specified video capture device.
-        ///
+        /// 
         /// This method is for Windows and macOS only. Video capture devices may support multiple video formats, and each format supports different combinations of video frame width, video frame height, and frame rate. You can call this method to get how many video formats the specified video capture device can support, and then call GetCapability to get the specific video frame information in the specified video format.
         /// </summary>
         ///
@@ -77,7 +77,7 @@ namespace Agora.Rtc
         ///
         /// <summary>
         /// Gets the detailed video frame information of the video capture device in the specified video format.
-        ///
+        /// 
         /// This method is for Windows and macOS only. After calling NumberOfCapabilities to get the number of video formats supported by the video capture device, you can call this method to get the specific video frame information supported by the specified index number.
         /// </summary>
         ///

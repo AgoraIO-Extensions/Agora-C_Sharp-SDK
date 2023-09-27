@@ -240,7 +240,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The audio device information.
-    ///
+    /// 
     /// This class is for Android only.
     /// </summary>
     ///
@@ -464,7 +464,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Error codes.
-    ///
+    /// 
     /// An error code indicates that the SDK encountered an unrecoverable error that requires application intervention. For example, an error is returned when the camera fails to open, and the app needs to inform the user that the camera cannot be used.
     /// </summary>
     ///
@@ -1444,6 +1444,7 @@ namespace Agora.Rtc
             this.width = w;
             this.height = h;
         }
+
     }
 
     ///
@@ -2273,6 +2274,7 @@ namespace Agora.Rtc
             this.encodingPreference = encoding_preference;
             this.compressionPreference = compression_preference;
         }
+
     }
 
     ///
@@ -2420,6 +2422,7 @@ namespace Agora.Rtc
         public CodecCapInfo()
         {
         }
+
     }
 
     ///
@@ -2561,7 +2564,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The configurations for the data stream.
-    ///
+    /// 
     /// The following table shows the SDK behaviors under different parameter settings:
     /// </summary>
     ///
@@ -2589,6 +2592,7 @@ namespace Agora.Rtc
         public DataStreamConfig()
         {
         }
+
     }
 
     ///
@@ -2711,12 +2715,13 @@ namespace Agora.Rtc
             this.width = ww;
             this.height = hh;
         }
+
     }
 
     ///
     /// <summary>
     /// The position and size of the watermark on the screen.
-    ///
+    /// 
     /// The position and size of the watermark on the screen are determined by xRatio, yRatio, and widthRatio :
     ///  (xRatio, yRatio) refers to the coordinates of the upper left corner of the watermark, which determines the distance from the upper left corner of the watermark to the upper left corner of the screen.
     ///  The widthRatio determines the width of the watermark.
@@ -2758,6 +2763,7 @@ namespace Agora.Rtc
             this.yRatio = y;
             this.widthRatio = width;
         }
+
     }
 
     ///
@@ -3469,6 +3475,7 @@ namespace Agora.Rtc
             this.height = h;
             this.fps = f;
         }
+
     }
 
     ///
@@ -4505,6 +4512,7 @@ namespace Agora.Rtc
         public LocalAudioStats()
         {
         }
+
     }
 
     ///
@@ -4723,7 +4731,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Image properties.
-    ///
+    /// 
     /// This class sets the properties of the watermark and background images in the live video.
     /// </summary>
     ///
@@ -4806,7 +4814,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The configuration for advanced features of the RTMP or RTMPS streaming with transcoding.
-    ///
+    /// 
     /// If you want to enable the advanced features of streaming with transcoding, contact.
     /// </summary>
     ///
@@ -4837,6 +4845,7 @@ namespace Agora.Rtc
             this.featureName = feat_name;
             this.opened = open;
         }
+
     }
 
     ///
@@ -5480,6 +5489,7 @@ namespace Agora.Rtc
         public LastmileProbeConfig()
         {
         }
+
     }
 
     ///
@@ -5875,6 +5885,7 @@ namespace Agora.Rtc
         public WlAccStats()
         {
         }
+
     }
 
     ///
@@ -6161,6 +6172,7 @@ namespace Agora.Rtc
             this.rednessLevel = 0;
             this.sharpnessLevel = 0;
         }
+
     }
 
     ///
@@ -6224,6 +6236,7 @@ namespace Agora.Rtc
             this.mode = LOW_LIGHT_ENHANCE_MODE.LOW_LIGHT_ENHANCE_AUTO;
             this.level = LOW_LIGHT_ENHANCE_LEVEL.LOW_LIGHT_ENHANCE_LEVEL_HIGH_QUALITY;
         }
+
     }
 
     ///
@@ -6302,6 +6315,7 @@ namespace Agora.Rtc
             this.mode = VIDEO_DENOISER_MODE.VIDEO_DENOISER_AUTO;
             this.level = VIDEO_DENOISER_LEVEL.VIDEO_DENOISER_LEVEL_HIGH_QUALITY;
         }
+
     }
 
     ///
@@ -6389,6 +6403,7 @@ namespace Agora.Rtc
             this.strengthLevel = 0;
             this.skinProtectLevel = 1;
         }
+
     }
 
     ///
@@ -6736,7 +6751,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// Preset audio effects.
-    ///
+    /// 
     /// To get better audio effects, Agora recommends calling SetAudioProfile [1/2] and setting the profile parameter as recommended below before using the preset audio effects.
     /// </summary>
     ///
@@ -7380,6 +7395,7 @@ namespace Agora.Rtc
             this.quality = rhs.quality;
             this.recordingChannel = rhs.recordingChannel;
         }
+
     }
 
     ///
@@ -7797,6 +7813,7 @@ namespace Agora.Rtc
         public ChannelMediaInfo()
         {
         }
+
     }
 
     ///
@@ -7916,7 +7933,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The built-in encryption mode.
-    ///
+    /// 
     /// Agora recommends using AES_128_GCM2 or AES_256_GCM2 encrypted mode. These two modes support the use of salt for higher security.
     /// </summary>
     ///
@@ -8232,6 +8249,7 @@ namespace Agora.Rtc
             this.channelId = "";
             this.intervalInSeconds = 2;
         }
+
     }
 
     ///
@@ -8351,7 +8369,7 @@ namespace Agora.Rtc
     ///
     /// <summary>
     /// The audio configuration for the shared screen stream.
-    ///
+    /// 
     /// Only available where captureAudio is true.
     /// </summary>
     ///
@@ -8387,6 +8405,7 @@ namespace Agora.Rtc
         public ScreenAudioParameters()
         {
         }
+
     }
 
     ///
@@ -8436,6 +8455,7 @@ namespace Agora.Rtc
         public ScreenCaptureParameters2()
         {
         }
+
     }
 
     ///
@@ -8541,6 +8561,7 @@ namespace Agora.Rtc
         public VideoRenderingTracingInfo()
         {
         }
+
     }
 
     ///
@@ -8649,6 +8670,7 @@ namespace Agora.Rtc
             this.serverPort = port;
             this.serverHttps = https;
         }
+
     }
 
     ///
@@ -8668,6 +8690,7 @@ namespace Agora.Rtc
         public AdvancedConfigInfo()
         {
         }
+
     }
 
     ///

@@ -588,6 +588,7 @@ namespace Agora.Rtc
         public SrcInfo()
         {
         }
+
     }
 
     ///
@@ -649,6 +650,7 @@ namespace Agora.Rtc
         public CacheStatistics()
         {
         }
+
     }
 
     ///

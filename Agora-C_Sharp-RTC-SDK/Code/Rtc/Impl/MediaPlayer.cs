@@ -61,6 +61,7 @@ namespace Agora.Rtc
 
         #region terra IMediaPlayer
 
+
         public override int Open(string url, long startPos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
@@ -69,7 +70,6 @@ namespace Agora.Rtc
             }
             return _mediaPlayerImpl.Open(playerId, url, startPos);
         }
-
         [Obsolete("")]
         public override int OpenWithCustomSource(long startPos, IMediaPlayerCustomDataProvider provider)
         {
@@ -385,7 +385,6 @@ namespace Agora.Rtc
             }
             return _mediaPlayerImpl.SetAudioDualMonoMode(playerId, mode);
         }
-
         [Obsolete("This method is deprecated.")]
         public override string GetPlayerSdkVersion()
         {

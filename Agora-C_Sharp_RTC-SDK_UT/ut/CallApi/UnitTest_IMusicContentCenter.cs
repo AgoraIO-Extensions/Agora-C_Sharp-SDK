@@ -54,6 +54,7 @@ namespace Agora.Rtc
         public void Test_UnregisterEventHandler()
         {
 
+
             var nRet = MusicContentCenter.UnregisterEventHandler();
             Assert.AreEqual(0, nRet);
         }
@@ -61,6 +62,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_CreateMusicPlayer()
         {
+
 
             var nRet = MusicContentCenter.CreateMusicPlayer();
             Assert.AreEqual(0, nRet);

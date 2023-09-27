@@ -122,6 +122,7 @@ namespace Agora.Rtc
         public MusicChartInfo()
         {
         }
+
     }
 
     ///
@@ -191,6 +192,7 @@ namespace Agora.Rtc
         public MvProperty()
         {
         }
+
     }
 
     ///
@@ -222,6 +224,7 @@ namespace Agora.Rtc
         public ClimaxSegment()
         {
         }
+
     }
 
     ///
@@ -319,6 +322,7 @@ namespace Agora.Rtc
         public Music()
         {
         }
+
     }
 
     ///
@@ -361,6 +365,7 @@ namespace Agora.Rtc
             this.mccUid = id;
             this.maxCacheSize = maxSize;
         }
+
     }
 
     #endregion terra IAgoraMusicContentCenter.h
