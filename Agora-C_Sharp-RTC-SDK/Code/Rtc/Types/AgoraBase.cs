@@ -5039,11 +5039,6 @@ namespace Agora.Rtc
     public enum VIDEO_TRANSCODER_ERROR
     {
         ///
-        /// @ignore
-        ///
-        VT_ERR_OK = 0,
-
-        ///
         /// <summary>
         /// 1: The selected video source has not started video capture. You need to create a video track for it and start video capture.
         /// </summary>
