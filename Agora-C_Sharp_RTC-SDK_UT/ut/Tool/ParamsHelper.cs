@@ -943,7 +943,7 @@ namespace Agora.Rtc
         }
         public static void InitParam(out VIDEO_TRANSCODER_ERROR param)
         {
-            param = VIDEO_TRANSCODER_ERROR.VT_ERR_OK;
+            param = VIDEO_TRANSCODER_ERROR.VT_ERR_VIDEO_SOURCE_NOT_READY;
         }
 
         public static void InitParam(out DeviceInfoMobile param)
@@ -3495,7 +3495,7 @@ namespace Agora.Rtc
 
         public static bool compareVIDEO_TRANSCODER_ERROR(VIDEO_TRANSCODER_ERROR selfParam, VIDEO_TRANSCODER_ERROR outParam)
         {
-            return selfParam == VIDEO_TRANSCODER_ERROR.VT_ERR_OK;
+            return selfParam == VIDEO_TRANSCODER_ERROR.VT_ERR_VIDEO_SOURCE_NOT_READY;
         }
 
         #endregion
