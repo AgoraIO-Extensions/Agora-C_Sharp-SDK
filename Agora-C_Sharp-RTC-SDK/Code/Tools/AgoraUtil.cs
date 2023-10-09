@@ -221,6 +221,28 @@ namespace Agora.Rtm
             return new JsonData();
         }
 
+        public void WriteEnum(LitJson.JsonWriter writer, Object obj)
+        {
+            Type obj_type = obj.GetType();
+            Type e_type = Enum.GetUnderlyingType(obj_type);
+
+            if (e_type == typeof(long))
+                writer.Write((long)obj);
+            else if (e_type == typeof(uint))
+                writer.Write((uint)obj);
+            else if (e_type == typeof(ulong))
+                writer.Write((ulong)obj);
+            else if (e_type == typeof(ushort))
+                writer.Write((ushort)obj);
+            else if (e_type == typeof(short))
+                writer.Write((short)obj);
+            else if (e_type == typeof(byte))
+                writer.Write((byte)obj);
+            else if (e_type == typeof(sbyte))
+                writer.Write((sbyte)obj);
+            else
+                writer.Write((int)obj);
+        }
     }
 
     internal class AgoraUtil
