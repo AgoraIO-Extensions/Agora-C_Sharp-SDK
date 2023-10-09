@@ -199,10 +199,10 @@ export class ParseClassOrStruct {
 
     _parseMember(replaceString: string, member: MemberVariable, clazzName: string): string {
         var config = ConfigTool.getInstance();
-        let memberClass = ConfigTool.getInstance().getClassOrStruct(member.name);
-        if (memberClass) {
-            replaceString = Tool.processNamespaces(replaceString, memberClass.namespaces);
-        }
+        // let memberClass = ConfigTool.getInstance().getClassOrStruct(member.type.source);
+        // if (memberClass) {
+        //     replaceString = Tool.processNamespaces(replaceString, memberClass.namespaces);
+        // }
 
         //成员类型
         let typeArray = replaceString.match(/\${-[a-z]+MEMBER_TYPE}/g);
@@ -315,10 +315,10 @@ export class ParseClassOrStruct {
             let str = json.format;
 
             //参数的命名空间
-            let memberClass = ConfigTool.getInstance().getClassOrStruct(parameters[i].name);
-            if (memberClass) {
-                str = Tool.processNamespaces(str, memberClass.namespaces);
-            }
+            // let memberClass = ConfigTool.getInstance().getClassOrStruct(parameters[i].type.source);
+            // if (memberClass) {
+            //     str = Tool.processNamespaces(str, memberClass.namespaces);
+            // }
 
             //函数名字的替换
             //方法名字

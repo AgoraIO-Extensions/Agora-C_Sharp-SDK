@@ -2,7 +2,8 @@ import * as fs from "fs";
 import { TemplateJoin } from "./Template";
 import { Constructor } from "./terra";
 import { type } from "os";
-import { normalize } from "path";
+import path, { normalize } from "path";
+import { ConfigTool } from "./ConfigTool";
 
 export interface CppConstructor {
     //参数列表
@@ -15,6 +16,10 @@ export interface CppConstructor {
 export class Tool {
 
     public static getCppConstructor(clazzName: string, filePath: string): CppConstructor[] {
+
+        let baseName = path.basename(filePath);
+        filePath = path.join(ConfigTool.getInstance().cxxOriginFileDir, baseName);
+        console.log("getCppConstructor " + filePath);
         let cppConstructors = [];
         let context = Tool.readFile(filePath);
         let reg = new RegExp(`^[ ]*${clazzName}\\([\\s\\S]*?\\)[\\s\\S]*?\\{[\\s\\S]*?\\}`, "gm");

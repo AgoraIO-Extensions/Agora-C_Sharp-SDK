@@ -12,6 +12,7 @@ export class ConfigTool {
         return this._instance;
     }
 
+    public cxxOriginFileDir: string = "";
     public cxxFiles: CXXFile[] = null;
     public distMarkStart: string = "";
     public distMarkEnd: string = "";
@@ -23,6 +24,10 @@ export class ConfigTool {
     public loadDistMark(markStart: string, markEnd: string): void {
         this.distMarkStart = markStart;
         this.distMarkEnd = markEnd;
+    }
+
+    public loadCXXOriginFileDir(dir: string) {
+        this.cxxOriginFileDir = dir;
     }
 
     public loadCXXFiles(cxxFiles: CXXFile[]) {
@@ -74,6 +79,9 @@ export class ConfigTool {
                 }
             }
         }
+
+        console.warn("getClassOrStruct error:" + name);
+
     }
 
     public getEnumz(name: string, fileName: string = null): Enumz {

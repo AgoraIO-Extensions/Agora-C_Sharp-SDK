@@ -262,79 +262,95 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_ClazzStructConstructor(clazz: Clazz): string {
-        if (clazz.name == "UserAudioSpectrumInfo") {
-            return "";
-        }
+    // public cSharpSDK_ClazzStructConstructor(clazz: Clazz): string {
+    //     if (clazz.name == "UserAudioSpectrumInfo") {
+    //         return "";
+    //     }
 
-        let config = ConfigTool.getInstance();
-        let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
-        let lines = [];
-        for (let constructor of cppConstructors) {
-            let constructorLines = [];
+    //     let config = ConfigTool.getInstance();
+    //     let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
+    //     let lines = [];
+    //     for (let constructor of cppConstructors) {
+    //         let constructorLines = [];
 
-            //参数列表
-            if (constructor.parameters.length > 0) {
-                let parametersLines = [];
-                for (let p of constructor.parameters) {
-                    let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, p.type, p.name);
-                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, p.name);
-                    let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, p.type, p.name, p.value == null ? "" : p.value);
-                    console.log("xxxxxxxxxxxxxxx " + p.value + " " + transValue);
-                    if (transValue == null || transValue == "@remove") {
-                        parametersLines.push(`${transType} ${transName}`);
-                    }
-                    else {
-                        parametersLines.push(`${transType} ${transName} = ${transValue}`);
-                    }
-                }
-                let parametersStr = parametersLines.join(",");
-                constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
-            }
-            else {
-                constructorLines.push(`public ${clazz.name}()\n{`);
-            }
+    //         //参数列表
+    //         if (constructor.parameters.length > 0) {
+    //             let parametersLines = [];
+    //             for (let p of constructor.parameters) {
+    //                 let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, p.type, p.name);
+    //                 let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, p.name);
+    //                 let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, p.type, p.name, p.value == null ? "" : p.value);
+    //                 console.log("xxxxxxxxxxxxxxx " + p.value + " " + transValue);
+    //                 if (transValue == null || transValue == "@remove") {
+    //                     parametersLines.push(`${transType} ${transName}`);
+    //                 }
+    //                 else {
+    //                     parametersLines.push(`${transType} ${transName} = ${transValue}`);
+    //                 }
+    //             }
+    //             let parametersStr = parametersLines.join(",");
+    //             constructorLines.push(`public ${clazz.name}(${parametersStr})`);
+    //         }
+    //         else {
+    //             constructorLines.push(`public ${clazz.name}()`);
+    //         }
 
-            //初始化构造列表
-            if (constructor.initializes.length > 0) {
-                for (let e of constructor.initializes) {
-                    let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
-                    let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, null, e.name, e.value);
-                    constructorLines.push(`this.${transName} = ${transValue};`);
-                }
-            }
-            constructorLines.push("}");
-            lines.push(constructorLines.join('\n'));
-        }
+    //         //初始化构造列表里调用了父类构造
+    //         let baseClazzName = clazz.base_clazzs.length > 0 ? clazz.base_clazzs[0] : "";
+    //         if (constructor.initializes.length > 0) {
+    //             for (let e of constructor.initializes) {
+    //                 if (e.name == baseClazzName) {
+    //                     constructorLines.push(`:base(${e.value})`);
+    //                     break;
+    //                 }
+    //             }
+    //         }
+    //         constructorLines.push(`{`);
 
-        //生成全量参数构造
-        let needFullParamCtor = true;
-        for (let e of cppConstructors) {
-            if (e.parameters.length == clazz.member_variables.length) {
-                needFullParamCtor = false;
-                break;
-            }
-        }
-        if (needFullParamCtor) {
-            let constructorLines = [];
-            let parametersLines = [];
-            for (let e of clazz.member_variables) {
-                let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, e.type.source, e.name);
-                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
-                parametersLines.push(`${transType} ${transName}`);
-            }
-            let parametersStr = parametersLines.join(",");
-            constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
-            for (let e of clazz.member_variables) {
-                let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
-                constructorLines.push(`this.${transName} = ${transName};`);
-            }
-            constructorLines.push(`}`);
-            lines.push(constructorLines.join('\n'));
-        }
+    //         //初始化构造列表
+    //         if (constructor.initializes.length > 0) {
+    //             for (let e of constructor.initializes) {
+    //                 if (e.name == baseClazzName)
+    //                     continue;
+    //                 let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+    //                 let transValue = config.paramDefaultTrans.transType(clazz.name, clazz.name, null, e.name, e.value);
+    //                 constructorLines.push(`this.${transName} = ${transValue};`);
+    //             }
+    //         }
 
-        return lines.join('\n\n');
-    }
+
+    //         constructorLines.push("}");
+    //         lines.push(constructorLines.join('\n'));
+    //     }
+
+    //     //生成全量参数构造
+    //     let needFullParamCtor = true;
+    //     for (let e of cppConstructors) {
+    //         if (e.parameters.length == clazz.member_variables.length) {
+    //             needFullParamCtor = false;
+    //             break;
+    //         }
+    //     }
+    //     if (needFullParamCtor) {
+    //         let constructorLines = [];
+    //         let parametersLines = [];
+    //         for (let e of clazz.member_variables) {
+    //             let transType = config.paramTypeTrans.transType(clazz.name, clazz.name, e.type.source, e.name);
+    //             let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+    //             parametersLines.push(`${transType} ${transName}`);
+    //         }
+    //         let parametersStr = parametersLines.join(",");
+    //         constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+    //         for (let e of clazz.member_variables) {
+    //             let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
+    //             constructorLines.push(`this.${transName} = ${transName};`);
+    //         }
+    //         constructorLines.push(`}`);
+    //         lines.push(constructorLines.join('\n'));
+    //     }
+
+    //     return lines.join('\n\n');
+    // }
 
     public cSharpSDK_AudioFrameConstructor(clazz: Clazz): string {
         let config = ConfigTool.getInstance();
@@ -405,20 +421,35 @@ export class SpeicalLogic {
     }
 
     public cSharpSDK_ClazzAndStructWithOptional(clazz: Clazz | Struct): string {
-        let hadOptional = false;
-        for (let e of clazz.member_variables) {
-            if (e.type.source.includes('Optional<')) {
-                hadOptional = true;
-                break;
+        let judgmentHadOptinal = (clazz: Clazz | Struct): boolean => {
+            for (let e of clazz.member_variables) {
+                if (e.type.source.includes('Optional<')) {
+                    return true;
+                    break;
+                }
             }
+            return false;
         }
+
         let config = ConfigTool.getInstance();
+        let baseClazz: Clazz | Struct = null;
+        if (clazz.base_clazzs.length > 0) {
+            baseClazz = config.getClassOrStruct(clazz.base_clazzs[0]);
+        }
+        let thisHadOptional = false;
+        let baseHadOptional = false;
+        thisHadOptional = judgmentHadOptinal(clazz);
+        baseHadOptional = baseClazz && judgmentHadOptinal(baseClazz);
+
         var lines = [];
-        if (hadOptional) {
-            lines.push(`public class ${clazz.name} : OptionalJsonParse{`);
+        let parentClass: string = clazz.base_clazzs.join(",");
+        if ((thisHadOptional && !baseHadOptional) ||
+            (baseHadOptional && !thisHadOptional)
+        ) {
+            lines.push(`public class ${clazz.name} :${parentClass} IOptionalJsonParse{`);
         }
         else {
-            lines.push(`public class ${clazz.name}{`);
+            lines.push(`public class ${clazz.name}${parentClass != "" ? ':' + parentClass : ''}{`);
         }
 
         //members
@@ -441,10 +472,10 @@ export class SpeicalLogic {
             }
             let tranName = config.paramNameFormalTrans.transType(clazz.name, null, e.name);
             if (e.type.source.includes('Optional<')) {
-                lines.push(`public ${transType} ${tranName} = new ${transType}();\n\n`);
+                lines.push(`public ${transType} ${tranName} = new ${transType}();\n`);
             }
             else {
-                lines.push(`public ${transType} ${tranName};\n\n`);
+                lines.push(`public ${transType} ${tranName};\n`);
             }
         }
 
@@ -479,11 +510,24 @@ export class SpeicalLogic {
                         }
                     }
                     let parametersStr = parametersLines.join(",");
-                    constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+                    constructorLines.push(`public ${clazz.name}(${parametersStr})`);
                 }
                 else {
-                    constructorLines.push(`public ${clazz.name}()\n{`);
+                    constructorLines.push(`public ${clazz.name}()`);
                 }
+
+                //初始化构造列表里调用了父类构造
+                let baseClazzName = clazz.base_clazzs.length > 0 ? clazz.base_clazzs[0] : "";
+                if (constructor.initializes.length > 0) {
+                    for (let e of constructor.initializes) {
+                        if (e.name == baseClazzName) {
+                            constructorLines.push(`:base(${e.value})`);
+                            break;
+                        }
+                    }
+                }
+                constructorLines.push(`{`);
+
 
                 //初始化构造列表
                 if (constructor.initializes.length > 0) {
@@ -491,6 +535,8 @@ export class SpeicalLogic {
                         if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                             continue;
                         if (clazz.name == "MusicContentCenterConfiguration" && e.name == "eventHandler")
+                            continue;
+                        if (e.name == baseClazzName)
                             continue;
                         let transType = this.cSharpSDK_FindType(e.name, clazz);
                         let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
@@ -515,17 +561,16 @@ export class SpeicalLogic {
             //生成全量参数构造
             let needFullParamCtor = true;
             let needEmptyParamCtor = true;
+            let baseAndThisMemberLength = clazz.member_variables.length + (baseClazz ? baseClazz.member_variables.length : 0);
             for (let e of cppConstructors) {
-                if (e.parameters.length == clazz.member_variables.length) {
+                if (e.parameters.length == baseAndThisMemberLength) {
                     needFullParamCtor = false;
                 }
                 if (e.parameters.length == 0) {
                     needEmptyParamCtor = false;
                 }
             }
-            if (needFullParamCtor) {
-                let constructorLines = [];
-                let parametersLines = [];
+            let generateParamersLines = (clazz: Clazz | Struct, parametersLines: string[]) => {
                 for (let e of clazz.member_variables) {
                     if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                         continue;
@@ -542,8 +587,30 @@ export class SpeicalLogic {
                     let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
                     parametersLines.push(`${transType} ${transName}`);
                 }
+            }
+
+
+            if (needFullParamCtor) {
+                let constructorLines = [];
+                let parametersLines = [];
+                if (baseClazz) {
+                    generateParamersLines(baseClazz, parametersLines);
+                }
+                generateParamersLines(clazz, parametersLines);
                 let parametersStr = parametersLines.join(",");
-                constructorLines.push(`public ${clazz.name}(${parametersStr})\n{`);
+                constructorLines.push(`public ${clazz.name}(${parametersStr})`);
+
+                if (baseClazz) {
+                    //C# only support single-inheritance
+                    let baseParamters: string[] = [];
+                    for (let e of baseClazz.member_variables) {
+                        let transName = config.paramNameFormalTrans.transType(baseClazz.name, baseClazz.name, e.name);
+                        baseParamters.push(transName);
+                    }
+                    constructorLines.push(`: base(${baseParamters.join(',')})`);
+                }
+                constructorLines.push('{');
+
                 for (let e of clazz.member_variables) {
                     if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                         continue;
@@ -559,54 +626,61 @@ export class SpeicalLogic {
         }
 
         //ToJson
-        if (hadOptional) {
-            lines.push(`\npublic override void ToJson(JsonWriter writer){`);
+        if (thisHadOptional || baseHadOptional) {
+            if (thisHadOptional) {
+                lines.push(`\npublic virtual void ToJson(JsonWriter writer){`);
+            }
+            else {
+                lines.push(`\npublic override void ToJson(JsonWriter writer){`);
+            }
             lines.push(`writer.WriteObjectStart();\n`);
+            let writeJson = (clazz: Clazz | Struct, lines: string[]) => {
+                for (let e of clazz.member_variables) {
+                    if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                        continue;
+                    if (clazz.name == "MediaSource" && e.name == "provider")
+                        continue;
 
-            for (let e of clazz.member_variables) {
-                if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
-                    continue;
-                if (clazz.name == "MediaSource" && e.name == "provider")
-                    continue;
+                    let transType = config.paramTypeTrans.transType(clazz.name, null, e.type.source, e.name);
+                    let transName = config.paramNameFormalTrans.transType(clazz.name, null, e.name);
 
-                let transType = config.paramTypeTrans.transType(clazz.name, null, e.type.source, e.name);
-                let transName = config.paramNameFormalTrans.transType(clazz.name, null, e.name);
-
-                if (transType.includes('Optional<')) {
-                    let midName = this.cSharpSDK_getMidTypeFromOptinal(transType);
-                    midName = config.paramTypeTrans.transType(clazz.name, null, midName, e.name);
-                    //Optional<agora::rtc::VIDEO_STREAM_TYPE> ==> Optional<VIDEO_STREAM_TYPE>
-                    transType = `Optional<${midName}>`;
-                    lines.push(`if (this.${transName}.HasValue()){`);
-                    lines.push(`writer.WritePropertyName("${transName}");`)
-                    if (this.cSharpSDK_IsClazzOrStruct(this.cSharpSDK_getMidTypeFromOptinal(transType))) {
-                        lines.push(`JsonMapper.WriteValue(this.${transName}.GetValue(), writer, false, 0);`)
+                    if (transType.includes('Optional<')) {
+                        let midName = this.cSharpSDK_getMidTypeFromOptinal(transType);
+                        midName = config.paramTypeTrans.transType(clazz.name, null, midName, e.name);
+                        //Optional<agora::rtc::VIDEO_STREAM_TYPE> ==> Optional<VIDEO_STREAM_TYPE>
+                        transType = `Optional<${midName}>`;
+                        lines.push(`if (this.${transName}.HasValue()){`);
+                        lines.push(`writer.WritePropertyName("${transName}");`)
+                        if (this.cSharpSDK_IsClazzOrStruct(this.cSharpSDK_getMidTypeFromOptinal(transType))) {
+                            lines.push(`JsonMapper.WriteValue(this.${transName}.GetValue(), writer, false, 0);`)
+                        }
+                        else if (this.cSharpSDK_IsEnumz(this.cSharpSDK_getMidTypeFromOptinal(transType))) {
+                            lines.push(`AgoraJson.WriteEnum(writer, this.${transName}.GetValue());`)
+                        }
+                        else {
+                            lines.push(`writer.Write(this.${transName}.GetValue());`)
+                        }
+                        lines.push(`}\n`);
                     }
-                    else if (this.cSharpSDK_IsEnumz(this.cSharpSDK_getMidTypeFromOptinal(transType))) {
-                        lines.push(`this.WriteEnum(writer, this.${transName}.GetValue());`)
+                    else if (this.cSharpSDK_IsClazzOrStruct(transType)) {
+                        //是class或者struct
+                        lines.push(`writer.WritePropertyName("${transName}");`);
+                        lines.push(`JsonMapper.WriteValue(this.${transName}, writer, false, 0);\n`);
                     }
                     else {
-                        lines.push(`writer.Write(this.${transName}.GetValue());`)
-                    }
-                    lines.push(`}\n`);
-                }
-                else if (this.cSharpSDK_IsClazzOrStruct(transType)) {
-                    //是class或者struct
-                    lines.push(`writer.WritePropertyName("${transName}");`);
-                    lines.push(`JsonMapper.WriteValue(this.${transName}, writer, false, 0);\n`);
-                }
-                else {
-                    //是普通变量
-                    lines.push(`writer.WritePropertyName("${transName}");`)
-                    if (this.cSharpSDK_IsEnumz(transType)) {
-                        lines.push(`this.WriteEnum(writer, this.${transName});\n`)
-                    }
-                    else {
-                        lines.push(`writer.Write(this.${transName});\n`)
+                        //是普通变量
+                        lines.push(`writer.WritePropertyName("${transName}");`)
+                        if (this.cSharpSDK_IsEnumz(transType)) {
+                            lines.push(`AgoraJson.WriteEnum(writer, this.${transName});\n`)
+                        }
+                        else {
+                            lines.push(`writer.Write(this.${transName});\n`)
+                        }
                     }
                 }
             }
-
+            baseHadOptional && writeJson(baseClazz, lines);
+            writeJson(clazz, lines);
             lines.push(`writer.WriteObjectEnd();`);
             lines.push(`}`)
         }
