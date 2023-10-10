@@ -480,7 +480,7 @@ export class SpeicalLogic {
         }
 
         //constructor
-        if (clazz.name != "UserAudioSpectrumInfo" && clazz.name != "SpatialAudioZone") {
+        if (clazz.name != "SpatialAudioZone") {
 
             let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
             for (let constructor of cppConstructors) {

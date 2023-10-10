@@ -156,7 +156,10 @@
         "IAudioSpectrumObserverS.onRemoteAudioSpectrum.spectrumsS": "UserAudioSpectrumInfoS[]",
         "IMediaPlayerCustomDataProvider.onReadData.buffer": "IntPtr",
         "IMetadataObserver.onReadyToSendMetadata.metadata": "ref Metadata",
-        "IMetadataObserverS.onReadyToSendMetadata.metadataS": "ref Metadata"
+        "IMetadataObserverS.onReadyToSendMetadata.metadataS": "ref Metadata",
+        "UserAudioSpectrumInfoBase.UserAudioSpectrumInfoBase.data": "float[]",
+        "UserAudioSpectrumInfo.UserAudioSpectrumInfo.data": "float[]",
+        "UserAudioSpectrumInfoS.UserAudioSpectrumInfoS.data": "float[]"
     },
     "normal": {
         "char*": "string",
@@ -225,7 +228,8 @@
         "agora::media::base::AudioPcmFrame*": "AudioPcmFrame",
         "agora::media::AudioSpectrumData const&": "AudioSpectrumData",
         "agora::media::RecorderInfo const&": "RecorderInfo",
-        "agora::rtc::IMetadataObserver::Metadata const&": "Metadata"
+        "agora::rtc::IMetadataObserver::Metadata const&": "Metadata",
+        "agora::media::base::IVideoFrameMetaInfo*": "IVideoFrameMetaInfo"
     },
     "reg": {
         "agora::rtc::SegmentationProperty::*": "${-o*}",
