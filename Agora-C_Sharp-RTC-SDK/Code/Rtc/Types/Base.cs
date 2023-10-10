@@ -43,6 +43,7 @@ namespace Agora.Rtc
             this.renderTimeMs = audioFrame.renderTimeMs;
             this.avsync_type = audioFrame.avsync_type;
             this.presentationMs = audioFrame.presentationMs;
+            this.audioTrackNumber = audioFrame.audioTrackNumber;
             #endregion terra AudioFrameInternal_Assignment
         }
 
@@ -57,6 +58,7 @@ namespace Agora.Rtc
         public long renderTimeMs;
         public int avsync_type;
         public long presentationMs;
+        public int audioTrackNumber;
         #endregion terra AudioFrameInternal_Member_List
     }
 
@@ -85,6 +87,8 @@ namespace Agora.Rtc
 
             this.metadata_size = frame.metadata_size;
 
+            this.d3d11_texture_2d = frame.d3d11_texture_2d;
+            this.texture_slice_index = frame.texture_slice_index;
             #endregion terra ExternalVideoFrameInternal_Assignment
         }
 
@@ -108,6 +112,8 @@ namespace Agora.Rtc
 
         public int metadata_size;
 
+        public IntPtr d3d11_texture_2d;
+        public int texture_slice_index;
         #endregion terra ExternalVideoFrameInternal_Member_List
     }
 
@@ -179,6 +185,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         FRAME_TYPE_YUV422 = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_I422,
+
+        FRAME_TYPE_TEXTURE_ID3D11TEXTURE2D = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_ID3D11TEXTURE2D,
     }
 
 }

@@ -446,7 +446,7 @@ export class SpeicalLogic {
         if ((thisHadOptional && !baseHadOptional) ||
             (baseHadOptional && !thisHadOptional)
         ) {
-            lines.push(`public class ${clazz.name} :${parentClass} IOptionalJsonParse{`);
+            lines.push(`public class ${clazz.name} :${parentClass == "" ? "" : parentClass + ","} IOptionalJsonParse{`);
         }
         else {
             lines.push(`public class ${clazz.name}${parentClass != "" ? ':' + parentClass : ''}{`);
@@ -455,6 +455,8 @@ export class SpeicalLogic {
         //members
         for (let e of clazz.member_variables) {
             if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                continue;
+            if (clazz.name == "RtcEngineContextS" && e.name == "eventHandlerS")
                 continue;
 
             if (clazz.name == "MusicContentCenterConfiguration" && e.name == "eventHandler")
@@ -534,6 +536,8 @@ export class SpeicalLogic {
                     for (let e of constructor.initializes) {
                         if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                             continue;
+                        if (clazz.name == "RtcEngineContextS" && e.name == "eventHandlerS")
+                            continue;
                         if (clazz.name == "MusicContentCenterConfiguration" && e.name == "eventHandler")
                             continue;
                         if (e.name == baseClazzName)
@@ -573,6 +577,8 @@ export class SpeicalLogic {
             let generateParamersLines = (clazz: Clazz | Struct, parametersLines: string[]) => {
                 for (let e of clazz.member_variables) {
                     if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                        continue;
+                    if (clazz.name == "RtcEngineContextS" && e.name == "eventHandlerS")
                         continue;
                     let transType = "";
                     if (e.type.source.includes('Optional<')) {
@@ -614,6 +620,8 @@ export class SpeicalLogic {
                 for (let e of clazz.member_variables) {
                     if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
                         continue;
+                    if (clazz.name == "RtcEngineContextS" && e.name == "eventHandlerS")
+                        continue;
                     let transName = config.paramNameFormalTrans.transType(clazz.name, clazz.name, e.name);
                     constructorLines.push(`this.${transName} = ${transName};`);
                 }
@@ -637,6 +645,8 @@ export class SpeicalLogic {
             let writeJson = (clazz: Clazz | Struct, lines: string[]) => {
                 for (let e of clazz.member_variables) {
                     if (clazz.name == "RtcEngineContext" && e.name == "eventHandler")
+                        continue;
+                    if (clazz.name == "RtcEngineContextS" && e.name == "eventHandlerS")
                         continue;
                     if (clazz.name == "MediaSource" && e.name == "provider")
                         continue;

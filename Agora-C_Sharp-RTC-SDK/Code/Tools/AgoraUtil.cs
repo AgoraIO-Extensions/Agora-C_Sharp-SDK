@@ -221,7 +221,7 @@ namespace Agora.Rtm
             return new JsonData();
         }
 
-        public void WriteEnum(LitJson.JsonWriter writer, Object obj)
+        public static void WriteEnum(LitJson.JsonWriter writer, Object obj)
         {
             Type obj_type = obj.GetType();
             Type e_type = Enum.GetUnderlyingType(obj_type);
