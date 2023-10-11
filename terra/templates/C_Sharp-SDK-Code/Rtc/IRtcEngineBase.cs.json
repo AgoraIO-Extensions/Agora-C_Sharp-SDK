@@ -1,7 +1,7 @@
 {
-    "IRtcEngine": {
+    "IRtcEngineBase": {
         "type": "ClazzStruct",
-        "name": "IRtcEngine",
+        "name": "IRtcEngineBase",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface",
         "includeMembers": [],
@@ -10,8 +10,7 @@
             "queryInterface",
             "registerPacketObserver",
             "registerEventHandler",
-            "unregisterEventHandler",
-            "JoinChannelWithUserAccountEx"
+            "unregisterEventHandler"
         ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
@@ -22,9 +21,9 @@
         "format": "${-oPARAM_TYPE} ${-oPARAM_NAME_FORMAL} ${-ePARAM_NAME_FORMAL_DEFAULT}",
         "split": ", "
     },
-    "IMediaEngine": {
+    "IMediaEngineBase": {
         "type": "ClazzStruct",
-        "name": "IMediaEngine",
+        "name": "IMediaEngineBase",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface",
         "includeMembers": [],

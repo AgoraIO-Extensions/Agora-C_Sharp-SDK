@@ -1,7 +1,7 @@
 {
-    "IRtcEngine": {
+    "IRtcEngineS": {
         "type": "ClazzStruct",
-        "name": "IRtcEngine",
+        "name": "IRtcEngineS",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface",
         "includeMembers": [],
@@ -22,9 +22,9 @@
         "format": "${-oPARAM_TYPE} ${-oPARAM_NAME_FORMAL} ${-ePARAM_NAME_FORMAL_DEFAULT}",
         "split": ", "
     },
-    "IMediaEngine": {
+    "IMediaEngineS": {
         "type": "ClazzStruct",
-        "name": "IMediaEngine",
+        "name": "IMediaEngineS",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface",
         "includeMembers": [],
