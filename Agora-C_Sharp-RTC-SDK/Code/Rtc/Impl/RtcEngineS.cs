@@ -12,16 +12,16 @@ using UnityEngine;
 namespace Agora.Rtc
 {
 #if AGORA_RTM
-    public sealed class RtcEngine : IRtcEngineEx, Rtm.Internal.IStreamChannelCreator
+    public sealed class RtcEngineS : IRtcEngineExS, Rtm.Internal.IStreamChannelCreator
 #else
-    public sealed class RtcEngine : IRtcEngineEx
+    public sealed class RtcEngineS : IRtcEngineExS
 #endif
     {
-        private RtcEngineImpl _rtcEngineImpl = null;
+        private RtcEngineImplS _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
         private IVideoDeviceManager _videoDeviceManager = null;
         private IMusicContentCenter _musicContentCenter = null;
-        private ILocalSpatialAudioEngine _localSpatialAudioEngine = null;
+        private ILocalSpatialAudioEngineS _localSpatialAudioEngine = null;
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
 
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
@@ -34,13 +34,13 @@ namespace Agora.Rtc
         private GameObject _agoraEngineObject;
 #endif
 
-        private RtcEngine(IntPtr nativePtr)
+        private RtcEngineS(IntPtr nativePtr)
         {
-            _rtcEngineImpl = RtcEngineImpl.GetInstance(nativePtr);
+            _rtcEngineImpl = RtcEngineImplS.GetInstance(nativePtr);
             _audioDeviceManager = AudioDeviceManager.GetInstance(this, _rtcEngineImpl.GetAudioDeviceManager());
             _videoDeviceManager = VideoDeviceManager.GetInstance(this, _rtcEngineImpl.GetVideoDeviceManager());
             _musicContentCenter = MusicContentCenter.GetInstance(this, _rtcEngineImpl.GetMusicContentCenter());
-            _localSpatialAudioEngine = LocalSpatialAudioEngine.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
+            _localSpatialAudioEngine = LocalSpatialAudioEngineS.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -48,7 +48,7 @@ namespace Agora.Rtc
 #endif
         }
 
-        ~RtcEngine()
+        ~RtcEngineS()
         {
             _audioDeviceManager = null;
             _videoDeviceManager = null;
@@ -57,42 +57,42 @@ namespace Agora.Rtc
             _mediaPlayerCacheManager = null;
         }
 
-        private static IRtcEngine instance = null;
-        public static IRtcEngine Instance
+        private static IRtcEngineS instance = null;
+        public static IRtcEngineS Instance
         {
             get
             {
-                return instance ?? (instance = new RtcEngine(IntPtr.Zero));
+                return instance ?? (instance = new RtcEngineS(IntPtr.Zero));
             }
         }
 
-        public static IRtcEngineEx InstanceEx
+        public static IRtcEngineExS InstanceEx
         {
             get
             {
-                return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
+                return (IRtcEngineExS)(instance ?? (instance = new RtcEngineS(IntPtr.Zero)));
             }
         }
 
-        public static IRtcEngine CreateAgoraRtcEngine()
+        public static IRtcEngineS CreateAgoraRtcEngine()
         {
-            return instance ?? (instance = new RtcEngine(IntPtr.Zero));
+            return instance ?? (instance = new RtcEngineS(IntPtr.Zero));
         }
-        public static IRtcEngine CreateAgoraRtcEngine(IntPtr nativePtr)
+        public static IRtcEngineS CreateAgoraRtcEngine(IntPtr nativePtr)
         {
-            return instance ?? (instance = new RtcEngine(nativePtr));
-        }
-
-        public static IRtcEngineEx CreateAgoraRtcEngineEx()
-        {
-            return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(IntPtr.Zero)));
-        }
-        public static IRtcEngineEx CreateAgoraRtcEngineEx(IntPtr nativePtr)
-        {
-            return (IRtcEngineEx)(instance ?? (instance = new RtcEngine(nativePtr)));
+            return instance ?? (instance = new RtcEngineS(nativePtr));
         }
 
-        public static IRtcEngine Get()
+        public static IRtcEngineExS CreateAgoraRtcEngineEx()
+        {
+            return (IRtcEngineExS)(instance ?? (instance = new RtcEngineS(IntPtr.Zero)));
+        }
+        public static IRtcEngineExS CreateAgoraRtcEngineEx(IntPtr nativePtr)
+        {
+            return (IRtcEngineExS)(instance ?? (instance = new RtcEngineS(nativePtr)));
+        }
+
+        public static IRtcEngineS Get()
         {
             return instance;
         }
@@ -124,13 +124,13 @@ namespace Agora.Rtc
             AudioDeviceManager.ReleaseInstance();
             VideoDeviceManager.ReleaseInstance();
             MusicContentCenter.ReleaseInstance();
-            LocalSpatialAudioEngine.ReleaseInstance();
+            LocalSpatialAudioEngineS.ReleaseInstance();
             MediaPlayerCacheManager.ReleaseInstance();
 
             instance = null;
         }
 
-        public override int InitEventHandler(IRtcEngineEventHandler engineEventHandler)
+        public override int InitEventHandler(IRtcEngineEventHandlerS engineEventHandler)
         {
             if (_rtcEngineImpl == null)
             {
@@ -175,13 +175,13 @@ namespace Agora.Rtc
             return _mediaPlayerCacheManager;
         }
 
-        public override IMediaRecorder CreateMediaRecorder(RecorderStreamInfo info)
+        public override IMediaRecorderS CreateMediaRecorder(RecorderStreamInfoS info)
         {
-            MediaRecorderImpl impl = this._rtcEngineImpl.GetMediaRecorder();
+            MediaRecorderImplS impl = this._rtcEngineImpl.GetMediaRecorder();
             string nativeHande = impl.CreateMediaRecorder(info);
             if (nativeHande != null && nativeHande != "")
             {
-                return new MediaRecorder(impl, nativeHande);
+                return new MediaRecorderS(impl, nativeHande);
             }
             else
             {
@@ -189,10 +189,10 @@ namespace Agora.Rtc
             }
         }
 
-        public override int DestroyMediaRecorder(IMediaRecorder mediaRecorder)
+        public override int DestroyMediaRecorder(IMediaRecorderS mediaRecorder)
         {
-            MediaRecorder recorder = (MediaRecorder)mediaRecorder;
-            MediaRecorderImpl impl = this._rtcEngineImpl.GetMediaRecorder();
+            MediaRecorderS recorder = (MediaRecorderS)mediaRecorder;
+            MediaRecorderImplS impl = this._rtcEngineImpl.GetMediaRecorder();
             int nRet = impl.DestroyMediaRecorder(recorder.GetNativeHandle());
             if (nRet == 0)
             {
@@ -220,7 +220,7 @@ namespace Agora.Rtc
             return player.Destroy();
         }
 
-        public override ILocalSpatialAudioEngine GetLocalSpatialAudioEngine()
+        public override ILocalSpatialAudioEngineS GetLocalSpatialAudioEngine()
         {
             if (_rtcEngineImpl == null)
             {
@@ -291,7 +291,7 @@ namespace Agora.Rtc
 #endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        public override int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
+        public override int SendMetadata(MetadataS metadata, VIDEO_SOURCE_TYPE source_type)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2303,64 +2303,46 @@ namespace Agora.Rtc
         }
         #endregion terra IRtcEngineBase
 
-        #region terra IRtcEngine
+        #region terra IRtcEngineS
 
 
-        public override int Initialize(RtcEngineContext context)
+        public override int PrepareUserAccount(string userAccount, uint uid)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.Initialize(context);
+            return _rtcEngineImpl.PrepareUserAccount(userAccount, uid);
         }
 
-        public override int PreloadChannel(string token, string channelId, uint uid)
+        public override int Initialize(RtcEngineContextS contextS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.PreloadChannel(token, channelId, uid);
+            return _rtcEngineImpl.Initialize(contextS);
         }
 
-        public override int PreloadChannel(string token, string channelId, string userAccount)
+        public override int JoinChannel(string token, string channelId, string info, string userAccount)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.PreloadChannel(token, channelId, userAccount);
+            return _rtcEngineImpl.JoinChannel(token, channelId, info, userAccount);
         }
 
-        public override int UpdatePreloadChannelToken(string token)
+        public override int JoinChannel(string token, string channelId, string userAccount, ChannelMediaOptions options)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.UpdatePreloadChannelToken(token);
+            return _rtcEngineImpl.JoinChannel(token, channelId, userAccount, options);
         }
 
-        public override int JoinChannel(string token, string channelId, string info, uint uid)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.JoinChannel(token, channelId, info, uid);
-        }
-
-        public override int JoinChannel(string token, string channelId, uint uid, ChannelMediaOptions options)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.JoinChannel(token, channelId, uid, options);
-        }
-
-        public override int SetupRemoteVideo(VideoCanvas canvas)
+        public override int SetupRemoteVideo(VideoCanvasS canvas)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2369,7 +2351,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetupRemoteVideo(canvas);
         }
 
-        public override int SetupLocalVideo(VideoCanvas canvas)
+        public override int SetupLocalVideo(VideoCanvasBase canvas)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2377,143 +2359,116 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.SetupLocalVideo(canvas);
         }
-        [Obsolete("This method is deprecated. You can use the \ref IRtcEngine::setAudioProfile(AUDIO_PROFILE_TYPE) \"setAudioProfile\" method instead. To set the audio scenario, call the \ref IRtcEngine::initialize \"initialize\" method and pass value in the `audioScenario` member in the RtcEngineContext struct.")]
-        public override int SetAudioProfile(AUDIO_PROFILE_TYPE profile, AUDIO_SCENARIO_TYPE scenario)
+
+        public override int MuteRemoteAudioStream(string userAccount, bool mute)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetAudioProfile(profile, scenario);
-        }
-        [Obsolete("This method is deprecated. To set whether to receive remote audio streams by default, call \ref IRtcEngine::muteAllRemoteAudioStreams \"muteAllRemoteAudioStreams\" before calling `joinChannel`")]
-        public override int SetDefaultMuteAllRemoteAudioStreams(bool mute)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetDefaultMuteAllRemoteAudioStreams(mute);
+            return _rtcEngineImpl.MuteRemoteAudioStream(userAccount, mute);
         }
 
-        public override int MuteRemoteAudioStream(uint uid, bool mute)
+        public override int MuteRemoteVideoStream(string userAccount, bool mute)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteRemoteAudioStream(uid, mute);
-        }
-        [Obsolete("This method is deprecated. To set whether to receive remote video streams by default, call \ref IRtcEngine::muteAllRemoteVideoStreams \"muteAllRemoteVideoStreams\" before calling `joinChannel`.")]
-        public override int SetDefaultMuteAllRemoteVideoStreams(bool mute)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetDefaultMuteAllRemoteVideoStreams(mute);
+            return _rtcEngineImpl.MuteRemoteVideoStream(userAccount, mute);
         }
 
-        public override int MuteRemoteVideoStream(uint uid, bool mute)
+        public override int SetRemoteVideoStreamType(string userAccount, VIDEO_STREAM_TYPE streamType)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteRemoteVideoStream(uid, mute);
+            return _rtcEngineImpl.SetRemoteVideoStreamType(userAccount, streamType);
         }
 
-        public override int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType)
+        public override int SetRemoteVideoSubscriptionOptions(string userAccount, VideoSubscriptionOptions options)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteVideoStreamType(uid, streamType);
+            return _rtcEngineImpl.SetRemoteVideoSubscriptionOptions(userAccount, options);
         }
 
-        public override int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options)
+        public override int SetSubscribeAudioBlocklist(string[] userAccountList, int userAccountNumber)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteVideoSubscriptionOptions(uid, options);
+            return _rtcEngineImpl.SetSubscribeAudioBlocklist(userAccountList, userAccountNumber);
         }
 
-        public override int SetSubscribeAudioBlocklist(uint[] uidList, int uidNumber)
+        public override int SetSubscribeAudioAllowlist(string[] userAccountList, int userAccountNumber)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetSubscribeAudioBlocklist(uidList, uidNumber);
+            return _rtcEngineImpl.SetSubscribeAudioAllowlist(userAccountList, userAccountNumber);
         }
 
-        public override int SetSubscribeAudioAllowlist(uint[] uidList, int uidNumber)
+        public override int SetSubscribeVideoBlocklist(string[] userAccountList, int userAccountNumber)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetSubscribeAudioAllowlist(uidList, uidNumber);
+            return _rtcEngineImpl.SetSubscribeVideoBlocklist(userAccountList, userAccountNumber);
         }
 
-        public override int SetSubscribeVideoBlocklist(uint[] uidList, int uidNumber)
+        public override int SetSubscribeVideoAllowlist(string[] userAccountList, int userAccountNumber)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetSubscribeVideoBlocklist(uidList, uidNumber);
+            return _rtcEngineImpl.SetSubscribeVideoAllowlist(userAccountList, userAccountNumber);
         }
 
-        public override int SetSubscribeVideoAllowlist(uint[] uidList, int uidNumber)
+        public override int SetRemoteVoicePosition(string userAccount, double pan, double gain)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetSubscribeVideoAllowlist(uidList, uidNumber);
+            return _rtcEngineImpl.SetRemoteVoicePosition(userAccount, pan, gain);
         }
 
-        public override int SetRemoteVoicePosition(uint uid, double pan, double gain)
+        public override int SetRemoteUserSpatialAudioParams(string userAccount, SpatialAudioParams @params)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteVoicePosition(uid, pan, gain);
+            return _rtcEngineImpl.SetRemoteUserSpatialAudioParams(userAccount, @params);
         }
 
-        public override int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams @params)
+        public override int SetRemoteRenderMode(string userAccount, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteUserSpatialAudioParams(uid, @params);
+            return _rtcEngineImpl.SetRemoteRenderMode(userAccount, renderMode, mirrorMode);
         }
 
-        public override int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode)
+        public override int RegisterAudioSpectrumObserver(IAudioSpectrumObserverS observerS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteRenderMode(uid, renderMode, mirrorMode);
+            return _rtcEngineImpl.RegisterAudioSpectrumObserver(observerS);
         }
 
-        public override int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.RegisterAudioSpectrumObserver(observer);
-        }
-
-        public override int UnregisterAudioSpectrumObserver()
+        public override int UnregisterAudioSpectrumObserver(IAudioSpectrumObserverS observerS)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2522,160 +2477,106 @@ namespace Agora.Rtc
             return _rtcEngineImpl.UnregisterAudioSpectrumObserver();
         }
 
-        public override int AdjustUserPlaybackSignalVolume(uint uid, int volume)
+        public override int AdjustUserPlaybackSignalVolume(string userAccount, int volume)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.AdjustUserPlaybackSignalVolume(uid, volume);
+            return _rtcEngineImpl.AdjustUserPlaybackSignalVolume(userAccount, volume);
         }
 
-        public override int SetHighPriorityUserList(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option)
+        public override int SetHighPriorityUserList(string[] userAccountList, int userAccountNum, STREAM_FALLBACK_OPTIONS option)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetHighPriorityUserList(uidList, uidNum, option);
+            return _rtcEngineImpl.SetHighPriorityUserList(userAccountList, userAccountNum, option);
         }
 
-        public override int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true)
+        public override int EnableExtension(string provider, string extension, ExtensionInfoS extensionInfoS, bool enable = true)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableExtension(provider, extension, extensionInfo, enable);
+            return _rtcEngineImpl.EnableExtension(provider, extension, extensionInfoS, enable);
         }
 
-        public override int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value)
+        public override int SetExtensionProperty(string provider, string extension, ExtensionInfoS extensionInfoS, string key, string value)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetExtensionProperty(provider, extension, extensionInfo, key, value);
+            return _rtcEngineImpl.SetExtensionProperty(provider, extension, extensionInfoS, key, value);
         }
 
-        public override int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value, int buf_len)
+        public override int GetExtensionProperty(string provider, string extension, ExtensionInfoS extensionInfoS, string key, string value, int buf_len)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.GetExtensionProperty(provider, extension, extensionInfo, key, ref value, buf_len);
+            return _rtcEngineImpl.GetExtensionProperty(provider, extension, extensionInfoS, key, ref value, buf_len);
         }
 
-        public override int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding)
+        public override int StartRtmpStreamWithTranscoding(string url, LiveTranscodingS transcodingS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartRtmpStreamWithTranscoding(url, transcoding);
+            return _rtcEngineImpl.StartRtmpStreamWithTranscoding(url, transcodingS);
         }
 
-        public override int UpdateRtmpTranscoding(LiveTranscoding transcoding)
+        public override int UpdateRtmpTranscoding(LiveTranscodingS transcodingS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.UpdateRtmpTranscoding(transcoding);
+            return _rtcEngineImpl.UpdateRtmpTranscoding(transcodingS);
         }
 
-        public override int StartLocalVideoTranscoder(LocalTranscoderConfiguration config)
+        public override int StartLocalVideoTranscoder(LocalTranscoderConfigurationS configS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartLocalVideoTranscoder(config);
+            return _rtcEngineImpl.StartLocalVideoTranscoder(configS);
         }
 
-        public override int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config)
+        public override int UpdateLocalTranscoderConfiguration(LocalTranscoderConfigurationS configS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.UpdateLocalTranscoderConfiguration(config);
+            return _rtcEngineImpl.UpdateLocalTranscoderConfiguration(configS);
         }
 
-        public override int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority)
+        public override int SetRemoteUserPriority(string userAccount, PRIORITY_TYPE userPriority)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteUserPriority(uid, userPriority);
-        }
-        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
-        public override int SetEncryptionMode(string encryptionMode)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetEncryptionMode(encryptionMode);
-        }
-        [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
-        public override int SetEncryptionSecret(string secret)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetEncryptionSecret(secret);
+            return _rtcEngineImpl.SetRemoteUserPriority(userAccount, userPriority);
         }
 
-        public override int AddVideoWatermark(RtcImage watermark)
+        public override int RegisterMediaMetadataObserver(IMetadataObserverS observerS, METADATA_TYPE type)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.AddVideoWatermark(watermark);
-        }
-        [Obsolete("Use disableAudio() instead.")]
-        public override int PauseAudio()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.PauseAudio();
-        }
-        [Obsolete("Use enableAudio() instead.")]
-        public override int ResumeAudio()
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.ResumeAudio();
-        }
-        [Obsolete("The Agora NG SDK enables the interoperablity with the Web SDK.")]
-        public override int EnableWebSdkInteroperability(bool enabled)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.EnableWebSdkInteroperability(enabled);
+            return _rtcEngineImpl.RegisterMediaMetadataObserver(observerS, type);
         }
 
-        public override int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.RegisterMediaMetadataObserver(observer, type);
-        }
-
-        public override int UnregisterMediaMetadataObserver()
+        public override int UnregisterMediaMetadataObserver(IMetadataObserverS observerS)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2684,70 +2585,25 @@ namespace Agora.Rtc
             return _rtcEngineImpl.UnregisterMediaMetadataObserver();
         }
 
-        public override int StartAudioFrameDump(string channel_id, uint uid, string location, string uuid, string passwd, long duration_ms, bool auto_upload)
+        public override int StartAudioFrameDump(string channel_id, string userAccount, string location, string uuid, string passwd, long duration_ms, bool auto_upload)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartAudioFrameDump(channel_id, uid, location, uuid, passwd, duration_ms, auto_upload);
+            return _rtcEngineImpl.StartAudioFrameDump(channel_id, userAccount, location, uuid, passwd, duration_ms, auto_upload);
         }
 
-        public override int StopAudioFrameDump(string channel_id, uint uid, string location)
+        public override int StopAudioFrameDump(string channel_id, string userAccount, string location)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StopAudioFrameDump(channel_id, uid, location);
+            return _rtcEngineImpl.StopAudioFrameDump(channel_id, userAccount, location);
         }
 
-        public override int RegisterLocalUserAccount(string appId, string userAccount)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.RegisterLocalUserAccount(appId, userAccount);
-        }
-
-        public override int JoinChannelWithUserAccount(string token, string channelId, string userAccount)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.JoinChannelWithUserAccount(token, channelId, userAccount);
-        }
-
-        public override int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.JoinChannelWithUserAccount(token, channelId, userAccount, options);
-        }
-
-        public override int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.GetUserInfoByUserAccount(userAccount, ref userInfo);
-        }
-
-        public override int GetUserInfoByUid(uint uid, ref UserInfo userInfo)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.GetUserInfoByUid(uid, ref userInfo);
-        }
-
-        public override int StartOrUpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
+        public override int StartOrUpdateChannelMediaRelay(ChannelMediaRelayConfigurationS configuration)
         {
             if (_rtcEngineImpl == null)
             {
@@ -2755,54 +2611,27 @@ namespace Agora.Rtc
             }
             return _rtcEngineImpl.StartOrUpdateChannelMediaRelay(configuration);
         }
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
-        public override int StartChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
+
+        public override int TakeSnapshot(string userAccount, string filePath)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartChannelMediaRelay(configuration);
-        }
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
-        public override int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.UpdateChannelMediaRelay(configuration);
+            return _rtcEngineImpl.TakeSnapshot(userAccount, filePath);
         }
 
-        public override int TakeSnapshot(uint uid, string filePath)
+        public override int SetAVSyncSource(string channelId, string userAccount)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.TakeSnapshot(uid, filePath);
+            return _rtcEngineImpl.SetAVSyncSource(channelId, userAccount);
         }
+        #endregion terra IRtcEngineS
 
-        public override int SetAVSyncSource(string channelId, uint uid)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetAVSyncSource(channelId, uid);
-        }
-
-        public override int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
-        }
-        #endregion terra IRtcEngine
-
-        public override int SetParametersEx(RtcConnection connection, string key, object value)
+        public override int SetParametersEx(RtcConnectionS connection, string key, object value)
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add(key, value);
@@ -2810,488 +2639,443 @@ namespace Agora.Rtc
             return SetParametersEx(connection, parameters);
         }
 
-        #region terra IRtcEngineEx
+        #region terra IRtcEngineExS
 
 
-        public override int JoinChannelEx(string token, RtcConnection connection, ChannelMediaOptions options)
+        public override int JoinChannelEx(string token, RtcConnectionS connectionS, ChannelMediaOptions options)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.JoinChannelEx(token, connection, options);
+            return _rtcEngineImpl.JoinChannelEx(token, connectionS, options);
         }
 
-        public override int LeaveChannelEx(RtcConnection connection)
+        public override int LeaveChannelEx(RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.LeaveChannelEx(connection);
+            return _rtcEngineImpl.LeaveChannelEx(connectionS);
         }
 
-        public override int LeaveChannelEx(RtcConnection connection, LeaveChannelOptions options)
+        public override int LeaveChannelEx(RtcConnectionS connectionS, LeaveChannelOptions options)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.LeaveChannelEx(connection, options);
+            return _rtcEngineImpl.LeaveChannelEx(connectionS, options);
         }
 
-        public override int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnection connection)
+        public override int UpdateChannelMediaOptionsEx(ChannelMediaOptions options, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.UpdateChannelMediaOptionsEx(options, connection);
+            return _rtcEngineImpl.UpdateChannelMediaOptionsEx(options, connectionS);
         }
 
-        public override int SetVideoEncoderConfigurationEx(VideoEncoderConfiguration config, RtcConnection connection)
+        public override int SetVideoEncoderConfigurationEx(VideoEncoderConfiguration config, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetVideoEncoderConfigurationEx(config, connection);
+            return _rtcEngineImpl.SetVideoEncoderConfigurationEx(config, connectionS);
         }
 
-        public override int SetupRemoteVideoEx(VideoCanvas canvas, RtcConnection connection)
+        public override int SetupRemoteVideoEx(VideoCanvasS canvas, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetupRemoteVideoEx(canvas, connection);
+            return _rtcEngineImpl.SetupRemoteVideoEx(canvas, connectionS);
         }
 
-        public override int MuteRemoteAudioStreamEx(uint uid, bool mute, RtcConnection connection)
+        public override int MuteRemoteAudioStreamEx(string userAccount, bool mute, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteRemoteAudioStreamEx(uid, mute, connection);
+            return _rtcEngineImpl.MuteRemoteAudioStreamEx(userAccount, mute, connectionS);
         }
 
-        public override int MuteRemoteVideoStreamEx(uint uid, bool mute, RtcConnection connection)
+        public override int MuteRemoteVideoStreamEx(string userAccount, bool mute, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteRemoteVideoStreamEx(uid, mute, connection);
+            return _rtcEngineImpl.MuteRemoteVideoStreamEx(userAccount, mute, connectionS);
         }
 
-        public override int SetRemoteVideoStreamTypeEx(uint uid, VIDEO_STREAM_TYPE streamType, RtcConnection connection)
+        public override int SetRemoteVideoStreamTypeEx(string userAccount, VIDEO_STREAM_TYPE streamType, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteVideoStreamTypeEx(uid, streamType, connection);
+            return _rtcEngineImpl.SetRemoteVideoStreamTypeEx(userAccount, streamType, connectionS);
         }
 
-        public override int MuteLocalAudioStreamEx(bool mute, RtcConnection connection)
+        public override int MuteLocalAudioStreamEx(bool mute, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteLocalAudioStreamEx(mute, connection);
+            return _rtcEngineImpl.MuteLocalAudioStreamEx(mute, connectionS);
         }
 
-        public override int MuteLocalVideoStreamEx(bool mute, RtcConnection connection)
+        public override int MuteLocalVideoStreamEx(bool mute, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteLocalVideoStreamEx(mute, connection);
+            return _rtcEngineImpl.MuteLocalVideoStreamEx(mute, connectionS);
         }
 
-        public override int MuteAllRemoteAudioStreamsEx(bool mute, RtcConnection connection)
+        public override int MuteAllRemoteAudioStreamsEx(bool mute, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteAllRemoteAudioStreamsEx(mute, connection);
+            return _rtcEngineImpl.MuteAllRemoteAudioStreamsEx(mute, connectionS);
         }
 
-        public override int MuteAllRemoteVideoStreamsEx(bool mute, RtcConnection connection)
+        public override int MuteAllRemoteVideoStreamsEx(bool mute, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteAllRemoteVideoStreamsEx(mute, connection);
+            return _rtcEngineImpl.MuteAllRemoteVideoStreamsEx(mute, connectionS);
         }
 
-        public override int SetSubscribeAudioBlocklistEx(uint[] uidList, int uidNumber, RtcConnection connection)
+        public override int SetSubscribeAudioBlocklistEx(string[] userAccountList, int userAccountNumber, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetSubscribeAudioBlocklistEx(uidList, uidNumber, connection);
+            return _rtcEngineImpl.SetSubscribeAudioBlocklistEx(userAccountList, userAccountNumber, connectionS);
         }
 
-        public override int SetSubscribeAudioAllowlistEx(uint[] uidList, int uidNumber, RtcConnection connection)
+        public override int SetSubscribeAudioAllowlistEx(string[] userAccountList, int userAccountNumber, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetSubscribeAudioAllowlistEx(uidList, uidNumber, connection);
+            return _rtcEngineImpl.SetSubscribeAudioAllowlistEx(userAccountList, userAccountNumber, connectionS);
         }
 
-        public override int SetSubscribeVideoBlocklistEx(uint[] uidList, int uidNumber, RtcConnection connection)
+        public override int SetSubscribeVideoBlocklistEx(string[] userAccountList, int userAccountNumber, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetSubscribeVideoBlocklistEx(uidList, uidNumber, connection);
+            return _rtcEngineImpl.SetSubscribeVideoBlocklistEx(userAccountList, userAccountNumber, connectionS);
         }
 
-        public override int SetSubscribeVideoAllowlistEx(uint[] uidList, int uidNumber, RtcConnection connection)
+        public override int SetSubscribeVideoAllowlistEx(string[] userAccountList, int userAccountNumber, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetSubscribeVideoAllowlistEx(uidList, uidNumber, connection);
+            return _rtcEngineImpl.SetSubscribeVideoAllowlistEx(userAccountList, userAccountNumber, connectionS);
         }
 
-        public override int SetRemoteVideoSubscriptionOptionsEx(uint uid, VideoSubscriptionOptions options, RtcConnection connection)
+        public override int SetRemoteVideoSubscriptionOptionsEx(string userAccount, VideoSubscriptionOptions options, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteVideoSubscriptionOptionsEx(uid, options, connection);
+            return _rtcEngineImpl.SetRemoteVideoSubscriptionOptionsEx(userAccount, options, connectionS);
         }
 
-        public override int SetRemoteVoicePositionEx(uint uid, double pan, double gain, RtcConnection connection)
+        public override int SetRemoteVoicePositionEx(string userAccount, double pan, double gain, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteVoicePositionEx(uid, pan, gain, connection);
+            return _rtcEngineImpl.SetRemoteVoicePositionEx(userAccount, pan, gain, connectionS);
         }
 
-        public override int SetRemoteUserSpatialAudioParamsEx(uint uid, SpatialAudioParams @params, RtcConnection connection)
+        public override int SetRemoteUserSpatialAudioParamsEx(string userAccount, SpatialAudioParams @params, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteUserSpatialAudioParamsEx(uid, @params, connection);
+            return _rtcEngineImpl.SetRemoteUserSpatialAudioParamsEx(userAccount, @params, connectionS);
         }
 
-        public override int SetRemoteRenderModeEx(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnection connection)
+        public override int SetRemoteRenderModeEx(string userAccount, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
+            return _rtcEngineImpl.SetRemoteRenderModeEx(userAccount, renderMode, mirrorMode, connectionS);
         }
 
-        public override int EnableLoopbackRecordingEx(RtcConnection connection, bool enabled, string deviceName = "")
+        public override int EnableLoopbackRecordingEx(RtcConnectionS connectionS, bool enabled, string deviceName = "")
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableLoopbackRecordingEx(connection, enabled, deviceName);
+            return _rtcEngineImpl.EnableLoopbackRecordingEx(connectionS, enabled, deviceName);
         }
 
-        public override int AdjustRecordingSignalVolumeEx(int volume, RtcConnection connection)
+        public override int AdjustRecordingSignalVolumeEx(int volume, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.AdjustRecordingSignalVolumeEx(volume, connection);
+            return _rtcEngineImpl.AdjustRecordingSignalVolumeEx(volume, connectionS);
         }
 
-        public override int MuteRecordingSignalEx(bool mute, RtcConnection connection)
+        public override int MuteRecordingSignalEx(bool mute, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.MuteRecordingSignalEx(mute, connection);
+            return _rtcEngineImpl.MuteRecordingSignalEx(mute, connectionS);
         }
 
-        public override int AdjustUserPlaybackSignalVolumeEx(uint uid, int volume, RtcConnection connection)
+        public override int AdjustUserPlaybackSignalVolumeEx(string userAccount, int volume, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.AdjustUserPlaybackSignalVolumeEx(uid, volume, connection);
+            return _rtcEngineImpl.AdjustUserPlaybackSignalVolumeEx(userAccount, volume, connectionS);
         }
 
-        public override CONNECTION_STATE_TYPE GetConnectionStateEx(RtcConnection connection)
+        public override CONNECTION_STATE_TYPE GetConnectionStateEx(RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return CONNECTION_STATE_TYPE.CONNECTION_STATE_CONNECTED;
             }
-            return _rtcEngineImpl.GetConnectionStateEx(connection);
+            return _rtcEngineImpl.GetConnectionStateEx(connectionS);
         }
 
-        public override int EnableEncryptionEx(RtcConnection connection, bool enabled, EncryptionConfig config)
+        public override int EnableEncryptionEx(RtcConnectionS connectionS, bool enabled, EncryptionConfig config)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableEncryptionEx(connection, enabled, config);
+            return _rtcEngineImpl.EnableEncryptionEx(connectionS, enabled, config);
         }
 
-        public override int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnection connection)
+        public override int CreateDataStreamEx(ref int streamId, bool reliable, bool ordered, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, reliable, ordered, connection);
+            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, reliable, ordered, connectionS);
         }
 
-        public override int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnection connection)
+        public override int CreateDataStreamEx(ref int streamId, DataStreamConfig config, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, config, connection);
+            return _rtcEngineImpl.CreateDataStreamEx(ref streamId, config, connectionS);
         }
 
-        public override int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnection connection)
+        public override int SendStreamMessageEx(int streamId, byte[] data, uint length, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SendStreamMessageEx(streamId, data, length, connection);
+            return _rtcEngineImpl.SendStreamMessageEx(streamId, data, length, connectionS);
         }
 
-        public override int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnection connection)
+        public override int AddVideoWatermarkEx(string watermarkUrl, WatermarkOptions options, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.AddVideoWatermarkEx(watermarkUrl, options, connection);
+            return _rtcEngineImpl.AddVideoWatermarkEx(watermarkUrl, options, connectionS);
         }
 
-        public override int ClearVideoWatermarkEx(RtcConnection connection)
+        public override int ClearVideoWatermarkEx(RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.ClearVideoWatermarkEx(connection);
+            return _rtcEngineImpl.ClearVideoWatermarkEx(connectionS);
         }
 
-        public override int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnection connection)
+        public override int SendCustomReportMessageEx(string id, string category, string @event, string label, int value, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SendCustomReportMessageEx(id, category, @event, label, value, connection);
+            return _rtcEngineImpl.SendCustomReportMessageEx(id, category, @event, label, value, connectionS);
         }
 
-        public override int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnection connection)
+        public override int EnableAudioVolumeIndicationEx(int interval, int smooth, bool reportVad, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connection);
+            return _rtcEngineImpl.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connectionS);
         }
 
-        public override int StartRtmpStreamWithoutTranscodingEx(string url, RtcConnection connection)
+        public override int StartRtmpStreamWithoutTranscodingEx(string url, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartRtmpStreamWithoutTranscodingEx(url, connection);
+            return _rtcEngineImpl.StartRtmpStreamWithoutTranscodingEx(url, connectionS);
         }
 
-        public override int StartRtmpStreamWithTranscodingEx(string url, LiveTranscoding transcoding, RtcConnection connection)
+        public override int StartRtmpStreamWithTranscodingEx(string url, LiveTranscodingS transcodingS, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartRtmpStreamWithTranscodingEx(url, transcoding, connection);
+            return _rtcEngineImpl.StartRtmpStreamWithTranscodingEx(url, transcodingS, connectionS);
         }
 
-        public override int UpdateRtmpTranscodingEx(LiveTranscoding transcoding, RtcConnection connection)
+        public override int UpdateRtmpTranscodingEx(LiveTranscodingS transcodingS, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.UpdateRtmpTranscodingEx(transcoding, connection);
+            return _rtcEngineImpl.UpdateRtmpTranscodingEx(transcodingS, connectionS);
         }
 
-        public override int StopRtmpStreamEx(string url, RtcConnection connection)
+        public override int StopRtmpStreamEx(string url, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StopRtmpStreamEx(url, connection);
+            return _rtcEngineImpl.StopRtmpStreamEx(url, connectionS);
         }
 
-        public override int StartOrUpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
+        public override int StartOrUpdateChannelMediaRelayEx(ChannelMediaRelayConfigurationS configurationS, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StartOrUpdateChannelMediaRelayEx(configuration, connection);
-        }
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
-        public override int StartChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.StartChannelMediaRelayEx(configuration, connection);
-        }
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
-        public override int UpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.UpdateChannelMediaRelayEx(configuration, connection);
+            return _rtcEngineImpl.StartOrUpdateChannelMediaRelayEx(configurationS, connectionS);
         }
 
-        public override int StopChannelMediaRelayEx(RtcConnection connection)
+        public override int StopChannelMediaRelayEx(RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.StopChannelMediaRelayEx(connection);
+            return _rtcEngineImpl.StopChannelMediaRelayEx(connectionS);
         }
 
-        public override int PauseAllChannelMediaRelayEx(RtcConnection connection)
+        public override int PauseAllChannelMediaRelayEx(RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.PauseAllChannelMediaRelayEx(connection);
+            return _rtcEngineImpl.PauseAllChannelMediaRelayEx(connectionS);
         }
 
-        public override int ResumeAllChannelMediaRelayEx(RtcConnection connection)
+        public override int ResumeAllChannelMediaRelayEx(RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.ResumeAllChannelMediaRelayEx(connection);
+            return _rtcEngineImpl.ResumeAllChannelMediaRelayEx(connectionS);
         }
 
-        public override int GetUserInfoByUserAccountEx(string userAccount, ref UserInfo userInfo, RtcConnection connection)
+        public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.GetUserInfoByUserAccountEx(userAccount, ref userInfo, connection);
+            return _rtcEngineImpl.EnableDualStreamModeEx(enabled, streamConfig, connectionS);
         }
 
-        public override int GetUserInfoByUidEx(uint uid, ref UserInfo userInfo, RtcConnection connection)
+        public override int SetDualStreamModeEx(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.GetUserInfoByUidEx(uid, ref userInfo, connection);
-        }
-        [Obsolete("v4.2.0. This method is deprecated. Use setDualStreamModeEx instead")]
-        public override int EnableDualStreamModeEx(bool enabled, SimulcastStreamConfig streamConfig, RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.EnableDualStreamModeEx(enabled, streamConfig, connection);
+            return _rtcEngineImpl.SetDualStreamModeEx(mode, streamConfig, connectionS);
         }
 
-        public override int SetDualStreamModeEx(SIMULCAST_STREAM_MODE mode, SimulcastStreamConfig streamConfig, RtcConnection connection)
+        public override int SetHighPriorityUserListEx(string[] userAccountList, int uidNum, STREAM_FALLBACK_OPTIONS option, RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetDualStreamModeEx(mode, streamConfig, connection);
+            return _rtcEngineImpl.SetHighPriorityUserListEx(userAccountList, uidNum, option, connectionS);
         }
 
-        public override int SetHighPriorityUserListEx(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option, RtcConnection connection)
+        public override int TakeSnapshotEx(RtcConnectionS connectionS, string userAccount, string filePath)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.SetHighPriorityUserListEx(uidList, uidNum, option, connection);
+            return _rtcEngineImpl.TakeSnapshotEx(connectionS, userAccount, filePath);
         }
 
-        public override int TakeSnapshotEx(RtcConnection connection, uint uid, string filePath)
+        public override int StartMediaRenderingTracingEx(RtcConnectionS connectionS)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.TakeSnapshotEx(connection, uid, filePath);
+            return _rtcEngineImpl.StartMediaRenderingTracingEx(connectionS);
         }
 
-        public override int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection)
+        public override int SetParametersEx(RtcConnectionS connectionS, string parameters)
         {
             if (_rtcEngineImpl == null)
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.EnableContentInspectEx(enabled, config, connection);
+            return _rtcEngineImpl.SetParametersEx(connectionS, parameters);
         }
+        #endregion terra IRtcEngineExS
 
-        public override int StartMediaRenderingTracingEx(RtcConnection connection)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.StartMediaRenderingTracingEx(connection);
-        }
-
-        public override int SetParametersEx(RtcConnection connection, string parameters)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _rtcEngineImpl.SetParametersEx(connection, parameters);
-        }
-        #endregion terra IRtcEngineEx
-
-        public override int RegisterAudioFrameObserver(IAudioFrameObserver audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterAudioFrameObserver(IAudioFrameObserverBase audioFrameObserver, AUDIO_FRAME_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3300,7 +3084,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.RegisterAudioFrameObserver(audioFrameObserver, position, mode);
         }
 
-        public override int RegisterVideoFrameObserver(IVideoFrameObserver videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_MODULE_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterVideoFrameObserver(IVideoFrameObserverS videoFrameObserver, VIDEO_OBSERVER_FRAME_TYPE formatPreference, VIDEO_MODULE_POSITION position, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3309,7 +3093,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.RegisterVideoFrameObserver(videoFrameObserver, formatPreference, position, mode);
         }
 
-        public override int RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserver videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
+        public override int RegisterVideoEncodedFrameObserver(IVideoEncodedFrameObserverS videoEncodedImageReceiver, OBSERVER_MODE mode = OBSERVER_MODE.INTPTR)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3431,10 +3215,10 @@ namespace Agora.Rtc
 
         #endregion terra IMediaEngineBase
 
-        #region terra IMediaEngine
+        #region terra IMediaEngineS
 
 
-        public override int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0)
+        public override int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfoS videoEncodedFrameInfo, uint videoTrackId = 0)
         {
             if (_rtcEngineImpl == null)
             {
@@ -3443,6 +3227,6 @@ namespace Agora.Rtc
             return _rtcEngineImpl.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
         }
 
-        #endregion terra IMediaEngine
+        #endregion terra IMediaEngineS
     }
 }

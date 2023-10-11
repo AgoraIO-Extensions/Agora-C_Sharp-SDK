@@ -11,7 +11,7 @@
             "registerPacketObserver",
             "registerEventHandler",
             "unregisterEventHandler",
-            "JoinChannelWithUserAccountEx"
+            "joinChannelWithUserAccountEx"
         ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",

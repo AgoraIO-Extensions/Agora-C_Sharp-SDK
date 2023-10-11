@@ -1152,4 +1152,8 @@ export class SpeicalLogic {
         lines.push(`}`);
         return lines.join('\n');
     }
+
+    public cSharpSDK_GenerateCallApiKey(clazzName: string, m: MemberFunction, repeat: number): string {
+        return `"${Tool.processString('-r', clazzName)}_${Tool.processString('-n', m.name)}${repeat > 1 ? repeat : ""}"`;
+    }
 }
