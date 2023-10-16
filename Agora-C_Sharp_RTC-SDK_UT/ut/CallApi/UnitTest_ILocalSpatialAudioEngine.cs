@@ -317,12 +317,11 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_MuteRemoteAudioStream()
+        public void Test_ClearRemotePositions()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
-            bool mute = ParamsHelper.CreateParam<bool>();
 
-            var nRet = LocalSpatialAudioEngine.MuteRemoteAudioStream(uid, mute);
+
+            var nRet = LocalSpatialAudioEngine.ClearRemotePositions();
             Assert.AreEqual(0, nRet);
         }
         [Test]
@@ -335,11 +334,12 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_ClearRemotePositions()
+        public void Test_MuteRemoteAudioStream()
         {
+            uint uid = ParamsHelper.CreateParam<uint>();
+            bool mute = ParamsHelper.CreateParam<bool>();
 
-
-            var nRet = LocalSpatialAudioEngine.ClearRemotePositions();
+            var nRet = LocalSpatialAudioEngine.MuteRemoteAudioStream(uid, mute);
             Assert.AreEqual(0, nRet);
         }
 

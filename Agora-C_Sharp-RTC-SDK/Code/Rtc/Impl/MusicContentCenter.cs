@@ -4,11 +4,11 @@ namespace Agora.Rtc
 {
     public sealed class MusicContentCenter : IMusicContentCenter
     {
-        private IRtcEngine _rtcEngineInstance = null;
+        private IRtcEngineBase _rtcEngineInstance = null;
         private MusicContentCenterImpl _musicContentCenterImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        public MusicContentCenter(IRtcEngine rtcEngine, MusicContentCenterImpl impl)
+        public MusicContentCenter(IRtcEngineBase rtcEngine, MusicContentCenterImpl impl)
         {
             _rtcEngineInstance = rtcEngine;
             _musicContentCenterImpl = impl;
@@ -20,7 +20,7 @@ namespace Agora.Rtc
         }
 
         private static IMusicContentCenter instance = null;
-        internal static IMusicContentCenter GetInstance(IRtcEngine rtcEngine, MusicContentCenterImpl impl)
+        internal static IMusicContentCenter GetInstance(IRtcEngineBase rtcEngine, MusicContentCenterImpl impl)
         {
             return instance ?? (instance = new MusicContentCenter(rtcEngine, impl));
         }

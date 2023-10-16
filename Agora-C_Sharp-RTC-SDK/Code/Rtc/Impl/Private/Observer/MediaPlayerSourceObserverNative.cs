@@ -131,7 +131,8 @@ CallbackObject._CallbackQueue.EnQueue(() => {
 #endif
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnPositionChanged(
-                            (long)AgoraJson.GetData<long>(jsonData, "position_ms")
+                            (long)AgoraJson.GetData<long>(jsonData, "positionMs"),
+                            (long)AgoraJson.GetData<long>(jsonData, "timestampMs")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 });
@@ -226,6 +227,36 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         mediaPlayerSourceObserverDic[playerId].OnPlayerSrcInfoChanged(
                             AgoraJson.JsonToStruct<SrcInfo>(jsonData, "from"),
                             AgoraJson.JsonToStruct<SrcInfo>(jsonData, "to")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+});
+#endif
+                        break;
+                    }
+
+                case "MediaPlayerSourceObserver_onPlayerCacheStats":
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
+                        mediaPlayerSourceObserverDic[playerId].OnPlayerCacheStats(
+                            AgoraJson.JsonToStruct<CacheStatistics>(jsonData, "stats")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+});
+#endif
+                        break;
+                    }
+
+                case "MediaPlayerSourceObserver_onPlayerPlaybackStats":
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
+                        mediaPlayerSourceObserverDic[playerId].OnPlayerPlaybackStats(
+                            AgoraJson.JsonToStruct<PlayerPlaybackStats>(jsonData, "stats")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 });

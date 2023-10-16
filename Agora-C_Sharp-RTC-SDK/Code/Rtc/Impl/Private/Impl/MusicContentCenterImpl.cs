@@ -167,7 +167,7 @@ namespace Agora.Rtc
             _param.Add("configuration", configuration);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_INITIALIZE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_initialize",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -182,7 +182,7 @@ namespace Agora.Rtc
             _param.Add("token", token);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_RENEWTOKEN,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_renewToken",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -196,7 +196,7 @@ namespace Agora.Rtc
             _param.Clear();
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETMUSICCHARTS,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_getMusicCharts",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -217,7 +217,7 @@ namespace Agora.Rtc
             _param.Add("jsonOption", jsonOption);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETMUSICCOLLECTIONBYMUSICCHARTID,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_getMusicCollectionByMusicChartId",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -238,7 +238,7 @@ namespace Agora.Rtc
             _param.Add("jsonOption", jsonOption);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_SEARCHMUSIC,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_searchMusic",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -257,7 +257,7 @@ namespace Agora.Rtc
             _param.Add("jsonOption", jsonOption);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_PRELOAD,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_preload",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -272,7 +272,7 @@ namespace Agora.Rtc
             _param.Add("songCode", songCode);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_PRELOAD2,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_preload2",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -290,7 +290,7 @@ namespace Agora.Rtc
             _param.Add("songCode", songCode);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_REMOVECACHE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_removeCache",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -305,7 +305,7 @@ namespace Agora.Rtc
             _param.Add("cacheInfoSize", cacheInfoSize);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETCACHES,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_getCaches",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -324,7 +324,7 @@ namespace Agora.Rtc
             _param.Add("songCode", songCode);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_ISPRELOADED,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_isPreloaded",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -340,7 +340,7 @@ namespace Agora.Rtc
             _param.Add("LyricType", LyricType);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETLYRIC,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_getLyric",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -358,7 +358,7 @@ namespace Agora.Rtc
             _param.Add("songCode", songCode);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETSONGSIMPLEINFO,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_getSongSimpleInfo",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -377,7 +377,7 @@ namespace Agora.Rtc
             _param.Add("jsonOption", jsonOption);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICCONTENTCENTER_GETINTERNALSONGCODE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicContentCenter_getInternalSongCode",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

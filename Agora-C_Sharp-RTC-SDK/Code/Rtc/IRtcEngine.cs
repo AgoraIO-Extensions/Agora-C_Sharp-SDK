@@ -166,9 +166,6 @@ namespace Agora.Rtc
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
 
-        public abstract int JoinChannelWithUserAccountEx(string token, string channelId, string userAccount, ChannelMediaOptions options, IRtcEngineEventHandler eventHandler);
-
-
         public abstract int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo);
 
 

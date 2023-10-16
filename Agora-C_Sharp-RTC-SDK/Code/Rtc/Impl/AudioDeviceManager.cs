@@ -2,11 +2,11 @@
 {
     public sealed class AudioDeviceManager : IAudioDeviceManager
     {
-        private IRtcEngine _rtcEngineInstance = null;
+        private IRtcEngineBase _rtcEngineInstance = null;
         private AudioDeviceManagerImpl _audioDeviecManagerImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        private AudioDeviceManager(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
+        private AudioDeviceManager(IRtcEngineBase rtcEngine, AudioDeviceManagerImpl impl)
         {
             _rtcEngineInstance = rtcEngine;
             _audioDeviecManagerImpl = impl;
@@ -26,7 +26,7 @@
             }
         }
 
-        internal static IAudioDeviceManager GetInstance(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)
+        internal static IAudioDeviceManager GetInstance(IRtcEngineBase rtcEngine, AudioDeviceManagerImpl impl)
         {
             return instance ?? (instance = new AudioDeviceManager(rtcEngine, impl));
         }

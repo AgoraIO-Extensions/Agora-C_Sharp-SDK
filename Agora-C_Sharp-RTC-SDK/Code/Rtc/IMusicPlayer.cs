@@ -9,9 +9,7 @@ namespace Agora.Rtc
     {
         #region terra IMusicPlayer
 
-        ///
-        /// @ignore
-        ///
+
         public abstract int Open(long songCode, long startPos = 0);
         #endregion terra IMusicPlayer
     }

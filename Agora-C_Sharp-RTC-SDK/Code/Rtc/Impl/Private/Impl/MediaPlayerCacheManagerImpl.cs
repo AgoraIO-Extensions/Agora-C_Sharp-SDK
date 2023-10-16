@@ -52,7 +52,7 @@ namespace Agora.Rtc
             _param.Clear();
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_removeAllCaches",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -66,7 +66,7 @@ namespace Agora.Rtc
             _param.Clear();
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEOLDCACHE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_removeOldCache",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -81,7 +81,7 @@ namespace Agora.Rtc
             _param.Add("uri", uri);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_REMOVECACHEBYURI,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_removeCacheByUri",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -96,7 +96,7 @@ namespace Agora.Rtc
             _param.Add("path", path);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_SETCACHEDIR,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_setCacheDir",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -111,7 +111,7 @@ namespace Agora.Rtc
             _param.Add("count", count);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILECOUNT,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_setMaxCacheFileCount",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -126,7 +126,7 @@ namespace Agora.Rtc
             _param.Add("cacheSize", cacheSize);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_SETMAXCACHEFILESIZE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_setMaxCacheFileSize",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -141,7 +141,7 @@ namespace Agora.Rtc
             _param.Add("enable", enable);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_ENABLEAUTOREMOVECACHE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_enableAutoRemoveCache",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -156,7 +156,7 @@ namespace Agora.Rtc
             _param.Add("length", length);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEDIR,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_getCacheDir",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -173,7 +173,7 @@ namespace Agora.Rtc
             _param.Clear();
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILECOUNT,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_getMaxCacheFileCount",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -187,7 +187,7 @@ namespace Agora.Rtc
             _param.Clear();
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_GETMAXCACHEFILESIZE,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_getMaxCacheFileSize",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -201,7 +201,7 @@ namespace Agora.Rtc
             _param.Clear();
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIAPLAYERCACHEMANAGER_GETCACHEFILECOUNT,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaPlayerCacheManager_getCacheFileCount",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

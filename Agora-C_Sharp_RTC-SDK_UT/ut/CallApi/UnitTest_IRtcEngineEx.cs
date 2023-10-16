@@ -557,11 +557,32 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_EnableContentInspectEx()
+        {
+            bool enabled = ParamsHelper.CreateParam<bool>();
+            ContentInspectConfig config = ParamsHelper.CreateParam<ContentInspectConfig>();
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+
+            var nRet = RtcEngineEx.EnableContentInspectEx(enabled, config, connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_StartMediaRenderingTracingEx()
         {
             RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
 
             var nRet = RtcEngineEx.StartMediaRenderingTracingEx(connection);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_SetParametersEx()
+        {
+            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            string parameters = ParamsHelper.CreateParam<string>();
+
+            var nRet = RtcEngineEx.SetParametersEx(connection, parameters);
             Assert.AreEqual(0, nRet);
         }
         #endregion terra IRtcEngineEx

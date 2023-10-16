@@ -73,7 +73,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnLocalAudioSpectrumPassed(data));
             Assert.AreEqual(true, EventHandlerForMediaPlayer.OnLocalAudioSpectrumPassed(data));
         }
-
         [Test]
         public void Test_OnRemoteAudioSpectrum()
         {

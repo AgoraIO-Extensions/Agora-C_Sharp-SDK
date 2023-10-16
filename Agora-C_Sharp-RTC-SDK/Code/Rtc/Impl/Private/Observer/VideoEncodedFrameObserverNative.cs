@@ -1,4 +1,6 @@
-﻿using System;
+﻿#define AGORA_STRING_UID
+#define AGORA_NUMBER_UID
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -9,10 +11,10 @@ namespace Agora.Rtc
 {
     internal static class VideoEncodedFrameObserverNative
     {
-        private static Object observerLock = new Object();
-        private static IVideoEncodedFrameObserver videoEncodedFrameObserver;
+        private static object observerLock = new Object();
+        private static object videoEncodedFrameObserver;
 
-        internal static void SetVideoEncodedFrameObserver(IVideoEncodedFrameObserver observer)
+        internal static void SetVideoEncodedFrameObserver(object observer)
         {
             lock (observerLock)
             {
@@ -20,11 +22,7 @@ namespace Agora.Rtc
             }
         }
 
-        // private static class LocalVideoEncodedVideoFrameInfo
-        //{
-        //     internal static readonly EncodedVideoFrameInfo info = new EncodedVideoFrameInfo();
-        // }
-
+  
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
 #endif
@@ -45,6 +43,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
+#if AGORA_NUMBER_UID
                     case "VideoEncodedFrameObserver_onEncodedVideoFrameReceived":
                         {
                             var jsonData = AgoraJson.ToObject(data);
@@ -52,7 +51,7 @@ namespace Agora.Rtc
                             IntPtr imageBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "imageBuffer");
                             UInt64 imageBufferLength = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "length");
                             EncodedVideoFrameInfo videoEncodedFrameInfo = AgoraJson.JsonToStruct<EncodedVideoFrameInfo>(jsonData, "videoEncodedFrameInfo");
-                            bool result = videoEncodedFrameObserver.OnEncodedVideoFrameReceived(uid, imageBuffer, imageBufferLength, videoEncodedFrameInfo);
+                            bool result = ((IVideoEncodedFrameObserver)videoEncodedFrameObserver).OnEncodedVideoFrameReceived(uid, imageBuffer, imageBufferLength, videoEncodedFrameInfo);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -61,10 +60,33 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                             break;
                         }
+#endif
+#if AGORA_STRING_UID
+                    case "VideoEncodedFrameObserverS_onEncodedVideoFrameReceived":
+                        {
+                            var jsonData = AgoraJson.ToObject(data);
+                            string userAccount = (string)AgoraJson.GetData<string>(jsonData, "userAccount");
+                            IntPtr imageBuffer = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "imageBuffer");
+                            UInt64 imageBufferLength = (UInt64)AgoraJson.GetData<UInt64>(jsonData, "length");
+                            EncodedVideoFrameInfoS videoEncodedFrameInfoS = AgoraJson.JsonToStruct<EncodedVideoFrameInfoS>(jsonData, "videoEncodedFrameInfoS");
+                            bool result = ((IVideoEncodedFrameObserverS)videoEncodedFrameObserver).OnEncodedVideoFrameReceived(userAccount, imageBuffer, imageBufferLength, videoEncodedFrameInfoS);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                            break;
+                        }
+#endif
 
                     #region terra IVideoEncodedFrameObserver
 
                     #endregion terra IVideoEncodedFrameObserver
+
+                    #region terra IVideoEncodedFrameObserverS
+
+                    #endregion terra IVideoEncodedFrameObserverS
                     default:
                         AgoraLog.LogError("unexpected event: " + @event);
                         break;
@@ -77,7 +99,12 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
+#if AGORA_NUMBER_UID
                 case "VideoEncodedFrameObserver_OnEncodedVideoFrameReceived":
+#endif
+#if AGORA_STRING_UID
+                case "VideoEncodedFrameObserverS_OnEncodedVideoFrameReceived":
+#endif
                     {
                         bool result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
@@ -88,10 +115,14 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         break;
                     }
-
+               
                 #region terra IVideoEncodedFrameObserver_CreateDefaultReturn
 
                 #endregion terra IVideoEncodedFrameObserver_CreateDefaultReturn
+
+                #region terra IVideoEncodedFrameObserverS_CreateDefaultReturn
+
+                #endregion terra IVideoEncodedFrameObserverS_CreateDefaultReturn
 
                 default:
                     AgoraLog.LogError("unexpected event: " + @event);

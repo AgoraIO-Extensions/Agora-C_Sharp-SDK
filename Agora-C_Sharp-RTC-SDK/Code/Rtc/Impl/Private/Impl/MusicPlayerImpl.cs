@@ -134,6 +134,11 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SelectAudioTrack(playerId, index);
         }
 
+        public int SelectMultiAudioTrack(int playerId, int playoutTrackIndex, int publishTrackIndex)
+        {
+            return _mediaPlayerImpl.SelectMultiAudioTrack(playerId, playoutTrackIndex, publishTrackIndex);
+        }
+
         public int SetPlayerOption(int playerId, string key, int value)
         {
             return _mediaPlayerImpl.SetPlayerOption(playerId, key, value);
@@ -320,7 +325,7 @@ namespace Agora.Rtc
             _param.Add("startPos", startPos);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICPLAYER_OPEN,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicPlayer_open",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

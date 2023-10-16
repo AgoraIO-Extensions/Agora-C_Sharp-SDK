@@ -57,7 +57,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.GetMaxMetadataSizePassed());
         }
-
         [Test]
         public void Test_OnReadyToSendMetadata()
         {

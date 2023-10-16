@@ -89,6 +89,38 @@ namespace Agora.Rtc
             return retval;
         }
 
+        internal static int CallIrisApiWithArgsS(IrisRtcEnginePtr engine_ptr, string func_name,
+           string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtcCApiParam apiParam,
+           uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0, uint buffer3Length = 0)
+        {
+            apiParam.@event = func_name;
+            apiParam.data = @params;
+            apiParam.data_size = paramLength;
+            apiParam.buffer = buffer;
+            apiParam.buffer_count = buffer_count;
+
+            IntPtr lengthPtr = IntPtr.Zero;
+            if (buffer_count > 0)
+            {
+                int[] lengths = new int[4];
+                lengths[0] = (int)buffer0Length;
+                lengths[1] = (int)buffer1Length;
+                lengths[2] = (int)buffer2Length;
+                lengths[3] = (int)buffer3Length;
+                lengthPtr = Marshal.AllocHGlobal(lengths.Length * sizeof(int));
+                Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
+            }
+            apiParam.length = lengthPtr;
+            int retval = CallIrisApi(engine_ptr, ref apiParam);
+
+            if (lengthPtr != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(lengthPtr);
+            }
+
+            return retval;
+        }
+
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisRtcCApiParam apiParam);

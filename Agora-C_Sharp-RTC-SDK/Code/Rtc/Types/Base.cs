@@ -189,4 +189,65 @@ namespace Agora.Rtc
         FRAME_TYPE_TEXTURE_ID3D11TEXTURE2D = VIDEO_PIXEL_FORMAT.VIDEO_TEXTURE_ID3D11TEXTURE2D,
     }
 
+    internal class IrisAudioSpectrumData
+    {
+        public IrisAudioSpectrumData()
+        {
+            audioSpectrumData = 0;
+            dataLength = 0;
+        }
+
+        public ulong audioSpectrumData;
+        public int dataLength;
+
+        public void GenerateAudioSpectrumData(ref AudioSpectrumData audioSpectrum)
+        {
+            audioSpectrum.audioSpectrumData = new float[this.dataLength];
+            Marshal.Copy((IntPtr)this.audioSpectrumData, audioSpectrum.audioSpectrumData, 0, dataLength);
+            audioSpectrum.dataLength = this.dataLength;
+        }
+    }
+
+
+    internal class IrisUserAudioSpectrumInfo
+    {
+        public IrisUserAudioSpectrumInfo()
+        {
+            uid = 0;
+            spectrumData = null;
+        }
+
+
+        public uint uid;
+        public IrisAudioSpectrumData spectrumData;
+
+        public void GenerateUserAudioSpectrumInfo(ref UserAudioSpectrumInfo info)
+        {
+            info.uid = this.uid;
+            info.spectrumData = new AudioSpectrumData();
+            this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
+        }
+    }
+
+    internal class IrisUserAudioSpectrumInfoS
+    {
+        public IrisUserAudioSpectrumInfoS()
+        {
+            userAccount = "";
+            spectrumData = null;
+        }
+
+
+        public string userAccount;
+        public IrisAudioSpectrumData spectrumData;
+
+        public void GenerateUserAudioSpectrumInfo(ref UserAudioSpectrumInfoS info)
+        {
+            info.userAccount = this.userAccount;
+            info.spectrumData = new AudioSpectrumData();
+            this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
+        }
+    }
+
+
 }

@@ -223,36 +223,6 @@ namespace Agora.Rtc
 
         #region terra IMediaRecorder
 
-        public int StartRecording(string nativeHandle, MediaRecorderConfiguration config)
-        {
-            _param.Clear();
-            _param.Add("nativeHandle", nativeHandle);
-            _param.Add("config", config);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STARTRECORDING,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int StopRecording(string nativeHandle)
-        {
-            _param.Clear();
-            _param.Add("nativeHandle", nativeHandle);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_STOPRECORDING,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
         #endregion terra IMediaRecorder
     }
 }

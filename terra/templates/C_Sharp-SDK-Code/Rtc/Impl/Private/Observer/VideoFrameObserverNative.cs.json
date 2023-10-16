@@ -1,7 +1,7 @@
 {
-    "IVideoFrameObserver": {
+    "IVideoFrameObserverBase": {
         "type": "ClazzStruct",
-        "name": "IVideoFrameObserver",
+        "name": "IVideoFrameObserverBase",
         "namespaces": "agora::media",
         "excludeMethods": [
             "getVideoFrameProcessMode",
@@ -19,6 +19,7 @@
         "commonMethodTemplate": "method_callback_impl",
         "methodSplitSymbol": "\n\n"
     },
+    
     "IVideoFrameObserver_CreateDefaultReturn": {
         "type": "ClazzStruct",
         "name": "IVideoFrameObserver",

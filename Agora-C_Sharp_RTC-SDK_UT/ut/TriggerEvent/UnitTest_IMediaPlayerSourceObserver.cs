@@ -72,8 +72,11 @@ namespace Agora.Rtc.Event
 
             jsonObj.Clear();
 
-            long position_ms = ParamsHelper.CreateParam<long>();
-            jsonObj.Add("position_ms", position_ms);
+            long positionMs = ParamsHelper.CreateParam<long>();
+            jsonObj.Add("positionMs", positionMs);
+
+            long timestampMs = ParamsHelper.CreateParam<long>();
+            jsonObj.Add("timestampMs", timestampMs);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -81,7 +84,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPositionChangedPassed(position_ms));
+            Assert.AreEqual(true, EventHandler.OnPositionChangedPassed(positionMs, timestampMs));
         }
 
         [Test]
@@ -243,6 +246,44 @@ namespace Agora.Rtc.Event
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPlayerInfoUpdatedPassed(info));
+        }
+
+        [Test]
+        public void Test_OnPlayerCacheStats()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERCACHESTATS;
+
+            jsonObj.Clear();
+
+            CacheStatistics stats = ParamsHelper.CreateParam<CacheStatistics>();
+            jsonObj.Add("stats", stats);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnPlayerCacheStatsPassed(stats));
+        }
+
+        [Test]
+        public void Test_OnPlayerPlaybackStats()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERPLAYBACKSTATS;
+
+            jsonObj.Clear();
+
+            PlayerPlaybackStats stats = ParamsHelper.CreateParam<PlayerPlaybackStats>();
+            jsonObj.Add("stats", stats);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnPlayerPlaybackStatsPassed(stats));
         }
 
         [Test]

@@ -4,11 +4,11 @@ namespace Agora.Rtc
 {
     public sealed class VideoDeviceManager : IVideoDeviceManager
     {
-        private IRtcEngine _rtcEngineInstance = null;
+        private IRtcEngineBase _rtcEngineInstance = null;
         private VideoDeviceManagerImpl _videoDeviecManagerImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        private VideoDeviceManager(IRtcEngine rtcEngine, VideoDeviceManagerImpl impl)
+        private VideoDeviceManager(IRtcEngineBase rtcEngine, VideoDeviceManagerImpl impl)
         {
             _rtcEngineInstance = rtcEngine;
             _videoDeviecManagerImpl = impl;
@@ -28,7 +28,7 @@ namespace Agora.Rtc
             }
         }
 
-        internal static IVideoDeviceManager GetInstance(IRtcEngine rtcEngine, VideoDeviceManagerImpl impl)
+        internal static IVideoDeviceManager GetInstance(IRtcEngineBase rtcEngine, VideoDeviceManagerImpl impl)
         {
             return instance ?? (instance = new VideoDeviceManager(rtcEngine, impl));
         }

@@ -84,15 +84,6 @@
             return _localSpatialAudioEngineImpl.UpdateSelfPosition(position, axisForward, axisRight, axisUp);
         }
 
-        public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.UpdateSelfPositionEx(position, axisForward, axisRight, axisUp, connection);
-        }
-
         public override int UpdatePlayerPositionInfo(int playerId, RemoteVoicePositionInfo positionInfo)
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
@@ -129,104 +120,112 @@
             return _localSpatialAudioEngineImpl.MuteAllRemoteAudioStreams(mute);
         }
 
-        public override int SetZones(SpatialAudioZone[] zones, uint zoneCount)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.SetZones(zones, zoneCount);
-        }
+        public override int SetZones(SpatialAudioZone const* zones, uint zoneCount ){
+if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+{
+return ErrorCode;
+}
+return _localSpatialAudioEngineImpl.SetZones(zones, zoneCount);
+}
 
-        public override int SetPlayerAttenuation(int playerId, double attenuation, bool forceSet)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.SetPlayerAttenuation(playerId, attenuation, forceSet);
-        }
+public override int SetPlayerAttenuation(int playerId, double attenuation, bool forceSet)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.SetPlayerAttenuation(playerId, attenuation, forceSet);
+}
 
-        public override int MuteRemoteAudioStream(uint uid, bool mute)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.MuteRemoteAudioStream(uid, mute);
-        }
+public override int ClearRemotePositions()
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.ClearRemotePositions();
+}
+[Obsolete("config The pointer to the LocalSpatialAudioConfig. See #LocalSpatialAudioConfig.")]
+public override int Initialize()
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.Initialize();
+}
 
-        public override int Initialize()
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.Initialize();
-        }
+public override int UpdateRemotePosition(uint uid, RemoteVoicePositionInfo posInfo)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.UpdateRemotePosition(uid, posInfo);
+}
 
-        public override int UpdateRemotePosition(uint uid, RemoteVoicePositionInfo posInfo)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.UpdateRemotePosition(uid, posInfo);
-        }
+public override int UpdateRemotePositionEx(uint uid, RemoteVoicePositionInfo posInfo, RtcConnection connection)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.UpdateRemotePositionEx(uid, posInfo, connection);
+}
 
-        public override int UpdateRemotePositionEx(uint uid, RemoteVoicePositionInfo posInfo, RtcConnection connection)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.UpdateRemotePositionEx(uid, posInfo, connection);
-        }
+public override int RemoveRemotePosition(uint uid)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.RemoveRemotePosition(uid);
+}
 
-        public override int RemoveRemotePosition(uint uid)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.RemoveRemotePosition(uid);
-        }
+public override int RemoveRemotePositionEx(uint uid, RtcConnection connection)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.RemoveRemotePositionEx(uid, connection);
+}
 
-        public override int RemoveRemotePositionEx(uint uid, RtcConnection connection)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.RemoveRemotePositionEx(uid, connection);
-        }
+public override int ClearRemotePositionsEx(RtcConnection connection)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.ClearRemotePositionsEx(connection);
+}
 
-        public override int ClearRemotePositions()
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.ClearRemotePositions();
-        }
+public override int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.UpdateSelfPositionEx(position, axisForward, axisRight, axisUp, connection);
+}
 
-        public override int ClearRemotePositionsEx(RtcConnection connection)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.ClearRemotePositionsEx(connection);
-        }
+public override int MuteRemoteAudioStream(uint uid, bool mute)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.MuteRemoteAudioStream(uid, mute);
+}
 
-        public override int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet)
-        {
-            if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
-            {
-                return ErrorCode;
-            }
-            return _localSpatialAudioEngineImpl.SetRemoteAudioAttenuation(uid, attenuation, forceSet);
-        }
+public override int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet)
+{
+    if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)
+    {
+        return ErrorCode;
+    }
+    return _localSpatialAudioEngineImpl.SetRemoteAudioAttenuation(uid, attenuation, forceSet);
+}
         #endregion terra ILocalSpatialAudioEngine
     }
 }

@@ -36,7 +36,7 @@ namespace Agora.Rtc
         int SetMaxMetadataSize(int size);
 #endif
 
-        int UnRegisterAudioEncodedFrameObserver();
+        public abstract int UnRegisterAudioEncodedFrameObserver();
 
         #region terra IRtcEngineBase
 

@@ -36,24 +36,6 @@ namespace Agora.Rtc
             var nRet = MediaRecorder.SetMediaRecorderObserver(callback);
             Assert.AreEqual(0, nRet);
         }
-
-        [Test]
-        public void Test_StartRecording()
-        {
-            MediaRecorderConfiguration config = ParamsHelper.CreateParam<MediaRecorderConfiguration>();
-
-            var nRet = MediaRecorder.StartRecording(config);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StopRecording()
-        {
-
-
-            var nRet = MediaRecorder.StopRecording();
-            Assert.AreEqual(0, nRet);
-        }
         #endregion terra IMediaRecorder
     }
 }

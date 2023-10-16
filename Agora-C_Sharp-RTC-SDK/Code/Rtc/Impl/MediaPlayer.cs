@@ -5,12 +5,12 @@ namespace Agora.Rtc
     using view_t = Int64;
     public sealed class MediaPlayer : IMediaPlayer
     {
-        private IRtcEngine _rtcEngineInstance = null;
+        private IRtcEngineBase _rtcEngineInstance = null;
         private MediaPlayerImpl _mediaPlayerImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
         private int playerId;
 
-        internal MediaPlayer(IRtcEngine rtcEngine, MediaPlayerImpl impl)
+        internal MediaPlayer(IRtcEngineBase rtcEngine, MediaPlayerImpl impl)
         {
             _rtcEngineInstance = rtcEngine;
             _mediaPlayerImpl = impl;
@@ -204,6 +204,15 @@ namespace Agora.Rtc
                 return ErrorCode;
             }
             return _mediaPlayerImpl.SelectAudioTrack(playerId, index);
+        }
+
+        public override int SelectMultiAudioTrack(int playoutTrackIndex, int publishTrackIndex)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.SelectMultiAudioTrack(playerId, playoutTrackIndex, publishTrackIndex);
         }
 
         public override int SetPlayerOption(string key, int value)

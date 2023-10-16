@@ -13,7 +13,7 @@ namespace Agora.Rtc
         public abstract ILocalSpatialAudioEngineS GetLocalSpatialAudioEngine();
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-         int SendMetadata(MetadataS metadata, VIDEO_SOURCE_TYPE source_type);
+        public abstract int SendMetadata(MetadataS metadata, VIDEO_SOURCE_TYPE source_type);
 #endif
 
         #region terra IRtcEngineS

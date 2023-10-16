@@ -30,7 +30,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-
         public bool OnReadyToSendMetadata_be_trigger = false;
         public Metadata OnReadyToSendMetadata_metadata;
         public VIDEO_SOURCE_TYPE OnReadyToSendMetadata_source_type;

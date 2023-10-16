@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define AGORA_STRING_UID
+#define AGORA_NUMBER_UID
+
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID 
@@ -8,54 +11,10 @@ using UnityEngine;
 
 namespace Agora.Rtc
 {
-    internal class IrisAudioSpectrumData
-    {
-        public IrisAudioSpectrumData()
-        {
-            audioSpectrumData = 0;
-            dataLength = 0;
-        }
-
-        public ulong audioSpectrumData;
-        public int dataLength;
-
-        public void GenerateAudioSpectrumData(ref AudioSpectrumData audioSpectrum)
-        {
-            audioSpectrum.audioSpectrumData = new float[this.dataLength];
-            Marshal.Copy((IntPtr)this.audioSpectrumData, audioSpectrum.audioSpectrumData, 0, dataLength);
-            audioSpectrum.dataLength = this.dataLength;
-        }
-    }
-
-
-    internal class IrisUserAudioSpectrumInfo
-    {
-        public IrisUserAudioSpectrumInfo()
-        {
-            uid = 0;
-            spectrumData = null;
-        }
-
-
-        public uint uid;
-        public IrisAudioSpectrumData spectrumData;
-
-        public void GenerateUserAudioSpectrumInfo(ref UserAudioSpectrumInfo info)
-        {
-            info.uid = this.uid;
-            info.spectrumData = new AudioSpectrumData();
-            this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
-        }
-
-    }
-
-
-
-
     internal static class MediaPlayerAudioSpectrumObserverNative
     {
         private static System.Object observerLock = new System.Object();
-        private static Dictionary<int, IAudioSpectrumObserver> mediaPlayerAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserver>();
+        private static Dictionary<int, IAudioSpectrumObserverBase> mediaPlayerAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserver>();
 
         internal static void AddAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer)
         {
@@ -74,21 +33,6 @@ namespace Agora.Rtc
                     mediaPlayerAudioSpectrumObserverDic.Remove(playerId);
             }
         }
-
-
-
-        //private static AudioSpectrumData ProcessAudioSpectrumData(IntPtr bufferPtr, int length)
-        //{
-        //    AudioSpectrumData spectrumData = new AudioSpectrumData();
-        //    spectrumData.dataLength = length;
-
-        //    spectrumData.audioSpectrumData = new float[length];
-        //    if (bufferPtr != IntPtr.Zero)
-        //    {
-        //        Marshal.Copy(bufferPtr, spectrumData.audioSpectrumData, 0, length);
-        //    }
-        //    return spectrumData;
-        //}
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
@@ -114,7 +58,7 @@ namespace Agora.Rtc
 
                 switch (@event)
                 {
-                    case "AudioSpectrumObserver_onLocalAudioSpectrum":
+                    case "AudioSpectrumObserverBase_onLocalAudioSpectrum":
                         {
                             var irisAudioSpectrumData = AgoraJson.JsonToStruct<IrisAudioSpectrumData>(jsonData, "data");
                             var spectrumData = new AudioSpectrumData();
@@ -128,6 +72,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
+#if AGORA_NUMBER_UID
                     case "AudioSpectrumObserver_onRemoteAudioSpectrum":
                         {
                             var irisUserAudioSpectrumInfo = AgoraJson.JsonToStructArray<IrisUserAudioSpectrumInfo>(jsonData, "spectrums");
@@ -140,7 +85,7 @@ namespace Agora.Rtc
                                 irisUserAudioSpectrumInfo[i].GenerateUserAudioSpectrumInfo(ref e);
                                 list[i] = e;
                             }
-                            var result = audioSpectrumObserver.OnRemoteAudioSpectrum(list, spectrumNumber);
+                            var result = ((IAudioSpectrumObserver)audioSpectrumObserver).OnRemoteAudioSpectrum(list, spectrumNumber);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);
@@ -149,6 +94,30 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
+#endif
+#if AGORA_STRING_UID
+                    case "AudioSpectrumObserverS_onRemoteAudioSpectrum":
+                        {
+                            var irisUserAudioSpectrumInfo = AgoraJson.JsonToStructArray<IrisUserAudioSpectrumInfoS>(jsonData, "spectrumsS");
+                            var spectrumNumber = (uint)AgoraJson.GetData<uint>(jsonData, "spectrumNumber");
+
+                            UserAudioSpectrumInfoS[] list = new UserAudioSpectrumInfoS[spectrumNumber];
+                            for (var i = 0; i < spectrumNumber; i++)
+                            {
+                                UserAudioSpectrumInfoS e = new UserAudioSpectrumInfoS();
+                                irisUserAudioSpectrumInfo[i].GenerateUserAudioSpectrumInfo(ref e);
+                                list[i] = e;
+                            }
+                            var result = ((IAudioSpectrumObserver)audioSpectrumObserver).OnRemoteAudioSpectrum(list, spectrumNumber);
+                            Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
+                            p.Add("result", result);
+                            string json = AgoraJson.ToJson(p);
+                            var jsonByte = System.Text.Encoding.Default.GetBytes(json);
+                            IntPtr resultPtr = eventParam.result;
+                            Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
+                        }
+                        break;
+#endif
                     default:
                         AgoraLog.LogError("unexpected event: " + @event);
                         break;
@@ -161,8 +130,13 @@ namespace Agora.Rtc
             var @event = eventParam.@event;
             switch (@event)
             {
-                case "AudioSpectrumObserver_onLocalAudioSpectrum":
+                case "AudioSpectrumObserverBase_onLocalAudioSpectrum":
+#if AGORA_NUMBER_UID
                 case "AudioSpectrumObserver_onRemoteAudioSpectrum":
+#endif
+#if AGORA_STRING_UID
+                case "AudioSpectrumObserverS_onRemoteAudioSpectrum":
+#endif
                     {
                         var result = true;
                         Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();

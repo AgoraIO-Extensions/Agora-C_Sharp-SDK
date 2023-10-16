@@ -32,7 +32,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-
         public bool OnRemoteAudioSpectrum_be_trigger = false;
         public UserAudioSpectrumInfo[] OnRemoteAudioSpectrum_spectrums;
         public uint OnRemoteAudioSpectrum_spectrumNumber;
