@@ -22,7 +22,6 @@ namespace Agora.Rtc
             }
         }
 
-  
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
 #endif
@@ -115,7 +114,7 @@ namespace Agora.Rtc
                         Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         break;
                     }
-               
+
                 #region terra IVideoEncodedFrameObserver_CreateDefaultReturn
 
                 #endregion terra IVideoEncodedFrameObserver_CreateDefaultReturn

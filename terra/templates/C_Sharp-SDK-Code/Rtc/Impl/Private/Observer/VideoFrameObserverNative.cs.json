@@ -19,10 +19,29 @@
         "commonMethodTemplate": "method_callback_impl",
         "methodSplitSymbol": "\n\n"
     },
-    
-    "IVideoFrameObserver_CreateDefaultReturn": {
+    "IVideoFrameObserver": {
         "type": "ClazzStruct",
         "name": "IVideoFrameObserver",
+        "namespaces": "agora::media",
+        "excludeMethods": [
+            "onRenderVideoFrame"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IVideoFrameObserverS": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserverS",
+        "namespaces": "agora::media",
+        "excludeMethods": [
+            "onRenderVideoFrame"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IVideoFrameObserverBase_CreateDefaultReturn": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserverBase",
         "namespaces": "agora::media",
         "excludeMethods": [
             "getVideoFrameProcessMode",
@@ -36,6 +55,26 @@
             "onMediaPlayerVideoFrame",
             "onRenderVideoFrame",
             "onTranscodedVideoFrame"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IVideoFrameObserver_CreateDefaultReturn": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserver",
+        "namespaces": "agora::media",
+        "excludeMethods": [
+            "onRenderVideoFrame"
+        ],
+        "commonMethodTemplate": "method_callback_impl",
+        "methodSplitSymbol": "\n\n"
+    },
+    "IVideoFrameObserverS_CreateDefaultReturn": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserverS",
+        "namespaces": "agora::media",
+        "excludeMethods": [
+            "onRenderVideoFrame"
         ],
         "commonMethodTemplate": "method_callback_impl",
         "methodSplitSymbol": "\n\n"
