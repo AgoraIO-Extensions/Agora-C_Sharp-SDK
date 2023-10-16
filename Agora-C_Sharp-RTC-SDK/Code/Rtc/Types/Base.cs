@@ -208,7 +208,6 @@ namespace Agora.Rtc
         }
     }
 
-
     internal class IrisUserAudioSpectrumInfo
     {
         public IrisUserAudioSpectrumInfo()
@@ -216,7 +215,6 @@ namespace Agora.Rtc
             uid = 0;
             spectrumData = null;
         }
-
 
         public uint uid;
         public IrisAudioSpectrumData spectrumData;
@@ -237,7 +235,6 @@ namespace Agora.Rtc
             spectrumData = null;
         }
 
-
         public string userAccount;
         public IrisAudioSpectrumData spectrumData;
 
@@ -248,6 +245,5 @@ namespace Agora.Rtc
             this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
         }
     }
-
 
 }
