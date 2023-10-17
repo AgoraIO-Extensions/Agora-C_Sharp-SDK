@@ -95,6 +95,8 @@
         "IMediaPlayer.unregisterAudioFrameObserver.observer": "@remove",
         "IMediaPlayer.unregisterMediaPlayerAudioSpectrumObserver.observer": "@remove",
         "ISpatialAudioEngineBase.setZones.zones": "SpatialAudioZone[]",
+        "ILocalSpatialAudioEngine.setZones.zones": "SpatialAudioZone[]",
+        "ILocalSpatialAudioEngineS.setZones.zones": "SpatialAudioZone[]",
         "IMediaEngine.pushEncodedVideoImage.imageBuffer": "byte[]",
         "IMediaEngineS.pushEncodedVideoImage.imageBuffer": "byte[]",
         "AudioSpectrumData.AudioSpectrumData.audioSpectrumData": "float[]",
@@ -203,7 +205,7 @@
         "agora::rtc::video_track_id_t": "uint",
         "agora::view_t": "view_t",
         "float[3]": "float[]",
-        "float const[3]":"float[]",
+        "float const[3]": "float[]",
         "float[16]": "float[]",
         "float const*": "float",
         "agora::media::IAudioSpectrumObserver*": "IAudioSpectrumObserver",
@@ -228,6 +230,7 @@
         "agora::rtc::IRtcEngineS*": "IRtcEngineS",
         "media::IAudioPcmFrameSink*": "IAudioPcmFrameSink",
         "agora::rtc::AudioVolumeInfo const*": "AudioVolumeInfo[]",
+        "agora::rtc::AudioVolumeInfoS const*": "AudioVolumeInfoS[]",
         "agora::media::IVideoFrameObserver::VideoFrame&": "VideoFrame",
         "agora::media::IVideoFrameObserverBase::VideoFrame&": "VideoFrame",
         "agora_refptr<agora::rtc::MusicChartCollection>": "MusicChartInfo[]",
@@ -238,7 +241,8 @@
         "agora::media::RecorderInfo const&": "RecorderInfo",
         "agora::rtc::IMetadataObserver::Metadata const&": "Metadata",
         "agora::rtc::IMetadataObserverS::MetadataS const&": "Metadata",
-        "agora::media::base::IVideoFrameMetaInfo*": "IVideoFrameMetaInfo"
+        "agora::media::base::IVideoFrameMetaInfo*": "IVideoFrameMetaInfo",
+        "agora::VideoLayout const*": "VideoLayout[]"
     },
     "reg": {
         "agora::rtc::SegmentationProperty::*": "${-o*}",

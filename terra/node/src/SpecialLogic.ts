@@ -802,12 +802,8 @@ export class SpeicalLogic {
     }
 
     public cSharpSDK_GetRtcEventHandlerData(excludes: string[]): { clazzName: string, m: MemberFunction, repeart: number }[] {
-        let returns = [];
+        let returns: { clazzName: string, m: MemberFunction, repeart: number }[] = [];
         let config = ConfigTool.getInstance();
-        let rtcEngineEventHandlerClazzName = "IRtcEngineEventHandler";
-        let rtcEngineEventHandlerExClazzName = "IRtcEngineEventHandlerEx";
-        let eventHandlerMethods = config.getClassOrStruct(rtcEngineEventHandlerClazzName).methods;
-        let eventHandlerExMethods = config.getClassOrStruct(rtcEngineEventHandlerExClazzName).methods;
         let excludeMethods = [
             "eventHandlerType"
         ]
@@ -815,36 +811,56 @@ export class SpeicalLogic {
         let bothMethods = [
             "onLocalVideoStateChanged"
         ];
-        for (let m of eventHandlerMethods) {
-            if (excludeMethods.includes(m.name))
-                continue;
 
-            let mEx = eventHandlerExMethods.find((e) => { return e.name == m.name });
-            let clazzName: string;
-            if (mEx != null) {
+        let pushHandler = (handlerName: string, handlerExName: string, returns: { clazzName: string, m: MemberFunction, repeart: number }[]) => {
+            let eventHandlerMethods = config.getClassOrStruct(handlerName).methods;
+            let eventHandlerExMethods = config.getClassOrStruct(handlerExName).methods;
+
+            for (let m of eventHandlerMethods) {
+                if (excludeMethods.includes(m.name))
+                    continue;
                 if (bothMethods.includes(m.name)) {
-                    returns.push({ clazzName: rtcEngineEventHandlerClazzName, m: m, repeart: 1 });
-                    returns.push({ clazzName: rtcEngineEventHandlerExClazzName, m: mEx, repeart: 2 });
-                }
-                else {
-                    returns.push({ clazzName: rtcEngineEventHandlerExClazzName, m: mEx, repeart: 1 });
+                    returns.push({ clazzName: handlerName, m: m, repeart: 1 });
+                    continue;
                 }
 
+                let mEx = eventHandlerExMethods.find((e) => { return e.name == m.name });
+                if (mEx == null) {
+                    returns.push({ clazzName: handlerName, m: m, repeart: 1 });
+                }
             }
-            else {
-                returns.push({ clazzName: rtcEngineEventHandlerClazzName, m: m, repeart: 1 });
+        };
+
+        // push IRtcEngineEventHandler, IRtcEngineEventHandlerEx
+        pushHandler("IRtcEngineEventHandlerBase", "IRtcEngineEventHandlerEx", returns);
+        pushHandler("IRtcEngineEventHandler", "IRtcEngineEventHandlerEx", returns);
+        pushHandler("IRtcEngineEventHandlerS", "IRtcEngineEventHandlerExS", returns);
+
+        let pushHandlerEx = (handlerExName, returns: { clazzName: string, m: MemberFunction, repeart: number }[]) => {
+            let eventHandlerExMethods = config.getClassOrStruct(handlerExName).methods;
+            for (let m of eventHandlerExMethods) {
+                if (excludeMethods.includes(m.name))
+                    continue;
+                let mBase = returns.find((e) => { return e.m.name == m.name });
+                returns.push({ clazzName: handlerExName, m: m, repeart: mBase ? 2 : 1 });
             }
         }
+        pushHandlerEx("IRtcEngineEventHandlerEx", returns);
+        pushHandlerEx("IRtcEngineEventHandlerExS", returns);
+
         return returns;
     }
 
-    public cSharpSDK_GenerateRtcEngineEventHandlerInterface(clazz: Clazz): string {
+    public cSharpSDK_GenerateRtcEngineEventHandlerBaseInterface(clazz: Clazz): string {
         let lines = [];
         let config = ConfigTool.getInstance();
         let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData([]);
 
         for (let data of allMethodDatas) {
             let clazzName = data.clazzName;
+            if (clazzName != "IRtcEngineEventHandlerBase")
+                continue;
+
             let m = data.m;
             let paramslines = [];
             for (let p of m.parameters) {
@@ -861,49 +877,192 @@ export class SpeicalLogic {
         return lines.join("\n\n");
     }
 
-    public cSharpSDK_GenerateRtcEngineEventHandlerNative(clazz: Clazz): string {
+    public cSharpSDK_GenerateRtcEngineEventHandlerInterface(clazz: Clazz): string {
         let lines = [];
         let config = ConfigTool.getInstance();
-        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData(["onStreamMessage"]);
+        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData([]);
 
         for (let data of allMethodDatas) {
             let clazzName = data.clazzName;
+            if (clazzName != "IRtcEngineEventHandler" && clazzName != "IRtcEngineEventHandlerEx")
+                continue;
+
             let m = data.m;
-            let switchKey: string;
-            if (clazzName == "IRtcEngineEventHandlerEx") {
-                switchKey = `RtcEngineEventHandler_${m.name}Ex`;
-            }
-            else {
-                switchKey = `RtcEngineEventHandler_${m.name}`;
-            }
-
-            lines.push(`case "${switchKey}":\n{`);
-            lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
-            lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
-            lines.push(`#endif`);
-            lines.push(`if (rtcEngineEventHandler == null) return;`);
-            let methodName = Tool._processStringWithU(m.name);
-            lines.push(`rtcEngineEventHandler.${methodName}(`);
-
             let paramslines = [];
-
             for (let p of m.parameters) {
-                let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
-                if (jsonString != null)
-                    paramslines.push("\t" + jsonString);
+                let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
+                let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
+                if (transType == "@remove")
+                    continue;
+                paramslines.push(`${transType} ${transName}`);
             }
-
-            lines.push(`${paramslines.join(",\n")}`);
-
-            lines.push(`);`);
-            lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
-            lines.push(`});`);
-            lines.push(`#endif`);
-            lines.push(`break;\n}\n`);
+            let methodName = Tool._processStringWithU(m.name);
+            lines.push(`public virtual void ${methodName}(${paramslines.join(", ")}){\n }`);
         }
 
-        return lines.join("\n");
+        return lines.join("\n\n");
     }
+
+    public cSharpSDK_GenerateRtcEngineEventHandlerSInterface(clazz: Clazz): string {
+        let lines = [];
+        let config = ConfigTool.getInstance();
+        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData([]);
+
+        for (let data of allMethodDatas) {
+            let clazzName = data.clazzName;
+            if (clazzName != "IRtcEngineEventHandlerS" && clazzName != "IRtcEngineEventHandlerExS")
+                continue;
+
+            let m = data.m;
+            let paramslines = [];
+            for (let p of m.parameters) {
+                let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
+                let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
+                if (transType == "@remove")
+                    continue;
+                paramslines.push(`${transType} ${transName}`);
+            }
+            let methodName = Tool._processStringWithU(m.name);
+            lines.push(`public virtual void ${methodName}(${paramslines.join(", ")}){\n }`);
+        }
+
+        return lines.join("\n\n");
+    }
+
+    public cSharpSDK_GenerateRtcEngineEventHandlerBaseNative(clazz: Clazz): string {
+        let lines = [];
+        let config = ConfigTool.getInstance();
+        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData([]);
+
+        for (let data of allMethodDatas) {
+            let clazzName = data.clazzName;
+            if (clazzName != "IRtcEngineEventHandlerBase")
+                continue;
+
+            let eachM = this.cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName, data.m, null);
+            lines.push(eachM);
+        }
+        return lines.join("\n\n");
+    }
+
+    public cSharpSDK_GenerateRtcEngineEventHandlerNative(clazz: Clazz): string {
+        let lines = [];
+        let config = ConfigTool.getInstance();
+        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData([]);
+
+        for (let data of allMethodDatas) {
+            let clazzName = data.clazzName;
+            if (clazzName != "IRtcEngineEventHandler" && clazzName != "IRtcEngineEventHandlerEx")
+                continue;
+
+            if (data.m.name == "onStreamMessage")
+                continue;
+
+            let eachM = this.cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName, data.m, "IRtcEngineEventHandler");
+            lines.push(eachM);
+        }
+        return lines.join("\n\n");
+    }
+
+    public cSharpSDK_GenerateRtcEngineEventHandlerSNative(clazz: Clazz): string {
+        let lines = [];
+        let config = ConfigTool.getInstance();
+        let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData([]);
+
+        for (let data of allMethodDatas) {
+            let clazzName = data.clazzName;
+            if (clazzName != "IRtcEngineEventHandlerS" && clazzName != "IRtcEngineEventHandlerExS")
+                continue;
+
+            if (data.m.name == "onStreamMessage")
+                continue;
+
+            let eachM = this.cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName, data.m, "IRtcEngineEventHandlerS");
+            lines.push(eachM);
+        }
+        return lines.join("\n\n");
+    }
+
+    public cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName: string, m: MemberFunction, forcedConversion: string): string {
+        let lines = [];
+        let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
+        let handlerNameMap = {
+            "IDirectCdnStreamingEventHandler": "rtcEngineEventHandler"
+        }
+        let handlerName = handlerNameMap[clazzName] || "commonEventHandler";
+        lines.push(`case "${switchKey}":\n{`);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
+        lines.push(`#endif`);
+        lines.push(`if (rtcEngineEventHandler == null) return;`);
+        let methodName = Tool._processStringWithU(m.name);
+        let eventHandlerName = forcedConversion ? `((${forcedConversion})rtcEngineEventHandler)` : "rtcEngineEventHandler";
+        lines.push(`${eventHandlerName}.${methodName}(`);
+
+        let paramslines = [];
+
+        for (let p of m.parameters) {
+            let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
+            if (jsonString != null)
+                paramslines.push(jsonString);
+        }
+
+        lines.push(`${paramslines.join(",\n")}`);
+
+        lines.push(`); `);
+        lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+        lines.push(`}); `);
+        lines.push(`#endif`);
+        lines.push(`break;\n}`);
+
+        return lines.join("\n");
+
+    }
+
+
+    // public cSharpSDK_GenerateRtcEngineEventHandlerNative(clazz: Clazz): string {
+    //     let lines = [];
+    //     let config = ConfigTool.getInstance();
+    //     let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData(["onStreamMessage"]);
+
+    //     for (let data of allMethodDatas) {
+    //         let clazzName = data.clazzName;
+    //         let m = data.m;
+    //         let switchKey: string;
+    //         if (clazzName == "IRtcEngineEventHandlerEx") {
+    //             switchKey = `RtcEngineEventHandler_${m.name}Ex`;
+    //         }
+    //         else {
+    //             switchKey = `RtcEngineEventHandler_${m.name}`;
+    //         }
+
+    //         lines.push(`case "${switchKey}":\n{`);
+    //         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+    //         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
+    //         lines.push(`#endif`);
+    //         lines.push(`if (rtcEngineEventHandler == null) return;`);
+    //         let methodName = Tool._processStringWithU(m.name);
+    //         lines.push(`rtcEngineEventHandler.${methodName}(`);
+
+    //         let paramslines = [];
+
+    //         for (let p of m.parameters) {
+    //             let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
+    //             if (jsonString != null)
+    //                 paramslines.push("\t" + jsonString);
+    //         }
+
+    //         lines.push(`${paramslines.join(",\n")}`);
+
+    //         lines.push(`);`);
+    //         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
+    //         lines.push(`});`);
+    //         lines.push(`#endif`);
+    //         lines.push(`break;\n}\n`);
+    //     }
+
+    //     return lines.join("\n");
+    // }
 
 
     public cSharpSDK_GetValueFromJson(clazzName: string, funName: string, originType: string, originName: string, jsonMapName: string) {

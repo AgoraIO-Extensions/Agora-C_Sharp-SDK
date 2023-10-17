@@ -102,7 +102,6 @@ CallbackObject._CallbackQueue.EnQueue(() =>{
 #endif
 
 #if AGORA_STRING_UID
-
                 case "MediaRecorderObserverS_onRecorderStateChanged":
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

@@ -7,20 +7,56 @@ namespace Agora.Rtc
     /// The SDK uses the IRtcEngineEventHandler interface to send event notifications to your app. Your app can get those notifications through methods that inherit this interface.
     /// </summary>
     ///
-    public abstract class IRtcEngineEventHandler
+    public abstract class IRtcEngineEventHandler : IRtcEngineEventHandlerBase
     {
 
         #region terra IRtcEngineEventHandler
+
+        public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        {
+        }
+
+        public virtual void OnAudioMixingFinished()
+        {
+        }
+
+        public virtual void OnCameraReady()
+        {
+        }
+
+        public virtual void OnVideoStopped()
+        {
+        }
+
+        public virtual void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
+        {
+        }
+
+        public virtual void OnLocalUserRegistered(uint uid, string userAccount)
+        {
+        }
+
+        public virtual void OnUserInfoUpdated(uint uid, UserInfo info)
+        {
+        }
+
+        public virtual void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        {
+        }
+
+        public virtual void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        {
+        }
+
+        public virtual void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        {
+        }
 
         public virtual void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
         {
         }
 
         public virtual void OnRejoinChannelSuccess(RtcConnection connection, int elapsed)
-        {
-        }
-
-        public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
         {
         }
 
@@ -32,7 +68,11 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnAudioMixingFinished()
+        public virtual void OnLeaveChannel(RtcConnection connection, RtcStats stats)
+        {
+        }
+
+        public virtual void OnRtcStats(RtcConnection connection, RtcStats stats)
         {
         }
 
@@ -40,15 +80,27 @@ namespace Agora.Rtc
         {
         }
 
+        public virtual void OnIntraRequestReceived(RtcConnection connection)
+        {
+        }
+
+        public virtual void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed)
+        {
+        }
+
         public virtual void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
         {
         }
 
-        public virtual void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
+        public virtual void OnVideoSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation)
         {
         }
 
-        public virtual void OnVideoSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation)
+        public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        {
+        }
+
+        public virtual void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
         }
 
@@ -76,11 +128,15 @@ namespace Agora.Rtc
         {
         }
 
+        public virtual void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled)
+        {
+        }
+
         public virtual void OnUserStateChanged(RtcConnection connection, uint remoteUid, uint state)
         {
         }
 
-        public virtual void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled)
+        public virtual void OnLocalAudioStats(RtcConnection connection, LocalAudioStats stats)
         {
         }
 
@@ -96,11 +152,7 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnCameraReady()
-        {
-        }
-
-        public virtual void OnVideoStopped()
+        public virtual void OnConnectionLost(RtcConnection connection)
         {
         }
 
@@ -120,11 +172,31 @@ namespace Agora.Rtc
         {
         }
 
+        public virtual void OnRequestToken(RtcConnection connection)
+        {
+        }
+
+        public virtual void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE reason)
+        {
+        }
+
+        public virtual void OnTokenPrivilegeWillExpire(RtcConnection connection, string token)
+        {
+        }
+
+        public virtual void OnFirstLocalAudioFramePublished(RtcConnection connection, int elapsed)
+        {
+        }
+
         public virtual void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed)
         {
         }
 
         public virtual void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed)
+        {
+        }
+
+        public virtual void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
         {
         }
 
@@ -136,11 +208,11 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode)
+        public virtual void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
         {
         }
 
-        public virtual void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
+        public virtual void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
         {
         }
 
@@ -152,11 +224,27 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnLocalUserRegistered(uint uid, string userAccount)
+        public virtual void OnConnectionStateChanged(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
         {
         }
 
-        public virtual void OnUserInfoUpdated(uint uid, UserInfo info)
+        public virtual void OnWlAccMessage(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
+        {
+        }
+
+        public virtual void OnWlAccStats(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats)
+        {
+        }
+
+        public virtual void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type)
+        {
+        }
+
+        public virtual void OnEncryptionError(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType)
+        {
+        }
+
+        public virtual void OnUploadLogResult(RtcConnection connection, string requestId, bool success, UPLOAD_ERROR_REASON reason)
         {
         }
 
@@ -164,11 +252,7 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-        }
-
-        public virtual void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        public virtual void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode)
         {
         }
 
@@ -176,23 +260,14 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        public virtual void OnSetRtmFlagResult(RtcConnection connection, int code)
         {
         }
 
-        public virtual void OnVideoLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout const* layoutlist){
- }
-    #endregion terra IRtcEngineEventHandler
+        public virtual void OnVideoLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        {
+        }
+        #endregion terra IRtcEngineEventHandler
 
-    #region terra IDirectCdnStreamingEventHandler
-
-    public virtual void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
-    {
-    }
-
-    public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats)
-    {
-    }
-    #endregion terra IDirectCdnStreamingEventHandler
-};
+    };
 }

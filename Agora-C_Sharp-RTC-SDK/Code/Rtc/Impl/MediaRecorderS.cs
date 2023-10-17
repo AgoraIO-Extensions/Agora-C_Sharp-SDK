@@ -1,18 +1,18 @@
 namespace Agora.Rtc
 {
-    public sealed class MediaRecorder : IMediaRecorder
+    public sealed class MediaRecorderS : IMediaRecorderS
     {
-        private MediaRecorderImpl _mediaRecorderImpl = null;
+        private MediaRecorderImplS _mediaRecorderImpl = null;
         private string _nativeHandle = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        internal MediaRecorder(MediaRecorderImpl impl, string nativeHandle)
+        internal MediaRecorderS(MediaRecorderImplS impl, string nativeHandle)
         {
             _mediaRecorderImpl = impl;
             _nativeHandle = nativeHandle;
         }
 
-        ~MediaRecorder()
+        ~MediaRecorderS()
         {
             _mediaRecorderImpl = null;
         }
@@ -27,7 +27,7 @@ namespace Agora.Rtc
             this._nativeHandle = nativeHandle;
         }
 
-        #region terra IMediaRecorder
+        #region terra IMediaRecorderS
 
 
         public override int StartRecording(MediaRecorderConfiguration config)
@@ -48,14 +48,14 @@ namespace Agora.Rtc
             return _mediaRecorderImpl.StopRecording(_nativeHandle);
         }
 
-        public override int SetMediaRecorderObserver(IMediaRecorderObserver callback)
+        public override int SetMediaRecorderObserver(IMediaRecorderObserverS callbackS)
         {
             if (_mediaRecorderImpl == null || this._nativeHandle == null)
             {
                 return ErrorCode;
             }
-            return _mediaRecorderImpl.SetMediaRecorderObserver(_nativeHandle, callback);
+            return _mediaRecorderImpl.SetMediaRecorderObserver(_nativeHandle, callbackS);
         }
-        #endregion terra IMediaRecorder
+        #endregion terra IMediaRecorderS
     }
 }

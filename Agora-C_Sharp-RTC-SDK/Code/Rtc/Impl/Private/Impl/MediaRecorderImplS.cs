@@ -13,7 +13,7 @@ namespace Agora.Rtc
     // get from C++, no need to free
     using IrisEventHandlerHandle = IntPtr;
 
-    public class MediaRecorderImpl
+    public class MediaRecorderImplS
     {
         private IrisApiEnginePtr _irisApiEngine;
         private IrisRtcCApiParam _apiParam;
@@ -24,17 +24,17 @@ namespace Agora.Rtc
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private AgoraCallbackObject _callbackObject;
-        private static readonly string identifier = "AgoraMediaRecorder";
+        private static readonly string identifier = "AgoraMediaRecorderS";
 #endif
 
-        internal MediaRecorderImpl(IrisApiEnginePtr irisApiEngine)
+        internal MediaRecorderImplS(IrisApiEnginePtr irisApiEngine)
         {
             _apiParam = new IrisRtcCApiParam();
             _apiParam.AllocResult();
             _irisApiEngine = irisApiEngine;
         }
 
-        ~MediaRecorderImpl()
+        ~MediaRecorderImplS()
         {
             Dispose(false);
         }
@@ -103,7 +103,7 @@ namespace Agora.Rtc
 
                 IntPtr[] arrayPtr = new IntPtr[] { handle.handle };
                 var json = AgoraJson.ToJson(_param);
-                int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER,
+                int nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "MediaRecorderS_unsetMediaRecorderObserver",
                                                               json, (UInt32)json.Length,
                                                               Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                               ref _apiParam);
@@ -126,7 +126,7 @@ namespace Agora.Rtc
 #endif
         }
 
-        public int SetMediaRecorderObserver(string nativeHandle, IMediaRecorderObserver callback)
+        public int SetMediaRecorderObserver(string nativeHandle, IMediaRecorderObserverS callback)
         {
             if (callback != null)
             {
@@ -143,7 +143,7 @@ namespace Agora.Rtc
 
                 IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
                 var json = AgoraJson.ToJson(_param);
-                int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_SETMEDIARECORDEROBSERVER,
+                int nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "MediaRecorder_setMediaRecorderObserver",
                                                               json, (UInt32)json.Length,
                                                               Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                               ref _apiParam);
@@ -163,7 +163,7 @@ namespace Agora.Rtc
 
                     IntPtr[] arrayPtr = new IntPtr[] { handler.handle };
                     var json = AgoraJson.ToJson(_param);
-                    int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDER_UNSETMEDIARECORDEROBSERVER,
+                    int nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "MediaRecorder_unsetMediaRecorderObserver",
                                                                   json, (UInt32)json.Length,
                                                                   Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                                   ref _apiParam);
@@ -191,7 +191,7 @@ namespace Agora.Rtc
             _param.Add("info", info);
 
             var json = AgoraJson.ToJson(_param);
-            int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_CREATEMEDIARECORDER,
+            int nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "RtcEngineS_createMediaRecorder",
                                                           json, (UInt32)json.Length,
                                                           IntPtr.Zero, 0,
                                                           ref _apiParam);
@@ -213,7 +213,7 @@ namespace Agora.Rtc
             _param.Add("nativeHandle", nativeHandle);
 
             var json = AgoraJson.ToJson(_param);
-            int nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_RTCENGINE_DESTROYMEDIARECORDER,
+            int nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "RtcEngineS_destroyMediaRecorder",
                                                           json, (UInt32)json.Length,
                                                           IntPtr.Zero, 0,
                                                           ref _apiParam);
@@ -221,7 +221,7 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
-        #region terra IMediaRecorder
+        #region terra IMediaRecorderS
 
         public int StartRecording(string nativeHandle, MediaRecorderConfiguration config)
         {
@@ -230,7 +230,7 @@ namespace Agora.Rtc
             _param.Add("config", config);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaRecorder_startRecording",
+            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "MediaRecorderS_startRecording",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -245,7 +245,7 @@ namespace Agora.Rtc
             _param.Add("nativeHandle", nativeHandle);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaRecorder_stopRecording",
+            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "MediaRecorderS_stopRecording",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -253,6 +253,6 @@ namespace Agora.Rtc
 
             return result;
         }
-        #endregion terra IMediaRecorder
+        #endregion terra IMediaRecorderS
     }
 }
