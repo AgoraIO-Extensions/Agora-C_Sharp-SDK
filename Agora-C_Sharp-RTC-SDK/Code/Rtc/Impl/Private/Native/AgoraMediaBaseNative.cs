@@ -64,6 +64,7 @@ namespace Agora.Rtc
         public float[] matrix;
         public IntPtr alphaBuffer;
         public uint alpha_buffer_length;
+        public IntPtr metaInfo;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -75,6 +76,22 @@ namespace Agora.Rtc
         /// int value of agora::media::base::VIDEO_PIXEL_FORMAT
         internal int video_frame_format;
         internal uint uid;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+        internal string channelId;
+
+        internal int video_view_setup_mode;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct IrisRtcVideoFrameConfigS
+    {
+        /// int value of agora::rtc::VIDEO_SOURCE_TYPE
+        internal int video_source_type;
+
+        /// int value of agora::media::base::VIDEO_PIXEL_FORMAT
+        internal int video_frame_format;
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+        internal string userAccount;
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
         internal string channelId;
 

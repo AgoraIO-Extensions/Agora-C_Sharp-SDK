@@ -3,11 +3,11 @@ namespace Agora.Rtc
 {
     public class MediaPlayerCacheManager : IMediaPlayerCacheManager
     {
-        private IRtcEngine _rtcEngineInstance = null;
+        private IRtcEngineBase _rtcEngineInstance = null;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManagerImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        private MediaPlayerCacheManager(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)
+        private MediaPlayerCacheManager(IRtcEngineBase rtcEngine, MediaPlayerCacheManagerImpl impl)
         {
             _rtcEngineInstance = rtcEngine;
             _mediaPlayerCacheManagerImpl = impl;
@@ -27,7 +27,7 @@ namespace Agora.Rtc
             }
         }
 
-        internal static MediaPlayerCacheManager GetInstance(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)
+        internal static MediaPlayerCacheManager GetInstance(IRtcEngineBase rtcEngine, MediaPlayerCacheManagerImpl impl)
         {
             return instance ?? (instance = new MediaPlayerCacheManager(rtcEngine, impl));
         }

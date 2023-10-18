@@ -52,6 +52,6 @@ namespace Agora.Rtm
 
     public interface IOptionalJsonParse
     {
-        public void ToJson(JsonWriter writer);
+        void ToJson(JsonWriter writer);
     }
 }

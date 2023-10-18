@@ -129,6 +129,14 @@ namespace Agora.Rtc
             localVideoFrame.matrix = videoFrameConverted.matrix;
             localVideoFrame.textureId = videoFrameConverted.textureId;
             localVideoFrame.alphaBufferPtr = videoFrameConverted.alphaBuffer;
+            if (videoFrameConverted.metaInfo != IntPtr.Zero)
+            {
+                localVideoFrame.metaInfo = new VideoFrameMetaInfo(videoFrameConverted.metaInfo);
+            }
+            else
+            {
+                localVideoFrame.metaInfo = null;
+            }
         }
 
         private static void CalculationYUVLength(ref IrisVideoFrame videoFrame)

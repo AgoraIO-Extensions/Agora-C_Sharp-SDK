@@ -14,7 +14,7 @@ namespace Agora.Rtc
     internal static class MediaPlayerAudioSpectrumObserverNative
     {
         private static System.Object observerLock = new System.Object();
-        private static Dictionary<int, IAudioSpectrumObserverBase> mediaPlayerAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserver>();
+        private static Dictionary<int, IAudioSpectrumObserverBase> mediaPlayerAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserverBase>();
 
         internal static void AddAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer)
         {
@@ -108,7 +108,7 @@ namespace Agora.Rtc
                                 irisUserAudioSpectrumInfo[i].GenerateUserAudioSpectrumInfo(ref e);
                                 list[i] = e;
                             }
-                            var result = ((IAudioSpectrumObserver)audioSpectrumObserver).OnRemoteAudioSpectrum(list, spectrumNumber);
+                            var result = ((IAudioSpectrumObserverS)audioSpectrumObserver).OnRemoteAudioSpectrum(list, spectrumNumber);
                             Dictionary<string, System.Object> p = new Dictionary<string, System.Object>();
                             p.Add("result", result);
                             string json = AgoraJson.ToJson(p);

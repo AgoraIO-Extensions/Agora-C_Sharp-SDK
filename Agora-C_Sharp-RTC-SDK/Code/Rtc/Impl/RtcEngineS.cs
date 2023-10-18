@@ -1795,7 +1795,7 @@ namespace Agora.Rtc
             {
                 return ErrorCode;
             }
-            return _rtcEngineImpl.GetAudioDeviceInfo(deviceInfo);
+            return _rtcEngineImpl.GetAudioDeviceInfo(ref deviceInfo);
         }
 
         public override int StartScreenCaptureByWindowId(view_t windowId, Rectangle regionRect, ScreenCaptureParameters captureParams)
@@ -2297,7 +2297,7 @@ namespace Agora.Rtc
         {
             if (_rtcEngineImpl == null)
             {
-                return ErrorCode;
+                return false;
             }
             return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
@@ -2513,7 +2513,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.SetExtensionProperty(provider, extension, extensionInfoS, key, value);
         }
 
-        public override int GetExtensionProperty(string provider, string extension, ExtensionInfoS extensionInfoS, string key, string value, int buf_len)
+        public override int GetExtensionProperty(string provider, string extension, ExtensionInfoS extensionInfoS, string key, ref string value, int buf_len)
         {
             if (_rtcEngineImpl == null)
             {

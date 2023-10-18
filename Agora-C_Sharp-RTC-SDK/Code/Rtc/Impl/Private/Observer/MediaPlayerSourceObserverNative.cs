@@ -51,39 +51,6 @@ namespace Agora.Rtc
             int playerId = (int)AgoraJson.GetData<int>(jsonData, "playerId");
             switch (@event)
             {
-                case "MediaPlayerSourceObserver_onPlayerInfoUpdated":
-                    {
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                CallbackObject._CallbackQueue.EnQueue(() =>
-                                                      {
-#endif
-                        if (!mediaPlayerSourceObserverDic.ContainsKey(playerId))
-                            return;
-
-                        PlayerUpdatedInfo playerUpdatedInfo = new PlayerUpdatedInfo();
-                        LitJson.JsonData info = jsonData["info"];
-                        if (info.ContainsKey("deviceId"))
-                        {
-                            playerUpdatedInfo.deviceId.SetValue((string)AgoraJson.GetData<string>(info, "deviceId"));
-                        }
-                        if (info.ContainsKey("playerId"))
-                        {
-                            playerUpdatedInfo.playerId.SetValue((string)AgoraJson.GetData<string>(info, "playerId"));
-                        }
-                        if (info.ContainsKey("cacheStatistics"))
-                        {
-                            playerUpdatedInfo.cacheStatistics.SetValue((CacheStatistics)AgoraJson.JsonToStruct<CacheStatistics>(info, "cacheStatistics"));
-                        }
-
-                        mediaPlayerSourceObserverDic[playerId].OnPlayerInfoUpdated(
-                            playerUpdatedInfo);
-
-#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-                                                      });
-#endif
-                        break;
-                    }
-
                 case "MediaPlayerSourceObserver_onMetaData":
                     {
                         var byteLength = (int)AgoraJson.GetData<int>(jsonData, "length");
@@ -227,6 +194,21 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         mediaPlayerSourceObserverDic[playerId].OnPlayerSrcInfoChanged(
                             AgoraJson.JsonToStruct<SrcInfo>(jsonData, "from"),
                             AgoraJson.JsonToStruct<SrcInfo>(jsonData, "to")
+                        );
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+});
+#endif
+                        break;
+                    }
+
+                case "MediaPlayerSourceObserver_onPlayerInfoUpdated":
+                    {
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+CallbackObject._CallbackQueue.EnQueue(() => {
+#endif
+                        if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
+                        mediaPlayerSourceObserverDic[playerId].OnPlayerInfoUpdated(
+                            AgoraJson.JsonToStruct<PlayerUpdatedInfo>(jsonData, "info")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 });

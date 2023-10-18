@@ -147,44 +147,44 @@ namespace Agora.Rtc
             return AgoraRtcNative.ILocalSpatialAudioEngineS_SetPlayerAttenuation(_irisApiEngine, playerId, attenuation, forceSet);
         }
 
-        public int MuteRemoteAudioStream(uint uid, bool mute)
+        public int MuteRemoteAudioStream(string userAccount, bool mute)
         {
             if (!_initialized) return UNINITIALIZED;
 
-            return AgoraRtcNative.ILocalSpatialAudioEngineS_MuteRemoteAudioStream(_irisApiEngine, uid, mute);
+            return AgoraRtcNative.ILocalSpatialAudioEngineS_MuteRemoteAudioStream(_irisApiEngine, userAccount, mute);
         }
 
-        public int UpdateRemotePosition(uint uid, RemoteVoicePositionInfo posInfo)
+        public int UpdateRemotePosition(string userAccount, RemoteVoicePositionInfo posInfo)
         {
             if (!_initialized) return UNINITIALIZED;
 
-            return AgoraRtcNative.ILocalSpatialAudioEngineS_UpdateRemotePosition(_irisApiEngine, uid,
+            return AgoraRtcNative.ILocalSpatialAudioEngineS_UpdateRemotePosition(_irisApiEngine, userAccount,
                 posInfo.position[0], posInfo.position[1], posInfo.position[2],
                 posInfo.forward[0], posInfo.forward[1], posInfo.forward[2]);
         }
 
-        public int UpdateRemotePositionEx(uint uid, RemoteVoicePositionInfo posInfo, RtcConnectionS connection)
+        public int UpdateRemotePositionEx(string userAccount, RemoteVoicePositionInfo posInfo, RtcConnectionS connection)
         {
             if (!_initialized) return UNINITIALIZED;
 
-            return AgoraRtcNative.ILocalSpatialAudioEngineS_UpdateRemotePositionEx(_irisApiEngine, uid,
+            return AgoraRtcNative.ILocalSpatialAudioEngineS_UpdateRemotePositionEx(_irisApiEngine, userAccount,
                 posInfo.position[0], posInfo.position[1], posInfo.position[2],
                 posInfo.forward[0], posInfo.forward[1], posInfo.forward[2],
                 connection.channelId, connection.localUserAccount);
         }
 
-        public int RemoveRemotePosition(uint uid)
+        public int RemoveRemotePosition(string userAccount)
         {
             if (!_initialized) return UNINITIALIZED;
 
-            return AgoraRtcNative.ILocalSpatialAudioEngineS_RemoveRemotePosition(_irisApiEngine, uid);
+            return AgoraRtcNative.ILocalSpatialAudioEngineS_RemoveRemotePosition(_irisApiEngine, userAccount);
         }
 
-        public int RemoveRemotePositionEx(uint uid, RtcConnectionS connection)
+        public int RemoveRemotePositionEx(string userAccount, RtcConnectionS connection)
         {
             if (!_initialized) return UNINITIALIZED;
 
-            return AgoraRtcNative.ILocalSpatialAudioEngineS_RemoveRemotePositionEx(_irisApiEngine, uid, connection.channelId, connection.localUserAccount);
+            return AgoraRtcNative.ILocalSpatialAudioEngineS_RemoveRemotePositionEx(_irisApiEngine, userAccount, connection.channelId, connection.localUserAccount);
         }
 
         public int ClearRemotePositions()
@@ -201,11 +201,11 @@ namespace Agora.Rtc
             return AgoraRtcNative.ILocalSpatialAudioEngineS_ClearRemotePositionsEx(_irisApiEngine, connection.channelId, connection.localUserAccount);
         }
 
-        public int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet)
+        public int SetRemoteAudioAttenuation(string userAccount, double attenuation, bool forceSet)
         {
             if (!_initialized) return UNINITIALIZED;
 
-            return AgoraRtcNative.ILocalSpatialAudioEngineS_SetRemoteAudioAttenuation(_irisApiEngine, uid, attenuation, forceSet);
+            return AgoraRtcNative.ILocalSpatialAudioEngineS_SetRemoteAudioAttenuation(_irisApiEngine, userAccount, attenuation, forceSet);
         }
 
 

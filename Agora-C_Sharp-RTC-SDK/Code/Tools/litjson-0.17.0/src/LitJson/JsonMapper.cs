@@ -1575,9 +1575,9 @@ namespace Agora.Rtm.LitJson
                 return;
             }
 
-            if (obj is OptionalJsonParse)
+            if (obj is IOptionalJsonParse)
             {
-                ((OptionalJsonParse)obj).ToJson(writer);
+                ((IOptionalJsonParse)obj).ToJson(writer);
                 return;
             }
 

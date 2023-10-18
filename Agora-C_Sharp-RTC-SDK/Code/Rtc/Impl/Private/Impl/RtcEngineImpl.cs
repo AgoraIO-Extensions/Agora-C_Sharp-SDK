@@ -211,17 +211,6 @@ namespace Agora.Rtc
             if (_rtcEventHandlerHandle.handle == IntPtr.Zero)
                 return;
 
-            // IntPtr[] arrayPtr = new IntPtr[] { _rtcEventHandlerHandle.handle };
-            // var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_UNREGISTEREVENTHANDLER,
-            //     "{}", 2,
-            //     Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
-            //     ref _apiParam);
-
-            // if (nRet != 0)
-            //{
-            //     AgoraLog.LogError("FUNC_RTCENGINE_UNREGISTEREVENTHANDLER failed: " + nRet);
-            // }
-
             AgoraRtcNative.FreeEventHandlerHandle(ref _rtcEventHandlerHandle);
 
             // you must Set(null) lately. because maybe some callback will trigger when unregister,
@@ -448,6 +437,25 @@ namespace Agora.Rtc
             return nRet;
         }
 
+        public int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
+        {
+            //you must SetAudioEncodedFrameObserver first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
+            AudioEncodedFrameObserverNative.SetAudioEncodedFrameObserver(observer);
+            int ret = SetIrisAudioEncodedFrameObserver(config);
+            return ret;
+        }
+
+        public int UnRegisterAudioEncodedFrameObserver()
+        {
+            // you must SetAudioEncodedFrameObserver(null) lately. because maybe some callback will trigger when unregister,
+            // you set null first, some callback will never triggered
+            int nRet = UnSetIrisAudioEncodedFrameObserver();
+            AudioEncodedFrameObserverNative.SetAudioEncodedFrameObserver(null);
+            return nRet;
+        }
+
         private int SetIrisAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config)
         {
             if (_rtcAudioEncodedFrameObserverHandle.handle != IntPtr.Zero)
@@ -478,6 +486,40 @@ namespace Agora.Rtc
                                                          ref _apiParam);
 
             AgoraRtcNative.FreeEventHandlerHandle(ref _rtcAudioEncodedFrameObserverHandle);
+            return ret;
+        }
+
+        public int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
+        {
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
+            AudioSpectrumObserverNative.SetAudioSpectrumObserver(observer);
+            int ret = SetIrisAudioSpectrumObserver();
+
+            return ret;
+        }
+
+        public int UnregisterAudioSpectrumObserver()
+        {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            int nRet = UnSetIrisAudioSpectrumObserver();
+            AudioSpectrumObserverNative.SetAudioSpectrumObserver(null);
+            return nRet;
+        }
+
+        private int SetIrisAudioSpectrumObserver()
+        {
+            if (_rtcAudioSpectrumObserverHandle.handle != IntPtr.Zero) return 0;
+
+            AgoraRtcNative.AllocEventHandlerHandle(ref _rtcAudioSpectrumObserverHandle, AudioSpectrumObserverNative.OnEvent);
+
+            IntPtr[] arrayPtr = new IntPtr[] { _rtcAudioSpectrumObserverHandle.handle };
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_REGISTERAUDIOSPECTRUMOBSERVER,
+                "{}", 2,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
             return ret;
         }
 
@@ -553,6 +595,26 @@ namespace Agora.Rtc
 
             AgoraRtcNative.FreeEventHandlerHandle(ref _rtcVideoEncodedFrameObserverHandle);
 
+            return nRet;
+        }
+
+        public int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
+        {
+            //you must Set Observerr first and then SetIrisAudioEncodedFrameObserver second
+            //because if you SetIrisAudioEncodedFrameObserver first, some call back will be trigger immediately
+            //and this time you dont have observer be trigger
+
+            MetadataObserverNative.SetMetadataObserver(observer);
+            var ret = SetIrisMetaDataObserver(type);
+            return ret;
+        }
+
+        public int UnregisterMediaMetadataObserver()
+        {
+            //you must Set(null) lately. because maybe some callback will trigger when unregister,
+            //you set null first, some callback will never triggered 
+            int nRet = UnSetIrisMetaDataObserver();
+            MetadataObserverNative.SetMetadataObserver(null);
             return nRet;
         }
 
@@ -1431,22 +1493,6 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, "RtcEngineBase_startAudioRecording3",
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int RegisterAudioEncodedFrameObserver(AudioEncodedFrameObserverConfig config, IAudioEncodedFrameObserver observer)
-        {
-            _param.Clear();
-            _param.Add("config", config);
-            _param.Add("observer", observer);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, "RtcEngineBase_registerAudioEncodedFrameObserver",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -3787,6 +3833,8 @@ namespace Agora.Rtc
 
         public int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
         {
+            CreateDirectCdnStreamingEventHandle();
+
             _param.Clear();
             _param.Add("publishUrl", publishUrl);
             _param.Add("options", options);
@@ -4445,35 +4493,6 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer)
-        {
-            _param.Clear();
-            _param.Add("observer", observer);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, "RtcEngine_registerAudioSpectrumObserver",
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int UnregisterAudioSpectrumObserver()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, "RtcEngine_unregisterAudioSpectrumObserver",
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
         public int AdjustUserPlaybackSignalVolume(uint uid, int volume)
         {
             _param.Clear();
@@ -4544,14 +4563,13 @@ namespace Agora.Rtc
             return result;
         }
 
-        public int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value, int buf_len)
+        public int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len)
         {
             _param.Clear();
             _param.Add("provider", provider);
             _param.Add("extension", extension);
             _param.Add("extensionInfo", extensionInfo);
             _param.Add("key", key);
-            _param.Add("value", value);
             _param.Add("buf_len", buf_len);
 
             var json = AgoraJson.ToJson(_param);
@@ -4560,7 +4578,10 @@ namespace Agora.Rtc
                 IntPtr.Zero, 0,
                 ref _apiParam);
             var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
+            if (nRet == 0)
+            {
+                value = (string)AgoraJson.GetData<string>(_apiParam.Result, "value");
+            }
             return result;
         }
 
@@ -4721,36 +4742,6 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, "RtcEngine_enableWebSdkInteroperability",
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type)
-        {
-            _param.Clear();
-            _param.Add("observer", observer);
-            _param.Add("type", type);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, "RtcEngine_registerMediaMetadataObserver",
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int UnregisterMediaMetadataObserver()
-        {
-            _param.Clear();
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, "RtcEngine_unregisterMediaMetadataObserver",
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -5961,15 +5952,6 @@ namespace Agora.Rtc
                                                           ref _apiParam, (uint)length);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-        }
-
-        public int UnRegisterAudioEncodedFrameObserver()
-        {
-            // you must SetAudioEncodedFrameObserver(null) lately. because maybe some callback will trigger when unregister,
-            // you set null first, some callback will never triggered
-            int nRet = UnSetIrisAudioEncodedFrameObserver();
-            AudioEncodedFrameObserverNative.SetAudioEncodedFrameObserver(null);
-            return nRet;
         }
 
         #region terra IMediaEngineBase

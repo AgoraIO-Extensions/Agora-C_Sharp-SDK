@@ -2,23 +2,23 @@
 {
     public sealed class LocalSpatialAudioEngineS : ILocalSpatialAudioEngineS
     {
-        private IRtcEngine _rtcEngineInstance = null;
-        private LocalSpatialAudioEngineImpl _localSpatialAudioEngineImpl = null;
+        private IRtcEngineBase _rtcEngineInstance = null;
+        private LocalSpatialAudioEngineImplS _localSpatialAudioEngineImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        private LocalSpatialAudioEngine(IRtcEngine rtcEngine, LocalSpatialAudioEngineImpl impl)
+        private LocalSpatialAudioEngineS(IRtcEngineBase rtcEngine, LocalSpatialAudioEngineImplS impl)
         {
             _rtcEngineInstance = rtcEngine;
             _localSpatialAudioEngineImpl = impl;
         }
 
-        ~LocalSpatialAudioEngine()
+        ~LocalSpatialAudioEngineS()
         {
             _rtcEngineInstance = null;
         }
 
-        private static ILocalSpatialAudioEngine instance = null;
-        public static ILocalSpatialAudioEngine Instance
+        private static ILocalSpatialAudioEngineS instance = null;
+        public static ILocalSpatialAudioEngineS Instance
         {
             get
             {
@@ -26,9 +26,9 @@
             }
         }
 
-        internal static ILocalSpatialAudioEngine GetInstance(IRtcEngine rtcEngine, LocalSpatialAudioEngineImpl impl)
+        internal static ILocalSpatialAudioEngineS GetInstance(IRtcEngineBase rtcEngine, LocalSpatialAudioEngineImplS impl)
         {
-            return instance ?? (instance = new LocalSpatialAudioEngine(rtcEngine, impl));
+            return instance ?? (instance = new LocalSpatialAudioEngineS(rtcEngine, impl));
         }
 
         internal static void ReleaseInstance()

@@ -841,7 +841,7 @@ export class SpeicalLogic {
             for (let m of eventHandlerExMethods) {
                 if (excludeMethods.includes(m.name))
                     continue;
-                let mBase = returns.find((e) => { return e.m.name == m.name });
+                let mBase = returns.find((e) => { return e.m.name == m.name && (e.clazzName == "IRtcEngineEventHandlerBase" || e.clazzName == "IRtcEngineEventHandler" || e.clazzName == "IRtcEngineEventHandlerS") });
                 returns.push({ clazzName: handlerExName, m: m, repeart: mBase ? 2 : 1 });
             }
         }
@@ -1019,51 +1019,71 @@ export class SpeicalLogic {
 
     }
 
+    public cSharpSDK_GenerateRtcEngineEventHandler(clazz: Clazz): string {
+        let lines = [];
+        let allMethods = this.cSharpSDK_GetRtcEventHandlerData([]);
+        let containClazzName = [
+            "IRtcEngineEventHandlerBase",
+            "IRtcEngineEventHandler",
+            "IRtcEngineEventHandlerEx"
+        ]
+        for (let data of allMethods) {
+            if (!containClazzName.includes(data.clazzName))
+                continue;
+            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(data.clazzName, data.m, data.repeart));
+        }
+        return lines.join('\n');
+    }
 
-    // public cSharpSDK_GenerateRtcEngineEventHandlerNative(clazz: Clazz): string {
-    //     let lines = [];
-    //     let config = ConfigTool.getInstance();
-    //     let allMethodDatas = this.cSharpSDK_GetRtcEventHandlerData(["onStreamMessage"]);
+    public cSharpSDK_GenerateRtcEngineEventHandlerS(clazz: Clazz): string {
+        let lines = [];
+        let allMethods = this.cSharpSDK_GetRtcEventHandlerData([]);
+        let containClazzName = [
+            "IRtcEngineEventHandlerBase",
+            "IRtcEngineEventHandlerS",
+            "IRtcEngineEventHandlerExS"
+        ]
+        for (let data of allMethods) {
+            if (!containClazzName.includes(data.clazzName))
+                continue;
+            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(data.clazzName, data.m, data.repeart));
+        }
+        return lines.join('\n');
+    }
 
-    //     for (let data of allMethodDatas) {
-    //         let clazzName = data.clazzName;
-    //         let m = data.m;
-    //         let switchKey: string;
-    //         if (clazzName == "IRtcEngineEventHandlerEx") {
-    //             switchKey = `RtcEngineEventHandler_${m.name}Ex`;
-    //         }
-    //         else {
-    //             switchKey = `RtcEngineEventHandler_${m.name}`;
-    //         }
+    public cSharpSDK_GenerateDirectCdnStreamingEventHandler(clazz: Clazz): string {
+        let lines = [];
+        for (let m of clazz.methods) {
+            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(clazz.name, m, 1));
+        }
+        return lines.join('\n');
+    }
 
-    //         lines.push(`case "${switchKey}":\n{`);
-    //         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
-    //         lines.push(`CallbackObject._CallbackQueue.EnQueue(() => {`);
-    //         lines.push(`#endif`);
-    //         lines.push(`if (rtcEngineEventHandler == null) return;`);
-    //         let methodName = Tool._processStringWithU(m.name);
-    //         lines.push(`rtcEngineEventHandler.${methodName}(`);
-
-    //         let paramslines = [];
-
-    //         for (let p of m.parameters) {
-    //             let jsonString = this.cSharpSDK_GetValueFromJson(clazzName, m.name, p.type.source, p.name, "jsonData");
-    //             if (jsonString != null)
-    //                 paramslines.push("\t" + jsonString);
-    //         }
-
-    //         lines.push(`${paramslines.join(",\n")}`);
-
-    //         lines.push(`);`);
-    //         lines.push(`#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID`);
-    //         lines.push(`});`);
-    //         lines.push(`#endif`);
-    //         lines.push(`break;\n}\n`);
-    //     }
-
-    //     return lines.join("\n");
-    // }
-
+    protected cSharpSDK_GenerateEventHandlerImpl(clazzName: string, m: MemberFunction, repeart: number): string {
+        let config = ConfigTool.getInstance();
+        let lines = [];
+        let paramsArray0: string[] = [];
+        let paramsArray1: string[] = [];
+        let paramsArray2: string[] = [];
+        for (let p of m.parameters) {
+            let transType = config.paramTypeTrans.transType(clazzName, m.name, p.type.source, p.name);
+            let transName = config.paramNameFormalTrans.transType(clazzName, m.name, p.name);
+            let transActive = config.paramNameActualTrans.transType(clazzName, m.name, p.name);
+            if (transType == "@remove")
+                continue;
+            paramsArray0.push(`${transType}`);
+            paramsArray1.push(`${transType} ${transName}`);
+            paramsArray2.push(`${transActive}`)
+        }
+        let eventName = `Event${Tool.processString('-u', m.name)}` + (repeart > 1 ? repeart : "");
+        lines.push(`public event Action${paramsArray0.length == 0 ? "" : "<" + paramsArray0.join(",") + ">"} ${eventName};`);
+        lines.push(``);
+        lines.push(`public override void ${Tool.processString('-u', m.name)}(${paramsArray1.join(",")})\n{`);
+        lines.push(`if (${eventName} == null) return;`);
+        lines.push(`${eventName}.Invoke(${paramsArray2.join(',')});`);
+        lines.push(`}\n`);
+        return lines.join('\n');
+    }
 
     public cSharpSDK_GetValueFromJson(clazzName: string, funName: string, originType: string, originName: string, jsonMapName: string) {
         let config = ConfigTool.getInstance();

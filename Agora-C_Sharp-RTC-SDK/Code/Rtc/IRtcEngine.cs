@@ -109,7 +109,7 @@ namespace Agora.Rtc
         public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value);
 
 
-        public abstract int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value, int buf_len);
+        public abstract int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len);
 
 
         public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);

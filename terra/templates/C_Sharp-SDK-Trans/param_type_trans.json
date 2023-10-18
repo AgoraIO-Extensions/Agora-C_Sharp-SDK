@@ -43,6 +43,8 @@
         "IRtcEngine.getUserInfoByUserAccount.userInfo": "ref UserInfo",
         "IRtcEngine.getUserInfoByUid.userInfo": "ref UserInfo",
         "IRtcEngineBase.getExtensionProperty.value": "ref string",
+        "IRtcEngine.getExtensionProperty.value": "ref string",
+        "IRtcEngineS.getExtensionProperty.value": "ref string",
         "IRtcEngine.unregisterMediaMetadataObserver.observer": "@remove",
         "IRtcEngine.unregisterMediaMetadataObserver.type": "@remove",
         "IRtcEngineS.unregisterMediaMetadataObserver.observer": "@remove",

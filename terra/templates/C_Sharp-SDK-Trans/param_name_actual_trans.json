@@ -10,7 +10,7 @@
         "IRtcEngineBase.getExtensionProperty.value": "ref value",
         "IRtcEngine.getExtensionProperty.value": "ref value",
         "IRtcEngineS.getExtensionProperty.value": "ref value",
-        "IRtcEngine.getAudioDeviceInfo.deviceInfo": "ref deviceInfo",
+        "IRtcEngineBase.getAudioDeviceInfo.deviceInfo": "ref deviceInfo",
         "IRtcEngineBase.uploadLogFile.requestId": "ref requestId",
         "IRtcEngineBase.getCallId.callId": "ref callId",
         "IRtcEngine.unregisterAudioSpectrumObserver.observer": "@remove",

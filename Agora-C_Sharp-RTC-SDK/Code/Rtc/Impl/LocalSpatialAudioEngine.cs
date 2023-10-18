@@ -1,8 +1,10 @@
-﻿namespace Agora.Rtc
+﻿using System;
+
+namespace Agora.Rtc
 {
     public sealed class LocalSpatialAudioEngine : ILocalSpatialAudioEngine
     {
-        private IRtcEngine _rtcEngineInstance = null;
+        private IRtcEngineBase _rtcEngineInstance = null;
         private LocalSpatialAudioEngineImpl _localSpatialAudioEngineImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 

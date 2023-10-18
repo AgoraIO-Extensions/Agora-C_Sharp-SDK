@@ -2651,270 +2651,270 @@ namespace Agora.Rtc
 
         //////////////////
 
-        public bool OnJoinChannelSuccess2_be_trigger = false;
-        public RtcConnectionS OnJoinChannelSuccess2_connectionS;
-        public int OnJoinChannelSuccess2_elapsed;
+        public bool OnJoinChannelSuccess_be_trigger = false;
+        public RtcConnectionS OnJoinChannelSuccess_connectionS;
+        public int OnJoinChannelSuccess_elapsed;
         public override void OnJoinChannelSuccess(RtcConnectionS connectionS, int elapsed)
         {
-            OnJoinChannelSuccess2_be_trigger = true;
-            OnJoinChannelSuccess2_connectionS = connectionS;
-            OnJoinChannelSuccess2_elapsed = elapsed;
+            OnJoinChannelSuccess_be_trigger = true;
+            OnJoinChannelSuccess_connectionS = connectionS;
+            OnJoinChannelSuccess_elapsed = elapsed;
         }
 
-        public bool OnJoinChannelSuccess2Passed(RtcConnectionS connectionS, int elapsed)
+        public bool OnJoinChannelSuccessPassed(RtcConnectionS connectionS, int elapsed)
         {
-            if (OnJoinChannelSuccess2_be_trigger == false)
+            if (OnJoinChannelSuccess_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnJoinChannelSuccess2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnJoinChannelSuccess_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnJoinChannelSuccess2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnJoinChannelSuccess_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnRejoinChannelSuccess2_be_trigger = false;
-        public RtcConnectionS OnRejoinChannelSuccess2_connectionS;
-        public int OnRejoinChannelSuccess2_elapsed;
+        public bool OnRejoinChannelSuccess_be_trigger = false;
+        public RtcConnectionS OnRejoinChannelSuccess_connectionS;
+        public int OnRejoinChannelSuccess_elapsed;
         public override void OnRejoinChannelSuccess(RtcConnectionS connectionS, int elapsed)
         {
-            OnRejoinChannelSuccess2_be_trigger = true;
-            OnRejoinChannelSuccess2_connectionS = connectionS;
-            OnRejoinChannelSuccess2_elapsed = elapsed;
+            OnRejoinChannelSuccess_be_trigger = true;
+            OnRejoinChannelSuccess_connectionS = connectionS;
+            OnRejoinChannelSuccess_elapsed = elapsed;
         }
 
-        public bool OnRejoinChannelSuccess2Passed(RtcConnectionS connectionS, int elapsed)
+        public bool OnRejoinChannelSuccessPassed(RtcConnectionS connectionS, int elapsed)
         {
-            if (OnRejoinChannelSuccess2_be_trigger == false)
+            if (OnRejoinChannelSuccess_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnRejoinChannelSuccess2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRejoinChannelSuccess_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnRejoinChannelSuccess2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnRejoinChannelSuccess_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnAudioVolumeIndication2_be_trigger = false;
-        public RtcConnectionS OnAudioVolumeIndication2_connectionS;
-        public AudioVolumeInfoS[] OnAudioVolumeIndication2_speakersS;
-        public uint OnAudioVolumeIndication2_speakerNumber;
-        public int OnAudioVolumeIndication2_totalVolume;
+        public bool OnAudioVolumeIndication_be_trigger = false;
+        public RtcConnectionS OnAudioVolumeIndication_connectionS;
+        public AudioVolumeInfoS[] OnAudioVolumeIndication_speakersS;
+        public uint OnAudioVolumeIndication_speakerNumber;
+        public int OnAudioVolumeIndication_totalVolume;
         public override void OnAudioVolumeIndication(RtcConnectionS connectionS, AudioVolumeInfoS[] speakersS, uint speakerNumber, int totalVolume)
         {
-            OnAudioVolumeIndication2_be_trigger = true;
-            OnAudioVolumeIndication2_connectionS = connectionS;
-            OnAudioVolumeIndication2_speakersS = speakersS;
-            OnAudioVolumeIndication2_speakerNumber = speakerNumber;
-            OnAudioVolumeIndication2_totalVolume = totalVolume;
+            OnAudioVolumeIndication_be_trigger = true;
+            OnAudioVolumeIndication_connectionS = connectionS;
+            OnAudioVolumeIndication_speakersS = speakersS;
+            OnAudioVolumeIndication_speakerNumber = speakerNumber;
+            OnAudioVolumeIndication_totalVolume = totalVolume;
         }
 
-        public bool OnAudioVolumeIndication2Passed(RtcConnectionS connectionS, AudioVolumeInfoS[] speakersS, uint speakerNumber, int totalVolume)
+        public bool OnAudioVolumeIndicationPassed(RtcConnectionS connectionS, AudioVolumeInfoS[] speakersS, uint speakerNumber, int totalVolume)
         {
-            if (OnAudioVolumeIndication2_be_trigger == false)
+            if (OnAudioVolumeIndication_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnAudioVolumeIndication2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnAudioVolumeIndication_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<AudioVolumeInfoS[]>(OnAudioVolumeIndication2_speakersS, speakersS) == false)
+            if (ParamsHelper.Compare<AudioVolumeInfoS[]>(OnAudioVolumeIndication_speakersS, speakersS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnAudioVolumeIndication2_speakerNumber, speakerNumber) == false)
+            if (ParamsHelper.Compare<uint>(OnAudioVolumeIndication_speakerNumber, speakerNumber) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnAudioVolumeIndication2_totalVolume, totalVolume) == false)
+            if (ParamsHelper.Compare<int>(OnAudioVolumeIndication_totalVolume, totalVolume) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnLeaveChannel2_be_trigger = false;
-        public RtcConnectionS OnLeaveChannel2_connectionS;
-        public RtcStats OnLeaveChannel2_stats;
+        public bool OnLeaveChannel_be_trigger = false;
+        public RtcConnectionS OnLeaveChannel_connectionS;
+        public RtcStats OnLeaveChannel_stats;
         public override void OnLeaveChannel(RtcConnectionS connectionS, RtcStats stats)
         {
-            OnLeaveChannel2_be_trigger = true;
-            OnLeaveChannel2_connectionS = connectionS;
-            OnLeaveChannel2_stats = stats;
+            OnLeaveChannel_be_trigger = true;
+            OnLeaveChannel_connectionS = connectionS;
+            OnLeaveChannel_stats = stats;
         }
 
-        public bool OnLeaveChannel2Passed(RtcConnectionS connectionS, RtcStats stats)
+        public bool OnLeaveChannelPassed(RtcConnectionS connectionS, RtcStats stats)
         {
-            if (OnLeaveChannel2_be_trigger == false)
+            if (OnLeaveChannel_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnLeaveChannel2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLeaveChannel_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<RtcStats>(OnLeaveChannel2_stats, stats) == false)
+            if (ParamsHelper.Compare<RtcStats>(OnLeaveChannel_stats, stats) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnRtcStats2_be_trigger = false;
-        public RtcConnectionS OnRtcStats2_connectionS;
-        public RtcStats OnRtcStats2_stats;
+        public bool OnRtcStats_be_trigger = false;
+        public RtcConnectionS OnRtcStats_connectionS;
+        public RtcStats OnRtcStats_stats;
         public override void OnRtcStats(RtcConnectionS connectionS, RtcStats stats)
         {
-            OnRtcStats2_be_trigger = true;
-            OnRtcStats2_connectionS = connectionS;
-            OnRtcStats2_stats = stats;
+            OnRtcStats_be_trigger = true;
+            OnRtcStats_connectionS = connectionS;
+            OnRtcStats_stats = stats;
         }
 
-        public bool OnRtcStats2Passed(RtcConnectionS connectionS, RtcStats stats)
+        public bool OnRtcStatsPassed(RtcConnectionS connectionS, RtcStats stats)
         {
-            if (OnRtcStats2_be_trigger == false)
+            if (OnRtcStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnRtcStats2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRtcStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<RtcStats>(OnRtcStats2_stats, stats) == false)
+            if (ParamsHelper.Compare<RtcStats>(OnRtcStats_stats, stats) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnNetworkQuality2_be_trigger = false;
-        public RtcConnectionS OnNetworkQuality2_connectionS;
-        public string OnNetworkQuality2_remoteUserAccount;
-        public int OnNetworkQuality2_txQuality;
-        public int OnNetworkQuality2_rxQuality;
+        public bool OnNetworkQuality_be_trigger = false;
+        public RtcConnectionS OnNetworkQuality_connectionS;
+        public string OnNetworkQuality_remoteUserAccount;
+        public int OnNetworkQuality_txQuality;
+        public int OnNetworkQuality_rxQuality;
         public override void OnNetworkQuality(RtcConnectionS connectionS, string remoteUserAccount, int txQuality, int rxQuality)
         {
-            OnNetworkQuality2_be_trigger = true;
-            OnNetworkQuality2_connectionS = connectionS;
-            OnNetworkQuality2_remoteUserAccount = remoteUserAccount;
-            OnNetworkQuality2_txQuality = txQuality;
-            OnNetworkQuality2_rxQuality = rxQuality;
+            OnNetworkQuality_be_trigger = true;
+            OnNetworkQuality_connectionS = connectionS;
+            OnNetworkQuality_remoteUserAccount = remoteUserAccount;
+            OnNetworkQuality_txQuality = txQuality;
+            OnNetworkQuality_rxQuality = rxQuality;
         }
 
-        public bool OnNetworkQuality2Passed(RtcConnectionS connectionS, string remoteUserAccount, int txQuality, int rxQuality)
+        public bool OnNetworkQualityPassed(RtcConnectionS connectionS, string remoteUserAccount, int txQuality, int rxQuality)
         {
-            if (OnNetworkQuality2_be_trigger == false)
+            if (OnNetworkQuality_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnNetworkQuality2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnNetworkQuality_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnNetworkQuality2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnNetworkQuality_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnNetworkQuality2_txQuality, txQuality) == false)
+            if (ParamsHelper.Compare<int>(OnNetworkQuality_txQuality, txQuality) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnNetworkQuality2_rxQuality, rxQuality) == false)
+            if (ParamsHelper.Compare<int>(OnNetworkQuality_rxQuality, rxQuality) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnIntraRequestReceived2_be_trigger = false;
-        public RtcConnectionS OnIntraRequestReceived2_connectionS;
+        public bool OnIntraRequestReceived_be_trigger = false;
+        public RtcConnectionS OnIntraRequestReceived_connectionS;
         public override void OnIntraRequestReceived(RtcConnectionS connectionS)
         {
-            OnIntraRequestReceived2_be_trigger = true;
-            OnIntraRequestReceived2_connectionS = connectionS;
+            OnIntraRequestReceived_be_trigger = true;
+            OnIntraRequestReceived_connectionS = connectionS;
         }
 
-        public bool OnIntraRequestReceived2Passed(RtcConnectionS connectionS)
+        public bool OnIntraRequestReceivedPassed(RtcConnectionS connectionS)
         {
-            if (OnIntraRequestReceived2_be_trigger == false)
+            if (OnIntraRequestReceived_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnIntraRequestReceived2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnIntraRequestReceived_connectionS, connectionS) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnFirstLocalVideoFramePublished2_be_trigger = false;
-        public RtcConnectionS OnFirstLocalVideoFramePublished2_connectionS;
-        public int OnFirstLocalVideoFramePublished2_elapsed;
+        public bool OnFirstLocalVideoFramePublished_be_trigger = false;
+        public RtcConnectionS OnFirstLocalVideoFramePublished_connectionS;
+        public int OnFirstLocalVideoFramePublished_elapsed;
         public override void OnFirstLocalVideoFramePublished(RtcConnectionS connectionS, int elapsed)
         {
-            OnFirstLocalVideoFramePublished2_be_trigger = true;
-            OnFirstLocalVideoFramePublished2_connectionS = connectionS;
-            OnFirstLocalVideoFramePublished2_elapsed = elapsed;
+            OnFirstLocalVideoFramePublished_be_trigger = true;
+            OnFirstLocalVideoFramePublished_connectionS = connectionS;
+            OnFirstLocalVideoFramePublished_elapsed = elapsed;
         }
 
-        public bool OnFirstLocalVideoFramePublished2Passed(RtcConnectionS connectionS, int elapsed)
+        public bool OnFirstLocalVideoFramePublishedPassed(RtcConnectionS connectionS, int elapsed)
         {
-            if (OnFirstLocalVideoFramePublished2_be_trigger == false)
+            if (OnFirstLocalVideoFramePublished_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstLocalVideoFramePublished2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstLocalVideoFramePublished_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnFirstLocalVideoFramePublished2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnFirstLocalVideoFramePublished_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnFirstRemoteVideoDecoded2_be_trigger = false;
-        public RtcConnectionS OnFirstRemoteVideoDecoded2_connectionS;
-        public string OnFirstRemoteVideoDecoded2_remoteUserAccount;
-        public int OnFirstRemoteVideoDecoded2_width;
-        public int OnFirstRemoteVideoDecoded2_height;
-        public int OnFirstRemoteVideoDecoded2_elapsed;
+        public bool OnFirstRemoteVideoDecoded_be_trigger = false;
+        public RtcConnectionS OnFirstRemoteVideoDecoded_connectionS;
+        public string OnFirstRemoteVideoDecoded_remoteUserAccount;
+        public int OnFirstRemoteVideoDecoded_width;
+        public int OnFirstRemoteVideoDecoded_height;
+        public int OnFirstRemoteVideoDecoded_elapsed;
         public override void OnFirstRemoteVideoDecoded(RtcConnectionS connectionS, string remoteUserAccount, int width, int height, int elapsed)
         {
-            OnFirstRemoteVideoDecoded2_be_trigger = true;
-            OnFirstRemoteVideoDecoded2_connectionS = connectionS;
-            OnFirstRemoteVideoDecoded2_remoteUserAccount = remoteUserAccount;
-            OnFirstRemoteVideoDecoded2_width = width;
-            OnFirstRemoteVideoDecoded2_height = height;
-            OnFirstRemoteVideoDecoded2_elapsed = elapsed;
+            OnFirstRemoteVideoDecoded_be_trigger = true;
+            OnFirstRemoteVideoDecoded_connectionS = connectionS;
+            OnFirstRemoteVideoDecoded_remoteUserAccount = remoteUserAccount;
+            OnFirstRemoteVideoDecoded_width = width;
+            OnFirstRemoteVideoDecoded_height = height;
+            OnFirstRemoteVideoDecoded_elapsed = elapsed;
         }
 
-        public bool OnFirstRemoteVideoDecoded2Passed(RtcConnectionS connectionS, string remoteUserAccount, int width, int height, int elapsed)
+        public bool OnFirstRemoteVideoDecodedPassed(RtcConnectionS connectionS, string remoteUserAccount, int width, int height, int elapsed)
         {
-            if (OnFirstRemoteVideoDecoded2_be_trigger == false)
+            if (OnFirstRemoteVideoDecoded_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstRemoteVideoDecoded2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstRemoteVideoDecoded_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnFirstRemoteVideoDecoded2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnFirstRemoteVideoDecoded_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded2_width, width) == false)
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_width, width) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded2_height, height) == false)
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_height, height) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnVideoSizeChanged2_be_trigger = false;
-        public RtcConnectionS OnVideoSizeChanged2_connectionS;
-        public VIDEO_SOURCE_TYPE OnVideoSizeChanged2_sourceType;
-        public string OnVideoSizeChanged2_userAccount;
-        public int OnVideoSizeChanged2_width;
-        public int OnVideoSizeChanged2_height;
-        public int OnVideoSizeChanged2_rotation;
+        public bool OnVideoSizeChanged_be_trigger = false;
+        public RtcConnectionS OnVideoSizeChanged_connectionS;
+        public VIDEO_SOURCE_TYPE OnVideoSizeChanged_sourceType;
+        public string OnVideoSizeChanged_userAccount;
+        public int OnVideoSizeChanged_width;
+        public int OnVideoSizeChanged_height;
+        public int OnVideoSizeChanged_rotation;
         public override void OnVideoSizeChanged(RtcConnectionS connectionS, VIDEO_SOURCE_TYPE sourceType, string userAccount, int width, int height, int rotation)
         {
-            OnVideoSizeChanged2_be_trigger = true;
-            OnVideoSizeChanged2_connectionS = connectionS;
-            OnVideoSizeChanged2_sourceType = sourceType;
-            OnVideoSizeChanged2_userAccount = userAccount;
-            OnVideoSizeChanged2_width = width;
-            OnVideoSizeChanged2_height = height;
-            OnVideoSizeChanged2_rotation = rotation;
+            OnVideoSizeChanged_be_trigger = true;
+            OnVideoSizeChanged_connectionS = connectionS;
+            OnVideoSizeChanged_sourceType = sourceType;
+            OnVideoSizeChanged_userAccount = userAccount;
+            OnVideoSizeChanged_width = width;
+            OnVideoSizeChanged_height = height;
+            OnVideoSizeChanged_rotation = rotation;
         }
 
-        public bool OnVideoSizeChanged2Passed(RtcConnectionS connectionS, VIDEO_SOURCE_TYPE sourceType, string userAccount, int width, int height, int rotation)
+        public bool OnVideoSizeChangedPassed(RtcConnectionS connectionS, VIDEO_SOURCE_TYPE sourceType, string userAccount, int width, int height, int rotation)
         {
-            if (OnVideoSizeChanged2_be_trigger == false)
+            if (OnVideoSizeChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnVideoSizeChanged2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnVideoSizeChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnVideoSizeChanged2_sourceType, sourceType) == false)
+            if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnVideoSizeChanged_sourceType, sourceType) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnVideoSizeChanged2_userAccount, userAccount) == false)
+            if (ParamsHelper.Compare<string>(OnVideoSizeChanged_userAccount, userAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnVideoSizeChanged2_width, width) == false)
+            if (ParamsHelper.Compare<int>(OnVideoSizeChanged_width, width) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnVideoSizeChanged2_height, height) == false)
+            if (ParamsHelper.Compare<int>(OnVideoSizeChanged_height, height) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnVideoSizeChanged2_rotation, rotation) == false)
+            if (ParamsHelper.Compare<int>(OnVideoSizeChanged_rotation, rotation) == false)
                 return false;
             return true;
         }
@@ -2948,926 +2948,926 @@ namespace Agora.Rtc
 
         //////////////////
 
-        public bool OnRemoteVideoStateChanged2_be_trigger = false;
-        public RtcConnectionS OnRemoteVideoStateChanged2_connectionS;
-        public string OnRemoteVideoStateChanged2_userAccount;
-        public REMOTE_VIDEO_STATE OnRemoteVideoStateChanged2_state;
-        public REMOTE_VIDEO_STATE_REASON OnRemoteVideoStateChanged2_reason;
-        public int OnRemoteVideoStateChanged2_elapsed;
+        public bool OnRemoteVideoStateChanged_be_trigger = false;
+        public RtcConnectionS OnRemoteVideoStateChanged_connectionS;
+        public string OnRemoteVideoStateChanged_userAccount;
+        public REMOTE_VIDEO_STATE OnRemoteVideoStateChanged_state;
+        public REMOTE_VIDEO_STATE_REASON OnRemoteVideoStateChanged_reason;
+        public int OnRemoteVideoStateChanged_elapsed;
         public override void OnRemoteVideoStateChanged(RtcConnectionS connectionS, string userAccount, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
-            OnRemoteVideoStateChanged2_be_trigger = true;
-            OnRemoteVideoStateChanged2_connectionS = connectionS;
-            OnRemoteVideoStateChanged2_userAccount = userAccount;
-            OnRemoteVideoStateChanged2_state = state;
-            OnRemoteVideoStateChanged2_reason = reason;
-            OnRemoteVideoStateChanged2_elapsed = elapsed;
+            OnRemoteVideoStateChanged_be_trigger = true;
+            OnRemoteVideoStateChanged_connectionS = connectionS;
+            OnRemoteVideoStateChanged_userAccount = userAccount;
+            OnRemoteVideoStateChanged_state = state;
+            OnRemoteVideoStateChanged_reason = reason;
+            OnRemoteVideoStateChanged_elapsed = elapsed;
         }
 
-        public bool OnRemoteVideoStateChanged2Passed(RtcConnectionS connectionS, string userAccount, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
+        public bool OnRemoteVideoStateChangedPassed(RtcConnectionS connectionS, string userAccount, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
-            if (OnRemoteVideoStateChanged2_be_trigger == false)
+            if (OnRemoteVideoStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteVideoStateChanged2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteVideoStateChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnRemoteVideoStateChanged2_userAccount, userAccount) == false)
+            if (ParamsHelper.Compare<string>(OnRemoteVideoStateChanged_userAccount, userAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<REMOTE_VIDEO_STATE>(OnRemoteVideoStateChanged2_state, state) == false)
+            if (ParamsHelper.Compare<REMOTE_VIDEO_STATE>(OnRemoteVideoStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<REMOTE_VIDEO_STATE_REASON>(OnRemoteVideoStateChanged2_reason, reason) == false)
+            if (ParamsHelper.Compare<REMOTE_VIDEO_STATE_REASON>(OnRemoteVideoStateChanged_reason, reason) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnRemoteVideoStateChanged2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnRemoteVideoStateChanged_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnFirstRemoteVideoFrame2_be_trigger = false;
-        public RtcConnectionS OnFirstRemoteVideoFrame2_connectionS;
-        public string OnFirstRemoteVideoFrame2_userAccount;
-        public int OnFirstRemoteVideoFrame2_width;
-        public int OnFirstRemoteVideoFrame2_height;
-        public int OnFirstRemoteVideoFrame2_elapsed;
+        public bool OnFirstRemoteVideoFrame_be_trigger = false;
+        public RtcConnectionS OnFirstRemoteVideoFrame_connectionS;
+        public string OnFirstRemoteVideoFrame_userAccount;
+        public int OnFirstRemoteVideoFrame_width;
+        public int OnFirstRemoteVideoFrame_height;
+        public int OnFirstRemoteVideoFrame_elapsed;
         public override void OnFirstRemoteVideoFrame(RtcConnectionS connectionS, string userAccount, int width, int height, int elapsed)
         {
-            OnFirstRemoteVideoFrame2_be_trigger = true;
-            OnFirstRemoteVideoFrame2_connectionS = connectionS;
-            OnFirstRemoteVideoFrame2_userAccount = userAccount;
-            OnFirstRemoteVideoFrame2_width = width;
-            OnFirstRemoteVideoFrame2_height = height;
-            OnFirstRemoteVideoFrame2_elapsed = elapsed;
+            OnFirstRemoteVideoFrame_be_trigger = true;
+            OnFirstRemoteVideoFrame_connectionS = connectionS;
+            OnFirstRemoteVideoFrame_userAccount = userAccount;
+            OnFirstRemoteVideoFrame_width = width;
+            OnFirstRemoteVideoFrame_height = height;
+            OnFirstRemoteVideoFrame_elapsed = elapsed;
         }
 
-        public bool OnFirstRemoteVideoFrame2Passed(RtcConnectionS connectionS, string userAccount, int width, int height, int elapsed)
+        public bool OnFirstRemoteVideoFramePassed(RtcConnectionS connectionS, string userAccount, int width, int height, int elapsed)
         {
-            if (OnFirstRemoteVideoFrame2_be_trigger == false)
+            if (OnFirstRemoteVideoFrame_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstRemoteVideoFrame2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstRemoteVideoFrame_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnFirstRemoteVideoFrame2_userAccount, userAccount) == false)
+            if (ParamsHelper.Compare<string>(OnFirstRemoteVideoFrame_userAccount, userAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame2_width, width) == false)
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_width, width) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame2_height, height) == false)
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_height, height) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnUserJoined2_be_trigger = false;
-        public RtcConnectionS OnUserJoined2_connectionS;
-        public string OnUserJoined2_userAccount;
-        public int OnUserJoined2_elapsed;
+        public bool OnUserJoined_be_trigger = false;
+        public RtcConnectionS OnUserJoined_connectionS;
+        public string OnUserJoined_userAccount;
+        public int OnUserJoined_elapsed;
         public override void OnUserJoined(RtcConnectionS connectionS, string userAccount, int elapsed)
         {
-            OnUserJoined2_be_trigger = true;
-            OnUserJoined2_connectionS = connectionS;
-            OnUserJoined2_userAccount = userAccount;
-            OnUserJoined2_elapsed = elapsed;
+            OnUserJoined_be_trigger = true;
+            OnUserJoined_connectionS = connectionS;
+            OnUserJoined_userAccount = userAccount;
+            OnUserJoined_elapsed = elapsed;
         }
 
-        public bool OnUserJoined2Passed(RtcConnectionS connectionS, string userAccount, int elapsed)
+        public bool OnUserJoinedPassed(RtcConnectionS connectionS, string userAccount, int elapsed)
         {
-            if (OnUserJoined2_be_trigger == false)
+            if (OnUserJoined_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnUserJoined2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserJoined_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnUserJoined2_userAccount, userAccount) == false)
+            if (ParamsHelper.Compare<string>(OnUserJoined_userAccount, userAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnUserJoined2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnUserJoined_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnUserOffline2_be_trigger = false;
-        public RtcConnectionS OnUserOffline2_connectionS;
-        public string OnUserOffline2_userAccount;
-        public USER_OFFLINE_REASON_TYPE OnUserOffline2_reason;
+        public bool OnUserOffline_be_trigger = false;
+        public RtcConnectionS OnUserOffline_connectionS;
+        public string OnUserOffline_userAccount;
+        public USER_OFFLINE_REASON_TYPE OnUserOffline_reason;
         public override void OnUserOffline(RtcConnectionS connectionS, string userAccount, USER_OFFLINE_REASON_TYPE reason)
         {
-            OnUserOffline2_be_trigger = true;
-            OnUserOffline2_connectionS = connectionS;
-            OnUserOffline2_userAccount = userAccount;
-            OnUserOffline2_reason = reason;
+            OnUserOffline_be_trigger = true;
+            OnUserOffline_connectionS = connectionS;
+            OnUserOffline_userAccount = userAccount;
+            OnUserOffline_reason = reason;
         }
 
-        public bool OnUserOffline2Passed(RtcConnectionS connectionS, string userAccount, USER_OFFLINE_REASON_TYPE reason)
+        public bool OnUserOfflinePassed(RtcConnectionS connectionS, string userAccount, USER_OFFLINE_REASON_TYPE reason)
         {
-            if (OnUserOffline2_be_trigger == false)
+            if (OnUserOffline_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnUserOffline2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserOffline_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnUserOffline2_userAccount, userAccount) == false)
+            if (ParamsHelper.Compare<string>(OnUserOffline_userAccount, userAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<USER_OFFLINE_REASON_TYPE>(OnUserOffline2_reason, reason) == false)
+            if (ParamsHelper.Compare<USER_OFFLINE_REASON_TYPE>(OnUserOffline_reason, reason) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnUserMuteAudio2_be_trigger = false;
-        public RtcConnectionS OnUserMuteAudio2_connectionS;
-        public string OnUserMuteAudio2_remoteUserAccount;
-        public bool OnUserMuteAudio2_muted;
+        public bool OnUserMuteAudio_be_trigger = false;
+        public RtcConnectionS OnUserMuteAudio_connectionS;
+        public string OnUserMuteAudio_remoteUserAccount;
+        public bool OnUserMuteAudio_muted;
         public override void OnUserMuteAudio(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
         {
-            OnUserMuteAudio2_be_trigger = true;
-            OnUserMuteAudio2_connectionS = connectionS;
-            OnUserMuteAudio2_remoteUserAccount = remoteUserAccount;
-            OnUserMuteAudio2_muted = muted;
+            OnUserMuteAudio_be_trigger = true;
+            OnUserMuteAudio_connectionS = connectionS;
+            OnUserMuteAudio_remoteUserAccount = remoteUserAccount;
+            OnUserMuteAudio_muted = muted;
         }
 
-        public bool OnUserMuteAudio2Passed(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
+        public bool OnUserMuteAudioPassed(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
         {
-            if (OnUserMuteAudio2_be_trigger == false)
+            if (OnUserMuteAudio_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnUserMuteAudio2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserMuteAudio_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnUserMuteAudio2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnUserMuteAudio_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<bool>(OnUserMuteAudio2_muted, muted) == false)
+            if (ParamsHelper.Compare<bool>(OnUserMuteAudio_muted, muted) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnUserMuteVideo2_be_trigger = false;
-        public RtcConnectionS OnUserMuteVideo2_connectionS;
-        public string OnUserMuteVideo2_remoteUserAccount;
-        public bool OnUserMuteVideo2_muted;
+        public bool OnUserMuteVideo_be_trigger = false;
+        public RtcConnectionS OnUserMuteVideo_connectionS;
+        public string OnUserMuteVideo_remoteUserAccount;
+        public bool OnUserMuteVideo_muted;
         public override void OnUserMuteVideo(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
         {
-            OnUserMuteVideo2_be_trigger = true;
-            OnUserMuteVideo2_connectionS = connectionS;
-            OnUserMuteVideo2_remoteUserAccount = remoteUserAccount;
-            OnUserMuteVideo2_muted = muted;
+            OnUserMuteVideo_be_trigger = true;
+            OnUserMuteVideo_connectionS = connectionS;
+            OnUserMuteVideo_remoteUserAccount = remoteUserAccount;
+            OnUserMuteVideo_muted = muted;
         }
 
-        public bool OnUserMuteVideo2Passed(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
+        public bool OnUserMuteVideoPassed(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
         {
-            if (OnUserMuteVideo2_be_trigger == false)
+            if (OnUserMuteVideo_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnUserMuteVideo2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserMuteVideo_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnUserMuteVideo2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnUserMuteVideo_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<bool>(OnUserMuteVideo2_muted, muted) == false)
+            if (ParamsHelper.Compare<bool>(OnUserMuteVideo_muted, muted) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnUserEnableVideo2_be_trigger = false;
-        public RtcConnectionS OnUserEnableVideo2_connectionS;
-        public string OnUserEnableVideo2_remoteUserAccount;
-        public bool OnUserEnableVideo2_enabled;
+        public bool OnUserEnableVideo_be_trigger = false;
+        public RtcConnectionS OnUserEnableVideo_connectionS;
+        public string OnUserEnableVideo_remoteUserAccount;
+        public bool OnUserEnableVideo_enabled;
         public override void OnUserEnableVideo(RtcConnectionS connectionS, string remoteUserAccount, bool enabled)
         {
-            OnUserEnableVideo2_be_trigger = true;
-            OnUserEnableVideo2_connectionS = connectionS;
-            OnUserEnableVideo2_remoteUserAccount = remoteUserAccount;
-            OnUserEnableVideo2_enabled = enabled;
+            OnUserEnableVideo_be_trigger = true;
+            OnUserEnableVideo_connectionS = connectionS;
+            OnUserEnableVideo_remoteUserAccount = remoteUserAccount;
+            OnUserEnableVideo_enabled = enabled;
         }
 
-        public bool OnUserEnableVideo2Passed(RtcConnectionS connectionS, string remoteUserAccount, bool enabled)
+        public bool OnUserEnableVideoPassed(RtcConnectionS connectionS, string remoteUserAccount, bool enabled)
         {
-            if (OnUserEnableVideo2_be_trigger == false)
+            if (OnUserEnableVideo_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnUserEnableVideo2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserEnableVideo_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnUserEnableVideo2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnUserEnableVideo_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<bool>(OnUserEnableVideo2_enabled, enabled) == false)
+            if (ParamsHelper.Compare<bool>(OnUserEnableVideo_enabled, enabled) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnUserStateChanged2_be_trigger = false;
-        public RtcConnectionS OnUserStateChanged2_connectionS;
-        public string OnUserStateChanged2_remoteUserAccount;
-        public uint OnUserStateChanged2_state;
+        public bool OnUserStateChanged_be_trigger = false;
+        public RtcConnectionS OnUserStateChanged_connectionS;
+        public string OnUserStateChanged_remoteUserAccount;
+        public uint OnUserStateChanged_state;
         public override void OnUserStateChanged(RtcConnectionS connectionS, string remoteUserAccount, uint state)
         {
-            OnUserStateChanged2_be_trigger = true;
-            OnUserStateChanged2_connectionS = connectionS;
-            OnUserStateChanged2_remoteUserAccount = remoteUserAccount;
-            OnUserStateChanged2_state = state;
+            OnUserStateChanged_be_trigger = true;
+            OnUserStateChanged_connectionS = connectionS;
+            OnUserStateChanged_remoteUserAccount = remoteUserAccount;
+            OnUserStateChanged_state = state;
         }
 
-        public bool OnUserStateChanged2Passed(RtcConnectionS connectionS, string remoteUserAccount, uint state)
+        public bool OnUserStateChangedPassed(RtcConnectionS connectionS, string remoteUserAccount, uint state)
         {
-            if (OnUserStateChanged2_be_trigger == false)
+            if (OnUserStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnUserStateChanged2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserStateChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnUserStateChanged2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnUserStateChanged_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnUserStateChanged2_state, state) == false)
+            if (ParamsHelper.Compare<uint>(OnUserStateChanged_state, state) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnLocalAudioStats2_be_trigger = false;
-        public RtcConnectionS OnLocalAudioStats2_connectionS;
-        public LocalAudioStats OnLocalAudioStats2_stats;
+        public bool OnLocalAudioStats_be_trigger = false;
+        public RtcConnectionS OnLocalAudioStats_connectionS;
+        public LocalAudioStats OnLocalAudioStats_stats;
         public override void OnLocalAudioStats(RtcConnectionS connectionS, LocalAudioStats stats)
         {
-            OnLocalAudioStats2_be_trigger = true;
-            OnLocalAudioStats2_connectionS = connectionS;
-            OnLocalAudioStats2_stats = stats;
+            OnLocalAudioStats_be_trigger = true;
+            OnLocalAudioStats_connectionS = connectionS;
+            OnLocalAudioStats_stats = stats;
         }
 
-        public bool OnLocalAudioStats2Passed(RtcConnectionS connectionS, LocalAudioStats stats)
+        public bool OnLocalAudioStatsPassed(RtcConnectionS connectionS, LocalAudioStats stats)
         {
-            if (OnLocalAudioStats2_be_trigger == false)
+            if (OnLocalAudioStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalAudioStats2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalAudioStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<LocalAudioStats>(OnLocalAudioStats2_stats, stats) == false)
+            if (ParamsHelper.Compare<LocalAudioStats>(OnLocalAudioStats_stats, stats) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnRemoteAudioStats2_be_trigger = false;
-        public RtcConnectionS OnRemoteAudioStats2_connectionS;
-        public RemoteAudioStatsS OnRemoteAudioStats2_statsS;
+        public bool OnRemoteAudioStats_be_trigger = false;
+        public RtcConnectionS OnRemoteAudioStats_connectionS;
+        public RemoteAudioStatsS OnRemoteAudioStats_statsS;
         public override void OnRemoteAudioStats(RtcConnectionS connectionS, RemoteAudioStatsS statsS)
         {
-            OnRemoteAudioStats2_be_trigger = true;
-            OnRemoteAudioStats2_connectionS = connectionS;
-            OnRemoteAudioStats2_statsS = statsS;
+            OnRemoteAudioStats_be_trigger = true;
+            OnRemoteAudioStats_connectionS = connectionS;
+            OnRemoteAudioStats_statsS = statsS;
         }
 
-        public bool OnRemoteAudioStats2Passed(RtcConnectionS connectionS, RemoteAudioStatsS statsS)
+        public bool OnRemoteAudioStatsPassed(RtcConnectionS connectionS, RemoteAudioStatsS statsS)
         {
-            if (OnRemoteAudioStats2_be_trigger == false)
+            if (OnRemoteAudioStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteAudioStats2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteAudioStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<RemoteAudioStatsS>(OnRemoteAudioStats2_statsS, statsS) == false)
+            if (ParamsHelper.Compare<RemoteAudioStatsS>(OnRemoteAudioStats_statsS, statsS) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnLocalVideoStats2_be_trigger = false;
-        public RtcConnectionS OnLocalVideoStats2_connectionS;
-        public LocalVideoStatsS OnLocalVideoStats2_statsS;
+        public bool OnLocalVideoStats_be_trigger = false;
+        public RtcConnectionS OnLocalVideoStats_connectionS;
+        public LocalVideoStatsS OnLocalVideoStats_statsS;
         public override void OnLocalVideoStats(RtcConnectionS connectionS, LocalVideoStatsS statsS)
         {
-            OnLocalVideoStats2_be_trigger = true;
-            OnLocalVideoStats2_connectionS = connectionS;
-            OnLocalVideoStats2_statsS = statsS;
+            OnLocalVideoStats_be_trigger = true;
+            OnLocalVideoStats_connectionS = connectionS;
+            OnLocalVideoStats_statsS = statsS;
         }
 
-        public bool OnLocalVideoStats2Passed(RtcConnectionS connectionS, LocalVideoStatsS statsS)
+        public bool OnLocalVideoStatsPassed(RtcConnectionS connectionS, LocalVideoStatsS statsS)
         {
-            if (OnLocalVideoStats2_be_trigger == false)
+            if (OnLocalVideoStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalVideoStats2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalVideoStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<LocalVideoStatsS>(OnLocalVideoStats2_statsS, statsS) == false)
+            if (ParamsHelper.Compare<LocalVideoStatsS>(OnLocalVideoStats_statsS, statsS) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnRemoteVideoStats2_be_trigger = false;
-        public RtcConnectionS OnRemoteVideoStats2_connectionS;
-        public RemoteVideoStatsS OnRemoteVideoStats2_statsS;
+        public bool OnRemoteVideoStats_be_trigger = false;
+        public RtcConnectionS OnRemoteVideoStats_connectionS;
+        public RemoteVideoStatsS OnRemoteVideoStats_statsS;
         public override void OnRemoteVideoStats(RtcConnectionS connectionS, RemoteVideoStatsS statsS)
         {
-            OnRemoteVideoStats2_be_trigger = true;
-            OnRemoteVideoStats2_connectionS = connectionS;
-            OnRemoteVideoStats2_statsS = statsS;
+            OnRemoteVideoStats_be_trigger = true;
+            OnRemoteVideoStats_connectionS = connectionS;
+            OnRemoteVideoStats_statsS = statsS;
         }
 
-        public bool OnRemoteVideoStats2Passed(RtcConnectionS connectionS, RemoteVideoStatsS statsS)
+        public bool OnRemoteVideoStatsPassed(RtcConnectionS connectionS, RemoteVideoStatsS statsS)
         {
-            if (OnRemoteVideoStats2_be_trigger == false)
+            if (OnRemoteVideoStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteVideoStats2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteVideoStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<RemoteVideoStatsS>(OnRemoteVideoStats2_statsS, statsS) == false)
+            if (ParamsHelper.Compare<RemoteVideoStatsS>(OnRemoteVideoStats_statsS, statsS) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnConnectionLost2_be_trigger = false;
-        public RtcConnectionS OnConnectionLost2_connectionS;
+        public bool OnConnectionLost_be_trigger = false;
+        public RtcConnectionS OnConnectionLost_connectionS;
         public override void OnConnectionLost(RtcConnectionS connectionS)
         {
-            OnConnectionLost2_be_trigger = true;
-            OnConnectionLost2_connectionS = connectionS;
+            OnConnectionLost_be_trigger = true;
+            OnConnectionLost_connectionS = connectionS;
         }
 
-        public bool OnConnectionLost2Passed(RtcConnectionS connectionS)
+        public bool OnConnectionLostPassed(RtcConnectionS connectionS)
         {
-            if (OnConnectionLost2_be_trigger == false)
+            if (OnConnectionLost_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionLost2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionLost_connectionS, connectionS) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnConnectionBanned2_be_trigger = false;
-        public RtcConnectionS OnConnectionBanned2_connectionS;
+        public bool OnConnectionBanned_be_trigger = false;
+        public RtcConnectionS OnConnectionBanned_connectionS;
         public override void OnConnectionBanned(RtcConnectionS connectionS)
         {
-            OnConnectionBanned2_be_trigger = true;
-            OnConnectionBanned2_connectionS = connectionS;
+            OnConnectionBanned_be_trigger = true;
+            OnConnectionBanned_connectionS = connectionS;
         }
 
-        public bool OnConnectionBanned2Passed(RtcConnectionS connectionS)
+        public bool OnConnectionBannedPassed(RtcConnectionS connectionS)
         {
-            if (OnConnectionBanned2_be_trigger == false)
+            if (OnConnectionBanned_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionBanned2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionBanned_connectionS, connectionS) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnStreamMessage2_be_trigger = false;
-        public RtcConnectionS OnStreamMessage2_connectionS;
-        public string OnStreamMessage2_remoteUserAccount;
-        public int OnStreamMessage2_streamId;
-        public byte[] OnStreamMessage2_data;
-        public ulong OnStreamMessage2_length;
-        public ulong OnStreamMessage2_sentTs;
+        public bool OnStreamMessage_be_trigger = false;
+        public RtcConnectionS OnStreamMessage_connectionS;
+        public string OnStreamMessage_remoteUserAccount;
+        public int OnStreamMessage_streamId;
+        public byte[] OnStreamMessage_data;
+        public ulong OnStreamMessage_length;
+        public ulong OnStreamMessage_sentTs;
         public override void OnStreamMessage(RtcConnectionS connectionS, string remoteUserAccount, int streamId, byte[] data, ulong length, ulong sentTs)
         {
-            OnStreamMessage2_be_trigger = true;
-            OnStreamMessage2_connectionS = connectionS;
-            OnStreamMessage2_remoteUserAccount = remoteUserAccount;
-            OnStreamMessage2_streamId = streamId;
-            OnStreamMessage2_data = data;
-            OnStreamMessage2_length = length;
-            OnStreamMessage2_sentTs = sentTs;
+            OnStreamMessage_be_trigger = true;
+            OnStreamMessage_connectionS = connectionS;
+            OnStreamMessage_remoteUserAccount = remoteUserAccount;
+            OnStreamMessage_streamId = streamId;
+            OnStreamMessage_data = data;
+            OnStreamMessage_length = length;
+            OnStreamMessage_sentTs = sentTs;
         }
 
-        public bool OnStreamMessage2Passed(RtcConnectionS connectionS, string remoteUserAccount, int streamId, byte[] data, ulong length, ulong sentTs)
+        public bool OnStreamMessagePassed(RtcConnectionS connectionS, string remoteUserAccount, int streamId, byte[] data, ulong length, ulong sentTs)
         {
-            if (OnStreamMessage2_be_trigger == false)
+            if (OnStreamMessage_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnStreamMessage2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnStreamMessage_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnStreamMessage2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnStreamMessage_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnStreamMessage2_streamId, streamId) == false)
+            if (ParamsHelper.Compare<int>(OnStreamMessage_streamId, streamId) == false)
                 return false;
-            if (ParamsHelper.Compare<byte[]>(OnStreamMessage2_data, data) == false)
+            if (ParamsHelper.Compare<byte[]>(OnStreamMessage_data, data) == false)
                 return false;
-            if (ParamsHelper.Compare<ulong>(OnStreamMessage2_length, length) == false)
+            if (ParamsHelper.Compare<ulong>(OnStreamMessage_length, length) == false)
                 return false;
-            if (ParamsHelper.Compare<ulong>(OnStreamMessage2_sentTs, sentTs) == false)
+            if (ParamsHelper.Compare<ulong>(OnStreamMessage_sentTs, sentTs) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnStreamMessageError2_be_trigger = false;
-        public RtcConnectionS OnStreamMessageError2_connectionS;
-        public string OnStreamMessageError2_remoteUserAccount;
-        public int OnStreamMessageError2_streamId;
-        public int OnStreamMessageError2_code;
-        public int OnStreamMessageError2_missed;
-        public int OnStreamMessageError2_cached;
+        public bool OnStreamMessageError_be_trigger = false;
+        public RtcConnectionS OnStreamMessageError_connectionS;
+        public string OnStreamMessageError_remoteUserAccount;
+        public int OnStreamMessageError_streamId;
+        public int OnStreamMessageError_code;
+        public int OnStreamMessageError_missed;
+        public int OnStreamMessageError_cached;
         public override void OnStreamMessageError(RtcConnectionS connectionS, string remoteUserAccount, int streamId, int code, int missed, int cached)
         {
-            OnStreamMessageError2_be_trigger = true;
-            OnStreamMessageError2_connectionS = connectionS;
-            OnStreamMessageError2_remoteUserAccount = remoteUserAccount;
-            OnStreamMessageError2_streamId = streamId;
-            OnStreamMessageError2_code = code;
-            OnStreamMessageError2_missed = missed;
-            OnStreamMessageError2_cached = cached;
+            OnStreamMessageError_be_trigger = true;
+            OnStreamMessageError_connectionS = connectionS;
+            OnStreamMessageError_remoteUserAccount = remoteUserAccount;
+            OnStreamMessageError_streamId = streamId;
+            OnStreamMessageError_code = code;
+            OnStreamMessageError_missed = missed;
+            OnStreamMessageError_cached = cached;
         }
 
-        public bool OnStreamMessageError2Passed(RtcConnectionS connectionS, string remoteUserAccount, int streamId, int code, int missed, int cached)
+        public bool OnStreamMessageErrorPassed(RtcConnectionS connectionS, string remoteUserAccount, int streamId, int code, int missed, int cached)
         {
-            if (OnStreamMessageError2_be_trigger == false)
+            if (OnStreamMessageError_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnStreamMessageError2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnStreamMessageError_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnStreamMessageError2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnStreamMessageError_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnStreamMessageError2_streamId, streamId) == false)
+            if (ParamsHelper.Compare<int>(OnStreamMessageError_streamId, streamId) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnStreamMessageError2_code, code) == false)
+            if (ParamsHelper.Compare<int>(OnStreamMessageError_code, code) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnStreamMessageError2_missed, missed) == false)
+            if (ParamsHelper.Compare<int>(OnStreamMessageError_missed, missed) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnStreamMessageError2_cached, cached) == false)
+            if (ParamsHelper.Compare<int>(OnStreamMessageError_cached, cached) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnRequestToken2_be_trigger = false;
-        public RtcConnectionS OnRequestToken2_connectionS;
+        public bool OnRequestToken_be_trigger = false;
+        public RtcConnectionS OnRequestToken_connectionS;
         public override void OnRequestToken(RtcConnectionS connectionS)
         {
-            OnRequestToken2_be_trigger = true;
-            OnRequestToken2_connectionS = connectionS;
+            OnRequestToken_be_trigger = true;
+            OnRequestToken_connectionS = connectionS;
         }
 
-        public bool OnRequestToken2Passed(RtcConnectionS connectionS)
+        public bool OnRequestTokenPassed(RtcConnectionS connectionS)
         {
-            if (OnRequestToken2_be_trigger == false)
+            if (OnRequestToken_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnRequestToken2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRequestToken_connectionS, connectionS) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnLicenseValidationFailure2_be_trigger = false;
-        public RtcConnectionS OnLicenseValidationFailure2_connectionS;
-        public LICENSE_ERROR_TYPE OnLicenseValidationFailure2_reason;
+        public bool OnLicenseValidationFailure_be_trigger = false;
+        public RtcConnectionS OnLicenseValidationFailure_connectionS;
+        public LICENSE_ERROR_TYPE OnLicenseValidationFailure_reason;
         public override void OnLicenseValidationFailure(RtcConnectionS connectionS, LICENSE_ERROR_TYPE reason)
         {
-            OnLicenseValidationFailure2_be_trigger = true;
-            OnLicenseValidationFailure2_connectionS = connectionS;
-            OnLicenseValidationFailure2_reason = reason;
+            OnLicenseValidationFailure_be_trigger = true;
+            OnLicenseValidationFailure_connectionS = connectionS;
+            OnLicenseValidationFailure_reason = reason;
         }
 
-        public bool OnLicenseValidationFailure2Passed(RtcConnectionS connectionS, LICENSE_ERROR_TYPE reason)
+        public bool OnLicenseValidationFailurePassed(RtcConnectionS connectionS, LICENSE_ERROR_TYPE reason)
         {
-            if (OnLicenseValidationFailure2_be_trigger == false)
+            if (OnLicenseValidationFailure_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnLicenseValidationFailure2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLicenseValidationFailure_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<LICENSE_ERROR_TYPE>(OnLicenseValidationFailure2_reason, reason) == false)
+            if (ParamsHelper.Compare<LICENSE_ERROR_TYPE>(OnLicenseValidationFailure_reason, reason) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnTokenPrivilegeWillExpire2_be_trigger = false;
-        public RtcConnectionS OnTokenPrivilegeWillExpire2_connectionS;
-        public string OnTokenPrivilegeWillExpire2_token;
+        public bool OnTokenPrivilegeWillExpire_be_trigger = false;
+        public RtcConnectionS OnTokenPrivilegeWillExpire_connectionS;
+        public string OnTokenPrivilegeWillExpire_token;
         public override void OnTokenPrivilegeWillExpire(RtcConnectionS connectionS, string token)
         {
-            OnTokenPrivilegeWillExpire2_be_trigger = true;
-            OnTokenPrivilegeWillExpire2_connectionS = connectionS;
-            OnTokenPrivilegeWillExpire2_token = token;
+            OnTokenPrivilegeWillExpire_be_trigger = true;
+            OnTokenPrivilegeWillExpire_connectionS = connectionS;
+            OnTokenPrivilegeWillExpire_token = token;
         }
 
-        public bool OnTokenPrivilegeWillExpire2Passed(RtcConnectionS connectionS, string token)
+        public bool OnTokenPrivilegeWillExpirePassed(RtcConnectionS connectionS, string token)
         {
-            if (OnTokenPrivilegeWillExpire2_be_trigger == false)
+            if (OnTokenPrivilegeWillExpire_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnTokenPrivilegeWillExpire2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnTokenPrivilegeWillExpire_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnTokenPrivilegeWillExpire2_token, token) == false)
+            if (ParamsHelper.Compare<string>(OnTokenPrivilegeWillExpire_token, token) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnFirstLocalAudioFramePublished2_be_trigger = false;
-        public RtcConnectionS OnFirstLocalAudioFramePublished2_connectionS;
-        public int OnFirstLocalAudioFramePublished2_elapsed;
+        public bool OnFirstLocalAudioFramePublished_be_trigger = false;
+        public RtcConnectionS OnFirstLocalAudioFramePublished_connectionS;
+        public int OnFirstLocalAudioFramePublished_elapsed;
         public override void OnFirstLocalAudioFramePublished(RtcConnectionS connectionS, int elapsed)
         {
-            OnFirstLocalAudioFramePublished2_be_trigger = true;
-            OnFirstLocalAudioFramePublished2_connectionS = connectionS;
-            OnFirstLocalAudioFramePublished2_elapsed = elapsed;
+            OnFirstLocalAudioFramePublished_be_trigger = true;
+            OnFirstLocalAudioFramePublished_connectionS = connectionS;
+            OnFirstLocalAudioFramePublished_elapsed = elapsed;
         }
 
-        public bool OnFirstLocalAudioFramePublished2Passed(RtcConnectionS connectionS, int elapsed)
+        public bool OnFirstLocalAudioFramePublishedPassed(RtcConnectionS connectionS, int elapsed)
         {
-            if (OnFirstLocalAudioFramePublished2_be_trigger == false)
+            if (OnFirstLocalAudioFramePublished_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstLocalAudioFramePublished2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstLocalAudioFramePublished_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnFirstLocalAudioFramePublished2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnFirstLocalAudioFramePublished_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnLocalAudioStateChanged2_be_trigger = false;
-        public RtcConnectionS OnLocalAudioStateChanged2_connectionS;
-        public LOCAL_AUDIO_STREAM_STATE OnLocalAudioStateChanged2_state;
-        public LOCAL_AUDIO_STREAM_ERROR OnLocalAudioStateChanged2_error;
+        public bool OnLocalAudioStateChanged_be_trigger = false;
+        public RtcConnectionS OnLocalAudioStateChanged_connectionS;
+        public LOCAL_AUDIO_STREAM_STATE OnLocalAudioStateChanged_state;
+        public LOCAL_AUDIO_STREAM_ERROR OnLocalAudioStateChanged_error;
         public override void OnLocalAudioStateChanged(RtcConnectionS connectionS, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
         {
-            OnLocalAudioStateChanged2_be_trigger = true;
-            OnLocalAudioStateChanged2_connectionS = connectionS;
-            OnLocalAudioStateChanged2_state = state;
-            OnLocalAudioStateChanged2_error = error;
+            OnLocalAudioStateChanged_be_trigger = true;
+            OnLocalAudioStateChanged_connectionS = connectionS;
+            OnLocalAudioStateChanged_state = state;
+            OnLocalAudioStateChanged_error = error;
         }
 
-        public bool OnLocalAudioStateChanged2Passed(RtcConnectionS connectionS, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
+        public bool OnLocalAudioStateChangedPassed(RtcConnectionS connectionS, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
         {
-            if (OnLocalAudioStateChanged2_be_trigger == false)
+            if (OnLocalAudioStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalAudioStateChanged2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalAudioStateChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_STATE>(OnLocalAudioStateChanged2_state, state) == false)
+            if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_STATE>(OnLocalAudioStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_ERROR>(OnLocalAudioStateChanged2_error, error) == false)
+            if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_ERROR>(OnLocalAudioStateChanged_error, error) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnRemoteAudioStateChanged2_be_trigger = false;
-        public RtcConnectionS OnRemoteAudioStateChanged2_connectionS;
-        public string OnRemoteAudioStateChanged2_remoteUserAccount;
-        public REMOTE_AUDIO_STATE OnRemoteAudioStateChanged2_state;
-        public REMOTE_AUDIO_STATE_REASON OnRemoteAudioStateChanged2_reason;
-        public int OnRemoteAudioStateChanged2_elapsed;
+        public bool OnRemoteAudioStateChanged_be_trigger = false;
+        public RtcConnectionS OnRemoteAudioStateChanged_connectionS;
+        public string OnRemoteAudioStateChanged_remoteUserAccount;
+        public REMOTE_AUDIO_STATE OnRemoteAudioStateChanged_state;
+        public REMOTE_AUDIO_STATE_REASON OnRemoteAudioStateChanged_reason;
+        public int OnRemoteAudioStateChanged_elapsed;
         public override void OnRemoteAudioStateChanged(RtcConnectionS connectionS, string remoteUserAccount, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
         {
-            OnRemoteAudioStateChanged2_be_trigger = true;
-            OnRemoteAudioStateChanged2_connectionS = connectionS;
-            OnRemoteAudioStateChanged2_remoteUserAccount = remoteUserAccount;
-            OnRemoteAudioStateChanged2_state = state;
-            OnRemoteAudioStateChanged2_reason = reason;
-            OnRemoteAudioStateChanged2_elapsed = elapsed;
+            OnRemoteAudioStateChanged_be_trigger = true;
+            OnRemoteAudioStateChanged_connectionS = connectionS;
+            OnRemoteAudioStateChanged_remoteUserAccount = remoteUserAccount;
+            OnRemoteAudioStateChanged_state = state;
+            OnRemoteAudioStateChanged_reason = reason;
+            OnRemoteAudioStateChanged_elapsed = elapsed;
         }
 
-        public bool OnRemoteAudioStateChanged2Passed(RtcConnectionS connectionS, string remoteUserAccount, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
+        public bool OnRemoteAudioStateChangedPassed(RtcConnectionS connectionS, string remoteUserAccount, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
         {
-            if (OnRemoteAudioStateChanged2_be_trigger == false)
+            if (OnRemoteAudioStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteAudioStateChanged2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteAudioStateChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnRemoteAudioStateChanged2_remoteUserAccount, remoteUserAccount) == false)
+            if (ParamsHelper.Compare<string>(OnRemoteAudioStateChanged_remoteUserAccount, remoteUserAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<REMOTE_AUDIO_STATE>(OnRemoteAudioStateChanged2_state, state) == false)
+            if (ParamsHelper.Compare<REMOTE_AUDIO_STATE>(OnRemoteAudioStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<REMOTE_AUDIO_STATE_REASON>(OnRemoteAudioStateChanged2_reason, reason) == false)
+            if (ParamsHelper.Compare<REMOTE_AUDIO_STATE_REASON>(OnRemoteAudioStateChanged_reason, reason) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnRemoteAudioStateChanged2_elapsed, elapsed) == false)
+            if (ParamsHelper.Compare<int>(OnRemoteAudioStateChanged_elapsed, elapsed) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnActiveSpeaker2_be_trigger = false;
-        public RtcConnectionS OnActiveSpeaker2_connectionS;
-        public string OnActiveSpeaker2_userAccount;
+        public bool OnActiveSpeaker_be_trigger = false;
+        public RtcConnectionS OnActiveSpeaker_connectionS;
+        public string OnActiveSpeaker_userAccount;
         public override void OnActiveSpeaker(RtcConnectionS connectionS, string userAccount)
         {
-            OnActiveSpeaker2_be_trigger = true;
-            OnActiveSpeaker2_connectionS = connectionS;
-            OnActiveSpeaker2_userAccount = userAccount;
+            OnActiveSpeaker_be_trigger = true;
+            OnActiveSpeaker_connectionS = connectionS;
+            OnActiveSpeaker_userAccount = userAccount;
         }
 
-        public bool OnActiveSpeaker2Passed(RtcConnectionS connectionS, string userAccount)
+        public bool OnActiveSpeakerPassed(RtcConnectionS connectionS, string userAccount)
         {
-            if (OnActiveSpeaker2_be_trigger == false)
+            if (OnActiveSpeaker_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnActiveSpeaker2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnActiveSpeaker_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnActiveSpeaker2_userAccount, userAccount) == false)
+            if (ParamsHelper.Compare<string>(OnActiveSpeaker_userAccount, userAccount) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnClientRoleChanged2_be_trigger = false;
-        public RtcConnectionS OnClientRoleChanged2_connectionS;
-        public CLIENT_ROLE_TYPE OnClientRoleChanged2_oldRole;
-        public CLIENT_ROLE_TYPE OnClientRoleChanged2_newRole;
-        public ClientRoleOptions OnClientRoleChanged2_newRoleOptions;
+        public bool OnClientRoleChanged_be_trigger = false;
+        public RtcConnectionS OnClientRoleChanged_connectionS;
+        public CLIENT_ROLE_TYPE OnClientRoleChanged_oldRole;
+        public CLIENT_ROLE_TYPE OnClientRoleChanged_newRole;
+        public ClientRoleOptions OnClientRoleChanged_newRoleOptions;
         public override void OnClientRoleChanged(RtcConnectionS connectionS, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
         {
-            OnClientRoleChanged2_be_trigger = true;
-            OnClientRoleChanged2_connectionS = connectionS;
-            OnClientRoleChanged2_oldRole = oldRole;
-            OnClientRoleChanged2_newRole = newRole;
-            OnClientRoleChanged2_newRoleOptions = newRoleOptions;
+            OnClientRoleChanged_be_trigger = true;
+            OnClientRoleChanged_connectionS = connectionS;
+            OnClientRoleChanged_oldRole = oldRole;
+            OnClientRoleChanged_newRole = newRole;
+            OnClientRoleChanged_newRoleOptions = newRoleOptions;
         }
 
-        public bool OnClientRoleChanged2Passed(RtcConnectionS connectionS, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
+        public bool OnClientRoleChangedPassed(RtcConnectionS connectionS, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
         {
-            if (OnClientRoleChanged2_be_trigger == false)
+            if (OnClientRoleChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnClientRoleChanged2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnClientRoleChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged2_oldRole, oldRole) == false)
+            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged_oldRole, oldRole) == false)
                 return false;
-            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged2_newRole, newRole) == false)
+            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged_newRole, newRole) == false)
                 return false;
-            if (ParamsHelper.Compare<ClientRoleOptions>(OnClientRoleChanged2_newRoleOptions, newRoleOptions) == false)
+            if (ParamsHelper.Compare<ClientRoleOptions>(OnClientRoleChanged_newRoleOptions, newRoleOptions) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnClientRoleChangeFailed2_be_trigger = false;
-        public RtcConnectionS OnClientRoleChangeFailed2_connectionS;
-        public CLIENT_ROLE_CHANGE_FAILED_REASON OnClientRoleChangeFailed2_reason;
-        public CLIENT_ROLE_TYPE OnClientRoleChangeFailed2_currentRole;
+        public bool OnClientRoleChangeFailed_be_trigger = false;
+        public RtcConnectionS OnClientRoleChangeFailed_connectionS;
+        public CLIENT_ROLE_CHANGE_FAILED_REASON OnClientRoleChangeFailed_reason;
+        public CLIENT_ROLE_TYPE OnClientRoleChangeFailed_currentRole;
         public override void OnClientRoleChangeFailed(RtcConnectionS connectionS, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
         {
-            OnClientRoleChangeFailed2_be_trigger = true;
-            OnClientRoleChangeFailed2_connectionS = connectionS;
-            OnClientRoleChangeFailed2_reason = reason;
-            OnClientRoleChangeFailed2_currentRole = currentRole;
+            OnClientRoleChangeFailed_be_trigger = true;
+            OnClientRoleChangeFailed_connectionS = connectionS;
+            OnClientRoleChangeFailed_reason = reason;
+            OnClientRoleChangeFailed_currentRole = currentRole;
         }
 
-        public bool OnClientRoleChangeFailed2Passed(RtcConnectionS connectionS, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
+        public bool OnClientRoleChangeFailedPassed(RtcConnectionS connectionS, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
         {
-            if (OnClientRoleChangeFailed2_be_trigger == false)
+            if (OnClientRoleChangeFailed_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnClientRoleChangeFailed2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnClientRoleChangeFailed_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<CLIENT_ROLE_CHANGE_FAILED_REASON>(OnClientRoleChangeFailed2_reason, reason) == false)
+            if (ParamsHelper.Compare<CLIENT_ROLE_CHANGE_FAILED_REASON>(OnClientRoleChangeFailed_reason, reason) == false)
                 return false;
-            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChangeFailed2_currentRole, currentRole) == false)
+            if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChangeFailed_currentRole, currentRole) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnConnectionStateChanged2_be_trigger = false;
-        public RtcConnectionS OnConnectionStateChanged2_connectionS;
-        public CONNECTION_STATE_TYPE OnConnectionStateChanged2_state;
-        public CONNECTION_CHANGED_REASON_TYPE OnConnectionStateChanged2_reason;
+        public bool OnConnectionStateChanged_be_trigger = false;
+        public RtcConnectionS OnConnectionStateChanged_connectionS;
+        public CONNECTION_STATE_TYPE OnConnectionStateChanged_state;
+        public CONNECTION_CHANGED_REASON_TYPE OnConnectionStateChanged_reason;
         public override void OnConnectionStateChanged(RtcConnectionS connectionS, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
         {
-            OnConnectionStateChanged2_be_trigger = true;
-            OnConnectionStateChanged2_connectionS = connectionS;
-            OnConnectionStateChanged2_state = state;
-            OnConnectionStateChanged2_reason = reason;
+            OnConnectionStateChanged_be_trigger = true;
+            OnConnectionStateChanged_connectionS = connectionS;
+            OnConnectionStateChanged_state = state;
+            OnConnectionStateChanged_reason = reason;
         }
 
-        public bool OnConnectionStateChanged2Passed(RtcConnectionS connectionS, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
+        public bool OnConnectionStateChangedPassed(RtcConnectionS connectionS, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
         {
-            if (OnConnectionStateChanged2_be_trigger == false)
+            if (OnConnectionStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionStateChanged2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionStateChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<CONNECTION_STATE_TYPE>(OnConnectionStateChanged2_state, state) == false)
+            if (ParamsHelper.Compare<CONNECTION_STATE_TYPE>(OnConnectionStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<CONNECTION_CHANGED_REASON_TYPE>(OnConnectionStateChanged2_reason, reason) == false)
+            if (ParamsHelper.Compare<CONNECTION_CHANGED_REASON_TYPE>(OnConnectionStateChanged_reason, reason) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnWlAccMessage2_be_trigger = false;
-        public RtcConnectionS OnWlAccMessage2_connectionS;
-        public WLACC_MESSAGE_REASON OnWlAccMessage2_reason;
-        public WLACC_SUGGEST_ACTION OnWlAccMessage2_action;
-        public string OnWlAccMessage2_wlAccMsg;
+        public bool OnWlAccMessage_be_trigger = false;
+        public RtcConnectionS OnWlAccMessage_connectionS;
+        public WLACC_MESSAGE_REASON OnWlAccMessage_reason;
+        public WLACC_SUGGEST_ACTION OnWlAccMessage_action;
+        public string OnWlAccMessage_wlAccMsg;
         public override void OnWlAccMessage(RtcConnectionS connectionS, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
         {
-            OnWlAccMessage2_be_trigger = true;
-            OnWlAccMessage2_connectionS = connectionS;
-            OnWlAccMessage2_reason = reason;
-            OnWlAccMessage2_action = action;
-            OnWlAccMessage2_wlAccMsg = wlAccMsg;
+            OnWlAccMessage_be_trigger = true;
+            OnWlAccMessage_connectionS = connectionS;
+            OnWlAccMessage_reason = reason;
+            OnWlAccMessage_action = action;
+            OnWlAccMessage_wlAccMsg = wlAccMsg;
         }
 
-        public bool OnWlAccMessage2Passed(RtcConnectionS connectionS, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
+        public bool OnWlAccMessagePassed(RtcConnectionS connectionS, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
         {
-            if (OnWlAccMessage2_be_trigger == false)
+            if (OnWlAccMessage_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnWlAccMessage2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnWlAccMessage_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<WLACC_MESSAGE_REASON>(OnWlAccMessage2_reason, reason) == false)
+            if (ParamsHelper.Compare<WLACC_MESSAGE_REASON>(OnWlAccMessage_reason, reason) == false)
                 return false;
-            if (ParamsHelper.Compare<WLACC_SUGGEST_ACTION>(OnWlAccMessage2_action, action) == false)
+            if (ParamsHelper.Compare<WLACC_SUGGEST_ACTION>(OnWlAccMessage_action, action) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnWlAccMessage2_wlAccMsg, wlAccMsg) == false)
+            if (ParamsHelper.Compare<string>(OnWlAccMessage_wlAccMsg, wlAccMsg) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnWlAccStats2_be_trigger = false;
-        public RtcConnectionS OnWlAccStats2_connectionS;
-        public WlAccStats OnWlAccStats2_currentStats;
-        public WlAccStats OnWlAccStats2_averageStats;
+        public bool OnWlAccStats_be_trigger = false;
+        public RtcConnectionS OnWlAccStats_connectionS;
+        public WlAccStats OnWlAccStats_currentStats;
+        public WlAccStats OnWlAccStats_averageStats;
         public override void OnWlAccStats(RtcConnectionS connectionS, WlAccStats currentStats, WlAccStats averageStats)
         {
-            OnWlAccStats2_be_trigger = true;
-            OnWlAccStats2_connectionS = connectionS;
-            OnWlAccStats2_currentStats = currentStats;
-            OnWlAccStats2_averageStats = averageStats;
+            OnWlAccStats_be_trigger = true;
+            OnWlAccStats_connectionS = connectionS;
+            OnWlAccStats_currentStats = currentStats;
+            OnWlAccStats_averageStats = averageStats;
         }
 
-        public bool OnWlAccStats2Passed(RtcConnectionS connectionS, WlAccStats currentStats, WlAccStats averageStats)
+        public bool OnWlAccStatsPassed(RtcConnectionS connectionS, WlAccStats currentStats, WlAccStats averageStats)
         {
-            if (OnWlAccStats2_be_trigger == false)
+            if (OnWlAccStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnWlAccStats2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnWlAccStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats2_currentStats, currentStats) == false)
+            if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_currentStats, currentStats) == false)
                 return false;
-            if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats2_averageStats, averageStats) == false)
+            if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_averageStats, averageStats) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnNetworkTypeChanged2_be_trigger = false;
-        public RtcConnectionS OnNetworkTypeChanged2_connectionS;
-        public NETWORK_TYPE OnNetworkTypeChanged2_type;
+        public bool OnNetworkTypeChanged_be_trigger = false;
+        public RtcConnectionS OnNetworkTypeChanged_connectionS;
+        public NETWORK_TYPE OnNetworkTypeChanged_type;
         public override void OnNetworkTypeChanged(RtcConnectionS connectionS, NETWORK_TYPE type)
         {
-            OnNetworkTypeChanged2_be_trigger = true;
-            OnNetworkTypeChanged2_connectionS = connectionS;
-            OnNetworkTypeChanged2_type = type;
+            OnNetworkTypeChanged_be_trigger = true;
+            OnNetworkTypeChanged_connectionS = connectionS;
+            OnNetworkTypeChanged_type = type;
         }
 
-        public bool OnNetworkTypeChanged2Passed(RtcConnectionS connectionS, NETWORK_TYPE type)
+        public bool OnNetworkTypeChangedPassed(RtcConnectionS connectionS, NETWORK_TYPE type)
         {
-            if (OnNetworkTypeChanged2_be_trigger == false)
+            if (OnNetworkTypeChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnNetworkTypeChanged2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnNetworkTypeChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<NETWORK_TYPE>(OnNetworkTypeChanged2_type, type) == false)
+            if (ParamsHelper.Compare<NETWORK_TYPE>(OnNetworkTypeChanged_type, type) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnEncryptionError2_be_trigger = false;
-        public RtcConnectionS OnEncryptionError2_connectionS;
-        public ENCRYPTION_ERROR_TYPE OnEncryptionError2_errorType;
+        public bool OnEncryptionError_be_trigger = false;
+        public RtcConnectionS OnEncryptionError_connectionS;
+        public ENCRYPTION_ERROR_TYPE OnEncryptionError_errorType;
         public override void OnEncryptionError(RtcConnectionS connectionS, ENCRYPTION_ERROR_TYPE errorType)
         {
-            OnEncryptionError2_be_trigger = true;
-            OnEncryptionError2_connectionS = connectionS;
-            OnEncryptionError2_errorType = errorType;
+            OnEncryptionError_be_trigger = true;
+            OnEncryptionError_connectionS = connectionS;
+            OnEncryptionError_errorType = errorType;
         }
 
-        public bool OnEncryptionError2Passed(RtcConnectionS connectionS, ENCRYPTION_ERROR_TYPE errorType)
+        public bool OnEncryptionErrorPassed(RtcConnectionS connectionS, ENCRYPTION_ERROR_TYPE errorType)
         {
-            if (OnEncryptionError2_be_trigger == false)
+            if (OnEncryptionError_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnEncryptionError2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnEncryptionError_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<ENCRYPTION_ERROR_TYPE>(OnEncryptionError2_errorType, errorType) == false)
+            if (ParamsHelper.Compare<ENCRYPTION_ERROR_TYPE>(OnEncryptionError_errorType, errorType) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnUploadLogResult2_be_trigger = false;
-        public RtcConnectionS OnUploadLogResult2_connectionS;
-        public string OnUploadLogResult2_requestId;
-        public bool OnUploadLogResult2_success;
-        public UPLOAD_ERROR_REASON OnUploadLogResult2_reason;
+        public bool OnUploadLogResult_be_trigger = false;
+        public RtcConnectionS OnUploadLogResult_connectionS;
+        public string OnUploadLogResult_requestId;
+        public bool OnUploadLogResult_success;
+        public UPLOAD_ERROR_REASON OnUploadLogResult_reason;
         public override void OnUploadLogResult(RtcConnectionS connectionS, string requestId, bool success, UPLOAD_ERROR_REASON reason)
         {
-            OnUploadLogResult2_be_trigger = true;
-            OnUploadLogResult2_connectionS = connectionS;
-            OnUploadLogResult2_requestId = requestId;
-            OnUploadLogResult2_success = success;
-            OnUploadLogResult2_reason = reason;
+            OnUploadLogResult_be_trigger = true;
+            OnUploadLogResult_connectionS = connectionS;
+            OnUploadLogResult_requestId = requestId;
+            OnUploadLogResult_success = success;
+            OnUploadLogResult_reason = reason;
         }
 
-        public bool OnUploadLogResult2Passed(RtcConnectionS connectionS, string requestId, bool success, UPLOAD_ERROR_REASON reason)
+        public bool OnUploadLogResultPassed(RtcConnectionS connectionS, string requestId, bool success, UPLOAD_ERROR_REASON reason)
         {
-            if (OnUploadLogResult2_be_trigger == false)
+            if (OnUploadLogResult_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnUploadLogResult2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUploadLogResult_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnUploadLogResult2_requestId, requestId) == false)
+            if (ParamsHelper.Compare<string>(OnUploadLogResult_requestId, requestId) == false)
                 return false;
-            if (ParamsHelper.Compare<bool>(OnUploadLogResult2_success, success) == false)
+            if (ParamsHelper.Compare<bool>(OnUploadLogResult_success, success) == false)
                 return false;
-            if (ParamsHelper.Compare<UPLOAD_ERROR_REASON>(OnUploadLogResult2_reason, reason) == false)
+            if (ParamsHelper.Compare<UPLOAD_ERROR_REASON>(OnUploadLogResult_reason, reason) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnSnapshotTaken2_be_trigger = false;
-        public RtcConnectionS OnSnapshotTaken2_connectionS;
-        public string OnSnapshotTaken2_userAccount;
-        public string OnSnapshotTaken2_filePath;
-        public int OnSnapshotTaken2_width;
-        public int OnSnapshotTaken2_height;
-        public int OnSnapshotTaken2_errCode;
+        public bool OnSnapshotTaken_be_trigger = false;
+        public RtcConnectionS OnSnapshotTaken_connectionS;
+        public string OnSnapshotTaken_userAccount;
+        public string OnSnapshotTaken_filePath;
+        public int OnSnapshotTaken_width;
+        public int OnSnapshotTaken_height;
+        public int OnSnapshotTaken_errCode;
         public override void OnSnapshotTaken(RtcConnectionS connectionS, string userAccount, string filePath, int width, int height, int errCode)
         {
-            OnSnapshotTaken2_be_trigger = true;
-            OnSnapshotTaken2_connectionS = connectionS;
-            OnSnapshotTaken2_userAccount = userAccount;
-            OnSnapshotTaken2_filePath = filePath;
-            OnSnapshotTaken2_width = width;
-            OnSnapshotTaken2_height = height;
-            OnSnapshotTaken2_errCode = errCode;
+            OnSnapshotTaken_be_trigger = true;
+            OnSnapshotTaken_connectionS = connectionS;
+            OnSnapshotTaken_userAccount = userAccount;
+            OnSnapshotTaken_filePath = filePath;
+            OnSnapshotTaken_width = width;
+            OnSnapshotTaken_height = height;
+            OnSnapshotTaken_errCode = errCode;
         }
 
-        public bool OnSnapshotTaken2Passed(RtcConnectionS connectionS, string userAccount, string filePath, int width, int height, int errCode)
+        public bool OnSnapshotTakenPassed(RtcConnectionS connectionS, string userAccount, string filePath, int width, int height, int errCode)
         {
-            if (OnSnapshotTaken2_be_trigger == false)
+            if (OnSnapshotTaken_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnSnapshotTaken2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnSnapshotTaken_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnSnapshotTaken2_userAccount, userAccount) == false)
+            if (ParamsHelper.Compare<string>(OnSnapshotTaken_userAccount, userAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnSnapshotTaken2_filePath, filePath) == false)
+            if (ParamsHelper.Compare<string>(OnSnapshotTaken_filePath, filePath) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnSnapshotTaken2_width, width) == false)
+            if (ParamsHelper.Compare<int>(OnSnapshotTaken_width, width) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnSnapshotTaken2_height, height) == false)
+            if (ParamsHelper.Compare<int>(OnSnapshotTaken_height, height) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnSnapshotTaken2_errCode, errCode) == false)
+            if (ParamsHelper.Compare<int>(OnSnapshotTaken_errCode, errCode) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnVideoRenderingTracingResult2_be_trigger = false;
-        public RtcConnectionS OnVideoRenderingTracingResult2_connectionS;
-        public string OnVideoRenderingTracingResult2_userAccount;
-        public MEDIA_TRACE_EVENT OnVideoRenderingTracingResult2_currentEvent;
-        public VideoRenderingTracingInfo OnVideoRenderingTracingResult2_tracingInfo;
+        public bool OnVideoRenderingTracingResult_be_trigger = false;
+        public RtcConnectionS OnVideoRenderingTracingResult_connectionS;
+        public string OnVideoRenderingTracingResult_userAccount;
+        public MEDIA_TRACE_EVENT OnVideoRenderingTracingResult_currentEvent;
+        public VideoRenderingTracingInfo OnVideoRenderingTracingResult_tracingInfo;
         public override void OnVideoRenderingTracingResult(RtcConnectionS connectionS, string userAccount, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
         {
-            OnVideoRenderingTracingResult2_be_trigger = true;
-            OnVideoRenderingTracingResult2_connectionS = connectionS;
-            OnVideoRenderingTracingResult2_userAccount = userAccount;
-            OnVideoRenderingTracingResult2_currentEvent = currentEvent;
-            OnVideoRenderingTracingResult2_tracingInfo = tracingInfo;
+            OnVideoRenderingTracingResult_be_trigger = true;
+            OnVideoRenderingTracingResult_connectionS = connectionS;
+            OnVideoRenderingTracingResult_userAccount = userAccount;
+            OnVideoRenderingTracingResult_currentEvent = currentEvent;
+            OnVideoRenderingTracingResult_tracingInfo = tracingInfo;
         }
 
-        public bool OnVideoRenderingTracingResult2Passed(RtcConnectionS connectionS, string userAccount, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
+        public bool OnVideoRenderingTracingResultPassed(RtcConnectionS connectionS, string userAccount, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
         {
-            if (OnVideoRenderingTracingResult2_be_trigger == false)
+            if (OnVideoRenderingTracingResult_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnVideoRenderingTracingResult2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnVideoRenderingTracingResult_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<string>(OnVideoRenderingTracingResult2_userAccount, userAccount) == false)
+            if (ParamsHelper.Compare<string>(OnVideoRenderingTracingResult_userAccount, userAccount) == false)
                 return false;
-            if (ParamsHelper.Compare<MEDIA_TRACE_EVENT>(OnVideoRenderingTracingResult2_currentEvent, currentEvent) == false)
+            if (ParamsHelper.Compare<MEDIA_TRACE_EVENT>(OnVideoRenderingTracingResult_currentEvent, currentEvent) == false)
                 return false;
-            if (ParamsHelper.Compare<VideoRenderingTracingInfo>(OnVideoRenderingTracingResult2_tracingInfo, tracingInfo) == false)
+            if (ParamsHelper.Compare<VideoRenderingTracingInfo>(OnVideoRenderingTracingResult_tracingInfo, tracingInfo) == false)
                 return false;
             return true;
         }
 
         //////////////////
 
-        public bool OnSetRtmFlagResult2_be_trigger = false;
-        public RtcConnectionS OnSetRtmFlagResult2_connectionS;
-        public int OnSetRtmFlagResult2_code;
+        public bool OnSetRtmFlagResult_be_trigger = false;
+        public RtcConnectionS OnSetRtmFlagResult_connectionS;
+        public int OnSetRtmFlagResult_code;
         public override void OnSetRtmFlagResult(RtcConnectionS connectionS, int code)
         {
-            OnSetRtmFlagResult2_be_trigger = true;
-            OnSetRtmFlagResult2_connectionS = connectionS;
-            OnSetRtmFlagResult2_code = code;
+            OnSetRtmFlagResult_be_trigger = true;
+            OnSetRtmFlagResult_connectionS = connectionS;
+            OnSetRtmFlagResult_code = code;
         }
 
-        public bool OnSetRtmFlagResult2Passed(RtcConnectionS connectionS, int code)
+        public bool OnSetRtmFlagResultPassed(RtcConnectionS connectionS, int code)
         {
-            if (OnSetRtmFlagResult2_be_trigger == false)
+            if (OnSetRtmFlagResult_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnectionS>(OnSetRtmFlagResult2_connectionS, connectionS) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnSetRtmFlagResult_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnSetRtmFlagResult2_code, code) == false)
+            if (ParamsHelper.Compare<int>(OnSetRtmFlagResult_code, code) == false)
                 return false;
             return true;
         }

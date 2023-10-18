@@ -184,7 +184,7 @@ namespace Agora.Rtc
             }
         }
 
-        public string CreateMediaRecorder(RecorderStreamInfo info)
+        public string CreateMediaRecorder(RecorderStreamInfoS info)
         {
 
             _param.Clear();

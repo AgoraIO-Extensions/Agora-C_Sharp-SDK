@@ -33,7 +33,8 @@
             "isSpeakerphoneEnabled": "method_interface_return_bool",
             "getScreenCaptureSources": "method_interface_return_null",
             "getConnectionState": "method_interface_return_CONNECTION_STATE_TYPE",
-            "getNtpWallTimeInMs": "method_interface_return_uint"
+            "getNtpWallTimeInMs": "method_interface_return_uint",
+            "isFeatureAvailableOnDevice": "method_interface_return_bool"
         },
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
