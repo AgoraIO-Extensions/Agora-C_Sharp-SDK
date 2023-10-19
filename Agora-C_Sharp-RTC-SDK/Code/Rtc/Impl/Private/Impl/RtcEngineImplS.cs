@@ -150,7 +150,7 @@ namespace Agora.Rtc
             {
                 _callbackObject.Release();
                 _callbackObject = null;
-                RtcEngineEventHandlerNativeS.CallbackObject = null;
+                RtcEngineEventHandlerNative.CallbackObject = null;
             }
 #endif
             _disposed = true;
@@ -187,7 +187,7 @@ namespace Agora.Rtc
             if (_callbackObject == null)
             {
                 _callbackObject = new AgoraCallbackObject("Agora" + GetHashCode());
-                RtcEngineEventHandlerNativeS.CallbackObject = _callbackObject;
+                RtcEngineEventHandlerNative.CallbackObject = _callbackObject;
             }
 #endif
 

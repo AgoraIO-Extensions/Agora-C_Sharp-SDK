@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Agora.Rtc
 {
-    public class TextureManagerYUV : TextureManager
+    public class TextureManagerYUVS : TextureManagerS
     {
         private Texture2D _uTexture;
         private Texture2D _vTexture;
@@ -89,10 +89,7 @@ namespace Agora.Rtc
 
         internal override void ReFreshTexture()
         {
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
-
-
-
+            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _userAccount, _channelId, _frameType);
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {

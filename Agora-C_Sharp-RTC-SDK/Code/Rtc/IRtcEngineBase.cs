@@ -33,7 +33,7 @@ namespace Agora.Rtc
         public abstract int GetNativeHandler(ref IntPtr nativeHandler);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
-        int SetMaxMetadataSize(int size);
+        public abstract int SetMaxMetadataSize(int size);
 #endif
 
         public abstract int UnRegisterAudioEncodedFrameObserver();
