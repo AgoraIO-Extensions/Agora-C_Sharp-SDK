@@ -66,6 +66,7 @@ namespace Agora.Rtc
         public float[] matrix;
         public IntPtr alphaBuffer;
         public uint alpha_buffer_length;
+        public IntPtr d3d11Texture2d;
     }
 
 

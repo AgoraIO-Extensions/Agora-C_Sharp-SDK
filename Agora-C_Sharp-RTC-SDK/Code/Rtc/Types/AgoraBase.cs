@@ -574,6 +574,11 @@ namespace Agora.Rtc
         /// </summary>
         ///
         ERR_VDM_CAMERA_NOT_AUTHORIZED = 1501,
+
+        ///
+        /// @ignore
+        ///
+        ERR_ADM_APPLICATION_LOOPBACK = 2007,
     };
 
 
@@ -1151,14 +1156,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// (Recommended) Standard bitrate mode. In this mode, the bitrates of the live broadcasting profile is higher than that of the communication profile.
+        /// 0: (Recommended) Standard bitrate mode. In this mode, the bitrates of the live broadcasting profile is higher than that of the communication profile.
         /// </summary>
         ///
         STANDARD_BITRATE = 0,
 
         ///
         /// <summary>
-        /// Adaptive bitrate mode. In this mode, the bitrates of the live broadcasting profile equals that of the communication profile. If this mode is selected, the video frame rate of live broadcasting scenarios may be lower than the set value.
+        /// -1: Adaptive bitrate mode. In this mode, the bitrates of the live broadcasting profile equals that of the communication profile. If this mode is selected, the video frame rate of live broadcasting scenarios may be lower than the set value.
         /// </summary>
         ///
         COMPATIBLE_BITRATE = -1,
@@ -2858,7 +2863,7 @@ namespace Agora.Rtc
         /// 0: The default audio profile.
         /// For the interactive streaming profile: A sample rate of 48 kHz, music encoding, mono, and a bitrate of up to 64 Kbps.
         /// For the communication profile:
-        /// Windows: A sample rate of 16 kHz, audio encoding, mono, and a bitrate of up to 16 Kbps. Android/macOS/iOS:
+        /// Windows: A sample rate of 16 kHz, audio encoding, mono, and a bitrate of up to 16 Kbps. Android/macOS/iOS: A sample rate of 32 kHz, audio encoding, mono, and a bitrate of up to 18 Kbps.
         /// </summary>
         ///
         AUDIO_PROFILE_DEFAULT = 0,
@@ -3231,7 +3236,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 3: (Android and iOS only) The local audio capture device is used. Remind your users to check whether another application occupies the microphone. Local audio capture automatically resumes after the microphone is idle for about five seconds. You can also try to rejoin the channel after the microphone is idle.
+        /// 3: (Android and iOS only) The local audio capture device is already in use. Remind your users to check whether another application occupies the microphone. Local audio capture automatically resumes after the microphone is idle for about five seconds. You can also try to rejoin the channel after the microphone is idle.
         /// </summary>
         ///
         LOCAL_AUDIO_STREAM_ERROR_DEVICE_BUSY = 3,
@@ -3373,14 +3378,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 6: (For iOS only) The app is in the background. Remind the user that video capture cannot be performed normally when the app is in the background.
+        /// 6: (iOS only) The app is in the background. Remind the user that video capture cannot be performed normally when the app is in the background.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_CAPTURE_INBACKGROUND = 6,
 
         ///
         /// <summary>
-        /// 7: (For iOS only) The current application window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Remind the user that the application cannot capture video properly when the app is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera.
+        /// 7: (iOS only) The current application window is running in Slide Over, Split View, or Picture in Picture mode, and another app is occupying the camera. Remind the user that the application cannot capture video properly when the app is running in Slide Over, Split View, or Picture in Picture mode and another app is occupying the camera.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_CAPTURE_MULTIPLE_FOREGROUND_APPS = 7,
@@ -3394,14 +3399,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 9: (For macOS only) The video capture device currently in use is disconnected (such as being unplugged).
+        /// 9: (macOS only) The video capture device currently in use is disconnected (such as being unplugged).
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_DISCONNECTED = 9,
 
         ///
         /// <summary>
-        /// 10: (For macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID of the video device is valid.
+        /// 10: (macOS and Windows only) The SDK cannot find the video device in the video device list. Check whether the ID of the video device is valid.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_INVALID_ID = 10,
@@ -3415,14 +3420,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 11: (For macOS only) The shared window is minimized when you call StartScreenCaptureByWindowId to share a window. The SDK cannot share a minimized window. You can cancel the minimization of this window at the application layer, for example by maximizing this window.
+        /// 11: (macOS only) The shared window is minimized when you call StartScreenCaptureByWindowId to share a window. The SDK cannot share a minimized window. You can cancel the minimization of this window at the application layer, for example by maximizing this window.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_MINIMIZED = 11,
 
         ///
         /// <summary>
-        /// 12: (For macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing. Common scenarios for reporting this error code:
+        /// 12: (macOS and Windows only) The error code indicates that a window shared by the window ID has been closed or a full-screen window shared by the window ID has exited full-screen mode. After exiting full-screen mode, remote users cannot see the shared window. To prevent remote users from seeing a black screen, Agora recommends that you immediately stop screen sharing. Common scenarios reporting this error code:
         /// When the local user closes the shared window, the SDK reports this error code.
         /// The local user shows some slides in full-screen mode first, and then shares the windows of the slides. After the user exits full-screen mode, the SDK reports this error code.
         /// The local user watches a web video or reads a web document in full-screen mode first, and then shares the window of the web video or document. After the user exits full-screen mode, the SDK reports this error code.
@@ -3432,7 +3437,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 13: (For Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by the SDK during window sharing.
+        /// 13: (Windows only) The window being shared is overlapped by another window, so the overlapped area is blacked out by the SDK during window sharing.
         /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_OCCLUDED = 13,
@@ -3447,9 +3452,46 @@ namespace Agora.Rtc
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_FAILURE = 21,
         ///
-        /// @ignore
+        /// <summary>
+        /// 22: (Windows and macOS only) No permission for screen capture.
+        /// </summary>
         ///
         LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_NO_PERMISSION = 22,
+
+        ///
+        /// <summary>
+        /// 23: (Windows only) Screen capture has been paused. Common scenarios reporting this error code: The current screen may have been switched to a secure desktop, such as a UAC dialog box or Winlogon desktop.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_PAUSED = 23,
+
+        ///
+        /// <summary>
+        /// 24: (Windows only) Screen capture has resumed from paused state.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_RESUMED = 24,
+
+        ///
+        /// <summary>
+        /// 25: (Windows only) The window for the current screen capture is hidden and not visible on the current screen.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_HIDDEN = 25,
+
+        ///
+        /// <summary>
+        /// 26: (Windows only) The window for screen capture has been restored from hidden state.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_HIDDEN = 26,
+
+        ///
+        /// <summary>
+        /// 27: (Windows only) The window for screen capture has been restored from minimized state.
+        /// </summary>
+        ///
+        LOCAL_VIDEO_STREAM_ERROR_SCREEN_CAPTURE_WINDOW_RECOVER_FROM_MINIMIZED = 27,
     };
 
     ///
@@ -4447,7 +4489,7 @@ namespace Agora.Rtc
         /// <summary>
         /// 1: The SDK is disconnected from the Agora edge server. The state indicates the SDK is in one of the following phases:
         /// Theinitial state before calling the JoinChannel [2/2] method.
-        /// The app calls the LeaveChannel [1/2]
+        /// The app calls the LeaveChannel [1/2] method.
         /// </summary>
         ///
         CONNECTION_STATE_DISCONNECTED = 1,
@@ -4479,7 +4521,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 5: The SDK fails to connect to the Agora edge server or join the channel. This state indicates that the SDK stops trying to rejoin the channel. You must call LeaveChannel [1/2]
+        /// 5: The SDK fails to connect to the Agora edge server or join the channel. This state indicates that the SDK stops trying to rejoin the channel. You must call LeaveChannel [1/2] to leave the channel.
         /// You can call JoinChannel [2/2] to rejoin the channel.
         /// If the SDK is banned from joining the channel by the Agora edge server through the RESTful API, the SDK triggers the OnConnectionStateChanged callback.
         /// </summary>
@@ -4997,11 +5039,6 @@ namespace Agora.Rtc
     public enum VIDEO_TRANSCODER_ERROR
     {
         ///
-        /// @ignore
-        ///
-        VT_ERR_OK = 0,
-
-        ///
         /// <summary>
         /// 1: The selected video source has not started video capture. You need to create a video track for it and start video capture.
         /// </summary>
@@ -5326,7 +5363,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 14: Timeout for the keep-alive of the connection between the SDK and the Agora edge server. The connection state changes to .
+        /// 14: Timeout for the keep-alive of the connection between the SDK and the Agora edge server. The SDK tries to reconnect to the server automatically.
         /// </summary>
         ///
         CONNECTION_CHANGED_KEEP_ALIVE_TIMEOUT = 14,
@@ -5376,7 +5413,12 @@ namespace Agora.Rtc
         ///
         /// @ignore
         ///
-        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21
+        CONNECTION_CHANGED_LICENSE_VALIDATION_FAILURE = 21,
+
+        ///
+        /// @ignore
+        ///
+        CONNECTION_CHANGED_CERTIFICATION_VERYFY_FAILURE = 22,
     };
 
     ///
@@ -5533,6 +5575,13 @@ namespace Agora.Rtc
         /// </summary>
         ///
         NETWORK_TYPE_MOBILE_4G = 5,
+
+        ///
+        /// <summary>
+        /// 6: The network type is mobile 5G.
+        /// </summary>
+        ///
+        NETWORK_TYPE_MOBILE_5G = 6,
     };
 
     ///
@@ -6162,14 +6211,14 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 0: Mixable audio tracks. You can publish multiple mixable audio tracks in one channel, and SDK will automatically mix these tracks into one. The latency of mixable audio tracks is higher than that of direct audio tracks.
+        /// 0: Mixable audio tracks. This type of audio track supports mixing with other audio streams (such as audio streams captured by microphone) and playing locally or publishing to channels after mixing. The latency of mixable audio tracks is higher than that of direct audio tracks.
         /// </summary>
         ///
         AUDIO_TRACK_MIXABLE = 0,
 
         ///
         /// <summary>
-        /// 1: Direct audio tracks. When creating multiple audio tracks of this type, each direct audio track can only be published in one channel and cannot be mixed with others. The latency of direct audio tracks is lower than that of mixable audio tracks.
+        /// 1: Direct audio tracks. This type of audio track will replace the audio streams captured by the microphone and does not support mixing with other audio streams. The latency of direct audio tracks is lower than that of mixable audio tracks. If AUDIO_TRACK_DIRECT is specified for this parameter, you must set publishMicrophoneTrack to false in ChannelMediaOptions when calling JoinChannel [2/2] to join the channel; otherwise, joining the channel fails and returns the error code -2.
         /// </summary>
         ///
         AUDIO_TRACK_DIRECT = 1,
@@ -6706,7 +6755,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// Whether to capture the mouse in screen sharing: true : (Default) Capture the mouse. false : Do not capture the mouse.
+        /// Whether to capture the mouse in screen sharing: true : (Default) Capture the mouse. false : Do not capture the mouse. Due to macOS system restrictions, setting this parameter to false is ineffective during screen sharing (it has no impact when sharing a window).
         /// </summary>
         ///
         public bool captureMouseCursor;
@@ -6890,7 +6939,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.mp4. Ensure that the directory for the log files exists and is writable.
+        /// The absolute path (including the filename extensions) of the recording file. For example: C:\music\audio.aac. Ensure that the directory for the log files exists and is writable.
         /// </summary>
         ///
         public string filePath;
@@ -7095,7 +7144,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 2: No server response. You can call LeaveChannel [1/2] This error can also occur if your project has not enabled co-host token authentication. You can to enable the service for cohosting across channels before starting a channel media relay.
+        /// 2: No server response. You can call LeaveChannel [1/2] to leave the channel. This error can also occur if your project has not enabled co-host token authentication. You can to enable the service for cohosting across channels before starting a channel media relay.
         /// </summary>
         ///
         RELAY_ERROR_SERVER_NO_RESPONSE = 2,
@@ -7137,7 +7186,7 @@ namespace Agora.Rtc
 
         ///
         /// <summary>
-        /// 8: The SDK disconnects from the server due to poor network connections. You can call LeaveChannel [1/2]
+        /// 8: The SDK disconnects from the server due to poor network connections. You can call LeaveChannel [1/2] to leave the channel.
         /// </summary>
         ///
         RELAY_ERROR_SERVER_CONNECTION_LOST = 8,
@@ -8284,7 +8333,7 @@ namespace Agora.Rtc
         /// @ignore
         ///
         ConnectivityFirst = 0,
-       
+
         ///
         /// @ignore
         ///
@@ -8313,17 +8362,17 @@ namespace Agora.Rtc
             serverHttps = https;
         }
 
-       
+
         ///
         /// @ignore
         ///
         public string serverDomain;
-        
+
         ///
         /// @ignore
         ///
         public string serverPath;
-      
+
         ///
         /// @ignore
         ///
@@ -8362,22 +8411,22 @@ namespace Agora.Rtc
             advancedConfig = new AdvancedConfigInfo();
         }
 
-      
+
         ///
         /// @ignore
         ///
         public string[] ipList;
-      
+
         ///
         /// @ignore
         ///
         public int ipListSize;
-       
+
         ///
         /// @ignore
         ///
         public string[] domainList;
-       
+
         ///
         /// @ignore
         ///
@@ -8387,12 +8436,12 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public string verifyDomainName;
-       
+
         ///
         /// @ignore
         ///
         public LOCAL_PROXY_MODE mode;
-      
+
         ///
         /// @ignore
         ///

@@ -277,14 +277,14 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
-        /// 0: Read-only mode,
+        /// 0: Read-only mode, For example, when users acquire the data with the Agora SDK, then start the media push.
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_ONLY = 0,
 
         ///
         /// <summary>
-        /// 2: Read and write mode,
+        /// 2: Read and write mode, For example, when users have their own audio-effect processing module and perform some voice preprocessing, such as a voice change.
         /// </summary>
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
@@ -584,6 +584,13 @@ namespace Agora.Rtc
         /// </summary>
         ///
         VIDEO_PIXEL_I422 = 16,
+
+        ///
+        /// <summary>
+        /// 17: The ID3D11TEXTURE2D format. Currently supported types are DXGI_FORMAT_B8G8R8A8_UNORM, DXGI_FORMAT_B8G8R8A8_TYPELESS and DXGI_FORMAT_NV12.
+        /// </summary>
+        ///
+        VIDEO_TEXTURE_ID3D11TEXTURE2D = 17,
     };
 
     ///
@@ -698,6 +705,8 @@ namespace Agora.Rtc
             this.metadata_buffer = null;
             this.metadata_size = 0;
             this.alphaBuffer = null;
+            this.d3d11_texture_2d = IntPtr.Zero;
+            this.texture_slice_index = 0;
         }
 
         public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride,
@@ -721,6 +730,8 @@ namespace Agora.Rtc
             this.textureId = textureId;
             this.metadata_buffer = metadata_buffer;
             this.metadata_size = metadata_size;
+            this.d3d11_texture_2d = IntPtr.Zero;
+            this.texture_slice_index = 0;
         }
 
         ///
@@ -842,6 +853,21 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public byte[] alphaBuffer;
+
+
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Windows Texture format. It represents a pointer to an object of type ID3D11Texture2D, which is used by a video frame.
+        /// </summary>
+        ///
+        public IntPtr d3d11_texture_2d;
+
+        ///
+        /// <summary>
+        /// This parameter only applies to video data in Windows Texture format. It represents an index of an ID3D11Texture2D texture object used by the video frame in the ID3D11Texture2D array.
+        /// </summary>
+        ///
+        public int texture_slice_index;
     };
 
     ///
@@ -874,6 +900,7 @@ namespace Agora.Rtc
             sharedContext = IntPtr.Zero;
             textureId = 0;
             matrix = new float[16];
+            d3d11Texture2d = IntPtr.Zero;
         }
 
         ///
@@ -1019,6 +1046,11 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public IntPtr alphaBufferPtr;
+
+        ///
+        /// @ignore
+        ///
+        public IntPtr d3d11Texture2d;
     };
 
     ///
@@ -1444,10 +1476,9 @@ namespace Agora.Rtc
         ///
         CONTENT_INSPECT_INVALID = 0,
 
+        [Obsolete]
         ///
-        /// <summary>
-        /// 1: Video content moderation. SDK takes screenshots, inspects video content of the video stream in the channel, and uploads the screenshots and moderation results.
-        /// </summary>
+        /// @ignore
         ///
         CONTENT_INSPECT_MODERATION = 1,
 
@@ -1456,7 +1487,14 @@ namespace Agora.Rtc
         /// 2: Screenshot capture. SDK takes screenshots of the video stream in the channel and uploads them.
         /// </summary>
         ///
-        CONTENT_INSPECT_SUPERVISION = 2
+        CONTENT_INSPECT_SUPERVISION = 2,
+
+        ///
+        /// <summary>
+        /// 3: Video screenshot and upload via extensions from Agora Extensions Marketplace. SDK uses video moderation extensions from Agora Extensions Marketplace to take screenshots of the video stream in the channel and uploads them.
+        /// </summary>
+        ///
+        CONTENT_INSPECT_IMAGE_MODERATION = 3,
     };
 
     ///
@@ -1517,6 +1555,18 @@ namespace Agora.Rtc
     {
         ///
         /// <summary>
+        /// Additional information on the video content (maximum length: 1024 Bytes). The SDK sends the screenshots and additional information on the video content to the Agora server. Once the video screenshot and upload process is completed, the Agora server sends the additional information and the callback notification to your server.
+        /// </summary>
+        ///
+        public string extraInfo;
+        ///
+        /// <summary>
+        /// (Optional) Server configuration related to uploading video screenshots via extensions from Agora Extensions Marketplace. This parameter only takes effect when type in ContentInspectModule is set to CONTENT_INSPECT_IMAGE_MODERATION. If you want to use it, contact.
+        /// </summary>
+        ///
+        public string serverConfig;
+        ///
+        /// <summary>
         /// Functional module. See ContentInspectModule. A maximum of 32 ContentInspectModule instances can be configured, and the value range of MAX_CONTENT_INSPECT_MODULE_COUNT is an integer in [1,32]. A function module can only be configured with one instance at most. Currently only the video screenshot and upload function is supported.
         /// </summary>
         ///
@@ -1531,6 +1581,8 @@ namespace Agora.Rtc
 
         public ContentInspectConfig()
         {
+            extraInfo = "";
+            serverConfig = "";
             modules = null;
             moduleCount = 0;
         }

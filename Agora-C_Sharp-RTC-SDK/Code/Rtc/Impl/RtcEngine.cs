@@ -833,6 +833,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.TakeSnapshotEx(connection, uid, filePath);
         }
 
+        public override int EnableContentInspectEx(bool enabled, ContentInspectConfig config, RtcConnection connection)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.EnableContentInspectEx(enabled, config, connection);
+        }
+
         public override int EnableAudioVolumeIndication(int interval, int smooth, bool reportVad)
         {
             if (_rtcEngineImpl == null)
@@ -3354,6 +3363,15 @@ namespace Agora.Rtc
                 return 0;
             }
             return _rtcEngineImpl.GetNtpWallTimeInMs();
+        }
+
+        public override bool IsFeatureAvailableOnDevice(FeatureType type)
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return false;
+            }
+            return _rtcEngineImpl.IsFeatureAvailableOnDevice(type);
         }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
