@@ -658,6 +658,41 @@ namespace Agora.Rtc
             return nRet;
         }
 
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        public int SetMaxMetadataSize(int size)
+        {
+            _param.Clear();
+            _param.Add("size", size);
+
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETMAXMETADATASIZE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+#endif
+
+     
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+        public int SendMetadata(Metadata metadata, VIDEO_SOURCE_TYPE source_type)
+        {
+            _param.Clear();
+            _param.Add("metadata", metadata);
+            _param.Add("source_type", source_type);
+
+            var json = AgoraJson.ToJson(_param);
+
+            IntPtr[] arrayPtr = new IntPtr[] { metadata.buffer };
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SENDMETADATA,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
+            return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+#endif
+
         public int GetNativeHandler(ref IntPtr nativeHandler)
         {
             _param.Clear();

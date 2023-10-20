@@ -243,12 +243,12 @@ namespace Agora.Rtc
 
         internal void RtcEngineImplWillDispose(RtcEngineImplS impl)
         {
-            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImpl).GetNativeHandler();
-            IntPtr rtcRenderingHandle = (_agoraRtcEngine as RtcEngineImpl).GetRtcRenderingHandle();
+            IntPtr irisEngine = (_agoraRtcEngine as RtcEngineImplS).GetNativeHandler();
+            IntPtr rtcRenderingHandle = (_agoraRtcEngine as RtcEngineImplS).GetRtcRenderingHandle();
 
             if (irisEngine != IntPtr.Zero)
             {
-                AgoraRtcNative.RemoveVideoFrameCacheKey(rtcRenderingHandle, ref _videoFrameConfig);
+                AgoraRtcNative.RemoveVideoFrameCacheKeyS(rtcRenderingHandle, ref _videoFrameConfig);
                 AgoraLog.Log("DisableVideoFrameBufferByConfig on RtcEngineImplWillDispose");
             }
         }

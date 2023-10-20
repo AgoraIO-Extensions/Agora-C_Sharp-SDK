@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Agora.Rtc
 {
-    public class TextureManager : MonoBehaviour
+    public class TextureManagerS : MonoBehaviour
     {
         // texture identity
         protected int _videoPixelWidth = 0;
@@ -26,7 +26,7 @@ namespace Agora.Rtc
             }
         }
 
-        protected uint _uid = 0;
+        protected string _userAccount = "";
         protected string _channelId = "";
         protected VIDEO_SOURCE_TYPE _sourceType = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY;
         protected VIDEO_OBSERVER_FRAME_TYPE _frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
@@ -35,7 +35,7 @@ namespace Agora.Rtc
         protected bool _needUpdateInfo = true;
         protected bool isFresh = false;
 
-        protected IVideoStreamManager _videoStreamManager;
+        protected IVideoStreamManagerS _videoStreamManager;
         protected IrisCVideoFrame _cachedVideoFrame;
 
         // reference count
@@ -66,11 +66,11 @@ namespace Agora.Rtc
 
         protected virtual void OnDestroy()
         {
-            AgoraLog.Log(string.Format("VideoSurface channel: ${0}, user:{1} destroy", _channelId, _uid));
+            AgoraLog.Log(string.Format("VideoSurface channel: ${0}, userAccount:{1} destroy", _channelId, _userAccount));
 
             if (_videoStreamManager != null)
             {
-                _videoStreamManager.DisableVideoFrameBuffer(_sourceType, _uid, _channelId, _frameType);
+                _videoStreamManager.DisableVideoFrameBuffer(_sourceType, _userAccount, _channelId, _frameType);
                 _videoStreamManager.Dispose();
                 _videoStreamManager = null;
             }
@@ -118,17 +118,17 @@ namespace Agora.Rtc
 
         internal void EnableVideoFrameWithIdentity()
         {
-            var engine = RtcEngineImpl.Get();
+            var engine = RtcEngineImplS.Get();
             if (engine != null)
             {
                 if (_videoStreamManager == null)
                 {
-                    _videoStreamManager = ((RtcEngineImpl)engine).GetVideoStreamManager();
+                    _videoStreamManager = ((RtcEngineImplS)engine).GetVideoStreamManager();
                 }
 
                 if (_videoStreamManager != null)
                 {
-                    _videoStreamManager.EnableVideoFrameBuffer(_sourceType, _uid, _channelId, _frameType);
+                    _videoStreamManager.EnableVideoFrameBuffer(_sourceType, _userAccount, _channelId, _frameType);
                     _needUpdateInfo = false;
                 }
             }
@@ -136,7 +136,7 @@ namespace Agora.Rtc
 
         internal virtual void ReFreshTexture()
         {
-            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _uid, _channelId, _frameType);
+            var ret = _videoStreamManager.GetVideoFrame(ref _cachedVideoFrame, ref isFresh, _sourceType, _userAccount, _channelId, _frameType);
 
             if (ret == IRIS_VIDEO_PROCESS_ERR.ERR_NO_CACHE)
             {
@@ -188,11 +188,11 @@ namespace Agora.Rtc
 
         }
 
-        internal void SetVideoStreamIdentity(uint uid = 0, string channelId = "",
+        internal void SetVideoStreamIdentity(string userAccount = "", string channelId = "",
             VIDEO_SOURCE_TYPE source_type = VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY,
             VIDEO_OBSERVER_FRAME_TYPE frameType = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA)
         {
-            _uid = uid;
+            _userAccount = userAccount;
             _channelId = channelId;
             _sourceType = source_type;
             _frameType = frameType;
