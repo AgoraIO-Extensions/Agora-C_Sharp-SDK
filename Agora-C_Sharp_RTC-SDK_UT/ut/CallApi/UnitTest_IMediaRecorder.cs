@@ -29,11 +29,20 @@ namespace Agora.Rtc
         #region terra IMediaRecorder
 
         [Test]
-        public void Test_SetMediaRecorderObserver()
+        public void Test_StartRecording()
         {
-            IMediaRecorderObserver callback = ParamsHelper.CreateParam<IMediaRecorderObserver>();
+            MediaRecorderConfiguration config = ParamsHelper.CreateParam<MediaRecorderConfiguration>();
 
-            var nRet = MediaRecorder.SetMediaRecorderObserver(callback);
+            var nRet = MediaRecorder.StartRecording(config);
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_StopRecording()
+        {
+
+
+            var nRet = MediaRecorder.StopRecording();
             Assert.AreEqual(0, nRet);
         }
         #endregion terra IMediaRecorder

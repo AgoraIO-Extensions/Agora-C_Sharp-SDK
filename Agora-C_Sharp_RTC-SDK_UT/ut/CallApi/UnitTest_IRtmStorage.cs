@@ -32,18 +32,12 @@ namespace Agora.Rtm
         [Test]
         public void Test_SetChannelMetadata()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            RtmMetadata data;
-            ParamsHelper.InitParam(out data);
-            MetadataOptions options;
-            ParamsHelper.InitParam(out options);
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            MetadataOptions options = ParamsHelper.CreateParam<MetadataOptions>();
+            string lockName = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.SetChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -52,18 +46,12 @@ namespace Agora.Rtm
         [Test]
         public void Test_UpdateChannelMetadata()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            RtmMetadata data;
-            ParamsHelper.InitParam(out data);
-            MetadataOptions options;
-            ParamsHelper.InitParam(out options);
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            MetadataOptions options = ParamsHelper.CreateParam<MetadataOptions>();
+            string lockName = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.UpdateChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -72,18 +60,12 @@ namespace Agora.Rtm
         [Test]
         public void Test_RemoveChannelMetadata()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            RtmMetadata data;
-            ParamsHelper.InitParam(out data);
-            MetadataOptions options;
-            ParamsHelper.InitParam(out options);
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            MetadataOptions options = ParamsHelper.CreateParam<MetadataOptions>();
+            string lockName = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.RemoveChannelMetadata(channelName, channelType, data, options, lockName, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -92,12 +74,9 @@ namespace Agora.Rtm
         [Test]
         public void Test_GetChannelMetadata()
         {
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string channelName = ParamsHelper.CreateParam<string>();
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.GetChannelMetadata(channelName, channelType, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -106,14 +85,10 @@ namespace Agora.Rtm
         [Test]
         public void Test_SetUserMetadata()
         {
-            string userId;
-            ParamsHelper.InitParam(out userId);
-            RtmMetadata data;
-            ParamsHelper.InitParam(out data);
-            MetadataOptions options;
-            ParamsHelper.InitParam(out options);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string userId = ParamsHelper.CreateParam<string>();
+            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            MetadataOptions options = ParamsHelper.CreateParam<MetadataOptions>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.SetUserMetadata(userId, data, options, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -122,14 +97,10 @@ namespace Agora.Rtm
         [Test]
         public void Test_UpdateUserMetadata()
         {
-            string userId;
-            ParamsHelper.InitParam(out userId);
-            RtmMetadata data;
-            ParamsHelper.InitParam(out data);
-            MetadataOptions options;
-            ParamsHelper.InitParam(out options);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string userId = ParamsHelper.CreateParam<string>();
+            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            MetadataOptions options = ParamsHelper.CreateParam<MetadataOptions>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.UpdateUserMetadata(userId, data, options, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -138,14 +109,10 @@ namespace Agora.Rtm
         [Test]
         public void Test_RemoveUserMetadata()
         {
-            string userId;
-            ParamsHelper.InitParam(out userId);
-            RtmMetadata data;
-            ParamsHelper.InitParam(out data);
-            MetadataOptions options;
-            ParamsHelper.InitParam(out options);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string userId = ParamsHelper.CreateParam<string>();
+            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
+            MetadataOptions options = ParamsHelper.CreateParam<MetadataOptions>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.RemoveUserMetadata(userId, data, options, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -154,10 +121,8 @@ namespace Agora.Rtm
         [Test]
         public void Test_GetUserMetadata()
         {
-            string userId;
-            ParamsHelper.InitParam(out userId);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string userId = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.GetUserMetadata(userId, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -166,10 +131,8 @@ namespace Agora.Rtm
         [Test]
         public void Test_SubscribeUserMetadata()
         {
-            string userId;
-            ParamsHelper.InitParam(out userId);
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            string userId = ParamsHelper.CreateParam<string>();
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
             var nRet = RtmStorage.SubscribeUserMetadata(userId, ref requestId);
 
             Assert.AreEqual(0, nRet);
@@ -178,8 +141,7 @@ namespace Agora.Rtm
         [Test]
         public void Test_UnsubscribeUserMetadata()
         {
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
             var nRet = RtmStorage.UnsubscribeUserMetadata(userId);
 
             Assert.AreEqual(0, nRet);

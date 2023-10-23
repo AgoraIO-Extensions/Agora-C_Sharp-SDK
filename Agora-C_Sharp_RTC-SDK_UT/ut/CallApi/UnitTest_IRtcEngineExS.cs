@@ -5,53 +5,53 @@ namespace Agora.Rtc
 {
     using uid_t = System.UInt32;
     [TestFixture]
-    class UnitTest_IRtcEngineEx
+    class UnitTest_IRtcEngineExS
     {
 
-        public IRtcEngineEx RtcEngineEx;
+        public IRtcEngineExS RtcEngineExS;
 
         [SetUp]
         public void Setup()
         {
-            RtcEngineEx = Rtc.RtcEngine.CreateAgoraRtcEngineEx(DLLHelper.CreateFakeRtcEngine());
-            RtcEngineContext rtcEngineContext;
+            RtcEngineExS = Rtc.RtcEngineS.CreateAgoraRtcEngineEx(DLLHelper.CreateFakeRtcEngineS());
+            RtcEngineContextS rtcEngineContext;
             ParamsHelper.InitParam(out rtcEngineContext);
-            int nRet = RtcEngineEx.Initialize(rtcEngineContext);
+            int nRet = RtcEngineExS.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
         }
 
         [TearDown]
-        public void TearDown() { RtcEngineEx.Dispose(); }
+        public void TearDown() { RtcEngineExS.Dispose(); }
 
-        #region terra IRtcEngineEx
+        #region terra IRtcEngineExS
 
         [Test]
         public void Test_JoinChannelEx()
         {
             string token = ParamsHelper.CreateParam<string>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
             ChannelMediaOptions options = ParamsHelper.CreateParam<ChannelMediaOptions>();
 
-            var nRet = RtcEngineEx.JoinChannelEx(token, connection, options);
+            var nRet = RtcEngineExS.JoinChannelEx(token, connectionS, options);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_LeaveChannelEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.LeaveChannelEx(connection);
+            var nRet = RtcEngineExS.LeaveChannelEx(connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_LeaveChannelEx2()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
             LeaveChannelOptions options = ParamsHelper.CreateParam<LeaveChannelOptions>();
 
-            var nRet = RtcEngineEx.LeaveChannelEx(connection, options);
+            var nRet = RtcEngineExS.LeaveChannelEx(connectionS, options);
             Assert.AreEqual(0, nRet);
         }
 
@@ -59,9 +59,9 @@ namespace Agora.Rtc
         public void Test_UpdateChannelMediaOptionsEx()
         {
             ChannelMediaOptions options = ParamsHelper.CreateParam<ChannelMediaOptions>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.UpdateChannelMediaOptionsEx(options, connection);
+            var nRet = RtcEngineExS.UpdateChannelMediaOptionsEx(options, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -69,52 +69,52 @@ namespace Agora.Rtc
         public void Test_SetVideoEncoderConfigurationEx()
         {
             VideoEncoderConfiguration config = ParamsHelper.CreateParam<VideoEncoderConfiguration>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetVideoEncoderConfigurationEx(config, connection);
+            var nRet = RtcEngineExS.SetVideoEncoderConfigurationEx(config, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetupRemoteVideoEx()
         {
-            VideoCanvas canvas = ParamsHelper.CreateParam<VideoCanvas>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            VideoCanvasS canvas = ParamsHelper.CreateParam<VideoCanvasS>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetupRemoteVideoEx(canvas, connection);
+            var nRet = RtcEngineExS.SetupRemoteVideoEx(canvas, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_MuteRemoteAudioStreamEx()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             bool mute = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.MuteRemoteAudioStreamEx(uid, mute, connection);
+            var nRet = RtcEngineExS.MuteRemoteAudioStreamEx(userAccount, mute, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_MuteRemoteVideoStreamEx()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             bool mute = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.MuteRemoteVideoStreamEx(uid, mute, connection);
+            var nRet = RtcEngineExS.MuteRemoteVideoStreamEx(userAccount, mute, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetRemoteVideoStreamTypeEx()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             VIDEO_STREAM_TYPE streamType = ParamsHelper.CreateParam<VIDEO_STREAM_TYPE>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetRemoteVideoStreamTypeEx(uid, streamType, connection);
+            var nRet = RtcEngineExS.SetRemoteVideoStreamTypeEx(userAccount, streamType, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -122,9 +122,9 @@ namespace Agora.Rtc
         public void Test_MuteLocalAudioStreamEx()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.MuteLocalAudioStreamEx(mute, connection);
+            var nRet = RtcEngineExS.MuteLocalAudioStreamEx(mute, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -132,9 +132,9 @@ namespace Agora.Rtc
         public void Test_MuteLocalVideoStreamEx()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.MuteLocalVideoStreamEx(mute, connection);
+            var nRet = RtcEngineExS.MuteLocalVideoStreamEx(mute, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -142,9 +142,9 @@ namespace Agora.Rtc
         public void Test_MuteAllRemoteAudioStreamsEx()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.MuteAllRemoteAudioStreamsEx(mute, connection);
+            var nRet = RtcEngineExS.MuteAllRemoteAudioStreamsEx(mute, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -152,110 +152,110 @@ namespace Agora.Rtc
         public void Test_MuteAllRemoteVideoStreamsEx()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.MuteAllRemoteVideoStreamsEx(mute, connection);
+            var nRet = RtcEngineExS.MuteAllRemoteVideoStreamsEx(mute, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetSubscribeAudioBlocklistEx()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNumber = ParamsHelper.CreateParam<int>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNumber = ParamsHelper.CreateParam<int>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetSubscribeAudioBlocklistEx(uidList, uidNumber, connection);
+            var nRet = RtcEngineExS.SetSubscribeAudioBlocklistEx(userAccountList, userAccountNumber, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetSubscribeAudioAllowlistEx()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNumber = ParamsHelper.CreateParam<int>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNumber = ParamsHelper.CreateParam<int>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetSubscribeAudioAllowlistEx(uidList, uidNumber, connection);
+            var nRet = RtcEngineExS.SetSubscribeAudioAllowlistEx(userAccountList, userAccountNumber, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetSubscribeVideoBlocklistEx()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNumber = ParamsHelper.CreateParam<int>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNumber = ParamsHelper.CreateParam<int>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetSubscribeVideoBlocklistEx(uidList, uidNumber, connection);
+            var nRet = RtcEngineExS.SetSubscribeVideoBlocklistEx(userAccountList, userAccountNumber, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetSubscribeVideoAllowlistEx()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNumber = ParamsHelper.CreateParam<int>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNumber = ParamsHelper.CreateParam<int>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetSubscribeVideoAllowlistEx(uidList, uidNumber, connection);
+            var nRet = RtcEngineExS.SetSubscribeVideoAllowlistEx(userAccountList, userAccountNumber, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetRemoteVideoSubscriptionOptionsEx()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             VideoSubscriptionOptions options = ParamsHelper.CreateParam<VideoSubscriptionOptions>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetRemoteVideoSubscriptionOptionsEx(uid, options, connection);
+            var nRet = RtcEngineExS.SetRemoteVideoSubscriptionOptionsEx(userAccount, options, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetRemoteVoicePositionEx()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             double pan = ParamsHelper.CreateParam<double>();
             double gain = ParamsHelper.CreateParam<double>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetRemoteVoicePositionEx(uid, pan, gain, connection);
+            var nRet = RtcEngineExS.SetRemoteVoicePositionEx(userAccount, pan, gain, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetRemoteUserSpatialAudioParamsEx()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             SpatialAudioParams @params = ParamsHelper.CreateParam<SpatialAudioParams>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetRemoteUserSpatialAudioParamsEx(uid, @params, connection);
+            var nRet = RtcEngineExS.SetRemoteUserSpatialAudioParamsEx(userAccount, @params, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetRemoteRenderModeEx()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             RENDER_MODE_TYPE renderMode = ParamsHelper.CreateParam<RENDER_MODE_TYPE>();
             VIDEO_MIRROR_MODE_TYPE mirrorMode = ParamsHelper.CreateParam<VIDEO_MIRROR_MODE_TYPE>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetRemoteRenderModeEx(uid, renderMode, mirrorMode, connection);
+            var nRet = RtcEngineExS.SetRemoteRenderModeEx(userAccount, renderMode, mirrorMode, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_EnableLoopbackRecordingEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
             bool enabled = ParamsHelper.CreateParam<bool>();
             string deviceName = ParamsHelper.CreateParam<string>();
 
-            var nRet = RtcEngineEx.EnableLoopbackRecordingEx(connection, enabled, deviceName);
+            var nRet = RtcEngineExS.EnableLoopbackRecordingEx(connectionS, enabled, deviceName);
             Assert.AreEqual(0, nRet);
         }
 
@@ -263,9 +263,9 @@ namespace Agora.Rtc
         public void Test_AdjustRecordingSignalVolumeEx()
         {
             int volume = ParamsHelper.CreateParam<int>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.AdjustRecordingSignalVolumeEx(volume, connection);
+            var nRet = RtcEngineExS.AdjustRecordingSignalVolumeEx(volume, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -273,40 +273,40 @@ namespace Agora.Rtc
         public void Test_MuteRecordingSignalEx()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.MuteRecordingSignalEx(mute, connection);
+            var nRet = RtcEngineExS.MuteRecordingSignalEx(mute, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_AdjustUserPlaybackSignalVolumeEx()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             int volume = ParamsHelper.CreateParam<int>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.AdjustUserPlaybackSignalVolumeEx(uid, volume, connection);
+            var nRet = RtcEngineExS.AdjustUserPlaybackSignalVolumeEx(userAccount, volume, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_GetConnectionStateEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.GetConnectionStateEx(connection);
+            var nRet = RtcEngineExS.GetConnectionStateEx(connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_EnableEncryptionEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
             bool enabled = ParamsHelper.CreateParam<bool>();
             EncryptionConfig config = ParamsHelper.CreateParam<EncryptionConfig>();
 
-            var nRet = RtcEngineEx.EnableEncryptionEx(connection, enabled, config);
+            var nRet = RtcEngineExS.EnableEncryptionEx(connectionS, enabled, config);
             Assert.AreEqual(0, nRet);
         }
 
@@ -316,9 +316,9 @@ namespace Agora.Rtc
             int streamId = ParamsHelper.CreateParam<int>();
             bool reliable = ParamsHelper.CreateParam<bool>();
             bool ordered = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.CreateDataStreamEx(ref streamId, reliable, ordered, connection);
+            var nRet = RtcEngineExS.CreateDataStreamEx(ref streamId, reliable, ordered, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -327,9 +327,9 @@ namespace Agora.Rtc
         {
             int streamId = ParamsHelper.CreateParam<int>();
             DataStreamConfig config = ParamsHelper.CreateParam<DataStreamConfig>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.CreateDataStreamEx(ref streamId, config, connection);
+            var nRet = RtcEngineExS.CreateDataStreamEx(ref streamId, config, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -339,9 +339,9 @@ namespace Agora.Rtc
             int streamId = ParamsHelper.CreateParam<int>();
             byte[] data = ParamsHelper.CreateParam<byte[]>();
             uint length = ParamsHelper.CreateParam<uint>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SendStreamMessageEx(streamId, data, length, connection);
+            var nRet = RtcEngineExS.SendStreamMessageEx(streamId, data, length, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -350,18 +350,18 @@ namespace Agora.Rtc
         {
             string watermarkUrl = ParamsHelper.CreateParam<string>();
             WatermarkOptions options = ParamsHelper.CreateParam<WatermarkOptions>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.AddVideoWatermarkEx(watermarkUrl, options, connection);
+            var nRet = RtcEngineExS.AddVideoWatermarkEx(watermarkUrl, options, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_ClearVideoWatermarkEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.ClearVideoWatermarkEx(connection);
+            var nRet = RtcEngineExS.ClearVideoWatermarkEx(connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -373,9 +373,9 @@ namespace Agora.Rtc
             string @event = ParamsHelper.CreateParam<string>();
             string label = ParamsHelper.CreateParam<string>();
             int value = ParamsHelper.CreateParam<int>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SendCustomReportMessageEx(id, category, @event, label, value, connection);
+            var nRet = RtcEngineExS.SendCustomReportMessageEx(id, category, @event, label, value, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -385,9 +385,9 @@ namespace Agora.Rtc
             int interval = ParamsHelper.CreateParam<int>();
             int smooth = ParamsHelper.CreateParam<int>();
             bool reportVad = ParamsHelper.CreateParam<bool>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connection);
+            var nRet = RtcEngineExS.EnableAudioVolumeIndicationEx(interval, smooth, reportVad, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -395,9 +395,9 @@ namespace Agora.Rtc
         public void Test_StartRtmpStreamWithoutTranscodingEx()
         {
             string url = ParamsHelper.CreateParam<string>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.StartRtmpStreamWithoutTranscodingEx(url, connection);
+            var nRet = RtcEngineExS.StartRtmpStreamWithoutTranscodingEx(url, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -405,20 +405,20 @@ namespace Agora.Rtc
         public void Test_StartRtmpStreamWithTranscodingEx()
         {
             string url = ParamsHelper.CreateParam<string>();
-            LiveTranscoding transcoding = ParamsHelper.CreateParam<LiveTranscoding>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            LiveTranscodingS transcodingS = ParamsHelper.CreateParam<LiveTranscodingS>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.StartRtmpStreamWithTranscodingEx(url, transcoding, connection);
+            var nRet = RtcEngineExS.StartRtmpStreamWithTranscodingEx(url, transcodingS, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_UpdateRtmpTranscodingEx()
         {
-            LiveTranscoding transcoding = ParamsHelper.CreateParam<LiveTranscoding>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            LiveTranscodingS transcodingS = ParamsHelper.CreateParam<LiveTranscodingS>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.UpdateRtmpTranscodingEx(transcoding, connection);
+            var nRet = RtcEngineExS.UpdateRtmpTranscodingEx(transcodingS, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -426,88 +426,46 @@ namespace Agora.Rtc
         public void Test_StopRtmpStreamEx()
         {
             string url = ParamsHelper.CreateParam<string>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.StopRtmpStreamEx(url, connection);
+            var nRet = RtcEngineExS.StopRtmpStreamEx(url, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_StartOrUpdateChannelMediaRelayEx()
         {
-            ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            ChannelMediaRelayConfigurationS configurationS = ParamsHelper.CreateParam<ChannelMediaRelayConfigurationS>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.StartOrUpdateChannelMediaRelayEx(configuration, connection);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_StartChannelMediaRelayEx()
-        {
-            ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var nRet = RtcEngineEx.StartChannelMediaRelayEx(configuration, connection);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_UpdateChannelMediaRelayEx()
-        {
-            ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var nRet = RtcEngineEx.UpdateChannelMediaRelayEx(configuration, connection);
+            var nRet = RtcEngineExS.StartOrUpdateChannelMediaRelayEx(configurationS, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_StopChannelMediaRelayEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.StopChannelMediaRelayEx(connection);
+            var nRet = RtcEngineExS.StopChannelMediaRelayEx(connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_PauseAllChannelMediaRelayEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.PauseAllChannelMediaRelayEx(connection);
+            var nRet = RtcEngineExS.PauseAllChannelMediaRelayEx(connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_ResumeAllChannelMediaRelayEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.ResumeAllChannelMediaRelayEx(connection);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetUserInfoByUserAccountEx()
-        {
-            string userAccount = ParamsHelper.CreateParam<string>();
-            UserInfo userInfo = ParamsHelper.CreateParam<UserInfo>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var nRet = RtcEngineEx.GetUserInfoByUserAccountEx(userAccount, ref userInfo, connection);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_GetUserInfoByUidEx()
-        {
-            uint uid = ParamsHelper.CreateParam<uint>();
-            UserInfo userInfo = ParamsHelper.CreateParam<UserInfo>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var nRet = RtcEngineEx.GetUserInfoByUidEx(uid, ref userInfo, connection);
+            var nRet = RtcEngineExS.ResumeAllChannelMediaRelayEx(connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -516,9 +474,9 @@ namespace Agora.Rtc
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             SimulcastStreamConfig streamConfig = ParamsHelper.CreateParam<SimulcastStreamConfig>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.EnableDualStreamModeEx(enabled, streamConfig, connection);
+            var nRet = RtcEngineExS.EnableDualStreamModeEx(enabled, streamConfig, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
@@ -527,65 +485,54 @@ namespace Agora.Rtc
         {
             SIMULCAST_STREAM_MODE mode = ParamsHelper.CreateParam<SIMULCAST_STREAM_MODE>();
             SimulcastStreamConfig streamConfig = ParamsHelper.CreateParam<SimulcastStreamConfig>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetDualStreamModeEx(mode, streamConfig, connection);
+            var nRet = RtcEngineExS.SetDualStreamModeEx(mode, streamConfig, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetHighPriorityUserListEx()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
             int uidNum = ParamsHelper.CreateParam<int>();
             STREAM_FALLBACK_OPTIONS option = ParamsHelper.CreateParam<STREAM_FALLBACK_OPTIONS>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.SetHighPriorityUserListEx(uidList, uidNum, option, connection);
+            var nRet = RtcEngineExS.SetHighPriorityUserListEx(userAccountList, uidNum, option, connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_TakeSnapshotEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-            uint uid = ParamsHelper.CreateParam<uint>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             string filePath = ParamsHelper.CreateParam<string>();
 
-            var nRet = RtcEngineEx.TakeSnapshotEx(connection, uid, filePath);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_EnableContentInspectEx()
-        {
-            bool enabled = ParamsHelper.CreateParam<bool>();
-            ContentInspectConfig config = ParamsHelper.CreateParam<ContentInspectConfig>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var nRet = RtcEngineEx.EnableContentInspectEx(enabled, config, connection);
+            var nRet = RtcEngineExS.TakeSnapshotEx(connectionS, userAccount, filePath);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_StartMediaRenderingTracingEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
 
-            var nRet = RtcEngineEx.StartMediaRenderingTracingEx(connection);
+            var nRet = RtcEngineExS.StartMediaRenderingTracingEx(connectionS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
         public void Test_SetParametersEx()
         {
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
+            RtcConnectionS connectionS = ParamsHelper.CreateParam<RtcConnectionS>();
             string parameters = ParamsHelper.CreateParam<string>();
 
-            var nRet = RtcEngineEx.SetParametersEx(connection, parameters);
+            var nRet = RtcEngineExS.SetParametersEx(connectionS, parameters);
             Assert.AreEqual(0, nRet);
         }
-        #endregion terra IRtcEngineEx
+        #endregion terra IRtcEngineExS
     }
 
 }

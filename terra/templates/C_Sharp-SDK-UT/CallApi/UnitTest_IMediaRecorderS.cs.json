@@ -1,7 +1,7 @@
 {
-    "IMediaRecorder": {
+    "IMediaRecorderS": {
         "type": "ClazzStruct",
-        "name": "IMediaRecorder",
+        "name": "IMediaRecorderS",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_unitTest_compare_0",
         "excludeMethods": [

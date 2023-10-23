@@ -3,16 +3,16 @@ using Agora.Rtc;
 using uid_t = System.UInt32;
 namespace Agora.Rtc
 {
-    public class UnitTest_ILocalSpatialAudioEngine
+    public class UnitTest_ILocalSpatialAudioEngineS
     {
-        public IRtcEngine Engine;
-        public ILocalSpatialAudioEngine LocalSpatialAudioEngine;
+        public IRtcEngineS Engine;
+        public ILocalSpatialAudioEngineS LocalSpatialAudioEngine;
 
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
-            RtcEngineContext rtcEngineContext;
+            Engine = RtcEngineS.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngineS());
+            RtcEngineContextS rtcEngineContext;
             ParamsHelper.InitParam(out rtcEngineContext);
             rtcEngineContext.logConfig.level = LOG_LEVEL.LOG_LEVEL_API_CALL;
             int nRet = Engine.Initialize(rtcEngineContext);
@@ -124,7 +124,7 @@ namespace Agora.Rtc
             axisUp[1] = 334.23f;
             axisUp[2] = -343.232f;
 
-            RtcConnection connection = new RtcConnection("hello", 238);
+            RtcConnectionS connection = new RtcConnectionS("hello", "238");
 
             var nRet = LocalSpatialAudioEngine.UpdateSelfPositionEx(position, axisForward, axisRight, axisUp, connection);
 
@@ -211,8 +211,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_UpdateRemotePosition()
         {
-            uid_t uid;
-            ParamsHelper.InitParam(out uid);
+            string userAccount = ParamsHelper.CreateParam<string>();
 
             float[] position = new float[3];
             position[0] = 26632;
@@ -225,7 +224,7 @@ namespace Agora.Rtc
             forward[2] = 1937.232f;
             RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
 
-            var nRet = LocalSpatialAudioEngine.UpdateRemotePosition(uid, positionInfo);
+            var nRet = LocalSpatialAudioEngine.UpdateRemotePosition(userAccount, positionInfo);
 
             Assert.AreEqual(0, nRet);
         }
@@ -233,9 +232,8 @@ namespace Agora.Rtc
         [Test]
         public void Test_UpdateRemotePositionEx()
         {
-            uid_t uid = uint.MaxValue;
+            string userAccount = "1234567890";
 
-            RemoteVoicePositionInfo posInfo;
             float[] position = new float[3];
             position[0] = 26632;
             position[1] = -32332f;
@@ -246,9 +244,9 @@ namespace Agora.Rtc
             forward[1] = -343.2f;
             forward[2] = 1937.232f;
             RemoteVoicePositionInfo positionInfo = new RemoteVoicePositionInfo(position, forward);
-            RtcConnection connection = new RtcConnection("yanddsad", 1223);
+            RtcConnectionS connection = new RtcConnectionS("yanddsad", "123456");
 
-            var nRet = LocalSpatialAudioEngine.UpdateRemotePositionEx(uid, positionInfo, connection);
+            var nRet = LocalSpatialAudioEngine.UpdateRemotePositionEx(userAccount, positionInfo, connection);
 
             Assert.AreEqual(0, nRet);
         }
@@ -256,8 +254,8 @@ namespace Agora.Rtc
         [Test]
         public void Test_RemoveRemotePosition()
         {
-            uid_t uid = 982;
-            var nRet = LocalSpatialAudioEngine.RemoveRemotePosition(uid);
+            string userAccount = "1234567890";
+            var nRet = LocalSpatialAudioEngine.RemoveRemotePosition(userAccount);
 
             Assert.AreEqual(0, nRet);
         }
@@ -265,11 +263,11 @@ namespace Agora.Rtc
         [Test]
         public void Test_RemoveRemotePositionEx()
         {
-            uid_t uid = 83;
+            string userAccount = ParamsHelper.CreateParam<string>();
 
-            RtcConnection connection = new RtcConnection("s2dfskds", 923);
+            RtcConnectionS connection = new RtcConnectionS("s2dfskds", "1234");
 
-            var nRet = LocalSpatialAudioEngine.RemoveRemotePositionEx(uid, connection);
+            var nRet = LocalSpatialAudioEngine.RemoveRemotePositionEx(userAccount, connection);
 
             Assert.AreEqual(0, nRet);
         }
@@ -277,13 +275,13 @@ namespace Agora.Rtc
         [Test]
         public void Test_SetRemoteAudioAttenuation()
         {
-            uid_t uid = 232;
+            string userAccount = ParamsHelper.CreateParam<string>();
 
             double attenuation = -983.2;
 
             bool forceSet = false;
 
-            var nRet = LocalSpatialAudioEngine.SetRemoteAudioAttenuation(uid, attenuation, forceSet);
+            var nRet = LocalSpatialAudioEngine.SetRemoteAudioAttenuation(userAccount, attenuation, forceSet);
 
             Assert.AreEqual(0, nRet);
         }
@@ -336,10 +334,10 @@ namespace Agora.Rtc
         [Test]
         public void Test_MuteRemoteAudioStream()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             bool mute = ParamsHelper.CreateParam<bool>();
 
-            var nRet = LocalSpatialAudioEngine.MuteRemoteAudioStream(uid, mute);
+            var nRet = LocalSpatialAudioEngine.MuteRemoteAudioStream(userAccount, mute);
             Assert.AreEqual(0, nRet);
         }
 

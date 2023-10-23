@@ -6,32 +6,32 @@ namespace Agora.Rtc
     using uid_t = System.UInt32;
     using view_t = System.Int64;
     [TestFixture]
-    class UnitTest_IRtcEngine
+    class UnitTest_IRtcEngineS
     {
-        public IRtcEngine RtcEngine;
+        public IRtcEngineS RtcEngineS;
         public IRtcEngineBase RtcEngineBase;
-        public IRtcEngine MediaEngine;
-        public IRtcEngine MediaEngineBase;
+        public IRtcEngineS MediaEngineS;
+        public IRtcEngineS MediaEngineBase;
         [SetUp]
         public void Setup()
         {
-            RtcEngine = Rtc.RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
-            RtcEngineBase = RtcEngine;
-            MediaEngine = RtcEngine;
-            MediaEngineBase = MediaEngine;
-            RtcEngineContext rtcEngineContext = ParamsHelper.CreateParam<RtcEngineContext>();
-            int nRet = RtcEngine.Initialize(rtcEngineContext);
+            RtcEngineS = Rtc.RtcEngineS.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngineS());
+            RtcEngineBase = RtcEngineS;
+            MediaEngineS = RtcEngineS;
+            MediaEngineBase = MediaEngineS;
+            RtcEngineContextS rtcEngineContext = ParamsHelper.CreateParam<RtcEngineContextS>();
+            int nRet = RtcEngineS.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
         }
 
         [TearDown]
-        public void TearDown() { RtcEngine.Dispose(); }
+        public void TearDown() { RtcEngineS.Dispose(); }
 
         [Test]
         public void Test_SetParameters1()
         {
             string parameters = ParamsHelper.CreateParam<string>();
-            var nRet = RtcEngine.SetParameters(parameters);
+            var nRet = RtcEngineS.SetParameters(parameters);
 
             Assert.AreEqual(0, nRet);
         }
@@ -41,19 +41,19 @@ namespace Agora.Rtc
         {
             string key = ParamsHelper.CreateParam<string>();
             string value = ParamsHelper.CreateParam<string>();
-            var nRet = RtcEngine.SetParameters(key, value);
+            var nRet = RtcEngineS.SetParameters(key, value);
             Assert.AreEqual(0, nRet);
 
             float value2 = ParamsHelper.CreateParam<float>();
-            nRet = RtcEngine.SetParameters(key, value2);
+            nRet = RtcEngineS.SetParameters(key, value2);
             Assert.AreEqual(0, nRet);
 
             bool value3 = ParamsHelper.CreateParam<bool>();
-            nRet = RtcEngine.SetParameters(key, value3);
+            nRet = RtcEngineS.SetParameters(key, value3);
             Assert.AreEqual(0, nRet);
 
             int value4 = ParamsHelper.CreateParam<int>();
-            nRet = RtcEngine.SetParameters(key, value4);
+            nRet = RtcEngineS.SetParameters(key, value4);
             Assert.AreEqual(0, nRet);
         }
 
@@ -2186,583 +2186,398 @@ namespace Agora.Rtc
         }
         #endregion terra IRtcEngineBase
 
-        #region terra IRtcEngine
+        #region terra IRtcEngineS
 
         [Test]
-        public void Test_IRtcEngineInitialize()
+        public void Test_IRtcEngineSPrepareUserAccount()
         {
-            RtcEngineContext context = ParamsHelper.CreateParam<RtcEngineContext>();
-
-            var nRet = RtcEngine.Initialize(context);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEnginePreloadChannel()
-        {
-            string token = ParamsHelper.CreateParam<string>();
-            string channelId = ParamsHelper.CreateParam<string>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             uint uid = ParamsHelper.CreateParam<uint>();
 
-            var nRet = RtcEngine.PreloadChannel(token, channelId, uid);
+            var nRet = RtcEngineS.PrepareUserAccount(userAccount, uid);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEnginePreloadChannel2()
+        public void Test_IRtcEngineSInitialize()
         {
-            string token = ParamsHelper.CreateParam<string>();
-            string channelId = ParamsHelper.CreateParam<string>();
-            string userAccount = ParamsHelper.CreateParam<string>();
+            RtcEngineContextS contextS = ParamsHelper.CreateParam<RtcEngineContextS>();
 
-            var nRet = RtcEngine.PreloadChannel(token, channelId, userAccount);
+            var nRet = RtcEngineS.Initialize(contextS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineUpdatePreloadChannelToken()
-        {
-            string token = ParamsHelper.CreateParam<string>();
-
-            var nRet = RtcEngine.UpdatePreloadChannelToken(token);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineJoinChannel()
+        public void Test_IRtcEngineSJoinChannel()
         {
             string token = ParamsHelper.CreateParam<string>();
             string channelId = ParamsHelper.CreateParam<string>();
             string info = ParamsHelper.CreateParam<string>();
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
 
-            var nRet = RtcEngine.JoinChannel(token, channelId, info, uid);
+            var nRet = RtcEngineS.JoinChannel(token, channelId, info, userAccount);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineJoinChannel2()
+        public void Test_IRtcEngineSJoinChannel2()
         {
             string token = ParamsHelper.CreateParam<string>();
             string channelId = ParamsHelper.CreateParam<string>();
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             ChannelMediaOptions options = ParamsHelper.CreateParam<ChannelMediaOptions>();
 
-            var nRet = RtcEngine.JoinChannel(token, channelId, uid, options);
+            var nRet = RtcEngineS.JoinChannel(token, channelId, userAccount, options);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetupRemoteVideo()
+        public void Test_IRtcEngineSSetupRemoteVideo()
         {
-            VideoCanvas canvas = ParamsHelper.CreateParam<VideoCanvas>();
+            VideoCanvasS canvas = ParamsHelper.CreateParam<VideoCanvasS>();
 
-            var nRet = RtcEngine.SetupRemoteVideo(canvas);
+            var nRet = RtcEngineS.SetupRemoteVideo(canvas);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetupLocalVideo()
+        public void Test_IRtcEngineSSetupLocalVideo()
         {
-            VideoCanvas canvas = ParamsHelper.CreateParam<VideoCanvas>();
+            VideoCanvasBase canvas = ParamsHelper.CreateParam<VideoCanvasBase>();
 
-            var nRet = RtcEngine.SetupLocalVideo(canvas);
+            var nRet = RtcEngineS.SetupLocalVideo(canvas);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioProfile()
+        public void Test_IRtcEngineSMuteRemoteAudioStream()
         {
-            AUDIO_PROFILE_TYPE profile = ParamsHelper.CreateParam<AUDIO_PROFILE_TYPE>();
-            AUDIO_SCENARIO_TYPE scenario = ParamsHelper.CreateParam<AUDIO_SCENARIO_TYPE>();
-
-            var nRet = RtcEngine.SetAudioProfile(profile, scenario);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineSetDefaultMuteAllRemoteAudioStreams()
-        {
+            string userAccount = ParamsHelper.CreateParam<string>();
             bool mute = ParamsHelper.CreateParam<bool>();
 
-            var nRet = RtcEngine.SetDefaultMuteAllRemoteAudioStreams(mute);
+            var nRet = RtcEngineS.MuteRemoteAudioStream(userAccount, mute);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineMuteRemoteAudioStream()
+        public void Test_IRtcEngineSMuteRemoteVideoStream()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             bool mute = ParamsHelper.CreateParam<bool>();
 
-            var nRet = RtcEngine.MuteRemoteAudioStream(uid, mute);
+            var nRet = RtcEngineS.MuteRemoteVideoStream(userAccount, mute);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetDefaultMuteAllRemoteVideoStreams()
+        public void Test_IRtcEngineSSetRemoteVideoStreamType()
         {
-            bool mute = ParamsHelper.CreateParam<bool>();
-
-            var nRet = RtcEngine.SetDefaultMuteAllRemoteVideoStreams(mute);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineMuteRemoteVideoStream()
-        {
-            uint uid = ParamsHelper.CreateParam<uint>();
-            bool mute = ParamsHelper.CreateParam<bool>();
-
-            var nRet = RtcEngine.MuteRemoteVideoStream(uid, mute);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineSetRemoteVideoStreamType()
-        {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             VIDEO_STREAM_TYPE streamType = ParamsHelper.CreateParam<VIDEO_STREAM_TYPE>();
 
-            var nRet = RtcEngine.SetRemoteVideoStreamType(uid, streamType);
+            var nRet = RtcEngineS.SetRemoteVideoStreamType(userAccount, streamType);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteVideoSubscriptionOptions()
+        public void Test_IRtcEngineSSetRemoteVideoSubscriptionOptions()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             VideoSubscriptionOptions options = ParamsHelper.CreateParam<VideoSubscriptionOptions>();
 
-            var nRet = RtcEngine.SetRemoteVideoSubscriptionOptions(uid, options);
+            var nRet = RtcEngineS.SetRemoteVideoSubscriptionOptions(userAccount, options);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetSubscribeAudioBlocklist()
+        public void Test_IRtcEngineSSetSubscribeAudioBlocklist()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNumber = ParamsHelper.CreateParam<int>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNumber = ParamsHelper.CreateParam<int>();
 
-            var nRet = RtcEngine.SetSubscribeAudioBlocklist(uidList, uidNumber);
+            var nRet = RtcEngineS.SetSubscribeAudioBlocklist(userAccountList, userAccountNumber);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetSubscribeAudioAllowlist()
+        public void Test_IRtcEngineSSetSubscribeAudioAllowlist()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNumber = ParamsHelper.CreateParam<int>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNumber = ParamsHelper.CreateParam<int>();
 
-            var nRet = RtcEngine.SetSubscribeAudioAllowlist(uidList, uidNumber);
+            var nRet = RtcEngineS.SetSubscribeAudioAllowlist(userAccountList, userAccountNumber);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetSubscribeVideoBlocklist()
+        public void Test_IRtcEngineSSetSubscribeVideoBlocklist()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNumber = ParamsHelper.CreateParam<int>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNumber = ParamsHelper.CreateParam<int>();
 
-            var nRet = RtcEngine.SetSubscribeVideoBlocklist(uidList, uidNumber);
+            var nRet = RtcEngineS.SetSubscribeVideoBlocklist(userAccountList, userAccountNumber);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetSubscribeVideoAllowlist()
+        public void Test_IRtcEngineSSetSubscribeVideoAllowlist()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNumber = ParamsHelper.CreateParam<int>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNumber = ParamsHelper.CreateParam<int>();
 
-            var nRet = RtcEngine.SetSubscribeVideoAllowlist(uidList, uidNumber);
+            var nRet = RtcEngineS.SetSubscribeVideoAllowlist(userAccountList, userAccountNumber);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineCreateMediaRecorder()
+        public void Test_IRtcEngineSCreateMediaRecorder()
         {
-            RecorderStreamInfo info = ParamsHelper.CreateParam<RecorderStreamInfo>();
+            RecorderStreamInfoS info = ParamsHelper.CreateParam<RecorderStreamInfoS>();
 
-            var nRet = RtcEngine.CreateMediaRecorder(info);
+            var nRet = RtcEngineS.CreateMediaRecorder(info);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineDestroyMediaRecorder()
+        public void Test_IRtcEngineSDestroyMediaRecorder()
         {
-            IMediaRecorder mediaRecorder = ParamsHelper.CreateParam<IMediaRecorder>();
+            IMediaRecorderS mediaRecorderS = ParamsHelper.CreateParam<IMediaRecorderS>();
 
-            var nRet = RtcEngine.DestroyMediaRecorder(mediaRecorder);
+            var nRet = RtcEngineS.DestroyMediaRecorder(mediaRecorderS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteVoicePosition()
+        public void Test_IRtcEngineSSetRemoteVoicePosition()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             double pan = ParamsHelper.CreateParam<double>();
             double gain = ParamsHelper.CreateParam<double>();
 
-            var nRet = RtcEngine.SetRemoteVoicePosition(uid, pan, gain);
+            var nRet = RtcEngineS.SetRemoteVoicePosition(userAccount, pan, gain);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteUserSpatialAudioParams()
+        public void Test_IRtcEngineSSetRemoteUserSpatialAudioParams()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             SpatialAudioParams @params = ParamsHelper.CreateParam<SpatialAudioParams>();
 
-            var nRet = RtcEngine.SetRemoteUserSpatialAudioParams(uid, @params);
+            var nRet = RtcEngineS.SetRemoteUserSpatialAudioParams(userAccount, @params);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteRenderMode()
+        public void Test_IRtcEngineSSetRemoteRenderMode()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             RENDER_MODE_TYPE renderMode = ParamsHelper.CreateParam<RENDER_MODE_TYPE>();
             VIDEO_MIRROR_MODE_TYPE mirrorMode = ParamsHelper.CreateParam<VIDEO_MIRROR_MODE_TYPE>();
 
-            var nRet = RtcEngine.SetRemoteRenderMode(uid, renderMode, mirrorMode);
+            var nRet = RtcEngineS.SetRemoteRenderMode(userAccount, renderMode, mirrorMode);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineRegisterAudioSpectrumObserver()
+        public void Test_IRtcEngineSRegisterAudioSpectrumObserver()
         {
-            IAudioSpectrumObserver observer = ParamsHelper.CreateParam<IAudioSpectrumObserver>();
+            IAudioSpectrumObserverS observerS = ParamsHelper.CreateParam<IAudioSpectrumObserverS>();
 
-            var nRet = RtcEngine.RegisterAudioSpectrumObserver(observer);
+            var nRet = RtcEngineS.RegisterAudioSpectrumObserver(observerS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineUnregisterAudioSpectrumObserver()
+        public void Test_IRtcEngineSUnregisterAudioSpectrumObserver()
         {
+            IAudioSpectrumObserverS observerS = ParamsHelper.CreateParam<IAudioSpectrumObserverS>();
 
-
-            var nRet = RtcEngine.UnregisterAudioSpectrumObserver();
+            var nRet = RtcEngineS.UnregisterAudioSpectrumObserver();
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustUserPlaybackSignalVolume()
+        public void Test_IRtcEngineSAdjustUserPlaybackSignalVolume()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             int volume = ParamsHelper.CreateParam<int>();
 
-            var nRet = RtcEngine.AdjustUserPlaybackSignalVolume(uid, volume);
+            var nRet = RtcEngineS.AdjustUserPlaybackSignalVolume(userAccount, volume);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetHighPriorityUserList()
+        public void Test_IRtcEngineSSetHighPriorityUserList()
         {
-            uint[] uidList = ParamsHelper.CreateParam<uint[]>();
-            int uidNum = ParamsHelper.CreateParam<int>();
+            string[] userAccountList = ParamsHelper.CreateParam<string[]>();
+            int userAccountNum = ParamsHelper.CreateParam<int>();
             STREAM_FALLBACK_OPTIONS option = ParamsHelper.CreateParam<STREAM_FALLBACK_OPTIONS>();
 
-            var nRet = RtcEngine.SetHighPriorityUserList(uidList, uidNum, option);
+            var nRet = RtcEngineS.SetHighPriorityUserList(userAccountList, userAccountNum, option);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineEnableExtension()
+        public void Test_IRtcEngineSEnableExtension()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
-            ExtensionInfo extensionInfo = ParamsHelper.CreateParam<ExtensionInfo>();
+            ExtensionInfoS extensionInfoS = ParamsHelper.CreateParam<ExtensionInfoS>();
             bool enable = ParamsHelper.CreateParam<bool>();
 
-            var nRet = RtcEngine.EnableExtension(provider, extension, extensionInfo, enable);
+            var nRet = RtcEngineS.EnableExtension(provider, extension, extensionInfoS, enable);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetExtensionProperty()
+        public void Test_IRtcEngineSSetExtensionProperty()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
-            ExtensionInfo extensionInfo = ParamsHelper.CreateParam<ExtensionInfo>();
+            ExtensionInfoS extensionInfoS = ParamsHelper.CreateParam<ExtensionInfoS>();
             string key = ParamsHelper.CreateParam<string>();
             string value = ParamsHelper.CreateParam<string>();
 
-            var nRet = RtcEngine.SetExtensionProperty(provider, extension, extensionInfo, key, value);
+            var nRet = RtcEngineS.SetExtensionProperty(provider, extension, extensionInfoS, key, value);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineGetExtensionProperty()
+        public void Test_IRtcEngineSGetExtensionProperty()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
-            ExtensionInfo extensionInfo = ParamsHelper.CreateParam<ExtensionInfo>();
+            ExtensionInfoS extensionInfoS = ParamsHelper.CreateParam<ExtensionInfoS>();
             string key = ParamsHelper.CreateParam<string>();
             string value = ParamsHelper.CreateParam<string>();
             int buf_len = ParamsHelper.CreateParam<int>();
 
-            var nRet = RtcEngine.GetExtensionProperty(provider, extension, extensionInfo, key, ref value, buf_len);
+            var nRet = RtcEngineS.GetExtensionProperty(provider, extension, extensionInfoS, key, ref value, buf_len);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineStartRtmpStreamWithTranscoding()
+        public void Test_IRtcEngineSStartRtmpStreamWithTranscoding()
         {
             string url = ParamsHelper.CreateParam<string>();
-            LiveTranscoding transcoding = ParamsHelper.CreateParam<LiveTranscoding>();
+            LiveTranscodingS transcodingS = ParamsHelper.CreateParam<LiveTranscodingS>();
 
-            var nRet = RtcEngine.StartRtmpStreamWithTranscoding(url, transcoding);
+            var nRet = RtcEngineS.StartRtmpStreamWithTranscoding(url, transcodingS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineUpdateRtmpTranscoding()
+        public void Test_IRtcEngineSUpdateRtmpTranscoding()
         {
-            LiveTranscoding transcoding = ParamsHelper.CreateParam<LiveTranscoding>();
+            LiveTranscodingS transcodingS = ParamsHelper.CreateParam<LiveTranscodingS>();
 
-            var nRet = RtcEngine.UpdateRtmpTranscoding(transcoding);
+            var nRet = RtcEngineS.UpdateRtmpTranscoding(transcodingS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineStartLocalVideoTranscoder()
+        public void Test_IRtcEngineSStartLocalVideoTranscoder()
         {
-            LocalTranscoderConfiguration config = ParamsHelper.CreateParam<LocalTranscoderConfiguration>();
+            LocalTranscoderConfigurationS configS = ParamsHelper.CreateParam<LocalTranscoderConfigurationS>();
 
-            var nRet = RtcEngine.StartLocalVideoTranscoder(config);
+            var nRet = RtcEngineS.StartLocalVideoTranscoder(configS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineUpdateLocalTranscoderConfiguration()
+        public void Test_IRtcEngineSUpdateLocalTranscoderConfiguration()
         {
-            LocalTranscoderConfiguration config = ParamsHelper.CreateParam<LocalTranscoderConfiguration>();
+            LocalTranscoderConfigurationS configS = ParamsHelper.CreateParam<LocalTranscoderConfigurationS>();
 
-            var nRet = RtcEngine.UpdateLocalTranscoderConfiguration(config);
+            var nRet = RtcEngineS.UpdateLocalTranscoderConfiguration(configS);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteUserPriority()
+        public void Test_IRtcEngineSSetRemoteUserPriority()
         {
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             PRIORITY_TYPE userPriority = ParamsHelper.CreateParam<PRIORITY_TYPE>();
 
-            var nRet = RtcEngine.SetRemoteUserPriority(uid, userPriority);
+            var nRet = RtcEngineS.SetRemoteUserPriority(userAccount, userPriority);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetEncryptionMode()
+        public void Test_IRtcEngineSRegisterMediaMetadataObserver()
         {
-            string encryptionMode = ParamsHelper.CreateParam<string>();
-
-            var nRet = RtcEngine.SetEncryptionMode(encryptionMode);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineSetEncryptionSecret()
-        {
-            string secret = ParamsHelper.CreateParam<string>();
-
-            var nRet = RtcEngine.SetEncryptionSecret(secret);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineAddVideoWatermark()
-        {
-            RtcImage watermark = ParamsHelper.CreateParam<RtcImage>();
-
-            var nRet = RtcEngine.AddVideoWatermark(watermark);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEnginePauseAudio()
-        {
-
-
-            var nRet = RtcEngine.PauseAudio();
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineResumeAudio()
-        {
-
-
-            var nRet = RtcEngine.ResumeAudio();
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineEnableWebSdkInteroperability()
-        {
-            bool enabled = ParamsHelper.CreateParam<bool>();
-
-            var nRet = RtcEngine.EnableWebSdkInteroperability(enabled);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineRegisterMediaMetadataObserver()
-        {
-            IMetadataObserver observer = ParamsHelper.CreateParam<IMetadataObserver>();
+            IMetadataObserverS observerS = ParamsHelper.CreateParam<IMetadataObserverS>();
             METADATA_TYPE type = ParamsHelper.CreateParam<METADATA_TYPE>();
 
-            var nRet = RtcEngine.RegisterMediaMetadataObserver(observer, type);
+            var nRet = RtcEngineS.RegisterMediaMetadataObserver(observerS, type);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineUnregisterMediaMetadataObserver()
+        public void Test_IRtcEngineSUnregisterMediaMetadataObserver()
         {
+            IMetadataObserverS observerS = ParamsHelper.CreateParam<IMetadataObserverS>();
 
-
-            var nRet = RtcEngine.UnregisterMediaMetadataObserver();
+            var nRet = RtcEngineS.UnregisterMediaMetadataObserver();
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineStartAudioFrameDump()
+        public void Test_IRtcEngineSStartAudioFrameDump()
         {
             string channel_id = ParamsHelper.CreateParam<string>();
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             string location = ParamsHelper.CreateParam<string>();
             string uuid = ParamsHelper.CreateParam<string>();
             string passwd = ParamsHelper.CreateParam<string>();
             long duration_ms = ParamsHelper.CreateParam<long>();
             bool auto_upload = ParamsHelper.CreateParam<bool>();
 
-            var nRet = RtcEngine.StartAudioFrameDump(channel_id, uid, location, uuid, passwd, duration_ms, auto_upload);
+            var nRet = RtcEngineS.StartAudioFrameDump(channel_id, userAccount, location, uuid, passwd, duration_ms, auto_upload);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineStopAudioFrameDump()
+        public void Test_IRtcEngineSStopAudioFrameDump()
         {
             string channel_id = ParamsHelper.CreateParam<string>();
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
             string location = ParamsHelper.CreateParam<string>();
 
-            var nRet = RtcEngine.StopAudioFrameDump(channel_id, uid, location);
+            var nRet = RtcEngineS.StopAudioFrameDump(channel_id, userAccount, location);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineRegisterLocalUserAccount()
+        public void Test_IRtcEngineSStartOrUpdateChannelMediaRelay()
         {
-            string appId = ParamsHelper.CreateParam<string>();
-            string userAccount = ParamsHelper.CreateParam<string>();
+            ChannelMediaRelayConfigurationS configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfigurationS>();
 
-            var nRet = RtcEngine.RegisterLocalUserAccount(appId, userAccount);
+            var nRet = RtcEngineS.StartOrUpdateChannelMediaRelay(configuration);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineJoinChannelWithUserAccount()
-        {
-            string token = ParamsHelper.CreateParam<string>();
-            string channelId = ParamsHelper.CreateParam<string>();
-            string userAccount = ParamsHelper.CreateParam<string>();
-
-            var nRet = RtcEngine.JoinChannelWithUserAccount(token, channelId, userAccount);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineJoinChannelWithUserAccount2()
-        {
-            string token = ParamsHelper.CreateParam<string>();
-            string channelId = ParamsHelper.CreateParam<string>();
-            string userAccount = ParamsHelper.CreateParam<string>();
-            ChannelMediaOptions options = ParamsHelper.CreateParam<ChannelMediaOptions>();
-
-            var nRet = RtcEngine.JoinChannelWithUserAccount(token, channelId, userAccount, options);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineGetUserInfoByUserAccount()
+        public void Test_IRtcEngineSTakeSnapshot()
         {
             string userAccount = ParamsHelper.CreateParam<string>();
-            UserInfo userInfo = ParamsHelper.CreateParam<UserInfo>();
-
-            var nRet = RtcEngine.GetUserInfoByUserAccount(userAccount, ref userInfo);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineGetUserInfoByUid()
-        {
-            uint uid = ParamsHelper.CreateParam<uint>();
-            UserInfo userInfo = ParamsHelper.CreateParam<UserInfo>();
-
-            var nRet = RtcEngine.GetUserInfoByUid(uid, ref userInfo);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineStartOrUpdateChannelMediaRelay()
-        {
-            ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
-
-            var nRet = RtcEngine.StartOrUpdateChannelMediaRelay(configuration);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineStartChannelMediaRelay()
-        {
-            ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
-
-            var nRet = RtcEngine.StartChannelMediaRelay(configuration);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineUpdateChannelMediaRelay()
-        {
-            ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
-
-            var nRet = RtcEngine.UpdateChannelMediaRelay(configuration);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineTakeSnapshot()
-        {
-            uint uid = ParamsHelper.CreateParam<uint>();
             string filePath = ParamsHelper.CreateParam<string>();
 
-            var nRet = RtcEngine.TakeSnapshot(uid, filePath);
+            var nRet = RtcEngineS.TakeSnapshot(userAccount, filePath);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetAVSyncSource()
+        public void Test_IRtcEngineSSetAVSyncSource()
         {
             string channelId = ParamsHelper.CreateParam<string>();
-            uint uid = ParamsHelper.CreateParam<uint>();
+            string userAccount = ParamsHelper.CreateParam<string>();
 
-            var nRet = RtcEngine.SetAVSyncSource(channelId, uid);
+            var nRet = RtcEngineS.SetAVSyncSource(channelId, userAccount);
             Assert.AreEqual(0, nRet);
         }
-
-        [Test]
-        public void Test_IRtcEngineStartScreenCaptureByScreenRect()
-        {
-            Rectangle screenRect = ParamsHelper.CreateParam<Rectangle>();
-            Rectangle regionRect = ParamsHelper.CreateParam<Rectangle>();
-            ScreenCaptureParameters captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters>();
-
-            var nRet = RtcEngine.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
-            Assert.AreEqual(0, nRet);
-        }
-        #endregion terra IRtcEngine
+        #endregion terra IRtcEngineS
 
         #region terra IMediaEngineBase
 
@@ -2853,22 +2668,22 @@ namespace Agora.Rtc
 
         #endregion terra IMediaEngineBase
 
-        #region terra IMediaEngine
+        #region terra IMediaEngineS
 
         [Test]
-        public void Test_IMediaEnginePushEncodedVideoImage()
+        public void Test_IMediaEngineSPushEncodedVideoImage()
         {
             byte[] imageBuffer = ParamsHelper.CreateParam<byte[]>();
             ulong length = ParamsHelper.CreateParam<ulong>();
-            EncodedVideoFrameInfo videoEncodedFrameInfo = ParamsHelper.CreateParam<EncodedVideoFrameInfo>();
+            EncodedVideoFrameInfoS videoEncodedFrameInfo = ParamsHelper.CreateParam<EncodedVideoFrameInfoS>();
             uint videoTrackId = ParamsHelper.CreateParam<uint>();
 
-            var nRet = MediaEngine.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
+            var nRet = MediaEngineS.PushEncodedVideoImage(imageBuffer, length, videoEncodedFrameInfo, videoTrackId);
             Assert.AreEqual(0, nRet);
         }
 
 
-        #endregion terra IMediaEngine
+        #endregion terra IMediaEngineS
     }
 
 }

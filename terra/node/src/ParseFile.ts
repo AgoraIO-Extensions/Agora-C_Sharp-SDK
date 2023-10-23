@@ -24,7 +24,7 @@ export class ParseFile {
         let array: TerraNode[] = config.getTerraNodeByHeadFile(info.name)
         if (array == null) {
             console.error("parseFile failed, no such file: " + info.name);
-            exit(0);
+            return null;
         }
 
         let outputStr = "";

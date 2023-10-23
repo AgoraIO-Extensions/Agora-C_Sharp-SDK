@@ -3,38 +3,37 @@ using Agora.Rtc;
 using NUnit.Framework;
 namespace Agora.Rtc
 {
-    public class UnitTest_IMediaRecorder
+    public class UnitTest_IMediaRecorderS
     {
-        public IRtcEngine Engine;
-        public IMediaRecorder MediaRecorder;
+        public IRtcEngineS EngineS;
+        public IMediaRecorder MediaRecorderS;
 
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
-            RtcEngineContext rtcEngineContext;
+            EngineS = RtcEngineS.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngineS());
+            RtcEngineContextS rtcEngineContext;
             ParamsHelper.InitParam(out rtcEngineContext);
-            int nRet = Engine.Initialize(rtcEngineContext);
+            int nRet = EngineS.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
-            MediaRecorder = Engine.CreateMediaRecorder(new RecorderStreamInfo("10", 10));
+            MediaRecorderS = EngineS.CreateMediaRecorder(new RecorderStreamInfoS("10", "10"));
         }
 
         [TearDown]
         public void TearDown()
         {
-            Engine.DestroyMediaRecorder(MediaRecorder);
-            Engine.Dispose();
+            EngineS.DestroyMediaRecorder(MediaRecorderS);
+            EngineS.Dispose();
         }
 
-
-        #region terra IMediaRecorder
+        #region terra IMediaRecorderS
 
         [Test]
         public void Test_StartRecording()
         {
             MediaRecorderConfiguration config = ParamsHelper.CreateParam<MediaRecorderConfiguration>();
 
-            var nRet = MediaRecorder.StartRecording(config);
+            var nRet = MediaRecorderS.StartRecording(config);
             Assert.AreEqual(0, nRet);
         }
 
@@ -43,9 +42,9 @@ namespace Agora.Rtc
         {
 
 
-            var nRet = MediaRecorder.StopRecording();
+            var nRet = MediaRecorderS.StopRecording();
             Assert.AreEqual(0, nRet);
         }
-        #endregion terra IMediaRecorder
+        #endregion terra IMediaRecorderS
     }
 }

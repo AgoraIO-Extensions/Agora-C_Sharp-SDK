@@ -30,6 +30,7 @@ export class ParseTemplate {
                     var template = templateJson[nodeName];
                     if (template == null) {
                         distLines[i - 1] = `Not find node name: ${nodeName}`;
+                        return;
                     }
                     else {
                         if (template.type == TemplateType.ClazzStruct) {
@@ -43,6 +44,10 @@ export class ParseTemplate {
                         else if (template.type == TemplateType.File) {
                             var parseFile = new ParseFile();
                             distLines[i - 1] = parseFile.parse(template, templateJson);
+                        }
+                        if (distLines[i - 1] == null) {
+                            //if cant find class,enum or file. Will not write file back. 
+                            return;
                         }
                     }
                     nodeName = null;

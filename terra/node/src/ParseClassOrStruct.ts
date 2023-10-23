@@ -20,7 +20,7 @@ export class ParseClassOrStruct {
         clazz == null && (clazz = config.getClassOrStruct(info.name, info.namespaces));
         if (clazz == null) {
             console.error("cant find class or struct : " + info.name);
-            exit(0);
+            return null;
         }
         let methodRepeatMap: Map<string, number> = new Map();
         this._parse(templateJson, clazz, info.trackBackFather ? info.trackBackFather : 0, result, info.name, info, methodRepeatMap);

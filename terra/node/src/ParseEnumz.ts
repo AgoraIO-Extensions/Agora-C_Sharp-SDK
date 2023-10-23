@@ -21,7 +21,7 @@ export class ParseEnumz {
         enumz == null && (enumz = config.getEnumz(info.name));
         if (enumz == null) {
             console.error("cant find enumz  : " + info.name);
-            exit(0);
+            return null;
         }
 
         this._parse(enumz, result, info.name, info, templateJson);

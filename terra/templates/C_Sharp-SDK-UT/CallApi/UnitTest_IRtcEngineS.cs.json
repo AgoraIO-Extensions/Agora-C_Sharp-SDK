@@ -16,9 +16,9 @@
         "commonMemberTemplate": "",
         "pecialMembersTemplate": ""
     },
-    "IRtcEngine": {
+    "IRtcEngineS": {
         "type": "ClazzStruct",
-        "name": "IRtcEngine",
+        "name": "IRtcEngineS",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_unitTest_compare_0",
         "excludeMethods": [
@@ -51,9 +51,9 @@
         "commonMemberTemplate": "",
         "pecialMembersTemplate": ""
     },
-    "IMediaEngine": {
+    "IMediaEngineS": {
         "type": "ClazzStruct",
-        "name": "IMediaEngine",
+        "name": "IMediaEngineS",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_unitTest_compare_0",
         "excludeMethods": [
