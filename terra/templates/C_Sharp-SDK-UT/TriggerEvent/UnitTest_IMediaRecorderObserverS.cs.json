@@ -1,0 +1,14 @@
+{
+    "IMediaRecorderObserverS": {
+        "type": "ClazzStruct",
+        "name": "IMediaRecorderObserverS",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_event_compare",
+        "excludeMethods": [],
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "pecialMembersTemplate": "",
+        "trackBackFather": 1
+    },
+    "method_event_compare": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateUnitTest_ICommonObserver}"
+}

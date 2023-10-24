@@ -32,8 +32,8 @@ new ParseEngine(
     "/Users/xiayangqun/Documents/agoraSpace/terra_shared_configs/headers/rtc_4.3.0/include"
 );
 
-var data = Tool.getCppConstructor("ChannelMediaInfoS", "/Users/xiayangqun/Documents/agoraSpace/terra_shared_configs/headers/rtc_4.3.0/include/AgoraBaseS.h")
-console.log(JSON.stringify(data));
+// var data = Tool.getCppConstructor("ChannelMediaInfoS", "/Users/xiayangqun/Documents/agoraSpace/terra_shared_configs/headers/rtc_4.3.0/include/AgoraBaseS.h")
+// console.log(JSON.stringify(data));
 execSync("dotnet format ../../Agora-C_Sharp_RTC-SDK_UT/Agora_C_Sharp_SDK_UT.sln");
 // DeleteAllOldDoc();
 // AddAllDocTag();

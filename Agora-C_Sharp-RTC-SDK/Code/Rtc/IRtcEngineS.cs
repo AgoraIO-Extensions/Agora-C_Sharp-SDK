@@ -79,7 +79,7 @@ namespace Agora.Rtc
         public abstract int RegisterAudioSpectrumObserver(IAudioSpectrumObserverS observerS);
 
 
-        public abstract int UnregisterAudioSpectrumObserver(IAudioSpectrumObserverS observerS);
+        public abstract int UnregisterAudioSpectrumObserver();
 
 
         public abstract int AdjustUserPlaybackSignalVolume(string userAccount, int volume);
@@ -115,7 +115,7 @@ namespace Agora.Rtc
         public abstract int RegisterMediaMetadataObserver(IMetadataObserverS observerS, METADATA_TYPE type);
 
 
-        public abstract int UnregisterMediaMetadataObserver(IMetadataObserverS observerS);
+        public abstract int UnregisterMediaMetadataObserver();
 
 
         public abstract int StartAudioFrameDump(string channel_id, string userAccount, string location, string uuid, string passwd, long duration_ms, bool auto_upload);

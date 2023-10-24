@@ -20,7 +20,7 @@ export class ParamTypeTrans {
 
     public transType(clazzName: string, funName: string, cxxTypeSource: string, cxxParamName: string): string {
         // // if (cxxTypeSource == 'uid_t') {
-        console.log(cxxTypeSource + " : " + cxxParamName);
+        // console.log(cxxTypeSource + " : " + cxxParamName);
         // // }
 
         if (funName == null || funName == "") {
@@ -33,7 +33,7 @@ export class ParamTypeTrans {
         else {
             //是否匹配了 方法名字属性
             let methodParamType = clazzName + "." + funName + "." + cxxParamName;
-            console.log("class.method.name:" + methodParamType)
+            // console.log("class.method.name:" + methodParamType)
             if (this._specialMethodParamMap[methodParamType]) {
                 return this._specialMethodParamMap[methodParamType];
             }

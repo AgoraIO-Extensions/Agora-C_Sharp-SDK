@@ -1,9 +1,9 @@
 ﻿using System;
 namespace Agora.Rtc
 {
-    public class UTVideoFrameObserver : IVideoFrameObserver
+    public class UTVideoFrameObserverS : IVideoFrameObserverS
     {
-        #region terra IVideoFrameObserver
+        #region terra IVideoFrameObserverS
 
         public bool OnCaptureVideoFrame_be_trigger = false;
         public VIDEO_SOURCE_TYPE OnCaptureVideoFrame_sourceType;
@@ -120,20 +120,20 @@ namespace Agora.Rtc
 
         public bool OnRenderVideoFrame_be_trigger = false;
         public string OnRenderVideoFrame_channelId;
-        public uint OnRenderVideoFrame_remoteUid;
+        public string OnRenderVideoFrame_remoteUserId;
         public VideoFrame OnRenderVideoFrame_videoFrame;
 
-        public override bool OnRenderVideoFrame(string channelId, uint remoteUid, VideoFrame videoFrame)
+        public override bool OnRenderVideoFrame(string channelId, string remoteUserId, VideoFrame videoFrame)
         {
             OnRenderVideoFrame_be_trigger = true;
             OnRenderVideoFrame_channelId = channelId;
-            OnRenderVideoFrame_remoteUid = remoteUid;
+            OnRenderVideoFrame_remoteUserId = remoteUserId;
             OnRenderVideoFrame_videoFrame = videoFrame;
             return true;
 
         }
 
-        public bool OnRenderVideoFramePassed(string channelId, uint remoteUid, VideoFrame videoFrame)
+        public bool OnRenderVideoFramePassed(string channelId, string remoteUserId, VideoFrame videoFrame)
         {
 
             if (OnRenderVideoFrame_be_trigger == false)
@@ -141,7 +141,7 @@ namespace Agora.Rtc
 
             if (ParamsHelper.Compare<string>(OnRenderVideoFrame_channelId, channelId) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnRenderVideoFrame_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnRenderVideoFrame_remoteUserId, remoteUserId) == false)
                 return false;
             if (ParamsHelper.Compare<VideoFrame>(OnRenderVideoFrame_videoFrame, videoFrame) == false)
                 return false;
@@ -150,6 +150,6 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
-        #endregion terra IVideoFrameObserver
+        #endregion terra IVideoFrameObserverS
     }
 }

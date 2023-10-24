@@ -1,0 +1,22 @@
+{
+    "IVideoFrameObserverS": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserverS",
+        "namespaces": "agora::media",
+        "methodSplitSymbol": "\n\n",
+        "commonMethodTemplate": "method_event_compare",
+        "excludeMethods": [
+            "getVideoFrameProcessMode",
+            "getVideoFormatPreference",
+            "getRotationApplied",
+            "getObservedFramePosition",
+            "isExternal",
+            "getMirrorApplied"
+        ],
+        "memberSplitSymbol": "\n",
+        "commonMemberTemplate": "",
+        "pecialMembersTemplate": "",
+        "trackBackFather": 1
+    },
+    "method_event_compare": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateUnitTest_ICommonObserver}"
+}

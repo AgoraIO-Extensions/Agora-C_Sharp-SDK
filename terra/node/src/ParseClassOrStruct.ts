@@ -24,7 +24,7 @@ export class ParseClassOrStruct {
         }
         let methodRepeatMap: Map<string, number> = new Map();
         this._parse(templateJson, clazz, info.trackBackFather ? info.trackBackFather : 0, result, info.name, info, methodRepeatMap);
-        return result.join(info.memberSplitSymbol);
+        return result.join(info.memberSplitSymbol || "\n");
     }
 
     private _parse(templateJson: any, clazz: Clazz, trackBackFather: number, result: string[], clazzName: string, info: TemplateClassStruct, methodRepeatMap: Map<string, number>) {

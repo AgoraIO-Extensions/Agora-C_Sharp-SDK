@@ -1,0 +1,185 @@
+{
+    "IRtcEngineEventHandlerBase": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandlerBase",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
+    },
+    "IRtcEngineEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandler",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
+    },
+    "IRtcEngineEventHandlerEx": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandlerEx",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
+    },
+    "IRtcEngineEventHandlerS": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandlerS",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
+    },
+    "IRtcEngineEventHandlerExS": {
+        "type": "ClazzStruct",
+        "name": "IRtcEngineEventHandlerExS",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
+    },
+    "IDirectCdnStreamingEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IDirectCdnStreamingEventHandler",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IAudioEncodedFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IAudioEncodedFrameObserver",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IAudioFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IAudioFrameObserver",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IAudioFrameObserverBase": {
+        "type": "ClazzStruct",
+        "name": "IAudioFrameObserverBase",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IAudioSpectrumObserver": {
+        "type": "ClazzStruct",
+        "name": "IAudioSpectrumObserver",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IAudioSpectrumObserverS": {
+        "type": "ClazzStruct",
+        "name": "IAudioSpectrumObserverS",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IAudioPcmFrameSink": {
+        "type": "ClazzStruct",
+        "name": "IAudioPcmFrameSink",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IMediaPlayerCustomDataProvider": {
+        "type": "ClazzStruct",
+        "name": "IMediaPlayerCustomDataProvider",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IMediaPlayerSourceObserver": {
+        "type": "ClazzStruct",
+        "name": "IMediaPlayerSourceObserver",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IMediaRecorderObserver": {
+        "type": "ClazzStruct",
+        "name": "IMediaRecorderObserver",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IMediaRecorderObserverS": {
+        "type": "ClazzStruct",
+        "name": "IMediaRecorderObserverS",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IMetadataObserver": {
+        "type": "ClazzStruct",
+        "name": "IMetadataObserver",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IMetadataObserverS": {
+        "type": "ClazzStruct",
+        "name": "IMetadataObserverS",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IMusicContentCenterEventHandler": {
+        "type": "ClazzStruct",
+        "name": "IMusicContentCenterEventHandler",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IVideoEncodedFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IVideoEncodedFrameObserver",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IVideoEncodedFrameObserverS": {
+        "type": "ClazzStruct",
+        "name": "IVideoEncodedFrameObserverS",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IVideoFrameObserver": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserver",
+        "namespaces": "agora::media",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
+    },
+    "IVideoFrameObserverS": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserverS",
+        "methodSplitSymbol": "\n",
+        "memberSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1,
+        "hello": 1
+    },
+    "method_event_name": "internal const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-nMETHOD_NAME}\";"
+}

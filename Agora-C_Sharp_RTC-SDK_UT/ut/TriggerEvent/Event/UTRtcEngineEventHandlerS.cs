@@ -2,10 +2,10 @@
 using uid_t = System.UInt32;
 namespace Agora.Rtc
 {
-    public class UTRtcEngineEventHandler : IRtcEngineEventHandler
+    public class UTRtcEngineEventHandlerS : IRtcEngineEventHandlerS
     {
 
-        #region terra IRtcEngineEventHandler
+        #region terra IRtcEngineEventHandlerS
 
         public bool OnError_be_trigger = false;
         public int OnError_err;
@@ -735,27 +735,27 @@ namespace Agora.Rtc
 
         public bool OnProxyConnected_be_trigger = false;
         public string OnProxyConnected_channel;
-        public uint OnProxyConnected_uid;
+        public string OnProxyConnected_userAccount;
         public PROXY_TYPE OnProxyConnected_proxyType;
         public string OnProxyConnected_localProxyIp;
         public int OnProxyConnected_elapsed;
-        public override void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        public override void OnProxyConnected(string channel, string userAccount, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
         {
             OnProxyConnected_be_trigger = true;
             OnProxyConnected_channel = channel;
-            OnProxyConnected_uid = uid;
+            OnProxyConnected_userAccount = userAccount;
             OnProxyConnected_proxyType = proxyType;
             OnProxyConnected_localProxyIp = localProxyIp;
             OnProxyConnected_elapsed = elapsed;
         }
 
-        public bool OnProxyConnectedPassed(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        public bool OnProxyConnectedPassed(string channel, string userAccount, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
         {
             if (OnProxyConnected_be_trigger == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnProxyConnected_channel, channel) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnProxyConnected_uid, uid) == false)
+            if (ParamsHelper.Compare<string>(OnProxyConnected_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<PROXY_TYPE>(OnProxyConnected_proxyType, proxyType) == false)
                 return false;
@@ -767,63 +767,21 @@ namespace Agora.Rtc
         }
         //////////////////
 
-        public bool OnAudioMixingFinished_be_trigger = false;
-        public override void OnAudioMixingFinished()
-        {
-            OnAudioMixingFinished_be_trigger = true;
-        }
-
-        public bool OnAudioMixingFinishedPassed()
-        {
-            if (OnAudioMixingFinished_be_trigger == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnCameraReady_be_trigger = false;
-        public override void OnCameraReady()
-        {
-            OnCameraReady_be_trigger = true;
-        }
-
-        public bool OnCameraReadyPassed()
-        {
-            if (OnCameraReady_be_trigger == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnVideoStopped_be_trigger = false;
-        public override void OnVideoStopped()
-        {
-            OnVideoStopped_be_trigger = true;
-        }
-
-        public bool OnVideoStoppedPassed()
-        {
-            if (OnVideoStopped_be_trigger == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnRemoteSubscribeFallbackToAudioOnly_be_trigger = false;
-        public uint OnRemoteSubscribeFallbackToAudioOnly_uid;
+        public string OnRemoteSubscribeFallbackToAudioOnly_userAccount;
         public bool OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover;
-        public override void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
+        public override void OnRemoteSubscribeFallbackToAudioOnly(string userAccount, bool isFallbackOrRecover)
         {
             OnRemoteSubscribeFallbackToAudioOnly_be_trigger = true;
-            OnRemoteSubscribeFallbackToAudioOnly_uid = uid;
+            OnRemoteSubscribeFallbackToAudioOnly_userAccount = userAccount;
             OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover = isFallbackOrRecover;
         }
 
-        public bool OnRemoteSubscribeFallbackToAudioOnlyPassed(uint uid, bool isFallbackOrRecover)
+        public bool OnRemoteSubscribeFallbackToAudioOnlyPassed(string userAccount, bool isFallbackOrRecover)
         {
             if (OnRemoteSubscribeFallbackToAudioOnly_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnRemoteSubscribeFallbackToAudioOnly_uid, uid) == false)
+            if (ParamsHelper.Compare<string>(OnRemoteSubscribeFallbackToAudioOnly_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<bool>(OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover, isFallbackOrRecover) == false)
                 return false;
@@ -831,73 +789,29 @@ namespace Agora.Rtc
         }
         //////////////////
 
-        public bool OnLocalUserRegistered_be_trigger = false;
-        public uint OnLocalUserRegistered_uid;
-        public string OnLocalUserRegistered_userAccount;
-        public override void OnLocalUserRegistered(uint uid, string userAccount)
-        {
-            OnLocalUserRegistered_be_trigger = true;
-            OnLocalUserRegistered_uid = uid;
-            OnLocalUserRegistered_userAccount = userAccount;
-        }
-
-        public bool OnLocalUserRegisteredPassed(uint uid, string userAccount)
-        {
-            if (OnLocalUserRegistered_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnLocalUserRegistered_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLocalUserRegistered_userAccount, userAccount) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnUserInfoUpdated_be_trigger = false;
-        public uint OnUserInfoUpdated_uid;
-        public UserInfo OnUserInfoUpdated_info;
-        public override void OnUserInfoUpdated(uint uid, UserInfo info)
-        {
-            OnUserInfoUpdated_be_trigger = true;
-            OnUserInfoUpdated_uid = uid;
-            OnUserInfoUpdated_info = info;
-        }
-
-        public bool OnUserInfoUpdatedPassed(uint uid, UserInfo info)
-        {
-            if (OnUserInfoUpdated_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnUserInfoUpdated_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<UserInfo>(OnUserInfoUpdated_info, info) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnAudioSubscribeStateChanged_be_trigger = false;
         public string OnAudioSubscribeStateChanged_channel;
-        public uint OnAudioSubscribeStateChanged_uid;
+        public string OnAudioSubscribeStateChanged_userAccount;
         public STREAM_SUBSCRIBE_STATE OnAudioSubscribeStateChanged_oldState;
         public STREAM_SUBSCRIBE_STATE OnAudioSubscribeStateChanged_newState;
         public int OnAudioSubscribeStateChanged_elapseSinceLastState;
-        public override void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        public override void OnAudioSubscribeStateChanged(string channel, string userAccount, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
         {
             OnAudioSubscribeStateChanged_be_trigger = true;
             OnAudioSubscribeStateChanged_channel = channel;
-            OnAudioSubscribeStateChanged_uid = uid;
+            OnAudioSubscribeStateChanged_userAccount = userAccount;
             OnAudioSubscribeStateChanged_oldState = oldState;
             OnAudioSubscribeStateChanged_newState = newState;
             OnAudioSubscribeStateChanged_elapseSinceLastState = elapseSinceLastState;
         }
 
-        public bool OnAudioSubscribeStateChangedPassed(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        public bool OnAudioSubscribeStateChangedPassed(string channel, string userAccount, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
         {
             if (OnAudioSubscribeStateChanged_be_trigger == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnAudioSubscribeStateChanged_channel, channel) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnAudioSubscribeStateChanged_uid, uid) == false)
+            if (ParamsHelper.Compare<string>(OnAudioSubscribeStateChanged_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_oldState, oldState) == false)
                 return false;
@@ -911,27 +825,27 @@ namespace Agora.Rtc
 
         public bool OnVideoSubscribeStateChanged_be_trigger = false;
         public string OnVideoSubscribeStateChanged_channel;
-        public uint OnVideoSubscribeStateChanged_uid;
+        public string OnVideoSubscribeStateChanged_userAccount;
         public STREAM_SUBSCRIBE_STATE OnVideoSubscribeStateChanged_oldState;
         public STREAM_SUBSCRIBE_STATE OnVideoSubscribeStateChanged_newState;
         public int OnVideoSubscribeStateChanged_elapseSinceLastState;
-        public override void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        public override void OnVideoSubscribeStateChanged(string channel, string userAccount, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
         {
             OnVideoSubscribeStateChanged_be_trigger = true;
             OnVideoSubscribeStateChanged_channel = channel;
-            OnVideoSubscribeStateChanged_uid = uid;
+            OnVideoSubscribeStateChanged_userAccount = userAccount;
             OnVideoSubscribeStateChanged_oldState = oldState;
             OnVideoSubscribeStateChanged_newState = newState;
             OnVideoSubscribeStateChanged_elapseSinceLastState = elapseSinceLastState;
         }
 
-        public bool OnVideoSubscribeStateChangedPassed(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        public bool OnVideoSubscribeStateChangedPassed(string channel, string userAccount, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
         {
             if (OnVideoSubscribeStateChanged_be_trigger == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnVideoSubscribeStateChanged_channel, channel) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnVideoSubscribeStateChanged_uid, uid) == false)
+            if (ParamsHelper.Compare<string>(OnVideoSubscribeStateChanged_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_oldState, oldState) == false)
                 return false;
@@ -944,20 +858,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnLocalVideoTranscoderError_be_trigger = false;
-        public TranscodingVideoStream OnLocalVideoTranscoderError_stream;
+        public TranscodingVideoStreamS OnLocalVideoTranscoderError_streamS;
         public VIDEO_TRANSCODER_ERROR OnLocalVideoTranscoderError_error;
-        public override void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        public override void OnLocalVideoTranscoderError(TranscodingVideoStreamS streamS, VIDEO_TRANSCODER_ERROR error)
         {
             OnLocalVideoTranscoderError_be_trigger = true;
-            OnLocalVideoTranscoderError_stream = stream;
+            OnLocalVideoTranscoderError_streamS = streamS;
             OnLocalVideoTranscoderError_error = error;
         }
 
-        public bool OnLocalVideoTranscoderErrorPassed(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        public bool OnLocalVideoTranscoderErrorPassed(TranscodingVideoStreamS streamS, VIDEO_TRANSCODER_ERROR error)
         {
             if (OnLocalVideoTranscoderError_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<TranscodingVideoStream>(OnLocalVideoTranscoderError_stream, stream) == false)
+            if (ParamsHelper.Compare<TranscodingVideoStreamS>(OnLocalVideoTranscoderError_streamS, streamS) == false)
                 return false;
             if (ParamsHelper.Compare<VIDEO_TRANSCODER_ERROR>(OnLocalVideoTranscoderError_error, error) == false)
                 return false;
@@ -966,20 +880,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnJoinChannelSuccess_be_trigger = false;
-        public RtcConnection OnJoinChannelSuccess_connection;
+        public RtcConnectionS OnJoinChannelSuccess_connectionS;
         public int OnJoinChannelSuccess_elapsed;
-        public override void OnJoinChannelSuccess(RtcConnection connection, int elapsed)
+        public override void OnJoinChannelSuccess(RtcConnectionS connectionS, int elapsed)
         {
             OnJoinChannelSuccess_be_trigger = true;
-            OnJoinChannelSuccess_connection = connection;
+            OnJoinChannelSuccess_connectionS = connectionS;
             OnJoinChannelSuccess_elapsed = elapsed;
         }
 
-        public bool OnJoinChannelSuccessPassed(RtcConnection connection, int elapsed)
+        public bool OnJoinChannelSuccessPassed(RtcConnectionS connectionS, int elapsed)
         {
             if (OnJoinChannelSuccess_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnJoinChannelSuccess_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnJoinChannelSuccess_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnJoinChannelSuccess_elapsed, elapsed) == false)
                 return false;
@@ -988,20 +902,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnRejoinChannelSuccess_be_trigger = false;
-        public RtcConnection OnRejoinChannelSuccess_connection;
+        public RtcConnectionS OnRejoinChannelSuccess_connectionS;
         public int OnRejoinChannelSuccess_elapsed;
-        public override void OnRejoinChannelSuccess(RtcConnection connection, int elapsed)
+        public override void OnRejoinChannelSuccess(RtcConnectionS connectionS, int elapsed)
         {
             OnRejoinChannelSuccess_be_trigger = true;
-            OnRejoinChannelSuccess_connection = connection;
+            OnRejoinChannelSuccess_connectionS = connectionS;
             OnRejoinChannelSuccess_elapsed = elapsed;
         }
 
-        public bool OnRejoinChannelSuccessPassed(RtcConnection connection, int elapsed)
+        public bool OnRejoinChannelSuccessPassed(RtcConnectionS connectionS, int elapsed)
         {
             if (OnRejoinChannelSuccess_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRejoinChannelSuccess_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRejoinChannelSuccess_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnRejoinChannelSuccess_elapsed, elapsed) == false)
                 return false;
@@ -1009,61 +923,27 @@ namespace Agora.Rtc
         }
         //////////////////
 
-        public bool OnAudioQuality_be_trigger = false;
-        public RtcConnection OnAudioQuality_connection;
-        public uint OnAudioQuality_remoteUid;
-        public int OnAudioQuality_quality;
-        public ushort OnAudioQuality_delay;
-        public ushort OnAudioQuality_lost;
-        public override void OnAudioQuality(RtcConnection connection, uint remoteUid, int quality, ushort delay, ushort lost)
-        {
-            OnAudioQuality_be_trigger = true;
-            OnAudioQuality_connection = connection;
-            OnAudioQuality_remoteUid = remoteUid;
-            OnAudioQuality_quality = quality;
-            OnAudioQuality_delay = delay;
-            OnAudioQuality_lost = lost;
-        }
-
-        public bool OnAudioQualityPassed(RtcConnection connection, uint remoteUid, int quality, ushort delay, ushort lost)
-        {
-            if (OnAudioQuality_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnAudioQuality_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnAudioQuality_remoteUid, remoteUid) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnAudioQuality_quality, quality) == false)
-                return false;
-            if (ParamsHelper.Compare<ushort>(OnAudioQuality_delay, delay) == false)
-                return false;
-            if (ParamsHelper.Compare<ushort>(OnAudioQuality_lost, lost) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnAudioVolumeIndication_be_trigger = false;
-        public RtcConnection OnAudioVolumeIndication_connection;
-        public AudioVolumeInfo[] OnAudioVolumeIndication_speakers;
+        public RtcConnectionS OnAudioVolumeIndication_connectionS;
+        public AudioVolumeInfoS[] OnAudioVolumeIndication_speakersS;
         public uint OnAudioVolumeIndication_speakerNumber;
         public int OnAudioVolumeIndication_totalVolume;
-        public override void OnAudioVolumeIndication(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume)
+        public override void OnAudioVolumeIndication(RtcConnectionS connectionS, AudioVolumeInfoS[] speakersS, uint speakerNumber, int totalVolume)
         {
             OnAudioVolumeIndication_be_trigger = true;
-            OnAudioVolumeIndication_connection = connection;
-            OnAudioVolumeIndication_speakers = speakers;
+            OnAudioVolumeIndication_connectionS = connectionS;
+            OnAudioVolumeIndication_speakersS = speakersS;
             OnAudioVolumeIndication_speakerNumber = speakerNumber;
             OnAudioVolumeIndication_totalVolume = totalVolume;
         }
 
-        public bool OnAudioVolumeIndicationPassed(RtcConnection connection, AudioVolumeInfo[] speakers, uint speakerNumber, int totalVolume)
+        public bool OnAudioVolumeIndicationPassed(RtcConnectionS connectionS, AudioVolumeInfoS[] speakersS, uint speakerNumber, int totalVolume)
         {
             if (OnAudioVolumeIndication_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnAudioVolumeIndication_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnAudioVolumeIndication_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<AudioVolumeInfo[]>(OnAudioVolumeIndication_speakers, speakers) == false)
+            if (ParamsHelper.Compare<AudioVolumeInfoS[]>(OnAudioVolumeIndication_speakersS, speakersS) == false)
                 return false;
             if (ParamsHelper.Compare<uint>(OnAudioVolumeIndication_speakerNumber, speakerNumber) == false)
                 return false;
@@ -1074,20 +954,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnLeaveChannel_be_trigger = false;
-        public RtcConnection OnLeaveChannel_connection;
+        public RtcConnectionS OnLeaveChannel_connectionS;
         public RtcStats OnLeaveChannel_stats;
-        public override void OnLeaveChannel(RtcConnection connection, RtcStats stats)
+        public override void OnLeaveChannel(RtcConnectionS connectionS, RtcStats stats)
         {
             OnLeaveChannel_be_trigger = true;
-            OnLeaveChannel_connection = connection;
+            OnLeaveChannel_connectionS = connectionS;
             OnLeaveChannel_stats = stats;
         }
 
-        public bool OnLeaveChannelPassed(RtcConnection connection, RtcStats stats)
+        public bool OnLeaveChannelPassed(RtcConnectionS connectionS, RtcStats stats)
         {
             if (OnLeaveChannel_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnLeaveChannel_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLeaveChannel_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<RtcStats>(OnLeaveChannel_stats, stats) == false)
                 return false;
@@ -1096,20 +976,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnRtcStats_be_trigger = false;
-        public RtcConnection OnRtcStats_connection;
+        public RtcConnectionS OnRtcStats_connectionS;
         public RtcStats OnRtcStats_stats;
-        public override void OnRtcStats(RtcConnection connection, RtcStats stats)
+        public override void OnRtcStats(RtcConnectionS connectionS, RtcStats stats)
         {
             OnRtcStats_be_trigger = true;
-            OnRtcStats_connection = connection;
+            OnRtcStats_connectionS = connectionS;
             OnRtcStats_stats = stats;
         }
 
-        public bool OnRtcStatsPassed(RtcConnection connection, RtcStats stats)
+        public bool OnRtcStatsPassed(RtcConnectionS connectionS, RtcStats stats)
         {
             if (OnRtcStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRtcStats_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRtcStats_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<RtcStats>(OnRtcStats_stats, stats) == false)
                 return false;
@@ -1118,26 +998,26 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnNetworkQuality_be_trigger = false;
-        public RtcConnection OnNetworkQuality_connection;
-        public uint OnNetworkQuality_remoteUid;
+        public RtcConnectionS OnNetworkQuality_connectionS;
+        public string OnNetworkQuality_remoteUserAccount;
         public int OnNetworkQuality_txQuality;
         public int OnNetworkQuality_rxQuality;
-        public override void OnNetworkQuality(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality)
+        public override void OnNetworkQuality(RtcConnectionS connectionS, string remoteUserAccount, int txQuality, int rxQuality)
         {
             OnNetworkQuality_be_trigger = true;
-            OnNetworkQuality_connection = connection;
-            OnNetworkQuality_remoteUid = remoteUid;
+            OnNetworkQuality_connectionS = connectionS;
+            OnNetworkQuality_remoteUserAccount = remoteUserAccount;
             OnNetworkQuality_txQuality = txQuality;
             OnNetworkQuality_rxQuality = rxQuality;
         }
 
-        public bool OnNetworkQualityPassed(RtcConnection connection, uint remoteUid, int txQuality, int rxQuality)
+        public bool OnNetworkQualityPassed(RtcConnectionS connectionS, string remoteUserAccount, int txQuality, int rxQuality)
         {
             if (OnNetworkQuality_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnNetworkQuality_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnNetworkQuality_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnNetworkQuality_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnNetworkQuality_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnNetworkQuality_txQuality, txQuality) == false)
                 return false;
@@ -1148,38 +1028,38 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnIntraRequestReceived_be_trigger = false;
-        public RtcConnection OnIntraRequestReceived_connection;
-        public override void OnIntraRequestReceived(RtcConnection connection)
+        public RtcConnectionS OnIntraRequestReceived_connectionS;
+        public override void OnIntraRequestReceived(RtcConnectionS connectionS)
         {
             OnIntraRequestReceived_be_trigger = true;
-            OnIntraRequestReceived_connection = connection;
+            OnIntraRequestReceived_connectionS = connectionS;
         }
 
-        public bool OnIntraRequestReceivedPassed(RtcConnection connection)
+        public bool OnIntraRequestReceivedPassed(RtcConnectionS connectionS)
         {
             if (OnIntraRequestReceived_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnIntraRequestReceived_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnIntraRequestReceived_connectionS, connectionS) == false)
                 return false;
             return true;
         }
         //////////////////
 
         public bool OnFirstLocalVideoFramePublished_be_trigger = false;
-        public RtcConnection OnFirstLocalVideoFramePublished_connection;
+        public RtcConnectionS OnFirstLocalVideoFramePublished_connectionS;
         public int OnFirstLocalVideoFramePublished_elapsed;
-        public override void OnFirstLocalVideoFramePublished(RtcConnection connection, int elapsed)
+        public override void OnFirstLocalVideoFramePublished(RtcConnectionS connectionS, int elapsed)
         {
             OnFirstLocalVideoFramePublished_be_trigger = true;
-            OnFirstLocalVideoFramePublished_connection = connection;
+            OnFirstLocalVideoFramePublished_connectionS = connectionS;
             OnFirstLocalVideoFramePublished_elapsed = elapsed;
         }
 
-        public bool OnFirstLocalVideoFramePublishedPassed(RtcConnection connection, int elapsed)
+        public bool OnFirstLocalVideoFramePublishedPassed(RtcConnectionS connectionS, int elapsed)
         {
             if (OnFirstLocalVideoFramePublished_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnFirstLocalVideoFramePublished_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstLocalVideoFramePublished_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnFirstLocalVideoFramePublished_elapsed, elapsed) == false)
                 return false;
@@ -1188,28 +1068,28 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnFirstRemoteVideoDecoded_be_trigger = false;
-        public RtcConnection OnFirstRemoteVideoDecoded_connection;
-        public uint OnFirstRemoteVideoDecoded_remoteUid;
+        public RtcConnectionS OnFirstRemoteVideoDecoded_connectionS;
+        public string OnFirstRemoteVideoDecoded_remoteUserAccount;
         public int OnFirstRemoteVideoDecoded_width;
         public int OnFirstRemoteVideoDecoded_height;
         public int OnFirstRemoteVideoDecoded_elapsed;
-        public override void OnFirstRemoteVideoDecoded(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
+        public override void OnFirstRemoteVideoDecoded(RtcConnectionS connectionS, string remoteUserAccount, int width, int height, int elapsed)
         {
             OnFirstRemoteVideoDecoded_be_trigger = true;
-            OnFirstRemoteVideoDecoded_connection = connection;
-            OnFirstRemoteVideoDecoded_remoteUid = remoteUid;
+            OnFirstRemoteVideoDecoded_connectionS = connectionS;
+            OnFirstRemoteVideoDecoded_remoteUserAccount = remoteUserAccount;
             OnFirstRemoteVideoDecoded_width = width;
             OnFirstRemoteVideoDecoded_height = height;
             OnFirstRemoteVideoDecoded_elapsed = elapsed;
         }
 
-        public bool OnFirstRemoteVideoDecodedPassed(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
+        public bool OnFirstRemoteVideoDecodedPassed(RtcConnectionS connectionS, string remoteUserAccount, int width, int height, int elapsed)
         {
             if (OnFirstRemoteVideoDecoded_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteVideoDecoded_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstRemoteVideoDecoded_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnFirstRemoteVideoDecoded_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnFirstRemoteVideoDecoded_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnFirstRemoteVideoDecoded_width, width) == false)
                 return false;
@@ -1222,32 +1102,32 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnVideoSizeChanged_be_trigger = false;
-        public RtcConnection OnVideoSizeChanged_connection;
+        public RtcConnectionS OnVideoSizeChanged_connectionS;
         public VIDEO_SOURCE_TYPE OnVideoSizeChanged_sourceType;
-        public uint OnVideoSizeChanged_uid;
+        public string OnVideoSizeChanged_userAccount;
         public int OnVideoSizeChanged_width;
         public int OnVideoSizeChanged_height;
         public int OnVideoSizeChanged_rotation;
-        public override void OnVideoSizeChanged(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation)
+        public override void OnVideoSizeChanged(RtcConnectionS connectionS, VIDEO_SOURCE_TYPE sourceType, string userAccount, int width, int height, int rotation)
         {
             OnVideoSizeChanged_be_trigger = true;
-            OnVideoSizeChanged_connection = connection;
+            OnVideoSizeChanged_connectionS = connectionS;
             OnVideoSizeChanged_sourceType = sourceType;
-            OnVideoSizeChanged_uid = uid;
+            OnVideoSizeChanged_userAccount = userAccount;
             OnVideoSizeChanged_width = width;
             OnVideoSizeChanged_height = height;
             OnVideoSizeChanged_rotation = rotation;
         }
 
-        public bool OnVideoSizeChangedPassed(RtcConnection connection, VIDEO_SOURCE_TYPE sourceType, uint uid, int width, int height, int rotation)
+        public bool OnVideoSizeChangedPassed(RtcConnectionS connectionS, VIDEO_SOURCE_TYPE sourceType, string userAccount, int width, int height, int rotation)
         {
             if (OnVideoSizeChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnVideoSizeChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnVideoSizeChanged_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<VIDEO_SOURCE_TYPE>(OnVideoSizeChanged_sourceType, sourceType) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnVideoSizeChanged_uid, uid) == false)
+            if (ParamsHelper.Compare<string>(OnVideoSizeChanged_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnVideoSizeChanged_width, width) == false)
                 return false;
@@ -1260,22 +1140,22 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnLocalVideoStateChanged2_be_trigger = false;
-        public RtcConnection OnLocalVideoStateChanged2_connection;
+        public RtcConnectionS OnLocalVideoStateChanged2_connectionS;
         public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged2_state;
         public LOCAL_VIDEO_STREAM_ERROR OnLocalVideoStateChanged2_errorCode;
-        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public override void OnLocalVideoStateChanged(RtcConnectionS connectionS, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
         {
             OnLocalVideoStateChanged2_be_trigger = true;
-            OnLocalVideoStateChanged2_connection = connection;
+            OnLocalVideoStateChanged2_connectionS = connectionS;
             OnLocalVideoStateChanged2_state = state;
             OnLocalVideoStateChanged2_errorCode = errorCode;
         }
 
-        public bool OnLocalVideoStateChanged2Passed(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public bool OnLocalVideoStateChanged2Passed(RtcConnectionS connectionS, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
         {
             if (OnLocalVideoStateChanged2_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStateChanged2_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalVideoStateChanged2_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged2_state, state) == false)
                 return false;
@@ -1286,28 +1166,28 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnRemoteVideoStateChanged_be_trigger = false;
-        public RtcConnection OnRemoteVideoStateChanged_connection;
-        public uint OnRemoteVideoStateChanged_remoteUid;
+        public RtcConnectionS OnRemoteVideoStateChanged_connectionS;
+        public string OnRemoteVideoStateChanged_userAccount;
         public REMOTE_VIDEO_STATE OnRemoteVideoStateChanged_state;
         public REMOTE_VIDEO_STATE_REASON OnRemoteVideoStateChanged_reason;
         public int OnRemoteVideoStateChanged_elapsed;
-        public override void OnRemoteVideoStateChanged(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
+        public override void OnRemoteVideoStateChanged(RtcConnectionS connectionS, string userAccount, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
             OnRemoteVideoStateChanged_be_trigger = true;
-            OnRemoteVideoStateChanged_connection = connection;
-            OnRemoteVideoStateChanged_remoteUid = remoteUid;
+            OnRemoteVideoStateChanged_connectionS = connectionS;
+            OnRemoteVideoStateChanged_userAccount = userAccount;
             OnRemoteVideoStateChanged_state = state;
             OnRemoteVideoStateChanged_reason = reason;
             OnRemoteVideoStateChanged_elapsed = elapsed;
         }
 
-        public bool OnRemoteVideoStateChangedPassed(RtcConnection connection, uint remoteUid, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
+        public bool OnRemoteVideoStateChangedPassed(RtcConnectionS connectionS, string userAccount, REMOTE_VIDEO_STATE state, REMOTE_VIDEO_STATE_REASON reason, int elapsed)
         {
             if (OnRemoteVideoStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoStateChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteVideoStateChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnRemoteVideoStateChanged_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnRemoteVideoStateChanged_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<REMOTE_VIDEO_STATE>(OnRemoteVideoStateChanged_state, state) == false)
                 return false;
@@ -1320,28 +1200,28 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnFirstRemoteVideoFrame_be_trigger = false;
-        public RtcConnection OnFirstRemoteVideoFrame_connection;
-        public uint OnFirstRemoteVideoFrame_remoteUid;
+        public RtcConnectionS OnFirstRemoteVideoFrame_connectionS;
+        public string OnFirstRemoteVideoFrame_userAccount;
         public int OnFirstRemoteVideoFrame_width;
         public int OnFirstRemoteVideoFrame_height;
         public int OnFirstRemoteVideoFrame_elapsed;
-        public override void OnFirstRemoteVideoFrame(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
+        public override void OnFirstRemoteVideoFrame(RtcConnectionS connectionS, string userAccount, int width, int height, int elapsed)
         {
             OnFirstRemoteVideoFrame_be_trigger = true;
-            OnFirstRemoteVideoFrame_connection = connection;
-            OnFirstRemoteVideoFrame_remoteUid = remoteUid;
+            OnFirstRemoteVideoFrame_connectionS = connectionS;
+            OnFirstRemoteVideoFrame_userAccount = userAccount;
             OnFirstRemoteVideoFrame_width = width;
             OnFirstRemoteVideoFrame_height = height;
             OnFirstRemoteVideoFrame_elapsed = elapsed;
         }
 
-        public bool OnFirstRemoteVideoFramePassed(RtcConnection connection, uint remoteUid, int width, int height, int elapsed)
+        public bool OnFirstRemoteVideoFramePassed(RtcConnectionS connectionS, string userAccount, int width, int height, int elapsed)
         {
             if (OnFirstRemoteVideoFrame_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteVideoFrame_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstRemoteVideoFrame_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnFirstRemoteVideoFrame_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnFirstRemoteVideoFrame_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnFirstRemoteVideoFrame_width, width) == false)
                 return false;
@@ -1354,24 +1234,24 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnUserJoined_be_trigger = false;
-        public RtcConnection OnUserJoined_connection;
-        public uint OnUserJoined_remoteUid;
+        public RtcConnectionS OnUserJoined_connectionS;
+        public string OnUserJoined_userAccount;
         public int OnUserJoined_elapsed;
-        public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
+        public override void OnUserJoined(RtcConnectionS connectionS, string userAccount, int elapsed)
         {
             OnUserJoined_be_trigger = true;
-            OnUserJoined_connection = connection;
-            OnUserJoined_remoteUid = remoteUid;
+            OnUserJoined_connectionS = connectionS;
+            OnUserJoined_userAccount = userAccount;
             OnUserJoined_elapsed = elapsed;
         }
 
-        public bool OnUserJoinedPassed(RtcConnection connection, uint remoteUid, int elapsed)
+        public bool OnUserJoinedPassed(RtcConnectionS connectionS, string userAccount, int elapsed)
         {
             if (OnUserJoined_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUserJoined_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserJoined_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnUserJoined_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnUserJoined_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnUserJoined_elapsed, elapsed) == false)
                 return false;
@@ -1380,24 +1260,24 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnUserOffline_be_trigger = false;
-        public RtcConnection OnUserOffline_connection;
-        public uint OnUserOffline_remoteUid;
+        public RtcConnectionS OnUserOffline_connectionS;
+        public string OnUserOffline_userAccount;
         public USER_OFFLINE_REASON_TYPE OnUserOffline_reason;
-        public override void OnUserOffline(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
+        public override void OnUserOffline(RtcConnectionS connectionS, string userAccount, USER_OFFLINE_REASON_TYPE reason)
         {
             OnUserOffline_be_trigger = true;
-            OnUserOffline_connection = connection;
-            OnUserOffline_remoteUid = remoteUid;
+            OnUserOffline_connectionS = connectionS;
+            OnUserOffline_userAccount = userAccount;
             OnUserOffline_reason = reason;
         }
 
-        public bool OnUserOfflinePassed(RtcConnection connection, uint remoteUid, USER_OFFLINE_REASON_TYPE reason)
+        public bool OnUserOfflinePassed(RtcConnectionS connectionS, string userAccount, USER_OFFLINE_REASON_TYPE reason)
         {
             if (OnUserOffline_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUserOffline_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserOffline_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnUserOffline_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnUserOffline_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<USER_OFFLINE_REASON_TYPE>(OnUserOffline_reason, reason) == false)
                 return false;
@@ -1406,24 +1286,24 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnUserMuteAudio_be_trigger = false;
-        public RtcConnection OnUserMuteAudio_connection;
-        public uint OnUserMuteAudio_remoteUid;
+        public RtcConnectionS OnUserMuteAudio_connectionS;
+        public string OnUserMuteAudio_remoteUserAccount;
         public bool OnUserMuteAudio_muted;
-        public override void OnUserMuteAudio(RtcConnection connection, uint remoteUid, bool muted)
+        public override void OnUserMuteAudio(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
         {
             OnUserMuteAudio_be_trigger = true;
-            OnUserMuteAudio_connection = connection;
-            OnUserMuteAudio_remoteUid = remoteUid;
+            OnUserMuteAudio_connectionS = connectionS;
+            OnUserMuteAudio_remoteUserAccount = remoteUserAccount;
             OnUserMuteAudio_muted = muted;
         }
 
-        public bool OnUserMuteAudioPassed(RtcConnection connection, uint remoteUid, bool muted)
+        public bool OnUserMuteAudioPassed(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
         {
             if (OnUserMuteAudio_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUserMuteAudio_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserMuteAudio_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnUserMuteAudio_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnUserMuteAudio_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<bool>(OnUserMuteAudio_muted, muted) == false)
                 return false;
@@ -1432,24 +1312,24 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnUserMuteVideo_be_trigger = false;
-        public RtcConnection OnUserMuteVideo_connection;
-        public uint OnUserMuteVideo_remoteUid;
+        public RtcConnectionS OnUserMuteVideo_connectionS;
+        public string OnUserMuteVideo_remoteUserAccount;
         public bool OnUserMuteVideo_muted;
-        public override void OnUserMuteVideo(RtcConnection connection, uint remoteUid, bool muted)
+        public override void OnUserMuteVideo(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
         {
             OnUserMuteVideo_be_trigger = true;
-            OnUserMuteVideo_connection = connection;
-            OnUserMuteVideo_remoteUid = remoteUid;
+            OnUserMuteVideo_connectionS = connectionS;
+            OnUserMuteVideo_remoteUserAccount = remoteUserAccount;
             OnUserMuteVideo_muted = muted;
         }
 
-        public bool OnUserMuteVideoPassed(RtcConnection connection, uint remoteUid, bool muted)
+        public bool OnUserMuteVideoPassed(RtcConnectionS connectionS, string remoteUserAccount, bool muted)
         {
             if (OnUserMuteVideo_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUserMuteVideo_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserMuteVideo_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnUserMuteVideo_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnUserMuteVideo_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<bool>(OnUserMuteVideo_muted, muted) == false)
                 return false;
@@ -1458,24 +1338,24 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnUserEnableVideo_be_trigger = false;
-        public RtcConnection OnUserEnableVideo_connection;
-        public uint OnUserEnableVideo_remoteUid;
+        public RtcConnectionS OnUserEnableVideo_connectionS;
+        public string OnUserEnableVideo_remoteUserAccount;
         public bool OnUserEnableVideo_enabled;
-        public override void OnUserEnableVideo(RtcConnection connection, uint remoteUid, bool enabled)
+        public override void OnUserEnableVideo(RtcConnectionS connectionS, string remoteUserAccount, bool enabled)
         {
             OnUserEnableVideo_be_trigger = true;
-            OnUserEnableVideo_connection = connection;
-            OnUserEnableVideo_remoteUid = remoteUid;
+            OnUserEnableVideo_connectionS = connectionS;
+            OnUserEnableVideo_remoteUserAccount = remoteUserAccount;
             OnUserEnableVideo_enabled = enabled;
         }
 
-        public bool OnUserEnableVideoPassed(RtcConnection connection, uint remoteUid, bool enabled)
+        public bool OnUserEnableVideoPassed(RtcConnectionS connectionS, string remoteUserAccount, bool enabled)
         {
             if (OnUserEnableVideo_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUserEnableVideo_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserEnableVideo_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnUserEnableVideo_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnUserEnableVideo_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<bool>(OnUserEnableVideo_enabled, enabled) == false)
                 return false;
@@ -1483,51 +1363,25 @@ namespace Agora.Rtc
         }
         //////////////////
 
-        public bool OnUserEnableLocalVideo_be_trigger = false;
-        public RtcConnection OnUserEnableLocalVideo_connection;
-        public uint OnUserEnableLocalVideo_remoteUid;
-        public bool OnUserEnableLocalVideo_enabled;
-        public override void OnUserEnableLocalVideo(RtcConnection connection, uint remoteUid, bool enabled)
-        {
-            OnUserEnableLocalVideo_be_trigger = true;
-            OnUserEnableLocalVideo_connection = connection;
-            OnUserEnableLocalVideo_remoteUid = remoteUid;
-            OnUserEnableLocalVideo_enabled = enabled;
-        }
-
-        public bool OnUserEnableLocalVideoPassed(RtcConnection connection, uint remoteUid, bool enabled)
-        {
-            if (OnUserEnableLocalVideo_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUserEnableLocalVideo_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnUserEnableLocalVideo_remoteUid, remoteUid) == false)
-                return false;
-            if (ParamsHelper.Compare<bool>(OnUserEnableLocalVideo_enabled, enabled) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnUserStateChanged_be_trigger = false;
-        public RtcConnection OnUserStateChanged_connection;
-        public uint OnUserStateChanged_remoteUid;
+        public RtcConnectionS OnUserStateChanged_connectionS;
+        public string OnUserStateChanged_remoteUserAccount;
         public uint OnUserStateChanged_state;
-        public override void OnUserStateChanged(RtcConnection connection, uint remoteUid, uint state)
+        public override void OnUserStateChanged(RtcConnectionS connectionS, string remoteUserAccount, uint state)
         {
             OnUserStateChanged_be_trigger = true;
-            OnUserStateChanged_connection = connection;
-            OnUserStateChanged_remoteUid = remoteUid;
+            OnUserStateChanged_connectionS = connectionS;
+            OnUserStateChanged_remoteUserAccount = remoteUserAccount;
             OnUserStateChanged_state = state;
         }
 
-        public bool OnUserStateChangedPassed(RtcConnection connection, uint remoteUid, uint state)
+        public bool OnUserStateChangedPassed(RtcConnectionS connectionS, string remoteUserAccount, uint state)
         {
             if (OnUserStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUserStateChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUserStateChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnUserStateChanged_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnUserStateChanged_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<uint>(OnUserStateChanged_state, state) == false)
                 return false;
@@ -1536,20 +1390,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnLocalAudioStats_be_trigger = false;
-        public RtcConnection OnLocalAudioStats_connection;
+        public RtcConnectionS OnLocalAudioStats_connectionS;
         public LocalAudioStats OnLocalAudioStats_stats;
-        public override void OnLocalAudioStats(RtcConnection connection, LocalAudioStats stats)
+        public override void OnLocalAudioStats(RtcConnectionS connectionS, LocalAudioStats stats)
         {
             OnLocalAudioStats_be_trigger = true;
-            OnLocalAudioStats_connection = connection;
+            OnLocalAudioStats_connectionS = connectionS;
             OnLocalAudioStats_stats = stats;
         }
 
-        public bool OnLocalAudioStatsPassed(RtcConnection connection, LocalAudioStats stats)
+        public bool OnLocalAudioStatsPassed(RtcConnectionS connectionS, LocalAudioStats stats)
         {
             if (OnLocalAudioStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnLocalAudioStats_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalAudioStats_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<LocalAudioStats>(OnLocalAudioStats_stats, stats) == false)
                 return false;
@@ -1558,150 +1412,132 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnRemoteAudioStats_be_trigger = false;
-        public RtcConnection OnRemoteAudioStats_connection;
-        public RemoteAudioStats OnRemoteAudioStats_stats;
-        public override void OnRemoteAudioStats(RtcConnection connection, RemoteAudioStats stats)
+        public RtcConnectionS OnRemoteAudioStats_connectionS;
+        public RemoteAudioStatsS OnRemoteAudioStats_statsS;
+        public override void OnRemoteAudioStats(RtcConnectionS connectionS, RemoteAudioStatsS statsS)
         {
             OnRemoteAudioStats_be_trigger = true;
-            OnRemoteAudioStats_connection = connection;
-            OnRemoteAudioStats_stats = stats;
+            OnRemoteAudioStats_connectionS = connectionS;
+            OnRemoteAudioStats_statsS = statsS;
         }
 
-        public bool OnRemoteAudioStatsPassed(RtcConnection connection, RemoteAudioStats stats)
+        public bool OnRemoteAudioStatsPassed(RtcConnectionS connectionS, RemoteAudioStatsS statsS)
         {
             if (OnRemoteAudioStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioStats_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteAudioStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<RemoteAudioStats>(OnRemoteAudioStats_stats, stats) == false)
+            if (ParamsHelper.Compare<RemoteAudioStatsS>(OnRemoteAudioStats_statsS, statsS) == false)
                 return false;
             return true;
         }
         //////////////////
 
         public bool OnLocalVideoStats_be_trigger = false;
-        public RtcConnection OnLocalVideoStats_connection;
-        public LocalVideoStats OnLocalVideoStats_stats;
-        public override void OnLocalVideoStats(RtcConnection connection, LocalVideoStats stats)
+        public RtcConnectionS OnLocalVideoStats_connectionS;
+        public LocalVideoStatsS OnLocalVideoStats_statsS;
+        public override void OnLocalVideoStats(RtcConnectionS connectionS, LocalVideoStatsS statsS)
         {
             OnLocalVideoStats_be_trigger = true;
-            OnLocalVideoStats_connection = connection;
-            OnLocalVideoStats_stats = stats;
+            OnLocalVideoStats_connectionS = connectionS;
+            OnLocalVideoStats_statsS = statsS;
         }
 
-        public bool OnLocalVideoStatsPassed(RtcConnection connection, LocalVideoStats stats)
+        public bool OnLocalVideoStatsPassed(RtcConnectionS connectionS, LocalVideoStatsS statsS)
         {
             if (OnLocalVideoStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnLocalVideoStats_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalVideoStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<LocalVideoStats>(OnLocalVideoStats_stats, stats) == false)
+            if (ParamsHelper.Compare<LocalVideoStatsS>(OnLocalVideoStats_statsS, statsS) == false)
                 return false;
             return true;
         }
         //////////////////
 
         public bool OnRemoteVideoStats_be_trigger = false;
-        public RtcConnection OnRemoteVideoStats_connection;
-        public RemoteVideoStats OnRemoteVideoStats_stats;
-        public override void OnRemoteVideoStats(RtcConnection connection, RemoteVideoStats stats)
+        public RtcConnectionS OnRemoteVideoStats_connectionS;
+        public RemoteVideoStatsS OnRemoteVideoStats_statsS;
+        public override void OnRemoteVideoStats(RtcConnectionS connectionS, RemoteVideoStatsS statsS)
         {
             OnRemoteVideoStats_be_trigger = true;
-            OnRemoteVideoStats_connection = connection;
-            OnRemoteVideoStats_stats = stats;
+            OnRemoteVideoStats_connectionS = connectionS;
+            OnRemoteVideoStats_statsS = statsS;
         }
 
-        public bool OnRemoteVideoStatsPassed(RtcConnection connection, RemoteVideoStats stats)
+        public bool OnRemoteVideoStatsPassed(RtcConnectionS connectionS, RemoteVideoStatsS statsS)
         {
             if (OnRemoteVideoStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoStats_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteVideoStats_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<RemoteVideoStats>(OnRemoteVideoStats_stats, stats) == false)
+            if (ParamsHelper.Compare<RemoteVideoStatsS>(OnRemoteVideoStats_statsS, statsS) == false)
                 return false;
             return true;
         }
         //////////////////
 
         public bool OnConnectionLost_be_trigger = false;
-        public RtcConnection OnConnectionLost_connection;
-        public override void OnConnectionLost(RtcConnection connection)
+        public RtcConnectionS OnConnectionLost_connectionS;
+        public override void OnConnectionLost(RtcConnectionS connectionS)
         {
             OnConnectionLost_be_trigger = true;
-            OnConnectionLost_connection = connection;
+            OnConnectionLost_connectionS = connectionS;
         }
 
-        public bool OnConnectionLostPassed(RtcConnection connection)
+        public bool OnConnectionLostPassed(RtcConnectionS connectionS)
         {
             if (OnConnectionLost_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnConnectionLost_connection, connection) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnConnectionInterrupted_be_trigger = false;
-        public RtcConnection OnConnectionInterrupted_connection;
-        public override void OnConnectionInterrupted(RtcConnection connection)
-        {
-            OnConnectionInterrupted_be_trigger = true;
-            OnConnectionInterrupted_connection = connection;
-        }
-
-        public bool OnConnectionInterruptedPassed(RtcConnection connection)
-        {
-            if (OnConnectionInterrupted_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnConnectionInterrupted_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionLost_connectionS, connectionS) == false)
                 return false;
             return true;
         }
         //////////////////
 
         public bool OnConnectionBanned_be_trigger = false;
-        public RtcConnection OnConnectionBanned_connection;
-        public override void OnConnectionBanned(RtcConnection connection)
+        public RtcConnectionS OnConnectionBanned_connectionS;
+        public override void OnConnectionBanned(RtcConnectionS connectionS)
         {
             OnConnectionBanned_be_trigger = true;
-            OnConnectionBanned_connection = connection;
+            OnConnectionBanned_connectionS = connectionS;
         }
 
-        public bool OnConnectionBannedPassed(RtcConnection connection)
+        public bool OnConnectionBannedPassed(RtcConnectionS connectionS)
         {
             if (OnConnectionBanned_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnConnectionBanned_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionBanned_connectionS, connectionS) == false)
                 return false;
             return true;
         }
         //////////////////
 
         public bool OnStreamMessage_be_trigger = false;
-        public RtcConnection OnStreamMessage_connection;
-        public uint OnStreamMessage_remoteUid;
+        public RtcConnectionS OnStreamMessage_connectionS;
+        public string OnStreamMessage_remoteUserAccount;
         public int OnStreamMessage_streamId;
         public byte[] OnStreamMessage_data;
         public ulong OnStreamMessage_length;
         public ulong OnStreamMessage_sentTs;
-        public override void OnStreamMessage(RtcConnection connection, uint remoteUid, int streamId, byte[] data, ulong length, ulong sentTs)
+        public override void OnStreamMessage(RtcConnectionS connectionS, string remoteUserAccount, int streamId, byte[] data, ulong length, ulong sentTs)
         {
             OnStreamMessage_be_trigger = true;
-            OnStreamMessage_connection = connection;
-            OnStreamMessage_remoteUid = remoteUid;
+            OnStreamMessage_connectionS = connectionS;
+            OnStreamMessage_remoteUserAccount = remoteUserAccount;
             OnStreamMessage_streamId = streamId;
             OnStreamMessage_data = data;
             OnStreamMessage_length = length;
             OnStreamMessage_sentTs = sentTs;
         }
 
-        public bool OnStreamMessagePassed(RtcConnection connection, uint remoteUid, int streamId, byte[] data, ulong length, ulong sentTs)
+        public bool OnStreamMessagePassed(RtcConnectionS connectionS, string remoteUserAccount, int streamId, byte[] data, ulong length, ulong sentTs)
         {
             if (OnStreamMessage_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnStreamMessage_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnStreamMessage_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnStreamMessage_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnStreamMessage_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnStreamMessage_streamId, streamId) == false)
                 return false;
@@ -1716,30 +1552,30 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnStreamMessageError_be_trigger = false;
-        public RtcConnection OnStreamMessageError_connection;
-        public uint OnStreamMessageError_remoteUid;
+        public RtcConnectionS OnStreamMessageError_connectionS;
+        public string OnStreamMessageError_remoteUserAccount;
         public int OnStreamMessageError_streamId;
         public int OnStreamMessageError_code;
         public int OnStreamMessageError_missed;
         public int OnStreamMessageError_cached;
-        public override void OnStreamMessageError(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached)
+        public override void OnStreamMessageError(RtcConnectionS connectionS, string remoteUserAccount, int streamId, int code, int missed, int cached)
         {
             OnStreamMessageError_be_trigger = true;
-            OnStreamMessageError_connection = connection;
-            OnStreamMessageError_remoteUid = remoteUid;
+            OnStreamMessageError_connectionS = connectionS;
+            OnStreamMessageError_remoteUserAccount = remoteUserAccount;
             OnStreamMessageError_streamId = streamId;
             OnStreamMessageError_code = code;
             OnStreamMessageError_missed = missed;
             OnStreamMessageError_cached = cached;
         }
 
-        public bool OnStreamMessageErrorPassed(RtcConnection connection, uint remoteUid, int streamId, int code, int missed, int cached)
+        public bool OnStreamMessageErrorPassed(RtcConnectionS connectionS, string remoteUserAccount, int streamId, int code, int missed, int cached)
         {
             if (OnStreamMessageError_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnStreamMessageError_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnStreamMessageError_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnStreamMessageError_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnStreamMessageError_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnStreamMessageError_streamId, streamId) == false)
                 return false;
@@ -1754,38 +1590,38 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnRequestToken_be_trigger = false;
-        public RtcConnection OnRequestToken_connection;
-        public override void OnRequestToken(RtcConnection connection)
+        public RtcConnectionS OnRequestToken_connectionS;
+        public override void OnRequestToken(RtcConnectionS connectionS)
         {
             OnRequestToken_be_trigger = true;
-            OnRequestToken_connection = connection;
+            OnRequestToken_connectionS = connectionS;
         }
 
-        public bool OnRequestTokenPassed(RtcConnection connection)
+        public bool OnRequestTokenPassed(RtcConnectionS connectionS)
         {
             if (OnRequestToken_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRequestToken_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRequestToken_connectionS, connectionS) == false)
                 return false;
             return true;
         }
         //////////////////
 
         public bool OnLicenseValidationFailure_be_trigger = false;
-        public RtcConnection OnLicenseValidationFailure_connection;
+        public RtcConnectionS OnLicenseValidationFailure_connectionS;
         public LICENSE_ERROR_TYPE OnLicenseValidationFailure_reason;
-        public override void OnLicenseValidationFailure(RtcConnection connection, LICENSE_ERROR_TYPE reason)
+        public override void OnLicenseValidationFailure(RtcConnectionS connectionS, LICENSE_ERROR_TYPE reason)
         {
             OnLicenseValidationFailure_be_trigger = true;
-            OnLicenseValidationFailure_connection = connection;
+            OnLicenseValidationFailure_connectionS = connectionS;
             OnLicenseValidationFailure_reason = reason;
         }
 
-        public bool OnLicenseValidationFailurePassed(RtcConnection connection, LICENSE_ERROR_TYPE reason)
+        public bool OnLicenseValidationFailurePassed(RtcConnectionS connectionS, LICENSE_ERROR_TYPE reason)
         {
             if (OnLicenseValidationFailure_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnLicenseValidationFailure_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLicenseValidationFailure_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<LICENSE_ERROR_TYPE>(OnLicenseValidationFailure_reason, reason) == false)
                 return false;
@@ -1794,20 +1630,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnTokenPrivilegeWillExpire_be_trigger = false;
-        public RtcConnection OnTokenPrivilegeWillExpire_connection;
+        public RtcConnectionS OnTokenPrivilegeWillExpire_connectionS;
         public string OnTokenPrivilegeWillExpire_token;
-        public override void OnTokenPrivilegeWillExpire(RtcConnection connection, string token)
+        public override void OnTokenPrivilegeWillExpire(RtcConnectionS connectionS, string token)
         {
             OnTokenPrivilegeWillExpire_be_trigger = true;
-            OnTokenPrivilegeWillExpire_connection = connection;
+            OnTokenPrivilegeWillExpire_connectionS = connectionS;
             OnTokenPrivilegeWillExpire_token = token;
         }
 
-        public bool OnTokenPrivilegeWillExpirePassed(RtcConnection connection, string token)
+        public bool OnTokenPrivilegeWillExpirePassed(RtcConnectionS connectionS, string token)
         {
             if (OnTokenPrivilegeWillExpire_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnTokenPrivilegeWillExpire_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnTokenPrivilegeWillExpire_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnTokenPrivilegeWillExpire_token, token) == false)
                 return false;
@@ -1816,20 +1652,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnFirstLocalAudioFramePublished_be_trigger = false;
-        public RtcConnection OnFirstLocalAudioFramePublished_connection;
+        public RtcConnectionS OnFirstLocalAudioFramePublished_connectionS;
         public int OnFirstLocalAudioFramePublished_elapsed;
-        public override void OnFirstLocalAudioFramePublished(RtcConnection connection, int elapsed)
+        public override void OnFirstLocalAudioFramePublished(RtcConnectionS connectionS, int elapsed)
         {
             OnFirstLocalAudioFramePublished_be_trigger = true;
-            OnFirstLocalAudioFramePublished_connection = connection;
+            OnFirstLocalAudioFramePublished_connectionS = connectionS;
             OnFirstLocalAudioFramePublished_elapsed = elapsed;
         }
 
-        public bool OnFirstLocalAudioFramePublishedPassed(RtcConnection connection, int elapsed)
+        public bool OnFirstLocalAudioFramePublishedPassed(RtcConnectionS connectionS, int elapsed)
         {
             if (OnFirstLocalAudioFramePublished_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnFirstLocalAudioFramePublished_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnFirstLocalAudioFramePublished_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnFirstLocalAudioFramePublished_elapsed, elapsed) == false)
                 return false;
@@ -1837,75 +1673,23 @@ namespace Agora.Rtc
         }
         //////////////////
 
-        public bool OnFirstRemoteAudioFrame_be_trigger = false;
-        public RtcConnection OnFirstRemoteAudioFrame_connection;
-        public uint OnFirstRemoteAudioFrame_userId;
-        public int OnFirstRemoteAudioFrame_elapsed;
-        public override void OnFirstRemoteAudioFrame(RtcConnection connection, uint userId, int elapsed)
-        {
-            OnFirstRemoteAudioFrame_be_trigger = true;
-            OnFirstRemoteAudioFrame_connection = connection;
-            OnFirstRemoteAudioFrame_userId = userId;
-            OnFirstRemoteAudioFrame_elapsed = elapsed;
-        }
-
-        public bool OnFirstRemoteAudioFramePassed(RtcConnection connection, uint userId, int elapsed)
-        {
-            if (OnFirstRemoteAudioFrame_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteAudioFrame_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnFirstRemoteAudioFrame_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnFirstRemoteAudioFrame_elapsed, elapsed) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnFirstRemoteAudioDecoded_be_trigger = false;
-        public RtcConnection OnFirstRemoteAudioDecoded_connection;
-        public uint OnFirstRemoteAudioDecoded_uid;
-        public int OnFirstRemoteAudioDecoded_elapsed;
-        public override void OnFirstRemoteAudioDecoded(RtcConnection connection, uint uid, int elapsed)
-        {
-            OnFirstRemoteAudioDecoded_be_trigger = true;
-            OnFirstRemoteAudioDecoded_connection = connection;
-            OnFirstRemoteAudioDecoded_uid = uid;
-            OnFirstRemoteAudioDecoded_elapsed = elapsed;
-        }
-
-        public bool OnFirstRemoteAudioDecodedPassed(RtcConnection connection, uint uid, int elapsed)
-        {
-            if (OnFirstRemoteAudioDecoded_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnFirstRemoteAudioDecoded_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnFirstRemoteAudioDecoded_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnFirstRemoteAudioDecoded_elapsed, elapsed) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnLocalAudioStateChanged_be_trigger = false;
-        public RtcConnection OnLocalAudioStateChanged_connection;
+        public RtcConnectionS OnLocalAudioStateChanged_connectionS;
         public LOCAL_AUDIO_STREAM_STATE OnLocalAudioStateChanged_state;
         public LOCAL_AUDIO_STREAM_ERROR OnLocalAudioStateChanged_error;
-        public override void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
+        public override void OnLocalAudioStateChanged(RtcConnectionS connectionS, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
         {
             OnLocalAudioStateChanged_be_trigger = true;
-            OnLocalAudioStateChanged_connection = connection;
+            OnLocalAudioStateChanged_connectionS = connectionS;
             OnLocalAudioStateChanged_state = state;
             OnLocalAudioStateChanged_error = error;
         }
 
-        public bool OnLocalAudioStateChangedPassed(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
+        public bool OnLocalAudioStateChangedPassed(RtcConnectionS connectionS, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
         {
             if (OnLocalAudioStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnLocalAudioStateChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnLocalAudioStateChanged_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_STATE>(OnLocalAudioStateChanged_state, state) == false)
                 return false;
@@ -1916,28 +1700,28 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnRemoteAudioStateChanged_be_trigger = false;
-        public RtcConnection OnRemoteAudioStateChanged_connection;
-        public uint OnRemoteAudioStateChanged_remoteUid;
+        public RtcConnectionS OnRemoteAudioStateChanged_connectionS;
+        public string OnRemoteAudioStateChanged_remoteUserAccount;
         public REMOTE_AUDIO_STATE OnRemoteAudioStateChanged_state;
         public REMOTE_AUDIO_STATE_REASON OnRemoteAudioStateChanged_reason;
         public int OnRemoteAudioStateChanged_elapsed;
-        public override void OnRemoteAudioStateChanged(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
+        public override void OnRemoteAudioStateChanged(RtcConnectionS connectionS, string remoteUserAccount, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
         {
             OnRemoteAudioStateChanged_be_trigger = true;
-            OnRemoteAudioStateChanged_connection = connection;
-            OnRemoteAudioStateChanged_remoteUid = remoteUid;
+            OnRemoteAudioStateChanged_connectionS = connectionS;
+            OnRemoteAudioStateChanged_remoteUserAccount = remoteUserAccount;
             OnRemoteAudioStateChanged_state = state;
             OnRemoteAudioStateChanged_reason = reason;
             OnRemoteAudioStateChanged_elapsed = elapsed;
         }
 
-        public bool OnRemoteAudioStateChangedPassed(RtcConnection connection, uint remoteUid, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
+        public bool OnRemoteAudioStateChangedPassed(RtcConnectionS connectionS, string remoteUserAccount, REMOTE_AUDIO_STATE state, REMOTE_AUDIO_STATE_REASON reason, int elapsed)
         {
             if (OnRemoteAudioStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioStateChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnRemoteAudioStateChanged_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnRemoteAudioStateChanged_remoteUid, remoteUid) == false)
+            if (ParamsHelper.Compare<string>(OnRemoteAudioStateChanged_remoteUserAccount, remoteUserAccount) == false)
                 return false;
             if (ParamsHelper.Compare<REMOTE_AUDIO_STATE>(OnRemoteAudioStateChanged_state, state) == false)
                 return false;
@@ -1950,46 +1734,46 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnActiveSpeaker_be_trigger = false;
-        public RtcConnection OnActiveSpeaker_connection;
-        public uint OnActiveSpeaker_uid;
-        public override void OnActiveSpeaker(RtcConnection connection, uint uid)
+        public RtcConnectionS OnActiveSpeaker_connectionS;
+        public string OnActiveSpeaker_userAccount;
+        public override void OnActiveSpeaker(RtcConnectionS connectionS, string userAccount)
         {
             OnActiveSpeaker_be_trigger = true;
-            OnActiveSpeaker_connection = connection;
-            OnActiveSpeaker_uid = uid;
+            OnActiveSpeaker_connectionS = connectionS;
+            OnActiveSpeaker_userAccount = userAccount;
         }
 
-        public bool OnActiveSpeakerPassed(RtcConnection connection, uint uid)
+        public bool OnActiveSpeakerPassed(RtcConnectionS connectionS, string userAccount)
         {
             if (OnActiveSpeaker_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnActiveSpeaker_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnActiveSpeaker_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnActiveSpeaker_uid, uid) == false)
+            if (ParamsHelper.Compare<string>(OnActiveSpeaker_userAccount, userAccount) == false)
                 return false;
             return true;
         }
         //////////////////
 
         public bool OnClientRoleChanged_be_trigger = false;
-        public RtcConnection OnClientRoleChanged_connection;
+        public RtcConnectionS OnClientRoleChanged_connectionS;
         public CLIENT_ROLE_TYPE OnClientRoleChanged_oldRole;
         public CLIENT_ROLE_TYPE OnClientRoleChanged_newRole;
         public ClientRoleOptions OnClientRoleChanged_newRoleOptions;
-        public override void OnClientRoleChanged(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
+        public override void OnClientRoleChanged(RtcConnectionS connectionS, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
         {
             OnClientRoleChanged_be_trigger = true;
-            OnClientRoleChanged_connection = connection;
+            OnClientRoleChanged_connectionS = connectionS;
             OnClientRoleChanged_oldRole = oldRole;
             OnClientRoleChanged_newRole = newRole;
             OnClientRoleChanged_newRoleOptions = newRoleOptions;
         }
 
-        public bool OnClientRoleChangedPassed(RtcConnection connection, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
+        public bool OnClientRoleChangedPassed(RtcConnectionS connectionS, CLIENT_ROLE_TYPE oldRole, CLIENT_ROLE_TYPE newRole, ClientRoleOptions newRoleOptions)
         {
             if (OnClientRoleChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnClientRoleChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnClientRoleChanged_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<CLIENT_ROLE_TYPE>(OnClientRoleChanged_oldRole, oldRole) == false)
                 return false;
@@ -2002,22 +1786,22 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnClientRoleChangeFailed_be_trigger = false;
-        public RtcConnection OnClientRoleChangeFailed_connection;
+        public RtcConnectionS OnClientRoleChangeFailed_connectionS;
         public CLIENT_ROLE_CHANGE_FAILED_REASON OnClientRoleChangeFailed_reason;
         public CLIENT_ROLE_TYPE OnClientRoleChangeFailed_currentRole;
-        public override void OnClientRoleChangeFailed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
+        public override void OnClientRoleChangeFailed(RtcConnectionS connectionS, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
         {
             OnClientRoleChangeFailed_be_trigger = true;
-            OnClientRoleChangeFailed_connection = connection;
+            OnClientRoleChangeFailed_connectionS = connectionS;
             OnClientRoleChangeFailed_reason = reason;
             OnClientRoleChangeFailed_currentRole = currentRole;
         }
 
-        public bool OnClientRoleChangeFailedPassed(RtcConnection connection, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
+        public bool OnClientRoleChangeFailedPassed(RtcConnectionS connectionS, CLIENT_ROLE_CHANGE_FAILED_REASON reason, CLIENT_ROLE_TYPE currentRole)
         {
             if (OnClientRoleChangeFailed_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnClientRoleChangeFailed_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnClientRoleChangeFailed_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<CLIENT_ROLE_CHANGE_FAILED_REASON>(OnClientRoleChangeFailed_reason, reason) == false)
                 return false;
@@ -2027,91 +1811,23 @@ namespace Agora.Rtc
         }
         //////////////////
 
-        public bool OnRemoteAudioTransportStats_be_trigger = false;
-        public RtcConnection OnRemoteAudioTransportStats_connection;
-        public uint OnRemoteAudioTransportStats_remoteUid;
-        public ushort OnRemoteAudioTransportStats_delay;
-        public ushort OnRemoteAudioTransportStats_lost;
-        public ushort OnRemoteAudioTransportStats_rxKBitRate;
-        public override void OnRemoteAudioTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
-        {
-            OnRemoteAudioTransportStats_be_trigger = true;
-            OnRemoteAudioTransportStats_connection = connection;
-            OnRemoteAudioTransportStats_remoteUid = remoteUid;
-            OnRemoteAudioTransportStats_delay = delay;
-            OnRemoteAudioTransportStats_lost = lost;
-            OnRemoteAudioTransportStats_rxKBitRate = rxKBitRate;
-        }
-
-        public bool OnRemoteAudioTransportStatsPassed(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
-        {
-            if (OnRemoteAudioTransportStats_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRemoteAudioTransportStats_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnRemoteAudioTransportStats_remoteUid, remoteUid) == false)
-                return false;
-            if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_delay, delay) == false)
-                return false;
-            if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_lost, lost) == false)
-                return false;
-            if (ParamsHelper.Compare<ushort>(OnRemoteAudioTransportStats_rxKBitRate, rxKBitRate) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnRemoteVideoTransportStats_be_trigger = false;
-        public RtcConnection OnRemoteVideoTransportStats_connection;
-        public uint OnRemoteVideoTransportStats_remoteUid;
-        public ushort OnRemoteVideoTransportStats_delay;
-        public ushort OnRemoteVideoTransportStats_lost;
-        public ushort OnRemoteVideoTransportStats_rxKBitRate;
-        public override void OnRemoteVideoTransportStats(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
-        {
-            OnRemoteVideoTransportStats_be_trigger = true;
-            OnRemoteVideoTransportStats_connection = connection;
-            OnRemoteVideoTransportStats_remoteUid = remoteUid;
-            OnRemoteVideoTransportStats_delay = delay;
-            OnRemoteVideoTransportStats_lost = lost;
-            OnRemoteVideoTransportStats_rxKBitRate = rxKBitRate;
-        }
-
-        public bool OnRemoteVideoTransportStatsPassed(RtcConnection connection, uint remoteUid, ushort delay, ushort lost, ushort rxKBitRate)
-        {
-            if (OnRemoteVideoTransportStats_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnRemoteVideoTransportStats_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnRemoteVideoTransportStats_remoteUid, remoteUid) == false)
-                return false;
-            if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_delay, delay) == false)
-                return false;
-            if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_lost, lost) == false)
-                return false;
-            if (ParamsHelper.Compare<ushort>(OnRemoteVideoTransportStats_rxKBitRate, rxKBitRate) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnConnectionStateChanged_be_trigger = false;
-        public RtcConnection OnConnectionStateChanged_connection;
+        public RtcConnectionS OnConnectionStateChanged_connectionS;
         public CONNECTION_STATE_TYPE OnConnectionStateChanged_state;
         public CONNECTION_CHANGED_REASON_TYPE OnConnectionStateChanged_reason;
-        public override void OnConnectionStateChanged(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
+        public override void OnConnectionStateChanged(RtcConnectionS connectionS, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
         {
             OnConnectionStateChanged_be_trigger = true;
-            OnConnectionStateChanged_connection = connection;
+            OnConnectionStateChanged_connectionS = connectionS;
             OnConnectionStateChanged_state = state;
             OnConnectionStateChanged_reason = reason;
         }
 
-        public bool OnConnectionStateChangedPassed(RtcConnection connection, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
+        public bool OnConnectionStateChangedPassed(RtcConnectionS connectionS, CONNECTION_STATE_TYPE state, CONNECTION_CHANGED_REASON_TYPE reason)
         {
             if (OnConnectionStateChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnConnectionStateChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnConnectionStateChanged_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<CONNECTION_STATE_TYPE>(OnConnectionStateChanged_state, state) == false)
                 return false;
@@ -2122,24 +1838,24 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnWlAccMessage_be_trigger = false;
-        public RtcConnection OnWlAccMessage_connection;
+        public RtcConnectionS OnWlAccMessage_connectionS;
         public WLACC_MESSAGE_REASON OnWlAccMessage_reason;
         public WLACC_SUGGEST_ACTION OnWlAccMessage_action;
         public string OnWlAccMessage_wlAccMsg;
-        public override void OnWlAccMessage(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
+        public override void OnWlAccMessage(RtcConnectionS connectionS, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
         {
             OnWlAccMessage_be_trigger = true;
-            OnWlAccMessage_connection = connection;
+            OnWlAccMessage_connectionS = connectionS;
             OnWlAccMessage_reason = reason;
             OnWlAccMessage_action = action;
             OnWlAccMessage_wlAccMsg = wlAccMsg;
         }
 
-        public bool OnWlAccMessagePassed(RtcConnection connection, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
+        public bool OnWlAccMessagePassed(RtcConnectionS connectionS, WLACC_MESSAGE_REASON reason, WLACC_SUGGEST_ACTION action, string wlAccMsg)
         {
             if (OnWlAccMessage_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnWlAccMessage_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnWlAccMessage_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<WLACC_MESSAGE_REASON>(OnWlAccMessage_reason, reason) == false)
                 return false;
@@ -2152,22 +1868,22 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnWlAccStats_be_trigger = false;
-        public RtcConnection OnWlAccStats_connection;
+        public RtcConnectionS OnWlAccStats_connectionS;
         public WlAccStats OnWlAccStats_currentStats;
         public WlAccStats OnWlAccStats_averageStats;
-        public override void OnWlAccStats(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats)
+        public override void OnWlAccStats(RtcConnectionS connectionS, WlAccStats currentStats, WlAccStats averageStats)
         {
             OnWlAccStats_be_trigger = true;
-            OnWlAccStats_connection = connection;
+            OnWlAccStats_connectionS = connectionS;
             OnWlAccStats_currentStats = currentStats;
             OnWlAccStats_averageStats = averageStats;
         }
 
-        public bool OnWlAccStatsPassed(RtcConnection connection, WlAccStats currentStats, WlAccStats averageStats)
+        public bool OnWlAccStatsPassed(RtcConnectionS connectionS, WlAccStats currentStats, WlAccStats averageStats)
         {
             if (OnWlAccStats_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnWlAccStats_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnWlAccStats_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<WlAccStats>(OnWlAccStats_currentStats, currentStats) == false)
                 return false;
@@ -2178,20 +1894,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnNetworkTypeChanged_be_trigger = false;
-        public RtcConnection OnNetworkTypeChanged_connection;
+        public RtcConnectionS OnNetworkTypeChanged_connectionS;
         public NETWORK_TYPE OnNetworkTypeChanged_type;
-        public override void OnNetworkTypeChanged(RtcConnection connection, NETWORK_TYPE type)
+        public override void OnNetworkTypeChanged(RtcConnectionS connectionS, NETWORK_TYPE type)
         {
             OnNetworkTypeChanged_be_trigger = true;
-            OnNetworkTypeChanged_connection = connection;
+            OnNetworkTypeChanged_connectionS = connectionS;
             OnNetworkTypeChanged_type = type;
         }
 
-        public bool OnNetworkTypeChangedPassed(RtcConnection connection, NETWORK_TYPE type)
+        public bool OnNetworkTypeChangedPassed(RtcConnectionS connectionS, NETWORK_TYPE type)
         {
             if (OnNetworkTypeChanged_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnNetworkTypeChanged_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnNetworkTypeChanged_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<NETWORK_TYPE>(OnNetworkTypeChanged_type, type) == false)
                 return false;
@@ -2200,20 +1916,20 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnEncryptionError_be_trigger = false;
-        public RtcConnection OnEncryptionError_connection;
+        public RtcConnectionS OnEncryptionError_connectionS;
         public ENCRYPTION_ERROR_TYPE OnEncryptionError_errorType;
-        public override void OnEncryptionError(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType)
+        public override void OnEncryptionError(RtcConnectionS connectionS, ENCRYPTION_ERROR_TYPE errorType)
         {
             OnEncryptionError_be_trigger = true;
-            OnEncryptionError_connection = connection;
+            OnEncryptionError_connectionS = connectionS;
             OnEncryptionError_errorType = errorType;
         }
 
-        public bool OnEncryptionErrorPassed(RtcConnection connection, ENCRYPTION_ERROR_TYPE errorType)
+        public bool OnEncryptionErrorPassed(RtcConnectionS connectionS, ENCRYPTION_ERROR_TYPE errorType)
         {
             if (OnEncryptionError_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnEncryptionError_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnEncryptionError_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<ENCRYPTION_ERROR_TYPE>(OnEncryptionError_errorType, errorType) == false)
                 return false;
@@ -2222,24 +1938,24 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnUploadLogResult_be_trigger = false;
-        public RtcConnection OnUploadLogResult_connection;
+        public RtcConnectionS OnUploadLogResult_connectionS;
         public string OnUploadLogResult_requestId;
         public bool OnUploadLogResult_success;
         public UPLOAD_ERROR_REASON OnUploadLogResult_reason;
-        public override void OnUploadLogResult(RtcConnection connection, string requestId, bool success, UPLOAD_ERROR_REASON reason)
+        public override void OnUploadLogResult(RtcConnectionS connectionS, string requestId, bool success, UPLOAD_ERROR_REASON reason)
         {
             OnUploadLogResult_be_trigger = true;
-            OnUploadLogResult_connection = connection;
+            OnUploadLogResult_connectionS = connectionS;
             OnUploadLogResult_requestId = requestId;
             OnUploadLogResult_success = success;
             OnUploadLogResult_reason = reason;
         }
 
-        public bool OnUploadLogResultPassed(RtcConnection connection, string requestId, bool success, UPLOAD_ERROR_REASON reason)
+        public bool OnUploadLogResultPassed(RtcConnectionS connectionS, string requestId, bool success, UPLOAD_ERROR_REASON reason)
         {
             if (OnUploadLogResult_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUploadLogResult_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnUploadLogResult_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnUploadLogResult_requestId, requestId) == false)
                 return false;
@@ -2251,57 +1967,31 @@ namespace Agora.Rtc
         }
         //////////////////
 
-        public bool OnUserAccountUpdated_be_trigger = false;
-        public RtcConnection OnUserAccountUpdated_connection;
-        public uint OnUserAccountUpdated_remoteUid;
-        public string OnUserAccountUpdated_remoteUserAccount;
-        public override void OnUserAccountUpdated(RtcConnection connection, uint remoteUid, string remoteUserAccount)
-        {
-            OnUserAccountUpdated_be_trigger = true;
-            OnUserAccountUpdated_connection = connection;
-            OnUserAccountUpdated_remoteUid = remoteUid;
-            OnUserAccountUpdated_remoteUserAccount = remoteUserAccount;
-        }
-
-        public bool OnUserAccountUpdatedPassed(RtcConnection connection, uint remoteUid, string remoteUserAccount)
-        {
-            if (OnUserAccountUpdated_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnUserAccountUpdated_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnUserAccountUpdated_remoteUid, remoteUid) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnUserAccountUpdated_remoteUserAccount, remoteUserAccount) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
         public bool OnSnapshotTaken_be_trigger = false;
-        public RtcConnection OnSnapshotTaken_connection;
-        public uint OnSnapshotTaken_uid;
+        public RtcConnectionS OnSnapshotTaken_connectionS;
+        public string OnSnapshotTaken_userAccount;
         public string OnSnapshotTaken_filePath;
         public int OnSnapshotTaken_width;
         public int OnSnapshotTaken_height;
         public int OnSnapshotTaken_errCode;
-        public override void OnSnapshotTaken(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode)
+        public override void OnSnapshotTaken(RtcConnectionS connectionS, string userAccount, string filePath, int width, int height, int errCode)
         {
             OnSnapshotTaken_be_trigger = true;
-            OnSnapshotTaken_connection = connection;
-            OnSnapshotTaken_uid = uid;
+            OnSnapshotTaken_connectionS = connectionS;
+            OnSnapshotTaken_userAccount = userAccount;
             OnSnapshotTaken_filePath = filePath;
             OnSnapshotTaken_width = width;
             OnSnapshotTaken_height = height;
             OnSnapshotTaken_errCode = errCode;
         }
 
-        public bool OnSnapshotTakenPassed(RtcConnection connection, uint uid, string filePath, int width, int height, int errCode)
+        public bool OnSnapshotTakenPassed(RtcConnectionS connectionS, string userAccount, string filePath, int width, int height, int errCode)
         {
             if (OnSnapshotTaken_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnSnapshotTaken_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnSnapshotTaken_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnSnapshotTaken_uid, uid) == false)
+            if (ParamsHelper.Compare<string>(OnSnapshotTaken_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnSnapshotTaken_filePath, filePath) == false)
                 return false;
@@ -2316,26 +2006,26 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnVideoRenderingTracingResult_be_trigger = false;
-        public RtcConnection OnVideoRenderingTracingResult_connection;
-        public uint OnVideoRenderingTracingResult_uid;
+        public RtcConnectionS OnVideoRenderingTracingResult_connectionS;
+        public string OnVideoRenderingTracingResult_userAccount;
         public MEDIA_TRACE_EVENT OnVideoRenderingTracingResult_currentEvent;
         public VideoRenderingTracingInfo OnVideoRenderingTracingResult_tracingInfo;
-        public override void OnVideoRenderingTracingResult(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
+        public override void OnVideoRenderingTracingResult(RtcConnectionS connectionS, string userAccount, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
         {
             OnVideoRenderingTracingResult_be_trigger = true;
-            OnVideoRenderingTracingResult_connection = connection;
-            OnVideoRenderingTracingResult_uid = uid;
+            OnVideoRenderingTracingResult_connectionS = connectionS;
+            OnVideoRenderingTracingResult_userAccount = userAccount;
             OnVideoRenderingTracingResult_currentEvent = currentEvent;
             OnVideoRenderingTracingResult_tracingInfo = tracingInfo;
         }
 
-        public bool OnVideoRenderingTracingResultPassed(RtcConnection connection, uint uid, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
+        public bool OnVideoRenderingTracingResultPassed(RtcConnectionS connectionS, string userAccount, MEDIA_TRACE_EVENT currentEvent, VideoRenderingTracingInfo tracingInfo)
         {
             if (OnVideoRenderingTracingResult_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnVideoRenderingTracingResult_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnVideoRenderingTracingResult_connectionS, connectionS) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnVideoRenderingTracingResult_uid, uid) == false)
+            if (ParamsHelper.Compare<string>(OnVideoRenderingTracingResult_userAccount, userAccount) == false)
                 return false;
             if (ParamsHelper.Compare<MEDIA_TRACE_EVENT>(OnVideoRenderingTracingResult_currentEvent, currentEvent) == false)
                 return false;
@@ -2346,64 +2036,26 @@ namespace Agora.Rtc
         //////////////////
 
         public bool OnSetRtmFlagResult_be_trigger = false;
-        public RtcConnection OnSetRtmFlagResult_connection;
+        public RtcConnectionS OnSetRtmFlagResult_connectionS;
         public int OnSetRtmFlagResult_code;
-        public override void OnSetRtmFlagResult(RtcConnection connection, int code)
+        public override void OnSetRtmFlagResult(RtcConnectionS connectionS, int code)
         {
             OnSetRtmFlagResult_be_trigger = true;
-            OnSetRtmFlagResult_connection = connection;
+            OnSetRtmFlagResult_connectionS = connectionS;
             OnSetRtmFlagResult_code = code;
         }
 
-        public bool OnSetRtmFlagResultPassed(RtcConnection connection, int code)
+        public bool OnSetRtmFlagResultPassed(RtcConnectionS connectionS, int code)
         {
             if (OnSetRtmFlagResult_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnSetRtmFlagResult_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnectionS>(OnSetRtmFlagResult_connectionS, connectionS) == false)
                 return false;
             if (ParamsHelper.Compare<int>(OnSetRtmFlagResult_code, code) == false)
                 return false;
             return true;
         }
         //////////////////
-
-        public bool OnVideoLayoutInfo_be_trigger = false;
-        public RtcConnection OnVideoLayoutInfo_connection;
-        public uint OnVideoLayoutInfo_uid;
-        public int OnVideoLayoutInfo_width;
-        public int OnVideoLayoutInfo_height;
-        public int OnVideoLayoutInfo_layoutNumber;
-        public VideoLayout[] OnVideoLayoutInfo_layoutlist;
-        public override void OnVideoLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
-        {
-            OnVideoLayoutInfo_be_trigger = true;
-            OnVideoLayoutInfo_connection = connection;
-            OnVideoLayoutInfo_uid = uid;
-            OnVideoLayoutInfo_width = width;
-            OnVideoLayoutInfo_height = height;
-            OnVideoLayoutInfo_layoutNumber = layoutNumber;
-            OnVideoLayoutInfo_layoutlist = layoutlist;
-        }
-
-        public bool OnVideoLayoutInfoPassed(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
-        {
-            if (OnVideoLayoutInfo_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnVideoLayoutInfo_connection, connection) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnVideoLayoutInfo_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnVideoLayoutInfo_width, width) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnVideoLayoutInfo_height, height) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnVideoLayoutInfo_layoutNumber, layoutNumber) == false)
-                return false;
-            if (ParamsHelper.Compare<VideoLayout[]>(OnVideoLayoutInfo_layoutlist, layoutlist) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-        #endregion terra IRtcEngineEventHandler
+        #endregion terra IRtcEngineEventHandlerS
     }
 }

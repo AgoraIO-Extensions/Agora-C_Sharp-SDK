@@ -1,18 +1,10 @@
 {
-    "IVideoFrameObserver": {
+    "IMetadataObserverS": {
         "type": "ClazzStruct",
-        "name": "IVideoFrameObserver",
-        "namespaces": "agora::media",
+        "name": "IMetadataObserverS",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_event_compare",
-        "excludeMethods": [
-            "getVideoFrameProcessMode",
-            "getVideoFormatPreference",
-            "getRotationApplied",
-            "getObservedFramePosition",
-            "isExternal",
-            "getMirrorApplied"
-        ],
+        "excludeMethods": [],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
         "pecialMembersTemplate": "",

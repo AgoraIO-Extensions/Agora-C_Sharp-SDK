@@ -2391,7 +2391,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_IRtcEngineSUnregisterAudioSpectrumObserver()
         {
-            IAudioSpectrumObserverS observerS = ParamsHelper.CreateParam<IAudioSpectrumObserverS>();
+
 
             var nRet = RtcEngineS.UnregisterAudioSpectrumObserver();
             Assert.AreEqual(0, nRet);
@@ -2517,7 +2517,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_IRtcEngineSUnregisterMediaMetadataObserver()
         {
-            IMetadataObserverS observerS = ParamsHelper.CreateParam<IMetadataObserverS>();
+
 
             var nRet = RtcEngineS.UnregisterMediaMetadataObserver();
             Assert.AreEqual(0, nRet);

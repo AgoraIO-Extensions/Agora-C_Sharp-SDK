@@ -2468,7 +2468,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.RegisterAudioSpectrumObserver(observerS);
         }
 
-        public override int UnregisterAudioSpectrumObserver(IAudioSpectrumObserverS observerS)
+        public override int UnregisterAudioSpectrumObserver()
         {
             if (_rtcEngineImpl == null)
             {
@@ -2576,7 +2576,7 @@ namespace Agora.Rtc
             return _rtcEngineImpl.RegisterMediaMetadataObserver(observerS, type);
         }
 
-        public override int UnregisterMediaMetadataObserver(IMetadataObserverS observerS)
+        public override int UnregisterMediaMetadataObserver()
         {
             if (_rtcEngineImpl == null)
             {

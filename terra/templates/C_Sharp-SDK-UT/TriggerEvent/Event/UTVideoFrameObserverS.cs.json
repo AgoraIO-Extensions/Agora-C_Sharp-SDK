@@ -1,7 +1,7 @@
 {
-    "IVideoFrameObserver": {
+    "IVideoFrameObserverS": {
         "type": "ClazzStruct",
-        "name": "IVideoFrameObserver",
+        "name": "IVideoFrameObserverS",
         "namespaces": "agora::media",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_event_compare",
