@@ -73,6 +73,7 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONRTMPSTREAMINGEVENT = "RtcEngineEventHandler_onRtmpStreamingEvent";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONTRANSCODINGUPDATED = "RtcEngineEventHandler_onTranscodingUpdated";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOROUTINGCHANGED = "RtcEngineEventHandler_onAudioRoutingChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOROUTINGCHANGED2 = "RtcEngineEventHandler_onAudioRoutingChanged2";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONCHANNELMEDIARELAYSTATECHANGED = "RtcEngineEventHandler_onChannelMediaRelayStateChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONCHANNELMEDIARELAYEVENT = "RtcEngineEventHandler_onChannelMediaRelayEvent";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALPUBLISHFALLBACKTOAUDIOONLY = "RtcEngineEventHandler_onLocalPublishFallbackToAudioOnly";

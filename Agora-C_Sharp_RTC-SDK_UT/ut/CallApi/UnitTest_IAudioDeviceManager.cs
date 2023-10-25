@@ -328,6 +328,25 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
-#endregion
+        [Test]
+        public void Test_GetPlaybackAudioDeviceInfo()
+        {
+            int index;
+            ParamsHelper.InitParam(out index);
+            var nRet = AudioDeviceManager.GetPlaybackAudioDeviceInfo(index);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
+        public void Test_GetRecordingAudioDeviceInfo()
+        {
+            int index;
+            ParamsHelper.InitParam(out index);
+            var nRet = AudioDeviceManager.GetRecordingAudioDeviceInfo(index);
+
+            Assert.AreEqual(0, nRet);
+        }
+        #endregion
     }
 }

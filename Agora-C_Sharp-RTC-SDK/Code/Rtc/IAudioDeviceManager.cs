@@ -414,6 +414,9 @@ namespace Agora.Rtc
         #endregion
 
 
+        public abstract AudioDeviceInfo GetPlaybackAudioDeviceInfo(int index);
+
+        public abstract AudioDeviceInfo GetRecordingAudioDeviceInfo(int index);
 
     }
 }

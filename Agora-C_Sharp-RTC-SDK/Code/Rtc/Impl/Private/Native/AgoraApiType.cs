@@ -17,6 +17,7 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINE_GETVERSION = "RtcEngine_getVersion";
         internal const string FUNC_RTCENGINE_GETERRORDESCRIPTION = "RtcEngine_getErrorDescription";
         internal const string FUNC_RTCENGINE_QUERYCODECCAPABILITY = "RtcEngine_queryCodecCapability";
+        internal const string FUNC_RTCENGINE_QUERYDEVICESCORE = "RtcEngine_queryDeviceScore";
         internal const string FUNC_RTCENGINE_PRELOADCHANNEL = "RtcEngine_preloadChannel";
         internal const string FUNC_RTCENGINE_PRELOADCHANNEL2 = "RtcEngine_preloadChannel2";
         internal const string FUNC_RTCENGINE_UPDATEPRELOADCHANNELTOKEN = "RtcEngine_updatePreloadChannelToken";
@@ -374,6 +375,7 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYER_SETLOOPCOUNT = "MediaPlayer_setLoopCount";
         internal const string FUNC_MEDIAPLAYER_SETPLAYBACKSPEED = "MediaPlayer_setPlaybackSpeed";
         internal const string FUNC_MEDIAPLAYER_SELECTAUDIOTRACK = "MediaPlayer_selectAudioTrack";
+        internal const string FUNC_MEDIAPLAYER_SELECTMULTIAUDIOTRACK = "MediaPlayer_selectMultiAudioTrack";
         internal const string FUNC_MEDIAPLAYER_SETPLAYEROPTION = "MediaPlayer_setPlayerOption";
         internal const string FUNC_MEDIAPLAYER_SETPLAYEROPTION2 = "MediaPlayer_setPlayerOption2";
         internal const string FUNC_MEDIAPLAYER_TAKESCREENSHOT = "MediaPlayer_takeScreenshot";
@@ -418,6 +420,8 @@ namespace Agora.Rtc
         #region IAudioDeviceManager start
         internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEFAULTDEVICE = "AudioDeviceManager_getPlaybackDefaultDevice";
         internal const string FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEAFULTDEVICE = "AudioDeviceManager_getRecordingDefaultDevice";
+        internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKAUDIODEVICEINFO = "AudioDeviceManager_getPlaybackAudioDeviceInfo";
+        internal const string FUNC_AUDIODEVICEMANAGER_GETRECORDINGAUDIODEVICEINFO = "AudioDeviceManager_getRecordingAudioDeviceInfo";
 
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATEPLAYBACKDEVICES = "AudioDeviceManager_enumeratePlaybackDevices";
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATERECORDINGDEVICES = "AudioDeviceManager_enumerateRecordingDevices";

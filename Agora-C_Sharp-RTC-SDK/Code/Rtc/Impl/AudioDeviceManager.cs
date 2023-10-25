@@ -292,6 +292,25 @@
             return _audioDeviecManagerImpl.FollowSystemLoopbackDevice(enable);
         }
 
+        public override AudioDeviceInfo GetPlaybackAudioDeviceInfo(int index)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return null;
+            }
+            return _audioDeviecManagerImpl.GetPlaybackAudioDeviceInfo(index);
+        }
+
+        public override AudioDeviceInfo GetRecordingAudioDeviceInfo(int index)
+        {
+            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
+            {
+                return null;
+            }
+            return _audioDeviecManagerImpl.GetRecordingAudioDeviceInfo(index);
+        }
+
+
         #endregion
 
         internal static IAudioDeviceManager GetInstance(IRtcEngine rtcEngine, AudioDeviceManagerImpl impl)

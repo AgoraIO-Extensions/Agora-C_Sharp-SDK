@@ -934,7 +934,10 @@ namespace Agora.Rtc
         ///
         /// <param name="routing"> The current audio routing. See AudioRoute.</param>
         ///
+        [Obsolete]
         public virtual void OnAudioRoutingChanged(int routing) { }
+
+        public virtual void OnAudioRoutingChanged(int deviceType, int routing) { }
 
         ///
         /// <summary>

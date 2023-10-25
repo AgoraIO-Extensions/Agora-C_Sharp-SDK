@@ -4443,6 +4443,8 @@ namespace Agora.Rtc
         ///
         public abstract int QueryCodecCapability(ref CodecCapInfo[] codecInfo, ref int size);
 
+        public abstract int QueryDeviceScore();
+
         #endregion
 
         #region DeviceManager

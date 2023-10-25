@@ -719,6 +719,7 @@ namespace Agora.Rtc
         ///
         public bool enableCache;
 
+        public bool enableMultiAudioTrack;
         ///
         /// <summary>
         /// Whether the media resource to be opened is a live stream or on-demand video distributed through Media Broadcast service: true : The media resource to be played is a live or on-demand video distributed through Media Broadcast service. false : (Default) The media resource is not a live stream or on-demand video distributed through Media Broadcast service. If you need to open a live stream or on-demand video distributed through Broadcast Streaming service, pass in the URL of the media resource to url, and set isAgoraSource as true; otherwise, you don't need to set the isAgoraSource parameter.
@@ -768,6 +769,9 @@ namespace Agora.Rtc
 
             writer.WritePropertyName("enableCache");
             writer.Write(enableCache);
+
+            writer.WritePropertyName("enableMultiAudioTrack");
+            writer.Write(enableMultiAudioTrack);
 
             if (isAgoraSource.HasValue())
             {

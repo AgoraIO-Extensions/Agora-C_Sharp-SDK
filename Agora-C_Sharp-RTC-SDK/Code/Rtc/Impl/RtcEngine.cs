@@ -319,6 +319,15 @@ namespace Agora.Rtc
             return _rtcEngineImpl.QueryCodecCapability(ref codecInfo, ref size);
         }
 
+        public override int QueryDeviceScore()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _rtcEngineImpl.QueryDeviceScore();
+        }
+
         public override int PreloadChannel(string token, string channelId, uint uid)
         {
             if (_rtcEngineImpl == null)

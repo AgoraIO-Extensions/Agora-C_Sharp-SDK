@@ -385,6 +385,42 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public AudioDeviceInfo GetPlaybackAudioDeviceInfo(int index)
+        {
+            _param.Clear();
+            _param.Add("index", index);
+            string jsonParam = AgoraJson.ToJson(_param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETPLAYBACKAUDIODEVICEINFO,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            AudioDeviceInfo info = null;
+            if (ret == 0)
+            {
+                info = AgoraJson.JsonToStruct<AudioDeviceInfo>(_apiParam.Result, "result");
+            }
+
+            return info;
+        }
+
+        public AudioDeviceInfo GetRecordingAudioDeviceInfo(int index)
+        {
+            _param.Clear();
+            _param.Add("index", index);
+            string jsonParam = AgoraJson.ToJson(_param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+                AgoraApiType.FUNC_AUDIODEVICEMANAGER_GETRECORDINGAUDIODEVICEINFO,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+
+            AudioDeviceInfo info = null;
+            if (ret == 0)
+            {
+                info = AgoraJson.JsonToStruct<AudioDeviceInfo>(_apiParam.Result, "result");
+            }
+
+            return info;
+        }
+
         #endregion
     }
 }
