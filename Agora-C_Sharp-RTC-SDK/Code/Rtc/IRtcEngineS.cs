@@ -12,6 +12,8 @@ namespace Agora.Rtc
 
         public abstract ILocalSpatialAudioEngineS GetLocalSpatialAudioEngine();
 
+        public abstract IH265TranscoderS GetH265Transcoder();
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         public abstract int SendMetadata(MetadataS metadata, VIDEO_SOURCE_TYPE source_type);
 #endif

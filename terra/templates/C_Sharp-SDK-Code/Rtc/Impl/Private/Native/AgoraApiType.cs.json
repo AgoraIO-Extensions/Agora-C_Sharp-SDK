@@ -1,0 +1,29 @@
+{
+    "IH265Transcoder": {
+        "type": "ClazzStruct",
+        "name": "IH265Transcoder",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name",
+        "excludeMethods": [
+            "AddRef",
+            "Release",
+            "HasOneRef"
+        ],
+        "trackBackFather": 1
+    },
+    "IH265TranscoderS": {
+        "type": "ClazzStruct",
+        "name": "IH265TranscoderS",
+        "memberSplitSymbol": "\n",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "api_name",
+        "excludeMethods": [
+            "AddRef",
+            "Release",
+            "HasOneRef"
+        ],
+        "trackBackFather": 1
+    },
+    "api_name": "internal const string FUNC_${-rmCLAZZ_STRUCT_NAME}_${-mMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-oMETHOD_NAME}\";"
+}

@@ -22,6 +22,7 @@ namespace Agora.Rtc
         private IVideoDeviceManager _videoDeviceManager = null;
         private IMusicContentCenter _musicContentCenter = null;
         private ILocalSpatialAudioEngineS _localSpatialAudioEngine = null;
+        private IH265TranscoderS _h265Transcoder = null;
         private IMediaPlayerCacheManager _mediaPlayerCacheManager = null;
 
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
@@ -41,6 +42,7 @@ namespace Agora.Rtc
             _videoDeviceManager = VideoDeviceManager.GetInstance(this, _rtcEngineImpl.GetVideoDeviceManager());
             _musicContentCenter = MusicContentCenter.GetInstance(this, _rtcEngineImpl.GetMusicContentCenter());
             _localSpatialAudioEngine = LocalSpatialAudioEngineS.GetInstance(this, _rtcEngineImpl.GetLocalSpatialAudioEngine());
+            _h265Transcoder = H265TranscoderS.GetInstance(this, _rtcEngineImpl.GetH265Transcoder());
             _mediaPlayerCacheManager = MediaPlayerCacheManager.GetInstance(this, _rtcEngineImpl.GetMediaPlayerCacheManager());
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -54,6 +56,7 @@ namespace Agora.Rtc
             _videoDeviceManager = null;
             _musicContentCenter = null;
             _localSpatialAudioEngine = null;
+            _h265Transcoder = null;
             _mediaPlayerCacheManager = null;
         }
 
@@ -227,6 +230,15 @@ namespace Agora.Rtc
                 return null;
             }
             return _localSpatialAudioEngine;
+        }
+
+        public override IH265TranscoderS GetH265Transcoder()
+        {
+            if (_rtcEngineImpl == null)
+            {
+                return null;
+            }
+            return _h265Transcoder;
         }
 
         public override int GetNativeHandler(ref IntPtr nativeHandler)

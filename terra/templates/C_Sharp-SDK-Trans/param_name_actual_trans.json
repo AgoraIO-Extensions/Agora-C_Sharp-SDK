@@ -71,7 +71,10 @@
         "ILocalSpatialAudioEngine.initialize.config": "@remove",
         "ILocalSpatialAudioEngineS.initialize.config": "@remove",
         "IMetadataObserver.onReadyToSendMetadata.metadata": "ref metadata",
-        "IMetadataObserverS.onReadyToSendMetadata.metadataS": "ref metadataS"
+        "IMetadataObserverS.onReadyToSendMetadata.metadataS": "ref metadataS",
+        "IH265TranscoderBase.unregisterTranscoderObserver.observer": "@remove",
+        "IH265Transcoder.unregisterTranscoderObserver.observer": "@remove",
+        "IH265TranscoderS.unregisterTranscoderObserver.observer": "@remove"
     },
     "normal": {
         "params": "@params",

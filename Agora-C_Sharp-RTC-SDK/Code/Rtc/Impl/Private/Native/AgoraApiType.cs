@@ -513,7 +513,6 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAENGINE_RELEASE = "MediaEngine_release";
         #endregion
 
-
         #region IMediaPlayerCacheManager start
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES = "MediaPlayerCacheManager_removeAllCaches";
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEOLDCACHE = "MediaPlayerCacheManager_removeOldCache";
@@ -559,5 +558,23 @@ namespace Agora.Rtc
         #region IMusicPlayer start
         internal const string FUNC_MUSICPLAYER_OPEN = "MusicPlayer_open";
         #endregion
+
+        #region terra IH265Transcoder
+
+        internal const string FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER = "H265Transcoder_registerTranscoderObserver";
+        internal const string FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER = "H265Transcoder_unregisterTranscoderObserver";
+        internal const string FUNC_H265TRANSCODER_ENABLETRANSCODE = "H265Transcoder_enableTranscode";
+        internal const string FUNC_H265TRANSCODER_QUERYCHANNEL = "H265Transcoder_queryChannel";
+        internal const string FUNC_H265TRANSCODER_TRIGGERTRANSCODE = "H265Transcoder_triggerTranscode";
+        #endregion terra IH265Transcoder
+
+        #region terra IH265TranscoderS
+
+        internal const string FUNC_H265TRANSCODERS_REGISTERTRANSCODEROBSERVER = "H265TranscoderS_registerTranscoderObserver";
+        internal const string FUNC_H265TRANSCODERS_UNREGISTERTRANSCODEROBSERVER = "H265TranscoderS_unregisterTranscoderObserver";
+        internal const string FUNC_H265TRANSCODERS_ENABLETRANSCODE = "H265TranscoderS_enableTranscode";
+        internal const string FUNC_H265TRANSCODERS_QUERYCHANNEL = "H265TranscoderS_queryChannel";
+        internal const string FUNC_H265TRANSCODERS_TRIGGERTRANSCODE = "H265TranscoderS_triggerTranscode";
+        #endregion terra IH265TranscoderS
     }
 }

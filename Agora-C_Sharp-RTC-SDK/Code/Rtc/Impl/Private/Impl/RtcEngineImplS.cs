@@ -53,6 +53,7 @@ namespace Agora.Rtc
         private MediaPlayerImpl _mediaPlayerInstance;
         private MusicContentCenterImpl _musicContentCenterImpl;
         private LocalSpatialAudioEngineImplS _spatialAudioEngineInstance;
+        private H265TranscoderImplS _h265TranscoderImpl;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManager;
         private MediaRecorderImplS _mediaRecorderInstance;
 
@@ -75,6 +76,7 @@ namespace Agora.Rtc
             _mediaPlayerInstance = new MediaPlayerImpl(_irisRtcEngine);
             _musicContentCenterImpl = new MusicContentCenterImpl(_irisRtcEngine, _mediaPlayerInstance);
             _spatialAudioEngineInstance = new LocalSpatialAudioEngineImplS(_irisRtcEngine);
+            _h265TranscoderImpl = new H265TranscoderImplS(_irisRtcEngine);
             _mediaPlayerCacheManager = new MediaPlayerCacheManagerImpl(_irisRtcEngine);
             _mediaRecorderInstance = new MediaRecorderImplS(_irisRtcEngine);
 #if AGORA_RTM
@@ -122,6 +124,7 @@ namespace Agora.Rtc
                 _musicContentCenterImpl = null;
 
                 _spatialAudioEngineInstance = null;
+                _h265TranscoderImpl = null;
 
                 _mediaPlayerCacheManager.Dispose();
                 _mediaPlayerCacheManager = null;
@@ -731,6 +734,11 @@ namespace Agora.Rtc
         public LocalSpatialAudioEngineImplS GetLocalSpatialAudioEngine()
         {
             return _spatialAudioEngineInstance;
+        }
+
+        public H265TranscoderImplS GetH265Transcoder()
+        {
+            return _h265TranscoderImpl;
         }
 
         public MediaPlayerCacheManagerImpl GetMediaPlayerCacheManager()
