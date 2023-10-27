@@ -335,7 +335,9 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out index);
             var nRet = AudioDeviceManager.GetPlaybackAudioDeviceInfo(index);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(nRet.isCurrentSelected, false);
+            Assert.AreEqual(nRet.isPlayoutDevice, true);
+            Assert.AreEqual(nRet.routing, AudioRoute.ROUTE_DEFAULT);
         }
 
         [Test]
@@ -345,7 +347,9 @@ namespace Agora.Rtc
             ParamsHelper.InitParam(out index);
             var nRet = AudioDeviceManager.GetRecordingAudioDeviceInfo(index);
 
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(nRet.isCurrentSelected, false);
+            Assert.AreEqual(nRet.isPlayoutDevice, true);
+            Assert.AreEqual(nRet.routing, AudioRoute.ROUTE_DEFAULT);
         }
         #endregion
     }
