@@ -40,8 +40,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_OpenWithMediaSource()
         {
-            MediaSource source;
-            ParamsHelper.InitParam(out source);
+            MediaSource source = ParamsHelper.CreateParam<MediaSource>();
 
             var nRet = MediaPlayer.OpenWithMediaSource(source);
             Assert.AreEqual(0, nRet);

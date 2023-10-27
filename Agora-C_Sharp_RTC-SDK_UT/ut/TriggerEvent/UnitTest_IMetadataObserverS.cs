@@ -53,7 +53,7 @@ namespace Agora.Rtc.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.GetMaxMetadataSizePassed());
         }
@@ -74,7 +74,7 @@ namespace Agora.Rtc.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnReadyToSendMetadataPassed(ref metadataS, source_type));
         }
@@ -86,14 +86,14 @@ namespace Agora.Rtc.Event
 
             jsonObj.Clear();
 
-            Metadata metadataS = ParamsHelper.CreateParam<Metadata>();
+            MetadataS metadataS = ParamsHelper.CreateParam<MetadataS>();
             jsonObj.Add("metadataS", metadataS);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnMetadataReceivedPassed(metadataS));
         }

@@ -42,9 +42,7 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONMESSAGEEVENT;
 
-            MessageEvent @event;
-            ParamsHelper.InitParam(out @event);
-
+            MessageEvent @event = ParamsHelper.CreateParam<MessageEvent>();
 
             jsonObj.Clear();
             jsonObj.Add("@event", @event);
@@ -65,9 +63,7 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONPRESENCEEVENT;
 
-            Internal.PresenceEvent @event;
-            ParamsHelper.InitParam(out @event);
-
+            Internal.PresenceEvent @event = ParamsHelper.CreateParam<Internal.PresenceEvent>();
 
             jsonObj.Clear();
             jsonObj.Add("@event", @event);
@@ -88,9 +84,7 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONTOPICEVENT;
 
-            TopicEvent @event;
-            ParamsHelper.InitParam(out @event);
-
+            TopicEvent @event = ParamsHelper.CreateParam<TopicEvent>();
 
             jsonObj.Clear();
             jsonObj.Add("@event", @event);
@@ -111,9 +105,7 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONLOCKEVENT;
 
-            LockEvent @event;
-            ParamsHelper.InitParam(out @event);
-
+            LockEvent @event = ParamsHelper.CreateParam<LockEvent>();
 
             jsonObj.Clear();
             jsonObj.Add("@event", @event);
@@ -134,9 +126,7 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONSTORAGEEVENT;
 
-            StorageEvent @event;
-            ParamsHelper.InitParam(out @event);
-
+            StorageEvent @event = ParamsHelper.CreateParam<StorageEvent>();
 
             jsonObj.Clear();
             jsonObj.Add("@event", @event);
@@ -157,18 +147,13 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONJOINRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -192,17 +177,13 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONLEAVERESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
 
             jsonObj.Clear();
@@ -227,23 +208,17 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONJOINTOPICRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            string topic;
-            ParamsHelper.InitParam(out topic);
+            string topic = ParamsHelper.CreateParam<string>();
 
-            string meta;
-            ParamsHelper.InitParam(out meta);
+            string meta = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
 
             jsonObj.Clear();
@@ -270,24 +245,17 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONLEAVETOPICRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            string topic;
-            ParamsHelper.InitParam(out topic);
+            string topic = ParamsHelper.CreateParam<string>();
 
-            string meta;
-            ParamsHelper.InitParam(out meta);
+            string meta = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -313,27 +281,19 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONSUBSCRIBETOPICRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            string topic;
-            ParamsHelper.InitParam(out topic);
+            string topic = ParamsHelper.CreateParam<string>();
 
-            Internal.UserList succeedUsers;
-            ParamsHelper.InitParam(out succeedUsers);
+            Internal.UserList succeedUsers = ParamsHelper.CreateParam<Internal.UserList>();
 
-            Internal.UserList failedUsers;
-            ParamsHelper.InitParam(out failedUsers);
+            Internal.UserList failedUsers = ParamsHelper.CreateParam<Internal.UserList>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -360,15 +320,11 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONCONNECTIONSTATECHANGE;
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CONNECTION_STATE state;
-            ParamsHelper.InitParam(out state);
+            RTM_CONNECTION_STATE state = ParamsHelper.CreateParam<RTM_CONNECTION_STATE>();
 
-            RTM_CONNECTION_CHANGE_REASON reason;
-            ParamsHelper.InitParam(out reason);
-
+            RTM_CONNECTION_CHANGE_REASON reason = ParamsHelper.CreateParam<RTM_CONNECTION_CHANGE_REASON>();
 
             jsonObj.Clear();
             jsonObj.Add("channelName", channelName);
@@ -391,9 +347,7 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONTOKENPRIVILEGEWILLEXPIRE;
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
-
+            string channelName = ParamsHelper.CreateParam<string>();
 
             jsonObj.Clear();
             jsonObj.Add("channelName", channelName);
@@ -414,14 +368,11 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONSUBSCRIBERESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
 
             jsonObj.Clear();
@@ -445,12 +396,9 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONPUBLISHRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -472,9 +420,7 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONLOGINRESULT;
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("errorCode", errorCode);
@@ -495,18 +441,13 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONSETCHANNELMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -530,18 +471,13 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONUPDATECHANNELMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -565,18 +501,13 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONREMOVECHANNELMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -600,20 +531,15 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONGETCHANNELMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            RtmMetadata data;
-            ParamsHelper.InitParam(out data);
+            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
 
             jsonObj.Clear();
@@ -639,15 +565,11 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONSETUSERMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -670,14 +592,9 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONUPDATEUSERMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
-
-            string userId;
-            ParamsHelper.InitParam(out userId);
-
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
+            string userId = ParamsHelper.CreateParam<string>();
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
 
             jsonObj.Clear();
@@ -701,15 +618,11 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONREMOVEUSERMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -732,18 +645,13 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONGETUSERMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            RtmMetadata data;
-            ParamsHelper.InitParam(out data);
+            RtmMetadata data = ParamsHelper.CreateParam<RtmMetadata>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -767,15 +675,11 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONSUBSCRIBEUSERMETADATARESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string userId;
-            ParamsHelper.InitParam(out userId);
+            string userId = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -798,20 +702,15 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONSETLOCKRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
+            string lockName = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
 
             jsonObj.Clear();
@@ -837,21 +736,15 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONREMOVELOCKRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
+            string lockName = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -876,20 +769,15 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONRELEASELOCKRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
+            string lockName = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
 
             jsonObj.Clear();
@@ -915,24 +803,17 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONACQUIRELOCKRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
+            string lockName = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
-            string errorDetails;
-            ParamsHelper.InitParam(out errorDetails);
-
+            string errorDetails = ParamsHelper.CreateParam<string>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -958,21 +839,15 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONREVOKELOCKRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            string lockName;
-            ParamsHelper.InitParam(out lockName);
+            string lockName = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -997,23 +872,17 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONGETLOCKSRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            string channelName;
-            ParamsHelper.InitParam(out channelName);
+            string channelName = ParamsHelper.CreateParam<string>();
 
-            RTM_CHANNEL_TYPE channelType;
-            ParamsHelper.InitParam(out channelType);
+            RTM_CHANNEL_TYPE channelType = ParamsHelper.CreateParam<RTM_CHANNEL_TYPE>();
 
-            LockDetail[] lockDetailList;
-            ParamsHelper.InitParam(out lockDetailList);
+            LockDetail[] lockDetailList = ParamsHelper.CreateParam<LockDetail[]>();
 
-            ulong count;
-            ParamsHelper.InitParam(out count);
+            ulong count = ParamsHelper.CreateParam<ulong>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
 
             jsonObj.Clear();
@@ -1040,20 +909,17 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONWHONOWRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            UserState[] userStateList;
-            ParamsHelper.InitParam(out userStateList);
+            UserState[] userStateList = ParamsHelper.CreateParam<UserState[]>();
 
-            ulong count;
-            ParamsHelper.InitParam(out count);
+            ulong count = ParamsHelper.CreateParam<ulong>();
 
-            string nextPage;
-            ParamsHelper.InitParam(out nextPage);
+            string nextPage = ParamsHelper.CreateParam<string>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
+
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
+
 
 
             jsonObj.Clear();
@@ -1079,18 +945,13 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONWHERENOWRESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            ChannelInfo[] channels;
-            ParamsHelper.InitParam(out channels);
+            ChannelInfo[] channels = ParamsHelper.CreateParam<ChannelInfo[]>();
 
-            ulong count;
-            ParamsHelper.InitParam(out count);
+            ulong count = ParamsHelper.CreateParam<ulong>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -1114,12 +975,9 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONPRESENCESETSTATERESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -1141,12 +999,9 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONPRESENCEREMOVESTATERESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);
@@ -1168,15 +1023,11 @@ namespace Agora.Rtm.Event
         {
             ApiParam.@event = AgoraEventType.EVENT_RTMEVENTHANDLER_ONPRESENCEGETSTATERESULT;
 
-            ulong requestId;
-            ParamsHelper.InitParam(out requestId);
+            ulong requestId = ParamsHelper.CreateParam<ulong>();
 
-            UserState state;
-            ParamsHelper.InitParam(out state);
+            UserState state = ParamsHelper.CreateParam<UserState>();
 
-            RTM_ERROR_CODE errorCode;
-            ParamsHelper.InitParam(out errorCode);
-
+            RTM_ERROR_CODE errorCode = ParamsHelper.CreateParam<RTM_ERROR_CODE>();
 
             jsonObj.Clear();
             jsonObj.Add("requestId", requestId);

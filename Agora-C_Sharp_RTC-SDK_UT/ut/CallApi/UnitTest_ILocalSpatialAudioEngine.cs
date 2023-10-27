@@ -211,8 +211,7 @@ namespace Agora.Rtc
         [Test]
         public void Test_UpdateRemotePosition()
         {
-            uid_t uid;
-            ParamsHelper.InitParam(out uid);
+            uid_t uid = 10;
 
             float[] position = new float[3];
             position[0] = 26632;

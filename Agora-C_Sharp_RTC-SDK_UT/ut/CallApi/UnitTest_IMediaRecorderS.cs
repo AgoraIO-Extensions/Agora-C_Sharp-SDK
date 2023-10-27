@@ -6,7 +6,7 @@ namespace Agora.Rtc
     public class UnitTest_IMediaRecorderS
     {
         public IRtcEngineS EngineS;
-        public IMediaRecorder MediaRecorderS;
+        public IMediaRecorderS MediaRecorderS;
 
         [SetUp]
         public void Setup()

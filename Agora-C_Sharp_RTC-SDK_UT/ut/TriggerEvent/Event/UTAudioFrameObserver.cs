@@ -168,7 +168,7 @@ namespace Agora.Rtc
 
         }
 
-        public bool OnPlaybackAudioFrameBeforeMixingPassed(string channelId, uint uid, AudioFrame audioFrame)
+        public bool OnPlaybackAudioFrameBeforeMixing2Passed(string channelId, uint uid, AudioFrame audioFrame)
         {
 
             if (OnPlaybackAudioFrameBeforeMixing2_be_trigger == false)

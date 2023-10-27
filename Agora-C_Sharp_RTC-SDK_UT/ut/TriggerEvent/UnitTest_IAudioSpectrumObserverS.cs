@@ -52,12 +52,12 @@ namespace Agora.Rtc.Event
             ApiParam.FreeResult();
         }
 
-        #region terra IAudioSpectrumObserver
+        #region terra IAudioSpectrumObserverS
 
         [Test]
         public void Test_OnLocalAudioSpectrum()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVERS_ONLOCALAUDIOSPECTRUM;
 
             jsonObj.Clear();
 
@@ -76,12 +76,12 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnRemoteAudioSpectrum()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVERS_ONREMOTEAUDIOSPECTRUM;
 
             jsonObj.Clear();
 
-            UserAudioSpectrumInfo[] spectrums = ParamsHelper.CreateParam<UserAudioSpectrumInfo[]>();
-            jsonObj.Add("spectrums", spectrums);
+            UserAudioSpectrumInfoS[] spectrumsS = ParamsHelper.CreateParam<UserAudioSpectrumInfoS[]>();
+            jsonObj.Add("spectrumsS", spectrumsS);
 
             uint spectrumNumber = ParamsHelper.CreateParam<uint>();
             jsonObj.Add("spectrumNumber", spectrumNumber);
@@ -92,9 +92,9 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
-            Assert.AreEqual(true, EventHandlerForMediaPlayer.OnRemoteAudioSpectrumPassed(spectrums, spectrumNumber));
+            Assert.AreEqual(true, EventHandler.OnRemoteAudioSpectrumPassed(spectrumsS, spectrumNumber));
+            Assert.AreEqual(true, EventHandlerForMediaPlayer.OnRemoteAudioSpectrumPassed(spectrumsS, spectrumNumber));
         }
-        #endregion terra IAudioSpectrumObserver
+        #endregion terra IAudioSpectrumObserverS
     }
 }

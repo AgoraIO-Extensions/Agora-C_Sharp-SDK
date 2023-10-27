@@ -1323,7 +1323,7 @@ export class SpeicalLogic {
         lines.push(`{`)
 
         let className = Tool.processString('-rv', clazzName, 1);
-        let methodName = Tool.processString('-v', m.name, repeat);
+        let methodName = Tool.processString('-v', m.name);
         let config = ConfigTool.getInstance();
         lines.push(`ApiParam.@event = AgoraEventType.EVENT_${className}_${methodName};\n`);
         lines.push(`jsonObj.Clear();\n`);
@@ -1344,7 +1344,7 @@ export class SpeicalLogic {
         lines.push(`int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);`);
         lines.push(`Assert.AreEqual(0, ret);`);
 
-        lines.push(`Assert.AreEqual(true, EventHandler.${Tool.processString('-u', m.name)}Passed(${paramsLines.join(',')}));`);
+        lines.push(`Assert.AreEqual(true, EventHandler.${Tool.processString('-un', m.name, repeat)}Passed(${paramsLines.join(',')}));`);
         lines.push(`}`)
         return lines.join("\n");
     }
@@ -1377,7 +1377,7 @@ export class SpeicalLogic {
         lines.push(`int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);`);
         lines.push(`Assert.AreEqual(0, ret);`);
 
-        lines.push(`Assert.AreEqual(true, EventHandler.${Tool.processString('-u', m.name)}Passed(${paramsLines.join(',')}));`);
+        lines.push(`Assert.AreEqual(true, EventHandler.${Tool.processString('-un', m.name, repeat)}Passed(${paramsLines.join(',')}));`);
         lines.push(`}`)
         return lines.join("\n");
     }
@@ -1396,6 +1396,43 @@ export class SpeicalLogic {
         lines.push(`}`);
         return lines.join('\n');
     }
+
+    public cSharpSDK_GenerateUnitTest_IRtcEngineEventHandler(clazz: Clazz): string {
+        let lines = [];
+        let allData = this.cSharpSDK_GetRtcEventHandlerData([]);
+        let includeClassStruct = [
+            "IRtcEngineEventHandlerBase",
+            "IRtcEngineEventHandler",
+            "IRtcEngineEventHandlerEx"
+        ];
+        for (let data of allData) {
+            if (includeClassStruct.includes(data.clazzName) == false)
+                continue;
+            let str = this.cSharpSDK_GenerateUnitTest_ICommonObserver(data.clazzName, data.m, data.repeart);
+            lines.push(str);
+        }
+
+        return lines.join("\n\n");
+    }
+
+    public cSharpSDK_GenerateUnitTest_IRtcEngineEventHandlerS(clazz: Clazz): string {
+        let lines = [];
+        let allData = this.cSharpSDK_GetRtcEventHandlerData([]);
+        let includeClassStruct = [
+            "IRtcEngineEventHandlerBase",
+            "IRtcEngineEventHandlerS",
+            "IRtcEngineEventHandlerExS"
+        ];
+        for (let data of allData) {
+            if (includeClassStruct.includes(data.clazzName) == false)
+                continue;
+            let str = this.cSharpSDK_GenerateUnitTest_ICommonObserverS(data.clazzName, data.m, data.repeart);
+            lines.push(str);
+        }
+
+        return lines.join("\n\n");
+    }
+
 
     public cSharpSDK_GenerateCallApiKey(clazzName: string, m: MemberFunction, repeat: number): string {
         return `"${Tool.processString('-r', clazzName)}_${Tool.processString('-n', m.name)}${repeat > 1 ? repeat : ""}"`;

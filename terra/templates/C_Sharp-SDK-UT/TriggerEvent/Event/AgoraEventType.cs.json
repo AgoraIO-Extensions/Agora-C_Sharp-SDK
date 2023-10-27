@@ -178,8 +178,16 @@
         "memberSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
         "excludeMethods": [],
-        "trackBackFather": 1,
-        "hello": 1
+        "trackBackFather": 1
+    },
+    "IH265TranscoderObserver": {
+        "type": "ClazzStruct",
+        "name": "IH265TranscoderObserver",
+        "methodSplitSymbol": "\n",
+        "memberSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": [],
+        "trackBackFather": 1
     },
     "method_event_name": "internal const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-nMETHOD_NAME}\";"
 }

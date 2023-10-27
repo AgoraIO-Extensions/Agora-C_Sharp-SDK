@@ -18,5 +18,5 @@
         "pecialMembersTemplate": "",
         "trackBackFather": 1
     },
-    "method_event_compare": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateUnitTest_ICommonObserver}"
+    "method_event_compare": "${SPECIAL_METHOD_LOGIC:cSharpSDK_GenerateUnitTest_ICommonObserverS}"
 }

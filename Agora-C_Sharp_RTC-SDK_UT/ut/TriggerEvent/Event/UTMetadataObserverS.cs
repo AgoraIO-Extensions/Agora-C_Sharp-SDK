@@ -60,22 +60,22 @@ namespace Agora.Rtc
         /////////////////////////////////
 
         public bool OnMetadataReceived_be_trigger = false;
-        public Metadata OnMetadataReceived_metadataS;
+        public MetadataS OnMetadataReceived_metadataS;
 
-        public override void OnMetadataReceived(Metadata metadataS)
+        public override void OnMetadataReceived(MetadataS metadataS)
         {
             OnMetadataReceived_be_trigger = true;
             OnMetadataReceived_metadataS = metadataS;
 
         }
 
-        public bool OnMetadataReceivedPassed(Metadata metadataS)
+        public bool OnMetadataReceivedPassed(MetadataS metadataS)
         {
 
             if (OnMetadataReceived_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<Metadata>(OnMetadataReceived_metadataS, metadataS) == false)
+            if (ParamsHelper.Compare<MetadataS>(OnMetadataReceived_metadataS, metadataS) == false)
                 return false;
 
             return true;

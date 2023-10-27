@@ -402,6 +402,13 @@ namespace Agora.Rtc
         internal const string EVENT_VIDEOFRAMEOBSERVERS_ONRENDERVIDEOFRAME = "VideoFrameObserverS_onRenderVideoFrame";
         #endregion terra IVideoFrameObserverS
 
+        #region terra IH265TranscoderObserver
+
+        internal const string EVENT_H265TRANSCODEROBSERVER_ONENABLETRANSCODE = "H265TranscoderObserver_onEnableTranscode";
+        internal const string EVENT_H265TRANSCODEROBSERVER_ONQUERYCHANNEL = "H265TranscoderObserver_onQueryChannel";
+        internal const string EVENT_H265TRANSCODEROBSERVER_ONTRIGGERTRANSCODE = "H265TranscoderObserver_onTriggerTranscode";
+        #endregion terra IH265TranscoderObserver
+
         #region IRtmEventHandler
         internal const string EVENT_RTMEVENTHANDLER_ONMESSAGEEVENT = "RtmEventHandler_onMessageEvent";
         internal const string EVENT_RTMEVENTHANDLER_ONPRESENCEEVENT = "RtmEventHandler_onPresenceEvent";

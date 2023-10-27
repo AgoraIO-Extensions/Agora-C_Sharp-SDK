@@ -179,7 +179,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPlaybackAudioFrameBeforeMixingPassed(channelId, uid, audioFrame));
+            Assert.AreEqual(true, EventHandler.OnPlaybackAudioFrameBeforeMixing2Passed(channelId, uid, audioFrame));
         }
         #endregion terra IAudioFrameObserver
     }

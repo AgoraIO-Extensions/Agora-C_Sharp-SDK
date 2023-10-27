@@ -19,7 +19,7 @@ export class Tool {
 
         let baseName = path.basename(filePath);
         filePath = path.join(ConfigTool.getInstance().cxxOriginFileDir, baseName);
-        console.log("getCppConstructor " + filePath);
+        // console.log("getCppConstructor " + filePath);
         let cppConstructors = [];
         let context = Tool.readFile(filePath);
         let reg = new RegExp(`^[ ]*${clazzName}\\([\\s\\S]*?\\)[\\s\\S]*?\\{[\\s\\S]*?\\}`, "gm");
@@ -271,6 +271,16 @@ export class Tool {
     public static _processStringWithF(input: string, repeat: number = 1): string {
         if (input.startsWith("ref ")) {
             return input.substring(4, input.length);
+        }
+        else {
+            return input;
+        }
+    }
+
+    //-a: 删除最前边的@
+    public static _processStringWithA(input: string, repeat: number = 1): string {
+        if (input.startsWith("@")) {
+            return input.substring(1, input.length);
         }
         else {
             return input;

@@ -59,7 +59,7 @@ namespace Agora.Rtc.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnCaptureVideoFramePassed(sourceType, videoFrame));
         }
@@ -81,7 +81,7 @@ namespace Agora.Rtc.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnPreEncodeVideoFramePassed(sourceType, videoFrame));
         }
@@ -103,7 +103,7 @@ namespace Agora.Rtc.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnMediaPlayerVideoFramePassed(videoFrame, mediaPlayerId));
         }
@@ -122,7 +122,7 @@ namespace Agora.Rtc.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnTranscodedVideoFramePassed(videoFrame));
         }
@@ -148,7 +148,7 @@ namespace Agora.Rtc.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnRenderVideoFramePassed(channelId, remoteUserId, videoFrame));
         }

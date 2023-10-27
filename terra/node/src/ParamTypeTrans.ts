@@ -20,7 +20,7 @@ export class ParamTypeTrans {
 
     public transType(clazzName: string, funName: string, cxxTypeSource: string, cxxParamName: string): string {
         // // if (cxxTypeSource == 'uid_t') {
-        console.log(cxxTypeSource + " : " + cxxParamName);
+        // console.log(cxxTypeSource + " : " + cxxParamName);
         // // }
 
         if (funName == null || funName == "") {

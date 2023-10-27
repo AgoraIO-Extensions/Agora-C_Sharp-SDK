@@ -63,7 +63,7 @@ namespace Agora.Rtc.Event
             ApiParam.data = jsonString;
             ApiParam.data_size = (uint)jsonString.Length;
 
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngineS(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnEncodedVideoFrameReceivedPassed(userAccount, imageBuffer, length, videoEncodedFrameInfoS));
         }
