@@ -1692,6 +1692,8 @@ namespace Agora.Rtc
         ///
         public Optional<bool> isAudioFilterable = new Optional<bool>();
 
+        public Optional<string> parameters = new Optional<string>();
+
         public ChannelMediaOptions() { }
 
         public override void ToJson(JsonWriter writer)
@@ -1910,6 +1912,12 @@ namespace Agora.Rtc
             {
                 writer.WritePropertyName("isAudioFilterable");
                 writer.Write(this.isAudioFilterable.GetValue());
+            }
+
+            if (this.parameters.HasValue())
+            {
+                writer.WritePropertyName("parameters");
+                writer.Write(this.parameters.GetValue());
             }
 
             writer.WriteObjectEnd();
