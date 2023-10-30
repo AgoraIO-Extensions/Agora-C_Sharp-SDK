@@ -8,7 +8,7 @@ import { start } from "repl";
 
 export class SpeicalLogic {
 
-    public cSharpSDK_MethodObsolete(clazzName: string, info: MemberFunction): string {
+    public cSharpSDK_MethodObsolete(clazzName: string, info: MemberFunction, repeart: number, belongToClazzName: string): string {
         var lines = info.comment.split("\n");
         let startIndex = -1;
         let endIndex = -1;
@@ -51,7 +51,7 @@ export class SpeicalLogic {
         };
     }
 
-    public cSharpSDK_EnumConstantObsolete(enumzName: string, constant: EnumConstant) {
+    public cSharpSDK_EnumConstantObsolete(enumzName: string, constant: EnumConstant, belongToEnumzName: string) {
         let comment = constant.comment;
         if (!comment)
             return "";
@@ -69,7 +69,7 @@ export class SpeicalLogic {
         return "";
     }
 
-    public cSharpSDK_ImplJsonAdd(clazzName: string, info: MemberFunction): string {
+    public cSharpSDK_ImplJsonAdd(clazzName: string, info: MemberFunction, repeart: number, belongToClazzName: string): string {
         var lines = [];
         var configTool = ConfigTool.getInstance();
         for (let p of info.parameters) {
@@ -86,7 +86,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_ImplResultGet(clazzName: string, info: MemberFunction): string {
+    public cSharpSDK_ImplResultGet(clazzName: string, info: MemberFunction, repeart: number, belongToClazzName: string): string {
         var transReturn = ConfigTool.getInstance().paramTypeTrans.transType(clazzName, info.name, info.return_type.source, info.return_type.name);
         var defaultValueMap = {
             int: 'nRet',
@@ -148,7 +148,7 @@ export class SpeicalLogic {
         return false;
     }
 
-    public cSharpSDK_ImplRefGet(clazzName: string, info: MemberFunction): string {
+    public cSharpSDK_ImplRefGet(clazzName: string, info: MemberFunction, repeart: number, belongToClazzName: string): string {
         var valueMap = [
             "int",
             "ulong",
@@ -175,14 +175,14 @@ export class SpeicalLogic {
         return lines.join('\n');
     }
 
-    public cSharpSDK_ImplPullAudioFrameAssignment(clazzName: string, m: MemberVariable): string {
+    public cSharpSDK_ImplPullAudioFrameAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         if (m.name != "buffer") {
             return `frame.${m.name} = f.${m.name};`;
         }
         return "";
     }
 
-    public cSharpSDK_ScreenCaptureSourceInfoInternalMemberAssignment(clazzName: string, m: MemberVariable): string {
+    public cSharpSDK_ScreenCaptureSourceInfoInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         if (m.type.source.includes("ThumbImageBuffer")) {
             return `screenCaptureSourceInfo.${m.name} = this.${m.name}.GenerateThumbImageBuffer();`
         }
@@ -191,7 +191,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_ScreenCaptureSourceInfoInternalMemberList(clazzName: string, m: MemberVariable): string {
+    public cSharpSDK_ScreenCaptureSourceInfoInternalMemberList(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         let transType = ConfigTool.getInstance().paramTypeTrans.transType(clazzName, null, m.type.source, m.name);
         if (transType.includes("ThumbImageBuffer")) {
             return `public ${transType}Internal ${m.name};`;
@@ -201,7 +201,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_ThumbImageBufferInternalMemberAssignment(clazzName: string, m: MemberVariable): string {
+    public cSharpSDK_ThumbImageBufferInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         if (m.name == 'buffer') {
             return ` byte[] thumbBuffer = new byte[length];
             if (imageBuffer.length > 0)
@@ -215,7 +215,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_ThumbImageBufferInternalMemberList(clazzName: string, m: MemberVariable): string {
+    public cSharpSDK_ThumbImageBufferInternalMemberList(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         let transType = ConfigTool.getInstance().paramTypeTrans.transType(clazzName, null, m.type.source, m.name);
         if (m.name == "buffer") {
             return `public IntPtr ${m.name};`;
@@ -225,7 +225,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_ExternalVideoFrameInternalMemberAssignment(clazzName: string, m: MemberVariable): string {
+    public cSharpSDK_ExternalVideoFrameInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer"];
         if (excludeList.includes(m.name)) {
             return "";
@@ -235,7 +235,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_ExternalVideoFrameInternalMemberList(clazzName: string, m: MemberVariable): string {
+    public cSharpSDK_ExternalVideoFrameInternalMemberList(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer"];
         if (excludeList.includes(m.name)) {
             return "";
@@ -246,7 +246,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_VideoFrameMemberList(clazzName: string, m: MemberVariable): string {
+    public cSharpSDK_VideoFrameMemberList(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
         if (m.name == "pixelBuffer") return '';
         let transType = ConfigTool.getInstance().paramTypeTrans.transType(clazzName, null, m.type.source, m.name);
         if (m.name == "metadata_buffer") {
@@ -751,7 +751,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_AppendPlayerIdWithInt(clazzName: string, fun: MemberFunction) {
+    public cSharpSDK_AppendPlayerIdWithInt(clazzName: string, fun: MemberFunction, repeart: number, belongToClazzName: string) {
         let length = 0;
         for (let p of fun.parameters) {
             let tranName = ConfigTool.getInstance().paramNameActualTrans.transType(clazzName, fun.name, p.name);
@@ -767,7 +767,7 @@ export class SpeicalLogic {
             return "int playerId";
         }
     }
-    public cSharpSDK_AppendNativeHandle(clazzName: string, fun: MemberFunction) {
+    public cSharpSDK_AppendNativeHandle(clazzName: string, fun: MemberFunction, repeart: number, belongToClazzName: string) {
         let length = 0;
         for (let p of fun.parameters) {
             let tranName = ConfigTool.getInstance().paramNameActualTrans.transType(clazzName, fun.name, p.name);
@@ -784,7 +784,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_AppendNativeHandleWithString(clazzName: string, fun: MemberFunction) {
+    public cSharpSDK_AppendNativeHandleWithString(clazzName: string, fun: MemberFunction, repeart: number, belongToClazzName: string) {
         let length = 0;
         for (let p of fun.parameters) {
             let tranName = ConfigTool.getInstance().paramNameActualTrans.transType(clazzName, fun.name, p.name);
@@ -1059,7 +1059,7 @@ export class SpeicalLogic {
         return lines.join('\n');
     }
 
-    protected cSharpSDK_GenerateEventHandlerImpl(clazzName: string, m: MemberFunction, repeart: number): string {
+    protected cSharpSDK_GenerateEventHandlerImpl(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let config = ConfigTool.getInstance();
         let lines = [];
         let paramsArray0: string[] = [];
@@ -1114,7 +1114,7 @@ export class SpeicalLogic {
         }
     }
 
-    public cSharpSDK_GenerateCommonEventHandlerNative(clazzName: string, m: MemberFunction): string {
+    public cSharpSDK_GenerateCommonEventHandlerNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let lines = [];
         let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
         let handlerNameMap = {
@@ -1149,7 +1149,7 @@ export class SpeicalLogic {
 
     }
 
-    public cSharpSDK_GenerateMediaPlayerSourceObserverNative(clazzName: string, m: MemberFunction): string {
+    public cSharpSDK_GenerateMediaPlayerSourceObserverNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let lines = [];
         let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
         lines.push(`case "${switchKey}":\n{`);
@@ -1180,7 +1180,7 @@ export class SpeicalLogic {
 
     }
 
-    public cSharpSDK_GenerateMusicContentCenterEventHandlerNative(clazzName: string, m: MemberFunction): string {
+    public cSharpSDK_GenerateMusicContentCenterEventHandlerNative(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let lines = [];
         let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
         lines.push(`case "${switchKey}":\n{`);
@@ -1211,7 +1211,7 @@ export class SpeicalLogic {
 
     }
 
-    public cSharpSDK_UTEventReturnValue(clazzName: string, m: MemberFunction): string {
+    public cSharpSDK_UTEventReturnValue(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let map = {
             bool: "true",
             int64_t: "0",
@@ -1269,7 +1269,7 @@ export class SpeicalLogic {
         return lines.join("\n\n");
     }
 
-    public cSharpSDK_GenerateUTCommonEventHandlerEachMethod(clazzName: string, m: MemberFunction, repeart: number): string {
+    public cSharpSDK_GenerateUTCommonEventHandlerEachMethod(clazzName: string, m: MemberFunction, repeart: number, belongToClazzName: string): string {
         let config = ConfigTool.getInstance();
         let funLines = [];
         let methodName = Tool.processString('-un', m.name, repeart);
@@ -1316,7 +1316,7 @@ export class SpeicalLogic {
         return funLines.join("\n");
     }
 
-    public cSharpSDK_GenerateUnitTest_ICommonObserver(clazzName: string, m: MemberFunction, repeat: number): string {
+    public cSharpSDK_GenerateUnitTest_ICommonObserver(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         let lines = [];
         lines.push(`[Test]`)
         lines.push(`public void Test_${Tool.processString('-un', m.name, repeat)}()`)
@@ -1349,7 +1349,7 @@ export class SpeicalLogic {
         return lines.join("\n");
     }
 
-    public cSharpSDK_GenerateUnitTest_ICommonObserverS(clazzName: string, m: MemberFunction, repeat: number): string {
+    public cSharpSDK_GenerateUnitTest_ICommonObserverS(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         let lines = [];
         lines.push(`[Test]`)
         lines.push(`public void Test_${Tool.processString('-un', m.name, repeat)}()`)
@@ -1382,7 +1382,7 @@ export class SpeicalLogic {
         return lines.join("\n");
     }
 
-    public cSharpSDK_GenerateUnitTest_IAudioSpectrumObserver(clazzName: string, m: MemberFunction, repeat: number): string {
+    public cSharpSDK_GenerateUnitTest_IAudioSpectrumObserver(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         let config = ConfigTool.getInstance();
         let lines = [];
         let prefixString = this.cSharpSDK_GenerateUnitTest_ICommonObserver(clazzName, m, repeat);
@@ -1434,7 +1434,7 @@ export class SpeicalLogic {
     }
 
 
-    public cSharpSDK_GenerateCallApiKey(clazzName: string, m: MemberFunction, repeat: number): string {
+    public cSharpSDK_GenerateCallApiKey(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         return `"${Tool.processString('-r', clazzName)}_${Tool.processString('-n', m.name)}${repeat > 1 ? repeat : ""}"`;
     }
 }

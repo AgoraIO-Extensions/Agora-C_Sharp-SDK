@@ -1,6 +1,8 @@
 
 //类(结构体名字)
 ${-oCLAZZ_STRUCT_NAME}
+//真正属于谁，有的方法是从父类继承来的
+${-oBELONG_TO}
 
 //方法名字
 ${-oMETHOD_NAME}

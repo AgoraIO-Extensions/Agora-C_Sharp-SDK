@@ -34,7 +34,9 @@ namespace Agora.Rtc.Event
             EventHandlerForMediaPlayer = new UTAudioSpectrumObserverS();
             EventHandlerForMediaPlayer.TAG = "FOR_MEDIAPLAYER";
             MediaPlayer = Engine.CreateMediaPlayer();
-            ret = MediaPlayer.RegisterMediaPlayerAudioSpectrumObserver(EventHandlerForMediaPlayer, 10);
+
+            //todo need delete this.
+            ret = MediaPlayer.RegisterMediaPlayerAudioSpectrumObserver((UTAudioSpectrumObserver)(System.Object)EventHandlerForMediaPlayer, 10);
 
             Assert.AreEqual(0, ret);
         }
