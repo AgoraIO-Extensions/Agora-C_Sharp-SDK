@@ -178,17 +178,17 @@ namespace Agora.Rtc
 
     public class ChannelMediaRelayConfiguration : ChannelMediaRelayConfigurationBase
     {
-        public ChannelMediaInfo[] srcInfo;
+        public ChannelMediaInfo srcInfo;
 
         public ChannelMediaInfo[] destInfos;
 
         public ChannelMediaRelayConfiguration()
         {
-            this.srcInfo = new ChannelMediaInfo[0];
+            this.srcInfo = new ChannelMediaInfo();
             this.destInfos = new ChannelMediaInfo[0];
         }
 
-        public ChannelMediaRelayConfiguration(int destCount, ChannelMediaInfo[] srcInfo, ChannelMediaInfo[] destInfos)
+        public ChannelMediaRelayConfiguration(int destCount, ChannelMediaInfo srcInfo, ChannelMediaInfo[] destInfos)
         : base(destCount)
         {
             this.srcInfo = srcInfo;

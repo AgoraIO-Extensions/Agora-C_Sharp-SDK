@@ -1030,7 +1030,7 @@ export class SpeicalLogic {
         for (let data of allMethods) {
             if (!containClazzName.includes(data.clazzName))
                 continue;
-            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(data.clazzName, data.m, data.repeart));
+            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(data.clazzName, data.m, data.repeart, data.clazzName));
         }
         return lines.join('\n');
     }
@@ -1046,7 +1046,7 @@ export class SpeicalLogic {
         for (let data of allMethods) {
             if (!containClazzName.includes(data.clazzName))
                 continue;
-            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(data.clazzName, data.m, data.repeart));
+            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(data.clazzName, data.m, data.repeart, data.clazzName));
         }
         return lines.join('\n');
     }
@@ -1054,7 +1054,7 @@ export class SpeicalLogic {
     public cSharpSDK_GenerateDirectCdnStreamingEventHandler(clazz: Clazz): string {
         let lines = [];
         for (let m of clazz.methods) {
-            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(clazz.name, m, 1));
+            lines.push(this.cSharpSDK_GenerateEventHandlerImpl(clazz.name, m, 1, clazz.name));
         }
         return lines.join('\n');
     }
@@ -1243,7 +1243,7 @@ export class SpeicalLogic {
             let clazzName = data.clazzName;
             let m = data.m;
             let repeart = data.repeart;
-            lines.push(this.cSharpSDK_GenerateUTCommonEventHandlerEachMethod(clazzName, m, repeart));
+            lines.push(this.cSharpSDK_GenerateUTCommonEventHandlerEachMethod(clazzName, m, repeart, clazzName));
         }
         return lines.join("\n\n");
     }
@@ -1264,7 +1264,7 @@ export class SpeicalLogic {
             let clazzName = data.clazzName;
             let m = data.m;
             let repeart = data.repeart;
-            lines.push(this.cSharpSDK_GenerateUTCommonEventHandlerEachMethod(clazzName, m, repeart));
+            lines.push(this.cSharpSDK_GenerateUTCommonEventHandlerEachMethod(clazzName, m, repeart, clazzName));
         }
         return lines.join("\n\n");
     }
@@ -1385,7 +1385,7 @@ export class SpeicalLogic {
     public cSharpSDK_GenerateUnitTest_IAudioSpectrumObserver(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         let config = ConfigTool.getInstance();
         let lines = [];
-        let prefixString = this.cSharpSDK_GenerateUnitTest_ICommonObserver(clazzName, m, repeat);
+        let prefixString = this.cSharpSDK_GenerateUnitTest_ICommonObserver(clazzName, m, repeat, belongToClazzName);
         prefixString = prefixString.substring(0, prefixString.length - 2);
         lines.push(prefixString);
         let paramsLines = [];
@@ -1408,7 +1408,7 @@ export class SpeicalLogic {
         for (let data of allData) {
             if (includeClassStruct.includes(data.clazzName) == false)
                 continue;
-            let str = this.cSharpSDK_GenerateUnitTest_ICommonObserver(data.clazzName, data.m, data.repeart);
+            let str = this.cSharpSDK_GenerateUnitTest_ICommonObserver(data.clazzName, data.m, data.repeart, data.clazzName);
             lines.push(str);
         }
 
@@ -1426,7 +1426,7 @@ export class SpeicalLogic {
         for (let data of allData) {
             if (includeClassStruct.includes(data.clazzName) == false)
                 continue;
-            let str = this.cSharpSDK_GenerateUnitTest_ICommonObserverS(data.clazzName, data.m, data.repeart);
+            let str = this.cSharpSDK_GenerateUnitTest_ICommonObserverS(data.clazzName, data.m, data.repeart, data.clazzName);
             lines.push(str);
         }
 
