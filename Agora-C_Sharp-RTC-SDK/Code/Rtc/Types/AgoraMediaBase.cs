@@ -220,7 +220,14 @@ namespace Agora.Rtc
         /// 9: The audio route is Apple AirPlay. (For macOS only)
         /// </summary>
         ///
-        ROUTE_AIRPLAY = 9
+        ROUTE_AIRPLAY = 9,
+
+
+        ROUTE_VIRTUAL = 10,
+        /**
+         * The Continuity
+         */
+        ROUTE_CONTINUITY = 11,
     };
 
     ///
@@ -289,6 +296,20 @@ namespace Agora.Rtc
         ///
         RAW_AUDIO_FRAME_OP_MODE_READ_WRITE = 2,
     };
+
+
+    public class AudioDeviceInfo
+    {
+        public string deviceName;
+
+        public string deviceId;
+
+        public bool isCurrentSelected;
+
+        public bool isPlayoutDevice;
+
+        public AudioRoute routing;
+    }
 
     ///
     /// <summary>
@@ -1148,10 +1169,11 @@ namespace Agora.Rtc
             renderTimeMs = 0;
             avsync_type = 0;
             presentationMs = 0;
+            audioTrackNumber = 0;
         }
 
         public AudioFrame(AUDIO_FRAME_TYPE type, int samplesPerChannel, BYTES_PER_SAMPLE bytesPerSample, int channels, int samplesPerSec,
-            byte[] buffer, long renderTimeMs, int avsync_type, int64_t presentationMs)
+            byte[] buffer, long renderTimeMs, int avsync_type, int64_t presentationMs, int audioTrackNumber)
         {
             this.type = type;
             this.samplesPerChannel = samplesPerChannel;
@@ -1162,6 +1184,7 @@ namespace Agora.Rtc
             this.renderTimeMs = renderTimeMs;
             this.avsync_type = avsync_type;
             this.presentationMs = presentationMs;
+            this.audioTrackNumber = audioTrackNumber;
         }
 
         ///
@@ -1232,6 +1255,8 @@ namespace Agora.Rtc
         /// @ignore
         ///
         public int64_t presentationMs;
+
+        public int audioTrackNumber;
     };
 
     [Flags]

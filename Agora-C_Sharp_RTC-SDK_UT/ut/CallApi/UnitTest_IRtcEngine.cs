@@ -90,6 +90,14 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_QueryDeviceScore()
+        { 
+            var nRet = Engine.QueryDeviceScore();
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_PreloadChannel()
         {
             string token;

@@ -19,7 +19,7 @@ namespace Agora.Rtc
         /// Failure: NULL.
         /// </returns>
         ///
-        public abstract DeviceInfo[] EnumeratePlaybackDevices();
+        public abstract AudioDeviceInfo[] EnumeratePlaybackDevices();
 
         ///
         /// <summary>
@@ -183,7 +183,7 @@ namespace Agora.Rtc
         /// Failure: NULL.
         /// </returns>
         ///
-        public abstract DeviceInfo[] EnumerateRecordingDevices();
+        public abstract AudioDeviceInfo[] EnumerateRecordingDevices();
 
         ///
         /// <summary>
@@ -414,6 +414,7 @@ namespace Agora.Rtc
         #endregion
 
 
+   
 
     }
 }

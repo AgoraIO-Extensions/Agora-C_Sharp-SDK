@@ -2242,6 +2242,34 @@ namespace Agora.Rtc
 
         ///////////////////////////////////
 
+        public bool OnAudioRoutingChanged2_be_trigger = false;
+        public int OnAudioRoutingChanged2_deviceType = 0;
+        public int OnAudioRoutingChanged2_routing = 0;
+
+        public override void OnAudioRoutingChanged(int deviceType, int routing)
+        {
+            OnAudioRoutingChanged2_be_trigger = true;
+            OnAudioRoutingChanged2_deviceType = deviceType;
+            OnAudioRoutingChanged2_routing = routing;
+        }
+
+        public bool OnAudioRoutingChangedPassed(int deviceType, int routing)
+        {
+            if (OnAudioRoutingChanged2_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.compareInt(OnAudioRoutingChanged2_deviceType, deviceType) == false)
+                return false;
+
+            if (ParamsHelper.compareInt(OnAudioRoutingChanged2_routing, routing) == false)
+                return false;
+
+            return true;
+        }
+
+        ///////////////////////////////////
+
+
         public bool OnChannelMediaRelayStateChanged_be_trigger = false;
         public int OnChannelMediaRelayStateChanged_state = 0;
         public int OnChannelMediaRelayStateChanged_code = 0;

@@ -283,6 +283,18 @@ namespace Agora.Rtc
         }
 
         [Test]
+        public void Test_SelectMultiAudioTrack()
+        {
+            int playoutTrackIndex;
+            ParamsHelper.InitParam(out playoutTrackIndex);
+            int publishTrackIndex;
+            ParamsHelper.InitParam(out publishTrackIndex);
+            var nRet = MediaPlayer.SelectMultiAudioTrack(playoutTrackIndex, publishTrackIndex);
+
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_SetPlayerOption()
         {
             string key;

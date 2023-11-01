@@ -1216,18 +1216,20 @@ namespace Agora.Rtc
         public CameraCapturerConfiguration()
         {
             deviceId = "";
+            cameraId = "";
             cameraDirection = CAMERA_DIRECTION.CAMERA_FRONT;
             format = new VideoFormat();
             this.followEncodeDimensionRatio = true;
         }
 
         public CameraCapturerConfiguration(string deviceId, VideoFormat format,
-            CAMERA_DIRECTION cameraDirection, bool followEncodeDimensionRatio)
+            CAMERA_DIRECTION cameraDirection, bool followEncodeDimensionRatio, string cameraId)
         {
             this.deviceId = deviceId;
             this.format = format;
             this.cameraDirection = cameraDirection;
             this.followEncodeDimensionRatio = followEncodeDimensionRatio;
+            this.cameraId = cameraId;
         }
 
         ///
@@ -1236,7 +1238,6 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public string deviceId;
-
         ///
         /// <summary>
         /// The format of the video frame. See VideoFormat.
@@ -1257,6 +1258,8 @@ namespace Agora.Rtc
         /// </summary>
         ///
         public CAMERA_DIRECTION cameraDirection;
+
+        public string cameraId;
     }
 
     ///

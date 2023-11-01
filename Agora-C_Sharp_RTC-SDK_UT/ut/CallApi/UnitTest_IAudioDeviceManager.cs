@@ -327,7 +327,6 @@ namespace Agora.Rtc
 
             Assert.AreEqual(0, nRet);
         }
-
-#endregion
+        #endregion
     }
 }

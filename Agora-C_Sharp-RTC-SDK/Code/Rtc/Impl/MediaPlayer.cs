@@ -249,6 +249,15 @@ namespace Agora.Rtc
             return _mediaPlayerImpl.SelectAudioTrack(playerId, index);
         }
 
+        public override int SelectMultiAudioTrack(int playoutTrackIndex, int publishTrackIndex)
+        {
+            if (_rtcEngineInstance == null || _mediaPlayerImpl == null)
+            {
+                return ErrorCode;
+            }
+            return _mediaPlayerImpl.SelectMultiAudioTrack(playerId, playoutTrackIndex, publishTrackIndex);
+        }
+
         public override int SetPlayerOption(string key, int value)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)

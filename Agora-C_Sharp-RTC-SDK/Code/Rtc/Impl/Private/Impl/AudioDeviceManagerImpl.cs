@@ -43,13 +43,13 @@ namespace Agora.Rtc
         }
 
         #region PlaybackDevices
-        public DeviceInfo[] EnumeratePlaybackDevices()
+        public AudioDeviceInfo[] EnumeratePlaybackDevices()
         {
             return AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_AUDIODEVICEMANAGER_ENUMERATEPLAYBACKDEVICES,
                 "", 0, IntPtr.Zero, 0, ref _apiParam) != 0
-                ? new DeviceInfo[0]
-                : AgoraJson.JsonToStructArray<DeviceInfo>(_apiParam.Result, "result");
+                ? new AudioDeviceInfo[0]
+                : AgoraJson.JsonToStructArray<AudioDeviceInfo>(_apiParam.Result, "result");
         }
 
         public int SetPlaybackDevice(string deviceId)
@@ -161,13 +161,13 @@ namespace Agora.Rtc
 
 
         #region PlaybackDevices
-        public DeviceInfo[] EnumerateRecordingDevices()
+        public AudioDeviceInfo[] EnumerateRecordingDevices()
         {
             return AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
                 AgoraApiType.FUNC_AUDIODEVICEMANAGER_ENUMERATERECORDINGDEVICES,
                 "", 0, IntPtr.Zero, 0, ref _apiParam) != 0
-                ? new DeviceInfo[0]
-                : AgoraJson.JsonToStructArray<DeviceInfo>(_apiParam.Result, "result");
+                ? new AudioDeviceInfo[0]
+                : AgoraJson.JsonToStructArray<AudioDeviceInfo>(_apiParam.Result, "result");
         }
 
         public int SetRecordingDevice(string deviceId)

@@ -621,6 +621,21 @@ namespace Agora.Rtc
             return ret;
         }
 
+        public int QueryDeviceScore()
+        {
+            _param.Clear();
+          
+            var json = AgoraJson.ToJson(_param);
+
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_QUERYDEVICESCORE,
+                json, (UInt32)json.Length,
+                IntPtr.Zero, 0,
+                ref _apiParam);
+
+            int ret = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+            return ret;
+        }
+
         public int PreloadChannel(string token, string channelId, uint uid)
         {
             _param.Clear();

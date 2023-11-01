@@ -2201,6 +2201,31 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
+        public void Test_OnAudioRoutingChanged2()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOROUTINGCHANGED2;
+
+            int deviceType;
+            ParamsHelper.InitParam(out deviceType);
+
+            int routing;
+            ParamsHelper.InitParam(out routing);
+
+            jsonObj.Clear();
+            jsonObj.Add("deviceType", deviceType);
+            jsonObj.Add("routing", routing);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnAudioRoutingChangedPassed(deviceType, routing));
+        }
+
+        [Test]
         public void Test_OnChannelMediaRelayStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCHANNELMEDIARELAYSTATECHANGED;

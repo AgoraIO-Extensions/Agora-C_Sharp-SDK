@@ -742,6 +742,20 @@ namespace Agora.Rtc
             return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int SelectMultiAudioTrack(int playerId, int playoutTrackIndex, int publishTrackIndex)
+        {
+            _param.Clear();
+            _param.Add("playerId", playerId);
+            _param.Add("playoutTrackIndex", playoutTrackIndex);
+            _param.Add("publishTrackIndex", publishTrackIndex);
+
+            string jsonParam = AgoraJson.ToJson(_param);
+            var ret = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine,
+                AgoraApiType.FUNC_MEDIAPLAYER_SELECTMULTIAUDIOTRACK,
+                jsonParam, (UInt32)jsonParam.Length, IntPtr.Zero, 0, ref _apiParam);
+            return ret != 0 ? ret : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+        }
+
         public int SetPlayerOption(int playerId, string key, int value)
         {
             _param.Clear();
