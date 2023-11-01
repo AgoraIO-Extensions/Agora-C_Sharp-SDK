@@ -420,8 +420,6 @@ namespace Agora.Rtc
         #region IAudioDeviceManager start
         internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEFAULTDEVICE = "AudioDeviceManager_getPlaybackDefaultDevice";
         internal const string FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEAFULTDEVICE = "AudioDeviceManager_getRecordingDefaultDevice";
-        internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKAUDIODEVICEINFO = "AudioDeviceManager_getPlaybackAudioDeviceInfo";
-        internal const string FUNC_AUDIODEVICEMANAGER_GETRECORDINGAUDIODEVICEINFO = "AudioDeviceManager_getRecordingAudioDeviceInfo";
 
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATEPLAYBACKDEVICES = "AudioDeviceManager_enumeratePlaybackDevices";
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATERECORDINGDEVICES = "AudioDeviceManager_enumerateRecordingDevices";

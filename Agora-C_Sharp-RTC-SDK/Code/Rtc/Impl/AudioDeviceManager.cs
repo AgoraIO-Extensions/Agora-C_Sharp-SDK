@@ -27,7 +27,7 @@
         }
 
         #region PlaybackDevices
-        public override DeviceInfo[] EnumeratePlaybackDevices()
+        public override AudioDeviceInfo[] EnumeratePlaybackDevices()
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
@@ -128,7 +128,7 @@
         #endregion
 
         #region RecordingDevices
-        public override DeviceInfo[] EnumerateRecordingDevices()
+        public override AudioDeviceInfo[] EnumerateRecordingDevices()
         {
             if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
             {
@@ -291,25 +291,6 @@
             }
             return _audioDeviecManagerImpl.FollowSystemLoopbackDevice(enable);
         }
-
-        public override AudioDeviceInfo GetPlaybackAudioDeviceInfo(int index)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return null;
-            }
-            return _audioDeviecManagerImpl.GetPlaybackAudioDeviceInfo(index);
-        }
-
-        public override AudioDeviceInfo GetRecordingAudioDeviceInfo(int index)
-        {
-            if (_rtcEngineInstance == null || _audioDeviecManagerImpl == null)
-            {
-                return null;
-            }
-            return _audioDeviecManagerImpl.GetRecordingAudioDeviceInfo(index);
-        }
-
 
         #endregion
 
