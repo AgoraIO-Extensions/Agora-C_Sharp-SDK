@@ -18,7 +18,7 @@ compileConfig = [
 ]
 
 def doBuild(buildVariables) {
-    withGithubSync("agora-unity-quickstart") {
+    withGithubSync("Agora-Unity-Quickstart") {
         type = params.Package_Publish ? "publish" : "non-publish"
         command = compileConfig.get(type).command
         preCommand = compileConfig.get(type).get("preCommand", "")
