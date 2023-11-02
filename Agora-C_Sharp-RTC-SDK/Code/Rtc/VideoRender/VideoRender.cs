@@ -1,11 +1,14 @@
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 
 using System;
-
+#define AGORA_NUMBER_UID
+#define AGORA_STRING_UID
 namespace Agora.Rtc
 {
     using IrisVideoFrameBufferHandle = IntPtr;
 
+
+#if AGORA_NUMBER_UID
     public abstract class IVideoStreamManager : IDisposable
     {
         internal abstract int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, uint uid, string key,
@@ -19,7 +22,9 @@ namespace Agora.Rtc
 
         public abstract void Dispose();
     }
+#endif
 
+#if AGORA_STRING_UID
     public abstract class IVideoStreamManagerS : IDisposable
     {
         internal abstract int EnableVideoFrameBuffer(VIDEO_SOURCE_TYPE sourceType, string userAccount, string key,
@@ -33,7 +38,9 @@ namespace Agora.Rtc
 
         public abstract void Dispose();
     }
+#endif
 
+#if AGORA_NUMBER_UID
     internal class VideoStreamManager : IVideoStreamManager
     {
         private RtcEngineImpl _agoraRtcEngine;
@@ -152,7 +159,9 @@ namespace Agora.Rtc
             GC.SuppressFinalize(this);
         }
     }
+#endif
 
+#if AGORA_STRING_UID
     internal class VideoStreamManagerS : IVideoStreamManagerS
     {
         private RtcEngineImplS _agoraRtcEngine;
@@ -271,6 +280,7 @@ namespace Agora.Rtc
             GC.SuppressFinalize(this);
         }
     }
+#endif
 
 }
 

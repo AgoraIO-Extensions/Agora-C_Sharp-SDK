@@ -90,6 +90,10 @@ echo IOS_URL: $IOS_URL
 echo TYPE: $TYPE
 echo RTC: $RTC
 echo RTM: $RTM
+echo NUMBER_UID: $NUMBER_UID
+echo STRING_UID: $STRING_UID
+echo FULL: $FULL
+echo VOICE: $VOICE
 echo DEMO_BRANCH: $DEMO_BRANCH
 
 if [ "$RTC" == "true" ]; then
@@ -148,14 +152,14 @@ PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
-python3 ../../agora-unity-quickstart/ci/build/remove_example_by_macor.py $ROOT/../agora-unity-quickstart/API-Example-Unity/Assets ${RTC} ${RTM}
+python3 ../../agora-unity-quickstart/ci/build/remove_example_by_macor.py $ROOT/../agora-unity-quickstart/API-Example-Unity/Assets ${RTC} ${RTM} ${NUMBER_UID} ${STRING_UID} ${FULL} ${VOICE}
 cp -r ../../agora-unity-quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
 cp -r ../../agora-unity-quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
 cp -r ../../agora-unity-quickstart/API-Example-Unity/README.zh.md $PLUGIN_PATH/API-Example/
 
 # Copy SDK
 echo "[Unity CI] copying scripts ..."
-python3 $ROOT/ci/build/remove_code_by_macor.py "$ROOT_DIR" ${RTC} ${RTM}
+python3 $ROOT/ci/build/remove_code_by_macor.py "$ROOT_DIR" ${RTC} ${RTM} ${NUMBER_UID} ${STRING_UID} ${FULL} ${VOICE}
 mkdir "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 cp -r "$ROOT_DIR"/Unity/Editor "$PLUGIN_PATH"/"$PLUGIN_CODE_NAME"
 if [ "$TYPE" == "VOICE" ]; then
@@ -306,10 +310,6 @@ echo "[Unity CI] finish copying files"
 #--------------------------------------
 # Export Package
 #--------------------------------------
-# remove only video case
-if [ "$TYPE" == "VOICE" ]; then
-    python3 ${ROOT}/ci/build/remove_video_case.py "$PLUGIN_PATH"/API-Example
-fi
 
 # API-Example replace guids
 if [ "$RTC" == "false" ]; then
