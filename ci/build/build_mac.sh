@@ -92,8 +92,6 @@ echo RTC: $RTC
 echo RTM: $RTM
 echo NUMBER_UID: $NUMBER_UID
 echo STRING_UID: $STRING_UID
-echo FULL: $FULL
-echo VOICE: $VOICE
 echo DEMO_BRANCH: $DEMO_BRANCH
 
 if [ "$RTC" == "true" ]; then
@@ -152,6 +150,14 @@ PLUGIN_PATH="./project/Assets/$PLUGIN_NAME"
 
 # Copy API-Example
 echo "[Unity CI] copying API-Example ..."
+if [ "$TYPE" == "VOICE" ]; then
+    FULL="false"
+    VOICE="true"
+else
+    FULL="true"
+    VOICE="false"
+fi
+
 python3 ../../agora-unity-quickstart/ci/build/remove_example_by_macor.py $ROOT/../agora-unity-quickstart/API-Example-Unity/Assets ${RTC} ${RTM} ${NUMBER_UID} ${STRING_UID} ${FULL} ${VOICE}
 cp -r ../../agora-unity-quickstart/API-Example-Unity/Assets/API-Example "$PLUGIN_PATH"
 cp -r ../../agora-unity-quickstart/API-Example-Unity/README.md $PLUGIN_PATH/API-Example/
