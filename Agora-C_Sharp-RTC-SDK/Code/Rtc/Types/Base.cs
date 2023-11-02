@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define AGORA_STRING_UID
+#define AGORA_NUMBER_UID
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace Agora.Rtc
@@ -209,6 +212,7 @@ namespace Agora.Rtc
         }
     }
 
+#if AGORA_NUMBER_UID
     internal class IrisUserAudioSpectrumInfo
     {
         public IrisUserAudioSpectrumInfo()
@@ -227,7 +231,9 @@ namespace Agora.Rtc
             this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
         }
     }
+#endif
 
+#if AGORA_STRING_UID
     internal class IrisUserAudioSpectrumInfoS
     {
         public IrisUserAudioSpectrumInfoS()
@@ -246,5 +252,6 @@ namespace Agora.Rtc
             this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
         }
     }
+#endif
 
 }
