@@ -1,8 +1,10 @@
+#define AGORA_NUMBER_UID
+#define AGORA_STRING_UID
+
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 
 using System;
-#define AGORA_NUMBER_UID
-#define AGORA_STRING_UID
+
 namespace Agora.Rtc
 {
     using IrisVideoFrameBufferHandle = IntPtr;
