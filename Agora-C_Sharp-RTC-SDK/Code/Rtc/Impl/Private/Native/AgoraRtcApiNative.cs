@@ -1,6 +1,3 @@
-#define AGORA_STRING_UID
-#define AGORA_NUMBER_UID
-
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -209,7 +206,7 @@ namespace Agora.Rtc
         #endregion
 
         #region iris_rtc_high_performance_c_api
-#if AGORA_NUMBER_UID
+
         // ILocalSpatialAudioEngine
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int ILocalSpatialAudioEngine_SetMaxAudioRecvCount(IrisRtcEnginePtr enginePtr, int maxCount);
@@ -282,9 +279,7 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int ILocalSpatialAudioEngine_SetRemoteAudioAttenuation(IrisRtcEnginePtr enginePtr,
           uint uid, double attenuation, bool forceSet);
-#endif
 
-#if AGORA_STRING_UID
         // ILocalSpatialAudioEngineS
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int ILocalSpatialAudioEngineS_SetMaxAudioRecvCount(IrisRtcEnginePtr enginePtr, int maxCount);
@@ -357,7 +352,7 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int ILocalSpatialAudioEngineS_SetRemoteAudioAttenuation(IrisRtcEnginePtr enginePtr,
           string userAccount, double attenuation, bool forceSet);
-#endif
+
 
         #endregion
 
