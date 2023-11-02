@@ -6,23 +6,6 @@ using UnityEngine.UI;
 namespace Agora.Rtc
 {
     ///
-    /// @ignore
-    ///
-    public enum VideoSurfaceType
-    {
-        ///
-        /// @ignore
-        ///
-        Renderer = 0,
-        ///
-        /// @ignore
-        ///
-        RawImage = 1,
-    };
-
-    public delegate void OnTextureSizeModifyHandler(int width, int height);
-
-    ///
     /// <summary>
     /// This class contains Unity native methods related to video rendering.
     /// </summary>
