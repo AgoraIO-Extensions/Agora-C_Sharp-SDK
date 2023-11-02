@@ -92,7 +92,7 @@ echo RTC: $RTC
 echo RTM: $RTM
 echo NUMBER_UID: $NUMBER_UID
 echo STRING_UID: $STRING_UID
-echo DEMO_BRANCH: $DEMO_BRANCH
+each SUFFIX: $SUFFIX
 
 if [ "$RTC" == "true" ]; then
     PLUGIN_NAME="Agora-RTC-Plugin"
@@ -120,8 +120,6 @@ ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 
 cd ../agora-unity-quickstart
 echo "agora-unity-quickstart git status:"
-git status
-git pull
 git status
 
 cd $ROOT
@@ -330,9 +328,9 @@ fi
 $UNITY_DIR/Unity -quit -batchmode -nographics -openProjects "./project" -exportPackage "Assets" "$PLUGIN_NAME.unitypackage" || exit 1
 ZIP_FILE="Unknow"
 if [ "$RTC" == "true" ]; then
-    ZIP_FILE=Agora_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}.zip
+    ZIP_FILE=Agora_Unity_RTC_SDK_${SDK_VERSION}_${TYPE}_${build_date}_${BUILD_NUMBER}_{$SUFFIX}.zip
 else
-    ZIP_FILE=Agora_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}.zip
+    ZIP_FILE=Agora_Unity_RTM_SDK_${SDK_VERSION}_${build_date}_${BUILD_NUMBER}_{$SUFFIX}.zip
 fi
 7za a ./${ZIP_FILE} ./project/"$PLUGIN_NAME.unitypackage"
 

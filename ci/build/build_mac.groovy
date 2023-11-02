@@ -18,7 +18,7 @@ compileConfig = [
 ]
 
 def doBuild(buildVariables) {
-    withGithubSync("Agora-Unity-Quickstart") {
+    // withGithubSync("Agora-Unity-Quickstart") {
         type = params.Package_Publish ? "publish" : "non-publish"
         command = compileConfig.get(type).command
         preCommand = compileConfig.get(type).get("preCommand", "")
@@ -32,7 +32,7 @@ def doBuild(buildVariables) {
         ]
         loadResources(["config.json", "artifactory_utils.py"])
         buildUtils.customBuild(commandConfig, preCommand, postCommand)
-    }
+    // }
 }
 
 def doPublish(buildVariables) {
