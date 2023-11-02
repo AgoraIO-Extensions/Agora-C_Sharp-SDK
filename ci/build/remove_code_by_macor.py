@@ -32,7 +32,7 @@ number_code_list = [
     "Code/Rtc/VideoRender/VideoSurface.cs",
     "Code/Rtc/VideoRender/VideoSurfaceYUV.cs",
     "Code/Rtc/Types/AgoraBase.cs",
-    "Code/Rtc/Types/AgoraMediaBase.cs",
+    # "Code/Rtc/Types/AgoraMediaBase.cs",
     "Code/Rtc/Types/AgoraRtcEngine.cs",
     "Code/Rtc/Types/AgoraRtcEngineEx.cs",
     "Code/Rtc/Types/AgoraSpatialAudio.cs"
