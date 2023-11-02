@@ -1694,7 +1694,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
         }
 #endif
 
-#if AGORA_NUMBER_UID
+#if AGORA_STRING_UID
         private static void OnRtcEngineSEvent(string @event, LitJson.JsonData jsonData)
         {
             switch (@event)
