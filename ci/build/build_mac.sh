@@ -121,6 +121,9 @@ ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 cd ../agora-unity-quickstart
 echo "agora-unity-quickstart git status:"
 git status
+git pull
+git status
+
 cd $ROOT
 
 if [ -d "./tempDir" ]; then
