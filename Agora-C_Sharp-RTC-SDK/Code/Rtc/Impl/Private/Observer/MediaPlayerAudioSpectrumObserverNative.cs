@@ -16,7 +16,7 @@ namespace Agora.Rtc
         private static System.Object observerLock = new System.Object();
         private static Dictionary<int, IAudioSpectrumObserverBase> mediaPlayerAudioSpectrumObserverDic = new Dictionary<int, IAudioSpectrumObserverBase>();
 
-        internal static void AddAudioSpectrumObserver(int playerId, IAudioSpectrumObserver observer)
+        internal static void AddAudioSpectrumObserver(int playerId, IAudioSpectrumObserverBase observer)
         {
             lock (observerLock)
             {
