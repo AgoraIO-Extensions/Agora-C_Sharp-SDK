@@ -1,4 +1,7 @@
-﻿#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
+﻿#define AGORA_STRING_UID
+#define AGORA_NUMBER_UID
+
+#if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using UnityEngine;
 using System.Collections;
 
@@ -8,11 +11,23 @@ namespace Agora.Rtc
     {
         void OnApplicationQuit()
         {
+#if AGORA_NUMBER_UID
             IRtcEngine rtcEngine = RtcEngine.Get();
+
             if (rtcEngine != null)
             {
                 rtcEngine.Dispose();
             }
+#endif
+
+#if AGORA_STRING_UID
+            IRtcEngineS rtcEngineS = RtcEngineS.Get();
+
+            if (rtcEngineS != null)
+            {
+                rtcEngineS.Dispose();
+            }
+#endif
         }
     }
 }

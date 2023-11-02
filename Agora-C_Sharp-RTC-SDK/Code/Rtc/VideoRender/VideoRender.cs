@@ -9,6 +9,22 @@ namespace Agora.Rtc
 {
     using IrisVideoFrameBufferHandle = IntPtr;
 
+     ///
+    /// @ignore
+    ///
+    public enum VideoSurfaceType
+    {
+        ///
+        /// @ignore
+        ///
+        Renderer = 0,
+        ///
+        /// @ignore
+        ///
+        RawImage = 1,
+    };
+
+    public delegate void OnTextureSizeModifyHandler(int width, int height);
 
 #if AGORA_NUMBER_UID
     public abstract class IVideoStreamManager : IDisposable
