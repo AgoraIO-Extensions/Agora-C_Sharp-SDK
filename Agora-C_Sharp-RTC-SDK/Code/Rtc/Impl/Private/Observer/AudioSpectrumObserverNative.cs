@@ -110,8 +110,8 @@ namespace Agora.Rtc
                             IntPtr resultPtr = eventParam.result;
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
-#endif
                         break;
+#endif
                     default:
                         AgoraLog.LogError("unexpected event: " + @event);
                         break;

@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define AGORA_STRING_UID
+#define AGORA_NUMBER_UID
+
+using System;
 using System.Runtime.InteropServices;
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 using AOT;
@@ -48,14 +51,18 @@ namespace Agora.Rtc
             {
                 OnRtcEngineBaseEvent(@event, jsonData);
             }
+#if AGORA_NUMBER_UID
             else if (@event.StartsWith("IRtcEngineEventHandler") || @event.StartsWith("IRtcEngineEventHandlerEx"))
             {
                 OnRtcEngineEvent(@event, jsonData);
             }
-            else
+#endif
+#if AGORA_STRING_UID
+            else if (@event.StartsWith("IRtcEngineEventHandlerS") || @event.StartsWith("IRtcEngineEventHandlerExS"))
             {
                 OnRtcEngineSEvent(@event, jsonData);
             }
+#endif
         }
 
         private static void OnRtcEngineBaseEvent(string @event, LitJson.JsonData jsonData)
@@ -575,6 +582,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
             }
         }
 
+#if AGORA_NUMBER_UID
         private static void OnRtcEngineEvent(string @event, LitJson.JsonData jsonData)
         {
             switch (@event)
@@ -1684,7 +1692,9 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                     #endregion terra IRtcEngineEventHandler
             }
         }
+#endif
 
+#if AGORA_NUMBER_UID
         private static void OnRtcEngineSEvent(string @event, LitJson.JsonData jsonData)
         {
             switch (@event)
@@ -2559,6 +2569,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                     #endregion terra IRtcEngineEventHandlerS
             }
         }
+#endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         [MonoPInvokeCallback(typeof(Rtc_Func_Event_Native))]
