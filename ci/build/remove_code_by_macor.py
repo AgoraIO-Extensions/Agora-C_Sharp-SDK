@@ -8,7 +8,7 @@ number_code_list = [
     "Code/Rtc/Event/MediaRecorderObserver.cs",
     "Code/Rtc/Event/RtcEngineEventHandler.cs",
     "Code/Rtc/IAudioFrameObserver.cs",
-    "Code/Rtc/IAudioSpectrumObserver.cs",
+    # "Code/Rtc/IAudioSpectrumObserver.cs",
     "Code/Rtc/IH265Transcoder.cs",
     "Code/Rtc/ILocalSpatialAudioEngine.cs",
     "Code/Rtc/IMediaRecorder.cs",
