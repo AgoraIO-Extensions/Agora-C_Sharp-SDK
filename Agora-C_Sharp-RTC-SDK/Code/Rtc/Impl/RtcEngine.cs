@@ -23,10 +23,6 @@ namespace Agora.Rtc
 
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-#if AGORA_RTM
-        private Dictionary<string, Rtm.StreamChannel> _streamChannelDic = new Dictionary<string, Rtm.StreamChannel>();
-#endif
-
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         private GameObject _agoraEngineObject;
 #endif
