@@ -92,7 +92,7 @@ echo RTC: $RTC
 echo RTM: $RTM
 echo NUMBER_UID: $NUMBER_UID
 echo STRING_UID: $STRING_UID
-each SUFFIX: $SUFFIX
+echo SUFFIX: $SUFFIX
 
 if [ "$RTC" == "true" ]; then
     PLUGIN_NAME="Agora-RTC-Plugin"
