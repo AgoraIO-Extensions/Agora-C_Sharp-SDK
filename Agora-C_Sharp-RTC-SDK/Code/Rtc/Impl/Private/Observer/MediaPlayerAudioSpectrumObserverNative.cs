@@ -72,7 +72,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-//#if AGORA_NUMBER_UID
+                    //#if AGORA_NUMBER_UID
                     case "AudioSpectrumObserver_onRemoteAudioSpectrum":
                         {
                             var irisUserAudioSpectrumInfo = AgoraJson.JsonToStructArray<IrisUserAudioSpectrumInfo>(jsonData, "spectrums");
@@ -94,7 +94,7 @@ namespace Agora.Rtc
                             Marshal.Copy(jsonByte, 0, resultPtr, (int)jsonByte.Length);
                         }
                         break;
-//#endif
+                    //#endif
 #if AGORA_STRING_UID
                     case "AudioSpectrumObserverS_onRemoteAudioSpectrum":
                         {

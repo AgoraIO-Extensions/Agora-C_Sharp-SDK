@@ -1717,12 +1717,12 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         if (rtcEngineEventHandler == null)
                             return;
                         ((IRtcEngineEventHandlerS)rtcEngineEventHandler).OnStreamMessage(
-                    AgoraJson.JsonToStruct<RtcConnectionS>(jsonData, "connectionS"),
-                    (string)AgoraJson.GetData<string>(jsonData, "remoteUserAccount"),
-                    (int)AgoraJson.GetData<int>(jsonData, "streamId"),
-                    byteData,
-                    byteLength,
-                    (UInt64)AgoraJson.GetData<UInt64>(jsonData, "sentTs"));
+                        AgoraJson.JsonToStruct<RtcConnectionS>(jsonData, "connectionS"),
+                        (string)AgoraJson.GetData<string>(jsonData, "remoteUserAccount"),
+                        (int)AgoraJson.GetData<int>(jsonData, "streamId"),
+                        byteData,
+                        byteLength,
+                        (UInt64)AgoraJson.GetData<UInt64>(jsonData, "sentTs"));
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
                                                               });
 #endif

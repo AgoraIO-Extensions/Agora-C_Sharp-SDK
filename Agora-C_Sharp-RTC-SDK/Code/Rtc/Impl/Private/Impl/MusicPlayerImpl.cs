@@ -325,7 +325,7 @@ namespace Agora.Rtc
             _param.Add("startPos", startPos);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MusicPlayer_open",
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MUSICPLAYER_OPEN,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

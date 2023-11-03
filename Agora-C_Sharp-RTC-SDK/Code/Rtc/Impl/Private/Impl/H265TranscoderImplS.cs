@@ -72,14 +72,14 @@ namespace Agora.Rtc
 
             AgoraRtcNative.AllocEventHandlerHandle(ref _h265TranscoderObserverHandle, H265TranscoderObserverNative.OnEvent);
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
-            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODERS_REGISTERTRANSCODEROBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODERBASE_REGISTERTRANSCODEROBSERVER,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_H265TRANSCODER_REGISTERTRANSCODEROBSERVER failed: " + nRet);
+                AgoraLog.LogError("FUNC_H265TRANSCODERBASE_REGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -96,14 +96,14 @@ namespace Agora.Rtc
                 return -1;
 
             IntPtr[] arrayPtr = new IntPtr[] { _h265TranscoderObserverHandle.handle };
-            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODERS_UNREGISTERTRANSCODEROBSERVER,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODERBASE_UNREGISTERTRANSCODEROBSERVER,
                                                           "{}", 2,
                                                           Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
                                                           ref _apiParam);
 
             if (nRet != 0)
             {
-                AgoraLog.LogError("FUNC_H265TRANSCODER_UNREGISTERTRANSCODEROBSERVER failed: " + nRet);
+                AgoraLog.LogError("FUNC_H265TRANSCODERBASE_UNREGISTERTRANSCODEROBSERVER failed: " + nRet);
             }
 
             AgoraRtcNative.FreeEventHandlerHandle(ref _h265TranscoderObserverHandle);
@@ -145,7 +145,7 @@ namespace Agora.Rtc
             _param.Add("userAccount", userAccount);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "H265TranscoderS_enableTranscode",
+            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODERS_ENABLETRANSCODE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -162,7 +162,7 @@ namespace Agora.Rtc
             _param.Add("userAccount", userAccount);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "H265TranscoderS_queryChannel",
+            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODERS_QUERYCHANNEL,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -179,7 +179,7 @@ namespace Agora.Rtc
             _param.Add("userAccount", userAccount);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, "H265TranscoderS_triggerTranscode",
+            var nRet = AgoraRtcNative.CallIrisApiWithArgsS(_irisApiEngine, AgoraApiType.FUNC_H265TRANSCODERS_TRIGGERTRANSCODE,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

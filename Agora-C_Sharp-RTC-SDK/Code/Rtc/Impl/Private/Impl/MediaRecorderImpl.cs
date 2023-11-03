@@ -230,7 +230,7 @@ namespace Agora.Rtc
             _param.Add("config", config);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaRecorder_startRecording",
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDERBASE_STARTRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -245,7 +245,7 @@ namespace Agora.Rtc
             _param.Add("nativeHandle", nativeHandle);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, "MediaRecorder_stopRecording",
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisApiEngine, AgoraApiType.FUNC_MEDIARECORDERBASE_STOPRECORDING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);

@@ -11,11 +11,7 @@ using UnityEngine;
 
 namespace Agora.Rtc
 {
-#if AGORA_RTM
-    public sealed class RtcEngineS : IRtcEngineExS, Rtm.Internal.IStreamChannelCreator
-#else
     public sealed class RtcEngineS : IRtcEngineExS
-#endif
     {
         private RtcEngineImplS _rtcEngineImpl = null;
         private IAudioDeviceManager _audioDeviceManager = null;
@@ -257,50 +253,6 @@ namespace Agora.Rtc
             string parameters = AgoraJson.ToJson<Dictionary<string, object>>(dic);
             return SetParameters(parameters);
         }
-
-#if AGORA_RTM
-        public override Rtm.IStreamChannel GetStreamChannel(string channelId)
-        {
-            if (_rtcEngineImpl == null)
-            {
-                return null;
-            }
-
-            Rtm.IRtmClient irtmClient = Rtm.RtmClient.Get();
-            if (irtmClient == null)
-            {
-                AgoraLog.LogError("need init rtm client first.");
-                return null;
-            }
-
-            if (_streamChannelDic.ContainsKey(channelId))
-            {
-                return _streamChannelDic[channelId];
-            }
-
-            int ret = _rtcEngineImpl.GetStreamChannel(channelId);
-            if (ret != 0)
-            {
-                return null;
-            }
-
-            Rtm.RtmClient rtmClient = (Rtm.RtmClient)irtmClient;
-            Rtm.Internal.StreamChannel internalStreamChannel = new Rtm.Internal.StreamChannel(this, _rtcEngineImpl.GetStreamChannel(), channelId);
-            Rtm.StreamChannel streamChannel = new Rtm.StreamChannel(internalStreamChannel, rtmClient.GetRtmEventHandler(), rtmClient.GetInternalRtmClient());
-            _streamChannelDic.Add(channelId, streamChannel);
-            return streamChannel;
-        }
-#endif
-
-#if AGORA_RTM
-        public void RemoveStreamChannelIfExist(string channelName)
-        {
-            if (this._streamChannelDic.ContainsKey(channelName))
-            {
-                this._streamChannelDic.Remove(channelName);
-            }
-        }
-#endif
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
         public override int SendMetadata(MetadataS metadata, VIDEO_SOURCE_TYPE source_type)

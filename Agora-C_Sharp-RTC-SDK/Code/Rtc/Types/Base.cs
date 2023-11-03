@@ -212,7 +212,7 @@ namespace Agora.Rtc
         }
     }
 
-//#if AGORA_NUMBER_UID
+    //#if AGORA_NUMBER_UID
     internal class IrisUserAudioSpectrumInfo
     {
         public IrisUserAudioSpectrumInfo()
@@ -231,7 +231,7 @@ namespace Agora.Rtc
             this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
         }
     }
-//#endif
+    //#endif
 
 #if AGORA_STRING_UID
     internal class IrisUserAudioSpectrumInfoS

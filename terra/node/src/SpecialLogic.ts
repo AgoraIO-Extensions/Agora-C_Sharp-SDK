@@ -1435,6 +1435,9 @@ export class SpeicalLogic {
 
 
     public cSharpSDK_GenerateCallApiKey(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
-        return `"${Tool.processString('-r', clazzName)}_${Tool.processString('-n', m.name)}${repeat > 1 ? repeat : ""}"`;
+        // return `"${Tool.processString('-r', clazzName)}_${Tool.processString('-n', m.name)}${repeat > 1 ? repeat : ""}"`;
+
+        return `AgoraApiType.FUNC_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-vn", m.name, repeat)}`;
+
     }
 }

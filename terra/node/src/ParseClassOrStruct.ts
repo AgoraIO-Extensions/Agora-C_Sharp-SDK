@@ -23,17 +23,17 @@ export class ParseClassOrStruct {
             return null;
         }
         let methodRepeatMap: Map<string, number> = new Map();
-        this._parse(templateJson, clazz, info.trackBackFather ? info.trackBackFather : 0, result, info.name, info, methodRepeatMap);
+        this._parse(templateJson, clazz, info.trackBackFather ? info.trackBackFather : 0, result, info.name, info, methodRepeatMap, clazz.name);
         return result.join(info.memberSplitSymbol || "\n");
     }
 
-    private _parse(templateJson: any, clazz: Clazz, trackBackFather: number, result: string[], clazzName: string, info: TemplateClassStruct, methodRepeatMap: Map<string, number>) {
+    private _parse(templateJson: any, clazz: Clazz, trackBackFather: number, result: string[], clazzName: string, info: TemplateClassStruct, methodRepeatMap: Map<string, number>, belongToClazzName: string) {
         let config: ConfigTool = ConfigTool.getInstance();
         if (trackBackFather > 0) {
             for (let i = 0; i < clazz.base_clazzs.length; i++) {
                 let baseClazz = config.getClassOrStruct(clazz.base_clazzs[i]);
                 if (baseClazz) {
-                    this._parse(templateJson, baseClazz, trackBackFather - 1, result, clazzName, info, methodRepeatMap);
+                    this._parse(templateJson, baseClazz, trackBackFather - 1, result, clazzName, info, methodRepeatMap, baseClazz.name);
                 }
                 else {
                     console.error("cant find baseClazz: " + clazz.base_clazzs[i]);
@@ -149,7 +149,7 @@ export class ParseClassOrStruct {
                 else {
                     methodRepeatMap.set(m.name, 1);
                 }
-                outputStr += this._parseMethod(templateJson, replaceString, m, clazzName, methodRepeatMap.get(m.name));
+                outputStr += this._parseMethod(templateJson, replaceString, m, clazzName, methodRepeatMap.get(m.name), belongToClazzName);
                 if (i != methodLength - 1) {
                     outputStr += info.methodSplitSymbol;
                 }
@@ -234,7 +234,7 @@ export class ParseClassOrStruct {
                 let pos = e.indexOf(":");
                 let methodName = e.substring(pos + 1, e.length - 1);
                 let logic = new SpeicalLogic() as any;
-                var str = logic[methodName](clazzName, member);
+                var str = logic[methodName](clazzName, member,);
                 replaceString = replaceString.replace(e, str);
             }
         }
@@ -242,7 +242,7 @@ export class ParseClassOrStruct {
         return replaceString;
     }
 
-    _parseMethod(templateJson: any, replaceString: string, method: MemberFunction, clazzName: string, repeat: number): string {
+    _parseMethod(templateJson: any, replaceString: string, method: MemberFunction, clazzName: string, repeat: number, belongToClazzName: string): string {
         var config: ConfigTool = ConfigTool.getInstance();
         //类名字
         let clazzArray = replaceString.match(/\${-[a-z]+CLAZZ_STRUCT_NAME}/g);
@@ -295,7 +295,7 @@ export class ParseClassOrStruct {
                 let pos = e.indexOf(":");
                 let methodName = e.substring(pos + 1, e.length - 1);
                 let logic = new SpeicalLogic() as any;
-                var str = logic[methodName](clazzName, method, repeat);
+                var str = logic[methodName](clazzName, method, repeat, belongToClazzName);
                 replaceString = replaceString.replace(e, str);
             }
         }

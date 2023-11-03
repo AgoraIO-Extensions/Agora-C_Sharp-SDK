@@ -26,10 +26,6 @@ namespace Agora.Rtc
 
         public abstract int SetParameters(string key, object value);
 
-#if AGORA_RTM
-        public abstract Rtm.IStreamChannel GetStreamChannel(string channelId);
-#endif
-
         public abstract int GetNativeHandler(ref IntPtr nativeHandler);
 
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
