@@ -118,6 +118,9 @@ echo PLUGIN_CODE_NAME $PLUGIN_CODE_NAME
 ROOT=$(pwd)
 ROOT_DIR=$(pwd)/Agora-C_Sharp-RTC-SDK
 
+echo "agora-c_sharp-sdk git status:"
+git status
+
 cd ../agora-unity-quickstart
 echo "agora-unity-quickstart git status:"
 git status
