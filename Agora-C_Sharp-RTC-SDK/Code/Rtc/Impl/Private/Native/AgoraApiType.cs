@@ -241,7 +241,6 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEBASE_ISFEATUREAVAILABLEONDEVICE = "RtcEngineBase_isFeatureAvailableOnDevice";
         #endregion terra IRtcEngineBase
 
-
         internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_sendMetadata";
         #region terra IRtcEngine
 
@@ -363,7 +362,6 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEEX_STARTMEDIARENDERINGTRACINGEX = "RtcEngineEx_startMediaRenderingTracingEx";
         internal const string FUNC_RTCENGINEEX_SETPARAMETERSEX = "RtcEngineEx_setParametersEx";
         #endregion terra IRtcEngineEx
-
 
         internal const string FUNC_RTCENGINES_SENDMETADATA = "RtcEngineS_sendMetadata";
         #region terra IRtcEngineS

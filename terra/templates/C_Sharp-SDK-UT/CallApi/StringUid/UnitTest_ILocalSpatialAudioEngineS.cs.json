@@ -1,7 +1,7 @@
 {
     "ILocalSpatialAudioEngine": {
         "type": "ClazzStruct",
-        "name": "ILocalSpatialAudioEngine",
+        "name": "ILocalSpatialAudioEngineS",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_unitTest_compare_0",
         "excludeMethods": [

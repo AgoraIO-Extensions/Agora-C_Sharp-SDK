@@ -2,16 +2,16 @@
 using Agora.Rtc;
 namespace Agora.Rtc
 {
-    public class UnitTest_IAudioDeviceManager
+    public class UnitTest_IAudioDeviceManagerS
     {
-        public IRtcEngine Engine;
+        public IRtcEngineS Engine;
         public IAudioDeviceManager AudioDeviceManager;
 
         [SetUp]
         public void Setup()
         {
-            Engine = RtcEngine.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngine());
-            RtcEngineContext rtcEngineContext;
+            Engine = RtcEngineS.CreateAgoraRtcEngine(DLLHelper.CreateFakeRtcEngineS());
+            RtcEngineContextS rtcEngineContext;
             ParamsHelper.InitParam(out rtcEngineContext);
             int nRet = Engine.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
