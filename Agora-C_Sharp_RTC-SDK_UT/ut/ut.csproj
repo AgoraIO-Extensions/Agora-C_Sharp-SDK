@@ -18,6 +18,8 @@
     <None Remove="TriggerEvent\" />
     <None Remove="Tool\" />
     <None Remove="TriggerEvent\Event\" />
+    <None Remove="CallApi\IntUid\" />
+    <None Remove="CallApi\StringUid\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Agora-C_Sharp-RTC-SDK\Code\agorartc.csproj" />
@@ -27,5 +29,7 @@
     <Folder Include="TriggerEvent\" />
     <Folder Include="Tool\" />
     <Folder Include="TriggerEvent\Event\" />
+    <Folder Include="CallApi\IntUid\" />
+    <Folder Include="CallApi\StringUid\" />
   </ItemGroup>
 </Project>
