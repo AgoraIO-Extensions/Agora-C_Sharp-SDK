@@ -10,7 +10,6 @@ namespace Agora.Rtc
     public abstract class IVideoEncodedFrameObserverS
     {
         #region terra IVideoEncodedFrameObserverS
-
         public virtual bool OnEncodedVideoFrameReceived(string userAccount, IntPtr imageBuffer, ulong length, EncodedVideoFrameInfoS videoEncodedFrameInfoS)
         {
             return true;

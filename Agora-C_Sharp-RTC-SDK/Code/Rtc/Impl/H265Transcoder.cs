@@ -41,7 +41,6 @@ namespace Agora.Rtc
         }
 
         #region terra IH265Transcoder
-
         public override int RegisterTranscoderObserver(IH265TranscoderObserver observer)
         {
             if (_rtcEngineInstance == null || _h265TranscoderImpl == null)
@@ -50,7 +49,6 @@ namespace Agora.Rtc
             }
             return _h265TranscoderImpl.RegisterTranscoderObserver(observer);
         }
-
         public override int UnregisterTranscoderObserver()
         {
             if (_rtcEngineInstance == null || _h265TranscoderImpl == null)
@@ -59,7 +57,6 @@ namespace Agora.Rtc
             }
             return _h265TranscoderImpl.UnregisterTranscoderObserver();
         }
-
         public override int EnableTranscode(string token, string channel, uint uid)
         {
             if (_rtcEngineInstance == null || _h265TranscoderImpl == null)
@@ -68,7 +65,6 @@ namespace Agora.Rtc
             }
             return _h265TranscoderImpl.EnableTranscode(token, channel, uid);
         }
-
         public override int QueryChannel(string token, string channel, uint uid)
         {
             if (_rtcEngineInstance == null || _h265TranscoderImpl == null)
@@ -77,7 +73,6 @@ namespace Agora.Rtc
             }
             return _h265TranscoderImpl.QueryChannel(token, channel, uid);
         }
-
         public override int TriggerTranscode(string token, string channel, uint uid)
         {
             if (_rtcEngineInstance == null || _h265TranscoderImpl == null)

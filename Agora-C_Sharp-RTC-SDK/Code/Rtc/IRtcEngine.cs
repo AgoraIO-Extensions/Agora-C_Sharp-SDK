@@ -19,27 +19,19 @@ namespace Agora.Rtc
 #endif
 
         #region terra IRtcEngine
-
         public abstract int Initialize(RtcEngineContext context);
-
 
         public abstract int PreloadChannel(string token, string channelId, uint uid);
 
-
         public abstract int PreloadChannel(string token, string channelId, string userAccount);
-
 
         public abstract int UpdatePreloadChannelToken(string token);
 
-
         public abstract int JoinChannel(string token, string channelId, string info, uint uid);
-
 
         public abstract int JoinChannel(string token, string channelId, uint uid, ChannelMediaOptions options);
 
-
         public abstract int SetupRemoteVideo(VideoCanvas canvas);
-
 
         public abstract int SetupLocalVideo(VideoCanvas canvas);
 
@@ -49,81 +41,56 @@ namespace Agora.Rtc
         [Obsolete("This method is deprecated. To set whether to receive remote audio streams by default, call \ref IRtcEngine::muteAllRemoteAudioStreams \"muteAllRemoteAudioStreams\" before calling `joinChannel`")]
         public abstract int SetDefaultMuteAllRemoteAudioStreams(bool mute);
 
-
         public abstract int MuteRemoteAudioStream(uint uid, bool mute);
 
         [Obsolete("This method is deprecated. To set whether to receive remote video streams by default, call \ref IRtcEngine::muteAllRemoteVideoStreams \"muteAllRemoteVideoStreams\" before calling `joinChannel`.")]
         public abstract int SetDefaultMuteAllRemoteVideoStreams(bool mute);
 
-
         public abstract int MuteRemoteVideoStream(uint uid, bool mute);
-
 
         public abstract int SetRemoteVideoStreamType(uint uid, VIDEO_STREAM_TYPE streamType);
 
-
         public abstract int SetRemoteVideoSubscriptionOptions(uint uid, VideoSubscriptionOptions options);
-
 
         public abstract int SetSubscribeAudioBlocklist(uint[] uidList, int uidNumber);
 
-
         public abstract int SetSubscribeAudioAllowlist(uint[] uidList, int uidNumber);
-
 
         public abstract int SetSubscribeVideoBlocklist(uint[] uidList, int uidNumber);
 
-
         public abstract int SetSubscribeVideoAllowlist(uint[] uidList, int uidNumber);
-
 
         public abstract IMediaRecorder CreateMediaRecorder(RecorderStreamInfo info);
 
-
         public abstract int DestroyMediaRecorder(IMediaRecorder mediaRecorder);
-
 
         public abstract int SetRemoteVoicePosition(uint uid, double pan, double gain);
 
-
         public abstract int SetRemoteUserSpatialAudioParams(uint uid, SpatialAudioParams @params);
-
 
         public abstract int SetRemoteRenderMode(uint uid, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
 
-
         public abstract int RegisterAudioSpectrumObserver(IAudioSpectrumObserver observer);
-
 
         public abstract int UnregisterAudioSpectrumObserver();
 
-
         public abstract int AdjustUserPlaybackSignalVolume(uint uid, int volume);
-
 
         public abstract int SetHighPriorityUserList(uint[] uidList, int uidNum, STREAM_FALLBACK_OPTIONS option);
 
-
         public abstract int EnableExtension(string provider, string extension, ExtensionInfo extensionInfo, bool enable = true);
-
 
         public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, string value);
 
-
         public abstract int GetExtensionProperty(string provider, string extension, ExtensionInfo extensionInfo, string key, ref string value, int buf_len);
-
 
         public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscoding transcoding);
 
-
         public abstract int UpdateRtmpTranscoding(LiveTranscoding transcoding);
-
 
         public abstract int StartLocalVideoTranscoder(LocalTranscoderConfiguration config);
 
-
         public abstract int UpdateLocalTranscoderConfiguration(LocalTranscoderConfiguration config);
-
 
         public abstract int SetRemoteUserPriority(uint uid, PRIORITY_TYPE userPriority);
 
@@ -132,7 +99,6 @@ namespace Agora.Rtc
 
         [Obsolete("This method is deprecated. Use enableEncryption(bool enabled, const EncryptionConfig&) instead.")]
         public abstract int SetEncryptionSecret(string secret);
-
 
         public abstract int AddVideoWatermark(RtcImage watermark);
 
@@ -145,33 +111,23 @@ namespace Agora.Rtc
         [Obsolete("The Agora NG SDK enables the interoperablity with the Web SDK.")]
         public abstract int EnableWebSdkInteroperability(bool enabled);
 
-
         public abstract int RegisterMediaMetadataObserver(IMetadataObserver observer, METADATA_TYPE type);
-
 
         public abstract int UnregisterMediaMetadataObserver();
 
-
         public abstract int StartAudioFrameDump(string channel_id, uint uid, string location, string uuid, string passwd, long duration_ms, bool auto_upload);
-
 
         public abstract int StopAudioFrameDump(string channel_id, uint uid, string location);
 
-
         public abstract int RegisterLocalUserAccount(string appId, string userAccount);
-
 
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount);
 
-
         public abstract int JoinChannelWithUserAccount(string token, string channelId, string userAccount, ChannelMediaOptions options);
-
 
         public abstract int GetUserInfoByUserAccount(string userAccount, ref UserInfo userInfo);
 
-
         public abstract int GetUserInfoByUid(uint uid, ref UserInfo userInfo);
-
 
         public abstract int StartOrUpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
@@ -181,12 +137,9 @@ namespace Agora.Rtc
         [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelay` instead.")]
         public abstract int UpdateChannelMediaRelay(ChannelMediaRelayConfiguration configuration);
 
-
         public abstract int TakeSnapshot(uint uid, string filePath);
 
-
         public abstract int SetAVSyncSource(string channelId, uint uid);
-
 
         public abstract int StartScreenCaptureByScreenRect(Rectangle screenRect, Rectangle regionRect, ScreenCaptureParameters captureParams);
         #endregion terra IRtcEngine
@@ -204,7 +157,6 @@ namespace Agora.Rtc
         public abstract int UnRegisterAudioFrameObserver();
 
         #region terra IMediaEngine
-
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
 
 

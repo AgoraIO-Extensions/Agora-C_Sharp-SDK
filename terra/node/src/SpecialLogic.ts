@@ -44,7 +44,7 @@ export class SpeicalLogic {
             des = des.replaceAll("  ", " ");
             des = des.replaceAll('"', '\\"')
             des = des.trim();
-            return `[Obsolete("${des}")]`;
+            return `[Obsolete("${des}")]\n`;
         }
         else {
             return "";

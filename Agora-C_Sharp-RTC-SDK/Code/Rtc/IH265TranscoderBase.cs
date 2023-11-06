@@ -5,9 +5,7 @@ namespace Agora.Rtc
     {
 
         #region terra IH265TranscoderBase
-
         public abstract int RegisterTranscoderObserver(IH265TranscoderObserver observer);
-
 
         public abstract int UnregisterTranscoderObserver();
         #endregion terra IH265TranscoderBase

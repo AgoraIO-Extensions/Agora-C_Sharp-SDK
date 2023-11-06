@@ -16,27 +16,19 @@ namespace Agora.Rtc
         [Obsolete("config The pointer to the LocalSpatialAudioConfig. See #LocalSpatialAudioConfig.")]
         public abstract int Initialize();
 
-
         public abstract int UpdateRemotePosition(uint uid, RemoteVoicePositionInfo posInfo);
-
 
         public abstract int UpdateRemotePositionEx(uint uid, RemoteVoicePositionInfo posInfo, RtcConnection connection);
 
-
         public abstract int RemoveRemotePosition(uint uid);
-
 
         public abstract int RemoveRemotePositionEx(uint uid, RtcConnection connection);
 
-
         public abstract int ClearRemotePositionsEx(RtcConnection connection);
-
 
         public abstract int UpdateSelfPositionEx(float[] position, float[] axisForward, float[] axisRight, float[] axisUp, RtcConnection connection);
 
-
         public abstract int MuteRemoteAudioStream(uint uid, bool mute);
-
 
         public abstract int SetRemoteAudioAttenuation(uint uid, double attenuation, bool forceSet);
         #endregion terra ILocalSpatialAudioEngine

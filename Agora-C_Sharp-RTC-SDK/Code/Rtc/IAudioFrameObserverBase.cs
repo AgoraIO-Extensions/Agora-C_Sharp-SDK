@@ -9,30 +9,25 @@ namespace Agora.Rtc
     {
 
         #region terra IAudioFrameObserverBase
-
         public virtual bool OnRecordAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
-
 
         public virtual bool OnPlaybackAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
 
-
         public virtual bool OnMixedAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;
         }
 
-
         public virtual bool OnEarMonitoringAudioFrame(AudioFrame audioFrame)
         {
             return true;
         }
-
 
         public virtual bool OnPlaybackAudioFrameBeforeMixing(string channelId, string userId, AudioFrame audioFrame)
         {

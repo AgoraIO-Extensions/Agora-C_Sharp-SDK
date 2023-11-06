@@ -28,7 +28,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMediaRecorder
-
         public override int StartRecording(MediaRecorderConfiguration config)
         {
             if (_mediaRecorderImpl == null || this._nativeHandle == null)
@@ -37,7 +36,6 @@ namespace Agora.Rtc
             }
             return _mediaRecorderImpl.StartRecording(_nativeHandle, config);
         }
-
         public override int StopRecording()
         {
             if (_mediaRecorderImpl == null || this._nativeHandle == null)
@@ -46,7 +44,6 @@ namespace Agora.Rtc
             }
             return _mediaRecorderImpl.StopRecording(_nativeHandle);
         }
-
         public override int SetMediaRecorderObserver(IMediaRecorderObserver callback)
         {
             if (_mediaRecorderImpl == null || this._nativeHandle == null)

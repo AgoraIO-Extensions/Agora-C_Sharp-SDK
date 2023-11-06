@@ -48,7 +48,6 @@ namespace Agora.Rtc
         }
 
         #region terra IVideoDeviceManager
-
         public override int SetDevice(string deviceIdUTF8)
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
@@ -57,7 +56,6 @@ namespace Agora.Rtc
             }
             return _videoDeviecManagerImpl.SetDevice(deviceIdUTF8);
         }
-
         public override int GetDevice(ref string deviceIdUTF8)
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
@@ -66,7 +64,6 @@ namespace Agora.Rtc
             }
             return _videoDeviecManagerImpl.GetDevice(ref deviceIdUTF8);
         }
-
         public override int NumberOfCapabilities(string deviceIdUTF8)
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
@@ -75,7 +72,6 @@ namespace Agora.Rtc
             }
             return _videoDeviecManagerImpl.NumberOfCapabilities(deviceIdUTF8);
         }
-
         public override int GetCapability(string deviceIdUTF8, uint deviceCapabilityNumber, ref VideoFormat capability)
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
@@ -84,7 +80,6 @@ namespace Agora.Rtc
             }
             return _videoDeviecManagerImpl.GetCapability(deviceIdUTF8, deviceCapabilityNumber, ref capability);
         }
-
         public override int StartDeviceTest(IntPtr hwnd)
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)
@@ -93,7 +88,6 @@ namespace Agora.Rtc
             }
             return _videoDeviecManagerImpl.StartDeviceTest(hwnd);
         }
-
         public override int StopDeviceTest()
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)

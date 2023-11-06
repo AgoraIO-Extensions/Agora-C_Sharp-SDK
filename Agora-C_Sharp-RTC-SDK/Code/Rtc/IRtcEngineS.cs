@@ -19,117 +19,79 @@ namespace Agora.Rtc
 #endif
 
         #region terra IRtcEngineS
-
         public abstract int PrepareUserAccount(string userAccount, uint uid);
-
 
         public abstract int Initialize(RtcEngineContextS contextS);
 
-
         public abstract int JoinChannel(string token, string channelId, string info, string userAccount);
-
 
         public abstract int JoinChannel(string token, string channelId, string userAccount, ChannelMediaOptions options);
 
-
         public abstract int SetupRemoteVideo(VideoCanvasS canvas);
-
 
         public abstract int SetupLocalVideo(VideoCanvasBase canvas);
 
-
         public abstract int MuteRemoteAudioStream(string userAccount, bool mute);
-
 
         public abstract int MuteRemoteVideoStream(string userAccount, bool mute);
 
-
         public abstract int SetRemoteVideoStreamType(string userAccount, VIDEO_STREAM_TYPE streamType);
-
 
         public abstract int SetRemoteVideoSubscriptionOptions(string userAccount, VideoSubscriptionOptions options);
 
-
         public abstract int SetSubscribeAudioBlocklist(string[] userAccountList, int userAccountNumber);
-
 
         public abstract int SetSubscribeAudioAllowlist(string[] userAccountList, int userAccountNumber);
 
-
         public abstract int SetSubscribeVideoBlocklist(string[] userAccountList, int userAccountNumber);
-
 
         public abstract int SetSubscribeVideoAllowlist(string[] userAccountList, int userAccountNumber);
 
-
         public abstract IMediaRecorderS CreateMediaRecorder(RecorderStreamInfoS info);
-
 
         public abstract int DestroyMediaRecorder(IMediaRecorderS mediaRecorderS);
 
-
         public abstract int SetRemoteVoicePosition(string userAccount, double pan, double gain);
-
 
         public abstract int SetRemoteUserSpatialAudioParams(string userAccount, SpatialAudioParams @params);
 
-
         public abstract int SetRemoteRenderMode(string userAccount, RENDER_MODE_TYPE renderMode, VIDEO_MIRROR_MODE_TYPE mirrorMode);
-
 
         public abstract int RegisterAudioSpectrumObserver(IAudioSpectrumObserverS observerS);
 
-
         public abstract int UnregisterAudioSpectrumObserver();
-
 
         public abstract int AdjustUserPlaybackSignalVolume(string userAccount, int volume);
 
-
         public abstract int SetHighPriorityUserList(string[] userAccountList, int userAccountNum, STREAM_FALLBACK_OPTIONS option);
-
 
         public abstract int EnableExtension(string provider, string extension, ExtensionInfoS extensionInfoS, bool enable = true);
 
-
         public abstract int SetExtensionProperty(string provider, string extension, ExtensionInfoS extensionInfoS, string key, string value);
-
 
         public abstract int GetExtensionProperty(string provider, string extension, ExtensionInfoS extensionInfoS, string key, ref string value, int buf_len);
 
-
         public abstract int StartRtmpStreamWithTranscoding(string url, LiveTranscodingS transcodingS);
-
 
         public abstract int UpdateRtmpTranscoding(LiveTranscodingS transcodingS);
 
-
         public abstract int StartLocalVideoTranscoder(LocalTranscoderConfigurationS configS);
-
 
         public abstract int UpdateLocalTranscoderConfiguration(LocalTranscoderConfigurationS configS);
 
-
         public abstract int SetRemoteUserPriority(string userAccount, PRIORITY_TYPE userPriority);
-
 
         public abstract int RegisterMediaMetadataObserver(IMetadataObserverS observerS, METADATA_TYPE type);
 
-
         public abstract int UnregisterMediaMetadataObserver();
-
 
         public abstract int StartAudioFrameDump(string channel_id, string userAccount, string location, string uuid, string passwd, long duration_ms, bool auto_upload);
 
-
         public abstract int StopAudioFrameDump(string channel_id, string userAccount, string location);
-
 
         public abstract int StartOrUpdateChannelMediaRelay(ChannelMediaRelayConfigurationS configuration);
 
-
         public abstract int TakeSnapshot(string userAccount, string filePath);
-
 
         public abstract int SetAVSyncSource(string channelId, string userAccount);
         #endregion terra IRtcEngineS
@@ -147,7 +109,6 @@ namespace Agora.Rtc
         public abstract int UnRegisterAudioFrameObserver();
 
         #region terra IMediaEngineS
-
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfoS videoEncodedFrameInfo, uint videoTrackId = 0);
 
 
