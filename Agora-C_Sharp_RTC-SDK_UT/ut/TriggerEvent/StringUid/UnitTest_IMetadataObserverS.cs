@@ -45,7 +45,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_GetMaxMetadataSize()
         {
-            ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVERS_GETMAXMETADATASIZE;
+            ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVERBASE_GETMAXMETADATASIZE;
 
             jsonObj.Clear();
 

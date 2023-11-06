@@ -45,7 +45,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnCaptureVideoFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERS_ONCAPTUREVIDEOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERBASE_ONCAPTUREVIDEOFRAME;
 
             jsonObj.Clear();
 
@@ -67,7 +67,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnPreEncodeVideoFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERS_ONPREENCODEVIDEOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERBASE_ONPREENCODEVIDEOFRAME;
 
             jsonObj.Clear();
 
@@ -89,7 +89,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnMediaPlayerVideoFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERS_ONMEDIAPLAYERVIDEOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERBASE_ONMEDIAPLAYERVIDEOFRAME;
 
             jsonObj.Clear();
 
@@ -111,7 +111,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnTranscodedVideoFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERS_ONTRANSCODEDVIDEOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERBASE_ONTRANSCODEDVIDEOFRAME;
 
             jsonObj.Clear();
 

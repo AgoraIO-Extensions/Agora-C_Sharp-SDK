@@ -263,17 +263,7 @@ namespace Agora.Rtc
 
         #region terra IAudioFrameObserver
 
-        internal const string EVENT_AUDIOFRAMEOBSERVER_ONRECORDAUDIOFRAME = "AudioFrameObserver_onRecordAudioFrame";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAME = "AudioFrameObserver_onPlaybackAudioFrame";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_ONMIXEDAUDIOFRAME = "AudioFrameObserver_onMixedAudioFrame";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_ONEARMONITORINGAUDIOFRAME = "AudioFrameObserver_onEarMonitoringAudioFrame";
         internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING = "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_GETOBSERVEDAUDIOFRAMEPOSITION = "AudioFrameObserver_getObservedAudioFramePosition";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_GETPLAYBACKAUDIOPARAMS = "AudioFrameObserver_getPlaybackAudioParams";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_GETRECORDAUDIOPARAMS = "AudioFrameObserver_getRecordAudioParams";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_GETMIXEDAUDIOPARAMS = "AudioFrameObserver_getMixedAudioParams";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_GETEARMONITORINGAUDIOPARAMS = "AudioFrameObserver_getEarMonitoringAudioParams";
-        internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING2 = "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2";
         #endregion terra IAudioFrameObserver
 
         #region terra IAudioFrameObserverBase
@@ -290,15 +280,17 @@ namespace Agora.Rtc
         internal const string EVENT_AUDIOFRAMEOBSERVERBASE_GETEARMONITORINGAUDIOPARAMS = "AudioFrameObserverBase_getEarMonitoringAudioParams";
         #endregion terra IAudioFrameObserverBase
 
+        #region terra IAudioSpectrumObserverBase
+        internal const string EVENT_AUDIOSPECTRUMOBSERVERBASE_ONLOCALAUDIOSPECTRUM = "AudioSpectrumObserverBase_onLocalAudioSpectrum";
+        #endregion terra IAudioSpectrumObserverBase
+
         #region terra IAudioSpectrumObserver
 
-        internal const string EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM = "AudioSpectrumObserver_onLocalAudioSpectrum";
         internal const string EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM = "AudioSpectrumObserver_onRemoteAudioSpectrum";
         #endregion terra IAudioSpectrumObserver
 
         #region terra IAudioSpectrumObserverS
 
-        internal const string EVENT_AUDIOSPECTRUMOBSERVERS_ONLOCALAUDIOSPECTRUM = "AudioSpectrumObserverS_onLocalAudioSpectrum";
         internal const string EVENT_AUDIOSPECTRUMOBSERVERS_ONREMOTEAUDIOSPECTRUM = "AudioSpectrumObserverS_onRemoteAudioSpectrum";
         #endregion terra IAudioSpectrumObserverS
 
@@ -341,16 +333,18 @@ namespace Agora.Rtc
         internal const string EVENT_MEDIARECORDEROBSERVERS_ONRECORDERINFOUPDATED = "MediaRecorderObserverS_onRecorderInfoUpdated";
         #endregion terra IMediaRecorderObserverS
 
+        #region terra IMetadataObserverBase
+        internal const string EVENT_METADATAOBSERVERBASE_GETMAXMETADATASIZE = "MetadataObserverBase_getMaxMetadataSize";
+        #endregion terra IMetadataObserverBase
+
         #region terra IMetadataObserver
 
-        internal const string EVENT_METADATAOBSERVER_GETMAXMETADATASIZE = "MetadataObserver_getMaxMetadataSize";
         internal const string EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA = "MetadataObserver_onReadyToSendMetadata";
         internal const string EVENT_METADATAOBSERVER_ONMETADATARECEIVED = "MetadataObserver_onMetadataReceived";
         #endregion terra IMetadataObserver
 
         #region terra IMetadataObserverS
 
-        internal const string EVENT_METADATAOBSERVERS_GETMAXMETADATASIZE = "MetadataObserverS_getMaxMetadataSize";
         internal const string EVENT_METADATAOBSERVERS_ONREADYTOSENDMETADATA = "MetadataObserverS_onReadyToSendMetadata";
         internal const string EVENT_METADATAOBSERVERS_ONMETADATARECEIVED = "MetadataObserverS_onMetadataReceived";
         #endregion terra IMetadataObserverS
@@ -372,33 +366,26 @@ namespace Agora.Rtc
         internal const string EVENT_VIDEOENCODEDFRAMEOBSERVERS_ONENCODEDVIDEOFRAMERECEIVED = "VideoEncodedFrameObserverS_onEncodedVideoFrameReceived";
         #endregion terra IVideoEncodedFrameObserverS
 
+        #region terra IVideoFrameObserverBase
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ONCAPTUREVIDEOFRAME = "VideoFrameObserverBase_onCaptureVideoFrame";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ONPREENCODEVIDEOFRAME = "VideoFrameObserverBase_onPreEncodeVideoFrame";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ONMEDIAPLAYERVIDEOFRAME = "VideoFrameObserverBase_onMediaPlayerVideoFrame";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ONTRANSCODEDVIDEOFRAME = "VideoFrameObserverBase_onTranscodedVideoFrame";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETVIDEOFRAMEPROCESSMODE = "VideoFrameObserverBase_getVideoFrameProcessMode";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETVIDEOFORMATPREFERENCE = "VideoFrameObserverBase_getVideoFormatPreference";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETROTATIONAPPLIED = "VideoFrameObserverBase_getRotationApplied";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETMIRRORAPPLIED = "VideoFrameObserverBase_getMirrorApplied";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETOBSERVEDFRAMEPOSITION = "VideoFrameObserverBase_getObservedFramePosition";
+        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ISEXTERNAL = "VideoFrameObserverBase_isExternal";
+        #endregion terra IVideoFrameObserverBase
+
         #region terra IVideoFrameObserver
 
-        internal const string EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME = "VideoFrameObserver_onCaptureVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME = "VideoFrameObserver_onPreEncodeVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME = "VideoFrameObserver_onMediaPlayerVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME = "VideoFrameObserver_onTranscodedVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_GETVIDEOFRAMEPROCESSMODE = "VideoFrameObserver_getVideoFrameProcessMode";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_GETVIDEOFORMATPREFERENCE = "VideoFrameObserver_getVideoFormatPreference";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_GETROTATIONAPPLIED = "VideoFrameObserver_getRotationApplied";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_GETMIRRORAPPLIED = "VideoFrameObserver_getMirrorApplied";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_GETOBSERVEDFRAMEPOSITION = "VideoFrameObserver_getObservedFramePosition";
-        internal const string EVENT_VIDEOFRAMEOBSERVER_ISEXTERNAL = "VideoFrameObserver_isExternal";
         internal const string EVENT_VIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME = "VideoFrameObserver_onRenderVideoFrame";
         #endregion terra IVideoFrameObserver
 
         #region terra IVideoFrameObserverS
 
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_ONCAPTUREVIDEOFRAME = "VideoFrameObserverS_onCaptureVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_ONPREENCODEVIDEOFRAME = "VideoFrameObserverS_onPreEncodeVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_ONMEDIAPLAYERVIDEOFRAME = "VideoFrameObserverS_onMediaPlayerVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_ONTRANSCODEDVIDEOFRAME = "VideoFrameObserverS_onTranscodedVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_GETVIDEOFRAMEPROCESSMODE = "VideoFrameObserverS_getVideoFrameProcessMode";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_GETVIDEOFORMATPREFERENCE = "VideoFrameObserverS_getVideoFormatPreference";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_GETROTATIONAPPLIED = "VideoFrameObserverS_getRotationApplied";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_GETMIRRORAPPLIED = "VideoFrameObserverS_getMirrorApplied";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_GETOBSERVEDFRAMEPOSITION = "VideoFrameObserverS_getObservedFramePosition";
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_ISEXTERNAL = "VideoFrameObserverS_isExternal";
         internal const string EVENT_VIDEOFRAMEOBSERVERS_ONRENDERVIDEOFRAME = "VideoFrameObserverS_onRenderVideoFrame";
         #endregion terra IVideoFrameObserverS
 

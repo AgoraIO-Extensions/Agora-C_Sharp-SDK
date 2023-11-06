@@ -39,128 +39,141 @@
         "name": "IDirectCdnStreamingEventHandler",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IAudioEncodedFrameObserver": {
         "type": "ClazzStruct",
         "name": "IAudioEncodedFrameObserver",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IAudioFrameObserver": {
         "type": "ClazzStruct",
         "name": "IAudioFrameObserver",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IAudioFrameObserverBase": {
         "type": "ClazzStruct",
         "name": "IAudioFrameObserverBase",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
+    },
+    "IAudioSpectrumObserverBase": {
+        "type": "ClazzStruct",
+        "name": "IAudioSpectrumObserverBase",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
     },
     "IAudioSpectrumObserver": {
         "type": "ClazzStruct",
         "name": "IAudioSpectrumObserver",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IAudioSpectrumObserverS": {
         "type": "ClazzStruct",
         "name": "IAudioSpectrumObserverS",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IAudioPcmFrameSink": {
         "type": "ClazzStruct",
         "name": "IAudioPcmFrameSink",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IMediaPlayerCustomDataProvider": {
         "type": "ClazzStruct",
         "name": "IMediaPlayerCustomDataProvider",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IMediaPlayerSourceObserver": {
         "type": "ClazzStruct",
         "name": "IMediaPlayerSourceObserver",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
+    },
+    "IMediaRecorderObserverBase": {
+        "type": "ClazzStruct",
+        "name": "IMediaRecorderObserverBase",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
     },
     "IMediaRecorderObserver": {
         "type": "ClazzStruct",
         "name": "IMediaRecorderObserver",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IMediaRecorderObserverS": {
         "type": "ClazzStruct",
         "name": "IMediaRecorderObserverS",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
+    },
+    "IMetadataObserverBase": {
+        "type": "ClazzStruct",
+        "name": "IMetadataObserverBase",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
     },
     "IMetadataObserver": {
         "type": "ClazzStruct",
         "name": "IMetadataObserver",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IMetadataObserverS": {
         "type": "ClazzStruct",
         "name": "IMetadataObserverS",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IMusicContentCenterEventHandler": {
         "type": "ClazzStruct",
         "name": "IMusicContentCenterEventHandler",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IVideoEncodedFrameObserver": {
         "type": "ClazzStruct",
         "name": "IVideoEncodedFrameObserver",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IVideoEncodedFrameObserverS": {
         "type": "ClazzStruct",
         "name": "IVideoEncodedFrameObserverS",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
+    },
+    "IVideoFrameObserverBase": {
+        "type": "ClazzStruct",
+        "name": "IVideoFrameObserverBase",
+        "namespaces": "agora::media",
+        "methodSplitSymbol": "\n",
+        "commonMethodTemplate": "method_event_name",
+        "excludeMethods": []
     },
     "IVideoFrameObserver": {
         "type": "ClazzStruct",
@@ -168,8 +181,7 @@
         "namespaces": "agora::media",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IVideoFrameObserverS": {
         "type": "ClazzStruct",
@@ -177,8 +189,7 @@
         "methodSplitSymbol": "\n",
         "memberSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "IH265TranscoderObserver": {
         "type": "ClazzStruct",
@@ -186,8 +197,7 @@
         "methodSplitSymbol": "\n",
         "memberSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": [],
-        "trackBackFather": 1
+        "excludeMethods": []
     },
     "method_event_name": "internal const string EVENT_${-rmCLAZZ_STRUCT_NAME}_${-mnMETHOD_NAME} = \"${-rCLAZZ_STRUCT_NAME}_${-nMETHOD_NAME}\";"
 }

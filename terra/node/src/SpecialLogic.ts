@@ -1322,7 +1322,7 @@ export class SpeicalLogic {
         lines.push(`public void Test_${Tool.processString('-un', m.name, repeat)}()`)
         lines.push(`{`)
 
-        let className = Tool.processString('-rv', clazzName, 1);
+        let className = Tool.processString('-rv', belongToClazzName, 1);
         let methodName = Tool.processString('-v', m.name);
         let config = ConfigTool.getInstance();
         lines.push(`ApiParam.@event = AgoraEventType.EVENT_${className}_${methodName};\n`);
@@ -1355,7 +1355,7 @@ export class SpeicalLogic {
         lines.push(`public void Test_${Tool.processString('-un', m.name, repeat)}()`)
         lines.push(`{`)
 
-        let className = Tool.processString('-rv', clazzName, 1);
+        let className = Tool.processString('-rv', belongToClazzName, 1);
         let methodName = Tool.processString('-v', m.name, repeat);
         let config = ConfigTool.getInstance();
         lines.push(`ApiParam.@event = AgoraEventType.EVENT_${className}_${methodName};\n`);

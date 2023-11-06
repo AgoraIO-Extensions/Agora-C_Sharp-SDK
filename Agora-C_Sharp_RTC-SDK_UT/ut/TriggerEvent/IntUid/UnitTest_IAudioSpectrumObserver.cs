@@ -57,7 +57,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnLocalAudioSpectrum()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVERBASE_ONLOCALAUDIOSPECTRUM;
 
             jsonObj.Clear();
 
