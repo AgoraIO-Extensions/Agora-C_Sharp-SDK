@@ -6,7 +6,6 @@ namespace Agora.Rtc
     {
 
         #region terra IRtcEngineEventHandlerS
-
         public event Action<int, string> EventOnError;
 
         public override void OnError(int err, string msg)
@@ -658,7 +657,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineEventHandlerS
 
         #region terra IDirectCdnStreamingEventHandler
-
         public event Action<DIRECT_CDN_STREAMING_STATE, DIRECT_CDN_STREAMING_ERROR, string> EventOnDirectCdnStreamingStateChanged;
 
         public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)

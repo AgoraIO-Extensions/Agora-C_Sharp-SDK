@@ -49,7 +49,6 @@ namespace Agora.Rtc
 
         #region terra IVideoDeviceManager
 
-
         public override int SetDevice(string deviceIdUTF8)
         {
             if (_rtcEngineInstance == null || _videoDeviecManagerImpl == null)

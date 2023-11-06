@@ -45,7 +45,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IAudioFrameObserver
-
         [Test]
         public void Test_OnRecordAudioFrame()
         {

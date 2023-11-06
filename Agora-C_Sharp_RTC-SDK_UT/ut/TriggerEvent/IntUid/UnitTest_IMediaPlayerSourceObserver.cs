@@ -42,7 +42,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IMediaPlayerSourceObserver
-
         [Test]
         public void Test_OnPlayerSourceStateChanged()
         {

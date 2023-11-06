@@ -42,7 +42,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IAudioPcmFrameSink
-
         [Test]
         public void Test_OnFrame()
         {

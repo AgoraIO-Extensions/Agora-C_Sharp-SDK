@@ -10,7 +10,6 @@ namespace Agora.Rtc
 
         #region terra IAudioFrameObserver
 
-
         public virtual bool OnPlaybackAudioFrameBeforeMixing(string channelId, uint uid, AudioFrame audioFrame)
         {
             return true;

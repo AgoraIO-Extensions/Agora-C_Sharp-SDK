@@ -41,7 +41,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IVideoFrameObserver
-
         [Test]
         public void Test_OnCaptureVideoFrame()
         {

@@ -266,7 +266,6 @@ namespace Agora.Rtc
     };
 
     #region terra AgoraCommonBase.h
-
     public enum CHANNEL_PROFILE_TYPE
     {
         CHANNEL_PROFILE_COMMUNICATION = 0,

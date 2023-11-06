@@ -5,7 +5,6 @@ namespace Agora.Rtc
     using LitJson;
 
     #region terra AgoraMediaPlayerTypes.h
-
     public enum MEDIA_PLAYER_STATE
     {
         PLAYER_STATE_IDLE = 0,

@@ -25,7 +25,6 @@ namespace Agora.Rtc
 
         #region terra IVideoDeviceManager
 
-
         public abstract int SetDevice(string deviceIdUTF8);
 
 

@@ -7,7 +7,6 @@ namespace Agora.Rtc
     {
         #region terra IMediaRecorderS
 
-
         public abstract int SetMediaRecorderObserver(IMediaRecorderObserverS callbackS);
         #endregion terra IMediaRecorderS
     };

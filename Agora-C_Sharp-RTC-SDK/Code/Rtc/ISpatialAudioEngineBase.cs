@@ -16,7 +16,6 @@ namespace Agora.Rtc
 
         #region terra ISpatialAudioEngineBase
 
-
         public abstract int SetMaxAudioRecvCount(int maxCount);
 
 

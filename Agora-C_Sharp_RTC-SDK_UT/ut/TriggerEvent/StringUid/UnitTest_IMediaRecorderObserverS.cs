@@ -42,7 +42,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IMediaRecorderObserverS
-
         [Test]
         public void Test_OnRecorderStateChanged()
         {

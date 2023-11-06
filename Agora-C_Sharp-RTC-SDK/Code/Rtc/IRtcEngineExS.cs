@@ -11,7 +11,6 @@ namespace Agora.Rtc
 
         #region terra IRtcEngineExS
 
-
         public abstract int JoinChannelEx(string token, RtcConnectionS connectionS, ChannelMediaOptions options);
 
 

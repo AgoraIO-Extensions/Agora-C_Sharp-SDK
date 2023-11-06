@@ -6,7 +6,6 @@ namespace Agora.Rtc
     {
 
         #region terra IRtcEngineEventHandlerS
-
         public bool OnError_be_trigger = false;
         public int OnError_err;
         public string OnError_msg;
@@ -2059,7 +2058,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineEventHandlerS
 
         #region terra IDirectCdnStreamingEventHandler
-
         public bool OnDirectCdnStreamingStateChanged_be_trigger = false;
         public DIRECT_CDN_STREAMING_STATE OnDirectCdnStreamingStateChanged_state;
         public DIRECT_CDN_STREAMING_ERROR OnDirectCdnStreamingStateChanged_error;

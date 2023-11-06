@@ -33,7 +33,6 @@ namespace Agora.Rtc
 
         #region terra IMediaPlayer
 
-
         public abstract int Open(string url, long startPos);
 
         [Obsolete("")]

@@ -27,7 +27,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMediaRecorderS
-
         [Test]
         public void Test_StartRecording()
         {

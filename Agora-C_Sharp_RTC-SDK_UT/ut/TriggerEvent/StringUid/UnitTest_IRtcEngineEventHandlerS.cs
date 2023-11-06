@@ -37,7 +37,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IRtcEngineEventHandlerS
-
         [Test]
         public void Test_OnError()
         {
@@ -2023,7 +2022,6 @@ namespace Agora.Rtc.Event
         #endregion terra IRtcEngineEventHandlerS
 
         #region terra IDirectCdnStreamingEventHandler
-
         [Test]
         public void Test_OnDirectCdnStreamingStateChanged()
         {

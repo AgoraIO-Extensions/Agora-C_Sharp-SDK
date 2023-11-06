@@ -41,7 +41,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IMetadataObserverS
-
         [Test]
         public void Test_GetMaxMetadataSize()
         {

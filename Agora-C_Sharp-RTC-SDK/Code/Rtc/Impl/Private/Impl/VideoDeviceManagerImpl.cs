@@ -57,7 +57,6 @@ namespace Agora.Rtc
         }
 
         #region terra IVideoDeviceManager
-
         public int SetDevice(string deviceIdUTF8)
         {
             _param.Clear();

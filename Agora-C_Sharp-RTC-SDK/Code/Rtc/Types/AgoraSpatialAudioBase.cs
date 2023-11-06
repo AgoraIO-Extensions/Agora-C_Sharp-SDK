@@ -1,7 +1,6 @@
 ﻿namespace Agora.Rtc
 {
     #region terra IAgoraSpatialAudioBase.h
-
     public class RemoteVoicePositionInfo
     {
         public float[] position;

@@ -61,7 +61,6 @@ namespace Agora.Rtc
 
         #region terra IMediaPlayer
 
-
         public override int Open(string url, long startPos)
         {
             if (_rtcEngineInstance == null || _mediaPlayerImpl == null)

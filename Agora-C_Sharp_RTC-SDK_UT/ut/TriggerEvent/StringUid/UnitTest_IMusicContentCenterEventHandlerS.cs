@@ -45,7 +45,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IMusicContentCenterEventHandler
-
         [Test]
         public void Test_OnMusicChartsResult()
         {

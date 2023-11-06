@@ -10,7 +10,6 @@
 
         #region terra IAudioSpectrumObserverBase
 
-
         public virtual bool OnLocalAudioSpectrum(AudioSpectrumData data)
         {
             return true;

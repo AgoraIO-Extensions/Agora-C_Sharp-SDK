@@ -53,7 +53,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IAudioSpectrumObserver
-
         [Test]
         public void Test_OnLocalAudioSpectrum()
         {

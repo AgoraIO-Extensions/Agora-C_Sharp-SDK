@@ -39,7 +39,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IVideoEncodedFrameObserverS
-
         [Test]
         public void Test_OnEncodedVideoFrameReceived()
         {

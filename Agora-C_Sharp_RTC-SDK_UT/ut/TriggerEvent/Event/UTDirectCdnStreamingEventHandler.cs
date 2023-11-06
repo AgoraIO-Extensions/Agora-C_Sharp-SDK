@@ -7,7 +7,6 @@ namespace Agora.Rtc
     {
 
         #region terra IDirectCdnStreamingEventHandler
-
         public bool OnDirectCdnStreamingStateChanged_be_trigger = false;
         public DIRECT_CDN_STREAMING_STATE OnDirectCdnStreamingStateChanged_state;
         public DIRECT_CDN_STREAMING_ERROR OnDirectCdnStreamingStateChanged_error;

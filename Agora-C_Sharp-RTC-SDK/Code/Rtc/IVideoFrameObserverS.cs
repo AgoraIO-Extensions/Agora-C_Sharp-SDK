@@ -9,7 +9,6 @@ namespace Agora.Rtc
     {
         #region terra IVideoFrameObserverS
 
-
         public virtual bool OnRenderVideoFrame(string channelId, string remoteUserId, VideoFrame videoFrame)
         {
             return true;

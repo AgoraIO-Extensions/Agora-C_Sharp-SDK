@@ -64,7 +64,6 @@ namespace Agora.Rtc
         #endregion
 
         #region terra IAudioDeviceManager
-
         [Test]
         public void Test_SetPlaybackDevice()
         {

@@ -5,7 +5,6 @@ namespace Agora.Rtc
     using view_t = Int64;
 
     #region terra AgoraBaseS.h
-
     public class EncodedVideoFrameInfoS : EncodedVideoFrameInfoBase
     {
         public string userAccount;

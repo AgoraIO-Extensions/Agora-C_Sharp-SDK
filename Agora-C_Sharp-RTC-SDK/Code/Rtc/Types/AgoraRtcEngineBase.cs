@@ -5,7 +5,6 @@ using Agora.Rtc.LitJson;
 namespace Agora.Rtc
 {
     #region terra IAgoraRtcEngineBase.h
-
     public enum MEDIA_DEVICE_TYPE
     {
         UNKNOWN_AUDIO_DEVICE = -1,

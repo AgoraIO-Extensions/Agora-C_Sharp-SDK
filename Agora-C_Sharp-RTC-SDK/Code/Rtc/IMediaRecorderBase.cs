@@ -7,7 +7,6 @@ namespace Agora.Rtc
     {
         #region terra IMediaRecorderBase
 
-
         public abstract int StartRecording(MediaRecorderConfiguration config);
 
 

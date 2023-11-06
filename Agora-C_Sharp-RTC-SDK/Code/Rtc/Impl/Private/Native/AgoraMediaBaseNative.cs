@@ -101,7 +101,6 @@ namespace Agora.Rtc
     internal class ThumbImageBufferInternal
     {
         #region terra ThumbImageBufferInternal_List
-
         public IntPtr buffer;
         public uint length;
         public uint width;
@@ -116,7 +115,6 @@ namespace Agora.Rtc
         {
             ThumbImageBuffer imageBuffer = new ThumbImageBuffer();
             #region terra ThumbImageBufferInternal_Generate
-
             byte[] thumbBuffer = new byte[length];
             if (imageBuffer.length > 0)
             {
@@ -134,7 +132,6 @@ namespace Agora.Rtc
     internal class ScreenCaptureSourceInfoInternal
     {
         #region terra ScreenCaptureSourceInfoInternal_List
-
         public ScreenCaptureSourceType type;
         public view_t sourceId;
         public string sourceName;
@@ -158,7 +155,6 @@ namespace Agora.Rtc
             var screenCaptureSourceInfo = new ScreenCaptureSourceInfo();
 
             #region terra ScreenCaptureSourceInfoInternal_Generate
-
             screenCaptureSourceInfo.type = this.type;
             screenCaptureSourceInfo.sourceId = this.sourceId;
             screenCaptureSourceInfo.sourceName = this.sourceName;

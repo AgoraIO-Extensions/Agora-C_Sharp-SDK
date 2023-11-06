@@ -36,7 +36,6 @@ namespace Agora.Rtc
 
         #region terra IRtcEngineBase
 
-
         public abstract string GetVersion(ref int build);
 
 
@@ -707,7 +706,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineBase
 
         #region terra IMediaEngineBase
-
 
         public abstract int PushAudioFrame(AudioFrame frame, uint trackId = 0);
 

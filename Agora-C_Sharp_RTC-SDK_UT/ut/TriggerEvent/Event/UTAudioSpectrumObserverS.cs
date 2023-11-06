@@ -7,7 +7,6 @@ namespace Agora.Rtc
         public string TAG;
 
         #region terra IAudioSpectrumObserverS
-
         public bool OnLocalAudioSpectrum_be_trigger = false;
         public AudioSpectrumData OnLocalAudioSpectrum_data;
 

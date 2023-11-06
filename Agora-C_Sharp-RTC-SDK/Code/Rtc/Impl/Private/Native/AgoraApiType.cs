@@ -12,7 +12,6 @@ namespace Agora.Rtc
         internal const string FUNC_RTCENGINEBASE_GETNATIVEHANDLE = "RtcEngineBase_getNativeHandle";
         internal const string FUNC_RTCENGINEBASE_SETMAXMETADATASIZE = "RtcEngineBase_setMaxMetadataSize";
         #region terra IRtcEngineBase
-
         internal const string FUNC_RTCENGINEBASE_RELEASE = "RtcEngineBase_release";
         internal const string FUNC_RTCENGINEBASE_QUERYINTERFACE = "RtcEngineBase_queryInterface";
         internal const string FUNC_RTCENGINEBASE_GETVERSION = "RtcEngineBase_getVersion";
@@ -243,7 +242,6 @@ namespace Agora.Rtc
 
         internal const string FUNC_RTCENGINE_SENDMETADATA = "RtcEngine_sendMetadata";
         #region terra IRtcEngine
-
         internal const string FUNC_RTCENGINE_INITIALIZE = "RtcEngine_initialize";
         internal const string FUNC_RTCENGINE_PRELOADCHANNEL = "RtcEngine_preloadChannel";
         internal const string FUNC_RTCENGINE_PRELOADCHANNEL2 = "RtcEngine_preloadChannel2";
@@ -307,7 +305,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngine
 
         #region terra IRtcEngineEx
-
         internal const string FUNC_RTCENGINEEX_JOINCHANNELEX = "RtcEngineEx_joinChannelEx";
         internal const string FUNC_RTCENGINEEX_LEAVECHANNELEX = "RtcEngineEx_leaveChannelEx";
         internal const string FUNC_RTCENGINEEX_LEAVECHANNELEX2 = "RtcEngineEx_leaveChannelEx2";
@@ -365,7 +362,6 @@ namespace Agora.Rtc
 
         internal const string FUNC_RTCENGINES_SENDMETADATA = "RtcEngineS_sendMetadata";
         #region terra IRtcEngineS
-
         internal const string FUNC_RTCENGINES_PREPAREUSERACCOUNT = "RtcEngineS_prepareUserAccount";
         internal const string FUNC_RTCENGINES_INITIALIZE = "RtcEngineS_initialize";
         internal const string FUNC_RTCENGINES_JOINCHANNEL = "RtcEngineS_joinChannel";
@@ -409,7 +405,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineS
 
         #region terra IRtcEngineExS
-
         internal const string FUNC_RTCENGINEEXS_JOINCHANNELEX = "RtcEngineExS_joinChannelEx";
         internal const string FUNC_RTCENGINEEXS_LEAVECHANNELEX = "RtcEngineExS_leaveChannelEx";
         internal const string FUNC_RTCENGINEEXS_LEAVECHANNELEX2 = "RtcEngineExS_leaveChannelEx2";
@@ -463,7 +458,6 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAPLAYER_UNOPENWITHCUSTOMSOURCE = "MediaPlayer_unOpenWithCustomSource";
         internal const string FUNC_MEDIAPLAYER_UNOPENWITHMEDIASOURCE = "MediaPlayer_unOpenWithMediaSource";
         #region terra IMediaPlayer
-
         internal const string FUNC_MEDIAPLAYER_INITIALIZE = "MediaPlayer_initialize";
         internal const string FUNC_MEDIAPLAYER_GETMEDIAPLAYERID = "MediaPlayer_getMediaPlayerId";
         internal const string FUNC_MEDIAPLAYER_OPEN = "MediaPlayer_open";
@@ -527,7 +521,6 @@ namespace Agora.Rtc
         internal const string FUNC_AUDIODEVICEMANAGER_GETPLAYBACKDEFAULTDEVICE = "AudioDeviceManager_getPlaybackDefaultDevice";
         internal const string FUNC_AUDIODEVICEMANAGER_GETRECORDINGDEAFULTDEVICE = "AudioDeviceManager_getRecordingDefaultDevice";
         #region terra IAudioDeviceManager
-
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATEPLAYBACKDEVICES = "AudioDeviceManager_enumeratePlaybackDevices";
         internal const string FUNC_AUDIODEVICEMANAGER_ENUMERATERECORDINGDEVICES = "AudioDeviceManager_enumerateRecordingDevices";
         internal const string FUNC_AUDIODEVICEMANAGER_SETPLAYBACKDEVICE = "AudioDeviceManager_setPlaybackDevice";
@@ -559,7 +552,6 @@ namespace Agora.Rtc
         #endregion terra IAudioDeviceManager
 
         #region terra IVideoDeviceManager
-
         internal const string FUNC_VIDEODEVICEMANAGER_ENUMERATEVIDEODEVICES = "VideoDeviceManager_enumerateVideoDevices";
         internal const string FUNC_VIDEODEVICEMANAGER_SETDEVICE = "VideoDeviceManager_setDevice";
         internal const string FUNC_VIDEODEVICEMANAGER_GETDEVICE = "VideoDeviceManager_getDevice";
@@ -571,7 +563,6 @@ namespace Agora.Rtc
         #endregion terra IVideoDeviceManager
 
         #region terra ISpatialAudioEngineBase
-
         internal const string FUNC_SPATIALAUDIOENGINEBASE_RELEASE = "SpatialAudioEngineBase_release";
         internal const string FUNC_SPATIALAUDIOENGINEBASE_SETMAXAUDIORECVCOUNT = "SpatialAudioEngineBase_setMaxAudioRecvCount";
         internal const string FUNC_SPATIALAUDIOENGINEBASE_SETAUDIORECVRANGE = "SpatialAudioEngineBase_setAudioRecvRange";
@@ -587,7 +578,6 @@ namespace Agora.Rtc
         #endregion terra ISpatialAudioEngineBase
 
         #region terra ILocalSpatialAudioEngine
-
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_INITIALIZE = "LocalSpatialAudioEngine_initialize";
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_UPDATEREMOTEPOSITION = "LocalSpatialAudioEngine_updateRemotePosition";
         internal const string FUNC_LOCALSPATIALAUDIOENGINE_UPDATEREMOTEPOSITIONEX = "LocalSpatialAudioEngine_updateRemotePositionEx";
@@ -600,7 +590,6 @@ namespace Agora.Rtc
         #endregion terra ILocalSpatialAudioEngine
 
         #region terra ILocalSpatialAudioEngineS
-
         internal const string FUNC_LOCALSPATIALAUDIOENGINES_INITIALIZE = "LocalSpatialAudioEngineS_initialize";
         internal const string FUNC_LOCALSPATIALAUDIOENGINES_UPDATEREMOTEPOSITION = "LocalSpatialAudioEngineS_updateRemotePosition";
         internal const string FUNC_LOCALSPATIALAUDIOENGINES_UPDATEREMOTEPOSITIONEX = "LocalSpatialAudioEngineS_updateRemotePositionEx";
@@ -613,7 +602,6 @@ namespace Agora.Rtc
         #endregion terra ILocalSpatialAudioEngineS
 
         #region terra IMediaEngineBase
-
         internal const string FUNC_MEDIAENGINEBASE_PUSHAUDIOFRAME = "MediaEngineBase_pushAudioFrame";
         internal const string FUNC_MEDIAENGINEBASE_PULLAUDIOFRAME = "MediaEngineBase_pullAudioFrame";
         internal const string FUNC_MEDIAENGINEBASE_SETEXTERNALVIDEOSOURCE = "MediaEngineBase_setExternalVideoSource";
@@ -630,7 +618,6 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAENGINE_UNREGISTERVIDEOFRAMEOBSERVER = "MediaEngine_unregisterVideoFrameObserver";
         internal const string FUNC_MEDIAENGINE_UNREGISTERVIDEOENCODEDFRAMEOBSERVER = "MediaEngine_unregisterVideoEncodedFrameObserver";
         #region terra IMediaEngine
-
         internal const string FUNC_MEDIAENGINE_REGISTERVIDEOFRAMEOBSERVER = "MediaEngine_registerVideoFrameObserver";
         internal const string FUNC_MEDIAENGINE_REGISTERAUDIOFRAMEOBSERVER = "MediaEngine_registerAudioFrameObserver";
         internal const string FUNC_MEDIAENGINE_REGISTERVIDEOENCODEDFRAMEOBSERVER = "MediaEngine_registerVideoEncodedFrameObserver";
@@ -642,7 +629,6 @@ namespace Agora.Rtc
         internal const string FUNC_MEDIAENGINES_UNREGISTERVIDEOFRAMEOBSERVER = "MediaEngineS_unregisterVideoFrameObserver";
         internal const string FUNC_MEDIAENGINES_UNREGISTERVIDEOENCODEDFRAMEOBSERVER = "MediaEngineS_unregisterVideoEncodedFrameObserver";
         #region terra IMediaEngineS
-
         internal const string FUNC_MEDIAENGINES_REGISTERVIDEOFRAMEOBSERVER = "MediaEngineS_registerVideoFrameObserver";
         internal const string FUNC_MEDIAENGINES_REGISTERAUDIOFRAMEOBSERVER = "MediaEngineS_registerAudioFrameObserver";
         internal const string FUNC_MEDIAENGINES_REGISTERVIDEOENCODEDFRAMEOBSERVER = "MediaEngineS_registerVideoEncodedFrameObserver";
@@ -651,7 +637,6 @@ namespace Agora.Rtc
         #endregion terra IMediaEngineS
 
         #region terra IMediaPlayerCacheManager
-
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEALLCACHES = "MediaPlayerCacheManager_removeAllCaches";
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVEOLDCACHE = "MediaPlayerCacheManager_removeOldCache";
         internal const string FUNC_MEDIAPLAYERCACHEMANAGER_REMOVECACHEBYURI = "MediaPlayerCacheManager_removeCacheByUri";
@@ -666,7 +651,6 @@ namespace Agora.Rtc
         #endregion terra IMediaPlayerCacheManager
 
         #region terra IMediaRecorderBase
-
         internal const string FUNC_MEDIARECORDERBASE_STARTRECORDING = "MediaRecorderBase_startRecording";
         internal const string FUNC_MEDIARECORDERBASE_STOPRECORDING = "MediaRecorderBase_stopRecording";
         #endregion terra IMediaRecorderBase
@@ -683,7 +667,6 @@ namespace Agora.Rtc
 
         internal const string FUNC_MUSICCONTENTCENTER_DESTROYMUSICPLAYER = "MusicContentCenter_destroyMusicPlayer";
         #region terra IMusicContentCenter
-
         internal const string FUNC_MUSICCONTENTCENTER_INITIALIZE = "MusicContentCenter_initialize";
         internal const string FUNC_MUSICCONTENTCENTER_RENEWTOKEN = "MusicContentCenter_renewToken";
         internal const string FUNC_MUSICCONTENTCENTER_RELEASE = "MusicContentCenter_release";
@@ -708,20 +691,17 @@ namespace Agora.Rtc
         #endregion terra IMusicPlayer
 
         #region terra IH265TranscoderBase
-
         internal const string FUNC_H265TRANSCODERBASE_REGISTERTRANSCODEROBSERVER = "H265TranscoderBase_registerTranscoderObserver";
         internal const string FUNC_H265TRANSCODERBASE_UNREGISTERTRANSCODEROBSERVER = "H265TranscoderBase_unregisterTranscoderObserver";
         #endregion terra IH265TranscoderBase
 
         #region terra IH265Transcoder
-
         internal const string FUNC_H265TRANSCODER_ENABLETRANSCODE = "H265Transcoder_enableTranscode";
         internal const string FUNC_H265TRANSCODER_QUERYCHANNEL = "H265Transcoder_queryChannel";
         internal const string FUNC_H265TRANSCODER_TRIGGERTRANSCODE = "H265Transcoder_triggerTranscode";
         #endregion terra IH265Transcoder
 
         #region terra IH265TranscoderS
-
         internal const string FUNC_H265TRANSCODERS_ENABLETRANSCODE = "H265TranscoderS_enableTranscode";
         internal const string FUNC_H265TRANSCODERS_QUERYCHANNEL = "H265TranscoderS_queryChannel";
         internal const string FUNC_H265TRANSCODERS_TRIGGERTRANSCODE = "H265TranscoderS_triggerTranscode";

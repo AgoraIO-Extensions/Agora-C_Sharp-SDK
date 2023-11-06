@@ -73,7 +73,6 @@ namespace Agora.Rtc
 
         #region terra IAudioDeviceManager
 
-
         public abstract int SetPlaybackDevice(string deviceId);
 
 

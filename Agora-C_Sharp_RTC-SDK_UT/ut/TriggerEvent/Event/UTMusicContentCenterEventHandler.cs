@@ -6,7 +6,6 @@ namespace Agora.Rtc
     {
 
         #region terra IMusicContentCenterEventHandler
-
         public bool OnMusicChartsResult_be_trigger = false;
         public string OnMusicChartsResult_requestId;
         public MusicChartInfo[] OnMusicChartsResult_result;

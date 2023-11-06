@@ -6,7 +6,6 @@ namespace Agora.Rtc
     {
 
         #region terra IAudioFrameObserver
-
         public bool OnRecordAudioFrame_be_trigger = false;
         public string OnRecordAudioFrame_channelId;
         public AudioFrame OnRecordAudioFrame_audioFrame;

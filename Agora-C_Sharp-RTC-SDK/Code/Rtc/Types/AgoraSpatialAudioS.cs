@@ -1,7 +1,6 @@
 ﻿namespace Agora.Rtc
 {
     #region terra IAgoraSpatialAudioS.h
-
     public class LocalSpatialAudioConfigS
     {
         public IRtcEngineS rtcEngine;

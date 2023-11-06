@@ -9,7 +9,6 @@ namespace Agora.Rtc
     {
         #region terra IVideoFrameObserverBase
 
-
         public virtual bool OnCaptureVideoFrame(VIDEO_SOURCE_TYPE sourceType, VideoFrame videoFrame)
         {
             return true;

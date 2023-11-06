@@ -58,7 +58,6 @@ namespace Agora.Rtc
         }
 
         #region terra IRtcEngineBase
-
         [Test]
         public void Test_IRtcEngineBaseGetVersion()
         {
@@ -2187,7 +2186,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineBase
 
         #region terra IRtcEngine
-
         [Test]
         public void Test_IRtcEngineInitialize()
         {
@@ -2765,7 +2763,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngine
 
         #region terra IMediaEngineBase
-
         [Test]
         public void Test_IMediaEngineBasePushAudioFrame()
         {
@@ -2854,7 +2851,6 @@ namespace Agora.Rtc
         #endregion terra IMediaEngineBase
 
         #region terra IMediaEngine
-
         [Test]
         public void Test_IMediaEnginePushEncodedVideoImage()
         {

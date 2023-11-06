@@ -24,7 +24,6 @@ namespace Agora.Rtc
         public void TearDown() { Engine.Dispose(); }
 
         #region terra IMediaPlayerCacheManager
-
         [Test]
         public void Test_RemoveAllCaches()
         {

@@ -3,7 +3,6 @@
 namespace Agora.Rtc
 {
     #region terra IAgoraLog.h
-
     public enum LOG_LEVEL
     {
         LOG_LEVEL_NONE = 0x0000,

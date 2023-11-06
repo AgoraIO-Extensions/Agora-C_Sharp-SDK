@@ -4,7 +4,6 @@ namespace Agora.Rtc
 {
 
     #region terra AgoraMediaBase.h
-
     public class UserAudioSpectrumInfo : UserAudioSpectrumInfoBase
     {
         public uint uid;

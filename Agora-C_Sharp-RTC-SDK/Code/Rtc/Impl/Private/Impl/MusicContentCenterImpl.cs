@@ -160,7 +160,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMusicContentCenter
-
         public int Initialize(MusicContentCenterConfiguration configuration)
         {
             _param.Clear();

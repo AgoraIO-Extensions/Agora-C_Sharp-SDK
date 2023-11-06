@@ -2,7 +2,6 @@
 {
 
     #region terra IAgoraH265TranscoderBase.h
-
     public enum H265_TRANSCODE_RESULT
     {
         H265_TRANSCODE_RESULT_UNKNOWN = -1,

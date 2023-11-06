@@ -10,7 +10,6 @@ namespace Agora.Rtc
 
         #region terra IAudioFrameObserverBase
 
-
         public virtual bool OnRecordAudioFrame(string channelId, AudioFrame audioFrame)
         {
             return true;

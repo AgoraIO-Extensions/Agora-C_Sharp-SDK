@@ -70,7 +70,6 @@ namespace Agora.Rtc
             switch (@event)
             {
                 #region terra IRtcEngineEventHandlerBase
-
                 case "RtcEngineEventHandlerBase_onError":
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -616,7 +615,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         break;
                     }
                 #region terra IRtcEngineEventHandler
-
                 case "RtcEngineEventHandler_onProxyConnected":
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -1730,7 +1728,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                     }
 
                 #region terra IRtcEngineEventHandlerS
-
                 case "RtcEngineEventHandlerS_onProxyConnected":
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
@@ -2598,7 +2595,6 @@ CallbackObject._CallbackQueue.EnQueue(() => {
             {
 
                 #region terra IDirectCdnStreamingEventHandler
-
                 case "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged":
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

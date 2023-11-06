@@ -7,7 +7,6 @@ namespace Agora.Rtc
     {
         #region terra IMediaRecorderObserverS
 
-
         public virtual void OnRecorderStateChanged(string channelId, string userId, RecorderState state, RecorderErrorCode error)
         {
         }

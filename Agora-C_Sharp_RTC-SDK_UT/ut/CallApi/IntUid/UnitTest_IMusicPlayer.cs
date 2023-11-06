@@ -31,7 +31,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMusicPlayer
-
         [Test]
         public void Test_Open()
         {

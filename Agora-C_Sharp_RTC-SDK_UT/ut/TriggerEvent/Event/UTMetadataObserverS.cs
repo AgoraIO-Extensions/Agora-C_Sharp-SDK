@@ -6,7 +6,6 @@ namespace Agora.Rtc
     {
 
         #region terra IMetadataObserverS
-
         public bool GetMaxMetadataSize_be_trigger = false;
 
 

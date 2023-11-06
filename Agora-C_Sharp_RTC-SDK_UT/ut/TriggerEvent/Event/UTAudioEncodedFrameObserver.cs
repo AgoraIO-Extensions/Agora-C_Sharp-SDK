@@ -5,7 +5,6 @@ namespace Agora.Rtc
     public class UTAudioEncodedFrameObserver : IAudioEncodedFrameObserver
     {
         #region terra IAudioEncodedFrameObserver
-
         public bool OnRecordAudioEncodedFrame_be_trigger = false;
         public IntPtr OnRecordAudioEncodedFrame_frameBuffer;
         public int OnRecordAudioEncodedFrame_length;

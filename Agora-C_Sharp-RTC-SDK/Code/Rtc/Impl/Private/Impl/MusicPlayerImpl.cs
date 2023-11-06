@@ -53,7 +53,6 @@ namespace Agora.Rtc
         }
 
         #region terra InheritedFromIMediaPlayer
-
         public int Open(int playerId, string url, long startPos)
         {
             return _mediaPlayerImpl.Open(playerId, url, startPos);
@@ -316,7 +315,6 @@ namespace Agora.Rtc
         #endregion terra InheritedFromIMediaPlayer
 
         #region terra IMusicPlayer
-
         public int Open(int playerId, long songCode, long startPos = 0)
         {
             _param.Clear();

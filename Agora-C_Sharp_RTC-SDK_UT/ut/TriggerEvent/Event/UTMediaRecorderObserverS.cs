@@ -5,7 +5,6 @@ namespace Agora.Rtc
     public class UTMediaRecorderObserverS : IMediaRecorderObserverS
     {
         #region terra IMediaRecorderObserverS
-
         public bool OnRecorderStateChanged_be_trigger = false;
         public string OnRecorderStateChanged_channelId;
         public string OnRecorderStateChanged_userId;

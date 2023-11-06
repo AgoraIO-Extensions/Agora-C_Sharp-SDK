@@ -7,7 +7,6 @@ namespace Agora.Rtc
     {
 
         #region terra IMediaPlayerCustomDataProvider
-
         public bool OnReadData_be_trigger = false;
         public IntPtr OnReadData_buffer;
         public int OnReadData_bufferSize;

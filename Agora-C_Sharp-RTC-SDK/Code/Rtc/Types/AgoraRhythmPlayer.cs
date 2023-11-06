@@ -3,7 +3,6 @@
 namespace Agora.Rtc
 {
     #region terra IAgoraRhythmPlayer.h
-
     public enum RHYTHM_PLAYER_STATE_TYPE
     {
         RHYTHM_PLAYER_STATE_IDLE = 810,

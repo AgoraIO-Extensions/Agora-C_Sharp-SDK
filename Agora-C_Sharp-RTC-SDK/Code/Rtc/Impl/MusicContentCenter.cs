@@ -41,7 +41,6 @@ namespace Agora.Rtc
 
         #region terra IMusicContentCenter
 
-
         public override int Initialize(MusicContentCenterConfiguration configuration)
         {
             if (_rtcEngineInstance == null || _musicContentCenterImpl == null)

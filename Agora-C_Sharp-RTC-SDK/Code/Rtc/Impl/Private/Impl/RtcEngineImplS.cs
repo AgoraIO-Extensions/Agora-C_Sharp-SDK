@@ -792,7 +792,6 @@ namespace Agora.Rtc
         }
 
         #region terra IRtcEngineBase
-
         public string GetVersion(ref int build)
         {
             _param.Clear();
@@ -4161,7 +4160,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineBase
 
         #region terra IRtcEngineS
-
         public int PrepareUserAccount(string userAccount, uint uid)
         {
             _param.Clear();
@@ -4680,7 +4678,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineS
 
         #region terra IRtcEngineExS
-
         public int JoinChannelEx(string token, RtcConnectionS connectionS, ChannelMediaOptions options)
         {
             _param.Clear();
@@ -5517,7 +5514,6 @@ namespace Agora.Rtc
             {
                 var f = AgoraJson.JsonToStruct<AudioFrame>(_apiParam.Result, "frame");
                 #region terra PullAudioFrame_Assignment
-
                 frame.type = f.type;
                 frame.samplesPerChannel = f.samplesPerChannel;
                 frame.bytesPerSample = f.bytesPerSample;
@@ -5577,7 +5573,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMediaEngineBase
-
         public int SetExternalVideoSource(bool enabled, bool useTexture, EXTERNAL_VIDEO_SOURCE_TYPE sourceType, SenderOptions encodedVideoOption)
         {
             _param.Clear();

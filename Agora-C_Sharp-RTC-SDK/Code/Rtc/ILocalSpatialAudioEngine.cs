@@ -13,7 +13,6 @@ namespace Agora.Rtc
     {
 
         #region terra ILocalSpatialAudioEngine
-
         [Obsolete("config The pointer to the LocalSpatialAudioConfig. See #LocalSpatialAudioConfig.")]
         public abstract int Initialize();
 

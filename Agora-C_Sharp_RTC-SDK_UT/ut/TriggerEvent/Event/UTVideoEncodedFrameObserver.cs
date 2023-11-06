@@ -5,7 +5,6 @@ namespace Agora.Rtc
     {
 
         #region terra IVideoEncodedFrameObserver
-
         public bool OnEncodedVideoFrameReceived_be_trigger = false;
         public uint OnEncodedVideoFrameReceived_uid;
         public IntPtr OnEncodedVideoFrameReceived_imageBuffer;

@@ -46,7 +46,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMediaPlayerCacheManager
-
         public int RemoveAllCaches()
         {
             _param.Clear();

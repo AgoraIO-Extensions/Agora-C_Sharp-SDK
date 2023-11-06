@@ -47,7 +47,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMediaPlayer
-
         [Test]
         public void Test_Open()
         {

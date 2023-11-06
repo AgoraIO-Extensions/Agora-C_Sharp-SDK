@@ -29,7 +29,6 @@ namespace Agora.Rtc
 
         #region terra IMediaRecorder
 
-
         public override int StartRecording(MediaRecorderConfiguration config)
         {
             if (_mediaRecorderImpl == null || this._nativeHandle == null)

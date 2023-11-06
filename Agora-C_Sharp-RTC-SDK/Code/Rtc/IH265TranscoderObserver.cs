@@ -5,7 +5,6 @@ namespace Agora.Rtc
     {
         #region terra IH265TranscoderObserver
 
-
         public abstract void OnEnableTranscode(H265_TRANSCODE_RESULT result);
 
 

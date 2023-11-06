@@ -22,7 +22,6 @@ namespace Agora.Rtc
         public void TearDown() { Engine.Dispose(); }
 
         #region terra IMusicContentCenter
-
         [Test]
         public void Test_Initialize()
         {

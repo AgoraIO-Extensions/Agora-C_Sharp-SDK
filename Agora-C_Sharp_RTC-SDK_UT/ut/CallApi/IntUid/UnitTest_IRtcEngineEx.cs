@@ -24,7 +24,6 @@ namespace Agora.Rtc
         public void TearDown() { RtcEngineEx.Dispose(); }
 
         #region terra IRtcEngineEx
-
         [Test]
         public void Test_JoinChannelEx()
         {

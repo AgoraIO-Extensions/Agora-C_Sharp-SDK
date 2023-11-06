@@ -272,7 +272,6 @@ namespace Agora.Rtc
 
         #region terra IRtcEngineBase
 
-
         public override string GetVersion(ref int build)
         {
             if (_rtcEngineImpl == null)
@@ -2265,7 +2264,6 @@ namespace Agora.Rtc
 
         #region terra IRtcEngineS
 
-
         public override int PrepareUserAccount(string userAccount, uint uid)
         {
             if (_rtcEngineImpl == null)
@@ -2600,7 +2598,6 @@ namespace Agora.Rtc
         }
 
         #region terra IRtcEngineExS
-
 
         public override int JoinChannelEx(string token, RtcConnectionS connectionS, ChannelMediaOptions options)
         {
@@ -3100,7 +3097,6 @@ namespace Agora.Rtc
 
         #region terra IMediaEngineBase
 
-
         public override int PushAudioFrame(AudioFrame frame, uint trackId = 0)
         {
             if (_rtcEngineImpl == null)
@@ -3176,7 +3172,6 @@ namespace Agora.Rtc
         #endregion terra IMediaEngineBase
 
         #region terra IMediaEngineS
-
 
         public override int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfoS videoEncodedFrameInfo, uint videoTrackId = 0)
         {

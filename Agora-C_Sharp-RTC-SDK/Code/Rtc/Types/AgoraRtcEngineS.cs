@@ -5,7 +5,6 @@ using Agora.Rtc.LitJson;
 namespace Agora.Rtc
 {
     #region terra IAgoraRtcEngineS.h
-
     public class LocalVideoStatsS : LocalVideoStatsBase
     {
         public string userAccount;

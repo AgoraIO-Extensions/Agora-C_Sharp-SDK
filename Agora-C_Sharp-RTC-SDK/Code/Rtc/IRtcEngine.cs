@@ -20,7 +20,6 @@ namespace Agora.Rtc
 
         #region terra IRtcEngine
 
-
         public abstract int Initialize(RtcEngineContext context);
 
 
@@ -205,7 +204,6 @@ namespace Agora.Rtc
         public abstract int UnRegisterAudioFrameObserver();
 
         #region terra IMediaEngine
-
 
         public abstract int PushEncodedVideoImage(byte[] imageBuffer, ulong length, EncodedVideoFrameInfo videoEncodedFrameInfo, uint videoTrackId = 0);
 

@@ -42,7 +42,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IMediaPlayerCustomDataProvider
-
         [Test]
         public void Test_OnReadData()
         {

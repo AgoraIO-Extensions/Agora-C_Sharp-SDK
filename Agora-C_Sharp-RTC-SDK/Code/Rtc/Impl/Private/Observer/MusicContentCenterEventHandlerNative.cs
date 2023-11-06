@@ -45,7 +45,6 @@ namespace Agora.Rtc
             switch (@event)
             {
                 #region terra IMusicContentCenterEventHandler
-
                 case "MusicContentCenterEventHandler_onMusicChartsResult":
                     {
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID

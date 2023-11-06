@@ -4,7 +4,6 @@ namespace Agora.Rtc
     public class AgoraEventType
     {
         #region terra IRtcEngineEventHandlerBase
-
         internal const string EVENT_RTCENGINEEVENTHANDLERBASE_EVENTHANDLERTYPE = "RtcEngineEventHandlerBase_eventHandlerType";
         internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONERROR = "RtcEngineEventHandlerBase_onError";
         internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLASTMILEPROBERESULT = "RtcEngineEventHandlerBase_onLastmileProbeResult";
@@ -60,7 +59,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineEventHandlerBase
 
         #region terra IRtcEngineEventHandler
-
         internal const string EVENT_RTCENGINEEVENTHANDLER_EVENTHANDLERTYPE = "RtcEngineEventHandler_eventHandlerType";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONJOINCHANNELSUCCESS = "RtcEngineEventHandler_onJoinChannelSuccess";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONREJOINCHANNELSUCCESS = "RtcEngineEventHandler_onRejoinChannelSuccess";
@@ -108,7 +106,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineEventHandler
 
         #region terra IRtcEngineEventHandlerS
-
         internal const string EVENT_RTCENGINEEVENTHANDLERS_EVENTHANDLERTYPE = "RtcEngineEventHandlerS_eventHandlerType";
         internal const string EVENT_RTCENGINEEVENTHANDLERS_ONJOINCHANNELSUCCESS = "RtcEngineEventHandlerS_onJoinChannelSuccess";
         internal const string EVENT_RTCENGINEEVENTHANDLERS_ONREJOINCHANNELSUCCESS = "RtcEngineEventHandlerS_onRejoinChannelSuccess";
@@ -140,7 +137,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineEventHandlerS
 
         #region terra IRtcEngineEventHandlerEx
-
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_EVENTHANDLERTYPE = "RtcEngineEventHandlerEx_eventHandlerType";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONJOINCHANNELSUCCESS = "RtcEngineEventHandlerEx_onJoinChannelSuccess";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONREJOINCHANNELSUCCESS = "RtcEngineEventHandlerEx_onRejoinChannelSuccess";
@@ -199,7 +195,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineEventHandlerEx
 
         #region terra IRtcEngineEventHandlerExS
-
         internal const string EVENT_RTCENGINEEVENTHANDLEREXS_EVENTHANDLERTYPE = "RtcEngineEventHandlerExS_eventHandlerType";
         internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONJOINCHANNELSUCCESS = "RtcEngineEventHandlerExS_onJoinChannelSuccess";
         internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONREJOINCHANNELSUCCESS = "RtcEngineEventHandlerExS_onRejoinChannelSuccess";
@@ -249,25 +244,21 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineEventHandlerExS
 
         #region terra IDirectCdnStreamingEventHandler
-
         internal const string EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED = "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged";
         internal const string EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS = "DirectCdnStreamingEventHandler_onDirectCdnStreamingStats";
         #endregion terra IDirectCdnStreamingEventHandler
 
         #region terra IAudioEncodedFrameObserver
-
         internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onRecordAudioEncodedFrame";
         internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onPlaybackAudioEncodedFrame";
         internal const string EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME = "AudioEncodedFrameObserver_onMixedAudioEncodedFrame";
         #endregion terra IAudioEncodedFrameObserver
 
         #region terra IAudioFrameObserver
-
         internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING = "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing";
         #endregion terra IAudioFrameObserver
 
         #region terra IAudioFrameObserverBase
-
         internal const string EVENT_AUDIOFRAMEOBSERVERBASE_ONRECORDAUDIOFRAME = "AudioFrameObserverBase_onRecordAudioFrame";
         internal const string EVENT_AUDIOFRAMEOBSERVERBASE_ONPLAYBACKAUDIOFRAME = "AudioFrameObserverBase_onPlaybackAudioFrame";
         internal const string EVENT_AUDIOFRAMEOBSERVERBASE_ONMIXEDAUDIOFRAME = "AudioFrameObserverBase_onMixedAudioFrame";
@@ -285,12 +276,10 @@ namespace Agora.Rtc
         #endregion terra IAudioSpectrumObserverBase
 
         #region terra IAudioSpectrumObserver
-
         internal const string EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM = "AudioSpectrumObserver_onRemoteAudioSpectrum";
         #endregion terra IAudioSpectrumObserver
 
         #region terra IAudioSpectrumObserverS
-
         internal const string EVENT_AUDIOSPECTRUMOBSERVERS_ONREMOTEAUDIOSPECTRUM = "AudioSpectrumObserverS_onRemoteAudioSpectrum";
         #endregion terra IAudioSpectrumObserverS
 
@@ -299,13 +288,11 @@ namespace Agora.Rtc
         #endregion terra IAudioPcmFrameSink
 
         #region terra IMediaPlayerCustomDataProvider
-
         internal const string EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA = "MediaPlayerCustomDataProvider_onReadData";
         internal const string EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK = "MediaPlayerCustomDataProvider_onSeek";
         #endregion terra IMediaPlayerCustomDataProvider
 
         #region terra IMediaPlayerSourceObserver
-
         internal const string EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSOURCESTATECHANGED = "MediaPlayerSourceObserver_onPlayerSourceStateChanged";
         internal const string EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED = "MediaPlayerSourceObserver_onPositionChanged";
         internal const string EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYEREVENT = "MediaPlayerSourceObserver_onPlayerEvent";
@@ -322,13 +309,11 @@ namespace Agora.Rtc
         #endregion terra IMediaPlayerSourceObserver
 
         #region terra IMediaRecorderObserver
-
         internal const string EVENT_MEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED = "MediaRecorderObserver_onRecorderStateChanged";
         internal const string EVENT_MEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED = "MediaRecorderObserver_onRecorderInfoUpdated";
         #endregion terra IMediaRecorderObserver
 
         #region terra IMediaRecorderObserverS
-
         internal const string EVENT_MEDIARECORDEROBSERVERS_ONRECORDERSTATECHANGED = "MediaRecorderObserverS_onRecorderStateChanged";
         internal const string EVENT_MEDIARECORDEROBSERVERS_ONRECORDERINFOUPDATED = "MediaRecorderObserverS_onRecorderInfoUpdated";
         #endregion terra IMediaRecorderObserverS
@@ -338,19 +323,16 @@ namespace Agora.Rtc
         #endregion terra IMetadataObserverBase
 
         #region terra IMetadataObserver
-
         internal const string EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA = "MetadataObserver_onReadyToSendMetadata";
         internal const string EVENT_METADATAOBSERVER_ONMETADATARECEIVED = "MetadataObserver_onMetadataReceived";
         #endregion terra IMetadataObserver
 
         #region terra IMetadataObserverS
-
         internal const string EVENT_METADATAOBSERVERS_ONREADYTOSENDMETADATA = "MetadataObserverS_onReadyToSendMetadata";
         internal const string EVENT_METADATAOBSERVERS_ONMETADATARECEIVED = "MetadataObserverS_onMetadataReceived";
         #endregion terra IMetadataObserverS
 
         #region terra IMusicContentCenterEventHandler
-
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT = "MusicContentCenterEventHandler_onMusicChartsResult";
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT = "MusicContentCenterEventHandler_onMusicCollectionResult";
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT = "MusicContentCenterEventHandler_onLyricResult";
@@ -380,17 +362,14 @@ namespace Agora.Rtc
         #endregion terra IVideoFrameObserverBase
 
         #region terra IVideoFrameObserver
-
         internal const string EVENT_VIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME = "VideoFrameObserver_onRenderVideoFrame";
         #endregion terra IVideoFrameObserver
 
         #region terra IVideoFrameObserverS
-
         internal const string EVENT_VIDEOFRAMEOBSERVERS_ONRENDERVIDEOFRAME = "VideoFrameObserverS_onRenderVideoFrame";
         #endregion terra IVideoFrameObserverS
 
         #region terra IH265TranscoderObserver
-
         internal const string EVENT_H265TRANSCODEROBSERVER_ONENABLETRANSCODE = "H265TranscoderObserver_onEnableTranscode";
         internal const string EVENT_H265TRANSCODEROBSERVER_ONQUERYCHANNEL = "H265TranscoderObserver_onQueryChannel";
         internal const string EVENT_H265TRANSCODEROBSERVER_ONTRIGGERTRANSCODE = "H265TranscoderObserver_onTriggerTranscode";

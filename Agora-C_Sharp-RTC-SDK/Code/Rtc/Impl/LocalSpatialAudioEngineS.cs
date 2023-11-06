@@ -47,7 +47,6 @@
 
         #region terra ILocalSpatialAudioEngineS
 
-
         public override int SetMaxAudioRecvCount(int maxCount)
         {
             if (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)

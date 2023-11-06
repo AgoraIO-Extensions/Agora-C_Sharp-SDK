@@ -25,7 +25,6 @@ namespace Agora.Rtc
         public void TearDown() { Engine.Dispose(); }
 
         #region terra IH265Transcoder
-
         [Test]
         public void Test_EnableTranscode()
         {

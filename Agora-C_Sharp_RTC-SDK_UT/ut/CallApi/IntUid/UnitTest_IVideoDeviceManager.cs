@@ -33,7 +33,6 @@ namespace Agora.Rtc
         }
 
         #region terra IVideoDeviceManager
-
         [Test]
         public void Test_SetDevice()
         {

@@ -4,7 +4,6 @@ namespace Agora.Rtc
 {
 
     #region terra AgoraMediaBaseS.h
-
     public class UserAudioSpectrumInfoS : UserAudioSpectrumInfoBase
     {
         public string userAccount;

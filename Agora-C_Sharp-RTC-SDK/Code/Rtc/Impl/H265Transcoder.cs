@@ -42,7 +42,6 @@ namespace Agora.Rtc
 
         #region terra IH265Transcoder
 
-
         public override int RegisterTranscoderObserver(IH265TranscoderObserver observer)
         {
             if (_rtcEngineInstance == null || _h265TranscoderImpl == null)

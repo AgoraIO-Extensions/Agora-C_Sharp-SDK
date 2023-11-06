@@ -136,7 +136,6 @@ namespace Agora.Rtc
         }
 
         #region terra IH265Transcoder
-
         public int EnableTranscode(string token, string channel, uint uid)
         {
             _param.Clear();

@@ -42,7 +42,6 @@ namespace Agora.Rtc
 
         #region terra IMusicPlayer
 
-
         public override int Open(string url, long startPos)
         {
             if (_musicPlayerImpl == null)

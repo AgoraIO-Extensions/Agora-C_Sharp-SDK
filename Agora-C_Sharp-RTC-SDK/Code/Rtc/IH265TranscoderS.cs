@@ -6,7 +6,6 @@ namespace Agora.Rtc
 
         #region terra IH265TranscoderS
 
-
         public abstract int EnableTranscode(string token, string channel, string userAccount);
 
 

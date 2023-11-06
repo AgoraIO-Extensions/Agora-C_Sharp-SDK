@@ -41,7 +41,6 @@ namespace Agora.Rtc.Event
         }
 
         #region terra IH265TranscoderObserver
-
         [Test]
         public void Test_OnEnableTranscode()
         {

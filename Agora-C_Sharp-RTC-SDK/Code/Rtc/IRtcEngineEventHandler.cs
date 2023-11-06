@@ -11,7 +11,6 @@ namespace Agora.Rtc
     {
 
         #region terra IRtcEngineEventHandler
-
         public virtual void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
         {
         }

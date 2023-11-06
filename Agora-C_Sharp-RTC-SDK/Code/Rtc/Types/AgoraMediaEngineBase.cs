@@ -1,7 +1,6 @@
 ﻿namespace Agora.Rtc
 {
     #region terra IAgoraMediaEngineBase.h
-
     public enum AUDIO_MIXING_DUAL_MONO_MODE
     {
         AUDIO_MIXING_DUAL_MONO_AUTO = 0,

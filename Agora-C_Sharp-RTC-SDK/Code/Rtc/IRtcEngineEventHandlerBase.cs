@@ -10,7 +10,6 @@ namespace Agora.Rtc
     public abstract class IRtcEngineEventHandlerBase
     {
         #region terra IRtcEngineEventHandlerBase
-
         public virtual void OnError(int err, string msg)
         {
         }
@@ -137,7 +136,6 @@ namespace Agora.Rtc
         #endregion terra IRtcEngineEventHandlerBase
 
         #region terra IDirectCdnStreamingEventHandler
-
         public virtual void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
         {
         }

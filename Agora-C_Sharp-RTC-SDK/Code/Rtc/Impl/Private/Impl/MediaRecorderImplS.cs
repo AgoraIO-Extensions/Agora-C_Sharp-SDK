@@ -222,7 +222,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMediaRecorderS
-
         public int StartRecording(string nativeHandle, MediaRecorderConfiguration config)
         {
             _param.Clear();

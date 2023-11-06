@@ -4,7 +4,6 @@ namespace Agora.Rtc
     public class UTVideoFrameObserverS : IVideoFrameObserverS
     {
         #region terra IVideoFrameObserverS
-
         public bool OnCaptureVideoFrame_be_trigger = false;
         public VIDEO_SOURCE_TYPE OnCaptureVideoFrame_sourceType;
         public VideoFrame OnCaptureVideoFrame_videoFrame;

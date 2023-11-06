@@ -37,7 +37,6 @@ namespace Agora.Rtc
         internal AudioFrameInternal(AudioFrame audioFrame)
         {
             #region terra AudioFrameInternal_Assignment
-
             this.type = audioFrame.type;
             this.samplesPerChannel = audioFrame.samplesPerChannel;
             this.bytesPerSample = audioFrame.bytesPerSample;
@@ -52,7 +51,6 @@ namespace Agora.Rtc
         }
 
         #region terra AudioFrameInternal_Member_List
-
         public AUDIO_FRAME_TYPE type;
         public int samplesPerChannel;
         public BYTES_PER_SAMPLE bytesPerSample;
@@ -72,7 +70,6 @@ namespace Agora.Rtc
         internal ExternalVideoFrameInternal(ExternalVideoFrame frame)
         {
             #region terra ExternalVideoFrameInternal_Assignment
-
             this.type = frame.type;
             this.format = frame.format;
 
@@ -97,7 +94,6 @@ namespace Agora.Rtc
         }
 
         #region terra ExternalVideoFrameInternal_Member_List
-
         public VIDEO_BUFFER_TYPE type;
         public VIDEO_PIXEL_FORMAT format;
 

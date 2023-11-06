@@ -19,7 +19,6 @@ namespace Agora.Rtc
     public class VideoFrame
     {
         #region terra VideoFrame_Member_List
-
         public VIDEO_PIXEL_FORMAT type;
 
         public int width;
@@ -74,7 +73,6 @@ namespace Agora.Rtc
         #region terra VideoFrame_Constructor
 
 
-
         public VideoFrame()
         {
             this.type = VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_DEFAULT;
@@ -115,7 +113,6 @@ namespace Agora.Rtc
     public class AudioFrame
     {
         #region terra AudioFrame_Member_List
-
         public AUDIO_FRAME_TYPE type;
 
         public int samplesPerChannel;
@@ -145,7 +142,6 @@ namespace Agora.Rtc
         public byte[] RawBuffer;
 
         #region terra AudioFrame_Constructor
-
 
 
         public AudioFrame()
@@ -185,7 +181,6 @@ namespace Agora.Rtc
     }
 
     #region terra AgoraMediaCommonBase.h
-
     public enum VIDEO_SOURCE_TYPE
     {
         VIDEO_SOURCE_CAMERA_PRIMARY = 0,

@@ -15,7 +15,6 @@ namespace Agora.Rtc
 
         #region terra IMusicContentCenter
 
-
         public abstract int Initialize(MusicContentCenterConfiguration configuration);
 
 

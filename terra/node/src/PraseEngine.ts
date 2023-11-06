@@ -17,7 +17,7 @@ export class ParseEngine {
 
 
     constructor(distPath: string, templatePath: string, tansPath: string, cxxFiles: CXXFile[], markStart: string, markEnd: string, originFileDir: string) {
-        var configTool = ConfigTool.getInstance();
+        let configTool = ConfigTool.getInstance();
         configTool.loadDistMark(markStart, markEnd);
         configTool.loadParamTypeTrans(new ParamTypeTrans(path.join(tansPath, "param_type_trans.json")));
         configTool.loadParamNameFormalTrans(new ParamNameTrans(path.join(tansPath, "param_name_formal_trans.json")));
@@ -26,13 +26,13 @@ export class ParseEngine {
         configTool.loadCXXFiles(cxxFiles);
         configTool.loadCXXOriginFileDir(originFileDir);
 
-        var parseTemplate = new ParseTemplate();
-        var list: string[] = [];
+        let parseTemplate = new ParseTemplate();
+        let list: string[] = [];
         this._walkFile(templatePath, list, "");
         for (let e of list) {
-            var distFileName = e.substring(0, e.length - 5);
-            var fullDistFileName = path.join(distPath, distFileName);
-            var fullTemplateFileName = path.join(templatePath, e);
+            let distFileName = e.substring(0, e.length - 5);
+            let fullDistFileName = path.join(distPath, distFileName);
+            let fullTemplateFileName = path.join(templatePath, e);
             if (fs.existsSync(fullDistFileName)) {
                 // console.log(fullDistFileName + " : " + fullTemplateFileName);
                 parseTemplate.parse(fullDistFileName, fullTemplateFileName);

@@ -1,7 +1,6 @@
 ﻿namespace Agora.Rtc
 {
     #region terra IAgoraRtcEngineEx.h
-
     public class RtcConnection
     {
         public string channelId;

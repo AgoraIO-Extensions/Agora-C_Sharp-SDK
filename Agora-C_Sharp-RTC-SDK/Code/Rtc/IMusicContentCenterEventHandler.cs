@@ -10,7 +10,6 @@ namespace Agora.Rtc
 
         #region terra IMusicContentCenterEventHandler
 
-
         public abstract void OnMusicChartsResult(string requestId, MusicChartInfo[] result, MusicContentCenterStatusCode errorCode);
 
 

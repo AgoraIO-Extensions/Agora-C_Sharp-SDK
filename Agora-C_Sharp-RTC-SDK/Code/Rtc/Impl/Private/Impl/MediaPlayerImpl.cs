@@ -555,7 +555,6 @@ namespace Agora.Rtc
         }
 
         #region terra IMediaPlayer
-
         public int Open(int playerId, string url, long startPos)
         {
             _param.Clear();

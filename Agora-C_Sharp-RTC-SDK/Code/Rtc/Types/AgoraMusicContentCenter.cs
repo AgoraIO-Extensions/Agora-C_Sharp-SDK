@@ -31,7 +31,6 @@ namespace Agora.Rtc
     };
 
     #region terra IAgoraMusicContentCenter.h
-
     public enum PreloadStatusCode
     {
         kPreloadStatusCompleted = 0,
