@@ -3204,6 +3204,11 @@ namespace Agora.Rtc
         ///
         LOCAL_VIDEO_STREAM_ERROR_DEVICE_INVALID_ID = 10,
 
+
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_INTERRUPT = 14,
+
+       
+        LOCAL_VIDEO_STREAM_ERROR_DEVICE_FATAL_ERROR = 15,
         ///
         /// <summary>
         /// 101: The current video capture device is unavailable due to excessive system pressure.
