@@ -65,6 +65,7 @@ echo "[Unity CI] start creating unity project"
 $UNITY_DIR/Unity -quit -batchmode -nographics -createProject "project"
 echo "[Unity CI] finish creating unity project"
 
+# make allowUnsafeCode true
 python3 set_allowUnsafeHeaderParsing.py "$CI_DIR"/project
 
 #--------------------------------------
