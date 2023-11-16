@@ -66,7 +66,7 @@ $UNITY_DIR/Unity -quit -batchmode -nographics -createProject "project"
 echo "[Unity CI] finish creating unity project"
 
 # make allowUnsafeCode true
-python3 set_allowUnsafeHeaderParsing.py "$CI_DIR"/project
+python3 set_allowUnsafeCode_true.py "$CI_DIR"/project
 
 #--------------------------------------
 # Copy files to the Unity project
