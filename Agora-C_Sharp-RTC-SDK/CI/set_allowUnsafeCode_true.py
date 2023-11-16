@@ -18,11 +18,11 @@ def get_all_files(target_dir):
             files.append(each_file)
     return files
 
-def replace_key_word_in_path(file_path, key_word, replace_word):
+def replace_key_word_in_path(file_path, key_word, replace_word, suffix):
     files = get_all_files(file_path)
     for i in range(0, len(files)):
         file_name = files[i]
-        if file_name.endswith(".csproj"):
+        if file_name.endswith(suffix):
             # print(file_name)
             f = open(file_name, 'r', encoding='UTF-8')
             content = f.read()
@@ -33,5 +33,6 @@ def replace_key_word_in_path(file_path, key_word, replace_word):
             f.close()
 
 
-replace_key_word_in_path(root,"<AllowUnsafeBlocks>False</AllowUnsafeBlocks>","<AllowUnsafeBlocks>True</AllowUnsafeBlocks>")
-replace_key_word_in_path(root,"<AllowUnsafeBlocks>false</AllowUnsafeBlocks>","<AllowUnsafeBlocks>True</AllowUnsafeBlocks>")
+replace_key_word_in_path(root, "<AllowUnsafeBlocks>False</AllowUnsafeBlocks>", "<AllowUnsafeBlocks>True</AllowUnsafeBlocks>", ".csproj")
+replace_key_word_in_path(root,"<AllowUnsafeBlocks>false</AllowUnsafeBlocks>","<AllowUnsafeBlocks>True</AllowUnsafeBlocks>", ".csproj")
+replace_key_word_in_path(os.path.join(root, "ProjectSettings"), "allowUnsafeCode: 0", "allowUnsafeCode: 1", ".asset")
