@@ -626,6 +626,7 @@ namespace Agora.Rtc
             this.textureId = 0;
             this.metadata_buffer = null;
             this.metadata_size = 0;
+            this.fillAlphaBuffer = false;
         }
 
         public ExternalVideoFrame(VIDEO_BUFFER_TYPE type, VIDEO_PIXEL_FORMAT format, byte[] buffer, int stride,
@@ -649,6 +650,7 @@ namespace Agora.Rtc
             this.textureId = textureId;
             this.metadata_buffer = metadata_buffer;
             this.metadata_size = metadata_size;
+            this.fillAlphaBuffer = false;
         }
 
         ///
@@ -764,6 +766,8 @@ namespace Agora.Rtc
         public int metadata_size;
 
         public byte[] alphaBuffer;
+
+        public bool fillAlphaBuffer;
     };
 
     ///
