@@ -121,7 +121,7 @@ namespace Agora.Rtc
             }
 #else
 
-            _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4)
+            _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
            
 #endif
 
@@ -190,7 +190,7 @@ namespace Agora.Rtc
 #else
                 _needResize = true;
                 FreeMemory();
-                _cachedVideoFrame.type = (int)VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
+                _cachedVideoFrame.type = VIDEO_OBSERVER_FRAME_TYPE.FRAME_TYPE_RGBA;
                 _cachedVideoFrame.yBuffer = Marshal.AllocHGlobal(_videoPixelWidth * _videoPixelHeight * 4);
 #endif
                 return;
