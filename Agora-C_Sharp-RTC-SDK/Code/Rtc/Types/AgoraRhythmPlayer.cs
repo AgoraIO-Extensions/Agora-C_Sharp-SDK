@@ -16,20 +16,18 @@ namespace Agora.Rtc
         RHYTHM_PLAYER_STATE_FAILED,
     }
 
-
-    public enum RHYTHM_PLAYER_ERROR_TYPE
+    public enum RHYTHM_PLAYER_REASON
     {
-        RHYTHM_PLAYER_ERROR_OK = 0,
+        RHYTHM_PLAYER_REASON_OK = 0,
 
-        RHYTHM_PLAYER_ERROR_FAILED = 1,
+        RHYTHM_PLAYER_REASON_FAILED = 1,
 
-        RHYTHM_PLAYER_ERROR_CAN_NOT_OPEN = 801,
+        RHYTHM_PLAYER_REASON_CAN_NOT_OPEN = 801,
 
-        RHYTHM_PLAYER_ERROR_CAN_NOT_PLAY,
+        RHYTHM_PLAYER_REASON_CAN_NOT_PLAY,
 
-        RHYTHM_PLAYER_ERROR_FILE_OVER_DURATION_LIMIT,
+        RHYTHM_PLAYER_REASON_FILE_OVER_DURATION_LIMIT,
     }
-
 
     public class AgoraRhythmPlayerConfig
     {
@@ -49,8 +47,6 @@ namespace Agora.Rtc
             this.beatsPerMinute = beatsPerMinute;
         }
     }
-
-
 
 
     #endregion terra IAgoraRhythmPlayer.h

@@ -1,7 +1,7 @@
 ﻿namespace Agora.Rtc
 {
 
-    #region terra IAgoraH265TranscoderBase.h
+    #region terra IAgoraH265Transcoder.h
     public enum H265_TRANSCODE_RESULT
     {
         H265_TRANSCODE_RESULT_UNKNOWN = -1,
@@ -30,6 +30,5 @@
     }
 
 
-
-    #endregion terra IAgoraH265TranscoderBase.h
+    #endregion terra IAgoraH265Transcoder.h
 }

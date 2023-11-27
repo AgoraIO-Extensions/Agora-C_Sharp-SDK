@@ -1,31 +1,21 @@
 {
-    "AgoraMediaBaseS.h": {
+    "AgoraMediaPlayerTypes.h": {
         "type": "File",
-        "name": "AgoraMediaBaseS.h",
+        "name": "AgoraMediaPlayerTypes.h",
         "commonClassStructTemplate": "common_class_struct_template",
         "specialClassStructTemplate": {},
         "excludeClassStruct": [
-            "IVideoFrameObserver",
-            "IAudioPcmFrameSink",
-            "IAudioFrameObserverBase",
-            "IAudioFrameObserver",
-            "IAudioSpectrumObserverS",
-            "IVideoEncodedFrameObserverS",
-            "IVideoFrameObserverS",
-            "IMediaRecorderObserverS",
-            "VideoFrame",
-            "AudioFrame"
+            "IMediaPlayerCustomDataProvider"
         ],
         "commmonEnumTemplate": "commmon_enum_template",
         "specialEnumTemplate": {
-            "VIDEO_MODULE_POSITION": "flags_commmon_enum_template",
-            "AUDIO_FRAME_POSITION": "flags_commmon_enum_template",
-            "VIDEO_OBSERVER_POSITION": "flags_commmon_enum_template"
+            "AREA_CODE": "uint_commmon_enum_template",
+            "AREA_CODE_EX": "uint_commmon_enum_template"
         },
         "excludeEnum": [
             ""
         ],
-        "splitSymbol": "\n\n\n"
+        "splitSymbol": "\n"
     },
     "common_class_struct_template": {
         "type": "ClazzStruct",
@@ -51,13 +41,24 @@
         "FieldSplitSymbol": "\n\n",
         "commonFieldTemple": "common_enum_member_template"
     },
+    "uint_commmon_enum_template": {
+        "type": "Enum",
+        "name": "",
+        "headTailTemple": "uint_common_enum_head_tail",
+        "FieldSplitSymbol": "\n\n",
+        "commonFieldTemple": "common_enum_member_template"
+    },
     "common_enum_head_tail": {
         "head": "public enum ${-oENUMZ_NAME}\n{\n",
-        "tail": "}"
+        "tail": "}\n"
     },
     "flags_common_enum_head_tail": {
         "head": "[Flags]\npublic enum ${-oENUMZ_NAME}\n{\n",
-        "tail": "}"
+        "tail": "}\n"
+    },
+    "uint_common_enum_head_tail": {
+        "head": "public enum ${-oENUMZ_NAME}:uint\n{\n",
+        "tail": "}\n"
     },
     "common_enum_member_template": "${SPECIAL_ENUMCONSTANT_LOGIC:cSharpSDK_EnumConstantObsolete}${-oENUMZ_FIELD_NAME} ${-eENUMZ_FIELD_VALUE},",
     "VideoFrame_Member_List": {

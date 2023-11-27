@@ -40,46 +40,44 @@ namespace Agora.Rtc
         PLAYER_STATE_FAILED = 100,
     }
 
-
-    public enum MEDIA_PLAYER_ERROR
+    public enum MEDIA_PLAYER_REASON
     {
-        PLAYER_ERROR_NONE = 0,
+        PLAYER_REASON_NONE = 0,
 
-        PLAYER_ERROR_INVALID_ARGUMENTS = -1,
+        PLAYER_REASON_INVALID_ARGUMENTS = -1,
 
-        PLAYER_ERROR_INTERNAL = -2,
+        PLAYER_REASON_INTERNAL = -2,
 
-        PLAYER_ERROR_NO_RESOURCE = -3,
+        PLAYER_REASON_NO_RESOURCE = -3,
 
-        PLAYER_ERROR_INVALID_MEDIA_SOURCE = -4,
+        PLAYER_REASON_INVALID_MEDIA_SOURCE = -4,
 
-        PLAYER_ERROR_UNKNOWN_STREAM_TYPE = -5,
+        PLAYER_REASON_UNKNOWN_STREAM_TYPE = -5,
 
-        PLAYER_ERROR_OBJ_NOT_INITIALIZED = -6,
+        PLAYER_REASON_OBJ_NOT_INITIALIZED = -6,
 
-        PLAYER_ERROR_CODEC_NOT_SUPPORTED = -7,
+        PLAYER_REASON_CODEC_NOT_SUPPORTED = -7,
 
-        PLAYER_ERROR_VIDEO_RENDER_FAILED = -8,
+        PLAYER_REASON_VIDEO_RENDER_FAILED = -8,
 
-        PLAYER_ERROR_INVALID_STATE = -9,
+        PLAYER_REASON_INVALID_STATE = -9,
 
-        PLAYER_ERROR_URL_NOT_FOUND = -10,
+        PLAYER_REASON_URL_NOT_FOUND = -10,
 
-        PLAYER_ERROR_INVALID_CONNECTION_STATE = -11,
+        PLAYER_REASON_INVALID_CONNECTION_STATE = -11,
 
-        PLAYER_ERROR_SRC_BUFFER_UNDERFLOW = -12,
+        PLAYER_REASON_SRC_BUFFER_UNDERFLOW = -12,
 
-        PLAYER_ERROR_INTERRUPTED = -13,
+        PLAYER_REASON_INTERRUPTED = -13,
 
-        PLAYER_ERROR_NOT_SUPPORTED = -14,
+        PLAYER_REASON_NOT_SUPPORTED = -14,
 
-        PLAYER_ERROR_TOKEN_EXPIRED = -15,
+        PLAYER_REASON_TOKEN_EXPIRED = -15,
 
-        PLAYER_ERROR_IP_EXPIRED = -16,
+        PLAYER_REASON_IP_EXPIRED = -16,
 
-        PLAYER_ERROR_UNKNOWN = -17,
+        PLAYER_REASON_UNKNOWN = -17,
     }
-
 
     public enum MEDIA_STREAM_TYPE
     {
@@ -91,7 +89,6 @@ namespace Agora.Rtc
 
         STREAM_TYPE_SUBTITLE = 3,
     }
-
 
     public enum MEDIA_PLAYER_EVENT
     {
@@ -130,7 +127,6 @@ namespace Agora.Rtc
         PLAYER_EVENT_TRY_OPEN_FAILED = 18,
     }
 
-
     public enum PLAYER_PRELOAD_EVENT
     {
         PLAYER_PRELOAD_EVENT_BEGIN = 0,
@@ -139,7 +135,6 @@ namespace Agora.Rtc
 
         PLAYER_PRELOAD_EVENT_ERROR = 2,
     }
-
 
     public class PlayerStreamInfo
     {
@@ -202,8 +197,6 @@ namespace Agora.Rtc
         }
     }
 
-
-
     public class SrcInfo
     {
         public int bitrateInKbps;
@@ -221,15 +214,12 @@ namespace Agora.Rtc
 
     }
 
-
-
     public enum MEDIA_PLAYER_METADATA_TYPE
     {
         PLAYER_METADATA_TYPE_UNKNOWN = 0,
 
         PLAYER_METADATA_TYPE_SEI = 1,
     }
-
 
     public class CacheStatistics
     {
@@ -250,8 +240,6 @@ namespace Agora.Rtc
         }
 
     }
-
-
 
     public class PlayerPlaybackStats
     {
@@ -275,8 +263,6 @@ namespace Agora.Rtc
         }
 
     }
-
-
 
     public class PlayerUpdatedInfo
     {
@@ -316,8 +302,6 @@ namespace Agora.Rtc
             this.audioBitsPerSample = audioBitsPerSample;
         }
     }
-
-
 
     public class MediaSource : IOptionalJsonParse
     {
@@ -400,8 +384,6 @@ namespace Agora.Rtc
             writer.WriteObjectEnd();
         }
     }
-
-
 
 
     #endregion terra AgoraMediaPlayerTypes.h

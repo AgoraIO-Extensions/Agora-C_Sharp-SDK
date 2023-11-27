@@ -13,7 +13,7 @@
         "excludeEnum": [
             ""
         ],
-        "splitSymbol": "\n\n\n"
+        "splitSymbol": "\n"
     },
     "common_class_struct_template": {
         "type": "ClazzStruct",
@@ -41,11 +41,11 @@
     },
     "common_enum_head_tail": {
         "head": "public enum ${-oENUMZ_NAME}\n{\n",
-        "tail": "}"
+        "tail": "}\n"
     },
     "flags_common_enum_head_tail": {
         "head": "[Flags]\npublic enum ${-oENUMZ_NAME}\n{\n",
-        "tail": "}"
+        "tail": "}\n"
     },
     "common_enum_member_template": "${SPECIAL_ENUMCONSTANT_LOGIC:cSharpSDK_EnumConstantObsolete}${-oENUMZ_FIELD_NAME} ${-eENUMZ_FIELD_VALUE},",
     "VideoFrame_Member_List": {

@@ -11,7 +11,7 @@ namespace Agora.Rtc
     {
 
         #region terra IMediaPlayerSourceObserver
-        public virtual void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
+        public virtual void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_REASON reason)
         {
         }
 

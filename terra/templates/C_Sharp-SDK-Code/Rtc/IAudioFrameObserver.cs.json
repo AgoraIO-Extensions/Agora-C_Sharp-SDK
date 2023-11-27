@@ -15,7 +15,8 @@
         ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
-        "specialMembersTemplate": ""
+        "specialMembersTemplate": "",
+        "trackBackFather": 1
     },
     "method_interface": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}public virtual ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join})\n{return true;\n}",
     "method_interface_param_join": {

@@ -63,7 +63,7 @@ export class SpeicalLogic {
             if (line.includes("@deprecated")) {
                 var out = line.replace("@deprecated", "");
                 out = out.trim();
-                return `[Obsolete("${out}")]`;
+                return `[Obsolete("${out}")]\n`;
             }
         }
         return "";
@@ -482,7 +482,7 @@ export class SpeicalLogic {
         }
 
         //constructor
-        if (clazz.name != "SpatialAudioZone") {
+        if (true/*clazz.name != "SpatialAudioZone"*/) {
 
             let cppConstructors: CppConstructor[] = Tool.getCppConstructor(clazz.name, clazz.file_path);
             for (let constructor of cppConstructors) {
@@ -832,9 +832,7 @@ export class SpeicalLogic {
         };
 
         // push IRtcEngineEventHandler, IRtcEngineEventHandlerEx
-        pushHandler("IRtcEngineEventHandlerBase", "IRtcEngineEventHandlerEx", returns);
         pushHandler("IRtcEngineEventHandler", "IRtcEngineEventHandlerEx", returns);
-        pushHandler("IRtcEngineEventHandlerS", "IRtcEngineEventHandlerExS", returns);
 
         let pushHandlerEx = (handlerExName, returns: { clazzName: string, m: MemberFunction, repeart: number }[]) => {
             let eventHandlerExMethods = config.getClassOrStruct(handlerExName).methods;
@@ -846,8 +844,6 @@ export class SpeicalLogic {
             }
         }
         pushHandlerEx("IRtcEngineEventHandlerEx", returns);
-        pushHandlerEx("IRtcEngineEventHandlerExS", returns);
-
         return returns;
     }
 

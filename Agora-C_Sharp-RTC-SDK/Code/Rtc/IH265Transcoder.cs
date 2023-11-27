@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Agora.Rtc
 {
-    public abstract class IH265Transcoder : IH265TranscoderBase
+    public abstract class IH265Transcoder
     {
 
         #region terra IH265Transcoder
@@ -10,6 +10,10 @@ namespace Agora.Rtc
         public abstract int QueryChannel(string token, string channel, uint uid);
 
         public abstract int TriggerTranscode(string token, string channel, uint uid);
+
+        public abstract int RegisterTranscoderObserver(IH265TranscoderObserver observer);
+
+        public abstract int UnregisterTranscoderObserver(IH265TranscoderObserver observer);
         #endregion terra IH265Transcoder
     }
 }

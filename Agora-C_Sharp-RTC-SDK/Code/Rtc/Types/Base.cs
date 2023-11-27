@@ -191,14 +191,14 @@ namespace Agora.Rtc
 
     internal class IrisAudioSpectrumData
     {
+        public ulong audioSpectrumData;
+        public int dataLength;
+
         public IrisAudioSpectrumData()
         {
             audioSpectrumData = 0;
             dataLength = 0;
         }
-
-        public ulong audioSpectrumData;
-        public int dataLength;
 
         public void GenerateAudioSpectrumData(ref AudioSpectrumData audioSpectrum)
         {
@@ -208,7 +208,6 @@ namespace Agora.Rtc
         }
     }
 
-    //#if AGORA_NUMBER_UID
     internal class IrisUserAudioSpectrumInfo
     {
         public IrisUserAudioSpectrumInfo()
@@ -227,27 +226,4 @@ namespace Agora.Rtc
             this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
         }
     }
-    //#endif
-
-#if AGORA_STRING_UID
-    internal class IrisUserAudioSpectrumInfoS
-    {
-        public IrisUserAudioSpectrumInfoS()
-        {
-            userAccount = "";
-            spectrumData = null;
-        }
-
-        public string userAccount;
-        public IrisAudioSpectrumData spectrumData;
-
-        public void GenerateUserAudioSpectrumInfo(ref UserAudioSpectrumInfoS info)
-        {
-            info.userAccount = this.userAccount;
-            info.spectrumData = new AudioSpectrumData();
-            this.spectrumData.GenerateAudioSpectrumData(ref info.spectrumData);
-        }
-    }
-#endif
-
 }

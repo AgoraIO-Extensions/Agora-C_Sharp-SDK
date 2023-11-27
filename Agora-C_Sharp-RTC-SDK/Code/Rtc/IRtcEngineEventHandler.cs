@@ -7,7 +7,7 @@ namespace Agora.Rtc
     /// The SDK uses the IRtcEngineEventHandler interface to send event notifications to your app. Your app can get those notifications through methods that inherit this interface.
     /// </summary>
     ///
-    public abstract class IRtcEngineEventHandler : IRtcEngineEventHandlerBase
+    public abstract class IRtcEngineEventHandler
     {
 
         #region terra IRtcEngineEventHandler
@@ -15,7 +15,51 @@ namespace Agora.Rtc
         {
         }
 
+        public virtual void OnError(int err, string msg)
+        {
+        }
+
+        public virtual void OnLastmileProbeResult(LastmileProbeResult result)
+        {
+        }
+
+        public virtual void OnAudioDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
+        {
+        }
+
+        public virtual void OnAudioMixingPositionChanged(long position)
+        {
+        }
+
         public virtual void OnAudioMixingFinished()
+        {
+        }
+
+        public virtual void OnAudioEffectFinished(int soundId)
+        {
+        }
+
+        public virtual void OnVideoDeviceStateChanged(string deviceId, MEDIA_DEVICE_TYPE deviceType, MEDIA_DEVICE_STATE_TYPE deviceState)
+        {
+        }
+
+        public virtual void OnUplinkNetworkInfoUpdated(UplinkNetworkInfo info)
+        {
+        }
+
+        public virtual void OnDownlinkNetworkInfoUpdated(DownlinkNetworkInfo info)
+        {
+        }
+
+        public virtual void OnLastmileQuality(int quality)
+        {
+        }
+
+        public virtual void OnFirstLocalVideoFrame(VIDEO_SOURCE_TYPE source, int width, int height, int elapsed)
+        {
+        }
+
+        public virtual void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
         }
 
@@ -23,11 +67,67 @@ namespace Agora.Rtc
         {
         }
 
+        public virtual void OnCameraFocusAreaChanged(int x, int y, int width, int height)
+        {
+        }
+
+        public virtual void OnCameraExposureAreaChanged(int x, int y, int width, int height)
+        {
+        }
+
+        public virtual void OnFacePositionChanged(int imageWidth, int imageHeight, Rectangle[] vecRectangle, int[] vecDistance, int numFaces)
+        {
+        }
+
         public virtual void OnVideoStopped()
         {
         }
 
+        public virtual void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason)
+        {
+        }
+
+        public virtual void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_REASON reason)
+        {
+        }
+
+        public virtual void OnContentInspectResult(CONTENT_INSPECT_RESULT result)
+        {
+        }
+
+        public virtual void OnAudioDeviceVolumeChanged(MEDIA_DEVICE_TYPE deviceType, int volume, bool muted)
+        {
+        }
+
+        public virtual void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_REASON reason)
+        {
+        }
+
+        public virtual void OnRtmpStreamingEvent(string url, RTMP_STREAMING_EVENT eventCode)
+        {
+        }
+
+        public virtual void OnTranscodingUpdated()
+        {
+        }
+
+        public virtual void OnAudioRoutingChanged(int routing)
+        {
+        }
+
+        public virtual void OnChannelMediaRelayStateChanged(int state, int code)
+        {
+        }
+
+        public virtual void OnLocalPublishFallbackToAudioOnly(bool isFallbackOrRecover)
+        {
+        }
+
         public virtual void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
+        {
+        }
+
+        public virtual void OnPermissionError(PERMISSION_TYPE permissionType)
         {
         }
 
@@ -39,6 +139,10 @@ namespace Agora.Rtc
         {
         }
 
+        public virtual void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        {
+        }
+
         public virtual void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
         {
         }
@@ -47,7 +151,27 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        public virtual void OnAudioPublishStateChanged(string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
+        {
+        }
+
+        public virtual void OnVideoPublishStateChanged(VIDEO_SOURCE_TYPE source, string channel, STREAM_PUBLISH_STATE oldState, STREAM_PUBLISH_STATE newState, int elapseSinceLastState)
+        {
+        }
+
+        public virtual void OnExtensionEvent(string provider, string extension, string key, string value)
+        {
+        }
+
+        public virtual void OnExtensionStarted(string provider, string extension)
+        {
+        }
+
+        public virtual void OnExtensionStopped(string provider, string extension)
+        {
+        }
+
+        public virtual void OnExtensionError(string provider, string extension, int error, string message)
         {
         }
 
@@ -95,7 +219,7 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public virtual void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
         }
 
@@ -195,7 +319,7 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
+        public virtual void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_REASON reason)
         {
         }
 
@@ -263,10 +387,19 @@ namespace Agora.Rtc
         {
         }
 
-        public virtual void OnVideoLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        public virtual void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {
         }
         #endregion terra IRtcEngineEventHandler
 
+        #region terra IDirectCdnStreamingEventHandler
+        public virtual void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_REASON reason, string message)
+        {
+        }
+
+        public virtual void OnDirectCdnStreamingStats(DirectCdnStreamingStats stats)
+        {
+        }
+        #endregion terra IDirectCdnStreamingEventHandler
     };
 }

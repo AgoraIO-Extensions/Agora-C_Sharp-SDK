@@ -88,12 +88,6 @@ namespace Agora.Rtc
 
         public abstract int StartOrUpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
 
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
-        public abstract int StartChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
-
-        [Obsolete("v4.2.0 Use `startOrUpdateChannelMediaRelayEx` instead.")]
-        public abstract int UpdateChannelMediaRelayEx(ChannelMediaRelayConfiguration configuration, RtcConnection connection);
-
         public abstract int StopChannelMediaRelayEx(RtcConnection connection);
 
         public abstract int PauseAllChannelMediaRelayEx(RtcConnection connection);

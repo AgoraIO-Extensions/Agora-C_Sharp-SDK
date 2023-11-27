@@ -42,26 +42,24 @@ namespace Agora.Rtc
         kPreloadStatusRemoved = 3,
     }
 
-
     public enum MusicContentCenterStatusCode
     {
         kMusicContentCenterStatusOk = 0,
 
-        kMusicContentCenterStatusErr = 1,
+        kMusicContentCenterStatusError = 1,
 
-        kMusicContentCenterStatusErrGateway = 2,
+        kMusicContentCenterStatusGateway = 2,
 
-        kMusicContentCenterStatusErrPermissionAndResource = 3,
+        kMusicContentCenterStatusPermissionAndResource = 3,
 
-        kMusicContentCenterStatusErrInternalDataParse = 4,
+        kMusicContentCenterStatusInternalDataParse = 4,
 
-        kMusicContentCenterStatusErrMusicLoading = 5,
+        kMusicContentCenterStatusMusicLoading = 5,
 
-        kMusicContentCenterStatusErrMusicDecryption = 6,
+        kMusicContentCenterStatusMusicDecryption = 6,
 
-        kMusicContentCenterStatusErrHttpInternalError = 7,
+        kMusicContentCenterStatusHttpInternalError = 7,
     }
-
 
     public class MusicChartInfo
     {
@@ -80,15 +78,12 @@ namespace Agora.Rtc
 
     }
 
-
-
     public enum MUSIC_CACHE_STATUS_TYPE
     {
         MUSIC_CACHE_STATUS_TYPE_CACHED = 0,
 
         MUSIC_CACHE_STATUS_TYPE_CACHING = 1,
     }
-
 
     public class MusicCacheInfo
     {
@@ -109,8 +104,6 @@ namespace Agora.Rtc
         }
     }
 
-
-
     public class MvProperty
     {
         public string resolution;
@@ -128,8 +121,6 @@ namespace Agora.Rtc
 
     }
 
-
-
     public class ClimaxSegment
     {
         public int startTimeMs;
@@ -146,8 +137,6 @@ namespace Agora.Rtc
         }
 
     }
-
-
 
     public class Music
     {
@@ -202,8 +191,6 @@ namespace Agora.Rtc
 
     }
 
-
-
     public class MusicContentCenterConfiguration
     {
         public string appId;
@@ -235,8 +222,6 @@ namespace Agora.Rtc
         }
 
     }
-
-
 
 
     #endregion terra IAgoraMusicContentCenter.h

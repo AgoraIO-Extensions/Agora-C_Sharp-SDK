@@ -18,7 +18,6 @@ namespace Agora.Rtc
         LOG_LEVEL_API_CALL = 0x0010,
     }
 
-
     public enum LOG_FILTER_TYPE
     {
         LOG_FILTER_OFF = 0,
@@ -35,7 +34,6 @@ namespace Agora.Rtc
 
         LOG_FILTER_MASK = 0x80f,
     }
-
 
     public class LogConfig
     {
@@ -59,8 +57,6 @@ namespace Agora.Rtc
             this.level = level;
         }
     }
-
-
 
 
     #endregion terra IAgoraLog.h
