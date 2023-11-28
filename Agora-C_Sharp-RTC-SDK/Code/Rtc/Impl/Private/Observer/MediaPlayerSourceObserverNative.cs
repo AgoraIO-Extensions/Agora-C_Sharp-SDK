@@ -82,7 +82,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnPlayerSourceStateChanged(
                             (MEDIA_PLAYER_STATE)AgoraJson.GetData<int>(jsonData, "state"),
-                            (MEDIA_PLAYER_ERROR)AgoraJson.GetData<int>(jsonData, "ec")
+                            (MEDIA_PLAYER_REASON)AgoraJson.GetData<int>(jsonData, "reason")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 });

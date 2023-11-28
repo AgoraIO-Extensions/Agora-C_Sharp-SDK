@@ -2,7 +2,7 @@
     "IRtcEngineBase": {
         "type": "ClazzStruct",
         "name": "IRtcEngineBase",
-        "methodSplitSymbol": "\n",
+        "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [
@@ -43,7 +43,7 @@
     "IRtcEngine": {
         "type": "ClazzStruct",
         "name": "IRtcEngine",
-        "methodSplitSymbol": "\n",
+        "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [
@@ -74,7 +74,8 @@
             "isSpeakerphoneEnabled": "method_interface_return_bool",
             "getScreenCaptureSources": "method_interface_return_null",
             "getConnectionState": "method_interface_return_CONNECTION_STATE_TYPE",
-            "getNtpWallTimeInMs": "method_interface_return_uint"
+            "getNtpWallTimeInMs": "method_interface_return_uint",
+            "isFeatureAvailableOnDevice": "method_interface_return_bool"
         },
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
@@ -83,7 +84,7 @@
     "IRtcEngineEx": {
         "type": "ClazzStruct",
         "name": "IRtcEngineEx",
-        "methodSplitSymbol": "\n",
+        "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [
@@ -101,32 +102,10 @@
         "commonMemberTemplate": "",
         "specialMembersTemplate": ""
     },
-    "IMediaEngineBase": {
-        "type": "ClazzStruct",
-        "name": "IMediaEngineBase",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "method_interface_return_int",
-        "includeMembers": [],
-        "excludeMethods": [
-            "release",
-            "enableCustomAudioLocalPlayback",
-            "registerAudioFrameObserver",
-            "registerVideoFrameObserver",
-            "registerVideoEncodedFrameObserver",
-            "addVideoFrameRenderer",
-            "removeVideoFrameRenderer"
-        ],
-        "specialMethodsTemplate": {
-            "createCustomAudioTrack": "method_interface_return_uint"
-        },
-        "memberSplitSymbol": "\n",
-        "commonMemberTemplate": "",
-        "specialMembersTemplate": ""
-    },
     "IMediaEngine": {
         "type": "ClazzStruct",
         "name": "IMediaEngine",
-        "methodSplitSymbol": "\n",
+        "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [

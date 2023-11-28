@@ -13,12 +13,12 @@ namespace Agora.Rtc
         }
 
         #region terra IMediaRecorderObserver
-        public event Action<string, uint, RecorderState, RecorderErrorCode> EventOnRecorderStateChanged;
+        public event Action<string, uint, RecorderState, RecorderReasonCode> EventOnRecorderStateChanged;
 
-        public override void OnRecorderStateChanged(string channelId, uint uid, RecorderState state, RecorderErrorCode error)
+        public override void OnRecorderStateChanged(string channelId, uint uid, RecorderState state, RecorderReasonCode reason)
         {
             if (EventOnRecorderStateChanged == null) return;
-            EventOnRecorderStateChanged.Invoke(channelId, uid, state, error);
+            EventOnRecorderStateChanged.Invoke(channelId, uid, state, reason);
         }
 
         public event Action<string, uint, RecorderInfo> EventOnRecorderInfoUpdated;

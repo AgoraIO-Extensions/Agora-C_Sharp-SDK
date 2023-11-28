@@ -954,7 +954,7 @@ export class SpeicalLogic {
             if (data.m.name == "onStreamMessage")
                 continue;
 
-            let eachM = this.cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName, data.m, "IRtcEngineEventHandler");
+            let eachM = this.cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName, data.m, null);
             lines.push(eachM);
         }
         return lines.join("\n\n");
@@ -981,7 +981,9 @@ export class SpeicalLogic {
 
     public cSharpSDK_GenerateIRtcEngineEventHandlerEachMethondNative(clazzName: string, m: MemberFunction, forcedConversion: string): string {
         let lines = [];
-        let switchKey = Tool._processStringWithR(clazzName) + "_" + m.name
+        let switchKeyPre = "RtcEngineEventHandler";
+        let switchKeyTail = clazzName.endsWith('Ex') ? m.name + "Ex" : m.name;
+        let switchKey = switchKeyPre + "_" + switchKeyTail;
         let handlerNameMap = {
             "IDirectCdnStreamingEventHandler": "rtcEngineEventHandler"
         }

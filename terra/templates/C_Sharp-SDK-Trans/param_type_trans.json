@@ -136,7 +136,8 @@
         "IAudioSpectrumObserver.onRemoteAudioSpectrum.spectrums": "UserAudioSpectrumInfo[]",
         "IMediaPlayerCustomDataProvider.onReadData.buffer": "IntPtr",
         "IMetadataObserver.onReadyToSendMetadata.metadata": "ref Metadata",
-        "UserAudioSpectrumInfo.UserAudioSpectrumInfo.data": "float[]"
+        "UserAudioSpectrumInfo.UserAudioSpectrumInfo.data": "float[]",
+        "IH265Transcoder.unregisterTranscoderObserver.observer": "@remove"
     },
     "normal": {
         "char*": "string",

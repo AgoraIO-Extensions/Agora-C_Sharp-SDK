@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 using view_t = System.Int64;
 namespace Agora.Rtc
 {
@@ -35,37 +36,6 @@ namespace Agora.Rtc
     //    internal IntPtr OnVideoFrameReceived;
     //    internal int bytes_per_row_alignment;
     //}
-
-    // use for videoFrameObserver json parse
-    // workaround, must be public, so can parse from a json string
-    [StructLayout(LayoutKind.Sequential)]
-    public struct IrisVideoFrame
-    {
-        public VIDEO_OBSERVER_FRAME_TYPE type;
-        public int width;
-        public int height;
-        public int yStride;
-        public int uStride;
-        public int vStride;
-        public IntPtr yBuffer;
-        public IntPtr uBuffer;
-        public IntPtr vBuffer;
-        public uint y_buffer_length;
-        public uint u_buffer_length;
-        public uint v_buffer_length;
-        public int rotation;
-        public Int64 renderTimeMs;
-        public int avsync_type;
-        public IntPtr metadata_buffer;
-        public int metadata_size;
-        public IntPtr sharedContext;
-        public int textureId;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-        public float[] matrix;
-        public IntPtr alphaBuffer;
-        public uint alpha_buffer_length;
-        public IntPtr metaInfo;
-    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct IrisRtcVideoFrameConfig

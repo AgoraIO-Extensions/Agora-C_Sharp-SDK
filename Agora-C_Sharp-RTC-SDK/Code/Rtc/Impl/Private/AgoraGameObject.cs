@@ -11,23 +11,12 @@ namespace Agora.Rtc
     {
         void OnApplicationQuit()
         {
-#if AGORA_NUMBER_UID
             IRtcEngine rtcEngine = RtcEngine.Get();
 
             if (rtcEngine != null)
             {
                 rtcEngine.Dispose();
             }
-#endif
-
-#if AGORA_STRING_UID
-            IRtcEngineS rtcEngineS = RtcEngineS.Get();
-
-            if (rtcEngineS != null)
-            {
-                rtcEngineS.Dispose();
-            }
-#endif
         }
     }
 }

@@ -41,7 +41,6 @@
             "release",
             "initialize",
             "getScreenCaptureSources",
-            "getVersion",
             "queryInterface",
             "registerPacketObserver",
             "registerEventHandler",
@@ -54,7 +53,8 @@
             "registerAudioSpectrumObserver",
             "unregisterAudioSpectrumObserver",
             "registerMediaMetadataObserver",
-            "unregisterMediaMetadataObserver"
+            "unregisterMediaMetadataObserver",
+            "registerAudioEncodedFrameObserver"
         ],
         "specialMethodsTemplate": {
             "queryCodecCapability": "method_interface_impl_queryCodecCapability",

@@ -14,6 +14,7 @@
         "IRtcEngine.unregisterMediaMetadataObserver.observer": "@remove",
         "IRtcEngine.unregisterMediaMetadataObserver.type": "@remove",
         "IRtcEngine.startDirectCdnStreaming.eventHandler": "@remove",
+        "IRtcEngine.getExtensionProperty.value": "ref value",
         "IRtcEngineEx.joinChannelEx.eventHandler": "@remove",
         "IRtcEngineEx.createDataStreamEx.streamId": "ref streamId",
         "IRtcEngineEx.getUserInfoByUserAccountEx.userInfo": "ref userInfo",
@@ -64,7 +65,7 @@
         "ILocalSpatialAudioEngineS.initialize.config": "@remove",
         "IMetadataObserver.onReadyToSendMetadata.metadata": "ref metadata",
         "IMetadataObserverS.onReadyToSendMetadata.metadataS": "ref metadataS",
-        "IH265TranscoderS.unregisterTranscoderObserver.observer": "@remove"
+        "IH265Transcoder.unregisterTranscoderObserver.observer": "@remove"
     },
     "normal": {
         "params": "@params",

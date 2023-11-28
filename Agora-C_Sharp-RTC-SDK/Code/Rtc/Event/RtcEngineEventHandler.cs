@@ -6,6 +6,14 @@ namespace Agora.Rtc
     {
 
         #region terra IRtcEngineEventHandler
+        public event Action<string, uint, PROXY_TYPE, string, int> EventOnProxyConnected;
+
+        public override void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        {
+            if (EventOnProxyConnected == null) return;
+            EventOnProxyConnected.Invoke(channel, uid, proxyType, localProxyIp, elapsed);
+        }
+
         public event Action<int, string> EventOnError;
 
         public override void OnError(int err, string msg)
@@ -36,6 +44,14 @@ namespace Agora.Rtc
         {
             if (EventOnAudioMixingPositionChanged == null) return;
             EventOnAudioMixingPositionChanged.Invoke(position);
+        }
+
+        public event Action EventOnAudioMixingFinished;
+
+        public override void OnAudioMixingFinished()
+        {
+            if (EventOnAudioMixingFinished == null) return;
+            EventOnAudioMixingFinished.Invoke();
         }
 
         public event Action<int> EventOnAudioEffectFinished;
@@ -86,12 +102,20 @@ namespace Agora.Rtc
             EventOnFirstLocalVideoFrame.Invoke(source, width, height, elapsed);
         }
 
-        public event Action<VIDEO_SOURCE_TYPE, LOCAL_VIDEO_STREAM_STATE, LOCAL_VIDEO_STREAM_ERROR> EventOnLocalVideoStateChanged;
+        public event Action<VIDEO_SOURCE_TYPE, LOCAL_VIDEO_STREAM_STATE, LOCAL_VIDEO_STREAM_REASON> EventOnLocalVideoStateChanged;
 
-        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR error)
+        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
             if (EventOnLocalVideoStateChanged == null) return;
-            EventOnLocalVideoStateChanged.Invoke(source, state, error);
+            EventOnLocalVideoStateChanged.Invoke(source, state, reason);
+        }
+
+        public event Action EventOnCameraReady;
+
+        public override void OnCameraReady()
+        {
+            if (EventOnCameraReady == null) return;
+            EventOnCameraReady.Invoke();
         }
 
         public event Action<int, int, int, int> EventOnCameraFocusAreaChanged;
@@ -118,6 +142,14 @@ namespace Agora.Rtc
             EventOnFacePositionChanged.Invoke(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces);
         }
 
+        public event Action EventOnVideoStopped;
+
+        public override void OnVideoStopped()
+        {
+            if (EventOnVideoStopped == null) return;
+            EventOnVideoStopped.Invoke();
+        }
+
         public event Action<AUDIO_MIXING_STATE_TYPE, AUDIO_MIXING_REASON_TYPE> EventOnAudioMixingStateChanged;
 
         public override void OnAudioMixingStateChanged(AUDIO_MIXING_STATE_TYPE state, AUDIO_MIXING_REASON_TYPE reason)
@@ -126,12 +158,12 @@ namespace Agora.Rtc
             EventOnAudioMixingStateChanged.Invoke(state, reason);
         }
 
-        public event Action<RHYTHM_PLAYER_STATE_TYPE, RHYTHM_PLAYER_ERROR_TYPE> EventOnRhythmPlayerStateChanged;
+        public event Action<RHYTHM_PLAYER_STATE_TYPE, RHYTHM_PLAYER_REASON> EventOnRhythmPlayerStateChanged;
 
-        public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode)
+        public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_REASON reason)
         {
             if (EventOnRhythmPlayerStateChanged == null) return;
-            EventOnRhythmPlayerStateChanged.Invoke(state, errorCode);
+            EventOnRhythmPlayerStateChanged.Invoke(state, reason);
         }
 
         public event Action<CONTENT_INSPECT_RESULT> EventOnContentInspectResult;
@@ -150,12 +182,12 @@ namespace Agora.Rtc
             EventOnAudioDeviceVolumeChanged.Invoke(deviceType, volume, muted);
         }
 
-        public event Action<string, RTMP_STREAM_PUBLISH_STATE, RTMP_STREAM_PUBLISH_ERROR_TYPE> EventOnRtmpStreamingStateChanged;
+        public event Action<string, RTMP_STREAM_PUBLISH_STATE, RTMP_STREAM_PUBLISH_REASON> EventOnRtmpStreamingStateChanged;
 
-        public override void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
+        public override void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_REASON reason)
         {
             if (EventOnRtmpStreamingStateChanged == null) return;
-            EventOnRtmpStreamingStateChanged.Invoke(url, state, errCode);
+            EventOnRtmpStreamingStateChanged.Invoke(url, state, reason);
         }
 
         public event Action<string, RTMP_STREAMING_EVENT> EventOnRtmpStreamingEvent;
@@ -198,12 +230,60 @@ namespace Agora.Rtc
             EventOnLocalPublishFallbackToAudioOnly.Invoke(isFallbackOrRecover);
         }
 
+        public event Action<uint, bool> EventOnRemoteSubscribeFallbackToAudioOnly;
+
+        public override void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
+        {
+            if (EventOnRemoteSubscribeFallbackToAudioOnly == null) return;
+            EventOnRemoteSubscribeFallbackToAudioOnly.Invoke(uid, isFallbackOrRecover);
+        }
+
         public event Action<PERMISSION_TYPE> EventOnPermissionError;
 
         public override void OnPermissionError(PERMISSION_TYPE permissionType)
         {
             if (EventOnPermissionError == null) return;
             EventOnPermissionError.Invoke(permissionType);
+        }
+
+        public event Action<uint, string> EventOnLocalUserRegistered;
+
+        public override void OnLocalUserRegistered(uint uid, string userAccount)
+        {
+            if (EventOnLocalUserRegistered == null) return;
+            EventOnLocalUserRegistered.Invoke(uid, userAccount);
+        }
+
+        public event Action<uint, UserInfo> EventOnUserInfoUpdated;
+
+        public override void OnUserInfoUpdated(uint uid, UserInfo info)
+        {
+            if (EventOnUserInfoUpdated == null) return;
+            EventOnUserInfoUpdated.Invoke(uid, info);
+        }
+
+        public event Action<TranscodingVideoStream, VIDEO_TRANSCODER_ERROR> EventOnLocalVideoTranscoderError;
+
+        public override void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        {
+            if (EventOnLocalVideoTranscoderError == null) return;
+            EventOnLocalVideoTranscoderError.Invoke(stream, error);
+        }
+
+        public event Action<string, uint, STREAM_SUBSCRIBE_STATE, STREAM_SUBSCRIBE_STATE, int> EventOnAudioSubscribeStateChanged;
+
+        public override void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        {
+            if (EventOnAudioSubscribeStateChanged == null) return;
+            EventOnAudioSubscribeStateChanged.Invoke(channel, uid, oldState, newState, elapseSinceLastState);
+        }
+
+        public event Action<string, uint, STREAM_SUBSCRIBE_STATE, STREAM_SUBSCRIBE_STATE, int> EventOnVideoSubscribeStateChanged;
+
+        public override void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        {
+            if (EventOnVideoSubscribeStateChanged == null) return;
+            EventOnVideoSubscribeStateChanged.Invoke(channel, uid, oldState, newState, elapseSinceLastState);
         }
 
         public event Action<string, STREAM_PUBLISH_STATE, STREAM_PUBLISH_STATE, int> EventOnAudioPublishStateChanged;
@@ -252,86 +332,6 @@ namespace Agora.Rtc
         {
             if (EventOnExtensionError == null) return;
             EventOnExtensionError.Invoke(provider, extension, error, message);
-        }
-
-        public event Action<string, uint, PROXY_TYPE, string, int> EventOnProxyConnected;
-
-        public override void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
-        {
-            if (EventOnProxyConnected == null) return;
-            EventOnProxyConnected.Invoke(channel, uid, proxyType, localProxyIp, elapsed);
-        }
-
-        public event Action EventOnAudioMixingFinished;
-
-        public override void OnAudioMixingFinished()
-        {
-            if (EventOnAudioMixingFinished == null) return;
-            EventOnAudioMixingFinished.Invoke();
-        }
-
-        public event Action EventOnCameraReady;
-
-        public override void OnCameraReady()
-        {
-            if (EventOnCameraReady == null) return;
-            EventOnCameraReady.Invoke();
-        }
-
-        public event Action EventOnVideoStopped;
-
-        public override void OnVideoStopped()
-        {
-            if (EventOnVideoStopped == null) return;
-            EventOnVideoStopped.Invoke();
-        }
-
-        public event Action<uint, bool> EventOnRemoteSubscribeFallbackToAudioOnly;
-
-        public override void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
-        {
-            if (EventOnRemoteSubscribeFallbackToAudioOnly == null) return;
-            EventOnRemoteSubscribeFallbackToAudioOnly.Invoke(uid, isFallbackOrRecover);
-        }
-
-        public event Action<uint, string> EventOnLocalUserRegistered;
-
-        public override void OnLocalUserRegistered(uint uid, string userAccount)
-        {
-            if (EventOnLocalUserRegistered == null) return;
-            EventOnLocalUserRegistered.Invoke(uid, userAccount);
-        }
-
-        public event Action<uint, UserInfo> EventOnUserInfoUpdated;
-
-        public override void OnUserInfoUpdated(uint uid, UserInfo info)
-        {
-            if (EventOnUserInfoUpdated == null) return;
-            EventOnUserInfoUpdated.Invoke(uid, info);
-        }
-
-        public event Action<string, uint, STREAM_SUBSCRIBE_STATE, STREAM_SUBSCRIBE_STATE, int> EventOnAudioSubscribeStateChanged;
-
-        public override void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-            if (EventOnAudioSubscribeStateChanged == null) return;
-            EventOnAudioSubscribeStateChanged.Invoke(channel, uid, oldState, newState, elapseSinceLastState);
-        }
-
-        public event Action<string, uint, STREAM_SUBSCRIBE_STATE, STREAM_SUBSCRIBE_STATE, int> EventOnVideoSubscribeStateChanged;
-
-        public override void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-            if (EventOnVideoSubscribeStateChanged == null) return;
-            EventOnVideoSubscribeStateChanged.Invoke(channel, uid, oldState, newState, elapseSinceLastState);
-        }
-
-        public event Action<TranscodingVideoStream, VIDEO_TRANSCODER_ERROR> EventOnLocalVideoTranscoderError;
-
-        public override void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
-        {
-            if (EventOnLocalVideoTranscoderError == null) return;
-            EventOnLocalVideoTranscoderError.Invoke(stream, error);
         }
 
         public event Action<RtcConnection, int> EventOnJoinChannelSuccess;
@@ -422,12 +422,12 @@ namespace Agora.Rtc
             EventOnVideoSizeChanged.Invoke(connection, sourceType, uid, width, height, rotation);
         }
 
-        public event Action<RtcConnection, LOCAL_VIDEO_STREAM_STATE, LOCAL_VIDEO_STREAM_ERROR> EventOnLocalVideoStateChanged2;
+        public event Action<RtcConnection, LOCAL_VIDEO_STREAM_STATE, LOCAL_VIDEO_STREAM_REASON> EventOnLocalVideoStateChanged2;
 
-        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
             if (EventOnLocalVideoStateChanged2 == null) return;
-            EventOnLocalVideoStateChanged2.Invoke(connection, state, errorCode);
+            EventOnLocalVideoStateChanged2.Invoke(connection, state, reason);
         }
 
         public event Action<RtcConnection, uint, REMOTE_VIDEO_STATE, REMOTE_VIDEO_STATE_REASON, int> EventOnRemoteVideoStateChanged;
@@ -622,12 +622,12 @@ namespace Agora.Rtc
             EventOnFirstRemoteAudioDecoded.Invoke(connection, uid, elapsed);
         }
 
-        public event Action<RtcConnection, LOCAL_AUDIO_STREAM_STATE, LOCAL_AUDIO_STREAM_ERROR> EventOnLocalAudioStateChanged;
+        public event Action<RtcConnection, LOCAL_AUDIO_STREAM_STATE, LOCAL_AUDIO_STREAM_REASON> EventOnLocalAudioStateChanged;
 
-        public override void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
+        public override void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_REASON reason)
         {
             if (EventOnLocalAudioStateChanged == null) return;
-            EventOnLocalAudioStateChanged.Invoke(connection, state, error);
+            EventOnLocalAudioStateChanged.Invoke(connection, state, reason);
         }
 
         public event Action<RtcConnection, uint, REMOTE_AUDIO_STATE, REMOTE_AUDIO_STATE_REASON, int> EventOnRemoteAudioStateChanged;
@@ -758,23 +758,23 @@ namespace Agora.Rtc
             EventOnSetRtmFlagResult.Invoke(connection, code);
         }
 
-        public event Action<RtcConnection, uint, int, int, int, VideoLayout[]> EventOnVideoLayoutInfo;
+        public event Action<RtcConnection, uint, int, int, int, VideoLayout[]> EventOnTranscodedStreamLayoutInfo;
 
-        public override void OnVideoLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        public override void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {
-            if (EventOnVideoLayoutInfo == null) return;
-            EventOnVideoLayoutInfo.Invoke(connection, uid, width, height, layoutNumber, layoutlist);
+            if (EventOnTranscodedStreamLayoutInfo == null) return;
+            EventOnTranscodedStreamLayoutInfo.Invoke(connection, uid, width, height, layoutCount, layoutlist);
         }
 
         #endregion terra IRtcEngineEventHandler
 
         #region terra IDirectCdnStreamingEventHandler
-        public event Action<DIRECT_CDN_STREAMING_STATE, DIRECT_CDN_STREAMING_ERROR, string> EventOnDirectCdnStreamingStateChanged;
+        public event Action<DIRECT_CDN_STREAMING_STATE, DIRECT_CDN_STREAMING_REASON, string> EventOnDirectCdnStreamingStateChanged;
 
-        public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
+        public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_REASON reason, string message)
         {
             if (EventOnDirectCdnStreamingStateChanged == null) return;
-            EventOnDirectCdnStreamingStateChanged.Invoke(state, error, message);
+            EventOnDirectCdnStreamingStateChanged.Invoke(state, reason, message);
         }
 
         public event Action<DirectCdnStreamingStats> EventOnDirectCdnStreamingStats;

@@ -3,11 +3,11 @@ namespace Agora.Rtc
 {
     public class MediaPlayerCacheManager : IMediaPlayerCacheManager
     {
-        private IRtcEngineBase _rtcEngineInstance = null;
+        private IRtcEngine _rtcEngineInstance = null;
         private MediaPlayerCacheManagerImpl _mediaPlayerCacheManagerImpl = null;
         private const int ErrorCode = -(int)ERROR_CODE_TYPE.ERR_NOT_INITIALIZED;
 
-        private MediaPlayerCacheManager(IRtcEngineBase rtcEngine, MediaPlayerCacheManagerImpl impl)
+        private MediaPlayerCacheManager(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)
         {
             _rtcEngineInstance = rtcEngine;
             _mediaPlayerCacheManagerImpl = impl;
@@ -27,7 +27,7 @@ namespace Agora.Rtc
             }
         }
 
-        internal static MediaPlayerCacheManager GetInstance(IRtcEngineBase rtcEngine, MediaPlayerCacheManagerImpl impl)
+        internal static MediaPlayerCacheManager GetInstance(IRtcEngine rtcEngine, MediaPlayerCacheManagerImpl impl)
         {
             return instance ?? (instance = new MediaPlayerCacheManager(rtcEngine, impl));
         }
@@ -46,6 +46,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.RemoveAllCaches();
         }
+
         public override int RemoveOldCache()
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -54,6 +55,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.RemoveOldCache();
         }
+
         public override int RemoveCacheByUri(string uri)
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -62,6 +64,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.RemoveCacheByUri(uri);
         }
+
         public override int SetCacheDir(string path)
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -70,6 +73,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.SetCacheDir(path);
         }
+
         public override int SetMaxCacheFileCount(int count)
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -78,6 +82,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.SetMaxCacheFileCount(count);
         }
+
         public override int SetMaxCacheFileSize(long cacheSize)
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -86,6 +91,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.SetMaxCacheFileSize(cacheSize);
         }
+
         public override int EnableAutoRemoveCache(bool enable)
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -94,6 +100,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.EnableAutoRemoveCache(enable);
         }
+
         public override int GetCacheDir(ref string path, int length)
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -102,6 +109,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.GetCacheDir(ref path, length);
         }
+
         public override int GetMaxCacheFileCount()
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -110,6 +118,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.GetMaxCacheFileCount();
         }
+
         public override long GetMaxCacheFileSize()
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)
@@ -118,6 +127,7 @@ namespace Agora.Rtc
             }
             return _mediaPlayerCacheManagerImpl.GetMaxCacheFileSize();
         }
+
         public override int GetCacheFileCount()
         {
             if (_rtcEngineInstance == null || _mediaPlayerCacheManagerImpl == null)

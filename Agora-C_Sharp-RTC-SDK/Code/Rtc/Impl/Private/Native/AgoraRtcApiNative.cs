@@ -49,13 +49,7 @@ namespace Agora.Rtc
         internal static extern IrisRtcEnginePtr CreateIrisApiEngine(IntPtr engine);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcEnginePtr CreateIrisApiEngineS(IntPtr engine);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DestroyIrisApiEngine(IrisRtcEnginePtr engine_ptr);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void DestroyIrisApiEngineS(IrisRtcEnginePtr engine_ptr);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisEventHandlerHandle CreateIrisEventHandler(IrisEventHandlerMarshal event_Handler);
@@ -95,81 +89,27 @@ namespace Agora.Rtc
             return retval;
         }
 
-        internal static int CallIrisApiWithArgsS(IrisRtcEnginePtr engine_ptr, string func_name,
-           string @params, UInt32 paramLength, IntPtr buffer, uint buffer_count, ref IrisRtcCApiParam apiParam,
-           uint buffer0Length = 0, uint buffer1Length = 0, uint buffer2Length = 0, uint buffer3Length = 0)
-        {
-            apiParam.@event = func_name;
-            apiParam.data = @params;
-            apiParam.data_size = paramLength;
-            apiParam.buffer = buffer;
-            apiParam.buffer_count = buffer_count;
-
-            IntPtr lengthPtr = IntPtr.Zero;
-            if (buffer_count > 0)
-            {
-                int[] lengths = new int[4];
-                lengths[0] = (int)buffer0Length;
-                lengths[1] = (int)buffer1Length;
-                lengths[2] = (int)buffer2Length;
-                lengths[3] = (int)buffer3Length;
-                lengthPtr = Marshal.AllocHGlobal(lengths.Length * sizeof(int));
-                Marshal.Copy(lengths, 0, lengthPtr, (int)lengths.Length);
-            }
-            apiParam.length = lengthPtr;
-            int retval = CallIrisApiS(engine_ptr, ref apiParam);
-
-            if (lengthPtr != IntPtr.Zero)
-            {
-                Marshal.FreeHGlobal(lengthPtr);
-            }
-
-            return retval;
-        }
-
-
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int CallIrisApi(IrisRtcEnginePtr engine_ptr, ref IrisRtcCApiParam apiParam);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int CallIrisApiS(IrisRtcEnginePtr engine_ptr, ref IrisRtcCApiParam apiParam);
 
         // IrisVideoFrameBufferManager
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IrisRtcRenderingHandle CreateIrisRtcRendering(IrisRtcEnginePtr iris_api_engine_handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IrisRtcRenderingHandle CreateIrisRtcRenderingS(IrisRtcEnginePtr iris_api_engine_handle);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void FreeIrisRtcRendering(IrisRtcRenderingHandle handle);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void FreeIrisRtcRenderingS(IrisRtcRenderingHandle handle);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void AddVideoFrameCacheKey(IrisRtcRenderingHandle handle, ref IrisRtcVideoFrameConfig config);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void AddVideoFrameCacheKeyS(IrisRtcRenderingHandle handle, ref IrisRtcVideoFrameConfigS config);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void RemoveVideoFrameCacheKey(IrisRtcRenderingHandle handle, ref IrisRtcVideoFrameConfig config);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void RemoveVideoFrameCacheKeyS(IrisRtcRenderingHandle handle, ref IrisRtcVideoFrameConfigS config);
 
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern IRIS_VIDEO_PROCESS_ERR GetVideoFrameCache(IrisRtcRenderingHandle manager_ptr,
                                     ref IrisRtcVideoFrameConfig config,
                                     ref IrisCVideoFrame video_frame, out bool is_new_frame
                                  );
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IRIS_VIDEO_PROCESS_ERR GetVideoFrameCacheS(IrisRtcRenderingHandle manager_ptr,
-                                  ref IrisRtcVideoFrameConfigS config,
-                                  ref IrisCVideoFrame video_frame, out bool is_new_frame
-                               );
 
         internal static void AllocEventHandlerHandle(ref RtcEventHandlerHandle eventHandlerHandle, Rtc_Func_Event_Native onEvent)
         {
@@ -198,10 +138,6 @@ namespace Agora.Rtc
 
             eventHandlerHandle.cEvent = new IrisRtcCEventHandler();
         }
-
-        //IVideoFrameMetaInfo
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern IntPtr GetMetaInfoStr(IntPtr ptr, int key);
 
         #endregion
 
@@ -279,80 +215,6 @@ namespace Agora.Rtc
         [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int ILocalSpatialAudioEngine_SetRemoteAudioAttenuation(IrisRtcEnginePtr enginePtr,
           uint uid, double attenuation, bool forceSet);
-
-        // ILocalSpatialAudioEngineS
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_SetMaxAudioRecvCount(IrisRtcEnginePtr enginePtr, int maxCount);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_SetAudioRecvRange(IrisRtcEnginePtr enginePtr, float range);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_SetDistanceUnit(IrisRtcEnginePtr enginePtr, float unit);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_UpdateSelfPosition(IrisRtcEnginePtr enginePtr,
-          float positionX, float positionY, float positionZ, float axisForwardX,
-          float axisForwardY, float axisForwardZ, float axisRightX, float axisRightY,
-          float axisRightZ, float axisUpX, float axisUpY, float axisUpZ);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_UpdateSelfPositionEx(IrisRtcEnginePtr enginePtr,
-          float positionX, float positionY, float positionZ, float axisForwardX,
-          float axisForwardY, float axisForwardZ, float axisRightX, float axisRightY,
-          float axisRightZ, float axisUpX, float axisUpY, float axisUpZ,
-          string channelId, string localUserAccount);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_UpdatePlayerPositionInfo(IrisRtcEnginePtr enginePtr,
-          int playerId, float positionX, float positionY, float positionZ,
-          float forwardX, float forwardY, float forwardZ);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_MuteLocalAudioStream(IrisRtcEnginePtr enginePtr, bool mute);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_MuteAllRemoteAudioStreams(IrisRtcEnginePtr enginePtr, bool mute);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_SetZones(IrisRtcEnginePtr enginePtr, IrisSpatialAudioZone[] zones, uint zoneCount);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_SetPlayerAttenuation(IrisRtcEnginePtr enginePtr,
-          int playerId, double attenuation, bool forceSet);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_MuteRemoteAudioStream(IrisRtcEnginePtr enginePtr, string userAccount, bool mute);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_UpdateRemotePosition(IrisRtcEnginePtr engine_ptr,
-          string userAccount, float positionX, float positionY, float positionZ,
-          float forwardX, float forwardY, float forwardZ);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_UpdateRemotePositionEx(IrisRtcEnginePtr enginePtr,
-          string userAccount, float positionX, float positionY, float positionZ,
-          float forwardX, float forwardY, float forwardZ, string channelId,
-          string localUserAccount);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_RemoveRemotePosition(IrisRtcEnginePtr enginePtr, string userAccount);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_RemoveRemotePositionEx(IrisRtcEnginePtr enginePtr,
-          string userAccount, string channelId, string localUserAccount);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_ClearRemotePositions(IrisRtcEnginePtr enginePtr);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_ClearRemotePositionsEx(IrisRtcEnginePtr enginePtr,
-           string channelId, string localUserAccount);
-
-        [DllImport(AgoraRtcLibName, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern int ILocalSpatialAudioEngineS_SetRemoteAudioAttenuation(IrisRtcEnginePtr enginePtr,
-          string userAccount, double attenuation, bool forceSet);
-
 
         #endregion
 

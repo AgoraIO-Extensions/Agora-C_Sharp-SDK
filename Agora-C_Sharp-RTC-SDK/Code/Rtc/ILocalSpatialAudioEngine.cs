@@ -11,6 +11,7 @@ namespace Agora.Rtc
     ///
     public abstract class ILocalSpatialAudioEngine
     {
+        public abstract void Dispose();
 
         #region terra ILocalSpatialAudioEngine
         public abstract int Initialize();

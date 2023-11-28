@@ -6,12 +6,12 @@ namespace Agora.Rtc
     public class MediaPlayerSourceObserver : IMediaPlayerSourceObserver
     {
         #region terra IMediaPlayerSourceObserver
-        public event Action<MEDIA_PLAYER_STATE, MEDIA_PLAYER_ERROR> EventOnPlayerSourceStateChanged;
+        public event Action<MEDIA_PLAYER_STATE, MEDIA_PLAYER_REASON> EventOnPlayerSourceStateChanged;
 
-        public override void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
+        public override void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_REASON reason)
         {
             if (EventOnPlayerSourceStateChanged == null) return;
-            EventOnPlayerSourceStateChanged.Invoke(state, ec);
+            EventOnPlayerSourceStateChanged.Invoke(state, reason);
         }
 
         public event Action<long, long> EventOnPositionChanged;

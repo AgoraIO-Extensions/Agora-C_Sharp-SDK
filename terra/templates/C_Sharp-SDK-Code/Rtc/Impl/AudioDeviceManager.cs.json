@@ -2,7 +2,7 @@
     "IAudioDeviceManager": {
         "type": "ClazzStruct",
         "name": "IAudioDeviceManager",
-        "methodSplitSymbol": "\n",
+        "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [

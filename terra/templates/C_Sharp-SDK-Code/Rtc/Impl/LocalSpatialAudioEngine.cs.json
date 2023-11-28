@@ -2,7 +2,7 @@
     "ILocalSpatialAudioEngine": {
         "type": "ClazzStruct",
         "name": "ILocalSpatialAudioEngine",
-        "methodSplitSymbol": "\n",
+        "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [
@@ -11,8 +11,7 @@
         "specialMethodsTemplate": {},
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
-        "specialMembersTemplate": "",
-        "trackBackFather": 1
+        "specialMembersTemplate": ""
     },
     "method_interface_return_int": "${SPECIAL_METHOD_LOGIC:cSharpSDK_MethodObsolete}public override ${-oMETHOD_RETURN_TYPE} ${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join}){\nif (_rtcEngineInstance == null || _localSpatialAudioEngineImpl == null)\n{\nreturn ErrorCode;\n}\nreturn _localSpatialAudioEngineImpl.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:method_interface_param_join2});\n}",
     "method_interface_param_join": {

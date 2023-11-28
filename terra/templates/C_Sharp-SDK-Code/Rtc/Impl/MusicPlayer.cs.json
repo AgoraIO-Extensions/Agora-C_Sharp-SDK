@@ -2,7 +2,7 @@
     "IMusicPlayer": {
         "type": "ClazzStruct",
         "name": "IMusicPlayer",
-        "methodSplitSymbol": "\n",
+        "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_interface_return_int",
         "includeMembers": [],
         "excludeMethods": [

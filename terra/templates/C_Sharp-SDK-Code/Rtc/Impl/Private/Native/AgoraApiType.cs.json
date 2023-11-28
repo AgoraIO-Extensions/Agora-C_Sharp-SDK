@@ -1,12 +1,4 @@
 {
-    "IRtcEngineBase": {
-        "type": "ClazzStruct",
-        "name": "IRtcEngineBase",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": []
-    },
     "IRtcEngine": {
         "type": "ClazzStruct",
         "name": "IRtcEngine",
@@ -18,22 +10,6 @@
     "IRtcEngineEx": {
         "type": "ClazzStruct",
         "name": "IRtcEngineEx",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": []
-    },
-    "IRtcEngineS": {
-        "type": "ClazzStruct",
-        "name": "IRtcEngineS",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": []
-    },
-    "IRtcEngineExS": {
-        "type": "ClazzStruct",
-        "name": "IRtcEngineExS",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "api_name",
@@ -79,36 +55,9 @@
         "commonMethodTemplate": "api_name",
         "excludeMethods": []
     },
-    "ILocalSpatialAudioEngineS": {
-        "type": "ClazzStruct",
-        "name": "ILocalSpatialAudioEngineS",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": []
-    },
-    "IMediaEngineBase": {
-        "type": "ClazzStruct",
-        "name": "IMediaEngineBase",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": []
-    },
     "IMediaEngine": {
         "type": "ClazzStruct",
         "name": "IMediaEngine",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": [
-            "addVideoFrameRenderer",
-            "removeVideoFrameRenderer"
-        ]
-    },
-    "IMediaEngineS": {
-        "type": "ClazzStruct",
-        "name": "IMediaEngineS",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "api_name",
@@ -125,25 +74,9 @@
         "commonMethodTemplate": "api_name",
         "excludeMethods": []
     },
-    "IMediaRecorderBase": {
-        "type": "ClazzStruct",
-        "name": "IMediaRecorderBase",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": []
-    },
     "IMediaRecorder": {
         "type": "ClazzStruct",
         "name": "IMediaRecorder",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": []
-    },
-    "IMediaRecorderS": {
-        "type": "ClazzStruct",
-        "name": "IMediaRecorderS",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "api_name",
@@ -165,33 +98,9 @@
         "commonMethodTemplate": "api_name",
         "excludeMethods": []
     },
-    "IH265TranscoderBase": {
-        "type": "ClazzStruct",
-        "name": "IH265TranscoderBase",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": [
-            "AddRef",
-            "Release",
-            "HasOneRef"
-        ]
-    },
     "IH265Transcoder": {
         "type": "ClazzStruct",
         "name": "IH265Transcoder",
-        "memberSplitSymbol": "\n",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "api_name",
-        "excludeMethods": [
-            "AddRef",
-            "Release",
-            "HasOneRef"
-        ]
-    },
-    "IH265TranscoderS": {
-        "type": "ClazzStruct",
-        "name": "IH265TranscoderS",
         "memberSplitSymbol": "\n",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "api_name",
