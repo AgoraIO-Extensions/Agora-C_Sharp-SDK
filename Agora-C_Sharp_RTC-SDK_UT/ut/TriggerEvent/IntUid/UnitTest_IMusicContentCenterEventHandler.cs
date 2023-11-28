@@ -58,8 +58,8 @@ namespace Agora.Rtc.Event
             MusicChartInfo[] result = ParamsHelper.CreateParam<MusicChartInfo[]>();
             jsonObj.Add("result", result);
 
-            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
-            jsonObj.Add("errorCode", errorCode);
+            MusicContentCenterStatusCode status = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
+            jsonObj.Add("status", status);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -67,7 +67,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnMusicChartsResultPassed(requestId, result, errorCode));
+            Assert.AreEqual(true, EventHandler.OnMusicChartsResultPassed(requestId, result, status));
         }
 
         [Test]
@@ -83,8 +83,8 @@ namespace Agora.Rtc.Event
             MusicCollection result = ParamsHelper.CreateParam<MusicCollection>();
             jsonObj.Add("result", result);
 
-            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
-            jsonObj.Add("errorCode", errorCode);
+            MusicContentCenterStatusCode status = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
+            jsonObj.Add("status", status);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -92,7 +92,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnMusicCollectionResultPassed(requestId, result, errorCode));
+            Assert.AreEqual(true, EventHandler.OnMusicCollectionResultPassed(requestId, result, status));
         }
 
         [Test]
@@ -111,8 +111,8 @@ namespace Agora.Rtc.Event
             string lyricUrl = ParamsHelper.CreateParam<string>();
             jsonObj.Add("lyricUrl", lyricUrl);
 
-            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
-            jsonObj.Add("errorCode", errorCode);
+            MusicContentCenterStatusCode status = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
+            jsonObj.Add("status", status);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -120,7 +120,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnLyricResultPassed(requestId, songCode, lyricUrl, errorCode));
+            Assert.AreEqual(true, EventHandler.OnLyricResultPassed(requestId, songCode, lyricUrl, status));
         }
 
         [Test]
@@ -139,8 +139,8 @@ namespace Agora.Rtc.Event
             string simpleInfo = ParamsHelper.CreateParam<string>();
             jsonObj.Add("simpleInfo", simpleInfo);
 
-            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
-            jsonObj.Add("errorCode", errorCode);
+            MusicContentCenterStatusCode status = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
+            jsonObj.Add("status", status);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -148,7 +148,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnSongSimpleInfoResultPassed(requestId, songCode, simpleInfo, errorCode));
+            Assert.AreEqual(true, EventHandler.OnSongSimpleInfoResultPassed(requestId, songCode, simpleInfo, status));
         }
 
         [Test]
@@ -170,11 +170,11 @@ namespace Agora.Rtc.Event
             string lyricUrl = ParamsHelper.CreateParam<string>();
             jsonObj.Add("lyricUrl", lyricUrl);
 
-            PreloadStatusCode status = ParamsHelper.CreateParam<PreloadStatusCode>();
-            jsonObj.Add("status", status);
+            PreloadStatusCode preloadStatus = ParamsHelper.CreateParam<PreloadStatusCode>();
+            jsonObj.Add("preloadStatus", preloadStatus);
 
-            MusicContentCenterStatusCode errorCode = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
-            jsonObj.Add("errorCode", errorCode);
+            MusicContentCenterStatusCode mccStatus = ParamsHelper.CreateParam<MusicContentCenterStatusCode>();
+            jsonObj.Add("mccStatus", mccStatus);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -182,7 +182,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPreLoadEventPassed(requestId, songCode, percent, lyricUrl, status, errorCode));
+            Assert.AreEqual(true, EventHandler.OnPreLoadEventPassed(requestId, songCode, percent, lyricUrl, preloadStatus, mccStatus));
         }
         #endregion terra IMusicContentCenterEventHandler
     }

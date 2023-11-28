@@ -51,8 +51,8 @@ namespace Agora.Rtc.Event
             DIRECT_CDN_STREAMING_STATE state = ParamsHelper.CreateParam<DIRECT_CDN_STREAMING_STATE>();
             jsonObj.Add("state", state);
 
-            DIRECT_CDN_STREAMING_ERROR error = ParamsHelper.CreateParam<DIRECT_CDN_STREAMING_ERROR>();
-            jsonObj.Add("error", error);
+            DIRECT_CDN_STREAMING_REASON reason = ParamsHelper.CreateParam<DIRECT_CDN_STREAMING_REASON>();
+            jsonObj.Add("reason", reason);
 
             string message = ParamsHelper.CreateParam<string>();
             jsonObj.Add("message", message);
@@ -63,7 +63,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnDirectCdnStreamingStateChangedPassed(state, error, message));
+            Assert.AreEqual(true, EventHandler.OnDirectCdnStreamingStateChangedPassed(state, reason, message));
         }
 
         [Test]

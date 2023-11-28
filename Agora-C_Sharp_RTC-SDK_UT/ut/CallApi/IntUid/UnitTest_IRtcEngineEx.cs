@@ -442,26 +442,6 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_StartChannelMediaRelayEx()
-        {
-            ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var nRet = RtcEngineEx.StartChannelMediaRelayEx(configuration, connection);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_UpdateChannelMediaRelayEx()
-        {
-            ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
-            RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
-
-            var nRet = RtcEngineEx.UpdateChannelMediaRelayEx(configuration, connection);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_StopChannelMediaRelayEx()
         {
             RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();

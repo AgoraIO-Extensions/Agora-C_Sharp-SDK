@@ -22,7 +22,6 @@ namespace Agora.Rtc
         [TearDown]
         public void TearDown() { Engine.Dispose(); }
 
-        #region custom
         [Test]
         public void Test_GetRecordingDefaultDevice()
         {
@@ -60,8 +59,6 @@ namespace Agora.Rtc
 
             Assert.AreEqual(0, nRet.Length);
         }
-
-        #endregion
 
         #region terra IAudioDeviceManager
         [Test]

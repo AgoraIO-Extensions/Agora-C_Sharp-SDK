@@ -9,19 +9,19 @@ namespace Agora.Rtc
         #region terra IDirectCdnStreamingEventHandler
         public bool OnDirectCdnStreamingStateChanged_be_trigger = false;
         public DIRECT_CDN_STREAMING_STATE OnDirectCdnStreamingStateChanged_state;
-        public DIRECT_CDN_STREAMING_ERROR OnDirectCdnStreamingStateChanged_error;
+        public DIRECT_CDN_STREAMING_REASON OnDirectCdnStreamingStateChanged_reason;
         public string OnDirectCdnStreamingStateChanged_message;
 
-        public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
+        public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_REASON reason, string message)
         {
             OnDirectCdnStreamingStateChanged_be_trigger = true;
             OnDirectCdnStreamingStateChanged_state = state;
-            OnDirectCdnStreamingStateChanged_error = error;
+            OnDirectCdnStreamingStateChanged_reason = reason;
             OnDirectCdnStreamingStateChanged_message = message;
 
         }
 
-        public bool OnDirectCdnStreamingStateChangedPassed(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
+        public bool OnDirectCdnStreamingStateChangedPassed(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_REASON reason, string message)
         {
 
             if (OnDirectCdnStreamingStateChanged_be_trigger == false)
@@ -29,7 +29,7 @@ namespace Agora.Rtc
 
             if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_STATE>(OnDirectCdnStreamingStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_ERROR>(OnDirectCdnStreamingStateChanged_error, error) == false)
+            if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_REASON>(OnDirectCdnStreamingStateChanged_reason, reason) == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnDirectCdnStreamingStateChanged_message, message) == false)
                 return false;

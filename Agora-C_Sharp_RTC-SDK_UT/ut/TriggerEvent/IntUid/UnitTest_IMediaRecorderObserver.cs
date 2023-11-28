@@ -58,8 +58,8 @@ namespace Agora.Rtc.Event
             RecorderState state = ParamsHelper.CreateParam<RecorderState>();
             jsonObj.Add("state", state);
 
-            RecorderErrorCode error = ParamsHelper.CreateParam<RecorderErrorCode>();
-            jsonObj.Add("error", error);
+            RecorderReasonCode reason = ParamsHelper.CreateParam<RecorderReasonCode>();
+            jsonObj.Add("reason", reason);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -67,7 +67,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnRecorderStateChangedPassed(channelId, uid, state, error));
+            Assert.AreEqual(true, EventHandler.OnRecorderStateChangedPassed(channelId, uid, state, reason));
         }
 
         [Test]

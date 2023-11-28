@@ -9,17 +9,17 @@ namespace Agora.Rtc
         #region terra IMediaPlayerSourceObserver
         public bool OnPlayerSourceStateChanged_be_trigger = false;
         public MEDIA_PLAYER_STATE OnPlayerSourceStateChanged_state;
-        public MEDIA_PLAYER_ERROR OnPlayerSourceStateChanged_ec;
+        public MEDIA_PLAYER_REASON OnPlayerSourceStateChanged_reason;
 
-        public override void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
+        public override void OnPlayerSourceStateChanged(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_REASON reason)
         {
             OnPlayerSourceStateChanged_be_trigger = true;
             OnPlayerSourceStateChanged_state = state;
-            OnPlayerSourceStateChanged_ec = ec;
+            OnPlayerSourceStateChanged_reason = reason;
 
         }
 
-        public bool OnPlayerSourceStateChangedPassed(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_ERROR ec)
+        public bool OnPlayerSourceStateChangedPassed(MEDIA_PLAYER_STATE state, MEDIA_PLAYER_REASON reason)
         {
 
             if (OnPlayerSourceStateChanged_be_trigger == false)
@@ -27,7 +27,7 @@ namespace Agora.Rtc
 
             if (ParamsHelper.Compare<MEDIA_PLAYER_STATE>(OnPlayerSourceStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<MEDIA_PLAYER_ERROR>(OnPlayerSourceStateChanged_ec, ec) == false)
+            if (ParamsHelper.Compare<MEDIA_PLAYER_REASON>(OnPlayerSourceStateChanged_reason, reason) == false)
                 return false;
 
             return true;

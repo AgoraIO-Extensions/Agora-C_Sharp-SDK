@@ -52,8 +52,8 @@ namespace Agora.Rtc.Event
             MEDIA_PLAYER_STATE state = ParamsHelper.CreateParam<MEDIA_PLAYER_STATE>();
             jsonObj.Add("state", state);
 
-            MEDIA_PLAYER_ERROR ec = ParamsHelper.CreateParam<MEDIA_PLAYER_ERROR>();
-            jsonObj.Add("ec", ec);
+            MEDIA_PLAYER_REASON reason = ParamsHelper.CreateParam<MEDIA_PLAYER_REASON>();
+            jsonObj.Add("reason", reason);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -61,7 +61,7 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnPlayerSourceStateChangedPassed(state, ec));
+            Assert.AreEqual(true, EventHandler.OnPlayerSourceStateChangedPassed(state, reason));
         }
 
         [Test]

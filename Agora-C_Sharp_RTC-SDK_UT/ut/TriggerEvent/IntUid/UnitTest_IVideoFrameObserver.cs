@@ -44,7 +44,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnCaptureVideoFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERBASE_ONCAPTUREVIDEOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME;
 
             jsonObj.Clear();
 
@@ -66,7 +66,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnPreEncodeVideoFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERBASE_ONPREENCODEVIDEOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME;
 
             jsonObj.Clear();
 
@@ -88,7 +88,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnMediaPlayerVideoFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERBASE_ONMEDIAPLAYERVIDEOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME;
 
             jsonObj.Clear();
 
@@ -106,26 +106,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnMediaPlayerVideoFramePassed(videoFrame, mediaPlayerId));
         }
-
-        [Test]
-        public void Test_OnTranscodedVideoFrame()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVERBASE_ONTRANSCODEDVIDEOFRAME;
-
-            jsonObj.Clear();
-
-            VideoFrame videoFrame = ParamsHelper.CreateParam<VideoFrame>();
-            jsonObj.Add("videoFrame", videoFrame);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnTranscodedVideoFramePassed(videoFrame));
-        }
-
 
         [Test]
         public void Test_OnRenderVideoFrame()
@@ -151,6 +131,27 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(0, ret);
             Assert.AreEqual(true, EventHandler.OnRenderVideoFramePassed(channelId, remoteUid, videoFrame));
         }
+
+        [Test]
+        public void Test_OnTranscodedVideoFrame()
+        {
+            ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME;
+
+            jsonObj.Clear();
+
+            VideoFrame videoFrame = ParamsHelper.CreateParam<VideoFrame>();
+            jsonObj.Add("videoFrame", videoFrame);
+
+            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
+            ApiParam.data = jsonString;
+            ApiParam.data_size = (uint)jsonString.Length;
+
+            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
+            Assert.AreEqual(0, ret);
+            Assert.AreEqual(true, EventHandler.OnTranscodedVideoFramePassed(videoFrame));
+        }
+
+
         #endregion terra IVideoFrameObserver
     }
 }

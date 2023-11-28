@@ -23,8 +23,7 @@
         ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
-        "pecialMembersTemplate": "",
-        "trackBackFather": 1
+        "pecialMembersTemplate": ""
     },
     "method_unitTest_compare_0": "[Test]\npublic void Test_${-unMETHOD_NAME}()\n{\n   ${METHOD_PARAM_JOIN:param_init}\n\n   var nRet = ${-rCLAZZ_STRUCT_NAME}.${-uMETHOD_NAME}(${METHOD_PARAM_JOIN:param_join});\n   Assert.AreEqual(0, nRet);\n}",
     "param_init": {

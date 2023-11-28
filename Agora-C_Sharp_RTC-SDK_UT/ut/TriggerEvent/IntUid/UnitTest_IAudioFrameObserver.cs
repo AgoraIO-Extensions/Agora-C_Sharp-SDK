@@ -48,7 +48,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnRecordAudioFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVERBASE_ONRECORDAUDIOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONRECORDAUDIOFRAME;
 
             jsonObj.Clear();
 
@@ -70,7 +70,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnPlaybackAudioFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVERBASE_ONPLAYBACKAUDIOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAME;
 
             jsonObj.Clear();
 
@@ -92,7 +92,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnMixedAudioFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVERBASE_ONMIXEDAUDIOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONMIXEDAUDIOFRAME;
 
             jsonObj.Clear();
 
@@ -114,7 +114,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnEarMonitoringAudioFrame()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVERBASE_ONEARMONITORINGAUDIOFRAME;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONEARMONITORINGAUDIOFRAME;
 
             jsonObj.Clear();
 
@@ -133,7 +133,7 @@ namespace Agora.Rtc.Event
         [Test]
         public void Test_OnPlaybackAudioFrameBeforeMixing()
         {
-            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVERBASE_ONPLAYBACKAUDIOFRAMEBEFOREMIXING;
+            ApiParam.@event = AgoraEventType.EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING;
 
             jsonObj.Clear();
 

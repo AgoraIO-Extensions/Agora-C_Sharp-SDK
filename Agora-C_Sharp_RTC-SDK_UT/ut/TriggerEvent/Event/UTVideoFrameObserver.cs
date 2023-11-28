@@ -91,32 +91,6 @@ namespace Agora.Rtc
 
         /////////////////////////////////
 
-        public bool OnTranscodedVideoFrame_be_trigger = false;
-        public VideoFrame OnTranscodedVideoFrame_videoFrame;
-
-        public override bool OnTranscodedVideoFrame(VideoFrame videoFrame)
-        {
-            OnTranscodedVideoFrame_be_trigger = true;
-            OnTranscodedVideoFrame_videoFrame = videoFrame;
-            return true;
-
-        }
-
-        public bool OnTranscodedVideoFramePassed(VideoFrame videoFrame)
-        {
-
-            if (OnTranscodedVideoFrame_be_trigger == false)
-                return false;
-
-            if (ParamsHelper.Compare<VideoFrame>(OnTranscodedVideoFrame_videoFrame, videoFrame) == false)
-                return false;
-
-            return true;
-        }
-
-        /////////////////////////////////
-
-
         public bool OnRenderVideoFrame_be_trigger = false;
         public string OnRenderVideoFrame_channelId;
         public uint OnRenderVideoFrame_remoteUid;
@@ -149,6 +123,33 @@ namespace Agora.Rtc
         }
 
         /////////////////////////////////
+
+        public bool OnTranscodedVideoFrame_be_trigger = false;
+        public VideoFrame OnTranscodedVideoFrame_videoFrame;
+
+        public override bool OnTranscodedVideoFrame(VideoFrame videoFrame)
+        {
+            OnTranscodedVideoFrame_be_trigger = true;
+            OnTranscodedVideoFrame_videoFrame = videoFrame;
+            return true;
+
+        }
+
+        public bool OnTranscodedVideoFramePassed(VideoFrame videoFrame)
+        {
+
+            if (OnTranscodedVideoFrame_be_trigger == false)
+                return false;
+
+            if (ParamsHelper.Compare<VideoFrame>(OnTranscodedVideoFrame_videoFrame, videoFrame) == false)
+                return false;
+
+            return true;
+        }
+
+        /////////////////////////////////
+
+
         #endregion terra IVideoFrameObserver
     }
 }

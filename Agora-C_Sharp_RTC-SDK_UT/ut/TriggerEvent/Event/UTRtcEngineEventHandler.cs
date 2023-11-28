@@ -6,6 +6,40 @@ namespace Agora.Rtc
     {
 
         #region terra IRtcEngineEventHandler
+        public bool OnProxyConnected_be_trigger = false;
+        public string OnProxyConnected_channel;
+        public uint OnProxyConnected_uid;
+        public PROXY_TYPE OnProxyConnected_proxyType;
+        public string OnProxyConnected_localProxyIp;
+        public int OnProxyConnected_elapsed;
+        public override void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        {
+            OnProxyConnected_be_trigger = true;
+            OnProxyConnected_channel = channel;
+            OnProxyConnected_uid = uid;
+            OnProxyConnected_proxyType = proxyType;
+            OnProxyConnected_localProxyIp = localProxyIp;
+            OnProxyConnected_elapsed = elapsed;
+        }
+
+        public bool OnProxyConnectedPassed(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
+        {
+            if (OnProxyConnected_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnProxyConnected_channel, channel) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnProxyConnected_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<PROXY_TYPE>(OnProxyConnected_proxyType, proxyType) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnProxyConnected_localProxyIp, localProxyIp) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnProxyConnected_elapsed, elapsed) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
         public bool OnError_be_trigger = false;
         public int OnError_err;
         public string OnError_msg;
@@ -85,6 +119,20 @@ namespace Agora.Rtc
             if (OnAudioMixingPositionChanged_be_trigger == false)
                 return false;
             if (ParamsHelper.Compare<long>(OnAudioMixingPositionChanged_position, position) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
+        public bool OnAudioMixingFinished_be_trigger = false;
+        public override void OnAudioMixingFinished()
+        {
+            OnAudioMixingFinished_be_trigger = true;
+        }
+
+        public bool OnAudioMixingFinishedPassed()
+        {
+            if (OnAudioMixingFinished_be_trigger == false)
                 return false;
             return true;
         }
@@ -221,16 +269,16 @@ namespace Agora.Rtc
         public bool OnLocalVideoStateChanged_be_trigger = false;
         public VIDEO_SOURCE_TYPE OnLocalVideoStateChanged_source;
         public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged_state;
-        public LOCAL_VIDEO_STREAM_ERROR OnLocalVideoStateChanged_error;
-        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR error)
+        public LOCAL_VIDEO_STREAM_REASON OnLocalVideoStateChanged_reason;
+        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
             OnLocalVideoStateChanged_be_trigger = true;
             OnLocalVideoStateChanged_source = source;
             OnLocalVideoStateChanged_state = state;
-            OnLocalVideoStateChanged_error = error;
+            OnLocalVideoStateChanged_reason = reason;
         }
 
-        public bool OnLocalVideoStateChangedPassed(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR error)
+        public bool OnLocalVideoStateChangedPassed(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
             if (OnLocalVideoStateChanged_be_trigger == false)
                 return false;
@@ -238,7 +286,21 @@ namespace Agora.Rtc
                 return false;
             if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_ERROR>(OnLocalVideoStateChanged_error, error) == false)
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_REASON>(OnLocalVideoStateChanged_reason, reason) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
+        public bool OnCameraReady_be_trigger = false;
+        public override void OnCameraReady()
+        {
+            OnCameraReady_be_trigger = true;
+        }
+
+        public bool OnCameraReadyPassed()
+        {
+            if (OnCameraReady_be_trigger == false)
                 return false;
             return true;
         }
@@ -338,6 +400,20 @@ namespace Agora.Rtc
         }
         //////////////////
 
+        public bool OnVideoStopped_be_trigger = false;
+        public override void OnVideoStopped()
+        {
+            OnVideoStopped_be_trigger = true;
+        }
+
+        public bool OnVideoStoppedPassed()
+        {
+            if (OnVideoStopped_be_trigger == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
         public bool OnAudioMixingStateChanged_be_trigger = false;
         public AUDIO_MIXING_STATE_TYPE OnAudioMixingStateChanged_state;
         public AUDIO_MIXING_REASON_TYPE OnAudioMixingStateChanged_reason;
@@ -362,21 +438,21 @@ namespace Agora.Rtc
 
         public bool OnRhythmPlayerStateChanged_be_trigger = false;
         public RHYTHM_PLAYER_STATE_TYPE OnRhythmPlayerStateChanged_state;
-        public RHYTHM_PLAYER_ERROR_TYPE OnRhythmPlayerStateChanged_errorCode;
-        public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode)
+        public RHYTHM_PLAYER_REASON OnRhythmPlayerStateChanged_reason;
+        public override void OnRhythmPlayerStateChanged(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_REASON reason)
         {
             OnRhythmPlayerStateChanged_be_trigger = true;
             OnRhythmPlayerStateChanged_state = state;
-            OnRhythmPlayerStateChanged_errorCode = errorCode;
+            OnRhythmPlayerStateChanged_reason = reason;
         }
 
-        public bool OnRhythmPlayerStateChangedPassed(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_ERROR_TYPE errorCode)
+        public bool OnRhythmPlayerStateChangedPassed(RHYTHM_PLAYER_STATE_TYPE state, RHYTHM_PLAYER_REASON reason)
         {
             if (OnRhythmPlayerStateChanged_be_trigger == false)
                 return false;
             if (ParamsHelper.Compare<RHYTHM_PLAYER_STATE_TYPE>(OnRhythmPlayerStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<RHYTHM_PLAYER_ERROR_TYPE>(OnRhythmPlayerStateChanged_errorCode, errorCode) == false)
+            if (ParamsHelper.Compare<RHYTHM_PLAYER_REASON>(OnRhythmPlayerStateChanged_reason, reason) == false)
                 return false;
             return true;
         }
@@ -429,16 +505,16 @@ namespace Agora.Rtc
         public bool OnRtmpStreamingStateChanged_be_trigger = false;
         public string OnRtmpStreamingStateChanged_url;
         public RTMP_STREAM_PUBLISH_STATE OnRtmpStreamingStateChanged_state;
-        public RTMP_STREAM_PUBLISH_ERROR_TYPE OnRtmpStreamingStateChanged_errCode;
-        public override void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
+        public RTMP_STREAM_PUBLISH_REASON OnRtmpStreamingStateChanged_reason;
+        public override void OnRtmpStreamingStateChanged(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_REASON reason)
         {
             OnRtmpStreamingStateChanged_be_trigger = true;
             OnRtmpStreamingStateChanged_url = url;
             OnRtmpStreamingStateChanged_state = state;
-            OnRtmpStreamingStateChanged_errCode = errCode;
+            OnRtmpStreamingStateChanged_reason = reason;
         }
 
-        public bool OnRtmpStreamingStateChangedPassed(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_ERROR_TYPE errCode)
+        public bool OnRtmpStreamingStateChangedPassed(string url, RTMP_STREAM_PUBLISH_STATE state, RTMP_STREAM_PUBLISH_REASON reason)
         {
             if (OnRtmpStreamingStateChanged_be_trigger == false)
                 return false;
@@ -446,7 +522,7 @@ namespace Agora.Rtc
                 return false;
             if (ParamsHelper.Compare<RTMP_STREAM_PUBLISH_STATE>(OnRtmpStreamingStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<RTMP_STREAM_PUBLISH_ERROR_TYPE>(OnRtmpStreamingStateChanged_errCode, errCode) == false)
+            if (ParamsHelper.Compare<RTMP_STREAM_PUBLISH_REASON>(OnRtmpStreamingStateChanged_reason, reason) == false)
                 return false;
             return true;
         }
@@ -546,6 +622,28 @@ namespace Agora.Rtc
         }
         //////////////////
 
+        public bool OnRemoteSubscribeFallbackToAudioOnly_be_trigger = false;
+        public uint OnRemoteSubscribeFallbackToAudioOnly_uid;
+        public bool OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover;
+        public override void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
+        {
+            OnRemoteSubscribeFallbackToAudioOnly_be_trigger = true;
+            OnRemoteSubscribeFallbackToAudioOnly_uid = uid;
+            OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover = isFallbackOrRecover;
+        }
+
+        public bool OnRemoteSubscribeFallbackToAudioOnlyPassed(uint uid, bool isFallbackOrRecover)
+        {
+            if (OnRemoteSubscribeFallbackToAudioOnly_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnRemoteSubscribeFallbackToAudioOnly_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<bool>(OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover, isFallbackOrRecover) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
         public bool OnPermissionError_be_trigger = false;
         public PERMISSION_TYPE OnPermissionError_permissionType;
         public override void OnPermissionError(PERMISSION_TYPE permissionType)
@@ -559,6 +657,140 @@ namespace Agora.Rtc
             if (OnPermissionError_be_trigger == false)
                 return false;
             if (ParamsHelper.Compare<PERMISSION_TYPE>(OnPermissionError_permissionType, permissionType) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
+        public bool OnLocalUserRegistered_be_trigger = false;
+        public uint OnLocalUserRegistered_uid;
+        public string OnLocalUserRegistered_userAccount;
+        public override void OnLocalUserRegistered(uint uid, string userAccount)
+        {
+            OnLocalUserRegistered_be_trigger = true;
+            OnLocalUserRegistered_uid = uid;
+            OnLocalUserRegistered_userAccount = userAccount;
+        }
+
+        public bool OnLocalUserRegisteredPassed(uint uid, string userAccount)
+        {
+            if (OnLocalUserRegistered_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnLocalUserRegistered_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnLocalUserRegistered_userAccount, userAccount) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
+        public bool OnUserInfoUpdated_be_trigger = false;
+        public uint OnUserInfoUpdated_uid;
+        public UserInfo OnUserInfoUpdated_info;
+        public override void OnUserInfoUpdated(uint uid, UserInfo info)
+        {
+            OnUserInfoUpdated_be_trigger = true;
+            OnUserInfoUpdated_uid = uid;
+            OnUserInfoUpdated_info = info;
+        }
+
+        public bool OnUserInfoUpdatedPassed(uint uid, UserInfo info)
+        {
+            if (OnUserInfoUpdated_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnUserInfoUpdated_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<UserInfo>(OnUserInfoUpdated_info, info) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
+        public bool OnLocalVideoTranscoderError_be_trigger = false;
+        public TranscodingVideoStream OnLocalVideoTranscoderError_stream;
+        public VIDEO_TRANSCODER_ERROR OnLocalVideoTranscoderError_error;
+        public override void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        {
+            OnLocalVideoTranscoderError_be_trigger = true;
+            OnLocalVideoTranscoderError_stream = stream;
+            OnLocalVideoTranscoderError_error = error;
+        }
+
+        public bool OnLocalVideoTranscoderErrorPassed(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
+        {
+            if (OnLocalVideoTranscoderError_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<TranscodingVideoStream>(OnLocalVideoTranscoderError_stream, stream) == false)
+                return false;
+            if (ParamsHelper.Compare<VIDEO_TRANSCODER_ERROR>(OnLocalVideoTranscoderError_error, error) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
+        public bool OnAudioSubscribeStateChanged_be_trigger = false;
+        public string OnAudioSubscribeStateChanged_channel;
+        public uint OnAudioSubscribeStateChanged_uid;
+        public STREAM_SUBSCRIBE_STATE OnAudioSubscribeStateChanged_oldState;
+        public STREAM_SUBSCRIBE_STATE OnAudioSubscribeStateChanged_newState;
+        public int OnAudioSubscribeStateChanged_elapseSinceLastState;
+        public override void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        {
+            OnAudioSubscribeStateChanged_be_trigger = true;
+            OnAudioSubscribeStateChanged_channel = channel;
+            OnAudioSubscribeStateChanged_uid = uid;
+            OnAudioSubscribeStateChanged_oldState = oldState;
+            OnAudioSubscribeStateChanged_newState = newState;
+            OnAudioSubscribeStateChanged_elapseSinceLastState = elapseSinceLastState;
+        }
+
+        public bool OnAudioSubscribeStateChangedPassed(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        {
+            if (OnAudioSubscribeStateChanged_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnAudioSubscribeStateChanged_channel, channel) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnAudioSubscribeStateChanged_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_oldState, oldState) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_newState, newState) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnAudioSubscribeStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
+                return false;
+            return true;
+        }
+        //////////////////
+
+        public bool OnVideoSubscribeStateChanged_be_trigger = false;
+        public string OnVideoSubscribeStateChanged_channel;
+        public uint OnVideoSubscribeStateChanged_uid;
+        public STREAM_SUBSCRIBE_STATE OnVideoSubscribeStateChanged_oldState;
+        public STREAM_SUBSCRIBE_STATE OnVideoSubscribeStateChanged_newState;
+        public int OnVideoSubscribeStateChanged_elapseSinceLastState;
+        public override void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        {
+            OnVideoSubscribeStateChanged_be_trigger = true;
+            OnVideoSubscribeStateChanged_channel = channel;
+            OnVideoSubscribeStateChanged_uid = uid;
+            OnVideoSubscribeStateChanged_oldState = oldState;
+            OnVideoSubscribeStateChanged_newState = newState;
+            OnVideoSubscribeStateChanged_elapseSinceLastState = elapseSinceLastState;
+        }
+
+        public bool OnVideoSubscribeStateChangedPassed(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
+        {
+            if (OnVideoSubscribeStateChanged_be_trigger == false)
+                return false;
+            if (ParamsHelper.Compare<string>(OnVideoSubscribeStateChanged_channel, channel) == false)
+                return false;
+            if (ParamsHelper.Compare<uint>(OnVideoSubscribeStateChanged_uid, uid) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_oldState, oldState) == false)
+                return false;
+            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_newState, newState) == false)
+                return false;
+            if (ParamsHelper.Compare<int>(OnVideoSubscribeStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
                 return false;
             return true;
         }
@@ -727,238 +959,6 @@ namespace Agora.Rtc
             if (ParamsHelper.Compare<int>(OnExtensionError_error, error) == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnExtensionError_message, message) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnProxyConnected_be_trigger = false;
-        public string OnProxyConnected_channel;
-        public uint OnProxyConnected_uid;
-        public PROXY_TYPE OnProxyConnected_proxyType;
-        public string OnProxyConnected_localProxyIp;
-        public int OnProxyConnected_elapsed;
-        public override void OnProxyConnected(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
-        {
-            OnProxyConnected_be_trigger = true;
-            OnProxyConnected_channel = channel;
-            OnProxyConnected_uid = uid;
-            OnProxyConnected_proxyType = proxyType;
-            OnProxyConnected_localProxyIp = localProxyIp;
-            OnProxyConnected_elapsed = elapsed;
-        }
-
-        public bool OnProxyConnectedPassed(string channel, uint uid, PROXY_TYPE proxyType, string localProxyIp, int elapsed)
-        {
-            if (OnProxyConnected_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnProxyConnected_channel, channel) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnProxyConnected_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<PROXY_TYPE>(OnProxyConnected_proxyType, proxyType) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnProxyConnected_localProxyIp, localProxyIp) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnProxyConnected_elapsed, elapsed) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnAudioMixingFinished_be_trigger = false;
-        public override void OnAudioMixingFinished()
-        {
-            OnAudioMixingFinished_be_trigger = true;
-        }
-
-        public bool OnAudioMixingFinishedPassed()
-        {
-            if (OnAudioMixingFinished_be_trigger == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnCameraReady_be_trigger = false;
-        public override void OnCameraReady()
-        {
-            OnCameraReady_be_trigger = true;
-        }
-
-        public bool OnCameraReadyPassed()
-        {
-            if (OnCameraReady_be_trigger == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnVideoStopped_be_trigger = false;
-        public override void OnVideoStopped()
-        {
-            OnVideoStopped_be_trigger = true;
-        }
-
-        public bool OnVideoStoppedPassed()
-        {
-            if (OnVideoStopped_be_trigger == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnRemoteSubscribeFallbackToAudioOnly_be_trigger = false;
-        public uint OnRemoteSubscribeFallbackToAudioOnly_uid;
-        public bool OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover;
-        public override void OnRemoteSubscribeFallbackToAudioOnly(uint uid, bool isFallbackOrRecover)
-        {
-            OnRemoteSubscribeFallbackToAudioOnly_be_trigger = true;
-            OnRemoteSubscribeFallbackToAudioOnly_uid = uid;
-            OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover = isFallbackOrRecover;
-        }
-
-        public bool OnRemoteSubscribeFallbackToAudioOnlyPassed(uint uid, bool isFallbackOrRecover)
-        {
-            if (OnRemoteSubscribeFallbackToAudioOnly_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnRemoteSubscribeFallbackToAudioOnly_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<bool>(OnRemoteSubscribeFallbackToAudioOnly_isFallbackOrRecover, isFallbackOrRecover) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnLocalUserRegistered_be_trigger = false;
-        public uint OnLocalUserRegistered_uid;
-        public string OnLocalUserRegistered_userAccount;
-        public override void OnLocalUserRegistered(uint uid, string userAccount)
-        {
-            OnLocalUserRegistered_be_trigger = true;
-            OnLocalUserRegistered_uid = uid;
-            OnLocalUserRegistered_userAccount = userAccount;
-        }
-
-        public bool OnLocalUserRegisteredPassed(uint uid, string userAccount)
-        {
-            if (OnLocalUserRegistered_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnLocalUserRegistered_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLocalUserRegistered_userAccount, userAccount) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnUserInfoUpdated_be_trigger = false;
-        public uint OnUserInfoUpdated_uid;
-        public UserInfo OnUserInfoUpdated_info;
-        public override void OnUserInfoUpdated(uint uid, UserInfo info)
-        {
-            OnUserInfoUpdated_be_trigger = true;
-            OnUserInfoUpdated_uid = uid;
-            OnUserInfoUpdated_info = info;
-        }
-
-        public bool OnUserInfoUpdatedPassed(uint uid, UserInfo info)
-        {
-            if (OnUserInfoUpdated_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnUserInfoUpdated_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<UserInfo>(OnUserInfoUpdated_info, info) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnAudioSubscribeStateChanged_be_trigger = false;
-        public string OnAudioSubscribeStateChanged_channel;
-        public uint OnAudioSubscribeStateChanged_uid;
-        public STREAM_SUBSCRIBE_STATE OnAudioSubscribeStateChanged_oldState;
-        public STREAM_SUBSCRIBE_STATE OnAudioSubscribeStateChanged_newState;
-        public int OnAudioSubscribeStateChanged_elapseSinceLastState;
-        public override void OnAudioSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-            OnAudioSubscribeStateChanged_be_trigger = true;
-            OnAudioSubscribeStateChanged_channel = channel;
-            OnAudioSubscribeStateChanged_uid = uid;
-            OnAudioSubscribeStateChanged_oldState = oldState;
-            OnAudioSubscribeStateChanged_newState = newState;
-            OnAudioSubscribeStateChanged_elapseSinceLastState = elapseSinceLastState;
-        }
-
-        public bool OnAudioSubscribeStateChangedPassed(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-            if (OnAudioSubscribeStateChanged_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnAudioSubscribeStateChanged_channel, channel) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnAudioSubscribeStateChanged_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_oldState, oldState) == false)
-                return false;
-            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnAudioSubscribeStateChanged_newState, newState) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnAudioSubscribeStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnVideoSubscribeStateChanged_be_trigger = false;
-        public string OnVideoSubscribeStateChanged_channel;
-        public uint OnVideoSubscribeStateChanged_uid;
-        public STREAM_SUBSCRIBE_STATE OnVideoSubscribeStateChanged_oldState;
-        public STREAM_SUBSCRIBE_STATE OnVideoSubscribeStateChanged_newState;
-        public int OnVideoSubscribeStateChanged_elapseSinceLastState;
-        public override void OnVideoSubscribeStateChanged(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-            OnVideoSubscribeStateChanged_be_trigger = true;
-            OnVideoSubscribeStateChanged_channel = channel;
-            OnVideoSubscribeStateChanged_uid = uid;
-            OnVideoSubscribeStateChanged_oldState = oldState;
-            OnVideoSubscribeStateChanged_newState = newState;
-            OnVideoSubscribeStateChanged_elapseSinceLastState = elapseSinceLastState;
-        }
-
-        public bool OnVideoSubscribeStateChangedPassed(string channel, uint uid, STREAM_SUBSCRIBE_STATE oldState, STREAM_SUBSCRIBE_STATE newState, int elapseSinceLastState)
-        {
-            if (OnVideoSubscribeStateChanged_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnVideoSubscribeStateChanged_channel, channel) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnVideoSubscribeStateChanged_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_oldState, oldState) == false)
-                return false;
-            if (ParamsHelper.Compare<STREAM_SUBSCRIBE_STATE>(OnVideoSubscribeStateChanged_newState, newState) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnVideoSubscribeStateChanged_elapseSinceLastState, elapseSinceLastState) == false)
-                return false;
-            return true;
-        }
-        //////////////////
-
-        public bool OnLocalVideoTranscoderError_be_trigger = false;
-        public TranscodingVideoStream OnLocalVideoTranscoderError_stream;
-        public VIDEO_TRANSCODER_ERROR OnLocalVideoTranscoderError_error;
-        public override void OnLocalVideoTranscoderError(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
-        {
-            OnLocalVideoTranscoderError_be_trigger = true;
-            OnLocalVideoTranscoderError_stream = stream;
-            OnLocalVideoTranscoderError_error = error;
-        }
-
-        public bool OnLocalVideoTranscoderErrorPassed(TranscodingVideoStream stream, VIDEO_TRANSCODER_ERROR error)
-        {
-            if (OnLocalVideoTranscoderError_be_trigger == false)
-                return false;
-            if (ParamsHelper.Compare<TranscodingVideoStream>(OnLocalVideoTranscoderError_stream, stream) == false)
-                return false;
-            if (ParamsHelper.Compare<VIDEO_TRANSCODER_ERROR>(OnLocalVideoTranscoderError_error, error) == false)
                 return false;
             return true;
         }
@@ -1261,16 +1261,16 @@ namespace Agora.Rtc
         public bool OnLocalVideoStateChanged2_be_trigger = false;
         public RtcConnection OnLocalVideoStateChanged2_connection;
         public LOCAL_VIDEO_STREAM_STATE OnLocalVideoStateChanged2_state;
-        public LOCAL_VIDEO_STREAM_ERROR OnLocalVideoStateChanged2_errorCode;
-        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public LOCAL_VIDEO_STREAM_REASON OnLocalVideoStateChanged2_reason;
+        public override void OnLocalVideoStateChanged(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
             OnLocalVideoStateChanged2_be_trigger = true;
             OnLocalVideoStateChanged2_connection = connection;
             OnLocalVideoStateChanged2_state = state;
-            OnLocalVideoStateChanged2_errorCode = errorCode;
+            OnLocalVideoStateChanged2_reason = reason;
         }
 
-        public bool OnLocalVideoStateChanged2Passed(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_ERROR errorCode)
+        public bool OnLocalVideoStateChanged2Passed(RtcConnection connection, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON reason)
         {
             if (OnLocalVideoStateChanged2_be_trigger == false)
                 return false;
@@ -1278,7 +1278,7 @@ namespace Agora.Rtc
                 return false;
             if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_STATE>(OnLocalVideoStateChanged2_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_ERROR>(OnLocalVideoStateChanged2_errorCode, errorCode) == false)
+            if (ParamsHelper.Compare<LOCAL_VIDEO_STREAM_REASON>(OnLocalVideoStateChanged2_reason, reason) == false)
                 return false;
             return true;
         }
@@ -1891,16 +1891,16 @@ namespace Agora.Rtc
         public bool OnLocalAudioStateChanged_be_trigger = false;
         public RtcConnection OnLocalAudioStateChanged_connection;
         public LOCAL_AUDIO_STREAM_STATE OnLocalAudioStateChanged_state;
-        public LOCAL_AUDIO_STREAM_ERROR OnLocalAudioStateChanged_error;
-        public override void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
+        public LOCAL_AUDIO_STREAM_REASON OnLocalAudioStateChanged_reason;
+        public override void OnLocalAudioStateChanged(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_REASON reason)
         {
             OnLocalAudioStateChanged_be_trigger = true;
             OnLocalAudioStateChanged_connection = connection;
             OnLocalAudioStateChanged_state = state;
-            OnLocalAudioStateChanged_error = error;
+            OnLocalAudioStateChanged_reason = reason;
         }
 
-        public bool OnLocalAudioStateChangedPassed(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_ERROR error)
+        public bool OnLocalAudioStateChangedPassed(RtcConnection connection, LOCAL_AUDIO_STREAM_STATE state, LOCAL_AUDIO_STREAM_REASON reason)
         {
             if (OnLocalAudioStateChanged_be_trigger == false)
                 return false;
@@ -1908,7 +1908,7 @@ namespace Agora.Rtc
                 return false;
             if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_STATE>(OnLocalAudioStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_ERROR>(OnLocalAudioStateChanged_error, error) == false)
+            if (ParamsHelper.Compare<LOCAL_AUDIO_STREAM_REASON>(OnLocalAudioStateChanged_reason, reason) == false)
                 return false;
             return true;
         }
@@ -2366,39 +2366,39 @@ namespace Agora.Rtc
         }
         //////////////////
 
-        public bool OnVideoLayoutInfo_be_trigger = false;
-        public RtcConnection OnVideoLayoutInfo_connection;
-        public uint OnVideoLayoutInfo_uid;
-        public int OnVideoLayoutInfo_width;
-        public int OnVideoLayoutInfo_height;
-        public int OnVideoLayoutInfo_layoutNumber;
-        public VideoLayout[] OnVideoLayoutInfo_layoutlist;
-        public override void OnVideoLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        public bool OnTranscodedStreamLayoutInfo_be_trigger = false;
+        public RtcConnection OnTranscodedStreamLayoutInfo_connection;
+        public uint OnTranscodedStreamLayoutInfo_uid;
+        public int OnTranscodedStreamLayoutInfo_width;
+        public int OnTranscodedStreamLayoutInfo_height;
+        public int OnTranscodedStreamLayoutInfo_layoutCount;
+        public VideoLayout[] OnTranscodedStreamLayoutInfo_layoutlist;
+        public override void OnTranscodedStreamLayoutInfo(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {
-            OnVideoLayoutInfo_be_trigger = true;
-            OnVideoLayoutInfo_connection = connection;
-            OnVideoLayoutInfo_uid = uid;
-            OnVideoLayoutInfo_width = width;
-            OnVideoLayoutInfo_height = height;
-            OnVideoLayoutInfo_layoutNumber = layoutNumber;
-            OnVideoLayoutInfo_layoutlist = layoutlist;
+            OnTranscodedStreamLayoutInfo_be_trigger = true;
+            OnTranscodedStreamLayoutInfo_connection = connection;
+            OnTranscodedStreamLayoutInfo_uid = uid;
+            OnTranscodedStreamLayoutInfo_width = width;
+            OnTranscodedStreamLayoutInfo_height = height;
+            OnTranscodedStreamLayoutInfo_layoutCount = layoutCount;
+            OnTranscodedStreamLayoutInfo_layoutlist = layoutlist;
         }
 
-        public bool OnVideoLayoutInfoPassed(RtcConnection connection, uint uid, int width, int height, int layoutNumber, VideoLayout[] layoutlist)
+        public bool OnTranscodedStreamLayoutInfoPassed(RtcConnection connection, uint uid, int width, int height, int layoutCount, VideoLayout[] layoutlist)
         {
-            if (OnVideoLayoutInfo_be_trigger == false)
+            if (OnTranscodedStreamLayoutInfo_be_trigger == false)
                 return false;
-            if (ParamsHelper.Compare<RtcConnection>(OnVideoLayoutInfo_connection, connection) == false)
+            if (ParamsHelper.Compare<RtcConnection>(OnTranscodedStreamLayoutInfo_connection, connection) == false)
                 return false;
-            if (ParamsHelper.Compare<uint>(OnVideoLayoutInfo_uid, uid) == false)
+            if (ParamsHelper.Compare<uint>(OnTranscodedStreamLayoutInfo_uid, uid) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnVideoLayoutInfo_width, width) == false)
+            if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_width, width) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnVideoLayoutInfo_height, height) == false)
+            if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_height, height) == false)
                 return false;
-            if (ParamsHelper.Compare<int>(OnVideoLayoutInfo_layoutNumber, layoutNumber) == false)
+            if (ParamsHelper.Compare<int>(OnTranscodedStreamLayoutInfo_layoutCount, layoutCount) == false)
                 return false;
-            if (ParamsHelper.Compare<VideoLayout[]>(OnVideoLayoutInfo_layoutlist, layoutlist) == false)
+            if (ParamsHelper.Compare<VideoLayout[]>(OnTranscodedStreamLayoutInfo_layoutlist, layoutlist) == false)
                 return false;
             return true;
         }
@@ -2408,19 +2408,19 @@ namespace Agora.Rtc
         #region terra IDirectCdnStreamingEventHandler
         public bool OnDirectCdnStreamingStateChanged_be_trigger = false;
         public DIRECT_CDN_STREAMING_STATE OnDirectCdnStreamingStateChanged_state;
-        public DIRECT_CDN_STREAMING_ERROR OnDirectCdnStreamingStateChanged_error;
+        public DIRECT_CDN_STREAMING_REASON OnDirectCdnStreamingStateChanged_reason;
         public string OnDirectCdnStreamingStateChanged_message;
 
-        public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
+        public override void OnDirectCdnStreamingStateChanged(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_REASON reason, string message)
         {
             OnDirectCdnStreamingStateChanged_be_trigger = true;
             OnDirectCdnStreamingStateChanged_state = state;
-            OnDirectCdnStreamingStateChanged_error = error;
+            OnDirectCdnStreamingStateChanged_reason = reason;
             OnDirectCdnStreamingStateChanged_message = message;
 
         }
 
-        public bool OnDirectCdnStreamingStateChangedPassed(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_ERROR error, string message)
+        public bool OnDirectCdnStreamingStateChangedPassed(DIRECT_CDN_STREAMING_STATE state, DIRECT_CDN_STREAMING_REASON reason, string message)
         {
 
             if (OnDirectCdnStreamingStateChanged_be_trigger == false)
@@ -2428,7 +2428,7 @@ namespace Agora.Rtc
 
             if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_STATE>(OnDirectCdnStreamingStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_ERROR>(OnDirectCdnStreamingStateChanged_error, error) == false)
+            if (ParamsHelper.Compare<DIRECT_CDN_STREAMING_REASON>(OnDirectCdnStreamingStateChanged_reason, reason) == false)
                 return false;
             if (ParamsHelper.Compare<string>(OnDirectCdnStreamingStateChanged_message, message) == false)
                 return false;

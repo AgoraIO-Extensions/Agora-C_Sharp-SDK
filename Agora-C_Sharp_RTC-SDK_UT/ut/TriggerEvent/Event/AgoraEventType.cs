@@ -3,73 +3,34 @@ namespace Agora.Rtc
 {
     public class AgoraEventType
     {
-        #region terra IRtcEngineEventHandlerBase
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_EVENTHANDLERTYPE = "RtcEngineEventHandlerBase_eventHandlerType";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONERROR = "RtcEngineEventHandlerBase_onError";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLASTMILEPROBERESULT = "RtcEngineEventHandlerBase_onLastmileProbeResult";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLEAVECHANNEL = "RtcEngineEventHandlerBase_onLeaveChannel";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONRTCSTATS = "RtcEngineEventHandlerBase_onRtcStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONAUDIODEVICESTATECHANGED = "RtcEngineEventHandlerBase_onAudioDeviceStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONAUDIOMIXINGPOSITIONCHANGED = "RtcEngineEventHandlerBase_onAudioMixingPositionChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONAUDIOEFFECTFINISHED = "RtcEngineEventHandlerBase_onAudioEffectFinished";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONVIDEODEVICESTATECHANGED = "RtcEngineEventHandlerBase_onVideoDeviceStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONINTRAREQUESTRECEIVED = "RtcEngineEventHandlerBase_onIntraRequestReceived";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONUPLINKNETWORKINFOUPDATED = "RtcEngineEventHandlerBase_onUplinkNetworkInfoUpdated";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONDOWNLINKNETWORKINFOUPDATED = "RtcEngineEventHandlerBase_onDownlinkNetworkInfoUpdated";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLASTMILEQUALITY = "RtcEngineEventHandlerBase_onLastmileQuality";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONFIRSTLOCALVIDEOFRAME = "RtcEngineEventHandlerBase_onFirstLocalVideoFrame";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONFIRSTLOCALVIDEOFRAMEPUBLISHED = "RtcEngineEventHandlerBase_onFirstLocalVideoFramePublished";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLOCALVIDEOSTATECHANGED = "RtcEngineEventHandlerBase_onLocalVideoStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLOCALAUDIOSTATS = "RtcEngineEventHandlerBase_onLocalAudioStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONCAMERAFOCUSAREACHANGED = "RtcEngineEventHandlerBase_onCameraFocusAreaChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONCAMERAEXPOSUREAREACHANGED = "RtcEngineEventHandlerBase_onCameraExposureAreaChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONFACEPOSITIONCHANGED = "RtcEngineEventHandlerBase_onFacePositionChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONAUDIOMIXINGSTATECHANGED = "RtcEngineEventHandlerBase_onAudioMixingStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONRHYTHMPLAYERSTATECHANGED = "RtcEngineEventHandlerBase_onRhythmPlayerStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONCONNECTIONLOST = "RtcEngineEventHandlerBase_onConnectionLost";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONREQUESTTOKEN = "RtcEngineEventHandlerBase_onRequestToken";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONTOKENPRIVILEGEWILLEXPIRE = "RtcEngineEventHandlerBase_onTokenPrivilegeWillExpire";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLICENSEVALIDATIONFAILURE = "RtcEngineEventHandlerBase_onLicenseValidationFailure";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONFIRSTLOCALAUDIOFRAMEPUBLISHED = "RtcEngineEventHandlerBase_onFirstLocalAudioFramePublished";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLOCALAUDIOSTATECHANGED = "RtcEngineEventHandlerBase_onLocalAudioStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONCONTENTINSPECTRESULT = "RtcEngineEventHandlerBase_onContentInspectResult";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONCLIENTROLECHANGED = "RtcEngineEventHandlerBase_onClientRoleChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONCLIENTROLECHANGEFAILED = "RtcEngineEventHandlerBase_onClientRoleChangeFailed";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONAUDIODEVICEVOLUMECHANGED = "RtcEngineEventHandlerBase_onAudioDeviceVolumeChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONRTMPSTREAMINGSTATECHANGED = "RtcEngineEventHandlerBase_onRtmpStreamingStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONRTMPSTREAMINGEVENT = "RtcEngineEventHandlerBase_onRtmpStreamingEvent";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONTRANSCODINGUPDATED = "RtcEngineEventHandlerBase_onTranscodingUpdated";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONAUDIOROUTINGCHANGED = "RtcEngineEventHandlerBase_onAudioRoutingChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONCHANNELMEDIARELAYSTATECHANGED = "RtcEngineEventHandlerBase_onChannelMediaRelayStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONLOCALPUBLISHFALLBACKTOAUDIOONLY = "RtcEngineEventHandlerBase_onLocalPublishFallbackToAudioOnly";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONCONNECTIONSTATECHANGED = "RtcEngineEventHandlerBase_onConnectionStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONWLACCMESSAGE = "RtcEngineEventHandlerBase_onWlAccMessage";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONWLACCSTATS = "RtcEngineEventHandlerBase_onWlAccStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONNETWORKTYPECHANGED = "RtcEngineEventHandlerBase_onNetworkTypeChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONENCRYPTIONERROR = "RtcEngineEventHandlerBase_onEncryptionError";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONPERMISSIONERROR = "RtcEngineEventHandlerBase_onPermissionError";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONUPLOADLOGRESULT = "RtcEngineEventHandlerBase_onUploadLogResult";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONAUDIOPUBLISHSTATECHANGED = "RtcEngineEventHandlerBase_onAudioPublishStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONVIDEOPUBLISHSTATECHANGED = "RtcEngineEventHandlerBase_onVideoPublishStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONEXTENSIONEVENT = "RtcEngineEventHandlerBase_onExtensionEvent";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONEXTENSIONSTARTED = "RtcEngineEventHandlerBase_onExtensionStarted";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONEXTENSIONSTOPPED = "RtcEngineEventHandlerBase_onExtensionStopped";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONEXTENSIONERROR = "RtcEngineEventHandlerBase_onExtensionError";
-        internal const string EVENT_RTCENGINEEVENTHANDLERBASE_ONSETRTMFLAGRESULT = "RtcEngineEventHandlerBase_onSetRtmFlagResult";
-        #endregion terra IRtcEngineEventHandlerBase
 
         #region terra IRtcEngineEventHandler
         internal const string EVENT_RTCENGINEEVENTHANDLER_EVENTHANDLERTYPE = "RtcEngineEventHandler_eventHandlerType";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONJOINCHANNELSUCCESS = "RtcEngineEventHandler_onJoinChannelSuccess";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONREJOINCHANNELSUCCESS = "RtcEngineEventHandler_onRejoinChannelSuccess";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONPROXYCONNECTED = "RtcEngineEventHandler_onProxyConnected";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONERROR = "RtcEngineEventHandler_onError";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOQUALITY = "RtcEngineEventHandler_onAudioQuality";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLASTMILEPROBERESULT = "RtcEngineEventHandler_onLastmileProbeResult";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOVOLUMEINDICATION = "RtcEngineEventHandler_onAudioVolumeIndication";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLEAVECHANNEL = "RtcEngineEventHandler_onLeaveChannel";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONRTCSTATS = "RtcEngineEventHandler_onRtcStats";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIODEVICESTATECHANGED = "RtcEngineEventHandler_onAudioDeviceStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGPOSITIONCHANGED = "RtcEngineEventHandler_onAudioMixingPositionChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGFINISHED = "RtcEngineEventHandler_onAudioMixingFinished";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOEFFECTFINISHED = "RtcEngineEventHandler_onAudioEffectFinished";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEODEVICESTATECHANGED = "RtcEngineEventHandler_onVideoDeviceStateChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONNETWORKQUALITY = "RtcEngineEventHandler_onNetworkQuality";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONINTRAREQUESTRECEIVED = "RtcEngineEventHandler_onIntraRequestReceived";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONUPLINKNETWORKINFOUPDATED = "RtcEngineEventHandler_onUplinkNetworkInfoUpdated";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONDOWNLINKNETWORKINFOUPDATED = "RtcEngineEventHandler_onDownlinkNetworkInfoUpdated";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLASTMILEQUALITY = "RtcEngineEventHandler_onLastmileQuality";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONFIRSTLOCALVIDEOFRAME = "RtcEngineEventHandler_onFirstLocalVideoFrame";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONFIRSTLOCALVIDEOFRAMEPUBLISHED = "RtcEngineEventHandler_onFirstLocalVideoFramePublished";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONFIRSTREMOTEVIDEODECODED = "RtcEngineEventHandler_onFirstRemoteVideoDecoded";
-        internal const string EVENT_RTCENGINEEVENTHANDLER_ONREMOTEVIDEOSTATECHANGED = "RtcEngineEventHandler_onRemoteVideoStateChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSIZECHANGED = "RtcEngineEventHandler_onVideoSizeChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATECHANGED = "RtcEngineEventHandler_onLocalVideoStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONREMOTEVIDEOSTATECHANGED = "RtcEngineEventHandler_onRemoteVideoStateChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONFIRSTREMOTEVIDEOFRAME = "RtcEngineEventHandler_onFirstRemoteVideoFrame";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONUSERJOINED = "RtcEngineEventHandler_onUserJoined";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONUSEROFFLINE = "RtcEngineEventHandler_onUserOffline";
@@ -79,62 +40,67 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONUSERSTATECHANGED = "RtcEngineEventHandler_onUserStateChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONUSERENABLELOCALVIDEO = "RtcEngineEventHandler_onUserEnableLocalVideo";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONREMOTEAUDIOSTATS = "RtcEngineEventHandler_onRemoteAudioStats";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALAUDIOSTATS = "RtcEngineEventHandler_onLocalAudioStats";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATS = "RtcEngineEventHandler_onLocalVideoStats";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONREMOTEVIDEOSTATS = "RtcEngineEventHandler_onRemoteVideoStats";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONCAMERAREADY = "RtcEngineEventHandler_onCameraReady";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONCAMERAFOCUSAREACHANGED = "RtcEngineEventHandler_onCameraFocusAreaChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONCAMERAEXPOSUREAREACHANGED = "RtcEngineEventHandler_onCameraExposureAreaChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONFACEPOSITIONCHANGED = "RtcEngineEventHandler_onFacePositionChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSTOPPED = "RtcEngineEventHandler_onVideoStopped";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGSTATECHANGED = "RtcEngineEventHandler_onAudioMixingStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONRHYTHMPLAYERSTATECHANGED = "RtcEngineEventHandler_onRhythmPlayerStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONCONNECTIONLOST = "RtcEngineEventHandler_onConnectionLost";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONCONNECTIONINTERRUPTED = "RtcEngineEventHandler_onConnectionInterrupted";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONCONNECTIONBANNED = "RtcEngineEventHandler_onConnectionBanned";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONSTREAMMESSAGE = "RtcEngineEventHandler_onStreamMessage";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONSTREAMMESSAGEERROR = "RtcEngineEventHandler_onStreamMessageError";
-        internal const string EVENT_RTCENGINEEVENTHANDLER_ONFIRSTREMOTEAUDIOFRAME = "RtcEngineEventHandler_onFirstRemoteAudioFrame";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONREQUESTTOKEN = "RtcEngineEventHandler_onRequestToken";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONTOKENPRIVILEGEWILLEXPIRE = "RtcEngineEventHandler_onTokenPrivilegeWillExpire";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLICENSEVALIDATIONFAILURE = "RtcEngineEventHandler_onLicenseValidationFailure";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONFIRSTLOCALAUDIOFRAMEPUBLISHED = "RtcEngineEventHandler_onFirstLocalAudioFramePublished";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONFIRSTREMOTEAUDIODECODED = "RtcEngineEventHandler_onFirstRemoteAudioDecoded";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONFIRSTREMOTEAUDIOFRAME = "RtcEngineEventHandler_onFirstRemoteAudioFrame";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALAUDIOSTATECHANGED = "RtcEngineEventHandler_onLocalAudioStateChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONREMOTEAUDIOSTATECHANGED = "RtcEngineEventHandler_onRemoteAudioStateChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONACTIVESPEAKER = "RtcEngineEventHandler_onActiveSpeaker";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONCONTENTINSPECTRESULT = "RtcEngineEventHandler_onContentInspectResult";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONSNAPSHOTTAKEN = "RtcEngineEventHandler_onSnapshotTaken";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONCLIENTROLECHANGED = "RtcEngineEventHandler_onClientRoleChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONCLIENTROLECHANGEFAILED = "RtcEngineEventHandler_onClientRoleChangeFailed";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIODEVICEVOLUMECHANGED = "RtcEngineEventHandler_onAudioDeviceVolumeChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONRTMPSTREAMINGSTATECHANGED = "RtcEngineEventHandler_onRtmpStreamingStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONRTMPSTREAMINGEVENT = "RtcEngineEventHandler_onRtmpStreamingEvent";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONTRANSCODINGUPDATED = "RtcEngineEventHandler_onTranscodingUpdated";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOROUTINGCHANGED = "RtcEngineEventHandler_onAudioRoutingChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONCHANNELMEDIARELAYSTATECHANGED = "RtcEngineEventHandler_onChannelMediaRelayStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALPUBLISHFALLBACKTOAUDIOONLY = "RtcEngineEventHandler_onLocalPublishFallbackToAudioOnly";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONREMOTESUBSCRIBEFALLBACKTOAUDIOONLY = "RtcEngineEventHandler_onRemoteSubscribeFallbackToAudioOnly";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONREMOTEAUDIOTRANSPORTSTATS = "RtcEngineEventHandler_onRemoteAudioTransportStats";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONREMOTEVIDEOTRANSPORTSTATS = "RtcEngineEventHandler_onRemoteVideoTransportStats";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONCONNECTIONSTATECHANGED = "RtcEngineEventHandler_onConnectionStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONWLACCMESSAGE = "RtcEngineEventHandler_onWlAccMessage";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONWLACCSTATS = "RtcEngineEventHandler_onWlAccStats";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONNETWORKTYPECHANGED = "RtcEngineEventHandler_onNetworkTypeChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONENCRYPTIONERROR = "RtcEngineEventHandler_onEncryptionError";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONPERMISSIONERROR = "RtcEngineEventHandler_onPermissionError";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALUSERREGISTERED = "RtcEngineEventHandler_onLocalUserRegistered";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONUSERINFOUPDATED = "RtcEngineEventHandler_onUserInfoUpdated";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONUSERACCOUNTUPDATED = "RtcEngineEventHandler_onUserAccountUpdated";
-        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOSUBSCRIBESTATECHANGED = "RtcEngineEventHandler_onAudioSubscribeStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSUBSCRIBESTATECHANGED = "RtcEngineEventHandler_onVideoSubscribeStateChanged";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEORENDERINGTRACINGRESULT = "RtcEngineEventHandler_onVideoRenderingTracingResult";
         internal const string EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOTRANSCODERERROR = "RtcEngineEventHandler_onLocalVideoTranscoderError";
-        internal const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOLAYOUTINFO = "RtcEngineEventHandler_onVideoLayoutInfo";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONUPLOADLOGRESULT = "RtcEngineEventHandler_onUploadLogResult";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOSUBSCRIBESTATECHANGED = "RtcEngineEventHandler_onAudioSubscribeStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSUBSCRIBESTATECHANGED = "RtcEngineEventHandler_onVideoSubscribeStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONAUDIOPUBLISHSTATECHANGED = "RtcEngineEventHandler_onAudioPublishStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONVIDEOPUBLISHSTATECHANGED = "RtcEngineEventHandler_onVideoPublishStateChanged";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONTRANSCODEDSTREAMLAYOUTINFO = "RtcEngineEventHandler_onTranscodedStreamLayoutInfo";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENT = "RtcEngineEventHandler_onExtensionEvent";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTED = "RtcEngineEventHandler_onExtensionStarted";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPED = "RtcEngineEventHandler_onExtensionStopped";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERROR = "RtcEngineEventHandler_onExtensionError";
+        internal const string EVENT_RTCENGINEEVENTHANDLER_ONSETRTMFLAGRESULT = "RtcEngineEventHandler_onSetRtmFlagResult";
         #endregion terra IRtcEngineEventHandler
-
-        #region terra IRtcEngineEventHandlerS
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_EVENTHANDLERTYPE = "RtcEngineEventHandlerS_eventHandlerType";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONJOINCHANNELSUCCESS = "RtcEngineEventHandlerS_onJoinChannelSuccess";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONREJOINCHANNELSUCCESS = "RtcEngineEventHandlerS_onRejoinChannelSuccess";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONPROXYCONNECTED = "RtcEngineEventHandlerS_onProxyConnected";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONAUDIOVOLUMEINDICATION = "RtcEngineEventHandlerS_onAudioVolumeIndication";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONNETWORKQUALITY = "RtcEngineEventHandlerS_onNetworkQuality";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONREMOTEVIDEOSTATECHANGED = "RtcEngineEventHandlerS_onRemoteVideoStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONVIDEOSIZECHANGED = "RtcEngineEventHandlerS_onVideoSizeChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONFIRSTREMOTEVIDEOFRAME = "RtcEngineEventHandlerS_onFirstRemoteVideoFrame";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONUSERJOINED = "RtcEngineEventHandlerS_onUserJoined";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONUSEROFFLINE = "RtcEngineEventHandlerS_onUserOffline";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONUSERMUTEAUDIO = "RtcEngineEventHandlerS_onUserMuteAudio";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONUSERMUTEVIDEO = "RtcEngineEventHandlerS_onUserMuteVideo";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONUSERENABLEVIDEO = "RtcEngineEventHandlerS_onUserEnableVideo";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONUSERSTATECHANGED = "RtcEngineEventHandlerS_onUserStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONREMOTEAUDIOSTATS = "RtcEngineEventHandlerS_onRemoteAudioStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONLOCALVIDEOSTATS = "RtcEngineEventHandlerS_onLocalVideoStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONREMOTEVIDEOSTATS = "RtcEngineEventHandlerS_onRemoteVideoStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONSTREAMMESSAGE = "RtcEngineEventHandlerS_onStreamMessage";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONSTREAMMESSAGEERROR = "RtcEngineEventHandlerS_onStreamMessageError";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONREMOTEAUDIOSTATECHANGED = "RtcEngineEventHandlerS_onRemoteAudioStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONACTIVESPEAKER = "RtcEngineEventHandlerS_onActiveSpeaker";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONSNAPSHOTTAKEN = "RtcEngineEventHandlerS_onSnapshotTaken";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONREMOTESUBSCRIBEFALLBACKTOAUDIOONLY = "RtcEngineEventHandlerS_onRemoteSubscribeFallbackToAudioOnly";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONAUDIOSUBSCRIBESTATECHANGED = "RtcEngineEventHandlerS_onAudioSubscribeStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONVIDEOSUBSCRIBESTATECHANGED = "RtcEngineEventHandlerS_onVideoSubscribeStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONVIDEORENDERINGTRACINGRESULT = "RtcEngineEventHandlerS_onVideoRenderingTracingResult";
-        internal const string EVENT_RTCENGINEEVENTHANDLERS_ONLOCALVIDEOTRANSCODERERROR = "RtcEngineEventHandlerS_onLocalVideoTranscoderError";
-        #endregion terra IRtcEngineEventHandlerS
 
         #region terra IRtcEngineEventHandlerEx
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_EVENTHANDLERTYPE = "RtcEngineEventHandlerEx_eventHandlerType";
@@ -191,57 +157,8 @@ namespace Agora.Rtc
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONSNAPSHOTTAKEN = "RtcEngineEventHandlerEx_onSnapshotTaken";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEORENDERINGTRACINGRESULT = "RtcEngineEventHandlerEx_onVideoRenderingTracingResult";
         internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONSETRTMFLAGRESULT = "RtcEngineEventHandlerEx_onSetRtmFlagResult";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEOLAYOUTINFO = "RtcEngineEventHandlerEx_onVideoLayoutInfo";
+        internal const string EVENT_RTCENGINEEVENTHANDLEREX_ONTRANSCODEDSTREAMLAYOUTINFO = "RtcEngineEventHandlerEx_onTranscodedStreamLayoutInfo";
         #endregion terra IRtcEngineEventHandlerEx
-
-        #region terra IRtcEngineEventHandlerExS
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_EVENTHANDLERTYPE = "RtcEngineEventHandlerExS_eventHandlerType";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONJOINCHANNELSUCCESS = "RtcEngineEventHandlerExS_onJoinChannelSuccess";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONREJOINCHANNELSUCCESS = "RtcEngineEventHandlerExS_onRejoinChannelSuccess";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONAUDIOVOLUMEINDICATION = "RtcEngineEventHandlerExS_onAudioVolumeIndication";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONLEAVECHANNEL = "RtcEngineEventHandlerExS_onLeaveChannel";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONRTCSTATS = "RtcEngineEventHandlerExS_onRtcStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONNETWORKQUALITY = "RtcEngineEventHandlerExS_onNetworkQuality";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONINTRAREQUESTRECEIVED = "RtcEngineEventHandlerExS_onIntraRequestReceived";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONFIRSTLOCALVIDEOFRAMEPUBLISHED = "RtcEngineEventHandlerExS_onFirstLocalVideoFramePublished";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONFIRSTREMOTEVIDEODECODED = "RtcEngineEventHandlerExS_onFirstRemoteVideoDecoded";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONVIDEOSIZECHANGED = "RtcEngineEventHandlerExS_onVideoSizeChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONLOCALVIDEOSTATECHANGED = "RtcEngineEventHandlerExS_onLocalVideoStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONREMOTEVIDEOSTATECHANGED = "RtcEngineEventHandlerExS_onRemoteVideoStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONFIRSTREMOTEVIDEOFRAME = "RtcEngineEventHandlerExS_onFirstRemoteVideoFrame";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONUSERJOINED = "RtcEngineEventHandlerExS_onUserJoined";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONUSEROFFLINE = "RtcEngineEventHandlerExS_onUserOffline";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONUSERMUTEAUDIO = "RtcEngineEventHandlerExS_onUserMuteAudio";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONUSERMUTEVIDEO = "RtcEngineEventHandlerExS_onUserMuteVideo";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONUSERENABLEVIDEO = "RtcEngineEventHandlerExS_onUserEnableVideo";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONUSERSTATECHANGED = "RtcEngineEventHandlerExS_onUserStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONLOCALAUDIOSTATS = "RtcEngineEventHandlerExS_onLocalAudioStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONREMOTEAUDIOSTATS = "RtcEngineEventHandlerExS_onRemoteAudioStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONLOCALVIDEOSTATS = "RtcEngineEventHandlerExS_onLocalVideoStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONREMOTEVIDEOSTATS = "RtcEngineEventHandlerExS_onRemoteVideoStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONCONNECTIONLOST = "RtcEngineEventHandlerExS_onConnectionLost";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONCONNECTIONBANNED = "RtcEngineEventHandlerExS_onConnectionBanned";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONSTREAMMESSAGE = "RtcEngineEventHandlerExS_onStreamMessage";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONSTREAMMESSAGEERROR = "RtcEngineEventHandlerExS_onStreamMessageError";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONREQUESTTOKEN = "RtcEngineEventHandlerExS_onRequestToken";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONLICENSEVALIDATIONFAILURE = "RtcEngineEventHandlerExS_onLicenseValidationFailure";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONTOKENPRIVILEGEWILLEXPIRE = "RtcEngineEventHandlerExS_onTokenPrivilegeWillExpire";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONFIRSTLOCALAUDIOFRAMEPUBLISHED = "RtcEngineEventHandlerExS_onFirstLocalAudioFramePublished";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONLOCALAUDIOSTATECHANGED = "RtcEngineEventHandlerExS_onLocalAudioStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONREMOTEAUDIOSTATECHANGED = "RtcEngineEventHandlerExS_onRemoteAudioStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONACTIVESPEAKER = "RtcEngineEventHandlerExS_onActiveSpeaker";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONCLIENTROLECHANGED = "RtcEngineEventHandlerExS_onClientRoleChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONCLIENTROLECHANGEFAILED = "RtcEngineEventHandlerExS_onClientRoleChangeFailed";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONCONNECTIONSTATECHANGED = "RtcEngineEventHandlerExS_onConnectionStateChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONWLACCMESSAGE = "RtcEngineEventHandlerExS_onWlAccMessage";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONWLACCSTATS = "RtcEngineEventHandlerExS_onWlAccStats";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONNETWORKTYPECHANGED = "RtcEngineEventHandlerExS_onNetworkTypeChanged";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONENCRYPTIONERROR = "RtcEngineEventHandlerExS_onEncryptionError";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONUPLOADLOGRESULT = "RtcEngineEventHandlerExS_onUploadLogResult";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONSNAPSHOTTAKEN = "RtcEngineEventHandlerExS_onSnapshotTaken";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONVIDEORENDERINGTRACINGRESULT = "RtcEngineEventHandlerExS_onVideoRenderingTracingResult";
-        internal const string EVENT_RTCENGINEEVENTHANDLEREXS_ONSETRTMFLAGRESULT = "RtcEngineEventHandlerExS_onSetRtmFlagResult";
-        #endregion terra IRtcEngineEventHandlerExS
 
         #region terra IDirectCdnStreamingEventHandler
         internal const string EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED = "DirectCdnStreamingEventHandler_onDirectCdnStreamingStateChanged";
@@ -255,33 +172,23 @@ namespace Agora.Rtc
         #endregion terra IAudioEncodedFrameObserver
 
         #region terra IAudioFrameObserver
+        internal const string EVENT_AUDIOFRAMEOBSERVER_ONRECORDAUDIOFRAME = "AudioFrameObserver_onRecordAudioFrame";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAME = "AudioFrameObserver_onPlaybackAudioFrame";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_ONMIXEDAUDIOFRAME = "AudioFrameObserver_onMixedAudioFrame";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_ONEARMONITORINGAUDIOFRAME = "AudioFrameObserver_onEarMonitoringAudioFrame";
         internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING = "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_GETOBSERVEDAUDIOFRAMEPOSITION = "AudioFrameObserver_getObservedAudioFramePosition";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_GETPLAYBACKAUDIOPARAMS = "AudioFrameObserver_getPlaybackAudioParams";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_GETRECORDAUDIOPARAMS = "AudioFrameObserver_getRecordAudioParams";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_GETMIXEDAUDIOPARAMS = "AudioFrameObserver_getMixedAudioParams";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_GETEARMONITORINGAUDIOPARAMS = "AudioFrameObserver_getEarMonitoringAudioParams";
+        internal const string EVENT_AUDIOFRAMEOBSERVER_ONPLAYBACKAUDIOFRAMEBEFOREMIXING2 = "AudioFrameObserver_onPlaybackAudioFrameBeforeMixing2";
         #endregion terra IAudioFrameObserver
 
-        #region terra IAudioFrameObserverBase
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_ONRECORDAUDIOFRAME = "AudioFrameObserverBase_onRecordAudioFrame";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_ONPLAYBACKAUDIOFRAME = "AudioFrameObserverBase_onPlaybackAudioFrame";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_ONMIXEDAUDIOFRAME = "AudioFrameObserverBase_onMixedAudioFrame";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_ONEARMONITORINGAUDIOFRAME = "AudioFrameObserverBase_onEarMonitoringAudioFrame";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_ONPLAYBACKAUDIOFRAMEBEFOREMIXING = "AudioFrameObserverBase_onPlaybackAudioFrameBeforeMixing";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_GETOBSERVEDAUDIOFRAMEPOSITION = "AudioFrameObserverBase_getObservedAudioFramePosition";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_GETPLAYBACKAUDIOPARAMS = "AudioFrameObserverBase_getPlaybackAudioParams";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_GETRECORDAUDIOPARAMS = "AudioFrameObserverBase_getRecordAudioParams";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_GETMIXEDAUDIOPARAMS = "AudioFrameObserverBase_getMixedAudioParams";
-        internal const string EVENT_AUDIOFRAMEOBSERVERBASE_GETEARMONITORINGAUDIOPARAMS = "AudioFrameObserverBase_getEarMonitoringAudioParams";
-        #endregion terra IAudioFrameObserverBase
-
-        #region terra IAudioSpectrumObserverBase
-        internal const string EVENT_AUDIOSPECTRUMOBSERVERBASE_ONLOCALAUDIOSPECTRUM = "AudioSpectrumObserverBase_onLocalAudioSpectrum";
-        #endregion terra IAudioSpectrumObserverBase
-
         #region terra IAudioSpectrumObserver
+        internal const string EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM = "AudioSpectrumObserver_onLocalAudioSpectrum";
         internal const string EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM = "AudioSpectrumObserver_onRemoteAudioSpectrum";
         #endregion terra IAudioSpectrumObserver
-
-        #region terra IAudioSpectrumObserverS
-        internal const string EVENT_AUDIOSPECTRUMOBSERVERS_ONREMOTEAUDIOSPECTRUM = "AudioSpectrumObserverS_onRemoteAudioSpectrum";
-        #endregion terra IAudioSpectrumObserverS
 
         #region terra IAudioPcmFrameSink
         internal const string EVENT_AUDIOPCMFRAMESINK_ONFRAME = "AudioPcmFrameSink_onFrame";
@@ -313,24 +220,11 @@ namespace Agora.Rtc
         internal const string EVENT_MEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED = "MediaRecorderObserver_onRecorderInfoUpdated";
         #endregion terra IMediaRecorderObserver
 
-        #region terra IMediaRecorderObserverS
-        internal const string EVENT_MEDIARECORDEROBSERVERS_ONRECORDERSTATECHANGED = "MediaRecorderObserverS_onRecorderStateChanged";
-        internal const string EVENT_MEDIARECORDEROBSERVERS_ONRECORDERINFOUPDATED = "MediaRecorderObserverS_onRecorderInfoUpdated";
-        #endregion terra IMediaRecorderObserverS
-
-        #region terra IMetadataObserverBase
-        internal const string EVENT_METADATAOBSERVERBASE_GETMAXMETADATASIZE = "MetadataObserverBase_getMaxMetadataSize";
-        #endregion terra IMetadataObserverBase
-
         #region terra IMetadataObserver
+        internal const string EVENT_METADATAOBSERVER_GETMAXMETADATASIZE = "MetadataObserver_getMaxMetadataSize";
         internal const string EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA = "MetadataObserver_onReadyToSendMetadata";
         internal const string EVENT_METADATAOBSERVER_ONMETADATARECEIVED = "MetadataObserver_onMetadataReceived";
         #endregion terra IMetadataObserver
-
-        #region terra IMetadataObserverS
-        internal const string EVENT_METADATAOBSERVERS_ONREADYTOSENDMETADATA = "MetadataObserverS_onReadyToSendMetadata";
-        internal const string EVENT_METADATAOBSERVERS_ONMETADATARECEIVED = "MetadataObserverS_onMetadataReceived";
-        #endregion terra IMetadataObserverS
 
         #region terra IMusicContentCenterEventHandler
         internal const string EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT = "MusicContentCenterEventHandler_onMusicChartsResult";
@@ -344,30 +238,19 @@ namespace Agora.Rtc
         internal const string EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED = "VideoEncodedFrameObserver_onEncodedVideoFrameReceived";
         #endregion terra IVideoEncodedFrameObserver
 
-        #region terra IVideoEncodedFrameObserverS
-        internal const string EVENT_VIDEOENCODEDFRAMEOBSERVERS_ONENCODEDVIDEOFRAMERECEIVED = "VideoEncodedFrameObserverS_onEncodedVideoFrameReceived";
-        #endregion terra IVideoEncodedFrameObserverS
-
-        #region terra IVideoFrameObserverBase
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ONCAPTUREVIDEOFRAME = "VideoFrameObserverBase_onCaptureVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ONPREENCODEVIDEOFRAME = "VideoFrameObserverBase_onPreEncodeVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ONMEDIAPLAYERVIDEOFRAME = "VideoFrameObserverBase_onMediaPlayerVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ONTRANSCODEDVIDEOFRAME = "VideoFrameObserverBase_onTranscodedVideoFrame";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETVIDEOFRAMEPROCESSMODE = "VideoFrameObserverBase_getVideoFrameProcessMode";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETVIDEOFORMATPREFERENCE = "VideoFrameObserverBase_getVideoFormatPreference";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETROTATIONAPPLIED = "VideoFrameObserverBase_getRotationApplied";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETMIRRORAPPLIED = "VideoFrameObserverBase_getMirrorApplied";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_GETOBSERVEDFRAMEPOSITION = "VideoFrameObserverBase_getObservedFramePosition";
-        internal const string EVENT_VIDEOFRAMEOBSERVERBASE_ISEXTERNAL = "VideoFrameObserverBase_isExternal";
-        #endregion terra IVideoFrameObserverBase
-
         #region terra IVideoFrameObserver
+        internal const string EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME = "VideoFrameObserver_onCaptureVideoFrame";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME = "VideoFrameObserver_onPreEncodeVideoFrame";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME = "VideoFrameObserver_onMediaPlayerVideoFrame";
         internal const string EVENT_VIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME = "VideoFrameObserver_onRenderVideoFrame";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME = "VideoFrameObserver_onTranscodedVideoFrame";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_GETVIDEOFRAMEPROCESSMODE = "VideoFrameObserver_getVideoFrameProcessMode";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_GETVIDEOFORMATPREFERENCE = "VideoFrameObserver_getVideoFormatPreference";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_GETROTATIONAPPLIED = "VideoFrameObserver_getRotationApplied";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_GETMIRRORAPPLIED = "VideoFrameObserver_getMirrorApplied";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_GETOBSERVEDFRAMEPOSITION = "VideoFrameObserver_getObservedFramePosition";
+        internal const string EVENT_VIDEOFRAMEOBSERVER_ISEXTERNAL = "VideoFrameObserver_isExternal";
         #endregion terra IVideoFrameObserver
-
-        #region terra IVideoFrameObserverS
-        internal const string EVENT_VIDEOFRAMEOBSERVERS_ONRENDERVIDEOFRAME = "VideoFrameObserverS_onRenderVideoFrame";
-        #endregion terra IVideoFrameObserverS
 
         #region terra IH265TranscoderObserver
         internal const string EVENT_H265TRANSCODEROBSERVER_ONENABLETRANSCODE = "H265TranscoderObserver_onEnableTranscode";

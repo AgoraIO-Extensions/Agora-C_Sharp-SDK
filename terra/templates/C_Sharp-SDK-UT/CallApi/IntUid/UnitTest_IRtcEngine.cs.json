@@ -1,51 +1,17 @@
 {
-    "IRtcEngineBase": {
-        "type": "ClazzStruct",
-        "name": "IRtcEngineBase",
-        "methodSplitSymbol": "\n\n",
-        "commonMethodTemplate": "method_unitTest_compare_0",
-        "excludeMethods": [
-            "release",
-            "queryInterface",
-            "registerPacketObserver",
-            "registerEventHandler",
-            "unregisterEventHandler",
-            "joinChannelWithUserAccountEx"
-        ],
-        "memberSplitSymbol": "\n",
-        "commonMemberTemplate": "",
-        "pecialMembersTemplate": ""
-    },
     "IRtcEngine": {
         "type": "ClazzStruct",
         "name": "IRtcEngine",
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_unitTest_compare_0",
         "excludeMethods": [
+            "initialize",
             "release",
             "queryInterface",
             "registerPacketObserver",
             "registerEventHandler",
             "unregisterEventHandler",
             "joinChannelWithUserAccountEx"
-        ],
-        "memberSplitSymbol": "\n",
-        "commonMemberTemplate": "",
-        "pecialMembersTemplate": ""
-    },
-    "IMediaEngineBase": {
-        "type": "ClazzStruct",
-        "name": "IMediaEngineBase",
-        "methodSplitSymbol": "\n\n",
-        "commonMethodTemplate": "method_unitTest_compare_0",
-        "excludeMethods": [
-            "release",
-            "enableCustomAudioLocalPlayback",
-            "registerAudioFrameObserver",
-            "registerVideoFrameObserver",
-            "registerVideoEncodedFrameObserver",
-            "addVideoFrameRenderer",
-            "removeVideoFrameRenderer"
         ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",

@@ -288,6 +288,15 @@ namespace Agora.Rtc
         }
         #region terra ILocalSpatialAudioEngine
         [Test]
+        public void Test_Initialize()
+        {
+
+
+            var nRet = LocalSpatialAudioEngine.Initialize();
+            Assert.AreEqual(0, nRet);
+        }
+
+        [Test]
         public void Test_SetParameters()
         {
             string @params = ParamsHelper.CreateParam<string>();
@@ -315,23 +324,6 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_ClearRemotePositions()
-        {
-
-
-            var nRet = LocalSpatialAudioEngine.ClearRemotePositions();
-            Assert.AreEqual(0, nRet);
-        }
-        [Test]
-        public void Test_Initialize()
-        {
-
-
-            var nRet = LocalSpatialAudioEngine.Initialize();
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_MuteRemoteAudioStream()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
@@ -341,7 +333,14 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
+        [Test]
+        public void Test_ClearRemotePositions()
+        {
 
+
+            var nRet = LocalSpatialAudioEngine.ClearRemotePositions();
+            Assert.AreEqual(0, nRet);
+        }
         #endregion terra ILocalSpatialAudioEngine
     }
 }

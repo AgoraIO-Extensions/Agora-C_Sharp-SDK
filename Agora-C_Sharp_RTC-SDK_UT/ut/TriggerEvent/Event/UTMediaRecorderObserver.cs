@@ -9,19 +9,19 @@ namespace Agora.Rtc
         public string OnRecorderStateChanged_channelId;
         public uint OnRecorderStateChanged_uid;
         public RecorderState OnRecorderStateChanged_state;
-        public RecorderErrorCode OnRecorderStateChanged_error;
+        public RecorderReasonCode OnRecorderStateChanged_reason;
 
-        public override void OnRecorderStateChanged(string channelId, uint uid, RecorderState state, RecorderErrorCode error)
+        public override void OnRecorderStateChanged(string channelId, uint uid, RecorderState state, RecorderReasonCode reason)
         {
             OnRecorderStateChanged_be_trigger = true;
             OnRecorderStateChanged_channelId = channelId;
             OnRecorderStateChanged_uid = uid;
             OnRecorderStateChanged_state = state;
-            OnRecorderStateChanged_error = error;
+            OnRecorderStateChanged_reason = reason;
 
         }
 
-        public bool OnRecorderStateChangedPassed(string channelId, uint uid, RecorderState state, RecorderErrorCode error)
+        public bool OnRecorderStateChangedPassed(string channelId, uint uid, RecorderState state, RecorderReasonCode reason)
         {
 
             if (OnRecorderStateChanged_be_trigger == false)
@@ -33,7 +33,7 @@ namespace Agora.Rtc
                 return false;
             if (ParamsHelper.Compare<RecorderState>(OnRecorderStateChanged_state, state) == false)
                 return false;
-            if (ParamsHelper.Compare<RecorderErrorCode>(OnRecorderStateChanged_error, error) == false)
+            if (ParamsHelper.Compare<RecorderReasonCode>(OnRecorderStateChanged_reason, reason) == false)
                 return false;
 
             return true;

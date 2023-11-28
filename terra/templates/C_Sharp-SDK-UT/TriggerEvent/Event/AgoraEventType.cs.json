@@ -53,14 +53,8 @@
         "name": "IAudioFrameObserver",
         "methodSplitSymbol": "\n",
         "commonMethodTemplate": "method_event_name",
-        "excludeMethods": []
-    },
-    "IAudioFrameObserverBase": {
-        "type": "ClazzStruct",
-        "name": "IAudioFrameObserverBase",
-        "methodSplitSymbol": "\n",
-        "commonMethodTemplate": "method_event_name",
-        "excludeMethods": []
+        "excludeMethods": [],
+        "trackBackFather": 1
     },
     "IAudioSpectrumObserverBase": {
         "type": "ClazzStruct",
