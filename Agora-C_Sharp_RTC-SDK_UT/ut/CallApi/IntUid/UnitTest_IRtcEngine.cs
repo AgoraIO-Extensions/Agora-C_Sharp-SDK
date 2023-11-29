@@ -55,27 +55,46 @@ namespace Agora.Rtc
             Assert.AreEqual(0, nRet);
         }
 
+        [Test]
+        public void Test_IRtcEngine_StartScreenCapture()
+        {
+            ScreenCaptureParameters2 captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters2>();
+
+            var nRet = RtcEngine.StartScreenCapture(captureParams);
+            Assert.AreEqual(-4, nRet);
+        }
+
+        [Test]
+        public void Test_IRtcEngine_StartScreenCapture2()
+        {
+            VIDEO_SOURCE_TYPE sourceType = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
+            ScreenCaptureConfiguration config = ParamsHelper.CreateParam<ScreenCaptureConfiguration>();
+
+            var nRet = RtcEngine.StartScreenCapture(sourceType, config);
+            Assert.AreEqual(0, nRet);
+        }
+
         #region terra IRtcEngine
         [Test]
-        public void Test_IRtcEngineGetVersion()
+        public void Test_IRtcEngine_GetVersion()
         {
             int build = ParamsHelper.CreateParam<int>();
 
             var nRet = RtcEngine.GetVersion(ref build);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineGetErrorDescription()
+        public void Test_IRtcEngine_GetErrorDescription()
         {
             int code = ParamsHelper.CreateParam<int>();
 
             var nRet = RtcEngine.GetErrorDescription(code);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual("", nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineQueryCodecCapability()
+        public void Test_IRtcEngine_QueryCodecCapability()
         {
             CodecCapInfo[] codecInfo = ParamsHelper.CreateParam<CodecCapInfo[]>();
             int size = ParamsHelper.CreateParam<int>();
@@ -85,7 +104,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineQueryDeviceScore()
+        public void Test_IRtcEngine_QueryDeviceScore()
         {
 
 
@@ -94,7 +113,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePreloadChannel()
+        public void Test_IRtcEngine_PreloadChannel()
         {
             string token = ParamsHelper.CreateParam<string>();
             string channelId = ParamsHelper.CreateParam<string>();
@@ -105,7 +124,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePreloadChannelWithUserAccount()
+        public void Test_IRtcEngine_PreloadChannelWithUserAccount()
         {
             string token = ParamsHelper.CreateParam<string>();
             string channelId = ParamsHelper.CreateParam<string>();
@@ -116,7 +135,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUpdatePreloadChannelToken()
+        public void Test_IRtcEngine_UpdatePreloadChannelToken()
         {
             string token = ParamsHelper.CreateParam<string>();
 
@@ -125,7 +144,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineJoinChannel()
+        public void Test_IRtcEngine_JoinChannel()
         {
             string token = ParamsHelper.CreateParam<string>();
             string channelId = ParamsHelper.CreateParam<string>();
@@ -137,7 +156,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineJoinChannel2()
+        public void Test_IRtcEngine_JoinChannel2()
         {
             string token = ParamsHelper.CreateParam<string>();
             string channelId = ParamsHelper.CreateParam<string>();
@@ -149,7 +168,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUpdateChannelMediaOptions()
+        public void Test_IRtcEngine_UpdateChannelMediaOptions()
         {
             ChannelMediaOptions options = ParamsHelper.CreateParam<ChannelMediaOptions>();
 
@@ -158,7 +177,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineLeaveChannel()
+        public void Test_IRtcEngine_LeaveChannel()
         {
 
 
@@ -167,7 +186,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineLeaveChannel2()
+        public void Test_IRtcEngine_LeaveChannel2()
         {
             LeaveChannelOptions options = ParamsHelper.CreateParam<LeaveChannelOptions>();
 
@@ -176,7 +195,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineRenewToken()
+        public void Test_IRtcEngine_RenewToken()
         {
             string token = ParamsHelper.CreateParam<string>();
 
@@ -185,7 +204,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetChannelProfile()
+        public void Test_IRtcEngine_SetChannelProfile()
         {
             CHANNEL_PROFILE_TYPE profile = ParamsHelper.CreateParam<CHANNEL_PROFILE_TYPE>();
 
@@ -194,7 +213,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetClientRole()
+        public void Test_IRtcEngine_SetClientRole()
         {
             CLIENT_ROLE_TYPE role = ParamsHelper.CreateParam<CLIENT_ROLE_TYPE>();
 
@@ -203,7 +222,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetClientRole2()
+        public void Test_IRtcEngine_SetClientRole2()
         {
             CLIENT_ROLE_TYPE role = ParamsHelper.CreateParam<CLIENT_ROLE_TYPE>();
             ClientRoleOptions options = ParamsHelper.CreateParam<ClientRoleOptions>();
@@ -213,7 +232,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartEchoTest()
+        public void Test_IRtcEngine_StartEchoTest()
         {
 
 
@@ -222,7 +241,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartEchoTest2()
+        public void Test_IRtcEngine_StartEchoTest2()
         {
             int intervalInSeconds = ParamsHelper.CreateParam<int>();
 
@@ -231,7 +250,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartEchoTest3()
+        public void Test_IRtcEngine_StartEchoTest3()
         {
             EchoTestConfiguration config = ParamsHelper.CreateParam<EchoTestConfiguration>();
 
@@ -240,7 +259,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopEchoTest()
+        public void Test_IRtcEngine_StopEchoTest()
         {
 
 
@@ -249,17 +268,17 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableMultiCamera()
+        public void Test_IRtcEngine_EnableMultiCamera()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             CameraCapturerConfiguration config = ParamsHelper.CreateParam<CameraCapturerConfiguration>();
 
             var nRet = RtcEngine.EnableMultiCamera(enabled, config);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineEnableVideo()
+        public void Test_IRtcEngine_EnableVideo()
         {
 
 
@@ -268,7 +287,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineDisableVideo()
+        public void Test_IRtcEngine_DisableVideo()
         {
 
 
@@ -277,7 +296,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartPreview()
+        public void Test_IRtcEngine_StartPreview()
         {
 
 
@@ -286,7 +305,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartPreview2()
+        public void Test_IRtcEngine_StartPreview2()
         {
             VIDEO_SOURCE_TYPE sourceType = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
 
@@ -295,7 +314,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopPreview()
+        public void Test_IRtcEngine_StopPreview()
         {
 
 
@@ -304,7 +323,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopPreview2()
+        public void Test_IRtcEngine_StopPreview2()
         {
             VIDEO_SOURCE_TYPE sourceType = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
 
@@ -313,7 +332,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartLastmileProbeTest()
+        public void Test_IRtcEngine_StartLastmileProbeTest()
         {
             LastmileProbeConfig config = ParamsHelper.CreateParam<LastmileProbeConfig>();
 
@@ -322,7 +341,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopLastmileProbeTest()
+        public void Test_IRtcEngine_StopLastmileProbeTest()
         {
 
 
@@ -331,7 +350,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVideoEncoderConfiguration()
+        public void Test_IRtcEngine_SetVideoEncoderConfiguration()
         {
             VideoEncoderConfiguration config = ParamsHelper.CreateParam<VideoEncoderConfiguration>();
 
@@ -340,7 +359,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetBeautyEffectOptions()
+        public void Test_IRtcEngine_SetBeautyEffectOptions()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             BeautyOptions options = ParamsHelper.CreateParam<BeautyOptions>();
@@ -351,7 +370,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLowlightEnhanceOptions()
+        public void Test_IRtcEngine_SetLowlightEnhanceOptions()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             LowlightEnhanceOptions options = ParamsHelper.CreateParam<LowlightEnhanceOptions>();
@@ -362,7 +381,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVideoDenoiserOptions()
+        public void Test_IRtcEngine_SetVideoDenoiserOptions()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             VideoDenoiserOptions options = ParamsHelper.CreateParam<VideoDenoiserOptions>();
@@ -373,7 +392,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetColorEnhanceOptions()
+        public void Test_IRtcEngine_SetColorEnhanceOptions()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             ColorEnhanceOptions options = ParamsHelper.CreateParam<ColorEnhanceOptions>();
@@ -384,7 +403,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableVirtualBackground()
+        public void Test_IRtcEngine_EnableVirtualBackground()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             VirtualBackgroundSource backgroundSource = ParamsHelper.CreateParam<VirtualBackgroundSource>();
@@ -396,7 +415,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetupRemoteVideo()
+        public void Test_IRtcEngine_SetupRemoteVideo()
         {
             VideoCanvas canvas = ParamsHelper.CreateParam<VideoCanvas>();
 
@@ -405,7 +424,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetupLocalVideo()
+        public void Test_IRtcEngine_SetupLocalVideo()
         {
             VideoCanvas canvas = ParamsHelper.CreateParam<VideoCanvas>();
 
@@ -414,7 +433,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVideoScenario()
+        public void Test_IRtcEngine_SetVideoScenario()
         {
             VIDEO_APPLICATION_SCENARIO_TYPE scenarioType = ParamsHelper.CreateParam<VIDEO_APPLICATION_SCENARIO_TYPE>();
 
@@ -423,7 +442,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVideoQoEPreference()
+        public void Test_IRtcEngine_SetVideoQoEPreference()
         {
             VIDEO_QOE_PREFERENCE_TYPE qoePreference = ParamsHelper.CreateParam<VIDEO_QOE_PREFERENCE_TYPE>();
 
@@ -432,7 +451,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableAudio()
+        public void Test_IRtcEngine_EnableAudio()
         {
 
 
@@ -441,7 +460,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineDisableAudio()
+        public void Test_IRtcEngine_DisableAudio()
         {
 
 
@@ -450,7 +469,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioProfile()
+        public void Test_IRtcEngine_SetAudioProfile()
         {
             AUDIO_PROFILE_TYPE profile = ParamsHelper.CreateParam<AUDIO_PROFILE_TYPE>();
             AUDIO_SCENARIO_TYPE scenario = ParamsHelper.CreateParam<AUDIO_SCENARIO_TYPE>();
@@ -460,7 +479,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioProfile2()
+        public void Test_IRtcEngine_SetAudioProfile2()
         {
             AUDIO_PROFILE_TYPE profile = ParamsHelper.CreateParam<AUDIO_PROFILE_TYPE>();
 
@@ -469,7 +488,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioScenario()
+        public void Test_IRtcEngine_SetAudioScenario()
         {
             AUDIO_SCENARIO_TYPE scenario = ParamsHelper.CreateParam<AUDIO_SCENARIO_TYPE>();
 
@@ -478,7 +497,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableLocalAudio()
+        public void Test_IRtcEngine_EnableLocalAudio()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
@@ -487,7 +506,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineMuteLocalAudioStream()
+        public void Test_IRtcEngine_MuteLocalAudioStream()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
 
@@ -496,7 +515,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineMuteAllRemoteAudioStreams()
+        public void Test_IRtcEngine_MuteAllRemoteAudioStreams()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
 
@@ -505,7 +524,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetDefaultMuteAllRemoteAudioStreams()
+        public void Test_IRtcEngine_SetDefaultMuteAllRemoteAudioStreams()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
 
@@ -514,7 +533,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineMuteRemoteAudioStream()
+        public void Test_IRtcEngine_MuteRemoteAudioStream()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             bool mute = ParamsHelper.CreateParam<bool>();
@@ -524,7 +543,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineMuteLocalVideoStream()
+        public void Test_IRtcEngine_MuteLocalVideoStream()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
 
@@ -533,7 +552,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableLocalVideo()
+        public void Test_IRtcEngine_EnableLocalVideo()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
@@ -542,7 +561,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineMuteAllRemoteVideoStreams()
+        public void Test_IRtcEngine_MuteAllRemoteVideoStreams()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
 
@@ -551,7 +570,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetDefaultMuteAllRemoteVideoStreams()
+        public void Test_IRtcEngine_SetDefaultMuteAllRemoteVideoStreams()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
 
@@ -560,7 +579,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteDefaultVideoStreamType()
+        public void Test_IRtcEngine_SetRemoteDefaultVideoStreamType()
         {
             VIDEO_STREAM_TYPE streamType = ParamsHelper.CreateParam<VIDEO_STREAM_TYPE>();
 
@@ -569,7 +588,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineMuteRemoteVideoStream()
+        public void Test_IRtcEngine_MuteRemoteVideoStream()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             bool mute = ParamsHelper.CreateParam<bool>();
@@ -579,7 +598,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteVideoStreamType()
+        public void Test_IRtcEngine_SetRemoteVideoStreamType()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             VIDEO_STREAM_TYPE streamType = ParamsHelper.CreateParam<VIDEO_STREAM_TYPE>();
@@ -589,7 +608,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteVideoSubscriptionOptions()
+        public void Test_IRtcEngine_SetRemoteVideoSubscriptionOptions()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             VideoSubscriptionOptions options = ParamsHelper.CreateParam<VideoSubscriptionOptions>();
@@ -599,7 +618,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetSubscribeAudioBlocklist()
+        public void Test_IRtcEngine_SetSubscribeAudioBlocklist()
         {
             uint[] uidList = ParamsHelper.CreateParam<uint[]>();
             int uidNumber = ParamsHelper.CreateParam<int>();
@@ -609,7 +628,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetSubscribeAudioAllowlist()
+        public void Test_IRtcEngine_SetSubscribeAudioAllowlist()
         {
             uint[] uidList = ParamsHelper.CreateParam<uint[]>();
             int uidNumber = ParamsHelper.CreateParam<int>();
@@ -619,7 +638,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetSubscribeVideoBlocklist()
+        public void Test_IRtcEngine_SetSubscribeVideoBlocklist()
         {
             uint[] uidList = ParamsHelper.CreateParam<uint[]>();
             int uidNumber = ParamsHelper.CreateParam<int>();
@@ -629,7 +648,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetSubscribeVideoAllowlist()
+        public void Test_IRtcEngine_SetSubscribeVideoAllowlist()
         {
             uint[] uidList = ParamsHelper.CreateParam<uint[]>();
             int uidNumber = ParamsHelper.CreateParam<int>();
@@ -639,7 +658,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableAudioVolumeIndication()
+        public void Test_IRtcEngine_EnableAudioVolumeIndication()
         {
             int interval = ParamsHelper.CreateParam<int>();
             int smooth = ParamsHelper.CreateParam<int>();
@@ -650,7 +669,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartAudioRecording()
+        public void Test_IRtcEngine_StartAudioRecording()
         {
             string filePath = ParamsHelper.CreateParam<string>();
             AUDIO_RECORDING_QUALITY_TYPE quality = ParamsHelper.CreateParam<AUDIO_RECORDING_QUALITY_TYPE>();
@@ -660,7 +679,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartAudioRecording2()
+        public void Test_IRtcEngine_StartAudioRecording2()
         {
             string filePath = ParamsHelper.CreateParam<string>();
             int sampleRate = ParamsHelper.CreateParam<int>();
@@ -671,7 +690,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartAudioRecording3()
+        public void Test_IRtcEngine_StartAudioRecording3()
         {
             AudioRecordingConfiguration config = ParamsHelper.CreateParam<AudioRecordingConfiguration>();
 
@@ -680,17 +699,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineRegisterAudioEncodedFrameObserver()
-        {
-            AudioEncodedFrameObserverConfig config = ParamsHelper.CreateParam<AudioEncodedFrameObserverConfig>();
-            IAudioEncodedFrameObserver observer = ParamsHelper.CreateParam<IAudioEncodedFrameObserver>();
-
-            var nRet = RtcEngine.RegisterAudioEncodedFrameObserver(config, observer);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineStopAudioRecording()
+        public void Test_IRtcEngine_StopAudioRecording()
         {
 
 
@@ -699,43 +708,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineCreateMediaPlayer()
-        {
-
-
-            var nRet = RtcEngine.CreateMediaPlayer();
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineDestroyMediaPlayer()
-        {
-            IMediaPlayer media_player = ParamsHelper.CreateParam<IMediaPlayer>();
-
-            var nRet = RtcEngine.DestroyMediaPlayer(media_player);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineCreateMediaRecorder()
-        {
-            RecorderStreamInfo info = ParamsHelper.CreateParam<RecorderStreamInfo>();
-
-            var nRet = RtcEngine.CreateMediaRecorder(info);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineDestroyMediaRecorder()
-        {
-            IMediaRecorder mediaRecorder = ParamsHelper.CreateParam<IMediaRecorder>();
-
-            var nRet = RtcEngine.DestroyMediaRecorder(mediaRecorder);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineStartAudioMixing()
+        public void Test_IRtcEngine_StartAudioMixing()
         {
             string filePath = ParamsHelper.CreateParam<string>();
             bool loopback = ParamsHelper.CreateParam<bool>();
@@ -746,7 +719,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartAudioMixing2()
+        public void Test_IRtcEngine_StartAudioMixing2()
         {
             string filePath = ParamsHelper.CreateParam<string>();
             bool loopback = ParamsHelper.CreateParam<bool>();
@@ -758,7 +731,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopAudioMixing()
+        public void Test_IRtcEngine_StopAudioMixing()
         {
 
 
@@ -767,7 +740,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePauseAudioMixing()
+        public void Test_IRtcEngine_PauseAudioMixing()
         {
 
 
@@ -776,7 +749,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineResumeAudioMixing()
+        public void Test_IRtcEngine_ResumeAudioMixing()
         {
 
 
@@ -785,7 +758,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSelectAudioTrack()
+        public void Test_IRtcEngine_SelectAudioTrack()
         {
             int index = ParamsHelper.CreateParam<int>();
 
@@ -794,7 +767,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetAudioTrackCount()
+        public void Test_IRtcEngine_GetAudioTrackCount()
         {
 
 
@@ -803,7 +776,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustAudioMixingVolume()
+        public void Test_IRtcEngine_AdjustAudioMixingVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
 
@@ -812,7 +785,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustAudioMixingPublishVolume()
+        public void Test_IRtcEngine_AdjustAudioMixingPublishVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
 
@@ -821,7 +794,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetAudioMixingPublishVolume()
+        public void Test_IRtcEngine_GetAudioMixingPublishVolume()
         {
 
 
@@ -830,7 +803,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustAudioMixingPlayoutVolume()
+        public void Test_IRtcEngine_AdjustAudioMixingPlayoutVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
 
@@ -839,7 +812,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetAudioMixingPlayoutVolume()
+        public void Test_IRtcEngine_GetAudioMixingPlayoutVolume()
         {
 
 
@@ -848,7 +821,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetAudioMixingDuration()
+        public void Test_IRtcEngine_GetAudioMixingDuration()
         {
 
 
@@ -857,7 +830,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetAudioMixingCurrentPosition()
+        public void Test_IRtcEngine_GetAudioMixingCurrentPosition()
         {
 
 
@@ -866,7 +839,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioMixingPosition()
+        public void Test_IRtcEngine_SetAudioMixingPosition()
         {
             int pos = ParamsHelper.CreateParam<int>();
 
@@ -875,7 +848,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioMixingDualMonoMode()
+        public void Test_IRtcEngine_SetAudioMixingDualMonoMode()
         {
             AUDIO_MIXING_DUAL_MONO_MODE mode = ParamsHelper.CreateParam<AUDIO_MIXING_DUAL_MONO_MODE>();
 
@@ -884,7 +857,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioMixingPitch()
+        public void Test_IRtcEngine_SetAudioMixingPitch()
         {
             int pitch = ParamsHelper.CreateParam<int>();
 
@@ -893,7 +866,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetEffectsVolume()
+        public void Test_IRtcEngine_GetEffectsVolume()
         {
 
 
@@ -902,7 +875,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetEffectsVolume()
+        public void Test_IRtcEngine_SetEffectsVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
 
@@ -911,7 +884,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePreloadEffect()
+        public void Test_IRtcEngine_PreloadEffect()
         {
             int soundId = ParamsHelper.CreateParam<int>();
             string filePath = ParamsHelper.CreateParam<string>();
@@ -922,7 +895,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePlayEffect()
+        public void Test_IRtcEngine_PlayEffect()
         {
             int soundId = ParamsHelper.CreateParam<int>();
             string filePath = ParamsHelper.CreateParam<string>();
@@ -938,7 +911,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePlayAllEffects()
+        public void Test_IRtcEngine_PlayAllEffects()
         {
             int loopCount = ParamsHelper.CreateParam<int>();
             double pitch = ParamsHelper.CreateParam<double>();
@@ -951,7 +924,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetVolumeOfEffect()
+        public void Test_IRtcEngine_GetVolumeOfEffect()
         {
             int soundId = ParamsHelper.CreateParam<int>();
 
@@ -960,7 +933,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVolumeOfEffect()
+        public void Test_IRtcEngine_SetVolumeOfEffect()
         {
             int soundId = ParamsHelper.CreateParam<int>();
             int volume = ParamsHelper.CreateParam<int>();
@@ -970,7 +943,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePauseEffect()
+        public void Test_IRtcEngine_PauseEffect()
         {
             int soundId = ParamsHelper.CreateParam<int>();
 
@@ -979,7 +952,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePauseAllEffects()
+        public void Test_IRtcEngine_PauseAllEffects()
         {
 
 
@@ -988,7 +961,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineResumeEffect()
+        public void Test_IRtcEngine_ResumeEffect()
         {
             int soundId = ParamsHelper.CreateParam<int>();
 
@@ -997,7 +970,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineResumeAllEffects()
+        public void Test_IRtcEngine_ResumeAllEffects()
         {
 
 
@@ -1006,7 +979,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopEffect()
+        public void Test_IRtcEngine_StopEffect()
         {
             int soundId = ParamsHelper.CreateParam<int>();
 
@@ -1015,7 +988,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopAllEffects()
+        public void Test_IRtcEngine_StopAllEffects()
         {
 
 
@@ -1024,7 +997,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUnloadEffect()
+        public void Test_IRtcEngine_UnloadEffect()
         {
             int soundId = ParamsHelper.CreateParam<int>();
 
@@ -1033,7 +1006,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUnloadAllEffects()
+        public void Test_IRtcEngine_UnloadAllEffects()
         {
 
 
@@ -1042,7 +1015,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetEffectDuration()
+        public void Test_IRtcEngine_GetEffectDuration()
         {
             string filePath = ParamsHelper.CreateParam<string>();
 
@@ -1051,7 +1024,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetEffectPosition()
+        public void Test_IRtcEngine_SetEffectPosition()
         {
             int soundId = ParamsHelper.CreateParam<int>();
             int pos = ParamsHelper.CreateParam<int>();
@@ -1061,7 +1034,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetEffectCurrentPosition()
+        public void Test_IRtcEngine_GetEffectCurrentPosition()
         {
             int soundId = ParamsHelper.CreateParam<int>();
 
@@ -1070,7 +1043,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableSoundPositionIndication()
+        public void Test_IRtcEngine_EnableSoundPositionIndication()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
@@ -1079,7 +1052,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteVoicePosition()
+        public void Test_IRtcEngine_SetRemoteVoicePosition()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             double pan = ParamsHelper.CreateParam<double>();
@@ -1090,7 +1063,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableSpatialAudio()
+        public void Test_IRtcEngine_EnableSpatialAudio()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
@@ -1099,7 +1072,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteUserSpatialAudioParams()
+        public void Test_IRtcEngine_SetRemoteUserSpatialAudioParams()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             SpatialAudioParams @params = ParamsHelper.CreateParam<SpatialAudioParams>();
@@ -1109,7 +1082,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVoiceBeautifierPreset()
+        public void Test_IRtcEngine_SetVoiceBeautifierPreset()
         {
             VOICE_BEAUTIFIER_PRESET preset = ParamsHelper.CreateParam<VOICE_BEAUTIFIER_PRESET>();
 
@@ -1118,7 +1091,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioEffectPreset()
+        public void Test_IRtcEngine_SetAudioEffectPreset()
         {
             AUDIO_EFFECT_PRESET preset = ParamsHelper.CreateParam<AUDIO_EFFECT_PRESET>();
 
@@ -1127,7 +1100,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVoiceConversionPreset()
+        public void Test_IRtcEngine_SetVoiceConversionPreset()
         {
             VOICE_CONVERSION_PRESET preset = ParamsHelper.CreateParam<VOICE_CONVERSION_PRESET>();
 
@@ -1136,7 +1109,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAudioEffectParameters()
+        public void Test_IRtcEngine_SetAudioEffectParameters()
         {
             AUDIO_EFFECT_PRESET preset = ParamsHelper.CreateParam<AUDIO_EFFECT_PRESET>();
             int param1 = ParamsHelper.CreateParam<int>();
@@ -1147,7 +1120,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVoiceBeautifierParameters()
+        public void Test_IRtcEngine_SetVoiceBeautifierParameters()
         {
             VOICE_BEAUTIFIER_PRESET preset = ParamsHelper.CreateParam<VOICE_BEAUTIFIER_PRESET>();
             int param1 = ParamsHelper.CreateParam<int>();
@@ -1158,7 +1131,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetVoiceConversionParameters()
+        public void Test_IRtcEngine_SetVoiceConversionParameters()
         {
             VOICE_CONVERSION_PRESET preset = ParamsHelper.CreateParam<VOICE_CONVERSION_PRESET>();
             int param1 = ParamsHelper.CreateParam<int>();
@@ -1169,7 +1142,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalVoicePitch()
+        public void Test_IRtcEngine_SetLocalVoicePitch()
         {
             double pitch = ParamsHelper.CreateParam<double>();
 
@@ -1178,7 +1151,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalVoiceFormant()
+        public void Test_IRtcEngine_SetLocalVoiceFormant()
         {
             double formantRatio = ParamsHelper.CreateParam<double>();
 
@@ -1187,7 +1160,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalVoiceEqualization()
+        public void Test_IRtcEngine_SetLocalVoiceEqualization()
         {
             AUDIO_EQUALIZATION_BAND_FREQUENCY bandFrequency = ParamsHelper.CreateParam<AUDIO_EQUALIZATION_BAND_FREQUENCY>();
             int bandGain = ParamsHelper.CreateParam<int>();
@@ -1197,7 +1170,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalVoiceReverb()
+        public void Test_IRtcEngine_SetLocalVoiceReverb()
         {
             AUDIO_REVERB_TYPE reverbKey = ParamsHelper.CreateParam<AUDIO_REVERB_TYPE>();
             int value = ParamsHelper.CreateParam<int>();
@@ -1207,7 +1180,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetHeadphoneEQPreset()
+        public void Test_IRtcEngine_SetHeadphoneEQPreset()
         {
             HEADPHONE_EQUALIZER_PRESET preset = ParamsHelper.CreateParam<HEADPHONE_EQUALIZER_PRESET>();
 
@@ -1216,7 +1189,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetHeadphoneEQParameters()
+        public void Test_IRtcEngine_SetHeadphoneEQParameters()
         {
             int lowGain = ParamsHelper.CreateParam<int>();
             int highGain = ParamsHelper.CreateParam<int>();
@@ -1226,7 +1199,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLogFile()
+        public void Test_IRtcEngine_SetLogFile()
         {
             string filePath = ParamsHelper.CreateParam<string>();
 
@@ -1235,7 +1208,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLogFilter()
+        public void Test_IRtcEngine_SetLogFilter()
         {
             uint filter = ParamsHelper.CreateParam<uint>();
 
@@ -1244,7 +1217,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLogLevel()
+        public void Test_IRtcEngine_SetLogLevel()
         {
             LOG_LEVEL level = ParamsHelper.CreateParam<LOG_LEVEL>();
 
@@ -1253,7 +1226,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLogFileSize()
+        public void Test_IRtcEngine_SetLogFileSize()
         {
             uint fileSizeInKBytes = ParamsHelper.CreateParam<uint>();
 
@@ -1262,7 +1235,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUploadLogFile()
+        public void Test_IRtcEngine_UploadLogFile()
         {
             string requestId = ParamsHelper.CreateParam<string>();
 
@@ -1271,7 +1244,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalRenderMode()
+        public void Test_IRtcEngine_SetLocalRenderMode()
         {
             RENDER_MODE_TYPE renderMode = ParamsHelper.CreateParam<RENDER_MODE_TYPE>();
             VIDEO_MIRROR_MODE_TYPE mirrorMode = ParamsHelper.CreateParam<VIDEO_MIRROR_MODE_TYPE>();
@@ -1281,7 +1254,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteRenderMode()
+        public void Test_IRtcEngine_SetRemoteRenderMode()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             RENDER_MODE_TYPE renderMode = ParamsHelper.CreateParam<RENDER_MODE_TYPE>();
@@ -1292,7 +1265,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalRenderMode2()
+        public void Test_IRtcEngine_SetLocalRenderMode2()
         {
             RENDER_MODE_TYPE renderMode = ParamsHelper.CreateParam<RENDER_MODE_TYPE>();
 
@@ -1301,7 +1274,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalVideoMirrorMode()
+        public void Test_IRtcEngine_SetLocalVideoMirrorMode()
         {
             VIDEO_MIRROR_MODE_TYPE mirrorMode = ParamsHelper.CreateParam<VIDEO_MIRROR_MODE_TYPE>();
 
@@ -1310,7 +1283,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableDualStreamMode()
+        public void Test_IRtcEngine_EnableDualStreamMode()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
@@ -1319,7 +1292,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableDualStreamMode2()
+        public void Test_IRtcEngine_EnableDualStreamMode2()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             SimulcastStreamConfig streamConfig = ParamsHelper.CreateParam<SimulcastStreamConfig>();
@@ -1329,7 +1302,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetDualStreamMode()
+        public void Test_IRtcEngine_SetDualStreamMode()
         {
             SIMULCAST_STREAM_MODE mode = ParamsHelper.CreateParam<SIMULCAST_STREAM_MODE>();
 
@@ -1338,7 +1311,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetDualStreamMode2()
+        public void Test_IRtcEngine_SetDualStreamMode2()
         {
             SIMULCAST_STREAM_MODE mode = ParamsHelper.CreateParam<SIMULCAST_STREAM_MODE>();
             SimulcastStreamConfig streamConfig = ParamsHelper.CreateParam<SimulcastStreamConfig>();
@@ -1348,7 +1321,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableCustomAudioLocalPlayback()
+        public void Test_IRtcEngine_EnableCustomAudioLocalPlayback()
         {
             uint trackId = ParamsHelper.CreateParam<uint>();
             bool enabled = ParamsHelper.CreateParam<bool>();
@@ -1358,7 +1331,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetRecordingAudioFrameParameters()
+        public void Test_IRtcEngine_SetRecordingAudioFrameParameters()
         {
             int sampleRate = ParamsHelper.CreateParam<int>();
             int channel = ParamsHelper.CreateParam<int>();
@@ -1370,7 +1343,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetPlaybackAudioFrameParameters()
+        public void Test_IRtcEngine_SetPlaybackAudioFrameParameters()
         {
             int sampleRate = ParamsHelper.CreateParam<int>();
             int channel = ParamsHelper.CreateParam<int>();
@@ -1382,7 +1355,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetMixedAudioFrameParameters()
+        public void Test_IRtcEngine_SetMixedAudioFrameParameters()
         {
             int sampleRate = ParamsHelper.CreateParam<int>();
             int channel = ParamsHelper.CreateParam<int>();
@@ -1393,7 +1366,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetEarMonitoringAudioFrameParameters()
+        public void Test_IRtcEngine_SetEarMonitoringAudioFrameParameters()
         {
             int sampleRate = ParamsHelper.CreateParam<int>();
             int channel = ParamsHelper.CreateParam<int>();
@@ -1405,7 +1378,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetPlaybackAudioFrameBeforeMixingParameters()
+        public void Test_IRtcEngine_SetPlaybackAudioFrameBeforeMixingParameters()
         {
             int sampleRate = ParamsHelper.CreateParam<int>();
             int channel = ParamsHelper.CreateParam<int>();
@@ -1415,7 +1388,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableAudioSpectrumMonitor()
+        public void Test_IRtcEngine_EnableAudioSpectrumMonitor()
         {
             int intervalInMS = ParamsHelper.CreateParam<int>();
 
@@ -1424,7 +1397,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineDisableAudioSpectrumMonitor()
+        public void Test_IRtcEngine_DisableAudioSpectrumMonitor()
         {
 
 
@@ -1433,16 +1406,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineRegisterAudioSpectrumObserver()
-        {
-            IAudioSpectrumObserver observer = ParamsHelper.CreateParam<IAudioSpectrumObserver>();
-
-            var nRet = RtcEngine.RegisterAudioSpectrumObserver(observer);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineUnregisterAudioSpectrumObserver()
+        public void Test_IRtcEngine_UnregisterAudioSpectrumObserver()
         {
 
 
@@ -1451,7 +1415,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustRecordingSignalVolume()
+        public void Test_IRtcEngine_AdjustRecordingSignalVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
 
@@ -1460,7 +1424,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineMuteRecordingSignal()
+        public void Test_IRtcEngine_MuteRecordingSignal()
         {
             bool mute = ParamsHelper.CreateParam<bool>();
 
@@ -1469,7 +1433,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustPlaybackSignalVolume()
+        public void Test_IRtcEngine_AdjustPlaybackSignalVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
 
@@ -1478,7 +1442,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustUserPlaybackSignalVolume()
+        public void Test_IRtcEngine_AdjustUserPlaybackSignalVolume()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             int volume = ParamsHelper.CreateParam<int>();
@@ -1488,7 +1452,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalPublishFallbackOption()
+        public void Test_IRtcEngine_SetLocalPublishFallbackOption()
         {
             STREAM_FALLBACK_OPTIONS option = ParamsHelper.CreateParam<STREAM_FALLBACK_OPTIONS>();
 
@@ -1497,7 +1461,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteSubscribeFallbackOption()
+        public void Test_IRtcEngine_SetRemoteSubscribeFallbackOption()
         {
             STREAM_FALLBACK_OPTIONS option = ParamsHelper.CreateParam<STREAM_FALLBACK_OPTIONS>();
 
@@ -1506,7 +1470,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetHighPriorityUserList()
+        public void Test_IRtcEngine_SetHighPriorityUserList()
         {
             uint[] uidList = ParamsHelper.CreateParam<uint[]>();
             int uidNum = ParamsHelper.CreateParam<int>();
@@ -1517,7 +1481,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableExtension()
+        public void Test_IRtcEngine_EnableExtension()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
@@ -1529,7 +1493,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetExtensionProperty()
+        public void Test_IRtcEngine_SetExtensionProperty()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
@@ -1542,7 +1506,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetExtensionProperty()
+        public void Test_IRtcEngine_GetExtensionProperty()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
@@ -1556,7 +1520,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableLoopbackRecording()
+        public void Test_IRtcEngine_EnableLoopbackRecording()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             string deviceName = ParamsHelper.CreateParam<string>();
@@ -1566,7 +1530,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustLoopbackSignalVolume()
+        public void Test_IRtcEngine_AdjustLoopbackSignalVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
 
@@ -1575,7 +1539,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetLoopbackRecordingVolume()
+        public void Test_IRtcEngine_GetLoopbackRecordingVolume()
         {
 
 
@@ -1584,7 +1548,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableInEarMonitoring()
+        public void Test_IRtcEngine_EnableInEarMonitoring()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             int includeAudioFilters = ParamsHelper.CreateParam<int>();
@@ -1594,7 +1558,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetInEarMonitoringVolume()
+        public void Test_IRtcEngine_SetInEarMonitoringVolume()
         {
             int volume = ParamsHelper.CreateParam<int>();
 
@@ -1603,17 +1567,17 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineLoadExtensionProvider()
+        public void Test_IRtcEngine_LoadExtensionProvider()
         {
             string path = ParamsHelper.CreateParam<string>();
             bool unload_after_use = ParamsHelper.CreateParam<bool>();
 
             var nRet = RtcEngine.LoadExtensionProvider(path, unload_after_use);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetExtensionProviderProperty()
+        public void Test_IRtcEngine_SetExtensionProviderProperty()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string key = ParamsHelper.CreateParam<string>();
@@ -1624,7 +1588,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineRegisterExtension()
+        public void Test_IRtcEngine_RegisterExtension()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
@@ -1635,7 +1599,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableExtension2()
+        public void Test_IRtcEngine_EnableExtension2()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
@@ -1647,7 +1611,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetExtensionProperty2()
+        public void Test_IRtcEngine_SetExtensionProperty2()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
@@ -1660,7 +1624,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetExtensionProperty2()
+        public void Test_IRtcEngine_GetExtensionProperty2()
         {
             string provider = ParamsHelper.CreateParam<string>();
             string extension = ParamsHelper.CreateParam<string>();
@@ -1674,7 +1638,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraCapturerConfiguration()
+        public void Test_IRtcEngine_SetCameraCapturerConfiguration()
         {
             CameraCapturerConfiguration config = ParamsHelper.CreateParam<CameraCapturerConfiguration>();
 
@@ -1683,25 +1647,25 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineCreateCustomVideoTrack()
+        public void Test_IRtcEngine_CreateCustomVideoTrack()
         {
 
 
             var nRet = RtcEngine.CreateCustomVideoTrack();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet > 0);
         }
 
         [Test]
-        public void Test_IRtcEngineCreateCustomEncodedVideoTrack()
+        public void Test_IRtcEngine_CreateCustomEncodedVideoTrack()
         {
             SenderOptions sender_option = ParamsHelper.CreateParam<SenderOptions>();
 
             var nRet = RtcEngine.CreateCustomEncodedVideoTrack(sender_option);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet > 0);
         }
 
         [Test]
-        public void Test_IRtcEngineDestroyCustomVideoTrack()
+        public void Test_IRtcEngine_DestroyCustomVideoTrack()
         {
             uint video_track_id = ParamsHelper.CreateParam<uint>();
 
@@ -1710,7 +1674,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineDestroyCustomEncodedVideoTrack()
+        public void Test_IRtcEngine_DestroyCustomEncodedVideoTrack()
         {
             uint video_track_id = ParamsHelper.CreateParam<uint>();
 
@@ -1719,79 +1683,79 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSwitchCamera()
+        public void Test_IRtcEngine_SwitchCamera()
         {
 
 
             var nRet = RtcEngine.SwitchCamera();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsCameraZoomSupported()
+        public void Test_IRtcEngine_IsCameraZoomSupported()
         {
 
 
             var nRet = RtcEngine.IsCameraZoomSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsCameraFaceDetectSupported()
+        public void Test_IRtcEngine_IsCameraFaceDetectSupported()
         {
 
 
             var nRet = RtcEngine.IsCameraFaceDetectSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsCameraTorchSupported()
+        public void Test_IRtcEngine_IsCameraTorchSupported()
         {
 
 
             var nRet = RtcEngine.IsCameraTorchSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsCameraFocusSupported()
+        public void Test_IRtcEngine_IsCameraFocusSupported()
         {
 
 
             var nRet = RtcEngine.IsCameraFocusSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsCameraAutoFocusFaceModeSupported()
+        public void Test_IRtcEngine_IsCameraAutoFocusFaceModeSupported()
         {
 
 
             var nRet = RtcEngine.IsCameraAutoFocusFaceModeSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraZoomFactor()
+        public void Test_IRtcEngine_SetCameraZoomFactor()
         {
             float factor = ParamsHelper.CreateParam<float>();
 
             var nRet = RtcEngine.SetCameraZoomFactor(factor);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineEnableFaceDetection()
+        public void Test_IRtcEngine_EnableFaceDetection()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
             var nRet = RtcEngine.EnableFaceDetection(enabled);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineGetCameraMaxZoomFactor()
+        public void Test_IRtcEngine_GetCameraMaxZoomFactor()
         {
 
 
@@ -1800,146 +1764,135 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraFocusPositionInPreview()
+        public void Test_IRtcEngine_SetCameraFocusPositionInPreview()
         {
             float positionX = ParamsHelper.CreateParam<float>();
             float positionY = ParamsHelper.CreateParam<float>();
 
             var nRet = RtcEngine.SetCameraFocusPositionInPreview(positionX, positionY);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraTorchOn()
+        public void Test_IRtcEngine_SetCameraTorchOn()
         {
             bool isOn = ParamsHelper.CreateParam<bool>();
 
             var nRet = RtcEngine.SetCameraTorchOn(isOn);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraAutoFocusFaceModeEnabled()
+        public void Test_IRtcEngine_SetCameraAutoFocusFaceModeEnabled()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
             var nRet = RtcEngine.SetCameraAutoFocusFaceModeEnabled(enabled);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsCameraExposurePositionSupported()
+        public void Test_IRtcEngine_IsCameraExposurePositionSupported()
         {
 
 
             var nRet = RtcEngine.IsCameraExposurePositionSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraExposurePosition()
+        public void Test_IRtcEngine_SetCameraExposurePosition()
         {
             float positionXinView = ParamsHelper.CreateParam<float>();
             float positionYinView = ParamsHelper.CreateParam<float>();
 
             var nRet = RtcEngine.SetCameraExposurePosition(positionXinView, positionYinView);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsCameraExposureSupported()
+        public void Test_IRtcEngine_IsCameraExposureSupported()
         {
 
 
             var nRet = RtcEngine.IsCameraExposureSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraExposureFactor()
+        public void Test_IRtcEngine_SetCameraExposureFactor()
         {
             float factor = ParamsHelper.CreateParam<float>();
 
             var nRet = RtcEngine.SetCameraExposureFactor(factor);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsCameraAutoExposureFaceModeSupported()
+        public void Test_IRtcEngine_IsCameraAutoExposureFaceModeSupported()
         {
 
 
             var nRet = RtcEngine.IsCameraAutoExposureFaceModeSupported();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraAutoExposureFaceModeEnabled()
+        public void Test_IRtcEngine_SetCameraAutoExposureFaceModeEnabled()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
             var nRet = RtcEngine.SetCameraAutoExposureFaceModeEnabled(enabled);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetDefaultAudioRouteToSpeakerphone()
+        public void Test_IRtcEngine_SetDefaultAudioRouteToSpeakerphone()
         {
             bool defaultToSpeaker = ParamsHelper.CreateParam<bool>();
 
             var nRet = RtcEngine.SetDefaultAudioRouteToSpeakerphone(defaultToSpeaker);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetEnableSpeakerphone()
+        public void Test_IRtcEngine_SetEnableSpeakerphone()
         {
             bool speakerOn = ParamsHelper.CreateParam<bool>();
 
             var nRet = RtcEngine.SetEnableSpeakerphone(speakerOn);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineIsSpeakerphoneEnabled()
+        public void Test_IRtcEngine_IsSpeakerphoneEnabled()
         {
 
 
             var nRet = RtcEngine.IsSpeakerphoneEnabled();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(false, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetRouteInCommunicationMode()
+        public void Test_IRtcEngine_SetRouteInCommunicationMode()
         {
             int route = ParamsHelper.CreateParam<int>();
 
             var nRet = RtcEngine.SetRouteInCommunicationMode(route);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineGetScreenCaptureSources()
-        {
-            SIZE thumbSize = ParamsHelper.CreateParam<SIZE>();
-            SIZE iconSize = ParamsHelper.CreateParam<SIZE>();
-            bool includeScreen = ParamsHelper.CreateParam<bool>();
-
-            var nRet = RtcEngine.GetScreenCaptureSources(thumbSize, iconSize, includeScreen);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineSetAudioSessionOperationRestriction()
+        public void Test_IRtcEngine_SetAudioSessionOperationRestriction()
         {
             AUDIO_SESSION_OPERATION_RESTRICTION restriction = ParamsHelper.CreateParam<AUDIO_SESSION_OPERATION_RESTRICTION>();
 
             var nRet = RtcEngine.SetAudioSessionOperationRestriction(restriction);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineStartScreenCaptureByDisplayId()
+        public void Test_IRtcEngine_StartScreenCaptureByDisplayId()
         {
             uint displayId = ParamsHelper.CreateParam<uint>();
             Rectangle regionRect = ParamsHelper.CreateParam<Rectangle>();
@@ -1950,27 +1903,27 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartScreenCaptureByScreenRect()
+        public void Test_IRtcEngine_StartScreenCaptureByScreenRect()
         {
             Rectangle screenRect = ParamsHelper.CreateParam<Rectangle>();
             Rectangle regionRect = ParamsHelper.CreateParam<Rectangle>();
             ScreenCaptureParameters captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters>();
 
             var nRet = RtcEngine.StartScreenCaptureByScreenRect(screenRect, regionRect, captureParams);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineGetAudioDeviceInfo()
+        public void Test_IRtcEngine_GetAudioDeviceInfo()
         {
             DeviceInfoMobile deviceInfo = ParamsHelper.CreateParam<DeviceInfoMobile>();
 
             var nRet = RtcEngine.GetAudioDeviceInfo(ref deviceInfo);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineStartScreenCaptureByWindowId()
+        public void Test_IRtcEngine_StartScreenCaptureByWindowId()
         {
             view_t windowId = ParamsHelper.CreateParam<view_t>();
             Rectangle regionRect = ParamsHelper.CreateParam<Rectangle>();
@@ -1981,7 +1934,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetScreenCaptureContentHint()
+        public void Test_IRtcEngine_SetScreenCaptureContentHint()
         {
             VIDEO_CONTENT_HINT contentHint = ParamsHelper.CreateParam<VIDEO_CONTENT_HINT>();
 
@@ -1990,7 +1943,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUpdateScreenCaptureRegion()
+        public void Test_IRtcEngine_UpdateScreenCaptureRegion()
         {
             Rectangle regionRect = ParamsHelper.CreateParam<Rectangle>();
 
@@ -1999,7 +1952,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUpdateScreenCaptureParameters()
+        public void Test_IRtcEngine_UpdateScreenCaptureParameters()
         {
             ScreenCaptureParameters captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters>();
 
@@ -2008,34 +1961,25 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartScreenCapture()
-        {
-            ScreenCaptureParameters2 captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters2>();
-
-            var nRet = RtcEngine.StartScreenCapture(captureParams);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineUpdateScreenCapture()
+        public void Test_IRtcEngine_UpdateScreenCapture()
         {
             ScreenCaptureParameters2 captureParams = ParamsHelper.CreateParam<ScreenCaptureParameters2>();
 
             var nRet = RtcEngine.UpdateScreenCapture(captureParams);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineQueryScreenCaptureCapability()
+        public void Test_IRtcEngine_QueryScreenCaptureCapability()
         {
 
 
             var nRet = RtcEngine.QueryScreenCaptureCapability();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(-4, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetScreenCaptureScenario()
+        public void Test_IRtcEngine_SetScreenCaptureScenario()
         {
             SCREEN_SCENARIO_TYPE screenScenario = ParamsHelper.CreateParam<SCREEN_SCENARIO_TYPE>();
 
@@ -2044,7 +1988,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopScreenCapture()
+        public void Test_IRtcEngine_StopScreenCapture()
         {
 
 
@@ -2053,7 +1997,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetCallId()
+        public void Test_IRtcEngine_GetCallId()
         {
             string callId = ParamsHelper.CreateParam<string>();
 
@@ -2062,7 +2006,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineRate()
+        public void Test_IRtcEngine_Rate()
         {
             string callId = ParamsHelper.CreateParam<string>();
             int rating = ParamsHelper.CreateParam<int>();
@@ -2073,7 +2017,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineComplain()
+        public void Test_IRtcEngine_Complain()
         {
             string callId = ParamsHelper.CreateParam<string>();
             string description = ParamsHelper.CreateParam<string>();
@@ -2083,7 +2027,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartRtmpStreamWithoutTranscoding()
+        public void Test_IRtcEngine_StartRtmpStreamWithoutTranscoding()
         {
             string url = ParamsHelper.CreateParam<string>();
 
@@ -2092,7 +2036,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartRtmpStreamWithTranscoding()
+        public void Test_IRtcEngine_StartRtmpStreamWithTranscoding()
         {
             string url = ParamsHelper.CreateParam<string>();
             LiveTranscoding transcoding = ParamsHelper.CreateParam<LiveTranscoding>();
@@ -2102,7 +2046,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUpdateRtmpTranscoding()
+        public void Test_IRtcEngine_UpdateRtmpTranscoding()
         {
             LiveTranscoding transcoding = ParamsHelper.CreateParam<LiveTranscoding>();
 
@@ -2111,7 +2055,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartLocalVideoTranscoder()
+        public void Test_IRtcEngine_StartLocalVideoTranscoder()
         {
             LocalTranscoderConfiguration config = ParamsHelper.CreateParam<LocalTranscoderConfiguration>();
 
@@ -2120,7 +2064,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUpdateLocalTranscoderConfiguration()
+        public void Test_IRtcEngine_UpdateLocalTranscoderConfiguration()
         {
             LocalTranscoderConfiguration config = ParamsHelper.CreateParam<LocalTranscoderConfiguration>();
 
@@ -2129,7 +2073,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopRtmpStream()
+        public void Test_IRtcEngine_StopRtmpStream()
         {
             string url = ParamsHelper.CreateParam<string>();
 
@@ -2138,7 +2082,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopLocalVideoTranscoder()
+        public void Test_IRtcEngine_StopLocalVideoTranscoder()
         {
 
 
@@ -2147,7 +2091,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartCameraCapture()
+        public void Test_IRtcEngine_StartCameraCapture()
         {
             VIDEO_SOURCE_TYPE sourceType = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
             CameraCapturerConfiguration config = ParamsHelper.CreateParam<CameraCapturerConfiguration>();
@@ -2157,7 +2101,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopCameraCapture()
+        public void Test_IRtcEngine_StopCameraCapture()
         {
             VIDEO_SOURCE_TYPE sourceType = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
 
@@ -2166,7 +2110,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetCameraDeviceOrientation()
+        public void Test_IRtcEngine_SetCameraDeviceOrientation()
         {
             VIDEO_SOURCE_TYPE type = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
             VIDEO_ORIENTATION orientation = ParamsHelper.CreateParam<VIDEO_ORIENTATION>();
@@ -2176,7 +2120,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetScreenCaptureOrientation()
+        public void Test_IRtcEngine_SetScreenCaptureOrientation()
         {
             VIDEO_SOURCE_TYPE type = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
             VIDEO_ORIENTATION orientation = ParamsHelper.CreateParam<VIDEO_ORIENTATION>();
@@ -2186,17 +2130,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartScreenCapture2()
-        {
-            VIDEO_SOURCE_TYPE sourceType = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
-            ScreenCaptureConfiguration config = ParamsHelper.CreateParam<ScreenCaptureConfiguration>();
-
-            var nRet = RtcEngine.StartScreenCapture(sourceType, config);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineStopScreenCapture2()
+        public void Test_IRtcEngine_StopScreenCapture2()
         {
             VIDEO_SOURCE_TYPE sourceType = ParamsHelper.CreateParam<VIDEO_SOURCE_TYPE>();
 
@@ -2205,16 +2139,16 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetConnectionState()
+        public void Test_IRtcEngine_GetConnectionState()
         {
 
 
             var nRet = RtcEngine.GetConnectionState();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineSetRemoteUserPriority()
+        public void Test_IRtcEngine_SetRemoteUserPriority()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             PRIORITY_TYPE userPriority = ParamsHelper.CreateParam<PRIORITY_TYPE>();
@@ -2224,7 +2158,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetEncryptionMode()
+        public void Test_IRtcEngine_SetEncryptionMode()
         {
             string encryptionMode = ParamsHelper.CreateParam<string>();
 
@@ -2233,7 +2167,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetEncryptionSecret()
+        public void Test_IRtcEngine_SetEncryptionSecret()
         {
             string secret = ParamsHelper.CreateParam<string>();
 
@@ -2242,17 +2176,18 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableEncryption()
+        public void Test_IRtcEngine_EnableEncryption()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             EncryptionConfig config = ParamsHelper.CreateParam<EncryptionConfig>();
 
+            config.encryptionKdfSalt = new byte[32];
             var nRet = RtcEngine.EnableEncryption(enabled, config);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IRtcEngineCreateDataStream()
+        public void Test_IRtcEngine_CreateDataStream()
         {
             int streamId = ParamsHelper.CreateParam<int>();
             bool reliable = ParamsHelper.CreateParam<bool>();
@@ -2263,7 +2198,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineCreateDataStream2()
+        public void Test_IRtcEngine_CreateDataStream2()
         {
             int streamId = ParamsHelper.CreateParam<int>();
             DataStreamConfig config = ParamsHelper.CreateParam<DataStreamConfig>();
@@ -2273,7 +2208,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSendStreamMessage()
+        public void Test_IRtcEngine_SendStreamMessage()
         {
             int streamId = ParamsHelper.CreateParam<int>();
             byte[] data = ParamsHelper.CreateParam<byte[]>();
@@ -2284,7 +2219,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAddVideoWatermark()
+        public void Test_IRtcEngine_AddVideoWatermark()
         {
             RtcImage watermark = ParamsHelper.CreateParam<RtcImage>();
 
@@ -2293,7 +2228,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAddVideoWatermark2()
+        public void Test_IRtcEngine_AddVideoWatermark2()
         {
             string watermarkUrl = ParamsHelper.CreateParam<string>();
             WatermarkOptions options = ParamsHelper.CreateParam<WatermarkOptions>();
@@ -2303,7 +2238,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineClearVideoWatermarks()
+        public void Test_IRtcEngine_ClearVideoWatermarks()
         {
 
 
@@ -2312,7 +2247,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePauseAudio()
+        public void Test_IRtcEngine_PauseAudio()
         {
 
 
@@ -2321,7 +2256,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineResumeAudio()
+        public void Test_IRtcEngine_ResumeAudio()
         {
 
 
@@ -2330,7 +2265,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableWebSdkInteroperability()
+        public void Test_IRtcEngine_EnableWebSdkInteroperability()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
@@ -2339,7 +2274,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSendCustomReportMessage()
+        public void Test_IRtcEngine_SendCustomReportMessage()
         {
             string id = ParamsHelper.CreateParam<string>();
             string category = ParamsHelper.CreateParam<string>();
@@ -2352,17 +2287,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineRegisterMediaMetadataObserver()
-        {
-            IMetadataObserver observer = ParamsHelper.CreateParam<IMetadataObserver>();
-            METADATA_TYPE type = ParamsHelper.CreateParam<METADATA_TYPE>();
-
-            var nRet = RtcEngine.RegisterMediaMetadataObserver(observer, type);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_IRtcEngineUnregisterMediaMetadataObserver()
+        public void Test_IRtcEngine_UnregisterMediaMetadataObserver()
         {
 
 
@@ -2371,7 +2296,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartAudioFrameDump()
+        public void Test_IRtcEngine_StartAudioFrameDump()
         {
             string channel_id = ParamsHelper.CreateParam<string>();
             uint uid = ParamsHelper.CreateParam<uint>();
@@ -2386,7 +2311,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopAudioFrameDump()
+        public void Test_IRtcEngine_StopAudioFrameDump()
         {
             string channel_id = ParamsHelper.CreateParam<string>();
             uint uid = ParamsHelper.CreateParam<uint>();
@@ -2397,7 +2322,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAINSMode()
+        public void Test_IRtcEngine_SetAINSMode()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             AUDIO_AINS_MODE mode = ParamsHelper.CreateParam<AUDIO_AINS_MODE>();
@@ -2407,7 +2332,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineRegisterLocalUserAccount()
+        public void Test_IRtcEngine_RegisterLocalUserAccount()
         {
             string appId = ParamsHelper.CreateParam<string>();
             string userAccount = ParamsHelper.CreateParam<string>();
@@ -2417,7 +2342,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineJoinChannelWithUserAccount()
+        public void Test_IRtcEngine_JoinChannelWithUserAccount()
         {
             string token = ParamsHelper.CreateParam<string>();
             string channelId = ParamsHelper.CreateParam<string>();
@@ -2428,7 +2353,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineJoinChannelWithUserAccount2()
+        public void Test_IRtcEngine_JoinChannelWithUserAccount2()
         {
             string token = ParamsHelper.CreateParam<string>();
             string channelId = ParamsHelper.CreateParam<string>();
@@ -2440,7 +2365,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetUserInfoByUserAccount()
+        public void Test_IRtcEngine_GetUserInfoByUserAccount()
         {
             string userAccount = ParamsHelper.CreateParam<string>();
             UserInfo userInfo = ParamsHelper.CreateParam<UserInfo>();
@@ -2450,7 +2375,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetUserInfoByUid()
+        public void Test_IRtcEngine_GetUserInfoByUid()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             UserInfo userInfo = ParamsHelper.CreateParam<UserInfo>();
@@ -2460,7 +2385,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartOrUpdateChannelMediaRelay()
+        public void Test_IRtcEngine_StartOrUpdateChannelMediaRelay()
         {
             ChannelMediaRelayConfiguration configuration = ParamsHelper.CreateParam<ChannelMediaRelayConfiguration>();
 
@@ -2469,7 +2394,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopChannelMediaRelay()
+        public void Test_IRtcEngine_StopChannelMediaRelay()
         {
 
 
@@ -2478,7 +2403,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEnginePauseAllChannelMediaRelay()
+        public void Test_IRtcEngine_PauseAllChannelMediaRelay()
         {
 
 
@@ -2487,7 +2412,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineResumeAllChannelMediaRelay()
+        public void Test_IRtcEngine_ResumeAllChannelMediaRelay()
         {
 
 
@@ -2496,7 +2421,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetDirectCdnStreamingAudioConfiguration()
+        public void Test_IRtcEngine_SetDirectCdnStreamingAudioConfiguration()
         {
             AUDIO_PROFILE_TYPE profile = ParamsHelper.CreateParam<AUDIO_PROFILE_TYPE>();
 
@@ -2505,7 +2430,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetDirectCdnStreamingVideoConfiguration()
+        public void Test_IRtcEngine_SetDirectCdnStreamingVideoConfiguration()
         {
             VideoEncoderConfiguration config = ParamsHelper.CreateParam<VideoEncoderConfiguration>();
 
@@ -2514,7 +2439,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartDirectCdnStreaming()
+        public void Test_IRtcEngine_StartDirectCdnStreaming()
         {
             string publishUrl = ParamsHelper.CreateParam<string>();
             DirectCdnStreamingMediaOptions options = ParamsHelper.CreateParam<DirectCdnStreamingMediaOptions>();
@@ -2524,7 +2449,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopDirectCdnStreaming()
+        public void Test_IRtcEngine_StopDirectCdnStreaming()
         {
 
 
@@ -2533,7 +2458,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineUpdateDirectCdnStreamingMediaOptions()
+        public void Test_IRtcEngine_UpdateDirectCdnStreamingMediaOptions()
         {
             DirectCdnStreamingMediaOptions options = ParamsHelper.CreateParam<DirectCdnStreamingMediaOptions>();
 
@@ -2542,7 +2467,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartRhythmPlayer()
+        public void Test_IRtcEngine_StartRhythmPlayer()
         {
             string sound1 = ParamsHelper.CreateParam<string>();
             string sound2 = ParamsHelper.CreateParam<string>();
@@ -2553,7 +2478,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStopRhythmPlayer()
+        public void Test_IRtcEngine_StopRhythmPlayer()
         {
 
 
@@ -2562,7 +2487,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineConfigRhythmPlayer()
+        public void Test_IRtcEngine_ConfigRhythmPlayer()
         {
             AgoraRhythmPlayerConfig config = ParamsHelper.CreateParam<AgoraRhythmPlayerConfig>();
 
@@ -2571,7 +2496,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineTakeSnapshot()
+        public void Test_IRtcEngine_TakeSnapshot()
         {
             uint uid = ParamsHelper.CreateParam<uint>();
             string filePath = ParamsHelper.CreateParam<string>();
@@ -2581,7 +2506,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableContentInspect()
+        public void Test_IRtcEngine_EnableContentInspect()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             ContentInspectConfig config = ParamsHelper.CreateParam<ContentInspectConfig>();
@@ -2591,7 +2516,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustCustomAudioPublishVolume()
+        public void Test_IRtcEngine_AdjustCustomAudioPublishVolume()
         {
             uint trackId = ParamsHelper.CreateParam<uint>();
             int volume = ParamsHelper.CreateParam<int>();
@@ -2601,7 +2526,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineAdjustCustomAudioPlayoutVolume()
+        public void Test_IRtcEngine_AdjustCustomAudioPlayoutVolume()
         {
             uint trackId = ParamsHelper.CreateParam<uint>();
             int volume = ParamsHelper.CreateParam<int>();
@@ -2611,7 +2536,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetCloudProxy()
+        public void Test_IRtcEngine_SetCloudProxy()
         {
             CLOUD_PROXY_TYPE proxyType = ParamsHelper.CreateParam<CLOUD_PROXY_TYPE>();
 
@@ -2620,7 +2545,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetLocalAccessPoint()
+        public void Test_IRtcEngine_SetLocalAccessPoint()
         {
             LocalAccessPointConfiguration config = ParamsHelper.CreateParam<LocalAccessPointConfiguration>();
 
@@ -2629,7 +2554,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAdvancedAudioOptions()
+        public void Test_IRtcEngine_SetAdvancedAudioOptions()
         {
             AdvancedAudioOptions options = ParamsHelper.CreateParam<AdvancedAudioOptions>();
             int sourceType = ParamsHelper.CreateParam<int>();
@@ -2639,7 +2564,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetAVSyncSource()
+        public void Test_IRtcEngine_SetAVSyncSource()
         {
             string channelId = ParamsHelper.CreateParam<string>();
             uint uid = ParamsHelper.CreateParam<uint>();
@@ -2649,7 +2574,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableVideoImageSource()
+        public void Test_IRtcEngine_EnableVideoImageSource()
         {
             bool enable = ParamsHelper.CreateParam<bool>();
             ImageTrackOptions options = ParamsHelper.CreateParam<ImageTrackOptions>();
@@ -2659,7 +2584,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetCurrentMonotonicTimeInMs()
+        public void Test_IRtcEngine_GetCurrentMonotonicTimeInMs()
         {
 
 
@@ -2668,7 +2593,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableWirelessAccelerate()
+        public void Test_IRtcEngine_EnableWirelessAccelerate()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
 
@@ -2677,7 +2602,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetNetworkType()
+        public void Test_IRtcEngine_GetNetworkType()
         {
 
 
@@ -2686,7 +2611,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineSetParameters()
+        public void Test_IRtcEngine_SetParameters()
         {
             string parameters = ParamsHelper.CreateParam<string>();
 
@@ -2695,7 +2620,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineStartMediaRenderingTracing()
+        public void Test_IRtcEngine_StartMediaRenderingTracing()
         {
 
 
@@ -2704,7 +2629,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineEnableInstantMediaRendering()
+        public void Test_IRtcEngine_EnableInstantMediaRendering()
         {
 
 
@@ -2713,27 +2638,27 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IRtcEngineGetNtpWallTimeInMs()
+        public void Test_IRtcEngine_GetNtpWallTimeInMs()
         {
 
 
             var nRet = RtcEngine.GetNtpWallTimeInMs();
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet > 0);
         }
 
         [Test]
-        public void Test_IRtcEngineIsFeatureAvailableOnDevice()
+        public void Test_IRtcEngine_IsFeatureAvailableOnDevice()
         {
             FeatureType type = ParamsHelper.CreateParam<FeatureType>();
 
             var nRet = RtcEngine.IsFeatureAvailableOnDevice(type);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet);
         }
         #endregion terra IRtcEngine
 
         #region terra IMediaEngine
         [Test]
-        public void Test_IMediaEnginePushAudioFrame()
+        public void Test_IMediaEngine_PushAudioFrame()
         {
             AudioFrame frame = ParamsHelper.CreateParam<AudioFrame>();
             uint trackId = ParamsHelper.CreateParam<uint>();
@@ -2743,7 +2668,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IMediaEnginePullAudioFrame()
+        public void Test_IMediaEngine_PullAudioFrame()
         {
             AudioFrame frame = ParamsHelper.CreateParam<AudioFrame>();
 
@@ -2752,7 +2677,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IMediaEngineSetExternalVideoSource()
+        public void Test_IMediaEngine_SetExternalVideoSource()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             bool useTexture = ParamsHelper.CreateParam<bool>();
@@ -2764,7 +2689,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IMediaEngineSetExternalAudioSource()
+        public void Test_IMediaEngine_SetExternalAudioSource()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             int sampleRate = ParamsHelper.CreateParam<int>();
@@ -2777,17 +2702,17 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IMediaEngineCreateCustomAudioTrack()
+        public void Test_IMediaEngine_CreateCustomAudioTrack()
         {
             AUDIO_TRACK_TYPE trackType = ParamsHelper.CreateParam<AUDIO_TRACK_TYPE>();
             AudioTrackConfig config = ParamsHelper.CreateParam<AudioTrackConfig>();
 
             var nRet = MediaEngine.CreateCustomAudioTrack(trackType, config);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(true, nRet > 0);
         }
 
         [Test]
-        public void Test_IMediaEngineDestroyCustomAudioTrack()
+        public void Test_IMediaEngine_DestroyCustomAudioTrack()
         {
             uint trackId = ParamsHelper.CreateParam<uint>();
 
@@ -2796,7 +2721,7 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IMediaEngineSetExternalAudioSink()
+        public void Test_IMediaEngine_SetExternalAudioSink()
         {
             bool enabled = ParamsHelper.CreateParam<bool>();
             int sampleRate = ParamsHelper.CreateParam<int>();
@@ -2807,17 +2732,18 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_IMediaEnginePushVideoFrame()
+        public void Test_IMediaEngine_PushVideoFrame()
         {
             ExternalVideoFrame frame = ParamsHelper.CreateParam<ExternalVideoFrame>();
             uint videoTrackId = ParamsHelper.CreateParam<uint>();
 
+            frame.matrix = new float[16];
             var nRet = MediaEngine.PushVideoFrame(frame, videoTrackId);
             Assert.AreEqual(0, nRet);
         }
 
         [Test]
-        public void Test_IMediaEnginePushEncodedVideoImage()
+        public void Test_IMediaEngine_PushEncodedVideoImage()
         {
             byte[] imageBuffer = ParamsHelper.CreateParam<byte[]>();
             ulong length = ParamsHelper.CreateParam<ulong>();

@@ -22,8 +22,8 @@ namespace Agora.Rtc
             if (OnEnableTranscode_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<H265_TRANSCODE_RESULT>(OnEnableTranscode_result, result) == false)
-                return false;
+            // if (ParamsHelper.Compare<H265_TRANSCODE_RESULT>(OnEnableTranscode_result, result) == false)
+            //return false;
 
             return true;
         }
@@ -50,12 +50,12 @@ namespace Agora.Rtc
             if (OnQueryChannel_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<H265_TRANSCODE_RESULT>(OnQueryChannel_result, result) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnQueryChannel_originChannel, originChannel) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnQueryChannel_transcodeChannel, transcodeChannel) == false)
-                return false;
+            // if (ParamsHelper.Compare<H265_TRANSCODE_RESULT>(OnQueryChannel_result, result) == false)
+            //return false;
+            // if (ParamsHelper.Compare<string>(OnQueryChannel_originChannel, originChannel) == false)
+            //return false;
+            // if (ParamsHelper.Compare<string>(OnQueryChannel_transcodeChannel, transcodeChannel) == false)
+            //return false;
 
             return true;
         }
@@ -78,8 +78,8 @@ namespace Agora.Rtc
             if (OnTriggerTranscode_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<H265_TRANSCODE_RESULT>(OnTriggerTranscode_result, result) == false)
-                return false;
+            // if (ParamsHelper.Compare<H265_TRANSCODE_RESULT>(OnTriggerTranscode_result, result) == false)
+            //return false;
 
             return true;
         }

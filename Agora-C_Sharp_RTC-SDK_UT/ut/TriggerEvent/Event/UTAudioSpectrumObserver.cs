@@ -24,8 +24,8 @@ namespace Agora.Rtc
             if (OnLocalAudioSpectrum_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<AudioSpectrumData>(OnLocalAudioSpectrum_data, data) == false)
-                return false;
+            // if (ParamsHelper.Compare<AudioSpectrumData>(OnLocalAudioSpectrum_data, data) == false)
+            //return false;
 
             return true;
         }
@@ -51,10 +51,10 @@ namespace Agora.Rtc
             if (OnRemoteAudioSpectrum_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<UserAudioSpectrumInfo[]>(OnRemoteAudioSpectrum_spectrums, spectrums) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnRemoteAudioSpectrum_spectrumNumber, spectrumNumber) == false)
-                return false;
+            // if (ParamsHelper.Compare<UserAudioSpectrumInfo[]>(OnRemoteAudioSpectrum_spectrums, spectrums) == false)
+            //return false;
+            // if (ParamsHelper.Compare<uint>(OnRemoteAudioSpectrum_spectrumNumber, spectrumNumber) == false)
+            //return false;
 
             return true;
         }

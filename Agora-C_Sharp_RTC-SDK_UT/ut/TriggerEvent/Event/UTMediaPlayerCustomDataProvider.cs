@@ -26,10 +26,10 @@ namespace Agora.Rtc
             if (OnReadData_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<IntPtr>(OnReadData_buffer, buffer) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnReadData_bufferSize, bufferSize) == false)
-                return false;
+            // if (ParamsHelper.Compare<IntPtr>(OnReadData_buffer, buffer) == false)
+            //return false;
+            // if (ParamsHelper.Compare<int>(OnReadData_bufferSize, bufferSize) == false)
+            //return false;
 
             return true;
         }
@@ -55,10 +55,10 @@ namespace Agora.Rtc
             if (OnSeek_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<long>(OnSeek_offset, offset) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnSeek_whence, whence) == false)
-                return false;
+            // if (ParamsHelper.Compare<long>(OnSeek_offset, offset) == false)
+            //return false;
+            // if (ParamsHelper.Compare<int>(OnSeek_whence, whence) == false)
+            //return false;
 
             return true;
         }

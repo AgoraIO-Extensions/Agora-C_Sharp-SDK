@@ -118,7 +118,7 @@ namespace Agora.Rtc
 
             this.metadata_size = frame.metadata_size;
 
-            this.d3d11_texture_2d = frame.d3d11_texture_2d;
+
             this.texture_slice_index = frame.texture_slice_index;
             #endregion terra ExternalVideoFrameInternal_Assignment
         }
@@ -142,7 +142,7 @@ namespace Agora.Rtc
 
         public int metadata_size;
 
-        public IntPtr d3d11_texture_2d;
+
         public int texture_slice_index;
         #endregion terra ExternalVideoFrameInternal_Member_List
     }

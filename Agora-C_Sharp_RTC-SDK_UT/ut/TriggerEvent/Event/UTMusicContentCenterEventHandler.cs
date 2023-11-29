@@ -26,12 +26,12 @@ namespace Agora.Rtc
             if (OnMusicChartsResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnMusicChartsResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicChartInfo[]>(OnMusicChartsResult_result, result) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnMusicChartsResult_status, status) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnMusicChartsResult_requestId, requestId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<MusicChartInfo[]>(OnMusicChartsResult_result, result) == false)
+            //return false;
+            // if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnMusicChartsResult_status, status) == false)
+            //return false;
 
             return true;
         }
@@ -58,12 +58,12 @@ namespace Agora.Rtc
             if (OnMusicCollectionResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnMusicCollectionResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicCollection>(OnMusicCollectionResult_result, result) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnMusicCollectionResult_status, status) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnMusicCollectionResult_requestId, requestId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<MusicCollection>(OnMusicCollectionResult_result, result) == false)
+            //return false;
+            // if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnMusicCollectionResult_status, status) == false)
+            //return false;
 
             return true;
         }
@@ -92,14 +92,14 @@ namespace Agora.Rtc
             if (OnLyricResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnLyricResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<long>(OnLyricResult_songCode, songCode) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnLyricResult_lyricUrl, lyricUrl) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnLyricResult_status, status) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnLyricResult_requestId, requestId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<long>(OnLyricResult_songCode, songCode) == false)
+            //return false;
+            // if (ParamsHelper.Compare<string>(OnLyricResult_lyricUrl, lyricUrl) == false)
+            //return false;
+            // if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnLyricResult_status, status) == false)
+            //return false;
 
             return true;
         }
@@ -128,14 +128,14 @@ namespace Agora.Rtc
             if (OnSongSimpleInfoResult_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnSongSimpleInfoResult_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<long>(OnSongSimpleInfoResult_songCode, songCode) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnSongSimpleInfoResult_simpleInfo, simpleInfo) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnSongSimpleInfoResult_status, status) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnSongSimpleInfoResult_requestId, requestId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<long>(OnSongSimpleInfoResult_songCode, songCode) == false)
+            //return false;
+            // if (ParamsHelper.Compare<string>(OnSongSimpleInfoResult_simpleInfo, simpleInfo) == false)
+            //return false;
+            // if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnSongSimpleInfoResult_status, status) == false)
+            //return false;
 
             return true;
         }
@@ -168,18 +168,18 @@ namespace Agora.Rtc
             if (OnPreLoadEvent_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnPreLoadEvent_requestId, requestId) == false)
-                return false;
-            if (ParamsHelper.Compare<long>(OnPreLoadEvent_songCode, songCode) == false)
-                return false;
-            if (ParamsHelper.Compare<int>(OnPreLoadEvent_percent, percent) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnPreLoadEvent_lyricUrl, lyricUrl) == false)
-                return false;
-            if (ParamsHelper.Compare<PreloadStatusCode>(OnPreLoadEvent_preloadStatus, preloadStatus) == false)
-                return false;
-            if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnPreLoadEvent_mccStatus, mccStatus) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnPreLoadEvent_requestId, requestId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<long>(OnPreLoadEvent_songCode, songCode) == false)
+            //return false;
+            // if (ParamsHelper.Compare<int>(OnPreLoadEvent_percent, percent) == false)
+            //return false;
+            // if (ParamsHelper.Compare<string>(OnPreLoadEvent_lyricUrl, lyricUrl) == false)
+            //return false;
+            // if (ParamsHelper.Compare<PreloadStatusCode>(OnPreLoadEvent_preloadStatus, preloadStatus) == false)
+            //return false;
+            // if (ParamsHelper.Compare<MusicContentCenterStatusCode>(OnPreLoadEvent_mccStatus, mccStatus) == false)
+            //return false;
 
             return true;
         }

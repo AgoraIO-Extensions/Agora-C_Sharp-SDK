@@ -25,10 +25,10 @@ namespace Agora.Rtc
             if (OnRecordAudioFrame_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnRecordAudioFrame_channelId, channelId) == false)
-                return false;
-            if (ParamsHelper.Compare<AudioFrame>(OnRecordAudioFrame_audioFrame, audioFrame) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnRecordAudioFrame_channelId, channelId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<AudioFrame>(OnRecordAudioFrame_audioFrame, audioFrame) == false)
+            //return false;
 
             return true;
         }
@@ -54,10 +54,10 @@ namespace Agora.Rtc
             if (OnPlaybackAudioFrame_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnPlaybackAudioFrame_channelId, channelId) == false)
-                return false;
-            if (ParamsHelper.Compare<AudioFrame>(OnPlaybackAudioFrame_audioFrame, audioFrame) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnPlaybackAudioFrame_channelId, channelId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<AudioFrame>(OnPlaybackAudioFrame_audioFrame, audioFrame) == false)
+            //return false;
 
             return true;
         }
@@ -83,10 +83,10 @@ namespace Agora.Rtc
             if (OnMixedAudioFrame_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnMixedAudioFrame_channelId, channelId) == false)
-                return false;
-            if (ParamsHelper.Compare<AudioFrame>(OnMixedAudioFrame_audioFrame, audioFrame) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnMixedAudioFrame_channelId, channelId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<AudioFrame>(OnMixedAudioFrame_audioFrame, audioFrame) == false)
+            //return false;
 
             return true;
         }
@@ -110,8 +110,8 @@ namespace Agora.Rtc
             if (OnEarMonitoringAudioFrame_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<AudioFrame>(OnEarMonitoringAudioFrame_audioFrame, audioFrame) == false)
-                return false;
+            // if (ParamsHelper.Compare<AudioFrame>(OnEarMonitoringAudioFrame_audioFrame, audioFrame) == false)
+            //return false;
 
             return true;
         }
@@ -139,12 +139,12 @@ namespace Agora.Rtc
             if (OnPlaybackAudioFrameBeforeMixing_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnPlaybackAudioFrameBeforeMixing_channelId, channelId) == false)
-                return false;
-            if (ParamsHelper.Compare<string>(OnPlaybackAudioFrameBeforeMixing_userId, userId) == false)
-                return false;
-            if (ParamsHelper.Compare<AudioFrame>(OnPlaybackAudioFrameBeforeMixing_audioFrame, audioFrame) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnPlaybackAudioFrameBeforeMixing_channelId, channelId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<string>(OnPlaybackAudioFrameBeforeMixing_userId, userId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<AudioFrame>(OnPlaybackAudioFrameBeforeMixing_audioFrame, audioFrame) == false)
+            //return false;
 
             return true;
         }
@@ -173,12 +173,12 @@ namespace Agora.Rtc
             if (OnPlaybackAudioFrameBeforeMixing2_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnPlaybackAudioFrameBeforeMixing2_channelId, channelId) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnPlaybackAudioFrameBeforeMixing2_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<AudioFrame>(OnPlaybackAudioFrameBeforeMixing2_audioFrame, audioFrame) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnPlaybackAudioFrameBeforeMixing2_channelId, channelId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<uint>(OnPlaybackAudioFrameBeforeMixing2_uid, uid) == false)
+            //return false;
+            // if (ParamsHelper.Compare<AudioFrame>(OnPlaybackAudioFrameBeforeMixing2_audioFrame, audioFrame) == false)
+            //return false;
 
             return true;
         }

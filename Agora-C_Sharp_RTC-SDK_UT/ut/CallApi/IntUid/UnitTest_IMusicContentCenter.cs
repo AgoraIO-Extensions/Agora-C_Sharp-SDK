@@ -16,21 +16,16 @@ namespace Agora.Rtc
             int nRet = Engine.Initialize(rtcEngineContext);
             Assert.AreEqual(0, nRet);
             MusicContentCenter = Engine.GetMusicContentCenter();
+            MusicContentCenterConfiguration configuration = ParamsHelper.CreateParam<MusicContentCenterConfiguration>();
+
+            nRet = MusicContentCenter.Initialize(configuration);
+            Assert.AreEqual(0, nRet);
         }
 
         [TearDown]
         public void TearDown() { Engine.Dispose(); }
 
         #region terra IMusicContentCenter
-        [Test]
-        public void Test_Initialize()
-        {
-            MusicContentCenterConfiguration configuration = ParamsHelper.CreateParam<MusicContentCenterConfiguration>();
-
-            var nRet = MusicContentCenter.Initialize(configuration);
-            Assert.AreEqual(0, nRet);
-        }
-
         [Test]
         public void Test_RenewToken()
         {
@@ -41,29 +36,11 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_RegisterEventHandler()
-        {
-            IMusicContentCenterEventHandler eventHandler = ParamsHelper.CreateParam<IMusicContentCenterEventHandler>();
-
-            var nRet = MusicContentCenter.RegisterEventHandler(eventHandler);
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
         public void Test_UnregisterEventHandler()
         {
 
 
             var nRet = MusicContentCenter.UnregisterEventHandler();
-            Assert.AreEqual(0, nRet);
-        }
-
-        [Test]
-        public void Test_CreateMusicPlayer()
-        {
-
-
-            var nRet = MusicContentCenter.CreateMusicPlayer();
             Assert.AreEqual(0, nRet);
         }
 

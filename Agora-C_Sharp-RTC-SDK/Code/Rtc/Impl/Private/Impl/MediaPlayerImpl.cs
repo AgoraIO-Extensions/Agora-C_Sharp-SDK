@@ -894,7 +894,7 @@ namespace Agora.Rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
-            var result = nRet != 0 ? MEDIA_PLAYER_STATE.PLAYER_STATE_FAILED : (MEDIA_PLAYER_STATE)AgoraJson.JsonToStruct<int>(_apiParam.Result, "result");
+            var result = nRet != 0 ? MEDIA_PLAYER_STATE.PLAYER_STATE_FAILED : (MEDIA_PLAYER_STATE)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
         }

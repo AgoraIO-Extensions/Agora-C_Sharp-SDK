@@ -791,6 +791,25 @@ namespace Agora.Rtc
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
         }
 
+        public int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
+        {
+            CreateDirectCdnStreamingEventHandle();
+
+            _param.Clear();
+            _param.Add("publishUrl", publishUrl);
+            _param.Add("options", options);
+
+            var json = AgoraJson.ToJson(_param);
+            IntPtr[] arrayPtr = new IntPtr[] { _rtcDirectCdnStreamingEventHandle.handle };
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTDIRECTCDNSTREAMING,
+                json, (UInt32)json.Length,
+                Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 1,
+                ref _apiParam);
+            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
+
+            return result;
+        }
+
         #region terra IRtcEngine
         public string GetVersion(ref int build)
         {
@@ -3050,7 +3069,7 @@ namespace Agora.Rtc
             _param.Add("enable", enable);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION2,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -3069,7 +3088,7 @@ namespace Agora.Rtc
             _param.Add("value", value);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY2,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -3088,7 +3107,7 @@ namespace Agora.Rtc
             _param.Add("buf_len", buf_len);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY2,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -3235,7 +3254,7 @@ namespace Agora.Rtc
             _param.Add("type", type);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION2,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -3254,7 +3273,7 @@ namespace Agora.Rtc
             _param.Add("type", type);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY2,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -3273,7 +3292,7 @@ namespace Agora.Rtc
             _param.Add("type", type);
 
             var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY2,
+            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -4139,7 +4158,7 @@ namespace Agora.Rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
-            var result = nRet != 0 ? CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED : (CONNECTION_STATE_TYPE)AgoraJson.JsonToStruct<int>(_apiParam.Result, "result");
+            var result = nRet != 0 ? CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED : (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
         }
@@ -4587,22 +4606,6 @@ namespace Agora.Rtc
 
             var json = AgoraJson.ToJson(_param);
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_SETDIRECTCDNSTREAMINGVIDEOCONFIGURATION,
-                json, (UInt32)json.Length,
-                IntPtr.Zero, 0,
-                ref _apiParam);
-            var result = nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");
-
-            return result;
-        }
-
-        public int StartDirectCdnStreaming(string publishUrl, DirectCdnStreamingMediaOptions options)
-        {
-            _param.Clear();
-            _param.Add("publishUrl", publishUrl);
-            _param.Add("options", options);
-
-            var json = AgoraJson.ToJson(_param);
-            var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_RTCENGINE_STARTDIRECTCDNSTREAMING,
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
@@ -5371,7 +5374,7 @@ namespace Agora.Rtc
                 json, (UInt32)json.Length,
                 IntPtr.Zero, 0,
                 ref _apiParam);
-            var result = nRet != 0 ? CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED : (CONNECTION_STATE_TYPE)AgoraJson.JsonToStruct<int>(_apiParam.Result, "result");
+            var result = nRet != 0 ? CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED : (CONNECTION_STATE_TYPE)AgoraJson.GetData<int>(_apiParam.Result, "result");
 
             return result;
         }
@@ -5861,13 +5864,13 @@ namespace Agora.Rtc
             IntPtr eglContextPtr = frame.eglContext;
             IntPtr metadataPtr = IntPtr.Zero;
             IntPtr alphaBuffer = frame.alphaBuffer == null ? IntPtr.Zero : Marshal.UnsafeAddrOfPinnedArrayElement(frame.alphaBuffer, 0);
-            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr, alphaBuffer };
+            IntPtr[] arrayPtr = new IntPtr[] { bufferPtr, eglContextPtr, metadataPtr, alphaBuffer, frame.d3d11_texture_2d };
             int alphaLength = frame.alphaBuffer == null ? 0 : frame.alphaBuffer.Length;
             var json = AgoraJson.ToJson(_param);
 
             var nRet = AgoraRtcNative.CallIrisApiWithArgs(_irisRtcEngine, AgoraApiType.FUNC_MEDIAENGINE_PUSHVIDEOFRAME,
                                                           json, (UInt32)json.Length,
-                                                          Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), 4,
+                                                          Marshal.UnsafeAddrOfPinnedArrayElement(arrayPtr, 0), (uint)arrayPtr.Length,
                                                           ref _apiParam, (uint)frame.buffer.Length, 0, 0, (uint)alphaLength);
 
             return nRet != 0 ? nRet : (int)AgoraJson.GetData<int>(_apiParam.Result, "result");

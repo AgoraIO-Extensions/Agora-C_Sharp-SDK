@@ -114,7 +114,7 @@ export class SpeicalLogic {
         else {
             //是结构体
             if (this.cSharpSDK_IsEnumz(transReturn)) {
-                return `var result = nRet != 0 ? ${defaultValue} : (${transReturn})AgoraJson.JsonToStruct<int>(_apiParam.Result, "result");`;
+                return `var result = nRet != 0 ? ${defaultValue} : (${transReturn})AgoraJson.GetData<int>(_apiParam.Result, "result");`;
             }
             else {
                 return `var result = nRet != 0 ? ${defaultValue} : (${transReturn})AgoraJson.JsonToStruct<${transReturn}>(_apiParam.Result, "result");`;
@@ -226,7 +226,7 @@ export class SpeicalLogic {
     }
 
     public cSharpSDK_ExternalVideoFrameInternalMemberAssignment(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
-        let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer"];
+        let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer", "d3d11_texture_2d"];
         if (excludeList.includes(m.name)) {
             return "";
         }
@@ -236,7 +236,7 @@ export class SpeicalLogic {
     }
 
     public cSharpSDK_ExternalVideoFrameInternalMemberList(clazzName: string, m: MemberVariable, repeart: number, belongToClazzName: string): string {
-        let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer"];
+        let excludeList = ["buffer", "eglContext", "metadata_buffer", "alphaBuffer", "d3d11_texture_2d"];
         if (excludeList.includes(m.name)) {
             return "";
         }
@@ -1321,7 +1321,7 @@ export class SpeicalLogic {
         lines.push(`{`)
 
         let className = Tool.processString('-rv', clazzName, 1);
-        let methodName = Tool.processString('-v', m.name);
+        let methodName = Tool.processString('-nv', m.name, repeat);
         let config = ConfigTool.getInstance();
         lines.push(`ApiParam.@event = AgoraEventType.EVENT_${className}_${methodName};\n`);
         lines.push(`jsonObj.Clear();\n`);
@@ -1434,8 +1434,23 @@ export class SpeicalLogic {
 
     public cSharpSDK_GenerateCallApiKey(clazzName: string, m: MemberFunction, repeat: number, belongToClazzName: string): string {
         // return `"${Tool.processString('-r', clazzName)}_${Tool.processString('-n', m.name)}${repeat > 1 ? repeat : ""}"`;
+        let specialKeyMap = {
+            "AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION": "AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION2",
+            "AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION2": "AgoraApiType.FUNC_RTCENGINE_ENABLEEXTENSION",
 
-        return `AgoraApiType.FUNC_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-vn", m.name, repeat)}`;
+            "AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY": "AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY2",
+            "AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY2": "AgoraApiType.FUNC_RTCENGINE_SETEXTENSIONPROPERTY",
 
+            "AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY": "AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY2",
+            "AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY2": "AgoraApiType.FUNC_RTCENGINE_GETEXTENSIONPROPERTY"
+        }
+
+        let key = `AgoraApiType.FUNC_${Tool.processString("-rv", belongToClazzName)}_${Tool.processString("-vn", m.name, repeat)}`;
+        if (specialKeyMap[key] == null) {
+            return key;
+        }
+        else {
+            return specialKeyMap[key];
+        }
     }
 }

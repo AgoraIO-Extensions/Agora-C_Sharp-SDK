@@ -1,36 +1,4 @@
 {
-    "IRtcEngineBase": {
-        "type": "ClazzStruct",
-        "name": "IRtcEngineBase",
-        "methodSplitSymbol": "\n\n",
-        "commonMethodTemplate": "method_interface_impl",
-        "includeMembers": [],
-        "excludeMethods": [
-            "release",
-            "initialize",
-            "getScreenCaptureSources",
-            "queryInterface",
-            "registerPacketObserver",
-            "registerEventHandler",
-            "unregisterEventHandler",
-            "joinChannelWithUserAccountEx",
-            "createMediaPlayer",
-            "destroyMediaPlayer",
-            "createMediaRecorder",
-            "destroyMediaRecorder",
-            "registerAudioEncodedFrameObserver"
-        ],
-        "specialMethodsTemplate": {
-            "queryCodecCapability": "method_interface_impl_queryCodecCapability",
-            "sendStreamMessage": "method_interface_impl_sendStreamMessage",
-            "setupLocalVideo": "method_interface_videoCanvas",
-            "setupRemoteVideo": "method_interface_videoCanvas",
-            "startDirectCdnStreaming": "method_interface_impl_startDirectCdnStreaming"
-        },
-        "memberSplitSymbol": "\n",
-        "commonMemberTemplate": "",
-        "specialMembersTemplate": ""
-    },
     "IRtcEngine": {
         "type": "ClazzStruct",
         "name": "IRtcEngine",
@@ -54,13 +22,15 @@
             "unregisterAudioSpectrumObserver",
             "registerMediaMetadataObserver",
             "unregisterMediaMetadataObserver",
-            "registerAudioEncodedFrameObserver"
+            "registerAudioEncodedFrameObserver",
+            "startDirectCdnStreaming"
         ],
         "specialMethodsTemplate": {
             "queryCodecCapability": "method_interface_impl_queryCodecCapability",
             "sendStreamMessage": "method_interface_impl_sendStreamMessage",
             "setupLocalVideo": "method_interface_videoCanvas",
-            "setupRemoteVideo": "method_interface_videoCanvas"
+            "setupRemoteVideo": "method_interface_videoCanvas",
+            "startDirectCdnStreaming": "method_interface_impl_startDirectCdnStreaming"
         },
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
@@ -85,30 +55,6 @@
             "setupLocalVideoEx": "method_interface_videoCanvas",
             "setupRemoteVideoEx": "method_interface_videoCanvas"
         },
-        "memberSplitSymbol": "\n",
-        "commonMemberTemplate": "",
-        "specialMembersTemplate": ""
-    },
-    "IMediaEngineBase": {
-        "type": "ClazzStruct",
-        "name": "IMediaEngineBase",
-        "methodSplitSymbol": "\n\n",
-        "commonMethodTemplate": "method_interface_impl",
-        "includeMembers": [],
-        "excludeMethods": [
-            "release",
-            "enableCustomAudioLocalPlayback",
-            "registerAudioFrameObserver",
-            "registerVideoFrameObserver",
-            "registerVideoEncodedFrameObserver",
-            "addVideoFrameRenderer",
-            "removeVideoFrameRenderer",
-            "pushAudioFrame",
-            "pushVideoFrame",
-            "pushEncodedVideoImage",
-            "pullAudioFrame"
-        ],
-        "specialMethodsTemplate": {},
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",
         "specialMembersTemplate": ""

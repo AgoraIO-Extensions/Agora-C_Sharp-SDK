@@ -290,21 +290,22 @@ namespace Agora.Rtc
         }
 
         [Test]
-        public void Test_GetConnectionStateEx()
+        public void Test_IRtcEngineEx_GetConnectionStateEx()
         {
             RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
 
             var nRet = RtcEngineEx.GetConnectionStateEx(connection);
-            Assert.AreEqual(0, nRet);
+            Assert.AreEqual(CONNECTION_STATE_TYPE.CONNECTION_STATE_DISCONNECTED, nRet);
         }
 
         [Test]
-        public void Test_EnableEncryptionEx()
+        public void Test_IRtcEngineEx_EnableEncryptionEx()
         {
             RtcConnection connection = ParamsHelper.CreateParam<RtcConnection>();
             bool enabled = ParamsHelper.CreateParam<bool>();
             EncryptionConfig config = ParamsHelper.CreateParam<EncryptionConfig>();
 
+            config.encryptionKdfSalt = new byte[32];
             var nRet = RtcEngineEx.EnableEncryptionEx(connection, enabled, config);
             Assert.AreEqual(0, nRet);
         }

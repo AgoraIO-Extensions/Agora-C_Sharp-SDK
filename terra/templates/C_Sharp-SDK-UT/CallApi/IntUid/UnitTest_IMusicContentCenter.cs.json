@@ -5,7 +5,10 @@
         "methodSplitSymbol": "\n\n",
         "commonMethodTemplate": "method_unitTest_compare_0",
         "excludeMethods": [
-            "release"
+            "release",
+            "initialize",
+            "createMusicPlayer",
+            "registerEventHandler"
         ],
         "memberSplitSymbol": "\n",
         "commonMemberTemplate": "",

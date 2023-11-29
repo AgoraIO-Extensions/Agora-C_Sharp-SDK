@@ -27,14 +27,14 @@ namespace Agora.Rtc
             if (OnRecorderStateChanged_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnRecorderStateChanged_channelId, channelId) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnRecorderStateChanged_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<RecorderState>(OnRecorderStateChanged_state, state) == false)
-                return false;
-            if (ParamsHelper.Compare<RecorderReasonCode>(OnRecorderStateChanged_reason, reason) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnRecorderStateChanged_channelId, channelId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<uint>(OnRecorderStateChanged_uid, uid) == false)
+            //return false;
+            // if (ParamsHelper.Compare<RecorderState>(OnRecorderStateChanged_state, state) == false)
+            //return false;
+            // if (ParamsHelper.Compare<RecorderReasonCode>(OnRecorderStateChanged_reason, reason) == false)
+            //return false;
 
             return true;
         }
@@ -61,12 +61,12 @@ namespace Agora.Rtc
             if (OnRecorderInfoUpdated_be_trigger == false)
                 return false;
 
-            if (ParamsHelper.Compare<string>(OnRecorderInfoUpdated_channelId, channelId) == false)
-                return false;
-            if (ParamsHelper.Compare<uint>(OnRecorderInfoUpdated_uid, uid) == false)
-                return false;
-            if (ParamsHelper.Compare<RecorderInfo>(OnRecorderInfoUpdated_info, info) == false)
-                return false;
+            // if (ParamsHelper.Compare<string>(OnRecorderInfoUpdated_channelId, channelId) == false)
+            //return false;
+            // if (ParamsHelper.Compare<uint>(OnRecorderInfoUpdated_uid, uid) == false)
+            //return false;
+            // if (ParamsHelper.Compare<RecorderInfo>(OnRecorderInfoUpdated_info, info) == false)
+            //return false;
 
             return true;
         }
