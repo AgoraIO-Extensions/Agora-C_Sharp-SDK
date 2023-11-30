@@ -1,7 +1,4 @@
-﻿#define AGORA_STRING_UID
-#define AGORA_NUMBER_UID
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
