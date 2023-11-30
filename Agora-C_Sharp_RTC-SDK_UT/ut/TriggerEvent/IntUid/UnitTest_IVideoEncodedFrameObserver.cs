@@ -40,7 +40,7 @@ namespace Agora.Rtc.Event
 
         #region terra IVideoEncodedFrameObserver
         [Test]
-        public void Test_OnEncodedVideoFrameReceived()
+        public void Test_IVideoEncodedFrameObserver_OnEncodedVideoFrameReceived()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOENCODEDFRAMEOBSERVER_ONENCODEDVIDEOFRAMERECEIVED;
 

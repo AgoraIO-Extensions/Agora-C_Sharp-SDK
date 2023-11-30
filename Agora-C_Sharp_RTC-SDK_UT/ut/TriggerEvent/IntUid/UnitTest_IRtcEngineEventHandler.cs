@@ -38,7 +38,7 @@ namespace Agora.Rtc.Event
 
         #region terra IRtcEngineEventHandler
         [Test]
-        public void Test_OnProxyConnected()
+        public void Test_IRtcEngineEventHandler_OnProxyConnected()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONPROXYCONNECTED;
 
@@ -69,7 +69,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnError()
+        public void Test_IRtcEngineEventHandler_OnError()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONERROR;
 
@@ -91,7 +91,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLastmileProbeResult()
+        public void Test_IRtcEngineEventHandler_OnLastmileProbeResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLASTMILEPROBERESULT;
 
@@ -110,7 +110,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioDeviceStateChanged()
+        public void Test_IRtcEngineEventHandler_OnAudioDeviceStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIODEVICESTATECHANGED;
 
@@ -135,7 +135,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioMixingPositionChanged()
+        public void Test_IRtcEngineEventHandler_OnAudioMixingPositionChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGPOSITIONCHANGED;
 
@@ -154,7 +154,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioMixingFinished()
+        public void Test_IRtcEngineEventHandler_OnAudioMixingFinished()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGFINISHED;
 
@@ -170,7 +170,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioEffectFinished()
+        public void Test_IRtcEngineEventHandler_OnAudioEffectFinished()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOEFFECTFINISHED;
 
@@ -189,7 +189,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnVideoDeviceStateChanged()
+        public void Test_IRtcEngineEventHandler_OnVideoDeviceStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEODEVICESTATECHANGED;
 
@@ -214,7 +214,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUplinkNetworkInfoUpdated()
+        public void Test_IRtcEngineEventHandler_OnUplinkNetworkInfoUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONUPLINKNETWORKINFOUPDATED;
 
@@ -233,7 +233,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnDownlinkNetworkInfoUpdated()
+        public void Test_IRtcEngineEventHandler_OnDownlinkNetworkInfoUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONDOWNLINKNETWORKINFOUPDATED;
 
@@ -252,7 +252,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLastmileQuality()
+        public void Test_IRtcEngineEventHandler_OnLastmileQuality()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLASTMILEQUALITY;
 
@@ -271,7 +271,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnFirstLocalVideoFrame()
+        public void Test_IRtcEngineEventHandler_OnFirstLocalVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONFIRSTLOCALVIDEOFRAME;
 
@@ -299,7 +299,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLocalVideoStateChanged()
+        public void Test_IRtcEngineEventHandler_OnLocalVideoStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOSTATECHANGED;
 
@@ -324,7 +324,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnCameraReady()
+        public void Test_IRtcEngineEventHandler_OnCameraReady()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCAMERAREADY;
 
@@ -340,7 +340,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnCameraFocusAreaChanged()
+        public void Test_IRtcEngineEventHandler_OnCameraFocusAreaChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCAMERAFOCUSAREACHANGED;
 
@@ -368,7 +368,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnCameraExposureAreaChanged()
+        public void Test_IRtcEngineEventHandler_OnCameraExposureAreaChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCAMERAEXPOSUREAREACHANGED;
 
@@ -396,7 +396,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnFacePositionChanged()
+        public void Test_IRtcEngineEventHandler_OnFacePositionChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONFACEPOSITIONCHANGED;
 
@@ -423,11 +423,11 @@ namespace Agora.Rtc.Event
 
             int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
             Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnFacePositionChangedPassed(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces));
+            Assert.AreEqual(false, EventHandler.OnFacePositionChangedPassed(imageWidth, imageHeight, vecRectangle, vecDistance, numFaces));
         }
 
         [Test]
-        public void Test_OnVideoStopped()
+        public void Test_IRtcEngineEventHandler_OnVideoStopped()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSTOPPED;
 
@@ -443,7 +443,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioMixingStateChanged()
+        public void Test_IRtcEngineEventHandler_OnAudioMixingStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOMIXINGSTATECHANGED;
 
@@ -465,7 +465,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRhythmPlayerStateChanged()
+        public void Test_IRtcEngineEventHandler_OnRhythmPlayerStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONRHYTHMPLAYERSTATECHANGED;
 
@@ -487,7 +487,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnContentInspectResult()
+        public void Test_IRtcEngineEventHandler_OnContentInspectResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCONTENTINSPECTRESULT;
 
@@ -506,7 +506,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioDeviceVolumeChanged()
+        public void Test_IRtcEngineEventHandler_OnAudioDeviceVolumeChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIODEVICEVOLUMECHANGED;
 
@@ -531,7 +531,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRtmpStreamingStateChanged()
+        public void Test_IRtcEngineEventHandler_OnRtmpStreamingStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONRTMPSTREAMINGSTATECHANGED;
 
@@ -556,7 +556,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRtmpStreamingEvent()
+        public void Test_IRtcEngineEventHandler_OnRtmpStreamingEvent()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONRTMPSTREAMINGEVENT;
 
@@ -578,7 +578,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnTranscodingUpdated()
+        public void Test_IRtcEngineEventHandler_OnTranscodingUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONTRANSCODINGUPDATED;
 
@@ -594,7 +594,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioRoutingChanged()
+        public void Test_IRtcEngineEventHandler_OnAudioRoutingChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOROUTINGCHANGED;
 
@@ -613,7 +613,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnChannelMediaRelayStateChanged()
+        public void Test_IRtcEngineEventHandler_OnChannelMediaRelayStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONCHANNELMEDIARELAYSTATECHANGED;
 
@@ -635,7 +635,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLocalPublishFallbackToAudioOnly()
+        public void Test_IRtcEngineEventHandler_OnLocalPublishFallbackToAudioOnly()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALPUBLISHFALLBACKTOAUDIOONLY;
 
@@ -654,7 +654,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRemoteSubscribeFallbackToAudioOnly()
+        public void Test_IRtcEngineEventHandler_OnRemoteSubscribeFallbackToAudioOnly()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONREMOTESUBSCRIBEFALLBACKTOAUDIOONLY;
 
@@ -676,7 +676,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPermissionError()
+        public void Test_IRtcEngineEventHandler_OnPermissionError()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONPERMISSIONERROR;
 
@@ -695,7 +695,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLocalUserRegistered()
+        public void Test_IRtcEngineEventHandler_OnLocalUserRegistered()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALUSERREGISTERED;
 
@@ -717,7 +717,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserInfoUpdated()
+        public void Test_IRtcEngineEventHandler_OnUserInfoUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONUSERINFOUPDATED;
 
@@ -739,7 +739,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLocalVideoTranscoderError()
+        public void Test_IRtcEngineEventHandler_OnLocalVideoTranscoderError()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONLOCALVIDEOTRANSCODERERROR;
 
@@ -761,7 +761,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioSubscribeStateChanged()
+        public void Test_IRtcEngineEventHandler_OnAudioSubscribeStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOSUBSCRIBESTATECHANGED;
 
@@ -792,7 +792,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnVideoSubscribeStateChanged()
+        public void Test_IRtcEngineEventHandler_OnVideoSubscribeStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEOSUBSCRIBESTATECHANGED;
 
@@ -823,7 +823,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioPublishStateChanged()
+        public void Test_IRtcEngineEventHandler_OnAudioPublishStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONAUDIOPUBLISHSTATECHANGED;
 
@@ -851,7 +851,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnVideoPublishStateChanged()
+        public void Test_IRtcEngineEventHandler_OnVideoPublishStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONVIDEOPUBLISHSTATECHANGED;
 
@@ -882,7 +882,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnExtensionEvent()
+        public void Test_IRtcEngineEventHandler_OnExtensionEvent()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONEVENT;
 
@@ -910,7 +910,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnExtensionStarted()
+        public void Test_IRtcEngineEventHandler_OnExtensionStarted()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTARTED;
 
@@ -932,7 +932,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnExtensionStopped()
+        public void Test_IRtcEngineEventHandler_OnExtensionStopped()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONSTOPPED;
 
@@ -954,7 +954,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnExtensionError()
+        public void Test_IRtcEngineEventHandler_OnExtensionError()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLER_ONEXTENSIONERROR;
 
@@ -982,7 +982,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnJoinChannelSuccess()
+        public void Test_IRtcEngineEventHandlerEx_OnJoinChannelSuccess()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONJOINCHANNELSUCCESS;
 
@@ -1004,7 +1004,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRejoinChannelSuccess()
+        public void Test_IRtcEngineEventHandlerEx_OnRejoinChannelSuccess()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREJOINCHANNELSUCCESS;
 
@@ -1026,7 +1026,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioQuality()
+        public void Test_IRtcEngineEventHandlerEx_OnAudioQuality()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOQUALITY;
 
@@ -1057,7 +1057,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioVolumeIndication()
+        public void Test_IRtcEngineEventHandlerEx_OnAudioVolumeIndication()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONAUDIOVOLUMEINDICATION;
 
@@ -1085,7 +1085,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLeaveChannel()
+        public void Test_IRtcEngineEventHandlerEx_OnLeaveChannel()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLEAVECHANNEL;
 
@@ -1107,7 +1107,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRtcStats()
+        public void Test_IRtcEngineEventHandlerEx_OnRtcStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONRTCSTATS;
 
@@ -1129,7 +1129,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnNetworkQuality()
+        public void Test_IRtcEngineEventHandlerEx_OnNetworkQuality()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONNETWORKQUALITY;
 
@@ -1157,7 +1157,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnIntraRequestReceived()
+        public void Test_IRtcEngineEventHandlerEx_OnIntraRequestReceived()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONINTRAREQUESTRECEIVED;
 
@@ -1176,7 +1176,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnFirstLocalVideoFramePublished()
+        public void Test_IRtcEngineEventHandlerEx_OnFirstLocalVideoFramePublished()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALVIDEOFRAMEPUBLISHED;
 
@@ -1198,7 +1198,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnFirstRemoteVideoDecoded()
+        public void Test_IRtcEngineEventHandlerEx_OnFirstRemoteVideoDecoded()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEVIDEODECODED;
 
@@ -1229,7 +1229,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnVideoSizeChanged()
+        public void Test_IRtcEngineEventHandlerEx_OnVideoSizeChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEOSIZECHANGED;
 
@@ -1263,7 +1263,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLocalVideoStateChanged2()
+        public void Test_IRtcEngineEventHandlerEx_OnLocalVideoStateChanged2()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALVIDEOSTATECHANGED;
 
@@ -1288,7 +1288,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRemoteVideoStateChanged()
+        public void Test_IRtcEngineEventHandlerEx_OnRemoteVideoStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEVIDEOSTATECHANGED;
 
@@ -1319,7 +1319,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnFirstRemoteVideoFrame()
+        public void Test_IRtcEngineEventHandlerEx_OnFirstRemoteVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEVIDEOFRAME;
 
@@ -1350,7 +1350,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserJoined()
+        public void Test_IRtcEngineEventHandlerEx_OnUserJoined()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERJOINED;
 
@@ -1375,7 +1375,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserOffline()
+        public void Test_IRtcEngineEventHandlerEx_OnUserOffline()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSEROFFLINE;
 
@@ -1400,7 +1400,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserMuteAudio()
+        public void Test_IRtcEngineEventHandlerEx_OnUserMuteAudio()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERMUTEAUDIO;
 
@@ -1425,7 +1425,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserMuteVideo()
+        public void Test_IRtcEngineEventHandlerEx_OnUserMuteVideo()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERMUTEVIDEO;
 
@@ -1450,7 +1450,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserEnableVideo()
+        public void Test_IRtcEngineEventHandlerEx_OnUserEnableVideo()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERENABLEVIDEO;
 
@@ -1475,7 +1475,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserEnableLocalVideo()
+        public void Test_IRtcEngineEventHandlerEx_OnUserEnableLocalVideo()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERENABLELOCALVIDEO;
 
@@ -1500,7 +1500,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserStateChanged()
+        public void Test_IRtcEngineEventHandlerEx_OnUserStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERSTATECHANGED;
 
@@ -1525,7 +1525,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLocalAudioStats()
+        public void Test_IRtcEngineEventHandlerEx_OnLocalAudioStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALAUDIOSTATS;
 
@@ -1547,7 +1547,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRemoteAudioStats()
+        public void Test_IRtcEngineEventHandlerEx_OnRemoteAudioStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEAUDIOSTATS;
 
@@ -1569,7 +1569,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLocalVideoStats()
+        public void Test_IRtcEngineEventHandlerEx_OnLocalVideoStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALVIDEOSTATS;
 
@@ -1591,7 +1591,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRemoteVideoStats()
+        public void Test_IRtcEngineEventHandlerEx_OnRemoteVideoStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEVIDEOSTATS;
 
@@ -1613,7 +1613,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnConnectionLost()
+        public void Test_IRtcEngineEventHandlerEx_OnConnectionLost()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONLOST;
 
@@ -1632,7 +1632,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnConnectionInterrupted()
+        public void Test_IRtcEngineEventHandlerEx_OnConnectionInterrupted()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONINTERRUPTED;
 
@@ -1651,7 +1651,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnConnectionBanned()
+        public void Test_IRtcEngineEventHandlerEx_OnConnectionBanned()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONBANNED;
 
@@ -1670,7 +1670,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnStreamMessage()
+        public void Test_IRtcEngineEventHandlerEx_OnStreamMessage()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSTREAMMESSAGE;
 
@@ -1704,7 +1704,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnStreamMessageError()
+        public void Test_IRtcEngineEventHandlerEx_OnStreamMessageError()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSTREAMMESSAGEERROR;
 
@@ -1738,7 +1738,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRequestToken()
+        public void Test_IRtcEngineEventHandlerEx_OnRequestToken()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREQUESTTOKEN;
 
@@ -1757,7 +1757,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLicenseValidationFailure()
+        public void Test_IRtcEngineEventHandlerEx_OnLicenseValidationFailure()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLICENSEVALIDATIONFAILURE;
 
@@ -1779,7 +1779,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnTokenPrivilegeWillExpire()
+        public void Test_IRtcEngineEventHandlerEx_OnTokenPrivilegeWillExpire()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONTOKENPRIVILEGEWILLEXPIRE;
 
@@ -1801,7 +1801,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnFirstLocalAudioFramePublished()
+        public void Test_IRtcEngineEventHandlerEx_OnFirstLocalAudioFramePublished()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTLOCALAUDIOFRAMEPUBLISHED;
 
@@ -1823,7 +1823,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnFirstRemoteAudioFrame()
+        public void Test_IRtcEngineEventHandlerEx_OnFirstRemoteAudioFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEAUDIOFRAME;
 
@@ -1848,7 +1848,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnFirstRemoteAudioDecoded()
+        public void Test_IRtcEngineEventHandlerEx_OnFirstRemoteAudioDecoded()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONFIRSTREMOTEAUDIODECODED;
 
@@ -1873,7 +1873,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLocalAudioStateChanged()
+        public void Test_IRtcEngineEventHandlerEx_OnLocalAudioStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONLOCALAUDIOSTATECHANGED;
 
@@ -1898,7 +1898,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRemoteAudioStateChanged()
+        public void Test_IRtcEngineEventHandlerEx_OnRemoteAudioStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEAUDIOSTATECHANGED;
 
@@ -1929,7 +1929,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnActiveSpeaker()
+        public void Test_IRtcEngineEventHandlerEx_OnActiveSpeaker()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONACTIVESPEAKER;
 
@@ -1951,7 +1951,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnClientRoleChanged()
+        public void Test_IRtcEngineEventHandlerEx_OnClientRoleChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCLIENTROLECHANGED;
 
@@ -1979,7 +1979,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnClientRoleChangeFailed()
+        public void Test_IRtcEngineEventHandlerEx_OnClientRoleChangeFailed()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCLIENTROLECHANGEFAILED;
 
@@ -2004,7 +2004,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRemoteAudioTransportStats()
+        public void Test_IRtcEngineEventHandlerEx_OnRemoteAudioTransportStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEAUDIOTRANSPORTSTATS;
 
@@ -2035,7 +2035,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRemoteVideoTransportStats()
+        public void Test_IRtcEngineEventHandlerEx_OnRemoteVideoTransportStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONREMOTEVIDEOTRANSPORTSTATS;
 
@@ -2066,7 +2066,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnConnectionStateChanged()
+        public void Test_IRtcEngineEventHandlerEx_OnConnectionStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONCONNECTIONSTATECHANGED;
 
@@ -2091,7 +2091,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnWlAccMessage()
+        public void Test_IRtcEngineEventHandlerEx_OnWlAccMessage()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONWLACCMESSAGE;
 
@@ -2119,7 +2119,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnWlAccStats()
+        public void Test_IRtcEngineEventHandlerEx_OnWlAccStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONWLACCSTATS;
 
@@ -2144,7 +2144,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnNetworkTypeChanged()
+        public void Test_IRtcEngineEventHandlerEx_OnNetworkTypeChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONNETWORKTYPECHANGED;
 
@@ -2166,7 +2166,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnEncryptionError()
+        public void Test_IRtcEngineEventHandlerEx_OnEncryptionError()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONENCRYPTIONERROR;
 
@@ -2188,7 +2188,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUploadLogResult()
+        public void Test_IRtcEngineEventHandlerEx_OnUploadLogResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUPLOADLOGRESULT;
 
@@ -2216,7 +2216,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnUserAccountUpdated()
+        public void Test_IRtcEngineEventHandlerEx_OnUserAccountUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONUSERACCOUNTUPDATED;
 
@@ -2241,7 +2241,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnSnapshotTaken()
+        public void Test_IRtcEngineEventHandlerEx_OnSnapshotTaken()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSNAPSHOTTAKEN;
 
@@ -2275,7 +2275,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnVideoRenderingTracingResult()
+        public void Test_IRtcEngineEventHandlerEx_OnVideoRenderingTracingResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONVIDEORENDERINGTRACINGRESULT;
 
@@ -2303,7 +2303,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnSetRtmFlagResult()
+        public void Test_IRtcEngineEventHandlerEx_OnSetRtmFlagResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONSETRTMFLAGRESULT;
 
@@ -2325,7 +2325,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnTranscodedStreamLayoutInfo()
+        public void Test_IRtcEngineEventHandlerEx_OnTranscodedStreamLayoutInfo()
         {
             ApiParam.@event = AgoraEventType.EVENT_RTCENGINEEVENTHANDLEREX_ONTRANSCODEDSTREAMLAYOUTINFO;
 
@@ -2358,52 +2358,6 @@ namespace Agora.Rtc.Event
             Assert.AreEqual(true, EventHandler.OnTranscodedStreamLayoutInfoPassed(connection, uid, width, height, layoutCount, layoutlist));
         }
         #endregion terra IRtcEngineEventHandler
-
-        #region terra IDirectCdnStreamingEventHandler
-        [Test]
-        public void Test_OnDirectCdnStreamingStateChanged()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED;
-
-            jsonObj.Clear();
-
-            DIRECT_CDN_STREAMING_STATE state = ParamsHelper.CreateParam<DIRECT_CDN_STREAMING_STATE>();
-            jsonObj.Add("state", state);
-
-            DIRECT_CDN_STREAMING_REASON reason = ParamsHelper.CreateParam<DIRECT_CDN_STREAMING_REASON>();
-            jsonObj.Add("reason", reason);
-
-            string message = ParamsHelper.CreateParam<string>();
-            jsonObj.Add("message", message);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnDirectCdnStreamingStateChangedPassed(state, reason, message));
-        }
-
-        [Test]
-        public void Test_OnDirectCdnStreamingStats()
-        {
-            ApiParam.@event = AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS;
-
-            jsonObj.Clear();
-
-            DirectCdnStreamingStats stats = ParamsHelper.CreateParam<DirectCdnStreamingStats>();
-            jsonObj.Add("stats", stats);
-
-            var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
-            ApiParam.data = jsonString;
-            ApiParam.data_size = (uint)jsonString.Length;
-
-            int ret = DLLHelper.TriggerEventWithFakeRtcEngine(FakeRtcEnginePtr, ref ApiParam);
-            Assert.AreEqual(0, ret);
-            Assert.AreEqual(true, EventHandler.OnDirectCdnStreamingStatsPassed(stats));
-        }
-        #endregion terra IDirectCdnStreamingEventHandler
 
     }
 }

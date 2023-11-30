@@ -43,7 +43,7 @@ namespace Agora.Rtc.Event
 
         #region terra IMediaPlayerSourceObserver
         [Test]
-        public void Test_OnPlayerSourceStateChanged()
+        public void Test_IMediaPlayerSourceObserver_OnPlayerSourceStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSOURCESTATECHANGED;
 
@@ -65,7 +65,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPositionChanged()
+        public void Test_IMediaPlayerSourceObserver_OnPositionChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPOSITIONCHANGED;
 
@@ -87,7 +87,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPlayerEvent()
+        public void Test_IMediaPlayerSourceObserver_OnPlayerEvent()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYEREVENT;
 
@@ -112,7 +112,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnMetaData()
+        public void Test_IMediaPlayerSourceObserver_OnMetaData()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONMETADATA;
 
@@ -134,7 +134,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPlayBufferUpdated()
+        public void Test_IMediaPlayerSourceObserver_OnPlayBufferUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYBUFFERUPDATED;
 
@@ -153,7 +153,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPreloadEvent()
+        public void Test_IMediaPlayerSourceObserver_OnPreloadEvent()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPRELOADEVENT;
 
@@ -163,7 +163,7 @@ namespace Agora.Rtc.Event
             jsonObj.Add("src", src);
 
             PLAYER_PRELOAD_EVENT @event = ParamsHelper.CreateParam<PLAYER_PRELOAD_EVENT>();
-            jsonObj.Add("@event", @event);
+            jsonObj.Add("event", @event);
 
             var jsonString = LitJson.JsonMapper.ToJson(jsonObj);
             ApiParam.data = jsonString;
@@ -175,7 +175,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnCompleted()
+        public void Test_IMediaPlayerSourceObserver_OnCompleted()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONCOMPLETED;
 
@@ -191,7 +191,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAgoraCDNTokenWillExpire()
+        public void Test_IMediaPlayerSourceObserver_OnAgoraCDNTokenWillExpire()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAGORACDNTOKENWILLEXPIRE;
 
@@ -207,7 +207,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPlayerSrcInfoChanged()
+        public void Test_IMediaPlayerSourceObserver_OnPlayerSrcInfoChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERSRCINFOCHANGED;
 
@@ -229,7 +229,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPlayerInfoUpdated()
+        public void Test_IMediaPlayerSourceObserver_OnPlayerInfoUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERINFOUPDATED;
 
@@ -248,7 +248,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPlayerCacheStats()
+        public void Test_IMediaPlayerSourceObserver_OnPlayerCacheStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERCACHESTATS;
 
@@ -267,7 +267,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPlayerPlaybackStats()
+        public void Test_IMediaPlayerSourceObserver_OnPlayerPlaybackStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONPLAYERPLAYBACKSTATS;
 
@@ -286,7 +286,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnAudioVolumeIndication()
+        public void Test_IMediaPlayerSourceObserver_OnAudioVolumeIndication()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERSOURCEOBSERVER_ONAUDIOVOLUMEINDICATION;
 

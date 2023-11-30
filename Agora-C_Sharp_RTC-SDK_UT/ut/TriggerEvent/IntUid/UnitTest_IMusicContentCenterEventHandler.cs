@@ -46,7 +46,7 @@ namespace Agora.Rtc.Event
 
         #region terra IMusicContentCenterEventHandler
         [Test]
-        public void Test_OnMusicChartsResult()
+        public void Test_IMusicContentCenterEventHandler_OnMusicChartsResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCHARTSRESULT;
 
@@ -71,7 +71,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnMusicCollectionResult()
+        public void Test_IMusicContentCenterEventHandler_OnMusicCollectionResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONMUSICCOLLECTIONRESULT;
 
@@ -96,7 +96,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnLyricResult()
+        public void Test_IMusicContentCenterEventHandler_OnLyricResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONLYRICRESULT;
 
@@ -124,7 +124,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnSongSimpleInfoResult()
+        public void Test_IMusicContentCenterEventHandler_OnSongSimpleInfoResult()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONSONGSIMPLEINFORESULT;
 
@@ -152,7 +152,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPreLoadEvent()
+        public void Test_IMusicContentCenterEventHandler_OnPreLoadEvent()
         {
             ApiParam.@event = AgoraEventType.EVENT_MUSICCONTENTCENTEREVENTHANDLER_ONPRELOADEVENT;
 

@@ -54,7 +54,7 @@ namespace Agora.Rtc
         {
             switch (@event)
             {
-                case "RtcEngineEventHandlerEx_onStreamMessage":
+                case "RtcEngineEventHandler_onStreamMessageEx":
                     {
                         var byteLength = (uint)AgoraJson.GetData<uint>(jsonData, "length");
                         var bufferPtr = (IntPtr)(UInt64)AgoraJson.GetData<UInt64>(jsonData, "data");

@@ -42,7 +42,7 @@ namespace Agora.Rtc.Event
 
         #region terra IDirectCdnStreamingEventHandler
         [Test]
-        public void Test_OnDirectCdnStreamingStateChanged()
+        public void Test_IDirectCdnStreamingEventHandler_OnDirectCdnStreamingStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATECHANGED;
 
@@ -67,7 +67,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnDirectCdnStreamingStats()
+        public void Test_IDirectCdnStreamingEventHandler_OnDirectCdnStreamingStats()
         {
             ApiParam.@event = AgoraEventType.EVENT_DIRECTCDNSTREAMINGEVENTHANDLER_ONDIRECTCDNSTREAMINGSTATS;
 

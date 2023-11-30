@@ -42,7 +42,7 @@ namespace Agora.Rtc.Event
 
         #region terra IMetadataObserver
         [Test]
-        public void Test_GetMaxMetadataSize()
+        public void Test_IMetadataObserver_GetMaxMetadataSize()
         {
             ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVER_GETMAXMETADATASIZE;
 
@@ -58,7 +58,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnReadyToSendMetadata()
+        public void Test_IMetadataObserver_OnReadyToSendMetadata()
         {
             ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVER_ONREADYTOSENDMETADATA;
 
@@ -80,7 +80,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnMetadataReceived()
+        public void Test_IMetadataObserver_OnMetadataReceived()
         {
             ApiParam.@event = AgoraEventType.EVENT_METADATAOBSERVER_ONMETADATARECEIVED;
 

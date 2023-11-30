@@ -43,7 +43,7 @@ namespace Agora.Rtc.Event
 
         #region terra IAudioPcmFrameSink
         [Test]
-        public void Test_OnFrame()
+        public void Test_IAudioPcmFrameSink_OnFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOPCMFRAMESINK_ONFRAME;
 

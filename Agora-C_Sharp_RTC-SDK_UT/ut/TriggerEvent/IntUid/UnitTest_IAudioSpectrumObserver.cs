@@ -54,7 +54,7 @@ namespace Agora.Rtc.Event
 
         #region terra IAudioSpectrumObserver
         [Test]
-        public void Test_OnLocalAudioSpectrum()
+        public void Test_IAudioSpectrumObserver_OnLocalAudioSpectrum()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONLOCALAUDIOSPECTRUM;
 
@@ -74,7 +74,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRemoteAudioSpectrum()
+        public void Test_IAudioSpectrumObserver_OnRemoteAudioSpectrum()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOSPECTRUMOBSERVER_ONREMOTEAUDIOSPECTRUM;
 

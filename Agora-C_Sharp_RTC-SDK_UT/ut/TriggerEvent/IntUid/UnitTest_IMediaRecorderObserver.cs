@@ -43,7 +43,7 @@ namespace Agora.Rtc.Event
 
         #region terra IMediaRecorderObserver
         [Test]
-        public void Test_OnRecorderStateChanged()
+        public void Test_IMediaRecorderObserver_OnRecorderStateChanged()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERSTATECHANGED;
 
@@ -71,7 +71,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRecorderInfoUpdated()
+        public void Test_IMediaRecorderObserver_OnRecorderInfoUpdated()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIARECORDEROBSERVER_ONRECORDERINFOUPDATED;
 

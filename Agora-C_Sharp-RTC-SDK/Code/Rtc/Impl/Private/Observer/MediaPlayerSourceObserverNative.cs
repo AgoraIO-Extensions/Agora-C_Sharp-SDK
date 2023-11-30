@@ -146,7 +146,7 @@ CallbackObject._CallbackQueue.EnQueue(() => {
                         if (!mediaPlayerSourceObserverDic.ContainsKey(playerId)) return;
                         mediaPlayerSourceObserverDic[playerId].OnPreloadEvent(
                             (string)AgoraJson.GetData<string>(jsonData, "src"),
-                            (PLAYER_PRELOAD_EVENT)AgoraJson.GetData<int>(jsonData, "@event")
+                            (PLAYER_PRELOAD_EVENT)AgoraJson.GetData<int>(jsonData, "event")
                         );
 #if UNITY_EDITOR_WIN || UNITY_EDITOR_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_ANDROID
 });

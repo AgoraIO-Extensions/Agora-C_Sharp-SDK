@@ -42,7 +42,7 @@ namespace Agora.Rtc.Event
 
         #region terra IH265TranscoderObserver
         [Test]
-        public void Test_OnEnableTranscode()
+        public void Test_IH265TranscoderObserver_OnEnableTranscode()
         {
             ApiParam.@event = AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONENABLETRANSCODE;
 
@@ -61,7 +61,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnQueryChannel()
+        public void Test_IH265TranscoderObserver_OnQueryChannel()
         {
             ApiParam.@event = AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONQUERYCHANNEL;
 
@@ -86,7 +86,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnTriggerTranscode()
+        public void Test_IH265TranscoderObserver_OnTriggerTranscode()
         {
             ApiParam.@event = AgoraEventType.EVENT_H265TRANSCODEROBSERVER_ONTRIGGERTRANSCODE;
 

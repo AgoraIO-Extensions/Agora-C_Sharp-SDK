@@ -42,7 +42,7 @@ namespace Agora.Rtc.Event
 
         #region terra IVideoFrameObserver
         [Test]
-        public void Test_OnCaptureVideoFrame()
+        public void Test_IVideoFrameObserver_OnCaptureVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONCAPTUREVIDEOFRAME;
 
@@ -64,7 +64,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPreEncodeVideoFrame()
+        public void Test_IVideoFrameObserver_OnPreEncodeVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONPREENCODEVIDEOFRAME;
 
@@ -86,7 +86,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnMediaPlayerVideoFrame()
+        public void Test_IVideoFrameObserver_OnMediaPlayerVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONMEDIAPLAYERVIDEOFRAME;
 
@@ -108,7 +108,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnRenderVideoFrame()
+        public void Test_IVideoFrameObserver_OnRenderVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONRENDERVIDEOFRAME;
 
@@ -133,7 +133,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnTranscodedVideoFrame()
+        public void Test_IVideoFrameObserver_OnTranscodedVideoFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_VIDEOFRAMEOBSERVER_ONTRANSCODEDVIDEOFRAME;
 

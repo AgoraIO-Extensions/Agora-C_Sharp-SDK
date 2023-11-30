@@ -43,7 +43,7 @@ namespace Agora.Rtc.Event
 
         #region terra IMediaPlayerCustomDataProvider
         [Test]
-        public void Test_OnReadData()
+        public void Test_IMediaPlayerCustomDataProvider_OnReadData()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONREADDATA;
 
@@ -65,7 +65,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnSeek()
+        public void Test_IMediaPlayerCustomDataProvider_OnSeek()
         {
             ApiParam.@event = AgoraEventType.EVENT_MEDIAPLAYERCUSTOMDATAPROVIDER_ONSEEK;
 

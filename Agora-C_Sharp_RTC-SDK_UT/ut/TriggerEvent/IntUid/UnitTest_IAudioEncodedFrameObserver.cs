@@ -41,7 +41,7 @@ namespace Agora.Rtc.Event
 
         #region terra IAudioEncodedFrameObserver
         [Test]
-        public void Test_OnRecordAudioEncodedFrame()
+        public void Test_IAudioEncodedFrameObserver_OnRecordAudioEncodedFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONRECORDAUDIOENCODEDFRAME;
 
@@ -66,7 +66,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnPlaybackAudioEncodedFrame()
+        public void Test_IAudioEncodedFrameObserver_OnPlaybackAudioEncodedFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONPLAYBACKAUDIOENCODEDFRAME;
 
@@ -91,7 +91,7 @@ namespace Agora.Rtc.Event
         }
 
         [Test]
-        public void Test_OnMixedAudioEncodedFrame()
+        public void Test_IAudioEncodedFrameObserver_OnMixedAudioEncodedFrame()
         {
             ApiParam.@event = AgoraEventType.EVENT_AUDIOENCODEDFRAMEOBSERVER_ONMIXEDAUDIOENCODEDFRAME;
 
