@@ -4,72 +4,72 @@ import re
 import shutil
 
 
-number_code_list = [
-    "Code/Rtc/Event/MediaRecorderObserver.cs",
-    "Code/Rtc/Event/RtcEngineEventHandler.cs",
-    "Code/Rtc/IAudioFrameObserver.cs",
-    # "Code/Rtc/IAudioSpectrumObserver.cs",
-    "Code/Rtc/IH265Transcoder.cs",
-    "Code/Rtc/ILocalSpatialAudioEngine.cs",
-    "Code/Rtc/IMediaRecorder.cs",
-    "Code/Rtc/IMediaRecorderObserver.cs",
-    "Code/Rtc/IMetadataObserver.cs",
-    "Code/Rtc/IRtcEngine.cs",
-    "Code/Rtc/IRtcEngineEx.cs",
-    "Code/Rtc/IRtcEngineEventHandler.cs",
-    "Code/Rtc/IVideoEncodedFrameObserver.cs",
-    "Code/Rtc/IVideoFrameObserver.cs",
-    "Code/Rtc/Impl/H265Transcoder.cs",
-    "Code/Rtc/Impl/LocalSpatialAudioEngine.cs",
-    "Code/Rtc/Impl/MediaRecorder.cs",
-    "Code/Rtc/Impl/RtcEngine.cs",
-    "Code/Rtc/Impl/Private/Impl/H265TranscoderImpl.cs",
-    "Code/Rtc/Impl/Private/Impl/SpatialAudioEngineImpl.cs",
-    "Code/Rtc/Impl/Private/Impl/MediaRecorderImpl.cs",
-    "Code/Rtc/Impl/Private/Impl/RtcEngineImpl.cs",
-    "Code/Rtc/VideoRender/TextureManager.cs",
-    "Code/Rtc/VideoRender/TextureManagerYUV.cs",
-    "Code/Rtc/VideoRender/VideoSurface.cs",
-    "Code/Rtc/VideoRender/VideoSurfaceYUV.cs",
-    "Code/Rtc/Types/AgoraBase.cs",
-    # "Code/Rtc/Types/AgoraMediaBase.cs",
-    "Code/Rtc/Types/AgoraRtcEngine.cs",
-    "Code/Rtc/Types/AgoraRtcEngineEx.cs",
-    "Code/Rtc/Types/AgoraSpatialAudio.cs"
-]
+# number_code_list = [
+#     "Code/Rtc/Event/MediaRecorderObserver.cs",
+#     "Code/Rtc/Event/RtcEngineEventHandler.cs",
+#     "Code/Rtc/IAudioFrameObserver.cs",
+#     # "Code/Rtc/IAudioSpectrumObserver.cs",
+#     "Code/Rtc/IH265Transcoder.cs",
+#     "Code/Rtc/ILocalSpatialAudioEngine.cs",
+#     "Code/Rtc/IMediaRecorder.cs",
+#     "Code/Rtc/IMediaRecorderObserver.cs",
+#     "Code/Rtc/IMetadataObserver.cs",
+#     "Code/Rtc/IRtcEngine.cs",
+#     "Code/Rtc/IRtcEngineEx.cs",
+#     "Code/Rtc/IRtcEngineEventHandler.cs",
+#     "Code/Rtc/IVideoEncodedFrameObserver.cs",
+#     "Code/Rtc/IVideoFrameObserver.cs",
+#     "Code/Rtc/Impl/H265Transcoder.cs",
+#     "Code/Rtc/Impl/LocalSpatialAudioEngine.cs",
+#     "Code/Rtc/Impl/MediaRecorder.cs",
+#     "Code/Rtc/Impl/RtcEngine.cs",
+#     "Code/Rtc/Impl/Private/Impl/H265TranscoderImpl.cs",
+#     "Code/Rtc/Impl/Private/Impl/SpatialAudioEngineImpl.cs",
+#     "Code/Rtc/Impl/Private/Impl/MediaRecorderImpl.cs",
+#     "Code/Rtc/Impl/Private/Impl/RtcEngineImpl.cs",
+#     "Code/Rtc/VideoRender/TextureManager.cs",
+#     "Code/Rtc/VideoRender/TextureManagerYUV.cs",
+#     "Code/Rtc/VideoRender/VideoSurface.cs",
+#     "Code/Rtc/VideoRender/VideoSurfaceYUV.cs",
+#     "Code/Rtc/Types/AgoraBase.cs",
+#     # "Code/Rtc/Types/AgoraMediaBase.cs",
+#     "Code/Rtc/Types/AgoraRtcEngine.cs",
+#     "Code/Rtc/Types/AgoraRtcEngineEx.cs",
+#     "Code/Rtc/Types/AgoraSpatialAudio.cs"
+# ]
 
-string_code_list = [
-    "Code/Rtc/Event/MediaRecorderObserverS.cs",
-    "Code/Rtc/Event/RtcEngineEventHandlerS.cs",
-    "Code/Rtc/IAudioSpectrumObserverS.cs",
-    "Code/Rtc/IH265TranscoderS.cs",
-    "Code/Rtc/ILocalSpatialAudioEngineS.cs",
-    "Code/Rtc/IMediaRecorderS.cs",
-    "Code/Rtc/IMediaRecorderObserverS.cs",
-    "Code/Rtc/IMetadataObserverS.cs",
-    "Code/Rtc/IRtcEngineS.cs",
-    "Code/Rtc/IRtcEngineExS.cs",
-    "Code/Rtc/IRtcEngineEventHandlerS.cs",
-    "Code/Rtc/IVideoEncodedFrameObserverS.cs",
-    "Code/Rtc/IVideoFrameObserverS.cs",
-    "Code/Rtc/Impl/H265TranscoderS.cs",
-    "Code/Rtc/Impl/LocalSpatialAudioEngineS.cs",
-    "Code/Rtc/Impl/MediaRecorderS.cs",
-    "Code/Rtc/Impl/RtcEngineS.cs",
-    "Code/Rtc/Impl/Private/Impl/H265TranscoderImplS.cs",
-    "Code/Rtc/Impl/Private/Impl/SpatialAudioEngineImplS.cs",
-    "Code/Rtc/Impl/Private/Impl/MediaRecorderImplS.cs",
-    "Code/Rtc/Impl/Private/Impl/RtcEngineImplS.cs",
-    "Code/Rtc/VideoRender/TextureManagerS.cs",
-    "Code/Rtc/VideoRender/TextureManagerYUVS.cs",
-    "Code/Rtc/VideoRender/VideoSurfaceS.cs",
-    "Code/Rtc/VideoRender/VideoSurfaceYUVS.cs",
-    "Code/Rtc/Types/AgoraBaseS.cs",
-    "Code/Rtc/Types/AgoraMediaBaseS.cs",
-    "Code/Rtc/Types/AgoraRtcEngineS.cs",
-    "Code/Rtc/Types/AgoraRtcEngineExS.cs",
-    "Code/Rtc/Types/AgoraSpatialAudioS.cs"
-]
+# string_code_list = [
+#     "Code/Rtc/Event/MediaRecorderObserverS.cs",
+#     "Code/Rtc/Event/RtcEngineEventHandlerS.cs",
+#     "Code/Rtc/IAudioSpectrumObserverS.cs",
+#     "Code/Rtc/IH265TranscoderS.cs",
+#     "Code/Rtc/ILocalSpatialAudioEngineS.cs",
+#     "Code/Rtc/IMediaRecorderS.cs",
+#     "Code/Rtc/IMediaRecorderObserverS.cs",
+#     "Code/Rtc/IMetadataObserverS.cs",
+#     "Code/Rtc/IRtcEngineS.cs",
+#     "Code/Rtc/IRtcEngineExS.cs",
+#     "Code/Rtc/IRtcEngineEventHandlerS.cs",
+#     "Code/Rtc/IVideoEncodedFrameObserverS.cs",
+#     "Code/Rtc/IVideoFrameObserverS.cs",
+#     "Code/Rtc/Impl/H265TranscoderS.cs",
+#     "Code/Rtc/Impl/LocalSpatialAudioEngineS.cs",
+#     "Code/Rtc/Impl/MediaRecorderS.cs",
+#     "Code/Rtc/Impl/RtcEngineS.cs",
+#     "Code/Rtc/Impl/Private/Impl/H265TranscoderImplS.cs",
+#     "Code/Rtc/Impl/Private/Impl/SpatialAudioEngineImplS.cs",
+#     "Code/Rtc/Impl/Private/Impl/MediaRecorderImplS.cs",
+#     "Code/Rtc/Impl/Private/Impl/RtcEngineImplS.cs",
+#     "Code/Rtc/VideoRender/TextureManagerS.cs",
+#     "Code/Rtc/VideoRender/TextureManagerYUVS.cs",
+#     "Code/Rtc/VideoRender/VideoSurfaceS.cs",
+#     "Code/Rtc/VideoRender/VideoSurfaceYUVS.cs",
+#     "Code/Rtc/Types/AgoraBaseS.cs",
+#     "Code/Rtc/Types/AgoraMediaBaseS.cs",
+#     "Code/Rtc/Types/AgoraRtcEngineS.cs",
+#     "Code/Rtc/Types/AgoraRtcEngineExS.cs",
+#     "Code/Rtc/Types/AgoraSpatialAudioS.cs"
+# ]
 
 
 
@@ -127,23 +127,23 @@ def replace_key_word_in_path(file_path, key_word, replace_word):
             f.close()
 
 
-# remove number uid code without number uid
-if NUMBER_UID == 'false':
-    for i in range(0, len(number_code_list)):
-        full_path = os.path.join(ROOT, number_code_list[i])
-        if os.path.isfile(full_path):
-            os.remove(full_path)
-        else :
-            print('can not remove: {0}. becasue no such file'.format(full_path))
+# # remove number uid code without number uid
+# if NUMBER_UID == 'false':
+#     for i in range(0, len(number_code_list)):
+#         full_path = os.path.join(ROOT, number_code_list[i])
+#         if os.path.isfile(full_path):
+#             os.remove(full_path)
+#         else :
+#             print('can not remove: {0}. becasue no such file'.format(full_path))
 
-# remove string uid code without string uid
-if STRING_UID == 'false':
-    for i in range(0, len(string_code_list)):
-        full_path = os.path.join(ROOT, string_code_list[i])
-        if os.path.isfile(full_path):
-            os.remove(full_path)
-        else :
-            print('can not remove: {0}. becasue no such file'.format(full_path))
+# # remove string uid code without string uid
+# if STRING_UID == 'false':
+#     for i in range(0, len(string_code_list)):
+#         full_path = os.path.join(ROOT, string_code_list[i])
+#         if os.path.isfile(full_path):
+#             os.remove(full_path)
+#         else :
+#             print('can not remove: {0}. becasue no such file'.format(full_path))
 
 
 #remove rtc code without rtc
@@ -162,11 +162,11 @@ if RTC == 'false':
 if RTM == 'false':
     remove_key_word_in_path(ROOT, '#define AGORA_RTM')
 
-if NUMBER_UID == 'false':
-    remove_key_word_in_path(ROOT, '#define AGORA_NUMBER_UID')
+# if NUMBER_UID == 'false':
+#     remove_key_word_in_path(ROOT, '#define AGORA_NUMBER_UID')
 
-if STRING_UID == 'false':
-    remove_key_word_in_path(ROOT, '#define AGORA_STRING_UID')
+# if STRING_UID == 'false':
+#     remove_key_word_in_path(ROOT, '#define AGORA_STRING_UID')
 
 
 if RTC == 'false':
